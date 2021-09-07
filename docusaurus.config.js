@@ -31,6 +31,21 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
           },
         }),
       ],
+      [
+        "redocusaurus",
+        {
+          specs: [
+            {
+              routePath: "/api/",
+              specUrl:
+                "https://raw.githubusercontent.com/blockstack/stacks-blockchain-api/master/docs/openapi.yaml",
+            },
+          ],
+          theme: {
+            primaryColor: "#5546FF",
+          },
+        },
+      ],
     ],
 
     themeConfig:
@@ -50,6 +65,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               docId: "intro",
               position: "right",
               label: "Developer docs",
+            },
+            {
+              to: "/api",
+              label: "Stacks API",
+              position: "right",
             },
             {
               href: "https://github.com/hirosystems/docs",
