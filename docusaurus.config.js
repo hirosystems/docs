@@ -72,6 +72,18 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               position: "right",
             },
             {
+              type: "doc",
+              docId: "tutorials",
+              position: "right",
+              label: "Tutorials",
+            },
+            {
+              type: "doc",
+              docId: "example-apps",
+              position: "right",
+              label: "Example apps",
+            },
+            {
               href: "https://github.com/hirosystems/docs",
               label: "GitHub",
               position: "right",
@@ -85,8 +97,20 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               title: "Docs",
               items: [
                 {
-                  label: "Tutorial",
+                  label: "Developer docs",
                   to: "/docs/intro",
+                },
+                {
+                  label: "Stacks API",
+                  to: "/api",
+                },
+                {
+                  label: "Tutorials",
+                  to: "/docs/tutorials",
+                },
+                {
+                  label: "Example apps",
+                  to: "/docs/example-apps",
                 },
               ],
             },
@@ -127,6 +151,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
         prism: {
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme,
+          additionalLanguages: ["toml", "lisp"],
         },
       }),
   }
