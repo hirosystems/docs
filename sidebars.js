@@ -46,6 +46,7 @@ module.exports = {
       label: "Developer references",
       items: [
         "references",
+        "references/cli-reference",
         {
           type: "category",
           label: "Clarity",
