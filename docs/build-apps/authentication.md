@@ -5,11 +5,11 @@ title: Authenticating users
 
 This guide explains how to authenticate users with the [`connect`](https://github.com/blockstack/connect#readme) package of Stacks.js.
 
-Authentication provides a way for users to identify themselves to an app while retaining complete control over their credentials and personal details. It can be integrated alone or used in conjunction with [transaction signing](/build-apps/transaction-signing) and [data storage](/build-apps/data-storage), for which it is a prerequisite.
+Authentication provides a way for users to identify themselves to an app while retaining complete control over their credentials and personal details. It can be integrated alone or used in conjunction with [transaction signing](/docs/build-apps/transaction-signing) and [data storage](/docs/build-apps/data-storage), for which it is a prerequisite.
 
-Users who register for your app can subsequently authenticate to any other app with support for the [Blockchain Naming System](/build-apps/references/bns) and vice versa.
+Users who register for your app can subsequently authenticate to any other app with support for the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns) and vice versa.
 
-See the To-dos app tutorial for a concrete example of this feature in practice.
+See the [To-dos example app](/docs/example-apps/to-dos) for a concrete example of this feature in practice.
 
 ## How it works
 
@@ -37,7 +37,7 @@ The authenticator generates the app private key from the user's _identity addres
 
 Finally, the app private key is deterministic, meaning that the same private key will always be generated for a given Stacks address and domain.
 
-The first two of these functions are particularly relevant to [data storage with Stacks.js](/build-apps/guides/data-storage).
+The first two of these functions are particularly relevant to [data storage with Stacks.js](/docs/build-apps/data-storage).
 
 [Learn more about keypairs](#key-pairs) used by authentication.
 

@@ -3,7 +3,7 @@ id: data-storage
 title: Storing data securely
 ---
 
-This guide explains how to save and retrieve data for users with [Gaia](/build-apps/references/gaia) by implementing the [`connect`](https://github.com/blockstack/ux/tree/master/packages/connect#stacksconnect) and [`storage`](https://github.com/blockstack/ux/tree/master/packages/storage#stacksstorage) packages of Stacks.js.
+This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/build-apps/references/gaia) by implementing the [`connect`](https://github.com/blockstack/ux/tree/master/packages/connect#stacksconnect) and [`storage`](https://github.com/blockstack/ux/tree/master/packages/storage#stacksstorage) packages of Stacks.js.
 
 Data storage provides a way for users to save both public and private data off-chain while retaining complete control over it.
 
@@ -109,7 +109,7 @@ Encrypted files need `decrypt` set to `true` so the app knows to decrypt the dat
 
 ## Get data for other user
 
-Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Blockchain Naming System](/build-apps/references/bns).
+Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns).
 
 Simply indicate the username of such a user in the `options` object:
 

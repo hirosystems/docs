@@ -5,7 +5,7 @@ title: Public registry app
 
 The [Stacks Blockchain API](/docs/get-started/stacks-blockchain-api) is an API that helps app developers to view and use the state of the Stacks blockchain.
 
-In this tutorial you will extend [the To-dos app](/docs/example-apps/todos) to share individual lists publicly using the Stacks blockchain.
+In this tutorial you will extend [the To-dos app](/docs/example-apps/to-dos) to share individual lists publicly using the Stacks blockchain.
 
 The registry of shared to-dos lists is implemented by a Clarity smart contract named [`todo-registry`](https://github.com/friedger/blockstack-todos/blob/tut/public-registry/contracts/todo-registry.clar). Data from this contract will be shown in the to-dos app.
 
@@ -116,7 +116,7 @@ export const PublicUrlRegistrar = ({ userSession }) => {
 };
 ```
 
-It is a simple button that calls `doContractCall` method of the Connect library when clicked. The method makes an api call to the Stacks authenticator. The authenticator creates a contract call transaction that is signed by the user and then it is broadcasted to the Stacks blockchain as explained in the [transaction signing tutorial](/build-app/guides/signing-transactions).
+It is a simple button that calls `doContractCall` method of the Connect library when clicked. The method makes an api call to the Stacks authenticator. The authenticator creates a contract call transaction that is signed by the user and then it is broadcast to the Stacks blockchain as explained in the [transaction signing tutorial](/docs/build-apps/transaction-signing).
 
 Note how the arguments are created using `bufferCVFromString`. There are similar methods for all other Clarity types, like `uintCV` or `trueCV`. See the [documentation](https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values) of the stacks-transactions library for more details.
 
@@ -196,7 +196,7 @@ You will see update logs in the console. The received object is a transaction st
 
 ## Reading the registration details
 
-Now that the transaction was processed sucessfully, you can read information about a transaction, in particular, the registry id that was returned by the transaction. The id (`registry-id`) is an unsigned integer.
+Now that the transaction was processed successfully, you can read information about a transaction, in particular, the registry id that was returned by the transaction. The id (`registry-id`) is an unsigned integer.
 
 ```clarity
 (define-public (register ...)
@@ -243,7 +243,11 @@ Information about transactions can be retrieved using the `TransactionsApi` obje
 const transcationsApi = new TransactionsApi();
 ```
 
--> Note: The contructor takes a configuration argument. It can be used to set the server url. By default, it is the URL for the node hosted by Hiro PBC.
+:::note
+
+The constructor takes a configuration argument. It can be used to set the server URL. By default, it is the URL for the node hosted by Hiro PBC.
+
+:::
 
 Then in the `fetchTransactionDetails` method add a call to `getTransactionById`. The result is detailed data about the transaction: the status, when it was created, the type, the contract call details, the transaction result and many more.
 
@@ -297,7 +301,7 @@ You should now be able to see an update in the UI if the transaction was success
 
 ## Show recent activities
 
-Similar to the `TransactionApi`, the `AccountsApi` provides easy access to account-related information. The api will be used in this section to show recent activities for the to-dos list registry.
+Similar to the `TransactionApi`, the `AccountsApi` provides easy access to account-related information. The API will be used in this section to show recent activities for the to-dos list registry.
 
 ### Step 1: Create recent activities component
 
@@ -454,7 +458,7 @@ Congratulations. You just implemented a list of recent activities that was fetch
 
 ## Fetch the first to-dos list
 
-There are two other ways to get state information from the blockchain: read-only functions and data map entries. Read-only functions were already discussed in the [Clarity counter tutorial](/write-smart-contracts/counter-tutorial). They do not require a transaction to complete. Data maps in Clarity are maps that can be read by any user. See the [Clarity reference](/references/language-functions#define-map) for more details.
+There are two other ways to get state information from the blockchain: read-only functions and data map entries. Read-only functions were already discussed in the [Clarity counter tutorial](/docs/tutorials/clarity-counter). They do not require a transaction to complete. Data maps in Clarity are maps that can be read by any user. See the [Clarity reference](https://docs.stacks.co/references/language-functions#define-map) for more details.
 
 The `todo-registry` contract defines a read-only function `owner-of?` that returns the owner of a registry entry and a data map for details about entries:
 

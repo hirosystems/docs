@@ -228,11 +228,11 @@ The search operation used by the endpoint (for example, `FROM txs WHERE tx_id = 
 
 ## Using Clarity values
 
-Some endpoints, like the [read-only function contract call](https://blockstack.github.io/stacks-blockchain-api/#operation/call_read_only_function), require input to as serialized [Clarity value](https://docs.blockstack.org/write-smart-contracts/values). Other endpoints return serialized values that need to be deserialized.
+Some endpoints, like the [read-only function contract call](https://blockstack.github.io/stacks-blockchain-api/#operation/call_read_only_function), require input to as serialized [Clarity value](https://docs.stacks.co/write-smart-contracts/values). Other endpoints return serialized values that need to be deserialized.
 
 Below is an example for Clarity value usage in combination with the API.
 
--> The example below is for illustration only. The `@stacks/transactions` library supports typed contract calls and makes [response value utilization much simpler](/write-smart-contracts/values#utilizing-clarity-values-from-transaction-responses)
+-> The example below is for illustration only. The `@stacks/transactions` library supports typed contract calls and makes [response value utilization much simpler](https://docs.stacks.co/write-smart-contracts/values#utilizing-clarity-values-from-transaction-responses)
 
 ```ts
 import {
