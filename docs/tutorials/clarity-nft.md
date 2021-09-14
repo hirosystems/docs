@@ -5,9 +5,9 @@ title: Non-fungible tokens
 
 ![What you'll build in this tutorial](/img/nft-preview.png)
 
-Non-fungible tokens, or NFTs, are a type of [token](/write-smart-contracts/tokens#non-fungible-tokens-nfts) that can
+Non-fungible tokens, or NFTs, are a type of [token](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts) that can
 represent unique data. NFTs are an emerging technology in blockchain, and there are many different potential uses for
-them. NFTs have desirable [characteristics](/write-smart-contracts/tokens) like uniqueness, programmability, and
+them. NFTs have desirable [characteristics](https://docs.stacks.co/write-smart-contracts/tokens) like uniqueness, programmability, and
 verifiable ownership. Simply put, an NFT is a piece of information that's unique. A common example of an NFT might be a
 piece of digital art.
 
@@ -25,7 +25,7 @@ In this tutorial you will:
 
 ## Prerequisites
 
-For this tutorial, you should have a local installation of Clarinet. Refer to [Installing Clarinet](/write-smart-contracts/clarinet#installing-clarinet)
+For this tutorial, you should have a local installation of Clarinet. Refer to [Installing Clarinet](/docs/smart-contracts/clarinet#installing-clarinet)
 for instructions on how to set up your local environment. You should also have a text editor or IDE to edit the Clarity
 smart contracts.
 
@@ -44,7 +44,7 @@ request the tokens before beginning the tutorial.
 
 ## Step 1: Create a new project
 
-With [Clarinet installed locally](/write-smart-contracts/clarinet#installing-clarinet), open a terminal window and
+With [Clarinet installed locally](/docs/smart-contracts/clarinet#installing-clarinet), open a terminal window and
 create a new Clarinet project with the command:
 
 ```sh

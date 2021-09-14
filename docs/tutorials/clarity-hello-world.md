@@ -13,7 +13,7 @@ Clarity smart contracts.
 Clarity, the smart contract language used on the Stacks Blockchain, is a LISP-based language and uses its
 parenthesized notation. Clarity is an [interpreted language](https://en.wikipedia.org/wiki/Interpreted_language), and
 [decidable](https://en.wikipedia.org/wiki/Recursive_language). To learn more basics about the language, see the
-[Introduction to Clarity](/write-smart-contracts/overview) topic.
+[Introduction to Clarity](https://docs.stacks.co/write-smart-contracts/overview) topic.
 
 In this tutorial you will:
 
@@ -99,7 +99,7 @@ Read-only functions are also public functions, but as the name implies, they can
 `echo-number` takes an input parameter of type `int` and uses an [`ok`][] response to return the value passed to the
 function.
 
--> Clarity supports a variety of other [types](/references/language-types)
+-> Clarity supports a variety of other [types](https://docs.stacks.co/references/language-types)
 
 The full `contracts/hello-world.clar` file should look like this:
 
@@ -244,17 +244,17 @@ wallet. The transaction summary page displays the output of the function:
 => You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-[clarinet]: /write-smart-contracts/clarinet
-[installing clarinet]: /write-smart-contracts/clarinet#installing-clarinet
+[clarinet]: /docs/smart-contracts/clarinet
+[installing clarinet]: /docs/smart-contracts/clarinet#installing-clarinet
 [clarity.tools]: https://clarity.tools
 [testnet sandbox]: https://explorer.stacks.co/sandbox/deploy?chain=testnet
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
 [testnet faucet]: https://explorer.stacks.co/sandbox/faucet?chain=testnet
 [step 3]: #step-3-add-code-to-the-hello-world-contract
-[unit tests]: /write-smart-contracts/clarinet#testing-with-clarinet
+[unit tests]: /docs/smart-contracts/clarinet#testing-with-clarinet
 [separating concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
-[`ok`]: /references/language-functions#ok
-[read-only function]: /references/language-functions#define-read-only
+[`ok`]: https://docs.stacks.co/references/language-functions#ok
+[read-only function]: https://docs.stacks.co/references/language-functions#define-read-only
 [transactions]: https://explorer.stacks.co/transactions?chain=testnet
 [call a contract]: https://explorer.stacks.co/sandbox/contract-call?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp

@@ -28,7 +28,7 @@ For developing the unit test, it's recommended that you have an IDE with Typescr
 
 If you are using Visual Studio Code, you may want to install the [Clarity Visual Studio Code plugin][].
 
-## Step 1: set up the project
+## Step 1: Set up the project
 
 With Clarinet installed locally, open a new terminal window and create a new Clarinet project. Add a smart contract and
 an empty test file to the project:
@@ -41,7 +41,7 @@ clarinet contract new billboard
 These commands create the necessary project structure and contracts for completing this tutorial. Remember that at
 any point during this tutorial you can use `clarinet check` to check the validity of your Clarity syntax.
 
-## Step 2: create message storage
+## Step 2: Create message storage
 
 Open the `contracts/billboard.clar` file in a text editor or IDE. For this tutorial, you'll use the boilerplate comments
 to structure your contract for easy readability.
@@ -69,7 +69,7 @@ You also should define a read-only getter function returns the value of the `bil
 
 These are the required methods for storing and accessing the message on the billboard.
 
-## Step 3: define set message function
+## Step 3: Define set message function
 
 Define a method to set the billboard message. Under the public functions, define a `set-message` function. This public
 function takes a `string-utf8` with a max length of `500` as the only argument. Note that the type of the argument
@@ -85,7 +85,7 @@ function doesn't execute.
 
 The contract is now capable of updating the `billboard-message`.
 
-## Step 4: transfer STX to set message
+## Step 4: Transfer STX to set message
 
 In this step, you'll modify the `set-message` function to add a cost in STX tokens, that increments by a set amount each
 time the message updates.
@@ -298,13 +298,13 @@ Try running `clarinet test` to see the output of the unit test.
 a contract caller to a new principal address. Additionally, you have learned how to write a unit test for a simple
 Clarity contract using Clarinet.
 
-[counter tutorial]: /write-smart-contracts/counter-tutorial
-[clarinet]: /write-smart-contracts/clarinet
-[installing clarinet]: /write-smart-contracts/clarinet#installing-clarinet
+[counter tutorial]: /docs/tutorials/clarity-counter
+[clarinet]: /docs/smart-contracts/clarinet
+[installing clarinet]: /docs/smart-contracts/clarinet#installing-clarinet
 [visual studio code]: https://code.visualstudio.com/
 [final code for this tutorial]: https://github.com/hirosystems/clarinet/tree/master/examples/billboard
-[`let`]: /references/language-functions#let
-[`stx-transfer?`]: /references/language-functions#stx-transfer
-[`as-contract`]: /references/language-functions#as-contract
-[`unwrap!`]: /references/language-functions#unwrap
+[`let`]: https://docs.stacks.co/references/language-functions#let
+[`stx-transfer?`]: https://docs.stacks.co/references/language-functions#stx-transfer
+[`as-contract`]: https://docs.stacks.co/references/language-functions#as-contract
+[`unwrap!`]: https://docs.stacks.co/references/language-functions#unwrap
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp

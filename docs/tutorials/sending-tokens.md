@@ -13,7 +13,7 @@ This tutorial walks you through the following steps:
 - Checking transaction completion
 - Confirming updates account balances (optional)
 
--> This tutorial is NodeJS-specific. If you would like to understand how to initiate a token transfer by constructing and broadcasting transactions using a different language/framework, please [review the transactions guide](/understand-stacks/transactions).
+-> This tutorial is NodeJS-specific. If you would like to understand how to initiate a token transfer by constructing and broadcasting transactions using a different language/framework, please [review the transactions guide](https://docs.stacks.co/understand-stacks/transactions).
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ You will need [NodeJS](https://nodejs.org/en/download/) `8.12.0` or higher to co
 node --version
 ```
 
-You should also complete the [Managing accounts tutorial](/understand-stacks/managing-accounts). The following steps assume we have access to an existing Stacks 2.0 account.
+You should also complete the [Managing accounts tutorial](https://docs.stacks.co/understand-stacks/managing-accounts). The following steps assume we have access to an existing Stacks 2.0 account.
 
 ## Step 1: Installing libraries
 
@@ -37,7 +37,7 @@ npm install --save @stacks/transactions bn.js @stacks/blockchain-api-client cros
 
 ## Step 2: Specifying a sender
 
-In order to build and sign transactions, you will need a Stacks private key. You can easily generate a new, random Stacks 2.0 sender key (see ["Generating an account" from the previous tutorial](/understand-stacks/managing-accounts#step-2-generating-an-account)).
+In order to build and sign transactions, you will need a Stacks private key. You can easily generate a new, random Stacks 2.0 sender key (see ["Generating an account" from the previous tutorial](/docs/tutorials/managing-accounts#step-2-generating-an-account)).
 
 For this tutorial, we will use an existing Stacks account and instantiate the key object from a private key string:
 
@@ -124,7 +124,7 @@ The generation method will need a few more pieces of information, as specified i
 
 If not specified, the transaction builder will automatically estimate the fee. Estimated fee rate is supplied by a Stacks node so network access is required.
 
--> Learn more about fees in the [network guide](/understand-stacks/network#fees)
+-> Learn more about fees in the [network guide](https://docs.stacks.co/understand-stacks/network#fees)
 
 Another way to estimate the fee is to use the `estimateTransfer()` function after you have constructed a transaction:
 
@@ -161,7 +161,7 @@ const txID = broadcastResponse.txid;
 
 As soon as the `broadcastTransaction` is completed, a JSON object with the transaction ID (`txid`) is returned.
 
-~> Keep in mind that the existence of a transaction ID does not mean the transaction has been successfully processed. Please review the [transaction lifecycle](/understand-stacks/transactions#lifecycle) for more details.
+~> Keep in mind that the existence of a transaction ID does not mean the transaction has been successfully processed. Please review the [transaction lifecycle](https://docs.stacks.co/understand-stacks/transactions#lifecycle) for more details.
 
 ### Serializing transactions
 
@@ -218,4 +218,4 @@ For all property formats and details, please review the [API reference](https://
 
 ## Step 6: Confirming balance (optional)
 
-Now that the token transfer is confirmed, we can verify the new account balance on the sender address by [following the "Getting account balances" steps from the previous tutorial](/understand-stacks/managing-accounts#step-5-getting-account-balances).
+Now that the token transfer is confirmed, we can verify the new account balance on the sender address by [following the "Getting account balances" steps from the previous tutorial](/docs/tutorials/managing-accounts#step-5-getting-account-balances).

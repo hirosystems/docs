@@ -237,20 +237,20 @@ Try calling the other public functions from the [call a contract][] page.
 => You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-[hello world tutorial]: /write-smart-contracts/hello-world
-[clarinet]: /write-smart-contracts/clarinet
-[installing clarinet]: /write-smart-contracts/clarinet#installing-clarinet
-[`define-data-var`]: /references/language-functions#define-data-var
+[hello world tutorial]: /docs/tutorials/clarity-hello-world
+[clarinet]: /docs/smart-contracts/clarinet
+[installing clarinet]: /docs/smart-contracts/clarinet#installing-clarinet
+[`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
 [testnet sandbox]: https://explorer.stacks.co/sandbox/deploy?chain=testnet
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
 [testnet faucet]: https://explorer.stacks.co/sandbox/faucet?chain=testnet
-[unit tests]: /write-smart-contracts/clarinet#testing-with-clarinet
-[`var-get`]: /references/language-functions#var-get
-[`clarinet console`]: /write-smart-contracts/clarinet#testing-with-the-console
-[`begin`]: /references/language-functions#begin
-[`var-set`]: /references/language-functions#var-set
-[`+`]: /references/language-functions#-add
-[clarity language reference]: /references/language-functions
+[unit tests]: /docs/smart-contracts/clarinet#testing-with-clarinet
+[`var-get`]: https://docs.stacks.co/references/language-functions#var-get
+[`clarinet console`]: /docs/smart-contracts/clarinet#testing-with-the-console
+[`begin`]: https://docs.stacks.co/references/language-functions#begin
+[`var-set`]: https://docs.stacks.co/references/language-functions#var-set
+[`+`]: https://docs.stacks.co/references/language-functions#-add
+[clarity language reference]: https://docs.stacks.co/references/language-functions
 [transactions]: https://explorer.stacks.co/transactions?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
 [call a contract]: https://explorer.stacks.co/sandbox/contract-call?chain=testnet

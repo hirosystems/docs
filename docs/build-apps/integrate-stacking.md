@@ -5,7 +5,7 @@ title: Integrating stacking
 
 In this tutorial, you'll learn how to integrate Stacking by interacting with the respective smart contract, as well as reading data from the Stacks blockchain.
 
-This tutorial highlights the following functionality:
+This tutorial highlights the following capabilities:
 
 - Generate Stacks accounts
 - Display stacking info
@@ -13,11 +13,15 @@ This tutorial highlights the following functionality:
 - Add stacking action
 - Display stacking status
 
--> Alternatively to integration using JS libraries, you can use the [Rust CLI](https://gist.github.com/kantai/c261ca04114231f0f6a7ce34f0d2499b) or [JS CLI](/understand-stacks/stacking-using-CLI).
+:::tip
+
+Alternatively to integration using JS libraries, you can use the [Rust CLI](https://gist.github.com/kantai/c261ca04114231f0f6a7ce34f0d2499b) or [JS CLI](/docs/tutorials/stacking-using-CLI).
+
+:::
 
 ## Prerequisites
 
-First, you'll need to understand the [Stacking mechanism](/understand-stacks/stacking).
+First, you'll need to understand the [Stacking mechanism](https://docs.stacks.co/understand-stacks/stacking).
 
 You'll also need [NodeJS](https://nodejs.org/en/download/) `12.10.0` or higher to complete this tutorial. You can verify your installation by opening up your terminal and run the following command:
 
@@ -27,7 +31,7 @@ node --version
 
 ## Overview
 
-In this tutorial, we'll implement the Stacking flow laid out in the [Stacking guide](/understand-stacks/stacking#stacking-flow).
+In this tutorial, we'll implement the Stacking flow laid out in the [Stacking guide](https://docs.stacks.co/understand-stacks/stacking#stacking-flow).
 
 ## Step 1: Integrate libraries
 
@@ -72,7 +76,7 @@ const stxAddress = getAddressFromPrivateKey(
 const client = new StackingClient(stxAddress, new StacksTestnet());
 ```
 
--> Review the [accounts guide](/understand-stacks/accounts) for more details
+-> Review the [accounts guide](https://docs.stacks.co/understand-stacks/accounts) for more details
 
 ## Step 3: Display stacking info
 
@@ -94,7 +98,11 @@ const secondsUntilNextCycle = await client.getSecondsUntilNextCycle();
 // 600000
 ```
 
--> Note: cycle duration and participation thresholds will differ between mainnet and testnet
+:::note
+
+Cycle duration and participation thresholds will differ between mainnet and testnet
+
+:::
 
 You can also retrieve the raw PoX and core information using the methods below if required:
 
@@ -237,7 +245,7 @@ The transaction completion will take several minutes. Only one stacking transact
 
 ## Step 6: Confirm lock-up
 
-The new transaction will not be completed immediately. It'll stay in the `pending` status for a few minutes. We need to poll the status and wait until the transaction status changes to `success`. We can use the [Stacks Blockchain API client library](/understand-stacks/stacks-blockchain-api#javascript-client-library) to check transaction status.
+The new transaction will not be completed immediately. It'll stay in the `pending` status for a few minutes. We need to poll the status and wait until the transaction status changes to `success`. We can use the [Stacks Blockchain API client library](/docs/get-started/stacks-blockchain-api#javascript-client-library) to check transaction status.
 
 ```js
 const { TransactionsApi } = require("@stacks/blockchain-api-client");
@@ -261,7 +269,7 @@ const waitForTransactionSuccess = (txId) =>
 const resp = await waitForTransactionSuccess(txId);
 ```
 
--> More details on the lifecycle of transactions can be found in the [transactions guide](/understand-stacks/transactions#lifecycle)
+-> More details on the lifecycle of transactions can be found in the [transactions guide](https://docs.stacks.co/understand-stacks/transactions#lifecycle)
 
 Alternatively to the polling, the Stacks Blockchain API client library offers WebSockets. WebSockets can be used to subscribe to specific updates, like transaction status changes. Here is an example:
 
@@ -281,7 +289,7 @@ await sub.unsubscribe();
 
 ## Step 6: Display Stacking status
 
-With the completed transactions, Stacks tokens are locked up for the lockup duration. During that time, your application can display the following details: unlocking time, amount of Stacks locked, and bitcoin address used for rewards.
+With the completed transactions, Stacks tokens are locked up for the lockup duration. During that time, your app can display the following details: unlocking time, amount of Stacks locked, and bitcoin address used for rewards.
 
 ```js
 const stackingStatus = await client.getStatus();

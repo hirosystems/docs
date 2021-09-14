@@ -235,7 +235,7 @@ interface ContractCallOptions {
 | --------------- | ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | contractAddress | string           | true     | Stacks address to which contract is deployed                                                                                                                                                                                          |
 | contractName    | string           | true     | Name of contract to sign                                                                                                                                                                                                              |
-| functionName    | string           | true     | Name of function for signing / execution, which needs to be a [public function](/references/language-functions#define-public).                                                                                                        |
+| functionName    | string           | true     | Name of function for signing / execution, which needs to be a [public function](https://docs.stacks.co/references/language-functions#define-public).                                                                                  |
 | functionArgs    | `ClarityValue[]` | true     | Arguments for calling the function. [Learn more about constructing clarity values](https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values). Defaults to `[]`.                          |
 | appDetails      | object           | true     | Dictionary that requires `name` and `icon` for app                                                                                                                                                                                    |
 | onFinish        | function         | true     | Callback executed by app when transaction has been signed and broadcasted. [Read more](#onFinish-option)                                                                                                                              |     |
@@ -404,7 +404,7 @@ interface TransactionResponse {
 
 ## StacksProvider injected variable
 
-When users have the [Stacks Wallet for Web](https://www.hiro.so/wallet/install-web) browser extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web application. This allows your JavaScript code to hook into the extension, and make authentication and transaction requests. `@stacks/connect` automatically detects and uses this global variable for you.
+When users have the [Stacks Wallet for Web](https://www.hiro.so/wallet/install-web) browser extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication and transaction requests. `@stacks/connect` automatically detects and uses this global variable for you.
 
 At the moment, only the Stacks Wallet for Web browser extension includes a `StacksProvider`, however, ideally more wallets (and mobile wallets) support this format, so that your app can be compatible with any Stacks Wallet that has functionality to embed web applications.
 

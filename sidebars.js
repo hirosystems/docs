@@ -46,7 +46,7 @@ module.exports = {
       label: "Developer references",
       items: [
         "references",
-        "references/cli-reference",
+        "references/stacks-cli",
         {
           type: "category",
           label: "Clarity",

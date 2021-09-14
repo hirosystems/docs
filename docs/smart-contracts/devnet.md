@@ -149,6 +149,6 @@ stacking orders that are necessary for your configuration.
 - `slots`: the number of stacking slots that the wallet will participate in
 - `btc_address`: the BTC address that stacking rewards should be sent to
 
-[clarinet installed]: /write-smart-contracts/clarinet#installing-clarinet
+[clarinet installed]: /docs/smart-contracts/clarinet#installing-clarinet
 [docker documentation]: https://docs.docker.com/get-docker/
 [stacking orders]: #stacking-orders
