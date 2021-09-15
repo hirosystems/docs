@@ -126,9 +126,13 @@ If you are using a free domain from [freenom], use the following procedure:
    instance in the **Target** field.
 5. Click **Save Changes** to update the DNS record.
 
--> It can take up to 15 minutes for your DNS record changes to propagate. In a terminal, use the command
+:::note
+
+It can take up to 15 minutes for your DNS record changes to propagate. In a terminal, use the command
 `dig A +short <yourdomain.co>` to review if the changes have propagated. If the output of this command is the container
 public IP, the changes were successful.
+
+:::
 
 ## Accessing your Gaia hub with SSH
 

@@ -232,7 +232,11 @@ Some endpoints, like the [read-only function contract call](https://blockstack.g
 
 Below is an example for Clarity value usage in combination with the API.
 
--> The example below is for illustration only. The `@stacks/transactions` library supports typed contract calls and makes [response value utilization much simpler](https://docs.stacks.co/write-smart-contracts/values#utilizing-clarity-values-from-transaction-responses)
+:::info
+
+The example below is for illustration only. The `@stacks/transactions` library supports typed contract calls and makes [response value utilization much simpler](https://docs.stacks.co/write-smart-contracts/values#utilizing-clarity-values-from-transaction-responses)
+
+:::
 
 ```ts
 import {
@@ -296,7 +300,11 @@ The API can respond with two different error types:
 
 The Stacks 2.0 Blockchain API is centrally hosted. However, every running Stacks node exposes an RPC API, which allows you to interact with the underlying blockchain. Instead of using a centrally hosted API, you can directly access the RPC API of a locally hosted Node.
 
--> The Stacks Blockchain API proxies to Node RPC endpoints
+:::note
+
+The Stacks Blockchain API proxies to Node RPC endpoints
+
+:::
 
 While the Node RPC API doesn't give the same functionality as the hosted Stacks 2.0 Blockchain API, you get similar functionality in a way that is scoped to that specific node. The RPC API includes the following endpoints:
 
@@ -309,13 +317,21 @@ While the Node RPC API doesn't give the same functionality as the hosted Stacks 
 - [GET /v2/fees/transfer](https://blockstack.github.io/stacks-blockchain-api/#operation/get_fee_transfer)
 - [GET /v2/info](https://blockstack.github.io/stacks-blockchain-api/#operation/get_core_api_info)
 
-~> If you run a local node, it exposes an HTTP server on port `20443`. The info endpoint would be `localhost:20443/v2/info`.
+:::info
+
+If you run a local node, it exposes an HTTP server on port `20443`. The info endpoint would be `localhost:20443/v2/info`.
+
+:::
 
 ## Rosetta support
 
 This API supports [v1.4.6 of the Rosetta specification](https://www.rosetta-api.org/). This industry open standard makes it simple to integrate blockchain deployment and interaction.
 
--> Find all Data and Construction Rosetta endpoints [here](https://blockstack.github.io/stacks-blockchain-api/#tag/Rosetta)
+:::info
+
+Find all Data and Construction Rosetta endpoints [here](https://blockstack.github.io/stacks-blockchain-api/#tag/Rosetta)
+
+:::
 
 ## Microblocks support
 

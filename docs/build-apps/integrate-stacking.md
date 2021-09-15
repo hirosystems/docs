@@ -41,7 +41,11 @@ Install the stacking, network, transactions libraries and bn.js for large number
 npm install --save @stacks/stacking @stacks/network @stacks/transactions bn.js
 ```
 
--> See additional [Stacking library reference](https://github.com/blockstack/stacks.js/tree/master/packages/stacking)
+:::info
+
+See additional [Stacking library reference](https://github.com/blockstack/stacks.js/tree/master/packages/stacking)
+
+:::
 
 ## Step 2: Generating an account and initialization
 
@@ -76,7 +80,11 @@ const stxAddress = getAddressFromPrivateKey(
 const client = new StackingClient(stxAddress, new StacksTestnet());
 ```
 
--> Review the [accounts guide](https://docs.stacks.co/understand-stacks/accounts) for more details
+:::info
+
+Review the [accounts guide](https://docs.stacks.co/understand-stacks/accounts) for more details
+
+:::
 
 ## Step 3: Display stacking info
 
@@ -199,9 +207,11 @@ const stackingEligibility = await client.canStack({
 // }
 ```
 
--> Note that the eligibility check assumes the user will be stacking the maximum balance available in the account.
+:::note
 
--> The eligibility check is a read-only function call to the PoX smart contract which does not require broadcasting a transaction
+The eligibility check assumes the user will be stacking the maximum balance available in the account. The eligibility check is a read-only function call to the PoX smart contract which does not require broadcasting a transaction
+
+:::
 
 If the user is eligible, the stacking action should be enabled on the UI. If not, the respective error message should be shown to the user.
 
@@ -269,7 +279,11 @@ const waitForTransactionSuccess = (txId) =>
 const resp = await waitForTransactionSuccess(txId);
 ```
 
--> More details on the lifecycle of transactions can be found in the [transactions guide](https://docs.stacks.co/understand-stacks/transactions#lifecycle)
+:::info
+
+More details on the lifecycle of transactions can be found in the [transactions guide](https://docs.stacks.co/understand-stacks/transactions#lifecycle)
+
+:::
 
 Alternatively to the polling, the Stacks Blockchain API client library offers WebSockets. WebSockets can be used to subscribe to specific updates, like transaction status changes. Here is an example:
 
@@ -312,7 +326,11 @@ const stackingStatus = await client.getStatus();
 // }
 ```
 
--> Note that the `pox_address` property is the PoX contract's internal representation of the reward BTC address.
+:::note
+
+The `pox_address` property is the PoX contract's internal representation of the reward BTC address.
+
+:::
 
 To display the unlocking time, you need to use the `firstRewardCycle` and the `lockPeriod` fields.
 

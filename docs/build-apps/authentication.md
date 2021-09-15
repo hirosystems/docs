@@ -138,7 +138,11 @@ The `handlePendingSignIn` method is then used to handle that state, returning a 
 
 The authenticated state can later be detected by the `isUserSignedIn` method in case any particular handling is needed then.
 
-~> It's especially important to implement `handlePendingSignIn` within the context of mobile apps.
+:::note
+
+It's especially important to implement `handlePendingSignIn` within the context of mobile apps.
+
+:::
 
 If the user has indeed confirmed authentication in the context of a popup window, the authenticator will resolve the pending authentication state automatically with the app within the parent window.
 

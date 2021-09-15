@@ -266,7 +266,7 @@ Clarinet.test({
 
 Run `clarinet test` in the terminal to review the output of the test.
 
-=> You have now learned how to work with contract traits, and how to unit test a contract with Clarinet. If you would
+You have now learned how to work with contract traits, and how to unit test a contract with Clarinet. If you would
 like to try deploying your contract to the testnet, proceed with the following optional step.
 
 ## Optional: Deploy the NFT to the testnet
