@@ -188,8 +188,12 @@ In Clarity, a contract can declare that it intends to implement a set of standar
 The [`impl-trait`][] function asserts that the smart contract is fully implementing a given set of traits defined by the
 argument. Like variable definitions, `impl-trait` must be declared at the top of a smart contract definition.
 
--> The contract address for SIP-010 trait definition is different depending on which network (mainnet, testnet, etc.)
+:::tip
+
+The contract address for SIP-010 trait definition is different depending on which network (mainnet, testnet, etc.)
 your contract is deployed on. See the standard for the current addresses of the standard traits.
+
+:::
 
 The `hey-token.clar` contract implements the required 7 traits of [SIP-010][], and one additional method, the
 `gift-tokens` method, that allows a principal to request tokens from the contract.
@@ -541,8 +545,12 @@ identity to their account, that can act as both a username and a web address.
 
 Names registered to a user can be read from a Stacks API endpoint, as demonstrated in [`src/store/names.ts`][].
 
--> Due to ecosystem limitations, it's currently uncommon for BNS names to be registered on any testnet. For the purpose
+:::info
+
+Due to ecosystem limitations, it's currently uncommon for BNS names to be registered on any testnet. For the purpose
 of demonstration, Heystack looks for BNS names against the user's mainnet wallet address.
+
+:::
 
 ```ts
 export const namesAtom = atomFamily((address: string) =>

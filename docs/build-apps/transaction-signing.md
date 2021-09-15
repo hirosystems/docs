@@ -19,7 +19,11 @@ See the public registry tutorial for a concrete example of these capabilities in
 
 ## Install dependency
 
-~> In order to utilize the latest transaction signing with the Stacks Wallet, use version 5 of the `@stacks/connect` NPM package.
+:::tip
+
+In order to utilize the latest transaction signing with the Stacks Wallet, use version 5 of the `@stacks/connect` NPM package.
+
+:::
 
 The following dependency must be installed:
 
@@ -147,7 +151,11 @@ interface ContractDeployOptions {
 | network      | StacksNetwork    | false    | Specify the network that this transaction should be completed on. [Read more](#network-option)                                                                                                                                        |
 | fee          | number \| string | false    | Optional fee amount in microstacks (1 STX = 1,000,000 microstacks) for overwriting the wallet's default fee value. [Read more](https://forum.stacks.org/t/mempool-congestion-on-stacks-observations-and-next-steps-from-hiro/12325/5) |
 
--> Contracts will deploy to the Stacks address of the authenticated user.
+:::info
+
+Contracts will deploy to the Stacks address of the authenticated user.
+
+:::
 
 ## Prompt to execute contract
 

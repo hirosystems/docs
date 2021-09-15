@@ -78,7 +78,11 @@ Whereas saving privately encrypted data is possible for all authenticated apps w
 
 The `putFile` method returns the URL where the the file can be retrieved from the user's Gaia hub, as used here to set the value of `fileUrl`.
 
--> You'll need to save an entirely new string of modified data using `putFile` with the same `fileName` every time you want to update a record. There is no separate update method.
+:::info
+
+You'll need to save an entirely new string of modified data using `putFile` with the same `fileName` every time you want to update a record. There is no separate update method.
+
+:::
 
 ## Get data for session user
 
@@ -164,4 +168,8 @@ storage.deleteFile(fileName).then(() => {
 });
 ```
 
--> Apps can save and delete data only for the active session user.
+:::info
+
+Apps can save and delete data only for the active session user.
+
+:::

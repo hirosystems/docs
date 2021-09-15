@@ -83,8 +83,12 @@ The first function is a public function called `say-hi`.
 Public functions in Clarity are callable from other smart contracts, which enables you to break complex tasks into
 smaller, simpler smart contraxcts (an exercise in [separating concerns][]).
 
--> To create private functions, you would use the `define-private` keyword. Private functions can only be called from
+:::info
+
+To create private functions, you would use the `define-private` keyword. Private functions can only be called from
 within the smart contract they're declared in. External contracts can only call public functions.
+
+:::
 
 The function doesn't take any parameters and simply returns "hello world" using the [`ok`][] response constructor.
 
@@ -99,7 +103,11 @@ Read-only functions are also public functions, but as the name implies, they can
 `echo-number` takes an input parameter of type `int` and uses an [`ok`][] response to return the value passed to the
 function.
 
--> Clarity supports a variety of other [types](https://docs.stacks.co/references/language-types)
+:::info
+
+Clarity supports a variety of other [types](https://docs.stacks.co/references/language-types)
+
+:::
 
 The full `contracts/hello-world.clar` file should look like this:
 
@@ -201,7 +209,7 @@ Try calling the `echo-number` function with an incorrect type, in this case an u
 The console should return `Analysis error: expecting expression of type 'int', found 'uint'`, indicating that the call
 to the contract was invalid due to the incorrect type.
 
-=> You have now learned the basics of Clarity and working with the Clarinet development tool. You may
+You have now learned the basics of Clarity and working with the Clarinet development tool. You may
 wish to optionally deploy the contract to the testnet, described in the next and final step.
 
 ## Optional: deploy and test the contract on the testnet
@@ -241,7 +249,7 @@ wallet. The transaction summary page displays the output of the function:
 
 ![Hello world transaction summary](/img/hello-world-transaction-summary.png)
 
-=> You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
+You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
 [clarinet]: /docs/smart-contracts/clarinet

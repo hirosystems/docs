@@ -5,7 +5,11 @@ title: Angular authenticator
 
 In this tutorial, you'll learn how to work with Stacks Connect when using [Angular](https://angular.io/) as your framework of choice. It builds on what you've learnt in the [Authentication Overview](/docs/build-apps/authentication).
 
--> This article presumes some familiarity with [Angular](https://angular.io/), as well as [Reactive Extensions (RxJS)](https://rxjs.dev/).
+:::note
+
+This article presumes some familiarity with [Angular](https://angular.io/), as well as [Reactive Extensions (RxJS)](https://rxjs.dev/).
+
+:::
 
 ### Prerequisites
 
@@ -38,13 +42,21 @@ ng serve
 npm install --save @stacks/connect blockstack
 ```
 
--> We're also installing the `blockstack` package, as it's a [peer dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#peerdependencies) of Stacks Connect
+:::info
+
+We're also installing the `blockstack` package, as it's a [peer dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#peerdependencies) of Stacks Connect
+
+:::
 
 ## Step 3: Declare missing globals
 
 Some dependencies of these packages were written for a Nodejs environment. In a browser environment, tools such as Webpack (v4) often abstract the polyfilling of Nodejs specific APIs. Using the Angular CLI, this must be done manually.
 
--> `Buffer`, for example, is a global class in a Nodejs environment. In the browser is it `undefined` so we must declare it to avoid runtime exceptions
+:::info
+
+`Buffer`, for example, is a global class in a Nodejs environment. In the browser is it `undefined` so we must declare it to avoid runtime exceptions
+
+:::
 
 Add the following snippet to your `src/polyfills.ts`
 
@@ -154,7 +166,11 @@ export class AppComponent {
 
 Let's run through what's going on. In the `authOptions` field, we're using the `finished` handler to emit a value to the `authResponse$` which uses a `ReplaySubject` to persist the latest response.
 
--> A [`ReplaySubject`](https://rxjs.dev/api/index/class/ReplaySubject) is an Observable that starts without an initial value, but replays the latest x emissions when subscribed to
+:::info
+
+A [`ReplaySubject`](https://rxjs.dev/api/index/class/ReplaySubject) is an Observable that starts without an initial value, but replays the latest x emissions when subscribed to
+
+:::
 
 For initial load performance, we're using `import("@stacks/connect")` to only load the Stacks Connect library when it's needed. The `switchMap` operators "switches" out the `stacksAuth$` event for the library.
 

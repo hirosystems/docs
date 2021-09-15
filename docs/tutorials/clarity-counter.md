@@ -116,8 +116,12 @@ function:
 
 The console should return `(ok 0)`.
 
--> Changes to your contract will not be loaded into the Clarinet console until it is restarted. Close the console with
+:::note
+
+Changes to your contract will not be loaded into the Clarinet console until it is restarted. Close the console with
 `Ctrl + C` before proceding to the next step.
+
+:::
 
 ## Step 4: define counter functions
 
@@ -195,7 +199,7 @@ The console should return `(ok 1)`. Try calling the `decrement` function to decr
 (contract-call? .counter decrement)
 ```
 
--> You have now learned the basics of working with variables in Clarity, and developed further practice with the
+You have now learned the basics of working with variables in Clarity, and developed further practice with the
 Clarinet development tool. You may wish to optionally deploy the contract to the testnet, described in the next and
 final step.
 
@@ -234,7 +238,7 @@ wallet. The transaction summary page displays the output of the function.
 
 Try calling the other public functions from the [call a contract][] page.
 
-=> You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
+You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
 [hello world tutorial]: /docs/tutorials/clarity-hello-world

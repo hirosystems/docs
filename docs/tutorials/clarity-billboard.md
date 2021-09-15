@@ -144,7 +144,11 @@ If the token transfer is successful, the function sets the new `billboard-messag
 `new-price`. Finally, the function returns `(ok new-price)`. It's generally a good practice to have public functions
 return `ok` when successfully executed.
 
--> This function should replace the existing `set-message` function defined previously.
+:::note
+
+This function should replace the existing `set-message` function defined previously.
+
+:::
 
 ```clarity
 (define-public (set-message (message (string-utf8 500)))
@@ -294,7 +298,7 @@ Clarinet.test({
 
 Try running `clarinet test` to see the output of the unit test.
 
-=> You have now learned how to store and update data on chain with a variable, and how to transfer STX tokens from
+You have now learned how to store and update data on chain with a variable, and how to transfer STX tokens from
 a contract caller to a new principal address. Additionally, you have learned how to write a unit test for a simple
 Clarity contract using Clarinet.
 

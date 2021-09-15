@@ -99,7 +99,11 @@ DevNet provides a sensible default configuration for the local blockchain, with 
 the latest development images for each of the Stacks and Bitcoin nodes. These parameters are defined under the
 `[devnet]` heading. You can customize these defaults by setting any of the following parameters.
 
--> Note: if any of the parameters are not supplied in the configuration file, the default value is used.
+:::note
+
+If any of the parameters are not supplied in the configuration file, the default value is used.
+
+:::
 
 - `pox_stacking_orders`: defined by [stacking orders][] headings later in the file
 - `orchestrator_port`: the port number for the Bitcoin orchestrator service

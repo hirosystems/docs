@@ -377,7 +377,11 @@ const fetchActivities = useCallback(async () => {
 }, []);
 ```
 
--> For users, the principal argument is just the user's stacks address.
+:::info
+
+For users, the principal argument is just the user's stacks address.
+
+:::
 
 ### Step 3: Filter for successful contract calls
 

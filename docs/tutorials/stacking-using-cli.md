@@ -43,7 +43,11 @@ stx make_keychain -t
 
 We'll be using this testnet key pair to perform Stacking. But first we'll need to get some testnet tokens.
 
--> If you're Stacking on mainnet, make sure you have an account with sufficient number of Stacks tokens to participate.
+:::tip
+
+If you're Stacking on mainnet, make sure you have an account with sufficient number of Stacks tokens to participate.
+
+:::
 
 ## Get Testnet Tokens Using The Faucet
 

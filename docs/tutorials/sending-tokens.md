@@ -13,7 +13,11 @@ This tutorial walks you through the following steps:
 - Checking transaction completion
 - Confirming updates account balances (optional)
 
--> This tutorial is NodeJS-specific. If you would like to understand how to initiate a token transfer by constructing and broadcasting transactions using a different language/framework, please [review the transactions guide](https://docs.stacks.co/understand-stacks/transactions).
+:::note
+
+This tutorial is NodeJS-specific. If you would like to understand how to initiate a token transfer by constructing and broadcasting transactions using a different language/framework, please [review the transactions guide](https://docs.stacks.co/understand-stacks/transactions).
+
+:::
 
 ## Prerequisites
 
@@ -33,7 +37,11 @@ First, install all the required libraries:
 npm install --save @stacks/transactions bn.js @stacks/blockchain-api-client cross-fetch
 ```
 
--> The API client is generated from the [OpenAPI specification](https://github.com/blockstack/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). Many other languages and frameworks are be supported by the generator.
+:::info
+
+The API client is generated from the [OpenAPI specification](https://github.com/blockstack/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). Many other languages and frameworks are be supported by the generator.
+
+:::
 
 ## Step 2: Specifying a sender
 
@@ -69,7 +77,11 @@ const key =
 const senderKey = createStacksPrivateKey(key);
 ```
 
--> Note: The code above also imports methods required for the next steps, including API configuration for the client library usage.
+:::note
+
+The code above also imports methods required for the next steps, including API configuration for the client library usage.
+
+:::
 
 ## Step 3: Generating transaction
 
@@ -124,7 +136,11 @@ The generation method will need a few more pieces of information, as specified i
 
 If not specified, the transaction builder will automatically estimate the fee. Estimated fee rate is supplied by a Stacks node so network access is required.
 
--> Learn more about fees in the [network guide](https://docs.stacks.co/understand-stacks/network#fees)
+:::tip
+
+Learn more about fees in the [network guide](https://docs.stacks.co/understand-stacks/network#fees)
+
+:::
 
 Another way to estimate the fee is to use the `estimateTransfer()` function after you have constructed a transaction:
 
@@ -136,7 +152,11 @@ const feeEstimate = estimateTransfer(transaction);
 transaction.setFee(feeEstimate);
 ```
 
--> Note: By setting a fee in the transaction builder function, the automatic fee estimation step will be skipped.
+:::note
+
+By setting a fee in the transaction builder function, the automatic fee estimation step will be skipped.
+
+:::
 
 ### Handling nonces
 
@@ -161,7 +181,11 @@ const txID = broadcastResponse.txid;
 
 As soon as the `broadcastTransaction` is completed, a JSON object with the transaction ID (`txid`) is returned.
 
-~> Keep in mind that the existence of a transaction ID does not mean the transaction has been successfully processed. Please review the [transaction lifecycle](https://docs.stacks.co/understand-stacks/transactions#lifecycle) for more details.
+:::note
+
+Keep in mind that the existence of a transaction ID does not mean the transaction has been successfully processed. Please review the [transaction lifecycle](https://docs.stacks.co/understand-stacks/transactions#lifecycle) for more details.
+
+:::
 
 ### Serializing transactions
 
@@ -175,7 +199,11 @@ const serializedTx = transaction.serialize().toString("hex");
 
 With the transaction ID, we can check the status of the transaction. Every transaction needs to be confirmed by the network and will be `pending` as soon as it is broadcasted.
 
--> Note: A transactions is completed once it is confirmed and the status changes to `success`. Most transactions will be pending for several minutes before confirmed. You should implement polling in your app to refresh the status display.
+:::note
+
+A transactions is completed once it is confirmed and the status changes to `success`. Most transactions will be pending for several minutes before confirmed. You should implement polling in your app to refresh the status display.
+
+:::
 
 ```js
 const transactions = new TransactionsApi(apiConfig);
