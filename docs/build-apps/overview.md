@@ -17,4 +17,4 @@ Three main integrations are available:
 
 All three of these integrations can be used together to create powerful new user experiences that rival or exceed those of traditional apps—all while protecting your users' digital rights.
 
-While integration is possible for any type of app, most of the resources available here are for web developers experienced with JavaScript.
+While integration is possible for any type of app, the resources available here are for web developers experienced with JavaScript.
