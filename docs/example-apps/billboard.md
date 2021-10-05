@@ -92,7 +92,7 @@ The DevNet configuration file also contains [definitions for predefined wallets]
 
 Once the local DevNet is healthy, you can run the billboard frontend from a separate terminal with the command `yarn dev` from the root of the billboard repository. This command launches the local frontend and opens a web browser to the appropriate local URL.
 
-The following sections highlight important parts of the billboard frontend application.
+The following sections highlight important parts of the billboard frontend app.
 
 ### Interacting with the Stacks API
 
