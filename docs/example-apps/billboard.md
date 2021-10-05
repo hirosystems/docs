@@ -86,7 +86,7 @@ To avoid errors, it is recommended that you bring up the local DevNet and allow 
 
 DevNet is a highly configurable instance of the Stacks blockchain. You can configure many of the properties of the DevNet through modifying values in the `settings/DevNet.toml` file. When you create a new project with Clarinet, this file is populated with sensible default vales for the local blockchain. If you would like to [change any of the default values](/docs/smart-contracts/devnet#blockchain-configuration), uncomment the line containing the configuration parameter, and change the value to your intended configuration.
 
-The DevNet configuration file also contains [definitions for predefined wallets](/docs/smart-contracts#accounts-configuration) in the local chain. These wallets are pre-populated with STX tokens, and can be used for testing and integration. The configuration file provides the seed phrase and private key for each wallet as well.
+The DevNet configuration file also contains [definitions for predefined wallets](/docs/smart-contracts/devnet#accounts-configuration) in the local chain. These wallets are pre-populated with STX tokens, and can be used for testing and integration. The configuration file provides the seed phrase and private key for each wallet as well.
 
 ## Running the billboard frontend
 
