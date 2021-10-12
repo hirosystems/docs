@@ -174,6 +174,7 @@ module.exports = {
     "example-apps",
     "example-apps/to-dos",
     "example-apps/public-registry",
+    "example-apps/billboard",
     "example-apps/heystack",
     "example-apps/angular",
   ],
