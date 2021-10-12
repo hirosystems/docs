@@ -16,6 +16,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
     projectName: "docs", // Usually your repo name.
     trailingSlash: false,
 
+    plugins: [require.resolve("@cmfcmf/docusaurus-search-local")],
+
     presets: [
       [
         "@docusaurus/preset-classic",
