@@ -4,9 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React from 'react';
-import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import React from "react";
+import clsx from "clsx";
+import styles from "./HomepageFeatures.module.css";
 
 type FeatureItem = {
   title: string;
@@ -16,40 +16,77 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    image: '/img/undraw_docusaurus_mountain.svg',
+    title: "Setup development environment",
+    image: "/img/undraw_docusaurus_mountain.svg",
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Hiro developer tools provide an easy, complete development environment
+        without the need to install multiple packages. Simply install{" "}
+        <a href="/docs/smart-contracts/clarinet">Clarinet</a> and start building
+        on Stacks.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    image: '/img/undraw_docusaurus_tree.svg',
+    title: "Write and test smart contracts",
+    image: "/img/undraw_docusaurus_tree.svg",
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Check out our{" "}
+        <a href="/docs/tutorials">extensive library of tutorials</a> for
+        guidance on how to write smart contracts in Clarity using Hiro developer
+        tools.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    image: '/img/undraw_docusaurus_react.svg',
+    title: "Troubleshoot contracts",
+    image: "/img/undraw_docusaurus_react.svg",
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        <a href="/docs/smart-contracts/clarinet">Clarinet</a> provides{" "}
+        <a href="/docs/smart-contracts/devnet">powerful debugging tools</a> and
+        troubleshooting your smart contracts locally, so you don't have to
+        deploy work-in-progress code to a live blockchain.
+      </>
+    ),
+  },
+  {
+    title: "Deploy contracts",
+    image: "/img/undraw_docusaurus_mountain.svg",
+    description: (
+      <>
+        Quickly go from local development to a live testnet using Clarinet's
+        configurable deployment system.
+      </>
+    ),
+  },
+  {
+    title: "Integrate contracts and apps",
+    image: "/img/undraw_docusaurus_tree.svg",
+    description: (
+      <>
+        Use the local DevNet to integrate your smart contracts with a web
+        frontend, or check out some{" "}
+        <a href="/docs/example-apps/billboard">example apps</a> that demonstrate
+        the local integration environment.
+      </>
+    ),
+  },
+  {
+    title: "Deploy apps",
+    image: "/img/undraw_docusaurus_react.svg",
+    description: (
+      <>
+        Easily deploy and manage your full stack app with Hiro developer tools.
       </>
     ),
   },
 ];
 
-function Feature({title, image, description}: FeatureItem) {
+function Feature({ title, image, description }: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx("col col--4")}>
       <div className="text--center">
         <img className={styles.featureSvg} alt={title} src={image} />
       </div>
