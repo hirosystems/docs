@@ -17,6 +17,7 @@ module.exports = {
       label: "Get started",
       items: [
         "get-started/command-line-interface",
+        "get-started/transactions",
         "get-started/stacks-blockchain-api",
         "get-started/gaia-storage",
         "get-started/running-api-node",
