@@ -61,7 +61,7 @@ curl -X POST https://stacks-node-api.xenon.blockstack.org/extended/v1/faucets/st
 
 ## Check Balance
 
-Confirm that the faucet transaction has completed by checking the balance of your address. The `-t` flag is used to indicate testnet. See the [CLI reference](/docs/references/stacks-cli) for usage of flags.
+Confirm that the faucet transaction has completed by checking the balance of your address. The `-t` flag is used to indicate testnet. See the [CLI reference](/references/stacks-cli) for usage of flags.
 
 ```bash
 stx balance ST1P3HXR80TKT48TKM2VTKCDBS4ET9396W0W2S3K8 -t
@@ -144,4 +144,4 @@ stx stacking_status ST1P3HXR80TKT48TKM2VTKCDBS4ET9396W0W2S3K8 -t
 
 Here we can see how many microstacks are locked and when they will unlock.
 
-Congratulations you have learned how to Stack using the CLI. To integrate Stacking into your app, check out the [Stacking integration guide](/docs/build-apps/integrate-stacking).
+Congratulations you have learned how to Stack using the CLI. To integrate Stacking into your app, check out the [Stacking integration guide](/build-apps/integrate-stacking).

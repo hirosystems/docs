@@ -3,14 +3,14 @@ id: billboard
 title: Billboard app
 ---
 
-This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](/docs/smart-contracts/devnet), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/docs/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
+This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](/smart-contracts/devnet), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
 
 This app showcases the following features of Stacks and Clarinet:
 
 - Running a local Stacks blockchain (DevNet)
 - Storing values in a Clarity smart contract
 - Accessing values in a smart contract from the [Stacks API](/api)
-- Issuing a contract transaction with [Stacks.js](/docs/references#frontend-development)
+- Issuing a contract transaction with [Stacks.js](/references#frontend-development)
 
 The source for the billboard app is available on [GitHub](https://github.com/pgray-hiro/stacks-billboard). This page assumes that you have familiarity with [React](https://reactjs.org).
 
@@ -28,7 +28,7 @@ If you are interested in running the billboard app locally, you can follow the i
 
 ## Review billboard contract
 
-The backend of the billboard app is a Clarity smart contract. The billboard contract stores the billboard message, and defines the functions for updating the message. For a complete overview of how to develop the billboard contract, review the [billboard tutorial](/docs/tutorials/clarity-billboard).
+The backend of the billboard app is a Clarity smart contract. The billboard contract stores the billboard message, and defines the functions for updating the message. For a complete overview of how to develop the billboard contract, review the [billboard tutorial](/tutorials/clarity-billboard).
 
 The Clarity smart contract for this app is located at `/contracts/billboard.clar`. It defines 3 functions, `get-price`, `get-message`, and `set-message`. This example app only demonstrates the interaction with the latter two functions, however you could extend the app to get the message price using the same general design for interacting with the `get-message` function.
 
@@ -84,9 +84,9 @@ To avoid errors, it is recommended that you bring up the local DevNet and allow 
 
 ### DevNet configuration
 
-DevNet is a highly configurable instance of the Stacks blockchain. You can configure many of the properties of the DevNet through modifying values in the `settings/DevNet.toml` file. When you create a new project with Clarinet, this file is populated with sensible default vales for the local blockchain. If you would like to [change any of the default values](/docs/smart-contracts/devnet#blockchain-configuration), uncomment the line containing the configuration parameter, and change the value to your intended configuration.
+DevNet is a highly configurable instance of the Stacks blockchain. You can configure many of the properties of the DevNet through modifying values in the `settings/DevNet.toml` file. When you create a new project with Clarinet, this file is populated with sensible default vales for the local blockchain. If you would like to [change any of the default values](/smart-contracts/devnet#blockchain-configuration), uncomment the line containing the configuration parameter, and change the value to your intended configuration.
 
-The DevNet configuration file also contains [definitions for predefined wallets](/docs/smart-contracts/devnet#accounts-configuration) in the local chain. These wallets are pre-populated with STX tokens, and can be used for testing and integration. The configuration file provides the seed phrase and private key for each wallet as well.
+The DevNet configuration file also contains [definitions for predefined wallets](/smart-contracts/devnet#accounts-configuration) in the local chain. These wallets are pre-populated with STX tokens, and can be used for testing and integration. The configuration file provides the seed phrase and private key for each wallet as well.
 
 ## Running the billboard frontend
 
@@ -250,6 +250,6 @@ const transaction = makeContractCall(txOptions)
 
 :::note
 
-This simple command-line script is provided as an additional demonstration of transactions, you could also update the message using the [Stacks CLI](/docs/get-started/command-line-interface).
+This simple command-line script is provided as an additional demonstration of transactions, you could also update the message using the [Stacks CLI](/get-started/command-line-interface).
 
 :::

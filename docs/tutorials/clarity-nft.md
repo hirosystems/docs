@@ -25,7 +25,7 @@ In this tutorial you will:
 
 ## Prerequisites
 
-For this tutorial, you should have a local installation of Clarinet. Refer to [Installing Clarinet](/docs/smart-contracts/clarinet#installing-clarinet)
+For this tutorial, you should have a local installation of Clarinet. Refer to [Installing Clarinet](/smart-contracts/clarinet#installing-clarinet)
 for instructions on how to set up your local environment. You should also have a text editor or IDE to edit the Clarity
 smart contracts.
 
@@ -44,7 +44,7 @@ request the tokens before beginning the tutorial.
 
 ## Step 1: Create a new project
 
-With [Clarinet installed locally](/docs/smart-contracts/clarinet#installing-clarinet), open a terminal window and
+With [Clarinet installed locally](/smart-contracts/clarinet#installing-clarinet), open a terminal window and
 create a new Clarinet project with the command:
 
 ```sh
