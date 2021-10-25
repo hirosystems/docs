@@ -3,7 +3,7 @@ id: angular
 title: Angular authenticator
 ---
 
-In this tutorial, you'll learn how to work with Stacks Connect when using [Angular](https://angular.io/) as your framework of choice. It builds on what you've learnt in the [Authentication Overview](/docs/build-apps/authentication).
+In this tutorial, you'll learn how to work with Stacks Connect when using [Angular](https://angular.io/) as your framework of choice. It builds on what you've learnt in the [Authentication Overview](/build-apps/authentication).
 
 :::note
 
@@ -123,7 +123,7 @@ Here we're using an Rxjs `Subject` to represent a stream of sign in events. `sta
 
 ### Authentication
 
-First, describe the auth options we need to pass to Connect. [Learn more about `AuthOptions` here](/docs/build-apps/authentication). Let's modify the default component to look like this:
+First, describe the auth options we need to pass to Connect. [Learn more about `AuthOptions` here](/build-apps/authentication). Let's modify the default component to look like this:
 
 ```typescript
 import { Component } from "@angular/core";

@@ -307,7 +307,7 @@ Each transaction signing method is itself available as a function returned by `u
 - `openSTXTransfer` as `doSTXTransfer`
 - `openContractDeploy` as `doContractDeploy`
 
-Use these functions with the same parameters as outlined above. However, you don't have to specify `appDetails` since they are detected automatically if `useConnect` has been used already [for authentication](/docs/build-apps/authentication#usage-in-react-apps).
+Use these functions with the same parameters as outlined above. However, you don't have to specify `appDetails` since they are detected automatically if `useConnect` has been used already [for authentication](/build-apps/authentication#usage-in-react-apps).
 
 ```tsx
 import { useConnect } from "@stacks/connect-react";
@@ -338,7 +338,7 @@ These payloads are tokens that conform to the [JSON Web Token (JWT) standard](ht
 
 ### Transaction Request Payload
 
-When an application triggers an transaction from `@stacks/connect`, the options of that transaction are serialized into a `transactionRequest` payload. The `transactionRequest` is similar to the [authRequest](/docs/build-apps/authentication#authrequest-payload-schema) payload used for authentication.
+When an application triggers an transaction from `@stacks/connect`, the options of that transaction are serialized into a `transactionRequest` payload. The `transactionRequest` is similar to the [authRequest](/build-apps/authentication#authrequest-payload-schema) payload used for authentication.
 
 The transaction request payload has the following schema, in addition to the standard JWT required fields:
 
