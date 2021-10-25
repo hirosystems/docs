@@ -7,7 +7,7 @@ The resources in this section are provided for reference toward developer resour
 
 ## Interacting with the blockchain
 
-The [Stacks CLI](/docs/references/stacks-cli) provides an easy way for you to interact with the Stacks live blockchain (testnet or mainnet). The CLI can be used to test transactions, perform stacking, or deploy contracts. Since the Stacks CLI operates on unencrypted private keys, it is recommended that you use the CLI as a development tool only, and not against accounts with significant amounts of mainnet STX tokens.
+The [Stacks CLI](/references/stacks-cli) provides an easy way for you to interact with the Stacks live blockchain (testnet or mainnet). The CLI can be used to test transactions, perform stacking, or deploy contracts. Since the Stacks CLI operates on unencrypted private keys, it is recommended that you use the CLI as a development tool only, and not against accounts with significant amounts of mainnet STX tokens.
 
 ## Contract development
 

@@ -170,6 +170,6 @@ docker stop stacks-blockchain
 
 - [Running an API instance with Docker][]
 
-[running a testnet node with docker]: /docs/get-started/running-testnet-node
-[running an api instance with docker]: /docs/get-started/running-api-node
+[running a testnet node with docker]: /get-started/running-testnet-node
+[running an api instance with docker]: /get-started/running-api-node
 [`stacks-blockchain`]: https://github.com/blockstack/stacks-blockchain

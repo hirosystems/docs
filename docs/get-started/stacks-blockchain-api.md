@@ -43,7 +43,7 @@ The easiest way to start interacting with the API is through the [Postman Collec
 
 :::info
 
-Postman allows you to [generate sample code](https://learning.postman.com/docs/sending-requests/generate-code-snippets/) for API requests for various languages and libraries
+Postman allows you to [generate sample code](https://learning.postman.com/sending-requests/generate-code-snippets/) for API requests for various languages and libraries
 
 :::
 
@@ -51,7 +51,7 @@ Postman allows you to [generate sample code](https://learning.postman.com/docs/s
 
 The Stacks API was designed using the [OpenAPI specification](https://swagger.io/specification/), making it compatible with a variety of developer tools.
 
-The [OpenAPI specification file for Stacks](https://github.com/blockstack/stacks-blockchain-api/blob/master/docs/openapi.yaml) is used to generate the [TypeScript client library](#typescript-client-library). You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator)
+The [OpenAPI specification file for Stacks](https://github.com/blockstack/stacks-blockchain-api/blob/master/openapi.yaml) is used to generate the [TypeScript client library](#typescript-client-library). You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator)
 
 ## TypeScript client library
 
@@ -394,7 +394,7 @@ You can use the `possible_next_nonce` property as the nonce for your next transa
 
 ## Running an API server
 
-While Hiro provides a hosted API server of the Stacks Blockchain API, anyone can spin up their own version. Please [follow the instructions in this guide](/docs/get-started/running-api-node) to start a Docker container with the API service running.
+While Hiro provides a hosted API server of the Stacks Blockchain API, anyone can spin up their own version. Please [follow the instructions in this guide](/get-started/running-api-node) to start a Docker container with the API service running.
 
 :::info
 

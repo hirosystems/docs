@@ -15,7 +15,7 @@ This tutorial highlights the following capabilities:
 
 :::tip
 
-Alternatively to integration using JS libraries, you can use the [Rust CLI](https://gist.github.com/kantai/c261ca04114231f0f6a7ce34f0d2499b) or [JS CLI](/docs/tutorials/stacking-using-CLI).
+Alternatively to integration using JS libraries, you can use the [Rust CLI](https://gist.github.com/kantai/c261ca04114231f0f6a7ce34f0d2499b) or [JS CLI](/tutorials/stacking-using-CLI).
 
 :::
 
@@ -255,7 +255,7 @@ The transaction completion will take several minutes. Only one stacking transact
 
 ## Step 6: Confirm lock-up
 
-The new transaction will not be completed immediately. It'll stay in the `pending` status for a few minutes. We need to poll the status and wait until the transaction status changes to `success`. We can use the [Stacks Blockchain API client library](/docs/get-started/stacks-blockchain-api#javascript-client-library) to check transaction status.
+The new transaction will not be completed immediately. It'll stay in the `pending` status for a few minutes. We need to poll the status and wait until the transaction status changes to `success`. We can use the [Stacks Blockchain API client library](/get-started/stacks-blockchain-api#javascript-client-library) to check transaction status.
 
 ```js
 const { TransactionsApi } = require("@stacks/blockchain-api-client");

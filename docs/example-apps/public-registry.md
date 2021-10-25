@@ -3,9 +3,9 @@ id: public-registry
 title: Public registry app
 ---
 
-The [Stacks Blockchain API](/docs/get-started/stacks-blockchain-api) is an API that helps app developers to view and use the state of the Stacks blockchain.
+The [Stacks Blockchain API](/get-started/stacks-blockchain-api) is an API that helps app developers to view and use the state of the Stacks blockchain.
 
-In this tutorial you will extend [the To-dos app](/docs/example-apps/to-dos) to share individual lists publicly using the Stacks blockchain.
+In this tutorial you will extend [the To-dos app](/example-apps/to-dos) to share individual lists publicly using the Stacks blockchain.
 
 The registry of shared to-dos lists is implemented by a Clarity smart contract named [`todo-registry`](https://github.com/friedger/blockstack-todos/blob/tut/public-registry/contracts/todo-registry.clar). Data from this contract will be shown in the to-dos app.
 
@@ -30,7 +30,7 @@ Furthermore, the to-dos app will interact with a smart contract deployed as `ST1
 
 There may already be a deployed version available on the testnet; the [Stacks Explorer](https://explorer.stacks.co/) can be used to search for it.
 
-Alternatively, the contract can be deployed as described in the [hello world tutorial](/docs/tutorials/clarity-hello-world). Then you have to use the corresponding contract address and name in this tutorial. Throughout this tutorial, we use `ST3YPJ6BBCZCMH71TV8BK50YC6QJTWEGCNDFWEQ15.todo-registry` as an example.
+Alternatively, the contract can be deployed as described in the [hello world tutorial](/tutorials/clarity-hello-world). Then you have to use the corresponding contract address and name in this tutorial. Throughout this tutorial, we use `ST3YPJ6BBCZCMH71TV8BK50YC6QJTWEGCNDFWEQ15.todo-registry` as an example.
 
 ### Tutorials
 
@@ -116,7 +116,7 @@ export const PublicUrlRegistrar = ({ userSession }) => {
 };
 ```
 
-It is a simple button that calls `doContractCall` method of the Connect library when clicked. The method makes an api call to the Stacks authenticator. The authenticator creates a contract call transaction that is signed by the user and then it is broadcast to the Stacks blockchain as explained in the [transaction signing tutorial](/docs/build-apps/transaction-signing).
+It is a simple button that calls `doContractCall` method of the Connect library when clicked. The method makes an api call to the Stacks authenticator. The authenticator creates a contract call transaction that is signed by the user and then it is broadcast to the Stacks blockchain as explained in the [transaction signing tutorial](/build-apps/transaction-signing).
 
 Note how the arguments are created using `bufferCVFromString`. There are similar methods for all other Clarity types, like `uintCV` or `trueCV`. See the [documentation](https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values) of the stacks-transactions library for more details.
 
@@ -462,7 +462,7 @@ Congratulations. You just implemented a list of recent activities that was fetch
 
 ## Fetch the first to-dos list
 
-There are two other ways to get state information from the blockchain: read-only functions and data map entries. Read-only functions were already discussed in the [Clarity counter tutorial](/docs/tutorials/clarity-counter). They do not require a transaction to complete. Data maps in Clarity are maps that can be read by any user. See the [Clarity reference](https://docs.stacks.co/references/language-functions#define-map) for more details.
+There are two other ways to get state information from the blockchain: read-only functions and data map entries. Read-only functions were already discussed in the [Clarity counter tutorial](/tutorials/clarity-counter). They do not require a transaction to complete. Data maps in Clarity are maps that can be read by any user. See the [Clarity reference](https://docs.stacks.co/references/language-functions#define-map) for more details.
 
 The `todo-registry` contract defines a read-only function `owner-of?` that returns the owner of a registry entry and a data map for details about entries:
 

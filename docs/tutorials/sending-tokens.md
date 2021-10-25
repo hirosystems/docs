@@ -39,13 +39,13 @@ npm install --save @stacks/transactions bn.js @stacks/blockchain-api-client cros
 
 :::info
 
-The API client is generated from the [OpenAPI specification](https://github.com/blockstack/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). Many other languages and frameworks are be supported by the generator.
+The API client is generated from the [OpenAPI specification](https://github.com/blockstack/stacks-blockchain-api/blob/master/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). Many other languages and frameworks are be supported by the generator.
 
 :::
 
 ## Step 2: Specifying a sender
 
-In order to build and sign transactions, you will need a Stacks private key. You can easily generate a new, random Stacks 2.0 sender key (see ["Generating an account" from the previous tutorial](/docs/tutorials/managing-accounts#step-2-generating-an-account)).
+In order to build and sign transactions, you will need a Stacks private key. You can easily generate a new, random Stacks 2.0 sender key (see ["Generating an account" from the previous tutorial](/tutorials/managing-accounts#step-2-generating-an-account)).
 
 For this tutorial, we will use an existing Stacks account and instantiate the key object from a private key string:
 
@@ -246,4 +246,4 @@ For all property formats and details, please review the [API reference](https://
 
 ## Step 6: Confirming balance (optional)
 
-Now that the token transfer is confirmed, we can verify the new account balance on the sender address by [following the "Getting account balances" steps from the previous tutorial](/docs/tutorials/managing-accounts#step-5-getting-account-balances).
+Now that the token transfer is confirmed, we can verify the new account balance on the sender address by [following the "Getting account balances" steps from the previous tutorial](/tutorials/managing-accounts#step-5-getting-account-balances).
