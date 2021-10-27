@@ -11,7 +11,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
     baseUrl: "/",
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
-    favicon: "img/favicon-light.svg",
+    favicon: "img/favicon.ico",
     organizationName: "hirosystems", // Usually your GitHub org/user name.
     projectName: "docs", // Usually your repo name.
     trailingSlash: false,
