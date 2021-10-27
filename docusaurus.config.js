@@ -59,17 +59,12 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
       ({
         navbar: {
           logo: {
-            alt: "Hiro docs",
+            alt: "Hiro developers",
             src: "img/logo-light.svg",
             srcDark: "img/logo-dark.svg",
             target: "_self",
           },
           items: [
-            {
-              to: "/",
-              label: "Get Started",
-              position: "left",
-            },
             {
               type: "doc",
               docId: "intro",
@@ -102,12 +97,17 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
         },
         footer: {
           style: "dark",
+          logo: {
+            alt: "Hiro developers",
+            src: "img/footer-logo-light.svg",
+            srcDark: "img/footer-logo-dark.svg",
+          },
           links: [
             {
-              title: "Docs",
+              title: "Hiro Developers",
               items: [
                 {
-                  label: "Developer docs",
+                  label: "Documentation",
                   to: "/intro",
                 },
                 {
@@ -119,44 +119,49 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
                   to: "/tutorials",
                 },
                 {
-                  label: "Example apps",
+                  label: "Example Apps",
                   to: "/example-apps",
-                },
-              ],
-            },
-            {
-              title: "Community",
-              items: [
-                {
-                  label: "Discord",
-                  href: "https://discordapp.com/invite/docusaurus",
-                },
-                {
-                  label: "Forum",
-                  href: "https://forum.stacks.org",
-                },
-                {
-                  label: "Reddit",
-                  href: "https://www.reddit.com/r/stacks",
-                },
-                {
-                  label: "Twitter",
-                  href: "https://twitter.com/hirosystems",
                 },
               ],
             },
             {
               title: "More",
               items: [
-                { label: "Stacks docs", href: "https://docs.stacks.co" },
                 {
                   label: "GitHub",
                   href: "https://github.com/hirosystems/docs",
                 },
+                { label: "Stacks Docs", href: "https://docs.stacks.co" },
+                { label: "Blog", href: "https://www.hiro.so/blog" },
+                {
+                  label: "Twitter",
+                  href: "https://twitter.com/hirosystems",
+                },
+                {
+                  label: "Youtube",
+                  href: "https://www.youtube.com/channel/UC3xNLj2Mu7fW-BCq-vC9xKQ",
+                },
+              ],
+            },
+            {
+              title: "Stacks Community",
+              items: [
+                {
+                  label: "Discord",
+                  href: "https://discordapp.com/invite/docusaurus",
+                },
+                {
+                  label: "Stacks Forum",
+                  href: "https://forum.stacks.org",
+                },
+                {
+                  label: "Reddit",
+                  href: "https://www.reddit.com/r/stacks",
+                },
               ],
             },
           ],
-          copyright: `Copyright © ${new Date().getFullYear()} Hiro Systems, PBC. Built with Docusaurus.`,
+          copyright: `Copyright © ${new Date().getFullYear()} Hiro Systems, PBC.`,
         },
         prism: {
           theme: lightCodeTheme,
