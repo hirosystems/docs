@@ -7,7 +7,6 @@
 import ThemedImage from "@theme/ThemedImage";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import React from "react";
-import clsx from "clsx";
 import styles from "./HomepageFeatures.module.css";
 
 type FeatureItem = {
@@ -95,7 +94,7 @@ const FeatureList: FeatureItem[] = [
 
 function Feature({ title, image, imageDark, description }: FeatureItem) {
   return (
-    <div className={clsx("col col--4")}>
+    <div className="col">
       <div className="text--left">
         <ThemedImage
           alt={title}
@@ -114,16 +113,28 @@ function Feature({ title, image, imageDark, description }: FeatureItem) {
   );
 }
 
+function FeatureRow({ index, items }): JSX.Element {
+  const features = FeatureList.slice(index, index + items);
+
+  return (
+    <div className="row">
+      {features.map((props, idx) => {
+        return <Feature key={idx} {...props} />;
+      })}
+    </div>
+  );
+}
+
 export default function HomepageFeatures(): JSX.Element {
+  let rows: JSX.Element[] = [];
+
+  for (let i = 0; i < Math.ceil(FeatureList.length / 3); i++) {
+    rows.push(<FeatureRow index={i * 3} items={3} />);
+  }
+
   return (
     <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
-      </div>
+      <div className="container">{rows}</div>
     </section>
   );
 }
