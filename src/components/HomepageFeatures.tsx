@@ -25,8 +25,8 @@ const FeatureList: FeatureItem[] = [
       <>
         Hiro developer tools provide an easy, complete development environment
         without the need to install multiple packages. Simply install{" "}
-        <a href="/docs/smart-contracts/clarinet">Clarinet</a> and start building
-        on Stacks.
+        <a href="/smart-contracts/clarinet">Clarinet</a> and start building on
+        Stacks.
       </>
     ),
   },
@@ -36,10 +36,9 @@ const FeatureList: FeatureItem[] = [
     imageDark: "/img/write-smart-contracts-dark.svg",
     description: (
       <>
-        Check out our{" "}
-        <a href="/docs/tutorials">extensive library of tutorials</a> for
-        guidance on how to write smart contracts in Clarity using Hiro developer
-        tools.
+        Check out our <a href="/tutorials">extensive library of tutorials</a>{" "}
+        for guidance on how to write smart contracts in Clarity using Hiro
+        developer tools.
       </>
     ),
   },
@@ -49,8 +48,8 @@ const FeatureList: FeatureItem[] = [
     imageDark: "/img/troubleshoot-contracts-dark.svg",
     description: (
       <>
-        <a href="/docs/smart-contracts/clarinet">Clarinet</a> provides{" "}
-        <a href="/docs/smart-contracts/devnet">powerful debugging tools</a> and
+        <a href="/smart-contracts/clarinet">Clarinet</a> provides{" "}
+        <a href="/smart-contracts/devnet">powerful debugging tools</a> and
         troubleshooting your smart contracts locally, so you don't have to
         deploy work-in-progress code to a live blockchain.
       </>
@@ -74,9 +73,8 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Use the local DevNet to integrate your smart contracts with a web
-        frontend, or check out some{" "}
-        <a href="/docs/example-apps/billboard">example apps</a> that demonstrate
-        the local integration environment.
+        frontend, or check out some <a href="/example-apps">example apps</a>{" "}
+        that demonstrate the local integration environment.
       </>
     ),
   },
