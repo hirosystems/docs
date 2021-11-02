@@ -210,7 +210,7 @@ At this point, the final contract should look like this:
 
 Use `clarinet check` to ensure that your Clarity code is well-formed and error-free.
 
-## Step 5: write a contract test
+## Step 5: Write a contract test
 
 At this point, the contract functions as intended, and can be deployed to the blockchain. However, it's good practice
 to write automated testing to ensure that the contract functions perform in the expected way. Testing can be valuable
