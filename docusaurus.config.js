@@ -44,7 +44,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
             {
               routePath: "/api/",
               specUrl:
-                "https://raw.githubusercontent.com/blockstack/stacks-blockchain-api/gh-pages/openapi.resolved.yaml",
+                "https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml",
             },
           ],
           theme: {
