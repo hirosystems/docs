@@ -128,8 +128,8 @@ following code into the file.
 
 ```clarity
 ;; use the SIP090 interface (testnet)
+;; trait deployed by deployer address from ./settings/Devnet.toml
 (impl-trait 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.nft-trait.nft-trait)
-
 
 ;; define a new NFT. Make sure to replace MY-OWN-NFT
 (define-non-fungible-token MY-OWN-NFT uint)
