@@ -92,7 +92,7 @@ export const PublicUrlRegistrar = ({ userSession }) => {
       contractName: CONTRACT_NAME,
       functionName: "register",
       functionArgs: [bufferCVFromString(username), bufferCVFromString(url)],
-      finished: (data) => {
+      onFinish: (data) => {
         console.log({ data });
       },
     });
@@ -135,7 +135,7 @@ Now, you should be able to register your public to-dos list on the blockchain wh
 
 ## Waiting for transactions
 
-The method `doContractCall` has a callback `finished` that is called after the user confirmed the transaction. This does not mean that the blockchain has accepted and included the transaction on the blockchain. It just means that the transaction was broadcasted to the network. The transaction id is returned in the `finished` callback as `data.txId`. This id can be used to find the transaction and its processing status on the blockchain. The [Stack Blockchain API client library](https://blockstack.github.io/stacks-blockchain-api/client/index.html) provides a convenient method to subscribe to the progress using web sockets.
+The method `doContractCall` has a callback `onFinish` that is called after the user confirmed the transaction. This does not mean that the blockchain has accepted and included the transaction on the blockchain. It just means that the transaction was broadcasted to the network. The transaction id is returned in the `onFinish` callback as `data.txId`. This id can be used to find the transaction and its processing status on the blockchain. The [Stack Blockchain API client library](https://blockstack.github.io/stacks-blockchain-api/client/index.html) provides a convenient method to subscribe to the progress using web sockets.
 
 ### Step 1: Add dependency
 
@@ -155,12 +155,12 @@ Create a react state variable in the `PublicUrlRegistrar` component that holds t
 const [txId, setTxId] = useState();
 ```
 
-and set the value in the `finished` callback
+and set the value in the `onFinish` callback
 
 ```js
 // src/components/PublicUrlRegistrar.jsx
 
-finished: data => {
+onFinish: data => {
     console.log(data);
     setTxId(data.txId);
     },
