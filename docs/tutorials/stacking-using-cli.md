@@ -5,7 +5,7 @@ title: Stacking using the Stacks CLI
 
 ## Introduction
 
-In this tutorial, you'll learn how to use the Stacks CLI to participate in Stacking. The CLI is a great way to quickly try out Stacking on testnet. To integrate Stacking into your application, see the [Stacking integration guide](https://docs.stacks.co/build-apps/guides/integrate-stacking).
+In this tutorial, you'll learn how to use the Stacks CLI to participate in Stacking. The CLI is a great way to quickly try out Stacking on testnet. To integrate Stacking into your application, see the [Stacking integration guide](https://docs.hiro.so/build-apps/integrate-stacking).
 
 ## Prerequisites
 
