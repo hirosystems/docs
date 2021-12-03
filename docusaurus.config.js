@@ -31,7 +31,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
           docs: {
             sidebarPath: require.resolve("./sidebars.js"),
             // Please change this to your repo.
-            editUrl: "https://github.com/hirosystems/docs/edit/main/",
+            editUrl: "https://github.com/hirosystems/docs/",
             routeBasePath: "/",
           },
           theme: {
