@@ -42,7 +42,7 @@ The Stacks 2.0 supports a set of different transaction types:
 | Contract call     | `contract_call`     | Contract call for a public, non read-only function                                                                                                                                                    |
 | Poison Microblock | `poison_microblock` | Punish leaders who intentionally equivocate about the microblocks they package                                                                                                                        |
 
-A sample of each transaction type can be found in the [Stacks Blockchain API response definition for transactions](https://blockstack.github.io/stacks-blockchain-api/#operation/get_transaction_by_id).
+A sample of each transaction type can be found in the [Stacks Blockchain API response definition for transactions](https://docs.hiro.so/api#operation/get_transaction_by_id).
 
 ~> Read-only contract call calls do **not** require transactions. Read more about it in the [network guide](https://docs.stacks.co/understand-stacks/network#read-only-function-calls).
 
@@ -418,7 +418,7 @@ A sponsored transaction is one where a second signer sets and pays the transacti
 
 ## Broadcast
 
-With a serialized transaction in the [raw format](#raw-format), it can be broadcast to the network using the [`POST /v2/transactions`](https://blockstack.github.io/stacks-blockchain-api/#operation/post_core_node_transactions) endpoint:
+With a serialized transaction in the [raw format](#raw-format), it can be broadcast to the network using the [`POST /v2/transactions`](https://docs.hiro.so/api#operation/post_core_node_transactions) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -472,13 +472,13 @@ Transactions on the Stacks 2.0 network can be queried using the [Stacks Blockcha
 
 For convenience, a Postman Collection was created and published: [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/614feab5c108d292bffa)
 
--> Note: The API can be easily consumed using a generated [JS client library](https://blockstack.github.io/stacks-blockchain-api/client/index.html). The generator uses an OpenAPI specification and supports other languages and frameworks.
+-> Note: The API can be easily consumed using a generated [JS client library](https://hirosystems.github.io/stacks-blockchain-api/client/index.html). The generator uses an OpenAPI specification and supports other languages and frameworks.
 
 @include "stacks-api-pagination.md"
 
 ### Get recent transactions
 
-Recent transactions can be obtained through the [`GET /extended/v1/tx`](https://blockstack.github.io/stacks-blockchain-api/#operation/get_transaction_list) endpoint:
+Recent transactions can be obtained through the [`GET /extended/v1/tx`](https://docs.hiro.so/api#operation/get_transaction_list) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -516,7 +516,7 @@ Sample response:
 
 ### Get mempool transactions
 
-Mempool (registered, but not processed) transactions can be obtained using the [`GET /extended/v1/tx/mempool`](https://blockstack.github.io/stacks-blockchain-api/#operation/get_mempool_transaction_list) endpoint:
+Mempool (registered, but not processed) transactions can be obtained using the [`GET /extended/v1/tx/mempool`](https://docs.hiro.so/api#operation/get_mempool_transaction_list) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -564,7 +564,7 @@ curl 'https://stacks-node-api.testnet.stacks.co/extended/v1/tx/?type=contract_ca
 
 ### Get transaction by ID
 
-A specific transaction can be obtained using the [`GET /extended/v1/tx/<tx_id>`](https://blockstack.github.io/stacks-blockchain-api/#operation/get_transaction_by_id) endpoint:
+A specific transaction can be obtained using the [`GET /extended/v1/tx/<tx_id>`](https://docs.hiro.so/api#operation/get_transaction_by_id) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`

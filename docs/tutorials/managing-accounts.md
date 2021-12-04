@@ -206,7 +206,7 @@ The API will respond with a paginatable list of transactions associated with the
 }
 ```
 
-Please review the [API reference](https://blockstack.github.io/stacks-blockchain-api/#operation/get_account_transactions) for property definitions and details.
+Please review the [API reference](https://docs.hiro.so/api#operation/get_account_transactions) for property definitions and details.
 
 ### Handling pagination
 

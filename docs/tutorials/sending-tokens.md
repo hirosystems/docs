@@ -242,7 +242,7 @@ The API will respond with transaction details, including the `tx_status` propert
 }
 ```
 
-For all property formats and details, please review the [API reference](https://blockstack.github.io/stacks-blockchain-api/#operation/get_transaction_by_id).
+For all property formats and details, please review the [API reference](https://docs.hiro.so/api#operation/get_transaction_by_id).
 
 ## Step 6: Confirming balance (optional)
 

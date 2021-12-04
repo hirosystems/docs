@@ -344,7 +344,7 @@ To display the unlocking time, you need to use the `firstRewardCycle` and the `l
 
 ## Optional: Rewards
 
-Currently, the Stacking library does not provide methods to get the paid rewards for a set address. However, the [Stacks Blockchain API exposes endpoints](https://blockstack.github.io/stacks-blockchain-api/#tag/Burnchain) to get more details.
+Currently, the Stacking library does not provide methods to get the paid rewards for a set address. However, the [Stacks Blockchain API exposes endpoints](https://docs.hiro.so/api#tag/Burnchain) to get more details.
 
 As an example, if you want to get the rewards paid to `btcAddress`, you can make the following API call:
 

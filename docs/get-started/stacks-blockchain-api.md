@@ -55,7 +55,7 @@ The [OpenAPI specification file for Stacks](https://github.com/blockstack/stacks
 
 ## TypeScript client library
 
-A Typescript client library is available for use of the Stacks API. The client library enables type-safe REST and WebSocket communication with the Stacks API endpoints. [Review the client documentation for more details](https://blockstack.github.io/stacks-blockchain-api/client/index.html).
+A Typescript client library is available for use of the Stacks API. The client library enables type-safe REST and WebSocket communication with the Stacks API endpoints. [Review the client documentation for more details](https://hirosystems.github.io/stacks-blockchain-api/client/index.html).
 
 The client is made up of three components:
 
@@ -153,7 +153,7 @@ await sub.unsubscribe();
 
 ## Rate limiting
 
-Rate limiting is only applied to [faucet requests](https://blockstack.github.io/stacks-blockchain-api/#tag/Faucets) and based on the address that tokens are requested for.
+Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) and based on the address that tokens are requested for.
 
 ### BTC faucet
 
@@ -222,13 +222,13 @@ Requesting the proof requires more resources (computation time, response time, a
 
 ## Searching
 
-The API provides a search endpoint ([`/extended/v1/search/{id}`](https://blockstack.github.io/stacks-blockchain-api/#operation/search_by_id)) that takes an identifier and responds with matching blocks, transactions, contracts, or accounts.
+The API provides a search endpoint ([`/extended/v1/search/{id}`](https://docs.hiro.so/api#operation/search_by_id)) that takes an identifier and responds with matching blocks, transactions, contracts, or accounts.
 
 The search operation used by the endpoint (for example, `FROM txs WHERE tx_id = $1 LIMIT 1`) matches hashes **equal** to the provided identifier. Fuzzy search, incomplete identifiers, or wildcards will not return any matches.
 
 ## Using Clarity values
 
-Some endpoints, like the [read-only function contract call](https://blockstack.github.io/stacks-blockchain-api/#operation/call_read_only_function), require input to as serialized [Clarity value](https://docs.stacks.co/write-smart-contracts/values). Other endpoints return serialized values that need to be deserialized.
+Some endpoints, like the [read-only function contract call](https://docs.hiro.so/api#operation/call_read_only_function), require input to as serialized [Clarity value](https://docs.stacks.co/write-smart-contracts/values). Other endpoints return serialized values that need to be deserialized.
 
 Below is an example for Clarity value usage in combination with the API.
 
@@ -308,14 +308,14 @@ The Stacks Blockchain API proxies to Node RPC endpoints
 
 While the Node RPC API doesn't give the same functionality as the hosted Stacks 2.0 Blockchain API, you get similar functionality in a way that is scoped to that specific node. The RPC API includes the following endpoints:
 
-- [POST /v2/transactions](https://blockstack.github.io/stacks-blockchain-api/#operation/post_core_node_transactions)
-- [GET /v2/contracts/interface/{contract_address}/{contract_name}](https://blockstack.github.io/stacks-blockchain-api/#operation/get_contract_interface)
-- [POST /v2/map_entry/{contract_address}/{contract_name}/{map_name}](https://blockstack.github.io/stacks-blockchain-api/#operation/get_contract_data_map_entry)
-- [GET /v2/contracts/source/{contract_address}/{contract_name}](https://blockstack.github.io/stacks-blockchain-api/#operation/get_contract_source)
-- [GET /v2/accounts/{principal}](https://blockstack.github.io/stacks-blockchain-api/#operation/get_account_info)
-- [POST /v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}](https://blockstack.github.io/stacks-blockchain-api/#operation/call_read_only_function)
-- [GET /v2/fees/transfer](https://blockstack.github.io/stacks-blockchain-api/#operation/get_fee_transfer)
-- [GET /v2/info](https://blockstack.github.io/stacks-blockchain-api/#operation/get_core_api_info)
+- [POST /v2/transactions](https://docs.hiro.so/api#operation/post_core_node_transactions)
+- [GET /v2/contracts/interface/{contract_address}/{contract_name}](https://docs.hiro.so/api#operation/get_contract_interface)
+- [POST /v2/map_entry/{contract_address}/{contract_name}/{map_name}](https://docs.hiro.so/api#operation/get_contract_data_map_entry)
+- [GET /v2/contracts/source/{contract_address}/{contract_name}](https://docs.hiro.so/api#operation/get_contract_source)
+- [GET /v2/accounts/{principal}](https://docs.hiro.so/api#operation/get_account_info)
+- [POST /v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}](https://docs.hiro.so/api#operation/call_read_only_function)
+- [GET /v2/fees/transfer](https://docs.hiro.so/api#operation/get_fee_transfer)
+- [GET /v2/info](https://docs.hiro.so/api#operation/get_core_api_info)
 
 :::info
 
@@ -329,7 +329,7 @@ This API supports [v1.4.6 of the Rosetta specification](https://www.rosetta-api.
 
 :::info
 
-Find all Data and Construction Rosetta endpoints [here](https://blockstack.github.io/stacks-blockchain-api/#tag/Rosetta)
+Find all Data and Construction Rosetta endpoints [here](https://docs.hiro.so/api#tag/Rosetta)
 
 :::
 

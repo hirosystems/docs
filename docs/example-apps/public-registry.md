@@ -135,7 +135,7 @@ Now, you should be able to register your public to-dos list on the blockchain wh
 
 ## Waiting for transactions
 
-The method `doContractCall` has a callback `onFinish` that is called after the user confirmed the transaction. This does not mean that the blockchain has accepted and included the transaction on the blockchain. It just means that the transaction was broadcasted to the network. The transaction id is returned in the `onFinish` callback as `data.txId`. This id can be used to find the transaction and its processing status on the blockchain. The [Stack Blockchain API client library](https://blockstack.github.io/stacks-blockchain-api/client/index.html) provides a convenient method to subscribe to the progress using web sockets.
+The method `doContractCall` has a callback `onFinish` that is called after the user confirmed the transaction. This does not mean that the blockchain has accepted and included the transaction on the blockchain. It just means that the transaction was broadcasted to the network. The transaction id is returned in the `onFinish` callback as `data.txId`. This id can be used to find the transaction and its processing status on the blockchain. The [Stack Blockchain API client library](https://hirosystems.github.io/stacks-blockchain-api/client/index.html) provides a convenient method to subscribe to the progress using web sockets.
 
 ### Step 1: Add dependency
 
@@ -452,7 +452,7 @@ In addition to `tx_result`, the transaction object also contains a timestamp (`b
 
 :::note
 
-The `AccountsApi` and other Api methods provide parameters to page through the results using `limit` and `offset`. See [the docs](https://blockstack.github.io/stacks-blockchain-api/client/interfaces/getaccounttransactionsrequest.html) for more details.
+The `AccountsApi` and other Api methods provide parameters to page through the results using `limit` and `offset`. See [the docs](https://hirosystems.github.io/stacks-blockchain-api/client/interfaces/generated.getaccounttransactionsrequest.html) for more details.
 
 :::
 

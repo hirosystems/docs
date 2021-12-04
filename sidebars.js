@@ -81,7 +81,7 @@ module.exports = {
             {
               type: "link",
               label: "blockchain-api-client",
-              href: "https://blockstack.github.io/stacks-blockchain-api/client/index.html",
+              href: "https://hirosystems.github.io/stacks-blockchain-api/client/index.html",
             },
             {
               type: "link",
