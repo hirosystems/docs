@@ -3,7 +3,7 @@ id: transaction-signing
 title: Signing transactions
 ---
 
-This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/blockstack/ux/tree/master/packages/connect#stacksconnect) package of Stacks.js.
+This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
 
 Transaction signing provides a way for users execute Clarity smart contracts that are relevant to your app then handle the result as appropriate.
 
@@ -264,7 +264,7 @@ interface FinishedTxData {
 }
 ```
 
-The `StacksTransaction` type comes from the [`@stacks/transactions`](https://github.com/blockstack/stacks.js/tree/master/packages/transactions) library.
+The `StacksTransaction` type comes from the [`@stacks/transactions`](https://blockstack.github.io/stacks.js/modules/transactions.html) library.
 
 The `txId` property can be used to provide a link to view the transaction in the explorer.
 
@@ -277,7 +277,7 @@ const onFinish = (data) => {
 
 ## Specifying the network for a transaction {#network-option}
 
-All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](https://github.com/blockstack/stacks.js/tree/master/packages/network) package.
+All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](https://blockstack.github.io/stacks.js/modules/network.html) package.
 
 ```ts
 import { StacksTestnet, StacksMainnet } from "@stacks/network";
@@ -295,7 +295,7 @@ openSTXTransfer({
 
 ## Usage in React Apps
 
-Import the `useConnect` from the [`connect-react`](https://github.com/blockstack/ux/tree/master/packages/connect-react) package to integrate transaction signing more seamlessly into React apps.
+Import the `useConnect` from the [`connect-react`](https://github.com/hirosystems/connect) package to integrate transaction signing more seamlessly into React apps.
 
 ```
 npm install @stacks/connect-react

@@ -36,7 +36,7 @@ npm install --save @stacks/transactions @stacks/blockchain-api-client cross-fetc
 
 :::info
 
-The TypeScript API client is generated from the [OpenAPI specification](https://github.com/blockstack/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). You can use the generator to create Stacks API clients for many other languages.
+The TypeScript API client is generated from the [OpenAPI specification](https://github.com/hirosystems/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). You can use the generator to create Stacks API clients for many other languages.
 
 :::
 

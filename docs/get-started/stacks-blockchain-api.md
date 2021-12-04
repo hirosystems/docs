@@ -53,7 +53,7 @@ Postman allows you to [generate sample code](https://learning.postman.com/sendin
 
 The Stacks API was designed using the [OpenAPI specification](https://swagger.io/specification/), making it compatible with a variety of developer tools.
 
-The [OpenAPI specification file for Stacks](https://github.com/blockstack/stacks-blockchain-api/blob/master/openapi.yaml) is used to generate the [TypeScript client library](#typescript-client-library). You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator)
+The [OpenAPI specification file for Stacks](https://github.com/hirosystems/stacks-blockchain-api/blob/master/docs/openapi.yaml) is used to generate the [TypeScript client library](#typescript-client-library). You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator)
 
 ## TypeScript client library
 
@@ -96,7 +96,7 @@ import { Configuration, AccountsApi } from "@stacks/blockchain-api-client";
 
 ### TypeScript sample
 
-The following sample demonstrate how generated [TypeScript models](https://github.com/blockstack/stacks-blockchain-api/tree/master/client/src/generated/models) can be used to ensure type-safety:
+The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used to ensure type-safety:
 
 ```ts
 import fetch from "cross-fetch";
@@ -404,4 +404,4 @@ Once started, the API is available on `localhost:3999`
 
 :::
 
-[microblocks_api]: https://stacks-blockchain-api-git-feat-microblocks-blockstack.vercel.app/#tag/Microblocks
+[microblocks_api]: https://docs.hiro.so/api#tag/Microblocks

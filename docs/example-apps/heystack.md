@@ -616,7 +616,7 @@ specific implementation details.
 [stacks.js]: https://github.com/blockstack/stacks.js
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
 [react]: https://reactjs.org/
-[heystack_gh]: https://github.com/blockstack/heystack
+[heystack_gh]: https://github.com/hirosystems/heystack
 [data maps]: https://docs.stacks.co/references/language-functions#define-map
 [`default-to`]: https://docs.stacks.co/references/language-functions#default-to
 [`asserts!`]: https://docs.stacks.co/references/language-functions#asserts
@@ -625,19 +625,19 @@ specific implementation details.
 [`map-set`]: https://docs.stacks.co/references/language-functions#map-set
 [sip-010]: https://github.com/hstove/sips/blob/feat/sip-10-ft/sips/sip-010/sip-010-fungible-token-standard.md
 [`impl-trait`]: https://docs.stacks.co/references/language-functions#impl-trait
-[`@stacks/connect-react`]: https://github.com/blockstack/connect#readme
+[`@stacks/connect-react`]: https://github.com/hirosystems/connect#readme
 [`@stacks/auth`]: https://github.com/blockstack/stacks.js/tree/master/packages/auth
 [jotai]: https://github.com/pmndrs/jotai
-[connect wallet button component]: https://github.com/blockstack/heystack/blob/main/src/components/connect-wallet-button.tsx
-[welcome panel component]: https://github.com/blockstack/heystack/blob/63ce30f4f6de7a9c846fcdba3acbb6c7b82b83e3/src/components/welcome-panel.tsx#L102
-[`/src/store/auth.ts`]: https://github.com/blockstack/heystack/blob/main/src/store/auth.ts
+[connect wallet button component]: https://github.com/hirosystems/heystack/blob/main/src/components/connect-wallet-button.tsx
+[welcome panel component]: https://github.com/hirosystems/heystack/blob/63ce30f4f6de7a9c846fcdba3acbb6c7b82b83e3/src/components/welcome-panel.tsx#L102
+[`/src/store/auth.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/auth.ts
 [clarity types in javascript]: #clarity-types-in-javascript
 [`@stacks/transactions`]: https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values
 [blockchain naming system]: https://docs.stacks.co/build-apps/references/bns
-[`src/store/names.ts`]: https://github.com/blockstack/heystack/blob/main/src/store/names.ts
+[`src/store/names.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/names.ts
 [javascript types to clarity types]: #clarity-types-in-javascript
-[`@stacks/blockchain-api-client`]: https://github.com/blockstack/stacks-blockchain-api/tree/master/client
-[`src/common/hooks/use-publish-hey.ts`]: https://github.com/blockstack/heystack/blob/main/src/common/hooks/use-publish-hey.ts
-[`src/store/hey.ts`]: https://github.com/blockstack/heystack/blob/main/src/store/hey.ts
-[`src/components/user-area.tsx`]: https://github.com/blockstack/heystack/blob/22e4e9020f8bbb404e8c1e36f32f000050f90818/src/components/user-area.tsx#L62
+[`@stacks/blockchain-api-client`]: https://github.com/hirosystems/stacks-blockchain-api/tree/master/client
+[`src/common/hooks/use-publish-hey.ts`]: https://github.com/hirosystems/heystack/blob/main/src/common/hooks/use-publish-hey.ts
+[`src/store/hey.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/hey.ts
+[`src/components/user-area.tsx`]: https://github.com/hirosystems/heystack/blob/22e4e9020f8bbb404e8c1e36f32f000050f90818/src/components/user-area.tsx#L62
 [separation of concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns

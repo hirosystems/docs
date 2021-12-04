@@ -15,7 +15,7 @@ This app highlights the following platform capabilities:
 - Decrypt data on Gaia for public sharing by URL
 - De-authenticate and re-authenticate app with _Secret Key_
 
-[Try the app](https://todos.blockstack.org) or [view its code on GitHub](https://github.com/blockstack/todos).
+[Try the app](https://todos-lovat.vercel.app/) or [view its code on GitHub](https://github.com/hirosystems/todos).
 
 Existing familiarity with [React](https://reactjs.org/) is recommended for reviewing this app's code.
 
@@ -27,7 +27,7 @@ You must have recent versions of Git and [Node.js](https://nodejs.org/en/downloa
 ### Step 1: Install the code and its dependencies
 
 ```bash
-git clone https://github.com/blockstack/todos && cd todos
+git clone https://github.com/hirosystems/todos && cd todos
 npm install
 ```
 
@@ -111,7 +111,7 @@ The `showConnect` function accepts a number of properties within a parameter obj
 
 Note how the `userSession` object is created at the beginning of this module by leveraging an `AppConfig` object that's first initiated with all relevant scopes.
 
-The [`UserSession`](https://blockstack.github.io/stacks.js/classes/usersession.html) and [`AppConfig`](https://blockstack.github.io/stacks.js/classes/appconfig.html) classes are themselves imported from the `@stacks/auth` library.
+The [`UserSession`](https://blockstack.github.io/stacks.js/classes/auth.usersession.html) and [`AppConfig`](https://blockstack.github.io/stacks.js/classes/auth.appconfig.html) classes are themselves imported from the `@stacks/auth` library.
 
 In the separate `src/components/App.jsx` component, you can see how
 `componentDidMount` loads the user's data into the app's state, whether upon redirect post-authentication with `userSession.handlePendingSignIn()` or upon detection of an existing session with `userSession.isUserSignedIn()`:
@@ -137,7 +137,7 @@ componentDidMount() {
 
 ### Step 2: Choose **Get started** to generate a _Secret Key_.
 
-The app triggers a popup window in which [Stacks Authenticator](https://github.com/blockstack/ux/tree/master/packages/app)
+The app triggers a popup window in which [Stacks Web Wallet](https://github.com/hirosystems/stacks-wallet-web)
 loads from [`app.blockstack.org`](http://app.blockstack.org/) and begins generating a new _Secret Key_.
 
 !["Secret Key generation" screen](/img/todos-secret-key-generation.png)
@@ -174,7 +174,7 @@ field and hitting "Enter."
 
 !["To-dos" app home screen](/img/todos-home.png)
 
-The data for all to-dos are saved as JSON to the Gaia hub linked to your Secret Key using the [`putFile`](http://blockstack.github.io/stacks.js/classes/storage.html#putfile) method of the `storage` object in the `src/storage.js` module, which manages all data storage for the app:
+The data for all to-dos are saved as JSON to the Gaia hub linked to your Secret Key using the [`putFile`](https://blockstack.github.io/stacks.js/classes/storage.storage-1.html#putfile) method of the `storage` object in the `src/storage.js` module, which manages all data storage for the app:
 
 ```js
 // src/storage.js
@@ -193,7 +193,7 @@ export const saveTasks = async (userSession, tasks, isPublic) => {
 };
 ```
 
-These to-dos are subsequently loaded using the [`getFile`](http://blockstack.github.io/stacks.js/globals.html#getfile)
+These to-dos are subsequently loaded using the [`getFile`](https://blockstack.github.io/stacks.js/classes/storage.storage-1.html#getfile)
 method of the same object in the same module:
 
 ```js
@@ -236,7 +236,7 @@ The app will now show all of your to-dos to anyone who visits the URL displayed 
 
 Select "Sign out" to deauthenticate the app with your Stacks account.
 
-This calls the [`signUserOut`](https://blockstack.github.io/stacks.js/classes/usersession.html#signuserout) method
+This calls the [`signUserOut`](https://blockstack.github.io/stacks.js/classes/auth.usersession.html#signuserout) method
 of the `userSession` object within `src/components/Header.jsx`.
 
 Now visit the URL that was provided to you when you made your tasks public. This URL has the format `/todos/:username`, so if your username were `janedoe.id.blockstack`, the URL would be `localhost:3000/todos/janedoe.id.blockstack`.

@@ -299,7 +299,7 @@ docker stop postgres
 - [Running an API instance with Docker][] in the `stacks-blockchain-api` repository
 - [Running an API instance from source][] in the `stacks-blockchain-api` repository
 
-[running an api instance with docker]: https://github.com/blockstack/stacks-blockchain-api/blob/master/running_an_api.md
-[running an api instance from source]: https://github.com/blockstack/stacks-blockchain-api/blob/master/running_api_from_source.md
+[running an api instance with docker]: https://github.com/hirosystems/stacks-blockchain-api/blob/master/running_an_api.md
+[running an api instance from source]: https://github.com/hirosystems/stacks-blockchain-api/blob/master/running_api_from_source.md
 [`stacks-blockchain`]: https://github.com/blockstack/stacks-blockchain
-[`stacks-blockchain-api`]: https://github.com/blockstack/stacks-blockchain-api
+[`stacks-blockchain-api`]: https://github.com/hirosystems/stacks-blockchain-api

@@ -3,7 +3,7 @@ id: data-storage
 title: Storing data securely
 ---
 
-This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/build-apps/references/gaia) by implementing the [`connect`](https://github.com/blockstack/ux/tree/master/packages/connect#stacksconnect) and [`storage`](https://github.com/blockstack/ux/tree/master/packages/storage#stacksstorage) packages of Stacks.js.
+This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/build-apps/references/gaia) by implementing the [`connect`](https://github.com/hirosystems/connect/) and [`storage`](https://blockstack.github.io/stacks.js/modules/storage.html) packages of Stacks.js.
 
 Data storage provides a way for users to save both public and private data off-chain while retaining complete control over it.
 
@@ -74,7 +74,7 @@ The `options` parameter object contains an `encrypt` property that when set to `
 
 If the `encrypt` property is set to `false`, the data will be saved completely unencrypted and available to everyone online with public access to the user's Gaia hub.
 
-Whereas saving privately encrypted data is possible for all authenticated apps with the [`store_write`](https://blockstack.github.io/stacks.js/enums/authscope.html#store_write) scope, the user must have previously granted the [`publish_data`](https://blockstack.github.io/stacks.js/enums/authscope.html#publish_data) scope as well during authentication for the app to save publicly unencrypted data.
+Whereas saving privately encrypted data is possible for all authenticated apps with the [`store_write`](https://blockstack.github.io/stacks.js/enums/auth.authscope.html#store_write) scope, the user must have previously granted the [`publish_data`](https://blockstack.github.io/stacks.js/enums/auth.authscope.html#publish_data) scope as well during authentication for the app to save publicly unencrypted data.
 
 The `putFile` method returns the URL where the the file can be retrieved from the user's Gaia hub, as used here to set the value of `fileUrl`.
 

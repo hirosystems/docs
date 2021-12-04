@@ -3,7 +3,7 @@ id: authentication
 title: Authenticating users
 ---
 
-This guide explains how to authenticate users with the [`connect`](https://github.com/blockstack/connect#readme) package of Stacks.js.
+This guide explains how to authenticate users with the [`connect`](https://github.com/hirosystems/connect#readme) package of Stacks.js.
 
 Authentication provides a way for users to identify themselves to an app while retaining complete control over their credentials and personal details. It can be integrated alone or used in conjunction with [transaction signing](/build-apps/transaction-signing) and [data storage](/build-apps/data-storage), for which it is a prerequisite.
 
@@ -150,7 +150,7 @@ It will then trigger the `onFinish` function provided above, which can be used s
 
 ## Usage in React Apps
 
-Import the `useConnect` from the [`connect-react`](https://github.com/blockstack/ux/tree/master/packages/connect-react) package to integrate authentication more seamlessly into React apps.
+Import the `useConnect` from the [`connect-react`](https://github.com/hirosystems/connect/) package to integrate authentication more seamlessly into React apps.
 
 ```
 npm install @stacks/connect-react
