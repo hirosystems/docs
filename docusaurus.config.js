@@ -18,7 +18,6 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
     plugins: [
       require.resolve("@cmfcmf/docusaurus-search-local"),
-      require.resolve("docusaurus-plugin-fathom"),
       require.resolve("docusaurus-plugin-segment"),
     ],
 
@@ -168,9 +167,6 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme,
           additionalLanguages: ["toml", "lisp"],
-        },
-        fathomAnalytics: {
-          siteId: "NMTVJYHS",
         },
         segment: {
           apiKey: "qabJfWPhi2L9CeMk22A1XlYmabsNtgKy",
