@@ -193,7 +193,7 @@ For simplicity, the billboard uses interval polling every 30 seconds to update t
 
 ## Updating the billboard value
 
-A small command line utility is provided to demonstrate creating a transaction to update the billboard value. While a production app might connect to the Hiro Web Wallet using the [connect](https://github.com/blockstack/connect#readme) library, for simplicity this app does not incorporate the wallet. To make the contract call to change the billboard value, you can use the `update-message.sh` script in the root of the repository. You need the secret key for one of the wallets in your local DevNet, which can be found in the `DevNet.toml` file.
+A small command line utility is provided to demonstrate creating a transaction to update the billboard value. While a production app might connect to the Hiro Web Wallet using the [connect](https://github.com/blockstack/connect#readme) library, for simplicity this app does not incorporate the wallet. To make the contract call to change the billboard value, you can use the [`update-message.js` script](https://github.com/pgray-hiro/stacks-billboard/blob/main/update-message.js) in the root of the repository. You need the secret key for one of the wallets in your local DevNet, which can be found in the `DevNet.toml` file.
 
 ```toml title="/settings/DevNet.toml"
 ...
@@ -209,14 +209,14 @@ balance = 100_000_000_000_000
 With the local DevNet running and the billboard frontend running, in a new terminal window, copy the value of the `secret_key`, and then update the message with the following command:
 
 ```sh
-./update-message.sh -k <secret_key> "My new message"
+./update-message.js -k <secret_key> "My new message"
 ```
 
 If the transaction was successful, the script echoes the message as output. A successful transaction should appear in the mempool summary of the DevNet interface.
 
 Internally, the script forms a transaction and then submits it to the local DevNet API node using the [transactions](https://stacks-js-git-master-blockstack.vercel.app/modules/transactions.html) library.
 
-```js title="./update-message.sh"
+```js title="./update-message.js"
 ...
 
 // Create a Stacks testnet with the local node as the URL
