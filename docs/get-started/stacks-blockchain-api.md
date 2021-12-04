@@ -26,6 +26,8 @@ Review the [Stacks API reference](/api) for more details
 
 The API is comprised of two parts: the Stacks Blockchain API and the Stacks Node RPC API. The Node RPC API is exposed by every running node. Stacks Blockchain API, however, introduces additional capabilities (for example, retrieving all transactions). It also proxies calls directly to Stacks Node RPC API.
 
+![api-diagram](/img/api-diagram.png)
+
 ### Stacks node RPC API
 
 The [stacks-node implementation](https://github.com/blockstack/stacks-blockchain/) exposes JSON RPC endpoints.
