@@ -143,13 +143,16 @@ following code into the file.
 
 ;; SIP009: Transfer token to a specified principal
 (define-public (transfer (token-id uint) (sender principal) (recipient principal))
-  (if (and
-        (is-eq tx-sender sender))
-      ;; Make sure to replace MY-OWN-NFT
-      (match (nft-transfer? MY-OWN-NFT token-id sender recipient)
-        success (ok success)
-        error (err error))
-      (err u500)))
+  (begin
+     (asserts! (is-eq tx-sender sender) (err u403))
+     ;; Make sure to replace MY-OWN-NFT
+     (nft-transfer? MY-OWN-NFT token-id sender recipient)))
+
+(define-public (transfer-memo (token-id uint) (sender principal) (recipient principal) (memo (buff 34)))
+  (begin 
+    (try! (transfer token-id sender recipient))
+    (print memo)
+    (ok true))
 
 ;; SIP009: Get the owner of the specified token ID
 (define-read-only (get-owner (token-id uint))
@@ -162,18 +165,14 @@ following code into the file.
 
 ;; SIP009: Get the token URI. You can set it to any other URI
 (define-read-only (get-token-uri (token-id uint))
-  (ok (some "https://docs.stacks.co")))
+  (ok (some "https://token.stacks.co/{id}.json")))
 
 ;; Internal - Mint new NFT
 (define-private (mint (new-owner principal))
     (let ((next-id (+ u1 (var-get last-id))))
+      (var-set last-id next-id)
       ;; Make sure to replace MY-OWN-NFT
-      (match (nft-mint? MY-OWN-NFT next-id new-owner)
-        success
-          (begin
-            (var-set last-id next-id)
-            (ok true))
-        error (err error))))
+      (nft-mint? MY-OWN-NFT next-id new-owner)))
 ```
 
 Continue editing the file, making sure that you replace the `MY-OWN-NFT` string in the contract with your own string.
@@ -197,7 +196,11 @@ Contracts
 |                                                     |     (token-id uint)             |
 |                                                     |     (sender principal)          |
 |                                                     |     (recipient principal))      |
-+-----------------------------------------------------+---------------------------------+
+|                                                     | (transfer-memo                  |
+|                                                     |     (token-id uint)             |
+|                                                     |     (sender principal)          |
+|                                                     |     (recipient principal)       |
+|                                                     |     (memo (buff 34))            | |+-----------------------------------------------------+---------------------------------+
 | ST1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE.nft-trait |                                 |
 +-----------------------------------------------------+---------------------------------+
 ```
@@ -260,7 +263,7 @@ Clarinet.test({
     block.receipts[1].result
       .expectOk()
       .expectSome()
-      .expectAscii("https://docs.stacks.co");
+      .expectAscii("https://token.stacks.co/{id}.json");
   },
 });
 ```
