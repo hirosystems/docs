@@ -12,7 +12,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
+      description="Easily write Clarity smart contracts, build apps, and use developer tools for Stacks"
     >
       <main>
         <HomepageBanner />
