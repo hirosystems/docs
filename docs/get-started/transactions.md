@@ -85,7 +85,7 @@ Post-conditions are meant to be added by the user (or by the user's wallet softw
 
 ### Attributes
 
-Each transaction includes a field that describes zero or more post-conditions that must all be true when the transaction finishes running. The post-condition describes only properties of the owner of the asset before the transaction happend. For a transfer transaction, the post-condition is about the sender, for a burn transaction, the post-condition is about the previous owner. A post-condition includes the following information:
+Each transaction includes a field that describes zero or more post-conditions that must all be true when the transaction finishes running. The post-condition describes only properties of the owner of the asset before the transaction happened. For a transfer transaction, the post-condition is about the sender, for a burn transaction, the post-condition is about the previous owner. A post-condition includes the following information:
 
 | **Attribute**                                                        | **Sample**                                  | **Description**                                                                                  |
 | -------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -406,7 +406,7 @@ Step 5: Add the resulting recoverable ECDSA signature to the transaction spendin
 
 ### Single signature transaction
 
-As the name implies a single signature transactions contains 1 signature from the origin account that authorizes a token spend or smart contract deploy/execution.
+As the name implies a single signature transaction contains 1 signature from the origin account that authorizes a token spend or smart contract deploy/execution.
 
 ### Multi-signature transaction
 
@@ -427,9 +427,9 @@ curl --location --request POST 'https://stacks-node-api.testnet.stacks.co/v2/tra
 --data-raw '<tx_raw_format>'
 ```
 
-The API will respond with a `HTTP 200 - OK` if the transactions was successfully added to the mempool.
+The API will respond with a `HTTP 200 - OK` if the transaction was successfully added to the mempool.
 
-There is no explicit time constraint between the construction of a valid signed transaction and when it can be broadcast. There are, however, some constraint to be aware of. The following reasons can deem a transaction invalid after some period:
+There is no explicit time constraint between the construction of a valid signed transaction and when it can be broadcast. There are, however, some constraints to be aware of. The following reasons can deem a transaction invalid after some period:
 
 - Token transfer: Nonce changed in-between construction and broadcast
 - Contract call or deploy: Block height is evaluated (with [`at-block`](https://docs.stacks.co/references/language-functions#at-block)) and changed in-between construction and broadcast
@@ -460,7 +460,7 @@ transactions after [256 blocks][].
 - **Transaction chaining:** even when using the correct nonce, transactions might arrive at a node out-of-order. For
   instance, a transaction with `nonce=1` may arrive in the mempool before the `nonce=0` transaction. Stacks nodes admit
   such out-of-order transactions in the mempool, but only up to a limit ([25 in the current implementation][]). So, you
-  should limit and chain of unconfirmed transactions from a single account to less than 25. Making this limit higher has
+  should limit any chain of unconfirmed transactions from a single account to less than 25. Making this limit higher has
   downsides, discussed in [this issue](https://github.com/blockstack/stacks-blockchain/issues/2384). If you need to send
   more than 25 transactions per block, consider using multiple accounts or a smart-contract based approach. See
   [this tool](https://www.npmjs.com/package/@stacks/send-many-stx-cli), for example, that allows up to 200 token
@@ -601,7 +601,7 @@ Sample response:
 
 ## Garbage Collection
 
-Broadcast transactions stay in the mempool for 256 blocks (~42 hours). If a transactions is not confirmed within that time, it is removed from the mempool.
+Broadcast transactions stay in the mempool for 256 blocks (~42 hours). If a transaction is not confirmed within that time, it is removed from the mempool.
 
 !> Most transactions stay in the mempool due to nonce issues. If you see a transaction pending for an unusual time, review the nonce of the account and the transaction.
 
