@@ -127,7 +127,7 @@ For this tutorial, you'll define an NFT contract for the Stacks testnet. Open th
 following code into the file.
 
 ```clarity
-;; use the SIP090 interface (testnet)
+;; use the SIP009 interface (testnet)
 ;; trait deployed by deployer address from ./settings/Devnet.toml
 (impl-trait 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.nft-trait.nft-trait)
 
@@ -152,7 +152,7 @@ following code into the file.
   (begin 
     (try! (transfer token-id sender recipient))
     (print memo)
-    (ok true))
+    (ok true)))
 
 ;; SIP009: Get the owner of the specified token ID
 (define-read-only (get-owner (token-id uint))
