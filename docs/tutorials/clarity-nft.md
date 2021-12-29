@@ -152,7 +152,7 @@ following code into the file.
   (begin 
     (try! (transfer token-id sender recipient))
     (print memo)
-    (ok true))
+    (ok true)))
 
 ;; SIP009: Get the owner of the specified token ID
 (define-read-only (get-owner (token-id uint))
