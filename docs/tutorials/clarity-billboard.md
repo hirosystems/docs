@@ -285,10 +285,7 @@ Clarinet.test({
     let [event] = block.receipts[0].events;
     let { sender, recipient, amount } = event.stx_transfer_event;
     sender.expectPrincipal(wallet_1.address);
-    recipient.expectPrincipal(
-    // you can get the contract address using clarinet console
-      "ST1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE.billboard"
-    );
+    recipient.expectPrincipal(`${deployer.address}.billboard`);
     amount.expectInt(100);
 
     assetMaps = chain.getAssetsMaps();
