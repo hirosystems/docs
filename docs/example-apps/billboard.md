@@ -12,7 +12,7 @@ This app showcases the following features of Stacks and Clarinet:
 - Accessing values in a smart contract from the [Stacks API](/api)
 - Issuing a contract transaction with [Stacks.js](/references#frontend-development)
 
-The source for the billboard app is available on [GitHub](https://github.com/pgray-hiro/stacks-billboard). This page assumes that you have familiarity with [React](https://reactjs.org).
+The source for the billboard app is available on [GitHub](https://github.com/hirosystems/stacks-billboard). This page assumes that you have familiarity with [React](https://reactjs.org).
 
 ## Billboard overview
 
