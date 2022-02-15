@@ -254,7 +254,7 @@ Clarinet.test({
   name: "A quick demo on how to assert expectations",
   async fn(chain: Chain, accounts: Map<string, Account>) {
     let wallet_1 = accounts.get("wallet_1")!;
-
+    let deployer = accounts.get("deployer")!;
     let assetMaps = chain.getAssetsMaps();
     const balance = assetMaps.assets["STX"][wallet_1.address];
 
@@ -284,10 +284,8 @@ Clarinet.test({
 
     let [event] = block.receipts[0].events;
     let { sender, recipient, amount } = event.stx_transfer_event;
-    sender.expectPrincipal("ST1J4G6RR643BCG8G8SR6M2D9Z9KXT2NJDRK3FBTK");
-    recipient.expectPrincipal(
-      "ST1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE.billboard"
-    );
+    sender.expectPrincipal(wallet_1.address);
+    recipient.expectPrincipal(`${deployer.address}.billboard`);
     amount.expectInt(100);
 
     assetMaps = chain.getAssetsMaps();
