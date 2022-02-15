@@ -254,7 +254,7 @@ Clarinet.test({
   name: "A quick demo on how to assert expectations",
   async fn(chain: Chain, accounts: Map<string, Account>) {
     let wallet_1 = accounts.get("wallet_1")!;
-    let deployer = accounts.get('deployer')!;
+    let deployer = accounts.get("deployer")!;
     let assetMaps = chain.getAssetsMaps();
     const balance = assetMaps.assets["STX"][wallet_1.address];
 
