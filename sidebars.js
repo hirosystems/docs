@@ -138,6 +138,11 @@ module.exports = {
               label: "bns",
               href: "https://stacks.js.org/modules/bns.html",
             },
+            {
+              type: "link",
+              label: "wallet-sdk",
+              href: "https://stacks.js.org/modules/wallet-sdk.html",
+            },
           ],
         },
       ],
