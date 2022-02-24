@@ -264,7 +264,7 @@ interface FinishedTxData {
 }
 ```
 
-The `StacksTransaction` type comes from the [`@stacks/transactions`](https://blockstack.github.io/stacks.js/modules/transactions.html) library.
+The `StacksTransaction` type comes from the [`@stacks/transactions`](https://stacks.js.org/modules/transactions.html) library.
 
 The `txId` property can be used to provide a link to view the transaction in the explorer.
 
@@ -277,7 +277,7 @@ const onFinish = (data) => {
 
 ## Specifying the network for a transaction {#network-option}
 
-All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](https://blockstack.github.io/stacks.js/modules/network.html) package.
+All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](https://stacks.js.org/modules/network.html) package.
 
 ```ts
 import { StacksTestnet, StacksMainnet } from "@stacks/network";
@@ -328,7 +328,7 @@ const MyComponent = () => {
 
 ## Request testnet STX from faucet
 
-You may find it useful to request testnet STX from [the Stacks Explorer sandbox](https://explorer.stacks.co/sandbox?chain=testnet) while developing your app with the Stacks testnet.
+You may find it useful to request testnet STX from [the Stacks Explorer sandbox](https://explorer.stacks.co/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
 
 ## Transaction request / response payload
 

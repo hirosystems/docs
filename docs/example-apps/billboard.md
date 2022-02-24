@@ -96,7 +96,7 @@ The following sections highlight important parts of the billboard frontend app.
 
 ### Interacting with the Stacks API
 
-The billboard frontend uses the [transactions](https://blockstack.github.io/stacks.js/modules/transactions.html) module of Stacks.js to interact with the [Stacks API](/api) and read values from the backend smart contract. This is accomplished by creating a network object in Stacks.js, serializing a request using Stacks.js, and then sending the request to the appropriate endpoint using the network object.
+The billboard frontend uses the [transactions](https://stacks.js.org/modules/transactions.html) module of Stacks.js to interact with the [Stacks API](/api) and read values from the backend smart contract. This is accomplished by creating a network object in Stacks.js, serializing a request using Stacks.js, and then sending the request to the appropriate endpoint using the network object.
 
 Note that commonly used objects such as the network and smart contract API are created as React hooks, a design choice that allows them to be shared between React components and is friendly to the React component lifecycle.
 
@@ -214,7 +214,7 @@ With the local DevNet running and the billboard frontend running, in a new termi
 
 If the transaction was successful, the script echoes the message as output. A successful transaction should appear in the mempool summary of the DevNet interface.
 
-Internally, the script forms a transaction and then submits it to the local DevNet API node using the [transactions](https://blockstack.github.io/stacks.js/modules/transactions.html) library.
+Internally, the script forms a transaction and then submits it to the local DevNet API node using the [transactions](https://stacks.js.org/modules/transactions.html) library.
 
 ```js title="./update-message.js"
 ...
