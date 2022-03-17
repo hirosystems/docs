@@ -5,22 +5,21 @@ title: Managing accounts
 
 ## Introduction
 
-This tutorial will walk you through the following steps:
+This tutorial helps you manage your accounts with the following steps:
 
 - Generating an account
 - Reviewing account info
 - Reviewing account history
 - Getting account balances
 
-:::note
+>[!NOTE]
 
-This tutorial is NodeJS-specific. If you would like to understand how to manage Stacks 2.0 accounts using a different language/framework, please [review the accounts guide](https://docs.stacks.co/understand-stacks/accounts).
+> This tutorial is NodeJS-specific. If you would like to understand how to manage Stacks 2.0 accounts using a different language/framework, please [review the accounts guide](https://docs.stacks.co/understand-stacks/accounts).
 
-:::
 
 ## Prerequisites
 
-You will need [NodeJS](https://nodejs.org/en/download/) `8.12.0` or higher to complete this tutorial. You can verify your installation by opening up your terminal and run the following command:
+You will need [NodeJS](https://nodejs.org/en/download/) `8.12.0` or higher to complete this tutorial. To verify your installation, open your terminal and run the following command:
 
 ```bash
 node --version
@@ -34,11 +33,10 @@ First, install all the required libraries:
 npm install --save @stacks/transactions @stacks/blockchain-api-client cross-fetch
 ```
 
-:::info
+>[!INFO]
 
-The TypeScript API client is generated from the [OpenAPI specification](https://github.com/hirosystems/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). You can use the generator to create Stacks API clients for many other languages.
+> The TypeScript API client is generated from the [OpenAPI specification](https://github.com/hirosystems/stacks-blockchain-api/blob/master/docs/openapi.yaml) ([openapi-generator](https://github.com/OpenAPITools/openapi-generator)). You can use the generator to create Stacks API clients for many other languages.
 
-:::
 
 ## Step 2: Generating an account
 
@@ -67,15 +65,13 @@ const apiConfig = new Configuration({
 const privateKey = makeRandomPrivKey();
 ```
 
-:::note
+>[!NOTE]
 
-The preceding code also imports methods required for the next steps, including API configuration for the client library usage.
-
-:::
+> The preceding code also imports methods required for the next steps, including API configuration for the client library usage.
 
 ## Step 3: Reviewing account info
 
-With the private key, you can review account details. First, we need to derive the Stacks address from the private key. Then, we can use the `AccountsApi` class to get the account details:
+With the above generated private key, you can review account details. First, we need to derive the Stacks address from the private key. Then, we can use the `AccountsApi` class to get the account details:
 
 ```js
 const stacksAddress = getAddressFromPrivateKey(
@@ -94,11 +90,9 @@ async function getAccountInfo() {
 }
 ```
 
-:::note
+>[!NOTE]
 
-A "principal" is any entity that can have a token balance. Find more details in the [Principals guide](https://docs.stacks.co/write-smart-contracts/principals).
-
-:::
+> A "principal" is any entity that can have token balance. You can find more details in the [Principals guide](https://docs.stacks.co/write-smart-contracts/principals).
 
 The API will respond with a balance, nonce (starting at zero), and respective proofs:
 
@@ -130,7 +124,7 @@ async function getAccountInfoWithoutProof() {
 
 ## Step 4: Reviewing account history
 
-The following step make requires associated accounts transactions. For simplicity, run the faucet for the new account:
+The following step requires associated account transactions. For simplicity, run the faucet for the new account:
 
 ```js
 async function runFaucetStx() {
@@ -154,13 +148,12 @@ The API will respond with a new transaction ID and confirmation that the faucet 
 }
 ```
 
-:::note
+>[!NOTE]
 
-Wait a few minutes for the transaction to complete. You can review the status using the Explorer, by navigating to the following URL: `https://explorer.stacks.co/txid/<txid>`.
+> Wait a few minutes for the transaction to complete. You can review the status using the Explorer, by navigating to the following URL: `https://explorer.stacks.co/txid/<txid>`.
 
-:::
 
-Assuming the faucet transaction was successfully processed, you can review the account history. We are expecting at least one transactions to show up in the account history.
+Assuming the faucet transaction was successfully processed, you can review the account history. We are expecting at least one transaction to apprear in the account history.
 
 ```js
 async function getAccountTransactions() {
@@ -206,7 +199,7 @@ The API will respond with a paginatable list of transactions associated with the
 }
 ```
 
-Please review the [API reference](https://docs.hiro.so/api#operation/get_account_transactions) for property definitions and details.
+You can review the [API reference](https://docs.hiro.so/api#operation/get_account_transactions) for property definitions and details.
 
 ### Handling pagination
 
@@ -247,7 +240,7 @@ async function getAccountBalance() {
 }
 ```
 
-The API will respond with the following breakdown of token balances:
+The API responds with the following breakdown of token balances:
 
 ```js
 {
@@ -261,10 +254,8 @@ The API will respond with the following breakdown of token balances:
 }
 ```
 
-:::note
+>[!NOTE]
 
-The `balance` field is denoted in micro-STX units. 1,000,000 micro-STX are worth 1 Stacks (STX) token.
-
-:::
+> The `balance` field is denoted in micro-STX units. 1,000,000 micro-STX is worth 1 Stacks (STX) token.
 
 In the preceding response, the current Stacks (STX) balance is `500000` micro-STX, or `0.5` Stacks (STX) token.
