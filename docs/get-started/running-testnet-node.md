@@ -28,7 +28,7 @@ In order for the API node services to work correctly, you must configure any net
 the ports discussed in this section. The details of network and firewall configuration are highly specific to your
 machine and network, so a detailed example isn't provided.
 
-The following ports must open on the host machine:
+You must open the following ports on the host machine:
 
 Ingress:
 
@@ -73,7 +73,7 @@ docker run -d --rm \
 /bin/stacks-node xenon
 ```
 
-You can verify the running [`stacks-blockchain`][] container with the command:
+You can verify that the container [`stacks-blockchain`][] is running with the command:
 
 ```sh
 docker ps --filter name=stacks-blockchain
@@ -131,7 +131,7 @@ If the instance is running you should receive terminal output similar to the fol
 
 ## Stopping the testnet node
 
-Use the following commands to stop the local testnet node:
+Use the following command to stop the local testnet node:
 
 ```sh
 docker stop stacks-blockchain
