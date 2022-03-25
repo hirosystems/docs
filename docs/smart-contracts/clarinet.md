@@ -15,7 +15,7 @@ test the behavior of the smart contract. Blocks are mined instantly, and you can
 
 Clarinet is a helpful tool for developing smart contracts, and should be used as part of a larger development strategy
 that involves building and testing the contract locally, deploying the final draft contract to a testnet environment
-and testing on a pulicly available live blockchain, and finally, the ability to deploy the final contract to the mainnet without switching to another tool.
+and testing on a publicly available live blockchain, and finally, the ability to deploy the final contract to the mainnet without switching to another tool.
 
 When developing smart contracts, you may also want to use the [Clarity Visual Studio Code plugin][].
 

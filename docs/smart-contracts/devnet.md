@@ -34,7 +34,7 @@ clarinet integrate
 ```
 
 Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks Blockchain node, Stacks Blockchain API node, and the Bitcoin
-and Stacks Explorers .All the dependent components are pulled, assembled, and run automatically to provide a highly-integrated and seamless bootstrapping experience to build new Apps on Stacks Blockchain rapidly. This can take several minutes on the first launch, given the Docker images are pulled from the registry for the first time. Once the images are launched, the DevNet interface
+and Stacks Explorers. All the dependent components are pulled, assembled, and run automatically to provide a highly-integrated and seamless bootstrapping experience to build new Apps on Stacks Blockchain rapidly. This can take several minutes on the first launch, given the Docker images are pulled from the registry for the first time. Once the images are launched, the DevNet interface
 is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second
 block of the chain, so you may need to wait for the third block before launching your frontend development environment.
 
