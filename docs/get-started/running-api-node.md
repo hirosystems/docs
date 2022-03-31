@@ -87,7 +87,7 @@ docker run -d --rm \
   --net=stacks-blockchain \
   -e POSTGRES_PASSWORD=postgres \
   -v $(pwd)/persistent-data/postgres:/var/lib/postgresql/data \
-  -p 5432:5432
+  -p 5432:5432 \
   postgres:alpine
 ```
 
