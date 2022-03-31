@@ -7,11 +7,11 @@ The Stacks 2.0 blockchain API allows you to query the Stacks 2.0 blockchain and 
 
 :::caution
 
-Hiro hosts the Stacks 2.0 blockchain API. Using it requires you to trust the hosted server, providing a faster development experience. Consider [running your own API instance](#running-an-api-server) to create a fully trustless architecture for your app.
+Hiro hosts an instance of the Stacks 2.0 blockchain API. Using it requires you to trust the hosted server, providing a faster development experience. Consider [running your own API instance](#running-an-api-server) to create a fully trustless architecture for your app.
 
 :::
 
-The Stacks 2.0 Blockchain API is RESTful, JSON-friendly, and available without authorization. The base path for the API is:
+The RESTful JSON API can be used without any authorization. The base path for the API is:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -24,7 +24,7 @@ Review the [Stacks API reference](/api) for more details
 
 :::
 
-The Stacks 2.0 Blockchain API is comprised of two parts: the "Stacks Blockchain API" and the "Stacks Node RPC API". The Stacks Node RPC API is exposed by every running node participating in the Stacks Blokchain. However, the Stacks Blockchain API introduces additional capabilities (for example, retrieving all transactions). It also proxies calls directly to Stacks Node RPC API.
+The API is comprised of two parts: the Stacks Blockchain API and the Stacks Node RPC API. The Node RPC API is exposed by every running node. Stacks Blockchain API, however, introduces additional capabilities (for example, retrieving all transactions). It also proxies calls directly to Stacks Node RPC API.
 
 ![api-diagram](/img/api-diagram.png)
 
@@ -51,7 +51,7 @@ Postman allows you to [generate sample code](https://learning.postman.com/docs/s
 
 ## OpenAPI spec
 
-The Stacks Blockchain API was designed using the [OpenAPI specification](https://swagger.io/specification/), making it compatible with various developer tools.
+The Stacks API was designed using the [OpenAPI specification](https://swagger.io/specification/), making it compatible with various developer tools.
 
 The [OpenAPI specification file for Stacks](https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/docs/openapi.yaml) is used to generate the [TypeScript client library](#typescript-client-library). You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator).
 
@@ -218,9 +218,9 @@ Using the `limit` and `offset` properties, you can paginate through the entire l
 
 Several endpoints will by default request the [MARF Merkel Proof](https://github.com/stacksgov/sips/blob/main/sips/sip-004/sip-004-materialized-view.md#marf-merkle-proofs).
 
-Provided with the proof, a client can verify the value, cumulative energy spent, and the number of confirmations for the response value provided by the Stacks Blockchain API.
+Provided with the proof, a client can verify the value, cumulative energy spent, and the number of confirmations for the response value provided by the API.
 
-Requesting the proof requires more resources (computation time, response time, and response body size). To avoid the additional resources, in case verification is not required, Stacks Blockchain API endpoints allow setting the request parameter: `proof=0`. The returned response object will not have any proof fields.
+Requesting the proof requires more resources (computation time, response time, and response body size). To avoid the additional resources, in case verification is not required, API endpoints allow setting the request parameter: `proof=0`. The returned response object will not have any proof fields.
 
 ## Searching
 
@@ -337,7 +337,7 @@ Find all Data and Construction Rosetta endpoints [here](https://docs.hiro.so/api
 
 ## Microblocks support
 
-The Stacks Blockchain API support for microblocks is a work-in-progress. Review the [API documentation][microblocks_api] carefully to
+The API support for microblocks is a work-in-progress. Review the [API documentation][microblocks_api] carefully to
 ensure that you are up-to-date on the latest implementation details for microblocks.
 
 The API allows querying the most recently streamed microblocks:
@@ -396,11 +396,11 @@ You can use the `possible_next_nonce` property as the nonce for your next transa
 
 ## Running an API server
 
-While Hiro provides a fully managed and hosted Stacks Blockchain API instance of the Stacks 2.0 Blockchain API, anyone can spin up their own version. Please [follow the instructions in this guide](/get-started/running-api-node) to start a Docker container with the API service running.
+While Hiro provides a fully managed and hosted API instance of the Stacks 2.0 Blockchain API, anyone can spin up their own version. Please [follow the instructions in this guide](/get-started/running-api-node) to start a Docker container with the API service running.
 
 :::info
 
-Once started, the Stacks Blockchain API is available on `localhost:3999`
+Once started, the API is available on `localhost:3999`
 
 :::
 
