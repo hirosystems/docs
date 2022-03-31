@@ -160,7 +160,7 @@ Wait a few minutes for the transaction to complete. You can review the status us
 
 :::
 
-Assuming the faucet transaction was successfull, you can review the account history. We are expecting at least one transaction to show up in the account history.
+Assuming the faucet transaction was successful, you can review the account history. We are expecting at least one transaction to show up in the account history.
 
 ```js
 async function getAccountTransactions() {
