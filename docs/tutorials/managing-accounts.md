@@ -5,16 +5,16 @@ title: Managing accounts
 
 ## Introduction
 
-This tutorial will walk you through the following steps:
+This tutorial walks you through the following steps:
 
-- Generating an account
-- Reviewing account info
-- Reviewing account history
-- Getting account balances
+- Generate an account
+- Review account info
+- Review account history
+- Get account balances
 
 :::note
 
-This tutorial is NodeJS-specific. If you would like to understand how to manage Stacks 2.0 accounts using a different language/framework, please [review the accounts guide](https://docs.stacks.co/understand-stacks/accounts).
+This tutorial is NodeJS-specific. You can [review the accounts guide](https://docs.stacks.co/understand-stacks/accounts) to understand how to manage Stacks 2.0 accounts using a different language/framework.
 
 :::
 
@@ -26,7 +26,7 @@ You will need [NodeJS](https://nodejs.org/en/download/) `8.12.0` or higher to co
 node --version
 ```
 
-## Step 1: Installing libraries
+## Step 1: Install libraries
 
 First, install all the required libraries:
 
@@ -40,7 +40,7 @@ The TypeScript API client is generated from the [OpenAPI specification](https://
 
 :::
 
-## Step 2: Generating an account
+## Step 2: Generate an account
 
 To get started, generate a new, random Stacks 2.0 private key:
 
@@ -73,7 +73,7 @@ The preceding code also imports methods required for the next steps, including A
 
 :::
 
-## Step 3: Reviewing account info
+## Step 3: Review account info
 
 With the private key, you can review account details. First, we need to derive the Stacks address from the private key. Then, we can use the `AccountsApi` class to get the account details:
 
@@ -113,7 +113,7 @@ The API will respond with a balance, nonce (starting at zero), and respective pr
 
 The `balance` property represents the Stacks token balance, as hex-encoded string of an unsigned 128-bit integer (big-endian). It is not easy to consume the `balance` property in this format. To simplify that, and to obtain all balances for all tokens (Stacks/STX, fungible, and non-fungible), check out [step 5](#step-5-getting-account-balances).
 
-### Disabling proofs
+### Disable proofs
 
 Proofs, provided as hex-encoded strings, can be removed from the responses by setting the `proof` parameter:
 
@@ -128,9 +128,9 @@ async function getAccountInfoWithoutProof() {
 }
 ```
 
-## Step 4: Reviewing account history
+## Step 4: Review account history
 
-The following step make requires associated accounts transactions. For simplicity, run the faucet for the new account:
+The following step requires associated accounts transactions. For simplicity, run the faucet for the new account:
 
 ```js
 async function runFaucetStx() {
@@ -160,7 +160,7 @@ Wait a few minutes for the transaction to complete. You can review the status us
 
 :::
 
-Assuming the faucet transaction was successfully processed, you can review the account history. We are expecting at least one transactions to show up in the account history.
+Assuming the faucet transaction was successful, you can review the account history. We are expecting at least one transaction to show up in the account history.
 
 ```js
 async function getAccountTransactions() {
@@ -208,7 +208,7 @@ The API will respond with a paginatable list of transactions associated with the
 
 Please review the [API reference](https://docs.hiro.so/api#operation/get_account_transactions) for property definitions and details.
 
-### Handling pagination
+### Handle pagination
 
 To make API responses more compact, lists returned by the API are paginated. For lists, the response body includes:
 
@@ -233,7 +233,7 @@ async function getAccountTransactions() {
 }
 ```
 
-## Step 5: Getting account balances
+## Step 5: Get account balances
 
 As mentioned above, any Stacks address can have a variety of tokens and associated balances. In order to get balances for all Stacks, fungible, and non-fungible tokens, we can use the `getAccountBalance` method:
 
