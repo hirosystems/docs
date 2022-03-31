@@ -17,6 +17,18 @@ The `-g` flag makes the CLI commands available globally
 
 :::
 
+:::tip
+
+If you're seeing errors installing the Stacks CLI, your `node` and `npm` versions aren't compatible with the dependent packages. It is generally recommended that you start with a stable or an LTS version of node, npm, and the related modules. 
+
+For instance, the following `nvm` command can help you pull and configure the stable dependencies.
+
+```sh
+nvm install --lts
+```
+
+:::
+
 ## Network selection
 
 By default, the CLI will attempt to interact with the mainnet of the Stacks 2.0 blockchain. However, it is possible to override the network and set it to the testnet:

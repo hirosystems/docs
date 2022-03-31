@@ -8,15 +8,14 @@ contract development, testing, and deployment. Clarinet consists of a Clarity RE
 used together, allow you to rapidly develop and test a Clarity smart contract, without the need to deploy the contract
 to a local mocknet or testnet.
 
-The local Clarity REPL is advantageous, because when learning Clarity or when developing a new smart contract, it's
-useful to be able to exercise a contract without needing to wait for block times in a live blockchain. Clarinet allows
-you to instantly initialize wallets and populate them with tokens, so that you can interactively or programmatically
-test the behavior of the smart contract. Blocks are mined instantly, and you can control the number of blocks that
-are mined between testing transactions.
+The local Clarity REPL is advantageous because when learning Clarity or developing a new smart contract, it's
+helpful to exercise a contract without needing to wait for block times in a live blockchain. Clarinet allows
+you to instantly initialize a simulated environment, including wallets, and populate them with tokens to interactively or programmatically
+test the behavior of the smart contract. Blocks are mined instantly, and you can control the number of mined blocks between testing transactions.
 
-Clarinet is a useful tool for developing smart contracts, and should be used as part of a larger development strategy
+Clarinet is a helpful tool for developing smart contracts, and should be used as part of a larger development strategy
 that involves building and testing the contract locally, deploying the final draft contract to a testnet environment
-and testing on a live blockchain, and deploying the final contract to the mainnet.
+and testing on a pulicly available live blockchain, and finally, the ability to deploy the final contract to the mainnet without switching to another tool.
 
 When developing smart contracts, you may also want to use the [Clarity Visual Studio Code plugin][].
 
@@ -25,25 +24,25 @@ When developing smart contracts, you may also want to use the [Clarity Visual St
 Clarinet is available in the Homebrew and Winget package managers. Installing from a package manager is the recommended
 installation method.
 
-### Installing from Homebrew (MacOS and Linux)
+### Install on macOS (Homebrew)
 
-Install Clarinet from Homebrew with the command:
-
-```sh
+```bash
 brew install clarinet
 ```
 
-### Installing from winget (Windows)
+### Install on Windows
 
-With the winget package manager installed, use the following command:
+The easiest way to install Clarinet on Windows is to use the MSI installer, that can be downloaded from the [releases page](https://github.com/hirosystems/clarinet/releases).
 
-```sh
+Clarinet is also available on Winget, the package manager that Microsoft started including in the latest Windows updates:
+
+```powershell
 winget install clarinet
 ```
 
-### Installing from a binary release
+### Install from a pre-built binary
 
-You can download a release from the [Clarinet repository](https://github.com/hirosystems/clarinet/releases/latest).
+To install Clarinet from pre-built binaries, download the latest release from the [releases page](https://github.com/hirosystems/clarinet/releases).
 Unzip the binary, then copy it to a location that is already in your path, such as `/usr/local/bin`.
 
 ```sh
@@ -52,11 +51,11 @@ chmod +x ./clarinet
 mv ./clarinet /usr/local/bin
 ```
 
-If you are using MacOS, you may get security warnings when trying to run the precompiled binary. You can resolve the
-security warning with the command:
+On MacOS, you may get security errors when trying to run the pre-compiled binary. You can resolve the security warning
+with with command
 
 ```sh
-xattr -d com.apple.quarantine /path/to/downloaded/clarinet
+xattr -d com.apple.quarantine /path/to/downloaded/clarinet/binary
 ```
 
 ### Installing from source

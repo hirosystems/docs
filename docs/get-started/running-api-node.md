@@ -3,8 +3,8 @@ id: running-api-node
 title: Running a Stacks API node
 ---
 
-This procedure demonstrates how to run a local API node using Docker images. There are several components that must be
-configured and run in a specific order for the local API node to work.
+This procedure demonstrates how to run a local Stacks Blockchain API node using Docker images. There are several components that must be
+configured and run in a specific order for the local Stacks Blockchain API node to work.
 
 For this procedure, the order in which the services are brought up is very important. In order to start the API node
 successfully, you need to bring up the services in the following order:
@@ -13,7 +13,7 @@ successfully, you need to bring up the services in the following order:
 2. `stacks-blockchain-api`
 3. `stacks-blockchain`
 
-When bringing down the API node, you should bring the services down in the exact reverse order in which they were
+When bringing down the Stacks Blockchain API node, you should bring the services down in the exact reverse order in which they were
 brought up, to avoid losing data.
 
 :::note
@@ -25,8 +25,7 @@ Windows.
 
 ## Prerequisites
 
-Running a node has no specialized hardware requirements. Users have been successful in running nodes on Raspberry Pi
-boards and other system-on-chip architectures. In order to complete this procedure, you must have the following software
+Running a node has no specialized hardware requirements. Users have been successful in running Stacks Blockchain and Stacks Blockchain API nodes on Raspberry Pi and other system-on-chip architectures. In order to complete this procedure, you must have the following software
 installed on the node host machine:
 
 - [Docker](https://docs.docker.com/get-docker/)
@@ -278,7 +277,7 @@ If the instance is configured correctly, you should receive terminal output simi
 }
 ```
 
-Once the API is running, you can use it to [interact with other API endpoints][`stacks-blockchain-api`].
+Once the API is running, you can use it to [interact with other API endpoints](https://docs.hiro.so/api).
 
 ## Stopping the API node
 

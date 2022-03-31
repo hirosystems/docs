@@ -20,6 +20,6 @@ Smart contracts on Stacks are developed in Clarity, a LISP-based, non-Turing com
 
 ## Frontend development
 
-Hiro provides the Stacks.js libraries for developing Stacks web apps in JavaScript or TypeScript. Stacks.js consists of several libraries for interacting with the Stacks blockchain. The [connect](https://github.com/hirosystems/connect#readme) library allows you to interact with the Hiro web wallet, allowing you to read important user information. The [transactions](https://hirosystems.github.io/stacks.js/modules/transactions.html) library has helper functions for converting JavaScript types to Clarity types (and vice versa), as well as functions for for forming Stacks transactions.
+Hiro provides the Stacks.js libraries for developing Stacks web apps in JavaScript or TypeScript. Stacks.js consists of several libraries for interacting with the Stacks blockchain. The [connect](https://github.com/hirosystems/connect#readme) library allows you to interact with the Hiro web wallet, allowing you to read important user information. The [transactions](https://github.com/hirosystems/stacks.js/tree/master/packages/transactions) library has helper functions for converting JavaScript types to Clarity types (and vice versa), as well as functions for for forming Stacks transactions.
 
 For a full list of Stacks.js libraries, see the sidebar.
