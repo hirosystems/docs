@@ -14,7 +14,7 @@ Clarity, the smart contracting language, is based on [LISP](<https://en.wikipedi
 
 ### Node environment
 
-To complete the tutorial, you should have [NodeJS](https://nodejs.org/en/download/) installed on your workstation. To install and run the starter project, you need to have at least version `8.12.0`. You can verify your installation by opening up your terminal and run the following command:
+To complete the tutorial, you should have [NodeJS](https://nodejs.org/en/download/) installed on your workstation. To install and run the starter project, you'll need  version `8.12.0` or higher. You can verify your installation by opening your terminal and run the following command:
 
 ```bash
 node --version
@@ -29,27 +29,27 @@ mkdir hello-world; cd hello-world
 npm init clarity-starter
 ```
 
-After the starter project is loaded up, you have to select a template and a name for your local project folder. Feel free to hit ENTER both times to accept the default suggestion.
+After the starter project is created, you can select a template and a name for your local project folder. Feel free to hit ENTER both times to accept the default suggestion.
 
 ```bash
 ? Template - one of [hello-world, counter]: (hello-world)
 ```
 
-Finally, after the project dependencies have been installed, your project is ready for development.
+Finally, after the project dependencies are installed, your project is ready for development.
 
-The project resources are created in your current folder. Take note of the `contracts` and `test` folders. The other files are boilerplate to wire up the project.
+The project resources are created in your current folder. Take note of the `contracts` and `test` folders. The other files are standardized pieces to wire up the project.
 
 ## Run tests
 
-The starter project comes with test tooling already set up for you using [Mocha](https://mochajs.org/). Let's run the tests and review the results:
+The starter project comes with test tooling already set up for you using [Mocha](https://mochajs.org/). You can now run the tests and review the results:
 
-Still in the project root directory, run the following command:
+In the project root directory, run the following command:
 
 ```bash
 npm test
 ```
 
-You should see the following response:
+You'll see the following response:
 
 ```bash
   hello world contract test suite
@@ -88,7 +88,7 @@ import {
 
 ### Initializing a client
 
-At the test start, we are initializing a contract instance `helloWorldClient` and a provider that simulates interactions with the Stacks 2.0 blockchain. If this were in a production environment, the contract instance would be the equivalent of a contract deployed to the blockchain. The provider would be the Stacks blockchain.
+At the test start, we are initializing a contract instance `helloWorldClient` and a provider that simulates interactions with the Stacks 2.0 blockchain. If this wwas in a production environment, the contract instance would be the equivalent of a contract deployed to the blockchain. The provider would be the Stacks blockchain.
 
 ```js
 let helloWorldClient: Client;
@@ -102,11 +102,11 @@ helloWorldClient = new Client("SP3GWX3NE58KXHESRYE4DYQ1S31PQJTCRXB3PE9SB.hello-w
 
 Take a look at the client initialization. It requires a contract identifier in the following format: `{contract_address}.{contract_name}`. The second argument indicates the location of the smart contract file, without the `.clar` suffix. By default, the location is assumed to be relative to the `contracts` folder.
 
-As you can see above, a sample Stacks address and contract identifier is already provided for you. You don't need to modify anything.
+As you can see above, a sample Stacks address and contract identifier are already provided for you. You don't need to modify anything.
 
 ### Checking syntax
 
-Next, we check the contract for valid syntax. If the smart contract implementation has syntax error (bugs), this check would fail:
+Next, we check the contract for valid syntax. If the smart contract implementation has syntax error (bugs), this check fails:
 
 ```js
 await helloWorldClient.checkContract();
@@ -134,7 +134,7 @@ const receipt = await helloWorldClient.submitQuery(query);
 const result = Result.unwrapString(receipt);
 ```
 
-As you see, smart contract calls are realized through query definitions. The `createQuery` function defines the name and arguments passed to the smart contract function. With `submitQuery`, the function is executed and the response is wrapped into a `Result` object. To obtain the readable result, we use the `unwrapString` function, which should return `hello world`.
+As you see, smart contract calls are realized through query definitions. The `createQuery` function defines the name and arguments passed to the smart contract function. With `submitQuery`, the function is executed and the response is wrapped into a `Result` object. To obtain the readable result, we use the `unwrapString` function that returns `hello world`.
 
 Now, review the last test `should echo number` on your own and try to understand how arguments are passed to the `echo-number` smart contract.
 
