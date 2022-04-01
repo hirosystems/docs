@@ -28,7 +28,7 @@ In order for the API node services to work correctly, you must configure any net
 the ports discussed in this section. The details of network and firewall configuration are highly specific to your
 machine and network, so a detailed example isn't provided.
 
-You must open the following ports on the host machine:
+You can open the following ports on the host machine:
 
 Ingress:
 
