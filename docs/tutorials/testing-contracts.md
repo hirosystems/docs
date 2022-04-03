@@ -37,7 +37,7 @@ After the starter project is created, you can select a template and a name for y
 
 Finally, after the project dependencies are installed, your project is ready for development.
 
-The project resources are created in your current folder. Take note of the `contracts` and `test` folders. The other files are standardized pieces to wire up the project.
+The project resources are created in your current folder. Take note of the `contracts` and `test` folders. The other files are standardized components required to run the project.
 
 ## Run tests
 
