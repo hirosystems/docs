@@ -81,7 +81,7 @@ The first function is a public function called `say-hi`.
 ```
 
 Public functions in Clarity are callable from other smart contracts, which enables you to break complex tasks into
-smaller, simpler smart contraxcts (an exercise in [separating concerns][]).
+smaller, simpler smart contracts (an exercise in [separating concerns][]).
 
 :::info
 
