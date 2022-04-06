@@ -37,7 +37,7 @@ The authenticator generates the app private key from the user's _identity addres
 
 Finally, the app private key is deterministic, meaning that the same private key will always be generated for a given Stacks address and domain.
 
-The first two of these functions are particularly relevant to [data storage with Stacks.js](/build-apps/data-storage).
+The first two functions are particularly relevant to [data storage with Stacks.js](/build-apps/data-storage).
 
 [Learn more about keypairs](#key-pairs) used by authentication.
 
@@ -60,7 +60,7 @@ const appConfig = new AppConfig(["store_write", "publish_data"]);
 const userSession = new UserSession({ appConfig });
 ```
 
-The main thing to decide here is what permission scopes your app needs from the user during authentication.
+During authentication, permission scope for your app from a user is critical.
 
 Apps may request any of the following scopes:
 
@@ -71,7 +71,7 @@ Apps may request any of the following scopes:
 
 The default scopes are `['store_write']` if no `scopes` array is provided when initializing the `appConfig` object.
 
-We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.
+We recommend you initiate the `userSession` object just once in your app, then reference it using imports where needed.
 
 ## Initiate authentication flow
 
@@ -99,21 +99,21 @@ function authenticate() {
 }
 ```
 
-`showConnect` triggers the display of a modal that initiates the authentication process for users, one in which they'll authenticate with a _Secret Key_ that's used to encrypt their private data.
+`showConnect` triggers the display of a modal dialog that initiates the authentication process for users, one in which they'll authenticate with a _Secret Key_ that's used to encrypt private data.
 
 ![Modal displayed by showConnect function](/img/todos-get-started.png)
 
 The `showConnect` function accepts a number of properties within a parameter object such as:
 
-- The app's `name` and `icon`: provided as strings comprising the `appDetails` object property.
-- The `redirectTo` string: used to provide a URL to which the user should be redirected upon successful authentication. The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
+- The app's `name` and `icon`: provided as strings containing the `appDetails` object property.
+- The `redirectTo` string:  upon successful authentication, provides a URL to redirect the user. The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
 - The `userSession` object initiated above.
 
-Once the user selects the button presented in this modal, they are passed to the Stacks Wallet for authenticator with the `authRequest` token as a GET parameter. From there they can confirm authentication and generate a new _Secret Key_ or Stacks identity before doing so, as needed before coming back to the app.
+Once the user selects the button presented in this modal, the user is passed to the Stacks Wallet. Next, the user is authenticated with the `authRequest` token as a GET parameter. The user can now generate a new _Secret Key_ or Stacks identity before coming back to the app.
 
 ## Handle pending authentication
 
-Unless the user has confirmed authentication within the context of a popup window, they will get redirected back to the app via the `redirectTo` address provided above, at which point the app needs to handle the pending authentication state using the `authResponse` value provided as a GET parameter:
+Once the user is authenticated using the popup window, the user is redirected back to the app via the `redirectTo` address provided above. The app needs to handle the pending authentication state using the `authResponse` value provided as a GET parameter:
 
 ```jsx
 import { AppConfig, UserSession, showConnect } from "@stacks/connect";
@@ -136,17 +136,17 @@ The `isSignInPending` method of the `userSession` object is used to detect wheth
 
 The `handlePendingSignIn` method is then used to handle that state, returning a `userData` object with all the data needed to save the user's information into their session.
 
-The authenticated state can later be detected by the `isUserSignedIn` method in case any particular handling is needed then.
+Later, the authenticated state is detected by the `isUserSignedIn` method in case any particular handling is needed then.
 
 :::note
 
-It's especially important to implement `handlePendingSignIn` within the context of mobile apps.
+It's important to implement `handlePendingSignIn` within the context of mobile apps.
 
 :::
 
-If the user has indeed confirmed authentication in the context of a popup window, the authenticator will resolve the pending authentication state automatically with the app within the parent window.
+Once the user confirms authentication in the context of a popup window, the authenticator will resolve the pending authentication state automatically with the app in the parent window.
 
-It will then trigger the `onFinish` function provided above, which can be used similarly to save the user's information into their session as retrieved with `userSession.loadUserData()`.
+Now, this will trigger the `onFinish` function provided above, that is used similarly to save the user's information into their session as retrieved with `userSession.loadUserData()`.
 
 ## Usage in React Apps
 
