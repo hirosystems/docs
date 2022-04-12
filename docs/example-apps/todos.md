@@ -5,15 +5,15 @@ title: To-dos app
 
 ![What you'll be studying in this tutorial](/img/todos-home.png)
 
-In this tutorial, you will learn about Stacks authentication and storage by installing,
-running, and reviewing the code for a "To-dos" app built with Stacks authentication and storage.
+In this tutorial, you'll learn about Stacks authentication and storage by installing,
+running, and reviewing the code for a "To-dos" app built on Stacks authentication and storage.
 
 This app highlights the following platform capabilities:
 
 - Generate _Secret Key_ with associated BNS username to authenticate app
-- Add, edit and delete encrypted app data with Gaia
+- Add, edit, and delete encrypted application data with Gaia
 - Decrypt data on Gaia for public sharing by URL
-- De-authenticate and re-authenticate app with _Secret Key_
+- De-authenticate and re-authenticate app using _Secret Key_
 
 [Try the app](https://todos-lovat.vercel.app/) or [view its code on GitHub](https://github.com/hirosystems/todos).
 
@@ -58,7 +58,7 @@ You should see the app's landing page:
 
 ## Onboard into your first Stacks app
 
-### Step 1: Choose **Get started** to start onboarding into the app.
+### Step 1: Choose **Get started** to start onboarding to the application
 
 The app displays a standardized introductory modal using the `@stacks/connect` library.
 
@@ -101,7 +101,7 @@ export function getPerson() {
 
 The `authenticate` function implements the `showConnect` function imported from the `connect` package of Stacks.js.
 
-`showConnect` triggers the display of a modal that initiates the authentication process for users, one in which they'll authenticate with a _Secret Key_ that's used to encrypt their private data.
+`showConnect` triggers the display of a modal that initiates the authentication process for users. Then, authentication is done with a _Secret Key_ that's used to encrypt their private data.
 
 The `showConnect` function accepts a number of properties within a parameter object such as:
 
@@ -247,10 +247,9 @@ option is then passed to `getFile`, which will look up where that user's tasks a
 
 ## Sign back in
 
-At this point, you will be logged out from the app but not you'll still have an active session with the Stacks
-app itself on [app.blockstack.org](https://app.blockstack.org). Navigate to app.blockstack.org and select "Sign out" there if you want to deauthenticate the Stacks app as well.
+At this point, you will be logged out of the app, but you'll still have an active session with the Stacks app itself on [app.blockstack.org](https://app.blockstack.org). Navigate to app.blockstack.org and select "Sign out" if you want to deauthenticate the Stacks app as well.
 
-Once signed out, select "Sign In" to sign back in with your _Secret Key_.
+Once you're signed out, select "Sign In" to sign back in with your _Secret Key_.
 
 If you've previously deauthenticated the Stacks app, you'll see a prompt to enter your _Secret Key_:
 
@@ -258,8 +257,7 @@ If you've previously deauthenticated the Stacks app, you'll see a prompt to ente
 
 The preceding screen is omitted if you have an active session with the Stacks app already.
 
-Then you'll be presented with the option to select an existing username associated with your _Secret Key_ or
-create a new one if you wish to authenticate the app with a different identity and data set:
+Then you'll be presented with the option to select an existing username associated with your _Secret Key_ or create a new one if you wish to authenticate the app with a different identity and data set:
 
 !["Choose account" screen](/img/todos-choose-account.png)
 
