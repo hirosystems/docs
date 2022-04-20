@@ -60,7 +60,7 @@ const appConfig = new AppConfig(["store_write", "publish_data"]);
 const userSession = new UserSession({ appConfig });
 ```
 
-During authentication, permission scope for your app from a user is critical.
+During authentication, the permission scope for your app from a user is critical.
 
 Apps may request any of the following scopes:
 
