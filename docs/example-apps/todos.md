@@ -8,18 +8,18 @@ title: To-dos app
 In this tutorial, you'll learn about Stacks authentication and storage by installing,
 running, and reviewing the code for a "To-dos" app built on Stacks authentication and storage.
 
-This app highlights the following platform capabilities:
+This application highlights the following platform capabilities:
 
-- Generate _Secret Key_ with associated BNS username to authenticate app
-- Add, edit, and delete encrypted application data with Gaia
-- Decrypt data on Gaia for public sharing by URL
-- De-authenticate and re-authenticate app using _Secret Key_
+- Generate _Secret Key_ with associated BNS username to authenticate application.
+- Add, edit, and delete encrypted application data with Gaia.
+- Decrypt data on Gaia for public sharing by URL.
+- De-authenticate and re-authenticate application using _Secret Key_.
 
 [Try the app](https://todos-lovat.vercel.app/) or [view its code on GitHub](https://github.com/hirosystems/todos).
 
-Existing familiarity with [React](https://reactjs.org/) is recommended for reviewing this app's code.
+Existing familiarity with [React](https://reactjs.org/) is recommended for reviewing this app code.
 
-## Install and run the app
+## Install and run the application
 
 You must have recent versions of Git and [Node.js](https://nodejs.org/en/download/)
 (v12.10.0 or greater) installed already.
