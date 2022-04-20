@@ -71,7 +71,7 @@ Apps may request any of the following scopes:
 
 The default scopes are `['store_write']` if no `scopes` array is provided when initializing the `appConfig` object.
 
-We recommend you initiate the `userSession` object just once in your app, then reference it using imports where needed.
+It is recommended to initiate the `userSession` object just once in your app, then reference it using imports where needed.
 
 ## Initiate authentication flow
 
