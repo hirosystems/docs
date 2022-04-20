@@ -3,27 +3,32 @@ id: clarinet
 title: Setting up a local development environment
 ---
 
-[Clarinet][] is a local Clarity runtime packaged as a command-line application. It's designed to facilitate rapid smart
-contract development, testing, and deployment. Clarinet consists of a Clarity REPL and a testing harness, which, when
-used together, allow you to rapidly develop and test a Clarity smart contract, without the need to deploy the contract
+[Clarinet][] is a local Clarity runtime packaged as a command-line application. It's designed to facilitate rapid smart contract development, testing, and deployment. 
+
+Clarinet consists of two components:
+
+- Clarity REPL.
+- Testing harness.
+
+When these components are used together, they allow you to rapidly develop and test a Clarity smart contract, without the need to deploy the contract
 to a local mocknet or testnet.
 
-The local Clarity REPL is advantageous, because when learning Clarity or when developing a new smart contract, it's
-useful to be able to exercise a contract without needing to wait for block times in a live blockchain. Clarinet allows
-you to instantly initialize wallets and populate them with tokens, so that you can interactively or programmatically
-test the behavior of the smart contract. Blocks are mined instantly, and you can control the number of blocks that
-are mined between testing transactions.
+When developing a new smart contract using local Clarity REPL, you can exercise a contract without the need to wait for block times in a live blockchain.
+Clarinet allows you to instantly initialize wallets and populate them with tokens, which helps to interactively or programmatically
+test the behavior of the smart contract. Blocks are mined instantly, so you can control the number of blocks that are mined between testing transactions.
 
-Clarinet is a useful tool for developing smart contracts, and should be used as part of a larger development strategy
-that involves building and testing the contract locally, deploying the final draft contract to a testnet environment
-and testing on a live blockchain, and deploying the final contract to the mainnet.
+The Clarinet tool is used for developing smart contracts using a larger development strategy that involves:
 
-When developing smart contracts, you may also want to use the [Clarity Visual Studio Code plugin][].
+- Building and testing the contract locally.
+- Deploying the final draft contract to a testnet environment.
+- Testing on a live blockchain.
+- Deploying the final contract to the mainnet.
+
+When developing smart contracts, you can use the [Clarity Visual Studio Code plugin][].
 
 ## Installing Clarinet
 
-Clarinet is available in the Homebrew and Winget package managers. Installing from a package manager is the recommended
-installation method.
+Clarinet is available in the Homebrew and Winget package managers. It is recommended to install the Clarinet tool from package manager.
 
 ### Installing from Homebrew (MacOS and Linux)
 
@@ -191,7 +196,7 @@ You can refer to the [Clarity language reference][] for a complete overview of a
 The test harness is a Deno testing library that can simulate the blockchain, exercise functions of the contract, and
 make testing assertions about the state of the contract or chain.
 
-You can run any tests configured in the `tests` directory with the command
+You can run any tests configured in the `tests` directory with the command:
 
 ```sh
 clarinet test
