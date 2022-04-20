@@ -45,7 +45,7 @@ The easiest way to start interacting with the API is through the [Postman Collec
 
 :::info
 
-Postman allows you to [generate sample code](https://learning.postman.com/sending-requests/generate-code-snippets/) for API requests for various languages and libraries
+Postman allows you to [generate sample code](https://learning.postman.com/docs/sending-requests/generate-code-snippets/) for API requests for various languages and libraries.
 
 :::
 

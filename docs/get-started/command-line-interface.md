@@ -101,7 +101,7 @@ The response should look like this:
 
 :::tip
 
-To receive testnet STX tokens, use the [faucet](https://explorer.stacks.co/sandbox/faucet).
+To receive testnet STX tokens, use the [faucet](https://explorer.stacks.co/sandbox/faucet?chain=testnet).
 
 :::
 

@@ -73,7 +73,7 @@ docker run -d --rm \
 /bin/stacks-node xenon
 ```
 
-You can verify the running [`stacks-blockchain`][] container with the command:
+You can verify that the container [`stacks-blockchain`][] is running with the command:
 
 ```sh
 docker ps --filter name=stacks-blockchain
@@ -131,7 +131,7 @@ If the instance is running you should receive terminal output similar to the fol
 
 ## Stopping the testnet node
 
-Use the following commands to stop the local testnet node:
+Use the following command to stop the local testnet node:
 
 ```sh
 docker stop stacks-blockchain
