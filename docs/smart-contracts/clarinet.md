@@ -7,7 +7,7 @@ title: Setting up a local development environment
 
 Clarinet consists of two components:
 
-- Clarity REPL.
+- Clarity REPL
 - Testing harness.
 
 When these components are used together, they allow you to rapidly develop and test a Clarity smart contract, without the need to deploy the contract
