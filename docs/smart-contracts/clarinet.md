@@ -24,7 +24,7 @@ The Clarinet tool is used for developing smart contracts using a larger developm
 - Testing on a live blockchain.
 - Deploying the final contract to the mainnet.
 
-When developing smart contracts, you can use the [Clarity Visual Studio Code plugin][].
+When developing smart contracts, you can also use the [Clarity Visual Studio Code plugin][].
 
 ## Installing Clarinet
 
