@@ -37,6 +37,7 @@ module.exports = {
         "build-apps/overview",
         "build-apps/authentication",
         "build-apps/transaction-signing",
+        "build-apps/message-signing",
         "build-apps/data-storage",
         "build-apps/integrate-stacking",
         "build-apps/integrate-stacking-delegation",
