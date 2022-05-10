@@ -647,32 +647,22 @@ Get the low-level blockchain-hosted state for a Blockstack namespace.  This comm
 
 **Group:** Key Management
 
-Get the application private key from a 12-word backup phrase and a name or ID-address.  This is the private key used to sign data in Gaia, and its address is the Gaia bucket address.  If you provide your encrypted backup phrase, you will be asked to decrypt it.  If you provide a name instead of an ID-address, its ID-address will be queried automatically (note that this means that the name must already be registered).
-
-NOTE: This command does NOT verify whether or not the name or ID-address was created by the backup phrase. You should do this yourself via the `get_owner_keys` command if you are not sure.
-
-There are two derivation paths emitted by this command:  a `keyInfo` path and a `legacyKeyInfo`path.  You should use the one that matches the Gaia hub read URL's address, if you have already signed in before.  If not, then you should use the `keyInfo` path when possible.
-
+Get the application private key from a 12- or 24-word Secret Key and an index of the enumerated associated accounts.  This is the private key used to sign data in Gaia, and its address is the Gaia bucket address.  If you provide your encrypted backup phrase, you will be asked to decrypt it.  
 Example:
 
     $ export BACKUP_PHRASE="one race buffalo dynamic icon drip width lake extra forest fee kit"
-    $ stx get_app_keys "$BACKUP_PHRASE" example.id.blockstack https://my.cool.dapp
+    $ stx get_app_keys "$BACKUP_PHRASE" 1 https://my.cool.dapp
     {
       "keyInfo": {
         "privateKey": "TODO",
         "address": "TODO"
       },
-      "legacyKeyInfo": {
-        "privateKey": "90f9ec4e13fb9a00243b4c1510075157229bda73076c7c721208c2edca28ea8b",
-        "address": "1Lr8ggSgdmfcb4764woYutUfFqQMjEoKHc"
-      },
-      "ownerKeyIndex": 0
     }
 
 | Name | Type | Value |
 |-|-|-|
 | `backup_phrase` | `string` | `12_words_or_ciphertext` |
-| `name_or_id_address` | `string` | `name-or-id-address` |
+| `index` | `string` | `integer` |
 | `app_origin` | `string` | `url` |
 
 ### get_owner_keys
@@ -748,7 +738,7 @@ Get the payment private key from a 24-word backup phrase used by the Stacks wall
 
 Example
 
-    $ stx get_stacks_payment_key "toast canal educate tissue express melody produce later gospel victory meadow outdoor hollow catch liberty annual gasp hat hello april equip thank neck cruise"
+    $ stx get_stacks_wallet_key "toast canal educate tissue express melody produce later gospel victory meadow outdoor hollow catch liberty annual gasp hat hello april equip thank neck cruise"
     [
       {
         "privateKey": "a25cea8d310ce656c6d427068c77bad58327334f73e39c296508b06589bc4fa201",
@@ -765,6 +755,7 @@ Example
 | Name | Type | Value |
 |-|-|-|
 | `backup_phrase` | `string` | `24_words_or_ciphertext` |
+| `derivation_path` | `string` | `custom_derivation_path_string` |
 
 ### get_zonefile
 
@@ -852,6 +843,7 @@ Example:
 | Name | Type | Value |
 |-|-|-|
 | `backup_phrase` | `string` | `12_words_or_ciphertext` |
+| `derivation_path` | `string` | `custom_derivation_path_string` |
 
 ### make_zonefile
 
@@ -1078,9 +1070,9 @@ Example:
       "blockHeight": 567890,
       "confirmations": 7,
     }
-    $ stx -H https://core.blockstack.org zonefile_push "$ZONEFILE_PATH"
+    $ stx -H https://stacks-node-api.stacks.co zonefile_push "$ZONEFILE_PATH"
     [
-      "https://core.blockstack.org"
+      "https://stacks-node-api.stacks.co"
     ]
 
 
@@ -1113,18 +1105,14 @@ WARNING: You should *NOT* use the payment private key (`PAYMENT_KEY`) while the 
 Example:
 
     $ export OWNER="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
-    $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
-    $ stx register example.id "$OWNER" "$PAYMENT" https://hub.blockstack.org
-    9bb908bfd4ab221f0829167a461229172184fc825a012c4e551533aa283207b1
-
+    $ stx register example.id "$OWNER" salt zonfile
 
 
 | Name | Type | Value |
 |-|-|-|
-| `blockstack_id` | `string` | `on-chain-blockstack_id` |
+| `fully-qualified-name` | `string` | `on-chain-fully-qualified-name` |
 | `owner_key` | `string` | `private_key` |
-| `payment_key` | `string` | `private_key` |
-| `gaia_hub` | `string` | `url` |
+| `salt` | `string` | `text` |
 | `zonefile` | `string` | `path` |
 
 ### register_addr
@@ -1352,12 +1340,18 @@ Generate and send `NAME_PREORDER` transaction, for a Blockstack ID to be owned b
 
 This is a low-level command that only experienced Blockstack developers should use.  If you just want to register a name, use the "register" command.
 
+Example:
+
+    $ export PAYMENT="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
+    $ stx tx_preorder example.id "$PAYMENT" salt 1000
+
 
 | Name | Type | Value |
 |-|-|-|
-| `blockstack_id` | `string` | `on-chain-blockstack_id` |
-| `id_address` | `string` | `id-address` |
+| `fully-qualified-name` | `string` | `on-chain-fully-qualified-name` |
 | `payment_key` | `string` | `private_key` |
+| `salt` | `string` | `text` |
+| `stx_to_burn` | `string` | `number` |
 
 ### tx_register
 
@@ -1405,9 +1399,9 @@ Example:
     }
     
     $ # send out the new zone file to a Blockstack peer
-    $ stx -H https://core.blockstack.org zonefile_push /tmp/zonefile.txt
+    $ stx -H https://stacks-node-api.stacks.co zonefile_push /tmp/zonefile.txt
     [
-      "https://core.blockstack.org"
+      "https://stacks-node-api.stacks.co"
     ]
 
 
@@ -1459,9 +1453,9 @@ Push a zone file on disk to the Blockstack peer network.  The zone file must cor
 
 Example:
 
-    $ stx -H https://core.blockstack.org zonefile_push /path/to/zonefile.txt
+    $ stx -H https://stacks-node-api.stacks.co zonefile_push /path/to/zonefile.txt
     [
-      "https://core.blockstack.org"
+      "https://stacks-node-api.stacks.co"
     ]
 
 
