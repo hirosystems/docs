@@ -41,14 +41,16 @@ Call the `openSignatureRequestPopup` function provided by the `connect`  pac
 import { openSignatureRequestPopup } from "@stacks/connect";
 import { StacksTestnet } from "@stacks/network";
 
+const message = "Hello World";
+
 openSignatureRequestPopup({
-  message: "Hello world !",
+  message,
   network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
   appDetails: {
     name: "My App",
     icon: window.location.origin + "/my-app-logo.svg",
   },
-  onFinish: (data) => {
+  onFinish(data) {
     console.log("Signature of the message", data.signature);
     console.log("Use public key:", data.publicKey);
   },
@@ -100,17 +102,19 @@ const onFinish = (data: SignatureData) => {
 You can easily verify the signature using the [`@stacks/stacks.js`](https://github.com/hirosystems/stacks.js) package as seen in the following example.
 
 ```ts
-import { verifyECDSA, hashMessage } from "@stacks/encryption";
+import { verifyMessageSignature } from "@stacks/encryption";
+
 const message = "Hello World";
-// ....
-const onFinish = (data: SignatureData) => {
-  const verified = verifyECDSA(
-    hashMessage(message),
-    data.publicKey,
-    data.signature
-  );
-  // verified will be true if the signature is verified successfully and false otherwise.
-};
+
+openSignatureRequestPopup({
+  // ...
+  onFinish({ publicKey, signature }) {
+    const verified = verifyMessageSignature({ message, publicKey, signature });
+    if (verified) {
+      // Trigger a notification explaining signature is verified
+    }
+  }
+});
 ```
 
 ## Specifying the network for a transaction {#network-option}
