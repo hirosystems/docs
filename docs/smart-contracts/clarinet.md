@@ -44,6 +44,12 @@ winget install clarinet
 ### Installing from a binary release
 
 You can download a release from the [Clarinet repository](https://github.com/hirosystems/clarinet/releases/latest).
+
+#### Windows
+
+Download the Windows installer, _clarinet-windows-x64.msi_. Once downloaded, run the installer, and it will install the clarinet binary and add it to your Path, allowing it to be easily used from the shell, and discovered by VS Code. If you have any shells open already, you will need to restart them to get the updated Path, allowing you to run `clarinet`.
+
+#### MacOS / Linux
 Unzip the binary, then copy it to a location that is already in your path, such as `/usr/local/bin`.
 
 ```sh
