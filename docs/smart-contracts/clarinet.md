@@ -105,7 +105,7 @@ clarinet contract new my-contract
 ```
 
 This command creates a new `my-contract.clar` file in the `contracts` directory, and a `my-contract_test.ts` in the
-`test` directory. Additionally, it adds the contract to the `Clarinet.toml` configuration file.
+`tests` directory. Additionally, it adds the contract to the `Clarinet.toml` configuration file.
 
 ```toml
 [contracts.my-contract]
