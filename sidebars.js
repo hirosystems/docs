@@ -14,12 +14,12 @@ module.exports = {
     "intro",
     {
       type: "category",
-      label: "Get started",
+      label: "Get Started",
       items: [
-        "get-started/command-line-interface",
         "get-started/transactions",
         "get-started/stacks-blockchain-api",
         "get-started/gaia-storage",
+        "get-started/command-line-interface",
         "get-started/running-api-node",
         "get-started/running-mainnet-node",
         "get-started/running-testnet-node",
@@ -27,12 +27,12 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Develop smart contracts",
+      label: "Develop Smart Contracts",
       items: ["smart-contracts/clarinet", "smart-contracts/devnet"],
     },
     {
       type: "category",
-      label: "Build frontend apps",
+      label: "Build Frontend Apps",
       items: [
         "build-apps/overview",
         "build-apps/authentication",
@@ -45,7 +45,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Developer references",
+      label: "Developer References",
       items: [
         "references",
         "references/stacks-cli",
@@ -55,7 +55,7 @@ module.exports = {
           items: [
             {
               type: "link",
-              label: "Language overview",
+              label: "Language Overview",
               href: "https://docs.stacks.co/references/language-overview",
             },
             {

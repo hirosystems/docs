@@ -31,6 +31,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
             // Please change this to your repo.
             editUrl: "https://github.com/hirosystems/docs/edit/main/",
             routeBasePath: "/",
+            breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
           },
           theme: {
             customCss: require.resolve("./src/css/custom.css"),
@@ -42,8 +43,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
         {
           specs: [
             {
-              routePath: "/api/",
-              specUrl:
+              route: "/api/",
+              spec:
                 "https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml",
             },
           ],
@@ -89,9 +90,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               label: "Example Apps",
             },
             {
-              href: "https://github.com/hirosystems/docs",
-              label: "GitHub",
-              position: "left",
+              href: 'https://github.com/hirosystems/docs',
+              position: 'right',
+              className: 'header-github-link',
+              title: 'GitHub Repository',
+              'aria-label': 'GitHub Repository',
             },
           ],
         },

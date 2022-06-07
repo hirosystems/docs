@@ -1,6 +1,6 @@
 ---
 id: transaction-signing
-title: Signing transactions
+title: Signing Transactions
 ---
 
 This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
@@ -28,7 +28,7 @@ In order to utilize the latest transaction signing with the Stacks Wallet, use v
 The following dependency must be installed:
 
 ```
-npm install @stacks/connect@^5
+npm install @stacks/connect
 ```
 
 ## Initiate session
