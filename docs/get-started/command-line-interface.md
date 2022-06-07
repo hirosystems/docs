@@ -3,7 +3,7 @@ id: command-line-interface
 title: Stacks CLI
 ---
 
-The Stacks CLI enables interactions with the Stacks 2.0 blockchain through a set of commands. At the current stage, the CLI is intended for developer experimentation on the testnet only.
+The Stacks CLI enables interactions with the Stacks 2.0 blockchain through a set of commands.
 
 ## Installation
 
