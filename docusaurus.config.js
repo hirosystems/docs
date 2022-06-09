@@ -136,21 +136,33 @@ module.exports = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/hirosystems/docs',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://github.com/hirosystems/docs',
               },
-              { label: 'Stacks Docs', href: 'https://docs.stacks.co' },
-              { label: 'Blog', href: 'https://www.hiro.so/blog' },
+              {
+                label: 'Stacks Docs',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://docs.stacks.co',
+              },
+              {
+                label: 'Blog',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://www.hiro.so/blog',
+              },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/hirosystems',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://twitter.com/hirosystems',
               },
               {
                 label: 'Youtube',
-                href: 'https://www.youtube.com/channel/UC3xNLj2Mu7fW-BCq-vC9xKQ',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://www.youtube.com/channel/UC3xNLj2Mu7fW-BCq-vC9xKQ',
               },
               {
                 label: 'Newsletter',
-                href: 'https://hiro.so/updates-docs',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://hiro.so/updates-docs',
               },
             ],
           },
@@ -159,15 +171,18 @@ module.exports = {
             items: [
               {
                 label: 'Discord',
-                href: 'https://stacks.chat',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://stacks.chat',
               },
               {
                 label: 'Stacks Forum',
-                href: 'https://forum.stacks.org',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://forum.stacks.org',
               },
               {
                 label: 'Reddit',
-                href: 'https://www.reddit.com/r/stacks',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://www.reddit.com/r/stacks',
               },
             ],
           },
