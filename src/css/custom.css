@@ -28,6 +28,10 @@ html[data-theme='dark'] .redoc-wrap a {
   color: #9494ff;
 }
 
+.footer__link-item:hover {
+  color: #9494ff;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
@@ -65,4 +69,15 @@ html[data-theme='dark'] .header-github-link::before {
 .navbar__items div[class^='searchBox_'] {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+/* custom footer external link icon & color */
+.custom-footer-external:after {
+  content: url("data:image/svg+xml,%3Csvg width='11' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m1.120104 11 8.328982-8.332464-.01436 6.425032H11V0H1.909922l-.014361 1.548892h6.433421L0 9.881356z' fill='%23ebedf0' fill-rule='nonzero'/%3E%3C/svg%3E");
+  margin-left: 3px;
+  display: inline-block;
+}
+
+.custom-footer-external:hover:after {
+  content: url("data:image/svg+xml,%3Csvg width='11' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m1.120104 11 8.328982-8.332464-.01436 6.425032H11V0H1.909922l-.014361 1.548892h6.433421L0 9.881356z' fill='%239494ff' fill-rule='nonzero'/%3E%3C/svg%3E");
 }
