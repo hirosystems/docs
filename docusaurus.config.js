@@ -90,6 +90,11 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
               label: "Example Apps",
             },
             {
+              to: "https://hiro.so/updates-docs",
+              label: "Get Updates",
+              position: "left",
+            },
+            {
               href: 'https://github.com/hirosystems/docs',
               position: 'right',
               className: 'header-github-link',
@@ -143,6 +148,10 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
                 {
                   label: "Youtube",
                   href: "https://www.youtube.com/channel/UC3xNLj2Mu7fW-BCq-vC9xKQ",
+                },
+                {
+                  label: "Newsletter",
+                  href: "https://hiro.so/updates-docs",
                 },
               ],
             },
