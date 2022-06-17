@@ -11,7 +11,7 @@ The user can then click on the ‘Sign’ button which will return the signature
 
 The message can be any utf-8 string.
 
-Internally the string will be hashed using `sha256` and signed with `secp256k1` using the user's publicKey
+Internally the string will be hashed using `sha256` and signed with `secp256k1` using the user's privateKey
 
 ## Install dependency
 
