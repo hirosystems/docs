@@ -56,7 +56,7 @@ Use the following `curl` command to request tokens from the testnet node's fauce
 We use the address generated above as a parameter.
 
 ```bash
-curl -X POST https://stacks-node-api.xenon.blockstack.org/extended/v1/faucets/stx?address=ST1P3HXR80TKT48TKM2VTKCDBS4ET9396W0W2S3K8&stacking=true
+curl -X POST https://stacks-node-api.testnet.stacks.co/extended/v1/faucets/stx?address=ST1P3HXR80TKT48TKM2VTKCDBS4ET9396W0W2S3K8&stacking=true
 ```
 
 ## Check Balance
