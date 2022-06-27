@@ -164,21 +164,17 @@ You can refer to the rate limit for each endpoint in the table below:
 |stacks-node-api.mainnet.stacks.co/extended/|500|
 |stacks-node-api.mainnet.stacks.co/rosetta/|200|
 |stacks-node-api.mainnet.stacks.co/v2/|100|
-|stacks-node-api.testnet.stacks.co/extended/|100|
-|stacks-node-api.testnet.stacks.co/v2/|100|
-|stacks-node-api.testnet.stacks.co/extended/v1/faucets|1|
 |stacks-node-api.stacks.co/extended/|500|
 |stacks-node-api.stacks.co/rosetta/|200|
 |stacks-node-api.stacks.co/v2/|100|
+|stacks-node-api.testnet.stacks.co/extended/|100|
+|stacks-node-api.testnet.stacks.co/v2/|100|
+|stacks-node-api.testnet.stacks.co/extended/v1/faucets|1|
 
-
-### BTC faucet
-
-The bitcoin faucet is limited to **5 requests per 5 minutes**.
 
 ### STX faucet
 
-The Stacks faucet rate limits depend on the type of request. For stacking requests, a limitation of **1 request per 2 days**. In case of regular Stacks faucet requests, the limits are set to **5 requests per 5 minutes**.
+The Stacks faucet rate limits depend on the type of request. For stacking requests, a limitation of **1 request per 2 days**. In case of regular Stacks faucet requests, the limits are set to **1 request per minute**.
 
 ## Pagination
 
