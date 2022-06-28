@@ -96,7 +96,7 @@ import { Configuration, AccountsApi } from "@stacks/blockchain-api-client";
 
 ### TypeScript sample
 
-The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used to ensure type-safety:
+The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
 
 ```ts
 import fetch from "cross-fetch";
@@ -155,21 +155,15 @@ await sub.unsubscribe();
 
 ## Rate limiting
 
-Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) and based on the address that tokens are requested for.
+Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) based on the requested token addresses.
 
 You can refer to the rate limit for each endpoint in the table below:
 
+
 |Endpoint  | Rate-Limit (RPM)|
 | --- | ---|
-|stacks-node-api.mainnet.stacks.co/extended/|500|
-|stacks-node-api.mainnet.stacks.co/rosetta/|200|
-|stacks-node-api.mainnet.stacks.co/v2/|100|
-|stacks-node-api.stacks.co/extended/|500|
-|stacks-node-api.stacks.co/rosetta/|200|
-|stacks-node-api.stacks.co/v2/|100|
-|stacks-node-api.testnet.stacks.co/extended/|100|
-|stacks-node-api.testnet.stacks.co/v2/|100|
-|stacks-node-api.testnet.stacks.co/extended/v1/faucets|1|
+| stacks-node-api.mainnet.stacks.co/extended/ <br>stacks-node-api.mainnet.stacks.co/rosetta <br> stacks-node-api.mainnet.stacks.co/v2/ <br> stacks-node-api.stacks.co/extended/ <br> stacks-node-api.stacks.co/rosetta/ <br> stacks-node-api.stacks.co/v2/ </br> | 500 <br> 200 <br> 100 <br> 500 <br> 200 <br> 100 </br> |
+|stacks-node-api.testnet.stacks.co/extended/ <br> stacks-node-api.testnet.stacks.co/v2/ <br> stacks-node-api.testnet.stacks.co/extended/v1/faucets/ </br> |100 <br> 100 <br> 1 </br>|
 
 
 ### STX faucet
