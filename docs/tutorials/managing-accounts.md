@@ -243,7 +243,7 @@ async function getAccountBalance() {
 }
 ```
 
-The API responds with the following breakdown of token balances:
+Following is the API response with breakdown of token balances:
 
 ```js
 {
