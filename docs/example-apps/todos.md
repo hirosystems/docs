@@ -69,20 +69,20 @@ This modal is displayed using the `authenticate` function exported by the `src/a
 ```js
 // src/auth.js
 
-import { AppConfig, UserSession, showConnect } from "@stacks/connect";
-import { Person } from "@stacks/profile";
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+import { Person } from '@stacks/profile';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 
 export const userSession = new UserSession({ appConfig });
 
 export function authenticate() {
   showConnect({
     appDetails: {
-      name: "Todos",
-      icon: window.location.origin + "/logo.svg",
+      name: 'Todos',
+      icon: window.location.origin + '/logo.svg',
     },
-    redirectTo: "/",
+    redirectTo: '/',
     finished: () => {
       window.location.reload();
     },
@@ -111,7 +111,7 @@ The `showConnect` function accepts a number of properties within a parameter obj
 
 Note how the `userSession` object is created at the beginning of this module by leveraging an `AppConfig` object that's first initiated with all relevant scopes.
 
-The [`UserSession`](https://stacks.js.org/classes/auth.usersession.html) and [`AppConfig`](https://stacks.js.org/classes/auth.appconfig.html) classes are themselves imported from the `@stacks/auth` library.
+The [`UserSession`](https://stacks.js.org/classes/auth.UserSession.html) and [`AppConfig`](https://stacks.js.org/classes/auth.AppConfig.html) classes are themselves imported from the `@stacks/auth` library.
 
 In the separate `src/components/App.jsx` component, you can see how
 `componentDidMount` loads the user's data into the app's state, whether upon redirect post-authentication with `userSession.handlePendingSignIn()` or upon detection of an existing session with `userSession.isUserSignedIn()`:
@@ -161,7 +161,7 @@ As such, it's paramount that users handle them with great care.
 
 The username will be used by the app to generate a URL for sharing your to-dos, should you choose to make them public.
 
-It is registered on the Stacks blockchain with [BNS](https://docs.stacks.co/references/bns) and associated with your _Secret Key_.
+It is registered on the Stacks blockchain with [BNS](https://docs.stacks.co/docs/build-apps/references/bns) and associated with your _Secret Key_.
 
 !["Choose username" screen](/img/todos-choose-username.png)
 
@@ -174,7 +174,7 @@ field and hitting "Enter."
 
 !["To-dos" app home screen](/img/todos-home.png)
 
-The data for all to-dos are saved as JSON to the Gaia hub linked to your Secret Key using the [`putFile`](https://stacks.js.org/classes/storage.storage-1.html#putfile) method of the `storage` object in the `src/storage.js` module, which manages all data storage for the app:
+The data for all to-dos are saved as JSON to the Gaia hub linked to your Secret Key using the [`putFile`](https://stacks.js.org/classes/storage.Storage.html#putFile) method of the `storage` object in the `src/storage.js` module, which manages all data storage for the app:
 
 ```js
 // src/storage.js
@@ -193,7 +193,7 @@ export const saveTasks = async (userSession, tasks, isPublic) => {
 };
 ```
 
-These to-dos are subsequently loaded using the [`getFile`](https://stacks.js.org/classes/storage.storage-1.html#getfile)
+These to-dos are subsequently loaded using the [`getFile`](https://stacks.js.org/classes/storage.Storage.html#getFile)
 method of the same object in the same module:
 
 ```js
@@ -236,7 +236,7 @@ The app will now show all of your to-dos to anyone who visits the URL displayed 
 
 Select "Sign out" to deauthenticate the app with your Stacks account.
 
-This calls the [`signUserOut`](https://stacks.js.org/classes/auth.usersession.html#signuserout) method
+This calls the [`signUserOut`](https://stacks.js.org/classes/auth.UserSession.html#signUserOut) method
 of the `userSession` object within `src/components/Header.jsx`.
 
 Now visit the URL that was provided to you when you made your tasks public. This URL has the format `/todos/:username`, so if your username were `janedoe.id.blockstack`, the URL would be `localhost:3000/todos/janedoe.id.blockstack`.

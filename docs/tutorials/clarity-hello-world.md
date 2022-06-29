@@ -105,7 +105,7 @@ function.
 
 :::info
 
-Clarity supports a variety of other [types](https://docs.stacks.co/references/language-types)
+Clarity supports a variety of other [types](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types)
 
 :::
 

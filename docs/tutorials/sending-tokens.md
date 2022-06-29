@@ -27,7 +27,7 @@ You will need [NodeJS](https://nodejs.org/en/download/) `8.12.0` or higher to co
 node --version
 ```
 
-You should also complete the [Managing accounts tutorial](https://docs.stacks.co/understand-stacks/managing-accounts). The following steps assume we have access to an existing Stacks 2.0 account.
+You should also complete the [Accounts Tutorial](https://docs.stacks.co/docs/understand-stacks/accounts). The following steps assume we have access to an existing Stacks 2.0 account.
 
 ## Step 1: Installing libraries
 
@@ -50,8 +50,8 @@ In order to build and sign transactions, you will need a Stacks private key. You
 For this tutorial, we will use an existing Stacks account and instantiate the key object from a private key string:
 
 ```js
-import fetch from "cross-fetch";
-const BN = require("bn.js");
+import fetch from 'cross-fetch';
+const BN = require('bn.js');
 const {
   makeSTXTokenTransfer,
   createStacksPrivateKey,
@@ -59,21 +59,17 @@ const {
   estimateTransfer,
   getNonce,
   privateKeyToString,
-} = require("@stacks/transactions");
-const { StacksTestnet, StacksMainnet } = require("@stacks/network");
-const {
-  TransactionsApi,
-  Configuration,
-} = require("@stacks/blockchain-api-client");
+} = require('@stacks/transactions');
+const { StacksTestnet, StacksMainnet } = require('@stacks/network');
+const { TransactionsApi, Configuration } = require('@stacks/blockchain-api-client');
 
 const apiConfig = new Configuration({
   fetchApi: fetch,
   // for mainnet, replace `testnet` with `mainnet`
-  basePath: "https://stacks-node-api.testnet.stacks.co",
+  basePath: 'https://stacks-node-api.testnet.stacks.co',
 });
 
-const key =
-  "edf9aee84d9b7abc145504dde6726c64f369d37ee34ded868fabd876c26570bc01";
+const key = 'edf9aee84d9b7abc145504dde6726c64f369d37ee34ded868fabd876c26570bc01';
 const senderKey = createStacksPrivateKey(key);
 ```
 
@@ -165,7 +161,7 @@ If not specified, the transaction builder will automatically lookup the latest n
 The updated nonce for each account can be retrieved manually using the `getNonce()` function:
 
 ```js
-const senderAddress = "SJ2FYQ8Z7JY9BWYZ5WM53SKR6CK7WHJF0691NZ942";
+const senderAddress = 'SJ2FYQ8Z7JY9BWYZ5WM53SKR6CK7WHJF0691NZ942';
 
 const senderNonce = getNonce(senderAddress);
 ```
@@ -192,7 +188,7 @@ Keep in mind that the existence of a transaction ID does not mean the transactio
 In case you would like to inspect the raw serialized transaction, you can call the `serialize()` method:
 
 ```js
-const serializedTx = transaction.serialize().toString("hex");
+const serializedTx = transaction.serialize().toString('hex');
 ```
 
 ## Step 5: Checking completion
