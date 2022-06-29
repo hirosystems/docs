@@ -96,7 +96,7 @@ import { Configuration, AccountsApi } from "@stacks/blockchain-api-client";
 
 ### TypeScript sample
 
-The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used to ensure type-safety:
+The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
 
 ```ts
 import fetch from "cross-fetch";
@@ -155,15 +155,24 @@ await sub.unsubscribe();
 
 ## Rate limiting
 
-Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) and based on the address that tokens are requested for.
+Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) based on the requested token addresses.
 
-### BTC faucet
+You can refer to the rate limit for each endpoint in the table below:
 
-The bitcoin faucet is limited to **5 requests per 5 minutes**.
+
+|**Endpoint**  | **Rate-Limit (RPM)**|
+| --- | ---|
+stacks-node-api.mainnet.stacks.co/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/>  <br/> |
+stacks-node-api.mainnet.stacks.co/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/> | <br/> 200 <br/>  <br/>
+stacks-node-api.mainnet.stacks.co/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/> | <br/> 100  <br/>  <br/>|
+|stacks-node-api.testnet.stacks.co/extended/ <br/> | 100 <br/> 
+stacks-node-api.testnet.stacks.co/v2/ <br/> | 100 <br/> 
+stacks-node-api.testnet.stacks.co/extended/v1/faucets/ <br/> |1 <br/>|
+
 
 ### STX faucet
 
-The Stacks faucet rate limits depend on the type of request. For stacking requests, a limitation of **1 request per 2 days**. In case of regular Stacks faucet requests, the limits are set to **5 requests per 5 minutes**.
+The Stacks faucet rate limits depend on the type of request. For stacking requests, a limitation of **1 request per 2 days**. In case of regular Stacks faucet requests, the limits are set to **1 request per minute**.
 
 ## Pagination
 
