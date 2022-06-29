@@ -44,37 +44,35 @@ Files are often saved as strings that represent stringified JSON objects and con
 To save a file, first instantiate a `storage` object using the `userSession` object for an authenticated user. Then proceed to call its `putFile` method with relevant parameters:
 
 ```js
-import { AppConfig, UserSession } from "@stacks/connect";
-import { Storage } from "@stacks/storage";
+import { AppConfig, UserSession } from '@stacks/connect';
+import { Storage } from '@stacks/storage';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 const storage = new Storage({ userSession });
 
-let fileName = "car.json";
+let fileName = 'car.json';
 
 let fileData = {
-  color: "blue",
+  color: 'blue',
   electric: true,
-  purchaseDate: "2019-04-03",
+  purchaseDate: '2019-04-03',
 };
 
 const options = {
   encrypt: true,
 };
 
-let fileUrl = storage
-  .putFile(fileName, JSON.stringify(fileData), options)
-  .then(() => {
-    // Handle any execution after data has been saved
-  });
+let fileUrl = storage.putFile(fileName, JSON.stringify(fileData), options).then(() => {
+  // Handle any execution after data has been saved
+});
 ```
 
 The `options` parameter object contains an `encrypt` property that when set to `true` indicates that the data should be encrypted with the user's app private key before saved to their Gaia hub. All data will be encrypted as such by default if the `encrypt` property or the `options` object itself is omitted entirely.
 
 If the `encrypt` property is set to `false`, the data will be saved completely unencrypted and available to everyone online with public access to the user's Gaia hub.
 
-Whereas saving privately encrypted data is possible for all authenticated apps with the [`store_write`](https://stacks.js.org/enums/auth.authscope.html#store_write) scope, the user must have previously granted the [`publish_data`](https://stacks.js.org/enums/auth.authscope.html#publish_data) scope as well during authentication for the app to save publicly unencrypted data.
+Whereas saving privately encrypted data is possible for all authenticated apps with the [`store_write`](https://stacks.js.org/enums/auth.AuthScope.html#store_write) scope, the user must have previously granted the [`publish_data`](https://stacks.js.org/enums/auth.AuthScope.html#publish_data) scope as well during authentication for the app to save publicly unencrypted data.
 
 The `putFile` method returns the URL where the the file can be retrieved from the user's Gaia hub, as used here to set the value of `fileUrl`.
 
@@ -89,20 +87,20 @@ You'll need to save an entirely new string of modified data using `putFile` with
 To retrieve data previously saved for a user with an app, call the `getFile` method available from the `storage` object:
 
 ```js
-import { AppConfig, UserSession } from "@stacks/connect";
-import { Storage } from "@stacks/storage";
+import { AppConfig, UserSession } from '@stacks/connect';
+import { Storage } from '@stacks/storage';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 const storage = new Storage({ userSession });
 
-let fileName = "car.json";
+let fileName = 'car.json';
 
 const options = {
   decrypt: true,
 };
 
-storage.getFile(fileName, options).then((fileData) => {
+storage.getFile(fileName, options).then(fileData => {
   // Handle any execution that uses decrypted fileData
 });
 ```
@@ -118,20 +116,20 @@ Apps can also retrieve public data saved by users other than the one with the ac
 Simply indicate the username of such a user in the `options` object:
 
 ```js
-import { AppConfig, UserSession } from "@stacks/connect";
-import { Storage } from "@stacks/storage";
+import { AppConfig, UserSession } from '@stacks/connect';
+import { Storage } from '@stacks/storage';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 const storage = new Storage({ userSession });
 
-let fileName = "car.json";
+let fileName = 'car.json';
 
 const options = {
-  username: "markmhendrickson.id.blockstack",
+  username: 'markmhendrickson.id.blockstack',
 };
 
-storage.getFile(fileName, options).then((fileData) => {
+storage.getFile(fileName, options).then(fileData => {
   // Handle any execution that uses decrypted fileData
 });
 ```
@@ -142,8 +140,8 @@ Set an additional `app` property within `options` to retrieve data for a user as
 
 ```js
 const options = {
-  app: "https://example.org",
-  username: "markmhendrickson.id.blockstack",
+  app: 'https://example.org',
+  username: 'markmhendrickson.id.blockstack',
 };
 ```
 
@@ -154,14 +152,14 @@ This will cause the `getFile` call to retrieve data found in a separate storage 
 Call the `deleteFile` method on `storage` to remove data found at a particular file path for the active session user:
 
 ```js
-import { AppConfig, UserSession } from "@stacks/connect";
-import { Storage } from "@stacks/storage";
+import { AppConfig, UserSession } from '@stacks/connect';
+import { Storage } from '@stacks/storage';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 const storage = new Storage({ userSession });
 
-let fileName = "car.json";
+let fileName = 'car.json';
 
 storage.deleteFile(fileName).then(() => {
   // Handle any execution after file has been deleted
