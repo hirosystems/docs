@@ -162,8 +162,12 @@ You can refer to the rate limit for each endpoint in the table below:
 
 |**Endpoint**  | **Rate-Limit (RPM)**|
 | --- | ---|
-stacks-node-api.mainnet.stacks.co/extended <br/>stacks-node-api.mainnet.stacks.co/rosetta  <br/> stacks-node-api.mainnet.stacks.co/v2/  <br/> stacks-node-api.stacks.co/extended/ <br/> stacks-node-api.stacks.co/rosetta/<br/>  stacks-node-api.stacks.co/v2/ <br/> | 500 <br/> 200 <br/> 100 <br/>  500 <br/> 200  <br/>100 <br/>|
-|stacks-node-api.testnet.stacks.co/extended/ <br/> stacks-node-api.testnet.stacks.co/v2/ <br/> stacks-node-api.testnet.stacks.co/extended/v1/faucets/ <br/> |100 <br/> 100 <br/> 1 <br/>|
+stacks-node-api.mainnet.stacks.co/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/>  <br/> |
+stacks-node-api.mainnet.stacks.co/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/> | <br/> 200 <br/>  <br/>
+stacks-node-api.mainnet.stacks.co/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/> | <br/> 100  <br/>  <br/>|
+|stacks-node-api.testnet.stacks.co/extended/ <br/> | 100 <br/> 
+stacks-node-api.testnet.stacks.co/v2/ <br/> | 100 <br/> 
+stacks-node-api.testnet.stacks.co/extended/v1/faucets/ <br/> |1 <br/>|
 
 
 ### STX faucet
