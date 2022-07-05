@@ -102,14 +102,14 @@ const onFinish = (data: SignatureData) => {
 You can easily verify the signature using the [`@stacks/stacks.js`](https://github.com/hirosystems/stacks.js) package as seen in the following example.
 
 ```ts
-import { verifyMessageSignature } from "@stacks/encryption";
+import { verifyMessageSignatureRsv } from "@stacks/encryption";
 
 const message = "Hello World";
 
 openSignatureRequestPopup({
   // ...
   onFinish({ publicKey, signature }) {
-    const verified = verifyMessageSignature({ message, publicKey, signature });
+    const verified = verifyMessageSignatureRsv({ message, publicKey, signature });
     if (verified) {
       // Trigger a notification explaining signature is verified
     }
