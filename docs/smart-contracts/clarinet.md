@@ -110,7 +110,6 @@ This command creates a new `my-contract.clar` file in the `contracts` directory,
 ```toml
 [contracts.my-contract]
 path = "contracts/my-contract.clar"
-depends_on = []
 ```
 
 At this point, you can begin editing your smart contract in the `contracts` directory. At any point while you are
