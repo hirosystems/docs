@@ -1,0 +1,1 @@
+If you're building a frontend application and looking for ways to bootstrap it, you can go to [stacks.js-starters](https://github.com/hirosystems/stacks.js-starters) repo to generate the application with everything automatically assembled for you.

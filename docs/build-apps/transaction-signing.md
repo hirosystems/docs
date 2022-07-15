@@ -3,6 +3,8 @@ id: transaction-signing
 title: Signing Transactions
 ---
 
+[!INCLUDE [Stacks.js starters interactive CLI](../includes/stacks.js-starters-note.md)]
+
 This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
 
 Transaction signing provides a way for users execute Clarity smart contracts that are relevant to your app then handle the result as appropriate.

@@ -3,6 +3,8 @@ id: message-signing
 title: Signing messages
 ---
 
+[!INCLUDE [Stacks.js starters interactive CLI](../includes/stacks.js-starters-note.md)]
+
 This guide explains how to prompt users to sign a message.
 
 The user will be prompted a popup from the Hiro Wallet showing the message you would like them to sign.

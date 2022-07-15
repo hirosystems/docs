@@ -3,6 +3,8 @@ id: authentication
 title: Authenticating users
 ---
 
+[!INCLUDE [Stacks.js starters interactive CLI](../includes/stacks.js-starters-note.md)]
+
 This guide explains how to authenticate users with the [`connect`](https://github.com/hirosystems/connect#readme) package of Stacks.js.
 
 Authentication provides a way for users to identify themselves to an app while retaining complete control over their credentials and personal details. It can be integrated alone or used in conjunction with [transaction signing](/build-apps/transaction-signing) and [data storage](/build-apps/data-storage), for which it is a prerequisite.
