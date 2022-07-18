@@ -1,9 +1,85 @@
 ---
 id: authentication
-title: Authenticating users
+title: Connecting Wallets & Authenticating
 ---
 
-This guide explains how to authenticate users with the [`connect`](https://github.com/hirosystems/connect#readme) package of Stacks.js.
+This guide explains how to connect to users' wallets and authenticate users with the [`@stacks/connect`](https://github.com/hirosystems/connect#readme) package of Stacks.js.
+
+## Installing Dependency
+
+To install the `@stacks/connect` package in your JavaScript/TypeScript project run:
+
+```
+npm install @stacks/connect
+```
+
+## Getting Started
+
+There are two ways to connect to users' wallets:
+
+- [`requestAccounts`](#requesting-accounts) is uncomplicated and more general — it returns a single or multiple _unverified_ addresses of the user _(recommended)_
+- [`authenticate`](#authentication) is more sophisticated — it returns additional data and uses signing to prove that the owner of a given address is providing the data
+
+### When to use which flow?
+
+For most use-cases [`requestAccounts`](#requesting-accounts) will be sufficient. Applications can use the received unverified addresses to filter public data and construct transactions. _[Read more...](#requesting-accounts)_
+However, [`authenticate`](#authentication) is needed as soon as applications require proof of ownership of an account (e.g. for accessing sensitive data of a user). Browser contexts can be manipulated by users and malicious browser extensions. Therefore, authenticity should be verified on the applications backend. _[Read more...](#authentication)_
+
+:::note Note for Hardware-Wallets
+Currently, applications that want to allow the use of hardware-wallets (e.g. Ledger Nano), can only connect to wallets using [`requestAccounts`](#requesting-accounts).
+:::
+
+<br />
+
+---
+
+## Requesting Accounts
+
+Requesting accounts can be used to customize a users' experience and to find a users' publicly available data (e.g. on-chain data). The [`requestAccounts`](#requesting-accounts) action simply returns an array of addresses, which were selected by the user using a Stacks wallet.
+
+This type of connecting to a wallet should not be confused with traditional "authentication". This flow does not prove that the current user is the owner of those addresses. A received address should not be used to grant access to confidential data! Addresses are public data and could be spoofed by any malicious entity.
+
+The most common use-case for [`requestAccounts`](#requesting-accounts) is to provide an address for [constructing transactions to be signed](/build-apps/transaction-signing)), (which will only be valid and accepted by the blockchain if the user is the owner of a provided address).
+
+### Initiate `requestAccounts`
+
+```js
+import { requestAccounts } from '@stacks/connect';
+
+function showAddressPopup() {
+  requestAccounts({
+    appDetails: {
+      name: 'My App',
+      icon: window.location.origin + '/my-app-logo.svg',
+    },
+    onFinish: addresses => {
+      // addresses: string[]
+      console.log(addresses[0]);
+      // logs the first received address to the console
+      //> "ST1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE"
+    },
+    onCancel: () => {
+      console.log('the user canceled');
+    },
+  });
+}
+```
+
+Calling the `requestAccounts` function triggers a popup window of the users' installed Stacks wallet (such as [the Stacks Wallet](https://www.hiro.so/wallet/install-web)). This allows a user to select one or more accounts (only the account addresses will be returned). Once the user confirms their selection the popup closes. Finally, the passed `onFinish` callback is fired with the selected addresses as an array of strings.
+
+The `requestAccounts` function accepts a single configuration object with the following properties:
+
+- The `appDetails` object, containing the applications `name` and `icon` as strings.
+- The `onFinish` callback, providing the function to be executed after a successful selection in the wallet's popup window.
+- The `onCancel` callback, providing a counterpart function to `onFinish`, for the case of a user canceling/closing the popup window.
+
+The popup window for selecting accounts looks something like this:
+
+![Popup displayed by requestAccounts function](/img/request-accounts-popup.png)
+
+---
+
+## Authentication
 
 Authentication provides a way for users to identify themselves to an app while retaining complete control over their credentials and personal details. It can be integrated alone or used in conjunction with [transaction signing](/build-apps/transaction-signing) and [data storage](/build-apps/data-storage), for which it is a prerequisite.
 
@@ -11,7 +87,110 @@ Users who register for your app can subsequently authenticate to any other app w
 
 See the [To-dos example app](/example-apps/to-dos) for a concrete example of this feature in practice.
 
-## How it works
+### Initiate `userSession`
+
+Apps keep track of user authentication state with the `userSession` object, initiated with the `UserSession` and `AppConfig` classes:
+
+```js
+import { AppConfig, UserSession } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+```
+
+The main thing to decide here is what permission scopes your app needs from the user during authentication.
+
+Apps may request any of the following scopes:
+
+| Scope          | Definition                                                                      |
+| -------------- | ------------------------------------------------------------------------------- |
+| `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
+| `publish_data` | Publish data so other users of the app can discover and interact with the user. |
+
+The default scopes are `['store_write']` if no `scopes` array is provided when initializing the `appConfig` object.
+
+We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.
+
+### Initiate Authentication Flow
+
+Apps prompt both new and existing users to authenticate with the `showConnect` function:
+
+```js
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+
+function authenticate() {
+  showConnect({
+    appDetails: {
+      name: 'My App',
+      icon: window.location.origin + '/my-app-logo.svg',
+    },
+    redirectTo: '/',
+    onFinish: () => {
+      let userData = userSession.loadUserData();
+      // Save or otherwise utilize userData post-authentication
+    },
+    userSession: userSession,
+  });
+}
+```
+
+`showConnect` triggers the display of a popup that initiates the authentication process for users, one in which they'll authenticate with a _Secret Key_ that's used to encrypt their private data.
+
+<!-- todo: use up-to-date image -->
+
+![Popup displayed by showConnect function](/img/todos-get-started.png)
+
+The `showConnect` function accepts a number of properties within a parameter object such as:
+
+- The app's `name` and `icon`: provided as strings comprising the `appDetails` object property.
+- The `redirectTo` string: used to provide a URL to which the user should be redirected upon successful authentication. The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
+- The `userSession` object initiated above.
+
+Once the user selects the button presented in this popup, they are passed to the Stacks Wallet for authenticator with the `authRequest` token as a GET parameter. From there they can confirm authentication and generate a new _Secret Key_ or Stacks identity before doing so, as needed before coming back to the app.
+
+### Handle Pending Authentication
+
+Unless the user has confirmed authentication within the context of a popup window, they will get redirected back to the app via the `redirectTo` address provided above, at which point the app needs to handle the pending authentication state using the `authResponse` value provided as a GET parameter:
+
+```jsx
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+
+window.onload = function () {
+  if (userSession.isSignInPending()) {
+    userSession.handlePendingSignIn().then(userData => {
+      // Save or otherwise utilize userData post-authentication
+    });
+  } else if (userSession.isUserSignedIn()) {
+    // Handle case in which user is already authenticated
+  }
+};
+```
+
+The `isSignInPending` method of the `userSession` object is used to detect whether the user needs to handle a pending authentication state upon page load.
+
+The `handlePendingSignIn` method is then used to handle that state, returning a `userData` object with all the data needed to save the user's information into their session.
+
+The authenticated state can later be detected by the `isUserSignedIn` method in case any particular handling is needed then.
+
+:::note
+
+It's especially important to implement `handlePendingSignIn` within the context of mobile apps.
+
+:::
+
+If the user has indeed confirmed authentication in the context of a popup window, the authenticator will resolve the pending authentication state automatically with the app within the parent window.
+
+It will then trigger the `onFinish` function provided above, which can be used similarly to save the user's information into their session as retrieved with `userSession.loadUserData()`.
+
+## Advanced
+
+### How It Works
 
 The authentication flow with Stacks is similar to the typical client-server flow used by centralized sign in services (for example, OAuth). However, with Stacks the authentication flow happens entirely client-side.
 
@@ -41,137 +220,13 @@ The first two of these functions are particularly relevant to [data storage with
 
 [Learn more about keypairs](#key-pairs) used by authentication.
 
-## Install dependency
-
-The following dependency must be installed:
-
-```
-npm install @stacks/connect
-```
-
-## Initiate userSession object
-
-Apps keep track of user authentication state with the `userSession` object, initiated with the `UserSession` and `AppConfig` classes:
-
-```js
-import { AppConfig, UserSession } from "@stacks/connect";
-
-const appConfig = new AppConfig(["store_write", "publish_data"]);
-const userSession = new UserSession({ appConfig });
-```
-
-The main thing to decide here is what permission scopes your app needs from the user during authentication.
-
-Apps may request any of the following scopes:
-
-| Scope          | Definition                                                                      |
-| -------------- | ------------------------------------------------------------------------------- |
-| `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
-| `publish_data` | Publish data so other users of the app can discover and interact with the user. |
-
-The default scopes are `['store_write']` if no `scopes` array is provided when initializing the `appConfig` object.
-
-We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.
-
-## Initiate authentication flow
-
-Apps prompt both new and existing users to authenticate with the `showConnect` function:
-
-```js
-import { AppConfig, UserSession, showConnect } from "@stacks/connect";
-
-const appConfig = new AppConfig(["store_write", "publish_data"]);
-const userSession = new UserSession({ appConfig });
-
-function authenticate() {
-  showConnect({
-    appDetails: {
-      name: "My App",
-      icon: window.location.origin + "/my-app-logo.svg",
-    },
-    redirectTo: "/",
-    onFinish: () => {
-      let userData = userSession.loadUserData();
-      // Save or otherwise utilize userData post-authentication
-    },
-    userSession: userSession,
-  });
-}
-```
-
-`showConnect` triggers the display of a modal that initiates the authentication process for users, one in which they'll authenticate with a _Secret Key_ that's used to encrypt their private data.
-
-![Modal displayed by showConnect function](/img/todos-get-started.png)
-
-The `showConnect` function accepts a number of properties within a parameter object such as:
-
-- The app's `name` and `icon`: provided as strings comprising the `appDetails` object property.
-- The `redirectTo` string: used to provide a URL to which the user should be redirected upon successful authentication. The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
-- The `userSession` object initiated above.
-
-Once the user selects the button presented in this modal, they are passed to the Stacks Wallet for authenticator with the `authRequest` token as a GET parameter. From there they can confirm authentication and generate a new _Secret Key_ or Stacks identity before doing so, as needed before coming back to the app.
-
-## Handle pending authentication
-
-Unless the user has confirmed authentication within the context of a popup window, they will get redirected back to the app via the `redirectTo` address provided above, at which point the app needs to handle the pending authentication state using the `authResponse` value provided as a GET parameter:
-
-```jsx
-import { AppConfig, UserSession, showConnect } from "@stacks/connect";
-
-const appConfig = new AppConfig(["store_write", "publish_data"]);
-const userSession = new UserSession({ appConfig });
-
-window.onload = function () {
-  if (userSession.isSignInPending()) {
-    userSession.handlePendingSignIn().then((userData) => {
-      // Save or otherwise utilize userData post-authentication
-    });
-  } else if (userSession.isUserSignedIn()) {
-    // Handle case in which user is already authenticated
-  }
-};
-```
-
-The `isSignInPending` method of the `userSession` object is used to detect whether the user needs to handle a pending authentication state upon page load.
-
-The `handlePendingSignIn` method is then used to handle that state, returning a `userData` object with all the data needed to save the user's information into their session.
-
-The authenticated state can later be detected by the `isUserSignedIn` method in case any particular handling is needed then.
-
-:::note
-
-It's especially important to implement `handlePendingSignIn` within the context of mobile apps.
-
-:::
-
-If the user has indeed confirmed authentication in the context of a popup window, the authenticator will resolve the pending authentication state automatically with the app within the parent window.
-
-It will then trigger the `onFinish` function provided above, which can be used similarly to save the user's information into their session as retrieved with `userSession.loadUserData()`.
-
-## Usage in React Apps
-
-Import the `useConnect` from the [`connect-react`](https://github.com/hirosystems/connect/) package to integrate authentication more seamlessly into React apps.
-
-```
-npm install @stacks/connect-react
-```
-
-```jsx
-import { useConnect } from "@stacks/connect-react";
-
-const AuthButton = () => {
-  const { doOpenAuth } = useConnect();
-  return <Button onClick={() => doOpenAuth()}>Authenticate</Button>;
-};
-```
-
-## Key pairs
+### Key Pairs
 
 Authentication with Stacks makes extensive use of public key cryptography generally and ECDSA with the `secp256k1` curve in particular.
 
 The following sections describe the three public-private key pairs used, including how they're generated, where they're used and to whom private keys are disclosed.
 
-### Transit private key
+#### Transit Private Key
 
 The transit private is an ephemeral key that is used to encrypt secrets that
 need to be passed from the authenticator to the app during the
@@ -184,7 +239,7 @@ authenticator encrypts secret data such as the app private key using this
 public key and sends it back to the app when the user signs in to the app. The
 transit private key signs the app authentication request.
 
-### Identity address private key
+#### Identity Address Private Key
 
 The identity address private key is derived from the user's keychain phrase and
 is the private key of the Stacks username that the user chooses to use to sign in
@@ -193,14 +248,14 @@ instance of the authenticator.
 
 This private key signs the authentication response token for an app to indicate that the user approves sign in to that app.
 
-### App private key
+#### App Private Key
 
 The app private key is an app-specific private key that is generated from the
 user's identity address private key using the `domain_name` as input.
 
 The app private key is securely shared with the app on each authentication, encrypted by the authenticator with the transit public key. Because the transit key is only stored on the client side, this prevents a man-in-the-middle attack where a server or internet provider could potentially snoop on the app private key.
 
-## authRequest Payload Schema
+### `authRequest` Payload Schema
 
 ```jsx
 const requestPayload = {
@@ -219,7 +274,7 @@ const requestPayload = {
 };
 ```
 
-## authResponse Payload Schema
+### `authResponse` Payload Schema
 
 ```jsx
 const responsePayload = {
@@ -239,7 +294,7 @@ const responsePayload = {
 };
 ```
 
-## Decode authRequest or authResponse
+### Decode `authRequest` or `authResponse`
 
 To decode a token and see what data it holds:
 
@@ -255,9 +310,7 @@ To decode a token and see what data it holds:
      "iat": 1555641911,
      "exp": 1555645511,
      "iss": "did:btc-addr:1ANL7TNdT7TTcjVnrvauP7Mq3tjcb8TsUX",
-     "public_keys": [
-       "02f08d5541bf611ded745cc15db08f4447bfa55a55a2dd555648a1de9759aea5f9"
-     ],
+     "public_keys": ["02f08d5541bf611ded745cc15db08f4447bfa55a55a2dd555648a1de9759aea5f9"],
      "domain_name": "http://localhost:8080",
      "manifest_uri": "http://localhost:8080/manifest.json",
      "redirect_uri": "http://localhost:8080",
