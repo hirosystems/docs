@@ -3,7 +3,12 @@ id: message-signing
 title: Signing messages
 ---
 
-[!INCLUDE [Stacks.js starters interactive CLI](../includes/stacks.js-starters-note.md)]
+import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+
+:::note
+<JSStartersNote/>
+:::
+
 
 This guide explains how to prompt users to sign a message.
 
