@@ -88,6 +88,11 @@ module.exports = {
             label: 'Example Apps',
           },
           {
+            to: 'https://hiro.so/updates-docs',
+            label: 'Get Updates',
+            position: 'left',
+          },
+          {
             href: 'https://github.com/hirosystems/docs',
             position: 'right',
             className: 'header-github-link',
@@ -152,6 +157,11 @@ module.exports = {
                 label: 'Youtube',
                 className: 'footer__link-item custom-footer-external',
                 to: 'https://www.youtube.com/channel/UC3xNLj2Mu7fW-BCq-vC9xKQ',
+              },
+              {
+                label: 'Newsletter',
+                className: 'footer__link-item custom-footer-external',
+                to: 'https://hiro.so/updates-docs',
               },
             ],
           },
