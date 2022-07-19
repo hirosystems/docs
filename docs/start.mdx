@@ -1,0 +1,19 @@
+---
+title: Start Stacks.js
+description: Stacks.js Starter Projects
+---
+
+import StartComponent from '../src/components/StartComponent';
+
+# Stacks.js Starter ⚡️
+
+The fastest way to start a new JavaScript project using Stacks.js — web3 here we come!
+The form below let's you generate a new project with a few clicks.
+We have prepared minimal example templates for the most common frameworks.
+Are we missing any?
+[Let us know!](https://github.com/hirosystems/stacks.js-starters/issues/new)
+Check out all the templates in the [stacks.js-starters GitHub repository](https://github.com/hirosystems/stacks.js-starters/tree/main/templates).
+
+**Start by selecting a framework:**
+
+<StartComponent />

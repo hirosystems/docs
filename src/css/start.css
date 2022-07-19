@@ -1,24 +1,18 @@
-* {
-  /* outline: 1px solid red; */
-}
-
 .start {
   margin-top: 32px;
   margin-bottom: 64px;
-  max-width: 512px;
   font-size: 18px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-content: stretch; */
-  /* flex: 1; */
 }
 
 .start .card {
-  /* max-width: 374px; */
   margin: auto;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--ifm-color-emphasis-300);
   padding: 13px 16px;
   margin-bottom: 24px;
+}
+
+html[data-theme='dark'] .start .card {
+  border: 1px solid var(--ifm-color-emphasis-400);
 }
 
 .start .card-title {
@@ -36,41 +30,65 @@
   margin-right: 6px;
 }
 
-.start input[type='checkbox'],
-.start input[type='radio'] {
-  position: relative;
-  top: -1px;
-}
-
 .start button {
   display: inline-block;
   padding: 14px 22px 16px 18px;
+  margin: 16px 16px 0 0;
   border: 2px solid #c5c1ff;
   border-radius: 13px;
   font-size: 16px;
   font-weight: bold;
-  color: #5347f4;
-  background: #fff;
+  background: transparent;
   cursor: pointer;
+  transition: all 0.05s ease;
 }
 
 .start button:hover {
+  transform: scale(1.02);
+}
+
+.start button.sandbox {
+  color: #5347f4;
+}
+
+html[data-theme='dark'] .start button.sandbox {
+  background: rgba(83, 71, 244, 0.35);
+  border-color: rgba(117, 107, 255, 0.8);
+  color: #d9d6ff;
+}
+
+.start button.sandbox:hover {
   background: #ebe9ff;
   border-color: #5347f4;
   color: #3227cd;
 }
 
+html[data-theme='dark'] .start button.sandbox:hover {
+  background: rgba(83, 71, 244, 0.5);
+  border-color: rgba(110, 100, 255);
+  color: #f2f0ff;
+}
+
 .start button.terminal {
   padding: 10px 18px 12px 18px;
-  background: #f9f9f9;
-  border-color: #bbb;
-  color: #555;
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+  color: var(--ifm-color-emphasis-700);
+}
+
+html[data-theme='dark'] .start button.terminal {
+  background: var(--ifm-color-emphasis-200);
 }
 
 .start button.terminal:hover {
-  background: #f2f2f2;
-  border-color: #999;
-  color: #333;
+  background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-emphasis-600);
+  color: var(--ifm-color-emphasis-900);
+}
+
+html[data-theme='dark'] .start button.terminal:hover {
+  background: var(--ifm-color-emphasis-300);
+  border-color: var(--ifm-color-emphasis-700);
 }
 
 .start .align-right {
@@ -78,7 +96,52 @@
 }
 
 .start .or {
-  margin-right: 6px;
+  margin-right: 16px;
   font-weight: bold;
   color: #aaa;
+}
+
+.start .form {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 966px) {
+  .start .form {
+    flex-direction: column;
+  }
+}
+
+.start .form .card {
+  margin: 0 16px 16px 16px;
+}
+
+.start .form .card.disabled,
+.start .form .card.disabled input {
+  border: 1px solid var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-300);
+  cursor: not-allowed;
+}
+
+.start .card .card-subtitle {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+
+.start .card.disabled .card-subtitle {
+  color: var(--ifm-color-emphasis-300);
+}
+
+.start pre {
+  margin-top: 16px;
+}
+
+.start span.emoji {
+  font-size: 125%;
+  vertical-align: middle;
+  line-height: 0;
+  margin-right: 2px;
 }
