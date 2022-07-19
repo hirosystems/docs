@@ -1,9 +1,9 @@
 name: stylecheck
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
-      - '**.md'
+      - "**.md"
 
 jobs:
   stylecheck:
@@ -20,7 +20,7 @@ jobs:
       - name: run vale
         uses: errata-ai/vale-action@master
         with:
-          files: '${{ steps.get_changed_files.outputs.all }}'
+          files: "${{ steps.get_changed_files.outputs.all }}"
           onlyAnnotateModifiedLines: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
