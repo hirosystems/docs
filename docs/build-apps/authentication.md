@@ -2,6 +2,11 @@
 id: authentication
 title: Authenticating users
 ---
+import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+
+:::note
+<JSStartersNote/>
+:::
 
 This guide explains how to authenticate users with the [`connect`](https://github.com/hirosystems/connect#readme) package of Stacks.js.
 

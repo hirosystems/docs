@@ -3,6 +3,13 @@ id: overview
 title: Building on Stacks
 ---
 
+import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+
+:::note
+<JSStartersNote/>
+:::
+
+
 Apps built with the Stacks blockchain give users control over their digital identities, assets, and data.
 
 Unlike most cloud-based apps, they are "decentralized" since they don't depend on any centralized platform, server, or database to function. Rather, they use the Stacks blockchain to authenticate users and facilitate read and write requests for them without any single point of failure or trust.

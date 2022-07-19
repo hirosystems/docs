@@ -3,6 +3,13 @@ id: message-signing
 title: Signing messages
 ---
 
+import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+
+:::note
+<JSStartersNote/>
+:::
+
+
 This guide explains how to prompt users to sign a message.
 
 The user will be prompted a popup from the Hiro Wallet showing the message you would like them to sign.
