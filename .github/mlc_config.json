@@ -8,6 +8,12 @@
     },
     {
       "pattern": "^/img"
+    },
+    {
+      "pattern": "(gaia|hub).blockstack.org"
+    },
+    {
+      "pattern": "explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1"
     }
   ],
   "replacementPatterns": [
@@ -18,5 +24,6 @@
   ],
   "timeout": "10s",
   "retryOn429": true,
-  "retryCount": 5
+  "retryCount": 5,
+  "aliveStatusCodes": [200, 206, 406]
 }

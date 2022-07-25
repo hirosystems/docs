@@ -62,7 +62,7 @@ A Typescript client library is available for use of the Stacks API. The client l
 The client is made up of three components:
 
 1. Generated HTTP API client
-2. Typescript definitions for [Clarity values](https://docs.stacks.co/write-smart-contracts/values)
+2. Typescript definitions for [Clarity values](https://docs.stacks.co/docs/write-smart-contracts/values)
 3. WebSocket client
 
 The following sections demonstrate common usages of the TypeScript API client.
@@ -72,14 +72,14 @@ The following sections demonstrate common usages of the TypeScript API client.
 The Typescript client library requires you to specify the underlying HTTP request library to handle HTTP communication. The example below uses the universal fetch API [`cross-fetch`](https://github.com/lquixada/cross-fetch):
 
 ```js
-import fetch from "cross-fetch";
-import { Configuration, AccountsApi } from "@stacks/blockchain-api-client";
+import fetch from 'cross-fetch';
+import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
 
 (async () => {
   const apiConfig = new Configuration({
     fetchApi: fetch,
     // for mainnet, replace `testnet` with `mainnet`
-    basePath: "https://stacks-node-api.testnet.stacks.co", // defaults to http://localhost:3999
+    basePath: 'https://stacks-node-api.testnet.stacks.co', // defaults to http://localhost:3999
   });
 
   // initiate the /accounts API with the basepath and fetch library
@@ -87,7 +87,7 @@ import { Configuration, AccountsApi } from "@stacks/blockchain-api-client";
 
   // get transactions for a specific account
   const txs = await accountsApi.getAccountTransactions({
-    principal: "ST000000000000000000002AMW42H",
+    principal: 'ST000000000000000000002AMW42H',
   });
 
   console.log(txs);
@@ -99,23 +99,23 @@ import { Configuration, AccountsApi } from "@stacks/blockchain-api-client";
 The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
 
 ```ts
-import fetch from "cross-fetch";
+import fetch from 'cross-fetch';
 import {
   Configuration,
   AccountsApi,
   AccountsApiInterface,
   AddressBalanceResponse,
   AddressBalanceResponseStx,
-} from "@stacks/blockchain-api-client";
+} from '@stacks/blockchain-api-client';
 
 (async () => {
   const apiConfig: Configuration = new Configuration({
     fetchApi: fetch,
     // for mainnet, replace `testnet` with `mainnet`
-    basePath: "https://stacks-node-api.testnet.stacks.co", // defaults to http://localhost:3999
+    basePath: 'https://stacks-node-api.testnet.stacks.co', // defaults to http://localhost:3999
   });
 
-  const principal: string = "ST000000000000000000002AMW42H";
+  const principal: string = 'ST000000000000000000002AMW42H';
 
   // initiate the /accounts API with the basepath and fetch library
   const accountsApi: AccountsApiInterface = new AccountsApi(apiConfig);
@@ -137,18 +137,13 @@ import {
 The WebSocket components enabled you to subscribe to specific updates, enabling a near real-time display of updates on transactions and accounts.
 
 ```js
-import { connectWebSocketClient } from "@stacks/blockchain-api-client";
+import { connectWebSocketClient } from '@stacks/blockchain-api-client';
 
-const client = await connectWebSocketClient(
-  "ws://stacks-node-api.blockstack.org/"
-);
+const client = await connectWebSocketClient('ws://stacks-node-api.blockstack.org/');
 
-const sub = await client.subscribeAddressTransactions(
-  contractCall.txId,
-  (event) => {
-    console.log(event);
-  }
-);
+const sub = await client.subscribeAddressTransactions(contractCall.txId, event => {
+  console.log(event);
+});
 
 await sub.unsubscribe();
 ```
@@ -159,16 +154,14 @@ Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/
 
 You can refer to the rate limit for each endpoint in the table below:
 
-
-|**Endpoint**  | **Rate-Limit (RPM)**|
-| --- | ---|
-stacks-node-api.mainnet.stacks.co/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/>  <br/> |
-stacks-node-api.mainnet.stacks.co/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/> | <br/> 200 <br/>  <br/>
-stacks-node-api.mainnet.stacks.co/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/> | <br/> 100  <br/>  <br/>|
-|stacks-node-api.testnet.stacks.co/extended/ <br/> | 100 <br/> 
-stacks-node-api.testnet.stacks.co/v2/ <br/> | 100 <br/> 
-stacks-node-api.testnet.stacks.co/extended/v1/faucets/ <br/> |1 <br/>|
-
+| **Endpoint**                                                                                | **Rate-Limit (RPM)**  |
+| ------------------------------------------------------------------------------------------- | --------------------- |
+| stacks-node-api.mainnet.stacks.co/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/> <br/> |
+| stacks-node-api.mainnet.stacks.co/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/>    | <br/> 200 <br/> <br/> |
+| stacks-node-api.mainnet.stacks.co/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/>             | <br/> 100 <br/> <br/> |
+| stacks-node-api.testnet.stacks.co/extended/ <br/>                                           | 100 <br/>             |
+| stacks-node-api.testnet.stacks.co/v2/ <br/>                                                 | 100 <br/>             |
+| stacks-node-api.testnet.stacks.co/extended/v1/faucets/ <br/>                                | 1 <br/>               |
 
 ### STX faucet
 
@@ -239,13 +232,13 @@ The search operation used by the endpoint (for example, `FROM txs WHERE tx_id = 
 
 ## Using Clarity values
 
-Some endpoints, like the [read-only function contract call](https://docs.hiro.so/api#operation/call_read_only_function), require input to as serialized [Clarity value](https://docs.stacks.co/write-smart-contracts/values). Other endpoints return serialized values that need to be deserialized.
+Some endpoints, like the [read-only function contract call](https://docs.hiro.so/api#operation/call_read_only_function), require input to as serialized [Clarity value](https://docs.stacks.co/docs/write-smart-contracts/values). Other endpoints return serialized values that need to be deserialized.
 
 Below is an example for Clarity value usage in combination with the API.
 
 :::info
 
-The example below is for illustration only. The `@stacks/transactions` library supports typed contract calls and makes [response value utilization much simpler](https://docs.stacks.co/write-smart-contracts/values#utilizing-clarity-values-from-transaction-responses)
+The example below is for illustration only. The `@stacks/transactions` library supports typed contract calls and makes [response value utilization much simpler](https://docs.stacks.co/docs/write-smart-contracts/values#utilizing-clarity-values-from-transaction-responses)
 
 :::
 
@@ -255,42 +248,33 @@ import {
   SmartContractsApiInterface,
   SmartContractsApi,
   ReadOnlyFunctionSuccessResponse,
-} from "@stacks/blockchain-api-client";
-import {
-  uintCV,
-  UIntCV,
-  cvToHex,
-  hexToCV,
-  ClarityType,
-} from "@stacks/transactions";
+} from '@stacks/blockchain-api-client';
+import { uintCV, UIntCV, cvToHex, hexToCV, ClarityType } from '@stacks/transactions';
 
 (async () => {
   const apiConfig: Configuration = new Configuration({
     fetchApi: fetch,
     // for mainnet, replace `testnet` with `mainnet`
-    basePath: "https://stacks-node-api.testnet.stacks.co", // defaults to http://localhost:3999
+    basePath: 'https://stacks-node-api.testnet.stacks.co', // defaults to http://localhost:3999
   });
 
-  const contractsApi: SmartContractsApiInterface = new SmartContractsApi(
-    apiConfig
-  );
+  const contractsApi: SmartContractsApiInterface = new SmartContractsApi(apiConfig);
 
-  const principal: string = "ST000000000000000000002AMW42H";
+  const principal: string = 'ST000000000000000000002AMW42H';
 
   // use most recent from: https://stacks-node-api.<mainnet/testnet>.stacks.co/v2/pox
   const rewardCycle: UIntCV = uintCV(22);
 
   // call a read-only function
-  const fnCall: ReadOnlyFunctionSuccessResponse =
-    await contractsApi.callReadOnlyFunction({
-      contractAddress: principal,
-      contractName: "pox",
-      functionName: "is-pox-active",
-      readOnlyFunctionArgs: {
-        sender: principal,
-        arguments: [cvToHex(rewardCycle)],
-      },
-    });
+  const fnCall: ReadOnlyFunctionSuccessResponse = await contractsApi.callReadOnlyFunction({
+    contractAddress: principal,
+    contractName: 'pox',
+    functionName: 'is-pox-active',
+    readOnlyFunctionArgs: {
+      sender: principal,
+      arguments: [cvToHex(rewardCycle)],
+    },
+  });
 
   console.log({
     status: fnCall.okay,
@@ -373,9 +357,7 @@ curl 'https://stacks-node-api-microblocks.testnet.stacks.co/extended/v1/microblo
       "parent_block_height": 14460,
       "parent_block_hash": "0xe0d1e8d216a77526ae2ce40294fc77038798a179a6532bb8980d3c2183f58de6",
       "block_hash": "0x17ceb3da5f36aab351d6b14f5aa77f85bb6b800b954b2f24c564579f80116d99",
-      "txs": [
-        "0x0622e096dec7e2f6e8f7d95f732e04d238b7381aea8d0aecffae026c53e73e05"
-      ]
+      "txs": ["0x0622e096dec7e2f6e8f7d95f732e04d238b7381aea8d0aecffae026c53e73e05"]
     }
   ]
 }

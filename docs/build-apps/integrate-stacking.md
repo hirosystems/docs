@@ -22,7 +22,7 @@ This tutorial highlights the following capabilities:
 
 :::tip
 
-Alternatively to integration using JS libraries, you can use the [Rust CLI](https://gist.github.com/kantai/c261ca04114231f0f6a7ce34f0d2499b) or [JS CLI](/tutorials/stacking-using-CLI).
+Alternatively to integration using JS libraries, you can use the [Rust CLI](https://gist.github.com/kantai/c261ca04114231f0f6a7ce34f0d2499b) or [JS CLI](/tutorials/stacking-using-cli).
 
 :::
 
@@ -64,23 +64,20 @@ import {
   privateKeyToString,
   getAddressFromPrivateKey,
   TransactionVersion,
-} from "@stacks/transactions";
+} from '@stacks/transactions';
 
-import { StackingClient } from "@stacks/stacking";
+import { StackingClient } from '@stacks/stacking';
 
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
-import BN from "bn.js";
+import BN from 'bn.js';
 
 // generate random key or use an existing key
 const privateKey = privateKeyToString(makeRandomPrivKey());
 
 // get Stacks address
 // for mainnet, remove the TransactionVersion
-const stxAddress = getAddressFromPrivateKey(
-  privateKey,
-  TransactionVersion.Testnet
-);
+const stxAddress = getAddressFromPrivateKey(privateKey, TransactionVersion.Testnet);
 
 // instantiate the Stacker class for testnet
 // for mainnet, use `new StacksMainnet()`
@@ -185,9 +182,7 @@ let numberOfCycles = 3;
 
 // the projected datetime for the unlocking of tokens
 const unlockingAt = new Date(new Date().getTime() + secondsUntilNextCycle);
-unlockingAt.setSeconds(
-  unlockingAt.getSeconds() + cycleDuration * numberOfCycles
-);
+unlockingAt.setSeconds(unlockingAt.getSeconds() + cycleDuration * numberOfCycles);
 ```
 
 ## Step 4: Verify stacking eligibility
@@ -199,7 +194,7 @@ With this input, and the data from previous steps, we can determine the eligibil
 ```js
 // user supplied parameters
 // BTC address must start with "1" or "3". Native Segwit (starts with "bc1") is not supported
-let btcAddress = "1Xik14zRm29UsyS6DjhYg4iZeZqsDa8D3";
+let btcAddress = '1Xik14zRm29UsyS6DjhYg4iZeZqsDa8D3';
 let numberOfCycles = 3;
 
 const stackingEligibility = await client.canStack({
@@ -244,12 +239,12 @@ client
     privateKey,
     burnBlockHeight,
   })
-  .then((response) => {
+  .then(response => {
     // If successful, stackingResults will contain the txid for the Stacking transaction
     // otherwise an error will be returned
-    if (response.hasOwnProperty("error")) {
+    if (response.hasOwnProperty('error')) {
       console.log(response.error);
-      throw new Error("Stacking transaction failed");
+      throw new Error('Stacking transaction failed');
     } else {
       console.log(`txid: ${response}`);
       // txid: f6e9dbf6a26c1b73a14738606cb2232375d1b440246e6bbc14a45b3a66618481
@@ -265,15 +260,15 @@ The transaction completion will take several minutes. Only one stacking transact
 The new transaction will not be completed immediately. It'll stay in the `pending` status for a few minutes. We need to poll the status and wait until the transaction status changes to `success`. We can use the [Stacks Blockchain API client library](/get-started/stacks-blockchain-api#javascript-client-library) to check transaction status.
 
 ```js
-const { TransactionsApi } = require("@stacks/blockchain-api-client");
+const { TransactionsApi } = require('@stacks/blockchain-api-client');
 const tx = new TransactionsApi(apiConfig);
 
-const waitForTransactionSuccess = (txId) =>
+const waitForTransactionSuccess = txId =>
   new Promise((resolve, reject) => {
     const pollingInterval = 3000;
     const intervalID = setInterval(async () => {
       const resp = await tx.getTransactionById({ txId });
-      if (resp.tx_status === "success") {
+      if (resp.tx_status === 'success') {
         // stop polling
         clearInterval(intervalID);
         // update UI to display stacking status
@@ -295,12 +290,10 @@ More details on the lifecycle of transactions can be found in the [transactions 
 Alternatively to the polling, the Stacks Blockchain API client library offers WebSockets. WebSockets can be used to subscribe to specific updates, like transaction status changes. Here is an example:
 
 ```js
-const client = await connectWebSocketClient(
-  "ws://stacks-node-api.blockstack.org/"
-);
+const client = await connectWebSocketClient('ws://stacks-node-api.blockstack.org/');
 
 // note: txId should be defined previously
-const sub = await client.subscribeAddressTransactions(txId, (event) => {
+const sub = await client.subscribeAddressTransactions(txId, event => {
   console.log(event);
   // update UI to display stacking status
 });

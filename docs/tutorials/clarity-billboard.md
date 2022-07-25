@@ -241,46 +241,30 @@ token transfer. The test verifies that the addresses of the wallets match the ex
 transferred is the expected amount.
 
 ```ts
-import {
-  Clarinet,
-  Tx,
-  Chain,
-  Account,
-  types,
-} from "https://deno.land/x/clarinet@v0.12.0/index.ts";
-import { assertEquals } from "https://deno.land/std@0.90.0/testing/asserts.ts";
+import { Clarinet, Tx, Chain, Account, types } from 'https://deno.land/x/clarinet@v0.12.0/index.ts';
+import { assertEquals } from 'https://deno.land/std@0.90.0/testing/asserts.ts';
 
 Clarinet.test({
-  name: "A quick demo on how to assert expectations",
+  name: 'A quick demo on how to assert expectations',
   async fn(chain: Chain, accounts: Map<string, Account>) {
-    let wallet_1 = accounts.get("wallet_1")!;
-    let deployer = accounts.get("deployer")!;
+    let wallet_1 = accounts.get('wallet_1')!;
+    let deployer = accounts.get('deployer')!;
     let assetMaps = chain.getAssetsMaps();
-    const balance = assetMaps.assets["STX"][wallet_1.address];
+    const balance = assetMaps.assets['STX'][wallet_1.address];
 
     let block = chain.mineBlock([
-      Tx.contractCall(
-        "billboard",
-        "set-message",
-        [types.utf8("testing")],
-        wallet_1.address
-      ),
-      Tx.contractCall("billboard", "get-message", [], wallet_1.address),
-      Tx.contractCall(
-        "billboard",
-        "set-message",
-        [types.utf8("testing...")],
-        wallet_1.address
-      ),
-      Tx.contractCall("billboard", "get-message", [], wallet_1.address),
+      Tx.contractCall('billboard', 'set-message', [types.utf8('testing')], wallet_1.address),
+      Tx.contractCall('billboard', 'get-message', [], wallet_1.address),
+      Tx.contractCall('billboard', 'set-message', [types.utf8('testing...')], wallet_1.address),
+      Tx.contractCall('billboard', 'get-message', [], wallet_1.address),
     ]);
 
     assertEquals(block.receipts.length, 4);
     assertEquals(block.height, 2);
 
-    block.receipts[1].result.expectUtf8("testing");
+    block.receipts[1].result.expectUtf8('testing');
 
-    block.receipts[3].result.expectUtf8("testing...");
+    block.receipts[3].result.expectUtf8('testing...');
 
     let [event] = block.receipts[0].events;
     let { sender, recipient, amount } = event.stx_transfer_event;
@@ -289,7 +273,7 @@ Clarinet.test({
     amount.expectInt(100);
 
     assetMaps = chain.getAssetsMaps();
-    assertEquals(assetMaps.assets["STX"][wallet_1.address], balance - 210);
+    assertEquals(assetMaps.assets['STX'][wallet_1.address], balance - 210);
   },
 });
 ```
@@ -304,7 +288,7 @@ Clarity contract using Clarinet.
 [clarinet]: /smart-contracts/clarinet
 [installing clarinet]: /smart-contracts/clarinet#installing-clarinet
 [visual studio code]: https://code.visualstudio.com/
-[final code for this tutorial]: https://github.com/hirosystems/clarinet/tree/master/examples/billboard
+[final code for this tutorial]: https://github.com/hirosystems/stacks-billboard
 [`let`]: https://docs.stacks.co/references/language-functions#let
 [`stx-transfer?`]: https://docs.stacks.co/references/language-functions#stx-transfer
 [`as-contract`]: https://docs.stacks.co/references/language-functions#as-contract
