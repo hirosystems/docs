@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     require.resolve('@cmfcmf/docusaurus-search-local'),
     require.resolve('docusaurus-plugin-segment'),
+    ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
   ],
 
   presets: [
