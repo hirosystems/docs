@@ -2,6 +2,7 @@
 id: billboard
 title: Billboard app
 ---
+import NodeLTS from '../includes/node-lts-version.mdx';
 
 This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](/smart-contracts/devnet), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
 
@@ -14,6 +15,10 @@ This app showcases the following features of Stacks and Clarinet:
 
 The source for the billboard app is available on [GitHub](https://github.com/hirosystems/stacks-billboard). This page assumes that you have familiarity with [React](https://reactjs.org).
 
+:::note
+<NodeLTS/>
+:::
+
 ## Billboard overview
 
 Billboard is a simple Stacks app that uses a Clarity smart contract to store a message on the Stacks blockchain. A web frontend built with React and Stacks.js then accesses and displays the message. The smart contract backend also has methods for updating the message through a small STX payment. The cost to update the message increases with each update.
@@ -23,8 +28,6 @@ Billboard is a simple Stacks app that uses a Clarity smart contract to store a m
 The billboard app is provided as a simple demonstration of a full stack Stacks web app, and an example of the architecture of a Stacks app. You can use the billboard app as a base for your own Stacks app, or review the code to learn more about how to structure your own full stack Stacks app.
 
 ### Quickstart
-
-If you are interested in running the billboard app locally, you can follow the instructions in the [GitHub README](https://github.com/pgray-hiro/stacks-billboard#readme). You should have Clarinet installed locally, and Node.js 12+ (Node 14 recommended).
 
 ## Review billboard contract
 

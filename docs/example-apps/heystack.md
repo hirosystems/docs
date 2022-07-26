@@ -2,6 +2,11 @@
 id: heystack
 title: Heystack chat app
 ---
+import NodeLTS from '../includes/node-lts-version.mdx';
+
+:::note
+<NodeLTS/>
+:::
 
 ## Introduction
 
