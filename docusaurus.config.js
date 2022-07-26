@@ -82,12 +82,12 @@ module.exports = {
             position: 'left',
             label: 'Tutorials',
           },
-          {
-            type: 'doc',
-            docId: 'example-apps',
-            position: 'left',
-            label: 'Example Apps',
-          },
+          // {
+          //   type: 'doc',
+          //   docId: 'example-apps',
+          //   position: 'left',
+          //   label: 'Example Apps',
+          // },
           {
             to: 'https://hiro.so/updates-docs',
             label: 'Get Updates',
@@ -125,10 +125,10 @@ module.exports = {
                 label: 'Tutorials',
                 to: '/tutorials',
               },
-              {
-                label: 'Example Apps',
-                to: '/example-apps',
-              },
+              // {
+              //   label: 'Example Apps',
+              //   to: '/example-apps',
+              // },
             ],
           },
           {
