@@ -16,11 +16,18 @@ type AnalyticsEvent = {
   button: string;
   framework: string;
   features: string[];
-  other?: string;
+  featuresConcatenated: string;
+  other: string;
 };
 
 // Available Form Options ======================================================
-const frameworks = { react: 'React', svelte: 'Svelte', vue: 'Vue', angular: 'Angular' };
+const frameworks = {
+  react: 'React (create-react-app)',
+  nextjs: 'React (Next.js)',
+  svelte: 'Svelte (Vite)',
+  vue: 'Vue (Vite)',
+  // angular: 'Angular', // Angular doesn't work with CodeSandbox/Stackblitz
+};
 const features = {
   connectWallet: 'Connect with Wallet',
   stxTokens: 'Send/Receive STX',
@@ -30,7 +37,7 @@ const features = {
   multiSig: 'Create/Sign Multi-Sig Transactions',
 };
 
-const EVENT_NAME: string = 'stacksjs_starter_web';
+const EVENT_NAME = 'stacksjs_starter_web';
 
 export default function StartComponent() {
   const [framework, setFramework] = useState('');
@@ -44,26 +51,22 @@ export default function StartComponent() {
         event: EVENT_NAME,
         button,
         framework,
-        features: Object.keys(features).filter(k => k != 'other'), // keys of selected checkboxes
+        features: Object.keys(features),
+        featuresConcatenated: Object.keys(features).join(','),
+        other: features.other || '',
       };
-      if (features.other) pushData.other = features.other;
       window.dataLayer.push(pushData);
     } catch (e) {}
   }
 
   function openSandbox() {
+    window.open(`https://stacks.new/${framework}`, '_blank').focus();
     trackButton('sandbox');
-    window
-      .open(
-        `https://githubbox.com/hirosystems/stacks.js-starters/tree/main/templates/template-${framework}`,
-        '_blank'
-      )
-      .focus();
   }
 
   function openTerminal() {
-    trackButton('terminal');
     setShowCode(!showCode);
+    trackButton('terminal');
   }
 
   return (
