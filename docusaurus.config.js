@@ -89,6 +89,12 @@ module.exports = {
             label: 'Example Apps',
           },
           {
+            type: 'doc',
+            docId: 'roadmap',
+            label: 'Roadmap',
+            position: 'left',
+          },
+          {
             to: 'https://hiro.so/updates-docs',
             label: 'Get Updates',
             position: 'left',
