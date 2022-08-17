@@ -2,6 +2,7 @@
 id: to-dos
 title: To-dos app
 ---
+import NodeLTS from '../includes/node-lts-version.mdx';
 
 ![What you'll be studying in this tutorial](/img/todos-home.png)
 
@@ -19,10 +20,9 @@ This app highlights the following platform capabilities:
 
 Existing familiarity with [React](https://reactjs.org/) is recommended for reviewing this app's code.
 
-## Install and run the app
-
-You must have recent versions of Git and [Node.js](https://nodejs.org/en/download/)
-(v12.10.0 or greater) installed already.
+:::note
+<NodeLTS/>
+:::
 
 ### Step 1: Install the code and its dependencies
 
