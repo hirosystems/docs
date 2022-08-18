@@ -7,8 +7,8 @@ At Hiro, we want to make development on Stacks a fast and painless experience fo
 
 | Product | Q3-2022 |
 | --------------- | --------------- |
+| **Clarinet** | [hirosystems/clarinet](https://github.com/hirosystems/clarinet/milestone/2) <br /> [hirosystems/clarity-lsp](https://github.com/hirosystems/clarity-lsp/milestone/1) <br /> [hirosystems/orchestra](https://github.com/hirosystems/orchestra/milestone/1)|
 | **Explorer** | [hirosystems/explorer](https://github.com/hirosystems/explorer/milestone/34) |
-| **Clarinet** | [hirosystems/clarinet](https://github.com/hirosystems/clarinet/milestone/2) |
 | **Stacks Blockchain API** | [hirosystems/stacks-blockchain-api](https://github.com/hirosystems/stacks-blockchain-api/milestone/32) |
 | **Stacks.js** | [hirosystems/stacks.js](https://github.com/hirosystems/stacks.js/milestone/59) |
 | **Subnets** | [hirosystems/stacks-subnets](https://github.com/hirosystems/stacks-subnets/milestone/6) |
