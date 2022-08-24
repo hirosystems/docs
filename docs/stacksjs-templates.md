@@ -1,6 +1,6 @@
 ---
-title: Start Stacks.js
-description: Stacks.js Starter Projects
+title: Stacks.js Starter Templates
+description: The fastest way to start a new JavaScript project using Stacks.js
 ---
 
 import StartComponent from '../src/components/StartComponent';
