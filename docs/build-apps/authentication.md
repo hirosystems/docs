@@ -2,11 +2,10 @@
 id: authentication
 title: Authenticating users
 ---
-import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
 
-:::note
-<JSStartersNote/>
-:::
+import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
+
+<StacksjsStartersNote/>
 
 This guide explains how to authenticate users with the [`connect`](https://github.com/hirosystems/connect#readme) package of Stacks.js.
 
@@ -59,9 +58,9 @@ npm install @stacks/connect
 Apps keep track of user authentication state with the `userSession` object, initiated with the `UserSession` and `AppConfig` classes:
 
 ```js
-import { AppConfig, UserSession } from "@stacks/connect";
+import { AppConfig, UserSession } from '@stacks/connect';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 ```
 
@@ -83,18 +82,18 @@ We recommend you initiate the `userSession` object just once in your app then re
 Apps prompt both new and existing users to authenticate with the `showConnect` function:
 
 ```js
-import { AppConfig, UserSession, showConnect } from "@stacks/connect";
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 
 function authenticate() {
   showConnect({
     appDetails: {
-      name: "My App",
-      icon: window.location.origin + "/my-app-logo.svg",
+      name: 'My App',
+      icon: window.location.origin + '/my-app-logo.svg',
     },
-    redirectTo: "/",
+    redirectTo: '/',
     onFinish: () => {
       let userData = userSession.loadUserData();
       // Save or otherwise utilize userData post-authentication
@@ -121,14 +120,14 @@ Once the user selects the button presented in this modal, they are passed to the
 Unless the user has confirmed authentication within the context of a popup window, they will get redirected back to the app via the `redirectTo` address provided above, at which point the app needs to handle the pending authentication state using the `authResponse` value provided as a GET parameter:
 
 ```jsx
-import { AppConfig, UserSession, showConnect } from "@stacks/connect";
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
+const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 
 window.onload = function () {
   if (userSession.isSignInPending()) {
-    userSession.handlePendingSignIn().then((userData) => {
+    userSession.handlePendingSignIn().then(userData => {
       // Save or otherwise utilize userData post-authentication
     });
   } else if (userSession.isUserSignedIn()) {
@@ -162,7 +161,7 @@ npm install @stacks/connect-react
 ```
 
 ```jsx
-import { useConnect } from "@stacks/connect-react";
+import { useConnect } from '@stacks/connect-react';
 
 const AuthButton = () => {
   const { doOpenAuth } = useConnect();
@@ -260,9 +259,7 @@ To decode a token and see what data it holds:
      "iat": 1555641911,
      "exp": 1555645511,
      "iss": "did:btc-addr:1ANL7TNdT7TTcjVnrvauP7Mq3tjcb8TsUX",
-     "public_keys": [
-       "02f08d5541bf611ded745cc15db08f4447bfa55a55a2dd555648a1de9759aea5f9"
-     ],
+     "public_keys": ["02f08d5541bf611ded745cc15db08f4447bfa55a55a2dd555648a1de9759aea5f9"],
      "domain_name": "http://localhost:8080",
      "manifest_uri": "http://localhost:8080/manifest.json",
      "redirect_uri": "http://localhost:8080",

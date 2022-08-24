@@ -3,12 +3,9 @@ id: overview
 title: Building on Stacks
 ---
 
-import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
 
-:::note
-<JSStartersNote/>
-:::
-
+<StacksjsStartersNote/>
 
 Apps built with the Stacks blockchain give users control over their digital identities, assets, and data.
 

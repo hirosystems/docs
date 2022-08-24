@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useRef, useState } from 'react';
-import '../css/start.css';
+import '../css/stacksjs-starter.css';
 
 // Types =======================================================================
 declare global {
@@ -21,13 +21,13 @@ type AnalyticsEvent = {
 };
 
 // Available Form Options ======================================================
-const frameworks = {
-  react: 'React (create-react-app)',
-  nextjs: 'React (Next.js)',
-  svelte: 'Svelte (Vite)',
-  vue: 'Vue (Vite)',
-  // angular: 'Angular', // Angular doesn't work with CodeSandbox/Stackblitz
-};
+const frameworks = [
+  { key: 'react', framework: 'React', context: 'create-react-app' },
+  { key: 'nextjs', framework: 'React', context: 'Next.js' },
+  { key: 'svelte', framework: 'Svelte', context: 'Vite' },
+  { key: 'vue', framework: 'Vue', context: 'Vite' },
+  // Angular doesn't work with CodeSandbox/Stackblitz
+];
 const features = {
   connectWallet: 'Connect with Wallet',
   stxTokens: 'Send/Receive STX',
@@ -39,7 +39,7 @@ const features = {
 
 const EVENT_NAME = 'stacksjs_starter_web';
 
-export default function StartComponent() {
+export default function StacksjsStartersComponent() {
   const [framework, setFramework] = useState('');
   const [showCode, setShowCode] = useState(false);
   const formRef: MutableRefObject<any> = useRef();
@@ -74,16 +74,18 @@ export default function StartComponent() {
       <div className="form">
         <div className="framework-form card" onChange={(e: any) => setFramework(e.target.value)}>
           <span className="card-title">Which framework will your project use?</span>
-          {Object.entries(frameworks).map(([k, v]) => (
-            <div key={k}>
+          {frameworks.map(f => (
+            <div key={f.key}>
               <input
                 type="radio"
                 name="framework"
-                id={k}
-                value={k}
-                defaultChecked={framework == k}
+                id={f.key}
+                value={f.key}
+                defaultChecked={framework == f.key}
               />
-              <label htmlFor={k}>{v}</label>
+              <label htmlFor={f.key}>
+                <strong>{f.framework}</strong> ({f.context})
+              </label>
             </div>
           ))}
         </div>
@@ -96,7 +98,7 @@ export default function StartComponent() {
           {Object.entries(features).map(([k, v]) => (
             <div key={k}>
               <input type="checkbox" name={k} id={k} value={k} disabled={!framework} />
-              <label htmlFor={k}>{v}</label>
+              <label htmlFor={k}>{v.split(' (')}</label>
             </div>
           ))}
           <div>

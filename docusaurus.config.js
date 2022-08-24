@@ -78,26 +78,23 @@ module.exports = {
           },
           {
             type: 'dropdown',
-            label: 'Community',
+            label: 'Learn & Build',
             position: 'left',
             items: [
               {
                 type: 'doc',
                 label: 'Tutorials',
                 docId: 'tutorials',
-                position: 'left',
               },
               {
                 type: 'doc',
                 label: 'Example Apps',
                 docId: 'example-apps',
-                position: 'left',
               },
               {
                 type: 'doc',
-                label: 'Stacks.js Templates',
-                docId: 'stacksjs-templates',
-                position: 'left',
+                label: 'Stacks.js Starters',
+                docId: 'stacksjs-starters',
               },
             ],
           },

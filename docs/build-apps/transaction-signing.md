@@ -3,12 +3,9 @@ id: transaction-signing
 title: Signing Transactions
 ---
 
-import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
 
-:::note
-<JSStartersNote/>
-:::
-
+<StacksjsStartersNote/>
 
 This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
 
@@ -62,22 +59,22 @@ const testnetAddress = stxAddresses.testnet;
 Call the `openSTXTransfer` function provided by the `connect` package to trigger the display of a transaction signing prompt for transferring STX:
 
 ```tsx
-import { openSTXTransfer } from "@stacks/connect";
-import { StacksTestnet } from "@stacks/network";
+import { openSTXTransfer } from '@stacks/connect';
+import { StacksTestnet } from '@stacks/network';
 
 openSTXTransfer({
-  recipient: "ST2EB9WEQNR9P0K28D2DC352TM75YG3K0GT7V13CV",
-  amount: "100",
-  memo: "Reimbursement",
+  recipient: 'ST2EB9WEQNR9P0K28D2DC352TM75YG3K0GT7V13CV',
+  amount: '100',
+  memo: 'Reimbursement',
   network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
   appDetails: {
-    name: "My App",
-    icon: window.location.origin + "/my-app-logo.svg",
+    name: 'My App',
+    icon: window.location.origin + '/my-app-logo.svg',
   },
-  onFinish: (data) => {
-    console.log("Stacks Transaction:", data.stacksTransaction);
-    console.log("Transaction ID:", data.txId);
-    console.log("Raw transaction:", data.txRaw);
+  onFinish: data => {
+    console.log('Stacks Transaction:', data.stacksTransaction);
+    console.log('Transaction ID:', data.txId);
+    console.log('Raw transaction:', data.txRaw);
   },
 });
 ```
@@ -114,21 +111,21 @@ interface STXTransferOptions {
 Call the `openContractDeploy` function provided by the `connect` package to trigger the display of a transaction signing prompt for deploying a smart contract:
 
 ```tsx
-import { openContractDeploy } from "@stacks/connect";
+import { openContractDeploy } from '@stacks/connect';
 
 const codeBody = '(begin (print "hello, world"))';
 
 openContractDeploy({
-  contractName: "my-contract-name",
+  contractName: 'my-contract-name',
   codeBody,
   appDetails: {
-    name: "My App",
-    icon: window.location.origin + "/my-app-logo.svg",
+    name: 'My App',
+    icon: window.location.origin + '/my-app-logo.svg',
   },
-  onFinish: (data) => {
-    console.log("Stacks Transaction:", data.stacksTransaction);
-    console.log("Transaction ID:", data.txId);
-    console.log("Raw transaction:", data.txRaw);
+  onFinish: data => {
+    console.log('Stacks Transaction:', data.stacksTransaction);
+    console.log('Transaction ID:', data.txId);
+    console.log('Raw transaction:', data.txRaw);
   },
 });
 ```
@@ -188,7 +185,7 @@ As an example, consider this simple Clarity contract:
 To execute this function, invoke the `openContractCall` method. Use the `ClarityValue` types from `@stacks/transactions` to construct properly formatted arguments.
 
 ```tsx
-import { openContractCall } from "@stacks/connect";
+import { openContractCall } from '@stacks/connect';
 import {
   uintCV,
   intCV,
@@ -197,31 +194,31 @@ import {
   stringUtf8CV,
   standardPrincipalCV,
   trueCV,
-} from "@stacks/transactions";
+} from '@stacks/transactions';
 
 const functionArgs = [
   uintCV(1234),
   intCV(-234),
-  bufferCV(Buffer.from("hello, world")),
-  stringAsciiCV("hey-ascii"),
-  stringUtf8CV("hey-utf8"),
-  standardPrincipalCV("STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6"),
+  bufferCV(Buffer.from('hello, world')),
+  stringAsciiCV('hey-ascii'),
+  stringUtf8CV('hey-utf8'),
+  standardPrincipalCV('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6'),
   trueCV(),
 ];
 
 const options = {
-  contractAddress: "ST22T6ZS7HVWEMZHHFK77H4GTNDTWNPQAX8WZAKHJ",
-  contractName: "my-contract",
-  functionName: "my-func",
+  contractAddress: 'ST22T6ZS7HVWEMZHHFK77H4GTNDTWNPQAX8WZAKHJ',
+  contractName: 'my-contract',
+  functionName: 'my-func',
   functionArgs,
   appDetails: {
-    name: "My App",
-    icon: window.location.origin + "/my-app-logo.svg",
+    name: 'My App',
+    icon: window.location.origin + '/my-app-logo.svg',
   },
-  onFinish: (data) => {
-    console.log("Stacks Transaction:", data.stacksTransaction);
-    console.log("Transaction ID:", data.txId);
-    console.log("Raw transaction:", data.txRaw);
+  onFinish: data => {
+    console.log('Stacks Transaction:', data.stacksTransaction);
+    console.log('Transaction ID:', data.txId);
+    console.log('Raw transaction:', data.txRaw);
   },
 };
 
@@ -276,9 +273,9 @@ The `StacksTransaction` type comes from the [`@stacks/transactions`](https://sta
 The `txId` property can be used to provide a link to view the transaction in the explorer.
 
 ```ts
-const onFinish = (data) => {
-  const explorerTransactionUrl = "https://explorer.stacks.co/txid/${data.txId}";
-  console.log("View transaction in explorer:", explorerTransactionUrl);
+const onFinish = data => {
+  const explorerTransactionUrl = 'https://explorer.stacks.co/txid/${data.txId}';
+  console.log('View transaction in explorer:', explorerTransactionUrl);
 };
 ```
 
@@ -287,7 +284,7 @@ const onFinish = (data) => {
 All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](https://stacks.js.org/modules/network.html) package.
 
 ```ts
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
 const testnet = new StacksTestnet();
 const mainnet = new StacksMainnet();
@@ -317,7 +314,7 @@ Each transaction signing method is itself available as a function returned by `u
 Use these functions with the same parameters as outlined above. However, you don't have to specify `appDetails` since they are detected automatically if `useConnect` has been used already [for authentication](/build-apps/authentication#usage-in-react-apps).
 
 ```tsx
-import { useConnect } from "@stacks/connect-react";
+import { useConnect } from '@stacks/connect-react';
 
 const MyComponent = () => {
   const { doContractCall } = useConnect();
@@ -375,9 +372,9 @@ interface TransactionRequest {
 }
 
 export enum TransactionTypes {
-  ContractCall = "contract_call",
-  ContractDeploy = "smart_contract",
-  STXTransfer = "token_transfer",
+  ContractCall = 'contract_call',
+  ContractDeploy = 'smart_contract',
+  STXTransfer = 'token_transfer',
 }
 
 interface ContractCallPayload extends TransactionRequest {
