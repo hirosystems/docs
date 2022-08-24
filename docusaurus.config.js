@@ -67,9 +67,9 @@ module.exports = {
         items: [
           {
             type: 'doc',
+            label: 'Documentation',
             docId: 'intro',
             position: 'left',
-            label: 'Documentation',
           },
           {
             to: '/api',
@@ -77,17 +77,31 @@ module.exports = {
             position: 'left',
           },
           {
-            type: 'doc',
-            docId: 'tutorials',
+            type: 'dropdown',
+            label: 'Community',
             position: 'left',
-            label: 'Tutorials',
+            items: [
+              {
+                type: 'doc',
+                label: 'Tutorials',
+                docId: 'tutorials',
+                position: 'left',
+              },
+              {
+                type: 'doc',
+                label: 'Example Apps',
+                docId: 'example-apps',
+                position: 'left',
+              },
+              {
+                type: 'doc',
+                label: 'Stacks.js Templates',
+                docId: 'stacksjs-templates',
+                position: 'left',
+              },
+            ],
           },
-          {
-            type: 'doc',
-            docId: 'example-apps',
-            position: 'left',
-            label: 'Example Apps',
-          },
+
           {
             type: 'doc',
             docId: 'roadmap',
