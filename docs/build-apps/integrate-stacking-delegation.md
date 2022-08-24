@@ -3,11 +3,9 @@ id: integrate-stacking-delegation
 title: Integrating Stacking Delegation
 ---
 
-import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
 
-:::note
-<JSStartersNote/>
-:::
+<StacksjsStartersNote/>
 
 In this guide, you'll learn how to integrate the Stacking delegation flow by interacting with the respective smart contract, as well as reading data from the Stacks blockchain.
 
@@ -59,16 +57,16 @@ See additional [Stacking library reference](https://github.com/blockstack/stacks
 To get started, delegate STX tokens as an account holder.
 
 ```js
-import { getNonce } from "@stacks/transactions";
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
-import { StackingClient } from "@stacks/stacking";
-import BN from "bn.js";
+import { getNonce } from '@stacks/transactions';
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
+import { StackingClient } from '@stacks/stacking';
+import BN from 'bn.js';
 
 // for mainnet: const network = new StacksMainnet();
 const network = new StacksTestnet();
 
 // the stacker STX address
-const address = "ST3XKKN4RPV69NN1PHFDNX3TYKXT7XPC4N8KC1ARH";
+const address = 'ST3XKKN4RPV69NN1PHFDNX3TYKXT7XPC4N8KC1ARH';
 
 const client = new StackingClient(address, network);
 
@@ -76,7 +74,7 @@ const client = new StackingClient(address, network);
 const amountMicroStx = new BN(100000000000);
 
 // STX address of the delegator
-const delegateTo = "ST2MCYPWTFMD2MGR5YY695EJG0G1R4J2BTJPRGM7H";
+const delegateTo = 'ST2MCYPWTFMD2MGR5YY695EJG0G1R4J2BTJPRGM7H';
 
 // burn height at which the delegation relationship should be revoked (optional)
 const untilBurnBlockHeight = 5000;
@@ -85,8 +83,7 @@ const untilBurnBlockHeight = 5000;
 const poxAddress = undefined;
 
 // private key of the account holder for transaction signing
-const privateKey =
-  "d48f215481c16cbe6426f8e557df9b78895661971d71735126545abddcd5377001";
+const privateKey = 'd48f215481c16cbe6426f8e557df9b78895661971d71735126545abddcd5377001';
 
 const delegetateResponse = await client.delegateStx({
   amountMicroStx,
@@ -142,18 +139,17 @@ With an established delegation relationship, the delegator can stack STX tokens 
 const burnBlockHeight = 2000;
 
 // the delegator initiates a different client
-const delegatorAddress = "ST22X605P0QX2BJC3NXEENXDPFCNJPHE02DTX5V74";
+const delegatorAddress = 'ST22X605P0QX2BJC3NXEENXDPFCNJPHE02DTX5V74';
 
 // number cycles to stack
 const cycles = 3;
 
 // delegator private key for transaction signing
-const delegatorPrivateKey =
-  "d48f215481c16cbe6426f8e557df9b78895661971d71735126545abddcd5377001";
+const delegatorPrivateKey = 'd48f215481c16cbe6426f8e557df9b78895661971d71735126545abddcd5377001';
 
 // the BTC address for reward payouts; either to the delegator or to the BTC address set by the account holder
 // must start with "1" or "3". Native Segwit (starts with "bc1") is not supported
-const delegatorBtcAddress = "msiYwJCvXEzjgq6hDwD9ueBka6MTfN962Z";
+const delegatorBtcAddress = 'msiYwJCvXEzjgq6hDwD9ueBka6MTfN962Z';
 
 // if you call this method multiple times in the same block, you need to increase the nonce manually
 let nonce = getNonce(delegatorAddress, network);

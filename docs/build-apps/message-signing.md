@@ -3,12 +3,9 @@ id: message-signing
 title: Signing messages
 ---
 
-import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
 
-:::note
-<JSStartersNote/>
-:::
-
+<StacksjsStartersNote/>
 
 This guide explains how to prompt users to sign a message.
 
@@ -45,21 +42,21 @@ See the [authentication guide](https://docs.hiro.so/build-apps/authentication) b
 Call the `openSignatureRequestPopup` function provided by the `connect`  package to trigger the display of the message signing prompt.
 
 ```tsx
-import { openSignatureRequestPopup } from "@stacks/connect";
-import { StacksTestnet } from "@stacks/network";
+import { openSignatureRequestPopup } from '@stacks/connect';
+import { StacksTestnet } from '@stacks/network';
 
-const message = "Hello World";
+const message = 'Hello World';
 
 openSignatureRequestPopup({
   message,
   network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
   appDetails: {
-    name: "My App",
-    icon: window.location.origin + "/my-app-logo.svg",
+    name: 'My App',
+    icon: window.location.origin + '/my-app-logo.svg',
   },
   onFinish(data) {
-    console.log("Signature of the message", data.signature);
-    console.log("Use public key:", data.publicKey);
+    console.log('Signature of the message', data.signature);
+    console.log('Use public key:', data.publicKey);
   },
 });
 ```
@@ -99,8 +96,8 @@ export interface SignatureData {
 
 ```ts
 const onFinish = (data: SignatureData) => {
-  console.log("Signature", data.signature);
-  console.log("PublicKey", data.publicKey);
+  console.log('Signature', data.signature);
+  console.log('PublicKey', data.publicKey);
 };
 ```
 
@@ -109,9 +106,9 @@ const onFinish = (data: SignatureData) => {
 You can easily verify the signature using the [`@stacks/stacks.js`](https://github.com/hirosystems/stacks.js) package as seen in the following example.
 
 ```ts
-import { verifyMessageSignatureRsv } from "@stacks/encryption";
+import { verifyMessageSignatureRsv } from '@stacks/encryption';
 
-const message = "Hello World";
+const message = 'Hello World';
 
 openSignatureRequestPopup({
   // ...
@@ -120,7 +117,7 @@ openSignatureRequestPopup({
     if (verified) {
       // Trigger a notification explaining signature is verified
     }
-  }
+  },
 });
 ```
 
@@ -129,7 +126,7 @@ openSignatureRequestPopup({
 All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](https://stacks.js.org/modules/network.html) package.
 
 ```ts
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
 const testnet = new StacksTestnet();
 const mainnet = new StacksMainnet();
@@ -154,7 +151,7 @@ npm install @stacks/connect-react
 Use the function with the same parameters as outlined above. However, you don't have to specify `appDetails` since they are detected automatically if `useConnect` has been used already [for authentication](/build-apps/authentication#usage-in-react-apps).
 
 ```tsx
-import { useConnect } from "@stacks/connect-react";
+import { useConnect } from '@stacks/connect-react';
 
 const MyComponent = () => {
   const { sign } = useConnect();
@@ -191,7 +188,7 @@ interface SignatureRequestPayload {
    * This is set by default if a `userSession` option is provided.
    */
   stxAddress?: string;
-  appDetails?: AuthOptions["appDetails"];
+  appDetails?: AuthOptions['appDetails'];
   network?: StacksNetwork;
 }
 ```
@@ -228,9 +225,7 @@ interface StacksProvider {
    *
    * @param payload - a JSON web token representing a transaction request
    */
-  transactionRequest(
-    payload: string
-  ): Promise<FinishedTxPayload | SponsoredFinishedTxPayload>;
+  transactionRequest(payload: string): Promise<FinishedTxPayload | SponsoredFinishedTxPayload>;
   /**
    * Make an authentication request
    *

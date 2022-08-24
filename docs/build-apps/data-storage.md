@@ -3,11 +3,9 @@ id: data-storage
 title: Storing Data Securely
 ---
 
-import JSStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
 
-:::note
-<JSStartersNote/>
-:::
+<StacksjsStartersNote/>
 
 This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/build-apps/references/gaia) by implementing the [`connect`](https://github.com/hirosystems/connect/) and [`storage`](https://stacks.js.org/modules/storage.html) packages of Stacks.js.
 
