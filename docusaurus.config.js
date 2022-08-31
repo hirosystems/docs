@@ -95,8 +95,8 @@ module.exports = {
             position: 'left',
           },
           {
-            to: 'https://hiro.so/updates-docs',
-            label: 'Get Updates',
+            to: 'https://survey.hiro.so',
+            label: 'Take The Dev Survey',
             position: 'left',
           },
           {
