@@ -98,7 +98,7 @@ export default function StacksjsStartersComponent() {
           {Object.entries(features).map(([k, v]) => (
             <div key={k}>
               <input type="checkbox" name={k} id={k} value={k} disabled={!framework} />
-              <label htmlFor={k}>{v.split(' (')}</label>
+              <label htmlFor={k}>{v}</label>
             </div>
           ))}
           <div>
