@@ -8,7 +8,7 @@ import StacksjsStartersComponent from '../src/components/StacksjsStartersCompone
 # Stacks.js Starters ⚡️
 
 The fastest way to start a new JavaScript project using Stacks.js — web3 here we come!
-The form below let's you generate a new project with a few clicks.
+The form below lets you generate a new project with a few clicks.
 We have prepared minimal example templates for the most common frameworks.
 Are we missing any?
 [Let us know!](https://github.com/hirosystems/stacks.js-starters/issues/new)
