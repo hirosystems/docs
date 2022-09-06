@@ -108,6 +108,7 @@ module.exports = {
           {
             to: 'https://survey.hiro.so',
             label: 'Take The Dev Survey',
+            className: 'header-survey-link',
             position: 'left',
           },
           {
