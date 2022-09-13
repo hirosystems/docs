@@ -12,6 +12,7 @@ Stacks community.
 
 ## How to download
 Hiro pushes out new datasets nightly. The best way to download these datasets is by constructing a download link.<br>
+
 The URL format is as follows:
 
 | Base Url                                           | Env      | Service     | File                                           | 
@@ -39,8 +40,8 @@ replacing `latest` with the date formatted as `yyyymmdd`. Use the table below fo
 
 ### Constructing the download link
 To construct the download link, use the links shown below.
-```
-[mainnet api .tsv from latest]
+
+```[mainnet api .tsv from latest]
  https://storage.googleapis.com/blockstack-publish/mainnet/api/mainnet-blockchain-api-4.0.3-latest.tar.gz
  
 [testnet postgres database from August 26, 2022]
