@@ -1,3 +1,8 @@
+---
+id: hiro archiver
+title: Using Hiro Archiver
+---
+
 # Hiro Archiver
 
 ## What is the Hiro Archiver
