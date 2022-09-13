@@ -11,7 +11,7 @@ published datasets needed to run a Stacks environment. This is a public service 
 Stacks community.  
 
 ## How to download
-Hiro pushes out new datasets nightly. The best way to download these datasets is by constructing a download link.<br>
+Hiro pushes out new datasets nightly. The best way to download these datasets is by constructing a download link.
 
 The URL format is as follows:
 
