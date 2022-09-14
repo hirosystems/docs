@@ -22,9 +22,11 @@ type AnalyticsEvent = {
 
 // Available Form Options ======================================================
 const frameworks = [
-  { key: 'react', framework: 'React', context: 'create-react-app' },
-  { key: 'nextjs', framework: 'React', context: 'Next.js' },
+  { key: 'react-vite', framework: 'React', context: 'Vite' },
+  { key: 'react-cra', framework: 'React', context: 'create-react-app' },
+  { key: 'react-nextjs', framework: 'React', context: 'Next.js' },
   { key: 'svelte', framework: 'Svelte', context: 'Vite' },
+  { key: 'sveltekit', framework: 'SvelteKit', context: 'Vite' },
   { key: 'vue', framework: 'Vue', context: 'Vite' },
   // Angular doesn't work with CodeSandbox/Stackblitz
 ];
