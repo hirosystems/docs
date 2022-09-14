@@ -183,4 +183,12 @@ module.exports = {
     'example-apps/billboard',
     'example-apps/heystack',
   ],
+  'products':[
+    'Clarinet',
+    'Stacks.js',
+    'Stacks-API',
+    'Orchestra',
+    'Hiro-Platform',
+    'Subnets'
+  ]
 };

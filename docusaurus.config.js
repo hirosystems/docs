@@ -66,6 +66,43 @@ module.exports = {
         },
         items: [
           {
+            type: 'dropdown',
+            label: 'Products',
+            position: 'left',
+            items: [
+              {
+                type: 'doc',
+                label: 'Clarinet',
+                docId: 'products',
+              },
+              {
+                type: 'doc',
+                label: 'Stacks.js',
+                docId: 'products',
+              },
+              {
+                type: 'doc',
+                label: 'Stack API',
+                docId: 'products',
+              },
+              {
+                type: 'doc',
+                label: 'Orchestra',
+                docId: 'products',
+              },
+              {
+                type: 'doc',
+                label: 'Hiro Platform',
+                docId: 'products',
+              },
+              {
+                type: 'doc',
+                label: 'Subnets',
+                docId: 'products',
+              },
+            ],
+          },
+          {
             type: 'doc',
             label: 'Documentation',
             docId: 'intro',
