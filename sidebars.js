@@ -149,6 +149,7 @@ module.exports = {
       ],
     },
   ],
+
   tutorials: [
     'tutorials',
     {
@@ -177,18 +178,24 @@ module.exports = {
       items: ['tutorials/gaia-amazon-deploy'],
     },
   ],
+
+  Clarinet: [
+    'clarinet',
+    {
+      type: 'category',
+      label: 'Clarinet Overview',
+      items: [
+        'clarinet/introduction',
+        'clarinet/beginner-tutorials',
+        'clarinet/architecture',
+        'clarinet/concepts',
+      ],
+    },
+  ],
   'example-apps': [
     'example-apps',
     'example-apps/to-dos',
     'example-apps/billboard',
     'example-apps/heystack',
-  ],
-  'products':[
-    'clarinet',
-    'stacks-js',
-    'stacks-api',
-    'orchestra',
-    'hiro-platform',
-    'subnets'
   ]
 };

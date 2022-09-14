@@ -73,35 +73,37 @@ module.exports = {
               {
                 type: 'doc',
                 label: 'Clarinet',
-                docId: 'products',
+                docId: 'clarinet',
               },
               {
                 type: 'doc',
                 label: 'Stacks.js',
-                docId: 'products',
+                docId: 'stacks.js',
               },
               {
                 type: 'doc',
-                label: 'Stack API',
-                docId: 'products',
+                label: 'Stacks API',
+                docId: 'stacks-api',
               },
               {
                 type: 'doc',
                 label: 'Orchestra',
-                docId: 'products',
+                docId: 'orchestra',
               },
               {
                 type: 'doc',
-                label: 'Hiro Platform',
-                docId: 'products',
+                label: 'Hiro-Platform',
+                docId: 'hiro-platform',
               },
               {
                 type: 'doc',
                 label: 'Subnets',
-                docId: 'products',
+                docId: 'subnets',
               },
             ],
           },
+
+
           {
             type: 'doc',
             label: 'Documentation',
@@ -168,6 +170,10 @@ module.exports = {
           {
             title: 'Hiro Developers',
             items: [
+              {
+                label: 'Clarinet',
+                to: '/clarinet',
+              },
               {
                 label: 'Documentation',
                 to: '/intro',
