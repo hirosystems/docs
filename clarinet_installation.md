@@ -59,7 +59,7 @@ You can resolve the security warning by using the following command:
 xattr -d com.apple.quarantine /path/to/downloaded/clarinet/binary
 ```
 
-### Install from source using Cargo
+## Install from source using Cargo
 
 You may also install Clarinet using Cargo. If you choose this option, please be aware that you must first intall Rust.
 For more information on installing Rust, please see the [Install Rust](https://www.rust-lang.org/tools/install) page for access 
@@ -68,4 +68,29 @@ to `cargo`, the Rust package manager.
 If you are using Debian or Ubuntu-based distributions, you must also install the following package to build Clarinet:
 ```bash
 sudo apt install build-essential pkg-config libssl-dev
+```
+### Build Clarinet
+
+Once you have installed Clarinet using Cargo, you can build Clarinet from source using Cargo with the following commands:
+
+```bash
+git clone https://github.com/hirosystems/clarinet.git --recursive
+cd clarinet
+cargo clarinet-install
+```
+
+By default, you will be in our development branch, `develop`, with code that has not yet been released.
+
+- If you plan to submit any changes to the code, then this is the right branch for you. 
+- If you would prefer to have the latest stable version, then switch to the main branch by entering the followingc command:
+
+```bash
+git checkout main
+```
+
+If you have previously checked out the source, ensure you have the latest code (including submodules) before building using:
+
+```
+git pull
+git submodule update --recursive
 ```
