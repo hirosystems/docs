@@ -11,4 +11,4 @@ development, testing and deployment. Clarinet consists of a Clarity REPL and a t
 which, when used together allow you to rapidly develop and test a Clarity smart contract, 
 with the need to deploy the contract to a local devnet or testnet.
 
-[Need to add Demo GIF here]
+![screenshot](docs/images/demo.gif)
