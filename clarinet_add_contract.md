@@ -5,7 +5,7 @@ title: Add a New Contract
 
 # New Contract
 
-### Add a new contract
+## Add a new contract
 
 Clarinet can handle adding a new contract and its configuration to your project when you use the following command:
 
