@@ -43,6 +43,13 @@ module.exports = {
         'build-apps/integrate-stacking-delegation',
       ],
     },
+   {
+      type: 'category',
+      label: 'Hiro Archiver',
+      items: [
+        'hiro-archiver/using-hiro-archiver',
+      ],
+    },
     {
       type: 'category',
       label: 'Developer References',
