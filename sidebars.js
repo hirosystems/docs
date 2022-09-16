@@ -47,7 +47,7 @@ module.exports = {
       type: 'category',
       label: 'Hiro Archiver',
       items: [
-        'hiro-archiver/using-hiro-archiver',
+        'hiro archiver/hiro archiver',
       ],
     },
     {
