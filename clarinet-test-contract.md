@@ -3,7 +3,7 @@ id: clarinet
 title: Test a Contract
 ---
 
-# Test a Contract
+# Test a contract
 
 Clarinet provides a testing harness based on Deno that enables you to create automated unit tests or
 pseudo-integration tests using Typescript.
@@ -25,13 +25,13 @@ and then examine the results of those transactions as well as the events generat
 
 See the [billboard example](examples/billboard/tests/billboard_test.ts) for sample unit tests.
 
-_Note: If you see an error in VS Code on the imports in the generated test file(s), that says, 
+**Note** If you see an error in VS Code on the imports in the generated test file(s), that says, 
 "An import path cannot end with a '.ts' extension" (example below), 
-installing the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) will resolve this error._
+installing the [Deno extension](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) will resolve this error.
 
 ![VS Code deno error](docs/images/deno-error.png)
 
-#### Measure and increase code coverage
+## Measure and increase code coverage
 
 To help developers maximizing their test coverage, Clarinet can produce a `lcov` report, using the following option:
 
@@ -39,7 +39,7 @@ To help developers maximizing their test coverage, Clarinet can produce a `lcov`
 $ clarinet test --coverage
 ```
 
-From there, developers can use the `lcov` tooling suite to produce HTML reports:
+From there, developers can use the `lcov` tooling suite to produce HTML reports.
 
 ```bash
 $ brew install lcov
@@ -49,7 +49,7 @@ $ open index.html
 
 ![lcov](docs/images/lcov.png)
 
-### Cost optimization
+## Cost optimization
 
 Clarinet can also be used for optimizing costs. When you execute a test suite, Clarinet keeps track of 
 all the costs being computed when executing the `contract-call`, and display the most expensive ones in a table:
@@ -62,7 +62,7 @@ The `--cost` option can be used in conjunction with `--watch` and filters to max
 
 ![costs](docs/images/costs.gif)
 
-### Load contracts in a console
+## Load contracts in a console
 
 The Clarinet console is an interactive Clarity REPL that runs in-memory. Any contracts in the current project are
 automatically loaded into memory.
@@ -80,10 +80,11 @@ You can exit the console by pressing `Ctrl + C` twice.
 Changes to contracts are not loaded into the console while it is running. If you make any changes to your contracts you
 must exit the console and run it again.
 
-### Spawn a local Devnet
+## Spawn a local Devnet
 
-You can use Clarinet to deploy your contracts to your own local offline environment for testing and
-evaluation on a blockchain. Use the following command:
+You can use Clarinet to deploy your contracts to your own local offline environment for testing and evaluation on a blockchain.
+
+Use the following command:
 
 ```bash
 $ clarinet integrate
@@ -91,7 +92,7 @@ $ clarinet integrate
 
 Make sure that you have a working installation of Docker running locally.
 
-### Interacting with contracts deployed on Mainnet
+## Interacting with contracts deployed on Mainnet
 
 Composition and interactions between protocols and contracts are one of the key innovations in blockchains. 
 Clarinet was designed to handle this sort of interactions.
@@ -113,19 +114,19 @@ or with the command:
 clarinet requirements add SP2KAF9RF86PVX3NEE27DFV1CQX0T4WGR41X3S45C.bitcoin-whales
 ```
 
-From there, clarinet will be able to resolve the `contract-call?` statements invoking requirements present 
+From there, Clarinet will be able to resolve the `contract-call?` statements invoking requirements present 
 in your local contracts, by downloading and caching a copy of these contracts and use them during the 
-execution of your testsuites, and all the different features available in `clarinet`.
+execution of your test suites, and all the different features available in `clarinet`.
 
 When deploying your protocol to Devnet / Testnet, for the contracts involving requirements, the 
 setting `remap_requirements` in your deployment plans must be set.
 
 As a step-by-step example, we use here the following contract, [**bitcoin-whales**](https://explorer.stacks.co/txid/SP2KAF9RF86PVX3NEE27DFV1CQX0T4WGR41X3S45C.bitcoin-whales?chain=mainnet)
 
-If you examine this contract, you will see that  there are 3 different dependencies: two from the **same**
+If you examine this contract, you will see that there are 3 different dependencies: two from the **same**
 project (included in the same `Clarinet.toml` file), and one referring to a contract deployed outside of the current project.
 
-### Same Project
+## Same Project
 
 In the contract snippet below *(line:260-265)*, there are dependencies on the contracts conversion and conversion-v2 
 which are included in the same `Clarinet.toml` file.
@@ -139,7 +140,7 @@ which are included in the same `Clarinet.toml` file.
 )
 ```
 
-### External Deployer 
+## External Deployer 
 
 In this snippet, there is a dependency on the `nft-trait` *(line:001)* deployed by `'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9`.
 
@@ -188,9 +189,9 @@ trusted_caller = false
 callee_filter = false
 ```
 
-As a next step ,we can generate a deployment plan for this project.
+As a next step, we can generate a deployment plan for this project.
 
-If running `$ clarinet integrate` for the first time. This file should be created by clarinet.
+If running `$ clarinet integrate` for the first time. This file should be created by Clarinet.
 
 In addition, you can run `$ clarinet deployment generate --devnet` to create or overwrite.
 
@@ -235,18 +236,17 @@ plan:
 As you can see from the example above, Clarinet will remap the external contract to our Devnet address. In addition Clarinet will 
 also create a copy of it in the folder `requirements`
 
-### Deploy contracts to Devnet / Testnet / Mainnet
+## Deploy contracts to Devnet / Testnet / Mainnet
 
-You can use Clarinet to publish your contracts to Devnet / Testnet / Mainnet environment for 
-testing and evaluation on a blockchain.
+You can use Clarinet to publish your contracts to Devnet / Testnet / Mainnet environment for  testing and evaluation on a blockchain.
 
-The first step is to generate a deployment plan, with the following command:
+The first step is to generate a deployment plan, with the command below.
 
 ```bash
 $ clarinet deployment generate --mainnet
 ```
 
-After **cautiously** reviewing (and updating if needed) the generated plan, you can use the command:
+After **cautiously** reviewing (and updating if needed) the generated plan, you can use the command below.
 
 ```bash
 $ clarinet deployment apply -p <path-to-plan.yaml>
@@ -254,7 +254,7 @@ $ clarinet deployment apply -p <path-to-plan.yaml>
 
 which will handle the deployments of your contracts, according to the plan.
 
-### Use Clarinet in your CI workflow as a GitHub Action
+## Use Clarinet in your CI workflow as a GitHub Action
 
 Clarinet can be used in GitHub Actions as a step of your CI workflows.
 You can set-up a simple workflow by adding the following steps in a file `.github/workflows/github-actions-clarinet.yml`:
@@ -282,7 +282,7 @@ jobs:
 Or add the steps above in your existing workflows.
 The generated code coverage output can then be used as is with GitHub Apps like https://codecov.io.
 
-### Extensions
+## Extensions
 
 Clarinet can easily be extended by community members: open source contributions to clarinet are welcome, 
 but developers can also write their own Clarinet extensions if they want to integrate clarity contracts 
@@ -293,7 +293,7 @@ with their own tooling and workflow.
 | stacksjs-helper-generator | no            | yes        | no        | https://deno.land/x/clarinet@v0.29.0/ext/stacksjs-helper-generator.ts | Facilitates contract integration by generating some typescript constants that can be used with stacks.js. Never hard code a stacks address again! |
 |                           |               |            |           |                                                                       |
 
-#### How to use extensions
+### How to use extensions
 
 Extensions are run with the following syntax:
 
@@ -301,8 +301,5 @@ Extensions are run with the following syntax:
 $ clarinet run --allow-write https://deno.land/x/clarinet@v0.29.0/ext/stacksjs-helper-generator.ts
 ```
 
-An extension can be deployed as a standalone plugin on Deno, or can also just be a local file if 
-it includes sensitive / private setup informations.
-As illustrated in the example above, permissions (wallet / disk read / disk write) are declared using command flags. 
-If at runtime, the Clarinet extension is trying to write to disk, read disk, or access wallets without permission, 
-the script will end up failing.
+An extension can be deployed as a standalone plugin on Deno, or can also just be a local file if  it includes sensitive / private setup informations.
+As illustrated in the example above, permissions (wallet / disk read / disk write) are declared using command flags. If at runtime, the Clarinet extension is trying to write to disk, read disk, or access wallets without permission, the script will end up failing.
