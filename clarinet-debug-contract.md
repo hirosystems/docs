@@ -114,7 +114,9 @@ Then at the REPL prompt, use this command to debug any expression.
 
 At the debug prompt, use any of the commands described above, or use `help` to get the full help documentation.
 
-For more information on how to debug your smart contracts, please see the [Debug Your Smart Contracts With Clarinet's New Inline Debugger](https://www.youtube.com/watch?v=nVDWeuMnkDs)video walkthrough.
+For more information on debugging smart contracts, please see the [Debugging Smart Contracts](https://www.hiro.so/blog/how-to-debug-your-smart-contracts-with-clarinet) blog post.
+
+For a video walkthrough on how to debug your smart contracts, please see the [Debug Your Smart Contracts With Clarinet's New Inline Debugger](https://www.youtube.com/watch?v=nVDWeuMnkDs)video.
 
 ## Execution Trace
 
