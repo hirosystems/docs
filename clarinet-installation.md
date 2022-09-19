@@ -26,6 +26,8 @@ Once you have Homebrew installed, run the following command shown below in your 
 brew install clarinet
 ```
 
+For more informaiton on how to install Clarinet on macOS, please see the [Setting Up Your Clarity Development Environment (Mac)](https://www.youtube.com/watch?v=dpPopuvYU90) video walkthrough.
+
 ## Install on Windows
 
 The easiest way to install Clarinet on Windows is to use the MSI installer, 
@@ -37,6 +39,8 @@ Simply enter the command below.
 ```powershell
 winget install clarinet
 ```
+
+For more information on how to install Clarinet on Windows, please see the [Setting Up Your Clarity Environment (Windows)](https://www.youtube.com/watch?v=r5LY1J5oACs) video walkthrough.
 
 ## Install from a pre-built binary
 
