@@ -5,7 +5,7 @@ title: Debug Contract
 
 # Debug a Contract
 
-#### VS Code Debugger
+## VS Code Debugger
 
 Clarinet supports the [Debug Adapter Protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP) which enables
 debugging of your smart contracts inside of VS Code, or any code editor supporting the DAP protocol.
@@ -72,7 +72,7 @@ and the return value are printed to the debug console.
 
 ![debug console](docs/images/debug-console.png)
 
-#### Command Line Debugger
+## Command Line Debugger
 
 Inside of the console (`clarinet console`), there is a debugger for stepping through your contracts 
 on the command line, including support for:
@@ -112,7 +112,9 @@ Then at the REPL prompt, use this command to debug any expression.
 
 At the debug prompt, use any of the commands described above, or use `help` to get the full help documentation.
 
-#### Execution Trace
+For more information on how to debug your smart contracts, please see the [Debug Your Smart Contracts With Clarinet's New Inline Debugger](https://www.youtube.com/watch?v=nVDWeuMnkDs)video walkthrough.
+
+## Execution Trace
 
 When in the console (`clarinet console`), the `::trace <expr>` command allows you to execute an 
 expression and print a trace of the execution, which can be very helpful for identifying problems with the contract.
