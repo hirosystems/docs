@@ -66,6 +66,8 @@ set to `tx-sender`), then there is no need to generate a warning, because the un
 who is the source of that input. To say that another way, the sender should be able to safely specify parameters in an 
 operation that affects only themselves. This sender is also potentially protected by post-conditions.
 
+For a video walkthrough on how to check for smart contract vulnerabilities, please see the [Catch Smart Contract Vulnerabilities With Clarinet's Check-Checker Feature](https://www.youtube.com/watch?v=v2qXFL2owC8) video.
+
 ### Options
 
 The check-checker provides various options that can be specified in `Clarinet.toml` to handle common usage scenarios that
