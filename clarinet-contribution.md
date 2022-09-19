@@ -3,11 +3,11 @@ id: clarinet
 title: Contribute to Clarinet
 ---
 
-## Contributing to Clarinet
+# Contributing to Clarinet
 
 We welcome contributions to Clarinet! The following sections provide information on how to contribute.
 
-### Prerequisites
+## Prerequisites
 
 - rust (>=1.52.0)
 - cargo (>=1.52.0)
@@ -16,10 +16,10 @@ We welcome contributions to Clarinet! The following sections provide information
 
 ### Guide
 
-This repo follows the [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) spec 
+This repo follows the [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification 
 when writing commit messages.
 
-It is important any pull requests submitted have commit messages which follow this standard.
+**Note** It is important any pull requests submitted have commit messages which follow this standard.
 
 To start contributing to Clarinet:
 
@@ -37,7 +37,7 @@ To start contributing to Clarinet:
 4. These tools will be used in a git commit hook to lint and validate your commit message. 
 5. If the message is invalid, `commitlint` will alert you to try again and fix it.
 
-Bad message:
+Here is an example of a "bad"" commit message.
 
 ```bash
 $ git commit -m "bad message"
@@ -51,7 +51,7 @@ $
 $ husky - commit-msg hook exited with code 1 (error)
 ```
 
-Good message:
+Here is an example of a "good" commit message.
 
 ```bash
 $ git commit -m "fix: added missing dependency"
@@ -62,7 +62,7 @@ $ 1 file changed, 50 insertions(+)
 1. After making your changes, ensure the following:
    1. `cargo build` runs successfully
    1. `cargo test` runs successfully
-   1. You've formatted your code with `cargo fmt --all --`
+   1. You have formatted your code with `cargo fmt --all --`
    1. All functional tests in the `examples` directory pass.
       ```bash
       for testdir in $(ls examples); do
