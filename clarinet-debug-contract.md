@@ -8,9 +8,9 @@ title: Debug Contract
 #### VS Code Debugger
 
 Clarinet supports the [Debug Adapter Protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP) which enables
-debugging your smart contracts inside of VS Code, or any code editor supporting the DAP protocol.
+debugging of your smart contracts inside of VS Code, or any code editor supporting the DAP protocol.
 
-To setup a debug session, you will first need to create a `launch.json` file to tell VS Code what you want to debug.
+To set up a debug session, you will first need to create a `launch.json` file to tell VS Code what you want to debug.
 The easiest way to accomplish this is to let VS Code generate the template for you by opening the "Run and Debug" view and 
 clicking "create a launch.json file".
 
@@ -47,13 +47,13 @@ step over, step into, step out, restart, and stop, in that order.
 
 ![debug toolbar](docs/images/debug-toolbar.png)
 
-Breakpoints can be set by clicking in the left gutter next to the code or using the right-click menu 
+Breakpoints can be set by clicking in the left gutter next to the code, or using the right-click menu 
 at a specific code location.
 
 ![breakpoint](docs/images/breakpoint.png)
 
-Data watchpoints may also be set, by clicking the + in the Watch section of the Debug side bar and typing 
-the contract variable to watch in the format `<principal>.<contract>.<name>` or using the shortcut for a 
+Data watchpoints may also be set, by clicking the "+" in the Watch section of the Debug side bar and typing 
+the contract variable to watch in the format `<principal>.<contract>.<name>`, or using the shortcut for a 
 local contract, `.<contract>.<name>`. When a watchpoint is set on a contract variable, execution will 
 pause when its value will change.
 
@@ -98,13 +98,13 @@ on the command line, including support for:
   - **Continue**: Continue execution until hitting a breakpoint or completing execution (`continue` or `c` command)
 - Evaluate and print the result of any expression (`print` or `p` command)
 
-To initiate a debug sessionm, first enter the REPL console using:
+To initiate a debug session, first enter the REPL console using the command below.
 
 ```
 clarinet console
 ```
 
-Then at the REPL prompt, debug any expression:
+Then at the REPL prompt, use this command to debug any expression.
 
 ```
 ::debug (contract-call? .foo hello .bar))
@@ -114,7 +114,7 @@ At the debug prompt, use any of the commands described above, or use `help` to g
 
 #### Execution Trace
 
-When in the console (`clarinet console`), the `::trace <expr>` command allows developers to execute an 
+When in the console (`clarinet console`), the `::trace <expr>` command allows you to execute an 
 expression and print a trace of the execution, which can be very helpful for identifying problems with the contract.
 
 This trace shows all function calls, both internal calls to private functions, and contract calls to other contracts. 
