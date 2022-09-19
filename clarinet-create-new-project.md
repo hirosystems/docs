@@ -3,7 +3,8 @@ id: clarinet
 title: Create a New Project
 ---
 
-Once you have installed Clarinet, you may then use clarinet to create a new project. To create a new project, enter the command shown below.
+# Creating a new project
+Once you have installed Clarinet, you may then use Clarinet to create a new project. To create a new project, enter the command shown below.
 
 ```bash
 clarinet new my-project && cd my-project
