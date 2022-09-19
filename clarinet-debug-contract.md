@@ -72,6 +72,8 @@ and the return value are printed to the debug console.
 
 ![debug console](docs/images/debug-console.png)
 
+For more information on how to debug your smart contract using the VS Code Extension, please see the [How To Debug Smart Contracts In Clarinet's VS Code Extension](https://www.youtube.com/watch?v=DsLCDQSijwk) video walkthrough.
+
 ## Command Line Debugger
 
 Inside of the console (`clarinet console`), there is a debugger for stepping through your contracts 
