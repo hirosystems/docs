@@ -8,7 +8,7 @@ title: Static Analysis
 ## Check-Checker
 
 The check-checker is a static analysis pass you can use to help find potential vulnerabilities in your contracts.
-To enable this pass, add the following to your Clarinet.toml file:
+To enable this pass, add the following lines to your Clarinet.toml file:
 
 ```toml
 [repl.analysis]
@@ -46,7 +46,7 @@ must be checked and return values must be checked.
 - Calls to private functions
 - Return values
 
-Finally, another opportunity for exploits shows up when contracts call functions from traits. 
+Finally, another opportunity for exploits appears when contracts call functions from traits. 
 Those traits are untrusted, just like other parameters to public functions, so they are also required to be checked.
 
 - Dynamic contract calls (through traits)
@@ -66,7 +66,7 @@ set to `tx-sender`), then there is no need to generate a warning, because the un
 who is the source of that input. To say that another way, the sender should be able to safely specify parameters in an 
 operation that affects only themselves. This sender is also potentially protected by post-conditions.
 
-#### Options
+### Options
 
 The check-checker provides various options that can be specified in `Clarinet.toml` to handle common usage scenarios that
 may reduce false positives from the analysis:
@@ -79,7 +79,7 @@ trusted_caller = true
 callee_filter = true
 ```
 
-If `strict` is set to true, all other options are ignored and the analysis proceeds with the most strict interpretation of the rules.
+If `strict` is set to `true`, all other options are ignored and the analysis proceeds with the most strict interpretation of the rules.
 
 The `trusted_sender` and `trusted_caller` options handle a common practice in smart contracts where there is a concept of a 
 trusted transaction sender (or transaction caller), which is treated like an admin user. Once a check has been performed 
@@ -161,7 +161,7 @@ It should be used with care, as it will disable all warnings from the associated
 **`#[filter(var1, var2)]`**
 
 This annotation will tell the check-checker to consider the specified variables to be checked by the following expression.
-This is useful for the case where your contract does some indirect check that validates that an input is safe, 
+This is useful for the case where your contract performs some indirect check that validates that an input is safe, 
 but there is no way for the analysis to recognize this. In place of the list of variable names in the annotation, an `*` 
 may be used to filter all inputs.
 
