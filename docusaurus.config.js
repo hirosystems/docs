@@ -60,8 +60,7 @@ module.exports = {
       navbar: {
         logo: {
           alt: 'Hiro developers',
-          src: 'img/logo-light.svg',
-          srcDark: 'img/logo-dark.svg',
+          src: 'img/hiro-docs-logo.svg',
           target: '_self',
         },
         items: [
@@ -124,8 +123,7 @@ module.exports = {
         style: 'dark',
         logo: {
           alt: 'Hiro developers',
-          src: 'img/footer-logo-light.svg',
-          srcDark: 'img/footer-logo-dark.svg',
+          src: 'img/hiro-docs-footer.svg',
         },
         links: [
           {
