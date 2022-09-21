@@ -7,8 +7,8 @@ title: Debug Contract
 
 ## VS Code Debugger
 
-Clarinet supports the [Debug Adapter Protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP) which enables
-debugging of your smart contracts inside of VS Code, or any code editor supporting the DAP protocol.
+Clarinet supports the [Debug Adapter Protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP), which enables you to
+debugg your smart contracts inside of Visua Studio Code (VS Code), or any code editor supporting the DAP protocol.
 
 To set up a debug session, you will first need to create a `launch.json` file to tell VS Code what you want to debug.
 The easiest way to accomplish this is to let VS Code generate the template for you by opening the "Run and Debug" view and 
@@ -67,7 +67,7 @@ in the Debug Console. The call stack is also updated to show the call stack of t
 ![view of side bar, showing variables, watchpoints, and call stack](docs/images/sidebar.png)
 
 At any point during execution, an expression can be evaluated in the current context via the Debug Console. 
-Just type any valid Clarity expression and hit enter to evaluate it. Upon completion, the events emitted 
+Simply type any valid Clarity expression and hit enter to evaluate it. Upon completion, the events emitted 
 and the return value are printed to the debug console.
 
 ![debug console](docs/images/debug-console.png)
@@ -76,7 +76,7 @@ For more information on how to debug your smart contract using the VS Code Exten
 
 ## Command Line Debugger
 
-Inside of the console (`clarinet console`), there is a debugger for stepping through your contracts 
+Inside the console (`clarinet console`), there is a debugger for stepping through your contracts 
 on the command line, including support for:
 
 - Breakpoints
@@ -100,7 +100,7 @@ on the command line, including support for:
   - **Continue**: Continue execution until hitting a breakpoint or completing execution (`continue` or `c` command)
 - Evaluate and print the result of any expression (`print` or `p` command)
 
-To initiate a debug session, first enter the REPL console using the command below.
+To initiate a debug session, first enter the Read, Evaluate, Print, Loop (REPL) console using the command shown below.
 
 ```
 clarinet console
@@ -120,8 +120,8 @@ For a video walkthrough on how to debug your smart contracts, please see the [De
 
 ## Execution Trace
 
-When in the console (`clarinet console`), the `::trace <expr>` command allows you to execute an 
-expression and print a trace of the execution, which can be very helpful for identifying problems with the contract.
+When you are in the console (`clarinet console`), the `::trace <expr>` command enables you to execute an 
+expression and print a trace of the execution, which can be very helpful in identifying problems with the contract.
 
 This trace shows all function calls, both internal calls to private functions, and contract calls to other contracts. 
 For each call, the parameters and return value are shown in the trace. Any events that are emitted are also shown in the trace.
