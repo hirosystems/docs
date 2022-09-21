@@ -129,7 +129,7 @@ input, `amount`, resulting in no warnings from the check-checker.
 ### Annotations
 
 Sometimes, there is code that the check-checker analysis is unable to determine is safe, but as a developer, 
-you know that it is safe, and want to pass that information to the check-checker to disable warnings that you 
+you know it is safe, and want to pass that information to the check-checker to disable warnings you 
 consider to be false positives. To handle these cases, the check-checker supports several annotations, implemented 
 using "magic comments" in the contract code.
 
