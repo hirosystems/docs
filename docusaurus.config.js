@@ -61,6 +61,7 @@ module.exports = {
         logo: {
           alt: 'Hiro developers',
           src: 'img/hiro-docs-logo.svg',
+          srcDark: 'img/hiro-docs-logo-dark.svg',
           target: '_self',
         },
         items: [
