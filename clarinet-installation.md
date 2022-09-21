@@ -83,7 +83,7 @@ cd clarinet
 cargo clarinet-install
 ```
 
-By default, you will be in our development branch, `develop`, with code that has not yet been released.
+By default, you will be placed in our development branch, `develop`, with code that has not yet been released.
 
 - If you plan to submit any changes to the code, then this is the right branch for you. 
 - If you would prefer to have the latest stable version, then switch to the main branch by entering the command below.
