@@ -4,8 +4,8 @@ Now that you have installed Docker and started the API server, you should now de
 
 # Deploying Service Dependencies
 
-To deploy service dependencies, run the following npm command in your terminal:
+To deploy service dependencies, run the following npm command in your terminal window:
 
 `npm run devenv:deploy`
 
-This command uses `docker-compose` to deploy the service dependencies (e.g. PostgreSQL, Stacks core node, etc).
+This command uses `docker-compose` to deploy the service dependencies (for example, PostgreSQL, Stacks core node, etc).
