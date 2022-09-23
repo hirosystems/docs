@@ -757,6 +757,42 @@ Example
 | `backup_phrase` | `string` | `24_words_or_ciphertext` |
 | `derivation_path` | `string` | `custom_derivation_path_string` |
 
+### migrate_subdomains
+
+**Group:** Blockstack ID Management
+
+Enable users to transfer subdomains currently owned by any data-key 
+addresses, to the wallet-key address of the account. Data-key addresses 
+owning addresses is a remnant of the Blockstack Connect interface. 
+Currently, the web wallet extension shows usernames owned by the 
+wallet-key address of an account.
+
+This command performs these steps in sequence: 
+1. Detects whether there are any subdomains owned by data-key addresses
+2. Prompts the user to confirm whether they want to migrate the each 
+   owned subdomain to the corresponding wallet-key addresses for the 
+   resepective wallet account
+3. Alerts the user to any subdomains that can't be migrated to these 
+   wallet-key addresses given collision with existing usernames owned 
+   by them
+4. Initiates a request to the subdomain registrar using the /transfer
+   endpoint
+5. Displays a message indicating how long the user will have to wait 
+   until request is likely fulfilled
+6. Informs user that no subdomains are pending migration if the command 
+   is executed again
+
+Example
+
+    $ stx migrate_subdomains "toast canal educate tissue express melody produce later gospel victory meadow outdoor hollow catch liberty annual gasp hat hello april equip thank neck cruise" https://registrar.stacks.co
+
+
+
+| Name | Type | Value |
+|-|-|-|
+| `backup_phrase` | `string` | `24_words_or_ciphertext` |
+| `registrar_url` | `string` | `url` |
+
 ### get_zonefile
 
 **Group:** Peer Services
