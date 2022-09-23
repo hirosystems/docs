@@ -1,0 +1,37 @@
+# Overview
+
+The Stacks 2.0 blockchain API allows you to query the Stacks 2.0 blockchain and interact with smart contracts. It was built to maintain paginated, materialized views of the Stacks 2.0 Blockchain.
+
+:::caution
+
+This API is hosted by Hiro. Using it requires you to trust the hosted server, but provides a faster development experience. Consider running your own API instance to create a fully trustless architecture for your app.
+
+:::
+
+# The Stacks Blockchain API
+
+The RESTful JSON API can be used without any authorization. The base path for the API is:
+
+```for mainnet, replace `testnet` with `mainnet
+https://stacks-node-api.testnet.stacks.co/
+```
+
+:::info
+
+For more information about the Stacks Blockchain API, please refer to the [Stacks API reference](https://docs.hiro.so/api?_gl=1*1nvx6u*_ga*NTQ3NDA3NTIuMTY2MDA3MTQ1MA..*_ga_NB2VBT0KY2*MTY2MzkxNTIzNS4yMi4xLjE2NjM5MTY1OTMuMC4wLjA.) page.
+
+:::
+
+The API is comprised of two parts: the Stacks Blockchain API and the Stacks Node RPC API. The Node RPC API is exposed by every running node. Stacks Blockchain API, however, introduces additional capabilities (for example, retrieving all transactions), while also running proxies calls directly to Stacks Node RPC API.
+
+(Add API Diagram here)
+
+## Stacks node RPC API
+
+The stacks-node implementation exposes JSON RPC endpoints.
+
+All `/v2/` routes are routed through a proxy to a Hiro-hosted Stacks Node. For a trustless architecture, you should make these requests to a self-hosted node.
+
+## Stacks blockchain API
+
+All `/extended/` routes are provided by the Stacks 2.0 Blockchain API directly. They extend the Stacks Node API capabilities to make it easier to integrate with.
