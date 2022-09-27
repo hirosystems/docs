@@ -26,6 +26,21 @@ module.exports = {
     //   ],
     // },
     {
+          type: 'category',
+          label: 'Introduction',
+          items: [
+            'explorer/explorer-overview',
+          ],
+        },
+{
+          type: 'category',
+          label: 'How-To\'s',
+          items: [
+            'explorer/how-to-guides/how-to-install-explorer',
+            'explorer/how-to-guides/how-to-run-and-build-explorer',
+          ],
+        },
+    {
       type: 'category',
       label: 'Clarinet Overview',
       items: [
