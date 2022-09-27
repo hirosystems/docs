@@ -98,3 +98,8 @@ html[data-theme='dark'] .header-github-link::before {
 .custom-footer-external:hover:after {
   content: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m1.003 10 7.571-7.575-.013 5.841h1.423V0H1.721l-.013 1.408h5.848L-.016 8.983z' fill='%239494ff' fill-rule='nonzero'/%3E%3C/svg%3E");
 }
+
+/* reduce img shift with color mode mismatch (on refresh in dark mode) */
+html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
+  display: none;
+}
