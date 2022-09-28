@@ -85,11 +85,11 @@ module.exports = {
           type: 'category',
           label: 'Introduction',
           items: [
-            'stacks-blockchain-api/introduction/stacks-blockchain-api-overview',
+            'stacks-blockchain-api/introduction/api-overview',
             'stacks-blockchain-api/introduction/architecture',
             'stacks-blockchain-api/introduction/openapi',
             'stacks-blockchain-api/introduction/pagination',
-            'stacks-blockchain-api/introduction/search',
+            'stacks-blockchain-api/introduction/search-operations',
             'stacks-blockchain-api/introduction/microblocks',
             'stacks-blockchain-api/introduction/requesting-proofs',
             'stacks-blockchain-api/introduction/error-handling',
