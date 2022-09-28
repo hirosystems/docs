@@ -1,8 +1,8 @@
 # API Architecture
 
-![API architecture!](api-architecture.png)
+![API architecture!](https://github.com/hirosystems/trichards-stacks-blockchain-api/blob/main/docs/docs/images/api-architecture.png)
 
-* The `stacks-node` has it's own minimal set of http endpoints referred to as `RPC endpoints`
+* The `stacks-node` contains a minimal set of HTTP endpoints referred to as `RPC endpoints`
   * The `stacks-blockchain-api` allows clients to access these endpoints by proxying them through to a load-balanced pool of `stacks-nodes`.
   * See: https://github.com/blockstack/stacks-blockchain/blob/master/docs/rpc-endpoints.md -- some common ones:
     * `POST /v2/transactions` - broadcast a tx.
@@ -11,26 +11,26 @@
     * `POST /v2/fees/transaction` - evaluates a given transaction and returns tx fee estimation data.
     * `GET /v2/accounts/<address>` - used to get the current `nonce` required for creating transactions.
 
-* The endpoints implemented by `stacks-blockchain-api` provide data that the `stacks-node` can't due to various constraints.
-  * Typically this is either data that the `stacks-node` doesn't persist, or data that it cannot efficiently serve to many clients.
-    For example, the `stacks-node` can return the current STX balance of an account, but it can't return a history of account transactions.
+* The endpoints implemented by `stacks-blockchain-api` provide data that the `stacks-node` cannot due to various constraints.
+  * Typically, this is either data that the `stacks-node` does not persist, or data that it cannot efficiently serve to many clients.
+    For example, the `stacks-node` can return the current STX balance of an account, but it cannot return a history of account transactions.
   * The API also implements the Rosetta spec created by Coinbase -- "an open standard designed to simplify blockchain deployment and interaction."
     * See: https://www.rosetta-api.org/
   * The API also implements the BNS (Blockchain Naming System) endpoints.
     * See https://docs.stacks.co/build-apps/references/bns
   * See `/src/api/routes` for the Express.js routes.
 
-* The API creates an "event observer" http server which listens for events from a `stacks-node` "event emitter"
-  * These events are http POST requests that contain things like blocks, transactions, byproducts of executed transactions.
-    * Transaction "byproducts" are things like asset transfers, smart-contract log data, execution cost data.
-  * The API processes and stores these as relational data in postgres.
+* The API creates an "event observer" HTTP server which listens for events from a `stacks-node` "event emitter"
+  * These events are HTTP `POST` requests that contain elements like blocks, transactions, byproducts of executed transactions.
+    * Transaction "byproducts" are items like asset transfers, smart-contract log data, execution cost data.
+  * The API processes and stores these items as relational data in postgres.
   * See `/src/event-stream` for the "event observer" code.
 
-* All http endpoints and responses are defined in OpenAPI and JSON Schema.
+* All HTTP endpoints and responses are defined in OpenAPI and JSON Schema.
   * See `/docs/openapi.yaml`
   * These are used to auto generate the docs at https://hirosystems.github.io/stacks-blockchain-api/
-  * The JSON Schemas are converted into Typescript interfaces, which are used internally by the db controller module to transform SQL query results into the correct object shapes.
-  * ALSO the OpenAPI + JSONSchemas are used to generate a standalone `@stacks/blockchain-api-client`.
+  * The JSON schemas are converted into Typescript interfaces, which are then used internally by the db controller module to transform SQL query results into the correct object shapes.
+  * ALSO, the OpenAPI + JSONSchemas are used to generate a standalone `@stacks/blockchain-api-client`.
 
-* The easiest/quickest way to develop in this repo is using the vscode debugger. It uses docker-compose to setup a `stacks-node` and postgres instance.
-  * Alternatively, you can run `npm run dev:integrated` which does the same thing but without a debugger.
+* The easiest/quickest way to develop in this repo is using the vscode debugger. It uses `docker-compose` to setup a `stacks-node` and postgres instance.
+  * Alternatively, you can run `npm run dev:integrated` which performs the same task, but without a debugger.
