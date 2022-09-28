@@ -49,7 +49,7 @@ module.exports = {
            'explorer/troubleshooting',
            'explorer/faq',
            'explorer/developer-resources',
-    {
+    /*  {
       type: 'category',
       label: 'Clarinet Overview',
       items: [
@@ -71,13 +71,13 @@ module.exports = {
             'clarinet/how-to-guides/how-to-set-up-local-development-environment',
             'clarinet/how-to-guides/how-to-run-integration-blockchain',
           ],
-        },
+       },
         'clarinet/troubleshooting',
         'clarinet/faq',
         'clarinet/developer-resources',
       ],
-    },
-   {
+     },
+   { */
       type: 'category',
       label: 'Stacks Blockchain API',
       items: [
@@ -111,11 +111,6 @@ module.exports = {
             'stacks-blockchain-api/how-to-guides/how-to-use-stacks-blockchain-api',
             'stacks-blockchain-api/how-to-guides/how-to-use-clarity-values',
             'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
-            'stacks.js/how-to-guides/how-to-setup-environment',
-            'stacks.js/how-to-guides/how-to-sign-messages',
-            'stacks.js/how-to-guides/how-to-sign-transactions',
-            'stacks.js/how-to-guides/how-to-store-data-securely',
-            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
           ],
         },
         'stacks-blockchain-api/troubleshooting',
