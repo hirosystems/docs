@@ -31,14 +31,14 @@ Here is a sample response:
     "canonical": true,
     "tx_index": 0,
     "tx_status": "success",
-    "tx_result": { ... },
+    "tx_result": {},
     "microblock_hash": "",
     "microblock_sequence": 2147483647,
     "microblock_canonical": true,
     "event_count": 0,
     "events": [],
     "tx_type": "coinbase",
-    "coinbase_payload": { ... }
+    "coinbase_payload": {}
     },
     { ... }
   ]
