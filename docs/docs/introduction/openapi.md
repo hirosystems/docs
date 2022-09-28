@@ -2,11 +2,11 @@
 
 The Stacks API was designed using the [OpenAPI specification](https://swagger.io/specification/), making it compatible with a variety of developer tools.
 
-The [OpenAPI specification file for Stacks](https://github.com/hirosystems/stacks-blockchain-api/blob/master/docs/openapi.yaml) is used to generate the [TypeScript client library](#typescript-client-library). You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator)
+The [OpenAPI specification file for Stacks](https://github.com/hirosystems/stacks-blockchain-api/blob/master/docs/openapi.yaml) is used to generate the TypeScript client library. You can use the specification file to generate client libraries for other programming languages using the [openapi-generator tool](https://github.com/OpenAPITools/openapi-generator)
 
 ## TypeScript client library
 
-A Typescript client library is available for use of the Stacks API. The client library enables type-safe REST and WebSocket communication with the Stacks API endpoints. [Review the client documentation for more details](https://hirosystems.github.io/stacks-blockchain-api/client/index.html).
+A Typescript client library is available for use of the Stacks API. The client library enables type-safe REST and WebSocket communication with the Stacks API endpoints.
 
 The client is made up of three components:
 
@@ -45,7 +45,7 @@ import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
 
 ### TypeScript sample
 
-The following sample demonstrate how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
+The following sample demonstrates how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
 
 ```ts
 import fetch from 'cross-fetch';
@@ -83,7 +83,7 @@ import {
 
 ### WebSocket sample
 
-The WebSocket components enabled you to subscribe to specific updates, enabling a near real-time display of updates on transactions and accounts.
+The WebSocket components enable you to subscribe to specific updates, providing a near real-time display of updates on transactions and accounts.
 
 ```js
 import { connectWebSocketClient } from '@stacks/blockchain-api-client';
