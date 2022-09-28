@@ -9,8 +9,6 @@ For more information about the Stacks Blockchain API, please refer to the [Stack
 
 The API is comprised of two parts: the Stacks Blockchain API and the Stacks Node RPC API. The Node RPC API is exposed by every running node. Stacks Blockchain API, however, introduces additional capabilities (for example, retrieving all transactions), while also running proxies calls directly to Stacks Node RPC API.
 
-(Add API Diagram here)
-
 ## Stacks node RPC API
 
 The stacks-node implementation exposes JSON RPC endpoints.
@@ -19,7 +17,7 @@ All `/v2/` routes are routed through a proxy to a Hiro-hosted Stacks Node. For a
 
 ## Stacks blockchain API
 
-All `/extended/` routes are provided by the Stacks 2.0 Blockchain API directly. They extend the Stacks Node API capabilities to make it easier to integrate with.
+All `/extended/` routes are provided by the Stacks 2.0 Blockchain API directly, and extend the Stacks Node API capabilities to make integration much easier.
 
 ## Running an API server
 
