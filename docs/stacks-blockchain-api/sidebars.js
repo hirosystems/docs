@@ -132,7 +132,7 @@ module.exports = {
         'stacks-blockchain-api/developer-resources',
       ],
     }, */
-    {
+  /*  {
       type: 'category',
       label: 'Stacks.js',
       items: [
@@ -179,7 +179,7 @@ module.exports = {
         'tutorials/stacking-using-cli',
       ],
     },
-    {
+    { */
       type: 'category',
       label: 'Developing with Clarinet',
       items: [
