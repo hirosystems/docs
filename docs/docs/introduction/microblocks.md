@@ -1,9 +1,9 @@
 # Microblocks support
 
-!> API support for microblocks is a work-in-progress. Review the [API documentation][microblocks_api] carefully to
+API support for microblocks is a work-in-progress. Please review the Microblocks API documentation carefully to
 ensure that you are up-to-date on the latest implementation details for microblocks.
 
-The API allows querying the most recently streamed microblocks:
+The API allows querying the most recently streamed microblocks when you run the following command:
 
 ```bash
 # for mainnet, remove `.testnet`
