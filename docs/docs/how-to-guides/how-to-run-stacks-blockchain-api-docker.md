@@ -1,10 +1,10 @@
 # Running a stacks-blockchain API instance with Docker
 
-In this document, we will go over how to run a [stacks-blockchain-api](https://github.com/hirosystems/stacks-blockchain-api) instance.   There are several components involved here to have a working setup, and we'll go over each.  
+On this page, you will learn how to run a [stacks-blockchain-api](https://github.com/hirosystems/stacks-blockchain-api) instance. There are several components involved here to have a working setup, and descriptions will be given for each of these components.  
 
-We will also focus on the **easy** path to get the services running, which today is using Docker.  
+This page will also focus on the **easy** path to get the services running, which is currently Docker.  
 
-Please note that the following guide is meant for a Unix-like OS (Linux/MacOS) - the commands *may* work on Windows but will likely need some adjustments (PR's welcome!).
+Please note that the following guide is meant for a Unix-like OS (Linux/MacOS). The commands *may* work on Windows but will likely need some adjustments.
 
 - [Running a stacks-blockchain API instance with Docker](#running-a-stacks-blockchain-api-instance-with-docker)
   - [Requirements](#requirements)
@@ -31,9 +31,7 @@ Please note that the following guide is meant for a Unix-like OS (Linux/MacOS) -
 2. `bash` or some other Unix-like shell (i.e. `zsh`)
 3. `curl` binary
 
-### Important
-
-*The order of operations here is important.*
+**Note:** The order of operations here is important.
 
 Essentially, to start the API successfully you will want to perform the following steps **in order**:
 
@@ -41,7 +39,7 @@ Essentially, to start the API successfully you will want to perform the followin
 2. [start stacks-blockchain-api](#starting-stacks-blockchain-api)
 3. [start stacks-blockchain](#starting-stacks-blockchain)
 
-Conversely, to bring down the API and *NOT* lose any data - perform the same steps **in Reverse**:
+Conversely, to bring down the API and *NOT* lose any data, perform the same steps **in Reverse**:
 
 1. [stop stacks-blockchain](#stopping-stacks-blockchain)
 2. [stop stacks-blockchain-api](#stopping-stacks-blockchain-api)
@@ -73,9 +71,9 @@ These are the ports used to sync the stacks-blockchain and the bitcoin headers. 
 
 ### Initial Setup
 
-Since we will need to create some files/dirs for persistent data we will first create a base directory structure and download the docker images.
+Since you will need to create some files/dirs for persistent data, you must first create a base directory structure and download the docker images.
 
-We will be using:
+You should use the following command:
 
 ```bash
 $ mkdir -p ./stacks-node/{persistent-data/postgres,persistent-data/stacks-blockchain,config}
@@ -113,7 +111,7 @@ f835f3a8cfd4   postgres:alpine   "docker-entrypoint.s…"   1 minute ago   Up 1 
 
 ### Stopping Postgres
 
-To stop the postgres service (this will also remove the container, but not the data):
+To stop the postgres service (this will also remove the container, but not the data), run the following command:
 
 ```bash
 $ docker stop postgres
@@ -121,8 +119,8 @@ $ docker stop postgres
 
 ## Stacks Blockchain API
 
-The stacks blockchain api requires several Environment Variables to be set in order to run properly.  
-To reduce complexity, we are going to create a `.env` file that we'll use for these environment variables.
+The Stacks Blockchain API requires you to set several environment variables in order to run properly.  
+To reduce complexity, create a `.env` file that you will use for these environment variables.
 
 Create a new file: `./.env` with the following content:
 
@@ -145,13 +143,15 @@ STACKS_CORE_RPC_PORT=20443
 API_DOCS_URL=https://docs.hiro.so/api
 ```
 
-The other Environment Variables to pay attention to:
+The other environment variables to pay attention to are:
 
 - `PG_HOST`: Set this to your **postgres** instance. In this guide, we'll be using a container named `postgres`.
 - `STACKS_CORE_RPC_HOST`: Set this to your **stacks blockchain** node. In this guide, we'll be using a container named `stacks-blockchain`.
 - `API_DOCS_URL`: Set this to enable your docs API http://localhost:3999/doc.
 
 ### Starting stacks-blockchain-api
+
+Run the following command to run Stacks Blockchain API:
 
 ```bash
 docker run -d --rm \
@@ -163,7 +163,7 @@ docker run -d --rm \
     blockstack/stacks-blockchain-api
 ```
 
-There should now be a running stacks-blockchain-api instance running on ports `3999` and `3700`:
+You shoudl now have a running stacks-blockchain-api instance running on ports `3999` and `3700`:
 
 ```bash
 e$ docker ps --filter name=stacks-blockchain-api
@@ -171,11 +171,11 @@ CONTAINER ID   IMAGE                              COMMAND                  CREAT
 a86a26da6c5a   blockstack/stacks-blockchain-api   "docker-entrypoint.s…"   1 minute ago   Up 1 minute   0.0.0.0:3700->3700/tcp, :::3700->3700/tcp, 0.0.0.0:3999->3999/tcp, :::3999->3999/tcp   stacks-blockchain-api
 ```
 
-**Note**: on initial sync, it will take several minutes for port `3999` to become available.
+**Note**: On initial sync, it will take several minutes for port `3999` to become available.
 
 ### Stopping stacks-blockchain-api
 
-To stop the stacks-blockchain-api service (this will also remove the container):
+To stop the stacks-blockchain-api service (this will also remove the container), run the following command:
 
 ```bash
 $ docker stop stacks-blockchain-api
@@ -183,11 +183,11 @@ $ docker stop stacks-blockchain-api
 
 ## Stacks Blockchain
 
-In order to have a **usable** API instance, it needs to have data from a running [stacks-blockchain](https://github.com/blockstack/stacks-blockchain) instance.  
+In order to have a **usable** API instance, you need to have data from a running [stacks-blockchain](https://github.com/blockstack/stacks-blockchain) instance.  
 
-Because we are focusing on running the API with Docker, it also makes things easier if we also run the stacks-blockchain instance the same way.  
+Because the focus is on running the API with Docker, it also makes things easier if you also run the stacks-blockchain instance the same way.  
 
-With that in mind, you will need to have the following in your `Config.toml` - this config block will send blockchain events to the API instance that was previously started:
+With that in mind, you will need to have the following configuration in your `Config.toml`. This configuration block will send blockchain events to the API instance that was previously started:
 
 ```toml
 [[events_observer]]
@@ -242,7 +242,7 @@ docker run -d --rm \
 /bin/stacks-node start --config /src/stacks-node/Config.toml
 ```
 
-There should now be a running stacks-blockchain instance running on ports `20443-20444`:
+You should now see a running stacks-blockchain instance running on ports `20443-20444`:
 
 ```bash
 $ docker ps --filter name=stacks-blockchain$
@@ -252,7 +252,7 @@ CONTAINER ID   IMAGE                          COMMAND                  CREATED  
 
 ### Stopping stacks-blockchain
 
-To stop the stacks-blockchain service (this will also remove the container, but not the data):
+To stop the stacks-blockchain service (this will also remove the container, but not the data), run the following command:
 
 ```bash
 $ docker stop stacks-blockchain
