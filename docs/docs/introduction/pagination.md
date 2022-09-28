@@ -40,7 +40,7 @@ Here is a sample response:
     "tx_type": "coinbase",
     "coinbase_payload": {}
     },
-    { ... }
+    {}
   ]
 }
 ```
