@@ -60,8 +60,8 @@ module.exports = {
       navbar: {
         logo: {
           alt: 'Hiro developers',
-          src: 'img/logo-light.svg',
-          srcDark: 'img/logo-dark.svg',
+          src: 'img/hiro-docs-logo.svg',
+          srcDark: 'img/hiro-docs-logo-dark.svg',
           target: '_self',
         },
         items: [
@@ -106,12 +106,6 @@ module.exports = {
             position: 'left',
           },
           {
-            to: 'https://survey.hiro.so',
-            label: 'Take The Dev Survey',
-            className: 'header-survey-link',
-            position: 'left',
-          },
-          {
             href: 'https://github.com/hirosystems/docs',
             position: 'right',
             className: 'header-github-link',
@@ -124,8 +118,7 @@ module.exports = {
         style: 'dark',
         logo: {
           alt: 'Hiro developers',
-          src: 'img/footer-logo-light.svg',
-          srcDark: 'img/footer-logo-dark.svg',
+          src: 'img/hiro-docs-footer.svg',
         },
         links: [
           {
