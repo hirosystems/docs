@@ -1,7 +1,7 @@
 # Nonce handling
 
 In order to prevent stuck transactions, you must track the next available nonce for principals issuing transactions. The
-API provides an endpoint to make nonce handling simpler:
+Stacks Blockchain API provides an endpoint to make nonce handling simpler when usint the following command:
 
 ```bash
 # for mainnet, remove `.testnet`
