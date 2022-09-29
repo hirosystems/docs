@@ -42,7 +42,7 @@ module.exports = {
     // {
     //  type: 'category',
     //  label: 'Clarinet Overview',
-    // items: [
+    //  items: [
     //   'clarinet/introduction',
     //   'clarinet/getting-started',
     //   'clarinet/feature-guides',
@@ -80,7 +80,7 @@ module.exports = {
         'stacks-blockchain-api/developer-resources',
       ],
     }, */
-    {
+    //  {
     //  type: 'category',
     //  label: 'Stacks.js',
     //  items: [
@@ -113,8 +113,8 @@ module.exports = {
     //   'stacks.js/troubleshooting',
     //   'stacks.js/faq',
     //   'stacks.js/developer-resources',
-     ],
-    },
+    // ],
+    // },
   ],
   tutorials: [
     'tutorials',
