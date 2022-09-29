@@ -90,7 +90,15 @@ module.exports = {
           ],
         },
         'stacks.js/faq',
-        'stacks.js/developer-resources',
+        {
+          type: 'category',
+          label: 'Stacks.js Resources',
+          items: [
+            'stacks.js/resources/contact-us',
+            'stacks.js/resources/blogs',
+            'stacks.js/resources/videos',
+          ],
+        },
       ],
     },
   ],
