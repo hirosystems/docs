@@ -12,7 +12,7 @@
 module.exports = {
   docs: [
     'intro',
-    {
+    /*{
       type: 'category',
       label: 'Get Started',
       items: [
@@ -147,7 +147,37 @@ module.exports = {
           ],
         },
       ],
-    },
+    }, */
+
+    {
+      type: 'category',
+      label: 'Stacks Explorer',
+      items: [
+        {
+        type: 'category',
+        label: 'Introduction',
+        items: [
+          'stacks-explorer/introduction/overview',
+        ]
+        },
+        {
+          type: 'category',
+          label: 'Getting Started',
+          items: [
+            'stacks-explorer/getting-started/getting-started-with-stacks-explorer',
+          ]
+          },
+            {
+              type: 'category',
+              label: 'How-To\'s',
+              items: [
+                'stacks-explorer/how-to-guide/how-to-run-build-explorer',
+              ]
+              },
+      ],
+    }, 
+
+
   ],
   tutorials: [
     'tutorials',
