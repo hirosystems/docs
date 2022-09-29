@@ -1,4 +1,9 @@
-# Installing explorer
+---
+Title: Installing Stacks Explorer
+---
+
+
+# Installing Stacks Explorer
 
 The Stacks Explorer is built with [React](https://reactjs.org/), [next.js](https://github.com/vercel/next.js) and [@stacks/ui](https://github.com/hirosystems/ui).
 
@@ -13,14 +18,14 @@ You must also enusre you have installed the project dependencies listed below.
 
 It is also highly recommended you install [Homebrew](https://brew.sh/).
 
-## Installing project dependencies
+## Installing Project Dependencies
 
 To install project dependencies:
 
 1. Open your terminal window and make sure you are in the `/explorer` folder.
 2. Run the `yarn` command to install the project dependencies.
 
-## Environment variables
+## Setting Environment Variables
 
 The Stacks Explorer application needs the environment variables listed below to work properly. 
 
