@@ -1,3 +1,9 @@
+---
+Title: FAQ
+---
+
+# FAQ's
+
 I'm trying to get the status from a local Stacks Blockchain node API and present to a user how close it is to being synced. I can get the current height of the local node (/v2/info) Is there any way to get the real current height from an API node that is not completely synced? I want to avoid going directly to the centrally hosted node.
 
 The API does not yet know when it's in sync mode vs normal "chain follower" mode, so there's no other way to check if you're synced other than comparing to another synced API's block height

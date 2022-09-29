@@ -1,3 +1,7 @@
+---
+Title: Nonce Handling
+---
+
 # Nonce handling
 
 In order to prevent stuck transactions, you must track the next available nonce for principals issuing transactions. The

@@ -1,3 +1,7 @@
+---
+Title: Rosetta support
+---
+
 # Rosetta support
 
 The Stacks Blockchain API supports [v1.4.6 of the Rosetta specification](https://www.rosetta-api.org/). This industry open standard makes it easy to integrate blockchain deployment and interaction.

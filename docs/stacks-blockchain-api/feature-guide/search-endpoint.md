@@ -1,4 +1,8 @@
-## Search Operation
+---
+Title: Search Endpoint
+---
+
+## Search endpoint
 
 The Stacks Blockchain API provides a search endpoint ([`/extended/v1/search/{id}`](https://docs.hiro.so/api#operation/search_by_id)) that takes an identifier and responds with matching blocks, transactions, contracts, or accounts.
 

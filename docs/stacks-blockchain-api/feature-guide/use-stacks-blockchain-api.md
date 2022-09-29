@@ -1,4 +1,9 @@
-# The Stacks Blockchain API
+---
+Title: How to use Stacks Blockchain API
+---
+
+
+# How to use Stacks Blockchain API
 
 The RESTful JSON API can be used without any authorization. The base path for the API is:
 

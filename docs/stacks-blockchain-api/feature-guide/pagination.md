@@ -1,3 +1,7 @@
+---
+Title: Pagination
+---
+
 # Pagination
 
 To make API responses more compact, lists returned by the API are paginated. For lists, the response body includes:
