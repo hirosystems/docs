@@ -31,8 +31,8 @@ module.exports = {
          type: 'category',
           label: 'How-To\s',
           items: [
-            'explorer/how-to-install-explorer',
-            `explorer/how-to-run-build-explorer',
+            'explorer/how-to-guides/how-to-install-explorer',
+            `explorer/how-to-guides/how-to-run-build-explorer',
           ],
          'explorer/troubleshooting',
          'explorer/faq',
