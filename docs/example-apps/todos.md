@@ -2,7 +2,7 @@
 id: to-dos
 title: To-dos app
 ---
-import NodeLTS from '../includes/node-lts-version.mdx';
+import NodeLTS from '../includes/_node-its-version.mdx';
 
 ![What you'll be studying in this tutorial](/img/todos-home.png)
 

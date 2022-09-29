@@ -72,15 +72,13 @@ module.exports = {
       label: 'Stacks.js',
       items: [
         
-        'stacks.js/introduction',
+        'stacks.js/stacks.js-overview',
         'stacks.js/getting-started',
         'stacks.js/feature-guides',
         {
           type: 'category',
           label: 'How-To\'s',
           items: [
-            'stacks.js/how-to-guides/how-to-setup-environment',
-            'stacks.js/how-to-guides/how-to-add-dependencies',
             'stacks.js/how-to-guides/how-to-authenticate-users-with-connect',
             'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',

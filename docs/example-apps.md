@@ -2,7 +2,7 @@
 id: example-apps
 title: Example apps
 ---
-import NodeLTS from './includes/node-lts-version.mdx';
+import NodeLTS from './includes/_node-its-version.mdx';
 
 The example apps provided in this section demonstrate key features of the Stacks blockchain, including connecting to the wallet, reading on-chain values, creating transactions, and interacting with the web wallet.
 
