@@ -146,6 +146,7 @@ module.exports = {
             },
           ],
         },
+        'references/hiro-archiver',
       ],
     },
   ],
