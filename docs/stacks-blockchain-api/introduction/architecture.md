@@ -2,4 +2,7 @@
 Title: Architecture
 ---
 
-You can find the architecture of Stacks-blockchain-API [here.](https://github.com/hirosystems/stacks-blockchain-api#architecture).
+# Architecture
+![Stacks Blockchain API architecture](../image/api-architecture.png)
+
+For more details about the architectural diagram, you can refer [here.](https://github.com/hirosystems/stacks-blockchain-api/blob/master/overview.md).

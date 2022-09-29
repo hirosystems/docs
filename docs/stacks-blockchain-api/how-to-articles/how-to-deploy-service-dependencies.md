@@ -1,8 +1,10 @@
-# Overview
+---
+Title: Deploy Service Dependencies
+---
+
+# Deploy Service Dependencies
 
 Now that you have installed Docker and started the API server, you should now deploy related service dependencies.
-
-# Deploying Service Dependencies
 
 To deploy service dependencies, run the following npm command in your terminal window:
 

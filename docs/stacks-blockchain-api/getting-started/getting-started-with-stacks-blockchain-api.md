@@ -2,6 +2,7 @@
 Title: Get started with Stacks Blockchain API
 ---
 
+# Get started with Stacks Blockchain API
 
 This page describes how you can start the API server and service dependencies.
 

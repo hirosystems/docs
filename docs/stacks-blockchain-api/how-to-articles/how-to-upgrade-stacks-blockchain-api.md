@@ -1,4 +1,8 @@
-# Overview
+---
+Title: Upgrade Stacks Blockchain API version
+---
+
+# Upgrade Stacks Blockchain API version
 
 Over time, the Stacks Blockchain API may be updated to a newer version, providing you additonal features and benefits not available in previous versions. When a new API version is released, you may want to upgrade the Stacks Blockchain API version to this new, stable version.
 
