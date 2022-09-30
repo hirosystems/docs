@@ -2,7 +2,11 @@
 title: Set up the local development environment
 ---
 
-[Clarinet][] is a local Clarity runtime packaged as a command-line application. It's designed to facilitate rapid smart contract development, testing, and deployment. 
+[Clarinet](../introduction.md) is a local Clarity runtime packaged as a command-line application. It's designed to facilitate rapid smart contract development, testing, and deployment.
+
+Clarinet is a tool to build decentralized protocols and applications using Stacks Blockchain. These protocols and applications are called Smart contracts. On Stacks blockchain, these smart contracts are written in a programming language called [Clarity](https://clarity-lang.org/).
+
+Clarinet is designed to provide a productive way for blockchain and front-end developers to work on smart contracts.
 
 Clarinet consists of two components:
 

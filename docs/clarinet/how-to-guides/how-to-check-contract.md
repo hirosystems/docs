@@ -17,9 +17,7 @@ If the Clarity code is valid, then the command will indicate success with the re
 ✔ 2 contracts checked
 ```
 
-The command may also report warnings indicating the code is valid, but there is something that you should pay attention to.
-For example, the check-checker analysis described below will generate warnings. If there are errors in the code,
-the output of the command will indicate the kind and location of the errors.
+The command may also report warnings indicating the code is valid.
 
 You may also perform a syntax-check on a single file by using the command below.
 

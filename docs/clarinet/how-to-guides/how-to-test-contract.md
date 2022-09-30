@@ -253,3 +253,20 @@ jobs:
 
 Or add the steps above in your existing workflows. The generated code coverage output can then be 
 used as is with GitHub Apps like https://codecov.io.
+
+## Monitor test coverage
+
+To help developers maximizing their test coverage, Clarinet can produce a `lcov` report, using the following option:
+
+```bash
+$ clarinet test --coverage
+```
+
+From there, developers can use the `lcov` tooling suite to produce HTML reports:
+
+```bash
+$ brew install lcov
+$ genhtml coverage.lcov
+$ open index.html
+
+For a step by step walkthrough, you can also watch [Executing Tests and Checking Code Coverage](https://www.youtube.com/watch?v=j2TZ560xEPA&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=10).

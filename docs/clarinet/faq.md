@@ -2,14 +2,20 @@
 title: FAQ
 ---
 
+
+## How to use Command line tools?
+
 People unfamiliar with command line tools will install the clarity extension in VSCode and then type `clarity new <project name>` in the editor window and not know what to do next. Maybe we could add some clarifications about how to use command line tools somewhere? 
 
-Also, adding more functionality into the extension will be helpful so that eventually, they don’t need to use the command line at all if they don’t want to. https://discord.com/channels/621759717756370964/625538774230892545/999051570635345970.
+Also, adding more functionality to the extension will be helpful so that eventually, they don’t need to use the command line if they don’t want to. https://discord.com/channels/621759717756370964/625538774230892545/999051570635345970.
 
-After installing Clarinet with the installer, I can’t run Clarinet.
+## After installing Clarinet with the installer, I can't run Clarinet. 
 
 - First, restart your shell/VSCode to ensure they have the updated Path (the installer should have added the directory to the path).
-- If that does not work, manually add the directory to your Path: Open "System Properties", click "Environment Variables" button, under "System variables", select "Path" and hit "Edit". Press the "New" button and add "C:\Program Files\clarinet\bin", then press Ok, Ok, Ok. 
+- If that does not work, manually add the directory to your Path by following the steps below:
+
+- Open "System Properties", select "Environment Variables" button, under "System variables", select "Path" and hit "Edit". 
+- Press the "New" button and add "C:\Program Files\clarinet\bin", then press Ok, Ok, Ok. 
 - Finally, restart your shell or VSCode.
 - If you did not install to the default directory, modify the path accordingly.
 
@@ -24,6 +30,6 @@ Below are some screenshots to help with this:
 ![FAQ -1](images/clarinet-faq-4.png)
 
 
-- `clarinet integrate` is not working
+## The command `clarinet integrate` is not working
 
-check for rootless docker installation
+Check for rootless docker installation.

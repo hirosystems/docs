@@ -1,5 +1,5 @@
 ---
-title: Analyse with Check-Checker
+title: Analyze with Check-Checker
 ---
 
 # Analysis with Check-Checker

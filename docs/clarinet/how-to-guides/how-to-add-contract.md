@@ -30,10 +30,8 @@ Clarinet will add 2 files to your project:
 Clarinet will also add a configuration to the `Clarinet.toml` file for your contract.
 
 ```toml
-[project.cache_location]
-path = ".requirements"
-[contracts.bbtc]
-path = "contracts/bbtc.clar"
+[contracts.my-contract]
+path = "contracts/my-contract.clar"
 ```
 
 You can add contracts to your project by adding the files manually, however, you must make sure to add the appropriate configuration

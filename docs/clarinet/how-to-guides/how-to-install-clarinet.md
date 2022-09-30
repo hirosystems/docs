@@ -4,15 +4,20 @@ title: Clarinet Installation
 
 # Installation
 
-Hiro has developed Clarinet to be environment-agnostic, meaning you may install Clarinet in whatever environment you prefer.
-You may choose to install Clarinet in any of the following environments:
+Hiro has developed Clarinet to be environment-agnostic.
+You may choose to install Clarinet in any of the following operating systems:
 
 - macOS
 - Windows
-- pre-built binary
-- source from Cargo
+- Linux
 
-**Note** There is no difference in Clarinet functionality based on the environment you select.
+To install Clarinet, you may choose from the following:
+- [pre-built binary](https://github.com/hirosystems/clarinet#install-from-a-pre-built-binary)
+- [build source from Cargo](https://github.com/hirosystems/clarinet#install-from-source-using-cargo)
+
+> [!Note]
+>
+> There is no difference in Clarinet functionality based on the environment you select.
 
 ## Install on macOS (Homebrew)
 
