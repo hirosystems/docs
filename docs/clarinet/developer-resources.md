@@ -4,7 +4,7 @@ title: Developer Resources
 
 # Contributing to Clarinet
 
-We welcome contributions to Clarinet! The following sections provide information on how to contribute.
+We welcome contributions to Clarinet! The following sections provide information on how to contribute to our product.
 
 ## Prerequisites
 
@@ -15,19 +15,18 @@ We welcome contributions to Clarinet! The following sections provide information
 
 ### Guide
 
-This repo follows the [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification 
-when writing commit messages.
+The [Clarinet repository](https://github.com/hirosystems/clarinet)  follows the [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification when writing commit messages.
 
-**Note** It is important any pull requests submitted have commit messages which follow this standard.
+**Note** It is important any pull requests submitted have commit messages that follow this standard.
 
 To start contributing to Clarinet:
 
-1. Fork this repo and clone the fork locally.
+1. Fork the [repository](https://github.com/hirosystems/clarinet) and clone the fork locally.
 2. Create a new branch
    ```bash
    git checkout -b <my-branch>
    ```
-3. Run `npm i` in the local repo to install and initialize `husky` and `commitlint`.
+3. Run `npm i` in the local repository to install and initialize `husky` and `commitlint`.
 
    ```bash
    npm i
@@ -35,20 +34,6 @@ To start contributing to Clarinet:
 
 4. These tools will be used in a git commit hook to lint and validate your commit message. 
 5. If the message is invalid, `commitlint` will alert you to try again and fix it.
-
-Here is an example of a "bad"" commit message.
-
-```bash
-$ git commit -m "bad message"
-$ ⧗   input: bad message
-$ ✖   subject may not be empty [subject-empty]
-$ ✖   type may not be empty [type-empty]
-$
-$ ✖   found 2 problems, 0 warnings
-$ ⓘ   Get help: https://github.com/conventional-changelog/commitlint/#what-is-commitlint
-$
-$ husky - commit-msg hook exited with code 1 (error)
-```
 
 Here is an example of a "good" commit message.
 

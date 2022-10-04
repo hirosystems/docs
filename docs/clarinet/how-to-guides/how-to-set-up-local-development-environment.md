@@ -17,8 +17,7 @@ When these components are used together, they allow you to rapidly develop and t
 to a local mocknet or testnet.
 
 When developing a new smart contract using local Clarity REPL, you can exercise a contract without the need to wait for block times in a live blockchain.
-Clarinet allows you to instantly initialize wallets and populate them with tokens, which helps to interactively or programmatically
-test the behavior of the smart contract. Blocks are mined instantly, so you can control the number of blocks that are mined between testing transactions.
+Clarinet allows you to instantly initialize wallets and populate them with tokens, which helps to interactively or programmatically test the behavior of the smart contract. Blocks are mined instantly, so you can control the number of blocks that are mined between testing transactions.
 
 The Clarinet tool is used for developing smart contracts using a larger development strategy that involves:
 
@@ -28,55 +27,6 @@ The Clarinet tool is used for developing smart contracts using a larger developm
 - Deploying the final contract to the mainnet.
 
 When developing smart contracts, you can also use the [Clarity Visual Studio Code plugin][].
-
-## Installing Clarinet
-
-Clarinet is available in the Homebrew and Winget package managers. It is recommended to install the Clarinet tool from package manager.
-
-### Installing from Homebrew (MacOS and Linux)
-
-Install Clarinet from Homebrew with the command:
-
-```sh
-brew install clarinet
-```
-
-### Installing from winget (Windows)
-
-With the winget package manager installed, use the following command:
-
-```sh
-winget install clarinet
-```
-
-### Installing from a binary release
-
-You can download a release from the [Clarinet repository](https://github.com/hirosystems/clarinet/releases/latest).
-
-#### Windows
-
-Download the Windows installer, _clarinet-windows-x64.msi_. Once downloaded, run the installer, and it will install the clarinet binary and add it to your Path, allowing it to be easily used from the shell, and discovered by VS Code. If you have any shells open already, you will need to restart them to get the updated Path, allowing you to run `clarinet`.
-
-#### MacOS / Linux
-Unzip the binary, then copy it to a location that is already in your path, such as `/usr/local/bin`.
-
-```sh
-unzip clarinet-linux-x64.zip -d .
-chmod +x ./clarinet
-mv ./clarinet /usr/local/bin
-```
-
-If you are using MacOS, you may get security warnings when trying to run the precompiled binary. You can resolve the
-security warning with the command:
-
-```sh
-xattr -d com.apple.quarantine /path/to/downloaded/clarinet
-```
-
-### Installing from source
-
-Follow the [procedure](https://github.com/hirosystems/clarinet#install-from-source-using-cargo) outlined in the Clarinet
-repository to install from source.
 
 ## Developing a Clarity smart contract
 
@@ -120,8 +70,7 @@ This command creates a new `my-contract.clar` file in the `contracts` directory,
 path = "contracts/my-contract.clar"
 ```
 
-At this point, you can begin editing your smart contract in the `contracts` directory. At any point while you are
-developing, you can use the command `clarinet check` to check the syntax of your smart contract.
+At this point, you can begin editing your smart contract in the `contracts` directory. At any point while you are developing, you can use the command `clarinet check` to check the syntax of your smart contract.
 
 For a more in-depth overview of developing with Clarinet, review this comprehensive walkthrough video.
 
@@ -243,11 +192,7 @@ available Clarity calls in Deno, review the [Deno Clarinet library][].
 ## Additional reading
 
 - [Clarinet README](https://github.com/hirosystems/clarinet#clarinet)
-
-[clarinet]: https://github.com/hirosystems/clarinet
-[console]: #testing-with-the-console
-[test harness]: #testing-with-the-test-harness
-[clarity language reference]: https://docs.stacks.co/references/language-functions
-[asserts]: https://deno.land/std@0.90.0/testing/asserts.ts
-[deno clarinet library]: https://github.com/hirosystems/clarinet/blob/master/deno/index.ts
-[clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
+- [clarinet repository](https://github.com/hirosystems/clarinet)
+- [Clarity language reference](https://docs.stacks.co/references/language-functions)
+- [Deno standard library - asserts](https://deno.land/std@0.90.0/testing/asserts.ts)
+- [Clarity visual studio code plugin](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp)

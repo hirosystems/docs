@@ -11,6 +11,10 @@ People unfamiliar with command line tools will install the clarity extension in 
 
 ### I am unable to run Clarinet after installation
 
+>[!Note]
+>
+> The below steps are indented to address Windows users only.
+
 If you are unable to run Clarinet after you have installed it using the installer, perform the steps listed below.
 
 1. Restart your shell/VSCode to ensure they have the updated path (the installer should have added the directory to the path).

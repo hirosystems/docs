@@ -3,7 +3,7 @@ id: intro
 title: Introduction
 ---
 
-Hiro is a developer tools company that supports developers on the Stacks blockchain. Apps built on Stacks typically consist of a Clarity smart contract for handling on chain data and a JavaScript frontend on the web. Trustless data storage is also available through Gaia, which is useful for storing large amounts of app or user data off-chain.
+[Hiro](https://www.hiro.so/) is a developer tools company that provides solutions to build, deploy and scale applications with smart contracts on Bitcoin. Apps built on Stacks typically consist of a Clarity smart contract for handling on chain data and a JavaScript frontend on the web. Trustless data storage is also available through Gaia, that is useful for storing large amounts of app or user data off-chain.
 
 The developer documentation on this site provides information about how to use Hiro products to develop applications on the Stacks blockchain. The examples and tutorials available cover all phases of app development from smart contract to frontend. Hiro's suite of developer tools allow you to rapidly iterate on an app locally, develop comprehensive unit tests, and deploy your app to the live Stacks chain.
 

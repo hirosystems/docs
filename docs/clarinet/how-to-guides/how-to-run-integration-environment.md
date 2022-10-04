@@ -2,40 +2,28 @@
 title: "Run a local integration Blockchain"
 ---
 
-Once you have reached a point where your Clarity smart contract is functional, you may want to develop a web frontend
-against your contract. This can be challenging, as the contract must be deployed to a live blockchain to fully
+Once you have reached a point where your Clarity smart contract is functional, you may want to develop a web frontend against your contract. This can be challenging, as the contract must be deployed to a live blockchain to fully
 interact with it from a web app. Clarinet provides an easy method to deploy your contract to a blockchain that
 runs locally on your machine that is configurable and controllable. This integration feature is called DevNet.
 
-DevNet allows you to perform frontend development and integration testing without the need to deploy your contract to
-public testnet. This is valuable if you are in the early stages of developing a product, or if you are developing a
-contract and app in stealth. DevNet uses Docker to launch local instances of Bitcoin, Stacks, Stacks API, Stacks
-Explorer, and Bitcoin Explorer, and provides total configuration control over all those instances. Once running, DevNet
-automatically deploys your contracts and creates Stacks accounts with pre-defined balances.
+DevNet allows you to perform frontend development and integration testing without the need to deploy your contract to public testnet. This is valuable if you are in the early stages of developing a product, or if you are developing a contract and app in stealth. DevNet uses Docker to launch local instances of Bitcoin, Stacks, Stacks API, Stacks Explorer, and Bitcoin Explorer, and provides total configuration control over all those instances. Once running, DevNet automatically deploys your contracts and creates Stacks accounts with pre-defined balances.
 
-The services launched by DevNet represent a full instance of the Stacks blockchain with the Proof of Transfer consensus
-mechanism running against a locally running Bitcoin testnet. DevNet allows you to control block times, PoX transactions,
-and contract deployments. Because DevNet is running locally, it can be reset or re-configured at any time. This allows
-for rapid frontend development without the need to interact with the public blockchain.
+The services launched by DevNet represent a full instance of the Stacks blockchain with the Proof of Transfer consensus mechanism running against a locally running Bitcoin testnet. DevNet allows you to control block times, PoX transactions, and contract deployments. Because DevNet is running locally, it can be reset or re-configured at any time. This allows for rapid frontend development without the need to interact with the public blockchain.
 
 ## Prerequisites
 
-In order to run DevNet, you must have [Clarinet installed][], and you also should have Docker installed locally. Refer
-to the [Docker documentation][] for instructions on installing Docker on your development machine.
+In order to run DevNet, you must have [Clarinet installed](../how-to-guides/how-to-install-clarinet.md), and you also should have Docker installed locally. Refer
+to the [Docker documentation](https://docs.docker.com/get-docker/) for instructions on installing Docker on your development machine.
 
 ## Launching DevNet
 
-Clarinet provides sensible a sensible default configuration for DevNet. If you wish to use the default configuration,
-you can launch DevNet from the root of your Clarinet project with the command:
+Clarinet provides sensible a sensible default configuration for DevNet. If you wish to use the default configuration, you can launch DevNet from the root of your Clarinet project with the command:
 
 ```sh
 clarinet integrate
 ```
 
-Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks node, Stacks API node, and the Bitcoin
-and Stacks Explorers. This can take several minutes on first launch. Once the images are launched, the DevNet interface
-is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second
-block of the chain, so you may need to wait for the third block before launching your frontend development environment.
+Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks node, Stacks API node, and the Bitcoin and Stacks Explorers. This can take several minutes on first launch. Once the images are launched, the DevNet interface is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second block of the chain, so you may need to wait for the third block before launching your frontend development environment.
 
 Review the following sections for information about the DevNet interface and configuration options for DevNet.
 
@@ -43,39 +31,24 @@ Review the following sections for information about the DevNet interface and con
 
 ![DevNet interface](/img/devnet-interface.png)
 
-The DevNet interface is displayed as a terminal GUI and consists of four primary panels: the system log, service status,
-mempool summary, and a minimal block explorer.
+The DevNet interface is displayed as a terminal GUI and consists of four primary panels: the system log, service status, mempool summary, and a minimal block explorer.
 
-The system log provides a log of events happening throughout the DevNet stack. You can use this log to monitor the
-health of the local blockchain and review any events that occur. For services that provide a web interface, the URL
-for the local service is displayed next to the container name. You can connect to these URLs using a web browser to
-access the service.
+The system log provides a log of events happening throughout the DevNet stack. You can use this log to monitor the health of the local blockchain and review any events that occur. For services that provide a web interface, the URL for the local service is displayed next to the container name. You can connect to these URLs using a web browser to access the service.
 
-The service status provides a status summary for the Docker containers that make up the DevNet stack. A green icon next
-to the container indicates that it is in a healthy state, a yellow icon indicates that the container is booting, and a
-red icon indicates that there is a problem with the service.
+The service status provides a status summary for the Docker containers that make up the DevNet stack. A green icon next to the container indicates that it is in a healthy state, a yellow icon indicates that the container is booting, and a red icon indicates that there is a problem with the service.
 
-The mempool summary displays a list of transactions in the mempool. These include historical transactions from the
-beginning of the blockchain.
+The mempool summary displays a list of transactions in the mempool. These include historical transactions from the beginning of the blockchain.
 
-The block explorer has two sub-panels: the block summary and the block transactions. You can use the `Arrow` keys to
-select a block within the chain (shown at the top of the block explorer), and the block summary and block transactions
-panels display information about that block. The block summary displays the Stacks block height, the Stacks block hash,
-the Bitcoin block height of the anchor block, and the PoX cycle number of the block. The block transactions panel
-displays all Stacks transactions that were included in the block.
+The block explorer has two sub-panels: the block summary and the block transactions. You can use the `Arrow` keys to select a block within the chain (shown at the top of the block explorer), and the block summary and block transactions panels display information about that block. The block summary displays the Stacks block height, the Stacks block hash, the Bitcoin block height of the anchor block, and the PoX cycle number of the block. The block transactions panel displays all Stacks transactions that were included in the block.
 
-You can access the locally running Stacks Explorer and Bitcoin Explorer from the URLs in the service status window for
-more detailed information about the blocks.
+You can access the locally running Stacks Explorer and Bitcoin Explorer from the URLs in the service status window for more detailed information about the blocks.
 
 You can press `0` in the interface to reset the DevNet. Press `Ctrl` + `C` to stop the DevNet and shut down the
 containers.
 
 ## Configuring DevNet
 
-By default, DevNet launches a local Stacks 2.0 testnet with a fixed block time of 30 seconds. It runs Docker images
-that host a Bitcoin node, a Stacks Node, the Stacks API, the Stacks Explorer, and the Bitcoin Explorer. The default
-settings should be adequate for most developers, but you can change many of the settings to customize your
-development environment.
+By default, DevNet launches a local Stacks 2.0 testnet with a fixed block time of 30 seconds. It runs Docker images that host a Bitcoin node, a Stacks Node, the Stacks API, the Stacks Explorer, and the Bitcoin Explorer. The default settings should be adequate for most developers, but you can change many of the settings to customize your development environment.
 
 DevNet settings are located in the `settings/Devnet.toml` file. The file defines the wallets that are created in the
 DevNet blockchain, the Stacks miner configuration, Proof of Transfer activity, and many other options.

@@ -1,3 +1,7 @@
+---
+title: Deploy Contracts
+---
+
 ## Deploy contracts to Devnet / Testnet / Mainnet
 
 You can use Clarinet to publish your contracts to Devnet / Testnet / Mainnet environment for  testing and evaluation on a blockchain.

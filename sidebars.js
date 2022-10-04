@@ -46,6 +46,7 @@ module.exports = {
             'clarinet/how-to-guides/how-to-deploy-contracts',
             'clarinet/how-to-guides/how-to-analyze-with-check-checker',
             'clarinet/how-to-guides/how-to-run-integration-environment',
+            'clarinet/how-to-guides/how-to-use-extensions',
             'clarinet/how-to-guides/how-to-deploy-subnets',
           ],
         },
