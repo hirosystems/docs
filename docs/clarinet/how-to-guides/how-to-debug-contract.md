@@ -129,4 +129,4 @@ For each call, the parameters and return value are shown in the trace. Any event
 
 ## What next?
 
-[How to deploy contract?](how-to-deploy-contract.md)
+[How to deploy contract?](../how-to-guides/how-to-deploy-contracts.md)
