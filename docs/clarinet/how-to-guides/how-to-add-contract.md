@@ -1,5 +1,5 @@
 ---
-title: Add a New Contract
+title: Add New Contract
 ---
 
 Clarinet can handle adding a new contract and its configuration to your project when you use the command listed below.

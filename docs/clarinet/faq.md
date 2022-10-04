@@ -1,7 +1,6 @@
 ---
-title: FAQ
+title: FAQ's
 ---
-
 
 ### Question - 1: 
 

@@ -2,7 +2,7 @@
 title: Developer Resources
 ---
 
-# Contributing to Clarinet
+## Contributing to Clarinet
 
 We welcome contributions to Clarinet! The following sections provide information on how to contribute to our product.
 

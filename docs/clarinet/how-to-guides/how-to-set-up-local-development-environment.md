@@ -1,5 +1,5 @@
 ---
-title: Set up the local development environment
+title: Set up Local Development Environment
 ---
 
 ## Developing a Clarity smart contract

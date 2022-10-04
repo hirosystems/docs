@@ -2,8 +2,6 @@
 title: Clarinet Installation
 ---
 
-# Installation
-
 Hiro has developed Clarinet to be environment-agnostic.
 You may choose to install Clarinet in any of the following operating systems:
 
