@@ -2,8 +2,6 @@
 title: Deploy Clarinet with Subnets
 ---
 
-# Deploy with subnets on Devnet
-
 Clarinet may be used for facilitating experimentations with [subnets](https://www.youtube.com/watch?v=PFPwuVCGGuI).
 To get started with subnets, in your `Devnet.toml`, enable the flag
 

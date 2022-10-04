@@ -10,8 +10,8 @@ We welcome contributions to Clarinet! The following sections provide information
 
 - rust (>=1.52.0)
 - cargo (>=1.52.0)
-- node (>=v14.16.0) - Used for git commit hook
-- npm (>=7.18.0) - Used for git commit hook
+- node (>=v14.16.0)
+- npm (>=7.18.0)
 
 ### Guide
 

@@ -75,7 +75,7 @@ the latest development images for each of the Stacks and Bitcoin nodes. These pa
 > If any of the parameters are not supplied in the configuration file, the default value is used.
 
 
-- `pox_stacking_orders`: defined by [stacking orders][] headings later in the file
+- `pox_stacking_orders`: defined by [stacking orders](../../smart-contracts/devnet.md#stacking-orders) headings later in the file
 - `orchestrator_port`: the port number for the Bitcoin orchestrator service
 - `bitcoin_node_p2p_port`: the port number for Bitcoin P2P network traffic
 - `bitcoin_node_rpc_port`: the port number for Bitcoin RPC network traffic

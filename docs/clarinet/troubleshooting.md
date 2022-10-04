@@ -9,9 +9,9 @@ People unfamiliar with command line tools will install the clarity extension in 
 
 ## Common Issues
 
-### I am unable to run Clarinet after installation
+### I am unable to run Clarinet after installation. 
 
->[!Note]
+> [!Note]
 >
 > The below steps are indented to address Windows users only.
 

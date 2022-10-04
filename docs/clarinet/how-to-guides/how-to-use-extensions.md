@@ -21,11 +21,3 @@ An extension can be deployed as a standalone plugin on [Deno](https://deno.land/
 
 As illustrated in the example above, permissions (wallet / disk read / disk write) are declared using command flags. If at runtime, the Clarinet extension is trying to write to disk, read disk, or access wallets without permission, the script will end up failing.
 
-
-## What next?
-
-Now that you have deployed your smart contracts, you can now explore any of the following options:
-
-- analyze your contract with Check-checker by referring to [how to analyze with check-checker](how-to-check-contract.md)
-- run a local integration block chain by referring to [how to run local integration environment](how-to-run-integration-environment.md)
-- deploy clarinet with subnets by referring to [how to deploy with subnets](how-to-deploy-with-subnets.md)

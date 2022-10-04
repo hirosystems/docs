@@ -2,32 +2,6 @@
 title: Set up the local development environment
 ---
 
-[Clarinet](../introduction.md) is a local Clarity runtime packaged as a command-line application. It's designed to facilitate rapid smart contract development, testing, and deployment.
-
-Clarinet is a tool to build decentralized protocols and applications using Stacks Blockchain. These protocols and applications are called Smart contracts. On Stacks blockchain, these smart contracts are written in a programming language called [Clarity](https://clarity-lang.org/).
-
-Clarinet is designed to provide a productive way for blockchain and front-end developers to work on smart contracts.
-
-Clarinet consists of two components:
-
-- Clarity REPL
-- Testing harness.
-
-When these components are used together, they allow you to rapidly develop and test a Clarity smart contract, without the need to deploy the contract
-to a local mocknet or testnet.
-
-When developing a new smart contract using local Clarity REPL, you can exercise a contract without the need to wait for block times in a live blockchain.
-Clarinet allows you to instantly initialize wallets and populate them with tokens, which helps to interactively or programmatically test the behavior of the smart contract. Blocks are mined instantly, so you can control the number of blocks that are mined between testing transactions.
-
-The Clarinet tool is used for developing smart contracts using a larger development strategy that involves:
-
-- Building and testing the contract locally.
-- Deploying the final draft contract to a testnet environment.
-- Testing on a live blockchain.
-- Deploying the final contract to the mainnet.
-
-When developing smart contracts, you can also use the [Clarity Visual Studio Code plugin][].
-
 ## Developing a Clarity smart contract
 
 Once you have installed Clarinet, you can begin a new Clarinet project with the command:
@@ -196,3 +170,5 @@ available Clarity calls in Deno, review the [Deno Clarinet library][].
 - [Clarity language reference](https://docs.stacks.co/references/language-functions)
 - [Deno standard library - asserts](https://deno.land/std@0.90.0/testing/asserts.ts)
 - [Clarity visual studio code plugin](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp)
+
+

@@ -28,6 +28,3 @@ The `Clarinet.toml` file contains configuration files for the smart contracts in
 The `settings/Devnet.toml` file contains configuration for accounts in the Clarinet console, including the seed
 phrases and initial balances. Initial balances are in microstacks (uSTX).
 
-## What next?
-
-[How to add a new contract?](how-to-add-contract.md)
