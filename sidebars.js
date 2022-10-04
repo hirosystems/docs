@@ -31,7 +31,6 @@ module.exports = {
       items: [
         'clarinet/introduction',
         'clarinet/getting-started',
-        'clarinet/feature-guides',
         {
           type: 'category',
           label: 'How-To\'s',
@@ -44,10 +43,10 @@ module.exports = {
             'clarinet/how-to-guides/how-to-test-contract',
             'clarinet/how-to-guides/how-to-debug-contract',
             'clarinet/how-to-guides/how-to-deploy-contracts',
+            'clarinet/how-to-guides/how-to-use-extensions',
             'clarinet/how-to-guides/how-to-analyze-with-check-checker',
             'clarinet/how-to-guides/how-to-run-integration-environment',
-            'clarinet/how-to-guides/how-to-use-extensions',
-            'clarinet/how-to-guides/how-to-deploy-subnets',
+            'clarinet/how-to-guides/how-to-deploy-with-subnets',
           ],
         },
         'clarinet/troubleshooting',

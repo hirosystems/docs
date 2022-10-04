@@ -33,3 +33,7 @@ If there are no syntax errors, the output of the command will be a success messa
 
 Any syntactical errors in the Clarity code will be reported, but type-checking and other semantic checks are not performed.
 This is because Clarinet is only looking at this one contract, and does not have the full context to perform a complete check.
+
+## What next?
+
+[How to test contract?](how-to-test-contract.md).

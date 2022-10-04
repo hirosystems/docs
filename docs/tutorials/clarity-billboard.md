@@ -3,9 +3,7 @@ id: clarity-billboard
 title: Billboard
 ---
 
-This tutorial demonstrates how to transfer STX tokens and handle errors in Clarity by building a simple on-chain message
-store. Additionally, this tutorial provides a simple overview of testing a smart contract. This tutorial builds on
-concepts introduced in the [counter tutorial][], and uses [Clarinet][] to develop and test the smart contract.
+This tutorial demonstrates how to transfer STX tokens and handle errors in Clarity by building a simple on-chain message store. Additionally, this tutorial provides a simple overview of testing a smart contract. This tutorial builds on concepts introduced in the [counter tutorial](https://docs.hiro.so/tutorials/clarity-counter), and uses [Clarinet](https://www.hiro.so/clarinet) to develop and test the smart contract.
 
 In this tutorial you will:
 
@@ -26,7 +24,7 @@ smart contract.
 For developing the unit test, it's recommended that you have an IDE with Typescript support, such as
 [Visual Studio Code][].
 
-If you are using Visual Studio Code, you may want to install the [Clarity Visual Studio Code plugin][].
+If you are using Visual Studio Code, you may want to install the [Clarity Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp).
 
 ## Step 1: Set up the project
 
@@ -38,21 +36,15 @@ clarinet new billboard-clarity && cd billboard-clarity
 clarinet contract new billboard
 ```
 
-These commands create the necessary project structure and contracts for completing this tutorial. Remember that at
-any point during this tutorial you can use `clarinet check` to check the validity of your Clarity syntax.
+These commands create the necessary project structure and contracts for completing this tutorial. Remember that at any point during this tutorial you can use `clarinet check` to check the validity of your Clarity syntax.
 
 ## Step 2: Create message storage
 
-Open the `contracts/billboard.clar` file in a text editor or IDE. For this tutorial, you'll use the boilerplate comments
-to structure your contract for easy readability.
+Open the `contracts/billboard.clar` file in a text editor or IDE. For this tutorial, you'll use the boilerplate comments to structure your contract for easy readability.
 
-In this step, you'll add a variable to the contract that stores the billboard message, and define a getter function to
-read the value of the variable.
+In this step, you'll add a variable to the contract that stores the billboard message, and define a getter function to read the value of the variable.
 
-Under the `data maps and vars` comment, define the `billboard-message` variable. Remember that you must define the type of
-the variable, in this case `string-utf8` to support emojis and extended characters. You must also define the
-maximum length of the variable, for this tutorial use the value `500` to allow for a longer message. You must also
-define the initial value for the variable.
+Under the `data maps and vars` comment, define the `billboard-message` variable. Remember that you must define the type of the variable, in this case `string-utf8` to support emojis and extended characters. You must also define the maximum length of the variable, for this tutorial use the value `500` to allow for a longer message. You must also define the initial value for the variable.
 
 ```clarity
 ;; data vars
@@ -90,9 +82,7 @@ The contract is now capable of updating the `billboard-message`.
 In this step, you'll modify the `set-message` function to add a cost in STX tokens, that increments by a set amount each
 time the message updates.
 
-First, you should define a variable to track the price of updating the billboard. This value is in micro-STX. Under the
-`data maps and vars` heading, add a new variable `price` with type `uint` and an initial value of `u100`. The initial
-cost to update the billboard is 100 micro-STX or 0.0001 STX.
+First, you should define a variable to track the price of updating the billboard. This value is in micro-STX. Under the `data maps and vars` heading, add a new variable `price` with type `uint` and an initial value of `u100`. The initial cost to update the billboard is 100 micro-STX or 0.0001 STX.
 
 ```clarity
 ;; data vars
@@ -109,11 +99,7 @@ Clarity are public, and should be grouped with other public functions in the con
 )
 ```
 
-It's a best practice to define codes to a descriptive constant for Clarity smart contracts. This makes the code easier
-to understand for readers and makes errors reusable across contract methods. Under the `constants` comment, define a STX
-transfer error constant. Assign the value `u0` to the constant. There is no standard for error constants in Clarity,
-this value is used because it's the first error the contract defines. Error constants should be defined at the top of
-the contract, usually preceding data variables.
+It's a best practice to define codes to a descriptive constant for Clarity smart contracts. This makes the code easier to understand for readers and makes errors reusable across contract methods. Under the `constants` comment, define a STX transfer error constant. Assign the value `u0` to the constant. There is no standard for error constants in Clarity, this value is used because it's the first error the contract defines. Error constants should be defined at the top of the contract, usually preceding data variables.
 
 ```clarity
 ;; error consts
@@ -121,28 +107,15 @@ the contract, usually preceding data variables.
 ```
 
 Modify the `set-message` function to transfer the amount of STX represented by the current price of the billboard from
-the function caller to the contract wallet address, and then increment the new price. The function is then executed in four steps: transferring STX from the function caller to the contract, updating the `billboard-message` variable, incrementing the
-`price` variable, and returning the new price.
+the function caller to the contract wallet address, and then increment the new price. The function is then executed in four steps: transferring STX from the function caller to the contract, updating the `billboard-message` variable, incrementing the `price` variable, and returning the new price.
 
-The new `set-message` function uses [`let`][] to define local variables for the function. Two variables are declared,
-the `cur-price`, which represents the current price of updating the billboard, and the `new-price`, which represents the
-incremented price for updating the billboard.
+The new `set-message` function uses [`let`][] to define local variables for the function. Two variables are declared, the `cur-price`, which represents the current price of updating the billboard, and the `new-price`, which represents the incremented price for updating the billboard.
 
-The function then calls the [`stx-transfer?`][] function to transfer the current price of the contract in STX from the
-transaction sender to the contract wallet. This syntax can be confusing: the function call uses the `tx-sender`
-variable, which is the principal address of the caller of the function. The second argument to [`stx-transfer?`][] uses
-the [`as-contract`][] function to change the context's `tx-sender` value to the principal address that deployed the
-contract.
+The function then calls the [`stx-transfer?`][] function to transfer the current price of the contract in STX from the transaction sender to the contract wallet. This syntax can be confusing: the function call uses the `tx-sender` variable, which is the principal address of the caller of the function. The second argument to [`stx-transfer?`][] uses the [`as-contract`][] function to change the context's `tx-sender` value to the principal address that deployed the contract.
 
-The entire [`stx-transfer?`][] function call is wrapped in the [`unwrap!`][] function, to provide protection from
-the transfer failing. The [`unwrap!`][] function executes the first argument, in this case the [`stx-transfer?`][]
-function. If the execution returns `(ok ...)`, the [`unwrap!`][] function returns the inner value of the `ok`, otherwise
-the function returns the second argument and exits the current control-flow, in this case the `ERR_STX_TRANSFER` error
-code.
+The entire [`stx-transfer?`][] function call is wrapped in the [`unwrap!`][] function, to provide protection from the transfer failing. The [`unwrap!`][] function executes the first argument, in this case the [`stx-transfer?`][] function. If the execution returns `(ok ...)`, the [`unwrap!`][] function returns the inner value of the `ok`, otherwise the function returns the second argument and exits the current control-flow, in this case the `ERR_STX_TRANSFER` error code.
 
-If the token transfer is successful, the function sets the new `billboard-message` and updates the `price` variable to
-`new-price`. Finally, the function returns `(ok new-price)`. It's generally a good practice to have public functions
-return `ok` when successfully executed.
+If the token transfer is successful, the function sets the new `billboard-message` and updates the `price` variable to `new-price`. Finally, the function returns `(ok new-price)`. It's generally a good practice to have public functions return `ok` when successfully executed.
 
 :::note
 
@@ -212,32 +185,19 @@ Use `clarinet check` to ensure that your Clarity code is well-formed and error-f
 
 ## Step 5: Write a contract test
 
-At this point, the contract functions as intended, and can be deployed to the blockchain. However, it's good practice
-to write automated testing to ensure that the contract functions perform in the expected way. Testing can be valuable
-when adding complexity or new functions, as working tests can verify that any changes you make didn't fundamentally
-alter the way the functions behave.
+At this point, the contract functions as intended, and can be deployed to the blockchain. However, it's good practice to write automated testing to ensure that the contract functions perform in the expected way. Testing can be valuable when adding complexity or new functions, as working tests can verify that any changes you make didn't fundamentally alter the way the functions behave.
 
-Open the `tests/billboard_test.ts` file in your IDE. In this step, you will add a single automated test to exercise the
-`set-message` and `get-message` functions of the contract.
+Open the [`tests/billboard_test.ts`](https://github.com/hirosystems/stacks-billboard/blob/main/tests/billboard_test.ts) file in your IDE. In this step, you will add a single automated test to exercise the `set-message` and `get-message` functions of the contract.
 
-Using the Clarinet library, define variables to get a wallet address principal from the Clarinet configuration, and the
-balance of that address on the chain.
+Using the Clarinet library, define variables to get a wallet address principal from the Clarinet configuration, and the balance of that address on the chain.
 
-The functional part of the test is defined using the `chain.mineBlock()` function, which simulates the mining of a
-block. Within that function, the test makes four contract calls (`Tx.contractCall()`), two calls to `set-message` and
-two calls to `get-message`.
+The functional part of the test is defined using the `chain.mineBlock()` function, which simulates the mining of a block. Within that function, the test makes four contract calls (`Tx.contractCall()`), two calls to `set-message` and two calls to `get-message`.
 
-Once the simulated block is mined, the test can make assertions about the chain state. This is accomplished using the
-`assertEquals()` function and the `expect` function. In this case, the test asserts that the once the simulated block
-is mined, the block height is now equal to `2`, and that the number of receipts (contract calls) in the block are
-exactly `4`.
+Once the simulated block is mined, the test can make assertions about the chain state. This is accomplished using the `assertEquals()` function and the `expect` function. In this case, the test asserts that the once the simulated block is mined, the block height is now equal to `2`, and that the number of receipts (contract calls) in the block are exactly `4`.
 
-The test can then make assertions about the return values of the contract. The test checks that the result of the
-transaction calls to `get-message` match the string values that the calls to `set-message` contain. This covers the
-capability of both contract functions.
+The test can then make assertions about the return values of the contract. The test checks that the result of the transaction calls to `get-message` match the string values that the calls to `set-message` contain. This covers the capability of both contract functions.
 
-Finally, the test asserts that STX are transferred from the transaction caller wallet, covering the price updating and
-token transfer. The test verifies that the addresses of the wallets match the expected addresses, and that the amount
+Finally, the test asserts that STX are transferred from the transaction caller wallet, covering the price updating and token transfer. The test verifies that the addresses of the wallets match the expected addresses, and that the amount
 transferred is the expected amount.
 
 ```ts
@@ -280,9 +240,7 @@ Clarinet.test({
 
 Try running `clarinet test` to see the output of the unit test.
 
-You have now learned how to store and update data on chain with a variable, and how to transfer STX tokens from
-a contract caller to a new principal address. Additionally, you have learned how to write a unit test for a simple
-Clarity contract using Clarinet.
+You have now learned how to store and update data on chain with a variable, and how to transfer STX tokens from a contract caller to a new principal address. Additionally, you have learned how to write a unit test for a simple Clarity contract using Clarinet.
 
 [counter tutorial]: /tutorials/clarity-counter
 [clarinet]: /smart-contracts/clarinet

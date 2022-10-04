@@ -25,5 +25,4 @@ After generating the file, you can refer to the documentation for your shell to 
 
 ## What next?
 
-[Create a new project.](how-to-guides/how-to-create-new-project.md)
-
+[Set up your local development environment](how-to-guides/how-to-set-up-local-development-environment.md)

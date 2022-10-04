@@ -20,3 +20,7 @@ $ clarinet deployment apply -p <path-to-plan.yaml>
 
 which will handle the deployments of your contracts, according to the plan.
 
+
+## What next?
+
+[How to use extensions?](how-to-use-extensions.md)

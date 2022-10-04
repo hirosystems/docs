@@ -36,3 +36,7 @@ path = "contracts/my-contract.clar"
 
 You can add contracts to your project by adding the files manually, however, you must make sure to add the appropriate configuration
 to `Clarinet.toml` for Clarinet to recognize the contracts.
+
+## What next?
+
+[How to check contract?](how-to-check-contract.md)

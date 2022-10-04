@@ -29,3 +29,5 @@ The `settings/Devnet.toml` file contains configuration for accounts in the Clari
 phrases and initial balances. Initial balances are in microstacks (uSTX).
 
 ## What next?
+
+[How to add a new contract?](how-to-add-contract.md)

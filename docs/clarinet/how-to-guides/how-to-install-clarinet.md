@@ -102,3 +102,7 @@ If you have previously checked out the source, ensure you have the latest code (
 git pull
 git submodule update --recursive
 ```
+
+## What next?
+
+[How to create new project?](how-to-create-new-project.md)

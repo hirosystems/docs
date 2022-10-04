@@ -252,3 +252,8 @@ $ genhtml coverage.lcov
 $ open index.html
 
 For a step by step walkthrough, you can also watch [Executing Tests and Checking Code Coverage](https://www.youtube.com/watch?v=j2TZ560xEPA&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=10).
+
+
+## What next?
+
+[How to debug contract?](how-to-debug-contract.md)

@@ -1,5 +1,5 @@
 ---
-title: "Run a local integration Blockchain"
+title: "Run a local integration Environment"
 ---
 
 Once you have reached a point where your Clarity smart contract is functional, you may want to develop a web frontend against your contract. This can be challenging, as the contract must be deployed to a live blockchain to fully
@@ -62,8 +62,7 @@ The accounts are seeded with a configurable balance of STX. Each wallet is defin
 - `mnemonic`: the 24-word keyphrase used to generate the wallet address
 - `balance`: the balance in micro-STX of the account when the blockchain starts
 
-The private key (`secret_key`), Stacks address, and BTC address are provided as comments under each wallet. These are
-useful for configuring [stacking orders][] on DevNet.
+The private key (`secret_key`), Stacks address, and BTC address are provided as comments under each wallet. These are useful for configuring stacking orders on DevNet.
 
 ### Blockchain configuration
 
@@ -71,11 +70,10 @@ DevNet provides a sensible default configuration for the local blockchain, with 
 the latest development images for each of the Stacks and Bitcoin nodes. These parameters are defined under the
 `[devnet]` heading. You can customize these defaults by setting any of the following parameters.
 
-:::note
+> [!Note]
+> 
+> If any of the parameters are not supplied in the configuration file, the default value is used.
 
-If any of the parameters are not supplied in the configuration file, the default value is used.
-
-:::
 
 - `pox_stacking_orders`: defined by [stacking orders][] headings later in the file
 - `orchestrator_port`: the port number for the Bitcoin orchestrator service
@@ -111,20 +109,17 @@ If any of the parameters are not supplied in the configuration file, the default
 
 ### Stacking orders
 
-You can configure any of the wallets in the DevNet to participate in stacking to exercise the PoX contract
-within DevNet. This can be useful if you are developing a contract that interacts with the PoX contract and you need
-to set specific test conditions.
+You can configure any of the wallets in the DevNet to participate in stacking to exercise the PoX contract within DevNet. This can be useful if you are developing a contract that interacts with the PoX contract and you need to set specific test conditions.
 
-Each stacking order is defined under the heading `[[devnet.pox_stacking_orders]]`. This heading is repeated for as many
-stacking orders that are necessary for your configuration.
+Each [stacking order](../../smart-contracts/devnet.md#stacking-orders) is defined under the heading `[devnet.pox_stacking_orders]`. This heading is repeated for as many stacking orders that are necessary for your configuration.
 
-- `start_at_cycle`: the stacking cycle that the wallet should start particiating in. The wallet's stacking order
-  occurs at the block preceding the beginning of that cycle.
+- `start_at_cycle`: the stacking cycle that the wallet should start particiating in. The wallet's stacking order occurs at the block preceding the beginning of that cycle.
 - `duration`: the stacking duration for the stacking cycle
 - `wallet`: the alias of the wallet participating
 - `slots`: the number of stacking slots that the wallet will participate in
 - `btc_address`: the BTC address that stacking rewards should be sent to
 
-[clarinet installed]: /smart-contracts/clarinet#installing-clarinet
-[docker documentation]: https://docs.docker.com/get-docker/
-[stacking orders]: #stacking-orders
+For more information, you can refer to the following links:
+
+- [clarinet installed](/smart-contracts/clarinet#installing-clarinet)
+- [docker documentation](https://docs.docker.com/get-docker/)
