@@ -1,16 +1,17 @@
 ---
-id: hiro archiver
-title: Using Hiro Archiver
+title: Hiro Archiver
 ---
 
 # Hiro Archiver
 
 ## What is the Hiro Archiver
+
 The purpose of the Hiro Archiver is to enable developers and users of the Hiro ecosystem to download and use any of the 
 published datasets needed to run a Stacks environment. This is a public service Hiro offers as a benefit to the 
 Stacks community.  
 
 ## How to download
+
 Hiro pushes out new datasets nightly. The best way to download these datasets is by constructing a download link.
 
 The URL format is as follows:
@@ -39,6 +40,7 @@ replacing `latest` with the date formatted as `yyyymmdd`. Use the table below fo
 
 
 ### Constructing the download link
+
 To construct the download link, use the links shown below.
 
 ```[mainnet api .tsv from latest]
@@ -51,6 +53,7 @@ To construct the download link, use the links shown below.
 ## How to use
 
 ### Importing the API .tsv
+
 The api .tsv location is configurable by setting the `STACKS_EXPORT_EVENTS_FILE` env var of the application. Un-tar 
 the file after downloading.
 
@@ -59,6 +62,7 @@ tar -xvf mainnet-blockchain-api-4.0.3-latest.tar.gz -C /root/api/stacks-node-eve
 ```
 
 ### Importing the blockchain chainstate
+
 The location of the chainstate is configurable by modifying `working_dir` parameter under the `[node]` section of the 
 `Config.toml` file. Un-tar the file after downloading. An example is shown below.
 
@@ -71,6 +75,7 @@ tar -xvf mainnet-blockchain-2.05.0.2.2-stretch-latest.tar.gz -C /root/stacks-nod
 ```
 
 ### Importing the Postgresql database
+
 A working Postgresql database is required. You do not need to un-tar the file prior to import.
 ```shell
 runuser -l postgres -c 'pg_restore -v -C -d stacks_node_api stacks_node_postgres.tar.gz'
