@@ -76,7 +76,7 @@ module.exports = {
         'stacks.js/getting-started',
         {
           type: 'category',
-          label: 'Feature Guides',
+          label: 'Feature guides',
           items: [
             'stacks.js/feature-guides/authenticate-users-with-connect',
             'stacks.js/feature-guides/sign-messages',
@@ -86,7 +86,7 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'How-To Guides',
+          label: 'How-to guides',
           items: [
             'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',

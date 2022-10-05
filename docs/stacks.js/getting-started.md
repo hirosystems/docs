@@ -1,5 +1,5 @@
 ---
-title: Get Started
+title: Getting started
 ---
 
 Stacks.js starters provides a way to start a new JavaScript project using the most common frameworks.
