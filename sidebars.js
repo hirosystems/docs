@@ -74,18 +74,23 @@ module.exports = {
         
         'stacks.js/stacks.js-overview',
         'stacks.js/getting-started',
-        'stacks.js/feature-guides',
         {
           type: 'category',
-          label: 'How-To\'s',
+          label: 'Feature Guides',
           items: [
-            'stacks.js/how-to-guides/how-to-authenticate-users-with-connect',
+            'stacks.js/feature-guides/authenticate-users-with-connect',
+            'stacks.js/feature-guides/sign-messages',
+            'stacks.js/feature-guides/sign-transactions',
+            'stacks.js/feature-guides/store-data-securely',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-To Guides',
+          items: [
             'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',
             'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
-            'stacks.js/how-to-guides/how-to-sign-messages',
-            'stacks.js/how-to-guides/how-to-sign-transactions',
-            'stacks.js/how-to-guides/how-to-store-data-securely',
             'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
           ],
         },

@@ -2,15 +2,9 @@
 title: Stacks.js Overview
 ---
 
-import StacksjsStartersNote from '../includes/_stacks.js-starters-note.mdx';
+Stacks.js is an SDK with a collection of JavaScript libraries to interact with and transact on Stacks blockchain. On the Stacks blockchain, Stacks.js libraries are used to build, broadcast and sign transactions.
 
-<StacksjsStartersNote/>
-
-Apps built with the Stacks blockchain give users control over their digital identities, assets, and data.
-
-Unlike most cloud-based apps, they are "decentralized" since they don't depend on any centralized platform, server, or database to function. Rather, they use the Stacks blockchain to authenticate users and facilitate read and write requests without any single point of failure or trust.
-
-This page provides information on how to build such apps using [Stacks.js](https://github.com/blockstack/stacks.js) and other libraries that make integration of the Stacks blockchain easy for front-end developers.
+This page provides information on how to build applications using [Stacks.js](https://github.com/blockstack/stacks.js) and other libraries that make integration of the Stacks blockchain easy for front-end developers.
 
 Following are the three main integrations:
 
@@ -21,3 +15,7 @@ Following are the three main integrations:
 All three of these integrations can be used together to create powerful new user experiences that rival or exceed those of traditional apps—all while protecting your users' digital rights.
 
 While integration is possible for any type of app, the resources available here are for web developers experienced with JavaScript.
+
+import StacksjsStartersNote from '../includes/_stacks.js-starters-note.mdx';
+
+<StacksjsStartersNote/>
