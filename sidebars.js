@@ -100,7 +100,13 @@
                 'stacks-blockchain-api/how-to-articles/how-to-upgrade-stacks-blockchain-api',
               ]
               },
-        'stacks-blockchain-api/faq',
+              {
+                type: 'category',
+                label: 'FAQs',
+                items: [
+                  'stacks-blockchain-api/faq',
+                ]
+                },
         {
           type: 'category',
           label: 'Resources',
