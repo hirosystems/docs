@@ -39,4 +39,4 @@ If using @stacks/connect with vite, rollup, svelte, or vue a package `regenerato
 
 #### How to fix the BigInt or how to fix if BigInt doesn’t support X?
 BigInt’s work in all modern browsers, but some bundlers try to optimize them incorrectly. If you are targeting browsers that are too outdated, BigInts might fail.
-To solve this set your project `browserslist` to the following: https://github.com/hirosystems/stacks.js-starters/blob/efb93261b59494f4eb34a7cb5db5d82a84bd3b7c/templates/template-react/package.json#L34-L40
+To solve this set your project `browserslist` to the following [package.json](https://github.com/hirosystems/stacks.js-starters/blob/efb93261b59494f4eb34a7cb5db5d82a84bd3b7c/templates/template-react/package.json#L34-L40)

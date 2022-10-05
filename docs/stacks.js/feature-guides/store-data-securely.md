@@ -174,3 +174,4 @@ storage.deleteFile(fileName).then(() => {
 Apps can save and delete data only for the active session user.
 
 :::
+
