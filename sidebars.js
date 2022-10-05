@@ -91,7 +91,7 @@
             },
             {
               type: 'category',
-              label: 'How-To\'s',
+              label: 'How To Guides',
               items: [
                 'stacks-blockchain-api/how-to-articles/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-articles/how-to-handle-errors',
