@@ -4,10 +4,9 @@ Title: Microblocks
 
 # Microblocks support
 
-API support for microblocks is a work-in-progress. Please review the Microblocks API documentation carefully to
-ensure that you are up-to-date on the latest implementation details for microblocks.
+**Note** Please review the Microblocks API documentation carefully to ensure you are up-to-date on the latest implementation details for microblocks.
 
-The API allows querying the most recently streamed microblocks when you run the following command:
+The Stacks Blockchain API enables you to query the most recently streamed microblocks when you run the following command:
 
 ```bash
 # for mainnet, remove `.testnet`

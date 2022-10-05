@@ -45,7 +45,7 @@ import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
 
 ### TypeScript sample
 
-The following sample demonstrates how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
+The following sample shows how generated [TypeScript models](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client/src/generated/models) can be used for type-safety:
 
 ```ts
 import fetch from 'cross-fetch';
