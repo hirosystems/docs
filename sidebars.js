@@ -12,142 +12,96 @@
  module.exports = {
   docs: [
     'intro',
+    // {
+    //   type: 'category',
+    //   label: 'Explorer',
+    //   items: [
+    //     'explorer/introduction',
+    //     'explorer/getting-started',
+    //     'explorer/feature-guides',
+    //     'explorer/how-to-guides',
+    //     'explorer/troubleshooting',
+    //     'explorer/faq',
+    //     'explorer/developer-resources',
+    //   ],
+    // },
     {
       type: 'category',
-      label: 'Get Started',
+      label: 'Clarinet',
       items: [
-        'get-started/transactions',
-        'get-started/stacks-blockchain-api',
-        'get-started/gaia-storage',
-        'get-started/command-line-interface',
-        'get-started/running-api-node',
-        'get-started/running-mainnet-node',
-        'get-started/running-testnet-node',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Develop Smart Contracts',
-      items: ['smart-contracts/clarinet', 'smart-contracts/devnet'],
-    },
-    {
-      type: 'category',
-      label: 'Build Frontend Apps',
-      items: [
-        'build-apps/overview',
-        'build-apps/authentication',
-        'build-apps/transaction-signing',
-        'build-apps/message-signing',
-        'build-apps/data-storage',
-        'build-apps/integrate-stacking',
-        'build-apps/integrate-stacking-delegation',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Developer References',
-      items: [
-        'references',
-        'references/stacks-cli',
+        'clarinet/introduction',
+        'clarinet/getting-started',
         {
           type: 'category',
-          label: 'Clarity',
+          label: 'How-To\'s',
           items: [
-            {
-              type: 'link',
-              label: 'Language Overview',
-              href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/',
-            },
-            {
-              type: 'link',
-              label: 'Types',
-              href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types',
-            },
-            {
-              type: 'link',
-              label: 'Keywords',
-              href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-keywords',
-            },
-            {
-              type: 'link',
-              label: 'Functions',
-              href: 'https://docs.stacks.co/references/language-functions',
-            },
+            'clarinet/how-to-guides/how-to-set-up-local-development-environment',
+            'clarinet/how-to-guides/how-to-install-clarinet',
+            'clarinet/how-to-guides/how-to-create-new-project',
+            'clarinet/how-to-guides/how-to-add-contract',
+            'clarinet/how-to-guides/how-to-check-contract',
+            'clarinet/how-to-guides/how-to-test-contract',
+            'clarinet/how-to-guides/how-to-debug-contract',
+            'clarinet/how-to-guides/how-to-deploy-contracts',
+            'clarinet/how-to-guides/how-to-use-extensions',
+            'clarinet/how-to-guides/how-to-analyze-with-check-checker',
+            'clarinet/how-to-guides/how-to-run-integration-environment',
+            'clarinet/how-to-guides/how-to-deploy-with-subnets',
           ],
         },
-        {
-          type: 'category',
-          label: 'Stacks.js',
-          items: [
-            {
-              type: 'link',
-              label: 'blockchain-api-client',
-              href: 'https://hirosystems.github.io/stacks-blockchain-api/client/index.html',
-            },
-            {
-              type: 'link',
-              label: 'connect',
-              href: 'https://github.com/hirosystems/connect#readme',
-            },
-            {
-              type: 'link',
-              label: 'auth',
-              href: 'https://stacks.js.org/modules/auth.html',
-            },
-            {
-              type: 'link',
-              label: 'storage',
-              href: 'https://stacks.js.org/modules/storage.html',
-            },
-            {
-              type: 'link',
-              label: 'transactions',
-              href: 'https://stacks.js.org/modules/transactions.html',
-            },
-            {
-              type: 'link',
-              label: 'stacking',
-              href: 'https://stacks.js.org/modules/stacking.html',
-            },
-            {
-              type: 'link',
-              label: 'keychain',
-              href: 'https://stacks.js.org/modules/keychain.html',
-            },
-            {
-              type: 'link',
-              label: 'network',
-              href: 'https://stacks.js.org/modules/network.html',
-            },
-            {
-              type: 'link',
-              label: 'encryption',
-              href: 'https://stacks.js.org/modules/encryption.html',
-            },
-            {
-              type: 'link',
-              label: 'profile',
-              href: 'https://stacks.js.org/modules/profile.html',
-            },
-            {
-              type: 'link',
-              label: 'common',
-              href: 'https://stacks.js.org/modules/common.html',
-            },
-            {
-              type: 'link',
-              label: 'bns',
-              href: 'https://stacks.js.org/modules/bns.html',
-            },
-            {
-              type: 'link',
-              label: 'wallet-sdk',
-              href: 'https://stacks.js.org/modules/wallet_sdk.html',
-            },
-          ],
-        },
+        'clarinet/troubleshooting',
+        'clarinet/faq',
+        'clarinet/developer-resources',
       ],
     },
+   /* {
+      type: 'category',
+      label: 'Stacks blockchain API',
+      items: [
+        'stacks-blockchain-api/introduction',
+        'stacks-blockchain-api/getting-started',
+        'stacks-blockchain-api/feature-guides',
+        'stacks-blockchain-api/how-to-guides',
+        'stacks-blockchain-api/troubleshooting',
+        'stacks-blockchain-api/faq',
+        'stacks-blockchain-api/developer-resources',
+      ],
+    }, */
+    /*{
+      type: 'category',
+      label: 'Stacks.js',
+      items: [
+        {
+          type: 'category',
+          label: 'Introduction',
+          items: [
+            'stacks.js/how-to-guides/how-to-add-dependencies',
+          ],
+        },
+        'stacks.js/introduction',
+        'stacks.js/getting-started',
+        'stacks.js/feature-guides',
+        {
+          type: 'category',
+          label: 'How-To\'s',
+          items: [
+            'stacks.js/how-to-guides/how-to-add-dependencies',
+            'stacks.js/how-to-guides/how-to-authenticate-users-with-connect',
+            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
+            'stacks.js/how-to-guides/how-to-integrate-stacking',
+            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
+            'stacks.js/how-to-guides/how-to-setup-environment',
+            'stacks.js/how-to-guides/how-to-sign-messages',
+            'stacks.js/how-to-guides/how-to-sign-transactions',
+            'stacks.js/how-to-guides/how-to-store-data-securely',
+            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
+          ],
+        },
+        'stacks.js/troubleshooting',
+        'stacks.js/faq',
+        'stacks.js/developer-resources',
+      ],
+    }, */
   ],
   tutorials: [
     'tutorials',
