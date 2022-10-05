@@ -104,7 +104,7 @@
                 type: 'category',
                 label: 'FAQs',
                 items: [
-                  'stacks-blockchain-api/faqs/faq',
+                  'stacks-blockchain-api/faqs/faqs',
                 ]
                 },
         {
