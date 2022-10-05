@@ -2,4 +2,4 @@
 title: Videos
 ---
 
-* [Stacks.js starters ](https://www.youtube.com/watch?v=SGrbeoCSHs0).
+* [Stacks.js starters](https://www.youtube.com/watch?v=SGrbeoCSHs0).
