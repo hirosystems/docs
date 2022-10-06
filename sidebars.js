@@ -72,7 +72,7 @@ module.exports = {
       label: 'Stacks.js',
       items: [
         
-        'stacks.js/stacks.js-overview',
+        'stacks.js/overview',
         'stacks.js/getting-started',
         {
           type: 'category',
@@ -97,11 +97,12 @@ module.exports = {
         'stacks.js/faq',
         {
           type: 'category',
-          label: 'Stacks.js Resources',
+          label: 'Developer resources',
           items: [
-            'stacks.js/resources/contact-us',
-            'stacks.js/resources/blogs',
-            'stacks.js/resources/videos',
+            'stacks.js/developer-resources/contribution-guidelines',
+            'stacks.js/developer-resources/stacks.js-discord',
+            'stacks.js/developer-resources/blogs',
+            'stacks.js/developer-resources/videos',
           ],
         },
       ],

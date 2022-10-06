@@ -1,5 +1,5 @@
 ---
-title: Stacks.js Overview
+title: Overview
 ---
 
 Stacks.js is an SDK with a collection of JavaScript libraries to interact with and transact on Stacks blockchain. On the Stacks blockchain, Stacks.js libraries are used to build, broadcast and sign transactions.
