@@ -58,61 +58,44 @@
       type: 'category',
       label: 'Stacks blockchain API',
       items: [
-        {
-        type: 'category',
-        label: 'Introduction',
-        items: [
-          'stacks-blockchain-api/introduction/overview',
-          'stacks-blockchain-api/introduction/architecture',
-        ]
-        },
+        'stacks-blockchain-api/overview',
+        'stacks-blockchain-api/getting-started',
         {
           type: 'category',
-          label: 'Getting Started',
+          label: 'Feature guides',
           items: [
-            'stacks-blockchain-api/getting-started/getting-started-with-stacks-blockchain-api',
+            'stacks-blockchain-api/feature-guides/microblocks',
+            'stacks-blockchain-api/feature-guides/nonce-handling',
+            'stacks-blockchain-api/feature-guides/openapi-spec',
+            'stacks-blockchain-api/feature-guides/pagination',
+            'stacks-blockchain-api/feature-guides/rate-limiting',
+            'stacks-blockchain-api/feature-guides/requesting-proofs',
+            'stacks-blockchain-api/feature-guides/rosetta-support',
+            'stacks-blockchain-api/feature-guides/search-endpoint',
+            'stacks-blockchain-api/feature-guides/use-clarity-values',
+            'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
           ]
           },
-          {
-            type: 'category',
-            label: 'Feature Guides',
-            items: [
-              'stacks-blockchain-api/feature-guides/microblocks',
-              'stacks-blockchain-api/feature-guides/nonce-handling',
-              'stacks-blockchain-api/feature-guides/openapi-spec',
-              'stacks-blockchain-api/feature-guides/pagination',
-              'stacks-blockchain-api/feature-guides/rate-limiting',
-              'stacks-blockchain-api/feature-guides/requesting-proofs',
-              'stacks-blockchain-api/feature-guides/rosetta-support',
-              'stacks-blockchain-api/feature-guides/search-endpoint',
-              'stacks-blockchain-api/feature-guides/use-clarity-values',
-              'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
-            ]
-            },
             {
               type: 'category',
-              label: 'How To Guides',
+              label: 'How-to guides',
               items: [
-                'stacks-blockchain-api/how-to-articles/how-to-deploy-service-dependencies',
-                'stacks-blockchain-api/how-to-articles/how-to-handle-errors',
-                'stacks-blockchain-api/how-to-articles/how-to-install-stacks-blockchain-api',
-                'stacks-blockchain-api/how-to-articles/how-to-run-stacks-blockchain-api-docker',
-                'stacks-blockchain-api/how-to-articles/how-to-upgrade-stacks-blockchain-api',
+                'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
+                'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
+                'stacks-blockchain-api/how-to-guides/how-to-install-stacks-blockchain-api',
+                'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
+                'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
               ]
               },
-              {
-                type: 'category',
-                label: 'FAQs',
-                items: [
-                  'stacks-blockchain-api/faqs/faqs',
-                ]
-                },
+              'stacks-blockchain-api/faqs',
         {
           type: 'category',
-          label: 'Resources',
+          label: 'Developer resources',
           items: [
-            'stacks-blockchain-api/resources/blogs',
-            'stacks-blockchain-api/resources/videos',
+            'stacks-blockchain-api/developer-resources/contribution-guidelines',
+            'stacks-blockchain-api/developer-resources/stacks-blockchain-api-discord',
+            'stacks-blockchain-api/developer-resources/blogs',
+            'stacks-blockchain-api/developer-resources/videos',
           ]
           },
         

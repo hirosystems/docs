@@ -2,8 +2,6 @@
 Title: Microblocks 
 ---
 
-# Microblocks support
-
 **Note** Please review the Microblocks API documentation carefully to ensure you are up-to-date on the latest implementation details for microblocks.
 
 The Stacks Blockchain API enables you to query the most recently streamed microblocks when you run the following command:

@@ -2,9 +2,6 @@
 Title: Install Stacks Blockchain API
 ---
 
-
-# Install Stacks Blockchain API
-
 A self-contained Docker image is provided, which will start a Stacks 2.05 blockchain and API instance.
 
 # Installing Docker

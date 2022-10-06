@@ -2,8 +2,6 @@
 Title: Error Handling
 ---
 
-# Error handling
-
 The API can respond with two different error types:
 
 - For URLs that do not match any defined endpoint, an HTTP 404 response is returned. The body of the response lists the URL in reference (as a string)
