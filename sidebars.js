@@ -169,9 +169,9 @@ module.exports = {
           },
             {
               type: 'category',
-              label: 'How-To\'s',
+              label: 'How-T0 Guides',
               items: [
-                'stacks-explorer/how-to-guide/how-to-run-build-explorer',
+                'stacks-explorer/how-to-guides/how-to-run-build-explorer',
               ]
               },
       ],
