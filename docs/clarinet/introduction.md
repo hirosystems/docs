@@ -1,6 +1,6 @@
 ---
 # The default id is the same as the one being defined below. so not needed
-title: Clarinet Overview
+title: Overview
 ---
 
 ## What is Clarinet?

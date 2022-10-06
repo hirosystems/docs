@@ -1,8 +1,6 @@
 ---
-title: Developer Resources
+title: Contribution guidelines
 ---
-
-## Contributing to Clarinet
 
 We welcome contributions to Clarinet! The following sections provide information on how to contribute to our product.
 
@@ -56,11 +54,3 @@ $ 1 file changed, 50 insertions(+)
       done
       ```
 1. Submit a pull request against the `develop` branch for review.
-
-
-For more information, refer to the following links.
-
-- [Meet four new features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet)
-- [Clarinet Roadmap](https://www.hiro.so/blog/clarinet-roadmap-looking-to-the-future)
-- [New safety checks in Clarinet](https://www.hiro.so/blog/new-safety-checks-in-clarinet)
-- [Taking clarity development to the next level](https://www.hiro.so/blog/clarinet-taking-clarity-development-next-level)

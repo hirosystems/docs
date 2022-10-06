@@ -33,7 +33,15 @@
         'clarinet/getting-started',
         {
           type: 'category',
-          label: 'How-To\'s',
+          label: 'Feature guides',
+          items: [
+            'clarinet/feature-guides/analyze-with-check-checker',
+            'clarinet/feature-guides/use-extensions',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to guides',
           items: [
             'clarinet/how-to-guides/how-to-set-up-local-development-environment',
             'clarinet/how-to-guides/how-to-install-clarinet',
@@ -43,15 +51,22 @@
             'clarinet/how-to-guides/how-to-test-contract',
             'clarinet/how-to-guides/how-to-debug-contract',
             'clarinet/how-to-guides/how-to-deploy-contracts',
-            'clarinet/how-to-guides/how-to-use-extensions',
-            'clarinet/how-to-guides/how-to-analyze-with-check-checker',
             'clarinet/how-to-guides/how-to-run-integration-environment',
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
           ],
         },
         'clarinet/troubleshooting',
         'clarinet/faq',
-        'clarinet/developer-resources',
+        {
+          type: 'category',
+          label: 'Developer resources',
+          items: [
+            'clarinet/developer-resources/contribution-guidelines',
+            'clarinet/developer-resources/clarinet-discord',
+            'clarinet/developer-resources/blogs',
+            'clarinet/developer-resources/videos',
+          ],
+        },
       ],
     },
    /* {

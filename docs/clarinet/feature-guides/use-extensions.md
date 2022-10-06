@@ -1,5 +1,5 @@
 ---
-title: How to use Extensions
+title: Use Extensions
 ---
 
 Clarinet can be easily extended by community members. Open source contributions to clarinet are welcome.
