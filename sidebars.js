@@ -159,7 +159,7 @@ module.exports = {
             type: 'category',
             label: 'Feature guides',
             items: [
-              'stacks-explorer/how-to-guides/how-to-run-build-explorer',
+              'stacks-explorer/feature-guides/feature-guide',
             ]
             },
             {
