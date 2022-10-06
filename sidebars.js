@@ -153,27 +153,34 @@ module.exports = {
       type: 'category',
       label: 'Stacks Explorer',
       items: [
-        {
-        type: 'category',
-        label: 'Introduction',
-        items: [
-          'stacks-explorer/introduction/overview',
-        ]
-        },
-        {
-          type: 'category',
-          label: 'Getting Started',
-          items: [
-            'stacks-explorer/getting-started/getting-started-with-stacks-explorer',
-          ]
-          },
+        'stacks-explorer/overview',
+        'stacks-explorer/getting-started',
+          {
+            type: 'category',
+            label: 'Feature guides',
+            items: [
+              'stacks-explorer/how-to-guides/how-to-run-build-explorer',
+            ]
+            },
             {
               type: 'category',
-              label: 'How-To Guides',
+              label: 'How-to guides',
               items: [
                 'stacks-explorer/how-to-guides/how-to-run-build-explorer',
               ]
               },
+              
+              'stacks-explorer/faqs',
+                {
+                  type: 'category',
+                  label: 'Developer resources',
+                  items: [
+                    'stacks-explorer/developer-resources/contributor-guidelines',
+                    'stacks-explorer/developer-resources/stacks-explorer-discord',
+                    'stacks-explorer/developer-resources/blogs',
+                    'stacks-explorer/developer-resources/videos',
+                  ]
+                  },
       ],
     }, 
 

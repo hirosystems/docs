@@ -1,8 +1,8 @@
 ---
-Title: Stacks Explorer Overview
+Title: Overview
 ---
 
-# Stacks Explorer Overview
+# Overview
 
 The Stacks Explorer frontend user interface is built with [React](https://reactjs.org/), [next.js](https://github.com/vercel/next.js) and [@stacks/ui](https://github.com/hirosystems/ui).
 
