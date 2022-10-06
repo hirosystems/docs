@@ -282,45 +282,39 @@ module.exports = {
     }, 
     {
       type: 'category',
-      label: 'Stacks.js',
+      label: 'Stacks Explorer',
       items: [
-        
-        'stacks.js/overview',
-        'stacks.js/getting-started',
-        {
-          type: 'category',
-          label: 'Feature guides',
-          items: [
-            'stacks.js/feature-guides/authenticate-users-with-connect',
-            'stacks.js/feature-guides/sign-messages',
-            'stacks.js/feature-guides/sign-transactions',
-            'stacks.js/feature-guides/store-data-securely',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'How-to guides',
-          items: [
-            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
-            'stacks.js/how-to-guides/how-to-integrate-stacking',
-            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
-            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
-          ],
-        },
-        'stacks.js/faq',
-        {
-          type: 'category',
-          label: 'Developer resources',
-          items: [
-            'stacks.js/developer-resources/contribution-guidelines',
-            'stacks.js/developer-resources/stacks.js-discord',
-            'stacks.js/developer-resources/blogs',
-            'stacks.js/developer-resources/videos',
-          ],
-        },
+        'stacks-explorer/overview',
+        'stacks-explorer/getting-started',
+          {
+            type: 'category',
+            label: 'Feature guides',
+            items: [
+              'stacks-explorer/feature-guides/feature-guide',
+            ]
+            },
+            {
+              type: 'category',
+              label: 'How-to guides',
+              items: [
+                'stacks-explorer/how-to-guides/how-to-run-build-explorer',
+              ]
+              },
+              
+              'stacks-explorer/faqs',
+                {
+                  type: 'category',
+                  label: 'Developer resources',
+                  items: [
+                    'stacks-explorer/developer-resources/contributor-guidelines',
+                    'stacks-explorer/developer-resources/stacks-explorer-discord',
+                    'stacks-explorer/developer-resources/blogs',
+                    'stacks-explorer/developer-resources/videos',
+                  ]
+                  },
       ],
-    },
-  
+    }, 
+
   ],
   tutorials: [
     'tutorials',
