@@ -167,6 +167,7 @@ module.exports = {
             'stacks-explorer/getting-started/getting-started-with-stacks-explorer',
           ]
           },
+          'stacks-explorer/feature-guides',
             {
               type: 'category',
               label: 'How-T0 Guides',
@@ -174,6 +175,9 @@ module.exports = {
                 'stacks-explorer/how-to-guides/how-to-run-build-explorer',
               ]
               },
+        'stacks-explorer/faqs',
+        'stacks-explorer/troubleshooting',
+        'stacks-explorer/developer-resources',
       ],
     }, 
 
