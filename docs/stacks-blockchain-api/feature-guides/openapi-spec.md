@@ -1,8 +1,8 @@
 ---
-Title: Open API Specification
+Title: Open API Spec
 ---
 
-# OpenAPI spec
+# OpenAPI Spec
 
 The Stacks API was designed using the [OpenAPI specification](https://swagger.io/specification/), making it compatible with a variety of developer tools.
 

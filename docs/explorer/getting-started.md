@@ -1,8 +1,8 @@
 ---
-Title: Getting started
+Title: Getting Started
 ---
 
-# Getting started
+# Getting Started
 
 The Explorer is built with [React](https://reactjs.org/), [next.js](https://github.com/vercel/next.js) and [@stacks/ui](https://github.com/hirosystems/ui).
 
