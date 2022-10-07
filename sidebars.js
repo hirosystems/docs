@@ -49,7 +49,7 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Contribution guidelines',
+              label: 'Contribution Guidelines',
               href: 'https://github.com/hirosystems/clarinet#contributing',
             },
             
@@ -106,7 +106,7 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Contribution guidelines',
+              label: 'Contribution Guidelines',
               href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
             },
             
@@ -118,7 +118,7 @@ module.exports = {
             {
               type: 'link',
               label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=Explorer',
+              href: 'https://www.hiro.so/search?query=Stacks.js',
             },
             {
               type: 'link',
@@ -169,7 +169,7 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Contribution guidelines',
+              label: 'Contribution Guidelines',
               href: 'https://github.com/hirosystems/stacks-blockchain-api',
             },
             {
@@ -185,7 +185,7 @@ module.exports = {
             {
               type: 'link',
               label: 'Videos',
-              href: 'https://www.youtube.com/c/HiroSystems/search?query=Blockchain%20API',
+              href: 'https://www.youtube.com/c/HiroSystems/search?query=API',
             },
             
           ]
@@ -212,7 +212,7 @@ module.exports = {
                   items: [
                     {
                       type: 'link',
-                      label: 'Contribution guidelines',
+                      label: 'Contribution Guidelines',
                       href: 'https://github.com/hirosystems/explorer',
                     },
                     {
