@@ -3,7 +3,7 @@
 title: Getting Started
 ---
 
-Before creating your project, make sure to install and build Clarinet. 
+Follow this guide to install and build Clarinet. 
 
 ## Install and Build Clarinet
 
