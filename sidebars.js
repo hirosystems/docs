@@ -70,7 +70,7 @@ module.exports = {
             },
           ],
         },
-        'references/hiro-archiver',
+        
       ],
     },
     {
@@ -111,7 +111,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Stacks blockchain API',
+      label: 'Stacks Blockchain API',
       items: [
         'stacks-blockchain-api/overview',
         'stacks-blockchain-api/getting-started',
@@ -230,8 +230,14 @@ module.exports = {
         },
       ],
     },
-     
-     
+    {
+      type: 'category',
+      label: 'Appendix',
+      items: [
+        'references/hiro-archiver',
+      ],
+    },
+    
 
   ],
   tutorials: [
