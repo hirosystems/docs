@@ -2,7 +2,7 @@
 Title: Requesting proofs
 ---
 
-# Requesting proofs
+# Requesting Proofs
 
 Several endpoints will request the [MARF Merkel Proof](https://github.com/stacksgov/sips/blob/main/sips/sip-004/sip-004-materialized-view.md#marf-merkle-proofs) by default.
 

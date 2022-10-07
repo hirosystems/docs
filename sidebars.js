@@ -157,7 +157,7 @@ module.exports = {
         'clarinet/getting-started',
         {
           type: 'category',
-          label: 'Feature guides',
+          label: 'Feature Guides',
           items: [
             'clarinet/feature-guides/analyze-with-check-checker',
             'clarinet/feature-guides/use-extensions',
@@ -165,7 +165,7 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'How-to guides',
+          label: 'How-to Guides',
           items: [
             'clarinet/how-to-guides/how-to-set-up-local-development-environment',
             'clarinet/how-to-guides/how-to-install-clarinet',
@@ -179,16 +179,33 @@ module.exports = {
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
           ],
         },
-        'clarinet/troubleshooting',
+        //'clarinet/troubleshooting',
         'clarinet/faq',
         {
           type: 'category',
-          label: 'Developer resources',
+          label: 'Developer Resources',
           items: [
-            'clarinet/developer-resources/contribution-guidelines',
-            'clarinet/developer-resources/clarinet-discord',
-            'clarinet/developer-resources/blogs',
-            'clarinet/developer-resources/videos',
+            {
+              type: 'link',
+              label: 'Contribution - guidelines',
+              href: 'https://github.com/hirosystems/clarinet#contributing',
+            },
+            
+            {
+              type: 'link',
+              label: 'Clarinet - Discord',
+              href: 'https://discord.com/channels/621759717756370964/839633619261456444',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Clarinet',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/c/HiroSystems/search?query=Clarinet',
+            },
           ],
         },
       ],
@@ -202,7 +219,7 @@ module.exports = {
         'stacks.js/getting-started',
         {
           type: 'category',
-          label: 'Feature guides',
+          label: 'Feature Guides',
           items: [
             'stacks.js/feature-guides/authenticate-users-with-connect',
             'stacks.js/feature-guides/sign-messages',
@@ -212,7 +229,7 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'How-to guides',
+          label: 'How-to Guides',
           items: [
             'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',
@@ -223,12 +240,29 @@ module.exports = {
         'stacks.js/faq',
         {
           type: 'category',
-          label: 'Developer resources',
+          label: 'Developer Resources',
           items: [
-            'stacks.js/developer-resources/contribution-guidelines',
-            'stacks.js/developer-resources/stacks.js-discord',
-            'stacks.js/developer-resources/blogs',
-            'stacks.js/developer-resources/videos',
+            {
+              type: 'link',
+              label: 'Contribution - guidelines',
+              href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
+            },
+            
+            {
+              type: 'link',
+              label: 'Stacks.js - Discord',
+              href: 'https://discord.com/channels/621759717756370964/1022879438515486791',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Explorer',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/watch?v=SGrbeoCSHs0',
+            },
           ],
         },
       ],
@@ -241,7 +275,7 @@ module.exports = {
         'stacks-blockchain-api/getting-started',
         {
           type: 'category',
-          label: 'Feature guides',
+          label: 'Feature Guides',
           items: [
             'stacks-blockchain-api/feature-guides/microblocks',
             'stacks-blockchain-api/feature-guides/nonce-handling',
@@ -257,7 +291,7 @@ module.exports = {
           },
             {
               type: 'category',
-              label: 'How-to guides',
+              label: 'How-to Guides',
               items: [
                 'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
@@ -269,12 +303,24 @@ module.exports = {
               'stacks-blockchain-api/faqs',
         {
           type: 'category',
-          label: 'Developer resources',
+          label: 'Developer Resources',
           items: [
-            'stacks-blockchain-api/developer-resources/contribution-guidelines',
-            'stacks-blockchain-api/developer-resources/stacks-blockchain-api-discord',
-            'stacks-blockchain-api/developer-resources/blogs',
-            'stacks-blockchain-api/developer-resources/videos',
+            {
+              type: 'link',
+              label: 'Stacks-Blockchain-API - Discord',
+              href: 'https://discord.com/channels/621759717756370964/909867922971820102',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=blochain-api',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/c/HiroSystems/search?query=Blockchain%20API',
+            },
+            
           ]
           },
         
@@ -286,30 +332,27 @@ module.exports = {
       items: [
         'stacks-explorer/overview',
         'stacks-explorer/getting-started',
-          {
-            type: 'category',
-            label: 'Feature guides',
-            items: [
-              'stacks-explorer/feature-guides/feature-guide',
-            ]
-            },
             {
               type: 'category',
-              label: 'How-to guides',
+              label: 'How-to Guides',
               items: [
                 'stacks-explorer/how-to-guides/how-to-run-build-explorer',
               ]
               },
-              
-              'stacks-explorer/faqs',
                 {
                   type: 'category',
-                  label: 'Developer resources',
+                  label: 'Developer Resources',
                   items: [
-                    'stacks-explorer/developer-resources/contributor-guidelines',
-                    'stacks-explorer/developer-resources/stacks-explorer-discord',
-                    'stacks-explorer/developer-resources/blogs',
-                    'stacks-explorer/developer-resources/videos',
+                    {
+                      type: 'link',
+                      label: 'Stacks-Explorer - Discord',
+                      href: 'https://discord.com/channels/621759717756370964/911531946738339900',
+                    },
+                    {
+                      type: 'link',
+                      label: 'Blogs',
+                      href: 'https://www.hiro.so/search?query=Explorer',
+                    },
                   ]
                   },
       ],

@@ -1,8 +1,8 @@
 ---
-Title: Getting started
+Title: Getting Started
 ---
 
-# Getting started
+# Getting Started
 
 This page describes how you can start the API server and service dependencies.
 
@@ -10,7 +10,7 @@ This page describes how you can start the API server and service dependencies.
 
 Before you can start the API server and its dependencies, you must first ensure that Docker is already installed on your machine. If you do not aready have Docker installed, please install Docker.
 
-# Starting the API Server
+## Starting the API Server
 
 To start the API server:
 

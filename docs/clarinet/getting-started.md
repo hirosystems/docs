@@ -1,8 +1,7 @@
 ---
 # The default id is the same as the one being defined below. so not needed
-title: Getting started
+title: Getting Started
 ---
-
 
 Before creating your project, make sure to install and build Clarinet by referring to [how-to install and build Clarinet](how-to-guides/how-to-install-clarinet.md).
 

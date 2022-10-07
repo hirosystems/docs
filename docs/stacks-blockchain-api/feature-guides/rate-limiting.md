@@ -2,7 +2,7 @@
 Title: Rate Limiting
 ---
 
-# Rate limiting
+# Rate Limiting
 
 Rate limiting will be applied to all API endpoints and [faucet requests](https://docs.hiro.so/api#tag/Faucets), based on the requested token addresses.
 

@@ -1,5 +1,0 @@
----
-Title: Blogs
----
-
-# Blogs

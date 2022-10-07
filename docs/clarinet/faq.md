@@ -1,22 +1,21 @@
 ---
 title: FAQ's
 ---
-
-### Question - 1: 
+**Question**: 
 
 How to use Command line tools?
 
-### Answer: 
+**Answer**: 
 
 People unfamiliar with the command line tools will install the clarity extension in VSCode and then type `clarity new <project name>` in the editor window and not know what to do next. Maybe we could add some clarifications about how to use command line tools. 
 
 Also, adding more functionality to the extension will be helpful so that eventually, they don’t need to use the command line if they don’t want to. https://discord.com/channels/621759717756370964/625538774230892545/999051570635345970.
 
-### Question - 2: 
+**Question**: 
 
 After installing Clarinet with the installer, how can I run Clarinet? 
 
-### Answer:
+**Answer**:
 
 - First, restart your shell/VSCode to ensure they have the updated Path (the installer should have added the directory to the path).
 - If that does not work, manually add the directory to your Path by following the steps below:
@@ -36,10 +35,10 @@ Below are some screenshots to help with this:
 
 ![FAQ - 2](images/clarinet-faq-4.png)
 
-### Question - 3: 
+**Question**: 
 
 The command `clarinet integrate` is not working. How can I fix it?
 
-### Answer: 
+**Answer**: 
 
 Check for rootless docker installation.
