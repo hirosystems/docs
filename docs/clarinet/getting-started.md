@@ -20,7 +20,3 @@ clarinet completions (bash|elvish|fish|powershell|zsh)
 
 After generating the file, you can refer to the documentation for your shell to determine where this file should be moved to, and what other steps may be necessary to enable tab-completion for `clarinet`.
 
-
-## What next?
-
-[Set up your local development environment](how-to-guides/how-to-set-up-local-development-environment.md)

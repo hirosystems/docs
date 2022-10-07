@@ -36,6 +36,3 @@ When developing smart contracts, you can also use the [Clarity Visual Studio Cod
 
 - Clarinet allows you to instantly initialize wallets and populate them with tokens, which helps to interactively or programmatically test the behavior of the smart contract. Blocks are mined instantly, so you can control the number of blocks that are mined between testing transactions.
 
-## What next?
-
-[Get started with Clarinet.](getting-started.md)
