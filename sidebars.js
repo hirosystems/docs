@@ -12,143 +12,6 @@
 module.exports = {
   docs: [
     'intro',
-    /*{
-      type: 'category',
-      label: 'Get Started',
-      items: [
-        'get-started/transactions',
-        'get-started/stacks-blockchain-api',
-        'get-started/gaia-storage',
-        'get-started/command-line-interface',
-        'get-started/running-api-node',
-        'get-started/running-mainnet-node',
-        'get-started/running-testnet-node',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Develop Smart Contracts',
-      items: ['smart-contracts/clarinet', 'smart-contracts/devnet'],
-    },
-    {
-      type: 'category',
-      label: 'Build Frontend Apps',
-      items: [
-        'build-apps/overview',
-        'build-apps/authentication',
-        'build-apps/transaction-signing',
-        'build-apps/message-signing',
-        'build-apps/data-storage',
-        'build-apps/integrate-stacking',
-        'build-apps/integrate-stacking-delegation',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Developer References',
-      items: [
-        'references',
-        'references/stacks-cli',
-        {
-          type: 'category',
-          label: 'Clarity',
-          items: [
-            {
-              type: 'link',
-              label: 'Language Overview',
-              href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/',
-            },
-            {
-              type: 'link',
-              label: 'Types',
-              href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types',
-            },
-            {
-              type: 'link',
-              label: 'Keywords',
-              href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-keywords',
-            },
-            {
-              type: 'link',
-              label: 'Functions',
-              href: 'https://docs.stacks.co/references/language-functions',
-            },
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Stacks.js',
-          items: [
-            {
-              type: 'link',
-              label: 'blockchain-api-client',
-              href: 'https://hirosystems.github.io/stacks-blockchain-api/client/index.html',
-            },
-            {
-              type: 'link',
-              label: 'connect',
-              href: 'https://github.com/hirosystems/connect#readme',
-            },
-            {
-              type: 'link',
-              label: 'auth',
-              href: 'https://stacks.js.org/modules/auth.html',
-            },
-            {
-              type: 'link',
-              label: 'storage',
-              href: 'https://stacks.js.org/modules/storage.html',
-            },
-            {
-              type: 'link',
-              label: 'transactions',
-              href: 'https://stacks.js.org/modules/transactions.html',
-            },
-            {
-              type: 'link',
-              label: 'stacking',
-              href: 'https://stacks.js.org/modules/stacking.html',
-            },
-            {
-              type: 'link',
-              label: 'keychain',
-              href: 'https://stacks.js.org/modules/keychain.html',
-            },
-            {
-              type: 'link',
-              label: 'network',
-              href: 'https://stacks.js.org/modules/network.html',
-            },
-            {
-              type: 'link',
-              label: 'encryption',
-              href: 'https://stacks.js.org/modules/encryption.html',
-            },
-            {
-              type: 'link',
-              label: 'profile',
-              href: 'https://stacks.js.org/modules/profile.html',
-            },
-            {
-              type: 'link',
-              label: 'common',
-              href: 'https://stacks.js.org/modules/common.html',
-            },
-            {
-              type: 'link',
-              label: 'bns',
-              href: 'https://stacks.js.org/modules/bns.html',
-            },
-            {
-              type: 'link',
-              label: 'wallet-sdk',
-              href: 'https://stacks.js.org/modules/wallet_sdk.html',
-            },
-          ],
-        },
-      ],
-    }, */
-
     {
       type: 'category',
       label: 'Clarinet',
@@ -160,7 +23,7 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'clarinet/feature-guides/analyze-with-check-checker',
-            'clarinet/feature-guides/use-extensions',
+            'clarinet/feature-guides/extend-clarinet',
           ],
         },
         {
@@ -168,7 +31,6 @@ module.exports = {
           label: 'How-to Guides',
           items: [
             'clarinet/how-to-guides/how-to-set-up-local-development-environment',
-            'clarinet/how-to-guides/how-to-install-clarinet',
             'clarinet/how-to-guides/how-to-create-new-project',
             'clarinet/how-to-guides/how-to-add-contract',
             'clarinet/how-to-guides/how-to-check-contract',
@@ -187,7 +49,7 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Contribution - guidelines',
+              label: 'Contribution guidelines',
               href: 'https://github.com/hirosystems/clarinet#contributing',
             },
             
@@ -244,7 +106,7 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Contribution - guidelines',
+              label: 'Contribution guidelines',
               href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
             },
             
@@ -293,10 +155,10 @@ module.exports = {
               type: 'category',
               label: 'How-to Guides',
               items: [
-                'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
                 'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
                 'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
+                'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
               ]
               },
@@ -307,7 +169,7 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Contribution - guidelines',
+              label: 'Contribution guidelines',
               href: 'https://github.com/hirosystems/stacks-blockchain-api',
             },
             {
@@ -318,7 +180,7 @@ module.exports = {
             {
               type: 'link',
               label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=blochain-api',
+              href: 'https://www.hiro.so/search?query=blockchain-api',
             },
             {
               type: 'link',
@@ -333,15 +195,15 @@ module.exports = {
     }, 
     {
       type: 'category',
-      label: 'Stacks Explorer',
+      label: 'Explorer',
       items: [
-        'stacks-explorer/overview',
-        'stacks-explorer/getting-started',
+        'explorer/overview',
+        'explorer/getting-started',
             {
               type: 'category',
               label: 'How-to Guides',
               items: [
-                'stacks-explorer/how-to-guides/how-to-run-build-explorer',
+                'explorer/how-to-guides/build-explorer',
               ]
               },
                 {
@@ -350,12 +212,12 @@ module.exports = {
                   items: [
                     {
                       type: 'link',
-                      label: 'Contribution - guidelines',
+                      label: 'Contribution guidelines',
                       href: 'https://github.com/hirosystems/explorer',
                     },
                     {
                       type: 'link',
-                      label: 'Stacks-Explorer - Discord',
+                      label: 'Explorer - Discord',
                       href: 'https://discord.com/channels/621759717756370964/911531946738339900',
                     },
                     {

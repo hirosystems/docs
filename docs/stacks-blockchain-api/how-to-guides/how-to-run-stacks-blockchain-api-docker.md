@@ -175,7 +175,9 @@ CONTAINER ID   IMAGE                              COMMAND                  CREAT
 a86a26da6c5a   blockstack/stacks-blockchain-api   "docker-entrypoint.s…"   1 minute ago   Up 1 minute   0.0.0.0:3700->3700/tcp, :::3700->3700/tcp, 0.0.0.0:3999->3999/tcp, :::3999->3999/tcp   stacks-blockchain-api
 ```
 
-**Note**: On initial sync, it will take several minutes for port `3999` to become available.
+ > **_NOTE:_**
+ >
+ > On initial sync, it will take several minutes for port `3999` to become available.
 
 ### Stopping stacks-blockchain-api
 

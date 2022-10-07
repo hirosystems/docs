@@ -1,5 +1,5 @@
 ---
-title: Set up Local Development Environment
+title: Set up local Development Environment
 ---
 
 ## Developing a Clarity smart contract
@@ -56,15 +56,11 @@ Clarinet provides several powerful methods to test and interact with your smart 
 section, you can always check your Clarity syntax using the `clarinet check` command. This validates any smart contracts
 you are currently developing in the active project.
 
-There are two tools in Clarinet you can use to test smart contracts: the [console][], an interactive Clarity REPL, and
-the [test harness][], a testing framework written in Typescript.
+There are two tools in Clarinet you can use to test smart contracts: the console, an interactive Clarity REPL, and the test harness, a testing framework written in Typescript.
 
 ### Testing with the console
 
-The Clarinet console is an interactive Clarity REPL that runs in-memory. Any contracts configured in the current project
-are automatically loaded into memory. Additionally, wallets defined in the `settings/Devnet.toml` file are
-initialized with STX tokens for testing purposes. When the console runs, it provides a summary of the deployed
-contracts, their public functions, as well as wallet addresses and balances.
+The Clarinet console is an interactive Clarity REPL that runs in-memory. Any contracts configured in the current project are automatically loaded into memory. Additionally, wallets defined in the `settings/Devnet.toml` file are initialized with STX tokens for testing purposes. When the console runs, it provides a summary of the deployed contracts, their public functions, as well as wallet addresses and balances.
 
 ```
 clarity-repl v0.11.0
@@ -120,7 +116,7 @@ Note that by default commands are always executed as the `deployer` address, whi
 `::set_tx_sender` command, you would need to provide the full address to the contract in the contract call
 (`ST1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE.my-contract`).
 
-You can refer to the [Clarity language reference][] for a complete overview of all Clarity functions.
+You can refer to the [Clarity language reference](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/) for a complete overview of all Clarity functions.
 
 ### Testing with the test harness
 
@@ -160,8 +156,7 @@ Clarinet.test({
 });
 ```
 
-For more information on assertions, review [asserts][] in the Deno standard library. For more information on the
-available Clarity calls in Deno, review the [Deno Clarinet library][].
+For more information on assertions, review [asserts](https://deno.land/std@0.90.0/testing/asserts.ts) in the Deno standard library. For more information on the available Clarity calls in Deno, review the [Deno Clarinet library](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-deno/index.ts).
 
 ## Additional reading
 

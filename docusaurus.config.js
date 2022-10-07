@@ -73,7 +73,7 @@ module.exports = {
           },
           {
             to: '/api',
-            label: 'Stacks API',
+            label: 'Stacks Blockchain API',
             position: 'left',
           },
           {

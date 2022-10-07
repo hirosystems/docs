@@ -1,10 +1,9 @@
 ---
 title: Integrating Stacking
 ---
+import StacksjsStartersNote from '../../includes/stacks.js-starters-note.mdx';
 
-//import StacksjsStartersNote from '../includes/_stacks.js-starters-note.mdx';
-
-//<StacksjsStartersNote/>
+<StacksjsStartersNote/>
 
 In this tutorial, you'll learn how to integrate Stacking by interacting with the respective smart contract, as well as reading data from the Stacks blockchain.
 

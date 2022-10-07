@@ -10,7 +10,7 @@ The process to upgrade the API version is descibed below.
 
 # Upgrading the API Version
 
-> [!Note]
+>  **_NOTE:_**
 >
 > If you choose to upgrade the Stacks Blockchain API to a new major version (for example, 3.0.0 to 4.0.0), then the Postgres database from the previous version will not be compatible and the upgrade process will fail to start.
 

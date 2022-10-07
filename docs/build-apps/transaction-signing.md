@@ -332,7 +332,7 @@ const MyComponent = () => {
 
 ## Request testnet STX from faucet
 
-You may find it useful to request testnet STX from [the Stacks Explorer sandbox](https://explorer.stacks.co/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
+You may find it useful to request testnet STX from [the Explorer sandbox](https://explorer.stacks.co/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
 
 ## Transaction request / response payload
 

@@ -4,7 +4,7 @@ title: Angular Authenticator
 
 In this tutorial, you'll learn how to work with Stacks Connect when using [Angular](https://angular.io/) as your framework of choice. It builds on what you've learnt in the [Authentication Overview](/build-apps/authentication).
 
-> [!Note]
+>  **_NOTE:_**
 
 > This article presumes some familiarity with [Angular](https://angular.io/), as well as [Reactive Extensions (RxJS)](https://rxjs.dev/).
 

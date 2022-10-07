@@ -2,9 +2,9 @@
 title: Sign Messages
 ---
 
-//import StacksjsStartersNote from '../../includes/_stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../../includes/stacks.js-starters-note.mdx';
 
-//<StacksjsStartersNote/>
+<StacksjsStartersNote/>
 
 This guide explains how to prompt users to sign a message.
 

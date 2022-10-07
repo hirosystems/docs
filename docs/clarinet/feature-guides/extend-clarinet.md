@@ -1,10 +1,8 @@
 ---
-title: Use Extensions
+title: Extend Clarinet
 ---
 
-Clarinet can be easily extended by community members. Open source contributions to clarinet are welcome.
-
-You may also write your own Clarinet extensions to integrate clarity contracts with your own tooling and workflow.
+Extend Clarinet to integrate clarity contracts with your own tooling and workflow.
 
 | Name                      | wallet access | disk write | disk read | Deployment                                                            | Description                                                                                                                                       |
 | ------------------------- | ------------- | ---------- | --------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |

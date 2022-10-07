@@ -75,7 +75,7 @@ The Clarity smart contract for this app is located at `/contracts/billboard.clar
 
 ## Running a local Stacks blockchain
 
-The billboard project demonstrates a powerful feature of Clarinet: the Stacks local DevNet. DevNet allows you to run a local Stacks blockchain with the full PoX consensus mechanism (and simulated stacking) active. To accomplish this, Clarinet orchestrates a suite of Docker containers that run a mock Bitcoin node, a Stacks node, a Stacks API node, and a local instance of the Stacks explorer. You may also choose to enable a local instance of the Bitcoin explorer.
+The billboard project demonstrates a powerful feature of Clarinet: the Stacks local DevNet. DevNet allows you to run a local Stacks blockchain with the full PoX consensus mechanism (and simulated stacking) active. To accomplish this, Clarinet orchestrates a suite of Docker containers that run a mock Bitcoin node, a Stacks node, a Stacks API node, and a local instance of the Explorer. You may also choose to enable a local instance of the Bitcoin explorer.
 
 In a terminal window, from the root of the billboard project repository, run `clarinet integrate` to bring up the local DevNet. The DevNet interface window displays a summary of the DevNet and a block explorer. It takes several minutes for the local DevNet to launch. When the DevNet has launched, the `bitcoin-node`, `stacks-node`, `stacks-api-node`, and `stacks-explorer` containers will all have green status.
 

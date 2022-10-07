@@ -2,9 +2,10 @@
 title: Sign Transactions
 ---
 
-//import StacksjsStartersNote from '../../includes/_stacks.js-starters-note.mdx';
 
-//<StacksjsStartersNote/>
+import StacksjsStartersNote from '../../includes/stacks.js-starters-note.mdx';
+
+<StacksjsStartersNote/>
 
 This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
 
@@ -331,7 +332,7 @@ const MyComponent = () => {
 
 ## Request testnet STX from faucet
 
-You may find it useful to request testnet STX from [the Stacks Explorer sandbox](https://explorer.stacks.co/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
+You may find it useful to request testnet STX from [the Explorer sandbox](https://explorer.stacks.co/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
 
 ## Transaction request / response payload
 

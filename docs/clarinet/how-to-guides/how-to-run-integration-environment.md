@@ -1,12 +1,12 @@
 ---
-title: "Run a local integration Environment"
+title: "Run a local Integration Environment"
 ---
 
 Once you have reached a point where your Clarity smart contract is functional, you may want to develop a web frontend against your contract. This can be challenging, as the contract must be deployed to a live blockchain to fully
 interact with it from a web app. Clarinet provides an easy method to deploy your contract to a blockchain that
 runs locally on your machine that is configurable and controllable. This integration feature is called DevNet.
 
-DevNet allows you to perform frontend development and integration testing without the need to deploy your contract to public testnet. This is valuable if you are in the early stages of developing a product, or if you are developing a contract and app in stealth. DevNet uses Docker to launch local instances of Bitcoin, Stacks, Stacks API, Stacks Explorer, and Bitcoin Explorer, and provides total configuration control over all those instances. Once running, DevNet automatically deploys your contracts and creates Stacks accounts with pre-defined balances.
+DevNet allows you to perform frontend development and integration testing without the need to deploy your contract to public testnet. This is valuable if you are in the early stages of developing a product, or if you are developing a contract and app in stealth. DevNet uses Docker to launch local instances of Bitcoin, Stacks, Stacks API, Explorer, and Bitcoin Explorer, and provides total configuration control over all those instances. Once running, DevNet automatically deploys your contracts and creates Stacks accounts with pre-defined balances.
 
 The services launched by DevNet represent a full instance of the Stacks blockchain with the Proof of Transfer consensus mechanism running against a locally running Bitcoin testnet. DevNet allows you to control block times, PoX transactions, and contract deployments. Because DevNet is running locally, it can be reset or re-configured at any time. This allows for rapid frontend development without the need to interact with the public blockchain.
 
@@ -23,7 +23,7 @@ Clarinet provides sensible a sensible default configuration for DevNet. If you w
 clarinet integrate
 ```
 
-Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks node, Stacks API node, and the Bitcoin and Stacks Explorers. This can take several minutes on first launch. Once the images are launched, the DevNet interface is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second block of the chain, so you may need to wait for the third block before launching your frontend development environment.
+Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks node, Stacks API node, and the Bitcoin and Explorers. This can take several minutes on first launch. Once the images are launched, the DevNet interface is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second block of the chain, so you may need to wait for the third block before launching your frontend development environment.
 
 Review the following sections for information about the DevNet interface and configuration options for DevNet.
 
@@ -41,14 +41,14 @@ The mempool summary displays a list of transactions in the mempool. These includ
 
 The block explorer has two sub-panels: the block summary and the block transactions. You can use the `Arrow` keys to select a block within the chain (shown at the top of the block explorer), and the block summary and block transactions panels display information about that block. The block summary displays the Stacks block height, the Stacks block hash, the Bitcoin block height of the anchor block, and the PoX cycle number of the block. The block transactions panel displays all Stacks transactions that were included in the block.
 
-You can access the locally running Stacks Explorer and Bitcoin Explorer from the URLs in the service status window for more detailed information about the blocks.
+You can access the locally running Explorer and Bitcoin Explorer from the URLs in the service status window for more detailed information about the blocks.
 
 You can press `0` in the interface to reset the DevNet. Press `Ctrl` + `C` to stop the DevNet and shut down the
 containers.
 
 ## Configuring DevNet
 
-By default, DevNet launches a local Stacks 2.0 testnet with a fixed block time of 30 seconds. It runs Docker images that host a Bitcoin node, a Stacks Node, the Stacks API, the Stacks Explorer, and the Bitcoin Explorer. The default settings should be adequate for most developers, but you can change many of the settings to customize your development environment.
+By default, DevNet launches a local Stacks 2.0 testnet with a fixed block time of 30 seconds. It runs Docker images that host a Bitcoin node, a Stacks Node, the Stacks API, the Explorer, and the Bitcoin Explorer. The default settings should be adequate for most developers, but you can change many of the settings to customize your development environment.
 
 DevNet settings are located in the `settings/Devnet.toml` file. The file defines the wallets that are created in the
 DevNet blockchain, the Stacks miner configuration, Proof of Transfer activity, and many other options.
@@ -70,7 +70,7 @@ DevNet provides a sensible default configuration for the local blockchain, with 
 the latest development images for each of the Stacks and Bitcoin nodes. These parameters are defined under the
 `[devnet]` heading. You can customize these defaults by setting any of the following parameters.
 
-> [!Note]
+>  **_NOTE:_**
 > 
 > If any of the parameters are not supplied in the configuration file, the default value is used.
 
@@ -89,7 +89,7 @@ the latest development images for each of the Stacks and Bitcoin nodes. These pa
 - `stacks_api_port`: the port number for Stacks API network traffic
 - `stacks_api_events_port`: the port number for Stacks API events network traffic
 - `bitcoin_explorer_port`: the port number for Bitcoin Explorer HTTP traffic
-- `stacks_explorer_port`: the port number for Stacks Explorer HTTP traffic
+- `stacks_explorer_port`: the port number for Explorer HTTP traffic
 - `miner_mnemonic`: the 24-word keyphrase for the STX miner wallet
 - `miner_derivation_path`: the derivation path for the STX miner
 - `working_dir`: the local working directory for filesystem storage for the testnet
@@ -100,11 +100,11 @@ the latest development images for each of the Stacks and Bitcoin nodes. These pa
 - `bitcoin_node_image_url`: a Docker image path for the Bitcoin node container
 - `stacks_node_image_url`: a Docker image path for the Stacks node container
 - `stacks_api_image_url`: a Docker image path for the Stacks API node container
-- `stacks_explorer_image_url`: a Docker image path for the Stacks Explorer node container
+- `stacks_explorer_image_url`: a Docker image path for the Explorer node container
 - `bitcoin_explorer_image_url`: a Docker image path for the Bitcoin Explorer node container
 - `postgres_image_url`: a Docker image path for the Postgres DB container
 - `disable_bitcoin_explorer`: Boolean to set if the Bitcoin Explorer container runs in the DevNet stack
-- `disable_stacks_explorer`: Boolean to set if the Stacks Explorer container runs in the DevNet stack
+- `disable_stacks_explorer`: Boolean to set if the Explorer container runs in the DevNet stack
 - `disable_stacks_api`: Boolean to set if the Stacks API container runs in the DevNet stack
 
 ### Stacking orders

@@ -2,7 +2,9 @@
 title: Integrate Stacking Delegation
 ---
 
-// [StacksjsStartersNote](../includes/stacks.js-starters-note.mdx)
+import StacksjsStartersNote from '../../includes/stacks.js-starters-note.mdx';
+
+<StacksjsStartersNote/>
 
 In this guide, you'll learn how to integrate the Stacking delegation flow by interacting with the respective smart contract, as well as reading data from the Stacks blockchain.
 

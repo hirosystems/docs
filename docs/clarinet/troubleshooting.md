@@ -11,7 +11,7 @@ People unfamiliar with command line tools will install the clarity extension in 
 
 ### I am unable to run Clarinet after installation. 
 
-> [!Note]
+> **_NOTE:_**
 >
 > The below steps are indented to address Windows users only.
 
