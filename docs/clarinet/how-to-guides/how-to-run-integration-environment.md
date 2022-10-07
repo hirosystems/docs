@@ -12,8 +12,7 @@ The services launched by DevNet represent a full instance of the Stacks blockcha
 
 ## Prerequisites
 
-In order to run DevNet, you must have [Clarinet installed](../how-to-guides/how-to-install-clarinet.md), and you also should have Docker installed locally. Refer
-to the [Docker documentation](https://docs.docker.com/get-docker/) for instructions on installing Docker on your development machine.
+In order to run DevNet, you must have [Clarinet installed](../getting-started.md), and you also should have Docker installed locally. Refer to the [Docker documentation](https://docs.docker.com/get-docker/) for instructions on installing Docker on your development machine.
 
 ## Launching DevNet
 
