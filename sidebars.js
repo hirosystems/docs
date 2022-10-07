@@ -295,7 +295,7 @@ module.exports = {
               items: [
                 'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-                'stacks-blockchain-api/how-to-guides/how-to-install-stacks-blockchain-api',
+                'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
                 'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
                 'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
               ]
@@ -307,7 +307,12 @@ module.exports = {
           items: [
             {
               type: 'link',
-              label: 'Stacks-Blockchain-API - Discord',
+              label: 'Contribution - guidelines',
+              href: 'https://github.com/hirosystems/stacks-blockchain-api',
+            },
+            {
+              type: 'link',
+              label: 'API - Discord',
               href: 'https://discord.com/channels/621759717756370964/909867922971820102',
             },
             {
@@ -343,6 +348,11 @@ module.exports = {
                   type: 'category',
                   label: 'Developer Resources',
                   items: [
+                    {
+                      type: 'link',
+                      label: 'Contribution - guidelines',
+                      href: 'https://github.com/hirosystems/explorer',
+                    },
                     {
                       type: 'link',
                       label: 'Stacks-Explorer - Discord',
