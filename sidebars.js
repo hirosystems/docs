@@ -74,59 +74,38 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Stacks.js',
+      label: 'Explorer',
       items: [
-        
-        'stacks.js/overview',
-        'stacks.js/getting-started',
-        {
-          type: 'category',
-          label: 'Feature Guides',
-          items: [
-            'stacks.js/feature-guides/authenticate-users-with-connect',
-            'stacks.js/feature-guides/sign-messages',
-            'stacks.js/feature-guides/sign-transactions',
-            'stacks.js/feature-guides/store-data-securely',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
-            'stacks.js/how-to-guides/how-to-integrate-stacking',
-            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
-            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
-          ],
-        },
-        'stacks.js/faq',
-        {
-          type: 'category',
-          label: 'Developer Resources',
-          items: [
+        'explorer/overview',
+        'explorer/getting-started',
             {
-              type: 'link',
-              label: 'Contribution Guidelines',
-              href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
-            },
-            
-            {
-              type: 'link',
-              label: 'Stacks.js - Discord',
-              href: 'https://discord.com/channels/621759717756370964/1022879438515486791',
-            },
-            {
-              type: 'link',
-              label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=Stacks.js',
-            },
-            {
-              type: 'link',
-              label: 'Videos',
-              href: 'https://www.youtube.com/watch?v=SGrbeoCSHs0',
-            },
-          ],
-        },
+              type: 'category',
+              label: 'How-to Guides',
+              items: [
+                'explorer/how-to-guides/build-explorer',
+              ]
+              },
+                {
+                  type: 'category',
+                  label: 'Developer Resources',
+                  items: [
+                    {
+                      type: 'link',
+                      label: 'Contribution Guidelines',
+                      href: 'https://github.com/hirosystems/explorer',
+                    },
+                    {
+                      type: 'link',
+                      label: 'Explorer - Discord',
+                      href: 'https://discord.com/channels/621759717756370964/911531946738339900',
+                    },
+                    {
+                      type: 'link',
+                      label: 'Blogs',
+                      href: 'https://www.hiro.so/search?query=Explorer',
+                    },
+                  ]
+                  },
       ],
     },
     {
@@ -192,43 +171,66 @@ module.exports = {
           },
         
       ],
-    }, 
+    },
     {
       type: 'category',
-      label: 'Explorer',
+      label: 'Stacks.js',
       items: [
-        'explorer/overview',
-        'explorer/getting-started',
+        
+        'stacks.js/overview',
+        'stacks.js/getting-started',
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'stacks.js/feature-guides/authenticate-users-with-connect',
+            'stacks.js/feature-guides/sign-messages',
+            'stacks.js/feature-guides/sign-transactions',
+            'stacks.js/feature-guides/store-data-securely',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
+            'stacks.js/how-to-guides/how-to-integrate-stacking',
+            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
+            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
+          ],
+        },
+        'stacks.js/faq',
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
             {
-              type: 'category',
-              label: 'How-to Guides',
-              items: [
-                'explorer/how-to-guides/build-explorer',
-              ]
-              },
-                {
-                  type: 'category',
-                  label: 'Developer Resources',
-                  items: [
-                    {
-                      type: 'link',
-                      label: 'Contribution Guidelines',
-                      href: 'https://github.com/hirosystems/explorer',
-                    },
-                    {
-                      type: 'link',
-                      label: 'Explorer - Discord',
-                      href: 'https://discord.com/channels/621759717756370964/911531946738339900',
-                    },
-                    {
-                      type: 'link',
-                      label: 'Blogs',
-                      href: 'https://www.hiro.so/search?query=Explorer',
-                    },
-                  ]
-                  },
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
+            },
+            
+            {
+              type: 'link',
+              label: 'Stacks.js - Discord',
+              href: 'https://discord.com/channels/621759717756370964/1022879438515486791',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Stacks.js',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/watch?v=SGrbeoCSHs0',
+            },
+          ],
+        },
       ],
-    }, 
+    },
+     
+     
 
   ],
   tutorials: [
