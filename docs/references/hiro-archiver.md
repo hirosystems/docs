@@ -14,7 +14,7 @@ Stacks community.
 
 Hiro pushes out new datasets nightly. The best way to download these datasets is by constructing a download link.
 
-The URL format is as follows:
+For datasets published before Oct 13, 2022, the URL format is as follows:
 
 | Base Url                                           | Env      | Service     | File                                           | 
 |----------------------------------------------------|----------|-------------|------------------------------------------------|
@@ -38,10 +38,14 @@ replacing `latest` with the date formatted as `yyyymmdd`. Use the table below fo
 |         | Blockchain | 2.05.0.2.2   |
 |         | Postgresql | 14           |
 
+For datasets published on Oct 13, 2022 or later, the base URL is https://storage.googleapis.com/hirosystems-archive/
+Archives are generated in the format {ENV}-{SERVICE}-{VERSION}-{YYYYMMDD}.tar.gz. For example,`mainnet-blockchain-api-5.0.0-20221013.tar.gz`.
+
+
 
 ### Constructing the download link
 
-To construct the download link, use the links shown below.
+Here are a couple of examples of how a download link can be generated for a specific dataset: 
 
 ```[mainnet api .tsv from latest]
  https://storage.googleapis.com/blockstack-publish/mainnet/api/mainnet-blockchain-api-4.0.3-latest.tar.gz
