@@ -19,7 +19,19 @@ module.exports = {
     require.resolve('@cmfcmf/docusaurus-search-local'),
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
-  ],
+    ["docusaurus-plugin-remote-content",
+            {
+                // options here
+                name: "remote-content", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/stacks-subnets/master", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/stacks-subnets-remote", // the base directory to output to.
+                documents: ["PROJECT.md", "README.md","docs/images/subnets-architecture.png", "docs/images/subnet-miners.png"], // the file names to download
+                // in the plugin's options:
+                noRuntimeDownloads: "true"
+                
+            }],
+            
+],
 
   presets: [
     [
