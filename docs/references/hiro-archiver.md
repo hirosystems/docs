@@ -11,10 +11,11 @@ published datasets needed to run a Stacks environment. This is a public service 
 Stacks community.  
 
 ## How to download
+_** Important note:  the `blockstack-publish` bucket has been deprecated and should no longer be used.**_
 
 Hiro pushes out new datasets nightly. The best way to download these datasets is by constructing a download link.
 
-For datasets published before Oct 13, 2022, the URL format is as follows:
+The URL format is as follows:
 
 | Base Url                                            | Env      | Service     | File                                           | 
 |-----------------------------------------------------|----------|-------------|------------------------------------------------|
@@ -32,26 +33,23 @@ replacing `latest` with the date formatted as `yyyymmdd`. Use the table below fo
 | Env     | Service    | Version    |
 |---------|------------|------------|
 | Mainnet | API        | 5.0.0      |
-|         | Blockchain | 2.05.0.2.2 |
+|         | Blockchain | 2.05.0.3.0 |
 |         | Postgresql | 14         |
 | Testnet | API        | 5.0.0      |
-|         | Blockchain | 2.05.0.2.2 |
+|         | Blockchain | 2.05.0.3.0 |
 |         | Postgresql | 14         |
 
-For datasets published on Oct 13, 2022 or later, the base URL is https://storage.googleapis.com/hirosystems-archive/
 Archives are generated in the format {ENV}-{SERVICE}-{VERSION}-{YYYYMMDD}.tar.gz. For example,`mainnet-blockchain-api-5.0.0-20221013.tar.gz`.
-
-
 
 ### Constructing the download link
 
 Here are a couple of examples of how a download link can be generated for a specific dataset: 
 
 ```[mainnet api .tsv from latest]
- https://storage.googleapis.com/blockstack-publish/mainnet/api/mainnet-blockchain-api-5.0.0-latest.tar.gz
+ https://storage.googleapis.com/hirosystems-archive/mainnet/api/mainnet-blockchain-api-5.0.0-latest.tar.gz
  
 [testnet postgres database from August 26, 2022]
- https://storage.googleapis.com/blockstack-publish/testnet/postgres/testnet-postgres-14-20220826.tar.gz 
+ https://storage.googleapis.com/hirosystems-archive/testnet/postgres/testnet-postgres-14-20220826.tar.gz 
 ```
 
 ## How to use
