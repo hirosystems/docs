@@ -16,7 +16,7 @@ module.exports = {
       type: 'category',
       label: 'Clarinet',
       items: [
-        'clarinet/introduction',
+        'clarinet/overview',
         'clarinet/getting-started',
         {
           type: 'category',
@@ -228,6 +228,30 @@ module.exports = {
             },
           ],
         },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Subnets',
+      items: [
+        'subnets/overview',
+        'subnets/getting-started',
+                {
+                  type: 'category',
+                  label: 'Developer Resources',
+                  items: [
+                    {
+                      type: 'link',
+                      label: 'Contribution Guidelines',
+                      href: 'https://github.com/hirosystems/stacks-subnets',
+                    },
+                    {
+                      type: 'link',
+                      label: 'Blogs',
+                      href: 'https://www.hiro.so/search?query=subnets',
+                    },
+                  ]
+                  },
       ],
     },
     {
