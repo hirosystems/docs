@@ -252,7 +252,7 @@ module.exports = {
                     },
                   ]
                   },
-      ],
+            ],
     },
     {
       type: 'category',

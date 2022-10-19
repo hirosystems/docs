@@ -3,4 +3,6 @@
 title: Getting Started
 ---
 
-Get started with Subnets
+# Getting started
+
+You can get started building subnets using the [subnets-readme](https://github.com/hirosystems/stacks-subnets/blob/master/README.md) documentation.
