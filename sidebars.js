@@ -253,6 +253,7 @@ module.exports = {
                     'subnets/how-to-guides/how-to-deposit-nft',
                     'subnets/how-to-guides/how-to-transfer-nft',
                     'subnets/how-to-guides/how-to-withdraw-nft',
+                    'subnets/how-to-guides/how-to-run-tests',
                   ],
                 },
                 {

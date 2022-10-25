@@ -5,13 +5,16 @@ title: Getting Started
 
 # Getting Started
 
-You can get started with subnets by setting up with one of the following set up instructions.
+Subnets can be built using any of the following methods:
+- Build with Clarinet
+- Build with Testnet
+- Test Locally
 
 > **_NOTE:_**
 >
 > Subnets was earlier referred as Hyperchains. While we are in the process of updating the content, you might still see subnets being referred as Hyperchains.
 
-## Set up with Clarinet
+## Build with Clarinet
 
 Make sure you have `clarinet` installed locally, and that it is at version 0.33.0 or above.
 If you do not have clarinet, you can find installation instructions [here](https://github.com/hirosystems/clarinet).
@@ -84,7 +87,7 @@ export ALT_USER_KEY=3eccc5dac8056590432db6a35d52b9896876a3d5cbdea53b72400bc9c209
 export HYPERCHAIN_URL="http://localhost:30443"
 ```
 
-## Set up with Testnet
+## Build with Testnet
 
 #### 1. Getting Testnet STX
 
@@ -262,7 +265,7 @@ in the hyperchain node's TOML.
 ./target/release/stacks-node start --config=/var/stacks-hyperchains/contrib/conf/stacks-l1-testnet.toml 2>&1 | tee -i /tmp/stacks-testnet.log
 ```
 
-## Test locally
+## Test Locally
 
 #### 1. Start the hyperchain miner
 
