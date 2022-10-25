@@ -4,13 +4,9 @@ title: How to Publish Contract
 
 ## Publish the NFT contract to the Stacks and Subnets
 
-Once the Stacks node and the hyperchain node boots up (use the indicators in the top right panel to determine this), we can 
-start to interact with the chains. To begin with, we want to publish NFT contracts onto both the L1 and L2. When the user
-deposits their L1 NFT onto the hyperchain, their asset gets minted by the L2 NFT contract. 
-The publish script takes in four arguments: the name of the contract to be published, the filename for the contract 
-source code, the layer on which to broadcast the transaction (1 or 2), and the nonce of the transaction.
-First, publish the layer 1 contracts. You can enter this command (and the following transaction commands) in the same 
-terminal window as you entered the environment variables. Make sure you are in the `scripts` directory. 
+Once the Stacks node and the hyperchain node boots up (use the indicators in the top right panel to determine this), we can start to interact with the chains. To begin with, we want to publish NFT contracts onto both the L1 and L2. When the user deposits their L1 NFT onto the hyperchain, their asset gets minted by the L2 NFT contract. 
+The publish script takes in four arguments: the name of the contract to be published, the filename for the contract source code, the layer on which to broadcast the transaction (1 or 2), and the nonce of the transaction.
+First, publish the layer 1 contracts. You can enter this command (and the following transaction commands) in the same terminal window as you entered the environment variables. Make sure you are in the `scripts` directory. 
 These transactions are called by the principal `USER_ADDR`.
 ```
 node ./publish_tx.js trait-standards ../contracts/trait-standards.clar 1 0 
