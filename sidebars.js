@@ -238,6 +238,25 @@ module.exports = {
         'subnets/getting-started',
                 {
                   type: 'category',
+                  label: 'Feature Guides',
+                  items: [
+                    'subnets/feature-guides/trust-models',
+                  ],
+                },
+                {
+                  type: 'category',
+                  label: 'How-to Guides',
+                  items: [
+                    'subnets/how-to-guides/how-to-publish-contract',
+                    'subnets/how-to-guides/how-to-register-nft-asset',
+                    'subnets/how-to-guides/how-to-mint-nft',
+                    'subnets/how-to-guides/how-to-deposit-nft',
+                    'subnets/how-to-guides/how-to-transfer-nft',
+                    'subnets/how-to-guides/how-to-withdraw-nft',
+                  ],
+                },
+                {
+                  type: 'category',
                   label: 'Developer Resources',
                   items: [
                     {
