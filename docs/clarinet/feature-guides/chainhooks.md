@@ -4,11 +4,11 @@ title: Chainhooks
 
 ## Overview
 
-Chainhooks are a powerful feature that enables you to automatically trigger an action based upon a predicate event occurring. Adhering to an event-based architecture, chainhooks allow you to pre-determin an underlying set of events that, when triggered, set into motion a logical series of follow-on steps and actions to address the specific event that was triggered. 
+Chainhooks are a powerful feature that enables you to automatically trigger an action based upon a predicate event occurring. Adhering to an event-based architecture, chainhooks allow you to pre-determine an underlying set of events that, when triggered, set into motion a logical series of follow-on steps and actions to address the specific event that was triggered. 
 
 ## Design
 
-Chainhooks were designed with a very specific set of requirements and limitations to make them easy to work with in a development environment. These constraints include:
+Chainhooks were designed with a very specific set of requirements and limitations to make them easy to work with in a development environment. These constraints include portability and performance.
 
 - portability and performance
 
@@ -16,7 +16,7 @@ Hiro designed the event observer as a library, choosing to embed the library in 
 
 - correctness
 
-Due to the fact that blockcahins can be forked, transactions can be discarded, and transactions can be added to a distinctly separate fork, ensuring correctness is a challenge. There are many different ways you can end up with a state slightly differing from the canonical state, which is why correctness is an inherent limitation of chainhooks. 
+Due to the fact that blockchains can be forked, transactions can be discarded, and transactions can be added to a distinctly separate fork, ensuring correctness can be a challenge. There are many different ways you can end up with a state slightly differing from the canonical state, which is why correctness is an inherent limitation of chainhooks. 
 
 ## Using Chainhoolks
 
@@ -28,6 +28,6 @@ You may also choose to deploy chainhooks in your own environment, although this 
 
 For a more detailed discussion of Chainhooks and how you can use them in your workflows, please see the following resources:
 
-[Meet 4 New Features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet) blog post.
+- [Meet 4 New Features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet) blog post.
 
-[Introduction to Smart Contract Integration with Clarinet](https://www.youtube.com/watch?v=or01j0a9MUo&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=12) YouTube video.
+- [Introduction to Smart Contract Integration with Clarinet](https://www.youtube.com/watch?v=or01j0a9MUo&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=12) YouTube video.
