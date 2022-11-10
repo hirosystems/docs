@@ -32,4 +32,4 @@ For a more detailed discussion of how to use Clarinet Integrate, please see the 
 
 - [Meet 4 New Features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet) blog post.
 
-- [Introduction to Smart Contract Integration with Clarinet](https://www.youtube.com/watch?v=or01j0a9MUo&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=12) YouTube video.
+- [Introduction to Smart Contract Integration with Clarinet](https://www.youtube.com/watch?v=ciHxOGBBS18) YouTube video.
