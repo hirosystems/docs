@@ -33,3 +33,5 @@ For a more detailed discussion of how to use Clarinet Integrate, please see the 
 - [Meet 4 New Features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet) blog post.
 
 - [Introduction to Smart Contract Integration With Clarinet](https://www.youtube.com/watch?v=or01j0a9MUo&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=12) YouTube video.
+
+- [Setting Up an Integration Test Environment With the Stacks DevNet](https://www.youtube.com/watch?v=4V0hcuOq47I&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=14) YouTube Video.
