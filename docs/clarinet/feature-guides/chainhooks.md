@@ -29,5 +29,3 @@ You may also choose to deploy chainhooks in your own environment, although this 
 For a more detailed discussion of Chainhooks and how you can use them in your workflows, please see the following resources:
 
 - [Meet 4 New Features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet) blog post.
-
-- [Introduction to Smart Contract Integration with Clarinet](https://www.youtube.com/watch?v=or01j0a9MUo&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=12) YouTube video.
