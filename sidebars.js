@@ -52,10 +52,9 @@ module.exports = {
               label: 'Contribution Guidelines',
               href: 'https://github.com/hirosystems/clarinet#contributing',
             },
-            
             {
               type: 'link',
-              label: 'Clarinet - Discord',
+              label: 'Discord #clarinet',
               href: 'https://discord.com/channels/621759717756370964/839633619261456444',
             },
             {
@@ -70,7 +69,6 @@ module.exports = {
             },
           ],
         },
-        
       ],
     },
     {
@@ -79,34 +77,32 @@ module.exports = {
       items: [
         'explorer/overview',
         'explorer/getting-started',
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: ['explorer/how-to-guides/build-explorer'],
+        },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
             {
-              type: 'category',
-              label: 'How-to Guides',
-              items: [
-                'explorer/how-to-guides/build-explorer',
-              ]
-              },
-                {
-                  type: 'category',
-                  label: 'Developer Resources',
-                  items: [
-                    {
-                      type: 'link',
-                      label: 'Contribution Guidelines',
-                      href: 'https://github.com/hirosystems/explorer',
-                    },
-                    {
-                      type: 'link',
-                      label: 'Explorer - Discord',
-                      href: 'https://discord.com/channels/621759717756370964/911531946738339900',
-                    },
-                    {
-                      type: 'link',
-                      label: 'Blogs',
-                      href: 'https://www.hiro.so/search?query=Explorer',
-                    },
-                  ]
-                  },
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/explorer',
+            },
+            {
+              type: 'link',
+              label: 'Discord #explorer',
+              href: 'https://discord.com/channels/621759717756370964/911531946738339900',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Explorer',
+            },
+          ],
+        },
       ],
     },
     {
@@ -129,20 +125,20 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/search-endpoint',
             'stacks-blockchain-api/feature-guides/use-clarity-values',
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
-          ]
-          },
-            {
-              type: 'category',
-              label: 'How-to Guides',
-              items: [
-                'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-                'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
-                'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
-                'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
-                'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
-              ]
-              },
-              'stacks-blockchain-api/faqs',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
+            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
+            'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
+            'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
+          ],
+        },
+        'stacks-blockchain-api/faqs',
         {
           type: 'category',
           label: 'Developer Resources',
@@ -154,7 +150,7 @@ module.exports = {
             },
             {
               type: 'link',
-              label: 'API - Discord',
+              label: 'Discord #api',
               href: 'https://discord.com/channels/621759717756370964/909867922971820102',
             },
             {
@@ -167,17 +163,14 @@ module.exports = {
               label: 'Videos',
               href: 'https://www.youtube.com/c/HiroSystems/search?query=API',
             },
-            
-          ]
-          },
-        
+          ],
+        },
       ],
     },
     {
       type: 'category',
       label: 'Stacks.js',
       items: [
-        
         'stacks.js/overview',
         'stacks.js/getting-started',
         {
@@ -196,6 +189,7 @@ module.exports = {
           items: [
             'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',
+            'stacks.js/how-to-guides/how-to-migrate-stacking-to-2.1',
             'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
             'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
           ],
@@ -210,10 +204,10 @@ module.exports = {
               label: 'Contribution Guidelines',
               href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
             },
-            
+
             {
               type: 'link',
-              label: 'Stacks.js - Discord',
+              label: 'Discord #stacks-js',
               href: 'https://discord.com/channels/621759717756370964/1022879438515486791',
             },
             {
@@ -233,12 +227,8 @@ module.exports = {
     {
       type: 'category',
       label: 'Appendix',
-      items: [
-        'references/hiro-archiver',
-      ],
+      items: ['references/hiro-archiver'],
     },
-    
-
   ],
   tutorials: [
     'tutorials',

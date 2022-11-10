@@ -2,7 +2,8 @@
 id: billboard
 title: Billboard app
 ---
-import NodeLTS from '../includes/node-lts-version.mdx';
+
+import NodeLTS from '../includes/\_node-lts-version.mdx';
 
 This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](/smart-contracts/devnet), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
 
@@ -15,9 +16,7 @@ This app showcases the following features of Stacks and Clarinet:
 
 The source for the billboard app is available on [GitHub](https://github.com/hirosystems/stacks-billboard). This page assumes that you have familiarity with [React](https://reactjs.org).
 
-:::note
 <NodeLTS/>
-:::
 
 ## Billboard overview
 
@@ -104,9 +103,9 @@ The billboard frontend uses the [transactions](https://stacks.js.org/modules/tra
 Note that commonly used objects such as the network and smart contract API are created as React hooks, a design choice that allows them to be shared between React components and is friendly to the React component lifecycle.
 
 ```js title="./src/common/hooks/use-network.ts"
-import { StacksMocknet, StacksTestnet } from "@stacks/network";
+import { StacksMocknet, StacksTestnet } from '@stacks/network';
 
-import { devnet, STACKS_API_URL } from "@common/constants";
+import { devnet, STACKS_API_URL } from '@common/constants';
 
 export const useNetwork = () => {
   const network = devnet
@@ -119,12 +118,9 @@ export const useNetwork = () => {
 The `use-network` hook provides a Stacks network object that can be used in a React component. The hook reads an environment variable to determine if the app is running in a local development environment or a live blockchain, and updates the network according to that state.
 
 ```js title="./src/common/hooks/use-smart-contract-api.ts"
-import {
-  Configuration,
-  SmartContractsApi,
-} from "@stacks/blockchain-api-client";
+import { Configuration, SmartContractsApi } from '@stacks/blockchain-api-client';
 
-import { useNetwork } from "@common/hooks/use-network";
+import { useNetwork } from '@common/hooks/use-network';
 
 export const useSmartContractApi = () => {
   const network = useNetwork();
@@ -140,25 +136,25 @@ The `use-smart-contract-api` hook provides an object for interacting with the sm
 The `use-billboard` React hook provides the business logic of reading the billboard message value from the smart contract and exporting it for use in the billboard React component. The hook imports the smart contract API object from the `use-smart-contract-api` hook, and the address of the contract from the `use-billboard-contract` hook. The `use-billboard` hook then constructs an API call to the read-only function API, and updates the app state with the retrieved value. If an error occurs, the hook provides the error message in the app state as well.
 
 ```js title="./src/common/hooks/use-billboard.ts"
-import { useCallback, useEffect, useState } from "react";
-import { cvToString, hexToCV } from "@stacks/transactions";
-import useInterval from "@use-it/interval";
+import { useCallback, useEffect, useState } from 'react';
+import { cvToString, hexToCV } from '@stacks/transactions';
+import useInterval from '@use-it/interval';
 
-import { useBillboardContract } from "@common/hooks/use-billboard-contract";
-import { useSmartContractApi } from "@common/hooks/use-smart-contract-api";
+import { useBillboardContract } from '@common/hooks/use-billboard-contract';
+import { useSmartContractApi } from '@common/hooks/use-smart-contract-api';
 
 export const useBillboard = () => {
   const client = useSmartContractApi();
   const [contractAddress, contractName] = useBillboardContract();
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   const getMessage = useCallback(() => {
     const request = {
       contractAddress,
       contractName,
-      functionName: "get-message",
+      functionName: 'get-message',
       readOnlyFunctionArgs: {
         arguments: [],
         sender: contractAddress,
@@ -167,8 +163,8 @@ export const useBillboard = () => {
 
     client
       .callReadOnlyFunction(request)
-      .then((response) => {
-        setError("");
+      .then(response => {
+        setError('');
 
         if (response.okay && response.result) {
           const msg = cvToString(hexToCV(response.result)).slice(2, -1);
@@ -176,7 +172,7 @@ export const useBillboard = () => {
         }
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(error => {
         setLoading(false);
         setError(error.message);
       });
