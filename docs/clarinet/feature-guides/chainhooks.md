@@ -18,7 +18,7 @@ Hiro designed the event observer as a library, choosing to embed the library in 
 
 Due to the fact that blockchains can be forked, transactions can be discarded, and transactions can be added to a distinctly separate fork, ensuring correctness can be a challenge. There are many different ways you can end up with a state slightly differing from the canonical state, which is why correctness is an inherent limitation of chainhooks. 
 
-## Using Chainhoolks
+## Using Chainhooks
 
 In terms of deployment lifecycle, you can start using chainhooks locally today, using the latest versions of Clarinet.
 
