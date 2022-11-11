@@ -10,18 +10,29 @@ By using Deployment Plans, you can simplify the smart contract deployment proces
 
 ## Design
 
-Deployment Plans use a standardized protocol when deploying smart contracts on any network based on stacks or bitcoin (devnet, testnet, mainnet). They also minimize the complexity with deployments, making it much easier to deploy a contract without errors. Some of these complexities can include dependencies, chaining limits, the process to initialize a smart contract, and underlying deployment costs.
+Deployment Plans are reproducible deployment steps that publish a “protocol”; a collection of on-chain transactions and contracts—to a network, whether it is on a local developer network, the public testnet, or into production on mainnet.
+
+Using a Deployment Plan can minimize the inherent complexity with deployments, thereby makaing it much easier to deploy a contract without errors. Some of these complexities can include dependencies, chaining limits, the process to initialize a smart contract, and underlying deployment costs.
+
+A deployment plan is made up of:
+
+- smart contracts
+- accounts with their token balances, and
+- content and sequence of transactions (across a single or multiple Stacks or Bitcoin blocks)
+
+A Deployment Plan’s specifications exist on two files within a Clarinet project: the `Clarinet.toml` and network’s `.toml` file (e.g. `devnet.toml`) under the “deployments” folder.
 
 You can commit, audit, and test contracts without including any secrets in the Deployment Plan, and share these contracts without exposing any sensitive information.
 
 ## Deployment Plans Primitives
 
-Deployment plans consist of the following four primitives:
+Deployment plans consist of the following primitives:
 
 - deploy contracts
 - call contracts
 - send bitcoin transactions
 - wait for block
+- send stacks to an address or contract
 
 With these four individual primitives, you can then:
 
