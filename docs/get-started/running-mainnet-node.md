@@ -61,7 +61,7 @@ mkdir -p ./stacks-node/{persistent-data/stacks-blockchain/mainnet,config/mainnet
 
 ## Step 2: Running Stacks blockchain
 
-First, create the `./config/Config.toml` file and add the following content to the
+First, create the `./config/mainnet/Config.toml` file and add the following content to the
 file using a text editor:
 
 ```toml
