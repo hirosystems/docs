@@ -135,6 +135,10 @@ module.exports = {
               type: 'category',
               label: 'How-to Guides',
               items: [
+                'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
+                'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
+                'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
+                'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
                 'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
                 'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
                 'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
