@@ -189,7 +189,6 @@ module.exports = {
           items: [
             'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',
-            'stacks.js/how-to-guides/how-to-migrate-stacking-to-2.1',
             'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
             'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
           ],
@@ -223,6 +222,11 @@ module.exports = {
           ],
         },
       ],
+    },
+    {
+      type: 'category',
+      label: 'Stacks 2.1 Upgrades',
+      href: 'stacks-2.1-upgrades',
     },
     {
       type: 'category',
