@@ -29,4 +29,4 @@ Caching API responses can also be handy, as not all information is updated frequ
 - Time - Let the cached item expire after a specific time interval - call the API the next time this item is required.
 - On-Chain Events - If your application tracks on-chain events, some additional ways to build the cache would be based on block height, successful execution of a function/contract, etc.
 
-Finally, more mature development projects can consider [running their instances of the API](https://docs.hiro.so/get-started/running-api-node).
+Finally, more mature development projects can consider [running their own instances of the API](https://docs.hiro.so/get-started/running-api-node).
