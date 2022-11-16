@@ -2,7 +2,7 @@
 title: Test Contract
 ---
 
-Clarinet testing supports [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development), where your blockchain application requirements are converted to test cases. Clarinet comes with a testing harness based on Deno that applies the unit tests you write in TypeScript to your smart contracts.
+Clarinet supports automatic testing, where your blockchain application requirements can be converted to test cases. Clarinet comes with a testing harness based on Deno that applies the unit tests you write in TypeScript to your smart contracts.
 
 ## Clarity contracts and unit tests
 
@@ -76,7 +76,7 @@ We run this test with
 $ clarinet test
 ```
 
-For a complete list of classes, objects, and interfaces available, see the [Deno's Clarinet module index](https://deno.land/x/clarinet@v1.0.2/index.ts).
+For a complete list of classes, objects, and interfaces available, see the [Deno's Clarinet module index](https://deno.land/x/clarinet/index.ts).
 
 ### Comprehensive unit tests for `counter`
 
