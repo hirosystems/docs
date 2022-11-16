@@ -78,6 +78,9 @@ $ clarinet test
 
 For a complete list of classes, objects, and interfaces available, see the [Deno's Clarinet module index](https://deno.land/x/clarinet/index.ts).
 
+For a step by step walkthrough in using `clarinet test`, you can also watch [Executing Tests and Checking Code Coverage](https://www.youtube.com/watch?v=j2TZ560xEPA&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=10).
+
+
 ### Comprehensive unit tests for `counter`
 
 Let us now write a higher coverage test suite.
@@ -178,9 +181,6 @@ $ clarinet test --cost
 The `--cost` option can be used in conjunction with `--watch` and filters to maximize productivity, as illustrated here:
 
 ![costs](../images//costs.gif)
-
-For a step by step walkthrough, you can also watch [Executing Tests and Checking Code Coverage](https://www.youtube.com/watch?v=j2TZ560xEPA&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=10).
-
 
 ## Load contracts in a console
 
