@@ -2,6 +2,8 @@
 Title: Troubleshooting
 ---
 
+# Troubleshooting
+
 ## I need help retrieving the requested information from an API endpoint.
 
 As a first step, examine the HTTP response codes returned by the API call. The following are the classification groups:
