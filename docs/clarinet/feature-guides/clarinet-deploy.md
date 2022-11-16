@@ -4,7 +4,7 @@ title: Clarinet Deployment Plans
 
 ## Overview
 
-Deployment plans allow teams to work together when deploying smart contracts. Hiro has created a set of primitives that will enable teams to work together more effectively, ensuring that these teams can create smart contracts faster and easier.
+Deployment plans allow teams to work together when deploying smart contracts. Hiro has created a set of primitives that enables teams collaborate more effectively, ensuring teams can create smart contracts faster and easier.
 
 By using Deployment Plans, you can simplify the smart contract deployment process to stacks or bitcoin environment.
 
@@ -12,7 +12,7 @@ By using Deployment Plans, you can simplify the smart contract deployment proces
 
 Deployment Plans are reproducible deployment steps that publish a “protocol”; a collection of on-chain transactions and contracts—to a network, whether it is on a local developer network, the public testnet, or into production on mainnet.
 
-Using a Deployment Plan can minimize the inherent complexity with deployments, thereby makaing it much easier to deploy a contract without errors. Some of these complexities can include dependencies, chaining limits, the process to initialize a smart contract, and underlying deployment costs.
+Using a Deployment Plan can minimize the inherent complexity with deployments, thereby making it much easier to deploy a contract without errors. Some of these complexities can include dependencies, chaining limits, the process to initialize a smart contract, and underlying deployment costs.
 
 A deployment plan is made up of:
 
@@ -20,11 +20,11 @@ A deployment plan is made up of:
 - accounts with their token balances, and
 - content and sequence of transactions (across a single or multiple Stacks or Bitcoin blocks)
 
-A Deployment Plan’s specifications exist on two files within a Clarinet project: the `Clarinet.toml` and network’s `.toml` file (e.g. `devnet.toml`) under the “deployments” folder.
+A Deployment Plan’s specifications exist on two files within a Clarinet project: the `Clarinet.toml` and network’s `.toml` file (for example, `devnet.toml`) under the “deployments” folder.
 
 You can commit, audit, and test contracts without including any secrets in the Deployment Plan, and share these contracts without exposing any sensitive information.
 
-## Deployment Plans Primitives
+## Deployment plan primitives
 
 Deployment plans consist of the following primitives:
 
