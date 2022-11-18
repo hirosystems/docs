@@ -9,7 +9,7 @@ This page answers some common issues you may encounter when using Clarinet. Upda
 
 > **_NOTE:_**
 >
-> The below steps are indented to address Windows users only.
+> The below steps are intended to address Windows users only.
 
 If you cannot run Clarinet after you have installed it using the installer, perform the steps listed below.
 
