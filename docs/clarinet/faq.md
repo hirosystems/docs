@@ -24,4 +24,4 @@ Below are some screenshots to help with this:
 
 #### **The command `clarinet integrate` is not working. How can I fix it?**
 
-Clarinet integrate uses Docker to run Bitcoin and Stacks nodes and other services. To use it, you'll need to have Docker installed. See [here](https://docs.docker.com/get-docker/) for help installing Docker. If you're on Linux, ensure you set up in [rootless](https://docs.docker.com/engine/security/rootless/) mode.
+Clarinet integrate uses Docker to run Bitcoin, Stacks nodes, and other services. To run the `clarinet integrate` feature,  you'll need to [install Docker](https://docs.docker.com/get-docker/). If you're on Linux, ensure you are set up in rootless mode.
