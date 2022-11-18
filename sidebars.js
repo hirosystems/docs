@@ -41,7 +41,7 @@ module.exports = {
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
           ],
         },
-        //'clarinet/troubleshooting',
+        'clarinet/troubleshooting',
         'clarinet/faq',
         {
           type: 'category',
@@ -142,6 +142,7 @@ module.exports = {
                 'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
               ]
               },
+              'stacks-blockchain-api/troubleshooting',
               'stacks-blockchain-api/faqs',
         {
           type: 'category',
@@ -200,6 +201,7 @@ module.exports = {
             'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
           ],
         },
+        'stacks.js/troubleshooting',
         'stacks.js/faq',
         {
           type: 'category',
