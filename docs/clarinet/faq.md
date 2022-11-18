@@ -2,12 +2,6 @@
 title: FAQ's
 ---
 
-#### **How to use Command line tools?**
-
-People unfamiliar with the command line tools will install the clarity extension in VSCode and then type `clarity new <project name>` in the editor window and not know what to do next. Maybe we could add some clarifications about how to use command line tools. 
-
-Also, adding more functionality to the extension will be helpful so that eventually, they don’t need to use the command line if they don’t want to.
-
 #### **After installing Clarinet with the installer, how can I run Clarinet?**
 
 - First, restart your shell/VSCode to ensure they have the updated Path (the installer should have added the directory to the path).
