@@ -10,9 +10,8 @@ This page will also focus on the **easy** path to get the services running, whic
 
 Please note that the following guide is meant for a Unix-like OS (Linux/MacOS). The commands *may* work on Windows but will likely need some adjustments.
 
-- [Running a stacks-blockchain API instance with Docker](#running-a-stacks-blockchain-api-instance-with-docker)
+- [Run a Stacks Blockchain API instance with Docker](#run-a-stacks-blockchain-api-instance-with-docker)
   - [Requirements](#requirements)
-    - [Important](#important)
     - [Firewalling](#firewalling)
     - [Initial Setup](#initial-setup)
   - [Postgres](#postgres)
@@ -202,7 +201,7 @@ retry_count = 255
 events_keys = ["*"]
 ```
 
-Here is an example `Config.toml` that you can use - create this file as `./config/Config.toml`:
+Here is an example `Config.toml` that you can use - create this file as `./config/mainnet/Config.toml`:
 
 ```toml
 [node]
