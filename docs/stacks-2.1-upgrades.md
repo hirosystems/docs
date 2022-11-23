@@ -12,23 +12,23 @@ In this article, you'll learn about Stacks 2.05 to 2.1 migration and how our pro
 
 ## What is PoX-2?
 
-[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consesus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses `.PoX` or `.PoX-1` smart contract. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`. 
+[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consesus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses `.PoX` or `.PoX-1` smart contract. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`.
 
 ### PoX Periods
 
 The PoX-2 fork happens with the following periods. The following periods helps us understand the transition of the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
 
 - **`Period 1`** — Before the 2.1 fork
-- **`Period 2`** — In the 2.1 fork, but PoX-2 hasn't started yet
+- **`Period 2`** — In the 2.1 fork, but before the first PoX-2 reward cycle
+  - **`Period 2a`** — In the 2.1 fork, but before v1_unlock_height
+  - **`Period 2b`** — In the 2.1 fork, after v1_unlock_height, but before the first PoX-2 reward cycle
 - **`Period 3`** — In the 2.1 fork, now PoX-2 is active
 
-
 > **_NOTE:_**
-> 
-> PoX-2 is not immediately active after the 2.1 fork! Period 2 allows stacking pool users to delegate their funds to the pool of their choice, using PoX-2.
+>
+> PoX-2 is not immediately used for reward cyles after the 2.1 fork! Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
 
 Now, lets dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
-
 
 ## Clarinet
 
@@ -36,7 +36,7 @@ Clarinet has updates for the following features to work on Stacks 2.1. For more 
 
 - Clarinet integrate
 - Chainhooks
-- Smart contract deployment 
+- Smart contract deployment
 
 ## Stacks Blockchain API
 
@@ -59,11 +59,10 @@ The Stacks 2.1 updates supports alternate recipient for coinbase transactions. T
 The `alt_recipient` value varies based on the standard vs contract principal recipients.
 
 Standard principal recipient:
-`"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5"  <-- New`
+`"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5" <-- New`
 
 Contract principal recipient:
-`"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5.hello_world"  <-- New`
-
+`"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5.hello_world" <-- New`
 
 ### PoX2 support for Rosetta API
 
@@ -73,9 +72,9 @@ The PoX-2 support is extended to various functions mentioned [below](#new-pox-in
 - **Constructing stacking operations**: Rosetta has built-in support for performing various "Stacking" operations, which under the hood perform PoX-1 contract calls. These need to be changed to PoX-2 contract calls.
 - **Parsing stacking operations**: Adding support for performing various "Stacking" operations, which involve PoX-2 contract calls.
 
-## Stacks JS
+## Stacks.js
 
-Mention about 3 sections below. 
+Mention about 3 sections below.
 
 - Methods now accept `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR)
 - New [Stacking](#new-pox-interaction-functions-clarity) and [Helper](#new-helper-methods) methods
@@ -84,11 +83,12 @@ Mention about 3 sections below.
 
 The following `@stacks/stacking` methods interact with [new PoX functions added in 2.1](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-extend).
 
-- [`stack-extend`](https://github.com/stacksgov/sips/blob/4ed252c11ade5569ab11a28d373b267f0e5499d4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-extend) = `client.stackExtend()`
-- [`stack-increase`](https://github.com/stacksgov/sips/blob/4ed252c11ade5569ab11a28d373b267f0e5499d4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-increase) = `client.stackIncrease()`
-- [`delegate-stack-extend`](https://github.com/stacksgov/sips/blob/4ed252c11ade5569ab11a28d373b267f0e5499d4/sips/sip-015/sip-015-network-upgrade.md#new-method-delegate-stack-extend) = `client.delegateStackExtend()`
-- [`delegate-stack-increase`](https://github.com/stacksgov/sips/blob/4ed252c11ade5569ab11a28d373b267f0e5499d4/sips/sip-015/sip-015-network-upgrade.md#new-method-delegate-stack-increase) = `client.delegateStackIncrease()`
-
+- [`stack-extend`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-extend) = `client.stackExtend()`
+- [`stack-increase`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-increase) = `client.stackIncrease()`
+- [`delegate-stack-extend`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-delegate-stack-extend) = `client.delegateStackExtend()`
+- [`delegate-stack-increase`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-delegate-stack-increase) = `client.delegateStackIncrease()`
+- [`stack-aggregation-commit-indexed`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-aggregation-commit-indexed) = `client.stackAggregationCommitIndexed()`
+- [`stack-aggregation-increase`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-aggregation-increase) = `client.stackAggregationIncrease()`
 
 ### New Helper Methods
 
@@ -101,9 +101,9 @@ The following `@stacks/stacking` methods interact with [new PoX functions added 
 
 ### Migration
 
-<!-- todo: version number is not fixated yet, might change -->
-
-Previous `@stacks/stacking` releases should automatically switch to the new PoX contract (in Period 3).
+Previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b).
 However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`.
 
-`npm install @stacks/stacking@6.0.0`
+```
+npm install @stacks/stacking@6.0.0
+```
