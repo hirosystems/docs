@@ -105,5 +105,5 @@ Previous `@stacks/stacking` releases will automatically switch to the new PoX co
 However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`.
 
 ```
-npm install @stacks/stacking@6.0.0
+npm install @stacks/stacking@^6.0.0
 ```
