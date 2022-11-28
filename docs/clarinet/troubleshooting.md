@@ -26,3 +26,13 @@ To manually add the directory to your path:
 6. Restart your shell/VSCode.
 
 If you did not install Clarinet to your default directory, you would need to modify the path so that Clarinet points to the correct directory. 
+
+## I am unable to start Devnet though my Docker is running
+
+When you run the `Clarinet integrate` command, you might experience the error: "unable to start Devnet: make sure that Docker is installed on this machine and running."
+
+You can resolve the issue by creating a symlink of the docker.sock file. To do that, In your terminal, navigate to your Clarinet project directory and run the following command:
+
+`sudo ln -s /Users/<your-username>/.docker/run/docker.sock /var/run/docker.sock` 
+
+Now, run the command `clarinet integrate` to see the Devnet up and run.
