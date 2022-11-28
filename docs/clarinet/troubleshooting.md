@@ -27,7 +27,7 @@ To manually add the directory to your path:
 
 If you did not install Clarinet to your default directory, you would need to modify the path so that Clarinet points to the correct directory. 
 
-## I am unable to start Devnet though my Docker is running
+## I am unable to start Devnet though my Docker is running.
 
 When you run the `Clarinet integrate` command, you might experience the error: "unable to start Devnet: make sure that Docker is installed on this machine and running."
 
