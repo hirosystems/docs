@@ -129,6 +129,8 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/search-endpoint',
             'stacks-blockchain-api/feature-guides/use-clarity-values',
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
+            'stacks-blockchain-api/feature-guides/gaia-storage',
+            'stacks-blockchain-api/feature-guides/transactions',
           ]
           },
             {
@@ -144,6 +146,7 @@ module.exports = {
                 'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
                 'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
+                'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
               ]
               },
               'stacks-blockchain-api/faqs',
