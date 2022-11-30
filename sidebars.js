@@ -24,6 +24,10 @@ module.exports = {
           items: [
             'clarinet/feature-guides/analyze-with-check-checker',
             'clarinet/feature-guides/extend-clarinet',
+            'clarinet/feature-guides/chainhooks',
+            'clarinet/feature-guides/clarinet-deploy',
+            'clarinet/feature-guides/clarinet-integrate',
+            
           ],
         },
         {
