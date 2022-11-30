@@ -155,8 +155,7 @@ docker ps --filter name=stacks-blockchain-api
 ## Step 4: Running Stacks blockchain
 
 In order for the API to be functional, the [`stacks-blockchain-api`][] container must have data from a running
-[`stacks-blockchain`][] instance. First create the `./config/Config.toml` file and add the following content to the
-file using a text editor:
+[`stacks-blockchain`][] instance. First create the `./config/mainnet/Config.toml` file and add the following content to the file using a text editor:
 
 ```toml
 [node]
