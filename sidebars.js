@@ -226,9 +226,9 @@ module.exports = {
       ],
     },
     {
-      type: 'category',
+      type: 'doc',
       label: 'Stacks 2.1 Upgrades',
-      href: 'stacks-2.1-upgrades',
+      id: 'stacks-2.1-upgrades',
     },
     {
       type: 'category',

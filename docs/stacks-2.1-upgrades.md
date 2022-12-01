@@ -12,15 +12,17 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is PoX-2?
 
-[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses `.PoX` or `.PoX-1` smart contracts. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`. 
+[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses `.PoX` or `.PoX-1` smart contracts. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`.
 
 ### PoX periods
 
 The PoX-2 fork happens with the following periods. These periods helps Hiro understand the transition of the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
 
-- **`Period 1`**—Before the 2.1 fork
-- **`Period 2`**—In the 2.1 fork, but PoX-2 has not started yet
-- **`Period 3`**—In the 2.1 fork, now PoX-2 is active
+- **`Period 1`** — Before the 2.1 fork
+- **`Period 2`** — In the 2.1 fork, but before the first PoX-2 reward cycle
+  - **`Period 2a`** — In the 2.1 fork, but before v1_unlock_height
+  - **`Period 2b`** — In the 2.1 fork, after v1_unlock_height, but before the first PoX-2 reward cycle
+- **`Period 3`** — In the 2.1 fork, now PoX-2 is active
 
 > **_NOTE:_**
 >
@@ -32,7 +34,7 @@ Now, lets dive into each product and understand the new features or improvements
 
 ### Update Devnet settings
 
-After you [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md), navigate to your project directory and then to `settings/Devnet.toml`. 
+After you [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md), navigate to your project directory and then to `settings/Devnet.toml`.
 
 You'll find a section [devnet] with the following settings.
 
@@ -71,7 +73,6 @@ These block heights can be customized using the settings:
 ...
 epoch_2_05 = 107
 epoch_2_1 = 114
-
 
 > **_NOTE:_**
 > This new feature is experimental, if you experience bugs or something suspicious, please file an issue.
@@ -138,18 +139,22 @@ The following `@stacks/stacking` methods interact with [new PoX functions added 
 
 ### New helper methods
 
-<!-- todo: add links to api reference, once live -->
-
-- `StackingClient.getAccountBalanceLocked()` gets the locked balance of the address from a node (`/v2` endpoint)
-- `StackingClient.getAccountExtendedBalance()` gets more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs
-- `StackingClient.getDelegationStatus()` gets the `get-delegation-info` information of the address from a node (read-only contract call)
-- `StackingClient.getPoxOperationInfo()` gets information about the current period of transition to PoX-2
+- [`StackingClient.getAccountBalanceLocked()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getAccountBalanceLocked) gets the locked balance of the address from a node (`/v2` endpoint)
+- [`StackingClient.getAccountExtendedBalances()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getAccountExtendedBalances) gets more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs
+- [`StackingClient.getDelegationStatus()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getDelegationStatus) gets the `get-delegation-info` information of the address from a node (read-only contract call)
+- [`StackingClient.getPoxOperationInfo()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getPoxOperationInfo) gets information about the current period of transition to PoX-2
+- [`StackingClient.getStackingContract()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getStackingContract) gets the contract identifier (`address.name`) of the PoX-contract to use. This will be PoX-1, unless PoX-2 is available (anytime after the 2.1 fork).
 
 ### Migration
 
 Previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b).
-However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`.
+
+However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`. The updated release will also always prefer PoX-2 if possible.
 
 ```
 npm install @stacks/stacking@^6.0.0
 ```
+
+:::caution
+There will be a short period of time ([Period 2a](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking#overview-of-transition-periods)), where old versions `@stacks/stacking` (<`6.0.0`) will stack to PoX-1, even though PoX-2 is available.
+:::
