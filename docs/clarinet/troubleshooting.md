@@ -35,4 +35,4 @@ You can resolve the issue by creating a symlink of the docker.sock file. To do t
 
 `sudo ln -s /Users/<your-username>/.docker/run/docker.sock /var/run/docker.sock` 
 
-Now, run the command `clarinet integrate` to see the Devnet up and run.
+Now, run the command `clarinet integrate` to see the Devnet up and running.
