@@ -75,11 +75,12 @@ If the contracts you're developing use Clarity 2, you must wait for this epoch t
 
 These block heights can be customized using the settings:
 
+```
 [devnet]
 ...
 epoch_2_05 = 107
 epoch_2_1 = 114
-
+```
 
 > **_NOTE:_**
 > This new feature is experimental. If you have trouble or find issues, you can report them [here](https://github.com/hirosystems/clarinet/issues).
@@ -161,3 +162,10 @@ However, if you want to use the new methods detailed above, you need to update t
 ```
 npm install @stacks/stacking@^6.0.0
 ```
+
+## References
+
+- [Developers guide to Stacks 2.1](https://www.hiro.so/blog/a-developers-guide-to-stacks-2-1)
+- [How the Stacks 2.1 transition impacts stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking)
+- [STX Mining report - July 2022](https://docs.google.com/document/u/1/d/e/2PACX-1vR93NPFIrQphHBmeVtUrUgCeKGX5i03xRcT1Lvb1jcWzpgh65ndbSFaHRwJvpBtmBw9HD8OZ-pwTpiU/pub)
+- [Bullish case for Stacks](https://medium.com/@sonkaos999/the-bullish-case-for-stacks-8ef75849861f)
