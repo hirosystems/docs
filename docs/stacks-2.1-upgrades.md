@@ -12,29 +12,31 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is PoX-2?
 
-[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses `.PoX` or `.PoX-1` smart contracts. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`.
+[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses `.PoX` or `.PoX-1` smart contracts. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`. 
 
 ### PoX periods
 
-The PoX-2 fork happens with the following periods. These periods helps Hiro understand the transition of the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
+The PoX-2 fork happens with the following periods. These periods help Hiro understand the transition of the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
 
-- **`Period 1`** — Before the 2.1 fork
-- **`Period 2`** — In the 2.1 fork, but before the first PoX-2 reward cycle
-  - **`Period 2a`** — In the 2.1 fork, but before v1_unlock_height
-  - **`Period 2b`** — In the 2.1 fork, after v1_unlock_height, but before the first PoX-2 reward cycle
-- **`Period 3`** — In the 2.1 fork, now PoX-2 is active
+- **`Period 1`**—Before the 2.1 fork
+- **`Period 2`**—In the 2.1 fork, but PoX-2 has not started yet
+- **`Period 3`**—In the 2.1 fork, now PoX-2 is active
 
 > **_NOTE:_**
 >
-> PoX-2 is not immediately used for reward cyles after the 2.1 fork! Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
+> PoX-2 is not immediately used for reward cycles after the 2.1 fork! Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
 
-Now, lets dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
+Now, let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
 
 ## Clarinet
 
 ### Update Devnet settings
 
-After you [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md), navigate to your project directory and then to `settings/Devnet.toml`.
+If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md)
+
+To upgrade your clarinet version, you can refer to [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
+
+After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml`.
 
 You'll find a section [devnet] with the following settings.
 
@@ -42,20 +44,19 @@ You'll find a section [devnet] with the following settings.
 [devnet]
 disable_stacks_explorer = false
 disable_stacks_api = false
-# disable_bitcoin_explorer = true
-# working_dir = "tmp/devnet"
+...
 ```
 
-Now, add a new setting `enable_next_features = true` and keep the remaining settings without any change.
+Now, add a new setting, `enable_next_features = true,` and keep the remaining settings without any change.
 
-The updated Devnet.toml looks like:
+The updated Devnet.toml looks like this:
 
 ```
 [devnet]
-...
 enable_next_features = true
 disable_stacks_explorer = false
 disable_stacks_api = false
+...
 ```
 
 Spin up a local Devnet network using the command:
@@ -64,8 +65,13 @@ Spin up a local Devnet network using the command:
 
 If you have any trouble with the above command, refer to our [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
-And a new stacks-node will spin up. At Bitcoin block height 107, the chainstate will migrate to epoch 2.05, which was a soft introduced earlier this year, reducing the costs of operations, and at bitcoin block height 114, the chainstate will migrate to epoch 2.1.
-If the contracts you're developing use Clarity 2, you must wait for this epoch to be crossed before deploying your contracts.
+New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, which was a soft introduced earlier this year, reducing the costs of operations, and at bitcoin block height 106, the chainstate will migrate to epoch 2.1.
+
+As shown in the below screenshot, the epoch changes are indicated in the *Transactions* section `deployed: ST00000000000000002AMW42H.costs-3 (ok true).`
+
+![image](../docs/images/integrate-epoch-changes.png)
+
+If the contracts you're developing use Clarity 2, you must wait for this epoch to cross before deploying your contracts.
 
 These block heights can be customized using the settings:
 
@@ -74,12 +80,13 @@ These block heights can be customized using the settings:
 epoch_2_05 = 107
 epoch_2_1 = 114
 
+
 > **_NOTE:_**
-> This new feature is experimental, if you experience bugs or something suspicious, please file an issue.
+> This new feature is experimental. If you have trouble or find issues, you can report them [here](https://github.com/hirosystems/clarinet/issues).
 
-#### Known limitations
+#### Limitations
 
-When running clarinet integrate with Stacks 2.1, contracts can not be automatically deployed in the current release. The default devnet deployment needs to be manually applied, using the command
+In the current release, contracts are not automatically deployed when running `clarinet integrate` with Stacks 2.1. The default devnet deployment needs to be manually applied using the command:
 
 `$ clarinet deployments apply --devnet`
 
@@ -89,7 +96,7 @@ Clarinet has updates for the following features to work on Stacks 2.1. For more 
 
 ### Distinguish contract versions
 
-The endpoints ` /extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-principal>` returns a new property `clarity_version`.
+The endpoints ` /extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-principal>` returns a new property, `clarity_version.`
 
 Sample response for a versioned smart contract transaction with Clarity version 2:
 
@@ -101,9 +108,9 @@ Sample response for a regular (non-versioned) smart contract transaction with Cl
 
 ### Coinbase payouts
 
-The Stacks 2.1 updates supports alternate recipient for coinbase transactions. The `alt_recipient` value is passed in the blockchain transaction and the API returns a new coinbase `alt_recipient` property on applicable requests. ; however, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to version >=`6.0.0`.
+The Stacks 2.1 updates support alternate recipients for coinbase transactions. The `alt_recipient` value is passed in the blockchain transaction, and the API returns a new coinbase `alt_recipient` property on applicable requests. ; however, if you want to use the latest methods detailed above, you need to update to `@stacks/stacking` to version >=`6.0.0`.
 
-The `alt_recipient` value varies based on the standard vs contract principal recipients.
+The `alt_recipient` value varies based on the standard vs. contract principal recipients.
 
 Standard principal recipient:
 `"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5" <-- New`
@@ -116,12 +123,12 @@ Contract principal recipient:
 The PoX-2 support is extended to various functions mentioned [below](#new-pox-interactive-functions-for-clarity) and [Rosetta API](https://www.rosetta-api.org/).
 
 - **Address format changes**: Adding support for segwit/taproot/bech32 addresses in PoX 2.
-- **Constructing stacking operations**: Rosetta has built-in support for performing various "Stacking" operations, which under the hood perform PoX-1 contract calls. These need to be changed to PoX-2 contract calls.
-- **Parsing stacking operations**: Adding support for performing various "Stacking" operations, which involve PoX-2 contract calls.
+- **Constructing stacking operations**: Rosetta has built-in support for performing various "Stacking" operations, which perform PoX-1 contract calls under the hood. These need to be changed to PoX-2 contract calls.
+- **Parsing stacking operations**: Adding support for performing various "Stacking" operations involving PoX-2 contract calls.
 
 ## Stacks.js
 
-Mention about 3 sections below.
+Mention about three sections below.
 
 - Methods now accept `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR).
 - New [Stacking](#new-pox-interaction-functions-clarity) and [Helper](#new-helper-methods) methods.
@@ -139,22 +146,18 @@ The following `@stacks/stacking` methods interact with [new PoX functions added 
 
 ### New helper methods
 
-- [`StackingClient.getAccountBalanceLocked()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getAccountBalanceLocked) gets the locked balance of the address from a node (`/v2` endpoint)
-- [`StackingClient.getAccountExtendedBalances()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getAccountExtendedBalances) gets more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs
-- [`StackingClient.getDelegationStatus()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getDelegationStatus) gets the `get-delegation-info` information of the address from a node (read-only contract call)
-- [`StackingClient.getPoxOperationInfo()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getPoxOperationInfo) gets information about the current period of transition to PoX-2
-- [`StackingClient.getStackingContract()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getStackingContract) gets the contract identifier (`address.name`) of the PoX-contract to use. This will be PoX-1, unless PoX-2 is available (anytime after the 2.1 fork).
+<!-- todo: add links to API reference, once live -->
+
+- `StackingClient.getAccountBalanceLocked()` gets the locked balance of the address from a node (`/v2` endpoint)
+- `StackingClient.getAccountExtendedBalance()` gets more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs
+- `StackingClient.getDelegationStatus()` gets the `get-delegation-info` information of the address from a node (read-only contract call)
+- `StackingClient.getPoxOperationInfo()` gets information about the current period of transition to PoX-2
 
 ### Migration
 
 Previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b).
-
-However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`. The updated release will also always prefer PoX-2 if possible.
+However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`.
 
 ```
 npm install @stacks/stacking@^6.0.0
 ```
-
-:::caution
-There will be a short period of time ([Period 2a](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking#overview-of-transition-periods)), where old versions `@stacks/stacking` (<`6.0.0`) will stack to PoX-1, even though PoX-2 is available.
-:::
