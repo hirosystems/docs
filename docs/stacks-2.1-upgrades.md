@@ -24,7 +24,7 @@ The PoX-2 fork happens with the following periods. These periods help Hiro under
 
 > **_NOTE:_**
 >
-> PoX-2 is not immediately used for reward cycles after the 2.1 fork! Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
+> PoX-2 is not immediately used for reward cycles after the 2.1 fork. Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
 
 Now, let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
 
@@ -78,8 +78,8 @@ These block heights can be customized using the settings:
 ```
 [devnet]
 ...
-epoch_2_05 = 107
-epoch_2_1 = 114
+epoch_2_05 = 102
+epoch_2_1 = 106
 ```
 
 > **_NOTE:_**
@@ -91,7 +91,7 @@ In the current release, contracts are not automatically deployed when running `c
 
 `$ clarinet deployments apply --devnet`
 
-Clarinet has updates for the following features to work on Stacks 2.1. For more information, refer to [new features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet)
+Clarinet has been updated with new features to work with Stacks 2.1. For more detailed information about these updates, refer to [new features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet).
 
 ## Stacks Blockchain API
 
@@ -99,11 +99,11 @@ Clarinet has updates for the following features to work on Stacks 2.1. For more 
 
 The endpoints ` /extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-principal>` returns a new property, `clarity_version.`
 
-Sample response for a versioned smart contract transaction with Clarity version 2:
+A sample response for a versioned smart contract transaction with Clarity version 2 is shown below:
 
 "clarity_version": 2
 
-Sample response for a regular (non-versioned) smart contract transaction with Clarity version null:
+A sample response for a regular (non-versioned) smart contract transaction with Clarity version null is shown below:
 
 "clarity_version": null
 
@@ -149,15 +149,14 @@ The following `@stacks/stacking` methods interact with [new PoX functions added 
 
 <!-- todo: add links to API reference, once live -->
 
-- `StackingClient.getAccountBalanceLocked()` gets the locked balance of the address from a node (`/v2` endpoint)
-- `StackingClient.getAccountExtendedBalance()` gets more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs
-- `StackingClient.getDelegationStatus()` gets the `get-delegation-info` information of the address from a node (read-only contract call)
-- `StackingClient.getPoxOperationInfo()` gets information about the current period of transition to PoX-2
+- `StackingClient.getAccountBalanceLocked()` retrieves the locked balance of the address from a node (`/v2` endpoint).
+- `StackingClient.getAccountExtendedBalance()` retrieves more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs.
+- `StackingClient.getDelegationStatus()` retrieves the `get-delegation-info` information of the address from a node (read-only contract call).
+- `StackingClient.getPoxOperationInfo()` retrieves information about the current period of transition to PoX-2.
 
 ### Migration
 
-Previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b).
-However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`.
+Previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b.  However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`.
 
 ```
 npm install @stacks/stacking@^6.0.0
