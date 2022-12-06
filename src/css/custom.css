@@ -62,8 +62,7 @@
   --ifm-code-font-size: 95%;
   --ifm-alert-border-left-width: 0px;
 
-  --custom-color-border: #eeeff2;
-  --custom-color-text-disabled: #8d929b;
+  --aa-primary-color-rgb: var(--ifm-color-primary-lighter);
 }
 
 [data-theme='dark'] {
@@ -76,7 +75,6 @@
   --ifm-color-primary-lightest: #ff884d;
 
   --ifm-color-primary: var(--ifm-color-primary-lighter);
-  --ifm-color-secondary: var(--ifm-color-gray-100);
 }
 
 html[data-theme='dark'] {
@@ -143,6 +141,15 @@ table {
   border-radius: 3px;
 }
 
+/* custom logo class */
+.hiro-logo {
+  height: 26px;
+  margin-top: 1px;
+  margin-left: 18px;
+}
+
+/* SEARCH PLUGIN =================================================================== */
+
 /* fix for duplicate padding, after search bar update */
 .navbar__items div[class^='searchBox_'] {
   padding-top: 0;
@@ -150,11 +157,29 @@ table {
   min-width: 122.828125px; /* reduces layout shift by late search box loading */
 }
 
-/* custom logo class */
-.hiro-logo {
-  height: 26px;
-  margin-top: 1px;
-  margin-left: 18px;
+.dsla-search-wrapper {
+  --aa-input-background-color-rgb: 245, 245, 247 !important;
+}
+
+.aa-DetachedOverlay {
+  --aa-primary-color-rgb: 235, 86, 12 !important;
+}
+
+.aa-SubmitIcon {
+  color: rgb(115, 119, 125) !important;
+}
+
+.aa-DetachedSearchButton {
+  border: 0 !important;
+  border-radius: 7px !important;
+}
+
+.aa-DetachedSearchButton:after {
+  content: 'Search';
+}
+
+.aa-DetachedSearchButtonPlaceholder {
+  display: none;
 }
 
 /* FOOTER =================================================================== */
