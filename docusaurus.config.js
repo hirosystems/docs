@@ -141,10 +141,10 @@ module.exports = {
         ],
       },
       footer: {
-        style: 'light',
         logo: {
           alt: 'Hiro developers',
           src: 'img/hiro-docs-footer.svg',
+          srcDark: 'img/hiro-docs-footer-light.svg',
         },
         links: [
           {
