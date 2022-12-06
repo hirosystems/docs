@@ -141,7 +141,7 @@ module.exports = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         logo: {
           alt: 'Hiro developers',
           src: 'img/hiro-docs-footer.svg',

@@ -6,35 +6,58 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: rgb(85, 70, 255);
-  --ifm-color-primary-dark: rgb(33, 175, 144);
-  --ifm-color-primary-darker: rgb(31, 165, 136);
-  --ifm-color-primary-darkest: rgb(26, 136, 112);
-  --ifm-color-primary-light: rgb(70, 203, 174);
-  --ifm-color-primary-lighter: rgb(102, 212, 189);
-  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-primary: #ff5500;
+  --ifm-color-primary-dark: #e64d00;
+  --ifm-color-primary-darker: #d94800;
+  --ifm-color-primary-darkest: #b33b00;
+  --ifm-color-primary-light: #ff661a;
+  --ifm-color-primary-lighter: #ff6e26;
+  --ifm-color-primary-lightest: #ff884d;
+
+  --ifm-color-gray-100: #f7faff;
+  --ifm-color-gray-200: #d9dee8;
+  --ifm-color-gray-300: #bcc4d1;
+  --ifm-color-gray-400: #a2abb9;
+  --ifm-color-gray-500: #8a93a2;
+  --ifm-color-gray-600: #747c8b;
+  --ifm-color-gray-700: #5f6674;
+  --ifm-color-gray-800: #373c45;
+  --ifm-color-gray-900: #121417;
+
   --ifm-code-font-size: 95%;
   --ifm-global-shadow-lw: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
+
+  --custom-color-border: #eeeff2;
+  --custom-color-text-disabled: #8d929b;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #ff5500;
+  --ifm-color-primary-dark: #e64d00;
+  --ifm-color-primary-darker: #d94800;
+  --ifm-color-primary-darkest: #b33b00;
+  --ifm-color-primary-light: #ff661a;
+  --ifm-color-primary-lighter: #ff6e26;
+  --ifm-color-primary-lightest: #ff884d;
 }
 
 html[data-theme='dark'] {
-  --ifm-color-primary: #9494ff;
-  --ifm-toc-border-color: var(--ifm-color-emphasis-300);
+  /* --ifm-toc-border-color: var(--ifm-color-emphasis-300); */
 }
 
 html[data-theme='dark'] table,
 html[data-theme='dark'] td,
 html[data-theme='dark'] th,
 html[data-theme='dark'] tr {
-  border-color: #303439;
+  /* border-color: #303439; */
 }
 
 html[data-theme='dark'] .redoc-wrap a {
-  color: #9494ff;
+  /* color: #9494ff; */
 }
 
 .footer__link-item:hover {
-  color: #9494ff;
+  /* color: #9494ff; */
 }
 
 .docusaurus-highlight-code-line {
@@ -91,7 +114,32 @@ html[data-theme='dark'] .header-github-link::before {
 
 /* custom logo class */
 .hiro-logo {
-  margin-left: 4px;
+  height: 26px;
+  margin-top: 1px;
+  margin-left: 18px;
+}
+
+/* FOOTER =================================================================== */
+footer.footer {
+  background-color: #fff;
+  border-top: 1px solid var(--custom-color-border);
+}
+
+.footer {
+  background-color: var(--ifm-footer-background-color);
+  color: var(--ifm-footer-color);
+  padding: var(--ifm-footer-padding-vertical) var(--ifm-footer-padding-horizontal);
+}
+
+.footer--dark {
+  --ifm-footer-background-color: #303846;
+  --ifm-footer-color: var(--ifm-footer-link-color);
+  --ifm-footer-link-color: var(--ifm-color-secondary);
+  --ifm-footer-title-color: var(--ifm-color-white);
+}
+
+.footer__copyright {
+  color: var(--custom-color-text-disabled);
 }
 
 /* reduces footer layout shift */
