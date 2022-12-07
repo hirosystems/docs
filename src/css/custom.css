@@ -75,25 +75,22 @@
   --ifm-color-primary-lightest: #ff884d;
 
   --ifm-color-primary: var(--ifm-color-primary-lighter);
+
+  --ifm-background-color: var(--ifm-color-emphasis-100) !important;
+  --ifm-background-surface-color: var(--ifm-color-emphasis-100) !important;
+
+  --ifm-toc-border-color: var(--ifm-color-emphasis-200);
 }
 
-html[data-theme='dark'] {
-  /* --ifm-toc-border-color: var(--ifm-color-emphasis-300); */
+[data-theme='dark'] table,
+[data-theme='dark'] td,
+[data-theme='dark'] th,
+[data-theme='dark'] tr {
+  border-color: var(--ifm-color-emphasis-200);
 }
 
-html[data-theme='dark'] table,
-html[data-theme='dark'] td,
-html[data-theme='dark'] th,
-html[data-theme='dark'] tr {
-  /* border-color: #303439; */
-}
-
-html[data-theme='dark'] .redoc-wrap a {
-  /* color: #9494ff; */
-}
-
-.footer__link-item:hover {
-  /* color: #9494ff; */
+.redocusaurus .redoc-wrap a {
+  color: var(--ifm-color-primary-light);
 }
 
 .docusaurus-highlight-code-line {
@@ -141,6 +138,10 @@ table {
   border-radius: 3px;
 }
 
+[data-theme='dark'] .navbar {
+  box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.07);
+}
+
 /* custom logo class */
 .hiro-logo {
   height: 26px !important;
@@ -154,15 +155,31 @@ table {
 .navbar__items div[class^='searchBox_'] {
   padding-top: 0;
   padding-bottom: 0;
-  min-width: 122.828125px; /* reduces layout shift by late search box loading */
+  min-width: 128px; /* reduces layout shift by late search box loading */
 }
 
 .dsla-search-wrapper {
+  --aa-primary-color-rgb: 235, 86, 12 !important;
   --aa-input-background-color-rgb: 245, 245, 247 !important;
 }
 
+[data-theme='dark'] .dsla-search-wrapper {
+  --aa-input-background-color-rgb: 36, 37, 38 !important;
+  --aa-muted-color-rgb: 136, 139, 145 !important;
+}
+
 .aa-DetachedOverlay {
+  --aa-input-border-color-rgb: 136, 139, 145 !important;
   --aa-primary-color-rgb: 235, 86, 12 !important;
+  --aa-muted-color-rgb: 136, 139, 145 !important;
+}
+
+[data-theme='dark'] .aa-DetachedOverlay {
+  --aa-background-color-rgb: 30, 31, 32 !important;
+}
+
+[data-theme='dark'] .aa-Input::placeholder {
+  color: rgb(115, 119, 125) !important;
 }
 
 .aa-SubmitIcon {

@@ -12,6 +12,7 @@ import styles from './HomepageFeatures.module.css';
 type FeatureItem = {
   title: string;
   image: string;
+  imageDark?: string;
   description: JSX.Element;
 };
 
@@ -87,7 +88,7 @@ function Feature({ title, image, imageDark, description }: FeatureItem) {
             className={styles.featureSvg}
             sources={{
               light: useBaseUrl(image),
-              dark: useBaseUrl(imageDark),
+              dark: useBaseUrl(imageDark ?? image),
             }}
           />
         </div>
@@ -116,7 +117,7 @@ export default function HomepageFeatures(): JSX.Element {
   let rows: JSX.Element[] = [];
 
   for (let i = 0; i < Math.ceil(FeatureList.length / 3); i++) {
-    rows.push(<FeatureRow index={i * 3} items={3} />);
+    rows.push(<FeatureRow key={i * 3} index={i * 3} items={3} />);
   }
 
   return (

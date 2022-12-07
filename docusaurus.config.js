@@ -48,7 +48,7 @@ module.exports = {
           },
         ],
         theme: {
-          primaryColor: '#5546FF',
+          primaryColor: '#FF5500',
         },
       },
     ],
