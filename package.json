@@ -1,29 +1,30 @@
 {
   "name": "@hirosystems/docs",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "prettier": "@stacks/prettier-config",
   "scripts": {
+    "build": "yarn update:cli-ref && docusaurus build",
+    "clear": "docusaurus clear",
+    "deploy": "docusaurus deploy",
     "dev": "yarn start",
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "yarn update:cli-ref && docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
-    "clear": "docusaurus clear",
+    "postinstall": "patch-package",
     "serve": "docusaurus serve",
     "spellcheck": "vale --config='.vale.ini' docs/**",
-    "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids",
+    "start": "docusaurus start",
+    "swizzle": "docusaurus swizzle",
     "typecheck": "tsc",
     "update:cli": "yarn upgrade @stacks/cli@latest --dev",
-    "update:cli-ref": "stx docs > src/_data/cli-reference.json && node ./update-cli-ref.js ./src/_data/cli-reference.json -o ./docs/references/"
+    "update:cli-ref": "stx docs > src/_data/cli-reference.json && node ./update-cli-ref.js ./src/_data/cli-reference.json -o ./docs/references/",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "write-translations": "docusaurus write-translations"
   },
   "dependencies": {
     "@cmfcmf/docusaurus-search-local": "^0.11.0",
-    "@docusaurus/core": "^2.1.0",
-    "@docusaurus/module-type-aliases": "^2.1.0",
-    "@docusaurus/preset-classic": "^2.1.0",
+    "@docusaurus/core": "^2.2.0",
+    "@docusaurus/module-type-aliases": "^2.2.0",
+    "@docusaurus/preset-classic": "^2.2.0",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^6.3.1",
     "clsx": "^1.1.1",
@@ -37,14 +38,17 @@
     "yargs": "^17.1.1"
   },
   "devDependencies": {
-    "@stacks/cli": "^4.3.5",
+    "@stacks/cli": "^6.0.2",
     "@stacks/prettier-config": "^0.0.10",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/react": "^18.0.20",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
+    "prettier": "^2.7.1",
     "typescript": "^4.8.3"
   },
   "engines": {
-    "node": ">=16.14 <18.7"
+    "node": ">=16 <19"
   },
   "browserslist": {
     "production": [

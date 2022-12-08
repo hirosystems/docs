@@ -246,5 +246,5 @@ available Clarity calls in Deno, review the [Deno Clarinet library][].
 [test harness]: #testing-with-the-test-harness
 [clarity language reference]: https://docs.stacks.co/references/language-functions
 [asserts]: https://deno.land/std@0.90.0/testing/asserts.ts
-[deno clarinet library]: https://github.com/hirosystems/clarinet/blob/master/deno/index.ts
+[deno clarinet library]: https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-deno/index.ts
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
