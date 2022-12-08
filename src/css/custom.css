@@ -223,3 +223,8 @@ table {
 .footer__logo {
   min-height: 36px;
 }
+
+/* reduce img shift with color mode mismatch (on refresh in dark mode) */
+html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
+  display: none;
+}
