@@ -8,34 +8,29 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is Stacks 2.1?
 
-[Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. The major improvement includes [Stacking](https://www.stacks.co/learn/stacking) with [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/noteworthy-contracts/stacking-contract) (aka PoX-2). Stacking allows users to lock up STX to support the network and earn BTC. For more information on stacking changes, refer to [Stacks 2.1 transition impacts stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking).
-
-> **_NOTE:_**
-> 
-> With the 2.1 transition, the users continuing stacking must restack their STX if they wish to continue stacking after the transition.
+[Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. Among [other improvements](https://www.hiro.so/blog/a-developers-guide-to-stacks-2-1), Stacks 2.1 includes an updated [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/noteworthy-contracts/stacking-contract) (often informally referred to as "PoX-2") for Stacking. Stacking allows users to lock up STX to support the network and earn BTC. For more information on stacking changes, refer to [How Stacks 2.1 Impacts Stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking).
 
 ## What is PoX-2?
 
-[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses [`.PoX`](https://explorer.stacks.co/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w) or `.PoX-1` smart contracts. With the Stacks 2.1 upgrade, the new fork is updated to `.PoX-2`. 
+[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.stacks.co/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-blockchain/blob/next/src/chainstate/stacks/boot/pox-2.clar), aka PoX-2).
 
 ### PoX-2 periods
 
-The PoX-2 fork evolves in the following periods. Hiro products adapt to these periods to align with the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
+The PoX-2 fork evolves in the following periods. Hiro products adapt to these periods to align with the new [network upgrade — SIP-015](https://github.com/stacksgov/sips/blob/a17d318321abf0754e8b2ce5706a9d25493d42ee/sips/sip-015/sip-015-network-upgrade.md).
 
-PoX contracts determine the reward set for the upcoming reward cycle. 
-
-- **`Period 1`**—Stacks 2.0 and PoX-1 consensus rules in effect
-  - **`Period 2a`**-PoX-1 is still active. Stacking or delegating can start with PoX-2.
-  - **`Period 2b`**-PoX-1 deactivates and PoX-2 is now active. Tokens locked in PoX-1 contract unlock.
-- **`Period 3`**—PoX-2 is active. The PoX-2 reward cycle starts.
+- **`Period 1`** — Stacks 2.0 and PoX-1 consensus rules in effect
+- **`Period 2`** — PoX-1 is still active. Stacking or delegating can start with PoX-2.
+  - **`Period 2a`** — PoX-1 deactivates and PoX-2 is now active. Tokens locked in PoX-1 contract unlock.
+  - **`Period 2b`** — In the 2.1 fork, after v1_unlock_height, but before the first PoX-2 reward cycle
+- **`Period 3`** — PoX-2 is active. The first PoX-2 reward cycle starts.
 
 > **_NOTE:_**
 >
 > PoX-2 is not immediately used for reward cycles after the 2.1 fork. Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
 
-The currently "active" PoX contract will determine the reward set for the upcoming reward cycle. If PoX-1 is the "active" contract, the next reward cycle will read from the smart-contract state of PoX-1 to determine **who is paid out to** for Proof-of-Transfer consensus. The transition when PoX-2 is "active," but the current reward set is still being read from PoX-1 state is *Period 2b*.
+The currently "active" PoX contract will determine the reward set for the upcoming reward cycle. If PoX-1 is the "active" contract, the next reward cycle will read from the smart-contract state of PoX-1 to determine **who is paid out to** for Proof-of-Transfer consensus. The transition when PoX-2 is "active," but the current reward set is still being read from PoX-1 state is _Period 2b_.
 
-To understand more about PoX-2 activation, reward cycles, and phases, refer to the below diagram. 
+To understand more about PoX-2 activation, reward cycles, and phases, refer to the below diagram.
 
 ![image](../docs/images/stacks_2.1_periods.jpeg)
 
@@ -84,11 +79,11 @@ If you have any trouble with the above command, refer to the [troubleshooting gu
 
 New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
-As shown in the below screenshot, the epoch changes are indicated in the *Transactions* section `deployed: ST00000000000000002AMW42H.costs-3 (ok true).`
+As shown in the below screenshot, the epoch changes are indicated in the _Transactions_ section `deployed: ST00000000000000002AMW42H.costs-3 (ok true).`
 
 ![image](../docs/images/integrate-epoch-changes.png)
 
-> **NOTE** 
+> **NOTE**
 >
 > If the contracts you're developing use Clarity 2, you must wait for this epoch to cross before deploying your contracts.
 
@@ -110,7 +105,6 @@ In the current release, contracts are not automatically deployed when running `c
 
 `$ clarinet deployments apply --devnet`
 
-
 ## Stacks Blockchain API
 
 The following updates for the API endpoints are for the Stacks 2.1 upgrade.
@@ -119,7 +113,7 @@ The following updates for the API endpoints are for the Stacks 2.1 upgrade.
 
 This section explains the new property returned with the following existing endpoints.
 
-The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now return a new property, `clarity_version.` 
+The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now return a new property, `clarity_version.`
 
 The sample response with the new property is shown below:
 
@@ -184,22 +178,25 @@ This section explains the new PoX interactive functions/methods for Clarity. The
 
 ### New helper methods
 
-The following are the new helper methods introduced with the Stacks 2.1 upgrade.
-
-<!-- todo: add links to API reference, once live -->
-
-- `StackingClient.getAccountBalanceLocked()` retrieves the locked balance of the address from a node (`/v2` endpoint).
-- `StackingClient.getAccountExtendedBalance()` retrieves more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs.
-- `StackingClient.getDelegationStatus()` retrieves the `get-delegation-info` information of the address from a node (read-only contract call).
-- `StackingClient.getPoxOperationInfo()` retrieves information about the current transition period to PoX-2.
+- [`StackingClient.getAccountBalanceLocked()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getAccountBalanceLocked) gets the locked balance of the address from a node (`/v2` endpoint)
+- [`StackingClient.getAccountExtendedBalances()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getAccountExtendedBalances) gets more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs
+- [`StackingClient.getDelegationStatus()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getDelegationStatus) gets the `get-delegation-info` information of the address from a node (read-only contract call)
+- [`StackingClient.getPoxOperationInfo()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getPoxOperationInfo) gets information about the current period of transition to PoX-2
+- [`StackingClient.getStackingContract()`](https://stacks.js.org/classes/_stacks_stacking.StackingClient#getStackingContract) gets the contract identifier (`address.name`) of the PoX-contract to use. This will be PoX-1, unless PoX-2 is available (anytime after the 2.1 fork).
 
 ### Migration
 
-Note that the previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b.  However, if you want to use the new methods detailed above, you need to update `@stacks/stacking` to a version >=`6.0.0`. Use the following command to update the version.
+Previous `@stacks/stacking` releases will automatically switch to the new PoX contract (in Period 2b).
+
+However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`. The updated release will also always prefer PoX-2 if possible. Use the following command to update the version.
 
 ```
 npm install @stacks/stacking@^6.0.0
 ```
+
+:::caution
+There will be a short period of time ([Period 2a](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking#overview-of-transition-periods)), where old versions `@stacks/stacking` (<`6.0.0`) will stack to PoX-1, even though PoX-2 is available.
+:::
 
 ## References
 
