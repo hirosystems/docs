@@ -2,11 +2,11 @@
 title: Test Contract
 ---
 
-Clarinet supports automatic testing, where your blockchain application requirements can be converted to test cases. Clarinet comes with a testing harness based on Deno that applies the unit tests you write in TypeScript to your smart contracts.
+Clarinet supports automatic testing, where you can convert blockchain application requirements to test cases. Clarinet comes with a testing harness based on Deno that applies the unit tests you write in TypeScript to your smart contracts.
 
 ## Clarity contracts and unit tests
 
-Let us consider a `counter` smart contract to get a basic understanding of how to write unit tests for our application requirements.
+Let us consider a `counter` smart contract to understand how to write unit tests for our application requirements.
 
 ```clarity
 ;; counter
@@ -32,7 +32,7 @@ Our `counter` application keeps track of an initialized value, allows for increm
 
 ### Unit tests for `counter` example
 
-When you created your Clarity contract with `$ clarinet contract new <my-project>`, Clarinet automatically created a test file for the contract within the tests directory:  `tests/my-projects_test.ts`. Other files under the `tests/` directory following the Deno test naming convention will also be included:
+Clarinet automatically creates a test file for each contract created with `$ clarinet contract new <new-contract>` within the tests directory. Other files under the `tests/` directory following the Deno test naming convention will also be included in any run of `$ clarinet test`:
 
 - named test.{ts, tsx, mts, js, mjs, jsx, cjs, cts},
 - or ending with .test.{ts, tsx, mts, js, mjs, jsx, cjs, cts},
@@ -46,12 +46,12 @@ Within these tests, developers can simulate mining a block containing transactio
 
 ![VS Code deno error](../images/deno-error.png)
 
-To define a Clarinet test you need to register it with a call to `Clarinet.test()`. In the example unit test below, you see us
+To define a Clarinet test you need to register it with a call to `Clarinet.test()` in the test file. In the example unit test below, you see us
 1. Importing the relevant classes from the Clarinet module on Deno
 2. Instantiating and passing common Clarinet objects to our `Clarinet.test()` API call
 3. Defining a user `wallet_1`, calling `increment`, and asserting its results
 
-```TypeScript
+```typescript
 // counter_test.ts - A unit test file
 import { Clarinet, Tx, Chain, Account, types } from 'https://deno.land/x/clarinet@v1.0.5/index.ts';
 
@@ -71,14 +71,14 @@ Clarinet.test({
 });
 ```
 
-We run this test with
+We run this test and see results with
 ```zsh
 $ clarinet test
 ```
 
-For a complete list of classes, objects, and interfaces available, see the [Deno's Clarinet module index](https://deno.land/x/clarinet/index.ts).
+For a complete list of classes, objects, and interfaces available, see [Deno's Clarinet module index](https://deno.land/x/clarinet/index.ts).
 
-For a step by step walkthrough in using `clarinet test`, you can also watch [Executing Tests and Checking Code Coverage](https://www.youtube.com/watch?v=j2TZ560xEPA&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=10).
+For a step-by-step walkthrough in using `clarinet test`, you can also watch [Executing Tests and Checking Code Coverage](https://www.youtube.com/watch?v=j2TZ560xEPA&list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb&index=10).
 
 
 ### Comprehensive unit tests for `counter`
@@ -86,13 +86,13 @@ For a step by step walkthrough in using `clarinet test`, you can also watch [Exe
 Let us now write a higher coverage test suite.
 
 
-```TypeScript
+```typescript
 // counter_test.ts - a comprehensive unit test file
 import { Clarinet, Tx, Chain, Account, Contract, types } from 'https://deno.land/x/clarinet@v1.0.2/index.ts';
 import { assertEquals } from "https://deno.land/std@0.90.0/testing/asserts.ts";
 
 Clarinet.test({
-    name: "Ensure that counter can be incremented multiples per block, accross multiple blocks",
+    name: "Ensure that counter can be incremented multiples per block, across multiple blocks",
     async fn(chain: Chain, accounts: Map<string, Account>, contracts: Map<string, Contract>) {
         let wallet_1 = accounts.get("wallet_1")!;
         let wallet_2 = accounts.get("wallet_2")!; // multiple users
@@ -119,7 +119,7 @@ Clarinet.test({
             Tx.contractCall("counter", "increment", [types.uint(4)], wallet_1.address),
             Tx.contractCall("counter", "increment", [types.uint(10)], wallet_1.address),
             Tx.transferSTX(1, wallet_2.address, wallet_1.address),
-        ]); // more contract calls, and an STX transfer
+        ]); // contract calls and an STX transfer
 
         assertEquals(block.height, 3);
         block.receipts[0].result
