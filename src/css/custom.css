@@ -4,37 +4,93 @@
  * work well for content-centric websites.
  */
 
+@font-face {
+  font-family: 'Aeonik Fono';
+  src: url('/static/font/AeonikFono-Regular.woff2') format('woff2'),
+    url('/static/font/AeonikFono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url('/static/font/Inter-roman.var.woff2?v=3.19') format('woff2');
+}
+
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: rgb(85, 70, 255);
-  --ifm-color-primary-dark: rgb(33, 175, 144);
-  --ifm-color-primary-darker: rgb(31, 165, 136);
-  --ifm-color-primary-darkest: rgb(26, 136, 112);
-  --ifm-color-primary-light: rgb(70, 203, 174);
-  --ifm-color-primary-lighter: rgb(102, 212, 189);
-  --ifm-color-primary-lightest: rgb(146, 224, 208);
-  --ifm-code-font-size: 95%;
+  --ifm-color-primary: #ff5500;
+  --ifm-color-primary-dark: #e64d00;
+  --ifm-color-primary-darker: #d94800;
+  --ifm-color-primary-darkest: #b33b00;
+  --ifm-color-primary-light: #ff661a;
+  --ifm-color-primary-lighter: #ff6e26;
+  --ifm-color-primary-lightest: #ff884d;
+
+  --ifm-color-gray-100: #fffdfa;
+  --ifm-color-gray-200: #f3f3ee;
+  --ifm-color-gray-300: #e7e8e2;
+  --ifm-color-gray-400: #d9dcd6;
+  --ifm-color-gray-500: #989ca2;
+  --ifm-color-gray-600: #6a6e74;
+  --ifm-color-gray-700: #54575d;
+  --ifm-color-gray-800: #3f4145;
+  --ifm-color-gray-900: #151517;
+
+  --ifm-color-secondary: var(--ifm-color-emphasis-900);
+
+  --ifm-font-family-base: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --ifm-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
+  --ifm-heading-font-family: 'Aeonik Fono', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  --ifm-heading-font-weight: var(--ifm-font-weight-normal);
+  --ifm-button-font-weight: var(--ifm-font-weight-semibold);
+
+  --ifm-global-radius: 2px;
   --ifm-global-shadow-lw: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
+  --ifm-code-font-size: 95%;
+  --ifm-alert-border-left-width: 0px;
+
+  --aa-primary-color-rgb: var(--ifm-color-primary-lighter);
 }
 
-html[data-theme='dark'] {
-  --ifm-color-primary: #9494ff;
-  --ifm-toc-border-color: var(--ifm-color-emphasis-300);
+[data-theme='dark'] {
+  /* --ifm-color-primary: #ff5500; */ /* Contrast isn't great */
+  --ifm-color-primary-dark: #e64d00;
+  --ifm-color-primary-darker: #d94800;
+  --ifm-color-primary-darkest: #b33b00;
+  --ifm-color-primary-light: #ff661a;
+  --ifm-color-primary-lighter: #ff6e26;
+  --ifm-color-primary-lightest: #ff884d;
+
+  --ifm-color-primary: var(--ifm-color-primary-lighter);
+
+  --ifm-background-color: var(--ifm-color-emphasis-100) !important;
+  --ifm-background-surface-color: var(--ifm-color-emphasis-100) !important;
+
+  --ifm-toc-border-color: var(--ifm-color-emphasis-200);
 }
 
-html[data-theme='dark'] table,
-html[data-theme='dark'] td,
-html[data-theme='dark'] th,
-html[data-theme='dark'] tr {
-  border-color: #303439;
+[data-theme='dark'] table,
+[data-theme='dark'] td,
+[data-theme='dark'] th,
+[data-theme='dark'] tr {
+  border-color: var(--ifm-color-emphasis-200);
 }
 
-html[data-theme='dark'] .redoc-wrap a {
-  color: #9494ff;
-}
-
-.footer__link-item:hover {
-  color: #9494ff;
+.redocusaurus .redoc-wrap a {
+  color: var(--ifm-color-primary-light);
 }
 
 .docusaurus-highlight-code-line {
@@ -78,20 +134,89 @@ html[data-theme='dark'] .header-github-link::before {
     no-repeat;
 }
 
-.admonition {
-  border-left: 0;
+table {
+  border-radius: 3px;
 }
+
+[data-theme='dark'] .navbar {
+  box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* custom logo class */
+.hiro-logo {
+  height: 26px !important;
+  margin-top: 3px;
+  margin-left: 18px;
+}
+
+/* SEARCH PLUGIN =================================================================== */
 
 /* fix for duplicate padding, after search bar update */
 .navbar__items div[class^='searchBox_'] {
   padding-top: 0;
   padding-bottom: 0;
-  min-width: 122.828125px; /* reduces layout shift by late search box loading */
+  min-width: 128px; /* reduces layout shift by late search box loading */
 }
 
-/* custom logo class */
-.hiro-logo {
-  margin-left: 4px;
+.dsla-search-wrapper {
+  --aa-primary-color-rgb: 235, 86, 12 !important;
+  --aa-input-background-color-rgb: 245, 245, 247 !important;
+}
+
+[data-theme='dark'] .dsla-search-wrapper {
+  --aa-input-background-color-rgb: 36, 37, 38 !important;
+  --aa-muted-color-rgb: 136, 139, 145 !important;
+}
+
+.aa-DetachedOverlay {
+  --aa-input-border-color-rgb: 136, 139, 145 !important;
+  --aa-primary-color-rgb: 235, 86, 12 !important;
+  --aa-muted-color-rgb: 136, 139, 145 !important;
+}
+
+[data-theme='dark'] .aa-DetachedOverlay {
+  --aa-background-color-rgb: 30, 31, 32 !important;
+}
+
+[data-theme='dark'] .aa-Input::placeholder {
+  color: rgb(115, 119, 125) !important;
+}
+
+.aa-SubmitIcon {
+  color: rgb(115, 119, 125) !important;
+}
+
+.aa-DetachedSearchButton {
+  border: 0 !important;
+  border-radius: 7px !important;
+}
+
+.aa-DetachedSearchButton:after {
+  content: 'Search';
+}
+
+.aa-DetachedSearchButtonPlaceholder {
+  display: none;
+}
+
+/* FOOTER =================================================================== */
+.footer {
+  --ifm-footer-color: var(--ifm-color-emphasis-800);
+  --ifm-footer-link-color: var(--ifm-footer-color);
+  --ifm-footer-title-color: var(--ifm-color-emphasis-900);
+
+  background-color: var(--ifm-background-color);
+  padding: var(--ifm-footer-padding-vertical) var(--ifm-footer-padding-horizontal);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  color: var(--ifm-footer-color);
+}
+
+.footer__title {
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+.footer__copyright {
+  color: var(--ifm-color-emphasis-500);
 }
 
 /* reduces footer layout shift */
