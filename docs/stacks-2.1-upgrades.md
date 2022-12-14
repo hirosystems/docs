@@ -10,7 +10,8 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 [Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. The major improvement includes [Stacking](https://www.stacks.co/learn/stacking) with [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/noteworthy-contracts/stacking-contract) (aka PoX-2). Stacking allows users to lock up STX to support the network and earn BTC. For more information on stacking changes, refer to [Stacks 2.1 transition impacts stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking).
 
-> **Note**
+> **_NOTE:_**
+> 
 > With the 2.1 transition, the users continuing stacking must restack their STX if they wish to continue stacking after the transition.
 
 ## What is PoX-2?
@@ -42,7 +43,11 @@ Now that you have a general understanding of Stacks 2.1 and the PoX changes and 
 
 ## Clarinet
 
+This section explains the Stacks 2.1 updates for Clarinet.
+
 ### Update Devnet settings
+
+This sections helps you update your Devnet settings to work with the Stacks 2.1 updates.
 
 If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md)
 
