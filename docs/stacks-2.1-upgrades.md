@@ -21,24 +21,24 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 The PoX-2 fork evolves in the following periods. The Hiro products adapt to these periods to align with the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
 
-The PoX contracts determine the reward set for the upcomign reward cycle. 
+The PoX contracts determine the reward set for the upcoming reward cycle. 
 
 - **`Period 1`**—Stacks 2.0 and PoX-1 consensus rules in effect
-  - **`Period 2a`**-PoX-1 is still active. Stacking or delegating can start to PoX-2.
-  - **`Period 2b`**-PoX-1 deactivates and PoX-2 is now active. Tokens locked in PoX-1 contract unlocks.
-- **`Period 3`**—PoX-2 is active. PoX-2 reward cycle starts.
+  - **`Period 2a`**-PoX-1 is still active. Stacking or delegating can start with PoX-2.
+  - **`Period 2b`**-PoX-1 deactivates and PoX-2 is now active. Tokens locked in PoX-1 contract unlock.
+- **`Period 3`**—PoX-2 is active. The PoX-2 reward cycle starts.
 
 > **_NOTE:_**
 >
 > PoX-2 is not immediately used for reward cycles after the 2.1 fork. Period 2 (2a and 2b) allows stackers to stack and delegate their funds using PoX-2.
 
-The currently “active” PoX contract will determine the reward set for the upcoming reward cycle. If PoX-1 is the “active” contract, the next reward cycle will read from the smart-contract state of PoX-1 to determine **who is paid out to** for Proof-of-Transfer consensus. The transition when PoX-2 is “active,” but the current reward set is still being read from PoX-1 state is *Period 2b*.
+The currently "active" PoX contract will determine the reward set for the upcoming reward cycle. If PoX-1 is the "active" contract, the next reward cycle will read from the smart-contract state of PoX-1 to determine **who is paid out to** for Proof-of-Transfer consensus. The transition when PoX-2 is "active," but the current reward set is still being read from PoX-1 state is *Period 2b*.
 
-To understand more about PoX-2 activation, reward cycles and phases, refer to the below diagram. 
+To understand more about PoX-2 activation, reward cycles, and phases, refer to the below diagram. 
 
 ![image](../docs/images/stacks_2.1_periods.jpeg)
 
-Now that you have a general understanding of Stacks 2.1 and the PoX changes and what to expect,  let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
+Now that you have a general understanding of Stacks 2.1 and the PoX changes and what to expect let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
 
 ## Clarinet
 
@@ -77,7 +77,7 @@ Spin up a local Devnet network using the command:
 
 If you have any trouble with the above command, refer to our [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
-New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, which was a soft introduced earlier this year, reducing the costs of operations. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
+New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a soft introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
 As shown in the below screenshot, the epoch changes are indicated in the *Transactions* section `deployed: ST00000000000000002AMW42H.costs-3 (ok true).`
 
@@ -113,7 +113,7 @@ The following are the updates for the API endpoints with the Stacks 2.1 updates.
 
 ### Distinguish contract versions
 
-This section explains about the new property returned with the following existing endpoints.
+This section explains the new property returned with the following existing endpoints.
 
 The endpoints [`/extended/v1/tx/<txid>`](/extended/v1/tx/<txid>) and [`/extended/v1/contract/<contract-id>`](https://docs.hiro.so/api#tag/Smart-Contracts/operation/get_contract_by_id) now returns a new property, `clarity_version.` 
 
@@ -169,7 +169,7 @@ Stacks 2.1 updates for Stacks JS include methods now accepting `poxAddress` in m
 
 ### New PoX interactive functions for Clarity
 
-This section explains about the new PoX interactive functions/methods for Clarity. The following are the new `@stacks/stacking` methods that interact with the [new PoX functions added in 2.1](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-extend).
+This section explains the new PoX interactive functions/methods for Clarity. The following are the new `@stacks/stacking` methods that interact with the [new PoX functions added in 2.1](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-extend).
 
 - [`stack-extend`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-extend) = `client.stackExtend()`
 - [`stack-increase`](https://github.com/stacksgov/sips/blob/7c6c69d37c0ab46c0c782bbb203f9eea6d4d42a4/sips/sip-015/sip-015-network-upgrade.md#new-method-stack-increase) = `client.stackIncrease()`
@@ -187,7 +187,7 @@ The following are the new helper methods introduced with the Stacks 2.1 update.
 - `StackingClient.getAccountBalanceLocked()` retrieves the locked balance of the address from a node (`/v2` endpoint).
 - `StackingClient.getAccountExtendedBalance()` retrieves more detailed balances of the address from an API (`/extended` endpoint); this includes STX, FTs, and NFTs.
 - `StackingClient.getDelegationStatus()` retrieves the `get-delegation-info` information of the address from a node (read-only contract call).
-- `StackingClient.getPoxOperationInfo()` retrieves information about the current period of transition to PoX-2.
+- `StackingClient.getPoxOperationInfo()` retrieves information about the current transition period to PoX-2.
 
 ### Migration
 
