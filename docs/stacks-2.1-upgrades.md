@@ -1,5 +1,5 @@
 ---
-title: Stacks 2.1 updates
+title: Stacks 2.1 Upgrade
 ---
 
 ## Overview
@@ -16,13 +16,13 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is PoX-2?
 
-[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses [`.PoX`](https://explorer.stacks.co/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w) or `.PoX-1` smart contracts. With the Stacks 2.1 update, the new fork is updated to `.PoX-2`. 
+[Proof-of-transfer(PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses [`.PoX`](https://explorer.stacks.co/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w) or `.PoX-1` smart contracts. With the Stacks 2.1 upgrade, the new fork is updated to `.PoX-2`. 
 
 ### PoX-2 periods
 
-The PoX-2 fork evolves in the following periods. The Hiro products adapt to these periods to align with the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
+The PoX-2 fork evolves in the following periods. Hiro products adapt to these periods to align with the new [network upgrade - SIP-015](https://github.com/stacksgov/sips/blob/feat/sip-015/sips/sip-015/sip-015-network-upgrade.md).
 
-The PoX contracts determine the reward set for the upcoming reward cycle. 
+PoX contracts determine the reward set for the upcoming reward cycle. 
 
 - **`Period 1`**—Stacks 2.0 and PoX-1 consensus rules in effect
   - **`Period 2a`**-PoX-1 is still active. Stacking or delegating can start with PoX-2.
@@ -39,23 +39,23 @@ To understand more about PoX-2 activation, reward cycles, and phases, refer to t
 
 ![image](../docs/images/stacks_2.1_periods.jpeg)
 
-Now that you have a general understanding of Stacks 2.1 and the PoX changes and what to expect let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 updates.
+Now that you have a general understanding of Stacks 2.1 and the PoX changes and what to expect let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 upgrade.
 
 ## Clarinet
 
-This section explains the Stacks 2.1 updates for Clarinet.
+This section explains the Stacks 2.1 upgrade for Clarinet.
 
 ### Update Devnet settings
 
-This sections helps you update your Devnet settings to work with the Stacks 2.1 updates.
+This sections helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
 If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md)
 
 To upgrade your clarinet version, you can refer to [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
 
-After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml`.
+After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (here after referred to as **devnet.toml**).
 
-You'll find a section [devnet] with the following settings.
+Find the section [devnet] with the following settings.
 
 ```
 [devnet]
@@ -64,7 +64,7 @@ disable_stacks_api = false
 ...
 ```
 
-Now, add a new setting, `enable_next_features = true,` and keep the remaining settings without any change.
+Add a new setting, `enable_next_features = true,` and keep the remaining settings as-is.
 
 The updated Devnet.toml looks like this:
 
@@ -80,9 +80,9 @@ Spin up a local Devnet network using the command:
 
 `$ clarinet integrate`
 
-If you have any trouble with the above command, refer to our [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
+If you have any trouble with the above command, refer to the [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
-New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a soft introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
+New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
 As shown in the below screenshot, the epoch changes are indicated in the *Transactions* section `deployed: ST00000000000000002AMW42H.costs-3 (ok true).`
 
@@ -106,22 +106,22 @@ epoch_2_1 = 106
 
 #### Limitations
 
-In the current release, contracts are not automatically deployed when running `clarinet integrate` with Stacks 2.1. The default devnet deployment needs to be manually applied using the command:
+In the current release, contracts are not automatically deployed when running `clarinet integrate` with Stacks 2.1. The devnet deployment is manually applied using the command:
 
 `$ clarinet deployments apply --devnet`
 
 
 ## Stacks Blockchain API
 
-The following are the updates for the API endpoints with the Stacks 2.1 updates.
+The following updates for the API endpoints are for the Stacks 2.1 upgrade.
 
 ### Distinguish contract versions
 
 This section explains the new property returned with the following existing endpoints.
 
-The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now returns a new property, `clarity_version.` 
+The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now return a new property, `clarity_version.` 
 
-For a versioned smart contract transaction, if you run the above endpoints, you will see a new property in the sample response as shown below with Clarity version 2:
+The sample response with the new property is shown below:
 
 ```
 {
@@ -149,14 +149,14 @@ A sample response for a regular (non-versioned) smart contract transaction with 
 
 ### Coinbase payouts
 
-The Stacks 2.1 updates support alternate recipients for Coinbase transactions. The `alt_recipient` value is passed in the blockchain transaction, and the API returns a new Coinbase `alt_recipient` property on applicable requests; however, if you want to use the latest methods detailed above, you need to update `@stacks/stacking` to version >=`6.0.0`.
+The Stacks 2.1 upgrade supports alternate recipients for Coinbase transactions. The `alt_recipient` value is passed in the blockchain transaction, and the API returns a new Coinbase `alt_recipient` property on applicable requests; if you want to use the latest methods detailed above, you need to update `@stacks/stacking` to version >=`6.0.0`.
 
 The `alt_recipient` value varies based on the standard vs. contract principal recipients.
 
-Standard principal recipient:
+Standard principal recipient sample:
 `"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5" <-- New`
 
-Contract principal recipient:
+Contract principal recipient sample:
 `"alt_recipient": "ST2X2FYCY01Y7YR2TGC2Y6661NFF3SMH0NGXPWTV5.hello_world" <-- New`
 
 ### PoX-2 support for Rosetta API
@@ -169,7 +169,7 @@ The PoX-2 support is extended to various functions mentioned [below](#new-pox-in
 
 ## Stacks.js
 
-Stacks 2.1 updates for Stacks JS include methods now accepting `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR) and new [Stacking](#new-pox-interaction-functions-clarity) and [Helper](#new-helper-methods) methods.
+Stacks 2.1 upgrade for Stacks JS include methods now accepting `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR) and new [Stacking](#new-pox-interaction-functions-clarity) and [Helper](#new-helper-methods) methods.
 
 ### New PoX interactive functions for Clarity
 
@@ -184,7 +184,7 @@ This section explains the new PoX interactive functions/methods for Clarity. The
 
 ### New helper methods
 
-The following are the new helper methods introduced with the Stacks 2.1 update.
+The following are the new helper methods introduced with the Stacks 2.1 upgrade.
 
 <!-- todo: add links to API reference, once live -->
 
