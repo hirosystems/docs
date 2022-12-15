@@ -110,7 +110,6 @@ In the current release, contracts are not automatically deployed when running `c
 
 `$ clarinet deployments apply --devnet`
 
-Clarinet has been updated with new features to work with Stacks 2.1. For more detailed information about these updates, refer to [new features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet).
 
 ## Stacks Blockchain API
 
@@ -120,7 +119,7 @@ The following are the updates for the API endpoints with the Stacks 2.1 updates.
 
 This section explains the new property returned with the following existing endpoints.
 
-The endpoints [`/extended/v1/tx/<txid>`](/extended/v1/tx/<txid>) and [`/extended/v1/contract/<contract-id>`](https://docs.hiro.so/api#tag/Smart-Contracts/operation/get_contract_by_id) now returns a new property, `clarity_version.` 
+The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now returns a new property, `clarity_version.` 
 
 For a versioned smart contract transaction, if you run the above endpoints, you will see a new property in the sample response as shown below with Clarity version 2:
 
