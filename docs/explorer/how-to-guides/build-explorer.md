@@ -14,6 +14,6 @@ You may also build a production version of Explorer. Simply run the following co
 
 `yarn build`
 
-> **_NOTE:_**
->
-> Running `yarn build` also run the default next.js build task.
+:::note
+Running `yarn build` also run the default next.js build task.
+:::

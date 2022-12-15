@@ -26,7 +26,7 @@ To install project dependencies:
 
 ## Setting Environment Variables
 
-The Explorer application needs the environment variables listed below to work properly. 
+The Explorer application needs the environment variables listed below to work properly.
 
 - NEXT_PUBLIC_MAINNET_API_SERVER=https://stacks-node-api.stacks.co
 - NEXT_PUBLIC_TESTNET_API_SERVER=https://stacks-node-api.testnet.stacks.co
@@ -35,6 +35,6 @@ The Explorer application needs the environment variables listed below to work pr
 - NEXT_PUBLIC_MAINNET_ENABLED="true"
 - NEXT_PUBLIC_DEFAULT_POLLING_INTERVAL="10000"
 
-> **_NOTE:_**
->
-> If you are working in a macOS environment, you will need to add these variable to `/etc/paths`.
+:::note
+If you are working in a macOS environment, you will need to add these variable to `/etc/paths`.
+:::
