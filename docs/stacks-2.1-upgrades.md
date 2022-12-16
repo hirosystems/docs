@@ -53,7 +53,7 @@ If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/gett
 
 To upgrade your clarinet version, you can refer to [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
 
-After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (here after referred to as **devnet.toml**).
+After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (hereafter referred to as **devnet.toml**).
 
 Find the section [devnet] with the following settings.
 
