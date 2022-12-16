@@ -39,7 +39,7 @@ To understand more about PoX-2 activation, reward cycles, and phases, refer to t
 
 ![image](../docs/images/stacks_2.1_periods.jpeg)
 
-Now that you have a general understanding of Stacks 2.1 and the PoX changes and what to expect let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 upgrade.
+Now that you have a general understanding of Stacks 2.1 and the PoX changes and what to expect, let's dive into each product and understand the new features or improvements to the existing features for Stacks 2.1 upgrade.
 
 ## Clarinet
 
