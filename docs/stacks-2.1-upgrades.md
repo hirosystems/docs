@@ -82,7 +82,7 @@ Spin up a local Devnet network using the command:
 
 If you have any trouble with the above command, refer to the [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
-New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
+New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
 As shown in the below screenshot, the epoch changes are indicated in the *Transactions* section `deployed: ST00000000000000002AMW42H.costs-3 (ok true).`
 
