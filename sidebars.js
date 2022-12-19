@@ -247,7 +247,7 @@ module.exports = {
       type: 'category',
       label: 'Appendix',
       items: [
-        'references/hiro-archiver',
+        'references/hiro-archive',
       ],
     },
     
