@@ -1,5 +1,5 @@
 ---
-title: Stacks 2.1 Upgrade
+title: Stacks 2.1 Upgrades
 ---
 
 ## Overview
@@ -47,11 +47,11 @@ This section explains the Stacks 2.1 upgrade for Clarinet.
 
 ### Update Devnet settings
 
-This sections helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
+This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
 If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md)
 
-To upgrade your clarinet version, you can refer to [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
+To upgrade your clarinet version, you can [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
 
 After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (hereafter referred to as **devnet.toml**).
 
