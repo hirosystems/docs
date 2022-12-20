@@ -48,7 +48,7 @@ module.exports = {
           },
         ],
         theme: {
-          primaryColor: '#5546FF',
+          primaryColor: '#FF5500',
         },
       },
     ],
@@ -141,10 +141,10 @@ module.exports = {
         ],
       },
       footer: {
-        style: 'dark',
         logo: {
           alt: 'Hiro developers',
           src: 'img/hiro-docs-footer.svg',
+          srcDark: 'img/hiro-docs-footer-light.svg',
         },
         links: [
           {
