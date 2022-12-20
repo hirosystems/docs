@@ -18,10 +18,10 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 The PoX-2 fork evolves in the following periods. Hiro products adapt to these periods to align with the new [network upgrade — SIP-015](https://github.com/stacksgov/sips/blob/a17d318321abf0754e8b2ce5706a9d25493d42ee/sips/sip-015/sip-015-network-upgrade.md).
 
-- **`Period 1`** — Stacks 2.0 and PoX-1 consensus rules in effect
+- **`Period 1`** — Stacks 2.0 and PoX-1 consensus rules in effect.
 - **`Period 2`** — PoX-1 is still active. Stacking or delegating can start with PoX-2.
   - **`Period 2a`** — PoX-1 deactivates and PoX-2 is now active. Tokens locked in PoX-1 contract unlock.
-  - **`Period 2b`** — In the 2.1 fork, after v1_unlock_height, but before the first PoX-2 reward cycle
+  - **`Period 2b`** — In the 2.1 fork, after v1_unlock_height, but before the first PoX-2 reward cycle.
 - **`Period 3`** — PoX-2 is active. The first PoX-2 reward cycle starts.
 
 > **_NOTE:_**
@@ -44,7 +44,7 @@ This section explains the Stacks 2.1 upgrade for Clarinet.
 
 This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
-If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md)
+If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md).
 
 To upgrade your clarinet version, you can [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
 
