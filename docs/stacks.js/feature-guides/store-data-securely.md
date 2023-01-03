@@ -2,7 +2,7 @@
 title: Store Data Securely
 ---
 
-import StacksjsStartersNote from '../../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../../includes/\_stacksjs-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
@@ -174,4 +174,3 @@ storage.deleteFile(fileName).then(() => {
 Apps can save and delete data only for the active session user.
 
 :::
-
