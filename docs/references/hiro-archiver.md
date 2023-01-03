@@ -60,7 +60,7 @@ Here are a couple of examples of how a download link can be generated for a spec
 ## How to use
 
 ### [New] for v6.x.x of the API
-Generating a tsv directly from the Postgres database is the preferred method of obtaining and replaying the tsv for v6.x.x.  
+Generating a TSV directly from the Postgres database is the preferred method of obtaining and replaying the TSV for v6.x.x.  
 It is neccessary to restore the Postgres database first, then from the API at startup, exec the following:
 ```shell
 node ./lib/index.js export-events --file {{ your awesome tsv filename }} --overwrite-file
