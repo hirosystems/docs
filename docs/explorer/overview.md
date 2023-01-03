@@ -16,9 +16,9 @@ Once you have cloned the Explorer repositories, you will need to install the fol
 - [Yarn](https://yarnpkg.com/)
 - [Homebrew](https://brew.sh/)
 
-> **_NOTE:_**
->
-> Although Homebrew is not required to install and operate Explorer, it is highly recommended.
+:::note
+Although Homebrew is not required to install and operate Explorer, it is highly recommended.
+:::
 
 Open your terminal window, and make sure you are in the `/explorer` folder. Run the `yarn` to install the dependencies:
 
