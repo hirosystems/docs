@@ -82,6 +82,10 @@ module.exports = {
                 to: '/api',
               },
               {
+                label: 'Token Metadata Service',
+                to: 'https://token-metadata-service-dlkidjgff-blockstack.vercel.app/',
+              },
+              {
                 label: 'Stacks CLI',
                 to: '/references/stacks-cli',
               },
