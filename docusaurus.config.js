@@ -83,7 +83,7 @@ module.exports = {
               },
               {
                 label: 'Token Metadata Service',
-                to: 'https://token-metadata-service-dlkidjgff-blockstack.vercel.app/',
+                href: 'https://token-metadata-service-dlkidjgff-blockstack.vercel.app/',
               },
               {
                 label: 'Stacks CLI',
