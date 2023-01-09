@@ -128,7 +128,8 @@ module.exports = {
           name: "remote-docs-stx-js-how-to", // used by CLI, must be path safe
           sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/how-to-guides/", // the base url for the markdown (gets prepended to all of the documents when fetching)
           outDir: "docs/stacks.js/how-to-guides", // the base directory to output to.
-          documents: ["how-to-integrate-stacking.md",
+          documents: ["how-to-integrate-stacking-delegation.md",
+          "how-to-integrate-stacking.md",
           "how-to-migrate-from-blockstack.js.md",
           "how-to-use-stacks-connect-with-angular.md",
           

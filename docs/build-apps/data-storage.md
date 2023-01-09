@@ -3,7 +3,7 @@ id: data-storage
 title: Storing Data Securely
 ---
 
-import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../stacks.js/includes/stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 

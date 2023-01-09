@@ -206,7 +206,7 @@ module.exports = {
           type: 'category',
           label: 'How-to Guides',
           items: [
-            
+            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
             'stacks.js/how-to-guides/how-to-integrate-stacking',
             'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
             'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',

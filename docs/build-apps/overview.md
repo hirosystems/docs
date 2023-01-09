@@ -3,7 +3,7 @@ id: overview
 title: Building on Stacks
 ---
 
-import StacksjsStartersNote from '../includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../stacks.js/includes/stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
