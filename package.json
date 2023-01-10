@@ -7,7 +7,7 @@
     "build": "yarn update:cli-ref && docusaurus build",
     "clear": "docusaurus clear",
     "deploy": "docusaurus deploy",
-    "dev": "yarn start",
+    "dev": "docusaurus start",
     "docusaurus": "docusaurus",
     "postinstall": "patch-package",
     "serve": "docusaurus serve",
@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "@cmfcmf/docusaurus-search-local": "^0.11.0",
-    "@docusaurus/core": "^2.1.0",
-    "@docusaurus/module-type-aliases": "^2.1.0",
-    "@docusaurus/preset-classic": "^2.1.0",
+    "@docusaurus/core": "^2.2.0",
+    "@docusaurus/module-type-aliases": "^2.2.0",
+    "@docusaurus/preset-classic": "^2.2.0",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^6.3.1",
     "clsx": "^1.1.1",
@@ -39,7 +39,7 @@
     "yargs": "^17.1.1"
   },
   "devDependencies": {
-    "@stacks/cli": "^4.3.5",
+    "@stacks/cli": "^6.0.2",
     "@stacks/prettier-config": "^0.0.10",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/react": "^18.0.20",

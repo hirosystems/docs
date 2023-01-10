@@ -2,11 +2,10 @@
 id: heystack
 title: Heystack chat app
 ---
-import NodeLTS from '../includes/node-lts-version.mdx';
 
-:::note
+import NodeLTS from '../includes/\_node-lts-version.mdx';
+
 <NodeLTS/>
-:::
 
 ## Introduction
 
@@ -222,14 +221,14 @@ The [connect wallet button component][] implements the interface with the Stacks
 [`@stacks/connect-react`][] package.
 
 ```tsx
-import { Button } from "@components/button";
-import React from "react";
-import { useConnect } from "@stacks/connect-react";
-import { ButtonProps } from "@stacks/ui";
-import { useLoading } from "@hooks/use-loading";
-import { LOADING_KEYS } from "@store/ui";
+import { Button } from '@components/button';
+import React from 'react';
+import { useConnect } from '@stacks/connect-react';
+import { ButtonProps } from '@stacks/ui';
+import { useLoading } from '@hooks/use-loading';
+import { LOADING_KEYS } from '@store/ui';
 
-export const ConnectWalletButton: React.FC<ButtonProps> = (props) => {
+export const ConnectWalletButton: React.FC<ButtonProps> = props => {
   const { doOpenAuth } = useConnect();
   const { isLoading, setIsLoading } = useLoading(LOADING_KEYS.AUTH);
   return (
@@ -279,15 +278,15 @@ const UserSection = memo((props: StackProps) => {
 The `use-claim-hey.ts` file provides a React hook for interacting with the token faucet of the Clarity smart contract.
 
 ```ts
-import { useLoading } from "@hooks/use-loading";
-import { LOADING_KEYS } from "@store/ui";
-import { useConnect } from "@stacks/connect-react";
-import { useNetwork } from "@hooks/use-network";
-import { useCallback } from "react";
-import { useHeyContract } from "@hooks/use-hey-contract";
-import { REQUEST_FUNCTION } from "@common/constants";
-import { principalCV } from "@stacks/transactions/dist/clarity/types/principalCV";
-import { useCurrentAddress } from "@hooks/use-current-address";
+import { useLoading } from '@hooks/use-loading';
+import { LOADING_KEYS } from '@store/ui';
+import { useConnect } from '@stacks/connect-react';
+import { useNetwork } from '@hooks/use-network';
+import { useCallback } from 'react';
+import { useHeyContract } from '@hooks/use-hey-contract';
+import { REQUEST_FUNCTION } from '@common/constants';
+import { principalCV } from '@stacks/transactions/dist/clarity/types/principalCV';
+import { useCurrentAddress } from '@hooks/use-current-address';
 
 export function useHandleClaimHey() {
   const address = useCurrentAddress();
@@ -429,8 +428,8 @@ method from the `TransactionsApi` object exported by the [`@stacks/blockchain-ap
 Pending transactions are read from the mempool in a similar implementation.
 
 ```ts
-export const pendingTxsAtom = atomWithQuery<Heystack[], string>((get) => ({
-  queryKey: ["hey-pending-txs"],
+export const pendingTxsAtom = atomWithQuery<Heystack[], string>(get => ({
+  queryKey: ['hey-pending-txs'],
   refetchInterval: 1000,
   ...(defaultOptions as any),
   queryFn: async (): Promise<Heystack[]> => {
@@ -439,31 +438,29 @@ export const pendingTxsAtom = atomWithQuery<Heystack[], string>((get) => ({
     const txs = await client.getMempoolTransactionList({ limit: 96 });
     const heyTxs = (txs as MempoolTransactionListResponse).results
       .filter(
-        (tx) =>
-          tx.tx_type === "contract_call" &&
+        tx =>
+          tx.tx_type === 'contract_call' &&
           tx.contract_call.contract_id === HEY_CONTRACT &&
           tx.contract_call.function_name === MESSAGE_FUNCTION &&
-          tx.tx_status === "pending"
+          tx.tx_status === 'pending'
       )
-      .map((tx) => tx.tx_id);
+      .map(tx => tx.tx_id);
 
-    const final = await Promise.all(
-      heyTxs.map(async (txId) => client.getTransactionById({ txId }))
-    );
+    const final = await Promise.all(heyTxs.map(async txId => client.getTransactionById({ txId })));
 
     return (
-      (final as ContractCallTransaction[]).map((tx) => {
+      (final as ContractCallTransaction[]).map(tx => {
         const attachment = tx.contract_call.function_args?.[1].repr
-          .replace(`(some u"`, "")
+          .replace(`(some u"`, '')
           .slice(0, -1);
 
         return {
           sender: tx.sender_address,
           content: tx.contract_call.function_args?.[0].repr
-            .replace(`u"`, "")
+            .replace(`u"`, '')
             .slice(0, -1) as string,
           id: tx.tx_id,
-          attachment: attachment === "non" ? undefined : attachment,
+          attachment: attachment === 'non' ? undefined : attachment,
           timestamp: (tx as any).receipt_time,
           isPending: true,
         };
@@ -512,7 +509,7 @@ const nothing = noneCV();
 const something = someCV(t);
 
 // construct a buffer clarity value from an existing Buffer
-const buffer = Buffer.from("foo");
+const buffer = Buffer.from('foo');
 const bufCV = bufferCV(buffer);
 
 // construct signed and unsigned integer clarity values
@@ -520,8 +517,8 @@ const i = intCV(-10);
 const u = uintCV(10);
 
 // construct principal clarity values
-const address = "SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B";
-const contractName = "contract-name";
+const address = 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B';
+const contractName = 'contract-name';
 const spCV = standardPrincipalCV(address);
 const cpCV = contractPrincipalCV(address, contractName);
 
@@ -559,8 +556,8 @@ of demonstration, Heystack looks for BNS names against the user's mainnet wallet
 
 ```ts
 export const namesAtom = atomFamily((address: string) =>
-  atom(async (get) => {
-    if (!address || address === "") return;
+  atom(async get => {
+    if (!address || address === '') return;
     const network = get(mainnetNetworkAtom);
     if (!network) return null;
 

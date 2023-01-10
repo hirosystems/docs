@@ -274,7 +274,7 @@ module.exports = {
           },
         ],
         theme: {
-          primaryColor: '#5546FF',
+          primaryColor: '#FF5500',
         },
       },
     ],
@@ -306,6 +306,10 @@ module.exports = {
               {
                 label: 'Stacks Blockchain API',
                 to: '/api',
+              },
+              {
+                label: 'Token Metadata Service',
+                href: 'https://token-metadata-service-dlkidjgff-blockstack.vercel.app/',
               },
               {
                 label: 'Stacks CLI',
@@ -367,10 +371,10 @@ module.exports = {
         ],
       },
       footer: {
-        style: 'dark',
         logo: {
           alt: 'Hiro developers',
           src: 'img/hiro-docs-footer.svg',
+          srcDark: 'img/hiro-docs-footer-light.svg',
         },
         links: [
           {
