@@ -94,6 +94,10 @@ module.exports = {
                 href: 'https://stacks.js.org',
               },
               {
+                label: 'Stacks Connect',
+                href: 'https://connect.stacks.js.org/modules/_stacks_connect',
+              },
+              {
                 label: 'Clarity Functions',
                 href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-functions',
               },
