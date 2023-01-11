@@ -44,9 +44,9 @@ This section explains the Stacks 2.1 upgrade for Clarinet.
 
 This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
-If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md).
+If you are new to Clarinet, refer to the [Getting started](/clarinet/getting-started) guide to install clarinet, [set up local development environment](/clarinet/how-to-guides/how-to-set-up-local-development-environment) and [create your project](/clarinet/how-to-guides/how-to-create-new-project).
 
-To upgrade your clarinet version, you can [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
+To upgrade your clarinet version, you can [install from a pre-built binary](/clarinet/getting-started#install-from-a-pre-built-binary) or [install from source using Cargo](/clarinet/getting-started#install-from-source-using-cargo).
 
 After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (hereafter referred to as **devnet.toml**).
 
@@ -75,7 +75,7 @@ Spin up a local Devnet network using the command:
 
 `$ clarinet integrate`
 
-If you have any trouble with the above command, refer to the [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
+If you have any trouble with the above command, refer to the [troubleshooting guide](/clarinet/troubleshooting) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
 New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
