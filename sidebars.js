@@ -50,7 +50,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Developer Resources',
-          items: [
+          items: [            
             {
               type: 'link',
               label: 'Contribution Guidelines',
@@ -155,6 +155,11 @@ module.exports = {
           type: 'category',
           label: 'Developer Resources',
           items: [
+            {
+              type: 'link',
+              label: 'Stacks Blockchain client API Reference',
+              href: 'https://hirosystems.github.io/stacks-blockchain-api/client',
+            },
             {
               type: 'link',
               label: 'Contribution Guidelines',
