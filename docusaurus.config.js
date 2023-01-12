@@ -95,7 +95,7 @@ module.exports = {
               },
               {
                 label: 'Stacks Connect',
-                href: 'https://connect.stacks.js.org/modules/_stacks_connect',
+                href: 'https://connect.stacks.js.org',
               },
               {
                 label: 'Clarity Functions',
