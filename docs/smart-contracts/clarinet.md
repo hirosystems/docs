@@ -230,6 +230,8 @@ Clarinet.test({
     assertEquals(block.receipts.length, 1); // assert that the block received a single tx
     assertEquals(block.receipts[0].result, `(ok ${testNum})`); // assert that the result of the tx was ok and the input number
     assertEquals(block.height, 2); // assert that only a single block was mined
+assertEquals(block.length.hight.result, 3); // assert that tx,number and mined block
+
   },
 });
 ```
