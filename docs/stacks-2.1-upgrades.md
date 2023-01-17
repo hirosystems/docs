@@ -71,6 +71,15 @@ disable_stacks_api = false
 ...
 ```
 
+If you wish to publish your contracts compatible with Stacks 2.1, you can specify the epoch value by navigating to your project folder and to `clarinet.toml` and updating the below settings.
+
+```toml
+[contracts.cbtc-token]
+path = "contracts/cbtc-token.clar"
+clarity = 2
+epoch = "2.1"
+```
+
 Spin up a local Devnet network using the command:
 
 `$ clarinet integrate`
