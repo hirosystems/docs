@@ -98,6 +98,23 @@ module.exports = {
               },
             ],
           },
+          {
+            type: 'dropdown',
+            label: 'Product Changelog',
+            position: 'left',
+            items: [
+              {
+                type: 'doc',
+                label: 'November 2022 Product Changelog',
+                docId: 'product-changelog-november',
+              },
+              {
+                type: 'doc',
+                label: 'December 2022 Product Changelog',
+                docId: 'product-changelog-december',
+              },
+            ],
+          },
 
           {
             type: 'doc',
