@@ -140,6 +140,10 @@ module.exports = {
                 label: 'Example Apps',
                 to: '/example-apps',
               },
+              {
+                label: 'Product Changelog',
+                to: '/product_changelog',
+              },
             ],
           },
           {
