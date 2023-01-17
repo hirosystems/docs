@@ -96,6 +96,11 @@ module.exports = {
                 label: 'Stacks.js Starters',
                 docId: 'stacksjs-starters',
               },
+              {
+                type: 'doc',
+                label: 'Contributors Guide',
+                docId: 'contributors-guide',
+              },
             ],
           },
           {
@@ -160,6 +165,10 @@ module.exports = {
               {
                 label: 'Product Changelog',
                 to: '/product_changelog',
+              },
+              {
+                label: 'Contributors Guide',
+                to: '/contributors-guide',
               },
             ],
           },
