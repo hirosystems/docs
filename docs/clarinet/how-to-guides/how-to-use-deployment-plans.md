@@ -1,6 +1,6 @@
 # Deployment plans
 
-Deployment Plans are reproducible deployment steps that publish a collection of on-chain transactions and one or more contracts to a network, whether a local developer network, the public testwork, or into production on mainnet. Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more, while also ensuring reproducible deployments which are critical for testing purposes.
+Deployment Plans are reproducible deployment steps that publish a collection of on-chain transactions and one or more contracts to a network, whether a local developer network, the public testnet, or into production on mainnet. Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more, while also ensuring reproducible deployments which are critical for testing purposes.
 
 <center>
 <img src="../images/deployment-plan-blocks.png" alt="dpb" width="400"/ >
