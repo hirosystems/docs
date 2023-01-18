@@ -50,7 +50,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Developer Resources',
-          items: [            
+          items: [
             {
               type: 'link',
               label: 'Contribution Guidelines',
