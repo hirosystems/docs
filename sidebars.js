@@ -157,6 +157,11 @@ module.exports = {
           items: [
             {
               type: 'link',
+              label: 'Stacks Blockchain JS Client API Reference',
+              href: 'https://hirosystems.github.io/stacks-blockchain-api/client',
+            },
+            {
+              type: 'link',
               label: 'Contribution Guidelines',
               href: 'https://github.com/hirosystems/stacks-blockchain-api',
             },
