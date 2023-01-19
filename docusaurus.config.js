@@ -241,18 +241,33 @@ module.exports = {
     [
       '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/hirosystems/docs/edit/main/',
+
+          editUrl({ docPath }) {
+            const repoUrls = {
+              clarinet: 'https://github.com/hirosystems/clarinet/blob/main/docs',
+              explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
+              'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
+              'stacks-blockchain-api':
+                'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
+            };
+            console.log('docPath', docPath);
+            const [repo, ...rem] = docPath.split('/');
+            if (repo in repoUrls) {
+              return `${repoUrls[repo]}/${rem.join('/')}`;
+            }
+
+            return `https://github.com/hirosystems/docs/blob/main/docs/${docPath}`;
+          },
           routeBasePath: '/',
           breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      }),
+      },
     ],
     [
       'redocusaurus',
