@@ -42,7 +42,7 @@ This section explains the Stacks 2.1 upgrade for Clarinet.
 
 ### Contract settings
 
-"In your project's `Clarinet.toml` file, you can now specify the epoch during which a contract should be deployed, and the Clarity version it uses. Note that you may **only** select the Clarity version in epoch 2.1. "
+In your project's `Clarinet.toml` file, you can now specify the epoch during which a contract should be deployed, and the Clarity version it uses. Note that you may **only** select the Clarity version in epoch 2.1.
 
 ```toml
 [contracts.cbtc-token]
