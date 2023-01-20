@@ -178,6 +178,10 @@ module.exports = {
                 label: 'Contributors Guide',
                 to: '/contributors-guide',
               },
+              {
+                label: 'Product Changelog',
+                to: '/changelog-intro',
+              },
             ],
           },
           {
