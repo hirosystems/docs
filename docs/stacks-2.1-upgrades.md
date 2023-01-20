@@ -40,6 +40,17 @@ Now that you have a general understanding of Stacks 2.1 and the PoX changes and 
 
 This section explains the Stacks 2.1 upgrade for Clarinet.
 
+### Contract settings
+
+In your project's `Clarinet.toml` file, you can now specify the epoch during which a contract should be deployed, and the Clarity version it uses. Note that you may **only** select the Clarity version in epoch 2.1.
+
+```toml
+[contracts.cbtc-token]
+path = "contracts/cbtc-token.clar"
+clarity = 2
+epoch = "2.1"
+```
+
 ### Update Devnet settings
 
 This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
