@@ -174,6 +174,10 @@ module.exports = {
                 label: 'Example Apps',
                 to: '/example-apps',
               },
+              {
+                label: 'Contributors Guide',
+                to: '/contributors-guide',
+              },
             ],
           },
           {
