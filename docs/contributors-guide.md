@@ -18,9 +18,9 @@ If content is obsolete, technically inaccurate, or unclear, [please create a Git
 
 ## **Pull requests**
 
-To suggest more comprehensive changes or updates to our content, it is best to submit a pull request.
+To suggest more comprehensive changes or updates to the content, it is best to submit a pull request.
 
-For minor changes like typos, click "Edit This Page", located at the bottom of each document. This goes to the source file on GitHub, where a pull request can be submitted for the changes.
+For minor changes like typos, click "Edit This Page," located at the bottom of each document. This goes to the source file on GitHub, where a pull request can be submitted for the changes.
 
 For larger edits or new documents, edit the docs locally, following the steps described below.
 
