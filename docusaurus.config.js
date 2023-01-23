@@ -181,7 +181,7 @@ module.exports = {
               },
               {
                 label: 'Product Changelog',
-                to: '/docs/changelog-intro',
+                to: '/changelog-intro',
               },
             ],
           },
