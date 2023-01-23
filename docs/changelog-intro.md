@@ -10,5 +10,5 @@ This page lists the monthly changes to Hiro products in the section below.
 
 ## Monthly Product Changelogs
 
-- November 2022
-- December 2022
+- November 2022(../changelog-november.md)
+- December 2022(../changelog-december.md)
