@@ -49,7 +49,7 @@ For more information on these updates, please refer to the following resources:
 - [Stacks.js GitHub Repository Overview](https://github.com/hirosystems/stacks.js/pulse/monthly)
 - [Stacks.js Change Comparison](https://github.com/hirosystems/stacks.js/compare/v5.0.2...v6.0.2)
 
-## **Hiro Wallet**
+## **Hiro wallet**
 
 Seevral new features were released for the Hiro Wallet. These features include:
 
@@ -61,7 +61,7 @@ For more information on these changes, please refer to the following resources:
 - [Web v3.29.0](https://github.com/hirosystems/stacks-wallet-web/compare/v3.28.0...v3.29.0)
 - [Desktop v.4.7.0](https://github.com/hirosystems/stacks-wallet/releases/tag/v4.7.0)
 
-## *Explorer**
+## **Explorer**
 
 Stacks Explorer had several new features added and implemented to improve the overall Explorer experience. These updates include:
 
@@ -76,6 +76,6 @@ For more information on these changes, please refer to the following resources:
 - [Explorer GitHub Repository](https://github.com/hirosystems/explorer/pulse/monthly)
 - [Explorer v.1.69.0](https://github.com/hirosystems/explorer/releases/tag/v1.69.0)
 
-## Additional Resources
+## Additional resources
 
 [Hiro 2022December Release Roundup](https://www.hiro.so/blog/release-roundup-december-2022).
