@@ -131,6 +131,7 @@ module.exports = {
                 label: 'Stacks.js Starters',
                 docId: 'stacksjs-starters',
               },
+              
             ],
           },
           {
@@ -180,7 +181,7 @@ module.exports = {
               },
               {
                 label: 'Product Changelog',
-                to: '/changelog-intro',
+                to: '/docs/changelog-intro',
               },
             ],
           },
