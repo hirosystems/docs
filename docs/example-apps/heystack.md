@@ -643,3 +643,5 @@ specific implementation details.
 [`src/store/hey.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/hey.ts
 [`src/components/user-area.tsx`]: https://github.com/hirosystems/heystack/blob/22e4e9020f8bbb404e8c1e36f32f000050f90818/src/components/user-area.tsx#L62
 [separation of concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
+
+

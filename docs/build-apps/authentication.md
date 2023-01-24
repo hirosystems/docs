@@ -3,7 +3,7 @@ id: authentication
 title: Authenticating users
 ---
 
-import StacksjsStartersNote from '../includes/\_stacksjs-starters-note.mdx';
+import StacksjsStartersNote from '../stacks.js/includes/stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
