@@ -4,7 +4,7 @@
  * work well for content-centric websites.
  */
 
- @font-face {
+@font-face {
   font-family: 'Aeonik Fono';
   src: url('/static/font/AeonikFono-Regular.woff2') format('woff2');
   font-weight: normal;
@@ -228,6 +228,10 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   display: none;
 }
 
+/* FEEDBACK ================================================================= */
+/* MIT Copyright Meta */
+/* Taken from https://github.com/facebook/react-native-website/blob/c9cb19e4061b403794492eee4981750c6542e974/website/src/css/customTheme.scss#L1665-L1712 */
+
 .docsRating {
   display: inline-block;
   padding: 16px 30px 16px 40px;
@@ -240,31 +244,39 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   line-height: 32px;
   font-weight: 500;
   border-radius: 0 var(--ifm-global-radius) var(--ifm-global-radius) 0;
-
-  svg {
-    height: 1.5em;
-    width: 1.5em;
-    margin: 0 0 0 6px;
-
-    &:hover,
-    &:focus {
-      cursor: pointer;
-      fill: var(--ifm-color-primary);
-    }
-  }
-
-  .i_thumbsup {
-    fill: #56a211;
-    transform: translateY(0.25em);
-    margin-left: 12px;
-  }
-
-  .i_thumbsdown {
-    fill: #e9430f;
-    transform: scale(-1, -1) translateY(-0.25em);
-  }
 }
 
-html[data-theme="dark"] .docsRating {
+.docsRating svg {
+  height: 1.5em;
+  width: 1.5em;
+  margin: 0 0 0 6px;
+}
+
+.docsRating svg:hover,
+.docsRating svg:focus {
+  cursor: pointer;
+  fill: var(--ifm-color-primary);
+}
+
+.docsRating .i_thumbsup {
+  fill: #56a211;
+  transform: translateY(0.25em);
+  margin-left: 12px;
+}
+
+.docsRating .i_thumbsdown {
+  fill: #e9430f;
+  transform: scale(-1, -1) translateY(-0.25em);
+}
+
+html[data-theme='dark'] .docsRating {
   color: #cee9f3;
+}
+
+@media only screen and (max-width: 996px) {
+  .docsRating {
+    width: 100%;
+    margin: 36px 0 0 !important;
+    border-radius: var(--ifm-global-radius);
+  }
 }
