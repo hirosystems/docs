@@ -15,6 +15,9 @@ function EditMetaRow({ editUrl }) {
   return (
     <div className={clsx(ThemeClassNames.docs.docFooterEditMetaRow, 'row')}>
       <div className="col">{editUrl && <EditThisPage editUrl={editUrl} />}</div>
+      <div className="col">
+        <DocsRating />
+      </div>
     </div>
   );
 }
@@ -31,7 +34,6 @@ export default function DocItemFooter() {
   return (
     <>
       <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        <DocsRating label={metadata.unversionedId} />
         <footer className={clsx(ThemeClassNames.docs.docFooter, 'docusaurus-mt-lg')}>
           {canDisplayTagsRow && <TagsRow tags={tags} />}
           {canDisplayEditMetaRow && <EditMetaRow editUrl={editUrl} />}
