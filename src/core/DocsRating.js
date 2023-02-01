@@ -27,7 +27,7 @@ const DocsRating = ({ label }) => {
   return (
     <div className="docsRating">
       {haveVoted ? (
-        'Thanks for letting us know!'
+        'Thanks for your feedback!'
       ) : (
         <>
           Is this page useful?
