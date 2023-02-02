@@ -4,9 +4,9 @@ title: November 2022 Product Changelog
 
 ## Overview
 
-Hiro contnually makes changes and updates to our products to add new features and functionality. Each month, these changes are described in these pages so you can better understand which products are affected, what changes and updates were made, and what you will need to do to ensure you have these updates.
+Hiro contnually makes changes and updates to add new features and functionality. Each month, these changes describe which products are affected, what changes and updates were made, and what actions need to be taken to ensure have these updates.these updates are applied.
 
-The sections below describe the changes and updates that were made in November
+The sections below describe the changes and updates made in November
 
 
 ## **Stacks API**
@@ -100,6 +100,6 @@ For more information about these changes, please see the following resources:
 - [Explorer GitHub Repository](https://github.com/hirosystems/explorer/pulse/monthly)
 - [Explorer v.1.61.0](https://github.com/hirosystems/explorer/releases/tag/v1.61.0)
 
-## Additional Resources
+## Additional resources
 
 [Hiro 2022 November Release Roundup](https://www.hiro.so/blog/release-roundup-november-2022).

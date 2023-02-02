@@ -8,7 +8,7 @@ Each month, Hiro publishes a [Release Roundup](https://www.hiro.so/blog-categori
 
 This page lists the monthly changes to Hiro products in the section below.
 
-## Monthly Product Changelogs
+## Monthly product changelogs
 
 - November 2022(docs/changelog-november.md)
 - December 2022(docs/changelog-december.md)
