@@ -227,3 +227,35 @@ table {
 html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   display: none;
 }
+
+/* FEEDBACK ================================================================= */
+/* MIT Copyright Meta */
+/* Adapted from https://github.com/facebook/react-native-website/blob/c9cb19e4061b403794492eee4981750c6542e974/website/src/css/customTheme.scss#L1665-L1712 */
+
+.docsRating {
+  text-align: right;
+  color: var(--ifm-color-primary);
+  line-height: 32px;
+}
+
+.docsRating svg {
+  height: 1.5em;
+  width: 1.5em;
+  margin: 0 0 0 4px;
+  fill: var(--ifm-color-primary);
+}
+
+.docsRating svg:hover,
+.docsRating svg:focus {
+  cursor: pointer;
+  fill: var(--ifm-color-primary-lightest);
+}
+
+.docsRating .i_thumbsup {
+  transform: translateY(0.25em);
+  margin-left: 9px;
+}
+
+.docsRating .i_thumbsdown {
+  transform: scale(-1, -1) translateY(-0.25em);
+}
