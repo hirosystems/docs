@@ -140,6 +140,12 @@ module.exports = {
             label: 'Roadmap',
             position: 'right',
           },
+                    {
+            type: 'doc',
+            label: 'Product Changelog',
+            docId: 'changelog-intro',
+            position: 'right',
+          },
           {
             href: 'https://github.com/hirosystems/docs',
             className: 'header-github-link',
