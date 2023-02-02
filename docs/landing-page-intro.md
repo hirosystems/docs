@@ -56,4 +56,3 @@ The documentation sites listed below were used as sources of insipration for the
 - [Stripe](https://stripe.com/docs)
 - [Twilio](https://www.twilio.com/docs)
 - [Linear](https://linear.app/docs)
-
