@@ -10,7 +10,7 @@ This page lays out some initial thinking about how Hiro and its design partners 
 
 ## Landing page
 
-The first experience a developer or reader has with a documentation site is the initial landing page seen when navigating to a docs site (for example, https://companyname.com/docs or http://docs.companyname.com). When a user comes to this page, the expectation is that the site is easy to navigate, in addition to being able to quickly find information. This is the beginning of the "user journey;" a starting point for the time spent on the site. If the landing page is poorly designed, or information is not easily "discoverable," the user likely never begins the user journey, and thus, user engagement suffers.
+The first experience a developer or reader has with a documentation site is the initial landing page seen when navigating to a docs site (for example, *companyname.com/docs* or *docs.companyname.com*). When a user comes to this page, the expectation is that the site is easy to navigate, in addition to being able to quickly find information. This is the beginning of the "user journey;" a starting point for the time spent on the site. If the landing page is poorly designed, or information is not easily "discoverable," the user likely never begins the user journey, and thus, user engagement suffers.
 
 To address these concerns, the Docs team has come up with some ideas, thoughts, and drawings that illustrate initial ideas and thoughts about what is needed for the new Hiro Docs site. Although somewhat rudimentary, these drawings define the team's approach to the redesign and what the new developer documentation experience should look like.
 
