@@ -134,16 +134,17 @@ module.exports = {
               
             ],
           },
+          },
+          {
+            type: 'doc',
+            label: 'Product Changelog',
+            docId: 'changelog-intro',
+            position: 'right',
+          },
           {
             type: 'doc',
             docId: 'roadmap',
             label: 'Roadmap',
-            position: 'right',
-          },
-                    {
-            type: 'doc',
-            label: 'Product Changelog',
-            docId: 'changelog-intro',
             position: 'right',
           },
           {
