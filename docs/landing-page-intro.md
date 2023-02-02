@@ -18,10 +18,10 @@ To address these concerns, the Docs team has come up with some ideas, thoughts, 
 
 The drawings below show an initial design of what the [Hiro Docs](https://docs.hiro.so/) site landing page and content pages could look like with some design improvements.
 
-- Hiro Docs Site Landing Page(images/hiro-landing-page-new.jpg)
-- Hiro Docs - Smart Contracts Page(images/hiro-smart-contracts-page-new.jpg)
-- Hiro Docs - Write Smart Contracts(images/hiro-write-smart-contracts.jpg)
-- Hiro Docs - Basics Developer Resources(images/hiro-basics-developer-resources.jpg)
+- [Hiro Docs Site Landing Page](images/hiro-landing-page-new.jpg)
+- [Hiro Docs - Smart Contracts Page](images/hiro-smart-contracts-page-new.jpg)
+- [Hiro Docs - Write Smart Contracts](images/hiro-write-smart-contracts.jpg)
+- [Hiro Docs - Basics Developer Resources](images/hiro-basics-developer-resources.jpg)
 
 ## User journey and documentation flow
 
