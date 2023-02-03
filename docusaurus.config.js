@@ -138,7 +138,7 @@ module.exports = {
       {
           
           name: "remote-docs-clarinet-docs", 
-          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/main/docs/", 
+          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/", 
           outDir: "docs/clarinet", 
           documents: ["faq.md", "getting-started.md","introduction.md", "troubleshooting.md"
             ], 
@@ -150,7 +150,7 @@ module.exports = {
       {
           
           name: "remote-docs-clarinet-feature-guides", 
-          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/main/docs/feature-guides", 
+          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/feature-guides", 
           outDir: "docs/clarinet/feature-guides", 
           documents: ["analyze-with-check-checker.md",
           "chainhooks.md", "clarinet-deploy.md", "clarinet-integrate.md","extend-clarinet.md" ], 
@@ -162,7 +162,7 @@ module.exports = {
       {
           
           name: "remote-docs-clarinet-how-to", 
-          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/main/docs/how-to-guides/", 
+          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/how-to-guides/", 
           outDir: "docs/clarinet/how-to-guides", 
           documents: ["how-to-add-contract.md", "how-to-check-contract.md", "how-to-create-new-project.md",
           "how-to-debug-contract.md",
@@ -177,7 +177,7 @@ module.exports = {
             {
                 
                 name: "remote-docs-clarinet-images", 
-                sourceBaseUrl: "https://raw.github.com/hirosystems/clarinet/main/docs/images", 
+                sourceBaseUrl: "https://raw.github.com/hirosystems/clarinet/develop/docs/images", 
                 outDir: "docs/clarinet/images", 
                 documents: [
                  "breakpoint.png", 
