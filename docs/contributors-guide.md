@@ -6,7 +6,7 @@ title: Hiro Contributor's Guide
 
 One of the most important ways that Hiro can build out the Stacks developer community and ecosystem is by having feedback and contributions from the developer community. Having this feedback loop and insight into what works, and what does not work, is helpful in prioritizing what content should be written, what content needs to be updated, and what content may be missing.
 
-This guide decribes how to contribute to Hiro documentation and content so feedback is received. Hiro can then incorporate these comments to improve the overall developer documentation experience.
+This guide describes how to contribute to Hiro documentation and content so feedback is received. Hiro can then incorporate these comments to improve the overall developer documentation experience.
 
 # **Contributing to hiro documentation**
 
@@ -20,20 +20,20 @@ If content is obsolete, technically inaccurate, or unclear, [please create a Git
 
 To suggest more comprehensive changes or updates to the content, make documentation changes and then submit a pull request.
 
-For minor changes like typos, click "Edit This Page", located at the bottom of each page. This leads to the source file on GitHub, where a pull request can be submitted.
+For minor changes like typos, click "Edit This Page," located at the bottom of each page. This leads to the source file on GitHub, where a pull request can be submitted.
 
 For larger edits or new documents, edit the docs locally, following the steps described below.
 
 ### **Editing docs locally**
 
-To submit a pull request to update the docs, fork the Hiro Docs repo and then clone it. Currently all Hiro docs are located in `/hirosystems/docs`
+To submit a pull request to update the docs, fork the Hiro Docs repository and then clone it. Currently all Hiro docs are located in `/hirosystems/docs`
 
 1. Create a branch and switch to that branch:
     
     `git checkout -b <branch-name>`
     
 2. Add or modify the GitHub Markdown files in the directories.
-3. When the suggested changes are complete, commit them with a message with a brief summary:
+3. When the suggested changes are complete, commit them with a message with a brief summary message:
     
     `git commit -m "commit message"`
     
