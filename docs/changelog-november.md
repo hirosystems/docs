@@ -4,10 +4,9 @@ title: November 2022 Product Changelog
 
 ## Overview
 
-Hiro contnually makes changes and updates to add new features and functionality. Each month, these changes describe which products are affected, what changes and updates were made, and what actions need to be taken to ensure have these updates.these updates are applied.
+Hiro continually makes changes and updates to add new features to Hiro products. Each month, these changes describe which products are affected, what changes and updates were made, and what actions need to be taken to ensure these updates are applied.
 
 The sections below describe the changes and updates made in November
-
 
 ## **Stacks API**
 

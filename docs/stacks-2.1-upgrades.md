@@ -40,13 +40,24 @@ Now that you have a general understanding of Stacks 2.1 and the PoX changes and 
 
 This section explains the Stacks 2.1 upgrade for Clarinet.
 
+### Contract settings
+
+In your project's `Clarinet.toml` file, you can now specify the epoch during which a contract should be deployed, and the Clarity version it uses. Note that you may **only** select the Clarity version in epoch 2.1.
+
+```toml
+[contracts.cbtc-token]
+path = "contracts/cbtc-token.clar"
+clarity = 2
+epoch = "2.1"
+```
+
 ### Update Devnet settings
 
 This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
-If you are new to Clarinet, refer to the [Getting started](../docs/clarinet/getting-started.md) guide to install clarinet, [set up local development environment](clarinet/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](clarinet/how-to-guides/how-to-create-new-project.md).
+If you are new to Clarinet, refer to the [Getting started](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md) guide to install clarinet, [set up local development environment](https://github.com/hirosystems/clarinet/blob/main/docs/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](https://github.com/hirosystems/clarinet/blob/main/docs/how-to-guides/how-to-create-new-project.md).
 
-To upgrade your clarinet version, you can [install from a pre-built binary](clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](clarinet/getting-started.md#install-from-source-using-cargo).
+To upgrade your clarinet version, you can [install from a pre-built binary](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md#install-from-source-using-cargo).
 
 After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (hereafter referred to as **devnet.toml**).
 
@@ -75,7 +86,7 @@ Spin up a local Devnet network using the command:
 
 `$ clarinet integrate`
 
-If you have any trouble with the above command, refer to the [troubleshooting guide](clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
+If you have any trouble with the above command, refer to the [troubleshooting guide](https://github.com/hirosystems/clarinet/blob/main/docs/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
 New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
