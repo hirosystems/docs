@@ -362,6 +362,7 @@ module.exports = {
                 label: 'Stacks.js Starters',
                 docId: 'stacksjs-starters',
               },
+              
             ],
           },
           {
@@ -404,6 +405,14 @@ module.exports = {
               {
                 label: 'Example Apps',
                 to: '/example-apps',
+              },
+              {
+                label: 'Contributors Guide',
+                to: '/contributors-guide',
+              },
+              {
+                label: 'Product Changelog',
+                to: '/changelog-intro',
               },
             ],
           },
