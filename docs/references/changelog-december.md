@@ -1,5 +1,5 @@
 ---
-title: December Product Changelog
+title: December 2022 Product Changelog
 ---
 
 ## Overview
