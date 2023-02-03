@@ -4,7 +4,7 @@ title: December Product Changelog
 
 ## Overview
 
-Hiro contnually makes changes and updates to our products to add new features and functionality. Each month, these changes are described in these pages so you can better understand which products are affected, what changes and updates were made, and what you will need to do to ensure you have these updates.
+Hiro contnually makes changes and updates to products to add new features. Each month, these changes are described in these pages so users can better understand which products are affected, what changes and updates were made, and what users need to do to ensure you have these updates.
 
 The sections below describe the changes and updates that were made in December.
 
@@ -51,7 +51,7 @@ For more information on these updates, please refer to the following resources:
 
 ## **Hiro wallet**
 
-Seevral new features were released for the Hiro Wallet. These features include:
+Several new features were released for the Hiro Wallet. These features include:
 
 - A "Get Support" button was added, making it easier to transfer within the same wallet.
 - The Hiro Wallet was updated to enable you to track the app domain as an event property for all events triggered within the flow.

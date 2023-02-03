@@ -33,7 +33,7 @@ For more information on these updates and changes, please refer to the following
 
 An ecosystem milestone was reached with code complete on the Stacks 2.1 network upgrade.
 
-For more detailed information about the Stacks 2.1 update, please see the [Developer’s Guide to Stacks 2.1](https://www.hiro.so/blog/a-developers-guide-to-stacks-2-1) blog post, and the blog post on [how the upgrade will impact stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking). 
+For more detailed information about the Stacks 2.1 update, please see the [Developer’s Guide to Stacks 2.1](https://www.hiro.so/blog/a-developers-guide-to-stacks-2-1) blog post, and the blog post on [how the upgrade impacts stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking). 
 
 ## **Clarinet**
 
@@ -41,7 +41,7 @@ There were several updates and changes made to chainhooks, a feature that enable
 
 - The developer experience was modified by adding a [new mode](https://github.com/hirosystems/clarinet/pull/657): `$ chainhook-node replay –testnet`,which enables you to replay devnet / testnet / mainnet dumps.
 
-- The `chainhookd-node` experience was improved by adding presets. You may now use commands like: `$ chainhook-node start` – and identify devnet, testnet, or mainnet and have their local environments set up in just a few minutes. For more information about these commands, please see the [Using Chainhooks](https://docs.hiro.so/clarinet/feature-guides/chainhooks?_gl=1*yvh6u7*_ga*NTQ3NDA3NTIuMTY2MDA3MTQ1MA..*_ga_NB2VBT0KY2*MTY3MzYzNTY4Mi43Mi4wLjE2NzM2MzU2ODIuMC4wLjA.#using-chainhooks)feature guide.
+- The `chainhookd-node` experience was improved by adding presets. You may now use commands like: `$ chainhook-node start` and identify devnet, testnet, or mainnet and have their local environments set up in just a few minutes. For more information about these commands, please see the [Using Chainhooks](https://docs.hiro.so/clarinet/feature-guides/chainhooks?_gl=1*yvh6u7*_ga*NTQ3NDA3NTIuMTY2MDA3MTQ1MA..*_ga_NB2VBT0KY2*MTY3MzYzNTY4Mi43Mi4wLjE2NzM2MzU2ODIuMC4wLjA.#using-chainhooks)feature guide.
 
 - To support the [Stacks 2.1 upgrade](https://github.com/hirosystems/clarinet/pull/669), Clarinet was updated to improve error management in event observer, while adding support for new event types and clarity version in deployment plans.
 
@@ -66,7 +66,7 @@ For more information on these updates, please refer to the following resources:
 
 - [Stacks.js Change Comparison](https://github.com/hirosystems/stacks.js/compare/v5.0.2...v6.0.2)
 
-## **Hiro Wallet**
+## **Hiro wallet**
 
 Hiro Wallet was updated with the following changes:
 
@@ -86,13 +86,13 @@ For more information about these changes, please refer to the following resource
 
 There were several changes made to Explorer to improve stability and provide additional information for Explorer users. These updates include:
 
-- The Clarity version for smart contract transactions is now displayed, alt recipient for coinbase transactions, and memo for STX transfer events. 
+- The Clarity version for smart contract transactions is now displayed, alt recipient for Coinbase transactions, and memo for STX transfer events. 
 
-- The ability to see the historical STX price on transactions was added in the Explorer. Please note that the price listed will be on the day of the transaction, not the exact moment of the transaction.
+- The ability to see the historical STX price on transactions was added in the Explorer. Please note that the price listed is on the day of the transaction, not the exact moment of the transaction.
 
-- There is also now tooltip support when a user hovers over the icons in the Sandbox, improving navigation.
+- There is also now support when a user hovers over the icons in the Sandbox, improving navigation.
 
-- You can now easily copy and paste the exact local time of any transaction, instead of having to manually write it down, by clicking on the tooltip. 
+- Users can now easily copy and paste the exact local time of any transaction, instead of having to manually write it down, by clicking on the tool tip. 
 
 For more information about these changes, please see the following resources:
 
