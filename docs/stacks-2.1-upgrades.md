@@ -108,13 +108,7 @@ epoch_2_1 = 106
 ```
 
 > **_NOTE:_**
-> This new feature is experimental. If you have trouble or find issues, you can report them [here](https://github.com/hirosystems/clarinet/issues).
-
-#### Limitations
-
-In the current release, contracts are not automatically deployed when running `clarinet integrate` with Stacks 2.1. The devnet deployment is manually applied using the command:
-
-`$ clarinet deployments apply --devnet`
+> If you have trouble or find issues, you can report them [here](https://github.com/hirosystems/clarinet/issues).
 
 ## Stacks Blockchain API
 
