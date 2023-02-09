@@ -13,10 +13,10 @@ The [Stacks CLI](/references/stacks-cli) provides an easy way for you to interac
 
 Smart contracts on Stacks are developed in Clarity, a LISP-based, non-Turing complete, interpreted, functional language developed specifically for use on blockchains. Hiro provides development tools for Clarity, and Clarity reference material is available in the Stacks ecosystem documentation.
 
-- [Clarity Overview](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/)
-- [Clarity Types](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types)
-- [Clarity Keywords](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-keywords)
-- [Clarity Functions](https://docs.stacks.co/references/language-functions)
+- [Clarity Overview](https://docs.stacks.co/docs/clarity/)
+- [Clarity Types](https://docs.stacks.co/docs/clarity/language-types)
+- [Clarity Keywords](https://docs.stacks.co/docs/clarity/language-keywords)
+- [Clarity Functions](https://docs.stacks.co/docs/clarity/language-functions)
 
 ## Frontend development
 

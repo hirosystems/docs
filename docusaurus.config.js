@@ -330,15 +330,15 @@ module.exports = {
               },
               {
                 label: 'Clarity Functions',
-                href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-functions',
+                href: 'https://docs.stacks.co/docs/clarity/language-functions',
               },
               {
                 label: 'Clarity Keywords',
-                href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-keywords',
+                href: 'https://docs.stacks.co/docs/clarity/language-keywords',
               },
               {
                 label: 'Clarity Types',
-                href: 'https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types',
+                href: 'https://docs.stacks.co/docs/clarity/language-types',
               },
             ],
           },
