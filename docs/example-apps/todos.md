@@ -160,7 +160,7 @@ As such, it's paramount that users handle them with great care.
 
 The username will be used by the app to generate a URL for sharing your to-dos, should you choose to make them public.
 
-It is registered on the Stacks blockchain with [BNS](https://docs.stacks.co/docs/build-apps/references/bns) and associated with your _Secret Key_.
+It is registered on the Stacks blockchain with [BNS](https://docs.stacks.co/docs/clarity/noteworthy-contracts/bns-contract) and associated with your _Secret Key_.
 
 !["Choose username" screen](/img/todos-choose-username.png)
 
@@ -268,3 +268,4 @@ You'll now see your to-dos as an authenticated user for the username you've chos
 
 Read [the Stacks.js reference](https://stacks.js.org/) to learn more about the
 libraries used in this tutorial.
+

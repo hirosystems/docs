@@ -8,7 +8,7 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is Stacks 2.1?
 
-[Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. Among [other improvements](https://www.hiro.so/blog/a-developers-guide-to-stacks-2-1), Stacks 2.1 includes an updated [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/noteworthy-contracts/stacking-contract) (often informally referred to as "PoX-2") for Stacking. Stacking allows users to lock up STX to support the network and earn BTC. For more information on stacking changes, refer to [How Stacks 2.1 Impacts Stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking).
+[Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. Among [other improvements](https://www.hiro.so/blog/a-developers-guide-to-stacks-2-1), Stacks 2.1 includes an updated [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/clarity/noteworthy-contracts/stacking-contract) (often informally referred to as "PoX-2") for Stacking. Stacking allows users to lock up STX to support the network and earn BTC. For more information on stacking changes, refer to [How Stacks 2.1 Impacts Stacking](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking).
 
 ## What is PoX-2?
 
