@@ -4,7 +4,7 @@ title: December Product Changelog
 
 ## Overview
 
-Hiro contnually makes changes and updates to products to add new features. Each month, these changes are described in these pages so users can better understand which products are affected, what changes and updates were made, and what users need to do to ensure you have these updates.
+Hiro continually makes changes and updates to products to add new features. Each month, these changes are described in these pages so users can better understand which products are affected, what changes and updates were made, and what users need to do to ensure you have these updates.
 
 The sections below describe the changes and updates that were made in December.
 

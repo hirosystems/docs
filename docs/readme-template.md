@@ -22,11 +22,11 @@ The sections below describe each heading and structure for this new README file 
 
 ## Setting up the local environment
 
-*Povide a brief series of required steps for the user to get their local environment up and running. Whenever possible, include real-world code snippets and samples that users can copy and use.*
+*Provide a brief series of required steps for the user to get their local environment up and running. Whenever possible, include real-world code snippets and samples that users can copy and use.*
 
 ## Usage
 
-*Briefly describe some of the tasks/actions a user can perform. Instead of desribing these in detail here, provide links to the Hiro technical documentation instead.*
+*Briefly describe some of the tasks/actions a user can perform. Instead of describing these in detail here, provide links to the Hiro technical documentation instead.*
 
 ## Additional Resources
 
