@@ -78,4 +78,4 @@ For more information on these changes, please refer to the following resources:
 
 ## Additional resources
 
-[Hiro 2022December Release Roundup](https://www.hiro.so/blog/release-roundup-december-2022).
+[Hiro December Release Roundup](https://www.hiro.so/blog/release-roundup-december-2022).
