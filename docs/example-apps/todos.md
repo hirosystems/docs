@@ -268,3 +268,4 @@ You'll now see your to-dos as an authenticated user for the username you've chos
 
 Read [the Stacks.js reference](https://stacks.js.org/) to learn more about the
 libraries used in this tutorial.
+
