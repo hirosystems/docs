@@ -167,7 +167,7 @@ module.exports = {
           documents: ["how-to-add-contract.md", "how-to-check-contract.md", "how-to-create-new-project.md",
           "how-to-debug-contract.md",
           "how-to-deploy-contracts.md", "how-to-deploy-with-subnets.md", "how-to-run-integration-environment.md", "how-to-set-up-local-development-environment.md"
-          ,"how-to-test-contract.md"
+          ,"how-to-test-contract.md",  "how-to-use-deployment-plans.md"
             ], 
           
          

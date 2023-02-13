@@ -43,6 +43,7 @@ module.exports = {
             'clarinet/how-to-guides/how-to-deploy-contracts',
             'clarinet/how-to-guides/how-to-run-integration-environment',
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
+            'clarinet/how-to-guides/how-to-use-deployment-plans',
           ],
         },
         'clarinet/troubleshooting',
