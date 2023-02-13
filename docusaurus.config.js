@@ -162,7 +162,7 @@ module.exports = {
       {
           
           name: "remote-docs-clarinet-how-to", 
-          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/how-to-guides/", 
+          sourceBaseUrl: "https://raw.githubusercontent.com/LakshmiLavanyaKasturi/clarinet/image-test/docs/how-to-guides/", 
           outDir: "docs/clarinet/how-to-guides", 
           documents: ["how-to-add-contract.md", "how-to-check-contract.md", "how-to-create-new-project.md",
           "how-to-debug-contract.md",
@@ -201,7 +201,7 @@ module.exports = {
                  "sidebar.png", 
                  "trace.png", 
                  "watchpoint.png", 
-                 "deployment-plan-blocks.png"
+                 "deployment-plans.png"
                 ], 
                 requestConfig: { responseType: "arraybuffer" },
                 
