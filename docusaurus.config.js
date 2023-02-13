@@ -201,6 +201,7 @@ module.exports = {
                  "sidebar.png", 
                  "trace.png", 
                  "watchpoint.png", 
+                 "deployment-plan-blocks.png"
                 ], 
                 requestConfig: { responseType: "arraybuffer" },
                 
