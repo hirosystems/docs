@@ -25,7 +25,7 @@ module.exports = {
             'clarinet/feature-guides/analyze-with-check-checker',
             'clarinet/feature-guides/extend-clarinet',
             'clarinet/feature-guides/chainhooks',
-            'clarinet/feature-guides/clarinet-deploy',
+            //'clarinet/feature-guides/clarinet-deploy',
             'clarinet/feature-guides/clarinet-integrate',
             
           ],
@@ -40,10 +40,11 @@ module.exports = {
             'clarinet/how-to-guides/how-to-check-contract',
             'clarinet/how-to-guides/how-to-test-contract',
             'clarinet/how-to-guides/how-to-debug-contract',
-            'clarinet/how-to-guides/how-to-deploy-contracts',
             'clarinet/how-to-guides/how-to-run-integration-environment',
-            'clarinet/how-to-guides/how-to-deploy-with-subnets',
             'clarinet/how-to-guides/how-to-use-deployment-plans',
+            'clarinet/how-to-guides/how-to-deploy-contracts',
+            'clarinet/how-to-guides/how-to-deploy-with-subnets',
+            
           ],
         },
         'clarinet/troubleshooting',
