@@ -278,6 +278,10 @@ module.exports = {
             route: '/api/',
             spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
           },
+          {
+            route: '/tms/api/',
+            spec: './docs/tms-openapi.json',
+          },
         ],
         theme: {
           primaryColor: '#FF5500',
@@ -315,7 +319,7 @@ module.exports = {
               },
               {
                 label: 'Token Metadata Service',
-                href: 'https://token-metadata-service.vercel.app/',
+                to: '/tms/api/',
               },
               {
                 label: 'Stacks CLI',
