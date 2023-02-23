@@ -279,7 +279,7 @@ module.exports = {
             spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
           },
           {
-            route: '/tms/api/',
+            route: '/metadata/',
             spec: './docs/tms-openapi.json',
           },
         ],
