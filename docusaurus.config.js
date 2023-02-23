@@ -315,7 +315,7 @@ module.exports = {
               },
               {
                 label: 'Token Metadata Service',
-                href: 'https://token-metadata-service-dlkidjgff-blockstack.vercel.app/',
+                href: 'https://token-metadata-service.vercel.app/',
               },
               {
                 label: 'Stacks CLI',
