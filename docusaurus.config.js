@@ -319,7 +319,7 @@ module.exports = {
               },
               {
                 label: 'Token Metadata Service',
-                to: '/tms/api/',
+                to: '/metadata',
               },
               {
                 label: 'Stacks CLI',
