@@ -3,12 +3,12 @@ title: January 2023 Product Changelog
 ---
 
 ## Overview
-As Hiro works to provide the most complete and up-to-date information on product releases and updates, the format of the Product Changelog has been altered slightly to make the content easier to read and understand. Instead of deep dives into each individual product, the focus has shifted to the developer experience, and how these updates and changes improve the overall "developer journey."
+As Hiro works to provide the most complete and up-to-date information on product releases and updates, the format of the Product Changelog has been altered slightly to make the content easier to read and understand. Instead of deep dives into each product, the focus has shifted to the developer experience and how these updates and changes improve the overall "developer journey."
 
-The sections below describe the changes and updates that were made in January 2023.
+The sections below describe the changes and updates made in January 2023.
 
 ## Developer onboarding
-The Hiro documentation team has been making significant progress in updating the technical documentation. The following updates/changes were added:
+The Hiro documentation team has been making significant progress updating the technical documentation. The following updates/changes were added:
 
 - an overview of Stacks 2.1 Upgrades.
 - a new Deployment Plans feature guide.
@@ -26,8 +26,8 @@ Hiro wants to empower developers to do their best work with the latest updates a
 - Subnets has been improved with an updated Subnets contract compatible with Clarity2.
 - A new trait for NFTs and FTs has been added on the subnet, which specifies a required name and signature for registration. This update ensures the Stacks Blockchain API always knows the correct name for the mint function.
 
-## Additional bitcoin support across hiro products
-New API endpoints are currently being developed to support Bitcoin-related queries, and a Stacks.js client library to connect Bitcoin Core RPC. These improvements enable STX-to-BTC and BTC-to-STX address conversions.
+## Additional bitcoin support across Hiro products
+New API endpoints are currently being developed to support Bitcoin-related queries and a Stacks.js client library to connect Bitcoin Core RPC. These improvements enable STX-to-BTC and BTC-to-STX to address conversions.
 
 ## Addition*al resources
 For more detailed information on these updates, please refer to the following resources:
