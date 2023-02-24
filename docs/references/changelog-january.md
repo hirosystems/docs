@@ -1,5 +1,5 @@
 ---
-title: January Product Changelog
+title: January 2023 Product Changelog
 ---
 
 ## Overview
