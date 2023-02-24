@@ -255,6 +255,7 @@ module.exports = {
         'references/hiro-archive',
         'references/changelog-november',
         'references/changelog-december',
+        'references/changelog-january',
       ],
     },
   ],
