@@ -34,7 +34,7 @@ The backend of the billboard app is a Clarity smart contract. The billboard cont
 
 The Clarity smart contract for this app is located at `/contracts/billboard.clar`. It defines 3 functions, `get-price`, `get-message`, and `set-message`. This example app only demonstrates the interaction with the latter two functions, however you could extend the app to get the message price using the same general design for interacting with the `get-message` function.
 
-```lisp title="/contracts/billboard.clar"
+```clarity title="/contracts/billboard.clar"
 ;; billboard contract
 
 ;; error consts
