@@ -1,0 +1,829 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Stacks Token Metadata Service",
+    "description": "A microservice that indexes metadata for every SIP-009, SIP-010, and SIP-013 Token in the Stacks blockchain and exposes it via REST API endpoints.",
+    "version": "v0.1.0"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/metadata/v1/ft/{principal}": {
+      "get": {
+        "summary": "Fungible Token Metadata",
+        "tags": [
+          "Tokens"
+        ],
+        "description": "Retrieves metadata for a SIP-010 Fungible Token",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "es-MX": {
+                "value": "es-MX"
+              },
+              "jp": {
+                "value": "jp"
+              }
+            },
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "description": "Metadata localization to retrieve"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}",
+              "example": "SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token"
+            },
+            "example": "SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token",
+            "in": "path",
+            "name": "principal",
+            "required": true,
+            "description": "Principal for the contract which owns the SIP-010 token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "decimals": {
+                      "type": "integer"
+                    },
+                    "total_supply": {
+                      "type": "string"
+                    },
+                    "token_uri": {
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "sip": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "format": "uri",
+                          "type": "string"
+                        },
+                        "cached_image": {
+                          "format": "uri",
+                          "type": "string"
+                        },
+                        "attributes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "trait_type": {
+                                "type": "string"
+                              },
+                              "display_type": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": true,
+                                    "type": "object",
+                                    "properties": {}
+                                  },
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "integer"
+                                  },
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {}
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "trait_type",
+                              "value"
+                            ]
+                          }
+                        },
+                        "properties": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": true,
+                                "type": "object",
+                                "properties": {}
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array",
+                                "items": {}
+                              }
+                            ]
+                          }
+                        },
+                        "localization": {
+                          "type": "object",
+                          "properties": {
+                            "uri": {
+                              "format": "uri",
+                              "type": "string"
+                            },
+                            "default": {
+                              "type": "string"
+                            },
+                            "locales": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "uri",
+                            "default",
+                            "locales"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "sip"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Token not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Token metadata fetch in progress"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Locale not found"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/nft/{principal}/{token_id}": {
+      "get": {
+        "summary": "Non-Fungible Token Metadata",
+        "tags": [
+          "Tokens"
+        ],
+        "description": "Retrieves metadata for a SIP-009 Non-Fungible Token",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "es-MX": {
+                "value": "es-MX"
+              },
+              "jp": {
+                "value": "jp"
+              }
+            },
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "description": "Metadata localization to retrieve"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}",
+              "example": "SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12"
+            },
+            "example": "SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12",
+            "in": "path",
+            "name": "principal",
+            "required": true,
+            "description": "SIP-009 compliant smart contract principal"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "example": "35"
+            },
+            "example": "35",
+            "in": "path",
+            "name": "token_id",
+            "required": true,
+            "description": "Token ID to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token_uri": {
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "sip": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "format": "uri",
+                          "type": "string"
+                        },
+                        "cached_image": {
+                          "format": "uri",
+                          "type": "string"
+                        },
+                        "attributes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "trait_type": {
+                                "type": "string"
+                              },
+                              "display_type": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": true,
+                                    "type": "object",
+                                    "properties": {}
+                                  },
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "integer"
+                                  },
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {}
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "trait_type",
+                              "value"
+                            ]
+                          }
+                        },
+                        "properties": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": true,
+                                "type": "object",
+                                "properties": {}
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array",
+                                "items": {}
+                              }
+                            ]
+                          }
+                        },
+                        "localization": {
+                          "type": "object",
+                          "properties": {
+                            "uri": {
+                              "format": "uri",
+                              "type": "string"
+                            },
+                            "default": {
+                              "type": "string"
+                            },
+                            "locales": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "uri",
+                            "default",
+                            "locales"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "sip"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Token not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Token metadata fetch in progress"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Locale not found"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/sft/{principal}/{token_id}": {
+      "get": {
+        "summary": "Semi-Fungible Token Metadata",
+        "tags": [
+          "Tokens"
+        ],
+        "description": "Retrieves metadata for a SIP-013 Semi-Fungible Token",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "es-MX": {
+                "value": "es-MX"
+              },
+              "jp": {
+                "value": "jp"
+              }
+            },
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "description": "Metadata localization to retrieve"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}",
+              "example": "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1"
+            },
+            "example": "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1",
+            "in": "path",
+            "name": "principal",
+            "required": true,
+            "description": "SIP-013 compliant smart contract principal"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "example": "35"
+            },
+            "example": "35",
+            "in": "path",
+            "name": "token_id",
+            "required": true,
+            "description": "Token ID to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token_uri": {
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "decimals": {
+                      "type": "integer"
+                    },
+                    "total_supply": {
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "sip": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "format": "uri",
+                          "type": "string"
+                        },
+                        "cached_image": {
+                          "format": "uri",
+                          "type": "string"
+                        },
+                        "attributes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "trait_type": {
+                                "type": "string"
+                              },
+                              "display_type": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": true,
+                                    "type": "object",
+                                    "properties": {}
+                                  },
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "integer"
+                                  },
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {}
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "trait_type",
+                              "value"
+                            ]
+                          }
+                        },
+                        "properties": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": true,
+                                "type": "object",
+                                "properties": {}
+                              },
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array",
+                                "items": {}
+                              }
+                            ]
+                          }
+                        },
+                        "localization": {
+                          "type": "object",
+                          "properties": {
+                            "uri": {
+                              "format": "uri",
+                              "type": "string"
+                            },
+                            "default": {
+                              "type": "string"
+                            },
+                            "locales": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "required": [
+                            "uri",
+                            "default",
+                            "locales"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "sip"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Token not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Token metadata fetch in progress"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Locale not found"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/": {
+      "get": {
+        "summary": "Service Status",
+        "tags": [
+          "Status"
+        ],
+        "description": "Displays the status of the Token Metadata Service and its current workload",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "server_version": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "tokens": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      }
+                    },
+                    "token_contracts": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      }
+                    },
+                    "job_queue": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": [
+                    "server_version",
+                    "status"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Tokens",
+      "description": "Token metadata endpoints"
+    },
+    {
+      "name": "Status",
+      "description": "Service status endpoints"
+    }
+  ],
+  "externalDocs": {
+    "url": "https://github.com/hirosystems/token-metadata-service",
+    "description": "Source Repository"
+  }
+}
