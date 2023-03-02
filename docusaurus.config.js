@@ -280,11 +280,11 @@ module.exports = {
           },
           {
             route: '/ordinals/',
-            spec: 'https://ordinals-api.vercel.app/openapi.yaml',
+            spec: './docs/ordinals-api.json',
           },
           {
             route: '/token-metadata-service/',
-            spec: 'https://token-metadata-service.vercel.app/openapi.yaml.',
+            spec: './docs/tms-openapi.json',
           },
         ],
         theme: {
