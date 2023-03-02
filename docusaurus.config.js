@@ -314,8 +314,12 @@ module.exports = {
                 to: '/api',
               },
               {
+                label: 'Ordinals API',
+                href: 'https://ordinals-api.vercel.app/openapi.yaml',
+              },
+              {
                 label: 'Token Metadata Service',
-                href: 'https://token-metadata-service-dlkidjgff-blockstack.vercel.app/',
+                href: 'https://token-metadata-service.vercel.app/openapi.yaml',
               },
               {
                 label: 'Stacks CLI',
