@@ -280,7 +280,7 @@ module.exports = {
           },
           {
             route: '/ordinals/',
-            spec: './docs/ordinals-api.json',
+            spec: './docs/ordinals-openapi.json',
           },
           {
             route: '/token-metadata-service/',
