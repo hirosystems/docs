@@ -283,7 +283,7 @@ module.exports = {
             spec: 'https://ordinals-api.vercel.app/openapi.yaml',
           },
           {
-            route: '/tms/',
+            route: '/token-metadata-service/',
             spec: 'https://token-metadata-service.vercel.app/openapi.yaml.',
           },
         ],
@@ -327,7 +327,7 @@ module.exports = {
               },
               {
                 label: 'Token Metadata Service',
-                href: '/tms',
+                href: '/token-metadata-service',
               },
               {
                 label: 'Stacks CLI',
