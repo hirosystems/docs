@@ -278,6 +278,14 @@ module.exports = {
             route: '/api/',
             spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
           },
+          {
+            route: '/ordinals/',
+            spec: 'https://ordinals-api.vercel.app/openapi.yaml',
+          },
+          {
+            route: '/tms/',
+            spec: 'https://token-metadata-service.vercel.app/openapi.yaml.',
+          },
         ],
         theme: {
           primaryColor: '#FF5500',
@@ -315,11 +323,11 @@ module.exports = {
               },
               {
                 label: 'Ordinals API',
-                href: 'https://ordinals-api.vercel.app/openapi.yaml',
+                href: '/ordinals',
               },
               {
                 label: 'Token Metadata Service',
-                href: 'https://token-metadata-service.vercel.app/openapi.yaml',
+                href: '/tms',
               },
               {
                 label: 'Stacks CLI',
