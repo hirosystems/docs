@@ -323,11 +323,11 @@ module.exports = {
               },
               {
                 label: 'Ordinals API',
-                href: '/ordinals',
+                to: '/ordinals',
               },
               {
                 label: 'Token Metadata Service',
-                href: '/token-metadata-service',
+                to: '/token-metadata-service',
               },
               {
                 label: 'Stacks CLI',
