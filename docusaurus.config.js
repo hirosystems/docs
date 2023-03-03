@@ -279,8 +279,12 @@ module.exports = {
             spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
           },
           {
-            route: '/metadata/',
-            spec: './docs/tms-openapi.json',
+            route: '/ordinals',
+            spec: './docs/ordinals-openapi.yaml',
+          },
+          {
+            route: '/token-metadata-service',
+            spec: './docs/tms-openapi.yaml',
           },
         ],
         theme: {
@@ -318,8 +322,12 @@ module.exports = {
                 to: '/api',
               },
               {
+                label: 'Ordinals API',
+                to: '/ordinals',
+              },
+              {
                 label: 'Token Metadata Service',
-                to: '/metadata',
+                to: '/token-metadata-service',
               },
               {
                 label: 'Stacks CLI',
