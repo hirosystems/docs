@@ -8,7 +8,7 @@ title: Migrate Stacking to 2.1
 
 #### "Stacks 2.1"
 
-[Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. Among other improvements, it includes an updated [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/noteworthy-contracts/stacking-contract) (aka PoX-2) for Stacking.
+[Stacks 2.1](https://stacks.org/stacks-21-what-to-expect) is a fork and protocol upgrade of the Stacks blockchain. Among other improvements, it includes an updated [Proof-of-Transfer](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) (PoX) [contract](https://docs.stacks.co/docs/clarity/noteworthy-contracts/stacking-contract) (aka PoX-2) for Stacking.
 
 #### "PoX-2"
 
