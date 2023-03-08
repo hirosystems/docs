@@ -238,7 +238,7 @@ module.exports = {
       {
           
           name: "remote-docs-token-metadata-api-feature-guides", 
-          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/token-metadata-api/LakshmiLavanyaKasturi-patch-1/docs/feature-guides/", 
+          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/", 
           outDir: "docs/token-metadata-api/feature-guides", 
           documents: ["token-metadata-api.md" ],  
       }],
