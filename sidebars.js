@@ -188,6 +188,19 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Token metadata API',
+      items: [
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'token-metadata-api/feature-guides/token-metadata-api',
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Stacks.js',
       items: [
         'stacks.js/overview',
