@@ -234,10 +234,36 @@ module.exports = {
           documents: ["build-explorer.md",
             ],  
       }],
+      ["docusaurus-plugin-remote-content",
+      {
+          
+          name: "remote-docs-token-metadata-api-feature-guides", 
+          sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/", 
+          outDir: "docs/token-metadata-api/feature-guides", 
+          documents: ["token-metadata-api.md" ],  
+      }],
+      ["docusaurus-plugin-remote-content",
+            {
+                
+                name: "remote-docs-token-metadata-images", 
+                sourceBaseUrl: "https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/", 
+                outDir: "docs", 
+                documents: [
+                 "flowchart.png", 
+                 "architecture.png"
+                ], 
+                requestConfig: { responseType: "arraybuffer" },
+                
+                headers: {
+                  'accept': 'image*',
+                  'Content-Type': 'image/jgeg',
+                }
+                }
+                
+      ],
       
     
   ],
-
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -284,7 +310,7 @@ module.exports = {
           },
           {
             route: '/metadata',
-            spec: 'https://token-metadata-service.vercel.app/openapi.yaml',
+            spec: 'https://token-metadata-api.vercel.app/openapi.yaml',
           },
         ],
         theme: {
