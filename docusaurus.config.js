@@ -264,7 +264,6 @@ module.exports = {
       
     
   ],
-
   presets: [
     [
       '@docusaurus/preset-classic',
