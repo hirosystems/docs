@@ -293,7 +293,6 @@ module.exports = {
           routeBasePath: '/',
           breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
         },
-        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -425,10 +424,6 @@ module.exports = {
           {
             title: 'Hiro Developers',
             items: [
-              {
-                label: 'Documentation',
-                to: '/intro',
-              },
               {
                 label: 'Stacks API',
                 to: '/api',
