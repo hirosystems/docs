@@ -5,19 +5,19 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Get started with the following quickstarts to set up and use Hiro's products",
+    text: "Get started with the following quickstarts to set up and use Hiro's products.",
     links: [
       {
         text: 'Set up local Development Environment',
         href: '/clarinet/how-to-guides/how-to-set-up-local-development-environment',
       },
       {
-        text: 'Add new Contract',
-        href: '/clarinet/how-to-guides/how-to-add-contract',
+        text: 'Stacks Blockchain API Client',
+        href: 'https://hirosystems.github.io/stacks-blockchain-api/client/',
       },
       {
-        text: 'Test Contract',
-        href: '/clarinet/how-to-guides/how-to-test-contract',
+        text: 'Stacks.js starters',
+        href: '/stacksjs-starters',
       },
     ],
   },
@@ -67,24 +67,24 @@ export default {
           title: 'Getting started',
           link: '/clarinet/getting-started',
           description:
-            'Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus.',
+            'Get started to install and build with Clarinet.',
         },
         {
           title: 'Feature guides',
           link: '/clarinet/feature-guides/analyze-with-check-checker',
           description:
-            'Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus.',
+            'Explore the features of Clarinet.',
         },
         {
           title: 'Troubleshooting',
           link: '/clarinet/troubleshooting',
           description:
-            'Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus.',
+            'Explore our troubleshooting guide to unblock yourself.',
         },
       ],
     },
     {
-      title: 'Explorer',
+      title: 'Stacks Blockchain API',
       image: {
         src: '/img/landing/stacks-logo.svg',
         alt: 'Stacks logo',
@@ -93,22 +93,22 @@ export default {
         'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
       subSections: [
         {
-          title: 'Overview',
-          link: '/explorer/overview',
-          description:
-            'Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus.',
-        },
-        {
           title: 'Getting started',
-          link: '/explorer/getting-started',
+          link: '/stacks-blockchain-api/getting-started',
           description:
-            'Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus.',
+            'Get started interacting with the blockchain.',
         },
         {
-          title: 'Build explorer',
-          link: '/explorer/how-to-guides/build-explorer',
+          title: 'Feature guides',
+          link: '/stacks-blockchain-api/feature-guides/microblocks',
           description:
-            'Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus.',
+            'Explore Stacks Blockchain API features.',
+        },
+        {
+          title: 'Troubleshooting',
+          link: '/Stacks-blockchain-api/troubleshooting',
+          description:
+            'Explore our troubleshooting guide to unblock yourself.',
         },
       ],
     },
