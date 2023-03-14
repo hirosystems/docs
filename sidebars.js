@@ -188,19 +188,6 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Token metadata API',
-      items: [
-        {
-          type: 'category',
-          label: 'Feature Guides',
-          items: [
-            'token-metadata-api/feature-guides/token-metadata-api',
-          ],
-        },
-      ],
-    },
-    {
-      type: 'category',
       label: 'Stacks.js',
       items: [
         'stacks.js/overview',
@@ -257,6 +244,19 @@ module.exports = {
       ],
     },
     {
+      type: 'category',
+      label: 'Token metadata API',
+      items: [
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'token-metadata-api/feature-guides/token-metadata-api',
+          ],
+        },
+      ],
+    },
+    {
       type: 'doc',
       label: 'Stacks 2.1 Upgrades',
       id: 'stacks-2.1-upgrades',
@@ -266,9 +266,10 @@ module.exports = {
       label: 'Appendix',
       items: [
         'references/hiro-archive',
-        'references/changelog-november',
-        'references/changelog-december',
-        'references/changelog-january',
+        'changelog/changelog-february',
+        'changelog/changelog-january',
+        'changelog/changelog-december',
+        'changelog/changelog-november',
       ],
     },
   ],

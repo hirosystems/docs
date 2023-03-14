@@ -4,16 +4,16 @@ title: December 2022 Product Changelog
 
 ## Overview
 
-Hiro contnually makes changes and updates to our products to add new features and functionality. Each month, these changes are described in these pages so you can better understand which products are affected, what changes and updates were made, and what you will need to do to ensure you have these updates.
+Hiro continually makes changes and updates to our products to add new features and functionality. Each month, these changes are described on these pages so you can better understand which products are affected, what changes and updates were made, and what you will need to do to ensure you have these updates.
 
 The sections below describe the changes and updates that were made in December.
 
 ## **Stacks API**
 
-There were a number of changes that were made to support the Stacks 2.1 update. These changes and updates were made to prepare you to activate Stacks 2.1.
+There were several changes that were made to support the Stacks 2.1 update. These changes and updates were made to prepare you to activate Stacks 2.1.
 
 The other significant changes made for Stacks API were focused on API v7. These improvements include:
-- additional Blockchain Naming Support (BNS)
+- Additional Blockchain Naming Support (BNS)
 - Fixes to Rosetta
 - Improved error handling with new `env` configuration for API shutdowns
 
@@ -25,15 +25,15 @@ For more detailed information about these updates and changes, please refer to t
 
 ## **Blockchain**
 
-There was a major update to the Hiro Archiver completed in December. This change enables you to download and use any of the published datasets needed to run a Stacks environment. For more information on Hiro Archiver updates, please refer to the [Hiro Archive](https://docs.hiro.so/references/hiro-archive?_gl=1*1369xwy*_ga*NTQ3NDA3NTIuMTY2MDA3MTQ1MA..*_ga_NB2VBT0KY2*MTY3MzU0MDkxMS43MC4wLjE2NzM1NDA5MTEuMC4wLjA.#what-is-the-hiro-archive) technical documentation.
+There was a significant update to the Hiro Archiver completed in December. This change lets you download and use any published datasets needed to run a Stacks environment. For more information on Hiro Archiver updates, please refer to the [Hiro Archive](https://docs.hiro.so/references/hiro-archive?_gl=1*1369xwy*_ga*NTQ3NDA3NTIuMTY2MDA3MTQ1MA..*_ga_NB2VBT0KY2*MTY3MzU0MDkxMS43MC4wLjE2NzM1NDA5MTEuMC4wLjA.#what-is-the-hiro-archive) technical documentation.
 
-One other change was made to how artifacts are used. These hosted artifacts can be used to quickly spin up a new stacks-blockchain node, or comprehensive stacks-blockchain-api deployment.
+One other change was made to how artifacts are used. These hosted artifacts can be used to quickly spin up a new stacks-blockchain node or comprehensive stacks-blockchain-api deployment.
 
 ## **Clarinet**
 
 Like the Stacks API, Clarinet was also improved and updated to support Stacks 2.1, along with support for devnet stability. 
 
-Another update was made to enable you to jump to the definition of any function, variable, constant, map, function argument, including the ability to find defintions of a `contract call`.
+Another update enabled you to jump to the definition of any function, variable, constant, map, or function argument, including the ability to find definitions of a `contract call.`
 
 For more information on these Clarinet updates, please refer to the following resources:
 
@@ -51,7 +51,7 @@ For more information on these updates, please refer to the following resources:
 
 ## **Hiro wallet**
 
-Seevral new features were released for the Hiro Wallet. These features include:
+Several new features were released for the Hiro Wallet. These features include:
 
 - A "Get Support" button was added, making it easier to transfer within the same wallet.
 - The Hiro Wallet was updated to enable you to track the app domain as an event property for all events triggered within the flow.
@@ -66,8 +66,8 @@ For more information on these changes, please refer to the following resources:
 Stacks Explorer had several new features added and implemented to improve the overall Explorer experience. These updates include:
 
 - Several bug fixes were released to improve Explorer stability.
-- The Explorer Sandbox now supports list arguments, while also including the ability to support calling from the contract page.
-- The Explorer page also now shows high level statistics, making it easier for users to quickly find important pieces of information such as STX Supply, Last Block, Current Stacking Cycle, and Next Stacking Cycle.
+- The Explorer Sandbox now supports list arguments while including the ability to support calling from the contract page.
+- The Explorer page also shows high-level statistics, making it easier for users to quickly find important information such as STX Supply, Last Block, Current Stacking Cycle, and Next Stacking Cycle.
 - Block information is now excluded from transactions in microblocks.
 - Dark Mode was updated to fix color issues.
 
@@ -78,4 +78,4 @@ For more information on these changes, please refer to the following resources:
 
 ## Additional resources
 
-[Hiro 2022December Release Roundup](https://www.hiro.so/blog/release-roundup-december-2022).
+[Hiro 2022 December Release Roundup](https://www.hiro.so/blog/release-roundup-december-2022).
