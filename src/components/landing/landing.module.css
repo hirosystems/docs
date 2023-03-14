@@ -1,0 +1,175 @@
+.landingPage {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+}
+
+.landingPage h1 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-neutral-100);
+}
+.landingPage h2 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-neutral-100);
+}
+.landingPage h3 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: var(--color-neutral-000);
+}
+.landingPage h4 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-neutral-300);
+}
+
+.hero {
+  display: flex;
+  border-radius: 8px;
+  margin: 64px 0;
+  background-color: var(--color-neutral-600);
+  overflow: hidden;
+}
+.hero > img {
+  width: 33%;
+  object-fit: cover;
+}
+.hero > div {
+  width: 67%;
+  padding: 32px;
+}
+.hero > div p,
+.hero > div ul {
+  font-weight: 400;
+  color: var(--color-neutral-200);
+}
+.hero > div ul {
+  list-style: none;
+  padding: 0;
+}
+.hero > div ul li {
+  padding: 0;
+}
+.hero > div ul li > a {
+  text-decoration: underline;
+  color: var(--color-neutral-200);
+}
+
+.popularSections {
+  display: flex;
+  gap: 16px;
+}
+.popularSections a {
+  display: block;
+  flex: 1;
+  text-decoration: none;
+  color: var(--color-neutral-200);
+  overflow: hidden;
+}
+.popularSections h3 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+.backgroundImageContainer {
+  border-radius: 4px;
+  overflow: hidden;
+}
+.backgroundImage {
+  width: 100%;
+  aspect-ratio: 2.74;
+  background-position: center;
+  background-size: cover;
+  transition: transform 128ms ease-in-out;
+}
+.popularSections a:hover h3 {
+  text-decoration: underline;
+}
+.popularSections a:hover .backgroundImage {
+  transform: scale(1.03);
+}
+
+.docSection {
+  margin-top: 64px;
+}
+.docSection > p {
+  max-width: 50%;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.subSections {
+  display: flex;
+  gap: 16px;
+}
+.subSections > a {
+  display: block;
+  flex: 1;
+  position: relative;
+  border-radius: 8px;
+  padding: 16px 16px 32px;
+
+  text-decoration: none;
+
+  color: var(--color-neutral-200);
+  background-color: var(--color-neutral-600);
+  transition: background-color 64ms ease-in-out;
+}
+.subSections > a:hover {
+  background-color: var(--color-neutral-500);
+}
+.subSections > a:focus {
+  background-color: var(--color-neutral-700);
+}
+.subSections > a span {
+  position: absolute;
+  transition: right 128ms ease-in-out;
+  right: 22px;
+}
+.subSections > a:hover span {
+  right: 16px;
+}
+.subSectionTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* left nav bar is hdden at 996px */
+@media screen and (max-width: 860px) {
+  .landingPage {
+    max-width: 680px;
+    margin: auto;
+  }
+
+  .hero {
+    flex-direction: column;
+  }
+  .hero > img {
+    width: 100%;
+  }
+  .hero > div {
+    width: 100%;
+  }
+
+  .docSection p {
+    max-width: 100%;
+  }
+
+  .popularSections {
+    flex-direction: column;
+  }
+
+  .subSections {
+    flex-direction: column;
+  }
+}
