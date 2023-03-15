@@ -348,7 +348,7 @@ module.exports = {
                 to: '/ordinals',
               },
               {
-                label: 'Token Metadata Service',
+                label: 'Token Metadata API',
                 to: '/metadata',
               },
               {
@@ -425,7 +425,7 @@ module.exports = {
             title: 'Hiro Developers',
             items: [
               {
-                label: 'Stacks API',
+                label: 'Stacks Blockchain API',
                 to: '/api',
               },
               {
@@ -442,7 +442,7 @@ module.exports = {
               },
               {
                 label: 'Product Changelog',
-                to: '/changelog-intro',
+                to: 'changelog/changelog-intro',
               },
             ],
           },

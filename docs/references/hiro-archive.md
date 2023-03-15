@@ -16,7 +16,7 @@ _** Important note: the `hirosystems-archive` bucket has been deprecated and sho
 Hiro pushes out new datasets nightly. All available artifacts can be found here: https://archive.hiro.so
 
 ## How to use
-The artifacts hosted can be used to quickly spin up a new [stacks-blockchain](https://github.com/stacks-network/stacks-blockchain) node, or comprehensive [stacks-blockchain-api](https://github.com/hirosystems/stacks-blockchain-api) deployment.
+The artifacts hosted can be used to quickly spin up a new [stacks-blockchain](https://github.com/stacks-network/stacks-blockchain) node or comprehensive [stacks-blockchain-api](https://github.com/hirosystems/stacks-blockchain-api) deployment.
 
 ### Importing the stacks-blockchain chainstate
 
