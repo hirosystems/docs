@@ -245,7 +245,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Token metadata API',
+      label: 'Token Metadata API',
       items: [
         {
           type: 'category',
