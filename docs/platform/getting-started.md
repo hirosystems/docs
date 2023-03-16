@@ -17,7 +17,7 @@ If you are a new user, you can sign up to create a new account or continue as an
 - Email address
 - Google
 - GitHub account
-- Discord account
+- Discord
 
 ![Platform login](images/platform-login.png)
 
