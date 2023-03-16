@@ -1,5 +1,5 @@
 ---
-title: Hiro Platform Overview
+title: Overview
 ---
 
 ## Introduction
