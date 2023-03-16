@@ -5,26 +5,33 @@
   letter-spacing: -0.01em;
 }
 
-.landingPage h1 {
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 40px;
+.landingPage h1,
+.landingPage h2,
+.landingPage h3,
+.landingPage h4 {
+  font-weight: var(--ifm-heading-font-weigh);
+  font-family: var(--ifm-heading-font-family);
+  color: var(--color-neutral-black);
+}
+
+[data-theme='dark'] .landingPage h1,
+[data-theme='dark'] .landingPage h2 {
   color: var(--color-neutral-100);
 }
+[data-theme='dark'] .landingPage h3 {
+  color: var(--color-neutral-white);
+}
+
+.landingPage h1,
 .landingPage h2 {
-  font-weight: 400;
   font-size: 32px;
   line-height: 40px;
-  color: var(--color-neutral-100);
 }
 .landingPage h3 {
-  font-weight: 400;
   font-size: 18px;
   line-height: 20px;
-  color: var(--color-neutral-000);
 }
 .landingPage h4 {
-  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   color: var(--color-neutral-300);
@@ -34,8 +41,11 @@
   display: flex;
   border-radius: 8px;
   margin: 64px 0;
-  background-color: var(--color-neutral-600);
+  background-color: var(--color-neutral-100);
   overflow: hidden;
+}
+[data-theme='dark'] .hero {
+  background-color: var(--color-neutral-600);
 }
 .hero > img {
   width: 33%;
@@ -46,9 +56,22 @@
   padding: 32px;
 }
 .hero > div p,
-.hero > div ul {
+.hero > div a {
   font-weight: 400;
+  color: var(--color-neutral-400);
+}
+.hero > div a {
+  text-decoration: underline;
+}
+.hero > div a:hover {
+  color: var(--color-neutral-black);
+}
+[data-theme='dark'] .hero > div p,
+[data-theme='dark'] .hero > div a {
   color: var(--color-neutral-200);
+}
+[data-theme='dark'] .hero > div a:hover {
+  color: var(--color-neutral-000);
 }
 .hero > div ul {
   list-style: none;
@@ -59,7 +82,6 @@
 }
 .hero > div ul li > a {
   text-decoration: underline;
-  color: var(--color-neutral-200);
 }
 
 .popularSections {
@@ -70,8 +92,11 @@
   display: block;
   flex: 1;
   text-decoration: none;
-  color: var(--color-neutral-200);
+  color: var(--color-neutral-300);
   overflow: hidden;
+}
+[data-theme='dark'] .popularSections a {
+  color: var(--color-neutral-200);
 }
 .popularSections h3 {
   margin-top: 16px;
@@ -106,11 +131,13 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  font-size: 32px;
 }
 
 .subSections {
   display: flex;
   gap: 16px;
+  color: var(--color-neutral-300);
 }
 .subSections > a {
   display: block;
@@ -121,14 +148,24 @@
 
   text-decoration: none;
 
-  color: var(--color-neutral-200);
-  background-color: var(--color-neutral-600);
+  background-color: var(--color-neutral-000);
+  color: var(--color-neutral-400);
   transition: background-color 64ms ease-in-out;
 }
 .subSections > a:hover {
-  background-color: var(--color-neutral-500);
+  background-color: var(--color-neutral-100);
 }
 .subSections > a:focus {
+  background-color: var(--color-neutral-200);
+}
+[data-theme='dark'] .subSections > a {
+  background-color: var(--color-neutral-600);
+  color: var(--color-neutral-200);
+}
+[data-theme='dark'] .subSections > a:hover {
+  background-color: var(--color-neutral-500);
+}
+[data-theme='dark'] .subSections > a:focus {
   background-color: var(--color-neutral-700);
 }
 .subSections > a span {

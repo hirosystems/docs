@@ -47,7 +47,7 @@ export default {
         text: 'Stacks.js is an SDK with a collection of JavaScript libraries to interact with and transact on the Stacks blockchain.',
         href: '/stacks.js/overview',
         image: {
-          src: '/img/landing/stackjs.png',
+          src: '/img/landing/stacksjs.png',
           alt: 'Abstract blockchain illustration image',
         },
       },
@@ -66,20 +66,17 @@ export default {
         {
           title: 'Getting started',
           link: '/clarinet/getting-started',
-          description:
-            'Get started to install and build with Clarinet.',
+          description: 'Get started to install and build with Clarinet.',
         },
         {
           title: 'Feature guides',
           link: '/clarinet/feature-guides/analyze-with-check-checker',
-          description:
-            'Explore the features of Clarinet.',
+          description: 'Explore the features of Clarinet.',
         },
         {
           title: 'Troubleshooting',
           link: '/clarinet/troubleshooting',
-          description:
-            'Explore our troubleshooting guide to unblock yourself.',
+          description: 'Explore our troubleshooting guide to unblock yourself.',
         },
       ],
     },
@@ -95,20 +92,17 @@ export default {
         {
           title: 'Getting started',
           link: '/stacks-blockchain-api/getting-started',
-          description:
-            'Get started interacting with the blockchain.',
+          description: 'Get started interacting with the blockchain.',
         },
         {
           title: 'Feature guides',
           link: '/stacks-blockchain-api/feature-guides/microblocks',
-          description:
-            'Explore Stacks Blockchain API features.',
+          description: 'Explore Stacks Blockchain API features.',
         },
         {
           title: 'Troubleshooting',
           link: '/Stacks-blockchain-api/troubleshooting',
-          description:
-            'Explore our troubleshooting guide to unblock yourself.',
+          description: 'Explore our troubleshooting guide to unblock yourself.',
         },
       ],
     },
