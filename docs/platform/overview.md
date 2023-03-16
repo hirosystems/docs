@@ -16,6 +16,5 @@ To deliver that developer productivity, the Hiro Platform comes pre-installed wi
 - Clarinet
 - Clarity for VS Code
 - Git
-- Git
 
 These tools enable you to quickly get up and running with the Platform without requiring additional steps. Less setup time equals more time for development and testing.
