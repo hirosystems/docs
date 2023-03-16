@@ -12,7 +12,10 @@ The Hiro Platform was designed to make it easy to deploy contracts in a secure, 
 
 To deliver that developer productivity, the Hiro Platform comes pre-installed with the following developer tools and resources to help speed up the developer journey:
 
-- VSCode
+- Web-based VS Code
+- Clarinet
+- Clarity for VS Code
+- Git
 - Git
 - Clarity
 
