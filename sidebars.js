@@ -113,6 +113,31 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Platform',
+      items: [
+        'platform/introduction',
+        'platform/getting-started',
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'platform/feature-guides/contracts',
+            'platform/feature-guides/projects',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'platform/how-to-guides/how-to-create-project',
+            'platform/how-to-guides/how-to-deploy-contract',
+            'platform/how-to-guides/how-to-archive-project',
+          ],
+        },
+      ],
+    }, 
+    {
+      type: 'category',
       label: 'Stacks Blockchain API',
       items: [
         'stacks-blockchain-api/overview',
