@@ -113,27 +113,16 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Platform',
+      label: 'Hiro Platform',
       items: [
         'platform/overview',
         'platform/getting-started',
-        {
-          type: 'category',
-          label: 'Feature Guides',
-          items: [
-            'platform/feature-guides/contracts',
-            'platform/feature-guides/projects',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'platform/how-to-guides/how-to-create-project',
-            'platform/how-to-guides/how-to-deploy-contract',
-            'platform/how-to-guides/how-to-archive-project',
-          ],
-        },
+        'platform/create-project',
+        'platform/build-contract',
+        'platform/deploy-project',
+        'platform/archive-project',
+        'platform/contract-examples',
+        'platform/faq',
       ],
     }, 
     {
