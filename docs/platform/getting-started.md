@@ -4,7 +4,7 @@ title: Getting Started
 
 ## Introduction
 
-The [Hiro Platform](https://platform.hiro.so/) provides you the opportunity to work with projects and contracts in a cloud-based SaaS environment outside of a normal production environment.
+The [Hiro Platform](https://platform.hiro.so/) allows you to work with Clarity smart contracts in a cloud-based secured development environment.
 
 ![The Hiro Platform landing page](images/platform-sign-in.png)
 
