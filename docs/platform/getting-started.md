@@ -15,7 +15,7 @@ When you navigate to the [Hiro Platform](https://platform.hiro.so/), you will be
 If you are a new user, you can sign up to create a new account or continue as an existing user to login with following options.
 
 - Email address
-- Google account
+- Google
 - GitHub account
 - Discord account
 
