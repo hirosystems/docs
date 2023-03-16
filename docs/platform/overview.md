@@ -17,4 +17,4 @@ To deliver that developer productivity, the Hiro Platform comes pre-installed wi
 - Clarity for VS Code
 - Git
 
-These tools enable you to quickly get up and running with the Platform without requiring additional steps. Less setup time equals more time for development and testing.
+These tools enable you to quickly get up and running with the Platform without requiring additional steps. Less setup time equals more time for translating your business models into code, testing them, and deploying them to a Stacks network!
