@@ -48,7 +48,8 @@ Now that you are signed in using one of the above methods, you can create or imp
 
 ## Create and build contracts
 
-Once you create a project, you can now view the existing contracts in your projects and edit them using the code editor, which is built into the Hiro Platform. You can [create new contracts](how-to-guides/how-to-create-contract.md) by referring to the [contract examples](feature-guides/contract-examples.md) and editing them using the Hiro Platform.
+Once you create or import a project, you can view the existing contracts in your projects and edit them using the VS Code editor available in the Hiro Platform. You can [create new contracts](how-to-guides/how-to-create-contract.md) by referring to the [contract examples](feature-guides/contract-examples.md) and editing them using the Hiro Platform.
+
 
 ![create and build contracts](images/vs-code-editor.png)
 
