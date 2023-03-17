@@ -54,7 +54,7 @@ Once you create a project, you can now view the existing contracts in your proje
 
 ## Deploy contract
 
-The Hiro Platform helps you with all the tools required for you to deploy the contracts in less than 5 min. Once your contracts are ready to deploy, follow the [how to deploy contracts] guide to deploy your contracts to testnet or mainnet environments.
+The Hiro Platform helps you with all the tools required to deploy the Clarity smart contracts. Once your Clarity contracts are ready to deploy, follow the [how to deploy contracts] guide to deploy your contracts to testnet or mainnet environments.
 
 ![Deploy contracts](images/mainnet-deployment.png)
 
