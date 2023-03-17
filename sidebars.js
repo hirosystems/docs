@@ -115,7 +115,7 @@ module.exports = {
       type: 'category',
       label: 'Platform',
       items: [
-        'platform/introduction',
+        'platform/overview',
         'platform/getting-started',
         {
           type: 'category',
