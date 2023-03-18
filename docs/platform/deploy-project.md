@@ -2,7 +2,7 @@
 title: Deploy Project
 ---
 
-The [Hiro Platform](https://platform.hiro.so/) comes pre-configured with the VS Code extension, Clarinet, and Git. The hosted development environment with pre-integrated wallet UX and the click to **deploy** to a network shortens the developer's journey to interact with the Stacks blockchain.
+The [Hiro Platform](https://platform.hiro.so/) comes pre-configured with the VS Code extension, Clarinet, and Git. The hosted development environment with pre-integrated wallet UX and the click to **deploy** to a Stacks network shortens the developer's journey to productize their business protocols in Stacks blockchain.
 
 This guide walks you through the deployment process of your project. Once you have your clarity contracts ready for your project, you can deploy the project easily using the Hiro Platform.
 

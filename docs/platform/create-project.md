@@ -47,6 +47,6 @@ Select the imported project to see the clarity files with the extension `.clar`.
 
 ![Import Clarinet project from GitHub](images/import-clarinet-project.png)
 
-Now that you have created or imported your projects, you are now ready to build your contracts by following the [vuild contracts](build-contract.md) guide.
+Now that you have created or imported your projects, you are now ready to build your contracts by following the [build contracts](build-contract.md) guide.
 
 You can archive your project at any time by following the [archive project](archive-project.md) guide.

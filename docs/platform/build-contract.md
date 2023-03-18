@@ -7,10 +7,15 @@ This guide helps you create/build contracts using the [Hiro Platform](https://pl
 ## Prerequisites
 
 - Log in using any of the methods described in the [Getting started](getting-started.md) guide.
-- You have accepted the *Terms and Conditions*.s
 - You have created or imported a project by following the steps in the [create project](create-project.md) guide.
 
 ## Build contract
+
+:::tip
+
+If you are new to clarity, try [Clarity Camp](https://learn.stacks.org/course/clarity-camp) to understand writing smart contracts.
+
+:::
 
 This section helps you create your contracts using the Hiro Platform. 
 
@@ -29,19 +34,12 @@ You can create a new contract for your project by following the steps below. Not
 
 1. On the [projects page](https://platform.hiro.so/projects), select the project you want to create a contract. 
 2. Then, select the *Open Editor* button. 
-3. This opens up a new tab with VS code editor to edit your project. 
-4. In the left nav, you can see the project and its directories.
+3. This opens up a new tab with VS Code editor to edit your project. 
+4. Inside VS Code, you can see the project directories and files.
 5. Expand *examples* and see a directory *contracts* but no contracts are in this folder.
-6. Right-select the *contracts* folder, select *New file* and add a new contract with a name of your choice. Eg: *clarity_contract_1.clar*
+6. Right-click by selecting the *contracts* folder, select *New file* and add a new contract with a name of your choice. Eg: *clarity_contract_1.clar*
     ![Write new contract](images/write-new-contract.png)
 7. This will create a `.clar` file in the *contracts* folder. Now you can use the [clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
-   
-    :::tip
-
-    If you are new to clarity, try [Clarity Camp](https://learn.stacks.org/course/clarity-camp) to understand writing smart contracts.
-
-    :::
-
 8. Once you are ready with your `.clar` file, you can update the `Clarinet.toml` file located in the same project directory. Use the following code to update the `.toml` file with these parameters. `[contracts.<your-contract-name>]` and path to use your `.clar` file name as `path = "<your-contract-name.clar>"`.
 
     ```
@@ -79,9 +77,9 @@ In the 8th step, where you edit the `clarinet.toml` file, you will add two lines
 
 You can customize your contracts by checking, testing, and debugging them using the VS code terminal inside the Hiro Platform. On your projects page, select the *Open editor* button to open up the VS code editor. Select the three horizontal lines icon to open a new terminal. Refer to the following documents to test your contracts in the VS code terminal.
 
-- [Check contracts](../../../clarinet/docs/how-to-guides/how-to-check-contract.md)
-- [Test contracts](../../../clarinet/docs/how-to-guides/how-to-test-contract.md)
-- [Debug contracts](../../../clarinet/docs/how-to-guides/how-to-debug-contract.md)
+- [Check contracts](https://docs.hiro.so/clarinet/how-to-guides/how-to-check-contract)
+- [Test contracts](https://docs.hiro.so/clarinet/how-to-guides/how-to-test-contract)
+- [Debug contracts](https://docs.hiro.so/clarinet/how-to-guides/how-to-debug-contract)
 
 :::note
 

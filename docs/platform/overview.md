@@ -10,7 +10,7 @@ We want to encourage developers to focus on shipping their business models to St
 
 To deliver that developer productivity, the Hiro Platform comes pre-installed with the following developer tools and resources to help speed up the developer journey:
 
-- Web-based VS Code
+- VS Code in Web Browser
 - Clarinet
 - Clarity for VS Code
 - Git

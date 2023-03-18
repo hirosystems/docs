@@ -2,8 +2,6 @@
 title: Contract examples
 ---
 
-## Introduction
-
 This article talks about our existing library of clarity files to build and customize your contracts. 
 
 Contracts are programs stored on the Stacks blockchain, run when a specific set of conditions are met. Although a contract may be used in several different ways, typically, a smart contract is written by a developer to automate a specific process or workflow and keep a record of the transaction on a ledger so others can trust the transaction is genuine and authentic.
@@ -22,4 +20,4 @@ The following are examples of contracts from the [Clarinet](https://github.com/h
 
 
 
-Now that you understand smart contracts, you can now [create](../how-to-guides/how-to-create-contract.md) and [deploy](../how-to-guides/how-to-deploy-contract.md) your contracts using [Hiro platform](https://platform.hiro.so/).
+Now that you understand smart contracts, you can now [create](build-contract.md) and [deploy](deploy-project.md) your contracts using [Hiro platform](https://platform.hiro.so/).
