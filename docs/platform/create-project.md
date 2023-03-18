@@ -4,10 +4,9 @@ title: Create Project
 
 This document walks you through the process of creating a new project or importing a project from GitHub to interact with the Stacks blockchain.
 
-## Prerequisites
+## Prerequisite
 
 - Log into the [Hiro Platform](https://platform.hiro.so/) using any of the login methods explained in the [Getting started](getting-started.md) guide.
-- Accept the *Terms and Conditions*.
 
 Once the prerequisites are met, you will be navigated to the [welcome page](https://platform.hiro.so/welcome), where you are required to respond if you want to opt-in to receive updates from our developers. You can choose *Yes, count me in* or *skip*.
 
