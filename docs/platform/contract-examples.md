@@ -8,7 +8,7 @@ This article talks about our existing library of clarity files to build and cust
 
 Contracts are programs stored on the Stacks blockchain, run when a specific set of conditions are met. Although a contract may be used in several different ways, typically, a smart contract is written by a developer to automate a specific process or workflow and keep a record of the transaction on a ledger so others can trust the transaction is genuine and authentic.
 
-The [Hiro platform](https://platform.hiro.so/) enables you to write and deploy a smart contract using [Clarity](https://clarity-lang.org/), a programming language developed specifically for smart contracts, in less than 5 minutes. You can refer to the contract examples to use with the Hiro platform. 
+The [Hiro platform](https://platform.hiro.so/) enables you to write and deploy a smart contract using [Clarity](https://clarity-lang.org/), a programming language developed specifically for smart contracts. You can refer to the contract examples to use with the Hiro platform. 
 
 ## Examples
 
