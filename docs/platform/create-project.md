@@ -29,7 +29,7 @@ Once you select a new project from the list, the selected project will be displa
 
 ![Hello world project](images/hello-world-project.png)
 
-Now, you can close the modal on the right to view your projects on the [projects page](https://platform.hiro.so/projects). Select the project to see its contracts. For each contract, you can see the CONTRACT NAME, LAST EDITED, TESTNET, MAINNET, and Deploy fields. 
+Now, you can close the modal on the right to view your projects on the [projects page](https://platform.hiro.so/projects). Select the project to see its contracts. You can see the CONTRACT NAME, LAST EDITED, TESTNET, MAINNET, and Deploy fields for each contract. 
 
 ## Import Project from GitHub
 
@@ -43,7 +43,7 @@ If you have an existing project but don't have clarity contracts in it, you can 
 
 Your cloned project is now displayed on the [projects page](https://platform.hiro.so/projects).
 
-Select the imported project to see the clarity files with extension `.clar`.
+Select the imported project to see the clarity files with the extension `.clar`.
 
 ![Import Clarinet project from GitHub](images/import-clarinet-project.png)
 

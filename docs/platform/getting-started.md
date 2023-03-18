@@ -62,4 +62,4 @@ Once the deployment of the contracts is successful, you can monitor your contrac
 
 ![explorer](images/explorer.png)
 
-Now that you understand what Hiro platform can do, continue with [creating a project or importing the project](create-project.md).
+Now that you understand what the Hiro platform can do, continue with [creating a project or importing the project](create-project.md).

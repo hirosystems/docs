@@ -14,7 +14,7 @@ This guide helps you create/build contracts using the [Hiro Platform](https://pl
 
 This section helps you create your contracts using the Hiro Platform. 
 
-If you have imported a project with no clarity contracts, you will see a window to open editor as shown below.
+If you have imported a project with no clarity contracts, you will see a window to open editor, as shown below.
 
 ![Open editor](images/open-editor.png)
 
@@ -25,14 +25,14 @@ You can now create contracts using any of the following ways.
 
 ### Write new contracts
 
-You can create a new contract in your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples) and it is assumed that your project has no clarity contracts.
+You can create a new contract for your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples), and it is assumed that your project has no clarity contracts.
 
 1. On the [projects page](https://platform.hiro.so/projects), select the project you want to create a contract. 
 2. Then, select the *Open Editor* button. 
 3. This opens up a new tab with VS code editor to edit your project. 
 4. In the left nav, you can see the project and its directories.
-5. Expand *examples* and see that there is a directory *contracts* but there are no contracts in this folder.
-6. Right select the *contracts* folder, select *New file* and add a new contract with a name of your choice. Eg: *clarity_contract_1.clar*
+5. Expand *examples* and see a directory *contracts* but no contracts are in this folder.
+6. Right-select the *contracts* folder, select *New file* and add a new contract with a name of your choice. Eg: *clarity_contract_1.clar*
     ![Write new contract](images/write-new-contract.png)
 7. This will create a `.clar` file in the *contracts* folder. Now you can use the [clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
    
@@ -61,7 +61,7 @@ When you are on the [projects](https://platform.hiro.so/projects) page with a li
 
 You can now add a new contract by following **1-7** steps in the [write new contracts](build-contract#write-new-contracts) section mentioned above in this article.
 
-In the 8th step where you edit the `clarinet.toml` file, you will add two lines of code as shown below. Note that the below code assumes that the newly added contract is *clarity_contract_2*. Also, add path to your new contract as shown below.
+In the 8th step, where you edit the `clarinet.toml` file, you will add two lines of code, as shown below. Note that the below code assumes that the newly added contract is *clarity_contract_2*. Also, add the path to your new contract as shown below.
 
     ```
     [project]
@@ -85,10 +85,10 @@ You can customize your contracts by checking, testing, and debugging them using 
 
 :::note
 
-The VS code terminal is currently not supported for deployment plans and clarinet integrate command.
+The VS Code terminal is currently not supported for clarinet integrate and deployment plans.
 
 :::
 
-Once you are done adding, customizing and testing the contracts, save your files. The Hiro platform will take care of binding your clarity contracts in your projects and deploy them as pods in Kubernetes with security.
+Once you are done adding, customizing, and testing the contracts, save your files. The Hiro platform will take care of binding your clarity contracts in your projects and deploy them as pods in Kubernetes with security.
 
 You can now proceed to the deployment process by referring to the [deploy project](deploy-project.md) guide.

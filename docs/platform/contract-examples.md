@@ -12,7 +12,7 @@ The [Hiro platform](https://platform.hiro.so/) enables you to write and deploy a
 
 ## Examples
 
-The following are the examples of contracts from the [Clarinet](https://github.com/hirosystems/clarinet) repository. 
+The following are examples of contracts from the [Clarinet](https://github.com/hirosystems/clarinet) repository. 
 
 - [Billboard](https://github.com/hirosystems/clarinet/tree/6b462e251619f9dd9bf908b1a990c4eff134aa5a/components/clarinet-cli/examples/billboard/contracts)
 - [cbtc](https://github.com/hirosystems/clarinet/tree/6b462e251619f9dd9bf908b1a990c4eff134aa5a/components/clarinet-cli/examples/cbtc/contracts)
