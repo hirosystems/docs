@@ -22,7 +22,7 @@ Use the [feedback widget inside Hiro Platform](https://hiro-pbc.canny.io/hiro-pl
 
 Your projects are deployed as pods in Kubernetes. Each pod operates with strict security context and resource limits. You are the only one to have access to the secured usage data.
 
-#### **I see an error: [Unable to retrieve contract in the VS code terminal](https://stacks-node-api.testnet.stacks.co/v2/contracts/source/STSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1D64KKHQ/newyorkcitycoin-token-v2?proof=0). How do I resolve it?**
+#### **I see an error: Unable to retrieve contract https://stacks-node-api.testnet.stacks.co/v2/contracts/source/STSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1D64KKHQ/newyorkcitycoin-token-v2?proof=0 How do I resolve it?**
 
 Currently, clarinet commands are not supported in the Hiro Platform VS code terminal.
 
