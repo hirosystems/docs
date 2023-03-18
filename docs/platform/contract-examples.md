@@ -1,5 +1,5 @@
 ---
-title: Contract examples
+title: Contract Examples
 ---
 
 This article talks about our existing library of clarity files to build and customize your contracts. 
