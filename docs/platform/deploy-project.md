@@ -40,7 +40,7 @@ This section helps you with the steps to monitor your contract in the [Explorer]
 1. You can now use the Pop-out button *View explorer* beside the *deployed* status to monitor your contract in Explorer.
 ![Exporer view](images/explorer-view.png)
 2. The  *view explorer* button opens up [Explorer](https://explorer.stacks.co/?chain=mainnet) to view the contract you just deployed in the mainnet/testnet environments.
-![Explorer](images/explorer.png) 
+![Explorer](images/explorer.jpeg) 
 3. You can check the summary of your contracts, contract details, etc., in Explorer.
 
 If you find issues with your deployment process, you can refer to the [FAQ section](faq.md) or file an issue [here](https://hiro-pbc.canny.io/hiro-platform).

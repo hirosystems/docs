@@ -6,23 +6,24 @@ This article walks you through the process of creating a new project or importin
 
 ## Prerequisite
 
-- Log into the [Hiro Platform](https://platform.hiro.so/) using any of the login methods explained in the [Getting started](getting-started.md) guide.
+Log into the [Hiro Platform](https://platform.hiro.so/) using any of the login methods explained in the [Getting started](getting-started.md) guide.
 
 Once the prerequisites are met, you will be navigated to the [welcome page](https://platform.hiro.so/welcome), where you are required to respond if you want to opt-in to receive updates from our developers. You can choose *Yes, count me in* or *skip*.
 
-![Opt for updates](images/opt-for-updates.jpeg)
+![Opt for updates](images/opt-for-updates.jpg)
 
 Now, you will be prompted to *create a project* or *import from GitHub*.
 
 ![create or import a project](images/create-or-import-project.png)
 
+
 An example workflow of the steps required to create a new project is described below.
 
-## Create Project
+## Create new Project
 
 To create a new project, you can start with a *Blank project* or use one of the examples displayed in the project modal - Hello world, Ordyswap, Clarity bitcoin, Counter, Fungible token, Lightning swaps, NFT marketplace, Non-fungible token. You can also refer to the examples in the [Clarity examples](https://github.com/hirosystems/clarity-examples/tree/main/examples) to view the source code.
 
-![Create new project](images/create-new-project.png)
+![Create new project](images/create-new-project.jpeg)
 
 Once you select a new project from the list, the selected example project will be automatically cloned and displayed on the [projects](https://platform.hiro.so/projects) page. Below is the screenshot of the *Hello world* project.
 

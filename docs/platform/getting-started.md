@@ -4,7 +4,7 @@ title: Getting Started
 
 When you navigate to the [Hiro Platform](https://platform.hiro.so/), you will be prompted to log into the platform using your login credentials.
 
-![The Hiro Platform landing page](images/platform-sign-in.png)
+![The Hiro Platform landing page](images/platform-sign-in.jpeg)
 
 If you are a new user, you can sign up to create a new account or continue as an existing user to log in with the following options.
 
@@ -58,4 +58,4 @@ To monitor the progress of your deployed contract, you can use the links to Expl
 
 ![explorer view](images/explorer-view.png)
 
-![explorer](images/explorer.png)
+![explorer](images/explorer.jpeg)
