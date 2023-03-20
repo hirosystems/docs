@@ -10,7 +10,7 @@ Log into the [Hiro Platform](https://platform.hiro.so/) using any of the login m
 
 Once the prerequisites are met, you will be navigated to the [welcome page](https://platform.hiro.so/welcome), where you are required to respond if you want to opt-in to receive updates from our developers. You can choose *Yes, count me in* or *skip*.
 
-![Opt for updates](images/opt-for-updates.jpg)
+![Opt for updates](images/opt-for-updates.png)
 
 Now, you will be prompted to *create a project* or *import from GitHub*.
 
