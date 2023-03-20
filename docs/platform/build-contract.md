@@ -2,7 +2,7 @@
 title: Build Contracts
 ---
 
-This guide helps you create/build contracts using the [Hiro Platform](https://platform.hiro.so/).
+This article helps you create/build contracts using the [Hiro Platform](https://platform.hiro.so/).
 
 ## Prerequisites
 
@@ -13,11 +13,9 @@ This guide helps you create/build contracts using the [Hiro Platform](https://pl
 
 :::tip
 
-If you are new to clarity, try [Clarity Camp](https://learn.stacks.org/course/clarity-camp) to understand writing smart contracts.
+If you are new to Clarity programming, please try [Clarity Camp](https://learn.stacks.org/course/clarity-camp).
 
 :::
-
-This section helps you create your contracts using the Hiro Platform. 
 
 If you have imported a project with no clarity contracts, you will see a window to open editor, as shown below.
 
@@ -30,7 +28,7 @@ You can now create contracts using any of the following ways.
 
 ### Write new contracts
 
-You can create a new contract for your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples), and it is assumed that your project has no clarity contracts.
+You can create a new contract for your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples/tree/main/examples/blank-project), and it is assumed that your project has no clarity contracts.
 
 1. On the [projects page](https://platform.hiro.so/projects), select the project you want to create a contract. 
 2. Then, select the *Open Editor* button. 
@@ -55,11 +53,11 @@ Save the file. You can now deploy your contracts in your project by referring to
 
 ## Add a new contract
 
-When you are on the [projects](https://platform.hiro.so/projects) page with a list of projects, select a project with at least one contract. Select the *Open Editor* button to open your project in the VS code editor.
+When you are on the [projects](https://platform.hiro.so/projects) page with a list of projects, select a project with at least one contract. Select the *Open Editor* button to open your project in the VS Code editor.
 
 You can now add a new contract by following **1-7** steps in the [write new contracts](build-contract#write-new-contracts) section mentioned above in this article.
 
-In the 8th step, where you edit the `clarinet.toml` file, you will add two lines of code, as shown below. Note that the below code assumes that the newly added contract is *clarity_contract_2*. Also, add the path to your new contract as shown below.
+In the 8th step, where you edit the `Clarinet.toml` file, you will add two lines of code, as shown below. Note that the below code assumes that the newly added contract is *clarity_contract_2*. Also, add the path to your new contract as shown below.
 
     ```
     [project]
@@ -75,7 +73,7 @@ In the 8th step, where you edit the `clarinet.toml` file, you will add two lines
 
 ### Test contract
 
-You can customize your contracts by checking, testing, and debugging them using the VS code terminal inside the Hiro Platform. On your projects page, select the *Open editor* button to open up the VS code editor. Select the three horizontal lines icon to open a new terminal. Refer to the following documents to test your contracts in the VS code terminal.
+You can customize your contracts, test, and debug them using the VS Code terminal inside the Hiro Platform. On your projects page, select the *Open editor* button to open up the VS Code editor. Select the three horizontal lines icon to open a new terminal. Refer to the following documents to test your contracts in the VS Code terminal.
 
 - [Check contracts](https://docs.hiro.so/clarinet/how-to-guides/how-to-check-contract)
 - [Test contracts](https://docs.hiro.so/clarinet/how-to-guides/how-to-test-contract)
@@ -83,10 +81,8 @@ You can customize your contracts by checking, testing, and debugging them using 
 
 :::note
 
-The VS Code terminal is currently not supported for clarinet integrate and deployment plans.
+The "clarinet integrate" and "deployment plans" are currently not supported in Clarinet installed inside VS Code editor of the Hiro Platform.
 
 :::
 
-Once you are done adding, customizing, and testing the contracts, save your files. The Hiro platform will take care of binding your clarity contracts in your projects and deploy them as pods in Kubernetes with security.
-
-You can now proceed to the deployment process by referring to the [deploy project](deploy-project.md) guide.
+Once you are done adding, customizing, and testing the contracts, save your files. The Hiro platform is now ready to deploy your saved contracts.

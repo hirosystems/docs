@@ -2,7 +2,7 @@
 title: Create Project
 ---
 
-This document walks you through the process of creating a new project or importing a project from GitHub to interact with the Stacks blockchain.
+This article walks you through the process of creating a new project or importing a project from GitHub.
 
 ## Prerequisite
 
@@ -10,7 +10,7 @@ This document walks you through the process of creating a new project or importi
 
 Once the prerequisites are met, you will be navigated to the [welcome page](https://platform.hiro.so/welcome), where you are required to respond if you want to opt-in to receive updates from our developers. You can choose *Yes, count me in* or *skip*.
 
-![Opt for updates](images/opt-for-updates.png)
+![Opt for updates](images/opt-for-updates.jpeg)
 
 Now, you will be prompted to *create a project* or *import from GitHub*.
 
@@ -24,28 +24,30 @@ To create a new project, you can start with a *Blank project* or use one of the 
 
 ![Create new project](images/create-new-project.png)
 
-Once you select a new project from the list, the selected project will be displayed on the [projects](https://platform.hiro.so/projects) page. Below is the screenshot of the *Hello world* project.
+Once you select a new project from the list, the selected example project will be automatically cloned and displayed on the [projects](https://platform.hiro.so/projects) page. Below is the screenshot of the *Hello world* project.
 
 ![Hello world project](images/hello-world-project.png)
 
-Now, you can close the modal on the right to view your projects on the [projects page](https://platform.hiro.so/projects). Select the project to see its contracts. You can see the CONTRACT NAME, LAST EDITED, TESTNET, MAINNET, and Deploy fields for each contract. 
+Now, you can view your projects on the [projects page](https://platform.hiro.so/projects). Select the project to review the list of contracts in them. 
 
 ## Import Project from GitHub
 
-When you select import project from GitHub, there will be a modal displayed on the right to enter the GitHub URL of your project.
+When you **Import from GitHub**, there will be a modal displayed on the right to enter the GitHub URL of your project.
 
-![Import from GitHub](images/import-from-github.png)
+![Import from GitHub](images/import-from-github.jpeg)
 
 Once you enter the URL of your project, select *clone* to clone your project into the Hiro platform.
+
+:::note
+
+The maximum project size allowed for imports is 50 MB.
+
+:::
 
 If you have an existing project but don't have clarity contracts in it, you can still clone the project and add clarity contracts by referring to our [clarity contract examples](contract-examples.md).
 
 Your cloned project is now displayed on the [projects page](https://platform.hiro.so/projects).
 
-Select the imported project to see the clarity files with the extension `.clar`.
+After your import, your project shows a list of Clarity contracts ending with `.clar` extension, as shown below. 
 
 ![Import Clarinet project from GitHub](images/import-clarinet-project.png)
-
-Now that you have created or imported your projects, you are now ready to build your contracts by following the [build contracts](build-contract.md) guide.
-
-You can archive your project at any time by following the [archive project](archive-project.md) guide.
