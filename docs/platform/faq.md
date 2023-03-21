@@ -4,7 +4,11 @@ title: FAQ's
 
 ### **Clarinet Integrate/Devnet is not working in terminal**
 
-This feature is in the roadmap. It is coming up soon.
+This feature is not supported. It is in the roadmap.
+
+### **Can I use deployment plans?**
+
+This feature is not supported. It is in the roadmap.
 
 ### **I cannot import my project**
 
@@ -20,12 +24,8 @@ Use the [feedback widget inside Hiro Platform](https://hiro-pbc.canny.io/hiro-pl
 
 ### **Are my projects and contracts isolated?**
 
-Your projects are deployed as pods in Kubernetes. Each pod operates with strict security context and resource limits. You are the only one to have access to the secured usage data.
+Your projects are deployed as pods in Kubernetes. Each pod operates with strict security context and resource limits. You are the only one to have access to the data.
 
 ### **I see an error: 'Unable to retrieve contract ...' in the browser console. How do I resolve it?**
 
 Currently, "clarinet integrate", "requirements" and "deployment plans" aren't supported in Clarinet installed in Hiro Platform. These are on the roadmap.
-
-### **Can I use deployment plans?**
-
-We are in the process of building the support for deployment plans in the Hiro Platform. 
