@@ -19,3 +19,9 @@ Follow the steps below to unarchive a project:
 
 1. On the [projects page](https://platform.hiro.so/projects), if you wish you unarchive a project, select the *Archive* button at the top and select the far-right three dots and select *Unarchive*.
 2. Once the project is unarchived, you should see that project listed on the [projects page](https://platform.hiro.so/projects).
+
+:::note
+
+Deleting a project is not yet available in the BETA version.
+
+:::

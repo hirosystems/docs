@@ -4,7 +4,7 @@ title: Getting Started
 
 When you navigate to the [Hiro Platform](https://platform.hiro.so/), you will be prompted to log into the platform using your login credentials.
 
-![The Hiro Platform landing page](images/platform-sign-in.jpeg)
+![The Hiro Platform landing page](images/platform-sign-in.png)
 
 If you are a new user, you can sign up to create a new account or continue as an existing user to log in with the following options.
 
@@ -56,6 +56,6 @@ Once your Clarity contracts are ready to deploy, follow the [deploy project](dep
 
 To monitor the progress of your deployed contract, you can use the links to Explorer assigned to each contract and verify the submitted deployment transaction.
 
-![explorer view](images/explorer-view.png)
+![explorer view](images/explorer-view.png){widtch}
 
 ![explorer](images/explorer.jpeg)
