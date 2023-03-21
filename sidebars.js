@@ -113,6 +113,20 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Hiro Platform',
+      items: [
+        'platform/overview',
+        'platform/getting-started',
+        'platform/create-project',
+        'platform/build-contract',
+        'platform/deploy-project',
+        'platform/archive-project',
+        'platform/contract-examples',
+        'platform/faq',
+      ],
+    }, 
+    {
+      type: 'category',
       label: 'Stacks Blockchain API',
       items: [
         'stacks-blockchain-api/overview',
