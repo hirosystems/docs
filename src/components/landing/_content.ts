@@ -8,8 +8,8 @@ export default {
     text: "Get started with the following quickstarts to set up and use Hiro's products.",
     links: [
       {
-        text: 'Set up local Development Environment',
-        href: '/clarinet/how-to-guides/how-to-set-up-local-development-environment',
+        text: 'Hiro Platform',
+        href: 'https://platform.hiro.so/',
       },
       {
         text: 'Stacks Blockchain API Client',
