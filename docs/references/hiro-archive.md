@@ -39,8 +39,8 @@ tar -zxvf testnet-stacks-blockchain-latest.tar.gz
 
 A working Postgresql database is required.
 ```shell
-curl https://archive.hiro.so/mainnet/stacks-blockchain-api-pg/stacks-blockchain-api-pg-14-latest.dump -O stacks-blockchain-api-pg-14-latest.dump
-runuser -l postgres -c 'pg_restore -v -C -d stacks-blockchain-api-pg-14-latest.dump'
+curl https://archive.hiro.so/mainnet/stacks-blockchain-api-pg/stacks-blockchain-api-pg-15-latest.dump -O stacks-blockchain-api-pg-15-latest.dump
+runuser -l postgres -c 'pg_restore -v -C -d stacks-blockchain-api-pg-15-latest.dump'
 
 [optional]
 runuser -l postgres -c "psql -c \"alter user postgres with password {{ your awesome password }};\""
