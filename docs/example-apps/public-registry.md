@@ -240,7 +240,7 @@ export const Transaction = ({ txId }) => {
 Information about transactions can be retrieved using the `TransactionsApi` object. Add a definition to the top of the `Transaction.jsx` file:
 
 ```js
-const transcationsApi = new TransactionsApi();
+const transactionsApi = new TransactionsApi();
 ```
 
 :::note
@@ -254,7 +254,7 @@ Then in the `fetchTransactionDetails` method add a call to `getTransactionById`.
 ```js
 // fetch transaction from api
 if (txId) {
-  const txDetails = await transcationsApi.getTransactionById({ txId });
+  const txDetails = await transactionsApi.getTransactionById({ txId });
   setTransactionDetails(txDetails);
 }
 ```

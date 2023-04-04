@@ -32,7 +32,7 @@ tokens, which allows them to send and like messages on the platform.
 
 Heystack is powered by Clarity smart contracts so each message is a transaction on the Stacks blockchain. Each time a
 user sends a message on the platform, they must sign the message with the [Stacks web wallet][] (or another compatible
-wallet) and pay a small gas fee in STX. A user spends a $HEY token to send every message, and recieves a $HEY token for
+wallet) and pay a small gas fee in STX. A user spends a $HEY token to send every message, and receives a $HEY token for
 every like that their messages receive.
 
 The following video provides a brief overview of the Heystack application:
