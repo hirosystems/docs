@@ -259,6 +259,60 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Subnets',
+      items: [
+        'subnets/overview',
+        'subnets/getting-started',
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'subnets/feature-guides/authenticate-users-with-connect',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
+            'stacks.js/how-to-guides/how-to-integrate-stacking',
+            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
+            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
+          ],
+        },
+        'stacks.js/troubleshooting',
+        'stacks.js/faq',
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
+            },
+
+            {
+              type: 'link',
+              label: 'Discord #stacks-js',
+              href: 'https://discord.com/channels/621759717756370964/1022879438515486791',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Stacks.js',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/watch?v=SGrbeoCSHs0',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Token Metadata API',
       items: [
         {
