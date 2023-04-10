@@ -140,6 +140,47 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
+        name: 'remote-docs-subnets-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/',
+        outDir: 'docs/subnets',
+        documents: ['getting-started.md', 'overview.md',],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-subnets-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/feature-guides/',
+        outDir: 'docs/subnets/feature-guides',
+        documents: [
+          'trust-models.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-subnets-images',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
+        outDir: 'docs/subnets/images',
+        documents: [
+          'subnet-devnet.png',
+          'subnet-miners.png',
+          'subnets-architecture.png',
+          'subnets-deployment-confirmed.png',
+        ],
+        requestConfig: { responseType: 'arraybuffer' },
+
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/png',
+        },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
         name: 'remote-docs-clarinet-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
         outDir: 'docs/clarinet',

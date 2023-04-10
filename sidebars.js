@@ -267,21 +267,9 @@ module.exports = {
           type: 'category',
           label: 'Feature Guides',
           items: [
-            'subnets/feature-guides/authenticate-users-with-connect',
+            'subnets/feature-guides/trust-models',
           ],
         },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
-            'stacks.js/how-to-guides/how-to-integrate-stacking',
-            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
-            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
-          ],
-        },
-        'stacks.js/troubleshooting',
-        'stacks.js/faq',
         {
           type: 'category',
           label: 'Developer Resources',
@@ -289,23 +277,22 @@ module.exports = {
             {
               type: 'link',
               label: 'Contribution Guidelines',
-              href: 'https://github.com/hirosystems/stacks.js/blob/master/CONTRIBUTING.md',
+              href: 'https://github.com/hirosystems/stacks-subnets/blob/master/CONTRIBUTORS.md',
             },
-
             {
               type: 'link',
-              label: 'Discord #stacks-js',
-              href: 'https://discord.com/channels/621759717756370964/1022879438515486791',
+              label: 'Discord #General',
+              href: 'https://discord.com/channels/621759717756370964/621759718192447502',
             },
             {
               type: 'link',
               label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=Stacks.js',
+              href: 'https://www.hiro.so/search?query=subnet',
             },
             {
               type: 'link',
               label: 'Videos',
-              href: 'https://www.youtube.com/watch?v=SGrbeoCSHs0',
+              href: 'https://www.youtube.com/@HiroSystems/search?query=subnets',
             },
           ],
         },
