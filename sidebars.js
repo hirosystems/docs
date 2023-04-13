@@ -259,6 +259,47 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Subnets',
+      items: [
+        'subnets/overview',
+        'subnets/getting-started',
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'subnets/feature-guides/trust-models',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/stacks-subnets/blob/master/CONTRIBUTORS.md',
+            },
+            {
+              type: 'link',
+              label: 'Discord #General',
+              href: 'https://discord.com/channels/621759717756370964/621759718192447502',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=subnet',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/@HiroSystems/search?query=subnets',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Token Metadata API',
       items: [
         {
