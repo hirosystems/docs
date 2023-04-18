@@ -22,9 +22,9 @@ module.exports = {
           type: 'category',
           label: 'How-to Guides',
           items: [
-            'chainhooks/how-to-guides/how-to-run-chainhook-as-a-service',
             'chainhooks/how-to-guides/how-to-use-chainhook-with-bitcoin',
             'chainhooks/how-to-guides/how-to-use-chainhook-with-stacks',
+            'chainhooks/how-to-guides/how-to-run-chainhook-as-a-service',
           ],
         },
         'chainhooks/faq',
