@@ -181,29 +181,6 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
-        name: 'remote-docs-chainhooks-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
-        outDir: 'docs/chainhooks',
-        documents: ['faq.md', 'getting-started.md', 'overview.md'],
-      },
-    ],
-    [
-      'docusaurus-plugin-remote-content',
-      {
-        name: 'remote-docs-chainhooks-how-to',
-        sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/how-to-guides/',
-        outDir: 'docs/chainhooks/how-to-guides',
-        documents: [
-          'how-to-run-chainhook-as-a-service.md',
-          'how-to-use-chainhook-with-bitcoin.md',
-          'how-to-use-chainhook-with-stacks.md',
-        ],
-      },
-    ],
-    [
-      'docusaurus-plugin-remote-content',
-      {
         name: 'remote-docs-clarinet-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
         outDir: 'docs/clarinet',
