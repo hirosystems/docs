@@ -321,6 +321,7 @@ module.exports = {
       label: 'Appendix',
       items: [
         'references/hiro-archive',
+        'changelog/changelog-march',
         'changelog/changelog-february',
         'changelog/changelog-january',
         'changelog/changelog-december',
