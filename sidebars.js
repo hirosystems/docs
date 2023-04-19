@@ -14,6 +14,45 @@ module.exports = {
     'intro',
     {
       type: 'category',
+      label: 'Chainhooks',
+      items: [
+        'chainhooks/overview',
+        'chainhooks/getting-started',
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'chainhooks/how-to-guides/how-to-use-chainhook-with-bitcoin',
+            'chainhooks/how-to-guides/how-to-use-chainhook-with-stacks',
+            'chainhooks/how-to-guides/how-to-run-chainhook-as-a-service',
+          ],
+        },
+        'chainhooks/faq',
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/chainhook/tree/develop',
+            },
+            {
+              type: 'link',
+              label: 'Discord #General',
+              href: 'https://discord.com/channels/621759717756370964/621759718192447502',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/blog/meet-4-new-features-in-clarinet',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Clarinet',
       items: [
         'clarinet/introduction',
