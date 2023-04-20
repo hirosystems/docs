@@ -5,33 +5,27 @@ title: Getting Started
 
 # Getting Started
 
-Developers can test their applications on a subnet either locally or on Hiro's
-hosted testnet subnet. This page describes two different walkthroughs that
-illustrate how to use a subnet.
+You understand subnets from the [overview](https://docs.hiro.so/subnets/overview)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](https://docs.hiro.so/clarinet/how-to-guides/how-to-run-integration-environment) as one of the networks in your Stacks development environment.
 
-- Run a local subnet
-- Use Hiro's subnet on testnet
+This guide walks a user through a **subnet demonstration**: minting and transferring NFTs between a main chain (local devnet) and a subnet to showcase subnet's high throughput and low latency functionality. By the end of this guide, the user will
+
+- Deploy the layer-1 contract that governs the interface to your subnet
+- Deploy the layer-2 subnet contract that runs our example application—an NFT contract
+- Create the handful of [Stacks.js](https://github.com/hirosystems/stacks.js) scripts that will allow us to interact with our subnet and its contract application
 
 :::note
 
-A subnet was previously referred to as a hyperchain. While the process of updating the content is ongoing, there may still be some references to a
-hyperchain instead of a subnet.
+A subnet was previously referred to as a hyperchain. While the process of updating the content is ongoing, there may still be some references to a hyperchain instead of a subnet.
 
 :::
 
+## Run a local subnet with Clarinet
 
-## Run a local subnet
+Clarinet provides a tool to set up a complete local development environment, known as a "devnet", which uses Docker to spin up a Bitcoin node, a Stacks node, a Stacks API node, a Stacks Explorer, and now, a subnet node and subnet API node. This allows developers to configure a subnet and develop and test applications locally on a system that matches the production environment.
 
-Clarinet provides a tool to set up a complete local development environment, referred to as "devnet," which uses Docker to spin up a Bitcoin node, a Stacks node, a Stacks API node, a Stacks Explorer, and now, a subnet node and subnet API node. This allows developers to test locally on a system that matches the production environment.
+In this section, we will explain how to launch and interact with the devnet's subnet node using a simple NFT example project.
 
-In this section, we will explain how to launch and interact with this devnet
-subnet environment using a simple NFT example project.
-
-Ensure you have `clarinet` installed and the version is 1.5.3 or
-above. If you do not already have clarinet installed, please refer to the
-clarinet installation instructions
-[here](https://docs.hiro.so/smart-contracts/clarinet#installing-clarinet) for
-installation procedures.
+Ensure you have `clarinet` installed and the version is 1.5.3 or above. If you do not already have clarinet installed, please refer to the clarinet installation instructions [here](https://docs.hiro.so/smart-contracts/clarinet#installing-clarinet) for installation procedures.
 
 ### Create a new project with Clarinet
 
@@ -42,29 +36,23 @@ clarinet new subnet-nft-example
 cd subnet-nft-example
 ```
 
-This command creates a new directory with a clarinet project already
-initialized, and then switches into that directory.
+This command creates a new directory with a clarinet project already initialized, and then switches into that directory.
 
 ### Create the contracts
 
-The clarinet does not yet support deploying a contract to a subnet, so we will not use it to manage our subnet contracts in this guide. Instead, we will manually deploy our subnet contracts for now.
+While this guide does involve writing and publishing a Clarity contract to your local subnet, Clarinet does not yet support contract deployment to subnets directly. Instead, we will manually deploy the contract through a Stacks.js script in a later step.
 
 #### Creating the Stacks (L1) contract
 
-Our L1 NFT contract is going to implement the
-[SIP-009 NFT trait](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md#trait).
+Our first contract will be the L1 contract that serves as an interface with the subnet node, in this instance allowing us to mint and transfer NFTs between the layers. Our L1 NFT contract is going to implement the [SIP-009 NFT trait](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md#trait).
 
-We will add this to our project as a requirement so that Clarinet will deploy it
-for us.
+We will add this to our project as a requirement so that Clarinet will deploy it for us.
 
 ```sh
 clarinet requirements add ST1NXBK3K5YYMD6FD41MVNP3JS1GABZ8TRVX023PT.nft-trait
 ```
 
-We'll also use a new trait defined for the subnet, `mint-from-subnet-trait,`
-that allows the subnet to mint a new asset on the Stacks chain if it was
-originally minted on the subnet and then withdrawn. We will add a requirement
-for this contract as well:
+We'll also use a new trait defined for the subnet, `mint-from-subnet-trait`, that allows the subnet to mint a new asset on the Stacks chain if it was originally minted on the subnet and then withdrawn. We will add a requirement for this contract as well:
 
 ```sh
 clarinet requirements add ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.subnet-traits
@@ -137,14 +125,15 @@ following clarity code:
 )
 ```
 
-Note that this contract implements the `mint-from-subnet-trait` and
-the SIP-009 `nft-trait.` When `mint-from-subnet-trait` is implemented, it allows an NFT to be minted on the subnet, then later withdrawn to the L1.
+Note that this contract implements the `mint-from-subnet-trait` and the SIP-009 `nft-trait.` When `mint-from-subnet-trait` is implemented, it allows an NFT to be minted on the subnet, then later withdrawn to the L1.
 
 #### Creating the subnet (L2) contract
 
-Next, we will create the subnet contract at _./contracts/simple-nft-l2.clar_. As
-mentioned earlier, Clarinet does not support deploying subnet contracts yet, so
-we will manually create this file and add the following contents:
+Next, we will create the subnet contract at _./contracts/simple-nft-l2.clar_. As mentioned earlier, Clarinet does not support deploying subnet contracts yet, so we will manually create this file and add the following contents:
+
+:::note
+You can use Clarinet to create the Clarity file at the specific location by entering into the terminal `clarinet contract new simple-nft-l2` or you can manually create a new file. But note that Clarinet will not deploy this contract to the subnet; instead, in a later step, you will write and run a Stacks.js script that communicates to the subnet node.
+:::
 
 ```clarity
 (define-constant CONTRACT_OWNER tx-sender)
@@ -230,30 +219,26 @@ layer-1.
 
 The settings for the devnet are found in _./settings/Devnet.toml_. In order to launch a subnet in the devnet, we need to tell Clarinet to enable a subnet node and a corresponding API node.
 
-Add, or uncomment, the following line under `[devnet]`:
+Uncomment, or add, the following line under `[devnet]`:
 
 ```toml
 enable_subnet_node = true
 ```
 
-Also, in that file, we can see a few default settings that `clarinet` will
-be using for our subnet. `subnet_contract_id` specifies the L1 contract with which the subnet will be interacting. This will be automatically downloaded from the network and deployed by `clarinet,` but you can take a look at it [here](https://explorer.hiro.so/txid/0x928db807c802078153009524e8f7f062ba45371e72a763ce60ed04a70aaefddc?chain=testnet)
-if interested.
+Also, in that file, we can see a few default settings that `clarinet` will be using for our subnet. `subnet_contract_id` specifies the L1 contract with which the subnet will be interacting. This will be automatically downloaded from the network and deployed by `clarinet` but you can take a look at it [here](https://explorer.hiro.so/txid/0x7d8a5d649d0f2b7583a456225c2e98b40ba62a124c5187f6dbfa563592b24e76?chain=testnet) if interested.
 
 ```toml
-subnet_contract_id = "ST13F481SBR0R7Z6NMMH8YV2FJJYXA5JPA0AD3HP9.subnet-v1-1"
+subnet_contract_id = "ST13F481SBR0R7Z6NMMH8YV2FJJYXA5JPA0AD3HP9.subnet-v1-2"
 ```
 
-`subnet_node_image_url` and `subnet_api_image_url` specify the docket images
-that will be used for the subnet node and the subnet API node, respectively.
+`subnet_node_image_url` and `subnet_api_image_url` specify the docket images that will be used for the subnet node and the subnet API node, respectively.
 
 ```toml
-subnet_node_image_url = "hirosystems/stacks-subnets:0.4.0"
+subnet_node_image_url = "hirosystems/stacks-subnets:0.4.1"
 subnet_api_image_url = "hirosystems/stacks-blockchain-api:7.1.0-beta.2"
 ```
 
-You do not need to modify any of these, but you can if you'd like to test a
-custom subnet implementation.
+You do not need to modify or uncomment any of these, but you can if you'd like to test a custom subnet implementation.
 
 Once the configuration is complete, run the following command to start the
 devnet environment:
@@ -275,16 +260,27 @@ Once this state is reached, we should see successful calls to `commit-block` in 
 
 ### Setup Node.js scripts
 
-To submit transactions to Hiro's Stacks node and subnet node, we will use
-[Stacks.js](https://stacks.js.org) and some simple scripts. We will create a new directory, _./scripts/_, for these scripts.
+Clarinet does not yet support direct interaction with the subnet node through `clarinet console`. Instead, we will interact with our subnet node with [Stacks.js](https://stacks.js.org) transactions.
+
+By the end of this section, we will have these several scripts that correspond to the various kinds of functionality we can invoke from our application:
+
+- _publish.js_ - publish a smart contract (to our subnet node)
+- _register.js_ - register an NFT minted on an L1 (devnet) with the subnet so it can be deposited
+- _mint.js_ - mint a new NFT on the L1 (devnet)
+- _deposit.js_ - deposit the NFT in the subnet by by calling the deposit function on the interface contract on the L1
+- _transfer.js_ - transfer the NFT from one user to another in the subnet
+- _withdraw-l2.js_ - the two-step withdrawal process starts with withdrawing asset from L2
+- _withdraw-l1.js_ - the second step to withdrawal is to undeposit the NFT asset from L1 interface contract
+- _verify.js_ - querying the current owner of an NFT
+
+To submit transactions to Hiro's Stacks node and subnet node, we will use the following simple scripts. We will save them in a new directory, _./scripts/_.
 
 ```sh
 mkdir scripts
 cd scripts
 ```
 
-Then we will initialize a Node.js project and install the stacks.js
-dependencies:
+Then we will initialize a Node.js project and install the Stacks.js dependencies:
 
 ```sh
 npm init -y
@@ -298,8 +294,7 @@ enable modules:
   "type": "module",
 ```
 
-To simplify our scripts, we will define some environment variables that will be
-used to hold the signing keys for various subnet transactions.
+To simplify our scripts, we will define some environment variables in our terminal that will be used to hold the signing keys for various subnet transactions.
 
 ```sh
 export DEPLOYER_ADDR=ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
