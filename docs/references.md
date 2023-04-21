@@ -3,7 +3,7 @@ id: references
 title: Resources for Stacks Developers
 ---
 
-The resources in this section are provided for reference toward developer resources in the Stacks ecosystem. From Clarity language resources to Stacks.js documentation, this section contains information for the complete development of a Stacks app.
+The resources in this section are provided for reference toward developer resources in the Stacks ecosystem. From Clarity language resources to Stacks.js documentation, this section contains information for the complete development of a Stacks app. 
 
 ## Interacting with the blockchain
 
