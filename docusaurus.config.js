@@ -470,6 +470,12 @@ module.exports = {
             position: 'right',
           },
           {
+            to: 'https://survey.hiro.so',
+            label: 'Take The Dev Survey',
+            className: 'header-survey-link',
+            position: 'right',
+          },
+          {
             href: 'https://github.com/hirosystems/docs',
             className: 'header-github-link',
             title: 'GitHub Repository',
