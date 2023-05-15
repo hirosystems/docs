@@ -372,7 +372,7 @@ module.exports = {
           },
           {
             route: '/ordinals',
-            spec: 'https://ordinals-api-pbcblockstack-blockstack.vercel.app/openapi.yaml',
+            spec: 'https://ordinals-api.vercel.app/openapi.yaml',
           },
           {
             route: '/metadata',
