@@ -143,7 +143,7 @@ module.exports = {
         name: 'remote-docs-subnets-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/',
         outDir: 'docs/subnets',
-        documents: ['getting-started.md', 'overview.md',],
+        documents: ['getting-started.md', 'overview.md'],
       },
     ],
     [
@@ -153,16 +153,15 @@ module.exports = {
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/feature-guides/',
         outDir: 'docs/subnets/feature-guides',
-        documents: [
-          'trust-models.md',
-        ],
+        documents: ['trust-models.md'],
       },
     ],
     [
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-subnets-images',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
         outDir: 'docs/subnets/images',
         documents: [
           'subnet-devnet.png',
@@ -470,12 +469,6 @@ module.exports = {
             position: 'right',
           },
           {
-            to: 'https://survey.hiro.so',
-            label: 'Take The Dev Survey',
-            className: 'header-survey-link',
-            position: 'right',
-          },
-          {
             href: 'https://github.com/hirosystems/docs',
             className: 'header-github-link',
             title: 'GitHub Repository',
@@ -575,4 +568,3 @@ module.exports = {
       },
     }),
 };
-

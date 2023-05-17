@@ -1,0 +1,61 @@
+.banner {
+  --color-mint: #c2ebc4;
+  --color-orange: #ff5500;
+  font-family: var(--ifm-heading-font-family);
+  display: flex;
+  gap: 14px;
+  padding: 8px 20px;
+  align-items: center;
+}
+.banner-info {
+  background-color: var(--color-mint);
+}
+.banner-warning {
+  background-color: var(--color-orange);
+}
+
+.bannerContent {
+  flex-grow: 1;
+  color: var(--color-neutral-black);
+}
+.bannerContent p {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+.banner a {
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: var(--color-neutral-black);
+  color: var(--color-mint);
+}
+.banner a:hover {
+  text-decoration: none;
+  color: var(--color-neutral-white);
+}
+.banner-warning a {
+  color: var(--color-neutral-white);
+}
+.banner-warning a:hover {
+  color: var(--color-orange);
+}
+
+.banner > div:first-child {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+}
+.banner-info > div:first-child {
+  background-image: url('/img/banner/info.png');
+}
+.banner-warning > div:first-child {
+  background-image: url('/img/banner/warning.png');
+}
+
+@media (max-width: 680px) {
+  .banner {
+    display: none;
+  }
+}
