@@ -1,3 +1,22 @@
+type Banner = {
+  type: 'info' | 'warning';
+  from: string;
+  to: string;
+  text: string[];
+  cta: string | null;
+  ctaLink: string;
+};
+
+const banner: Banner = {
+  type: 'info',
+  from: '2023-05-15',
+  to: '2023-05-31',
+  text: ["Developers, we're listening!", 'Tell us about your experience using Hiro products.'],
+  cta: 'Take the Survey',
+  ctaLink: 'https://survey.hiro.so',
+};
+const now = new Date();
+
 export default {
   hero: {
     title: 'Get started',
@@ -20,6 +39,10 @@ export default {
         href: '/stacksjs-starters',
       },
     ],
+  },
+  banner: {
+    showBanner: now >= new Date(banner.from) && now <= new Date(banner.to),
+    ...banner,
   },
   popularSections: {
     title: 'Popular sections',

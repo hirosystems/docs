@@ -2,7 +2,7 @@ import React from 'react';
 
 import Link from '@docusaurus/Link';
 
-import content from './_content';
+import content from '../_content';
 import styles from './landing.module.css';
 
 const { hero, popularSections, sections } = content;
