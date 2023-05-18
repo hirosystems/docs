@@ -152,6 +152,13 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Hiro Archive',
+      items: [
+        'hiro-archive/overview',
+      ],
+    }, 
+    {
+      type: 'category',
       label: 'Hiro Platform',
       items: [
         'platform/overview',
@@ -359,7 +366,6 @@ module.exports = {
       type: 'category',
       label: 'Appendix',
       items: [
-        'references/hiro-archive',
         'changelog/changelog-march',
         'changelog/changelog-february',
         'changelog/changelog-january',
