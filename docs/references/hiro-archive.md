@@ -6,9 +6,9 @@ title: Hiro Archive
 
 ## What is the Hiro Archive
 
-The Hiro Archive is a collection of datasets for the [Stacks Blockchain](https://github.com/stacks-network/stacks-blockchain) and Hiro services, like the [Stacks Blockchain API](https://github.com/hirosystems/stacks-blockchain-api) and [Token Metadata API](https://github.com/hirosystems/token-metadata-api).
+The Hiro Archive is a collection of datasets for various services in the Stacks ecosystem.
 
-The purpose of the Hiro Archive is to enable developers and users in the Stacks ecosystem to quickly bootstrap supported services with pre-loaded data, which otherwise could day days or weeks to acquire when syncing from genesis. This is a public service Hiro offers as a benefit to the Stacks community.
+The purpose of the Hiro Archive is to enable Stacks developers and users to quickly bootstrap supported services with pre-loaded data, which otherwise could day days or weeks to acquire when syncing from genesis. This is a public service Hiro offers as a benefit to the Stacks community.
 
 All available artifacts can be found here: https://archive.hiro.so
 ## Supported Services
@@ -17,22 +17,6 @@ Nightly mainnet and testnet archives are published for the following services:
   * [Stacks-Blockchain](https://github.com/stacks-network/stacks-blockchain)
   * [Stacks-Blockchain-API](https://github.com/hirosystems/stacks-blockchain-api)
   * [Token-Metadata-API](https://github.com/hirosystems/token-metadata-api)
-
-## Verifying Integrity
-
-All datasets have an associated SHA256 hash file which can be used to verify the integrity of the downloaded dataset.
-As some of the archives are quite large, this is useful to ensure the file you've downloaded matches the file maintained in the Archive.
-
-```bash
-    echo "$(cat <SHASUM FILE> | awk '{print $1}')  <ARCHIVE FILE>" | shasum --check
-    <ARCHIVE FILE>: OK
-
-    # For example
-    echo "$(cat mainnet-stacks-blockchain-api-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-api-latest.gz" | shasum --check
-    mainnet-stacks-blockchain-api-latest.gz: OK
-```
-
-If the integrity check fails for any reason, you may need to delete the local archive and re-attempt the download. If issues persist, switch to a different network and try again.
 
 ## Stacks Blockchain
 ### Where to Download Archives
@@ -155,3 +139,27 @@ or the most recent upload for a particular version:
 1. Verify the dataset is being used by comparing your nodes [local block height](http://localhost:3999/extended/v1/status) with [Hiro's](https://api.hiro.so/extended/v1/status). If the block height matches or is close to Hiro's block height, the restoration was successful.
     1. It may take a few minutes for the local node to respond on this endpoint.
     1. Your block height may be up to a few hundred blocks away from Hiro's depending on the age of the archive. It should catch up relatively quickly.
+
+
+## Verifying Integrity
+
+All datasets have an associated SHA256 hash file which can be used to verify the integrity of the downloaded dataset.
+As some of the archives are quite large, this is useful to ensure the file you've downloaded matches the file maintained in the Archive.
+
+After downloading an archive file and its associated shasum file, you can verify the integrity of the archive file like so:
+```bash
+    echo "$(cat <SHASUM FILE> | awk '{print $1}')  <ARCHIVE FILE>" | shasum --check
+    <ARCHIVE FILE>: OK
+
+    # Example
+    echo "$(cat mainnet-stacks-blockchain-api-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-api-latest.gz" | shasum --check
+
+    # If the integrity check succeeds, a log will be printed indicating so
+    mainnet-stacks-blockchain-api-latest.gz: OK
+
+    # Otherwise a log will be printed indicating failure
+    mainnet-stacks-blockchain-api-latest.gz: FAILED
+    shasum: WARNING: 1 computed checksum did NOT match
+```
+
+If the integrity check fails for any reason, you may need to delete the local archive and re-attempt the download. If issues persist, switch to a different network and try again.
