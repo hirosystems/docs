@@ -145,7 +145,7 @@ or the most recent upload for a particular version:
 
 Since the Token Metadata API depends on a Stacks Blockchain API, you will need to first launch a Stacks Blockchain API configured for the same Stacks network.
 
-If you don't already have one, you can follow [these instructions](#restoring-the-stacks-blockchain-api-using-the-hiro-archive) to launch one with an archive.
+If you don't already have one, you can follow [these instructions](#stacks-blockchain-api) to launch one with an archive.
 
 ### Where to Download Archives
 
