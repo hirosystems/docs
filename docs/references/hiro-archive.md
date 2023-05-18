@@ -37,7 +37,7 @@ or the most recent upload for a particular version:
 * archive: `<NETWORK>-stacks-blockchain-2.3.0.0.2-latest.tar.gz`
 * shasum: `<NETWORK>-stacks-blockchain-2.3.0.0.2-latest.sha256`
 
-### Restoring the Stacks-Blockchain Node Using the Hiro Archive
+### Restoring the Stacks Blockchain Node Using the Hiro Archive
 
 1. [Download the archive and shasum for the appropriate network](#where-to-download-archives)
 1. [Verify the archive with the shasum](#verifying-integrity)
