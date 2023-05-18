@@ -154,7 +154,7 @@ module.exports = {
       type: 'category',
       label: 'Hiro Archive',
       items: [
-        'references/hiro-archive',
+        'hiro-archive/overview',
       ],
     }, 
     {

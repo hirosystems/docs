@@ -1,8 +1,6 @@
 ---
-title: Hiro Archive
+title: Overview
 ---
-
-# Hiro Archive
 
 ## What is the Hiro Archive
 
