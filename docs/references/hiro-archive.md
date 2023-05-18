@@ -66,7 +66,7 @@ In order for the Stacks Blockchain and Stacks Blockchain API archives to be comp
 
 There are two ways to restore a Stacks Blockchain API using the Hiro Archive. The archive file you'll need to download will depend on your method of restoration. There is no scenario where you would need both restoration methods.
 
-**Restore the Postgres database (Recommended)**
+**Restore via Postgres database dump (Recommended)**
 
 This is the quickest and most direct method, and is suitable for most scenarios. It consists of a backup of the API's Postgres database taken using `pg_dump`. We generally recommend starting with this method before attempting the method below if this one does not work for any reason.
 
