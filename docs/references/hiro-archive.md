@@ -8,7 +8,7 @@ title: Hiro Archive
 
 The Hiro Archive is a collection of datasets for various services in the Stacks ecosystem.
 
-The purpose of the Hiro Archive is to enable Stacks developers and users to quickly bootstrap supported services with pre-loaded data, which otherwise could day days or weeks to acquire when syncing from genesis. This is a public service Hiro offers as a benefit to the Stacks community.
+The purpose of the Hiro Archive is to enable Stacks developers and users to quickly bootstrap supported services with pre-loaded data, which otherwise could take days or weeks to acquire when syncing from genesis. This is a public service Hiro offers as a benefit to the Stacks community.
 
 All available artifacts can be found here: https://archive.hiro.so
 ## Supported Services
