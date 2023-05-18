@@ -14,9 +14,9 @@ All available artifacts can be found here: https://archive.hiro.so
 ## Supported Services
 
 Nightly mainnet and testnet archives are published for the following services:
-  * [Stacks-Blockchain](https://github.com/stacks-network/stacks-blockchain)
-  * [Stacks-Blockchain-API](https://github.com/hirosystems/stacks-blockchain-api)
-  * [Token-Metadata-API](https://github.com/hirosystems/token-metadata-api)
+  * [Stacks Blockchain](https://github.com/stacks-network/stacks-blockchain)
+  * [Stacks Blockchain API](https://github.com/hirosystems/stacks-blockchain-api)
+  * [Token Metadata API](https://github.com/hirosystems/token-metadata-api)
 
 ## Stacks Blockchain
 ### Where to Download Archives
@@ -55,7 +55,7 @@ or the most recent upload for a particular version:
 ## Stacks Blockchain API
 ### Prerequisites
 
-Since the Stacks Blockchain API depends on a Stacks Blockchain node, you will need to first [restore a Stacks Blockchain node using the Hiro Archive](#restoring-the-stacks-blockchain-node-using-the-hiro-archive) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
+Since the Stacks Blockchain API depends on a Stacks Blockchain node being at the same block height, you will need to first [restore a Stacks Blockchain node using the Hiro Archive](#restoring-the-stacks-blockchain-node-using-the-hiro-archive) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
 
 In order for the Stacks Blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
 * Both archives correspond to the same Stacks network (mainnet/testnet)
@@ -110,7 +110,7 @@ or the most recent upload for a particular version:
     * archive: `<network>-stacks-blockchain-api-<API VERSION>-latest.gz`
     * shasum: `<network>-stacks-blockchain-api-<API VERSION>-latest.sha256`
 
-### Restoring the Stacks-Blockchain-API Using the Hiro Archive
+### Restoring the Stacks Blockchain API Using the Hiro Archive
 
 **If restoring via Postgres dump**
 1. [Download the archive and shasum for the appropriate network and restoration method](#where-to-download-archives-1)
@@ -140,6 +140,43 @@ or the most recent upload for a particular version:
     1. It may take a few minutes for the local node to respond on this endpoint.
     1. Your block height may be up to a few hundred blocks away from Hiro's depending on the age of the archive. It should catch up relatively quickly.
 
+## Token Metadata API
+### Prerequisites
+
+Since the Token Metadata API depends on a Stacks Blockchain API, you will need to first launch a Stacks Blockchain API configured for the same Stacks network.
+
+If you don't already have one, you can follow [these instructions](#restoring-the-stacks-blockchain-api-using-the-hiro-archive) to launch one with an archive.
+
+### Where to Download Archives
+
+Token Metadata API archives for each network can be found at the following locations:
+* mainnet: https://archive.hiro.so/mainnet/token-metadata-api-pg/
+* testnet: https://archive.hiro.so/testnet/token-metadata-api-pg/
+
+The file name patterns are as follows:
+* archive: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-<DATE(YYYYMMDD)>.dump`
+* shasum: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-<DATE(YYYYMMDD)>.sha256`
+
+There is a continually updated archive and shasum which always points to the most recent upload:
+* archive: `token-metadata-api-pg-<DATABASE VERSION>-latest.dump`
+* shasum: `token-metadata-api-pg-<DATABASE VERSION>-latest.sha256`
+
+or the most recent upload for a particular version:
+* archive: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-latest.dump`
+* shasum: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-latest.sha256`
+
+### Restoring the Token Metadata API Using the Hiro Archive
+
+1. [Download the archive and shasum for the appropriate network](#where-to-download-archives-2)
+1. [Verify the archive with the shasum](#verifying-integrity)
+1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning)
+    ```bash
+        export PGPASSWORD=<YOUR POSTGRES PASSWORD>
+        pg_restore --username postgres --verbose --jobs 4 --dbname token_metadata_api /path/to/archive/file
+    ```
+1. Launch the Token Metadata API service
+1. Verify the restoration was successful by viewing the [total number of tokens and contracts tracked in the service.](http://localhost:3000/metadata) If the total number of each property is greater than zero, the restoration was successful.
+    1. It may take a few minutes for the local node to respond on this endpoint.
 
 ## Verifying Integrity
 
