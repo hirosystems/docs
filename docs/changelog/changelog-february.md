@@ -39,7 +39,7 @@ The API team is actively building new ordinal RESTful APIs as part of a new API 
 The documentation team had new functionality and features released. 
  * Thumbs up/down functionality to know the feedback from end users.
    * Every documentation page now has a "Is this page useful" feedback form at the bottom.
- * New documentation for [customizing your deployment plans](/docs/clarinet/how-to-guides/how-to-use-deployment-plans.md). You can also watch a video walkthrough [here](https://www.youtube.com/watch?v=YcIg5VCO98s).
+ * New documentation for [customizing your deployment plans](/clarinet/how-to-guides/how-to-use-deployment-plans). You can also watch a video walkthrough [here](https://www.youtube.com/watch?v=YcIg5VCO98s).
 
 ## Empower developers as they scale
 
