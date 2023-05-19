@@ -55,7 +55,7 @@ Save the file. You can now deploy your contracts in your project by referring to
 
 When you are on the [projects](https://platform.hiro.so/projects) page with a list of projects, select a project with at least one contract. Select the *Open Editor* button to open your project in the VS Code editor.
 
-You can now add a new contract by following **1-7** steps in the [write new contracts](build-contract#write-new-contracts) section mentioned above in this article.
+You can now add a new contract by following **1-7** steps in the [write new contracts](#write-new-contracts) section mentioned above in this article.
 
 In the 8th step, where you edit the `Clarinet.toml` file, you will add two lines of code, as shown below. Note that the below code assumes that the newly added contract is *clarity_contract_2*. Also, add the path to your new contract as shown below.
 

@@ -25,7 +25,7 @@ For more detailed information about these updates and changes, please refer to t
 
 ## **Blockchain**
 
-There was a significant update to the Hiro Archiver completed in December. This change lets you download and use any published datasets needed to run a Stacks environment. For more information on Hiro Archiver updates, please refer to the [Hiro Archive](https://docs.hiro.so/references/hiro-archive?_gl=1*1369xwy*_ga*NTQ3NDA3NTIuMTY2MDA3MTQ1MA..*_ga_NB2VBT0KY2*MTY3MzU0MDkxMS43MC4wLjE2NzM1NDA5MTEuMC4wLjA.#what-is-the-hiro-archive) technical documentation.
+There was a significant update to the Hiro Archiver completed in December. This change lets you download and use any published datasets needed to run a Stacks environment. For more information on Hiro Archiver updates, please refer to the [Hiro Archive](/hiro-archive/overview) technical documentation.
 
 One other change was made to how artifacts are used. These hosted artifacts can be used to quickly spin up a new stacks-blockchain node or comprehensive stacks-blockchain-api deployment.
 
