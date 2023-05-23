@@ -30,14 +30,7 @@ Let us know at platform@hiro.so if you encounter any bugs or availability issues
 
 
 
-```jsx live
-
-function MyPlayground(props) {
-  return (
-    <div>
-      <ButtonExample onClick={() => alert('hey!')}>Click me</ButtonExample>
-    </div>
-  );
-}
-
+```js live noInline
+const thing = "hi";
+console.log(thing);
 ```
