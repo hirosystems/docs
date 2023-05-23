@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
@@ -7,6 +7,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { usePrismTheme } from '@docusaurus/theme-common';
 import styles from './styles.module.css';
+
 function Header({ children }) {
   return <div className={clsx(styles.playgroundHeader)}>{children}</div>;
 }
@@ -66,6 +67,7 @@ function EditorWithHeader() {
     </>
   );
 }
+
 export default function Playground({ children, transformCode, ...props }) {
   const {
     siteConfig: { themeConfig },
@@ -75,9 +77,11 @@ export default function Playground({ children, transformCode, ...props }) {
   } = themeConfig;
   const prismTheme = usePrismTheme();
   const noInline = props.metastring?.includes('noInline') ?? false;
+  const [code, setCode] = useState(children.replace(/\n$/, ''));
+
   transformCode =
     transformCode ??
-    (code => {
+    (() => {
       const importLines = /(?=import).*(?<=[;])/g;
       const removedImports = code.replace(importLines, '');
       return `
@@ -94,28 +98,34 @@ export default function Playground({ children, transformCode, ...props }) {
   console = oldConsole;
   render(<div>{renders}</div>);`;
     });
+  const hidden = {};
+
+  const runCode = e => {
+    e.preventDefault();
+    const code = e.target.parentNode.childNodes[0].childNodes[1].childNodes[0].innerHTML;
+    setCode(code.replace(/\n$/, ''));
+  };
+
   return (
     <div className={styles.playgroundContainer}>
       {/* @ts-expect-error: type incompatibility with refs */}
       <LiveProvider
-        code={children.replace(/\n$/, '')}
+        code={code}
         noInline={noInline}
         transformCode={transformCode}
         theme={prismTheme}
         {...props}
       >
-        {playgroundPosition === 'top' ? (
-          <>
-            <ResultWithHeader />
-            <EditorWithHeader />
-          </>
-        ) : (
-          <>
-            <EditorWithHeader />
-            <ResultWithHeader />
-          </>
-        )}
+        <div>
+          <EditorWithHeader />
+        </div>
+        <div style={hidden}>
+          <ResultWithHeader />
+        </div>
       </LiveProvider>
+      <button id="my-button" onClick={runCode}>
+        Run this Code!
+      </button>
     </div>
   );
 }
