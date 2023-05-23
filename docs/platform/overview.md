@@ -31,6 +31,23 @@ Let us know at platform@hiro.so if you encounter any bugs or availability issues
 
 
 ```js live noInline
-const thing = "hi";
-console.log(thing);
+import {makeRandomPrivKey,privateKeyToString,getAddressFromPrivateKey,TransactionVersion} from '@stacks/transactions';
+
+import { StackingClient } from '@stacks/stacking';
+
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+import BN from 'bn.js';
+
+// generate random key or use an existing key
+const privateKey = privateKeyToString(makeRandomPrivKey());
+
+// get Stacks address
+// for mainnet, remove the TransactionVersion
+const stxAddress = getAddressFromPrivateKey(privateKey, TransactionVersion.Testnet);
+
+// instantiate the Stacker class for testnet
+// for mainnet, use `new StacksMainnet()`
+const client = new StackingClient(stxAddress, new StacksTestnet());
+console.log(client);
 ```
