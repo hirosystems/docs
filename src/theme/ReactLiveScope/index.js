@@ -20,7 +20,7 @@ const ReactLiveScope = {
   React,
   ...React,
   ButtonExample,
-  StacksNetwork,
+  ...StacksNetwork,
 };
 
 export default ReactLiveScope;

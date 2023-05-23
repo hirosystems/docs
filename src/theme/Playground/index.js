@@ -75,13 +75,25 @@ export default function Playground({ children, transformCode, ...props }) {
   } = themeConfig;
   const prismTheme = usePrismTheme();
   const noInline = props.metastring?.includes('noInline') ?? false;
-  // transformCode = code => {
-  //   `function myClass() {
-  //   ${code}
-  //   return ""
-  // }
-  // `;
-  // };
+  transformCode =
+    transformCode ??
+    (code => {
+      const importLines = /(?=import).*(?<=[;])/g;
+      const removedImports = code.replace(importLines, '');
+      return `
+  const oldConsole = console;
+  const renders = [];
+  console = {
+    log: (...args) => {
+      for(const arg of args) {
+        renders.push(<div>{JSON.stringify(arg)}</div>);
+      }
+    }
+  };
+  ${removedImports};
+  console = oldConsole;
+  render(<div>{renders}</div>);`;
+    });
   return (
     <div className={styles.playgroundContainer}>
       {/* @ts-expect-error: type incompatibility with refs */}
