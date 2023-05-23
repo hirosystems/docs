@@ -26,3 +26,11 @@ While using the BETA release of the Hiro Platform, Hiro will **not** be liable f
 Let us know at platform@hiro.so if you encounter any bugs or availability issues.
 
 :::
+
+
+
+
+```js live noInline
+const thing = "hi";
+console.log(thing);
+```

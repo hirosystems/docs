@@ -14,8 +14,10 @@ module.exports = {
   organizationName: 'hirosystems', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
   trailingSlash: false,
+  themes: ['@docusaurus/theme-live-codeblock'],
 
   plugins: [
+    
     require.resolve('@cmfcmf/docusaurus-search-local'),
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
@@ -92,7 +94,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/LakshmiLavanyaKasturi/stacks.js/test-interactive-code/docs/',
         outDir: 'docs/stacks.js',
         documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
       },
