@@ -94,7 +94,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/LakshmiLavanyaKasturi/stacks.js/test-interactive-code/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/',
         outDir: 'docs/stacks.js',
         documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
       },
