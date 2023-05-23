@@ -26,3 +26,18 @@ While using the BETA release of the Hiro Platform, Hiro will **not** be liable f
 Let us know at platform@hiro.so if you encounter any bugs or availability issues.
 
 :::
+
+
+
+
+```jsx live
+
+function MyPlayground(props) {
+  return (
+    <div>
+      <ButtonExample onClick={() => alert('hey!')}>Click me</ButtonExample>
+    </div>
+  );
+}
+
+```
