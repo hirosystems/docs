@@ -200,7 +200,9 @@ npm install @stacks/stacking@^6.0.0
 ```
 
 :::caution
+
 There will be a short period of time ([Period 2a](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking#overview-of-transition-periods)), where old versions `@stacks/stacking` (<`6.0.0`) will stack to PoX-1, even though PoX-2 is available.
+
 :::
 
 ## References
