@@ -7,7 +7,7 @@ import * as StacksEncryption from '@stacks/encryption';
 import * as StacksProfile from '@stacks/profile';
 import * as StacksAuth from '@stacks/auth';
 import * as StacksStorage from '@stacks/storage';
-// import * as StacksWalletSDK from '@stacks/wallet-sdk';
+//import * as StacksWalletSDK from '@stacks/wallet-sdk';
 import * as StacksStacking from '@stacks/stacking';
 import * as StacksBlockchainApiClient from '@stacks/blockchain-api-client';
 
@@ -39,7 +39,7 @@ const ReactLiveScope = {
   ...StacksProfile,
   ...StacksAuth,
   ...StacksStorage,
-  // ...StacksWalletSDK,
+  //...StacksWalletSDK,
   ...StacksStacking,
   ...StacksBlockchainApiClient,
 };
