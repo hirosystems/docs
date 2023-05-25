@@ -86,6 +86,14 @@ export default function Playground({ children, transformCode, ...props }) {
       const removedImports = code.replace(importLines, '');
       return `
   (async () => {
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
     const oldConsole = console;
     const renders = [];
     console = {
@@ -93,16 +101,18 @@ export default function Playground({ children, transformCode, ...props }) {
         for(let i = 0; i < args.length; i++) {
           let arg = args[i];
           if(typeof arg === "object") {
-            arg = JSON.parse(JSON.stringify(
-                arg,
-                (key, value) => {
-                    return typeof value === 'bigint'
-                                ? value.toString()
-                                : value;
-                },
-            2));
+            arg = 
+                JSON.stringify(
+                  arg,
+                  (key, value) => {
+                      return typeof value === 'bigint'
+                                  ? value.toString()
+                                  : value;
+                  },
+              2
+            );
           }
-          renders.push(<div key={Math.random()}>{JSON.stringify(arg)}</div>);
+          renders.push(<pre style={{whiteSpace:'pre-wrap', paddingTop: '0px', paddingBottom: '0px'}} key={Math.random()}>{arg}</pre>);
         }
       },
       warn: oldConsole.warn,
