@@ -364,6 +364,11 @@ module.exports = {
       id: 'stacks-2.1-upgrades',
     },
     {
+      type: 'doc',
+      label: 'Stacks Primitives',
+      id: 'stacks-primitives',
+    },
+    {
       type: 'category',
       label: 'Appendix',
       items: [
