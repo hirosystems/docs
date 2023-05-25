@@ -331,6 +331,7 @@ module.exports = {
         },
       },
     ],
+    require.resolve('./docusaurusWebpack5Plugin'),
   ],
   presets: [
     [

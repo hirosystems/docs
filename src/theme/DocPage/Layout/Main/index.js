@@ -3,6 +3,9 @@ import clsx from 'clsx';
 import { useDocsSidebar } from '@docusaurus/theme-common/internal';
 import styles from './styles.module.css';
 import { Banner } from '@site/src/components/banner/Banner';
+import buffer from 'buffer/';
+global.Buffer = buffer.Buffer;
+
 export default function DocPageLayoutMain({ hiddenSidebarContainer, children }) {
   const sidebar = useDocsSidebar();
   return (
