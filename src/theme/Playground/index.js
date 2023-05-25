@@ -82,7 +82,7 @@ export default function Playground({ children, transformCode, ...props }) {
   transformCode =
     transformCode ??
     (() => {
-      const importLines = /(?=import).*(?<=[;])/g;
+      const importLines = /^import\s*(?:(?:(?:[\w*\s{},]*)\s*from)?\s*['"].+['"])?.*?(?:;|$)/gm;
       const removedImports = code.replace(importLines, '');
       return `
   const oldConsole = console;
