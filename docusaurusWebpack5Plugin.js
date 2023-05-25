@@ -11,6 +11,16 @@ module.exports = function (context, options) {
           'resolve.fallback': 'append',
           plugins: 'append',
         },
+        module: {
+          rules: [
+            {
+              test: /\.m?js/,
+              resolve: {
+                fullySpecified: false,
+              },
+            },
+          ],
+        },
         resolve: {
           alias: {
             path: require.resolve('path-browserify'),
