@@ -85,18 +85,20 @@ export default function Playground({ children, transformCode, ...props }) {
       const importLines = /^import\s*(?:(?:(?:[\w*\s{},]*)\s*from)?\s*['"].+['"])?.*?(?:;|$)/gm;
       const removedImports = code.replace(importLines, '');
       return `
-  const oldConsole = console;
-  const renders = [];
-  console = {
-    log: (...args) => {
-      for(const arg of args) {
-        renders.push(<div>{JSON.stringify(arg)}</div>);
+  (async () => {
+    const oldConsole = console;
+    const renders = [];
+    console = {
+      log: (...args) => {
+        for(const arg of args) {
+          renders.push(<div>{JSON.stringify(arg)}</div>);
+        }
       }
-    }
-  };
-  ${removedImports};
-  console = oldConsole;
-  render(<div>{renders}</div>);`;
+    };
+    ${removedImports}; 
+    console = oldConsole;
+    render(<div>{renders}</div>);
+  })();`;
     });
   const hidden = {};
 
