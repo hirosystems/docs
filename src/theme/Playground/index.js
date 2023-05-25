@@ -90,10 +90,23 @@ export default function Playground({ children, transformCode, ...props }) {
     const renders = [];
     console = {
       log: (...args) => {
-        for(const arg of args) {
-          renders.push(<div>{JSON.stringify(arg)}</div>);
+        for(let i = 0; i < args.length; i++) {
+          let arg = args[i];
+          if(typeof arg === "object") {
+            arg = JSON.parse(JSON.stringify(
+                arg,
+                (key, value) => {
+                    return typeof value === 'bigint'
+                                ? value.toString()
+                                : value;
+                },
+            2));
+          }
+          renders.push(<div key={Math.random()}>{JSON.stringify(arg)}</div>);
         }
-      }
+      },
+      warn: oldConsole.warn,
+      error: oldConsole.error
     };
     ${removedImports}; 
     console = oldConsole;
