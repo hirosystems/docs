@@ -10,7 +10,7 @@ type Banner = {
 const banner: Banner = {
   type: 'info',
   from: '2023-05-15',
-  to: '2023-05-31',
+  to: '2023-06-01',
   text: ["Developers, we're listening!", 'Tell us about your experience using Hiro products.'],
   cta: 'Take the Survey',
   ctaLink: 'https://survey.hiro.so',

@@ -9,6 +9,7 @@
     "deploy": "docusaurus deploy",
     "dev": "docusaurus start",
     "docusaurus": "docusaurus",
+    "postinstall": "patch-package",
     "serve": "docusaurus serve",
     "spellcheck": "vale --config='.vale.ini' docs/**",
     "start": "docusaurus start",
@@ -42,6 +43,8 @@
     "@stacks/prettier-config": "^0.0.10",
     "@tsconfig/docusaurus": "^1.0.4",
     "@types/react": "^17.0.2",
+    "patch-package": "^7.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.7.1",
     "typescript": "^4.8.3"
   },
