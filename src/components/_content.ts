@@ -24,7 +24,7 @@ export default {
   banner: {
     type: 'info',
     from: '2023-05-15',
-    to: '2023-06-02', // to leave the message until 2023-05-31 11:59pm, set to = 2023-06-01
+    to: '2023-06-01', // to leave the message until 2023-05-31 11:59pm, set to = 2023-06-01
     text: ["Developers, we're listening!", 'Tell us about your experience using Hiro products.'],
     cta: 'Take the Survey',
     ctaLink: 'https://survey.hiro.so',
