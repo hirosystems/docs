@@ -24,9 +24,19 @@ For minor changes like typos, click "Edit This Page," located at the bottom of e
 
 For larger edits or new documents, edit the docs locally, following the steps described below.
 
-### **Editing docs locally**
+### **Before Development**
 
-To submit a pull request to update the docs, fork the Hiro Docs repository and then clone it. Currently all Hiro docs are located in `/hirosystems/docs`
+1. Ensure that [Git](https://git-scm.com) and [Yarn](https://yarnpkg.com) are installed.
+2. Fork Hiro Docs repository . As it is described [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+3. Checkout the current source code from: https://github.com/you_user_name/docs/ by running
+
+    `git clone https://github.com/you_user_name/docs.git`
+
+4. You can find information about setting up development environment [here](https://github.com/hirosystems/docs#installation).
+ 
+### **Starting Development**
+
+Follow these instructions of Git usage and creating a Pull Request. Currently all Hiro docs are located in `/hirosystems/docs`
 
 1. Create a branch and switch to that branch:
     
