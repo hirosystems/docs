@@ -22,7 +22,7 @@ To suggest more comprehensive changes or updates to the content, make documentat
 
 For minor changes like typos, click "Edit This Page," located at the bottom of each page. This leads to the source file on GitHub, where a pull request can be submitted.
 
-For larger edits or new documents, edit the docs locally, following the steps described below.
+For larger edits or new documents, edit the docs locally by following the steps below.
 
 ### **Before Development**
 
