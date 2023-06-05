@@ -32,7 +32,7 @@ For larger edits or new documents, edit the docs locally by following the steps
 
     `git clone git@github.com:hirosystems/docs.git`
 
-4. Follow the instructions [here](https://github.com/hirosystems/docs#installation) to run the development environment.
+4. Follow the instructions [here](https://github.com/hirosystems/docs#local-development) to run the development environment.
  
 ### **Starting Development**
 
