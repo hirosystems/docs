@@ -28,7 +28,7 @@ For larger edits or new documents, edit the docs locally by following the steps
 
 1. Ensure that [Git](https://github.com/git-guides/install-git) and [Yarn](https://yarnpkg.com) are installed.
 2. Fork the [Hiro Docs](https://github.com/hirosystems/docs) repository. For instructions, refer to this [guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
-3. Checkout the current source code from: https://github.com/you_user_name/docs/ by running
+3. Open the terminal on your machine and navigate to your work folder to clone the docs repository. Then, use the following command to clone the repo.
 
     `git clone https://github.com/you_user_name/docs.git`
 
