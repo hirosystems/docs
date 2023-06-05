@@ -26,7 +26,7 @@ For larger edits or new documents, edit the docs locally, following the steps d
 
 ### **Before Development**
 
-1. Ensure that [Git](https://git-scm.com) and [Yarn](https://yarnpkg.com) are installed.
+1. Ensure that [Git](https://github.com/git-guides/install-git) and [Yarn](https://yarnpkg.com) are installed.
 2. Fork Hiro Docs repository . As it is described [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 3. Checkout the current source code from: https://github.com/you_user_name/docs/ by running
 
