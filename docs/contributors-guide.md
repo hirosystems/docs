@@ -36,7 +36,7 @@ For larger edits or new documents, edit the docs locally by following the steps
  
 ### **Starting Development**
 
-Follow these instructions of Git usage and creating a Pull Request. Currently all Hiro docs are located in `/hirosystems/docs`
+Follow the instructions in this section to create a branch and a pull request.
 
 1. Create a branch and switch to that branch:
     
