@@ -164,6 +164,7 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
         outDir: 'docs/subnets/images',
         documents: [
+          'deposit-stx.png',
           'subnet-devnet.png',
           'subnet-miners.png',
           'subnets-architecture.png',
@@ -355,6 +356,8 @@ module.exports = {
           },
           routeBasePath: '/',
           breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
