@@ -29,7 +29,7 @@ This brings up the deployment plans pane where you can select the network to dep
 
 In this section, you will learn how to deploy your contracts using your created deployment plans. 
 
-Select `Generate for Testnet` to deploy your contracts to the Testnet.
+- Select `Generate for Testnet` to deploy your contracts to the Testnet.
 ![]()
 - Next, you will connect the wallet to the application and select `Confirm` to confirm the deployment.
 ![]()
@@ -47,7 +47,7 @@ Make sure that the new contract is added to the `clarinet.toml` file
 
 :::
 
-- Now select `Refresh Plan` to get the updated list of contracts in your selected deployment plan.
+- Now select `Regenerate Plan` to get the updated list of contracts in your selected deployment plan.
 
 
 ## Remove
