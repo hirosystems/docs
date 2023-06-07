@@ -4,8 +4,7 @@ title: Deployment Plans
 
 # Deployment Plans
 
-Deployment plans are a collection of transactions to publish one or more contracts to a network (testnet or mainnet).
-This article walks you through deploying your contracts using deployment plans in the [Hiro Platform](https://platform.hiro.so/).
+Deployment plans are a collection of transactions to publish one or more contracts to a network (testnet or mainnet). This article walks you through deploying your contracts using deployment plans in the [Hiro Platform](https://platform.hiro.so/).
 
 To learn more about Deployment plans, refer to [Customize deployment](https://docs.hiro.so/clarinet/how-to-guides/how-to-use-deployment-plans#deployment-plans).
 
@@ -36,11 +35,17 @@ In this section, you will learn how to deploy your contracts using the created d
 - You will connect the wallet to the application and select `Confirm` to confirm the deployment.
 ![Connect wallet](images/deployment-plan-connect-wallet.jpeg)
 
+:::note
+
+The deployment process may take a while based on the number of contracts you deploy using deployment plans.
+
+:::
+
 - Now, in your list of contracts, you will see the status of your deployment as `In mempool.`
 ![Deployment plan with status in-mempool](images/deployment-plan-in-mempool.jpeg)
 
 - Upon successful deployment, the status changes to `Deployed.`
-![Deployment plan with status deployed](deployment-plans-status-deployed.jpeg)
+![Deployment plan with status deployed](images/deployment-plans-status-deployed.jpeg)
 
 -  `Failed,` reflecting that there might be some error in the deployment process. You can view the transaction in [Explorer](https://explorer.hiro.so/) by selecting the pop-out arrow beside the contract.
 ![Deployment failed](images/deployment-plans-failed.jpeg)
@@ -51,9 +56,7 @@ If you choose to deploy a contract to either of the networks using the **Deploy*
 
 ## Regenerate Plan
 
-Regenerate plan is helpful when you have changes in your contracts and you wish to create a new deployment plan.
-
-Regenerate plans can be helpful when:
+Regenerate plan is helpful when you have changes in your contracts and you wish to create a new deployment plan. The following are a few instances where you will use regenerate deployment plan.
 
 ### New contract is added
 
