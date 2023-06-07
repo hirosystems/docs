@@ -40,6 +40,8 @@ In this section, you will learn how to deploy your contracts using the created d
 ![Deployment plan with status in-mempool](images/deployment-plan-in-mempool.jpeg)
 
 - Upon successful deployment, the status changes to `Deployed.`
+![Deployment plan with status deployed](deployment-plans-status-deployed.jpeg)
+
 -  `Failed,` reflecting that there might be some error in the deployment process. You can view the transaction in [Explorer](https://explorer.hiro.so/) by selecting the pop-out arrow beside the contract.
 ![Deployment failed](images/deployment-plans-failed.jpeg)
 
