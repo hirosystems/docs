@@ -164,6 +164,7 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
         outDir: 'docs/subnets/images',
         documents: [
+          'deposit-stx.png',
           'subnet-devnet.png',
           'subnet-miners.png',
           'subnets-architecture.png',
