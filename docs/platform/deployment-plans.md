@@ -32,10 +32,13 @@ In this section, you will learn how to deploy your contracts using the created d
 - Select `Generate for Testnet` to deploy your contracts to the Testnet.
 - Next, select **deploy** to deploy your deployment plan with contracts to testnet.
 ![Deployment plan with status in-mempool](images/deployment-plan-in-mempool.jpeg)
+
 - You will connect the wallet to the application and select `Confirm` to confirm the deployment.
-![Connect wallet](images/connect-wallet.jpeg)
+![Connect wallet](images/deployment-plan-connect-wallet.jpeg)
+
 - Now, in your list of contracts, you will see the status of your deployment as `In mempool.`
 ![Deployment plan with status in-mempool](images/deployment-plan-in-mempool.jpeg)
+
 - Upon successful deployment, the status changes to `Deployed.`
 -  `Failed,` reflecting that there might be some error in the deployment process. You can view the transaction in [Explorer](https://explorer.hiro.so/) by selecting the pop-out arrow beside the contract.
 ![Deployment failed](images/deployment-plans-failed.jpeg)
