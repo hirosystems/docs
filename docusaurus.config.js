@@ -164,6 +164,7 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
         outDir: 'docs/subnets/images',
         documents: [
+          'deposit-stx.png',
           'subnet-devnet.png',
           'subnet-miners.png',
           'subnets-architecture.png',
@@ -198,6 +199,16 @@ module.exports = {
           'how-to-use-chainhook-with-bitcoin.md',
           'how-to-use-chainhook-with-stacks.md',
         ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordinals-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/ordinals-api/master/docs/feature-guides/',
+        outDir: 'docs/ordinals-api/feature-guides',
+        documents: ['rate-limiting.md'],
       },
     ],
     [
@@ -311,7 +322,7 @@ module.exports = {
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/',
         outDir: 'docs/token-metadata-api/feature-guides',
-        documents: ['token-metadata-api.md'],
+        documents: ['token-metadata-api.md', 'rate-limiting.md'],
       },
     ],
     [

@@ -170,7 +170,41 @@ module.exports = {
         'platform/contract-examples',
         'platform/faq',
       ],
-    }, 
+    },
+    {
+      type: 'category',
+      label: 'Ordinals API',
+      items: [
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'ordinals-api/feature-guides/rate-limiting',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Discord #ordinals',
+              href: 'https://discord.com/channels/621759717756370964/1101164749984649256',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Ordinals',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/watch?v=p1clYRMkaFI',
+            },
+          ],
+        },
+      ],
+    },
     {
       type: 'category',
       label: 'Stacks Blockchain API',
@@ -353,6 +387,7 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'token-metadata-api/feature-guides/token-metadata-api',
+            'token-metadata-api/feature-guides/rate-limiting'
           ],
         },
       ],
