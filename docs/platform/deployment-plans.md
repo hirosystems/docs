@@ -6,7 +6,7 @@ title: Deployment Plans
 
 Deployment plans are a collection of transactions to publish one or more contracts to a network (testnet or mainnet). This article walks you through deploying your contracts using deployment plans in the [Hiro Platform](https://platform.hiro.so/).
 
-To learn more about Deployment plans, refer to [Customize deployment](https://docs.hiro.so/clarinet/how-to-guides/how-to-use-deployment-plans#deployment-plans).
+To learn more about Deployment plans, refer to [customize deployment within the Clarinet docs](https://docs.hiro.so/clarinet/how-to-guides/how-to-use-deployment-plans#deployment-plans).
 
 ## Generate Deployment Plan
 
@@ -26,58 +26,57 @@ This brings up the deployment plans pane, where you can select the network to de
 
 ## Deploy
 
-In this section, you will learn how to deploy your contracts using the created deployment plans.
+In this section, you will learn how to deploy your contracts using the generated deployment plans. This section walks you through generating deployment plans for testnet.
 
 - Select `Generate for Testnet` to deploy your contracts to the Testnet.
 - Next, select **deploy** to deploy your deployment plan with contracts to testnet.
-![Deployment plan with status in-mempool](images/deployment-plan-in-mempool.jpeg)
+- You will connect the wallet to the application and select `Confirm` to confirm the deployment. Note that each step in the deployment plan shows a prompt from the Hiro Wallet and requires you to submit the transaction.
 
-- You will connect the wallet to the application and select `Confirm` to confirm the deployment.
-![Connect wallet](images/deployment-plan-connect-wallet.jpeg)
-
-:::note
-
-The deployment process may take a while based on the number of contracts you deploy using deployment plans.
-
-:::
+![Connect wallet](images/deployment-plans-wallet-confirmation.jpeg)
 
 - Now, in your list of contracts, you will see the status of your deployment as `In mempool.`
-![Deployment plan with status in-mempool](images/deployment-plan-in-mempool.jpeg)
+  
+  ![Deployment plan with status in-mempool](images/deployment-plans-status-in-mempool.jpeg)
+
+    :::note
+
+    The deployment process may take a while based on the blockchain traffic at the time of deployment.
+
+    :::
 
 - Upon successful deployment, the status changes to `Deployed.`
-![Deployment plan with status deployed](images/deployment-plans-status-deployed.jpeg)
 
--  `Failed,` reflecting that there might be some error in the deployment process. You can view the transaction in [Explorer](https://explorer.hiro.so/) by selecting the pop-out arrow beside the contract.
-![Deployment failed](images/deployment-plans-failed.jpeg)
+    ![Deployment plan with status deployed](images/deployment-plans-status-deployed.jpeg)
 
-If you choose to deploy a contract to either of the networks using the **Deploy** button beside each of the contracts, you will be prompted to confirm if you want to deploy outside of your deployment plan. Then, you can choose between deploying the contract vs. using a deployment plan.
+- The transaction status may fail due to several reasons in the deployment process, then you will see the status as `Failed.` If you want to understand more details, you can view the transaction in [Explorer](https://explorer.hiro.so/) by selecting the pop-out arrow beside the contract.
+
+    ![Deployment failed](images/deployment-plans-failed.jpeg)
+
+If you choose to deploy an individual contract to either of the networks using the **Deploy** button, you will be prompted to confirm if you want to deploy outside of your deployment plan. Then, you can choose between deploying the contract vs. using a deployment plan.
 
 ![Confirmation to deploy outside of deployment plan](images/confirmation-to-delpoy-outside-of-deployment-plan.jpeg)
 
 ## Regenerate Plan
 
-Regenerate plan is helpful when you have changes in your contracts and you wish to create a new deployment plan. The following are a few instances where you will use regenerate deployment plan.
+The **Regenerate plan** feature in the deployment plans is helpful when you have changes in your contracts, and you wish to create a new deployment plan.
 
-### New contract is added
+### Add/update contracts
 
-If you want to create a new contract, refer to this [link](https://docs.hiro.so/clarinet/how-to-guides/how-to-add-contract). You can also use the "Open Editor" button to open Visual Studio code to add or update a contract.
+If you want to create or update a new contract, refer to this [guide](build-contract.md). You can also use the "Open Editor" button to open Visual Studio code to add a new contract.
 
 :::note
 
-If you add a new contract through Editor, ensure the new contract is configured to the `clarinet.toml` file.
+If you add a new contract through Editor, ensure the new contract is configured to the `Clarinet.toml` file. For guidance, refer to [Clarinet.toml configuration for new contracts](https://docs.hiro.so/platform/build-contract#add-a-new-contract). You can also check your contracts before deploying them by following [Check contract](https://docs.hiro.so/clarinet/how-to-guides/how-to-check-contract).
 
 :::
 
-### Updated existing contract
-
-If your existing contracts are updated, you can use regenerate your deployment plan to use the updated contract.
-Once your contract is ready, you can [check your contract](https://docs.hiro.so/clarinet/how-to-guides/how-to-check-contract) and select `Regenerate Plan` to generate a new deployment plan.
+You can then use the **Regenerate plan** button to update your deployment plan with the new contract added.
 
 ## Remove the deployment plan
 
 Select the `Remove` button to remove the generated deployment plan.
 
-## Resources
+## Additional Resources
 
 - [Deployment Plans video walkthrough](https://www.youtube.com/watch?v=YcIg5VCO98s)
 - [Debug contract](https://docs.hiro.so/clarinet/how-to-guides/how-to-debug-contract)
