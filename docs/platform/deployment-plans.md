@@ -61,11 +61,10 @@ The **Regenerate plan** feature in the deployment plans is helpful when you have
 
 If you want to create or update a new contract, refer to this [guide](build-contract.md). You can also use the "Open Editor" button to open Visual Studio code to add a new contract.
 
-:::note
+> **_NOTE:_**
+>
+> If you add a new contract through Editor, ensure the new contract is configured to the `Clarinet.toml` file. For guidance, refer to [Clarinet.toml configuration for new contracts](https://docs.hiro.so/platform/build-contract#add-a-new-contract). You can also check your contracts before deploying them by following the [Check contract](https://docs.hiro.so/clarinet/how-to-guides/how-to-check-contract) guide.
 
-If you add a new contract through Editor, ensure the new contract is configured to the `Clarinet.toml` file. For guidance, refer to [Clarinet.toml configuration for new contracts](https://docs.hiro.so/platform/build-contract#add-a-new-contract). You can also check your contracts before deploying them by following the [Check contract](https://docs.hiro.so/clarinet/how-to-guides/how-to-check-contract) guide.
-
-:::
 
 You can then use the **Regenerate plan** button to update your deployment plan with your new or updated contract.
 
