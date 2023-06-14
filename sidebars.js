@@ -181,6 +181,7 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'ordinals-api/feature-guides/rate-limiting',
+            'api/how-to-use-api-key'
           ],
         },
         {
@@ -228,6 +229,7 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
             'stacks-blockchain-api/feature-guides/gaia-storage',
             'stacks-blockchain-api/feature-guides/transactions',
+            'api/how-to-use-api-key'
           ]
           },
             {
@@ -388,7 +390,8 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'token-metadata-api/feature-guides/token-metadata-api',
-            'token-metadata-api/feature-guides/rate-limiting'
+            'token-metadata-api/feature-guides/rate-limiting',
+            'api/how-to-use-api-key'
           ],
         },
       ],
