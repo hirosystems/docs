@@ -574,6 +574,30 @@ module.exports = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['toml'],
       },
+      //Algolio docsearch support
+      algolia: {
+        // The application ID provided by Algolia
+        appId: "YRIGH3WCGU",
+
+        // Public API key: it is safe to commit it
+        apiKey: "8e46f26b8360e5030da62471366bac29",
+
+        indexName: "hiro",
+
+        // Optional: see doc section below
+        contextualSearch: true,
+
+        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+        //externalUrlRegex: 'external\\.com|domain\\.com',
+
+        // Optional: Algolia search parameters
+        //searchParameters: {},
+
+        // Optional: path for search page that enabled by default (`false` to disable it)
+        searchPagePath: "search",
+
+        //... other Algolia params
+      },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },
