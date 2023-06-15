@@ -2,6 +2,8 @@
 title: Overview
 ---
 
+# Hiro Platform Overview
+
 The [Hiro Platform](https://platform.hiro.so/) is a cloud-based development environment that enables you to create, build and deploy Clarity smart contracts. The Hiro platform has pre-installed developer tools and helpful resources to improve developer productivity.
 
 :::note
