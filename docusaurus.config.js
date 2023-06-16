@@ -577,10 +577,10 @@ module.exports = {
       //Algolio docsearch support
       algolia: {
         // The application ID provided by Algolia
-        appId: "YRIGH3WCGU",
+        appId: "6VMF3PQPOI",
 
         // Public API key: it is safe to commit it
-        apiKey: "8e46f26b8360e5030da62471366bac29",
+        apiKey: "fd702012f83a5e487b903a70527c87a4",
 
         indexName: "hiro",
 
