@@ -2,7 +2,7 @@
 title: Overview
 ---
 
-## What is the Hiro Archive
+## Hiro Archive Overview
 
 The Hiro Archive is a collection of datasets for various services in the Stacks ecosystem.
 
