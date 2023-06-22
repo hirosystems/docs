@@ -26,7 +26,7 @@ Using cURL, you will pass the API key in an `x-hiro-api-key` header. Use the fol
 
 ## Using the API key in Typescript
 
-You can use the following sample to pass the API key in your function using Typescript.
+The following Typescript snippet demonstrates the instantiation of  RESTful HTTP requests with API key.
 
 ```typescript
 function <your-api-function>(apiKey: string) {
