@@ -2,7 +2,7 @@
 Title: How to use API key
 ---
 
-# How to use API Key?
+# How to use API Key
 
 API keys are alpha-numeric codes that identify and authenticate an application or developer. You can use API keys to control access to your API calls.
 
