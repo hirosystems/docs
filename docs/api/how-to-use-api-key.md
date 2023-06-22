@@ -1,9 +1,10 @@
 ---
 Title: How to use API key
 ---
-# How to use API Key
 
-API keys are alpha-numeric codes that identify and authenticate an application or developer.
+# How to use API Key?
+
+API keys are alpha-numeric codes that identify and authenticate an application or developer. You can use API keys to control access to your API calls.
 
 # Steps to use API Key
 
@@ -12,7 +13,7 @@ This guide helps you with the steps to use the API key to interact with the API.
 > **_NOTE:_**
 > The API key is passed in the **header** of your API call and is used only for private use, like server-side applications. This key is not to be exposed or shared.
 
-There are multiple ways to interact with the API endpoints. This document walks you through three ways to make an API. You can choose between any of the following methods:
+Choose one of the following ways to interact with the API endpoints by passing the API key in the header.
 
 - cURL
 - Postman
@@ -20,23 +21,25 @@ There are multiple ways to interact with the API endpoints. This document walks 
 
 ## Using cURL
 
-Using cURL, you will pass the API key in an `x-hiro-api-key` header. Use the following command as an example to call the API endpoint `https://api.hiro.so/...`.
+Using cURL, you will pass the API key in an `x-hiro-api-key` header. Use the following command as an example to call the API endpoint `https://api.hiro.so/<your-api-endpoint>`.
 
-`curl https://api.hiro.so/... -H 'x-hiro-api-key: Nabcs1234efg56789aaaaaaaaqqqqqqqeeeeee12334345'`
+`curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-API-value>'`
 
 ## Using Postman
 
 The following section walks you through using an API key with [Postman](https://www.postman.com/).
 
-In the Postman request for the API include the API key and its value received from the Hiro team in the **Headers** section, as shown in the image below.
+In Postman's request for the API, you can include the API key value received from the Hiro team in the **Headers** section, as shown in the image below.
 
-![API-Key](../images/api-key.png)
+![API-Key](../images/api-key.jpeg)
 
 ## Using the API key in Typescript
 
+You can use the following sample to pass the API key in your function using Typescript.
+
 ```typescript
-function getRecentMicroblocks(apiKey: string) {
-  const url = `https://api.hiro.so/..`;
+function <your-api-function>(apiKey: string) {
+  const url = `https://api.hiro.so/<your-api-endpoint>`;
   const headers = new Headers();
   headers.append("x-hiro-api-key", ${apiKey});
 
