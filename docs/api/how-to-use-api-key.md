@@ -16,7 +16,7 @@ This guide helps you with the steps to use the API key to interact with the API.
 There are multiple ways to interact with the API endpoints. In this guide, we will walk through the following approaches with the help of an API endpoint.
 
 - cURL
-- Typescript function
+- Typescript client
 
 ## Using cURL
 
