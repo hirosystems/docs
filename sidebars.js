@@ -178,6 +178,13 @@ module.exports = {
       items: [
         {
           type: 'category',
+          label: 'How-to Guides',
+          items: [
+              'api/how-to-use-api-key'
+            ]
+          },
+          {
+          type: 'category',
           label: 'Feature Guides',
           items: [
             'ordinals-api/feature-guides/rate-limiting',
@@ -228,6 +235,7 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
             'stacks-blockchain-api/feature-guides/gaia-storage',
             'stacks-blockchain-api/feature-guides/transactions',
+            
           ]
           },
             {
@@ -244,6 +252,7 @@ module.exports = {
                 'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
                 'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
+                'api/how-to-use-api-key'
               ]
               },
               'stacks-blockchain-api/troubleshooting',
@@ -385,10 +394,17 @@ module.exports = {
       items: [
         {
           type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'api/how-to-use-api-key'
+          ]
+        },
+        {
+          type: 'category',
           label: 'Feature Guides',
           items: [
             'token-metadata-api/feature-guides/token-metadata-api',
-            'token-metadata-api/feature-guides/rate-limiting'
+            'token-metadata-api/feature-guides/rate-limiting',
           ],
         },
       ],
