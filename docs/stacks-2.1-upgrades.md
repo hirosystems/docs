@@ -47,7 +47,7 @@ In your project's `Clarinet.toml` file, you can now specify the epoch during whi
 ```toml
 [contracts.cbtc-token]
 path = "contracts/cbtc-token.clar"
-clarity = 2
+clarity_version = 2
 epoch = "2.1"
 ```
 
