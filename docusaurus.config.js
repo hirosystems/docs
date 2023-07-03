@@ -104,7 +104,7 @@ module.exports = {
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/includes',
         outDir: 'docs/stacks.js/includes/',
-        documents: ['stacks.js-starters-note.mdx'],
+        documents: ['_stacks.js-starters-note.mdx'],
       },
     ],
     [
