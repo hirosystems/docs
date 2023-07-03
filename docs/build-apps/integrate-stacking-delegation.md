@@ -3,7 +3,7 @@ id: integrate-stacking-delegation
 title: Integrating Stacking Delegation
 ---
 
-import StacksjsStartersNote from '../stacks.js/includes/stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../stacks.js/includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
