@@ -92,7 +92,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
         outDir: 'docs/stacks.js',
         documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
       },
@@ -101,8 +101,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-includes',
-        sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/includes',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/includes',
         outDir: 'docs/stacks.js/includes/',
         documents: ['_stacks.js-starters-note.mdx'],
       },
@@ -112,7 +111,7 @@ module.exports = {
       {
         name: 'remote-docs-stx-js-feature-guides',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/feature-guides',
+          'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/feature-guides',
         outDir: 'docs/stacks.js/feature-guides',
         documents: [
           'authenticate-users-with-connect.md',
@@ -127,7 +126,7 @@ module.exports = {
       {
         name: 'remote-docs-stx-js-how-to',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/how-to-guides/',
+          'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/how-to-guides/',
         outDir: 'docs/stacks.js/how-to-guides',
         documents: [
           'how-to-integrate-stacking-delegation.md',
