@@ -56,7 +56,7 @@ Use the following `curl` command to request tokens from the testnet node's fauce
 We use the address generated above as a parameter.
 
 ```bash
-curl -X POST https://stacks-node-api.testnet.stacks.co/extended/v1/faucets/stx?address=ST1P3HXR80TKT48TKM2VTKCDBS4ET9396W0W2S3K8&stacking=true
+curl -X POST https://api.testnet.hiro.so/extended/v1/faucets/stx?address=ST1P3HXR80TKT48TKM2VTKCDBS4ET9396W0W2S3K8&stacking=true
 ```
 
 ## Check Balance
@@ -115,7 +115,7 @@ stx stack 90000000000000 10 mqkccNX5h7Xy1YUku3X2fCFCC54x6HEiHk dca82f838f6e5a893
 
 {
   txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',
-  transaction: 'https://explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'
+  transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'
 }
 ```
 

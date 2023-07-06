@@ -15,7 +15,7 @@ The RESTful JSON API can be used without any authorization. The base path for th
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
-https://stacks-node-api.testnet.stacks.co/
+https://api.testnet.hiro.so/
 ```
 
 :::info
@@ -79,7 +79,7 @@ import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
   const apiConfig = new Configuration({
     fetchApi: fetch,
     // for mainnet, replace `testnet` with `mainnet`
-    basePath: 'https://stacks-node-api.testnet.stacks.co', // defaults to http://localhost:3999
+    basePath: 'https://api.testnet.hiro.so', // defaults to http://localhost:3999
   });
 
   // initiate the /accounts API with the basepath and fetch library
@@ -112,7 +112,7 @@ import {
   const apiConfig: Configuration = new Configuration({
     fetchApi: fetch,
     // for mainnet, replace `testnet` with `mainnet`
-    basePath: 'https://stacks-node-api.testnet.stacks.co', // defaults to http://localhost:3999
+    basePath: 'https://api.testnet.hiro.so', // defaults to http://localhost:3999
   });
 
   const principal: string = 'ST000000000000000000002AMW42H';
@@ -156,12 +156,12 @@ You can refer to the rate limit for each endpoint in the table below:
 
 | **Endpoint**                                                                                | **Rate-Limit (RPM)**  |
 | ------------------------------------------------------------------------------------------- | --------------------- |
-| stacks-node-api.mainnet.stacks.co/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/> <br/> |
-| stacks-node-api.mainnet.stacks.co/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/>    | <br/> 200 <br/> <br/> |
-| stacks-node-api.mainnet.stacks.co/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/>             | <br/> 100 <br/> <br/> |
-| stacks-node-api.testnet.stacks.co/extended/ <br/>                                           | 100 <br/>             |
-| stacks-node-api.testnet.stacks.co/v2/ <br/>                                                 | 100 <br/>             |
-| stacks-node-api.testnet.stacks.co/extended/v1/faucets/ <br/>                                | 1 <br/>               |
+| api.mainnet.hiro.so/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/> <br/> |
+| api.mainnet.hiro.so/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/>    | <br/> 200 <br/> <br/> |
+| api.mainnet.hiro.so/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/>             | <br/> 100 <br/> <br/> |
+| api.testnet.hiro.so/extended/ <br/>                                           | 100 <br/>             |
+| api.testnet.hiro.so/v2/ <br/>                                                 | 100 <br/>             |
+| api.testnet.hiro.so/extended/v1/faucets/ <br/>                                | 1 <br/>               |
 
 ### STX faucet
 
@@ -255,7 +255,7 @@ import { uintCV, UIntCV, cvToHex, hexToCV, ClarityType } from '@stacks/transacti
   const apiConfig: Configuration = new Configuration({
     fetchApi: fetch,
     // for mainnet, replace `testnet` with `mainnet`
-    basePath: 'https://stacks-node-api.testnet.stacks.co', // defaults to http://localhost:3999
+    basePath: 'https://api.testnet.hiro.so', // defaults to http://localhost:3999
   });
 
   const contractsApi: SmartContractsApiInterface = new SmartContractsApi(apiConfig);

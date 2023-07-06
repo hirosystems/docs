@@ -274,7 +274,7 @@ The `txId` property can be used to provide a link to view the transaction in the
 
 ```ts
 const onFinish = data => {
-  const explorerTransactionUrl = 'https://explorer.stacks.co/txid/${data.txId}';
+  const explorerTransactionUrl = 'https://explorer.hiro.so/txid/${data.txId}';
   console.log('View transaction in explorer:', explorerTransactionUrl);
 };
 ```
@@ -332,7 +332,7 @@ const MyComponent = () => {
 
 ## Request testnet STX from faucet
 
-You may find it useful to request testnet STX from [the Explorer sandbox](https://explorer.stacks.co/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
+You may find it useful to request testnet STX from [the Explorer sandbox](https://explorer.hiro.so/sandbox/deploy?chain=testnet) while developing your app with the Stacks testnet.
 
 ## Transaction request / response payload
 
