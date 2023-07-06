@@ -120,7 +120,11 @@ module.exports = {
       type: 'category',
       label: 'Explorer',
       items: [
-        'explorer/overview',
+        {
+          type: 'doc',
+          label: 'Overview',
+          id: 'explorer/overview'
+        },
         'explorer/getting-started',
         {
           type: 'category',
@@ -217,7 +221,11 @@ module.exports = {
       type: 'category',
       label: 'Stacks Blockchain API',
       items: [
-        'stacks-blockchain-api/overview',
+        {
+          type: 'doc',
+          label: 'Overview',
+          id: 'stacks-blockchain-api/overview'
+        },
         'stacks-blockchain-api/getting-started',
         {
           type: 'category',
