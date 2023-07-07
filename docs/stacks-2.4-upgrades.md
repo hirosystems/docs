@@ -48,7 +48,7 @@ In your project's `Clarinet.toml` file, you can now specify the epoch during whi
 [contracts.cbtc-token]
 path = "contracts/cbtc-token.clar"
 clarity = 2
-epoch = "2.1"
+epoch = "2.4"
 ```
 
 ### Update Devnet settings
