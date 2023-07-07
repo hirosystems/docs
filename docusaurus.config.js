@@ -215,7 +215,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-clarinet-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/LakshmiLavanyaKasturi/clarinet/redeploy-testing/docs/',
         outDir: 'docs/clarinet',
         documents: ['faq.md', 'getting-started.md', 'introduction.md', 'troubleshooting.md'],
       },
