@@ -66,7 +66,7 @@ const { TransactionsApi, Configuration } = require('@stacks/blockchain-api-clien
 const apiConfig = new Configuration({
   fetchApi: fetch,
   // for mainnet, replace `testnet` with `mainnet`
-  basePath: 'https://stacks-node-api.testnet.stacks.co',
+  basePath: 'https://api.testnet.hiro.so',
 });
 
 const key = 'edf9aee84d9b7abc145504dde6726c64f369d37ee34ded868fabd876c26570bc01';
