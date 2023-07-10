@@ -28,7 +28,7 @@ and confirm that all systems are operational. If some systems seem to have issue
 
 Furthermore, the to-dos app will interact with a smart contract deployed as `ST1234....todo-registry`. The contract source code is available at [GitHub](https://github.com/friedger/blockstack-todos/blob/tut/step1/contracts/todo-registry.clar).
 
-There may already be a deployed version available on the testnet; the [Explorer](https://explorer.stacks.co/) can be used to search for it.
+There may already be a deployed version available on the testnet; the [Explorer](https://explorer.hiro.so/) can be used to search for it.
 
 Alternatively, the contract can be deployed as described in the [hello world tutorial](/tutorials/clarity-hello-world). Then you have to use the corresponding contract address and name in this tutorial. Throughout this tutorial, we use `ST3YPJ6BBCZCMH71TV8BK50YC6QJTWEGCNDFWEQ15.todo-registry` as an example.
 

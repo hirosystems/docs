@@ -245,9 +245,9 @@ the strengths of performing local development without having to wait for block t
 [clarinet]: /smart-contracts/clarinet
 [installing clarinet]: /smart-contracts/clarinet#installing-clarinet
 [`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
-[testnet sandbox]: https://explorer.stacks.co/sandbox/deploy?chain=testnet
+[testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
-[testnet faucet]: https://explorer.stacks.co/sandbox/faucet?chain=testnet
+[testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
 [unit tests]: /smart-contracts/clarinet#testing-with-clarinet
 [`var-get`]: https://docs.stacks.co/references/language-functions#var-get
 [`clarinet console`]: /smart-contracts/clarinet#testing-with-the-console
@@ -255,6 +255,6 @@ the strengths of performing local development without having to wait for block t
 [`var-set`]: https://docs.stacks.co/references/language-functions#var-set
 [`+`]: https://docs.stacks.co/references/language-functions#-add
 [clarity language reference]: https://docs.stacks.co/references/language-functions
-[transactions]: https://explorer.stacks.co/transactions?chain=testnet
+[transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
-[call a contract]: https://explorer.stacks.co/sandbox/contract-call?chain=testnet
+[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet

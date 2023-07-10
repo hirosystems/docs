@@ -35,11 +35,11 @@ The following are the steps to deploy your contracts using the **Deploy** button
 
 ## Monitor your contract in Explorer
 
-This section helps you with the steps to monitor your contract in the [Explorer](https://explorer.stacks.co/?chain=mainnet).
+This section helps you with the steps to monitor your contract in the [Explorer](https://explorer.hiro.so/?chain=mainnet).
 
 1. You can now use the Pop-out button *View explorer* beside the *deployed* status to monitor your contract in Explorer.
 ![Exporer view](images/explorer-view.png)
-2. The  *view explorer* button opens up [Explorer](https://explorer.stacks.co/?chain=mainnet) to view the contract you just deployed in the mainnet/testnet environments.
+2. The  *view explorer* button opens up [Explorer](https://explorer.hiro.so/?chain=mainnet) to view the contract you just deployed in the mainnet/testnet environments.
 ![Explorer](images/explorer.jpeg) 
 3. You can check the summary of your contracts, contract details, etc., in Explorer.
 
