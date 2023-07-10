@@ -419,8 +419,8 @@ module.exports = {
     },
     {
       type: 'doc',
-      label: 'Stacks 2.1 Upgrades',
-      id: 'stacks-2.1-upgrades',
+      label: 'Stacks 2.4 Upgrades',
+      id: 'stacks-2.4-upgrades',
     },
     {
       type: 'category',
