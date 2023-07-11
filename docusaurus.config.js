@@ -153,7 +153,7 @@ module.exports = {
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/feature-guides/',
         outDir: 'docs/subnets/feature-guides',
-        documents: ['trust-models.md'],
+        documents: ['trust-models.md', 'subnet-participants.md'],
       },
     ],
     [
