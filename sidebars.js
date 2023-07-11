@@ -366,6 +366,7 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'subnets/feature-guides/trust-models',
+            'subnets/feature-guides/subnet-participants',
           ],
         },
         {
