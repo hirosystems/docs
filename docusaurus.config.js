@@ -140,7 +140,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-subnets-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/',
         outDir: 'docs/subnets',
         documents: ['getting-started.md', 'overview.md'],
       },
@@ -150,9 +150,9 @@ module.exports = {
       {
         name: 'remote-docs-subnets-feature-guides',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/feature-guides/',
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/feature-guides/',
         outDir: 'docs/subnets/feature-guides',
-        documents: ['trust-models.md'],
+        documents: ['trust-models.md', 'subnet-participants.md'],
       },
     ],
     [
@@ -160,7 +160,7 @@ module.exports = {
       {
         name: 'remote-docs-subnets-images',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/images/',
         outDir: 'docs/subnets/images',
         documents: [
           'deposit-stx.png',
@@ -578,3 +578,4 @@ module.exports = {
       },
     }),
 };
+
