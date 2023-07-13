@@ -194,9 +194,10 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
         outDir: 'docs/chainhooks/how-to-guides',
         documents: [
-          'how-to-run-chainhook-as-a-service.md',
-          'how-to-use-chainhook-with-bitcoin.md',
-          'how-to-use-chainhook-with-stacks.md',
+            'how-to-run-chainhook-as-a-service-using-bitcoind',
+            'how-to-run-chainhook-as-a-service-using-stacks',
+            'how-to-use-chainhook-with-bitcoin',
+            'how-to-use-chainhook-with-stacks',
         ],
       },
     ],
