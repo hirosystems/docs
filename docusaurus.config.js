@@ -205,7 +205,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-chainhook-images',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/c30de709e0472bef5d17bb0f3a3b27f84c065b21/docs/images/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
         outDir: 'docs/chainhook/images/',
         documents: ['chainhook-post-request.jpeg'],
         requestConfig: { responseType: 'arraybuffer' },
