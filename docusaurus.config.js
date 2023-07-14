@@ -181,7 +181,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-chainhook-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/c30de709e0472bef5d17bb0f3a3b27f84c065b21/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/',
         outDir: 'docs/chainhook',
         documents: ['faq.md', 'getting-started.md', 'overview.md'],
       },
@@ -191,7 +191,7 @@ module.exports = {
       {
         name: 'remote-docs-chainhook-how-to',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/chainhook/c30de709e0472bef5d17bb0f3a3b27f84c065b21/docs/how-to-guides/',
+          'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
         outDir: 'chainhook/docs/how-to-guides',
         documents: [
             'how-to-run-chainhook-as-a-service-using-bitcoind.md',
