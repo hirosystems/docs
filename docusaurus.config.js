@@ -192,7 +192,7 @@ module.exports = {
         name: 'remote-docs-chainhook-how-to',
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
-        outDir: 'chainhook/docs/how-to-guides',
+        outDir: 'docs/chainhook/how-to-guides',
         documents: [
             'how-to-run-chainhook-as-a-service-using-bitcoind.md',
             'how-to-run-chainhook-as-a-service-using-stacks.md',
