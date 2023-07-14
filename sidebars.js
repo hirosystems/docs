@@ -14,21 +14,21 @@ module.exports = {
     'intro',
     {
       type: 'category',
-      label: 'Chainhooks',
+      label: 'Chainhook',
       items: [
-        'chainhooks/overview',
-        'chainhooks/getting-started',
+        'chainhook/overview',
+        'chainhook/getting-started',
         {
           type: 'category',
           label: 'How-to Guides',
           items: [
-            'chainhooks/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind',
-            'chainhooks/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks',
-            'chainhooks/how-to-guides/how-to-use-chainhook-with-bitcoin',
-            'chainhooks/how-to-guides/how-to-use-chainhook-with-stacks',
+            'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind',
+            'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks',
+            'chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin',
+            'chainhook/how-to-guides/how-to-use-chainhook-with-stacks',
           ],
         },
-        'chainhooks/faq',
+        'chainhook/faq',
         {
           type: 'category',
           label: 'Developer Resources',
@@ -42,11 +42,6 @@ module.exports = {
               type: 'link',
               label: 'Discord #General',
               href: 'https://discord.com/channels/621759717756370964/621759718192447502',
-            },
-            {
-              type: 'link',
-              label: 'Blogs',
-              href: 'https://www.hiro.so/blog/meet-4-new-features-in-clarinet',
             },
           ],
         },
