@@ -1,30 +1,24 @@
 # Hiro developer documentation
 
-This repository holds source for the Hiro developer documentation website, which is deployed at [docs.hiro.so](https://docs.hiro.so). This website is built using [Docusaurus](https://docusaurus.io/).
+This repository holds the source for the Hiro developer documentation website, which is deployed at [docs.hiro.so](https://docs.hiro.so). This website is built using [Docusaurus](https://docusaurus.io/).
 
 ## Installation
 
 Use the following command to install local build and development dependencies.
 
-```
-$ yarn
-```
+`yarn`
 
 ## Local Development
 
 The following command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server. Make sure that you have [installed dependencies](#installation) before doing local development.
 
-```
-$ yarn start
-```
+`yarn start`
 
 ## Build
 
 The following command will build the final static website into the `build` directory.
 
-```
-$ yarn build
-```
+`yarn build`
 
 ### Deployment
 
