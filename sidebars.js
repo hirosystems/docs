@@ -421,8 +421,13 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Appendix',
+      label: 'Product-changelogs',
       items: [
+        {
+          type: 'link',
+          label: 'June 2023 changelog',
+          href: 'https://www.hiro.so/blog/release-roundup-june-2023',
+        },
         {
           type: 'link',
           label: 'May 2023 changelog',
