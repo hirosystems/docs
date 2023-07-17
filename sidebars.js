@@ -421,61 +421,61 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Product Changelogs',
+      label: 'Product Change logs',
       items: [
         {
           type: 'link',
-          label: 'June 2023 Changelog',
+          label: 'June 2023',
           href: 'https://www.hiro.so/blog/release-roundup-june-2023',
         },
         {
           type: 'link',
-          label: 'May 2023 Changelog',
+          label: 'May 2023',
           href: 'https://www.hiro.so/blog/release-roundup-may-2023',
         },
         {
           type: 'link',
-          label: 'April 2023 Changelog',
+          label: 'April 2023',
           href: 'https://www.hiro.so/blog/release-roundup-april-2023',
         },
         {
           type: 'link',
-          label: 'March 2023 Changelog',
+          label: 'March 2023',
           href: 'https://www.hiro.so/blog/release-roundup-march-2023',
         },
         {
           type: 'link',
-          label: 'February 2023 Changelog',
+          label: 'February 2023',
           href: 'https://www.hiro.so/blog/release-roundup-february-2023',
         },
         {
           type: 'link',
-          label: 'January 2023 Changelog',
+          label: 'January 2023',
           href: 'https://www.hiro.so/blog/release-roundup-january-2023',
         },
         {
           type: 'link',
-          label: 'December 2022 Changelog',
+          label: 'December 2022',
           href: 'https://www.hiro.so/blog/release-roundup-december-2022',
         },
         {
           type: 'link',
-          label: 'November 2022 Changelog',
+          label: 'November 2022',
           href: 'https://www.hiro.so/blog/release-roundup-november-2022',
         },
         {
           type: 'link',
-          label: 'October 2022 Changelog',
+          label: 'October 2022',
           href: 'https://www.hiro.so/blog/release-roundup-october-2022',
         },
         {
           type: 'link',
-          label: 'September 2022 Changelog',
+          label: 'September 2022',
           href: 'https://www.hiro.so/blog/release-roundup-september-2022',
         },
         {
           type: 'link',
-          label: 'August 2022 Changelog',
+          label: 'August 2022',
           href: 'https://www.hiro.so/blog/release-roundup-august-2022',
         },
       ],
