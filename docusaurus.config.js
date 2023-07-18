@@ -582,7 +582,7 @@ module.exports = {
         // Public API key: it is safe to commit it
         apiKey: "fd702012f83a5e487b903a70527c87a4",
 
-        indexName: "hiro",
+        indexName: "prod_hiro_docs",
 
         // Optional: see doc section below
         contextualSearch: true,
