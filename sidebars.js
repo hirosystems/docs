@@ -421,7 +421,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Product Change logs',
+      label: 'Product Change Logs',
       items: [
         {
           type: 'link',
