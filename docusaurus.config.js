@@ -20,6 +20,15 @@ module.exports = {
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
     [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'openapi-token-metadata-api',
+        path: 'openapi/token-metadata.json',
+        routeBasePath: 'open-api-metadata',
+        // ... other options
+      },
+    ],
+    [
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-blockchain-api-docs',
@@ -357,6 +366,7 @@ module.exports = {
     ],
   ],
   presets: [
+    
     [
       '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
