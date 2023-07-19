@@ -92,7 +92,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
         outDir: 'docs/stacks.js',
         documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
       },
@@ -101,10 +101,9 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-includes',
-        sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/includes',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/includes',
         outDir: 'docs/stacks.js/includes/',
-        documents: ['stacks.js-starters-note.mdx'],
+        documents: ['_stacks.js-starters-note.mdx', '_stacks.js-provider-section.mdx'], 
       },
     ],
     [
@@ -112,7 +111,7 @@ module.exports = {
       {
         name: 'remote-docs-stx-js-feature-guides',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/feature-guides',
+          'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/feature-guides',
         outDir: 'docs/stacks.js/feature-guides',
         documents: [
           'authenticate-users-with-connect.md',
@@ -127,7 +126,7 @@ module.exports = {
       {
         name: 'remote-docs-stx-js-how-to',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/master/docs/how-to-guides/',
+          'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/how-to-guides/',
         outDir: 'docs/stacks.js/how-to-guides',
         documents: [
           'how-to-integrate-stacking-delegation.md',
@@ -141,7 +140,7 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-subnets-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/',
         outDir: 'docs/subnets',
         documents: ['getting-started.md', 'overview.md'],
       },
@@ -151,9 +150,9 @@ module.exports = {
       {
         name: 'remote-docs-subnets-feature-guides',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/feature-guides/',
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/feature-guides/',
         outDir: 'docs/subnets/feature-guides',
-        documents: ['trust-models.md'],
+        documents: ['trust-models.md', 'subnet-participants.md'],
       },
     ],
     [
@@ -161,7 +160,7 @@ module.exports = {
       {
         name: 'remote-docs-subnets-images',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/master/docs/images/',
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/images/',
         outDir: 'docs/subnets/images',
         documents: [
           'deposit-stx.png',
@@ -181,24 +180,40 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
-        name: 'remote-docs-chainhooks-docs',
+        name: 'remote-docs-chainhook-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/',
-        outDir: 'docs/chainhooks',
+        outDir: 'docs/chainhook',
         documents: ['faq.md', 'getting-started.md', 'overview.md'],
       },
     ],
     [
       'docusaurus-plugin-remote-content',
       {
-        name: 'remote-docs-chainhooks-how-to',
+        name: 'remote-docs-chainhook-how-to',
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
-        outDir: 'docs/chainhooks/how-to-guides',
+        outDir: 'docs/chainhook/how-to-guides',
         documents: [
-          'how-to-run-chainhook-as-a-service.md',
-          'how-to-use-chainhook-with-bitcoin.md',
-          'how-to-use-chainhook-with-stacks.md',
+            'how-to-run-chainhook-as-a-service-using-bitcoind.md',
+            'how-to-run-chainhook-as-a-service-using-stacks.md',
+            'how-to-use-chainhook-with-bitcoin.md',
+            'how-to-use-chainhook-with-stacks.md',
         ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-chainhook-images',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
+        outDir: 'docs/chainhook/images/',
+        documents: ['chainhook-post-request.jpeg'],
+        requestConfig: { responseType: 'arraybuffer' },
+
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/jpeg',
+        },
       },
     ],
     [
@@ -603,3 +618,4 @@ module.exports = {
       },
     }),
 };
+

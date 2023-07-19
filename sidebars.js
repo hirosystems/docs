@@ -14,20 +14,21 @@ module.exports = {
     'intro',
     {
       type: 'category',
-      label: 'Chainhooks',
+      label: 'Chainhook',
       items: [
-        'chainhooks/overview',
-        'chainhooks/getting-started',
+        'chainhook/overview',
+        'chainhook/getting-started',
         {
           type: 'category',
           label: 'How-to Guides',
           items: [
-            'chainhooks/how-to-guides/how-to-use-chainhook-with-bitcoin',
-            'chainhooks/how-to-guides/how-to-use-chainhook-with-stacks',
-            'chainhooks/how-to-guides/how-to-run-chainhook-as-a-service',
+            'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind',
+            'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks',
+            'chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin',
+            'chainhook/how-to-guides/how-to-use-chainhook-with-stacks',
           ],
         },
-        'chainhooks/faq',
+        'chainhook/faq',
         {
           type: 'category',
           label: 'Developer Resources',
@@ -41,11 +42,6 @@ module.exports = {
               type: 'link',
               label: 'Discord #General',
               href: 'https://discord.com/channels/621759717756370964/621759718192447502',
-            },
-            {
-              type: 'link',
-              label: 'Blogs',
-              href: 'https://www.hiro.so/blog/meet-4-new-features-in-clarinet',
             },
           ],
         },
@@ -120,7 +116,11 @@ module.exports = {
       type: 'category',
       label: 'Explorer',
       items: [
-        'explorer/overview',
+        {
+          type: 'doc',
+          label: 'Overview',
+          id: 'explorer/overview'
+        },
         'explorer/getting-started',
         {
           type: 'category',
@@ -178,6 +178,13 @@ module.exports = {
       items: [
         {
           type: 'category',
+          label: 'How-to Guides',
+          items: [
+              'api/how-to-use-api-key'
+            ]
+          },
+          {
+          type: 'category',
           label: 'Feature Guides',
           items: [
             'ordinals-api/feature-guides/rate-limiting',
@@ -210,7 +217,11 @@ module.exports = {
       type: 'category',
       label: 'Stacks Blockchain API',
       items: [
-        'stacks-blockchain-api/overview',
+        {
+          type: 'doc',
+          label: 'Overview',
+          id: 'stacks-blockchain-api/overview'
+        },
         'stacks-blockchain-api/getting-started',
         {
           type: 'category',
@@ -228,6 +239,7 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
             'stacks-blockchain-api/feature-guides/gaia-storage',
             'stacks-blockchain-api/feature-guides/transactions',
+            
           ]
           },
             {
@@ -244,6 +256,7 @@ module.exports = {
                 'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
                 'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
                 'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
+                'api/how-to-use-api-key'
               ]
               },
               'stacks-blockchain-api/troubleshooting',
@@ -349,6 +362,7 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'subnets/feature-guides/trust-models',
+            'subnets/feature-guides/subnet-participants',
           ],
         },
         {
@@ -385,10 +399,17 @@ module.exports = {
       items: [
         {
           type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'api/how-to-use-api-key'
+          ]
+        },
+        {
+          type: 'category',
           label: 'Feature Guides',
           items: [
             'token-metadata-api/feature-guides/token-metadata-api',
-            'token-metadata-api/feature-guides/rate-limiting'
+            'token-metadata-api/feature-guides/rate-limiting',
           ],
         },
       ],
@@ -400,13 +421,63 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Appendix',
+      label: 'Product Change Logs',
       items: [
-        'changelog/changelog-march',
-        'changelog/changelog-february',
-        'changelog/changelog-january',
-        'changelog/changelog-december',
-        'changelog/changelog-november',
+        {
+          type: 'link',
+          label: 'June 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-june-2023',
+        },
+        {
+          type: 'link',
+          label: 'May 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-may-2023',
+        },
+        {
+          type: 'link',
+          label: 'April 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-april-2023',
+        },
+        {
+          type: 'link',
+          label: 'March 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-march-2023',
+        },
+        {
+          type: 'link',
+          label: 'February 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-february-2023',
+        },
+        {
+          type: 'link',
+          label: 'January 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-january-2023',
+        },
+        {
+          type: 'link',
+          label: 'December 2022',
+          href: 'https://www.hiro.so/blog/release-roundup-december-2022',
+        },
+        {
+          type: 'link',
+          label: 'November 2022',
+          href: 'https://www.hiro.so/blog/release-roundup-november-2022',
+        },
+        {
+          type: 'link',
+          label: 'October 2022',
+          href: 'https://www.hiro.so/blog/release-roundup-october-2022',
+        },
+        {
+          type: 'link',
+          label: 'September 2022',
+          href: 'https://www.hiro.so/blog/release-roundup-september-2022',
+        },
+        {
+          type: 'link',
+          label: 'August 2022',
+          href: 'https://www.hiro.so/blog/release-roundup-august-2022',
+        },
       ],
     },
   ],

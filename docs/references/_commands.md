@@ -107,7 +107,7 @@ Example:
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ stx call_contract_func SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X contract_name      contract_function 1 0 "$PAYMENT"
      {
-       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
+       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
 
 
 
@@ -130,7 +130,7 @@ If the command succeeds, it prints out a Clarity value.
 Example:
     $ stx call_read_only_contract_func SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X contract_name     contract_function SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X
      {
-       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
+       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
 
 
 
@@ -220,7 +220,7 @@ Example:
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ stx deploy_contract ./my_contract.clar my_contract 1 0 "$PAYMENT"
      {
-       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
+       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
 
 
 
@@ -757,6 +757,42 @@ Example
 | `backup_phrase` | `string` | `24_words_or_ciphertext` |
 | `derivation_path` | `string` | `custom_derivation_path_string` |
 
+### migrate_subdomains
+
+**Group:** Blockstack ID Management
+
+Enable users to transfer subdomains currently owned by any data-key 
+addresses, to the wallet-key address of the account. Data-key addresses 
+owning addresses is a remnant of the Blockstack Connect interface. 
+Currently, the web wallet extension shows usernames owned by the 
+wallet-key address of an account.
+
+This command performs these steps in sequence: 
+1. Detects whether there are any subdomains owned by data-key addresses
+2. Prompts the user to confirm whether they want to migrate the each 
+   owned subdomain to the corresponding wallet-key addresses for the 
+   resepective wallet account
+3. Alerts the user to any subdomains that can't be migrated to these 
+   wallet-key addresses given collision with existing usernames owned 
+   by them
+4. Initiates a request to the subdomain registrar using the /transfer
+   endpoint
+5. Displays a message indicating how long the user will have to wait 
+   until request is likely fulfilled
+6. Informs user that no subdomains are pending migration if the command 
+   is executed again
+
+Example
+
+    $ stx migrate_subdomains "toast canal educate tissue express melody produce later gospel victory meadow outdoor hollow catch liberty annual gasp hat hello april equip thank neck cruise" https://registrar.stacks.co
+
+
+
+| Name | Type | Value |
+|-|-|-|
+| `backup_phrase` | `string` | `24_words_or_ciphertext` |
+| `registrar_url` | `string` | `url` |
+
 ### get_zonefile
 
 **Group:** Peer Services
@@ -1147,31 +1183,6 @@ Example:
 | `gaia_url_prefix` | `string` | `url` |
 | `zonefile` | `string` | `path` |
 
-### register_subdomain
-
-**Group:** Blockstack ID Management
-
-Register a subdomain.  This will generate and sign a subdomain zone file record with the given `GAIA_HUB` URL and send it to the given subdomain registrar (`REGISTRAR`).
-
-This command generates, signs, and uploads a profile to the `GAIA_HUB` url.  Note that the `GAIA_HUB` argument must correspond to the *write* endpoint of your Gaia hub (i.e. you should be able to run 'curl "$GAIA_HUB/hub_info"' successfully).  If you are using Blockstack PBC's default Gaia hub, this argument should be "https://hub.blockstack.org".
-
-WARNING: At this time, no validation will occur on the registrar URL.  Be sure that the URL corresponds to the registrar for the on-chain name before running this command!
-
-Example:
-
-    $ export OWNER="6e50431b955fe73f079469b24f06480aee44e4519282686433195b3c4b5336ef01"
-    $ # NOTE: https://registrar.blockstack.org is the registrar for personal.id!
-    $ stx register_subdomain hello.personal.id "$OWNER" https://hub.blockstack.org https://registrar.blockstack.org
-
-
-| Name | Type | Value |
-|-|-|-|
-| `blockstack_id` | `string` | `blockstack_id` |
-| `owner_key` | `string` | `private_key` |
-| `gaia_hub` | `string` | `url` |
-| `registrar` | `string` | `url` |
-| `zonefile` | `string` | `path` |
-
 ### revoke
 
 **Group:** Blockstack ID Management
@@ -1241,7 +1252,7 @@ Example:
     $ # send tokens
     $ stx send_tokens SP1P10PS2T517S4SQGZT5WNX8R00G1ECTRKYCPMHY 12345 1 0 "$PAYMENT"
      {
-       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
+       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
     a9d387a925fb0ba7a725fb1e11f2c3f1647473699dd5a147c312e6453d233456
 
     $ # wait for transaction to be confirmed
@@ -1276,7 +1287,7 @@ Example:
 
     $ stx stack 10000000 20 16pm276FpJYpm7Dv3GEaRqTVvGPTdceoY4 136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01
      {
-       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.stacks.co/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
+       txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
 
 
 | Name | Type | Value |

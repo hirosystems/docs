@@ -255,14 +255,14 @@ the strengths of performing local development without having to wait for block t
 [clarinet]: /smart-contracts/clarinet
 [installing clarinet]: /smart-contracts/clarinet#installing-clarinet
 [clarity.tools]: https://clarity.tools
-[testnet sandbox]: https://explorer.stacks.co/sandbox/deploy?chain=testnet
+[testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
-[testnet faucet]: https://explorer.stacks.co/sandbox/faucet?chain=testnet
+[testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
 [step 3]: #step-3-add-code-to-the-hello-world-contract
 [unit tests]: /smart-contracts/clarinet#testing-with-clarinet
 [separating concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
 [`ok`]: https://docs.stacks.co/references/language-functions#ok
 [read-only function]: https://docs.stacks.co/references/language-functions#define-read-only
-[transactions]: https://explorer.stacks.co/transactions?chain=testnet
-[call a contract]: https://explorer.stacks.co/sandbox/contract-call?chain=testnet
+[transactions]: https://explorer.hiro.so/transactions?chain=testnet
+[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
