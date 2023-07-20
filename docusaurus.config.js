@@ -219,6 +219,15 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
+        name: 'remote-docs-ordinals-api-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordinals-api/develop/docs/',
+        outDir: 'docs/ordinals-api',
+        documents: ['overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
         name: 'remote-docs-ordinals-feature-guides',
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/ordinals-api/master/docs/feature-guides/',
