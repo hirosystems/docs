@@ -177,6 +177,11 @@ module.exports = {
       label: 'Ordinals API',
       items: [
         {
+          type: 'doc',
+          label: 'Overview',
+          id: 'ordinals-api/overview'
+        },
+        {
           type: 'category',
           label: 'How-to Guides',
           items: [
