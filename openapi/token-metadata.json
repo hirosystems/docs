@@ -1,842 +1,1096 @@
-openapi: 3.0.3
-info:
-  title: Token Metadata API
-  description: Service that indexes metadata for every SIP-009, SIP-010, and
-    SIP-013 Token in the Stacks blockchain and exposes it via REST API
-    endpoints.
-  version: v0.2.1
-components:
-  schemas: {}
-paths:
-  /metadata/v1/ft:
-    get:
-      operationId: getFungibleTokens
-      summary: Fungible Tokens
-      tags:
-        - Tokens
-      description: Retrieves a list of Fungible Tokens
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: name
-          required: false
-        - schema:
-            type: string
-          in: query
-          name: symbol
-          required: false
-        - schema:
-            title: Stacks Address
-            type: string
-            pattern: ^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}
-            example: SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9
-          example: SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9
-          in: query
-          name: address
-          required: false
-          description: Stacks Address
-        - schema:
-            minimum: 0
-            title: Offset
-            type: integer
-          in: query
-          name: offset
-          required: false
-          description: Result offset
-        - schema:
-            minimum: 1
-            maximum: 60
-            title: Limit
-            type: integer
-          in: query
-          name: limit
-          required: false
-          description: Results per page
-        - schema:
-            title: Order By
-            anyOf:
-              - type: string
-                enum:
-                  - name
-              - type: string
-                enum:
-                  - symbol
-          in: query
-          name: order_by
-          required: false
-          description: Parameter to order results by
-        - schema:
-            title: Order
-            anyOf:
-              - type: string
-                enum:
-                  - asc
-              - type: string
-                enum:
-                  - desc
-          in: query
-          name: order
-          required: false
-          description: Results order
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Paginated Ft Basic Metadata Response
-                type: object
-                properties:
-                  limit:
-                    type: integer
-                    example: 20
-                  offset:
-                    type: integer
-                    example: 0
-                  total:
-                    type: integer
-                    example: 1
-                  results:
-                    type: array
-                    items:
-                      title: Ft Basic Metadata Response
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                          example: Wrapped USD
-                        symbol:
-                          type: string
-                          example: xUSD
-                        decimals:
-                          type: integer
-                          example: 8
-                        total_supply:
-                          type: string
-                          example: "9999980000000"
-                        token_uri:
-                          format: uri
-                          type: string
-                          example: ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json
-                        description:
-                          type: string
-                          example: Heavy hitters, all-stars and legends of the game join forces to create
-                            a collection of unique varsity jackets
-                        image_uri:
-                          format: uri
-                          type: string
-                          example: https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                        image_canonical_uri:
-                          format: uri
-                          type: string
-                          example: ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                        tx_id:
-                          type: string
-                          example: 0xef2ac1126e16f46843228b1dk4830e19eb7599129e4jf392cab9e65ae83a45c0
-                        sender_address:
-                          type: string
-                          example: ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA
-                      required:
-                        - tx_id
-                        - sender_address
-                required:
-                  - limit
-                  - offset
-                  - total
-                  - results
-  "/metadata/v1/ft/{principal}":
-    get:
-      operationId: getFtMetadata
-      summary: Fungible Token Metadata
-      tags:
-        - Tokens
-      description: Retrieves metadata for a SIP-010 Fungible Token
-      parameters:
-        - schema:
-            title: Localization
-            type: string
-          examples:
-            es-MX:
-              value: es-MX
-            jp:
-              value: jp
-          in: query
-          name: locale
-          required: false
-          description: Metadata localization to retrieve
-        - schema:
-            title: Fungible Token Contract Principal
-            type: string
-            pattern: ^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$
-            example: SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token
-          example: SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token
-          in: path
-          name: principal
-          required: true
-          description: Principal for the contract which owns the SIP-010 token
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Ft Metadata Response
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: Wrapped USD
-                  symbol:
-                    type: string
-                    example: xUSD
-                  decimals:
-                    type: integer
-                    example: 8
-                  total_supply:
-                    type: string
-                    example: "9999980000000"
-                  token_uri:
-                    format: uri
-                    type: string
-                    example: ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json
-                  description:
-                    type: string
-                    example: Heavy hitters, all-stars and legends of the game join forces to create
-                      a collection of unique varsity jackets
-                  image_uri:
-                    format: uri
-                    type: string
-                    example: https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                  image_canonical_uri:
-                    format: uri
-                    type: string
-                    example: ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                  tx_id:
-                    type: string
-                    example: 0xef2ac1126e16f46843228b1dk4830e19eb7599129e4jf392cab9e65ae83a45c0
-                  sender_address:
-                    type: string
-                    example: ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA
-                  metadata:
-                    title: Metadata
-                    type: object
-                    properties:
-                      sip:
-                        type: integer
-                        example: 16
-                      name:
-                        type: string
-                        example: "Satoshi's Team #12200"
-                      description:
-                        type: string
-                        example: Heavy hitters, all-stars and legends of the game join forces to create
-                          a collection of unique varsity jackets
-                      image:
-                        format: uri
-                        type: string
-                        example: ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                      cached_image:
-                        format: uri
-                        type: string
-                        example: https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                      attributes:
-                        type: array
-                        items:
-                          title: Metadata Attribute
-                          type: object
-                          properties:
-                            trait_type:
-                              type: string
-                              example: Background
-                            display_type:
-                              type: string
-                              example: string
-                            value:
-                              title: Metadata Value
-                              example: value
-                          required:
-                            - trait_type
-                            - value
-                      properties:
-                        title: Metadata Properties
-                        type: object
-                        additionalProperties:
-                          title: Metadata Value
-                          example: value
-                        example:
-                          collection: Foo Collection
-                          total_supply: "10000"
-                      localization:
-                        title: Metadata Localization
-                        type: object
-                        properties:
-                          uri:
-                            format: uri
-                            type: string
-                            example: http://token.com/metadata?hl={locale}
-                          default:
-                            type: string
-                            example: en
-                          locales:
-                            type: array
-                            items:
-                              type: string
-                            example:
-                              - en
-                              - jp
-                        required:
-                          - uri
-                          - default
-                          - locales
-                    required:
-                      - sip
-                required:
-                  - tx_id
-                  - sender_address
-        "404":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Not Found Error Response
-                anyOf:
-                  - title: Token Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token not found
-                    required:
-                      - error
-                  - title: Contract Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Contract not found
-                    required:
-                      - error
-        "422":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Error Response
-                anyOf:
-                  - title: Token Metadata Fetch In Progress Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token metadata fetch in progress
-                    required:
-                      - error
-                  - title: Locale Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Locale not found
-                    required:
-                      - error
-                  - title: Invalid Token Contract Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token contract is invalid or does not conform to its
-                            token standard
-                    required:
-                      - error
-                  - title: Invalid Token Metadata Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token metadata is unreachable or does not conform to
-                            SIP-016
-                    required:
-                      - error
-  "/metadata/v1/nft/{principal}/{token_id}":
-    get:
-      operationId: getNftMetadata
-      summary: Non-Fungible Token Metadata
-      tags:
-        - Tokens
-      description: Retrieves metadata for a SIP-009 Non-Fungible Token
-      parameters:
-        - schema:
-            title: Localization
-            type: string
-          examples:
-            es-MX:
-              value: es-MX
-            jp:
-              value: jp
-          in: query
-          name: locale
-          required: false
-          description: Metadata localization to retrieve
-        - schema:
-            title: Non-Fungible Token Contract Principal
-            type: string
-            pattern: ^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$
-            example: SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12
-          example: SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12
-          in: path
-          name: principal
-          required: true
-          description: SIP-009 compliant smart contract principal
-        - schema:
-            title: Token ID
-            type: integer
-            example: "35"
-          example: "35"
-          in: path
-          name: token_id
-          required: true
-          description: Token ID to retrieve
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Nft Metadata Response
-                type: object
-                properties:
-                  token_uri:
-                    format: uri
-                    type: string
-                    example: ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json
-                  metadata:
-                    title: Metadata
-                    type: object
-                    properties:
-                      sip:
-                        type: integer
-                        example: 16
-                      name:
-                        type: string
-                        example: "Satoshi's Team #12200"
-                      description:
-                        type: string
-                        example: Heavy hitters, all-stars and legends of the game join forces to create
-                          a collection of unique varsity jackets
-                      image:
-                        format: uri
-                        type: string
-                        example: ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                      cached_image:
-                        format: uri
-                        type: string
-                        example: https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                      attributes:
-                        type: array
-                        items:
-                          title: Metadata Attribute
-                          type: object
-                          properties:
-                            trait_type:
-                              type: string
-                              example: Background
-                            display_type:
-                              type: string
-                              example: string
-                            value:
-                              title: Metadata Value
-                              example: value
-                          required:
-                            - trait_type
-                            - value
-                      properties:
-                        title: Metadata Properties
-                        type: object
-                        additionalProperties:
-                          title: Metadata Value
-                          example: value
-                        example:
-                          collection: Foo Collection
-                          total_supply: "10000"
-                      localization:
-                        title: Metadata Localization
-                        type: object
-                        properties:
-                          uri:
-                            format: uri
-                            type: string
-                            example: http://token.com/metadata?hl={locale}
-                          default:
-                            type: string
-                            example: en
-                          locales:
-                            type: array
-                            items:
-                              type: string
-                            example:
-                              - en
-                              - jp
-                        required:
-                          - uri
-                          - default
-                          - locales
-                    required:
-                      - sip
-        "404":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Not Found Error Response
-                anyOf:
-                  - title: Token Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token not found
-                    required:
-                      - error
-                  - title: Contract Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Contract not found
-                    required:
-                      - error
-        "422":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Error Response
-                anyOf:
-                  - title: Token Metadata Fetch In Progress Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token metadata fetch in progress
-                    required:
-                      - error
-                  - title: Locale Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Locale not found
-                    required:
-                      - error
-                  - title: Invalid Token Contract Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token contract is invalid or does not conform to its
-                            token standard
-                    required:
-                      - error
-                  - title: Invalid Token Metadata Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token metadata is unreachable or does not conform to
-                            SIP-016
-                    required:
-                      - error
-  "/metadata/v1/sft/{principal}/{token_id}":
-    get:
-      operationId: getSftMetadata
-      summary: Semi-Fungible Token Metadata
-      tags:
-        - Tokens
-      description: Retrieves metadata for a SIP-013 Semi-Fungible Token
-      parameters:
-        - schema:
-            title: Localization
-            type: string
-          examples:
-            es-MX:
-              value: es-MX
-            jp:
-              value: jp
-          in: query
-          name: locale
-          required: false
-          description: Metadata localization to retrieve
-        - schema:
-            title: Semi-Fungible Token Contract Principal
-            type: string
-            pattern: ^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$
-            example: SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1
-          example: SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1
-          in: path
-          name: principal
-          required: true
-          description: SIP-013 compliant smart contract principal
-        - schema:
-            title: Token ID
-            type: integer
-            example: "35"
-          example: "35"
-          in: path
-          name: token_id
-          required: true
-          description: Token ID to retrieve
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Sft Metadata Response
-                type: object
-                properties:
-                  token_uri:
-                    format: uri
-                    type: string
-                    example: ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json
-                  decimals:
-                    type: integer
-                    example: 6
-                  total_supply:
-                    type: string
-                    example: "250"
-                  metadata:
-                    title: Metadata
-                    type: object
-                    properties:
-                      sip:
-                        type: integer
-                        example: 16
-                      name:
-                        type: string
-                        example: "Satoshi's Team #12200"
-                      description:
-                        type: string
-                        example: Heavy hitters, all-stars and legends of the game join forces to create
-                          a collection of unique varsity jackets
-                      image:
-                        format: uri
-                        type: string
-                        example: ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                      cached_image:
-                        format: uri
-                        type: string
-                        example: https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png
-                      attributes:
-                        type: array
-                        items:
-                          title: Metadata Attribute
-                          type: object
-                          properties:
-                            trait_type:
-                              type: string
-                              example: Background
-                            display_type:
-                              type: string
-                              example: string
-                            value:
-                              title: Metadata Value
-                              example: value
-                          required:
-                            - trait_type
-                            - value
-                      properties:
-                        title: Metadata Properties
-                        type: object
-                        additionalProperties:
-                          title: Metadata Value
-                          example: value
-                        example:
-                          collection: Foo Collection
-                          total_supply: "10000"
-                      localization:
-                        title: Metadata Localization
-                        type: object
-                        properties:
-                          uri:
-                            format: uri
-                            type: string
-                            example: http://token.com/metadata?hl={locale}
-                          default:
-                            type: string
-                            example: en
-                          locales:
-                            type: array
-                            items:
-                              type: string
-                            example:
-                              - en
-                              - jp
-                        required:
-                          - uri
-                          - default
-                          - locales
-                    required:
-                      - sip
-        "404":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Not Found Error Response
-                anyOf:
-                  - title: Token Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token not found
-                    required:
-                      - error
-                  - title: Contract Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Contract not found
-                    required:
-                      - error
-        "422":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Error Response
-                anyOf:
-                  - title: Token Metadata Fetch In Progress Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token metadata fetch in progress
-                    required:
-                      - error
-                  - title: Locale Not Found Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Locale not found
-                    required:
-                      - error
-                  - title: Invalid Token Contract Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token contract is invalid or does not conform to its
-                            token standard
-                    required:
-                      - error
-                  - title: Invalid Token Metadata Response
-                    type: object
-                    properties:
-                      error:
-                        type: string
-                        enum:
-                          - Token metadata is unreachable or does not conform to
-                            SIP-016
-                    required:
-                      - error
-  /metadata/v1/:
-    get:
-      operationId: getApiStatus
-      summary: API Status
-      tags:
-        - Status
-      description: Displays the status of the API and its current workload
-      responses:
-        "200":
-          description: Default Response
-          content:
-            application/json:
-              schema:
-                title: Api Status Response
-                type: object
-                properties:
-                  server_version:
-                    type: string
-                    example: token-metadata-api v0.0.1 (master:a1b2c3)
-                  status:
-                    type: string
-                    example: ready
-                  tokens:
-                    title: Api Token Count
-                    type: object
-                    properties:
-                      ft:
-                        type: integer
-                        example: 512
-                      nft:
-                        type: integer
-                        example: 493452
-                      sft:
-                        type: integer
-                        example: 44
-                  token_contracts:
-                    title: Api Token Contract Count
-                    type: object
-                    properties:
-                      sip-009:
-                        type: integer
-                        example: 3101
-                      sip-010:
-                        type: integer
-                        example: 512
-                      sip-013:
-                        type: integer
-                        example: 11
-                  job_queue:
-                    title: Api Job Count
-                    type: object
-                    properties:
-                      pending:
-                        type: integer
-                        example: 430562
-                      queued:
-                        type: integer
-                        example: 512
-                      done:
-                        type: integer
-                        example: 12532
-                      failed:
-                        type: integer
-                        example: 11
-                required:
-                  - server_version
-                  - status
-servers:
-  - url: https://api.hiro.so/
-    description: mainnet
-  - url: https://api.testnet.hiro.so/
-    description: testnet
-tags:
-  - name: Tokens
-    description: Token metadata endpoints
-  - name: Status
-    description: Service status endpoints
-externalDocs:
-  url: https://github.com/hirosystems/token-metadata-api
-  description: Source Repository
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Token Metadata API",
+    "description": "Service that indexes metadata for every SIP-009, SIP-010, and SIP-013 Token in the Stacks blockchain and exposes it via REST API endpoints.",
+    "version": "v0.2.1"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/metadata/v1/ft": {
+      "get": {
+        "operationId": "getFungibleTokens",
+        "summary": "Fungible Tokens",
+        "tags": ["Tokens"],
+        "description": "Retrieves a list of Fungible Tokens",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "name",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "symbol",
+            "required": false
+          },
+          {
+            "schema": {
+              "title": "Stacks Address",
+              "type": "string",
+              "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}",
+              "example": "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9"
+            },
+            "example": "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9",
+            "in": "query",
+            "name": "address",
+            "required": false,
+            "description": "Stacks Address"
+          },
+          {
+            "schema": {
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Result offset"
+          },
+          {
+            "schema": {
+              "minimum": 1,
+              "maximum": 60,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Results per page"
+          },
+          {
+            "schema": {
+              "title": "Order By",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": ["name"]
+                },
+                {
+                  "type": "string",
+                  "enum": ["symbol"]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "description": "Parameter to order results by"
+          },
+          {
+            "schema": {
+              "title": "Order",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": ["asc"]
+                },
+                {
+                  "type": "string",
+                  "enum": ["desc"]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "order",
+            "required": false,
+            "description": "Results order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Paginated Ft Basic Metadata Response",
+                  "type": "object",
+                  "properties": {
+                    "limit": {
+                      "type": "integer",
+                      "example": 20
+                    },
+                    "offset": {
+                      "type": "integer",
+                      "example": 0
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "title": "Ft Basic Metadata Response",
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "Wrapped USD"
+                          },
+                          "symbol": {
+                            "type": "string",
+                            "example": "xUSD"
+                          },
+                          "decimals": {
+                            "type": "integer",
+                            "example": 8
+                          },
+                          "total_supply": {
+                            "type": "string",
+                            "example": "9999980000000"
+                          },
+                          "token_uri": {
+                            "format": "uri",
+                            "type": "string",
+                            "example": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets"
+                          },
+                          "image_uri": {
+                            "format": "uri",
+                            "type": "string",
+                            "example": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                          },
+                          "image_canonical_uri": {
+                            "format": "uri",
+                            "type": "string",
+                            "example": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                          },
+                          "tx_id": {
+                            "type": "string",
+                            "example": "0xef2ac1126e16f46843228b1dk4830e19eb7599129e4jf392cab9e65ae83a45c0"
+                          },
+                          "sender_address": {
+                            "type": "string",
+                            "example": "ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA"
+                          }
+                        },
+                        "required": ["tx_id", "sender_address"]
+                      }
+                    }
+                  },
+                  "required": ["limit", "offset", "total", "results"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/ft/{principal}": {
+      "get": {
+        "operationId": "getFtMetadata",
+        "summary": "Fungible Token Metadata",
+        "tags": ["Tokens"],
+        "description": "Retrieves metadata for a SIP-010 Fungible Token",
+        "parameters": [
+          {
+            "schema": {
+              "title": "Localization",
+              "type": "string"
+            },
+            "examples": {
+              "es-MX": {
+                "value": "es-MX"
+              },
+              "jp": {
+                "value": "jp"
+              }
+            },
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "description": "Metadata localization to retrieve"
+          },
+          {
+            "schema": {
+              "title": "Fungible Token Contract Principal",
+              "type": "string",
+              "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
+              "example": "SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token"
+            },
+            "example": "SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token",
+            "in": "path",
+            "name": "principal",
+            "required": true,
+            "description": "Principal for the contract which owns the SIP-010 token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Ft Metadata Response",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Wrapped USD"
+                    },
+                    "symbol": {
+                      "type": "string",
+                      "example": "xUSD"
+                    },
+                    "decimals": {
+                      "type": "integer",
+                      "example": 8
+                    },
+                    "total_supply": {
+                      "type": "string",
+                      "example": "9999980000000"
+                    },
+                    "token_uri": {
+                      "format": "uri",
+                      "type": "string",
+                      "example": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets"
+                    },
+                    "image_uri": {
+                      "format": "uri",
+                      "type": "string",
+                      "example": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                    },
+                    "image_canonical_uri": {
+                      "format": "uri",
+                      "type": "string",
+                      "example": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                    },
+                    "tx_id": {
+                      "type": "string",
+                      "example": "0xef2ac1126e16f46843228b1dk4830e19eb7599129e4jf392cab9e65ae83a45c0"
+                    },
+                    "sender_address": {
+                      "type": "string",
+                      "example": "ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA"
+                    },
+                    "metadata": {
+                      "title": "Metadata",
+                      "type": "object",
+                      "properties": {
+                        "sip": {
+                          "type": "integer",
+                          "example": 16
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Satoshi's Team #12200"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets"
+                        },
+                        "image": {
+                          "format": "uri",
+                          "type": "string",
+                          "example": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                        },
+                        "cached_image": {
+                          "format": "uri",
+                          "type": "string",
+                          "example": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                        },
+                        "attributes": {
+                          "type": "array",
+                          "items": {
+                            "title": "Metadata Attribute",
+                            "type": "object",
+                            "properties": {
+                              "trait_type": {
+                                "type": "string",
+                                "example": "Background"
+                              },
+                              "display_type": {
+                                "type": "string",
+                                "example": "string"
+                              },
+                              "value": {
+                                "title": "Metadata Value",
+                                "example": "value"
+                              }
+                            },
+                            "required": ["trait_type", "value"]
+                          }
+                        },
+                        "properties": {
+                          "title": "Metadata Properties",
+                          "type": "object",
+                          "additionalProperties": {
+                            "title": "Metadata Value",
+                            "example": "value"
+                          },
+                          "example": {
+                            "collection": "Foo Collection",
+                            "total_supply": "10000"
+                          }
+                        },
+                        "localization": {
+                          "title": "Metadata Localization",
+                          "type": "object",
+                          "properties": {
+                            "uri": {
+                              "format": "uri",
+                              "type": "string",
+                              "example": "http://token.com/metadata?hl={locale}"
+                            },
+                            "default": {
+                              "type": "string",
+                              "example": "en"
+                            },
+                            "locales": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": ["en", "jp"]
+                            }
+                          },
+                          "required": ["uri", "default", "locales"]
+                        }
+                      },
+                      "required": ["sip"]
+                    }
+                  },
+                  "required": ["tx_id", "sender_address"]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Error Response",
+                  "anyOf": [
+                    {
+                      "title": "Token Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Contract Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Contract not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Error Response",
+                  "anyOf": [
+                    {
+                      "title": "Token Metadata Fetch In Progress Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token metadata fetch in progress"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Locale Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Locale not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Invalid Token Contract Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Token contract is invalid or does not conform to its token standard"
+                          ]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Invalid Token Metadata Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token metadata is unreachable or does not conform to SIP-016"]
+                        }
+                      },
+                      "required": ["error"]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/nft/{principal}/{token_id}": {
+      "get": {
+        "operationId": "getNftMetadata",
+        "summary": "Non-Fungible Token Metadata",
+        "tags": ["Tokens"],
+        "description": "Retrieves metadata for a SIP-009 Non-Fungible Token",
+        "parameters": [
+          {
+            "schema": {
+              "title": "Localization",
+              "type": "string"
+            },
+            "examples": {
+              "es-MX": {
+                "value": "es-MX"
+              },
+              "jp": {
+                "value": "jp"
+              }
+            },
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "description": "Metadata localization to retrieve"
+          },
+          {
+            "schema": {
+              "title": "Non-Fungible Token Contract Principal",
+              "type": "string",
+              "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
+              "example": "SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12"
+            },
+            "example": "SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12",
+            "in": "path",
+            "name": "principal",
+            "required": true,
+            "description": "SIP-009 compliant smart contract principal"
+          },
+          {
+            "schema": {
+              "title": "Token ID",
+              "type": "integer",
+              "example": "35"
+            },
+            "example": "35",
+            "in": "path",
+            "name": "token_id",
+            "required": true,
+            "description": "Token ID to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Nft Metadata Response",
+                  "type": "object",
+                  "properties": {
+                    "token_uri": {
+                      "format": "uri",
+                      "type": "string",
+                      "example": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json"
+                    },
+                    "metadata": {
+                      "title": "Metadata",
+                      "type": "object",
+                      "properties": {
+                        "sip": {
+                          "type": "integer",
+                          "example": 16
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Satoshi's Team #12200"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets"
+                        },
+                        "image": {
+                          "format": "uri",
+                          "type": "string",
+                          "example": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                        },
+                        "cached_image": {
+                          "format": "uri",
+                          "type": "string",
+                          "example": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                        },
+                        "attributes": {
+                          "type": "array",
+                          "items": {
+                            "title": "Metadata Attribute",
+                            "type": "object",
+                            "properties": {
+                              "trait_type": {
+                                "type": "string",
+                                "example": "Background"
+                              },
+                              "display_type": {
+                                "type": "string",
+                                "example": "string"
+                              },
+                              "value": {
+                                "title": "Metadata Value",
+                                "example": "value"
+                              }
+                            },
+                            "required": ["trait_type", "value"]
+                          }
+                        },
+                        "properties": {
+                          "title": "Metadata Properties",
+                          "type": "object",
+                          "additionalProperties": {
+                            "title": "Metadata Value",
+                            "example": "value"
+                          },
+                          "example": {
+                            "collection": "Foo Collection",
+                            "total_supply": "10000"
+                          }
+                        },
+                        "localization": {
+                          "title": "Metadata Localization",
+                          "type": "object",
+                          "properties": {
+                            "uri": {
+                              "format": "uri",
+                              "type": "string",
+                              "example": "http://token.com/metadata?hl={locale}"
+                            },
+                            "default": {
+                              "type": "string",
+                              "example": "en"
+                            },
+                            "locales": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": ["en", "jp"]
+                            }
+                          },
+                          "required": ["uri", "default", "locales"]
+                        }
+                      },
+                      "required": ["sip"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Error Response",
+                  "anyOf": [
+                    {
+                      "title": "Token Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Contract Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Contract not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Error Response",
+                  "anyOf": [
+                    {
+                      "title": "Token Metadata Fetch In Progress Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token metadata fetch in progress"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Locale Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Locale not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Invalid Token Contract Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Token contract is invalid or does not conform to its token standard"
+                          ]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Invalid Token Metadata Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token metadata is unreachable or does not conform to SIP-016"]
+                        }
+                      },
+                      "required": ["error"]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/sft/{principal}/{token_id}": {
+      "get": {
+        "operationId": "getSftMetadata",
+        "summary": "Semi-Fungible Token Metadata",
+        "tags": ["Tokens"],
+        "description": "Retrieves metadata for a SIP-013 Semi-Fungible Token",
+        "parameters": [
+          {
+            "schema": {
+              "title": "Localization",
+              "type": "string"
+            },
+            "examples": {
+              "es-MX": {
+                "value": "es-MX"
+              },
+              "jp": {
+                "value": "jp"
+              }
+            },
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "description": "Metadata localization to retrieve"
+          },
+          {
+            "schema": {
+              "title": "Semi-Fungible Token Contract Principal",
+              "type": "string",
+              "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
+              "example": "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1"
+            },
+            "example": "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1",
+            "in": "path",
+            "name": "principal",
+            "required": true,
+            "description": "SIP-013 compliant smart contract principal"
+          },
+          {
+            "schema": {
+              "title": "Token ID",
+              "type": "integer",
+              "example": "35"
+            },
+            "example": "35",
+            "in": "path",
+            "name": "token_id",
+            "required": true,
+            "description": "Token ID to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Sft Metadata Response",
+                  "type": "object",
+                  "properties": {
+                    "token_uri": {
+                      "format": "uri",
+                      "type": "string",
+                      "example": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json"
+                    },
+                    "decimals": {
+                      "type": "integer",
+                      "example": 6
+                    },
+                    "total_supply": {
+                      "type": "string",
+                      "example": "250"
+                    },
+                    "metadata": {
+                      "title": "Metadata",
+                      "type": "object",
+                      "properties": {
+                        "sip": {
+                          "type": "integer",
+                          "example": 16
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Satoshi's Team #12200"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets"
+                        },
+                        "image": {
+                          "format": "uri",
+                          "type": "string",
+                          "example": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                        },
+                        "cached_image": {
+                          "format": "uri",
+                          "type": "string",
+                          "example": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png"
+                        },
+                        "attributes": {
+                          "type": "array",
+                          "items": {
+                            "title": "Metadata Attribute",
+                            "type": "object",
+                            "properties": {
+                              "trait_type": {
+                                "type": "string",
+                                "example": "Background"
+                              },
+                              "display_type": {
+                                "type": "string",
+                                "example": "string"
+                              },
+                              "value": {
+                                "title": "Metadata Value",
+                                "example": "value"
+                              }
+                            },
+                            "required": ["trait_type", "value"]
+                          }
+                        },
+                        "properties": {
+                          "title": "Metadata Properties",
+                          "type": "object",
+                          "additionalProperties": {
+                            "title": "Metadata Value",
+                            "example": "value"
+                          },
+                          "example": {
+                            "collection": "Foo Collection",
+                            "total_supply": "10000"
+                          }
+                        },
+                        "localization": {
+                          "title": "Metadata Localization",
+                          "type": "object",
+                          "properties": {
+                            "uri": {
+                              "format": "uri",
+                              "type": "string",
+                              "example": "http://token.com/metadata?hl={locale}"
+                            },
+                            "default": {
+                              "type": "string",
+                              "example": "en"
+                            },
+                            "locales": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": ["en", "jp"]
+                            }
+                          },
+                          "required": ["uri", "default", "locales"]
+                        }
+                      },
+                      "required": ["sip"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Error Response",
+                  "anyOf": [
+                    {
+                      "title": "Token Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Contract Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Contract not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Error Response",
+                  "anyOf": [
+                    {
+                      "title": "Token Metadata Fetch In Progress Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token metadata fetch in progress"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Locale Not Found Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Locale not found"]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Invalid Token Contract Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": [
+                            "Token contract is invalid or does not conform to its token standard"
+                          ]
+                        }
+                      },
+                      "required": ["error"]
+                    },
+                    {
+                      "title": "Invalid Token Metadata Response",
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string",
+                          "enum": ["Token metadata is unreachable or does not conform to SIP-016"]
+                        }
+                      },
+                      "required": ["error"]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/v1/": {
+      "get": {
+        "operationId": "getApiStatus",
+        "summary": "API Status",
+        "tags": ["Status"],
+        "description": "Displays the status of the API and its current workload",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Api Status Response",
+                  "type": "object",
+                  "properties": {
+                    "server_version": {
+                      "type": "string",
+                      "example": "token-metadata-api v0.0.1 (master:a1b2c3)"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "ready"
+                    },
+                    "tokens": {
+                      "title": "Api Token Count",
+                      "type": "object",
+                      "properties": {
+                        "ft": {
+                          "type": "integer",
+                          "example": 512
+                        },
+                        "nft": {
+                          "type": "integer",
+                          "example": 493452
+                        },
+                        "sft": {
+                          "type": "integer",
+                          "example": 44
+                        }
+                      }
+                    },
+                    "token_contracts": {
+                      "title": "Api Token Contract Count",
+                      "type": "object",
+                      "properties": {
+                        "sip-009": {
+                          "type": "integer",
+                          "example": 3101
+                        },
+                        "sip-010": {
+                          "type": "integer",
+                          "example": 512
+                        },
+                        "sip-013": {
+                          "type": "integer",
+                          "example": 11
+                        }
+                      }
+                    },
+                    "job_queue": {
+                      "title": "Api Job Count",
+                      "type": "object",
+                      "properties": {
+                        "pending": {
+                          "type": "integer",
+                          "example": 430562
+                        },
+                        "queued": {
+                          "type": "integer",
+                          "example": 512
+                        },
+                        "done": {
+                          "type": "integer",
+                          "example": 12532
+                        },
+                        "failed": {
+                          "type": "integer",
+                          "example": 11
+                        }
+                      }
+                    }
+                  },
+                  "required": ["server_version", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.hiro.so/",
+      "description": "mainnet"
+    },
+    {
+      "url": "https://api.testnet.hiro.so/",
+      "description": "testnet"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Tokens",
+      "description": "Token metadata endpoints"
+    },
+    {
+      "name": "Status",
+      "description": "Service status endpoints"
+    }
+  ],
+  "externalDocs": {
+    "url": "https://github.com/hirosystems/token-metadata-api",
+    "description": "Source Repository"
+  }
+}
