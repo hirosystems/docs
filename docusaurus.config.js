@@ -22,9 +22,9 @@ module.exports = {
     [
       'docusaurus-plugin-openapi',
       {
-        id: 'openapi-token-metadata-api',
+        id: 'token-metadata-api',
         path: 'openapi/token-metadata.json',
-        routeBasePath: 'open-api-metadata',
+        routeBasePath: 'token-metadata',
         // ... other options
       },
     ],
@@ -372,6 +372,7 @@ module.exports = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
+          
           sidebarPath: require.resolve('./sidebars.js'),
 
           editUrl({ docPath }) {
@@ -419,6 +420,7 @@ module.exports = {
         },
       },
     ],
+    
   ],
 
   themeConfig:
@@ -449,6 +451,10 @@ module.exports = {
               {
                 label: 'Token Metadata API',
                 to: '/metadata',
+              },
+              {
+                label: 'OpenApi Token Metadata API',
+                to: '/token-metadata',
               },
               {
                 label: 'Stacks CLI',
