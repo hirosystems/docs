@@ -177,6 +177,11 @@ module.exports = {
       label: 'Ordinals API',
       items: [
         {
+          type: 'doc',
+          label: 'Overview',
+          id: 'ordinals-api/overview'
+        },
+        {
           type: 'category',
           label: 'How-to Guides',
           items: [
@@ -308,6 +313,7 @@ module.exports = {
             'stacks.js/feature-guides/sign-messages',
             'stacks.js/feature-guides/sign-transactions',
             'stacks.js/feature-guides/store-data-securely',
+            'stacks.js/feature-guides/update-profile',
           ],
         },
         {

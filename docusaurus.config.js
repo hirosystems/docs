@@ -94,7 +94,12 @@ module.exports = {
         name: 'remote-docs-stx-js-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
         outDir: 'docs/stacks.js',
-        documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
+        documents: [
+          'faq.md',
+          'getting-started.md',
+          'overview.md',
+          'troubleshooting.md',
+        ],
       },
     ],
     [
@@ -103,7 +108,7 @@ module.exports = {
         name: 'remote-docs-stx-js-includes',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/includes',
         outDir: 'docs/stacks.js/includes/',
-        documents: ['_stacks.js-starters-note.mdx', '_stacks.js-provider-section.mdx'], 
+        documents: ['_stacks.js-starters-note.mdx', '_stacks.js-provider-section.mdx'],
       },
     ],
     [
@@ -118,6 +123,7 @@ module.exports = {
           'sign-messages.md',
           'sign-transactions.md',
           'store-data-securely.md',
+          'update-profile.md',
         ],
       },
     ],
@@ -214,6 +220,15 @@ module.exports = {
           accept: 'image*',
           'Content-Type': 'image/jpeg',
         },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordinals-api-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordinals-api/develop/docs/',
+        outDir: 'docs/ordinals-api',
+        documents: ['overview.md'],
       },
     ],
     [
