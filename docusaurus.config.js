@@ -28,6 +28,14 @@ module.exports = {
       },
     ],
     [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'stx-blockchain',
+        path: 'openapi/stx-blockchain.json',
+        routeBasePath: '/api',
+      },
+    ],
+    [
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-blockchain-api-docs',
@@ -400,7 +408,7 @@ module.exports = {
         },
       },
     ],
-    [
+   /*  [
       'redocusaurus',
       {
         specs: [
@@ -413,7 +421,7 @@ module.exports = {
           primaryColor: '#FF5500',
         },
       },
-    ],
+    ], */
   ],
 
   themeConfig:
