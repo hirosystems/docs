@@ -5,7 +5,7 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Get started with the following guides to set up and use Hiro's products.",
+    text: "Start your journey with the Hiro Platform, and make the most of the accompanying guides to effortlessly set up and make the best use of Hiro's wide range of products.",
     links: [
       {
         text: 'Hiro Platform',
