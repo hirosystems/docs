@@ -164,10 +164,17 @@ table {
   margin-top: 3px;
   margin-left: 18px;
 }
-/* REDOCUSAURUS ============================================================= */
-.redocusaurus .menu-content {
-  top: 60px !important;
-  height: calc(100vh - 60px) !important;
+/* INTERACTIVE OPEN API ===================================================== */
+.badge--secondary {
+  color: var(--ifm-color-white);
+}
+
+html[data-theme='dark'] .badge--secondary {
+  color: var(--ifm-color-black);
+}
+
+main[class^='apiMainContainer_'] table {
+  table-layout: fixed;
 }
 
 /* SEARCH PLUGIN ============================================================ */
