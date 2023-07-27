@@ -218,11 +218,9 @@
           "description": "A valid testnet BTC address",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": {"address":"2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"}
-          },
-          "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
-        }
+            "type": "string"
+            }
+          }
       ],
       "post": {
         "summary": "Add testnet BTC tokens to address",
@@ -239,12 +237,12 @@
                 "properties": {
                   "address": {
                     "description": "BTC testnet address",
-                    "type": "string"
+                    "type": "string",
+                    "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
                   }
-                },
-                "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
-              },
-              "example": {"address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"}
+                }
+              }
+              
             }
           }
         },
