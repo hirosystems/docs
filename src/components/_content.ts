@@ -5,18 +5,18 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Start your journey with the Hiro Platform, and make the most of the accompanying guides to effortlessly set up and make the best use of Hiro's wide range of products.",
+    text: "Maximize your Web3 development efficiency and productivity by leveraging the provided resources.",
     links: [
       {
-        text: 'Hiro Platform',
+        text: 'Web-hosted contract development using the Hiro Platform',
         href: 'https://platform.hiro.so/',
       },
       {
-        text: 'Stacks Blockchain API Client',
+        text: 'JS Client for the Stacks Blockchain API',
         href: 'https://hirosystems.github.io/stacks-blockchain-api/client/',
       },
       {
-        text: 'Stacks.js starters',
+        text: 'JavaScript project templates',
         href: '/stacksjs-starters',
       },
     ],
