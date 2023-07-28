@@ -1,8 +1,8 @@
 [[plugins]]
 package = "@algolia/netlify-plugin-crawler"
     [plugins.inputs]
-    branches = ['main']
-    disabled = true
+    branches = ['*']
+    disabled = false
     pathPrefix = "/docs"
     customDomain = "hiro.so"
     renderJavaScript = true
