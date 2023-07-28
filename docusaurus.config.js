@@ -612,7 +612,7 @@ module.exports = {
         // Public API key: it is safe to commit it
         apiKey: "e2a20acb668b5f3ecb3adc611ee4e6e5",
 
-        indexName: "netlify_d6cb4f8e-1222-4919-9d0b-53db3e321fc2_main_all",
+        indexName: "netlify_d6cb4f8e-1222-4919-9d0b-53db3e321fc2_algolia-implementation_all",
 
         // Optional: see doc section below
         contextualSearch: true,
