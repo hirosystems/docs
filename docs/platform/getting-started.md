@@ -56,6 +56,6 @@ Once your Clarity contracts are ready to deploy, follow the [deploy project](dep
 
 To monitor the progress of your deployed contract, you can use the links to Explorer assigned to each contract and verify the submitted deployment transaction.
 
-![explorer view](images/explorer-view.png){widtch}
+![explorer view](images/explorer-view.png)
 
 ![explorer](images/explorer.jpeg)
