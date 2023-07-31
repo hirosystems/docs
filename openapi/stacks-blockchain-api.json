@@ -16,7 +16,7 @@
   ],
   "info": {
     "title": "Stacks Blockchain API",
-    "version": "v7.2.2",
+    "version": "v7.3.0",
     "description": "Welcome to the API reference overview for the <a href=\"https://docs.hiro.so/get-started/stacks-blockchain-api\">Stacks Blockchain API</a>.\n\n<a href=\"https://hirosystems.github.io/stacks-blockchain-api/collection.json\" download=\"stacks-api-collection.json\">Download Postman collection</a>\n"
   },
   "tags": [
@@ -122,9 +122,9 @@
           "description": "A valid testnet STX address",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "ST3M7N9Q9HDRM7RVP1Q26P0EE69358PZZAZD7KMXQ"
+            "type": "string",
+            "example": "ST3M7N9Q9HDRM7RVP1Q26P0EE69358PZZAZD7KMXQ"
+          }
         },
         {
           "name": "stacking",
@@ -134,8 +134,7 @@
           "schema": {
             "type": "boolean",
             "default": false
-          },
-          "example": true
+          }
         }
       ],
       "post": {
@@ -218,9 +217,10 @@
           "description": "A valid testnet BTC address",
           "required": true,
           "schema": {
-            "type": "string"
-            }
+            "type": "string",
+            "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
           }
+        }
       ],
       "post": {
         "summary": "Add testnet BTC tokens to address",
@@ -237,12 +237,13 @@
                 "properties": {
                   "address": {
                     "description": "BTC testnet address",
-                    "type": "string",
-                    "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
+                    "type": "string"
                   }
+                },
+                "example": {
+                  "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
                 }
               }
-              
             }
           }
         },
@@ -255,7 +256,9 @@
                   "$ref": "#/paths/~1extended~1v1~1faucets~1stx/post/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1faucets~1stx/post/responses/200/content/application~1json/example"
+                  "success": true,
+                  "txId": "0xf2f0402f9f4c4d43b382690c4f7b97e24d5ff5dd5c619e3615daa64dca7ef4bc",
+                  "txRaw": "80800000000400164247d6f2b425ac5771423ae6c80c754f7172b0000000000000003200000000000000b400008537046ff1008368baaa3ff2235122c556b89dad4f9df0639b924cf32a44b866497e49846b24191e711b21faaae96ca0542e4a140168484740b94211cececb3303020000000000051ab52c45b1a7977204f17ac0b6f48306aea2dbb8e9000000000007a12046617563657400000000000000000000000000000000000000000000000000000000"
                 }
               }
             }
@@ -305,9 +308,9 @@
             "schema": {
               "type": "integer",
               "default": 96,
-              "maximum": 200
-            },
-            "example": 100
+              "maximum": 200,
+              "example": 100
+            }
           },
           {
             "name": "offset",
@@ -315,9 +318,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "type",
@@ -326,6 +329,7 @@
             "required": false,
             "schema": {
               "type": "array",
+              "example": "coinbase",
               "items": {
                 "type": "string",
                 "enum": [
@@ -336,8 +340,7 @@
                   "poison_microblock"
                 ]
               }
-            },
-            "example": "coinbase"
+            }
           },
           {
             "name": "unanchored",
@@ -346,9 +349,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           }
         ],
         "responses": {
@@ -468,9 +471,9 @@
             "description": "Filter to only return transactions with this sender address.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10"
+              "type": "string",
+              "example": "SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10"
+            }
           },
           {
             "name": "recipient_address",
@@ -498,9 +501,9 @@
             "schema": {
               "type": "integer",
               "default": 20,
-              "maximum": 50
-            },
-            "example": 20
+              "maximum": 50,
+              "example": 20
+            }
           },
           {
             "name": "offset",
@@ -508,9 +511,9 @@
             "description": "index of first mempool transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -519,9 +522,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           }
         ],
         "responses": {
@@ -819,8 +822,7 @@
               "type": "integer",
               "default": 96,
               "maximum": 200
-            },
-            "example": 100
+            }
           },
           {
             "name": "offset",
@@ -828,9 +830,9 @@
             "description": "index of first mempool transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -842,7 +844,135 @@
                   "$ref": "#/paths/~1extended~1v1~1tx~1mempool/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1tx~1mempool/get/responses/200/content/application~1json/example"
+                  "limit": 96,
+                  "offset": 0,
+                  "total": 5,
+                  "results": [
+                    {
+                      "tx_id": "0xb31df5a363dad31723324cb5e0eefa04d491519fd30827a521cbc830114aa50c",
+                      "tx_status": "pending",
+                      "tx_type": "token_transfer",
+                      "receipt_time": 1598288370,
+                      "receipt_time_iso": "2020-08-24T16:59:30.000Z",
+                      "fee_rate": "180",
+                      "sender_address": "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "token_transfer": {
+                        "recipient_address": "ST1GY25DM8RZV4X15X07THRZ2C5NMWPGQWKFGV87F",
+                        "amount": "500000",
+                        "memo": "0x46617563657400000000000000000000000000000000000000000000000000000000"
+                      }
+                    },
+                    {
+                      "tx_id": "0x5bed8e3f801cb4e2c74d2815a092f7c1c6a35f2fce4a80c80ca70848d34cb395",
+                      "tx_status": "pending",
+                      "tx_type": "token_transfer",
+                      "receipt_time": 1598282326,
+                      "receipt_time_iso": "2020-08-24T15:18:46.000Z",
+                      "fee_rate": "180",
+                      "sender_address": "ST1PS1KF93VBY5A1JV7TM66KN046KP3E3761DBSAG",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "token_transfer": {
+                        "recipient_address": "ST2H33S8SEY27QKEKQKR6S5PECYPKY45CQYGGQR8X",
+                        "amount": "1000",
+                        "memo": "0x00000000000000000000000000000000000000000000000000000000000000000000"
+                      }
+                    },
+                    {
+                      "tx_id": "0x9916036fde08a207e581cdcabc18ff55469861cb81194ab0e3e7c9a02cd5a17c",
+                      "tx_status": "pending",
+                      "tx_type": "smart_contract",
+                      "receipt_time": 1598258958,
+                      "receipt_time_iso": "2020-08-24T08:49:18.000Z",
+                      "fee_rate": "2000",
+                      "sender_address": "ST2R1XSFXYHCSFE426HP45TTD8ZWV9XHX2SRP3XA8",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "smart_contract": {
+                        "contract_id": "ST2R1XSFXYHCSFE426HP45TTD8ZWV9XHX2SRP3XA8.test-loans-1",
+                        "source_code": "(define-data-var stx-loaned int 0)\n(define-data-var lockup-period int 0)\n(define-data-var stx-return int 0)\n(define-public (get-stx-return (stx uint) (months uint))\n    (ok\n        (begin\n            (var-set stx-loaned (to-int(stx))\n            (var-set lockup-period (to-int(months))\n            (calculate-stx-return)\n            (print (var-get stx-return))\n            (transfer-to-server)\n        )\n    )\n)\n(define-private (calculate-stx-return)\n    (ok\n        (begin\n            (var-set stx-return (- (+ (* (/ (* (var-get stx-loaned) 5) 100) (var-get lockup-period)) (var-get stx-loaned)) 5))\n        )\n    )\n)\n(define-private (transfer-to-server)\n  (begin\n    (unwrap-panic (stx-transfer? (to-uint (var-get stx-loaned)) tx-sender 'ST2R1XSFXYHCSFE426HP45TTD8ZWV9XHX2SRP3XA8))\n    (ok (to-uint (var-get stx-loaned)))\n  )\n)"
+                      }
+                    },
+                    {
+                      "tx_id": "0x871fb186c8d6ac6ede2822c71074d9884b593c0d7f2d0d6e8516e615484d7501",
+                      "tx_status": "pending",
+                      "tx_type": "smart_contract",
+                      "receipt_time": 1598230365,
+                      "receipt_time_iso": "2020-08-24T00:52:45.000Z",
+                      "fee_rate": "2000",
+                      "sender_address": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "smart_contract": {
+                        "contract_id": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1.contract-hook-1598230358601",
+                        "source_code": ";; ## CUSTOM FUNCTION TO EXTRACT A SUBSTRING\n\n(define-read-only (subs (source (buff 10)) \n                        (start int) \n                        (end int))\n (begin\n  (unwrap-panic (if (and (<= 0 start) (<= start 10)) (ok 1) (err \"Out of bounds: start\")))\n  (unwrap-panic (if (and (<= 0 end) (<= end 10)) (ok 1) (err \"Out of bounds: end\")))\n  (let ((temp1 (fold subs1 source \n                  {start: start, end: end, cursor: 1, data: \"\"})))\n   (let ((data (get data temp1))) \n       data))))\n\n    \n;; Call the function to extract the substring between the bounds:\n\n;; (subs \"123456789\" 2 5)\n\n(define-read-only (subs1 \n                    (ch (buff 1))\n                    (acc {data: (buff 10), \n                          start: int,\n                          end: int,\n                          cursor: int})) \n  (let ((data (get data acc))\n        (start (get start acc))\n        (cursor (get cursor acc))\n        (end (get end acc)))                                     \n    (let ((temp2 \n           {cursor: (+ 1 cursor),\n            data: (default-to \"\"\n                     (as-max-len?\n                       (concat data \n                         (if (let ((temp3 start)\n                                   (temp4 cursor)\n                                   (temp5 end))\n                              (and (<= temp3 temp4)\n                               (<= temp4 temp5)))\n                           ch \n                           \"\"))\n                       u10))}))\n     {start: (get start acc),\n      end: (get end acc),\n      cursor: (get cursor temp2),\n      data: (get data temp2)})))\n"
+                      }
+                    },
+                    {
+                      "tx_id": "0x66df10d99d3a26018f521d60e9f744b083386c73e47ad39c394d570abee55f1f",
+                      "tx_status": "pending",
+                      "tx_type": "smart_contract",
+                      "receipt_time": 1598230066,
+                      "receipt_time_iso": "2020-08-24T00:47:46.000Z",
+                      "fee_rate": "2000",
+                      "sender_address": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "smart_contract": {
+                        "contract_id": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1.contract-hook-1598230054238",
+                        "source_code": "(define-read-only (subs1 \n                    (ch (buff 1))\n                    (acc {data: (buff 10), \n                          start: int,\n                          end: int,\n                          cursor: int}))\n (begin\n  (unwrap-panic (if (and (<= 1 (get start acc)) (<= (get start acc) 10)) (ok 1) (err \"Out of bounds: start\")))\n  (unwrap-panic (if (and (<= 1 (get end acc)) (<= (get end acc) 10)) (ok 1) (err \"Out of bounds: end\")))\n  (unwrap-panic (if (and (<= 1 (get cursor acc)) (<= (get cursor acc) 10)) (ok 1) (err \"Out of bounds: cursor\")))\n  (let ((data (get data acc))\n        (start (get start acc))\n        (cursor (get cursor acc))\n        (end (get end acc)))                                     \n    (let ((temp1 \n           {cursor: (+ 1 cursor),\n            data: (default-to \"\"\n                     (as-max-len?\n                       (concat data \n                         (if (let ((temp2 start)\n                                   (temp3 cursor)\n                                   (temp4 end))\n                              (and (<= temp2 temp3)\n                               (<= temp3 temp4)))\n                           ch \n                           \"\"))\n                       u10))}))\n     {start: (get start acc),\n      end: (get end acc),\n      cursor: (get cursor temp1),\n      data: (get data temp1)}))))\n"
+                      }
+                    },
+                    {
+                      "tx_id": "0x7402d8e52204d6c8cba7465e159e79750338c3ee31d4fe6ddef1d4d226304b65",
+                      "nonce": 1,
+                      "fee_rate": "227",
+                      "sender_address": "SP1HJDP35SSMYP98CG8SHMYHMZDK0A495ZCH6ARYS",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [
+                        {
+                          "type": "stx",
+                          "condition_code": "sent_equal_to",
+                          "amount": "88884500",
+                          "principal": {
+                            "type_id": "principal_standard",
+                            "address": "SP2J6HSSDYSTM71S0K0KK4YWRKX59JN1AD52M4B59"
+                          }
+                        }
+                      ],
+                      "anchor_mode": "any",
+                      "tx_status": "pending",
+                      "receipt_time": 1626286631,
+                      "receipt_time_iso": "2021-07-14T18:17:11.000Z",
+                      "tx_type": "contract_call",
+                      "contract_call": {
+                        "contract_id": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.send-many-memo",
+                        "function_name": "send-many",
+                        "function_signature": "(define-public (send-many (recipients (list 200 (tuple (memo (buff 34)) (to principal) (ustx uint))))))",
+                        "function_args": [
+                          {
+                            "hex": "0x0b000000010c00000003046d656d6f020000000e357a62597346716a52336d736b7102746f0516b734e97043840503dc1091661c105d32b7c5c75d047573747801000000000000000000000000054c4514",
+                            "repr": "(list (tuple (memo 0x357a62597346716a52336d736b71) (to SP2VK9TBG8E20A0YW228PC70GBMSBFHE7BNVMKB57) (ustx u88884500)))",
+                            "name": "recipients",
+                            "type": "(list 200 (tuple (memo (buff 34)) (to principal) (ustx uint)))"
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -1378,11 +1508,11 @@
           "required": true,
           "schema": {
             "type": "array",
+            "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0",
             "items": {
               "type": "string"
             }
-          },
-          "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
+          }
         },
         {
           "name": "event_offset",
@@ -1409,9 +1539,9 @@
           "required": false,
           "schema": {
             "type": "boolean",
+            "example": true,
             "default": false
-          },
-          "example": true
+          }
         }
       ],
       "get": {
@@ -1606,9 +1736,9 @@
           "description": "Hash of transaction",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
+            "type": "string",
+            "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
+          }
         },
         {
           "name": "event_offset",
@@ -1635,9 +1765,9 @@
           "required": false,
           "schema": {
             "type": "boolean",
+            "example": true,
             "default": false
-          },
-          "example": true
+          }
         }
       ],
       "get": {
@@ -2449,9 +2579,9 @@
           "description": "Hash of transaction",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
+            "type": "string",
+            "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
+          }
         }
       ],
       "get": {
@@ -2506,9 +2636,9 @@
             "application/octet-stream": {
               "schema": {
                 "type": "string",
-                "format": "binary"
-              },
-              "example": "binary format of 00000000010400bed38c2aadffa348931bcb542880ff79d607afec000000000000000000000000000000c800012b0b1fff6cccd0974966dcd665835838f0985be508e1322e09fb3d751eca132c492bda720f9ef1768d14fdabed6127560ba52d5e3ac470dcb60b784e97dc88c9030200000000000516df0ba3e79792be7be5e50a370289accfc8c9e032000000000000303974657374206d656d6f00000000000000000000000000000000000000000000000000"
+                "format": "binary",
+                "example": "binary format of 00000000010400bed38c2aadffa348931bcb542880ff79d607afec000000000000000000000000000000c800012b0b1fff6cccd0974966dcd665835838f0985be508e1322e09fb3d751eca132c492bda720f9ef1768d14fdabed6127560ba52d5e3ac470dcb60b784e97dc88c9030200000000000516df0ba3e79792be7be5e50a370289accfc8c9e032000000000000303974657374206d656d6f00000000000000000000000000000000000000000000000000"
+              }
             }
           }
         },
@@ -2592,9 +2722,9 @@
             "schema": {
               "type": "integer",
               "default": 20,
-              "maximum": 200
-            },
-            "example": 100
+              "maximum": 200,
+              "example": 100
+            }
           },
           {
             "name": "offset",
@@ -2602,9 +2732,9 @@
             "description": "Index of the first microblock to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -2742,9 +2872,9 @@
           "description": "Hash of the microblock",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "0x3bfcdf84b3012adb544cf0f6df4835f93418c2269a3881885e27b3d58eb82d47"
+            "type": "string",
+            "example": "0x3bfcdf84b3012adb544cf0f6df4835f93418c2269a3881885e27b3d58eb82d47"
+          }
         }
       ],
       "get": {
@@ -2919,8 +3049,7 @@
               "type": "integer",
               "default": 20,
               "maximum": 30
-            },
-            "example": 25
+            }
           },
           {
             "name": "offset",
@@ -2928,9 +3057,9 @@
             "description": "index of first block to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -3153,9 +3282,9 @@
           "description": "Hash of the block",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79"
+            "type": "string",
+            "example": "0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79"
+          }
         }
       ],
       "get": {
@@ -3364,9 +3493,9 @@
           "description": "Height of the block",
           "required": true,
           "schema": {
-            "type": "number"
-          },
-          "example": 10000
+            "type": "number",
+            "example": 10000
+          }
         }
       ],
       "get": {
@@ -3385,7 +3514,44 @@
                   "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/200/content/application~1json/example"
+                  "canonical": true,
+                  "height": 3275,
+                  "hash": "0xe77ba8cf6bb7c0e4f64adc83356289ed467d31a22354907b4bb814590058430f",
+                  "index_block_hash": "0x918697ef63f9d8bdf844c3312b299e72a231cde542f3173f7755bb8c1cdaf3a7",
+                  "parent_block_hash": "0x75ab21ef25cbff2caa14c27d830ed7886a4d1522e1b6f9e5dc3b59ccf73ed49f",
+                  "burn_block_time": 1594233639,
+                  "burn_block_time_iso": "2020-08-27T16:41:26.000Z",
+                  "burn_block_hash": "0xb154c008df2101023a6d0d54986b3964cee58119eed14f5bed98e15678e18fe2",
+                  "burn_block_height": 654439,
+                  "miner_txid": "0xd7d56070277ccd87b42acf0c91f915dd181f9db4cf878a4e95518bc397c240cc",
+                  "parent_microblock_hash": "0x590a1bb1d7bcbeafce0a9fc8f8a69e369486192d14687fe95fbe4dc1c71d49df",
+                  "parent_microblock_sequence": 2,
+                  "txs": [
+                    "0x4262db117659d1ca9406970c8f44ffd3d8f11f8e18c591d2e3960f4070107754",
+                    "0x383632cd3b5464dffb684082750fcfaddd1f52625bbb9f884ed8f45d2b1f0547",
+                    "0xc99fe597e44b8bd15a50eec660c6e679a7144a5a8553d214b9d5f1406d278c22"
+                  ],
+                  "microblocks_accepted": [
+                    "0xce0b1a4099d3fc7d5885cc7a3baa952b6d999f9709d0683b98b843597208231c",
+                    "0x4c0529b6448a5885991c5021bd869cc97f1692c128a98b382729dc962203c326",
+                    "0x64968846291dfea1015228a9d4bbd60aac81378cd6774b810b08e59e6b0e7494"
+                  ],
+                  "microblocks_streamed": [
+                    "0xb5650ef855f7d90fc146942e85cf9fac3a8c47ec408aca02f3cf9ed7c82f6cc6",
+                    "0xeeb9aa5741d84aa0bc5de4f2fbdeae57ae29694479475d45a67ae7bd7e2c98f3",
+                    "0x4f4c368d5f06fdf6065c5bafd9cb37391fddc9c279cfc57be35e4bf8ee932cbd",
+                    "0xde2fc8d99872c827f144c752c002d29f9315dfc09472a09572ac7447ae623dea"
+                  ],
+                  "execution_cost_read_count": 2477,
+                  "execution_cost_read_length": 1659409,
+                  "execution_cost_runtime": 2520952000,
+                  "execution_cost_write_count": 608,
+                  "execution_cost_write_length": 80170,
+                  "microblock_tx_count": {
+                    "0xce0b1a4099d3fc7d5885cc7a3baa952b6d999f9709d0683b98b843597208231c": 5,
+                    "0x4c0529b6448a5885991c5021bd869cc97f1692c128a98b382729dc962203c326": 6,
+                    "0x64968846291dfea1015228a9d4bbd60aac81378cd6774b810b08e59e6b0e7494": 9
+                  }
                 }
               }
             }
@@ -3395,7 +3561,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/404/content/application~1json/example"
+                  "error": "cannot find block by hash 0xabc123"
                 }
               }
             }
@@ -3411,9 +3577,9 @@
           "description": "Hash of the burnchain block",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "0x00000000000000000002bba732926cf68b6eda3e2cdbc2a85af79f10efeeeb10"
+            "type": "string",
+            "example": "0x00000000000000000002bba732926cf68b6eda3e2cdbc2a85af79f10efeeeb10"
+          }
         }
       ],
       "get": {
@@ -3432,7 +3598,44 @@
                   "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/200/content/application~1json/example"
+                  "canonical": true,
+                  "height": 3275,
+                  "hash": "0xe77ba8cf6bb7c0e4f64adc83356289ed467d31a22354907b4bb814590058430f",
+                  "index_block_hash": "0x918697ef63f9d8bdf844c3312b299e72a231cde542f3173f7755bb8c1cdaf3a7",
+                  "parent_block_hash": "0x75ab21ef25cbff2caa14c27d830ed7886a4d1522e1b6f9e5dc3b59ccf73ed49f",
+                  "burn_block_time": 1594233639,
+                  "burn_block_time_iso": "2020-08-27T16:41:26.000Z",
+                  "burn_block_hash": "0xb154c008df2101023a6d0d54986b3964cee58119eed14f5bed98e15678e18fe2",
+                  "burn_block_height": 654439,
+                  "miner_txid": "0xd7d56070277ccd87b42acf0c91f915dd181f9db4cf878a4e95518bc397c240cc",
+                  "parent_microblock_hash": "0x590a1bb1d7bcbeafce0a9fc8f8a69e369486192d14687fe95fbe4dc1c71d49df",
+                  "parent_microblock_sequence": 2,
+                  "txs": [
+                    "0x4262db117659d1ca9406970c8f44ffd3d8f11f8e18c591d2e3960f4070107754",
+                    "0x383632cd3b5464dffb684082750fcfaddd1f52625bbb9f884ed8f45d2b1f0547",
+                    "0xc99fe597e44b8bd15a50eec660c6e679a7144a5a8553d214b9d5f1406d278c22"
+                  ],
+                  "microblocks_accepted": [
+                    "0xce0b1a4099d3fc7d5885cc7a3baa952b6d999f9709d0683b98b843597208231c",
+                    "0x4c0529b6448a5885991c5021bd869cc97f1692c128a98b382729dc962203c326",
+                    "0x64968846291dfea1015228a9d4bbd60aac81378cd6774b810b08e59e6b0e7494"
+                  ],
+                  "microblocks_streamed": [
+                    "0xb5650ef855f7d90fc146942e85cf9fac3a8c47ec408aca02f3cf9ed7c82f6cc6",
+                    "0xeeb9aa5741d84aa0bc5de4f2fbdeae57ae29694479475d45a67ae7bd7e2c98f3",
+                    "0x4f4c368d5f06fdf6065c5bafd9cb37391fddc9c279cfc57be35e4bf8ee932cbd",
+                    "0xde2fc8d99872c827f144c752c002d29f9315dfc09472a09572ac7447ae623dea"
+                  ],
+                  "execution_cost_read_count": 2477,
+                  "execution_cost_read_length": 1659409,
+                  "execution_cost_runtime": 2520952000,
+                  "execution_cost_write_count": 608,
+                  "execution_cost_write_length": 80170,
+                  "microblock_tx_count": {
+                    "0xce0b1a4099d3fc7d5885cc7a3baa952b6d999f9709d0683b98b843597208231c": 5,
+                    "0x4c0529b6448a5885991c5021bd869cc97f1692c128a98b382729dc962203c326": 6,
+                    "0x64968846291dfea1015228a9d4bbd60aac81378cd6774b810b08e59e6b0e7494": 9
+                  }
                 }
               }
             }
@@ -3442,7 +3645,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/404/content/application~1json/example"
+                  "error": "cannot find block by hash 0xabc123"
                 }
               }
             }
@@ -3458,9 +3661,9 @@
           "description": "Height of the burn chain block",
           "required": true,
           "schema": {
-            "type": "number"
-          },
-          "example": 744603
+            "type": "number",
+            "example": 744603
+          }
         }
       ],
       "get": {
@@ -3479,7 +3682,44 @@
                   "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/200/content/application~1json/example"
+                  "canonical": true,
+                  "height": 3275,
+                  "hash": "0xe77ba8cf6bb7c0e4f64adc83356289ed467d31a22354907b4bb814590058430f",
+                  "index_block_hash": "0x918697ef63f9d8bdf844c3312b299e72a231cde542f3173f7755bb8c1cdaf3a7",
+                  "parent_block_hash": "0x75ab21ef25cbff2caa14c27d830ed7886a4d1522e1b6f9e5dc3b59ccf73ed49f",
+                  "burn_block_time": 1594233639,
+                  "burn_block_time_iso": "2020-08-27T16:41:26.000Z",
+                  "burn_block_hash": "0xb154c008df2101023a6d0d54986b3964cee58119eed14f5bed98e15678e18fe2",
+                  "burn_block_height": 654439,
+                  "miner_txid": "0xd7d56070277ccd87b42acf0c91f915dd181f9db4cf878a4e95518bc397c240cc",
+                  "parent_microblock_hash": "0x590a1bb1d7bcbeafce0a9fc8f8a69e369486192d14687fe95fbe4dc1c71d49df",
+                  "parent_microblock_sequence": 2,
+                  "txs": [
+                    "0x4262db117659d1ca9406970c8f44ffd3d8f11f8e18c591d2e3960f4070107754",
+                    "0x383632cd3b5464dffb684082750fcfaddd1f52625bbb9f884ed8f45d2b1f0547",
+                    "0xc99fe597e44b8bd15a50eec660c6e679a7144a5a8553d214b9d5f1406d278c22"
+                  ],
+                  "microblocks_accepted": [
+                    "0xce0b1a4099d3fc7d5885cc7a3baa952b6d999f9709d0683b98b843597208231c",
+                    "0x4c0529b6448a5885991c5021bd869cc97f1692c128a98b382729dc962203c326",
+                    "0x64968846291dfea1015228a9d4bbd60aac81378cd6774b810b08e59e6b0e7494"
+                  ],
+                  "microblocks_streamed": [
+                    "0xb5650ef855f7d90fc146942e85cf9fac3a8c47ec408aca02f3cf9ed7c82f6cc6",
+                    "0xeeb9aa5741d84aa0bc5de4f2fbdeae57ae29694479475d45a67ae7bd7e2c98f3",
+                    "0x4f4c368d5f06fdf6065c5bafd9cb37391fddc9c279cfc57be35e4bf8ee932cbd",
+                    "0xde2fc8d99872c827f144c752c002d29f9315dfc09472a09572ac7447ae623dea"
+                  ],
+                  "execution_cost_read_count": 2477,
+                  "execution_cost_read_length": 1659409,
+                  "execution_cost_runtime": 2520952000,
+                  "execution_cost_write_count": 608,
+                  "execution_cost_write_length": 80170,
+                  "microblock_tx_count": {
+                    "0xce0b1a4099d3fc7d5885cc7a3baa952b6d999f9709d0683b98b843597208231c": 5,
+                    "0x4c0529b6448a5885991c5021bd869cc97f1692c128a98b382729dc962203c326": 6,
+                    "0x64968846291dfea1015228a9d4bbd60aac81378cd6774b810b08e59e6b0e7494": 9
+                  }
                 }
               }
             }
@@ -3489,7 +3729,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1block~1%7Bhash%7D/get/responses/404/content/application~1json/example"
+                  "error": "cannot find block by hash 0xabc123"
                 }
               }
             }
@@ -3515,8 +3755,7 @@
               "type": "integer",
               "default": 96,
               "maximum": 250
-            },
-            "example": 200
+            }
           },
           {
             "name": "offset",
@@ -3524,9 +3763,9 @@
             "description": "index of the first items to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -3642,9 +3881,9 @@
             "description": "Reward slot holder recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+              "type": "string",
+              "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+            }
           },
           {
             "name": "limit",
@@ -3661,9 +3900,9 @@
             "description": "index of the first items to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -3675,7 +3914,25 @@
                   "$ref": "#/paths/~1extended~1v1~1burnchain~1reward_slot_holders/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1burnchain~1reward_slot_holders/get/responses/200/content/application~1json/example"
+                  "limit": 20,
+                  "offset": 0,
+                  "total": 2,
+                  "results": [
+                    {
+                      "canonical": true,
+                      "burn_block_hash": "0x4eaabcd105865e471f697eff5dd5bd85d47ecb5a26a3379d74fae0ae87c40904",
+                      "burn_block_height": 331,
+                      "address": "1C56LYirKa3PFXFsvhSESgDy2acEHVAEt6",
+                      "slot_index": 0
+                    },
+                    {
+                      "canonical": true,
+                      "burn_block_hash": "0x4eaabcd105865e471f697eff5dd5bd85d47ecb5a26a3379d74fae0ae87c40904",
+                      "burn_block_height": 331,
+                      "address": "1M3bvWB9CRh5BTumeVxtHDEV6W4S2R9AZw",
+                      "slot_index": 0
+                    }
+                  ]
                 }
               }
             }
@@ -3701,8 +3958,7 @@
               "type": "integer",
               "default": 96,
               "maximum": 250
-            },
-            "example": 200
+            }
           },
           {
             "name": "offset",
@@ -3710,9 +3966,9 @@
             "description": "index of first rewards to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -3836,9 +4092,9 @@
             "description": "Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+              "type": "string",
+              "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+            }
           },
           {
             "name": "limit",
@@ -3854,10 +4110,10 @@
             "in": "query",
             "description": "index of first rewards to fetch",
             "required": false,
-            "schema": {              
-            },
-            "type": "integer"
-
+            "schema": {
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -3869,7 +4125,28 @@
                   "$ref": "#/paths/~1extended~1v1~1burnchain~1rewards/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1burnchain~1rewards/get/responses/200/content/application~1json/example"
+                  "limit": 20,
+                  "offset": 0,
+                  "results": [
+                    {
+                      "canonical": true,
+                      "burn_block_hash": "0x4eaabcd105865e471f697eff5dd5bd85d47ecb5a26a3379d74fae0ae87c40904",
+                      "burn_block_height": 331,
+                      "burn_amount": "12000",
+                      "reward_recipient": "1C56LYirKa3PFXFsvhSESgDy2acEHVAEt6",
+                      "reward_amount": "5000",
+                      "reward_index": 0
+                    },
+                    {
+                      "canonical": true,
+                      "burn_block_hash": "0x4eaabcd105865e471f697eff5dd5bd85d47ecb5a26a3379d74fae0ae87c40904",
+                      "burn_block_height": 336,
+                      "burn_amount": "14000",
+                      "reward_recipient": "1M3bvWB9CRh5BTumeVxtHDEV6W4S2R9AZw",
+                      "reward_amount": "2000",
+                      "reward_index": 0
+                    }
+                  ]
                 }
               }
             }
@@ -3892,9 +4169,9 @@
             "description": "Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+              "type": "string",
+              "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+            }
           }
         ],
         "responses": {
@@ -4002,9 +4279,9 @@
           "description": "Contract identifier formatted as `<contract_address>.<contract_name>`",
           "required": true,
           "schema": {
-            "type": "string"
-          },
-          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
+            "type": "string",
+            "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
+          }
         },
         {
           "name": "unanchored",
@@ -4013,9 +4290,9 @@
           "required": false,
           "schema": {
             "type": "boolean",
+            "example": true,
             "default": false
-          },
-          "example": true
+          }
         }
       ]
     },
@@ -4133,10 +4410,10 @@
             "in": "query",
             "description": "index of first contract event to fetch",
             "required": false,
+            "example": 42000,
             "schema": {
               "type": "integer"
-            },
-            "example": 42000
+            }
           }
         ]
       }
@@ -4156,9 +4433,9 @@
             "description": "Contract identifier formatted as `<contract_address>.<contract_name>`",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
+              "type": "string",
+              "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
+            }
           },
           {
             "name": "limit",
@@ -4175,9 +4452,9 @@
             "description": "index of first contract event to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -4186,9 +4463,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           }
         ],
         "responses": {
@@ -4748,10 +5025,10 @@
           "in": "path",
           "required": true,
           "description": "Stacks address",
+          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C",
           "schema": {
             "type": "string"
-          },
-          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C"
+          }
         },
         {
           "name": "contract_name",
@@ -4759,9 +5036,9 @@
           "required": true,
           "description": "Contract name",
           "schema": {
-            "type": "string"
-          },
-          "example": "satoshibles"
+            "type": "string",
+            "example": "satoshibles"
+          }
         },
         {
           "name": "tip",
@@ -4823,9 +5100,9 @@
             "required": true,
             "description": "Stacks address",
             "schema": {
-              "type": "string"
-            },
-            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"
+              "type": "string",
+              "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"
+            }
           },
           {
             "name": "contract_name",
@@ -4833,9 +5110,9 @@
             "required": true,
             "description": "Contract name",
             "schema": {
-              "type": "string"
-            },
-            "example": "newyorkcitycoin-core-v2"
+              "type": "string",
+              "example": "newyorkcitycoin-core-v2"
+            }
           },
           {
             "name": "map_name",
@@ -4843,9 +5120,9 @@
             "required": true,
             "description": "Map name",
             "schema": {
-              "type": "string"
-            },
-            "example": "approved-contracts"
+              "type": "string",
+              "example": "approved-contracts"
+            }
           },
           {
             "name": "proof",
@@ -4931,9 +5208,9 @@
           "required": true,
           "description": "Stacks address",
           "schema": {
-            "type": "string"
-          },
-          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C"
+            "type": "string",
+            "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C"
+          }
         },
         {
           "name": "contract_name",
@@ -4941,9 +5218,9 @@
           "required": true,
           "description": "Contract name",
           "schema": {
-            "type": "string"
-          },
-          "example": "satoshibles"
+            "type": "string",
+            "example": "satoshibles"
+          }
         },
         {
           "name": "proof",
@@ -5022,9 +5299,9 @@
             "required": true,
             "description": "Stacks address",
             "schema": {
-              "type": "string"
-            },
-            "example": "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"
+              "type": "string",
+              "example": "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"
+            }
           },
           {
             "name": "contract_name",
@@ -5032,9 +5309,9 @@
             "required": true,
             "description": "Contract name",
             "schema": {
-              "type": "string"
-            },
-            "example": "imaginary-friends-zebras"
+              "type": "string",
+              "example": "imaginary-friends-zebras"
+            }
           },
           {
             "name": "function_name",
@@ -5042,9 +5319,9 @@
             "required": true,
             "description": "Function name",
             "schema": {
-              "type": "string"
-            },
-            "example": "get-token-uri"
+              "type": "string",
+              "example": "get-token-uri"
+            }
           },
           {
             "name": "tip",
@@ -5110,9 +5387,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "unanchored",
@@ -5121,9 +5398,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -5131,9 +5408,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -5342,9 +5619,9 @@
             "description": "Stacks address or a Contract identifier.",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "unanchored",
@@ -5353,9 +5630,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -5363,9 +5640,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -5423,9 +5700,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "limit",
@@ -5433,9 +5710,9 @@
             "description": "max number of account transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "offset",
@@ -5443,9 +5720,9 @@
             "description": "index of first account transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "height",
@@ -5453,9 +5730,9 @@
             "description": "Filter for transactions only at this given block height",
             "required": false,
             "schema": {
-              "type": "number"
-            },
-            "example": 42000
+              "type": "number",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -5464,9 +5741,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -5474,9 +5751,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -5571,9 +5848,9 @@
             "description": "Stacks address or a contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
+              "type": "string",
+              "example": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
+            }
           },
           {
             "name": "tx_id",
@@ -5581,9 +5858,9 @@
             "description": "Transaction id",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "0x34d79c7cfc2fe525438736733e501a4bf0308a5556e3e080d1e2c0858aad7448"
+              "type": "string",
+              "example": "0x34d79c7cfc2fe525438736733e501a4bf0308a5556e3e080d1e2c0858aad7448"
+            }
           }
         ],
         "responses": {
@@ -5792,9 +6069,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "limit",
@@ -5802,9 +6079,9 @@
             "description": "max number of account transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 20
+              "type": "integer",
+              "example": 20
+            }
           },
           {
             "name": "offset",
@@ -5812,9 +6089,9 @@
             "description": "index of first account transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 10
+              "type": "integer",
+              "example": 10
+            }
           },
           {
             "name": "height",
@@ -5822,9 +6099,9 @@
             "description": "Filter for transactions only at this given block height",
             "required": false,
             "schema": {
-              "type": "number"
-            },
-            "example": 66119
+              "type": "number",
+              "example": 66119
+            }
           },
           {
             "name": "unanchored",
@@ -5833,9 +6110,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -5843,9 +6120,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -6157,9 +6434,9 @@
             "description": "Stacks address",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "block_height",
@@ -6167,9 +6444,9 @@
             "description": "Optionally get the nonce at a given block height.",
             "required": false,
             "schema": {
-              "type": "number"
-            },
-            "example": 66119
+              "type": "number",
+              "example": 66119
+            }
           },
           {
             "name": "block_hash",
@@ -6177,9 +6454,9 @@
             "description": "Optionally get the nonce at a given block hash. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": "0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"
+              "type": "string",
+              "example": "0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"
+            }
           }
         ],
         "responses": {
@@ -6260,9 +6537,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "limit",
@@ -6270,9 +6547,9 @@
             "description": "max number of account assets to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 20
+              "type": "integer",
+              "example": 20
+            }
           },
           {
             "name": "offset",
@@ -6280,9 +6557,9 @@
             "description": "index of first account assets to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -6291,9 +6568,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -6301,9 +6578,9 @@
             "description": "returned data representing the state at that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -6398,9 +6675,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "limit",
@@ -6417,9 +6694,9 @@
             "description": "number of items to skip",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "height",
@@ -6437,9 +6714,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -6447,9 +6724,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -6572,9 +6849,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "limit",
@@ -6591,9 +6868,9 @@
             "description": "number of items to skip",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -6602,9 +6879,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "until_block",
@@ -6612,9 +6889,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": 60000
+              "type": "string",
+              "example": 60000
+            }
           }
         ],
         "responses": {
@@ -6743,9 +7020,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+              "type": "string",
+              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+            }
           },
           {
             "name": "proof",
@@ -7120,9 +7397,9 @@
               "enum": [
                 "testnet",
                 "mainnet"
-              ]
+              ],
+              "example": "mainnet"
             },
-            "example": "mainnet",
             "description": "the target block time for a given network (testnet, mainnet)."
           }
         ],
@@ -7157,9 +7434,9 @@
             "name": "height",
             "required": false,
             "schema": {
-              "type": "number"
+              "type": "number",
+              "example": 200
             },
-            "example": 200,
             "description": "Supply details are queried from specified block height. If the block height is not specified, the latest block height is taken as default value. Note that the `block height` is referred to the stacks blockchain."
           }
         ],
@@ -7274,9 +7551,9 @@
             "name": "height",
             "required": false,
             "schema": {
-              "type": "number"
+              "type": "number",
+              "example": 200
             },
-            "example": 200,
             "description": "Supply details are queried from specified block height. If the block height is not specified, the latest block height is taken as default value."
           }
         ],
@@ -7450,9 +7727,9 @@
             "name": "id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"
             },
-            "example": "0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d",
             "description": "The hex hash string for a block or transaction, account address, or contract address"
           },
           {
@@ -8399,9 +8676,15 @@
                   }
                 }
               },
-              "example": {
-                "$ref": "#/paths/~1rosetta~1v1~1network~1options/post/requestBody/content/application~1json/example"
-              }
+              "example": [
+                {
+                  "network_identifier": {
+                    "blockchain": "stacks",
+                    "network": "mainnet"
+                  },
+                  "metadata": {}
+                }
+              ]
             }
           }
         }
@@ -8989,9 +9272,15 @@
                   }
                 }
               },
-              "example": {
-                "$ref": "#/paths/~1rosetta~1v1~1network~1options/post/requestBody/content/application~1json/example"
-              }
+              "example": [
+                {
+                  "network_identifier": {
+                    "blockchain": "stacks",
+                    "network": "mainnet"
+                  },
+                  "metadata": {}
+                }
+              ]
             }
           }
         }
@@ -10214,9 +10503,9 @@
             "description": "the name to query price information for",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "muneeb.id"
+              "type": "string",
+              "example": "muneeb.id"
+            }
           }
         ],
         "responses": {
@@ -10309,9 +10598,9 @@
             "description": "the namespace to fetch names from.",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "id"
+              "type": "string",
+              "example": "id"
+            }
           },
           {
             "name": "page",
@@ -10319,9 +10608,9 @@
             "description": "namespace values are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 22
+              "type": "integer",
+              "example": 22
+            }
           }
         ],
         "responses": {
@@ -10401,9 +10690,9 @@
             "description": "names are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 22
+              "type": "integer",
+              "example": 22
+            }
           }
         ],
         "responses": {
@@ -10439,7 +10728,7 @@
                   "$ref": "#/paths/~1v1~1namespaces~1%7Btld%7D~1names/get/responses/400/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1v1~1namespaces~1%7Btld%7D~1names/get/responses/400/content/application~1json/example"
+                  "error": "Invalid page"
                 }
               }
             }
@@ -10462,9 +10751,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "muneeb.id"
+              "type": "string",
+              "example": "muneeb.id"
+            }
           }
         ],
         "responses": {
@@ -10577,9 +10866,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "id.blockstack"
+              "type": "string",
+              "example": "id.blockstack"
+            }
           }
         ],
         "responses": {
@@ -10624,9 +10913,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "bar.test"
+              "type": "string",
+              "example": "bar.test"
+            }
           }
         ],
         "responses": {
@@ -10674,7 +10963,7 @@
                   "$ref": "#/paths/~1v1~1namespaces~1%7Btld%7D~1names/get/responses/400/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1v1~1names~1%7Bname%7D/get/responses/400/content/application~1json/example"
+                  "error": "Invalid name or subdomain"
                 }
               }
             }
@@ -10710,9 +10999,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "muneeb.id"
+              "type": "string",
+              "example": "muneeb.id"
+            }
           },
           {
             "name": "zoneFileHash",
@@ -10720,9 +11009,9 @@
             "description": "zone file hash",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "b100a68235244b012854a95f9114695679002af9"
+              "type": "string",
+              "example": "b100a68235244b012854a95f9114695679002af9"
+            }
           }
         ],
         "responses": {
@@ -10787,7 +11076,7 @@
                   "$ref": "#/paths/~1v1~1namespaces~1%7Btld%7D~1names/get/responses/400/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1v1~1names~1%7Bname%7D/get/responses/400/content/application~1json/example"
+                  "error": "Invalid name or subdomain"
                 }
               }
             }
@@ -10800,7 +11089,7 @@
                   "$ref": "#/paths/~1v1~1namespaces~1%7Btld%7D~1names/get/responses/400/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1v1~1names~1%7Bname%7D~1zonefile/get/responses/404/content/application~1json/example"
+                  "error": "No zone file for name"
                 }
               }
             }
@@ -10823,9 +11112,9 @@
             "description": "the layer-1 blockchain for the address",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "bitcoin"
+              "type": "string",
+              "example": "bitcoin"
+            }
           },
           {
             "name": "address",
@@ -10833,9 +11122,9 @@
             "description": "the address to lookup",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "1QJQxDas5JhdiXhEbNS14iNjr8auFT96GP"
+              "type": "string",
+              "example": "1QJQxDas5JhdiXhEbNS14iNjr8auFT96GP"
+            }
           }
         ],
         "responses": {
@@ -10900,9 +11189,9 @@
             "description": "Hash of block",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "0x0a83d82a65460a9e711f85a44616350280040b75317dbe486a923c1131b5ff99"
+              "type": "string",
+              "example": "0x0a83d82a65460a9e711f85a44616350280040b75317dbe486a923c1131b5ff99"
+            }
           },
           {
             "name": "limit",
@@ -10910,9 +11199,9 @@
             "description": "max number of transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 10
+              "type": "integer",
+              "example": 10
+            }
           },
           {
             "name": "offset",
@@ -10920,9 +11209,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -10934,7 +11223,43 @@
                   "$ref": "#/paths/~1extended~1v1~1tx/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1tx/get/responses/200/content/application~1json/example"
+                  "limit": 10,
+                  "offset": 0,
+                  "total": 101922,
+                  "results": [
+                    {
+                      "tx_id": "0x20dedbef812e44d712569224411b27324b68ab4667321a4badd5e81ba76bf0eb",
+                      "nonce": 269,
+                      "fee_rate": "0",
+                      "sender_address": "SPQXK10DBF5ECAM30XVE3EJA8DNZF3VE0BK4MKV",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "on_chain_only",
+                      "is_unanchored": false,
+                      "block_hash": "0x28a9e2749b82bdc058776781a5abd5c9a6efed38f05545a8a51152655b8e1f4b",
+                      "parent_block_hash": "0x3789b75ccfe7f2acf85c3f069fd5b8f95f73aba5332fa618243957d1c017a2a3",
+                      "block_height": 21709,
+                      "burn_block_time": 1626286436,
+                      "burn_block_time_iso": "2021-07-14T18:13:56.000Z",
+                      "canonical": true,
+                      "tx_index": 0,
+                      "tx_status": "success",
+                      "tx_result": {
+                        "hex": "0x0703",
+                        "repr": "(ok true)"
+                      },
+                      "microblock_hash": "",
+                      "microblock_sequence": 2147483647,
+                      "microblock_canonical": true,
+                      "event_count": 0,
+                      "events": [],
+                      "tx_type": "coinbase",
+                      "coinbase_payload": {
+                        "data": "0x0000000000000000000000000000000000000000000000000000000000000000"
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -10957,9 +11282,9 @@
             "description": "Height of block",
             "required": true,
             "schema": {
-              "type": "integer"
-            },
-            "example": 66119
+              "type": "integer",
+              "example": 66119
+            }
           },
           {
             "name": "limit",
@@ -10967,9 +11292,9 @@
             "description": "max number of transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 10
+              "type": "integer",
+              "example": 10
+            }
           },
           {
             "name": "offset",
@@ -10977,9 +11302,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -10988,9 +11313,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           }
         ],
         "responses": {
@@ -11002,7 +11327,43 @@
                   "$ref": "#/paths/~1extended~1v1~1tx/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1tx/get/responses/200/content/application~1json/example"
+                  "limit": 10,
+                  "offset": 0,
+                  "total": 101922,
+                  "results": [
+                    {
+                      "tx_id": "0x20dedbef812e44d712569224411b27324b68ab4667321a4badd5e81ba76bf0eb",
+                      "nonce": 269,
+                      "fee_rate": "0",
+                      "sender_address": "SPQXK10DBF5ECAM30XVE3EJA8DNZF3VE0BK4MKV",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "on_chain_only",
+                      "is_unanchored": false,
+                      "block_hash": "0x28a9e2749b82bdc058776781a5abd5c9a6efed38f05545a8a51152655b8e1f4b",
+                      "parent_block_hash": "0x3789b75ccfe7f2acf85c3f069fd5b8f95f73aba5332fa618243957d1c017a2a3",
+                      "block_height": 21709,
+                      "burn_block_time": 1626286436,
+                      "burn_block_time_iso": "2021-07-14T18:13:56.000Z",
+                      "canonical": true,
+                      "tx_index": 0,
+                      "tx_status": "success",
+                      "tx_result": {
+                        "hex": "0x0703",
+                        "repr": "(ok true)"
+                      },
+                      "microblock_hash": "",
+                      "microblock_sequence": 2147483647,
+                      "microblock_canonical": true,
+                      "event_count": 0,
+                      "events": [],
+                      "tx_type": "coinbase",
+                      "coinbase_payload": {
+                        "data": "0x0000000000000000000000000000000000000000000000000000000000000000"
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -11025,9 +11386,9 @@
             "description": "Transactions for the address",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9"
+              "type": "string",
+              "example": "SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9"
+            }
           },
           {
             "name": "limit",
@@ -11035,9 +11396,9 @@
             "description": "max number of transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 90
+              "type": "integer",
+              "example": 90
+            }
           },
           {
             "name": "offset",
@@ -11045,9 +11406,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -11056,9 +11417,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           }
         ],
         "responses": {
@@ -11070,7 +11431,135 @@
                   "$ref": "#/paths/~1extended~1v1~1tx~1mempool/get/responses/200/content/application~1json/schema"
                 },
                 "example": {
-                  "$ref": "#/paths/~1extended~1v1~1tx~1mempool/get/responses/200/content/application~1json/example"
+                  "limit": 96,
+                  "offset": 0,
+                  "total": 5,
+                  "results": [
+                    {
+                      "tx_id": "0xb31df5a363dad31723324cb5e0eefa04d491519fd30827a521cbc830114aa50c",
+                      "tx_status": "pending",
+                      "tx_type": "token_transfer",
+                      "receipt_time": 1598288370,
+                      "receipt_time_iso": "2020-08-24T16:59:30.000Z",
+                      "fee_rate": "180",
+                      "sender_address": "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "token_transfer": {
+                        "recipient_address": "ST1GY25DM8RZV4X15X07THRZ2C5NMWPGQWKFGV87F",
+                        "amount": "500000",
+                        "memo": "0x46617563657400000000000000000000000000000000000000000000000000000000"
+                      }
+                    },
+                    {
+                      "tx_id": "0x5bed8e3f801cb4e2c74d2815a092f7c1c6a35f2fce4a80c80ca70848d34cb395",
+                      "tx_status": "pending",
+                      "tx_type": "token_transfer",
+                      "receipt_time": 1598282326,
+                      "receipt_time_iso": "2020-08-24T15:18:46.000Z",
+                      "fee_rate": "180",
+                      "sender_address": "ST1PS1KF93VBY5A1JV7TM66KN046KP3E3761DBSAG",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "token_transfer": {
+                        "recipient_address": "ST2H33S8SEY27QKEKQKR6S5PECYPKY45CQYGGQR8X",
+                        "amount": "1000",
+                        "memo": "0x00000000000000000000000000000000000000000000000000000000000000000000"
+                      }
+                    },
+                    {
+                      "tx_id": "0x9916036fde08a207e581cdcabc18ff55469861cb81194ab0e3e7c9a02cd5a17c",
+                      "tx_status": "pending",
+                      "tx_type": "smart_contract",
+                      "receipt_time": 1598258958,
+                      "receipt_time_iso": "2020-08-24T08:49:18.000Z",
+                      "fee_rate": "2000",
+                      "sender_address": "ST2R1XSFXYHCSFE426HP45TTD8ZWV9XHX2SRP3XA8",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "smart_contract": {
+                        "contract_id": "ST2R1XSFXYHCSFE426HP45TTD8ZWV9XHX2SRP3XA8.test-loans-1",
+                        "source_code": "(define-data-var stx-loaned int 0)\n(define-data-var lockup-period int 0)\n(define-data-var stx-return int 0)\n(define-public (get-stx-return (stx uint) (months uint))\n    (ok\n        (begin\n            (var-set stx-loaned (to-int(stx))\n            (var-set lockup-period (to-int(months))\n            (calculate-stx-return)\n            (print (var-get stx-return))\n            (transfer-to-server)\n        )\n    )\n)\n(define-private (calculate-stx-return)\n    (ok\n        (begin\n            (var-set stx-return (- (+ (* (/ (* (var-get stx-loaned) 5) 100) (var-get lockup-period)) (var-get stx-loaned)) 5))\n        )\n    )\n)\n(define-private (transfer-to-server)\n  (begin\n    (unwrap-panic (stx-transfer? (to-uint (var-get stx-loaned)) tx-sender 'ST2R1XSFXYHCSFE426HP45TTD8ZWV9XHX2SRP3XA8))\n    (ok (to-uint (var-get stx-loaned)))\n  )\n)"
+                      }
+                    },
+                    {
+                      "tx_id": "0x871fb186c8d6ac6ede2822c71074d9884b593c0d7f2d0d6e8516e615484d7501",
+                      "tx_status": "pending",
+                      "tx_type": "smart_contract",
+                      "receipt_time": 1598230365,
+                      "receipt_time_iso": "2020-08-24T00:52:45.000Z",
+                      "fee_rate": "2000",
+                      "sender_address": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "smart_contract": {
+                        "contract_id": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1.contract-hook-1598230358601",
+                        "source_code": ";; ## CUSTOM FUNCTION TO EXTRACT A SUBSTRING\n\n(define-read-only (subs (source (buff 10)) \n                        (start int) \n                        (end int))\n (begin\n  (unwrap-panic (if (and (<= 0 start) (<= start 10)) (ok 1) (err \"Out of bounds: start\")))\n  (unwrap-panic (if (and (<= 0 end) (<= end 10)) (ok 1) (err \"Out of bounds: end\")))\n  (let ((temp1 (fold subs1 source \n                  {start: start, end: end, cursor: 1, data: \"\"})))\n   (let ((data (get data temp1))) \n       data))))\n\n    \n;; Call the function to extract the substring between the bounds:\n\n;; (subs \"123456789\" 2 5)\n\n(define-read-only (subs1 \n                    (ch (buff 1))\n                    (acc {data: (buff 10), \n                          start: int,\n                          end: int,\n                          cursor: int})) \n  (let ((data (get data acc))\n        (start (get start acc))\n        (cursor (get cursor acc))\n        (end (get end acc)))                                     \n    (let ((temp2 \n           {cursor: (+ 1 cursor),\n            data: (default-to \"\"\n                     (as-max-len?\n                       (concat data \n                         (if (let ((temp3 start)\n                                   (temp4 cursor)\n                                   (temp5 end))\n                              (and (<= temp3 temp4)\n                               (<= temp4 temp5)))\n                           ch \n                           \"\"))\n                       u10))}))\n     {start: (get start acc),\n      end: (get end acc),\n      cursor: (get cursor temp2),\n      data: (get data temp2)})))\n"
+                      }
+                    },
+                    {
+                      "tx_id": "0x66df10d99d3a26018f521d60e9f744b083386c73e47ad39c394d570abee55f1f",
+                      "tx_status": "pending",
+                      "tx_type": "smart_contract",
+                      "receipt_time": 1598230066,
+                      "receipt_time_iso": "2020-08-24T00:47:46.000Z",
+                      "fee_rate": "2000",
+                      "sender_address": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [],
+                      "anchor_mode": "any",
+                      "smart_contract": {
+                        "contract_id": "ST1FJGMWPGM1P7N0K3N9QEPZK5H1VDC5YWTVMEAZ1.contract-hook-1598230054238",
+                        "source_code": "(define-read-only (subs1 \n                    (ch (buff 1))\n                    (acc {data: (buff 10), \n                          start: int,\n                          end: int,\n                          cursor: int}))\n (begin\n  (unwrap-panic (if (and (<= 1 (get start acc)) (<= (get start acc) 10)) (ok 1) (err \"Out of bounds: start\")))\n  (unwrap-panic (if (and (<= 1 (get end acc)) (<= (get end acc) 10)) (ok 1) (err \"Out of bounds: end\")))\n  (unwrap-panic (if (and (<= 1 (get cursor acc)) (<= (get cursor acc) 10)) (ok 1) (err \"Out of bounds: cursor\")))\n  (let ((data (get data acc))\n        (start (get start acc))\n        (cursor (get cursor acc))\n        (end (get end acc)))                                     \n    (let ((temp1 \n           {cursor: (+ 1 cursor),\n            data: (default-to \"\"\n                     (as-max-len?\n                       (concat data \n                         (if (let ((temp2 start)\n                                   (temp3 cursor)\n                                   (temp4 end))\n                              (and (<= temp2 temp3)\n                               (<= temp3 temp4)))\n                           ch \n                           \"\"))\n                       u10))}))\n     {start: (get start acc),\n      end: (get end acc),\n      cursor: (get cursor temp1),\n      data: (get data temp1)}))))\n"
+                      }
+                    },
+                    {
+                      "tx_id": "0x7402d8e52204d6c8cba7465e159e79750338c3ee31d4fe6ddef1d4d226304b65",
+                      "nonce": 1,
+                      "fee_rate": "227",
+                      "sender_address": "SP1HJDP35SSMYP98CG8SHMYHMZDK0A495ZCH6ARYS",
+                      "sponsored": false,
+                      "post_condition_mode": "deny",
+                      "post_conditions": [
+                        {
+                          "type": "stx",
+                          "condition_code": "sent_equal_to",
+                          "amount": "88884500",
+                          "principal": {
+                            "type_id": "principal_standard",
+                            "address": "SP2J6HSSDYSTM71S0K0KK4YWRKX59JN1AD52M4B59"
+                          }
+                        }
+                      ],
+                      "anchor_mode": "any",
+                      "tx_status": "pending",
+                      "receipt_time": 1626286631,
+                      "receipt_time_iso": "2021-07-14T18:17:11.000Z",
+                      "tx_type": "contract_call",
+                      "contract_call": {
+                        "contract_id": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.send-many-memo",
+                        "function_name": "send-many",
+                        "function_signature": "(define-public (send-many (recipients (list 200 (tuple (memo (buff 34)) (to principal) (ustx uint))))))",
+                        "function_args": [
+                          {
+                            "hex": "0x0b000000010c00000003046d656d6f020000000e357a62597346716a52336d736b7102746f0516b734e97043840503dc1091661c105d32b7c5c75d047573747801000000000000000000000000054c4514",
+                            "repr": "(list (tuple (memo 0x357a62597346716a52336d736b71) (to SP2VK9TBG8E20A0YW228PC70GBMSBFHE7BNVMKB57) (ustx u88884500)))",
+                            "name": "recipients",
+                            "type": "(list 200 (tuple (memo (buff 34)) (to principal) (ustx uint)))"
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               }
             }
@@ -11095,9 +11584,9 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "example": 100,
               "maximum": 200
-            },
-            "example": 100
+            }
           },
           {
             "name": "offset",
@@ -11105,9 +11594,9 @@
             "description": "index of first tokens to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -11238,9 +11727,9 @@
             "description": "token owner's STX address or Smart Contract ID",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3"
+              "type": "string",
+              "example": "SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3"
+            }
           },
           {
             "name": "asset_identifiers",
@@ -11249,11 +11738,11 @@
             "required": false,
             "schema": {
               "type": "array",
+              "example": "SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy::candy",
               "items": {
                 "type": "string"
               }
-            },
-            "example": "SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy::candy"
+            }
           },
           {
             "name": "limit",
@@ -11272,9 +11761,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 0
-            },
-            "example": 42000
+              "default": 0,
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -11283,9 +11772,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "tx_metadata",
@@ -11686,9 +12175,9 @@
             "description": "token asset class identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
+              "type": "string",
+              "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
+            }
           },
           {
             "name": "value",
@@ -11696,9 +12185,9 @@
             "description": "hex representation of the token's unique value",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "0x0100000000000000000000000000000803"
+              "type": "string",
+              "example": "0x0100000000000000000000000000000803"
+            }
           },
           {
             "name": "limit",
@@ -11717,9 +12206,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 0
-            },
-            "example": 42000
+              "default": 0,
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -11728,9 +12217,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "default": false
-            },
-            "example": true
+              "default": false,
+              "example": true
+            }
           },
           {
             "name": "tx_metadata",
@@ -12046,9 +12535,9 @@
             "description": "token asset class identifier",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
+              "type": "string",
+              "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
+            }
           },
           {
             "name": "limit",
@@ -12067,9 +12556,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 0
-            },
-            "example": 42000
+              "default": 0,
+              "example": 42000
+            }
           },
           {
             "name": "unanchored",
@@ -12078,9 +12567,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
+              "example": true,
               "default": false
-            },
-            "example": true
+            }
           },
           {
             "name": "tx_metadata",
@@ -12600,9 +13089,9 @@
             "description": "max number of tokens to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 1
+              "type": "integer",
+              "example": 1
+            }
           },
           {
             "name": "offset",
@@ -12610,9 +13099,9 @@
             "description": "index of first tokens to fetch",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           }
         ],
         "responses": {
@@ -12816,9 +13305,9 @@
             "description": "token's contract id",
             "required": true,
             "schema": {
-              "type": "string"
-            },
-            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11.newyorkcitycoin-token-v2"
+              "type": "string",
+              "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11.newyorkcitycoin-token-v2"
+            }
           }
         ],
         "responses": {
@@ -13104,10 +13593,10 @@
             "in": "query",
             "description": "Hash of transaction",
             "required": false,
+            "example": "0x29e25515652dad41ef675bd0670964e3d537b80ec19cf6ca6f1dd65d5bc642c5",
             "schema": {
               "type": "string"
-            },
-            "example": "0x29e25515652dad41ef675bd0670964e3d537b80ec19cf6ca6f1dd65d5bc642c5"
+            }
           },
           {
             "name": "address",
@@ -13115,9 +13604,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": false,
             "schema": {
-              "type": "string"
-            },
-            "example": "ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"
+              "type": "string",
+              "example": "ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"
+            }
           },
           {
             "name": "limit",
@@ -13125,9 +13614,9 @@
             "description": "number of items to return",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 100
+              "type": "integer",
+              "example": 100
+            }
           },
           {
             "name": "offset",
@@ -13135,9 +13624,9 @@
             "description": "number of items to skip",
             "required": false,
             "schema": {
-              "type": "integer"
-            },
-            "example": 42000
+              "type": "integer",
+              "example": 42000
+            }
           },
           {
             "name": "type",
@@ -13146,6 +13635,7 @@
             "required": false,
             "schema": {
               "type": "array",
+              "example": "stx_lock",
               "items": {
                 "type": "string",
                 "enum": [
@@ -13156,8 +13646,7 @@
                   "non_fungible_token_asset"
                 ]
               }
-            },
-            "example": "stx_lock"
+            }
           }
         ],
         "responses": {
@@ -13244,10 +13733,10 @@
             "in": "path",
             "description": "Address principal of the stacking pool delegator",
             "required": true,
+            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11",
             "schema": {
               "type": "string"
-            },
-            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"
+            }
           },
           {
             "name": "after_block",
@@ -13265,9 +13754,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "default": false
-            },
-            "example": true
+              "default": false,
+              "example": true
+            }
           },
           {
             "name": "limit",
@@ -13276,10 +13765,10 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "example": 100,
               "default": 100,
               "maximum": 200
-            },
-            "example": 100
+            }
           },
           {
             "name": "offset",
@@ -13288,9 +13777,9 @@
             "required": false,
             "schema": {
               "type": "integer",
+              "example": 300,
               "default": 0
-            },
-            "example": 300
+            }
           }
         ],
         "responses": {
@@ -13394,5 +13883,6 @@
         }
       }
     }
-  }
+  },
+  "components": {}
 }

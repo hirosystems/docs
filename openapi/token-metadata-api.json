@@ -3,7 +3,7 @@
   "info": {
     "title": "Token Metadata API",
     "description": "Service that indexes metadata for every SIP-009, SIP-010, and SIP-013 Token in the Stacks blockchain and exposes it via REST API endpoints.",
-    "version": "v0.2.1"
+    "version": "v0.4.0"
   },
   "components": {
     "schemas": {}
@@ -13,7 +13,9 @@
       "get": {
         "operationId": "getFungibleTokens",
         "summary": "Fungible Tokens",
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "description": "Retrieves a list of Fungible Tokens",
         "parameters": [
           {
@@ -74,11 +76,15 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": ["name"]
+                  "enum": [
+                    "name"
+                  ]
                 },
                 {
                   "type": "string",
-                  "enum": ["symbol"]
+                  "enum": [
+                    "symbol"
+                  ]
                 }
               ]
             },
@@ -93,11 +99,15 @@
               "anyOf": [
                 {
                   "type": "string",
-                  "enum": ["asc"]
+                  "enum": [
+                    "asc"
+                  ]
                 },
                 {
                   "type": "string",
-                  "enum": ["desc"]
+                  "enum": [
+                    "desc"
+                  ]
                 }
               ]
             },
@@ -178,11 +188,19 @@
                             "example": "ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA"
                           }
                         },
-                        "required": ["tx_id", "sender_address"]
+                        "required": [
+                          "tx_id",
+                          "sender_address"
+                        ]
                       }
                     }
                   },
-                  "required": ["limit", "offset", "total", "results"]
+                  "required": [
+                    "limit",
+                    "offset",
+                    "total",
+                    "results"
+                  ]
                 }
               }
             }
@@ -194,7 +212,9 @@
       "get": {
         "operationId": "getFtMetadata",
         "summary": "Fungible Token Metadata",
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "description": "Retrieves metadata for a SIP-010 Fungible Token",
         "parameters": [
           {
@@ -326,7 +346,10 @@
                                 "example": "value"
                               }
                             },
-                            "required": ["trait_type", "value"]
+                            "required": [
+                              "trait_type",
+                              "value"
+                            ]
                           }
                         },
                         "properties": {
@@ -359,16 +382,28 @@
                               "items": {
                                 "type": "string"
                               },
-                              "example": ["en", "jp"]
+                              "example": [
+                                "en",
+                                "jp"
+                              ]
                             }
                           },
-                          "required": ["uri", "default", "locales"]
+                          "required": [
+                            "uri",
+                            "default",
+                            "locales"
+                          ]
                         }
                       },
-                      "required": ["sip"]
+                      "required": [
+                        "sip"
+                      ]
                     }
                   },
-                  "required": ["tx_id", "sender_address"]
+                  "required": [
+                    "tx_id",
+                    "sender_address"
+                  ]
                 }
               }
             }
@@ -386,10 +421,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token not found"]
+                          "enum": [
+                            "Token not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Contract Not Found Response",
@@ -397,10 +436,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Contract not found"]
+                          "enum": [
+                            "Contract not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     }
                   ]
                 }
@@ -420,10 +463,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token metadata fetch in progress"]
+                          "enum": [
+                            "Token metadata fetch in progress"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Locale Not Found Response",
@@ -431,10 +478,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Locale not found"]
+                          "enum": [
+                            "Locale not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Invalid Token Contract Response",
@@ -447,7 +498,9 @@
                           ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Invalid Token Metadata Response",
@@ -455,10 +508,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token metadata is unreachable or does not conform to SIP-016"]
+                          "enum": [
+                            "Token metadata is unreachable or does not conform to SIP-016"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     }
                   ]
                 }
@@ -472,7 +529,9 @@
       "get": {
         "operationId": "getNftMetadata",
         "summary": "Non-Fungible Token Metadata",
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "description": "Retrieves metadata for a SIP-009 Non-Fungible Token",
         "parameters": [
           {
@@ -578,7 +637,10 @@
                                 "example": "value"
                               }
                             },
-                            "required": ["trait_type", "value"]
+                            "required": [
+                              "trait_type",
+                              "value"
+                            ]
                           }
                         },
                         "properties": {
@@ -611,13 +673,22 @@
                               "items": {
                                 "type": "string"
                               },
-                              "example": ["en", "jp"]
+                              "example": [
+                                "en",
+                                "jp"
+                              ]
                             }
                           },
-                          "required": ["uri", "default", "locales"]
+                          "required": [
+                            "uri",
+                            "default",
+                            "locales"
+                          ]
                         }
                       },
-                      "required": ["sip"]
+                      "required": [
+                        "sip"
+                      ]
                     }
                   }
                 }
@@ -637,10 +708,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token not found"]
+                          "enum": [
+                            "Token not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Contract Not Found Response",
@@ -648,10 +723,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Contract not found"]
+                          "enum": [
+                            "Contract not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     }
                   ]
                 }
@@ -671,10 +750,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token metadata fetch in progress"]
+                          "enum": [
+                            "Token metadata fetch in progress"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Locale Not Found Response",
@@ -682,10 +765,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Locale not found"]
+                          "enum": [
+                            "Locale not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Invalid Token Contract Response",
@@ -698,7 +785,9 @@
                           ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Invalid Token Metadata Response",
@@ -706,10 +795,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token metadata is unreachable or does not conform to SIP-016"]
+                          "enum": [
+                            "Token metadata is unreachable or does not conform to SIP-016"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     }
                   ]
                 }
@@ -723,7 +816,9 @@
       "get": {
         "operationId": "getSftMetadata",
         "summary": "Semi-Fungible Token Metadata",
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "description": "Retrieves metadata for a SIP-013 Semi-Fungible Token",
         "parameters": [
           {
@@ -837,7 +932,10 @@
                                 "example": "value"
                               }
                             },
-                            "required": ["trait_type", "value"]
+                            "required": [
+                              "trait_type",
+                              "value"
+                            ]
                           }
                         },
                         "properties": {
@@ -870,13 +968,22 @@
                               "items": {
                                 "type": "string"
                               },
-                              "example": ["en", "jp"]
+                              "example": [
+                                "en",
+                                "jp"
+                              ]
                             }
                           },
-                          "required": ["uri", "default", "locales"]
+                          "required": [
+                            "uri",
+                            "default",
+                            "locales"
+                          ]
                         }
                       },
-                      "required": ["sip"]
+                      "required": [
+                        "sip"
+                      ]
                     }
                   }
                 }
@@ -896,10 +1003,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token not found"]
+                          "enum": [
+                            "Token not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Contract Not Found Response",
@@ -907,10 +1018,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Contract not found"]
+                          "enum": [
+                            "Contract not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     }
                   ]
                 }
@@ -930,10 +1045,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token metadata fetch in progress"]
+                          "enum": [
+                            "Token metadata fetch in progress"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Locale Not Found Response",
@@ -941,10 +1060,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Locale not found"]
+                          "enum": [
+                            "Locale not found"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Invalid Token Contract Response",
@@ -957,7 +1080,9 @@
                           ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     },
                     {
                       "title": "Invalid Token Metadata Response",
@@ -965,10 +1090,14 @@
                       "properties": {
                         "error": {
                           "type": "string",
-                          "enum": ["Token metadata is unreachable or does not conform to SIP-016"]
+                          "enum": [
+                            "Token metadata is unreachable or does not conform to SIP-016"
+                          ]
                         }
                       },
-                      "required": ["error"]
+                      "required": [
+                        "error"
+                      ]
                     }
                   ]
                 }
@@ -982,7 +1111,9 @@
       "get": {
         "operationId": "getApiStatus",
         "summary": "API Status",
-        "tags": ["Status"],
+        "tags": [
+          "Status"
+        ],
         "description": "Displays the status of the API and its current workload",
         "responses": {
           "200": {
@@ -1060,7 +1191,10 @@
                       }
                     }
                   },
-                  "required": ["server_version", "status"]
+                  "required": [
+                    "server_version",
+                    "status"
+                  ]
                 }
               }
             }
