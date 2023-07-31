@@ -23,7 +23,7 @@ module.exports = {
       'docusaurus-plugin-openapi',
       {
         id: 'ordinals',
-        path: 'openapi/ordinals.json',
+        path: 'openapi/ordinals-api.json',
         routeBasePath: '/ordinals',
       },
     ],
@@ -31,7 +31,7 @@ module.exports = {
       'docusaurus-plugin-openapi',
       {
         id: 'stx-blockchain',
-        path: 'openapi/stx-blockchain.json',
+        path: 'openapi/stacks-blockchain-api.json',
         routeBasePath: '/api',
       },
     ],
@@ -379,7 +379,7 @@ module.exports = {
       /** @type {import('docusaurus-preset-openapi').Options} */
       {
         api: {
-          path: 'openapi/token-metadata.json',
+          path: 'openapi/token-metadata-api.json',
           routeBasePath: '/metadata',
         },
         docs: {
