@@ -122,9 +122,9 @@
           "description": "A valid testnet STX address",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "ST3M7N9Q9HDRM7RVP1Q26P0EE69358PZZAZD7KMXQ"
-          }
+            "type": "string"
+          },
+          "example": "ST3M7N9Q9HDRM7RVP1Q26P0EE69358PZZAZD7KMXQ"
         },
         {
           "name": "stacking",
@@ -217,9 +217,9 @@
           "description": "A valid testnet BTC address",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
-          }
+            "type": "string"
+          },
+          "example": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
         }
       ],
       "post": {
@@ -308,9 +308,9 @@
             "schema": {
               "type": "integer",
               "default": 96,
-              "maximum": 200,
-              "example": 100
-            }
+              "maximum": 200
+            },
+            "example": 100
           },
           {
             "name": "offset",
@@ -318,9 +318,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "type",
@@ -329,7 +329,6 @@
             "required": false,
             "schema": {
               "type": "array",
-              "example": "coinbase",
               "items": {
                 "type": "string",
                 "enum": [
@@ -340,7 +339,8 @@
                   "poison_microblock"
                 ]
               }
-            }
+            },
+            "example": "coinbase"
           },
           {
             "name": "unanchored",
@@ -349,9 +349,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           }
         ],
         "responses": {
@@ -471,9 +471,9 @@
             "description": "Filter to only return transactions with this sender address.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": "SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10"
-            }
+              "type": "string"
+            },
+            "example": "SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10"
           },
           {
             "name": "recipient_address",
@@ -501,9 +501,9 @@
             "schema": {
               "type": "integer",
               "default": 20,
-              "maximum": 50,
-              "example": 20
-            }
+              "maximum": 50
+            },
+            "example": 20
           },
           {
             "name": "offset",
@@ -511,9 +511,9 @@
             "description": "index of first mempool transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -522,9 +522,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           }
         ],
         "responses": {
@@ -830,9 +830,9 @@
             "description": "index of first mempool transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -1508,11 +1508,11 @@
           "required": true,
           "schema": {
             "type": "array",
-            "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0",
             "items": {
               "type": "string"
             }
-          }
+          },
+          "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
         },
         {
           "name": "event_offset",
@@ -1539,9 +1539,9 @@
           "required": false,
           "schema": {
             "type": "boolean",
-            "example": true,
             "default": false
-          }
+          },
+          "example": true
         }
       ],
       "get": {
@@ -1736,9 +1736,9 @@
           "description": "Hash of transaction",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
-          }
+            "type": "string"
+          },
+          "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
         },
         {
           "name": "event_offset",
@@ -1765,9 +1765,9 @@
           "required": false,
           "schema": {
             "type": "boolean",
-            "example": true,
             "default": false
-          }
+          },
+          "example": true
         }
       ],
       "get": {
@@ -2579,9 +2579,9 @@
           "description": "Hash of transaction",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
-          }
+            "type": "string"
+          },
+          "example": "0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"
         }
       ],
       "get": {
@@ -2636,9 +2636,9 @@
             "application/octet-stream": {
               "schema": {
                 "type": "string",
-                "format": "binary",
-                "example": "binary format of 00000000010400bed38c2aadffa348931bcb542880ff79d607afec000000000000000000000000000000c800012b0b1fff6cccd0974966dcd665835838f0985be508e1322e09fb3d751eca132c492bda720f9ef1768d14fdabed6127560ba52d5e3ac470dcb60b784e97dc88c9030200000000000516df0ba3e79792be7be5e50a370289accfc8c9e032000000000000303974657374206d656d6f00000000000000000000000000000000000000000000000000"
-              }
+                "format": "binary"
+              },
+              "example": "binary format of 00000000010400bed38c2aadffa348931bcb542880ff79d607afec000000000000000000000000000000c800012b0b1fff6cccd0974966dcd665835838f0985be508e1322e09fb3d751eca132c492bda720f9ef1768d14fdabed6127560ba52d5e3ac470dcb60b784e97dc88c9030200000000000516df0ba3e79792be7be5e50a370289accfc8c9e032000000000000303974657374206d656d6f00000000000000000000000000000000000000000000000000"
             }
           }
         },
@@ -2722,9 +2722,9 @@
             "schema": {
               "type": "integer",
               "default": 20,
-              "maximum": 200,
-              "example": 100
-            }
+              "maximum": 200
+            },
+            "example": 100
           },
           {
             "name": "offset",
@@ -2732,9 +2732,9 @@
             "description": "Index of the first microblock to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -2872,9 +2872,9 @@
           "description": "Hash of the microblock",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "0x3bfcdf84b3012adb544cf0f6df4835f93418c2269a3881885e27b3d58eb82d47"
-          }
+            "type": "string"
+          },
+          "example": "0x3bfcdf84b3012adb544cf0f6df4835f93418c2269a3881885e27b3d58eb82d47"
         }
       ],
       "get": {
@@ -3057,9 +3057,9 @@
             "description": "index of first block to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -3282,9 +3282,9 @@
           "description": "Hash of the block",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79"
-          }
+            "type": "string"
+          },
+          "example": "0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79"
         }
       ],
       "get": {
@@ -3493,9 +3493,9 @@
           "description": "Height of the block",
           "required": true,
           "schema": {
-            "type": "number",
-            "example": 10000
-          }
+            "type": "number"
+          },
+          "example": 10000
         }
       ],
       "get": {
@@ -3577,9 +3577,9 @@
           "description": "Hash of the burnchain block",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "0x00000000000000000002bba732926cf68b6eda3e2cdbc2a85af79f10efeeeb10"
-          }
+            "type": "string"
+          },
+          "example": "0x00000000000000000002bba732926cf68b6eda3e2cdbc2a85af79f10efeeeb10"
         }
       ],
       "get": {
@@ -3661,9 +3661,9 @@
           "description": "Height of the burn chain block",
           "required": true,
           "schema": {
-            "type": "number",
-            "example": 744603
-          }
+            "type": "number"
+          },
+          "example": 744603
         }
       ],
       "get": {
@@ -3763,9 +3763,9 @@
             "description": "index of the first items to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -3881,9 +3881,9 @@
             "description": "Reward slot holder recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
-            }
+              "type": "string"
+            },
+            "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
           },
           {
             "name": "limit",
@@ -3900,8 +3900,7 @@
             "description": "index of the first items to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
+              "type": "integer"
             }
           }
         ],
@@ -3966,9 +3965,9 @@
             "description": "index of first rewards to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -4092,9 +4091,9 @@
             "description": "Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
-            }
+              "type": "string"
+            },
+            "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
           },
           {
             "name": "limit",
@@ -4111,9 +4110,9 @@
             "description": "index of first rewards to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -4169,9 +4168,9 @@
             "description": "Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
-            }
+              "type": "string"
+            },
+            "example": "36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
           }
         ],
         "responses": {
@@ -4279,9 +4278,9 @@
           "description": "Contract identifier formatted as `<contract_address>.<contract_name>`",
           "required": true,
           "schema": {
-            "type": "string",
-            "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
-          }
+            "type": "string"
+          },
+          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
         },
         {
           "name": "unanchored",
@@ -4290,9 +4289,9 @@
           "required": false,
           "schema": {
             "type": "boolean",
-            "example": true,
             "default": false
-          }
+          },
+          "example": true
         }
       ]
     },
@@ -4410,10 +4409,10 @@
             "in": "query",
             "description": "index of first contract event to fetch",
             "required": false,
-            "example": 42000,
             "schema": {
               "type": "integer"
-            }
+            },
+            "example": 42000
           }
         ]
       }
@@ -4433,9 +4432,9 @@
             "description": "Contract identifier formatted as `<contract_address>.<contract_name>`",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
-            }
+              "type": "string"
+            },
+            "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"
           },
           {
             "name": "limit",
@@ -4452,9 +4451,9 @@
             "description": "index of first contract event to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -4463,9 +4462,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           }
         ],
         "responses": {
@@ -5025,10 +5024,10 @@
           "in": "path",
           "required": true,
           "description": "Stacks address",
-          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C",
           "schema": {
             "type": "string"
-          }
+          },
+          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C"
         },
         {
           "name": "contract_name",
@@ -5036,9 +5035,9 @@
           "required": true,
           "description": "Contract name",
           "schema": {
-            "type": "string",
-            "example": "satoshibles"
-          }
+            "type": "string"
+          },
+          "example": "satoshibles"
         },
         {
           "name": "tip",
@@ -5100,9 +5099,9 @@
             "required": true,
             "description": "Stacks address",
             "schema": {
-              "type": "string",
-              "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"
-            }
+              "type": "string"
+            },
+            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"
           },
           {
             "name": "contract_name",
@@ -5110,9 +5109,9 @@
             "required": true,
             "description": "Contract name",
             "schema": {
-              "type": "string",
-              "example": "newyorkcitycoin-core-v2"
-            }
+              "type": "string"
+            },
+            "example": "newyorkcitycoin-core-v2"
           },
           {
             "name": "map_name",
@@ -5120,9 +5119,9 @@
             "required": true,
             "description": "Map name",
             "schema": {
-              "type": "string",
-              "example": "approved-contracts"
-            }
+              "type": "string"
+            },
+            "example": "approved-contracts"
           },
           {
             "name": "proof",
@@ -5208,9 +5207,9 @@
           "required": true,
           "description": "Stacks address",
           "schema": {
-            "type": "string",
-            "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C"
-          }
+            "type": "string"
+          },
+          "example": "SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C"
         },
         {
           "name": "contract_name",
@@ -5218,9 +5217,9 @@
           "required": true,
           "description": "Contract name",
           "schema": {
-            "type": "string",
-            "example": "satoshibles"
-          }
+            "type": "string"
+          },
+          "example": "satoshibles"
         },
         {
           "name": "proof",
@@ -5299,9 +5298,9 @@
             "required": true,
             "description": "Stacks address",
             "schema": {
-              "type": "string",
-              "example": "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"
-            }
+              "type": "string"
+            },
+            "example": "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"
           },
           {
             "name": "contract_name",
@@ -5309,9 +5308,9 @@
             "required": true,
             "description": "Contract name",
             "schema": {
-              "type": "string",
-              "example": "imaginary-friends-zebras"
-            }
+              "type": "string"
+            },
+            "example": "imaginary-friends-zebras"
           },
           {
             "name": "function_name",
@@ -5319,9 +5318,9 @@
             "required": true,
             "description": "Function name",
             "schema": {
-              "type": "string",
-              "example": "get-token-uri"
-            }
+              "type": "string"
+            },
+            "example": "get-token-uri"
           },
           {
             "name": "tip",
@@ -5387,9 +5386,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "unanchored",
@@ -5398,9 +5397,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -5408,9 +5407,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -5619,9 +5618,9 @@
             "description": "Stacks address or a Contract identifier.",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "unanchored",
@@ -5630,9 +5629,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -5640,9 +5639,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -5700,9 +5699,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "limit",
@@ -5710,9 +5709,9 @@
             "description": "max number of account transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "offset",
@@ -5720,9 +5719,9 @@
             "description": "index of first account transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "height",
@@ -5730,9 +5729,9 @@
             "description": "Filter for transactions only at this given block height",
             "required": false,
             "schema": {
-              "type": "number",
-              "example": 42000
-            }
+              "type": "number"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -5741,9 +5740,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -5751,9 +5750,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -5848,9 +5847,9 @@
             "description": "Stacks address or a contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
-            }
+              "type": "string"
+            },
+            "example": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE"
           },
           {
             "name": "tx_id",
@@ -5858,9 +5857,9 @@
             "description": "Transaction id",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "0x34d79c7cfc2fe525438736733e501a4bf0308a5556e3e080d1e2c0858aad7448"
-            }
+              "type": "string"
+            },
+            "example": "0x34d79c7cfc2fe525438736733e501a4bf0308a5556e3e080d1e2c0858aad7448"
           }
         ],
         "responses": {
@@ -6069,9 +6068,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "limit",
@@ -6079,9 +6078,9 @@
             "description": "max number of account transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 20
-            }
+              "type": "integer"
+            },
+            "example": 20
           },
           {
             "name": "offset",
@@ -6089,9 +6088,9 @@
             "description": "index of first account transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 10
-            }
+              "type": "integer"
+            },
+            "example": 10
           },
           {
             "name": "height",
@@ -6099,9 +6098,9 @@
             "description": "Filter for transactions only at this given block height",
             "required": false,
             "schema": {
-              "type": "number",
-              "example": 66119
-            }
+              "type": "number"
+            },
+            "example": 66119
           },
           {
             "name": "unanchored",
@@ -6110,9 +6109,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -6120,9 +6119,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -6434,9 +6433,9 @@
             "description": "Stacks address",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "block_height",
@@ -6444,9 +6443,9 @@
             "description": "Optionally get the nonce at a given block height.",
             "required": false,
             "schema": {
-              "type": "number",
-              "example": 66119
-            }
+              "type": "number"
+            },
+            "example": 66119
           },
           {
             "name": "block_hash",
@@ -6454,9 +6453,9 @@
             "description": "Optionally get the nonce at a given block hash. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": "0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"
-            }
+              "type": "string"
+            },
+            "example": "0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"
           }
         ],
         "responses": {
@@ -6537,9 +6536,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "limit",
@@ -6547,9 +6546,9 @@
             "description": "max number of account assets to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 20
-            }
+              "type": "integer"
+            },
+            "example": 20
           },
           {
             "name": "offset",
@@ -6557,9 +6556,9 @@
             "description": "index of first account assets to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -6568,9 +6567,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -6578,9 +6577,9 @@
             "description": "returned data representing the state at that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -6675,9 +6674,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "limit",
@@ -6694,9 +6693,9 @@
             "description": "number of items to skip",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "height",
@@ -6714,9 +6713,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -6724,9 +6723,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -6849,9 +6848,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "limit",
@@ -6868,9 +6867,9 @@
             "description": "number of items to skip",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -6879,9 +6878,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "until_block",
@@ -6889,9 +6888,9 @@
             "description": "returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": 60000
-            }
+              "type": "string"
+            },
+            "example": 60000
           }
         ],
         "responses": {
@@ -7020,9 +7019,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
-            }
+              "type": "string"
+            },
+            "example": "SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
           },
           {
             "name": "proof",
@@ -7397,9 +7396,9 @@
               "enum": [
                 "testnet",
                 "mainnet"
-              ],
-              "example": "mainnet"
+              ]
             },
+            "example": "mainnet",
             "description": "the target block time for a given network (testnet, mainnet)."
           }
         ],
@@ -7434,9 +7433,9 @@
             "name": "height",
             "required": false,
             "schema": {
-              "type": "number",
-              "example": 200
+              "type": "number"
             },
+            "example": 200,
             "description": "Supply details are queried from specified block height. If the block height is not specified, the latest block height is taken as default value. Note that the `block height` is referred to the stacks blockchain."
           }
         ],
@@ -7551,9 +7550,9 @@
             "name": "height",
             "required": false,
             "schema": {
-              "type": "number",
-              "example": 200
+              "type": "number"
             },
+            "example": 200,
             "description": "Supply details are queried from specified block height. If the block height is not specified, the latest block height is taken as default value."
           }
         ],
@@ -7727,9 +7726,9 @@
             "name": "id",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"
+              "type": "string"
             },
+            "example": "0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d",
             "description": "The hex hash string for a block or transaction, account address, or contract address"
           },
           {
@@ -10453,9 +10452,9 @@
             "description": "the namespace to fetch price for",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "id"
-            }
+              "type": "string"
+            },
+            "example": "id"
           }
         ],
         "responses": {
@@ -10503,9 +10502,9 @@
             "description": "the name to query price information for",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "muneeb.id"
-            }
+              "type": "string"
+            },
+            "example": "muneeb.id"
           }
         ],
         "responses": {
@@ -10598,9 +10597,9 @@
             "description": "the namespace to fetch names from.",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "id"
-            }
+              "type": "string"
+            },
+            "example": "id"
           },
           {
             "name": "page",
@@ -10608,9 +10607,9 @@
             "description": "namespace values are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 22
-            }
+              "type": "integer"
+            },
+            "example": 22
           }
         ],
         "responses": {
@@ -10690,9 +10689,9 @@
             "description": "names are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 22
-            }
+              "type": "integer"
+            },
+            "example": 22
           }
         ],
         "responses": {
@@ -10751,9 +10750,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "muneeb.id"
-            }
+              "type": "string"
+            },
+            "example": "muneeb.id"
           }
         ],
         "responses": {
@@ -10866,9 +10865,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "id.blockstack"
-            }
+              "type": "string"
+            },
+            "example": "id.blockstack"
           }
         ],
         "responses": {
@@ -10913,9 +10912,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "bar.test"
-            }
+              "type": "string"
+            },
+            "example": "bar.test"
           }
         ],
         "responses": {
@@ -10999,9 +10998,9 @@
             "description": "fully-qualified name",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "muneeb.id"
-            }
+              "type": "string"
+            },
+            "example": "muneeb.id"
           },
           {
             "name": "zoneFileHash",
@@ -11009,9 +11008,9 @@
             "description": "zone file hash",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "b100a68235244b012854a95f9114695679002af9"
-            }
+              "type": "string"
+            },
+            "example": "b100a68235244b012854a95f9114695679002af9"
           }
         ],
         "responses": {
@@ -11112,9 +11111,9 @@
             "description": "the layer-1 blockchain for the address",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "bitcoin"
-            }
+              "type": "string"
+            },
+            "example": "bitcoin"
           },
           {
             "name": "address",
@@ -11122,9 +11121,9 @@
             "description": "the address to lookup",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "1QJQxDas5JhdiXhEbNS14iNjr8auFT96GP"
-            }
+              "type": "string"
+            },
+            "example": "1QJQxDas5JhdiXhEbNS14iNjr8auFT96GP"
           }
         ],
         "responses": {
@@ -11189,9 +11188,9 @@
             "description": "Hash of block",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "0x0a83d82a65460a9e711f85a44616350280040b75317dbe486a923c1131b5ff99"
-            }
+              "type": "string"
+            },
+            "example": "0x0a83d82a65460a9e711f85a44616350280040b75317dbe486a923c1131b5ff99"
           },
           {
             "name": "limit",
@@ -11199,9 +11198,9 @@
             "description": "max number of transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 10
-            }
+              "type": "integer"
+            },
+            "example": 10
           },
           {
             "name": "offset",
@@ -11209,9 +11208,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -11282,9 +11281,9 @@
             "description": "Height of block",
             "required": true,
             "schema": {
-              "type": "integer",
-              "example": 66119
-            }
+              "type": "integer"
+            },
+            "example": 66119
           },
           {
             "name": "limit",
@@ -11292,9 +11291,9 @@
             "description": "max number of transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 10
-            }
+              "type": "integer"
+            },
+            "example": 10
           },
           {
             "name": "offset",
@@ -11302,9 +11301,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -11313,9 +11312,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           }
         ],
         "responses": {
@@ -11386,9 +11385,9 @@
             "description": "Transactions for the address",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9"
-            }
+              "type": "string"
+            },
+            "example": "SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9"
           },
           {
             "name": "limit",
@@ -11396,9 +11395,9 @@
             "description": "max number of transactions to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 90
-            }
+              "type": "integer"
+            },
+            "example": 90
           },
           {
             "name": "offset",
@@ -11406,9 +11405,9 @@
             "description": "index of first transaction to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -11417,9 +11416,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           }
         ],
         "responses": {
@@ -11584,9 +11583,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "example": 100,
               "maximum": 200
-            }
+            },
+            "example": 100
           },
           {
             "name": "offset",
@@ -11594,9 +11593,9 @@
             "description": "index of first tokens to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -11727,9 +11726,9 @@
             "description": "token owner's STX address or Smart Contract ID",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3"
-            }
+              "type": "string"
+            },
+            "example": "SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3"
           },
           {
             "name": "asset_identifiers",
@@ -11738,11 +11737,11 @@
             "required": false,
             "schema": {
               "type": "array",
-              "example": "SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy::candy",
               "items": {
                 "type": "string"
               }
-            }
+            },
+            "example": "SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy::candy"
           },
           {
             "name": "limit",
@@ -11761,9 +11760,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 0,
-              "example": 42000
-            }
+              "default": 0
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -11772,9 +11771,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "tx_metadata",
@@ -12175,9 +12174,9 @@
             "description": "token asset class identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
-            }
+              "type": "string"
+            },
+            "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
           },
           {
             "name": "value",
@@ -12185,9 +12184,9 @@
             "description": "hex representation of the token's unique value",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "0x0100000000000000000000000000000803"
-            }
+              "type": "string"
+            },
+            "example": "0x0100000000000000000000000000000803"
           },
           {
             "name": "limit",
@@ -12206,9 +12205,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 0,
-              "example": 42000
-            }
+              "default": 0
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -12217,9 +12216,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "default": false,
-              "example": true
-            }
+              "default": false
+            },
+            "example": true
           },
           {
             "name": "tx_metadata",
@@ -12535,9 +12534,9 @@
             "description": "token asset class identifier",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
-            }
+              "type": "string"
+            },
+            "example": "SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"
           },
           {
             "name": "limit",
@@ -12556,9 +12555,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "default": 0,
-              "example": 42000
-            }
+              "default": 0
+            },
+            "example": 42000
           },
           {
             "name": "unanchored",
@@ -12567,9 +12566,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "example": true,
               "default": false
-            }
+            },
+            "example": true
           },
           {
             "name": "tx_metadata",
@@ -13089,9 +13088,9 @@
             "description": "max number of tokens to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 1
-            }
+              "type": "integer"
+            },
+            "example": 1
           },
           {
             "name": "offset",
@@ -13099,9 +13098,9 @@
             "description": "index of first tokens to fetch",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           }
         ],
         "responses": {
@@ -13305,9 +13304,9 @@
             "description": "token's contract id",
             "required": true,
             "schema": {
-              "type": "string",
-              "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11.newyorkcitycoin-token-v2"
-            }
+              "type": "string"
+            },
+            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11.newyorkcitycoin-token-v2"
           }
         ],
         "responses": {
@@ -13593,10 +13592,10 @@
             "in": "query",
             "description": "Hash of transaction",
             "required": false,
-            "example": "0x29e25515652dad41ef675bd0670964e3d537b80ec19cf6ca6f1dd65d5bc642c5",
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "0x29e25515652dad41ef675bd0670964e3d537b80ec19cf6ca6f1dd65d5bc642c5"
           },
           {
             "name": "address",
@@ -13604,9 +13603,9 @@
             "description": "Stacks address or a Contract identifier",
             "required": false,
             "schema": {
-              "type": "string",
-              "example": "ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"
-            }
+              "type": "string"
+            },
+            "example": "ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"
           },
           {
             "name": "limit",
@@ -13614,9 +13613,9 @@
             "description": "number of items to return",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 100
-            }
+              "type": "integer"
+            },
+            "example": 100
           },
           {
             "name": "offset",
@@ -13624,9 +13623,9 @@
             "description": "number of items to skip",
             "required": false,
             "schema": {
-              "type": "integer",
-              "example": 42000
-            }
+              "type": "integer"
+            },
+            "example": 42000
           },
           {
             "name": "type",
@@ -13635,7 +13634,6 @@
             "required": false,
             "schema": {
               "type": "array",
-              "example": "stx_lock",
               "items": {
                 "type": "string",
                 "enum": [
@@ -13646,7 +13644,8 @@
                   "non_fungible_token_asset"
                 ]
               }
-            }
+            },
+            "example": "stx_lock"
           }
         ],
         "responses": {
@@ -13733,10 +13732,10 @@
             "in": "path",
             "description": "Address principal of the stacking pool delegator",
             "required": true,
-            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11",
             "schema": {
               "type": "string"
-            }
+            },
+            "example": "SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"
           },
           {
             "name": "after_block",
@@ -13754,9 +13753,9 @@
             "required": false,
             "schema": {
               "type": "boolean",
-              "default": false,
-              "example": true
-            }
+              "default": false
+            },
+            "example": true
           },
           {
             "name": "limit",
@@ -13765,10 +13764,10 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "example": 100,
               "default": 100,
               "maximum": 200
-            }
+            },
+            "example": 100
           },
           {
             "name": "offset",
@@ -13777,9 +13776,9 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "example": 300,
               "default": 0
-            }
+            },
+            "example": 300
           }
         ],
         "responses": {
