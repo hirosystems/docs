@@ -1,8 +1,8 @@
 ---
-title: Create Chainhook using Hiro Platform
+title: Create Chainhook
 ---
 
-# Create Chainhook using Hiro Platform
+# Create Chainhook
 
 Chainhook is a powerful feature that enables you to automatically trigger an action based upon a predicate event occurring. To learn more about Chainhook, refer to [Chainhook overview documentation](https://docs.hiro.so/chainhook/overview).
 
