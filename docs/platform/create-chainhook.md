@@ -22,7 +22,7 @@ Select the _Create chainhook_ button at the bottom of the screen.
 
 ![Create Chainhook Window](./images/chainhook-create-chainhook-window.jpeg)
 
-A new pane opens up on the right to create a chainhook.
+A new pane opens up on the right to create a chainhook. Use the following fields to create a chainhook:
 
 **Name**: Select a name of your choice for chainhook.
 **Chain**: Select the chain between Bitcoin and Stacks to create a chainhook.
@@ -65,7 +65,7 @@ The `name`, `chain`, `last updated`, `start block`, `testnet`, and `mainnet` hea
 
 Based on the chosen network, the status of the chainhook is updated to **Deployed**.
 
-There may be multiple other options available based on the `If-this` predicate defined. Refer to the [chainhook documentation](https://docs.hiro.so/chainhook/overview) for more details.
+Note that there may be other fields in the UI to create a chainhook based on the predicates defined.
 
 ## Edit Chainhook
 
