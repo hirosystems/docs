@@ -24,7 +24,7 @@ Select the _Create chainhook_ button at the bottom of the screen.
 
 A new pane opens up on the right to create a chainhook. Use the following fields to create a chainhook:
 
-**Name**: Select a name of your choice for chainhook.
+**Name**: Define a chainhook name of your choice.
 **Chain**: Select the chain between Bitcoin and Stacks to create a chainhook.
 
 **Network**: Choose a network between `mainnet` and `testnet` to run the chainhook node.
