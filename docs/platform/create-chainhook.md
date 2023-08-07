@@ -4,7 +4,7 @@ title: Create Chainhook
 
 # Create Chainhook
 
-Chainhook is a powerful feature that enables you to automatically trigger an action based upon a predicate event occurring. To learn more about Chainhook, refer to [Chainhook overview documentation](https://docs.hiro.so/chainhook/overview).
+Chainhook enables you to automatically trigger an action based upon an event occurring in Stacks, Bitcoin, and others. To learn more about Chainhook, refer to [Chainhook overview documentation](https://docs.hiro.so/chainhook/overview).
 
 This guide helps you create a Chainhook using the [Hiro Platform](https://platform.hiro.so/).
 
