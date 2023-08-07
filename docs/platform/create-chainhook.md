@@ -37,7 +37,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 `non-fungible_token_event`, `stx_event`, `print_event`, `contract_deployment`.
 
 > _**Note**_
-> _Refer to the following predicate definition documents to understand the available predicates and how to define them._
+> _Refer to the following documents to understand the available predicates and how to use them._
 > [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin)
 > [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
 
