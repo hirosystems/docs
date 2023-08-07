@@ -25,6 +25,7 @@ Select the _Create chainhook_ button at the bottom of the screen.
 A new pane opens up on the right to create a chainhook. Use the following fields to create a chainhook:
 
 **Name**: Define a chainhook name of your choice.
+
 **Chain**: Select between Bitcoin and Stacks to create a chainhook.
 
 **Network**: Choose a network between `mainnet` and `testnet` to observe for events 
@@ -37,9 +38,9 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 `non-fungible_token_event`, `stx_event`, `print_event`, `contract_deployment`.
 
 > _**Note**_
+>
 > _Refer to the following documents to understand the available predicates and how to use them._
-> [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin)
-> [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
+> [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
 
 **Then-that**: This action is defaulted to `http_post` to allow the chainhook post events to the URL specified in the below option.
 
@@ -61,7 +62,7 @@ The right pane navigates to the Projects page with the Chainhook tab open, and y
 
 ![Chainhook created](images/chainhook-created.jpeg)
 
-The `name`, `chain`, `last updated`, `start block`, `testnet`, and `mainnet` headers are updated based on the selected fields used to create a chainhook.
+The `NAME`, `CHAIN`, `LAST UPDATED`, `START BLOCK`, `TESTNET`, and `MAINNET` headers are updated based on the selected fields used to create a chainhook.
 
 Based on the chosen network, the respective status columns in the Chainhook list page will be updated to **Deployed**.
 
@@ -83,7 +84,7 @@ This opens a right pane with all the fields populated to use to create a duplica
 
 You can update the fields or directly select **Create chainhook** to duplicate a copy of the chainhook.
 
-![Duplicate chainhook](images/chainhook-edit-chainhook.jpeg)
+![Duplicate chainhook](images/chainhook-duplicate.jpeg)
 
 ## Delete Chainhook
 
