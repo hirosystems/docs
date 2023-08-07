@@ -3,10 +3,10 @@ id: running-api-node
 title: Running a Stacks API node
 ---
 
-This procedure demonstrates how to run a local API node using Docker images. There are several components that must be
+This procedure demonstrates how to run a local API node using Docker images. Several components must be
 configured and run in a specific order for the local API node to work.
 
-For this procedure, the order in which the services are brought up is very important. In order to start the API node
+The order in which the services are brought up is very important for this procedure. To start the API node
 successfully, you need to bring up the services in the following order:
 
 1. `postgres`
@@ -14,7 +14,7 @@ successfully, you need to bring up the services in the following order:
 3. `stacks-blockchain`
 
 When bringing down the API node, you should bring the services down in the exact reverse order in which they were
-brought up, to avoid losing data.
+brought up to avoid losing data.
 
 :::note
 
@@ -25,8 +25,8 @@ Windows.
 
 ## Prerequisites
 
-Running a node has no specialized hardware requirements. Users have been successful in running nodes on Raspberry Pi
-boards and other system-on-chip architectures. In order to complete this procedure, you must have the following software
+Running a node has no specialized hardware requirements. Users have successfully run nodes on Raspberry Pi
+boards and other system-on-chip architectures. To complete this procedure, you must have the following software
 installed on the node host machine:
 
 - [Docker](https://docs.docker.com/get-docker/)
@@ -36,8 +36,8 @@ installed on the node host machine:
 
 ### Firewall configuration
 
-In order for the API node services to work correctly, you must configure any network firewall rules to allow traffic on
-the ports discussed in this section. The details of network and firewall configuration are highly specific to your
+For the API node services to work correctly, you must configure any network firewall rules to allow traffic on
+the ports discussed in this section. The network and firewall configuration details are highly specific to your
 machine and network, so a detailed example isn't provided.
 
 The following ports must open on the host machine:
@@ -62,7 +62,7 @@ These egress ports are for syncing [`stacks-blockchain`][] and Bitcoin headers. 
 
 ## Step 1: Initial setup
 
-In order to run the API node, you must download the Docker images and create a directory structure to hold the
+To run the API node, you must download the Docker images and create a directory structure to hold the
 persistent data from the services. Download and configure the Docker images with the following commands:
 
 ```sh
@@ -91,7 +91,7 @@ docker run -d --rm \
   postgres:alpine
 ```
 
-You can verify the running Postgres instance on port `5432` with the command
+You can verify the running Postgres instance on port `5432` with the command.
 
 ```sh
 docker ps --filter name=postgres
@@ -125,8 +125,8 @@ BNS_IMPORT_DIR=/bns-data
 :::info
 
 This guide configures the API to import BNS data with the `BNS_IMPORT_DIR` variable. To turn off this import, comment
-the line out by placing a `#` at the beginning of the line. If you leave the BNS import enabled, it may take several
-minutes for the container to start while it imports the data.
+the line out by placing a `#` at the beginning of the line. If you leave the BNS import enabled, the container may take several
+minutes to start while it imports the data.
 
 :::
 
@@ -154,7 +154,7 @@ docker ps --filter name=stacks-blockchain-api
 
 ## Step 4: Running Stacks blockchain
 
-In order for the API to be functional, the [`stacks-blockchain-api`][] container must have data from a running
+For the API to be functional, the [`stacks-blockchain-api`][] container must have data from a running
 [`stacks-blockchain`][] instance. First create the `./config/mainnet/Config.toml` file and add the following content to the file using a text editor:
 
 ```toml
@@ -277,12 +277,12 @@ If the instance is configured correctly, you should receive terminal output simi
 }
 ```
 
-Once the API is running, you can use it to [interact with other API endpoints][`stacks-blockchain-api`].
+Once the API runs, you can use it to [interact with other API endpoints][`stacks-blockchain-api`].
 
 ## Stopping the API node
 
 As discussed previously, if you want to bring down your API node, you must stop the services in the reverse order that
-you started them. Performing the shutdown in this order ensures that you don't lose any data while shutting down
+you started them. Performing the shutdown in this order ensures you don't lose any data while shutting down
 the node.
 
 Use the following commands to stop the local API node:
