@@ -63,7 +63,7 @@ The right pane navigates to the Projects page with the Chainhook tab open, and y
 
 The `name`, `chain`, `last updated`, `start block`, `testnet`, and `mainnet` headers are updated based on the selected fields used to create a chainhook.
 
-Based on the chosen network, the status of the chainhook is updated to **Deployed**.
+Based on the chosen network, the respective status columns in the Chainhook list page will be updated to **Deployed**.
 
 Note that there may be other fields in the UI to create a chainhook based on the predicates defined.
 
