@@ -25,11 +25,11 @@ To create a new project, you can start with a *Blank project* or use one of the 
 
 ![Create new project](images/create-new-project.jpeg)
 
-Once you select a new project from the list, the selected example project will be automatically cloned and displayed on the [projects](https://platform.hiro.so/projects) page. Below is the screenshot of the *Hello world* project.
+Once you select a new project from the list, the selected example project will be automatically cloned and displayed on the [projects](https://platform.hiro.so) page. Below is the screenshot of the *Hello world* project.
 
 ![Hello world project](images/hello-world-project.png)
 
-Now, you can view your projects on the [projects page](https://platform.hiro.so/projects). Select the project to review the list of contracts in them. 
+Now, you can view your projects on the [projects page](https://platform.hiro.so). Select the project to review the list of contracts in them.
 
 ## Import Project from GitHub
 
@@ -47,7 +47,7 @@ The maximum project size allowed for imports is 50 MB.
 
 If you have an existing project but don't have clarity contracts in it, you can still clone the project and add clarity contracts by referring to our [clarity contract examples](contract-examples.md).
 
-Your cloned project is now displayed on the [projects page](https://platform.hiro.so/projects).
+Your cloned project is now displayed on the [projects page](https://platform.hiro.so).
 
 After your import, your project shows a list of Clarity contracts ending with `.clar` extension, as shown below. 
 

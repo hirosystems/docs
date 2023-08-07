@@ -30,9 +30,9 @@ You can now create contracts using any of the following ways.
 
 You can create a new contract for your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples/tree/main/examples/blank-project), and it is assumed that your project has no clarity contracts.
 
-1. On the [projects page](https://platform.hiro.so/projects), select the project you want to create a contract. 
-2. Then, select the *Open Editor* button. 
-3. This opens up a new tab with VS Code editor to edit your project. 
+1. On the [projects page](https://platform.hiro.so), select the project you want to create a contract.
+2. Then, select the *Open Editor* button.
+3. This opens up a new tab with VS Code editor to edit your project.
 4. Inside VS Code, you can see the project directories and files.
 5. Expand *examples* and see a directory *contracts* but no contracts are in this folder.
 6. Right-click by selecting the *contracts* folder, select *New file* and add a new contract with a name of your choice. Eg: *clarity_contract_1.clar*
@@ -53,7 +53,7 @@ Save the file. You can now deploy your contracts in your project by referring to
 
 ## Add a new contract
 
-When you are on the [projects](https://platform.hiro.so/projects) page with a list of projects, select a project with at least one contract. Select the *Open Editor* button to open your project in the VS Code editor.
+When you are on the [projects](https://platform.hiro.so) page with a list of projects, select a project with at least one contract. Select the *Open Editor* button to open your project in the VS Code editor.
 
 You can now add a new contract by following **1-7** steps in the [write new contracts](#write-new-contracts) section mentioned above in this article.
 

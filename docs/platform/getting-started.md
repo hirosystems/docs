@@ -30,7 +30,7 @@ To sign into the Hiro platform using your email address, perform the steps descr
 
 1. Enter your email in the "Email" field.
 2. Enter your password in the "Password" field.
-3. Hiro will attempt to verify your credentials. If successful, you are taken to the [projects](https://platform.hiro.so/projects/) page.
+3. Hiro will attempt to verify your credentials. If successful, you are taken to the [projects](https://platform.hiro.so/) page.
 
 Once you are signed in using any of the above methods, you can follow the create, build, deploy, and monitor sections to quickly deploy your smart contracts using the Hiro Platform.
 

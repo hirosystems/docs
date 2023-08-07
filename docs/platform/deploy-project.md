@@ -17,13 +17,13 @@ Once you have your smart contracts ready, you can deploy them to mainnet/testnet
 
 The following are the steps to deploy your contracts using the **Deploy** button.
 
-1. On the [projects page](https://platform.hiro.so/projects), select the project you want to deploy to the blockchain.
+1. On the [projects page](https://platform.hiro.so), select the project you want to deploy to the blockchain.
 2. Then, in the list of the contracts displayed for the project, select the contract you are ready to deploy.
 3. Use the *Deploy* button available on the right side of the contract.
 4. Choose the environment to deploy - *Deploy to Testnet* or *Deploy to Mainnet*.
    ![deploy to environments](images/deploy-to-environment.png)
 5. Once you choose the environment, a pop-up window opens up connecting your wallet, scroll down and select *confirm* to deploy the contract to your chosen environment.
-   
+
    ![wallet](images/connect-wallet.png)
 6. While the deployment is in progress, you will see the status as *In mempool* under the environment field for the contract.
 
@@ -38,9 +38,9 @@ The following are the steps to deploy your contracts using the **Deploy** button
 This section helps you with the steps to monitor your contract in the [Explorer](https://explorer.hiro.so/?chain=mainnet).
 
 1. You can now use the Pop-out button *View explorer* beside the *deployed* status to monitor your contract in Explorer.
-![Exporer view](images/explorer-view.png)
+![Explorer view](images/explorer-view.png)
 2. The  *view explorer* button opens up [Explorer](https://explorer.hiro.so/?chain=mainnet) to view the contract you just deployed in the mainnet/testnet environments.
-![Explorer](images/explorer.jpeg) 
+![Explorer](images/explorer.jpeg)
 3. You can check the summary of your contracts, contract details, etc., in Explorer.
 
 If you find issues with your deployment process, you can refer to the [FAQ section](faq.md) or file an issue [here](https://hiro-pbc.canny.io/hiro-platform).
