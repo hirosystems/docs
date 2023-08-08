@@ -14,7 +14,7 @@ Once you are on the [Projects page](https://platform.hiro.so/projects), select t
 
 ![Create Projects](./images/chainhook-create-project.jpeg)
 
-You'll see a navigation bar with two tabs, Contracts, and Chainhook. Select Chainhook to create a new chainhook.
+You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select Chainhooks to create a new chainhook.
 
 ![Create Chainhook Window](./images/chainhook-select-chainhook-tab.jpeg)
 
