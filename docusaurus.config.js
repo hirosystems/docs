@@ -408,20 +408,6 @@ module.exports = {
         },
       },
     ],
-   /*  [
-      'redocusaurus',
-      {
-        specs: [
-          {
-            route: '/api',
-            spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
-          },
-        ],
-        theme: {
-          primaryColor: '#FF5500',
-        },
-      },
-    ], */
   ],
 
   themeConfig:
