@@ -202,8 +202,8 @@ module.exports = {
         documents: [
             'how-to-run-chainhook-as-a-service-using-bitcoind.md',
             'how-to-run-chainhook-as-a-service-using-stacks.md',
-            'how-to-use-chainhook-with-bitcoin.md',
-            'how-to-use-chainhook-with-stacks.md',
+            'how-to-use-chainhooks-with-bitcoin.md',
+            'how-to-use-chainhooks-with-stacks.md',
         ],
       },
     ],
