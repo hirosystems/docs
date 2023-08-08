@@ -1,5 +1,5 @@
 ---
-title: Create Chainhook
+title: Create a chainhook
 ---
 
 # Create Chainhook
