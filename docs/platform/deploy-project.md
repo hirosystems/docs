@@ -17,7 +17,7 @@ Once you have your smart contracts ready, you can deploy them to mainnet/testnet
 
 The following are the steps to deploy your contracts using the **Deploy** button.
 
-1. On the [projects page](https://platform.hiro.so/projects), select the project you want to deploy to the blockchain.
+1. On the [projects page](https://platform.hiro.so), select the project you want to deploy to the blockchain.
 2. Then, in the list of the contracts displayed for the project, select the contract you are ready to deploy.
 3. Use the *Deploy* button available on the right side of the contract.
 4. Choose the environment to deploy - *Deploy to Testnet* or *Deploy to Mainnet*.

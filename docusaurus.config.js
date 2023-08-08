@@ -352,7 +352,7 @@ module.exports = {
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/',
         outDir: 'docs/token-metadata-api/feature-guides',
-        documents: ['token-metadata-api.md', 'rate-limiting.md'],
+        documents: ['metadata-api.md', 'rate-limiting.md'],
       },
     ],
     [

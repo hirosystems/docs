@@ -165,6 +165,7 @@ module.exports = {
         'platform/getting-started',
         'platform/create-project',
         'platform/build-contract',
+        'platform/create-chainhooks',
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
@@ -414,7 +415,7 @@ module.exports = {
           type: 'category',
           label: 'Feature Guides',
           items: [
-            'token-metadata-api/feature-guides/token-metadata-api',
+            'token-metadata-api/feature-guides/metadata-api',
             'token-metadata-api/feature-guides/rate-limiting',
           ],
         },
