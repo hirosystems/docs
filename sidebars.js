@@ -415,7 +415,7 @@ module.exports = {
           type: 'category',
           label: 'Feature Guides',
           items: [
-            'token-metadata-api/feature-guides/token-metadata-api',
+            'token-metadata-api/feature-guides/metadata-api',
             'token-metadata-api/feature-guides/rate-limiting',
           ],
         },
