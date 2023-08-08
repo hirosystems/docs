@@ -348,11 +348,30 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
+        name: 'remote-docs-token-metadata-api-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
+        outDir: 'docs/token-metadata-api',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
         name: 'remote-docs-token-metadata-api-feature-guides',
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/',
         outDir: 'docs/token-metadata-api/feature-guides',
-        documents: ['token-metadata-api.md', 'rate-limiting.md'],
+        documents: ['metadata-api.md', 'rate-limiting.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-token-metadata-api-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/how-to/',
+        outDir: 'docs/token-metadata-api/how-to-guides',
+        documents: ['how-to-stop-service.md', 'how-to-use-image-cache-service.md'],
       },
     ],
     [
@@ -384,8 +403,12 @@ module.exports = {
               clarinet: 'https://github.com/hirosystems/clarinet/blob/main/docs',
               explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
               'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
+              'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
               'stacks-blockchain-api':
                 'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
+              'ordinals-api': 'https://github.com/hirosystems/ordinals-api/tree/develop/docs',
+              'token-metadata-api': 'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
+              'chainhook': 'https://github.com/hirosystems/chainhook/tree/develop/docs'
             };
             const [repo, ...rem] = docPath.split('/');
             if (repo in repoUrls) {
