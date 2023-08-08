@@ -24,8 +24,8 @@ module.exports = {
           items: [
             'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind',
             'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks',
-            'chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin',
-            'chainhook/how-to-guides/how-to-use-chainhook-with-stacks',
+            'chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin',
+            'chainhook/how-to-guides/how-to-use-chainhooks-with-stacks',
           ],
         },
         'chainhook/faq',
