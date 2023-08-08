@@ -58,7 +58,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 Once you define the fields, you can select **Create a Chainhook**.
 
-The right pane navigates to the Projects page with the Chainhook tab open, and you can view the chainhook created.
+The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the chainhook created.
 
 ![Chainhook created](images/chainhook-created.jpeg)
 
