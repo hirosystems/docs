@@ -18,7 +18,7 @@ You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select Cha
 
 ![Create Chainhook Window](./images/chainhook-select-chainhook-tab.jpeg)
 
-Select the _Create chainhook_ button at the bottom of the screen.
+Select the _Create a Chainhook_ button at the bottom of the screen.
 
 ![Create Chainhook Window](./images/chainhook-create-chainhook-window.jpeg)
 
