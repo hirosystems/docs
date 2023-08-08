@@ -40,11 +40,10 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 > _**Note**_
 >
 > _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks) documents to understand the available predicates and how to use them._
->
 
-**Then-that**: This action is defaulted to `http_post` to allow the chainhook post events to the URL specified in the below option.
+**Then-that**: This action is defaulted to `http_post` to allow the chainhook to post events to the URL specified in the below option.
 
-**URL**: Specify a URL to post chainhook events using the HTTP_post method.
+**URL**: Specify a URL to post chainhook events to the HTTP_post method.
 
 **Authorization Header**: This field is optional to add a Secret to the `authorization` header when posting payloads.
 
@@ -54,7 +53,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **Expire After Occurrence**: You can specify a number greater than or equal to 1 to expire the chainhook after a specific number of occurrences. You can leave this blank if you don't want to set any limit.
 
-**Decode Clarity Values**: This is enabled by default to help you decode clarity values in your contract.
+**Decode Clarity Values**: This is enabled by default for stacks predicates to help you decode clarity values in your contract.
 
 Once you define the fields, you can select **Create a Chainhook**.
 
