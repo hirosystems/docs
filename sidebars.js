@@ -62,7 +62,7 @@ module.exports = {
             'clarinet/feature-guides/chainhooks',
             'clarinet/feature-guides/clarinet-deploy',
             'clarinet/feature-guides/clarinet-integrate',
-            
+
           ],
         },
         {
@@ -79,7 +79,7 @@ module.exports = {
             'clarinet/how-to-guides/how-to-use-deployment-plans',
             'clarinet/how-to-guides/how-to-deploy-contracts',
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
-            
+
           ],
         },
         'clarinet/troubleshooting',
@@ -156,7 +156,7 @@ module.exports = {
       items: [
         'hiro-archive/overview',
       ],
-    }, 
+    },
     {
       type: 'category',
       label: 'Hiro Platform',
@@ -175,7 +175,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Ordinals API',
+      label: 'API Ordinals',
       items: [
         {
           type: 'doc',
@@ -184,17 +184,17 @@ module.exports = {
         },
         {
           type: 'category',
-          label: 'How-to Guides',
-          items: [
-              'api/how-to-use-api-key'
-            ]
-          },
-          {
-          type: 'category',
           label: 'Feature Guides',
           items: [
             'ordinals-api/feature-guides/rate-limiting',
           ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'api/how-to-use-api-key'
+          ]
         },
         {
           type: 'category',
@@ -221,7 +221,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Stacks Blockchain API',
+      label: 'API Stacks Blockchain',
       items: [
         {
           type: 'doc',
@@ -245,28 +245,28 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
             'stacks-blockchain-api/feature-guides/gaia-storage',
             'stacks-blockchain-api/feature-guides/transactions',
-            
+
           ]
-          },
-            {
-              type: 'category',
-              label: 'How-to Guides',
-              items: [
-                'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
-                'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
-                'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
-                'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
-                'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-                'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
-                'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
-                'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
-                'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
-                'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
-                'api/how-to-use-api-key'
-              ]
-              },
-              'stacks-blockchain-api/troubleshooting',
-              'stacks-blockchain-api/faqs',
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
+            'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
+            'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
+            'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
+            'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
+            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
+            'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
+            'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
+            'api/how-to-use-api-key'
+          ]
+        },
+        'stacks-blockchain-api/troubleshooting',
+        'stacks-blockchain-api/faqs',
         {
           type: 'category',
           label: 'Developer Resources',
@@ -402,15 +402,10 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Token Metadata API',
+      label: 'API Token Metadata',
       items: [
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'api/how-to-use-api-key'
-          ]
-        },
+        'token-metadata-api/overview',
+        'token-metadata-api/getting-started',
         {
           type: 'category',
           label: 'Feature Guides',
@@ -418,6 +413,15 @@ module.exports = {
             'token-metadata-api/feature-guides/metadata-api',
             'token-metadata-api/feature-guides/rate-limiting',
           ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
+            'token-metadata-api/how-to-guides/how-to-stop-service',
+            'api/how-to-use-api-key',
+          ]
         },
       ],
     },
