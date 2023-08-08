@@ -10,7 +10,7 @@ This guide helps you create a chainhook using the [Hiro Platform](https://platfo
 
 Login to the [Hiro Platform](getting-started.md) and create or import a project by following [this](https://docs.hiro.so/platform/create-project) guide. Next, you can follow the steps below to create a chainhook.
 
-Once you are on the [Projects page](https://platform.hiro.so/projects), select the project to create a chainhook.
+Once you are on the [Projects page](https://platform.hiro.so), select the project to create a chainhook.
 
 ![Create Projects](./images/chainhook-create-project.jpeg)
 
