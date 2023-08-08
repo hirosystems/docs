@@ -165,6 +165,7 @@ module.exports = {
         'platform/getting-started',
         'platform/create-project',
         'platform/build-contract',
+        'platform/create-chainhooks',
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
