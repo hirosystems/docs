@@ -56,7 +56,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **Decode Clarity Values**: This is enabled by default to help you decode clarity values in your contract.
 
-Once you define the fields, you can select **Create chainhook**.
+Once you define the fields, you can select **Create a Chainhook**.
 
 The right pane navigates to the Projects page with the Chainhook tab open, and you can view the chainhook created.
 
