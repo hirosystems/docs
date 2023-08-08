@@ -1,5 +1,5 @@
 ---
-title: Create a chainhook
+title: Create Chainhook
 ---
 
 # Create Chainhook
@@ -14,11 +14,11 @@ Once you are on the [Projects page](https://platform.hiro.so), select the projec
 
 ![Create Projects](./images/chainhook-create-project.jpeg)
 
-You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select Chainhooks to create a new chainhook.
+You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select _Chainhooks_ to create a new chainhook.
 
 ![Create Chainhook Window](./images/chainhook-select-chainhook-tab.jpeg)
 
-Select the _Create a Chainhook_ button at the bottom of the screen.
+Select the _Create chainhook_ button at the bottom of the screen.
 
 ![Create Chainhook Window](./images/chainhook-create-chainhook-window.jpeg)
 
@@ -39,8 +39,8 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 > _**Note**_
 >
-> _Refer to the following documents to understand the available predicates and how to use them._
-> [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
+> _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks) documents to understand the available predicates and how to use them._
+>
 
 **Then-that**: This action is defaulted to `http_post` to allow the chainhook post events to the URL specified in the below option.
 
