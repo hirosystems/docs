@@ -28,7 +28,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **Chain**: Select between Bitcoin and Stacks to create a chainhook.
 
-**Network**: Choose a network between `mainnet` and `testnet` to observe for events 
+**Network**: Choose a network between `mainnet` and `testnet` to observe for events.
 
 **If-this**: Based on the selected chain, you will see a list of available scopes for the `If-this` condition.
 
@@ -55,7 +55,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **Decode Clarity Values**: This is enabled by default for stacks predicates to help you decode clarity values in your contract.
 
-Once you define the fields, you can select **Create a Chainhook**.
+Once you define the fields, you can select **Create Chainhook**.
 
 The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the chainhook created.
 
