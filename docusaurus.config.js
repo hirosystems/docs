@@ -631,5 +631,8 @@ module.exports = {
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },
+      hostnameAliases: {
+        'https://docs.hiro.so': 'docs.hiro.so'
+      },
     }),
 };
