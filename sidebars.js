@@ -24,8 +24,8 @@ module.exports = {
           items: [
             'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind',
             'chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks',
-            'chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin',
-            'chainhook/how-to-guides/how-to-use-chainhook-with-stacks',
+            'chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin',
+            'chainhook/how-to-guides/how-to-use-chainhooks-with-stacks',
           ],
         },
         'chainhook/faq',
@@ -62,7 +62,7 @@ module.exports = {
             'clarinet/feature-guides/chainhooks',
             'clarinet/feature-guides/clarinet-deploy',
             'clarinet/feature-guides/clarinet-integrate',
-            
+
           ],
         },
         {
@@ -79,7 +79,7 @@ module.exports = {
             'clarinet/how-to-guides/how-to-use-deployment-plans',
             'clarinet/how-to-guides/how-to-deploy-contracts',
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
-            
+
           ],
         },
         'clarinet/troubleshooting',
@@ -156,7 +156,7 @@ module.exports = {
       items: [
         'hiro-archive/overview',
       ],
-    }, 
+    },
     {
       type: 'category',
       label: 'Hiro Platform',
@@ -165,6 +165,7 @@ module.exports = {
         'platform/getting-started',
         'platform/create-project',
         'platform/build-contract',
+        'platform/create-chainhooks',
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
@@ -174,21 +175,26 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Ordinals API',
+      label: 'API Ordinals',
       items: [
         {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-              'api/how-to-use-api-key'
-            ]
-          },
-          {
+          type: 'doc',
+          label: 'Overview',
+          id: 'ordinals-api/overview'
+        },
+        {
           type: 'category',
           label: 'Feature Guides',
           items: [
             'ordinals-api/feature-guides/rate-limiting',
           ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'api/how-to-use-api-key'
+          ]
         },
         {
           type: 'category',
@@ -215,7 +221,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Stacks Blockchain API',
+      label: 'API Stacks Blockchain',
       items: [
         {
           type: 'doc',
@@ -239,28 +245,28 @@ module.exports = {
             'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
             'stacks-blockchain-api/feature-guides/gaia-storage',
             'stacks-blockchain-api/feature-guides/transactions',
-            
+
           ]
-          },
-            {
-              type: 'category',
-              label: 'How-to Guides',
-              items: [
-                'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
-                'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
-                'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
-                'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
-                'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-                'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
-                'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
-                'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
-                'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
-                'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
-                'api/how-to-use-api-key'
-              ]
-              },
-              'stacks-blockchain-api/troubleshooting',
-              'stacks-blockchain-api/faqs',
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
+            'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
+            'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
+            'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
+            'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
+            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
+            'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
+            'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
+            'api/how-to-use-api-key'
+          ]
+        },
+        'stacks-blockchain-api/troubleshooting',
+        'stacks-blockchain-api/faqs',
         {
           type: 'category',
           label: 'Developer Resources',
@@ -308,6 +314,7 @@ module.exports = {
             'stacks.js/feature-guides/sign-messages',
             'stacks.js/feature-guides/sign-transactions',
             'stacks.js/feature-guides/store-data-securely',
+            'stacks.js/feature-guides/update-profile',
           ],
         },
         {
@@ -395,29 +402,28 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Token Metadata API',
+      label: 'API Token Metadata',
       items: [
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'api/how-to-use-api-key'
-          ]
-        },
+        'token-metadata-api/overview',
+        'token-metadata-api/getting-started',
         {
           type: 'category',
           label: 'Feature Guides',
           items: [
-            'token-metadata-api/feature-guides/token-metadata-api',
+            'token-metadata-api/feature-guides/metadata-api',
             'token-metadata-api/feature-guides/rate-limiting',
           ],
         },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
+            'token-metadata-api/how-to-guides/how-to-stop-service',
+            'api/how-to-use-api-key',
+          ]
+        },
       ],
-    },
-    {
-      type: 'doc',
-      label: 'Stacks 2.1 Upgrades',
-      id: 'stacks-2.1-upgrades',
     },
     {
       type: 'category',

@@ -110,7 +110,12 @@ module.exports = {
         name: 'remote-docs-stx-js-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
         outDir: 'docs/stacks.js',
-        documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
+        documents: [
+          'faq.md',
+          'getting-started.md',
+          'overview.md',
+          'troubleshooting.md',
+        ],
       },
     ],
     [
@@ -134,6 +139,7 @@ module.exports = {
           'sign-messages.md',
           'sign-transactions.md',
           'store-data-securely.md',
+          'update-profile.md',
         ],
       },
     ],
@@ -210,10 +216,10 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
         outDir: 'docs/chainhook/how-to-guides',
         documents: [
-          'how-to-run-chainhook-as-a-service-using-bitcoind.md',
-          'how-to-run-chainhook-as-a-service-using-stacks.md',
-          'how-to-use-chainhook-with-bitcoin.md',
-          'how-to-use-chainhook-with-stacks.md',
+            'how-to-run-chainhook-as-a-service-using-bitcoind.md',
+            'how-to-run-chainhook-as-a-service-using-stacks.md',
+            'how-to-use-chainhooks-with-bitcoin.md',
+            'how-to-use-chainhooks-with-stacks.md',
         ],
       },
     ],
@@ -231,6 +237,15 @@ module.exports = {
           accept: 'image*',
           'Content-Type': 'image/jpeg',
         },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordinals-api-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordinals-api/develop/docs/',
+        outDir: 'docs/ordinals-api',
+        documents: ['overview.md'],
       },
     ],
     [
@@ -350,11 +365,30 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
+        name: 'remote-docs-token-metadata-api-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
+        outDir: 'docs/token-metadata-api',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
         name: 'remote-docs-token-metadata-api-feature-guides',
         sourceBaseUrl:
           'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/',
         outDir: 'docs/token-metadata-api/feature-guides',
-        documents: ['token-metadata-api.md', 'rate-limiting.md'],
+        documents: ['metadata-api.md', 'rate-limiting.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-token-metadata-api-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/how-to/',
+        outDir: 'docs/token-metadata-api/how-to-guides',
+        documents: ['how-to-stop-service.md', 'how-to-use-image-cache-service.md'],
       },
     ],
     [
@@ -390,8 +424,12 @@ module.exports = {
               clarinet: 'https://github.com/hirosystems/clarinet/blob/main/docs',
               explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
               'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
+              'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
               'stacks-blockchain-api':
                 'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
+              'ordinals-api': 'https://github.com/hirosystems/ordinals-api/tree/develop/docs',
+              'token-metadata-api': 'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
+              'chainhook': 'https://github.com/hirosystems/chainhook/tree/develop/docs'
             };
             const [repo, ...rem] = docPath.split('/');
             if (repo in repoUrls) {
