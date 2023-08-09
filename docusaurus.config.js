@@ -20,6 +20,22 @@ module.exports = {
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
     [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'ordinals',
+        path: 'openapi/ordinals-api.json',
+        routeBasePath: '/ordinals',
+      },
+    ],
+    [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'stx-blockchain',
+        path: 'openapi/stacks-blockchain-api.json',
+        routeBasePath: '/api',
+      },
+    ],
+    [
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-blockchain-api-docs',
@@ -211,7 +227,8 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-chainhook-images',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
         outDir: 'docs/chainhook/images/',
         documents: ['chainhook-post-request.jpeg'],
         requestConfig: { responseType: 'arraybuffer' },
@@ -392,9 +409,13 @@ module.exports = {
   ],
   presets: [
     [
-      '@docusaurus/preset-classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
+      'docusaurus-preset-openapi',
+      /** @type {import('docusaurus-preset-openapi').Options} */
       {
+        api: {
+          path: 'openapi/token-metadata-api.json',
+          routeBasePath: '/metadata',
+        },
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
 
@@ -422,28 +443,6 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
-        },
-      },
-    ],
-    [
-      'redocusaurus',
-      {
-        specs: [
-          {
-            route: '/api/',
-            spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
-          },
-          {
-            route: '/ordinals',
-            spec: 'https://ordinals-api.vercel.app/openapi.yaml',
-          },
-          {
-            route: '/metadata',
-            spec: 'https://token-metadata-api.vercel.app/openapi.yaml',
-          },
-        ],
-        theme: {
-          primaryColor: '#FF5500',
         },
       },
     ],
