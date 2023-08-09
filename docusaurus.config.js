@@ -655,7 +655,7 @@ module.exports = {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },
       hostnameAliases: {
-        'https://docs.hiro.so': 'docs.hiro.so'
+        'https://docs.hiro.so': 'https://deploy-preview-427--docs-hiro.netlify.app'
       },
     }),
 };
