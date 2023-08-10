@@ -5,19 +5,19 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Maximize your Web3 development efficiency and productivity by leveraging the provided resources.",
+    text: "Explore API references, feature guides, and tutorials to integrate Stacks and Ordinals into your application. Start here:",
     links: [
       {
-        text: 'Web-hosted contract development using the Hiro Platform',
-        href: 'https://platform.hiro.so/',
-      },
-      {
-        text: 'JS Client for the Stacks Blockchain API',
+        text: 'Stacks Blockchain API Client',
         href: 'https://hirosystems.github.io/stacks-blockchain-api/client/',
       },
       {
-        text: 'JavaScript project templates',
-        href: '/stacksjs-starters',
+        text: 'Stacks.js starters',
+        href: 'https://docs.hiro.so/stacksjs-starters',
+      },
+      {
+        text: 'Sign in to Hiro Platform',
+        href: 'https://platform.hiro.so/',
       },
     ],
   },
