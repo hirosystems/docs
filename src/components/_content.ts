@@ -5,19 +5,19 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Get started with the following guides to set up and use Hiro's products.",
+    text: "Explore API references, feature guides, and tutorials to integrate Stacks and Ordinals into your application. Start here:",
     links: [
-      {
-        text: 'Hiro Platform',
-        href: 'https://platform.hiro.so/',
-      },
       {
         text: 'Stacks Blockchain API Client',
         href: 'https://hirosystems.github.io/stacks-blockchain-api/client/',
       },
       {
         text: 'Stacks.js starters',
-        href: '/stacksjs-starters',
+        href: 'https://docs.hiro.so/stacksjs-starters',
+      },
+      {
+        text: 'Sign to Hiro Platform',
+        href: 'https://platform.hiro.so',
       },
     ],
   },
