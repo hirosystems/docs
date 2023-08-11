@@ -94,6 +94,6 @@ Use the ellipse on the chainhook row to delete the chainhook. You will see a con
 ## References
 
 - [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin)
-- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
+- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks)
 - [Run chainhook as a service using Bitcoind](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind)
 - [Run chainhook as a service using Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks)
