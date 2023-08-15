@@ -42,12 +42,12 @@ export default {
         },
       },
       {
-        title: 'What is Clarinet?',
-        text: 'Clarinet is a command line tool for Clarity smart contract development.',
-        href: '/clarinet/introduction',
+        title: 'Ordinals API',
+        text: 'Ordinals API is a REST-based service that indexes Bitcoin inscriptions based on Ordinal theory. The API supports Auto-scaling and Etag caching.',
+        href: '/ordinals-api/overview',
         image: {
-          src: '/img/landing/clarinet.png',
-          alt: 'sBTC illustration image',
+          src: '/img/landing/ordinals-api.png',
+          alt: 'Ordinals API',
         },
       },
       {
@@ -62,6 +62,32 @@ export default {
     ],
   },
   sections: [
+    {
+      title: 'Chainhook',
+      image: {
+        src: '/img/landing/chainhooks-icon.svg',
+        alt: 'Chainhook logo',
+      },
+      description:
+        'Chainhook helps you get reliable blockchain data, regardless of forks and reorgs, and enables you to create triggers that respond to on-chain events in real time, using IFTTT (if_this, then_that) logic.',
+      subSections: [
+        {
+          title: 'Getting started',
+          link: '/chainhook/getting-started',
+          description: 'Get started to install Chainhook from the source.',
+        },
+        {
+          title: 'How-to guides',
+          link: '/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin',
+          description: 'Explore the how-to guides of Chainhook.',
+        },
+        {
+          title: 'FAQ',
+          link: '/chainhook/faq',
+          description: 'Explore our frequently asked questions to address common queries.',
+        },
+      ],
+    },
     {
       title: 'Clarinet',
       image: {
@@ -105,7 +131,7 @@ export default {
         {
           title: 'Feature guides',
           link: '/stacks-blockchain-api/feature-guides/microblocks',
-          description: 'Explore Stacks Blockchain API features.',
+          description: 'Explore the features of Stacks Blockchain API.',
         },
         {
           title: 'Troubleshooting',

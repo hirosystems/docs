@@ -28,8 +28,7 @@ In this tutorial you will:
 For this tutorial, you should have a local installation of Clarinet. Refer to [Installing Clarinet][] for instructions
 on how to set up your local environment. You should also have a text editor or IDE to edit the Clarity smart contract.
 
-Note that you could also complete the coding portion of this tutorial in an online REPL such as [clarity.tools][]. If
-you are using the online REPL, you can skip to [step 3][] of the tutorial and enter the code into the sandbox.
+If you are using the online REPL, you can skip to step 3 of the tutorial and enter the code into the sandbox.
 
 If you are using Visual Studio Code, you may want to install the [Clarity Visual Studio Code plugin][].
 
@@ -254,7 +253,6 @@ the strengths of performing local development without having to wait for block t
 
 [clarinet]: /smart-contracts/clarinet
 [installing clarinet]: /smart-contracts/clarinet#installing-clarinet
-[clarity.tools]: https://clarity.tools
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
 [testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
