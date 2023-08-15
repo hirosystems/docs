@@ -630,26 +630,14 @@ module.exports = {
       //Algolio docsearch support
       algolia: {
         // The application ID provided by Algolia
-        appId: "WS3KPDA1LJ",
+        appId: UL2NZRAK8K,
 
         // Public API key: it is safe to commit it
-        apiKey: "e2a20acb668b5f3ecb3adc611ee4e6e5",
+        apiKey: "2b7f4af4606380e8e9d4a39aa9a4237f",
 
-        indexName: "netlify_d6cb4f8e-1222-4919-9d0b-53db3e321fc2_algolia-implementation_all",
-
-        // Optional: see doc section below
+        indexName: "hiro",
         contextualSearch: true,
-
-        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-        //externalUrlRegex: 'external\\.com|domain\\.com',
-
-        // Optional: Algolia search parameters
-        //searchParameters: {},
-
-        // Optional: path for search page that enabled by default (`false` to disable it)
         searchPagePath: "search",
-
-        //... other Algolia params
       },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
