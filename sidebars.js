@@ -193,7 +193,7 @@ module.exports = {
           type: 'category',
           label: 'How-to Guides',
           items: [
-            'api/how-to-use-api-key'
+            'how-to-use-api-key'
           ]
         },
         {
@@ -262,7 +262,7 @@ module.exports = {
             'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
             'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
             'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
-            'api/how-to-use-api-key'
+            'how-to-use-api-key'
           ]
         },
         'stacks-blockchain-api/troubleshooting',
@@ -420,7 +420,7 @@ module.exports = {
           items: [
             'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
             'token-metadata-api/how-to-guides/how-to-stop-service',
-            'api/how-to-use-api-key',
+            'how-to-use-api-key',
           ]
         },
       ],
