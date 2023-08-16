@@ -423,6 +423,27 @@ module.exports = {
             'how-to-use-api-key',
           ]
         },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Discord #api',
+              href: 'https://discord.com/channels/621759717756370964/909867922971820102',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Token+Metadata+API',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/watch?v=Hejsz-pivM4',
+            },
+          ],
+        },
       ],
     },
     {
