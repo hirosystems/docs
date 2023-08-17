@@ -55,7 +55,17 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **Decode Clarity Values**: This is enabled by default for stacks predicates to help you decode clarity values in your contract.
 
-Once you define the fields, you can select **Create Chainhook**.
+You'll see the following options for Bitcoin chain,
+
+**Include Proof**: Enable this option when you have evidence that the transaction or block has been verified and authorized by the sender using their private key. This proof is generally a cryptographic signature to a transaction or block on the Bitcoin blockchain.
+
+**Include Inputs**: Enable this option to include Bitcoin transaction inputs in the payload. In a Bitcoin transaction, inputs are references to previous transactions' outputs (also known as unspent transaction outputs or UTXOs) that are being spent in the current transaction. These inputs provide evidence that the sender has the right to spend the funds.
+
+**Include Outputs**: Enable this option to include Bitcoin transaction outputs in the payload. Including outputs in a Bitcoin transaction refers to specifying the destinations and amounts of Bitcoin being sent as part of a transaction. Outputs in a Bitcoin transaction represent the recipients' addresses and the corresponding amounts of Bitcoin they are receiving.
+
+**Include Witness**: Enable this option to include Bitcoin transaction witness in the payload. The witness data for a transaction includes the cryptographic signatures and other related information placed alongside the transaction data in the block.
+
+Once you define the all the required fields, you can select **Create Chainhook**.
 
 The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the chainhook created.
 
