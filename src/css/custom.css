@@ -257,6 +257,22 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   display: none;
 }
 
+/* SIDEBAR & NAVBAR ========================================================= */
+.section-title {
+  color: var(--ifm-color-gray-600);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding-bottom: 0 !important;
+}
+
+.dropdown__menu .section-title {
+  padding: 0.5rem 0.375rem 0;
+}
+
+.dropdown__link {
+  margin-top: 0;
+}
+
 /* FEEDBACK ================================================================= */
 /* MIT Copyright Meta */
 /* Adapted from https://github.com/facebook/react-native-website/blob/c9cb19e4061b403794492eee4981750c6542e974/website/src/css/customTheme.scss#L1665-L1712 */
