@@ -13,6 +13,165 @@ module.exports = {
   docs: [
     'intro',
     {
+      type: 'html',
+      value: 'APIs',
+      className: 'section-title',
+      defaultStyle: true,
+    },
+    {
+      type: 'category',
+      label: 'Ordinals API',
+      items: [
+        {
+          type: 'doc',
+          label: 'Overview',
+          id: 'ordinals-api/overview',
+        },
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: ['ordinals-api/feature-guides/rate-limiting'],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: ['how-to-use-api-key'],
+        },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Discord #ordinals',
+              href: 'https://discord.com/channels/621759717756370964/1101164749984649256',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=Ordinals',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/watch?v=p1clYRMkaFI',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Stacks Blockchain API',
+      items: [
+        {
+          type: 'doc',
+          label: 'Overview',
+          id: 'stacks-blockchain-api/overview',
+        },
+        'stacks-blockchain-api/getting-started',
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'stacks-blockchain-api/feature-guides/microblocks',
+            'stacks-blockchain-api/feature-guides/nonce-handling',
+            'stacks-blockchain-api/feature-guides/openapi-spec',
+            'stacks-blockchain-api/feature-guides/pagination',
+            'stacks-blockchain-api/feature-guides/rate-limiting',
+            'stacks-blockchain-api/feature-guides/requesting-proofs',
+            'stacks-blockchain-api/feature-guides/rosetta-support',
+            'stacks-blockchain-api/feature-guides/search-endpoint',
+            'stacks-blockchain-api/feature-guides/use-clarity-values',
+            'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
+            'stacks-blockchain-api/feature-guides/gaia-storage',
+            'stacks-blockchain-api/feature-guides/transactions',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
+            'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
+            'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
+            'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
+            'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
+            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
+            'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
+            'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
+            'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
+            'how-to-use-api-key',
+          ],
+        },
+        'stacks-blockchain-api/troubleshooting',
+        'stacks-blockchain-api/faqs',
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Stacks Blockchain JS Client API Reference',
+              href: 'https://hirosystems.github.io/stacks-blockchain-api/client',
+            },
+            {
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/stacks-blockchain-api',
+            },
+            {
+              type: 'link',
+              label: 'Discord #api',
+              href: 'https://discord.com/channels/621759717756370964/909867922971820102',
+            },
+            {
+              type: 'link',
+              label: 'Blogs',
+              href: 'https://www.hiro.so/search?query=blockchain-api',
+            },
+            {
+              type: 'link',
+              label: 'Videos',
+              href: 'https://www.youtube.com/c/HiroSystems/search?query=API',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Token Metadata API',
+      items: [
+        'token-metadata-api/overview',
+        'token-metadata-api/getting-started',
+        {
+          type: 'category',
+          label: 'Feature Guides',
+          items: [
+            'token-metadata-api/feature-guides/metadata-api',
+            'token-metadata-api/feature-guides/rate-limiting',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
+            'token-metadata-api/how-to-guides/how-to-stop-service',
+            'how-to-use-api-key',
+          ],
+        },
+      ],
+    },
+    {
+      type: 'html',
+      value: 'PRODUCTS',
+      className: 'section-title',
+      defaultStyle: true,
+    },
+    {
       type: 'category',
       label: 'Chainhook',
       items: [
@@ -62,7 +221,6 @@ module.exports = {
             'clarinet/feature-guides/chainhooks',
             'clarinet/feature-guides/clarinet-deploy',
             'clarinet/feature-guides/clarinet-integrate',
-
           ],
         },
         {
@@ -79,7 +237,6 @@ module.exports = {
             'clarinet/how-to-guides/how-to-use-deployment-plans',
             'clarinet/how-to-guides/how-to-deploy-contracts',
             'clarinet/how-to-guides/how-to-deploy-with-subnets',
-
           ],
         },
         'clarinet/troubleshooting',
@@ -119,7 +276,7 @@ module.exports = {
         {
           type: 'doc',
           label: 'Overview',
-          id: 'explorer/overview'
+          id: 'explorer/overview',
         },
         'explorer/getting-started',
         {
@@ -153,9 +310,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Hiro Archive',
-      items: [
-        'hiro-archive/overview',
-      ],
+      items: ['hiro-archive/overview'],
     },
     {
       type: 'category',
@@ -171,133 +326,6 @@ module.exports = {
         'platform/archive-project',
         'platform/contract-examples',
         'platform/faq',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'API Ordinals',
-      items: [
-        {
-          type: 'doc',
-          label: 'Overview',
-          id: 'ordinals-api/overview'
-        },
-        {
-          type: 'category',
-          label: 'Feature Guides',
-          items: [
-            'ordinals-api/feature-guides/rate-limiting',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'how-to-use-api-key'
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Developer Resources',
-          items: [
-            {
-              type: 'link',
-              label: 'Discord #ordinals',
-              href: 'https://discord.com/channels/621759717756370964/1101164749984649256',
-            },
-            {
-              type: 'link',
-              label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=Ordinals',
-            },
-            {
-              type: 'link',
-              label: 'Videos',
-              href: 'https://www.youtube.com/watch?v=p1clYRMkaFI',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: 'category',
-      label: 'API Stacks Blockchain',
-      items: [
-        {
-          type: 'doc',
-          label: 'Overview',
-          id: 'stacks-blockchain-api/overview'
-        },
-        'stacks-blockchain-api/getting-started',
-        {
-          type: 'category',
-          label: 'Feature Guides',
-          items: [
-            'stacks-blockchain-api/feature-guides/microblocks',
-            'stacks-blockchain-api/feature-guides/nonce-handling',
-            'stacks-blockchain-api/feature-guides/openapi-spec',
-            'stacks-blockchain-api/feature-guides/pagination',
-            'stacks-blockchain-api/feature-guides/rate-limiting',
-            'stacks-blockchain-api/feature-guides/requesting-proofs',
-            'stacks-blockchain-api/feature-guides/rosetta-support',
-            'stacks-blockchain-api/feature-guides/search-endpoint',
-            'stacks-blockchain-api/feature-guides/use-clarity-values',
-            'stacks-blockchain-api/feature-guides/use-stacks-blockchain-api',
-            'stacks-blockchain-api/feature-guides/gaia-storage',
-            'stacks-blockchain-api/feature-guides/transactions',
-
-          ]
-        },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'stacks-blockchain-api/how-to-guides/how-to-install-stacks-cli',
-            'stacks-blockchain-api/how-to-guides/how-to-run-api-node',
-            'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
-            'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
-            'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
-            'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
-            'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
-            'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
-            'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
-            'how-to-use-api-key'
-          ]
-        },
-        'stacks-blockchain-api/troubleshooting',
-        'stacks-blockchain-api/faqs',
-        {
-          type: 'category',
-          label: 'Developer Resources',
-          items: [
-            {
-              type: 'link',
-              label: 'Stacks Blockchain JS Client API Reference',
-              href: 'https://hirosystems.github.io/stacks-blockchain-api/client',
-            },
-            {
-              type: 'link',
-              label: 'Contribution Guidelines',
-              href: 'https://github.com/hirosystems/stacks-blockchain-api',
-            },
-            {
-              type: 'link',
-              label: 'Discord #api',
-              href: 'https://discord.com/channels/621759717756370964/909867922971820102',
-            },
-            {
-              type: 'link',
-              label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=blockchain-api',
-            },
-            {
-              type: 'link',
-              label: 'Videos',
-              href: 'https://www.youtube.com/c/HiroSystems/search?query=API',
-            },
-          ],
-        },
       ],
     },
     {
@@ -401,54 +429,14 @@ module.exports = {
       ],
     },
     {
-      type: 'category',
-      label: 'API Token Metadata',
-      items: [
-        'token-metadata-api/overview',
-        'token-metadata-api/getting-started',
-        {
-          type: 'category',
-          label: 'Feature Guides',
-          items: [
-            'token-metadata-api/feature-guides/metadata-api',
-            'token-metadata-api/feature-guides/rate-limiting',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
-            'token-metadata-api/how-to-guides/how-to-stop-service',
-            'how-to-use-api-key',
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Developer Resources',
-          items: [
-            {
-              type: 'link',
-              label: 'Discord #api',
-              href: 'https://discord.com/channels/621759717756370964/909867922971820102',
-            },
-            {
-              type: 'link',
-              label: 'Blogs',
-              href: 'https://www.hiro.so/search?query=Token+Metadata+API',
-            },
-            {
-              type: 'link',
-              label: 'Videos',
-              href: 'https://www.youtube.com/watch?v=Hejsz-pivM4',
-            },
-          ],
-        },
-      ],
+      type: 'html',
+      value: 'OTHER',
+      className: 'section-title',
+      defaultStyle: true,
     },
     {
       type: 'category',
-      label: 'Product Change Logs',
+      label: 'Hiro Change Log',
       items: [
         {
           type: 'link',

@@ -110,12 +110,7 @@ module.exports = {
         name: 'remote-docs-stx-js-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
         outDir: 'docs/stacks.js',
-        documents: [
-          'faq.md',
-          'getting-started.md',
-          'overview.md',
-          'troubleshooting.md',
-        ],
+        documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
       },
     ],
     [
@@ -216,10 +211,10 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
         outDir: 'docs/chainhook/how-to-guides',
         documents: [
-            'how-to-run-chainhook-as-a-service-using-bitcoind.md',
-            'how-to-run-chainhook-as-a-service-using-stacks.md',
-            'how-to-use-chainhooks-with-bitcoin.md',
-            'how-to-use-chainhooks-with-stacks.md',
+          'how-to-run-chainhook-as-a-service-using-bitcoind.md',
+          'how-to-run-chainhook-as-a-service-using-stacks.md',
+          'how-to-use-chainhooks-with-bitcoin.md',
+          'how-to-use-chainhooks-with-stacks.md',
         ],
       },
     ],
@@ -366,7 +361,8 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-token-metadata-api-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
         outDir: 'docs/token-metadata-api',
         documents: ['getting-started.md', 'overview.md'],
       },
@@ -428,8 +424,9 @@ module.exports = {
               'stacks-blockchain-api':
                 'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
               'ordinals-api': 'https://github.com/hirosystems/ordinals-api/tree/develop/docs',
-              'token-metadata-api': 'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
-              'chainhook': 'https://github.com/hirosystems/chainhook/tree/develop/docs'
+              'token-metadata-api':
+                'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
+              chainhook: 'https://github.com/hirosystems/chainhook/tree/develop/docs',
             };
             const [repo, ...rem] = docPath.split('/');
             if (repo in repoUrls) {
@@ -466,16 +463,26 @@ module.exports = {
             position: 'right',
             items: [
               {
-                label: 'Stacks Blockchain API',
-                to: '/api',
+                type: 'html',
+                value: 'APIs',
+                className: 'section-title',
               },
               {
                 label: 'Ordinals API',
                 to: '/ordinals',
               },
               {
+                label: 'Stacks Blockchain API',
+                to: '/api',
+              },
+              {
                 label: 'Token Metadata API',
                 to: '/metadata',
+              },
+              {
+                type: 'html',
+                value: 'OTHER',
+                className: 'section-title',
               },
               {
                 label: 'Stacks CLI',
