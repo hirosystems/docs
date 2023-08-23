@@ -13,7 +13,7 @@ This article helps you create/build contracts using the [Hiro Platform](https://
 
 :::tip
 
-If you are new to Clarity programming, please try [Clarity Camp](https://learn.stacks.org/course/clarity-camp).
+If you are new to Clarity programming, please try the [Bitcoin Builders Primer](https://start.bitcoinprimer.dev/).
 
 :::
 
