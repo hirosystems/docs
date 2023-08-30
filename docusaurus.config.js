@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
+    ['./src/_plugins/alltius', { id: 'alltius' }],
     [
       'docusaurus-plugin-openapi',
       {
