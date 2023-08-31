@@ -164,10 +164,17 @@ table {
   margin-top: 3px;
   margin-left: 18px;
 }
-/* REDOCUSAURUS ============================================================= */
-.redocusaurus .menu-content {
-  top: 60px !important;
-  height: calc(100vh - 60px) !important;
+/* INTERACTIVE OPEN API ===================================================== */
+.badge--secondary {
+  color: var(--ifm-color-white);
+}
+
+html[data-theme='dark'] .badge--secondary {
+  color: var(--ifm-color-black);
+}
+
+main[class^='apiMainContainer_'] table {
+  table-layout: fixed;
 }
 
 /* SEARCH PLUGIN ============================================================ */
@@ -248,6 +255,22 @@ table {
 /* reduce img shift with color mode mismatch (on refresh in dark mode) */
 html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   display: none;
+}
+
+/* SIDEBAR & NAVBAR ========================================================= */
+.section-title {
+  color: var(--ifm-color-gray-600);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding-bottom: 0 !important;
+}
+
+.dropdown__menu .section-title {
+  padding: 0.5rem 0.375rem 0;
+}
+
+.dropdown__link {
+  margin-top: 0;
 }
 
 /* FEEDBACK ================================================================= */

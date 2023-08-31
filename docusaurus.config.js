@@ -20,6 +20,22 @@ module.exports = {
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
     [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'ordinals',
+        path: 'openapi/ordinals-api.json',
+        routeBasePath: '/ordinals',
+      },
+    ],
+    [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'stx-blockchain',
+        path: 'openapi/stacks-blockchain-api.json',
+        routeBasePath: '/api',
+      },
+    ],
+    [
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-blockchain-api-docs',
@@ -94,12 +110,7 @@ module.exports = {
         name: 'remote-docs-stx-js-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
         outDir: 'docs/stacks.js',
-        documents: [
-          'faq.md',
-          'getting-started.md',
-          'overview.md',
-          'troubleshooting.md',
-        ],
+        documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
       },
     ],
     [
@@ -200,10 +211,10 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
         outDir: 'docs/chainhook/how-to-guides',
         documents: [
-            'how-to-run-chainhook-as-a-service-using-bitcoind.md',
-            'how-to-run-chainhook-as-a-service-using-stacks.md',
-            'how-to-use-chainhooks-with-bitcoin.md',
-            'how-to-use-chainhooks-with-stacks.md',
+          'how-to-run-chainhook-as-a-service-using-bitcoind.md',
+          'how-to-run-chainhook-as-a-service-using-stacks.md',
+          'how-to-use-chainhooks-with-bitcoin.md',
+          'how-to-use-chainhooks-with-stacks.md',
         ],
       },
     ],
@@ -211,7 +222,8 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-chainhook-images',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
         outDir: 'docs/chainhook/images/',
         documents: ['chainhook-post-request.jpeg'],
         requestConfig: { responseType: 'arraybuffer' },
@@ -349,7 +361,8 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-token-metadata-api-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
         outDir: 'docs/token-metadata-api',
         documents: ['getting-started.md', 'overview.md'],
       },
@@ -392,9 +405,13 @@ module.exports = {
   ],
   presets: [
     [
-      '@docusaurus/preset-classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
+      'docusaurus-preset-openapi',
+      /** @type {import('docusaurus-preset-openapi').Options} */
       {
+        api: {
+          path: 'openapi/token-metadata-api.json',
+          routeBasePath: '/metadata',
+        },
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
 
@@ -407,8 +424,9 @@ module.exports = {
               'stacks-blockchain-api':
                 'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
               'ordinals-api': 'https://github.com/hirosystems/ordinals-api/tree/develop/docs',
-              'token-metadata-api': 'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
-              'chainhook': 'https://github.com/hirosystems/chainhook/tree/develop/docs'
+              'token-metadata-api':
+                'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
+              chainhook: 'https://github.com/hirosystems/chainhook/tree/develop/docs',
             };
             const [repo, ...rem] = docPath.split('/');
             if (repo in repoUrls) {
@@ -422,28 +440,6 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
-        },
-      },
-    ],
-    [
-      'redocusaurus',
-      {
-        specs: [
-          {
-            route: '/api/',
-            spec: 'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/gh-pages/openapi.resolved.yaml',
-          },
-          {
-            route: '/ordinals',
-            spec: 'https://ordinals-api.vercel.app/openapi.yaml',
-          },
-          {
-            route: '/metadata',
-            spec: 'https://token-metadata-api.vercel.app/openapi.yaml',
-          },
-        ],
-        theme: {
-          primaryColor: '#FF5500',
         },
       },
     ],
@@ -467,16 +463,26 @@ module.exports = {
             position: 'right',
             items: [
               {
-                label: 'Stacks Blockchain API',
-                to: '/api',
+                type: 'html',
+                value: 'APIs',
+                className: 'section-title',
               },
               {
                 label: 'Ordinals API',
                 to: '/ordinals',
               },
               {
+                label: 'Stacks Blockchain API',
+                to: '/api',
+              },
+              {
                 label: 'Token Metadata API',
                 to: '/metadata',
+              },
+              {
+                type: 'html',
+                value: 'OTHER',
+                className: 'section-title',
               },
               {
                 label: 'Stacks CLI',

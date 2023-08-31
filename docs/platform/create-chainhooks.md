@@ -4,7 +4,7 @@ title: Create Chainhooks
 
 # Create Chainhooks
 
-With chainhooks, you can automatically trigger an action in response to on-chain events on Stacks, Bitcoin, and other Bitcoin layers, enabling you to use IFTT (if_this, then_that) logic to power your applications. To learn more about Chainhook, refer to [Chainhook overview documentation](https://docs.hiro.so/chainhook/overview).
+With chainhooks, you can automatically trigger an action in response to on-chain events on Stacks, Bitcoin, and other Bitcoin layers, enabling you to use IFTTT (if_this, then_that) logic to power your applications. To learn more about Chainhook, refer to [Chainhook overview documentation](https://docs.hiro.so/chainhook/overview).
 
 This guide helps you create a chainhook using the [Hiro Platform](https://platform.hiro.so/).
 
@@ -39,7 +39,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 > _**Note**_
 >
-> _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks) documents to understand the available predicates and how to use them._
+> _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks) documents to understand the available predicates and how to use them._
 
 **Then-that**: This action is defaulted to `http_post` to allow the chainhook to post events to the URL specified in the below option.
 
@@ -55,7 +55,17 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **Decode Clarity Values**: This is enabled by default for stacks predicates to help you decode clarity values in your contract.
 
-Once you define the fields, you can select **Create Chainhook**.
+You'll see the following options for Bitcoin chain,
+
+**Include Proof**: Enable this option when you have evidence that the transaction or block has been verified and authorized by the sender using their private key. This proof is generally a cryptographic signature to a transaction or block on the Bitcoin blockchain.
+
+**Include Inputs**: Enable this option to include Bitcoin transaction inputs in the payload. In a Bitcoin transaction, inputs are references to previous transactions' outputs (also known as unspent transaction outputs or UTXOs) that are being spent in the current transaction. These inputs provide evidence that the sender has the right to spend the funds.
+
+**Include Outputs**: Enable this option to include Bitcoin transaction outputs in the payload. Including outputs in a Bitcoin transaction refers to specifying the destinations and amounts of Bitcoin being sent as part of a transaction. Outputs in a Bitcoin transaction represent the recipients' addresses and the corresponding amounts of Bitcoin they are receiving.
+
+**Include Witness**: Enable this option to include Bitcoin transaction witness in the payload. The witness data for a transaction includes the cryptographic signatures and other related information placed alongside the transaction data in the block.
+
+Once you define the all the required fields, you can select **Create Chainhook**.
 
 The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the chainhook created.
 
@@ -93,7 +103,7 @@ Use the ellipse on the chainhook row to delete the chainhook. You will see a con
 
 ## References
 
-- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin)
-- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
+- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin)
+- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks)
 - [Run chainhook as a service using Bitcoind](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind)
 - [Run chainhook as a service using Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks)
