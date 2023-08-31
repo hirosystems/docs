@@ -636,20 +636,20 @@ module.exports = {
       //Algolio docsearch support
       algolia: {
         // The application ID provided by Algolia
-        appId: UL2NZRAK8K,
+        appId: 'UL2NZRAK8K',
 
         // Public API key: it is safe to commit it
-        apiKey: "2b7f4af4606380e8e9d4a39aa9a4237f",
+        apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
 
-        indexName: "hiro",
+        indexName: 'hiro',
         contextualSearch: true,
-        searchPagePath: "search",
+        searchPagePath: 'search',
       },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },
       hostnameAliases: {
-        'https://deploy-preview-427--docs-hiro.netlify.app': 'https://docs.hiro.so'
+        'https://deploy-preview-427--docs-hiro.netlify.app': 'https://docs.hiro.so',
       },
     }),
 };
