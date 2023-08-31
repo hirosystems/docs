@@ -16,7 +16,6 @@ module.exports = {
   trailingSlash: false,
 
   plugins: [
-    require.resolve('@cmfcmf/docusaurus-search-local'),
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
     [
@@ -633,7 +632,7 @@ module.exports = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['toml'],
       },
-      //Algolio docsearch support
+      // Algolio DocSearch
       algolia: {
         // The application ID provided by Algolia
         appId: 'UL2NZRAK8K',
