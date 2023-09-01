@@ -7,7 +7,7 @@ At Hiro, we want to make development on Stacks a fast and painless experience fo
 
 | Product | Board |
 | --------------- | --------------- |
-| **Clarinet** | [Clarinet Board](https://github.com/orgs/hirosystems/projects/15/views/13?filterQuery=-status%3A%22%E2%9C%85+Done%22+-label%3Aicebox+iteration%3A%3E%3D%40current+repo%3A%22hirosystems%2Fclarinet%22) |
+| **Clarinet** | [Clarinet](https://github.com/orgs/hirosystems/projects/15/views/13?filterQuery=-status%3A%22%E2%9C%85+Done%22+-label%3Aicebox+iteration%3A%3E%3D%40current+repo%3A%22hirosystems%2Fclarinet%22) |
 | **Chainhook**| [Chainhook Board](https://github.com/orgs/hirosystems/projects/15/views/13?filterQuery=-status%3A%22%E2%9C%85+Done%22+-label%3Aicebox+iteration%3A%3E%3D%40current+repo%3A%22hirosystems%2Fchainhook%22) |
 | **Explorer** | [Explorer Board](https://github.com/orgs/hirosystems/projects/29/views/4) |
 | **Stacks Blockchain API** | [Stacks Blockchain API Board](https://github.com/orgs/hirosystems/projects/11/views/4?filterQuery=-label%3Aicebox+-status%3A%22%E2%9C%85+Done%22+repo%3A%22hirosystems%2Fstacks-blockchain-api%22) |
