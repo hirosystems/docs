@@ -6,8 +6,8 @@ title: Product Roadmap
 At Hiro, we want to make development on Stacks a fast and painless experience for developers. Hiro's product teams will focus on the following high-level themes to achieve that goal.
 
 **API Boards:**
-- [Stacks Blockchain API](https://github.com/orgs/hirosystems/projects/11/views/4?filterQuery=-label%3Aicebox+-status%3A%22%E2%9C%85+Done%22+repo%3A%22hirosystems%2Fstacks-blockchain-api%22)
 - [Ordinals API](https://github.com/orgs/hirosystems/projects/28/views/1?filterQuery=-status%3A%22%E2%9C%85+Done%22+-label%3Aicebox+repo%3A%22hirosystems%2Fordinals-api%22)
+- [Stacks Blockchain API](https://github.com/orgs/hirosystems/projects/11/views/4?filterQuery=-label%3Aicebox+-status%3A%22%E2%9C%85+Done%22+repo%3A%22hirosystems%2Fstacks-blockchain-api%22)
 - [Token Metadata API](https://github.com/orgs/hirosystems/projects/11/views/4?filterQuery=-label%3Aicebox+-status%3A%22%E2%9C%85+Done%22+repo%3A%22hirosystems%2Ftoken-metadata-api%22)
 
 **Product Boards:**
