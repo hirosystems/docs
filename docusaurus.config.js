@@ -647,8 +647,5 @@ module.exports = {
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },
-      hostnameAliases: {
-        'https://deploy-preview-427--docs-hiro.netlify.app': 'https://docs.hiro.so',
-      },
     }),
 };
