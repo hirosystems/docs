@@ -3,7 +3,7 @@
   "info": {
     "title": "Ordinals API",
     "description": "A service that indexes Bitcoin Ordinals data and exposes it via REST API endpoints.",
-    "version": "v0.4.15"
+    "version": "v1.0.0-beta.5"
   },
   "components": {
     "schemas": {}
@@ -59,7 +59,7 @@
     "/ordinals/v1/inscriptions": {
       "get": {
         "operationId": "getInscriptions",
-        "summary": "Inscriptions",
+        "summary": "List of Inscriptions",
         "tags": [
           "Inscriptions"
         ],
@@ -1066,7 +1066,7 @@
     "/ordinals/v1/inscriptions/{id}": {
       "get": {
         "operationId": "getInscription",
-        "summary": "Inscription",
+        "summary": "Specific Inscription",
         "tags": [
           "Inscriptions"
         ],
@@ -2112,6 +2112,126 @@
           }
         }
       }
+    },
+    "/ordinals/v1/stats/inscriptions": {
+      "get": {
+        "operationId": "getStatsInscriptionCount",
+        "summary": "Inscription Count per Block",
+        "tags": [
+          "Statistics"
+        ],
+        "description": "Retrieves statistics on the number of inscriptions revealed per block",
+        "parameters": [
+          {
+            "schema": {
+              "title": "Block Height",
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": 777678,
+            "in": "query",
+            "name": "from_block_height",
+            "required": false,
+            "description": "Bitcoin block height"
+          },
+          {
+            "schema": {
+              "title": "Block Height",
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": 777678,
+            "in": "query",
+            "name": "to_block_height",
+            "required": false,
+            "description": "Bitcoin block height"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "block_height": {
+                            "examples": [
+                              "778921"
+                            ],
+                            "type": "string"
+                          },
+                          "block_hash": {
+                            "examples": [
+                              "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133"
+                            ],
+                            "type": "string"
+                          },
+                          "inscription_count": {
+                            "examples": [
+                              "100"
+                            ],
+                            "type": "string"
+                          },
+                          "inscription_count_accum": {
+                            "examples": [
+                              "3100"
+                            ],
+                            "type": "string"
+                          },
+                          "timestamp": {
+                            "examples": [
+                              1677733170000
+                            ],
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "block_height",
+                          "block_hash",
+                          "inscription_count",
+                          "inscription_count_accum",
+                          "timestamp"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "results"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Response",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "servers": [
@@ -2128,6 +2248,10 @@
     {
       "name": "Satoshis",
       "description": "Endpoints to query Satoshi ordinal and rarity information"
+    },
+    {
+      "name": "Statistics",
+      "description": "Endpoints to query statistics on ordinal inscription data"
     }
   ],
   "externalDocs": {
