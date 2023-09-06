@@ -16,7 +16,6 @@ module.exports = {
   trailingSlash: false,
 
   plugins: [
-    require.resolve('@cmfcmf/docusaurus-search-local'),
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
     [
@@ -632,6 +631,18 @@ module.exports = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
         additionalLanguages: ['toml'],
+      },
+      // Algolio DocSearch
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'UL2NZRAK8K',
+
+        // Public API key: it is safe to commit it
+        apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
+
+        indexName: 'hiro',
+        contextualSearch: true,
+        searchPagePath: 'search',
       },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
