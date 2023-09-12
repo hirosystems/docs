@@ -3,7 +3,7 @@
   "info": {
     "title": "Ordinals API",
     "description": "A service that indexes Bitcoin Ordinals data and exposes it via REST API endpoints.",
-    "version": "v0.4.15"
+    "version": "v1.1.0"
   },
   "components": {
     "schemas": {}
@@ -59,7 +59,7 @@
     "/ordinals/v1/inscriptions": {
       "get": {
         "operationId": "getInscriptions",
-        "summary": "Inscriptions",
+        "summary": "List of Inscriptions",
         "tags": [
           "Inscriptions"
         ],
@@ -301,6 +301,28 @@
           },
           {
             "schema": {
+              "title": "Addresses",
+              "type": "array",
+              "items": {
+                "title": "Address",
+                "description": "Bitcoin address",
+                "examples": [
+                  "bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5"
+                ],
+                "type": "string"
+              }
+            },
+            "example": [
+              "bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5",
+              "bc1pscktlmn99gyzlvymvrezh6vwd0l4kg06tg5rvssw0czg8873gz5sdkteqj"
+            ],
+            "in": "query",
+            "name": "genesis_address",
+            "required": false,
+            "description": "Array of Bitcoin addresses"
+          },
+          {
+            "schema": {
               "title": "MIME Types",
               "type": "array",
               "items": {
@@ -383,6 +405,28 @@
           },
           {
             "schema": {
+              "title": "Recursive",
+              "type": "boolean"
+            },
+            "example": false,
+            "in": "query",
+            "name": "recursive",
+            "required": false,
+            "description": "Whether or not the inscription is recursive"
+          },
+          {
+            "schema": {
+              "title": "Cursed",
+              "type": "boolean"
+            },
+            "example": false,
+            "in": "query",
+            "name": "cursed",
+            "required": false,
+            "description": "Whether or not the inscription is cursed"
+          },
+          {
+            "schema": {
               "minimum": 0,
               "title": "Offset",
               "type": "integer"
@@ -408,6 +452,12 @@
             "schema": {
               "title": "Order By",
               "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "number"
+                  ]
+                },
                 {
                   "type": "string",
                   "enum": [
@@ -656,6 +706,29 @@
                                 "type": "null"
                               }
                             ]
+                          },
+                          "recursive": {
+                            "examples": [
+                              true
+                            ],
+                            "type": "boolean"
+                          },
+                          "recursion_refs": {
+                            "anyOf": [
+                              {
+                                "type": "array",
+                                "items": {
+                                  "examples": [
+                                    "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+                                    "541076e29e1b63460412d3087b37130c9a14abd0beeb4e9b2b805d2072c84dedi0"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
                           }
                         },
                         "required": [
@@ -680,7 +753,9 @@
                           "content_type",
                           "content_length",
                           "timestamp",
-                          "curse_type"
+                          "curse_type",
+                          "recursive",
+                          "recursion_refs"
                         ]
                       }
                     }
@@ -1066,7 +1141,7 @@
     "/ordinals/v1/inscriptions/{id}": {
       "get": {
         "operationId": "getInscription",
-        "summary": "Inscription",
+        "summary": "Specific Inscription",
         "tags": [
           "Inscriptions"
         ],
@@ -1284,6 +1359,29 @@
                           "type": "null"
                         }
                       ]
+                    },
+                    "recursive": {
+                      "examples": [
+                        true
+                      ],
+                      "type": "boolean"
+                    },
+                    "recursion_refs": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "examples": [
+                              "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+                              "541076e29e1b63460412d3087b37130c9a14abd0beeb4e9b2b805d2072c84dedi0"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -1308,7 +1406,9 @@
                     "content_type",
                     "content_length",
                     "timestamp",
-                    "curse_type"
+                    "curse_type",
+                    "recursive",
+                    "recursion_refs"
                   ]
                 }
               }
@@ -2071,6 +2171,29 @@
                                 "type": "null"
                               }
                             ]
+                          },
+                          "recursive": {
+                            "examples": [
+                              true
+                            ],
+                            "type": "boolean"
+                          },
+                          "recursion_refs": {
+                            "anyOf": [
+                              {
+                                "type": "array",
+                                "items": {
+                                  "examples": [
+                                    "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+                                    "541076e29e1b63460412d3087b37130c9a14abd0beeb4e9b2b805d2072c84dedi0"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
                           }
                         },
                         "required": [
@@ -2095,7 +2218,1142 @@
                           "content_type",
                           "content_length",
                           "timestamp",
-                          "curse_type"
+                          "curse_type",
+                          "recursive",
+                          "recursion_refs"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "limit",
+                    "offset",
+                    "total",
+                    "results"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordinals/v1/stats/inscriptions": {
+      "get": {
+        "operationId": "getStatsInscriptionCount",
+        "summary": "Inscription Count per Block",
+        "tags": [
+          "Statistics"
+        ],
+        "description": "Retrieves statistics on the number of inscriptions revealed per block",
+        "parameters": [
+          {
+            "schema": {
+              "title": "Block Height",
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": 777678,
+            "in": "query",
+            "name": "from_block_height",
+            "required": false,
+            "description": "Bitcoin block height"
+          },
+          {
+            "schema": {
+              "title": "Block Height",
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": 777678,
+            "in": "query",
+            "name": "to_block_height",
+            "required": false,
+            "description": "Bitcoin block height"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "block_height": {
+                            "examples": [
+                              "778921"
+                            ],
+                            "type": "string"
+                          },
+                          "block_hash": {
+                            "examples": [
+                              "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133"
+                            ],
+                            "type": "string"
+                          },
+                          "inscription_count": {
+                            "examples": [
+                              "100"
+                            ],
+                            "type": "string"
+                          },
+                          "inscription_count_accum": {
+                            "examples": [
+                              "3100"
+                            ],
+                            "type": "string"
+                          },
+                          "timestamp": {
+                            "examples": [
+                              1677733170000
+                            ],
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "block_height",
+                          "block_hash",
+                          "inscription_count",
+                          "inscription_count_accum",
+                          "timestamp"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "results"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Response",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordinals/v1/brc-20/tokens": {
+      "get": {
+        "operationId": "getBrc20Tokens",
+        "summary": "BRC-20 Tokens",
+        "tags": [
+          "BRC-20"
+        ],
+        "description": "Retrieves information for BRC-20 tokens",
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "ticker",
+            "required": false
+          },
+          {
+            "schema": {
+              "title": "Order By",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "tx_count"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "index"
+                  ]
+                }
+              ]
+            },
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "description": "Parameter to order results by"
+          },
+          {
+            "schema": {
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Result offset"
+          },
+          {
+            "schema": {
+              "minimum": 1,
+              "maximum": 60,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Results per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Paginated BRC-20 Token Response",
+                  "type": "object",
+                  "properties": {
+                    "limit": {
+                      "examples": [
+                        20
+                      ],
+                      "type": "integer"
+                    },
+                    "offset": {
+                      "examples": [
+                        0
+                      ],
+                      "type": "integer"
+                    },
+                    "total": {
+                      "examples": [
+                        1
+                      ],
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "title": "BRC-20 Token Response",
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "examples": [
+                              "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0"
+                            ],
+                            "type": "string"
+                          },
+                          "number": {
+                            "examples": [
+                              248751
+                            ],
+                            "type": "integer"
+                          },
+                          "block_height": {
+                            "examples": [
+                              752860
+                            ],
+                            "type": "integer"
+                          },
+                          "tx_id": {
+                            "examples": [
+                              "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218"
+                            ],
+                            "type": "string"
+                          },
+                          "address": {
+                            "examples": [
+                              "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                            ],
+                            "type": "string"
+                          },
+                          "ticker": {
+                            "examples": [
+                              "PEPE"
+                            ],
+                            "type": "string"
+                          },
+                          "max_supply": {
+                            "examples": [
+                              "21000000"
+                            ],
+                            "type": "string"
+                          },
+                          "mint_limit": {
+                            "anyOf": [
+                              {
+                                "examples": [
+                                  "100000"
+                                ],
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "decimals": {
+                            "examples": [
+                              18
+                            ],
+                            "type": "integer"
+                          },
+                          "deploy_timestamp": {
+                            "examples": [
+                              1677733170000
+                            ],
+                            "type": "integer"
+                          },
+                          "minted_supply": {
+                            "examples": [
+                              "1000000"
+                            ],
+                            "type": "string"
+                          },
+                          "tx_count": {
+                            "examples": [
+                              300000
+                            ],
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "number",
+                          "block_height",
+                          "tx_id",
+                          "address",
+                          "ticker",
+                          "max_supply",
+                          "mint_limit",
+                          "decimals",
+                          "deploy_timestamp",
+                          "minted_supply",
+                          "tx_count"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "limit",
+                    "offset",
+                    "total",
+                    "results"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordinals/v1/brc-20/tokens/{ticker}": {
+      "get": {
+        "operationId": "getBrc20TokenDetails",
+        "summary": "BRC-20 Token Details",
+        "tags": [
+          "BRC-20"
+        ],
+        "description": "Retrieves information for a BRC-20 token including supply and holders",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "ticker",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "BRC-20 Token Details Response",
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "title": "BRC-20 Token Response",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "examples": [
+                            "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0"
+                          ],
+                          "type": "string"
+                        },
+                        "number": {
+                          "examples": [
+                            248751
+                          ],
+                          "type": "integer"
+                        },
+                        "block_height": {
+                          "examples": [
+                            752860
+                          ],
+                          "type": "integer"
+                        },
+                        "tx_id": {
+                          "examples": [
+                            "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218"
+                          ],
+                          "type": "string"
+                        },
+                        "address": {
+                          "examples": [
+                            "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                          ],
+                          "type": "string"
+                        },
+                        "ticker": {
+                          "examples": [
+                            "PEPE"
+                          ],
+                          "type": "string"
+                        },
+                        "max_supply": {
+                          "examples": [
+                            "21000000"
+                          ],
+                          "type": "string"
+                        },
+                        "mint_limit": {
+                          "anyOf": [
+                            {
+                              "examples": [
+                                "100000"
+                              ],
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "decimals": {
+                          "examples": [
+                            18
+                          ],
+                          "type": "integer"
+                        },
+                        "deploy_timestamp": {
+                          "examples": [
+                            1677733170000
+                          ],
+                          "type": "integer"
+                        },
+                        "minted_supply": {
+                          "examples": [
+                            "1000000"
+                          ],
+                          "type": "string"
+                        },
+                        "tx_count": {
+                          "examples": [
+                            300000
+                          ],
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "number",
+                        "block_height",
+                        "tx_id",
+                        "address",
+                        "ticker",
+                        "max_supply",
+                        "mint_limit",
+                        "decimals",
+                        "deploy_timestamp",
+                        "minted_supply",
+                        "tx_count"
+                      ]
+                    },
+                    "supply": {
+                      "type": "object",
+                      "properties": {
+                        "max_supply": {
+                          "examples": [
+                            "21000000"
+                          ],
+                          "type": "string"
+                        },
+                        "minted_supply": {
+                          "examples": [
+                            "1000000"
+                          ],
+                          "type": "string"
+                        },
+                        "holders": {
+                          "examples": [
+                            240
+                          ],
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "max_supply",
+                        "minted_supply",
+                        "holders"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "token",
+                    "supply"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Response",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordinals/v1/brc-20/tokens/{ticker}/holders": {
+      "get": {
+        "operationId": "getBrc20TokenHolders",
+        "summary": "BRC-20 Token Holders",
+        "tags": [
+          "BRC-20"
+        ],
+        "description": "Retrieves a list of holders and their balances for a BRC-20 token",
+        "parameters": [
+          {
+            "schema": {
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Result offset"
+          },
+          {
+            "schema": {
+              "minimum": 1,
+              "maximum": 60,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Results per page"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "ticker",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Paginated BRC-20 Holders Response",
+                  "type": "object",
+                  "properties": {
+                    "limit": {
+                      "examples": [
+                        20
+                      ],
+                      "type": "integer"
+                    },
+                    "offset": {
+                      "examples": [
+                        0
+                      ],
+                      "type": "integer"
+                    },
+                    "total": {
+                      "examples": [
+                        1
+                      ],
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "address": {
+                            "examples": [
+                              "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                            ],
+                            "type": "string"
+                          },
+                          "overall_balance": {
+                            "examples": [
+                              "2000.00000"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "address",
+                          "overall_balance"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "limit",
+                    "offset",
+                    "total",
+                    "results"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Not Found Response",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "Not found"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordinals/v1/brc-20/balances/{address}": {
+      "get": {
+        "operationId": "getBrc20Balances",
+        "summary": "BRC-20 Balances",
+        "tags": [
+          "BRC-20"
+        ],
+        "description": "Retrieves BRC-20 token balances for a Bitcoin address",
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "ticker",
+            "required": false
+          },
+          {
+            "schema": {
+              "title": "Block Height",
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": 777678,
+            "in": "query",
+            "name": "block_height",
+            "required": false,
+            "description": "Bitcoin block height"
+          },
+          {
+            "schema": {
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Result offset"
+          },
+          {
+            "schema": {
+              "minimum": 1,
+              "maximum": 60,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Results per page"
+          },
+          {
+            "schema": {
+              "title": "Address",
+              "type": "string"
+            },
+            "example": "bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5",
+            "in": "path",
+            "name": "address",
+            "required": true,
+            "description": "Bitcoin address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Paginated BRC-20 Balance Response",
+                  "type": "object",
+                  "properties": {
+                    "limit": {
+                      "examples": [
+                        20
+                      ],
+                      "type": "integer"
+                    },
+                    "offset": {
+                      "examples": [
+                        0
+                      ],
+                      "type": "integer"
+                    },
+                    "total": {
+                      "examples": [
+                        1
+                      ],
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ticker": {
+                            "examples": [
+                              "PEPE"
+                            ],
+                            "type": "string"
+                          },
+                          "available_balance": {
+                            "examples": [
+                              "1500.00000"
+                            ],
+                            "type": "string"
+                          },
+                          "transferrable_balance": {
+                            "examples": [
+                              "500.00000"
+                            ],
+                            "type": "string"
+                          },
+                          "overall_balance": {
+                            "examples": [
+                              "2000.00000"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "ticker",
+                          "available_balance",
+                          "transferrable_balance",
+                          "overall_balance"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "limit",
+                    "offset",
+                    "total",
+                    "results"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordinals/v1/brc-20/activity": {
+      "get": {
+        "operationId": "getBrc20Activity",
+        "summary": "BRC-20 Activity",
+        "tags": [
+          "BRC-20"
+        ],
+        "description": "Retrieves BRC-20 activity",
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "ticker",
+            "required": false
+          },
+          {
+            "schema": {
+              "title": "Block Height",
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            },
+            "example": 777678,
+            "in": "query",
+            "name": "block_height",
+            "required": false,
+            "description": "Bitcoin block height"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "title": "Operation",
+                "description": "BRC-20 token operation. Note that a BRC-20 transfer is a two step process `transfer` (creating the inscription, which makes funds transferrable) and `transfer_send` (sending the inscription to a recipient, which moves the funds)",
+                "examples": [
+                  "deploy",
+                  "mint",
+                  "transfer",
+                  "transfer_send"
+                ],
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "deploy"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "mint"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "transfer"
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "transfer_send"
+                    ]
+                  }
+                ]
+              }
+            },
+            "in": "query",
+            "name": "operation",
+            "required": false
+          },
+          {
+            "schema": {
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Result offset"
+          },
+          {
+            "schema": {
+              "minimum": 1,
+              "maximum": 60,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Results per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Paginated BRC-20 Activity Response",
+                  "type": "object",
+                  "properties": {
+                    "limit": {
+                      "examples": [
+                        20
+                      ],
+                      "type": "integer"
+                    },
+                    "offset": {
+                      "examples": [
+                        0
+                      ],
+                      "type": "integer"
+                    },
+                    "total": {
+                      "examples": [
+                        1
+                      ],
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "operation": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "deploy"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "mint"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "transfer"
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "transfer_send"
+                                ]
+                              }
+                            ]
+                          },
+                          "ticker": {
+                            "examples": [
+                              "PEPE"
+                            ],
+                            "type": "string"
+                          },
+                          "inscription_id": {
+                            "examples": [
+                              "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0"
+                            ],
+                            "type": "string"
+                          },
+                          "block_height": {
+                            "examples": [
+                              778921
+                            ],
+                            "type": "integer"
+                          },
+                          "block_hash": {
+                            "examples": [
+                              "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133"
+                            ],
+                            "type": "string"
+                          },
+                          "tx_id": {
+                            "examples": [
+                              "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218"
+                            ],
+                            "type": "string"
+                          },
+                          "location": {
+                            "examples": [
+                              "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0:0"
+                            ],
+                            "type": "string"
+                          },
+                          "address": {
+                            "examples": [
+                              "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                            ],
+                            "type": "string"
+                          },
+                          "timestamp": {
+                            "examples": [
+                              1677733170000
+                            ],
+                            "type": "integer"
+                          },
+                          "mint": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "anyOf": [
+                                  {
+                                    "examples": [
+                                      "1000000"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "amount"
+                            ]
+                          },
+                          "deploy": {
+                            "type": "object",
+                            "properties": {
+                              "max_supply": {
+                                "examples": [
+                                  "21000000"
+                                ],
+                                "type": "string"
+                              },
+                              "mint_limit": {
+                                "anyOf": [
+                                  {
+                                    "examples": [
+                                      "100000"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "decimals": {
+                                "examples": [
+                                  18
+                                ],
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "max_supply",
+                              "mint_limit",
+                              "decimals"
+                            ]
+                          },
+                          "transfer": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "examples": [
+                                  "1000000"
+                                ],
+                                "type": "string"
+                              },
+                              "from_address": {
+                                "examples": [
+                                  "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "amount",
+                              "from_address"
+                            ]
+                          },
+                          "transfer_send": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "examples": [
+                                  "1000000"
+                                ],
+                                "type": "string"
+                              },
+                              "from_address": {
+                                "examples": [
+                                  "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                                ],
+                                "type": "string"
+                              },
+                              "to_address": {
+                                "examples": [
+                                  "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "amount",
+                              "from_address",
+                              "to_address"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "operation",
+                          "ticker",
+                          "inscription_id",
+                          "block_height",
+                          "block_hash",
+                          "tx_id",
+                          "location",
+                          "address",
+                          "timestamp"
                         ]
                       }
                     }
@@ -2128,6 +3386,14 @@
     {
       "name": "Satoshis",
       "description": "Endpoints to query Satoshi ordinal and rarity information"
+    },
+    {
+      "name": "BRC-20",
+      "description": "Endpoints to query BRC-20 token balances and events"
+    },
+    {
+      "name": "Statistics",
+      "description": "Endpoints to query statistics on ordinal inscription data"
     }
   ],
   "externalDocs": {
