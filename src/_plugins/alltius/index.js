@@ -1,6 +1,6 @@
 module.exports = async function alltiusPlugin(_context, options) {
   return {
-    name: 'gtm-plugin',
+    name: 'alltius-plugin',
     injectHtmlTags() {
       return {
         headTags: [
