@@ -3,19 +3,19 @@ id: clarinet
 title: Setting up a local development environment
 ---
 
-[Clarinet][] is a local Clarity runtime packaged as a command-line application. It's designed to facilitate rapid smart contract development, testing, and deployment. 
+[Clarinet][] is a local Clarity runtime packaged as a command-line application. It facilitates rapid smart contract development, testing, and deployment. 
 
 Clarinet consists of two components:
 
 - Clarity REPL
 - Testing harness.
 
-When these components are used together, they allow you to rapidly develop and test a Clarity smart contract, without the need to deploy the contract
+When these components are used together, they allow you to develop and test a Clarity smart contract rapidly without the need to deploy the contract.
 to a local mocknet or testnet.
 
-When developing a new smart contract using local Clarity REPL, you can exercise a contract without the need to wait for block times in a live blockchain.
+When developing a new smart contract using local Clarity REPL, you can exercise a contract without waiting for block times in a live blockchain.
 Clarinet allows you to instantly initialize wallets and populate them with tokens, which helps to interactively or programmatically
-test the behavior of the smart contract. Blocks are mined instantly, so you can control the number of blocks that are mined between testing transactions.
+test the behavior of the smart contract. Blocks are mined instantly so that you can control the number of blocks between testing transactions.
 
 The Clarinet tool is used for developing smart contracts using a larger development strategy that involves:
 
@@ -28,7 +28,7 @@ When developing smart contracts, you can also use the [Clarity Visual Studio Cod
 
 ## Installing Clarinet
 
-Clarinet is available in the Homebrew and Winget package managers. It is recommended to install the Clarinet tool from package manager.
+Clarinet is available in the Homebrew and Winget package managers. It is recommended to install the Clarinet tool from the package manager.
 
 ### Installing from Homebrew (MacOS and Linux)
 
@@ -38,9 +38,9 @@ Install Clarinet from Homebrew with the command:
 brew install clarinet
 ```
 
-### Installing from winget (Windows)
+### Installing from Winget (Windows)
 
-With the winget package manager installed, use the following command:
+With the Winget package manager installed, use the following command:
 
 ```sh
 winget install clarinet
@@ -52,10 +52,10 @@ You can download a release from the [Clarinet repository](https://github.com/hir
 
 #### Windows
 
-Download the Windows installer, _clarinet-windows-x64.msi_. Once downloaded, run the installer, and it will install the clarinet binary and add it to your Path, allowing it to be easily used from the shell, and discovered by VS Code. If you have any shells open already, you will need to restart them to get the updated Path, allowing you to run `clarinet`.
+Download the Windows installer, _clarinet-windows-x64.msi_. Once downloaded, run the installer, and it will install the clarinet binary and add it to your Path, allowing it to be easily used from the shell and discovered by VS Code. If you have any shells open already, you must restart them to get the updated Path, allowing you to run `clarinet`.
 
 #### MacOS / Linux
-Unzip the binary, then copy it to a location that is already in your path, such as `/usr/local/bin`.
+Unzip the binary, then copy it to a location already in your path, such as `/usr/local/bin`.
 
 ```sh
 unzip clarinet-linux-x64.zip -d .
@@ -85,7 +85,7 @@ clarinet new my-project && cd my-project
 
 This command creates a new directory and populates it with boilerplate configuration and testing files. The `toml` files
 located in the `settings` directory control the Clarinet environment. For example, the `Devnet.toml` file contains
-definitions for wallets in the local REPL environment, and their starting balances (in STX).
+definitions for wallets in the local REPL environment and their starting balances (in STX).
 
 ```toml
 ...
