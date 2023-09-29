@@ -88,7 +88,6 @@ located in the `settings` directory control the Clarinet environment. For exampl
 definitions for wallets in the local REPL environment, and their starting balances (in STX).
 
 ```toml
-...
 [accounts.deployer]
 mnemonic = "fetch outside black test wash cover just actual execute nice door want airport betray quantum stamp fish act pen trust portion fatigue scissors vague"
 balance = 1_000_000
@@ -100,7 +99,6 @@ balance = 1_000_000
 [accounts.wallet_2]
 mnemonic = "arrange scale orient half ugly kid bike twin magnet joke hurt fiber ethics super receive version wreck media fluid much abstract reward street alter"
 balance = 1_000_000
-...
 ```
 
 You can create a new contract in the project with the command:
@@ -213,7 +211,6 @@ unit tests as you develop the contract.
 An example unit test for the `echo-number` function is provided below:
 
 ```ts
-...
 Clarinet.test({
   name: 'the echo-number function returns the input value ok',
   async fn(chain: Chain, accounts: Map<string, Account>) {
