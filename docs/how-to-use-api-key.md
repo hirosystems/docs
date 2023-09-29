@@ -22,7 +22,9 @@ There are multiple ways to interact with the API endpoints. In this guide, we wi
 
 Using cURL, you will pass the API key in an `x-hiro-api-key` header. Use the following command as an example to call the API endpoint `https://api.hiro.so/<your-api-endpoint>`.
 
-`curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-API-value>'`
+```sh
+curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-API-value>'
+```
 
 ## Using the API key in Typescript
 
