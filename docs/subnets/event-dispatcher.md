@@ -12,13 +12,11 @@ The `stacks-node` supports a configurable event observer interface.
 This is enabled by adding an entry to the node's `config.toml` file:
 
 ```toml
-...
 [[events_observer]]
 endpoint = "listener:3700"
 events_keys = [
   "*"
 ]
-...
 ```
 
 The `stacks-node` will then execute HTTP POSTs to the configured
