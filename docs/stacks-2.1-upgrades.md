@@ -67,7 +67,6 @@ Find the section [devnet] with the following settings.
 [devnet]
 disable_stacks_explorer = false
 disable_stacks_api = false
-# ...
 ```
 
 Add a new setting, `enable_next_features = true,` and keep the remaining settings as-is.
@@ -79,7 +78,6 @@ The updated Devnet.toml looks like this:
 enable_next_features = true
 disable_stacks_explorer = false
 disable_stacks_api = false
-# ...
 ```
 
 Spin up a local Devnet network using the command:
@@ -104,7 +102,6 @@ These block heights can be customized using the settings in the devnet.toml:
 
 ```toml
 [devnet]
-# ...
 epoch_2_05 = 102
 epoch_2_1 = 106
 ```
