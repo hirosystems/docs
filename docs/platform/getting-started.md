@@ -39,4 +39,4 @@ To monitor the progress of your deployed contract, you can use the links to Expl
 
 ## Create & Use Chainhooks
 
-The Hiro Platform offers a hosted version of Chainhook, allowing you to [create and use Chainhooks]([url](https://docs.hiro.so/platform/create-chainhooks)https://docs.hiro.so/platform/create-chainhooks) without needing to setup your own instance.
+The Hiro Platform offers a hosted version of Chainhook, allowing you to [create and use Chainhooks](create-chainhooks.md) without needing to setup your own instance.
