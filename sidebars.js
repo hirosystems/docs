@@ -461,6 +461,11 @@ module.exports = {
       items: [
         {
           type: 'link',
+          label: 'July 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-july-2023',
+        },
+        {
+          type: 'link',
           label: 'June 2023',
           href: 'https://www.hiro.so/blog/release-roundup-june-2023',
         },
