@@ -9,6 +9,13 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn add --dev forever
+      - run: forever start -c "yarn serve --build"
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
-          config-file: ".github/mlc_config.json"
+          config-file: '.github/mlc_config.json'
