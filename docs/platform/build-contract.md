@@ -32,7 +32,7 @@ You can create a new contract for your project by following the steps below. Not
 
 :::tip
 
-Hiro offers a [collection of Clarity smart contracts](https://github.com/hirosystems/clarity-examples/tree/main/examples) in the platform available for you to quickly extend and deploy. Or you can write your own from scatch.
+Hiro offers a [collection of Clarity smart contracts](https://github.com/hirosystems/clarity-examples/tree/main/examples) in the platform available for you to quickly extend and deploy. Or you can write your own from scratch.
 
 :::
 
