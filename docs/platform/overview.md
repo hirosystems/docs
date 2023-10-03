@@ -15,7 +15,7 @@ If you’d like guidance or help with Hiro Platform, you can also speak with one
 
 ## Purpose
 
-The Hiro Platform comes pre-installed all of the tools needed to develop and deploy Clarity smart contracts entirely from within your browser, including
+The Hiro Platform comes pre-installed with all of the tools needed to develop and deploy Clarity smart contracts entirely from within your browser, including
 
 - VS Code in Web Browser
 - Clarinet
