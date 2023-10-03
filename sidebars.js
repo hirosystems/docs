@@ -97,7 +97,6 @@ module.exports = {
             'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
             'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
             'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
             'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
             'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
             'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
