@@ -1,5 +1,5 @@
 ---
-title: FAQ's
+title: FAQs
 ---
 
 ### Are my projects and contracts isolated?
