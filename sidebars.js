@@ -97,7 +97,6 @@ module.exports = {
             'stacks-blockchain-api/how-to-guides/how-to-run-mainnet-node',
             'stacks-blockchain-api/how-to-guides/how-to-run-testnet-node',
             'stacks-blockchain-api/how-to-guides/how-to-handle-errors',
-            'stacks-blockchain-api/how-to-guides/how-to-use-docker-with-Stacks-blockchain-api',
             'stacks-blockchain-api/how-to-guides/how-to-run-stacks-blockchain-api-docker',
             'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
             'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
@@ -119,7 +118,7 @@ module.exports = {
             {
               type: 'link',
               label: 'Contribution Guidelines',
-              href: 'https://github.com/hirosystems/stacks-blockchain-api',
+              href: 'https://github.com/hirosystems/stacks-blockchain-api/blob/master/.github/CONTRIBUTING.md',
             },
             {
               type: 'link',
@@ -459,6 +458,11 @@ module.exports = {
       type: 'category',
       label: 'Hiro Change Log',
       items: [
+        {
+          type: 'link',
+          label: 'July 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-july-2023',
+        },
         {
           type: 'link',
           label: 'June 2023',
