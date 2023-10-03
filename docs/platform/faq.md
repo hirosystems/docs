@@ -1,5 +1,5 @@
 ---
-title: FAQ's
+title: FAQs
 ---
 
 ### Clarinet Integrate/Devnet is not working in terminal

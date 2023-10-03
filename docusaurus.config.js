@@ -86,7 +86,6 @@ module.exports = {
           'how-to-run-stacks-blockchain-api-docker.md',
           'how-to-run-testnet-node.md',
           'how-to-upgrade-stacks-blockchain-api.md',
-          'how-to-use-docker-with-Stacks-blockchain-api.md',
         ],
       },
     ],
