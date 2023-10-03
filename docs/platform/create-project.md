@@ -45,7 +45,6 @@ The maximum project size allowed for imports is 50 MB.
 
 :::
 
-If you have an existing project but don't have clarity contracts in it, you can still clone the project and add clarity contracts by referring to our clarity contract examples.
 
 Your cloned project is now displayed on the [projects page](https://platform.hiro.so).
 
