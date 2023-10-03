@@ -119,7 +119,7 @@ module.exports = {
             {
               type: 'link',
               label: 'Contribution Guidelines',
-              href: 'https://github.com/hirosystems/stacks-blockchain-api/blob/develop/.github/CONTRIBUTING.md',
+              href: 'https://github.com/hirosystems/stacks-blockchain-api/blob/master/.github/CONTRIBUTING.md',
             },
             {
               type: 'link',
