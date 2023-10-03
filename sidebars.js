@@ -457,7 +457,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Hiro Change Log',
+      label: 'Release History',
       items: [
         {
           type: 'link',
