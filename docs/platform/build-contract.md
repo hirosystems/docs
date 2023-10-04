@@ -30,6 +30,12 @@ You can now create contracts using any of the following ways.
 
 You can create a new contract for your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples/tree/main/examples/blank-project), and it is assumed that your project has no clarity contracts.
 
+:::tip
+
+Hiro offers a [collection of Clarity smart contracts](https://github.com/hirosystems/clarity-examples/tree/main/examples) in the platform available for you to quickly extend and deploy. Or you can write your own from scratch.
+
+:::
+
 1. On the [projects page](https://platform.hiro.so), select the project you want to create a contract. 
 2. Then, select the *Open Editor* button. 
 3. This opens up a new tab with VS Code editor to edit your project. 
