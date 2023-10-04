@@ -256,7 +256,8 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-clarinet-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/clarinet/89338a023b8315440c7035916473f5877daf3eba/docs/',
         outDir: 'docs/clarinet',
         documents: ['faq.md', 'getting-started.md', 'introduction.md', 'troubleshooting.md'],
       },
@@ -266,14 +267,13 @@ module.exports = {
       {
         name: 'remote-docs-clarinet-feature-guides',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/feature-guides',
+          'https://raw.githubusercontent.com/hirosystems/clarinet/89338a023b8315440c7035916473f5877daf3eba/docs/feature-guides',
         outDir: 'docs/clarinet/feature-guides',
         documents: [
           'analyze-with-check-checker.md',
           'chainhooks.md',
           'clarinet-deploy.md',
           'clarinet-integrate.md',
-          'extend-clarinet.md',
         ],
       },
     ],
@@ -282,7 +282,7 @@ module.exports = {
       {
         name: 'remote-docs-clarinet-how-to',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/how-to-guides/',
+          'https://raw.githubusercontent.com/hirosystems/clarinet/89338a023b8315440c7035916473f5877daf3eba/docs/how-to-guides/',
         outDir: 'docs/clarinet/how-to-guides',
         documents: [
           'how-to-add-contract.md',
@@ -416,7 +416,7 @@ module.exports = {
 
           editUrl({ docPath }) {
             const repoUrls = {
-              clarinet: 'https://github.com/hirosystems/clarinet/blob/main/docs',
+              clarinet: 'https://github.com/hirosystems/clarinet/blob/develop/docs',
               explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
               'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
               'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
