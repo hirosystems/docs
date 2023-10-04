@@ -11,14 +11,18 @@ import { promisify } from 'util';
 const directory = './openapi';
 const asyncPipeline = promisify(pipeline);
 
-async function downloadOpenApiJson(url: string): Promise<void> {
+async function downloadOpenApiJson(apiName: string): Promise<void> {
+  const url = `https://${apiName}.vercel.app/openapi.json`;
+  const fileName = `${directory}/${apiName}.json`;
+  console.log(`Downloading OpenAPI definition: ${url}`);
+
   return new Promise((resolve, reject) => {
-    const req = https.get(`https://${url}.vercel.app/openapi.json`, (res) => {
+    const req = https.get(url, (res) => {
       if (res.statusCode !== 200) {
-        reject(new Error(`Failed to get '${url}'. Status Code: ${res.statusCode}`));
+        reject(new Error(`Failed to get '${apiName}'. Status Code: ${res.statusCode}`));
         return;
       }
-      asyncPipeline(res, fs.createWriteStream(`${directory}/${url}.json`))
+      asyncPipeline(res, fs.createWriteStream(fileName))
         .then(resolve)
         .catch(reject);
     });
