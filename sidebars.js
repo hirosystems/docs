@@ -349,6 +349,39 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Ordhook',
+      items: [
+        'ordhook/overview',
+        'ordhook/getting-started',
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'ordhook/how-to-guides/how-to-run-ordhook-as-a-service-using-bitcoind',
+            'ordhook/how-to-guides/how-to-scan-ordinal-activities',
+            'ordhook/how-to-guides/how-to-stream-ordinal-activities',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/ordhook/tree/develop',
+            },
+            {
+              type: 'link',
+              label: 'Discord #General',
+              href: 'https://discord.com/channels/621759717756370964/621759718192447502',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Stacks.js',
       items: [
         'stacks.js/overview',
