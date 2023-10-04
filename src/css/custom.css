@@ -309,6 +309,68 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   transform: scale(-1, -1) translateY(-0.25em);
 }
 
+/* tmp content, todo: deduplicate */
+.sectionTitle {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 32px;
+}
+
+.subSections {
+  display: flex;
+  gap: 16px;
+  color: var(--color-neutral-300);
+}
+.subSections > a {
+  display: block;
+  flex: 1;
+  position: relative;
+  border-radius: 8px;
+  padding: 16px 16px 32px;
+
+  text-decoration: none;
+
+  background-color: var(--color-neutral-000);
+  color: var(--color-neutral-400);
+  transition: background-color 64ms ease-in-out;
+}
+.subSections > a:hover {
+  background-color: var(--color-neutral-100);
+}
+.subSections > a:focus {
+  background-color: var(--color-neutral-200);
+}
+[data-theme='dark'] .subSections > a {
+  background-color: var(--color-neutral-600);
+  color: var(--color-neutral-200);
+}
+[data-theme='dark'] .subSections > a:hover {
+  background-color: var(--color-neutral-500);
+}
+[data-theme='dark'] .subSections > a:focus {
+  background-color: var(--color-neutral-700);
+}
+.subSections > a span {
+  position: absolute;
+  transition: right 128ms ease-in-out;
+  right: 22px;
+}
+.subSections > a:hover span {
+  right: 16px;
+}
+.subSectionTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* left nav bar is hdden at 996px */
+@media screen and (max-width: 860px) {
+  .subSections {
+    flex-direction: column;
+  }
+}
+
 /* CONTENT MARKDOWN ELEMENTS ================================================ */
 /* Prefixed with `Hiro` */
 
