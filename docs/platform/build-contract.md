@@ -30,6 +30,12 @@ You can now create contracts using any of the following ways.
 
 You can create a new contract for your project by following the steps below. Note that the sample project used here is [clarity examples project](https://github.com/hirosystems/clarity-examples/tree/main/examples/blank-project), and it is assumed that your project has no clarity contracts.
 
+:::tip
+
+Hiro offers a [collection of Clarity smart contracts](https://github.com/hirosystems/clarity-examples/tree/main/examples) in the platform available for you to quickly extend and deploy. Or you can write your own from scratch.
+
+:::
+
 1. On the [projects page](https://platform.hiro.so), select the project you want to create a contract. 
 2. Then, select the *Open Editor* button. 
 3. This opens up a new tab with VS Code editor to edit your project. 
@@ -40,15 +46,16 @@ You can create a new contract for your project by following the steps below. Not
 7. This will create a `.clar` file in the *contracts* folder. Now you can use the [clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
 8. Once you are ready with your `.clar` file, you can update the `Clarinet.toml` file located in the same project directory. Use the following code to update the `.toml` file with these parameters. `[contracts.<your-contract-name>]` and path to use your `.clar` file name as `path = "<your-contract-name.clar>"`.
 
-    ```
-    [project]
-    name = "CLARITY-EXAMPLES-5XE7"
-    requirements = []
-    [contracts.clarity_contract_1]
-    path = "clarity_contract_1.clar"
-    clarity_version = 1
-    epoch = "2.05"
-    ```
+```toml
+[project]
+name = "CLARITY-EXAMPLES-5XE7"
+requirements = []
+[contracts.clarity_contract_1]
+path = "clarity_contract_1.clar"
+clarity_version = 1
+epoch = "2.05"
+```
+
 Save the file. You can now deploy your contracts in your project by referring to the [deploy project](deploy-project.md) guide.
 
 ## Add a new contract
@@ -59,17 +66,17 @@ You can now add a new contract by following **1-7** steps in the [write new cont
 
 In the 8th step, where you edit the `Clarinet.toml` file, you will add two lines of code, as shown below. Note that the below code assumes that the newly added contract is *clarity_contract_2*. Also, add the path to your new contract as shown below.
 
-    ```
-    [project]
-    name = "CLARITY-EXAMPLES-5XE7"
-    requirements = []
-    [contracts.clarity_contract_1.clar]
-    [contracts.clarity_contract_2.clar]  --> new
-    path = "clarity_contract_1.clar"
-    path = "clarity_contract_2.clar"  --> new
-    clarity_version = 1
-    epoch = "2.05"
-    ```
+```toml
+[project]
+name = "CLARITY-EXAMPLES-5XE7"
+requirements = []
+[contracts.clarity_contract_1.clar]
+[contracts.clarity_contract_2.clar]  # --> new
+path = "clarity_contract_1.clar"
+path = "clarity_contract_2.clar" # --> new
+clarity_version = 1
+epoch = "2.05"
+```
 
 ### Test contract
 

@@ -12,7 +12,7 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is PoX-2?
 
-[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.hiro.so/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-blockchain/blob/next/src/chainstate/stacks/boot/pox-2.clar), aka PoX-2).
+[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.hiro.so/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-blockchain/blob/master/src/chainstate/stacks/boot/pox-2.clar), aka PoX-2).
 
 ### PoX-2 periods
 
@@ -63,28 +63,28 @@ After installing the latest version of Clarinet, navigate to your project direct
 
 Find the section [devnet] with the following settings.
 
-```
+```toml
 [devnet]
 disable_stacks_explorer = false
 disable_stacks_api = false
-...
 ```
 
 Add a new setting, `enable_next_features = true,` and keep the remaining settings as-is.
 
 The updated Devnet.toml looks like this:
 
-```
+```toml
 [devnet]
 enable_next_features = true
 disable_stacks_explorer = false
 disable_stacks_api = false
-...
 ```
 
 Spin up a local Devnet network using the command:
 
-`clarinet integrate`
+```sh
+clarinet integrate
+```
 
 If you have any trouble with the above command, refer to the [troubleshooting guide](https://github.com/hirosystems/clarinet/blob/main/docs/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
@@ -100,9 +100,8 @@ As shown in the below screenshot, the epoch changes are indicated in the _Transa
 
 These block heights can be customized using the settings in the devnet.toml:
 
-```
+```toml
 [devnet]
-...
 epoch_2_05 = 102
 epoch_2_1 = 106
 ```
@@ -118,30 +117,30 @@ The following updates for the API endpoints are for the Stacks 2.1 upgrade.
 
 This section explains the new property returned with the following existing endpoints.
 
-The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now return a new property, `clarity_version.`
+The endpoints `/extended/v1/tx/<txid>` and `/extended/v1/contract/<contract-id>` now return a new property, `clarity_version`.
 
 The sample response with the new property is shown below:
 
-```
+```json
 {
   "tx_id": "0x33c573f5ed06f1feecaa4a9df0225e109416dbba9792abb0cd94869bbad4a88a",
   "canonical": true,
   "contract_id": "ST000000000000000000002AMW42H.pox-2",
   "block_height": 2,
-  "clarity_version": 2, <-- New
+  "clarity_version": 2, # <-- New
   "source_code": ";; PoX testnet constants\n;; Min/max number of reward cycles uSTX can be locked for..."
 }
 ```
 
 A sample response for a regular (non-versioned) smart contract transaction with Clarity version null is shown below:
 
-```
+```json
 {
   "tx_id": "0x55bb3a37f9b2e8c58905c95099d5fc21aa47d073a918f3b30cc5abe4e3be44c6",
   "canonical": true,
   "contract_id": "ST000000000000000000002AMW42H.bns",
   "block_height": 1,
-  "clarity_version": null, <-- New
+  "clarity_version": null, # <-- New
   "source_code": ";;;; Errors\n(define-constant ERR_PANIC 0)..."
 }
 ```
@@ -195,7 +194,7 @@ Previous `@stacks/stacking` releases will automatically switch to the new PoX co
 
 However, if you want to use the new methods detailed above, you need to update to `@stacks/stacking` to a version >=`6.0.0`. The updated release will also always prefer PoX-2 if possible. Use the following command to update the version.
 
-```
+```sh
 npm install @stacks/stacking@^6.0.0
 ```
 

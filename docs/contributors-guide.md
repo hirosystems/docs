@@ -29,18 +29,20 @@ Edit the docs locally for larger edits or new documents, following the steps des
 To submit a pull request to update the docs, fork the Hiro Docs repository and clone it. Currently, all Hiro docs are located in `/hirosystems/docs`
 
 1. Create a branch and switch to that branch:
-    
-    `git checkout -b <branch-name>`
-    
+    ```sh
+    git checkout -b <branch-name>
+    ```
+
 2. Add or modify the GitHub Markdown files in the directories.
 3. When the suggested changes are complete, commit them with a message with a brief summary message:
-    
-    `git commit -m "commit message"`
-    
+    ```sh
+    git commit -m "commit message"
+    ```
+
 4. Push the branch up:
-    
-    `git push origin <branch-name>`
-    
+    ```sh
+    git push origin <branch-name>
+    ```
 
 When the changes are final, create a pull request from the working branch by following [GitHub's guide](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
 

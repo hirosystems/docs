@@ -16,9 +16,9 @@ module.exports = {
   trailingSlash: false,
 
   plugins: [
-    require.resolve('@cmfcmf/docusaurus-search-local'),
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
+    ['./src/_plugins/alltius', { id: 'alltius' }],
     [
       'docusaurus-plugin-openapi',
       {
@@ -86,7 +86,6 @@ module.exports = {
           'how-to-run-stacks-blockchain-api-docker.md',
           'how-to-run-testnet-node.md',
           'how-to-upgrade-stacks-blockchain-api.md',
-          'how-to-use-docker-with-Stacks-blockchain-api.md',
         ],
       },
     ],
@@ -192,6 +191,29 @@ module.exports = {
           accept: 'image*',
           'Content-Type': 'image/png',
         },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordhook-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordhook/develop/docs/',
+        outDir: 'docs/ordhook',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordhook-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/ordhook/develop/docs/how-to-guides/',
+        outDir: 'docs/ordhook/how-to-guides',
+        documents: [
+          'how-to-run-ordhook-as-a-service-using-bitcoind.md',
+          'how-to-scan-ordinal-activities.md',
+          'how-to-stream-ordinal-activities.md',
+        ],
       },
     ],
     [
@@ -427,6 +449,7 @@ module.exports = {
               'token-metadata-api':
                 'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
               chainhook: 'https://github.com/hirosystems/chainhook/tree/develop/docs',
+              ordhook: 'https://github.com/hirosystems/ordhook/tree/develop/docs',
             };
             const [repo, ...rem] = docPath.split('/');
             if (repo in repoUrls) {
@@ -558,10 +581,6 @@ module.exports = {
             title: 'Hiro Developers',
             items: [
               {
-                label: 'Stacks Blockchain API',
-                to: '/api',
-              },
-              {
                 label: 'Tutorials',
                 to: '/tutorials',
               },
@@ -632,6 +651,18 @@ module.exports = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
         additionalLanguages: ['toml'],
+      },
+      // Algolio DocSearch
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'UL2NZRAK8K',
+
+        // Public API key: it is safe to commit it
+        apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
+
+        indexName: 'hiro',
+        contextualSearch: true,
+        searchPagePath: 'search',
       },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
