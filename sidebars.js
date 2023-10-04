@@ -344,7 +344,6 @@ module.exports = {
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
-        'platform/contract-examples',
         'platform/faq',
       ],
     },
@@ -489,7 +488,7 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Hiro Change Log',
+      label: 'Release History',
       items: [
         {
           type: 'link',

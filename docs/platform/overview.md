@@ -4,7 +4,7 @@ title: Overview
 
 # Hiro Platform Overview
 
-The [Hiro Platform](https://platform.hiro.so/) is a cloud-based development environment that enables you to create, build and deploy Clarity smart contracts. The Hiro platform has pre-installed developer tools and helpful resources to improve developer productivity.
+The [Hiro Platform](https://platform.hiro.so/) is a cloud-based development environment that enables you to create, build and deploy Clarity smart contracts. Additionally, you can create, monitor, and centrally manage Chainhooks.
 
 :::note
 
@@ -15,16 +15,12 @@ If you’d like guidance or help with Hiro Platform, you can also speak with one
 
 ## Purpose
 
-We want to encourage developers to focus on shipping their business models to Stacks blockchain, ship often and happily, and avoid getting caught up with unboxing and infrastructure overhead.
-
-To deliver developer productivity, the Hiro Platform comes pre-installed with the following developer tools and resources to help speed up the developer journey:
+The Hiro Platform comes pre-installed with all of the tools needed to develop and deploy Clarity smart contracts entirely from within your browser, including
 
 - VS Code in Web Browser
 - Clarinet
 - Clarity for VS Code
 - Clarity Examples
-
-These tools enable you to quickly get up and running with the Platform without requiring additional steps. Less setup time equals more time for translating your business models into code, testing them, and deploying them to a Stacks network!
 
 :::note
 
