@@ -19,7 +19,7 @@
     "update:cli-ref": "stx docs > src/_data/cli-reference.json && node ./update-cli-ref.js ./src/_data/cli-reference.json -o ./docs/references/",
     "write-heading-ids": "docusaurus write-heading-ids",
     "write-translations": "docusaurus write-translations",
-    "pull-openapi-definitions": "rimraf ./tmp && node -r ts-node/register ./util/pull-openapi-definitions.ts"
+    "pull-openapi-definitions": "rimraf ./openapi && node -r ts-node/register ./util/pull-openapi-definitions.ts"
   },
   "dependencies": {
     "@docusaurus/core": "^2.4.3",
