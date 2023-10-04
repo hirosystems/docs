@@ -373,8 +373,6 @@ module.exports = {
           ],
         },
 
-        'stacks.js/packages',
-
         'stacks.js/faq',
         {
           type: 'category',
