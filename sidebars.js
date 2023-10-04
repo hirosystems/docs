@@ -358,8 +358,9 @@ module.exports = {
           type: 'category',
           label: 'How-to Guides',
           items: [
-            'ordhook/how-to-guides/how-to-use-ordhook-as-a-service-using-bitcoind',
-            'ordhook/how-to-guides/how-to-explore-ordinal-activities',
+            'ordhook/how-to-guides/how-to-run-ordhook-as-a-service-using-bitcoind',
+            'ordhook/how-to-guides/how-to-scan-ordinal-activities',
+            'ordhook/how-to-guides/how-to-stream-ordinal-activities',
           ],
         },
         {
