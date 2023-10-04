@@ -557,10 +557,6 @@ module.exports = {
             title: 'Hiro Developers',
             items: [
               {
-                label: 'Stacks Blockchain API',
-                to: '/api',
-              },
-              {
                 label: 'Tutorials',
                 to: '/tutorials',
               },
