@@ -237,7 +237,7 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'clarinet/feature-guides/analyze-with-check-checker',
-            'clarinet/feature-guides/clarinet-js-sdk',
+            // 'clarinet/feature-guides/clarinet-js-sdk',
             'clarinet/feature-guides/clarinet-integrate',
             'clarinet/feature-guides/clarinet-deploy',
           ],
@@ -250,7 +250,7 @@ module.exports = {
             'clarinet/how-to-guides/how-to-create-new-project',
             'clarinet/how-to-guides/how-to-add-contract',
             'clarinet/how-to-guides/how-to-check-contract',
-            'clarinet/how-to-guides/how-to-test-contract-with-clarinet-sdk',
+            // 'clarinet/how-to-guides/how-to-test-contract-with-clarinet-sdk',
             'clarinet/how-to-guides/how-to-debug-contract',
             'clarinet/how-to-guides/how-to-run-integration-environment',
             'clarinet/how-to-guides/how-to-use-deployment-plans',
