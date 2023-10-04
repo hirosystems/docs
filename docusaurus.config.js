@@ -107,44 +107,24 @@ module.exports = {
       'docusaurus-plugin-remote-content',
       {
         name: 'remote-docs-stx-js-docs',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/update-docs/docs/',
         outDir: 'docs/stacks.js',
-        documents: ['faq.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
+        documents: ['faq.md', 'getting-started.md', 'overview.md', 'installing.md', 'connect.md'],
       },
     ],
     [
       'docusaurus-plugin-remote-content',
       {
-        name: 'remote-docs-stx-js-includes',
-        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/includes',
-        outDir: 'docs/stacks.js/includes/',
-        documents: ['_stacks.js-starters-note.mdx', '_stacks.js-provider-section.mdx'],
-      },
-    ],
-    [
-      'docusaurus-plugin-remote-content',
-      {
-        name: 'remote-docs-stx-js-feature-guides',
+        name: 'remote-docs-stx-js-guides',
         sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/feature-guides',
-        outDir: 'docs/stacks.js/feature-guides',
+          'https://raw.githubusercontent.com/hirosystems/stacks.js/update-docs/docs/guides',
+        outDir: 'docs/stacks.js/guides',
         documents: [
           'authenticate-users-with-connect.md',
           'sign-messages.md',
           'sign-transactions.md',
           'store-data-securely.md',
           'update-profile.md',
-        ],
-      },
-    ],
-    [
-      'docusaurus-plugin-remote-content',
-      {
-        name: 'remote-docs-stx-js-how-to',
-        sourceBaseUrl:
-          'https://raw.githubusercontent.com/hirosystems/stacks.js/main/docs/how-to-guides/',
-        outDir: 'docs/stacks.js/how-to-guides',
-        documents: [
           'how-to-integrate-stacking-delegation.md',
           'how-to-integrate-stacking.md',
           'how-to-migrate-from-blockstack.js.md',
@@ -401,6 +381,16 @@ module.exports = {
         },
       },
     ],
+    async function tailwindPlugin(context, options) {
+      return {
+        name: 'docusaurus-tailwindcss',
+        configurePostCss(postcssOptions) {
+          postcssOptions.plugins.push(require('tailwindcss'));
+          postcssOptions.plugins.push(require('autoprefixer'));
+          return postcssOptions;
+        },
+      };
+    },
   ],
   presets: [
     [

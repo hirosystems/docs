@@ -4,6 +4,10 @@
  * work well for content-centric websites.
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: 'Aeonik Fono';
   src: url('https://alphaassets.hiro.so/AeonikFono-Regular.woff2') format('woff2'),
@@ -303,4 +307,32 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 
 .docsRating .i_thumbsdown {
   transform: scale(-1, -1) translateY(-0.25em);
+}
+
+/* CONTENT MARKDOWN ELEMENTS ================================================ */
+/* Prefixed with `Hiro` */
+
+div.HiroLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+a.HiroLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: color 0.15s ease;
+  background-color: ;
+}
+
+a.HiroLinkExternal {
+  color: var(--ifm-color-primary);
 }

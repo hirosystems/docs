@@ -352,29 +352,29 @@ module.exports = {
       label: 'Stacks.js',
       items: [
         'stacks.js/overview',
+        'stacks.js/installing',
         'stacks.js/getting-started',
+        'stacks.js/connect',
+
         {
           type: 'category',
-          label: 'Feature Guides',
+          label: 'Guides',
           items: [
-            'stacks.js/feature-guides/authenticate-users-with-connect',
-            'stacks.js/feature-guides/sign-messages',
-            'stacks.js/feature-guides/sign-transactions',
-            'stacks.js/feature-guides/store-data-securely',
-            'stacks.js/feature-guides/update-profile',
+            'stacks.js/guides/authenticate-users-with-connect',
+            'stacks.js/guides/sign-messages',
+            'stacks.js/guides/sign-transactions',
+            'stacks.js/guides/store-data-securely',
+            'stacks.js/guides/update-profile',
+
+            'stacks.js/guides/how-to-integrate-stacking-delegation',
+            'stacks.js/guides/how-to-integrate-stacking',
+            'stacks.js/guides/how-to-migrate-from-blockstack.js',
+            'stacks.js/guides/how-to-use-stacks-connect-with-angular',
           ],
         },
-        {
-          type: 'category',
-          label: 'How-to Guides',
-          items: [
-            'stacks.js/how-to-guides/how-to-integrate-stacking-delegation',
-            'stacks.js/how-to-guides/how-to-integrate-stacking',
-            'stacks.js/how-to-guides/how-to-migrate-from-blockstack.js',
-            'stacks.js/how-to-guides/how-to-use-stacks-connect-with-angular',
-          ],
-        },
-        'stacks.js/troubleshooting',
+
+        'stacks.js/packages',
+
         'stacks.js/faq',
         {
           type: 'category',
