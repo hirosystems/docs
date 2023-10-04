@@ -210,8 +210,9 @@ module.exports = {
           'https://raw.githubusercontent.com/hirosystems/ordhook/develop/docs/how-to-guides/',
         outDir: 'docs/ordhook/how-to-guides',
         documents: [
-          'how-to-use-ordhook-as-a-service-using-bitcoind.md',
-          'how-to-explore-ordinal-activities.md',
+          'how-to-run-ordhook-as-a-service-using-bitcoind.md',
+          'how-to-scan-ordinal-activities.md',
+          'how-to-stream-ordinal-activities.md',
         ],
       },
     ],
