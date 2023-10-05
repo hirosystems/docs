@@ -35,352 +35,352 @@ module.exports = {
         routeBasePath: '/api',
       },
     ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-stx-blockchain-api-docs',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/content/',
-    //     outDir: 'docs/stacks-blockchain-api',
-    //     documents: ['faqs.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-stx-blockchain-api-feature-guides',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/content/feature-guides',
-    //     outDir: 'docs/stacks-blockchain-api/feature-guides',
-    //     documents: [
-    //       'gaia-storage.md',
-    //       'microblocks.md',
-    //       'nonce-handling.md',
-    //       'openapi-spec.md',
-    //       'pagination.md',
-    //       'rate-limiting.md',
-    //       'requesting-proofs.md',
-    //       'rosetta-support.md',
-    //       'search-endpoint.md',
-    //       'search-endpoint.md',
-    //       'transactions.md',
-    //       'use-clarity-values.md',
-    //       'use-stacks-blockchain-api.md',
-    //     ],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-stx-blockchain-api-how-to',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/content/how-to-guides/',
-    //     outDir: 'docs/stacks-blockchain-api/how-to-guides',
-    //     documents: [
-    //       'how-to-deploy-service-dependencies.md',
-    //       'how-to-handle-errors.md',
-    //       'how-to-install-stacks-cli.md',
-    //       'how-to-query-stacks2.0-blockchain.md',
-    //       'how-to-run-api-node.md',
-    //       'how-to-run-mainnet-node.md',
-    //       'how-to-run-stacks-blockchain-api-docker.md',
-    //       'how-to-run-testnet-node.md',
-    //       'how-to-upgrade-stacks-blockchain-api.md',
-    //     ],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-stx-blockchain-api-images', // path safe name to have multiple versions for the plugin
-    //     sourceBaseUrl: 'https://raw.github.com/hirosystems/stacks-blockchain-api/master/content/', // url from where the files are donwloaded from
-    //     outDir: 'docs/stacks-blockchain-api/', // content directory where the downloaded files are stored
-    //     documents: ['images/api-architecture.png'], // named files list to be downloaded
-    //     requestConfig: { responseType: 'arraybuffer' }, // required for non-text downloads
-    //     headers: {
-    //       accept: 'image*',
-    //       'Content-Type': 'image/jpeg', // required for image downloads
-    //     },
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-stx-js-docs',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/update-docs/docs/',
-    //     outDir: 'docs/stacks.js',
-    //     documents: ['faq.md', 'getting-started.md', 'overview.md', 'installing.md', 'connect.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-stx-js-guides',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/stacks.js/update-docs/docs/guides',
-    //     outDir: 'docs/stacks.js/guides',
-    //     documents: [
-    //       'authenticate-users-with-connect.md',
-    //       'sign-messages.md',
-    //       'sign-transactions.md',
-    //       'store-data-securely.md',
-    //       'update-profile.md',
-    //       'how-to-integrate-stacking-delegation.md',
-    //       'how-to-integrate-stacking.md',
-    //       'how-to-migrate-from-blockstack.js.md',
-    //       'how-to-use-stacks-connect-with-angular.md',
-    //     ],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-subnets-docs',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/',
-    //     outDir: 'docs/subnets',
-    //     documents: ['getting-started.md', 'overview.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-subnets-feature-guides',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/feature-guides/',
-    //     outDir: 'docs/subnets/feature-guides',
-    //     documents: ['trust-models.md', 'subnet-participants.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-subnets-images',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/images/',
-    //     outDir: 'docs/subnets/images',
-    //     documents: [
-    //       'deposit-stx.png',
-    //       'subnet-devnet.png',
-    //       'subnet-miners.png',
-    //       'subnets-architecture.png',
-    //       'subnets-deployment-confirmed.png',
-    //     ],
-    //     requestConfig: { responseType: 'arraybuffer' },
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-stx-blockchain-api-docs',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/content/',
+        outDir: 'docs/stacks-blockchain-api',
+        documents: ['faqs.md', 'getting-started.md', 'overview.md', 'troubleshooting.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-stx-blockchain-api-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/content/feature-guides',
+        outDir: 'docs/stacks-blockchain-api/feature-guides',
+        documents: [
+          'gaia-storage.md',
+          'microblocks.md',
+          'nonce-handling.md',
+          'openapi-spec.md',
+          'pagination.md',
+          'rate-limiting.md',
+          'requesting-proofs.md',
+          'rosetta-support.md',
+          'search-endpoint.md',
+          'search-endpoint.md',
+          'transactions.md',
+          'use-clarity-values.md',
+          'use-stacks-blockchain-api.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-stx-blockchain-api-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-blockchain-api/master/content/how-to-guides/',
+        outDir: 'docs/stacks-blockchain-api/how-to-guides',
+        documents: [
+          'how-to-deploy-service-dependencies.md',
+          'how-to-handle-errors.md',
+          'how-to-install-stacks-cli.md',
+          'how-to-query-stacks2.0-blockchain.md',
+          'how-to-run-api-node.md',
+          'how-to-run-mainnet-node.md',
+          'how-to-run-stacks-blockchain-api-docker.md',
+          'how-to-run-testnet-node.md',
+          'how-to-upgrade-stacks-blockchain-api.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-stx-blockchain-api-images', // path safe name to have multiple versions for the plugin
+        sourceBaseUrl: 'https://raw.github.com/hirosystems/stacks-blockchain-api/master/content/', // url from where the files are donwloaded from
+        outDir: 'docs/stacks-blockchain-api/', // content directory where the downloaded files are stored
+        documents: ['images/api-architecture.png'], // named files list to be downloaded
+        requestConfig: { responseType: 'arraybuffer' }, // required for non-text downloads
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/jpeg', // required for image downloads
+        },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-stx-js-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks.js/update-docs/docs/',
+        outDir: 'docs/stacks.js',
+        documents: ['faq.md', 'getting-started.md', 'overview.md', 'installing.md', 'connect.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-stx-js-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks.js/update-docs/docs/guides',
+        outDir: 'docs/stacks.js/guides',
+        documents: [
+          'authenticate-users-with-connect.md',
+          'sign-messages.md',
+          'sign-transactions.md',
+          'store-data-securely.md',
+          'update-profile.md',
+          'how-to-integrate-stacking-delegation.md',
+          'how-to-integrate-stacking.md',
+          'how-to-migrate-from-blockstack.js.md',
+          'how-to-use-stacks-connect-with-angular.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-subnets-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/',
+        outDir: 'docs/subnets',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-subnets-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/feature-guides/',
+        outDir: 'docs/subnets/feature-guides',
+        documents: ['trust-models.md', 'subnet-participants.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-subnets-images',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/stacks-subnets/develop/docs/images/',
+        outDir: 'docs/subnets/images',
+        documents: [
+          'deposit-stx.png',
+          'subnet-devnet.png',
+          'subnet-miners.png',
+          'subnets-architecture.png',
+          'subnets-deployment-confirmed.png',
+        ],
+        requestConfig: { responseType: 'arraybuffer' },
 
-    //     headers: {
-    //       accept: 'image*',
-    //       'Content-Type': 'image/png',
-    //     },
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-chainhook-docs',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/',
-    //     outDir: 'docs/chainhook',
-    //     documents: ['faq.md', 'getting-started.md', 'overview.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-chainhook-how-to',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
-    //     outDir: 'docs/chainhook/how-to-guides',
-    //     documents: [
-    //       'how-to-run-chainhook-as-a-service-using-bitcoind.md',
-    //       'how-to-run-chainhook-as-a-service-using-stacks.md',
-    //       'how-to-use-chainhooks-with-bitcoin.md',
-    //       'how-to-use-chainhooks-with-stacks.md',
-    //     ],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-chainhook-images',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
-    //     outDir: 'docs/chainhook/images/',
-    //     documents: ['chainhook-post-request.jpeg'],
-    //     requestConfig: { responseType: 'arraybuffer' },
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/png',
+        },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-chainhook-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/',
+        outDir: 'docs/chainhook',
+        documents: ['faq.md', 'getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-chainhook-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/how-to-guides/',
+        outDir: 'docs/chainhook/how-to-guides',
+        documents: [
+          'how-to-run-chainhook-as-a-service-using-bitcoind.md',
+          'how-to-run-chainhook-as-a-service-using-stacks.md',
+          'how-to-use-chainhooks-with-bitcoin.md',
+          'how-to-use-chainhooks-with-stacks.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-chainhook-images',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/images/',
+        outDir: 'docs/chainhook/images/',
+        documents: ['chainhook-post-request.jpeg'],
+        requestConfig: { responseType: 'arraybuffer' },
 
-    //     headers: {
-    //       accept: 'image*',
-    //       'Content-Type': 'image/jpeg',
-    //     },
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-ordinals-api-docs',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordinals-api/develop/docs/',
-    //     outDir: 'docs/ordinals-api',
-    //     documents: ['overview.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-ordinals-feature-guides',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/ordinals-api/master/docs/feature-guides/',
-    //     outDir: 'docs/ordinals-api/feature-guides',
-    //     documents: ['rate-limiting.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-clarinet-docs',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
-    //     outDir: 'docs/clarinet',
-    //     documents: ['faq.md', 'getting-started.md', 'introduction.md', 'troubleshooting.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-clarinet-feature-guides',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/feature-guides',
-    //     outDir: 'docs/clarinet/feature-guides',
-    //     documents: [
-    //       'analyze-with-check-checker.md',
-    //       'chainhooks.md',
-    //       'clarinet-deploy.md',
-    //       'clarinet-integrate.md',
-    //       'extend-clarinet.md',
-    //     ],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-clarinet-how-to',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/how-to-guides/',
-    //     outDir: 'docs/clarinet/how-to-guides',
-    //     documents: [
-    //       'how-to-add-contract.md',
-    //       'how-to-check-contract.md',
-    //       'how-to-create-new-project.md',
-    //       'how-to-debug-contract.md',
-    //       'how-to-deploy-contracts.md',
-    //       'how-to-deploy-with-subnets.md',
-    //       'how-to-run-integration-environment.md',
-    //       'how-to-set-up-local-development-environment.md',
-    //       'how-to-test-contract.md',
-    //       'how-to-use-deployment-plans.md',
-    //     ],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-clarinet-images',
-    //     sourceBaseUrl: 'https://raw.github.com/hirosystems/clarinet/develop/docs/images',
-    //     outDir: 'docs/clarinet/images',
-    //     documents: [
-    //       'breakpoint.png',
-    //       'clarinet-banner.bmp',
-    //       'clarinet-dialog.bmp',
-    //       'clarinet-faq-1.png',
-    //       'clarinet-faq-2.png',
-    //       'clarinet-faq-3.png',
-    //       'clarinet-faq-4.png',
-    //       'clarinet.ico',
-    //       'clarinet.png',
-    //       'clarinet101.png',
-    //       'costs.gif',
-    //       'debug-console.png',
-    //       'debug-toolbar.png',
-    //       'demo.gif',
-    //       'deno-error.png',
-    //       'jupyter.png',
-    //       'lcov.png',
-    //       'run-and-debug.png',
-    //       'sidebar.png',
-    //       'trace.png',
-    //       'watchpoint.png',
-    //       'deployment-plans.png',
-    //     ],
-    //     requestConfig: { responseType: 'arraybuffer' },
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/jpeg',
+        },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordinals-api-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordinals-api/develop/docs/',
+        outDir: 'docs/ordinals-api',
+        documents: ['overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordinals-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/ordinals-api/master/docs/feature-guides/',
+        outDir: 'docs/ordinals-api/feature-guides',
+        documents: ['rate-limiting.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-clarinet-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/',
+        outDir: 'docs/clarinet',
+        documents: ['faq.md', 'getting-started.md', 'introduction.md', 'troubleshooting.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-clarinet-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/feature-guides',
+        outDir: 'docs/clarinet/feature-guides',
+        documents: [
+          'analyze-with-check-checker.md',
+          'chainhooks.md',
+          'clarinet-deploy.md',
+          'clarinet-integrate.md',
+          'extend-clarinet.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-clarinet-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/clarinet/develop/docs/how-to-guides/',
+        outDir: 'docs/clarinet/how-to-guides',
+        documents: [
+          'how-to-add-contract.md',
+          'how-to-check-contract.md',
+          'how-to-create-new-project.md',
+          'how-to-debug-contract.md',
+          'how-to-deploy-contracts.md',
+          'how-to-deploy-with-subnets.md',
+          'how-to-run-integration-environment.md',
+          'how-to-set-up-local-development-environment.md',
+          'how-to-test-contract.md',
+          'how-to-use-deployment-plans.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-clarinet-images',
+        sourceBaseUrl: 'https://raw.github.com/hirosystems/clarinet/develop/docs/images',
+        outDir: 'docs/clarinet/images',
+        documents: [
+          'breakpoint.png',
+          'clarinet-banner.bmp',
+          'clarinet-dialog.bmp',
+          'clarinet-faq-1.png',
+          'clarinet-faq-2.png',
+          'clarinet-faq-3.png',
+          'clarinet-faq-4.png',
+          'clarinet.ico',
+          'clarinet.png',
+          'clarinet101.png',
+          'costs.gif',
+          'debug-console.png',
+          'debug-toolbar.png',
+          'demo.gif',
+          'deno-error.png',
+          'jupyter.png',
+          'lcov.png',
+          'run-and-debug.png',
+          'sidebar.png',
+          'trace.png',
+          'watchpoint.png',
+          'deployment-plans.png',
+        ],
+        requestConfig: { responseType: 'arraybuffer' },
 
-    //     headers: {
-    //       accept: 'image*',
-    //       'Content-Type': 'image/jgeg',
-    //     },
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-explorer-docs',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/explorer/main/docs/',
-    //     outDir: 'docs/explorer',
-    //     documents: ['getting-started.md', 'overview.md'],
-    //   },
-    // ],
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/jgeg',
+        },
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-explorer-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/explorer/main/docs/',
+        outDir: 'docs/explorer',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
 
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-explorer-how-to',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/explorer/main/docs/how-to-guides/',
-    //     outDir: 'docs/explorer/how-to-guides',
-    //     documents: ['build-explorer.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-token-metadata-api-docs',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
-    //     outDir: 'docs/token-metadata-api',
-    //     documents: ['getting-started.md', 'overview.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-token-metadata-api-feature-guides',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/',
-    //     outDir: 'docs/token-metadata-api/feature-guides',
-    //     documents: ['metadata-api.md', 'rate-limiting.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-token-metadata-api-how-to',
-    //     sourceBaseUrl:
-    //       'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/how-to/',
-    //     outDir: 'docs/token-metadata-api/how-to-guides',
-    //     documents: ['how-to-stop-service.md', 'how-to-use-image-cache-service.md'],
-    //   },
-    // ],
-    // [
-    //   'docusaurus-plugin-remote-content',
-    //   {
-    //     name: 'remote-docs-token-metadata-images',
-    //     sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/',
-    //     outDir: 'docs',
-    //     documents: ['flowchart.png', 'architecture.png'],
-    //     requestConfig: { responseType: 'arraybuffer' },
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-explorer-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/explorer/main/docs/how-to-guides/',
+        outDir: 'docs/explorer/how-to-guides',
+        documents: ['build-explorer.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-token-metadata-api-docs',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/',
+        outDir: 'docs/token-metadata-api',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-token-metadata-api-feature-guides',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/docs/feature-guides/',
+        outDir: 'docs/token-metadata-api/feature-guides',
+        documents: ['metadata-api.md', 'rate-limiting.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-token-metadata-api-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/token-metadata-api/develop/docs/how-to/',
+        outDir: 'docs/token-metadata-api/how-to-guides',
+        documents: ['how-to-stop-service.md', 'how-to-use-image-cache-service.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-token-metadata-images',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/token-metadata-api/master/',
+        outDir: 'docs',
+        documents: ['flowchart.png', 'architecture.png'],
+        requestConfig: { responseType: 'arraybuffer' },
 
-    //     headers: {
-    //       accept: 'image*',
-    //       'Content-Type': 'image/jgeg',
-    //     },
-    //   },
-    // ],
+        headers: {
+          accept: 'image*',
+          'Content-Type': 'image/jgeg',
+        },
+      },
+    ],
     async function tailwindPlugin(context, options) {
       return {
         name: 'docusaurus-tailwindcss',
