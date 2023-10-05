@@ -1,3 +1,5 @@
+const { iconsPlugin, getIconCollections } = require('@egoist/tailwindcss-icons');
+
 module.exports = {
   corePlugins: {
     preflight: false,
@@ -10,5 +12,9 @@ module.exports = {
     extend: {},
   },
 
-  plugins: [],
+  plugins: [
+    iconsPlugin({
+      collections: getIconCollections(['bi', 'radix-icons', 'pixelarticons']),
+    }),
+  ],
 };
