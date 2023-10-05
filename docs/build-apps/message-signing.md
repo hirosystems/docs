@@ -3,7 +3,7 @@ id: message-signing
 title: Signing messages
 ---
 
-import StacksjsStartersNote from '../stacks.js/includes/\_stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
