@@ -1,5 +1,5 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
+const darkCodeTheme = require('./src/theme/hiro-dark-code.js');
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -176,6 +176,29 @@ module.exports = {
     [
       'docusaurus-plugin-remote-content',
       {
+        name: 'remote-docs-ordhook-docs',
+        sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/ordhook/develop/docs/',
+        outDir: 'docs/ordhook',
+        documents: ['getting-started.md', 'overview.md'],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
+        name: 'remote-docs-ordhook-how-to',
+        sourceBaseUrl:
+          'https://raw.githubusercontent.com/hirosystems/ordhook/develop/docs/how-to-guides/',
+        outDir: 'docs/ordhook/how-to-guides',
+        documents: [
+          'how-to-run-ordhook-as-a-service-using-bitcoind.md',
+          'how-to-scan-ordinal-activities.md',
+          'how-to-stream-ordinal-activities.md',
+        ],
+      },
+    ],
+    [
+      'docusaurus-plugin-remote-content',
+      {
         name: 'remote-docs-chainhook-docs',
         sourceBaseUrl: 'https://raw.githubusercontent.com/hirosystems/chainhook/develop/docs/',
         outDir: 'docs/chainhook',
@@ -250,10 +273,10 @@ module.exports = {
         outDir: 'docs/clarinet/feature-guides',
         documents: [
           'analyze-with-check-checker.md',
-          'chainhooks.md',
+          'clarinet-js-sdk.md',
           'clarinet-deploy.md',
           'clarinet-integrate.md',
-          'extend-clarinet.md',
+          'test-contract-with-clarinet-sdk.md',
         ],
       },
     ],
@@ -416,6 +439,7 @@ module.exports = {
               'token-metadata-api':
                 'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
               chainhook: 'https://github.com/hirosystems/chainhook/tree/develop/docs',
+              ordhook: 'https://github.com/hirosystems/ordhook/tree/develop/docs',
             };
             const [repo, ...rem] = docPath.split('/');
             if (repo in repoUrls) {
