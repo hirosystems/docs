@@ -102,7 +102,7 @@ This method calls the [`delegate-stx`](https://docs.stacks.co/references/stackin
 
 :::tip
 
-To avoid handling private keys, it is recommended to use the [Stacks Wallet](https://www.hiro.so/wallet) to sign the delegation transaction
+To avoid handling private keys, it is recommended to use the [Leather Wallet](https://leather.io/install-extension) to sign the delegation transaction
 
 :::
 
@@ -126,7 +126,7 @@ This method calls the [`revoke-delegate-stx`](https://docs.stacks.co/references/
 
 :::tip
 
-To avoid handling private keys, it is recommended to use the [Stacks Wallet](https://www.hiro.so/wallet) to sign the revoke transaction
+To avoid handling private keys, it is recommended to use the [Leather Wallet](https://leather.io/install-extension) to sign the revoke transaction
 
 :::
 
