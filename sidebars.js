@@ -497,7 +497,7 @@ module.exports = {
         },
         {
           type: 'link',
-          label: 'Jule 2023',
+          label: 'July 2023',
           href: 'https://www.hiro.so/blog/release-roundup-july-2023',
         },
         {
