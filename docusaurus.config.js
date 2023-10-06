@@ -293,10 +293,10 @@ module.exports = {
         outDir: 'docs/clarinet/feature-guides',
         documents: [
           'analyze-with-check-checker.md',
-          'chainhooks.md',
+          'clarinet-js-sdk.md',
           'clarinet-deploy.md',
           'clarinet-integrate.md',
-          'extend-clarinet.md',
+          'test-contract-with-clarinet-sdk.md',
         ],
       },
     ],
