@@ -115,7 +115,7 @@ Encrypted files need `decrypt` set to `true` so the app knows to decrypt the dat
 
 ## Get data for other user
 
-Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns).
+Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Bitcoin Naming System](https://docs.stacks.co/build-apps/references/bns).
 
 Simply indicate the username of such a user in the `options` object:
 
