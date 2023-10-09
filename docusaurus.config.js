@@ -439,7 +439,7 @@ module.exports = {
 
           editUrl({ docPath }) {
             const repoUrls = {
-              clarinet: 'https://github.com/hirosystems/clarinet/blob/main/docs',
+              clarinet: 'https://github.com/hirosystems/clarinet/blob/develop/docs',
               explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
               'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
               'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
