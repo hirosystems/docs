@@ -51,7 +51,9 @@ You'll also need to provide a nickname for your connected device, such as 'MacBo
 
 ## Enable SSH and Git
 
-To enable SSH access and Git authentication to your Hiro Platform workspace, you'll need to add the following lines to your `~/.ssh/config` file:
+To enable SSH access and Git authentication to your Hiro Platform workspace, you'll need to modify your `~/.ssh/config` file. However, before proceeding, it's important to understand what these commands do to ensure you're comfortable with the changes being made to your machine
+
+Here are the lines you need to add:
 
 ```bash
 Host *.ssh.platform.hiro.so
@@ -59,12 +61,19 @@ Host *.ssh.platform.hiro.so
     StrictHostKeyChecking no 
     ProxyCommand openssl s_client -quiet -servername %h -connect %h:22
     ForwardAgent yes
-
-If you don't plan to use Git, you can delete the line 
-
-```bash
-    ForwardAgent yes
 ```
+
+See below what each line does:
+
+- `Host *.ssh.platform.hiro.so`: This line specifies that the following settings apply to any host in the `ssh.platform.hiro.so` domain.
+- `User hiro`: This line sets the default username to `hiro` for this host.
+- `StrictHostKeyChecking no`: This line disables the prompt that asks if you trust the host you're connecting to.
+- `ProxyCommand openssl s_client -quiet -servername %h -connect %h:22`: This line tells SSH to use OpenSSL as a proxy to connect to the host.
+  `-servername %h`: This option sets the Server Name Indication (SNI). The `%h` is a placeholder that SSH replaces with the host name.
+
+- `ForwardAgent yes`: This line enables the forwarding of the authentication agent connection, which is useful if you're using Git. `ForwardAgent` is an option in SSH that allows your local SSH agent to authenticate on a remote server without storing your private keys on the remote server. When `ForwardAgent` is set to `yes`, the SSH client will forward the authentication information to the remote machine that you SSH into. 
+
+If you don't plan to use Git, you can remove the line `ForwardAgent yes`.
 
 ## Get your workspace url
 
@@ -78,23 +87,22 @@ Now you can access your Hiro Platform projects directly from your local setup. U
 
 ## Configuring Visual Studio Code
 
-Visual Studio Code (VSCode) has built-in support for SSH connections, allowing you to connect to and work on your remote server directly from your local VSCode environment. Here's how to set it up:
+You can use the "Remote-SSH" extension to connect to and work on your remote server directly from your local VSCode environment. If you don't have it installed already, you can install it from the VSCode Marketplace: [https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+Once the extension is installed, you can connect to your remote server by following the steps below.
 
 1. Open VSCode on your local machine.
 
-2. Open the Command Palette by pressing `F1` or `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS).
+2. Type "Remote-SSH: Connect to Host..." and select it from the dropdown list.
 
-3. Type "Remote-SSH: Connect to Host..." and select it from the dropdown list.
+3. Click on "Add New SSH Host...".
 
-4. Click on "Add New SSH Host...".
+4. Enter your SSH connection command, for example `ssh <your-workspace-url>`, replacing `<your-workspace-url>` with your workspace url.
 
-5. Enter your SSH connection command, for example `ssh <your-workspace-url>`, replacing `<your-workspace-url>` with your workspace url.
+5. Select the SSH configuration file to update. This is usually `~/.ssh/config`.
 
-6. Select the SSH configuration file to update. This is usually `~/.ssh/config`.
+6. Once the configuration file is updated, you can click on "Connect to Host" again and you should see your new SSH host. Click on it to connect.
 
-7. Once the configuration file is updated, you can click on "Connect to Host" again and you should see your new SSH host. Click on it to connect.
-
-8. A new VSCode window will open, connected to your remote server. You can now open folders and files on the server and work on them as if they were local.
+7. A new VSCode window will open, connected to your remote server. You can now open folders and files on the server and work on them as if they were local.
 
 Remember to replace `<your-workspace-url>` with your actual workspace url.
 
