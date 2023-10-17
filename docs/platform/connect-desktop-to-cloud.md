@@ -69,7 +69,7 @@ If you don't plan to use Git, you can delete the line
 ## Get your workspace url
 
 <!-- markdown-link-check-disable -->
-To create an SSH connection to your Hiro Platform workspace you will need your workspace url. To find it just go to [https://platform.hiro.so/projects](https://platform.hiro.so/projects) and click on `Connect Your Local Editor`. You will find your worspace url at the bottom.
+To create an SSH connection to your Hiro Platform workspace you will need your workspace url. To find it just go to [https://platform.hiro.so/projects](https://platform.hiro.so/projects) and click on `Connect Your Local Editor`. You will find your workspace url at the bottom.
 <!-- markdown-link-check-enable -->
 
 ## Connection Complete!
