@@ -338,6 +338,7 @@ module.exports = {
       items: [
         'platform/overview',
         'platform/getting-started',
+        'platform/connect-desktop-to-cloud',
         'platform/create-project',
         'platform/build-contract',
         'platform/create-chainhooks',
