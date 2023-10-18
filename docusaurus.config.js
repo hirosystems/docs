@@ -337,7 +337,6 @@ module.exports = {
           'clarinet-faq-4.png',
           'clarinet.ico',
           'clarinet.png',
-          'clarinet101.png',
           'costs.gif',
           'debug-console.png',
           'debug-toolbar.png',
@@ -355,7 +354,7 @@ module.exports = {
 
         headers: {
           accept: 'image*',
-          'Content-Type': 'image/jgeg',
+          'Content-Type': 'image/jpeg',
         },
       },
     ],
