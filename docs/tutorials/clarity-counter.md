@@ -242,15 +242,15 @@ You have now learned one method of deploying and interacting with smart contract
 the strengths of performing local development without having to wait for block times.
 
 [hello world tutorial]: /tutorials/clarity-hello-world
-[clarinet]: /smart-contracts/clarinet
-[installing clarinet]: /smart-contracts/clarinet#installing-clarinet
+[clarinet]: /clarinet/introduction
+[installing clarinet]: /clarinet/getting-started
 [`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [stacks web wallet]: https://www.hiro.so/wallet/install-web
 [testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
-[unit tests]: /smart-contracts/clarinet#testing-with-clarinet
+[unit tests]: /clarinet/feature-guides/test-contract-with-clarinet-sdk
 [`var-get`]: https://docs.stacks.co/references/language-functions#var-get
-[`clarinet console`]: /smart-contracts/clarinet#testing-with-the-console
+[`clarinet console`]: /clarinet/how-to-guides/how-to-debug-contract#command-line-debugger
 [`begin`]: https://docs.stacks.co/references/language-functions#begin
 [`var-set`]: https://docs.stacks.co/references/language-functions#var-set
 [`+`]: https://docs.stacks.co/references/language-functions#-add

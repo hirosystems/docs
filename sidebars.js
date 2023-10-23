@@ -237,8 +237,8 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'clarinet/feature-guides/analyze-with-check-checker',
-            'clarinet/feature-guides/extend-clarinet',
-            'clarinet/feature-guides/chainhooks',
+            'clarinet/feature-guides/clarinet-js-sdk',
+            'clarinet/feature-guides/test-contract-with-clarinet-sdk',
             'clarinet/feature-guides/clarinet-deploy',
             'clarinet/feature-guides/clarinet-integrate',
           ],
@@ -338,6 +338,7 @@ module.exports = {
       items: [
         'platform/overview',
         'platform/getting-started',
+        'platform/connect-desktop-to-cloud',
         'platform/create-project',
         'platform/build-contract',
         'platform/create-chainhooks',
@@ -345,6 +346,39 @@ module.exports = {
         'platform/deploy-project',
         'platform/archive-project',
         'platform/faq',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Ordhook',
+      items: [
+        'ordhook/overview',
+        'ordhook/getting-started',
+        {
+          type: 'category',
+          label: 'How-to Guides',
+          items: [
+            'ordhook/how-to-guides/how-to-run-ordhook-as-a-service-using-bitcoind',
+            'ordhook/how-to-guides/how-to-scan-ordinal-activities',
+            'ordhook/how-to-guides/how-to-stream-ordinal-activities',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Developer Resources',
+          items: [
+            {
+              type: 'link',
+              label: 'Contribution Guidelines',
+              href: 'https://github.com/hirosystems/ordhook/tree/develop',
+            },
+            {
+              type: 'link',
+              label: 'Discord #General',
+              href: 'https://discord.com/channels/621759717756370964/621759718192447502',
+            },
+          ],
+        },
       ],
     },
     {
