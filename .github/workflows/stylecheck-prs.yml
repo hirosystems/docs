@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "**.md"
+      - '**.md'
 
 jobs:
   stylecheck:
@@ -11,16 +11,16 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: get changed Files
         id: get_changed_files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: run vale
-        uses: errata-ai/vale-action@master
+        uses: errata-ai/vale-action@reviewdog
         with:
-          files: "${{ steps.get_changed_files.outputs.all }}"
+          files: '${{ steps.get_changed_files.outputs.all }}'
           onlyAnnotateModifiedLines: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
