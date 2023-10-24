@@ -1,11 +1,11 @@
 ---
-title: Connect Desktop to Cloud using SSH
+title: Connect Desktop to Cloud Using SSH
 ---
 # Setting Up Your Local Editor
 
-Hiro Platform now supports local development, allowing you to use your preferred local editor (VSCode, Emacs, Vim, etc.) to develop smart contracts. This guide will walk you through the steps to set up your local editor for Hiro Platform.
+The Hiro Platform now supports local development, allowing you to use your preferred local editor (VSCode, Emacs, Vim, etc.) to develop smart contracts. This guide will walk you through the steps to set up your local editor for the Hiro Platform.
 
-## Find or Generate your SSH Key
+## Find or Generate Your SSH Key
 
 First, you need to check if you already have an existing SSH key on your device. This is often located in `~/.ssh/id_ed25519.pub`. You can view your SSH keys by running the following command in your terminal:
 
@@ -23,24 +23,24 @@ ssh-keygen -t ed25519
 
 You'll then be prompted to enter a passphrase. You can choose to leave that blank. You should now have a `id_ed25519.pub` file which contains your new public SSH key.
 
-## Save your SSH Key
+## Save Your SSH Key
 
 <!-- markdown-link-check-disable -->
 Next, you'll provide your public key to the Hiro Platform. You can do this by copying your public key and pasting it into the SSH Public Key field in the Hiro Platform in Profile -> Settings. [https://platform.hiro.so/settings](https://platform.hiro.so/settings)
 <!-- markdown-link-check-enable -->
 
-For Mac you can do
+For Mac, use:
 ```
 cat ~/.ssh/id_ed25519.pub | pbcopy
 ```
 
-For  Windows you can do
+For Windows, use:
 ```
 type %userprofile%\.ssh\id_ed25519.pub | clip
 
 ```
 
-For Linux you can do
+For Linux, use:
 
 ```
 cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
@@ -75,10 +75,10 @@ See below what each line does:
 
 If you don't plan to use Git, you can remove the line `ForwardAgent yes`.
 
-## Get your workspace url
+## Get Your Workspace URL
 
 <!-- markdown-link-check-disable -->
-To create an SSH connection to your Hiro Platform workspace you will need your workspace url. To find it just go to [https://platform.hiro.so/projects](https://platform.hiro.so/projects) and click on `Connect Your Local Editor`. You will find your workspace url at the bottom.
+To create an SSH connection to your Hiro Platform workspace, you will need your workspace url. To find it, go to [https://platform.hiro.so/projects](https://platform.hiro.so/projects) and click `Connect Your Local Editor`. You will find your workspace url at the bottom.
 <!-- markdown-link-check-enable -->
 
 ## Connection Complete!
@@ -87,10 +87,10 @@ Now you can access your Hiro Platform projects directly from your local setup. U
 
 ## Configuring Visual Studio Code
 
-You can use the "Remote-SSH" extension to connect to and work on your remote server directly from your local VSCode environment. If you don't have it installed already, you can install it from the VSCode Marketplace: [https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+You can use the "Remote-SSH" extension to connect to, and work on, your remote server directly from your local VS Code environment. If you don't have it installed already, you can install it from the VS Code Marketplace: [https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
 Once the extension is installed, you can connect to your remote server by following the steps below.
 
-1. Open VSCode on your local machine.
+1. Open VS Code on your local machine.
 
 2. Type "Remote-SSH: Connect to Host..." and select it from the dropdown list.
 
@@ -100,9 +100,9 @@ Once the extension is installed, you can connect to your remote server by follow
 
 5. Select the SSH configuration file to update. This is usually `~/.ssh/config`.
 
-6. Once the configuration file is updated, you can click on "Connect to Host" again and you should see your new SSH host. Click on it to connect.
+6. Once the configuration file is updated, you can click on "Connect to Host" again, and you should see your new SSH host. Click on it to connect.
 
-7. A new VSCode window will open, connected to your remote server. You can now open folders and files on the server and work on them as if they were local.
+7. A new VS Code window will open, connected to your remote server. You can now open folders and files on the server and work on them as if they were local.
 
 Remember to replace `<your-workspace-url>` with your actual workspace url.
 
