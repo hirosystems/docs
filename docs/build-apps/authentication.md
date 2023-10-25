@@ -13,8 +13,6 @@ Authentication provides a way for users to identify themselves to an app while r
 
 Users who register for your app can subsequently authenticate to any other app with support for the [Bitcoin Naming System](https://docs.stacks.co/build-apps/references/bns) and vice versa.
 
-See the [To-dos example app](/example-apps/to-dos) for a concrete example of this feature in practice.
-
 ## How it works
 
 The authentication flow with Stacks is similar to the typical client-server flow used by centralized sign in services (for example, OAuth). However, with Stacks the authentication flow happens entirely client-side.
