@@ -8,7 +8,7 @@ API keys are alpha-numeric codes that identify and authenticate an application o
 
 # Steps to use API Key
 
-Review these steps to interact with the API using the API key
+Follow these steps to interact with the API using the API key
 
 > :::caution
 > The API key is passed in the **header** of your HTTP API request and is used only for private use, like in server-side applications. This key is not to be exposed or shared; if you use the API key in your client-side application (E.g., frontend, browser-based applications), attackers can capture it using the client tools (E.g., browser console) and abuse your API key.
@@ -28,7 +28,7 @@ curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-API-value>'
 
 ## Using the API key in Typescript
 
-The following Typescript snippet demonstrates the instantiation of  RESTful HTTP requests with an API key.
+The following Typescript snippet demonstrates the instantiation of RESTful HTTP requests with an API key.
 
 ```typescript
 function <your-api-function>(apiKey: string) {
