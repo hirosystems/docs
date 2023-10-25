@@ -542,7 +542,7 @@ typing.
 
 ## Reading BNS names
 
-An important feature of Stacks is the [Blockchain Naming System][] (BNS). BNS allows users to register a human-readable
+An important feature of Stacks is the [Bitcoin Naming System][] (BNS). BNS allows users to register a human-readable
 identity to their account, that can act as both a username and a web address.
 
 Names registered to a user can be read from a Stacks API endpoint, as demonstrated in [`src/store/names.ts`][].
@@ -635,7 +635,7 @@ specific implementation details.
 [`/src/store/auth.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/auth.ts
 [clarity types in javascript]: #clarity-types-in-javascript
 [`@stacks/transactions`]: https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values
-[blockchain naming system]: https://docs.stacks.co/build-apps/references/bns
+[bitcoin naming system]: https://docs.stacks.co/build-apps/references/bns
 [`src/store/names.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/names.ts
 [javascript types to clarity types]: #clarity-types-in-javascript
 [`@stacks/blockchain-api-client`]: https://github.com/hirosystems/stacks-blockchain-api/tree/master/client
