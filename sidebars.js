@@ -237,8 +237,8 @@ module.exports = {
           label: 'Feature Guides',
           items: [
             'clarinet/feature-guides/analyze-with-check-checker',
-            'clarinet/feature-guides/extend-clarinet',
-            'clarinet/feature-guides/chainhooks',
+            'clarinet/feature-guides/clarinet-js-sdk',
+            'clarinet/feature-guides/test-contract-with-clarinet-sdk',
             'clarinet/feature-guides/clarinet-deploy',
             'clarinet/feature-guides/clarinet-integrate',
           ],
@@ -338,12 +338,14 @@ module.exports = {
       items: [
         'platform/overview',
         'platform/getting-started',
+        'platform/connect-desktop-to-cloud',
         'platform/create-project',
         'platform/build-contract',
         'platform/create-chainhooks',
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
+        'platform/faucet',
         'platform/faq',
       ],
     },
@@ -588,7 +590,6 @@ module.exports = {
   ],
   'example-apps': [
     'example-apps',
-    'example-apps/to-dos',
     'example-apps/billboard',
     'example-apps/heystack',
   ],
