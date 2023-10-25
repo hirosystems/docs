@@ -14,11 +14,15 @@ Once you are on the [Projects page](https://platform.hiro.so), select the projec
 
 ![Create Projects](./images/chainhook-create-project.jpeg)
 
-You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select _Chainhooks_ to create a new chainhook.
+You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select the _Chainhooks_ tab.
+
+There are two ways to create a chainhook. You can either create a chainhook from scratch using our form, or you can upload a chainhook(s) that you have already defined in JSON.
+
+# Creating a Chainhook
 
 ![Create Chainhook Window](./images/chainhook-select-chainhook-tab.jpeg)
 
-Select the _Create chainhook_ button at the bottom of the screen.
+Select the _Create Chainhook_ button.
 
 ![Create Chainhook Window](./images/chainhook-create-chainhook-window.jpeg)
 
@@ -71,11 +75,21 @@ The right pane navigates to the Projects page with the Chainhooks tab open, and 
 
 ![Chainhook created](images/chainhook-created.jpeg)
 
-The `NAME`, `CHAIN`, `LAST UPDATED`, `START BLOCK`, `TESTNET`, and `MAINNET` headers are updated based on the selected fields used to create a chainhook.
+The `NAME`, `CHAIN`, `START BLOCK`, `NETWORK`, `STATUS`, and `LAST UPDATED` headers are updated based on the selected fields used to create a chainhook.
 
 Based on the chosen network, the respective status columns in the Chainhook list page will be updated to **Deployed**.
 
 Note that there may be other fields in the UI to create a chainhook based on the predicates defined.
+
+# Uploading a Chainhook
+
+To upload a chainhook, you can either select the _Upload Chainhook_ button and choose the .json file that has the chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area. 
+
+![Upload Chainhook](./images/chainhook-upload.jpeg)
+
+The upload file must be a .json file containing either a single json object representing a chainhook predicate, or an array of json objects representing one or more chainhook predicates. 
+
+Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks) documents to understand the available predicates and how your chainhook predicate json for upload.
 
 ## Edit Chainhook
 
@@ -100,6 +114,14 @@ You can update the fields or directly select **Create chainhook** to duplicate a
 Use the ellipse on the chainhook row to delete the chainhook. You will see a confirmation window to confirm if you want to delete the chainhook.
 
 ![Delete chainhook](images/chainhook-delete-confirmation-window.jpeg)
+
+## Chainhook Status
+
+The chainhook row has a `STATUS` column that displays whether the chainhook is in an Active, Inactive, or Error state. Active means the chainhook is actively scanning blocks against the chainhook's defined predicate, inactive means the chainhook has reached a terminal state, e.g. its end block has been reached, and it is no longer scanning blocks, and error means the chainhook ran into an error during its execution. 
+
+More status info can be found by hovering over the status element. For example, to understand why the chainhook is in an error state, hover over the status element to find out!
+
+![Chainhook status](images/chainhook-status-info.jpeg)
 
 ## References
 
