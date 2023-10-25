@@ -33,7 +33,7 @@ See the authentication guide before proceeding to integrate the following data s
 
 Gaia serves as a key-value store in which data is saved and retrieved as files to and from Gaia hubs owned by, or managed for, users.
 
-The default Gaia hub for users who authenticate to apps with [the Stacks Wallet](https://www.hiro.so/wallet/install-web) is run by Hiro PBC at `https://gaia.blockstack.org/`. It supports files up to 25 megabytes in size.
+The default Gaia hub for users who authenticate to apps with [the Leather Wallet](https://leather.io/install-extension) is run by Hiro PBC at `https://gaia.blockstack.org/`. It supports files up to 25 megabytes in size.
 
 :::tip
 
@@ -115,7 +115,7 @@ Encrypted files need `decrypt` set to `true` so the app knows to decrypt the dat
 
 ## Get data for other user
 
-Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns).
+Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Bitcoin Naming System](https://docs.stacks.co/build-apps/references/bns).
 
 Simply indicate the username of such a user in the `options` object:
 

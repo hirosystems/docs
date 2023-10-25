@@ -35,7 +35,7 @@ If you are using Visual Studio Code, you may want to install the [Clarity Visual
 
 While this tutorial primarily focuses on local smart contract development, you may wish to deploy your contract to a
 live blockchain. For simplicity, contract deployment is performed using the [testnet sandbox](https://explorer.hiro.so/sandbox/deploy?chain=testnet).
-If you wish to complete the optional deployment step, you should have the [Stacks Web Wallet](https://www.hiro.so/wallet/install-web)
+If you wish to complete the optional deployment step, you should have the [Leather Wallet](https://leather.io/install-extension)
 installed, and you should request testnet STX tokens from the [testnet faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
 on the testnet explorer. Note that requesting testnet STX from the faucet can take up to 15 minuets, so you may wish to
 request the tokens before beginning the tutorial.
@@ -276,11 +276,11 @@ like to try deploying your contract to the testnet, proceed with the following o
 ## Optional: Deploy the NFT to the testnet
 
 For this tutorial, you'll use the [testnet sandbox](https://explorer.hiro.so/sandbox/deploy?chain=testnet) to deploy
-your smart contract. Make sure you have connected your [Stacks web wallet](https://www.hiro.so/wallet/install-web) to
+your smart contract. Make sure you have connected your [Leather wallet](https://leather.io/install-extension) to
 the sandbox using the **Connect wallet** button, then copy and paste the `my-nft.clar` smart contract into the Clarity
 code editor on the [Write & Deploy](https://explorer.hiro.so/sandbox/deploy?chain=testnet) page. Edit the contract name or use the randomly generated name provided to you.
 
-Click **Deploy** to deploy the contract to the blockchain. This will display the Stacks web wallet window with
+Click **Deploy** to deploy the contract to the blockchain. This will display the Leather wallet window with
 information about the transaction. Verify that the transaction looks correct, and the network is set to `Testnet`, and
 click **Confirm**.
 
@@ -290,12 +290,12 @@ your web wallet.
 
 When your contract is confirmed, navigate to the
 [Call a contract](https://explorer.hiro.so/sandbox/contract-call?chain=testnet) page of the sandbox, and search for
-your contract. Enter your wallet address in the top field, can you copy this address by clicking the Stacks web wallet
+your contract. Enter your wallet address in the top field, can you copy this address by clicking the Leather wallet
 icon and clicking the **Copy address** button. Enter the contract name in the bottom field, in this case `my-nft`. Click
 **Get contract** to view the contract.
 
 Click the `claim` function in the function summary, then click **Call function** to perform the function call in the
-sandbox. This will display the Stacks web wallet with information about the transaction. Verify the information, then
+sandbox. This will display the Leather wallet with information about the transaction. Verify the information, then
 click **Confirm** to execute the function call. The function call can take up to 15 minutes to complete.
 
 When the transaction is complete, you can access the transaction summary page from the activity panel of your web

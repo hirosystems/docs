@@ -585,7 +585,6 @@ module.exports = {
   ],
   'example-apps': [
     'example-apps',
-    'example-apps/to-dos',
     'example-apps/billboard',
     'example-apps/heystack',
   ],
