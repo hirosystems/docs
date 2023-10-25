@@ -37,7 +37,7 @@ npm install @stacks/connect
 
 ## Initiate session
 
-Users must authenticate to an app before the `connect` package will work to prompt them for signing and broadcasting transactions to the Stacks blockchain with an authenticator such as [the Stacks Wallet](https://www.hiro.so/wallet/install-web).
+Users must authenticate to an app before the `connect` package will work to prompt them for signing and broadcasting transactions to the Stacks blockchain with an authenticator such as [the Leather Wallet](https://leather.io/install-extension).
 
 See the authentication guide before proceeding to integrate the following transaction signing capabilities in cases where `userSession.isUserSignedIn()` returns `true`.
 
@@ -416,7 +416,7 @@ interface TransactionResponse {
 
 ## StacksProvider injected variable
 
-When users have the [Stacks Wallet for Web](https://www.hiro.so/wallet/install-web) browser extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication and transaction requests. `@stacks/connect` automatically detects and uses this global variable for you.
+When users have the [Leather wallet](https://leather.io/install-extension) browser extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication and transaction requests. `@stacks/connect` automatically detects and uses this global variable for you.
 
 At the moment, only the Stacks Wallet for Web browser extension includes a `StacksProvider`, however, ideally more wallets (and mobile wallets) support this format, so that your app can be compatible with any Stacks Wallet that has functionality to embed web applications.
 

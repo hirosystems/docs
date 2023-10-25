@@ -136,7 +136,7 @@ componentDidMount() {
 
 ### Step 2: Choose **Get started** to generate a _Secret Key_.
 
-The app triggers a popup window in which [Stacks Web Wallet](https://github.com/hirosystems/stacks-wallet-web)
+The app triggers a popup window in which [Leather wallet](https://github.com/leather-wallet/extension)
 loads from [`app.blockstack.org`](http://app.blockstack.org/) and begins generating a new _Secret Key_.
 
 !["Secret Key generation" screen](/img/todos-secret-key-generation.png)

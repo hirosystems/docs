@@ -19,7 +19,7 @@ See the [To-dos example app](/example-apps/to-dos) for a concrete example of thi
 
 The authentication flow with Stacks is similar to the typical client-server flow used by centralized sign in services (for example, OAuth). However, with Stacks the authentication flow happens entirely client-side.
 
-An app and authenticator, such as [the Stacks Wallet](https://www.hiro.so/wallet/install-web), communicate during the authentication flow by passing back and forth two tokens. The requesting app sends the authenticator an `authRequest` token. Once a user approves authentication, the authenticator responds to the app with an `authResponse` token.
+An app and authenticator, such as [the Leather Wallet](https://leather.io/install-extension), communicate during the authentication flow by passing back and forth two tokens. The requesting app sends the authenticator an `authRequest` token. Once a user approves authentication, the authenticator responds to the app with an `authResponse` token.
 
 These tokens are based on [a JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies. They are passed via URL query strings.
 
