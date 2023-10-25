@@ -6,18 +6,9 @@ This article walks you through the process of creating a new project or importin
 
 ## Prerequisite
 
-Log into the [Hiro Platform](https://platform.hiro.so/) using any of the login methods explained in the [Getting started](getting-started.md) guide.
-
-Once you are logged in, you will be navigated to the [welcome page](https://platform.hiro.so), where you are required to respond if you want to opt-in to receive updates from our developers. You can choose *Yes, count me in* or *skip*.
-
-![Opt for updates](images/opt-for-updates.png)
-
-Now, you will be prompted to *create a project* or *import from GitHub*.
+After you log into the [Hiro Platform](https://platform.hiro.so/), you will be prompted to *create a project* or *import from GitHub*.
 
 ![create or import a project](images/create-or-import-project.png)
-
-
-An example workflow of the steps required to create a new project is described below.
 
 ## Create new Project
 
@@ -45,7 +36,6 @@ The maximum project size allowed for imports is 50 MB.
 
 :::
 
-If you have an existing project but don't have clarity contracts in it, you can still clone the project and add clarity contracts by referring to our [clarity contract examples](contract-examples.md).
 
 Your cloned project is now displayed on the [projects page](https://platform.hiro.so).
 
