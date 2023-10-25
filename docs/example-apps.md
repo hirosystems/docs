@@ -11,6 +11,5 @@ The example apps provided in this section demonstrate key features of the Stacks
 
 You can use the example apps provided here as a basis for your own Stacks application or just as a reference for how to implement specific features.
 
-- [To-dos](/example-apps/to-dos): A to-do list app that demonstrates authentication with the web wallet and storing data off-chain with Gaia.
 - [Billboard](/example-apps/billboard): An app that stores a simple message on the blockchain and allows you to view it. Demonstrates the DevNet local development environment of [Clarinet](https://github.com/hirosystems/clarinet).
 - [Heystack](/example-apps/heystack): A public chat app featuring a comprehensive demonstraction of the web wallet, Clarity smart contracts, and the Stacks API.
