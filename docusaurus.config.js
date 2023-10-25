@@ -337,7 +337,6 @@ module.exports = {
           'clarinet-faq-4.png',
           'clarinet.ico',
           'clarinet.png',
-          'clarinet101.png',
           'costs.gif',
           'debug-console.png',
           'debug-toolbar.png',
@@ -355,7 +354,7 @@ module.exports = {
 
         headers: {
           accept: 'image*',
-          'Content-Type': 'image/jgeg',
+          'Content-Type': 'image/jpeg',
         },
       },
     ],
@@ -439,7 +438,7 @@ module.exports = {
 
           editUrl({ docPath }) {
             const repoUrls = {
-              clarinet: 'https://github.com/hirosystems/clarinet/blob/main/docs',
+              clarinet: 'https://github.com/hirosystems/clarinet/blob/develop/docs',
               explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
               'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
               'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
