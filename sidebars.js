@@ -345,6 +345,7 @@ module.exports = {
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
+        'platform/faucet',
         'platform/faq',
       ],
     },
