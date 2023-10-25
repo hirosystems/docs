@@ -16,8 +16,9 @@ Building and testing on a blockchain requires a certain amount of native tokens 
 
 1. **Visit the Faucet Page**: Navigate to [platform.hiro.so/faucet](https://platform.hiro.so/faucet).
 2. **Login into Your Wallet**: Log into the platform with the wallet that has the test account that you want funded. Click _Connect Wallet_ to login.
-2. **Request Tokens**: You'll find a straightforward interface with a button to request tokens. Simply click on the button _Request STX_.
-3. **Receive 500 STX Tokens**: By clicking the button, you'll receive 500 STX tokens to your testnet account.
+3. **Request Tokens**: You'll find a straightforward interface with a button to request tokens. Simply click on the button _Request STX_.
+4. **Receive 500 STX Tokens**: By clicking the button, you'll receive 500 STX tokens to your testnet account.
 
 ### Note:
+
 - **Daily Limit**: To ensure fair distribution and availability for all developers, there's a limit of one request per day. Plan your testing accordingly!
