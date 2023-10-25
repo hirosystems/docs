@@ -26,12 +26,12 @@ available on [Github][heystack_gh]. This page assumes some familiarity with [Rea
 
 ## Heystack overview
 
-Heystack is a web application for chatting with other Stacks users. The application uses the [Stacks web wallet][] to
+Heystack is a web application for chatting with other Stacks users. The application uses the [Leather wallet][] to
 authenticate users in the frontend. When a user logs in to Heystack, they're given a genesis amount of $HEY fungible
 tokens, which allows them to send and like messages on the platform.
 
 Heystack is powered by Clarity smart contracts so each message is a transaction on the Stacks blockchain. Each time a
-user sends a message on the platform, they must sign the message with the [Stacks web wallet][] (or another compatible
+user sends a message on the platform, they must sign the message with the [Leather wallet][] (or another compatible
 wallet) and pay a small gas fee in STX. A user spends a $HEY token to send every message, and receives a $HEY token for
 every like that their messages receive.
 
@@ -217,7 +217,7 @@ Authentication is handled through the [`@stacks/connect-react`][] and [`@stacks/
 compatible Stacks wallet extensions and provide methods for interacting with a user session respectively. [Jotai][]
 provides application state management.
 
-The [connect wallet button component][] implements the interface with the Stacks web wallet through the
+The [connect wallet button component][] implements the interface with the Leather wallet through the
 [`@stacks/connect-react`][] package.
 
 ```tsx
@@ -616,7 +616,7 @@ specific implementation details.
 
 [heystack]: https://heystack.xyz
 [stacks.js]: https://github.com/blockstack/stacks.js
-[stacks web wallet]: https://www.hiro.so/wallet/install-web
+[Leather wallet]: https://leather.io/install-extension
 [react]: https://reactjs.org/
 [heystack_gh]: https://github.com/hirosystems/heystack
 [data maps]: https://docs.stacks.co/references/language-functions#define-map

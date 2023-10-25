@@ -36,7 +36,7 @@ If you are using Visual Studio Code, you may want to install the [Clarity Visual
 
 While this tutorial primarily focuses on local smart contract development, you may wish to deploy your contract to
 a live blockchain. For simplicity, contract deployment is performed using the [testnet sandbox][]. If you wish to
-complete the optional deployment step, you should have the [Stacks Web Wallet][] installed, and you should request
+complete the optional deployment step, you should have the [Leather wallet][] installed, and you should request
 testnet STX tokens from the [testnet faucet][] on the testnet explorer. Note that requesting testnet STX from the faucet
 can take up to 15 minutes, so you may wish to request the tokens before beginning the tutorial.
 
@@ -214,13 +214,13 @@ wish to optionally deploy the contract to the testnet, described in the next and
 ## Optional: deploy and test the contract on the testnet
 
 For this tutorial, you'll use the [testnet sandbox][] to deploy your smart contract. Make sure you have connected your
-[Stacks web wallet][] to the sandbox using the **Connect wallet** button, then copy and paste your smart contract into
+[Leather wallet][] to the sandbox using the **Connect wallet** button, then copy and paste your smart contract into
 the Clarity code editor on the **Write & Deploy** page. Edit the contract name or use the randomly generated name
 provided to you.
 
 ![Hello world testnet sandbox](/img/hello-world-testnet-sandbox.png)
 
-Click **Deploy** to deploy the contract to the blockchain. This will display the Stacks web wallet window with
+Click **Deploy** to deploy the contract to the blockchain. This will display the Leather wallet window with
 information about the transaction. Verify that the transaction looks correct, and the network is set to `Testnet`, and
 click **Confirm**.
 
@@ -229,14 +229,14 @@ to 15 minutes to complete. You can review it on the [transactions][] page of the
 of your web wallet.
 
 When your contract is confirmed, navigate to the [call a contract][] page of the sandbox, and search for your contract.
-Enter your wallet address in the top field, you can copy this address by clicking the Stacks web wallet icon and
+Enter your wallet address in the top field, you can copy this address by clicking the Leather wallet icon and
 clicking the **Copy address** button. Enter the contract name in the bottom field, in this case `hello-world`. Click
 **Get Contract** to view the contract.
 
 ![Hello world sandbox contract](/img/hello-world-sandbox-contract.png)
 
 Click the `say-hi` function in the function summary, then click **Call Function** to perform the function call in the
-sandbox. This will display the Stacks web wallet with information about the transaction. Verify the information, then
+sandbox. This will display the Leather wallet with information about the transaction. Verify the information, then
 click **Confirm** to execute the function call.
 
 The function call is added to the miners mempool, and is executed in the next block of the blockchain. This process
@@ -254,7 +254,7 @@ the strengths of performing local development without having to wait for block t
 [clarinet]: /clarinet/introduction
 [installing clarinet]: /clarinet/getting-started
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
-[stacks web wallet]: https://www.hiro.so/wallet/install-web
+[Leather wallet]: https://leather.io/install-extension
 [testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
 [step 3]: #step-3-add-code-to-the-hello-world-contract
 [unit tests]: /clarinet/feature-guides/test-contract-with-clarinet-sdk

@@ -28,7 +28,7 @@ In this section, you will learn how to deploy your contracts using the generated
 
 - Select `Generate for Testnet` to deploy your contracts to the Testnet.
 - Next, select **deploy** to deploy your deployment plan with contracts to testnet.
-- You will connect the wallet to the application and select `Confirm` to confirm the deployment. Note that each step in the deployment plan shows a prompt from the Hiro Wallet and requires you to confirm the transaction.
+- You will connect the wallet to the application and select `Confirm` to confirm the deployment. Note that each step in the deployment plan shows a prompt from the Leather Wallet and requires you to confirm the transaction.
 
     ![Connect wallet](images/deployment-plans-wallet-confirmation.jpeg)
 
