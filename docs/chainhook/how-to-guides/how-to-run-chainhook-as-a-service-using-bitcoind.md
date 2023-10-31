@@ -10,14 +10,14 @@ You can run Chainhook as a service to evaluate your `if_this / then_that` predic
 
 The Bitcoin Core daemon (bitcoind) is a program that implements the Bitcoin protocol for remote procedure call (RPC) use. Chainhook can be set up to interact with the Bitcoin chainstate through bitcoind's ZeroMQ interface, its embedded networking library, passing raw blockchain data to be evaluated for relevant events.
 
-This guide is written to work with the latest Bitcoin Core software containing bitcoind, [Bitcoin Core 25.0](https://bitcoincore.org/bin/bitcoin-core-25.0/). 
+This guide is written to work with the latest Bitcoin Core software containing bitcoind, [Bitcoin Core 25.0](https://bitcoincore.org/bin/bitcoin-core-25.0/).
 
 > **_NOTE:_**
 >
 > While bitcoind can and will start syncing a Bitcoin node, customizing this node to your use cases beyond supporting a Chainhook is out of scope for this guide. See the Bitcoin wiki for ["Running Bitcoin"](https://en.bitcoin.it/wiki/Running_Bitcoin) or bitcoin.org's [Running A Full Node guide](https://bitcoin.org/en/full-node).
 
 - Make note of the path of your `bitcoind` executable (located within the `bin` directory of the `bitcoin-25.0` folder you downloaded above appropriate to your operating system).
-- Navigate to your project folder where your Chainhook node will reside, create a new file, and rename it to `bitcoin.conf`. Copy the configuration below to this `bitcoin.conf` file. 
+- Navigate to your project folder where your Chainhook node will reside, create a new file, and rename it to `bitcoin.conf`. Copy the configuration below to this `bitcoin.conf` file.
 - Find and copy your Bitcoin data directory and paste to the `datadir` field in the `bitcoin.conf` file below. Either copy the default path (see [list of default directories by operating system](https://en.bitcoin.it/wiki/Data_directory)) or copy the custom path you set for your Bitcoin data.
 - Set a username of your choice for bitcoind and use it in the `rpcuser` configuration below (`devnet` is a default).
 - Set a password of your choice for bitcoind and use it in the `rpcpassword` configuration below (`devnet` is a default).
@@ -228,13 +228,13 @@ Once you are finished setting up your endpoint, use the following command to sca
 chainhook predicates scan stacking-pool-api.json --config-path=./Chainhook.toml
 ```
 
-The above command posts events to the URL, http://localhost:3000/events mentioned in the JSON file.
+The above command posts events to the URL, `http://localhost:3000/events` mentioned in the JSON file.
 
 ## Initiate Chainhook Service
 
 In the examples above, our Chainhook scanned historical blockchain data against predicates and delivered results. In this next section, let's learn how to set up a Chainhook that acts as an ongoing observer and event-streaming service.
 
-We can start a Chainhook service with an existing predicate. We can also dynamically register new predicates by making an API call to our Chainhook. In both of these instances, our predicates will be delivering their results to a server set up to receive results. 
+We can start a Chainhook service with an existing predicate. We can also dynamically register new predicates by making an API call to our Chainhook. In both of these instances, our predicates will be delivering their results to a server set up to receive results.
 
 - Initiate the chainhook service by passing the predicate path to the command as shown below:
 

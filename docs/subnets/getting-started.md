@@ -23,7 +23,7 @@ Clarinet provides a tool to set up a complete local development environment, kno
 
 In this section, we will explain how to launch and interact with the devnet's subnet node using a simple NFT example project.
 
-Ensure you have `clarinet` installed and the version is 1.7.1 or above. If you do not already have Clarinet installed, please refer to the Clarinet installation instructions [here](https://docs.hiro.so/smart-contracts/clarinet#installing-clarinet) for installation procedures.
+Ensure you have `clarinet` installed and the version is 1.7.1 or above. If you do not already have Clarinet installed, please refer to the Clarinet installation instructions [here](https://docs.hiro.so/clarinet/getting-started#install-clarinet) for installation procedures.
 
 ### Create a new project with Clarinet
 
@@ -315,17 +315,17 @@ import {
   uintCV,
   PostConditionMode,
   broadcastTransaction,
-} from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
 
 async function main() {
   const network = new StacksTestnet({ url: HIRO_MOCKNET_DEFAULT });
   const nonce = 0;
 
   let txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
-    contractName: "subnet-v3-0-1",
-    functionName: "deposit-stx",
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'subnet-v3-0-1',
+    functionName: 'deposit-stx',
     functionArgs: [
       uintCV(5000000), // amount
       standardPrincipalCV(process.env.USER_ADDR), // sender
@@ -346,9 +346,9 @@ async function main() {
   console.log(txid);
 
   txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
-    contractName: "subnet-v3-0-1",
-    functionName: "deposit-stx",
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'subnet-v3-0-1',
+    functionName: 'deposit-stx',
     functionArgs: [
       uintCV(5000000), // amount
       standardPrincipalCV(process.env.ALT_USER_ADDR), // sender
@@ -384,13 +384,9 @@ Next, we'll add a script to publish a contract. To make it reusable, we will all
 _publish.js_:
 
 ```js
-import {
-  AnchorMode,
-  makeContractDeploy,
-  broadcastTransaction,
-} from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
-import { readFileSync } from "fs";
+import { AnchorMode, makeContractDeploy, broadcastTransaction } from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
+import { readFileSync } from 'fs';
 
 async function main() {
   const contractName = process.argv[2];
@@ -409,7 +405,7 @@ async function main() {
     return 1;
   }
 
-  const codeBody = readFileSync(contractFilename, { encoding: "utf-8" });
+  const codeBody = readFileSync(contractFilename, { encoding: 'utf-8' });
 
   const transaction = await makeContractDeploy({
     codeBody,
@@ -444,8 +440,8 @@ import {
   contractPrincipalCV,
   broadcastTransaction,
   getNonce,
-} from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
 
 async function main() {
   const network = new StacksTestnet({ url: HIRO_MOCKNET_DEFAULT });
@@ -455,12 +451,12 @@ async function main() {
   const nonce = (await getNonce(deployerAddr, network)) + BigInt(1);
 
   const txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
-    contractName: "subnet-v3-0-1",
-    functionName: "register-new-nft-contract",
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'subnet-v3-0-1',
+    functionName: 'register-new-nft-contract',
     functionArgs: [
-      contractPrincipalCV(deployerAddr, "simple-nft-l1"),
-      contractPrincipalCV(userAddr, "simple-nft-l2"),
+      contractPrincipalCV(deployerAddr, 'simple-nft-l1'),
+      contractPrincipalCV(userAddr, 'simple-nft-l2'),
     ],
     senderKey,
     validateWithAbi: false,
@@ -493,8 +489,8 @@ import {
   standardPrincipalCV,
   uintCV,
   broadcastTransaction,
-} from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
 
 async function main() {
   const network = new StacksTestnet({ url: HIRO_MOCKNET_DEFAULT });
@@ -505,8 +501,8 @@ async function main() {
 
   const txOptions = {
     contractAddress: deployerAddr,
-    contractName: "simple-nft-l1",
-    functionName: "gift-nft",
+    contractName: 'simple-nft-l1',
+    functionName: 'gift-nft',
     functionArgs: [standardPrincipalCV(addr), uintCV(5)],
     senderKey,
     validateWithAbi: false,
@@ -541,8 +537,8 @@ import {
   contractPrincipalCV,
   PostConditionMode,
   broadcastTransaction,
-} from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
 
 async function main() {
   const network = new StacksTestnet({ url: HIRO_MOCKNET_DEFAULT });
@@ -552,11 +548,11 @@ async function main() {
   const nonce = parseInt(process.argv[2]);
 
   const txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
-    contractName: "subnet-v3-0-1",
-    functionName: "deposit-nft-asset",
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'subnet-v3-0-1',
+    functionName: 'deposit-nft-asset',
     functionArgs: [
-      contractPrincipalCV(deployerAddr, "simple-nft-l1"), // contract ID of nft contract on L1
+      contractPrincipalCV(deployerAddr, 'simple-nft-l1'), // contract ID of nft contract on L1
       uintCV(5), // ID
       standardPrincipalCV(addr), // sender
     ],
@@ -593,8 +589,8 @@ import {
   uintCV,
   PostConditionMode,
   broadcastTransaction,
-} from "@stacks/transactions";
-import { StacksTestnet } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
 
 async function main() {
   let network = new StacksTestnet({ url: process.env.SUBNET_URL });
@@ -606,8 +602,8 @@ async function main() {
 
   const txOptions = {
     contractAddress: addr,
-    contractName: "simple-nft-l2",
-    functionName: "transfer",
+    contractName: 'simple-nft-l2',
+    functionName: 'transfer',
     functionArgs: [
       uintCV(5), // ID
       standardPrincipalCV(addr), // sender
@@ -647,8 +643,8 @@ import {
   uintCV,
   broadcastTransaction,
   PostConditionMode,
-} from "@stacks/transactions";
-import { StacksTestnet } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
 
 async function main() {
   let network = new StacksTestnet({ url: process.env.SUBNET_URL });
@@ -659,11 +655,11 @@ async function main() {
   const nonce = parseInt(process.argv[2]);
 
   const txOptions = {
-    contractAddress: "ST000000000000000000002AMW42H",
-    contractName: "subnet",
-    functionName: "nft-withdraw?",
+    contractAddress: 'ST000000000000000000002AMW42H',
+    contractName: 'subnet',
+    functionName: 'nft-withdraw?',
     functionArgs: [
-      contractPrincipalCV(contractAddr, "simple-nft-l2"),
+      contractPrincipalCV(contractAddr, 'simple-nft-l2'),
       uintCV(5), // ID
       standardPrincipalCV(addr), // recipient
     ],
@@ -705,8 +701,8 @@ import {
   PostConditionMode,
   contractPrincipalCV,
   broadcastTransaction,
-} from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
+} from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
 
 async function main() {
   const network = new StacksTestnet({ url: HIRO_MOCKNET_DEFAULT });
@@ -721,7 +717,7 @@ async function main() {
 
   let json_merkle_entry = await fetch(
     `${subnetUrl}/v2/withdrawal/nft/${withdrawalBlockHeight}/${addr}/${withdrawalId}/${l2ContractAddr}/simple-nft-l2/5`
-  ).then((x) => x.json());
+  ).then(x => x.json());
   let cv_merkle_entry = {
     withdrawal_leaf_hash: deserializeCV(json_merkle_entry.withdrawal_leaf_hash),
     withdrawal_root: deserializeCV(json_merkle_entry.withdrawal_root),
@@ -732,16 +728,16 @@ async function main() {
     senderKey,
     network,
     anchorMode: AnchorMode.Any,
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
-    contractName: "subnet-v3-0-1",
-    functionName: "withdraw-nft-asset",
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'subnet-v3-0-1',
+    functionName: 'withdraw-nft-asset',
     functionArgs: [
-      contractPrincipalCV(l1ContractAddr, "simple-nft-l1"), // nft-contract
+      contractPrincipalCV(l1ContractAddr, 'simple-nft-l1'), // nft-contract
       uintCV(5), // ID
       standardPrincipalCV(addr), // recipient
       uintCV(withdrawalId), // withdrawal ID
       uintCV(withdrawalBlockHeight), // withdrawal block height
-      someCV(contractPrincipalCV(l1ContractAddr, "simple-nft-l1")), // nft-mint-contract
+      someCV(contractPrincipalCV(l1ContractAddr, 'simple-nft-l1')), // nft-mint-contract
       cv_merkle_entry.withdrawal_root, // withdrawal root
       cv_merkle_entry.withdrawal_leaf_hash, // withdrawal leaf hash
       cv_merkle_entry.sibling_hashes,
@@ -768,8 +764,8 @@ Lastly, we need a simple way to query for the current owner of an NFT, so we wil
 _verify.js_
 
 ```js
-import { uintCV, callReadOnlyFunction, cvToString } from "@stacks/transactions";
-import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from "@stacks/network";
+import { uintCV, callReadOnlyFunction, cvToString } from '@stacks/transactions';
+import { StacksTestnet, HIRO_MOCKNET_DEFAULT } from '@stacks/network';
 
 async function main() {
   const networkLayer = parseInt(process.argv[2]);
@@ -779,11 +775,11 @@ async function main() {
   let network = null;
 
   if (networkLayer == 1) {
-    contractName = "simple-nft-l1";
+    contractName = 'simple-nft-l1';
     contractAddress = process.env.DEPLOYER_ADDR;
     network = new StacksTestnet({ url: HIRO_MOCKNET_DEFAULT });
   } else if (networkLayer == 2) {
-    contractName = "simple-nft-l2";
+    contractName = 'simple-nft-l2';
     contractAddress = process.env.USER_ADDR;
     network = new StacksTestnet({ url: process.env.SUBNET_URL });
     network.chainId = process.env.SUBNET_CHAIN_ID;
@@ -795,7 +791,7 @@ async function main() {
   const txOptions = {
     contractAddress,
     contractName,
-    functionName: "get-owner",
+    functionName: 'get-owner',
     functionArgs: [uintCV(5)],
     network,
     senderAddress,
@@ -826,7 +822,7 @@ First, we will deposit 5 STX into the subnet for each of our users:
 node ./deposit-stx.js
 ```
 
-Since this is an L1 transaction, we can see it in Clarinet's terminal interface, or look for it in the Stacks Explorer, at http://localhost:8000. Once this transaction has been confirmed in the L1, it will also trigger a STX transfer in the L2. To see that, we can add the subnet to the Explorer as a new network. To switch to the subnet, select "Network" in the top right, then "Add a network." In the popup, choose a name, e.g. "Devnet Subnet", and then for the URL, use "http://localhost:13999". Once we see a STX transfer of 5.00 STX, we'll know that the deposit was successful.
+Since this is an L1 transaction, we can see it in Clarinet's terminal interface, or look for it in the Stacks Explorer, at `http://localhost:8000`. Once this transaction has been confirmed in the L1, it will also trigger a STX transfer in the L2. To see that, we can add the subnet to the Explorer as a new network. To switch to the subnet, select "Network" in the top right, then "Add a network." In the popup, choose a name, e.g. "Devnet Subnet", and then for the URL, use `http://localhost:13999`. Once we see a STX transfer of 5.00 STX, we'll know that the deposit was successful.
 
 ![STX deposit successful](images/deposit-stx.png)
 

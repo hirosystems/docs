@@ -19,7 +19,7 @@ docker run -d \
 rosetta:stable
 ```
 
-To build and run the `rosetta.Dockerfile` image using an [archived chainstate](https://docs.hiro.so/references/hiro-archive#what-is-the-hiro-archive), run the following command:
+To build and run the `rosetta.Dockerfile` image using an [archived chainstate](https://docs.hiro.so/hiro-archive/overview), run the following command:
 
 ```
 docker build -t rosetta:stable -f rosetta.Dockerfile .
@@ -30,7 +30,6 @@ docker run -d \
   --name rosetta \
 rosetta:stable
 ```
-
 
 By default, this will connect to the mainnet. To run a local node, run the following command:
 
@@ -44,6 +43,7 @@ rosetta:stable
 ```
 
 To use a recent version of [rosetta-cli](https://github.com/coinbase/rosetta-cli) to test the endpoints, use the following command:
+
 ```
 rosetta-cli \
   --configuration-file rosetta-cli-config/rosetta-config.json \

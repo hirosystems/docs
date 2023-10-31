@@ -13,12 +13,11 @@ Get any transaction matching a given transaction ID `txid` mandatory argument ad
 - 32 bytes hex encoded type
 
 ```json
-
 {
-    "if_this": {
-        "scope": "txid",
-        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
-    }
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
 }
 ```
 
@@ -31,10 +30,10 @@ Get any stacks block matching constraints:
 
 ```json
 {
-    "if_this": {
-        "scope": "block_height",
-        "higher_than": 10000
-    }
+  "if_this": {
+    "scope": "block_height",
+    "higher_than": 10000
+  }
 }
 ```
 
@@ -42,10 +41,10 @@ The `between` operator can be used by providing an array with two values:
 
 ```json
 {
-    "if_this": {
-        "scope": "block_height",
-        "between": [0, 1000]
-    }
+  "if_this": {
+    "scope": "block_height",
+    "between": [0, 1000]
+  }
 }
 ```
 
@@ -58,11 +57,11 @@ Get any transaction related to a given fungible token asset identifier:
 
 ```json
 {
-    "if_this": {
-        "scope": "ft_event",
-        "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
-        "actions": ["burn"]
-    },
+  "if_this": {
+    "scope": "ft_event",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
+    "actions": ["burn"]
+  }
 }
 ```
 
@@ -75,11 +74,11 @@ Get any transaction related to a given non-fungible token asset identifier:
 
 ```json
 {
-    "if_this": {
-        "scope": "nft_event",
-        "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
-        "actions": ["mint", "transfer", "burn"]
-    },
+  "if_this": {
+    "scope": "nft_event",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
+    "actions": ["mint", "transfer", "burn"]
+  }
 }
 ```
 
@@ -90,10 +89,10 @@ Get any transaction moving STX tokens:
 
 ```json
 {
-    "if_this": {
-        "scope": "stx_event",
-        "actions": ["transfer", "lock"]
-    },
+  "if_this": {
+    "scope": "stx_event",
+    "actions": ["transfer", "lock"]
+  }
 }
 ```
 
@@ -101,19 +100,19 @@ Get any transaction emitting given print events predicate
 
 - `contract-identifier` mandatory argument admits:
   - string type, fully qualifying the contract to observe. Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09`
- - Either the `contains` or `matches_regex` argument:
-    - `contains` argument admits string type, used for matching an event containing the specified string. Example: `vault`
-    - `matches_regex` argument admits string type that should be valid regex, used for matching an event that regex matches with the specified string. Example: `(?:^|\\W)vault(?:$|\\W)`
+- Either the `contains` or `matches_regex` argument:
+  - `contains` argument admits string type, used for matching an event containing the specified string. Example: `vault`
+  - `matches_regex` argument admits string type that should be valid regex, used for matching an event that regex matches with the specified string. Example: `(?:^|\\W)vault(?:$|\\W)`
 
 The following example uses `contains` argument:
 
 ```json
 {
-    "if_this": {
-        "scope": "print_event",
-        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-        "contains": "vault"
-    },
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+    "contains": "vault"
+  }
 }
 ```
 
@@ -121,11 +120,11 @@ The following example uses `matches_regex` argument:
 
 ```json
 {
-    "if_this": {
-        "scope": "print_event",
-        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-        "matches_regex": "(?:^|\\W)vault(?:$|\\W)"
-    },
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+    "matches_regex": "(?:^|\\W)vault(?:$|\\W)"
+  }
 }
 ```
 
@@ -141,25 +140,25 @@ Get any transaction calling a specific method for a given contract **directly**.
 
 ```json
 {
-    "if_this": {
-        "scope": "contract_call",
-        "contract_identifier": "SP000000000000000000002Q6VF78.pox",
-        "method": "stack-stx"
-    },
+  "if_this": {
+    "scope": "contract_call",
+    "contract_identifier": "SP000000000000000000002Q6VF78.pox",
+    "method": "stack-stx"
+  }
 }
 ```
 
 Get any transaction, including a contract deployment:
 
 - `deployer` mandatory argument admits:
-  - string "*" - string encoding a valid STX address. Example: "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
+  - string "\*" - string encoding a valid STX address. Example: "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG"
 
 ```json
 {
-    "if_this": {
-        "scope": "contract_deployment",
-        "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
-    },
+  "if_this": {
+    "scope": "contract_deployment",
+    "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+  }
 }
 ```
 
@@ -171,10 +170,10 @@ Get any transaction, including a contract deployment implementing a given trait
 
 ```json
 {
-    "if_this": {
-        "scope": "contract_deployment",
-        "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol"
-    },
+  "if_this": {
+    "scope": "contract_deployment",
+    "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol"
+  }
 }
 ```
 
@@ -183,17 +182,17 @@ Get any transaction, including a contract deployment implementing a given trait
 HTTP Post block/transaction payload to a given endpoint.
 
 - `http_post` construct admits:
-  - url (string type). Example: http://localhost:3000/api/v1/wrapBtc 
+  - url (string type). Example: `http://localhost:3000/api/v1/wrapBtc`
   - authorization_header (string type). Secret to add to the request `authorization` header when posting payloads
 
 ```json
 {
-    "then_that": {
-        "http_post": {
-            "url": "http://localhost:3000/api/v1/wrapBtc",
-            "authorization_header": "Bearer cn389ncoiwuencr"
-        }
+  "then_that": {
+    "http_post": {
+      "url": "http://localhost:3000/api/v1/wrapBtc",
+      "authorization_header": "Bearer cn389ncoiwuencr"
     }
+  }
 }
 ```
 
@@ -201,14 +200,14 @@ Append events to a file through the filesystem. Convenient for local tests:
 
 - `file_append` construct admits:
   - path (string type). Path to file on disk.
-  
+
 ```json
 {
-    "then_that": {
-        "file_append": {
-            "path": "/tmp/events.json",
-        }
+  "then_that": {
+    "file_append": {
+      "path": "/tmp/events.json"
     }
+  }
 }
 ```
 
@@ -217,23 +216,23 @@ Append events to a file through the filesystem. Convenient for local tests:
 Following additional configurations can be used to improve the performance of chainhook by preventing a full scan of the blockchain:
 
 - Ignore any block before the given block:
-`"start_block": 101`
+  `"start_block": 101`
 
 - Ignore any block after the given block:
-`"end_block": 201`
+  `"end_block": 201`
 
 - Stop evaluating chainhook after a given number of occurrences found:
-`"expire_after_occurrence": 1`
+  `"expire_after_occurrence": 1`
 
 - Include decoded clarity values in the payload:
-`"decode_clarity_values": true`
+  `"decode_clarity_values": true`
 
 - Include the contract ABI for transactions that deploy contracts:
-`"include_contract_abi": true`
+  `"include_contract_abi": true`
 
 ## Example predicate definition to print events
 
-Retrieve and HTTP Post to `http://localhost:3000/api/v1/wrapBtc`  the first five transactions interacting with ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09, emitting print events containing the word 'vault'.
+Retrieve and HTTP Post to `http://localhost:3000/api/v1/wrapBtc` the first five transactions interacting with ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09, emitting print events containing the word 'vault'.
 
 ```json
 {
@@ -243,19 +242,19 @@ Retrieve and HTTP Post to `http://localhost:3000/api/v1/wrapBtc`  the first five
   "version": 1,
   "networks": {
     "testnet": {
-        "if_this": {
-            "scope": "print_event",
-            "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-            "contains": "vault"
-        },
-        "then_that": {
-            "http_post": {
-            "url": "http://localhost:3000/api/v1/vaults",
-            "authorization_header": "Bearer cn389ncoiwuencr"
-            }
-        },
-        "start_block": 10200,
-        "expire_after_occurrence": 5,
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+        "contains": "vault"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "http://localhost:3000/api/v1/vaults",
+          "authorization_header": "Bearer cn389ncoiwuencr"
+        }
+      },
+      "start_block": 10200,
+      "expire_after_occurrence": 5
     }
   }
 }
@@ -273,34 +272,34 @@ A specification file can also include different networks. In this case, the chai
   "version": 1,
   "networks": {
     "testnet": {
-        "if_this": {
-            "scope": "print_event",
-            "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-            "contains": "vault"
-        },
-        "then_that": {
-            "http_post": {
-                "url": "http://localhost:3000/api/v1/vaults",
-                "authorization_header": "Bearer cn389ncoiwuencr"
-            }
-        },
-        "start_block": 10200,
-        "expire_after_occurrence": 5,
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+        "contains": "vault"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "http://localhost:3000/api/v1/vaults",
+          "authorization_header": "Bearer cn389ncoiwuencr"
+        }
+      },
+      "start_block": 10200,
+      "expire_after_occurrence": 5
     },
     "mainnet": {
-        "if_this": {
-            "scope": "print_event",
-            "contract_identifier": "SP456HQKV0RJXZFY1DGX8MNSNYVE3VGZJSRT459863.monkey-sip09",
-            "contains": "vault"
-        },
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "SP456HQKV0RJXZFY1DGX8MNSNYVE3VGZJSRT459863.monkey-sip09",
+        "contains": "vault"
+      },
       "then_that": {
-            "http_post": {
-                "url": "http://my-protocol.xyz/api/v1/vaults",
-                "authorization_header": "Bearer cn389ncoiwuencr"
-            }
+        "http_post": {
+          "url": "http://my-protocol.xyz/api/v1/vaults",
+          "authorization_header": "Bearer cn389ncoiwuencr"
+        }
       },
       "start_block": 90232,
-      "expire_after_occurrence": 5,
+      "expire_after_occurrence": 5
     }
   }
 }

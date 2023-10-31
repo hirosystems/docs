@@ -5,16 +5,16 @@ title: Getting Started
 
 ## Install Clarinet
 
-Hiro has developed Clarinet to be environment-agnostic. Follow this guide to install and build Clarinet. 
+Hiro has developed Clarinet to be environment-agnostic. Follow this guide to install and build Clarinet.
 
-*Topics covered in this guide*:
+_Topics covered in this guide_:
 
-* [Install Clarinet](#install-clarinet)
-  * [Install on MacOS](#install-on-macos-homebrew)
-  * [Install on Windows](#install-on-windows)
-  * [Install from Pre-built library](#install-from-pre-built-binary)
-* [Build Clarinet from source using Cargo](#build-clarinet)
-* [Use Clarinet to generate shell completion scripts](#setup-shell-completions)
+- [Install Clarinet](#install-clarinet)
+  - [Install on MacOS](#install-on-macos-homebrew)
+  - [Install on Windows](#install-on-windows)
+  - [Install from Pre-built library](https://github.com/hirosystems/clarinet#install-from-a-pre-built-binary)
+- [Build Clarinet from source using Cargo](#build-clarinet)
+- [Use Clarinet to generate shell completion scripts](#setup-shell-completions)
 
 You may choose to install Clarinet in any of the following operating systems:
 
@@ -23,6 +23,7 @@ You may choose to install Clarinet in any of the following operating systems:
 - Linux
 
 To install Clarinet, you may choose from the following:
+
 - [pre-built binary](https://github.com/hirosystems/clarinet#install-from-a-pre-built-binary)
 - [build source from Cargo](https://github.com/hirosystems/clarinet#install-from-source-using-cargo)
 
@@ -32,7 +33,7 @@ To install Clarinet, you may choose from the following:
 
 ### Install on macOS (Homebrew)
 
-To install Clarinet using macOs, you must first install Homebrew on your system. If you do not already have Homebrew already installed, 
+To install Clarinet using macOs, you must first install Homebrew on your system. If you do not already have Homebrew already installed,
 please refer to the [Homebrew](https://brew.sh/) documentation for detailed information on installing Homebrew.
 
 Once you have Homebrew installed, run the below command in your terminal.
@@ -45,7 +46,7 @@ For more information on how to install Clarinet on macOS, please see the [Settin
 
 ### Install on Windows
 
-The easiest way to install Clarinet on Windows is to use the MSI installer, 
+The easiest way to install Clarinet on Windows is to use the MSI installer,
 which you can download from the [Hiro releases page](https://github.com/hirosystems/clarinet/releases).
 
 You may also install Clarinet on Winget. Microsoft created this package manager, which includes the latest Windows updates.
@@ -60,7 +61,7 @@ For more information on how to install Clarinet on Windows, please see the [Sett
 
 ### Install from a pre-built binary
 
-If you would like to install Clarinet from pre-built binaries, you must first download the latest release from the 
+If you would like to install Clarinet from pre-built binaries, you must first download the latest release from the
 [Hiro releases page](https://github.com/hirosystems/clarinet/releases). When you have downloaded the latest release,
 unzip the binary and copy it to a location already in your path, such as `/usr/local/bin`, using the command shown below.
 
@@ -72,9 +73,9 @@ chmod +x ./clarinet
 mv ./clarinet /usr/local/bin
 ```
 
->**_NOTE:_**
+> **_NOTE:_**
 >
->If you use macOS, you may receive security errors when running the pre-compiled binary. 
+> If you use macOS, you may receive security errors when running the pre-compiled binary.
 > To resolve the security warning, use the command below and replace the path `/usr/local/bin/clarinet` with your local binary file.
 
 ```sh
@@ -84,13 +85,15 @@ xattr -d com.apple.quarantine /usr/local/bin/clarinet
 ### Install from source using Cargo
 
 You may also install Clarinet using Cargo. If you choose this option, please be aware that you must first install Rust.
-For more information on installing Rust, please see the [Install Rust](https://www.rust-lang.org/tools/install) page for access 
+For more information on installing Rust, please see the [Install Rust](https://www.rust-lang.org/tools/install) page for access
 to `cargo`, the Rust package manager.
 
 If you are using Debian or Ubuntu-based distributions, you must also install the following package to build Clarinet:
+
 ```bash
 sudo apt install build-essential pkg-config libssl-dev
 ```
+
 ### Build Clarinet
 
 Once you have installed Clarinet using Cargo, you can build Clarinet from the source using Cargo with the following commands:
@@ -103,7 +106,7 @@ cargo clarinet-install
 
 By default, you will be placed in our development branch, `develop`, with code that has not yet been released.
 
-- If you plan to submit any code changes, this is the right branch for you. 
+- If you plan to submit any code changes, this is the right branch for you.
 - If you prefer the latest stable version, switch to the main branch by entering the command below.
 
 ```bash
@@ -123,7 +126,7 @@ Clarinet also provides tools for interacting with your contracts in a Read, Eval
 
 ## Setup shell completions
 
-Clarinet already has many different commands built in. Therefore, enabling tab completion in your shell may be useful. 
+Clarinet already has many different commands built in. Therefore, enabling tab completion in your shell may be useful.
 Using the command below, you can use `clarinet` to generate the shell completion scripts for many common shells.
 
 ```sh

@@ -51,7 +51,7 @@ In this section, you will configure a chainhook to communicate with the network.
 chainhook config generate --mainnet
 ```
 
-Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [Setting up a Bitcoin Node](#setting-up-a-bitcoin-node) section. Please update the following parameters accordingly:
+Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [Setting up a Bitcoin Node](how-to-run-chainhook-as-a-service-using-bitcoind.md#setting-up-a-bitcoin-node) section. Please update the following parameters accordingly:
 
 1. Update `bitcoind_rpc_username` with the username set for `rpcuser` in `bitcoin.conf`.
 2. Update `bitcoind_rpc_password` with the password set for `rpcpassword` in `bitcoin.conf`.
