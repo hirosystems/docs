@@ -23,8 +23,18 @@ When the above components are used together, you can rapidly develop and test a 
 
 ![screenshot](images/demo.gif)
 
-To better understand Clarinet and how to develop with Clarinet, Hiro has created an introductory video tutorial series from Hiro Engineer [Ludo Galabru](https://twitter.com/ludovic?lang=en) that will guide you through some of the basics of using Clarinet. The video series also shows you how to use Clarinet to develop, test, and deploy smart contracts.
+## Network Types
 
+Clarinet supports different network types to cater to various development and testing needs. Here's a brief overview of each:
+
+| Network | Description                                                                                                                                                                                     | Use Case                                                                    |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Simnet  | Optimized for fast feedback loops, introspection, and portability. Can be run anywhere and generate reports about contract analysis, execution, costs, etc.                                     | Ideal for initial development and testing.                                  |
+| Devnet  | Orchestrates a Stacks node and a Bitcoin node for correctness and relatively fast feedback loops. Includes optional components like stacks-api, bitcoin-explorer, stacks-explorer, subnet, etc. | Use when you need a more accurate simulation of the production environment. |
+| Testnet | A pre-production network that offers a realistic environment for testing.                                                                                                                       | Ideal for final testing before deploying to Mainnet.                        |
+| Mainnet | The production network where real transactions occur.                                                                                                                                           | Use when you're ready to deploy your smart contract to production.          |
+
+To better understand Clarinet and how to develop with Clarinet, Hiro has created an introductory video tutorial series from Hiro Engineer [Ludo Galabru](https://twitter.com/ludovic?lang=en) that will guide you through some of the basics of using Clarinet. The video series also shows you how to use Clarinet to develop, test, and deploy smart contracts.
 
 To view these video tutorials, please see [Hiro's Youtube channel](https://www.youtube.com/playlist?list=PL5Ujm489LoJaAz9kUJm8lYUWdGJ2AnQTb).
 
