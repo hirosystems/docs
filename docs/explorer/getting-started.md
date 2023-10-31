@@ -26,12 +26,11 @@ To install project dependencies:
 
 ## Setting Environment Variables
 
-The Explorer application needs the environment variables listed below to work properly. 
+The Explorer application needs the environment variables listed below to work properly.
 
 ```
 NEXT_PUBLIC_MAINNET_API_SERVER=https://api.hiro.so
 NEXT_PUBLIC_TESTNET_API_SERVER=https://api.testnet.hiro.so
-NEXT_PUBLIC_LEGACY_EXPLORER_API_SERVER=https://explorer-api.legacy.blockstack.org
 NEXT_PUBLIC_DEPLOYMENT_URL=https://explorer.hiro.so
 NEXT_PUBLIC_MAINNET_ENABLED="true"
 NEXT_PUBLIC_DEFAULT_POLLING_INTERVAL="10000"
