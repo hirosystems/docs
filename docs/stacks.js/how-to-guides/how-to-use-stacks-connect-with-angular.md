@@ -26,7 +26,7 @@ ng new --minimal --inline-style --inline-template
 
 You'll be asked to enter some preferences: whether your app with use routing, and whether you want to use a CSS preprocessor like SASS. For sake of this tutorial, we're keeping things simple. No routing. No preprocessing.
 
-Inside the newly created `ng-stacks-connect` directory, let's boot up the development server which defaults to [localhost:4200](`http://localhost:4200`).
+Inside the newly created `ng-stacks-connect` directory, let's boot up the development server which defaults to [localhost:4200](http://localhost:4200).
 
 ```sh
 cd ng-stacks-connect
