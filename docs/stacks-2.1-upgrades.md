@@ -167,7 +167,7 @@ The PoX-2 support is extended to various functions mentioned [below](#new-pox-in
 
 ## Stacks.js
 
-Stacks 2.1 upgrade for Stacks.js include methods now accepting `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR) and new [Stacking](#new-pox-interaction-functions-clarity) and [Helper](#new-helper-methods) methods.
+Stacks 2.1 upgrade for Stacks.js include methods now accepting `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR) and new Stacking and [Helper](#new-helper-methods) methods.
 
 ### New PoX interactive functions for Clarity
 
