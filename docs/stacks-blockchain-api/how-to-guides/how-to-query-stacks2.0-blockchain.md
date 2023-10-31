@@ -59,7 +59,7 @@ A Typescript client library is available for use of the Stacks API. The client l
 The client is made up of three components:
 
 1. Generated HTTP API client
-2. Typescript definitions for [Clarity values](https://docs.stacks.co/docs/clarity/)
+2. Typescript definitions for [Clarity values](https://docs.hiro.so/stacks-blockchain-api/feature-guides/use-clarity-values)
 3. WebSocket client
 
 The following sections demonstrate common usages of the TypeScript API client.
