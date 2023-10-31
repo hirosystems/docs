@@ -251,7 +251,6 @@ module.exports = {
             'clarinet/how-to-guides/how-to-create-new-project',
             'clarinet/how-to-guides/how-to-add-contract',
             'clarinet/how-to-guides/how-to-check-contract',
-            'clarinet/how-to-guides/how-to-test-contract',
             'clarinet/how-to-guides/how-to-debug-contract',
             'clarinet/how-to-guides/how-to-run-integration-environment',
             'clarinet/how-to-guides/how-to-use-deployment-plans',
