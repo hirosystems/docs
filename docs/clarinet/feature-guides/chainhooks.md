@@ -6,11 +6,12 @@ title: Chainhooks
 
 Chainhooks are a powerful feature that enables you to trigger an action based upon a predicate event occurring automatically. Adhering to an event-based architecture, chainhooks allow you to pre-determine an underlying set of events that, when triggered, set into motion a logical series of follow-on steps and actions to address the specific event that was triggered.
 
-*Topics covered in this guide*:
+_Topics covered in this guide_:
 
-* [Chainhooks design](#design)
-* [Use chainhooks](#using-chainhooks)
-* [References](#references)
+- [Overview](#overview)
+- [Design](#design)
+- [Using chainhooks](#using-chainhooks)
+- [References](#references)
 
 ## Design
 
@@ -22,7 +23,7 @@ Hiro designed the event observer as a library, choosing to embed the library in 
 
 - correctness
 
-Since blockchains can be forked and since some period of uncertainty may arise as to which chain tip asserts itself as the canonical chain, there are challenges to guaranteeing the validity of a triggered predicate. There are many different ways you can end up with a state slightly differing from the canonical state, which is why correctness is an inherent limitation of chainhooks. 
+Since blockchains can be forked and since some period of uncertainty may arise as to which chain tip asserts itself as the canonical chain, there are challenges to guaranteeing the validity of a triggered predicate. There are many different ways you can end up with a state slightly differing from the canonical state, which is why correctness is an inherent limitation of chainhooks.
 
 ## Using chainhooks
 
@@ -36,8 +37,8 @@ In terms of the deployment lifecycle, you can begin using chainhooks locally, us
 
 For a more detailed discussion of Chainhooks and how you can use them in your workflows, please see the following resources:
 
-- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-bitcoin)
-- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhook-with-stacks)
+- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin)
+- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks)
 - [Run Chainhook as a Service using Bitcoind](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind)
 - [Run Chainhook as a Service using Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks)
 - [Create Chainhooks using Hiro Platform](https://docs.hiro.so/platform/create-chainhooks)

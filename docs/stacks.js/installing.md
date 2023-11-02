@@ -22,7 +22,7 @@ npm install @stacks/network
 
 ### Connecting Wallets
 
-- [`@stacks/connect`](https://stacks.js.org/modules/_stacks_connect) <GithubLink href="https://github.com/hirosystems/connect/tree/main/packages/connect" title=""/> Connect web application to Stacks wallet browser extensions.
+- [`@stacks/connect`](https://connect.stacks.js.org/) <GithubLink href="https://github.com/hirosystems/connect/tree/main/packages/connect" title=""/> Connect web application to Stacks wallet browser extensions.
 
 ### Stacks Primitives
 
@@ -60,7 +60,7 @@ The most commonly used packages are:
   <a class="bg-neutral-200 rounded-md text-sm text-neutral-700 px-2 py-1" href="https://connst.stacks.js.org">Stacks Connect Reference →</a>
 </div>
 
-The source-code for most packages live in the [Stacks.js monorepo](https://https://github.com/hirosystems/stacks.js) or the [Stacks Connect monorepo](https://github.com/hirosystems/connect) on GitHub.
+The source-code for most packages live in the [Stacks.js monorepo](https://github.com/hirosystems/stacks.js) or the [Stacks Connect monorepo](https://github.com/hirosystems/connect) on GitHub.
 
 <!-- todo: add github icon component -->
 
