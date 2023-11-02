@@ -23,8 +23,6 @@ Authentication provides a way for users to identify themselves to an app while r
 
 Users who register for your app can subsequently authenticate to any other app with support for the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns) and vice versa.
 
-See the [To-dos example app](/example-apps/to-dos) for a concrete example of this feature in practice.
-
 ### Initiate `userSession`
 
 Apps keep track of user authentication state with the `userSession` object, initiated with the `UserSession` and `AppConfig` classes:
