@@ -1,12 +1,12 @@
 ---
-title: Getting Started
+sidebar_label: Getting Started
 ---
 
-import StacksjsStartersNote from './includes/\_stacks.js-starters-note.mdx';
+# Getting Started with Stacks.js
+
+import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
-
----
 
 To introduce the different functionality offered by Stacks.js, we'll walk through a few examples and concepts important to building on the Stacks blockchain.
 
@@ -83,9 +83,12 @@ openSTXTransfer({
 });
 ```
 
+<!-- todo -->
+<!-- [Read more](./connect.md) about transaction signing with Stacks Connect. -->
+
 ### Using a private key 🔑
 
-Note that if we're not using another wallet, we need to provide the sender's private key for signing.
+For full manual transaction signing, we need to provide the sender's private key.
 Treat the private key as a secret and never expose it to the public!
 
 ```js
@@ -98,6 +101,9 @@ const tx = await makeSTXTokenTransfer({
   senderKey: 'c3a2d3...0b1c2', // private key (typically derived from a mnemonic)
 });
 ```
+
+<!-- todo -->
+<!-- [Read more](./installing.md) about transaction signing with Stacks.js. -->
 
 ## Anchor Mode / Block Type
 
@@ -135,7 +141,7 @@ An example adding a post condition (of an address sending 1000 uSTX).
 ```js
 import { Pc } from '@stacks/transactions';
 
-const tx = await makeSTXTokenTransfer({
+const tx = await makeContractCall({
   // ...
   postConditions: [
     Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6').willSendEq(1000).ustx(),

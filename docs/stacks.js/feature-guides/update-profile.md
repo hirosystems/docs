@@ -2,8 +2,8 @@
 title: Update User Profile
 ---
 
-import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
-import StacksProviderSection from '../includes/\_stacks.js-provider-section.mdx';
+import StacksjsStartersNote from '../../includes/\_stacks.js-starters-note.mdx';
+import StacksProviderSection from '../../includes/\_stacks.js-provider-section.mdx';
 
 <StacksjsStartersNote/>
 

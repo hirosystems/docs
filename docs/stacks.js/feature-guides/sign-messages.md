@@ -2,12 +2,10 @@
 title: Sign Messages
 ---
 
-import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
-import StacksProviderSection from '../includes/\_stacks.js-provider-section.mdx';
+import StacksjsStartersNote from '../../includes/\_stacks.js-starters-note.mdx';
+import StacksProviderSection from '../../includes/\_stacks.js-provider-section.mdx';
 
 <StacksjsStartersNote/>
-
----
 
 This guide explains how to prompt users to sign a message. Messaging signing can be used to have a user prove they control a particular address or to have a user authorize a particular action in your app.
 
