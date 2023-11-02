@@ -15,7 +15,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn add --dev forever
-      - run: forever start -c "yarn serve --build"
+      - run: npx forever start -c "yarn serve --build"
       - uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           config-file: '.github/mlc_config.json'
