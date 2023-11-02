@@ -9,7 +9,7 @@ import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
 
 This guide explains how to prompt users to sign a message.
 
-The user will be prompted a popup from the Hiro Wallet showing the message you would like them to sign.
+The user will be prompted a popup from the Leather Wallet showing the message you would like them to sign.
 
 The user can then click on the ‘Sign’ button which will return the signature data and the user's publicKey to your app. You can then verify the signature by passing the signature data and the public key to the [`stacks.js`](https://github.com/hirosystems/stacks.js) `verifySignature` method.
 
@@ -21,7 +21,7 @@ Internally the string will be hashed using `sha256` and signed with `secp256k1` 
 
 :::tip
 
-In order to utilize the latest transaction signing with the Hiro Wallet, use a version >= 6.6.0 of the `@stacks/connect` NPM package.
+In order to utilize the latest transaction signing with the Leather Wallet, use a version >= 6.6.0 of the `@stacks/connect` NPM package.
 
 :::
 
@@ -33,7 +33,7 @@ npm install @stacks/connect
 
 ## Initiate session
 
-Users must authenticate to an app before you request message signing. Users can install an authenticator like [the Hiro Wallet](https://www.hiro.so/wallet/install-web).
+Users must authenticate to an app before you request message signing. Users can install an authenticator like [the Leather Wallet](https://leather.io/install-extension).
 
 See the [authentication guide](https://docs.hiro.so/build-apps/authentication) before proceeding to integrate the following message signing capabilities.
 
@@ -169,7 +169,7 @@ const MyComponent = () => {
 
 ## Signature request / response payload
 
-Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Hiro Wallet.
+Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Leather Wallet.
 
 These payloads are tokens that conform to the [JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies.
 
@@ -208,9 +208,9 @@ interface SignatureData {
 
 ## StacksProvider injected variable
 
-When users have the [Hiro Wallet](https://www.hiro.so/wallet/install-web) extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication, transaction and signature requests. `@stacks/connect` automatically detects and uses this global variable for you.
+When users have the [Leather Wallet](https://leather.io/install-extension) extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication, transaction and signature requests. `@stacks/connect` automatically detects and uses this global variable for you.
 
-At the moment, only the Hiro Wallet extension includes a `StacksProvider`, however, ideally more wallets (and mobile wallets) will support this format, so that your app can be compatible with any Stacks wallet that has functionality to embed web applications.
+At the moment, only the Leather Wallet extension includes a `StacksProvider`, however, ideally more wallets (and mobile wallets) will support this format, so that your app can be compatible with any Stacks wallet that has functionality to embed web applications.
 
 In your web application, you can check to see if the user has a compatible wallet installed by checking for the presence of `window.StacksProvider`.
 

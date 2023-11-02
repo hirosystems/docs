@@ -37,7 +37,7 @@ npm install @stacks/connect
 
 ## Initiate session
 
-Users must authenticate to an app before the `connect` package will work to prompt them for signing and broadcasting transactions to the Stacks blockchain with an authenticator such as [the Stacks Wallet](https://www.hiro.so/wallet/install-web).
+Users must authenticate to an app before the `connect` package will work to prompt them for signing and broadcasting transactions to the Stacks blockchain with an authenticator such as [the Leather Wallet](https://leather.io/install-extension).
 
 See the authentication guide before proceeding to integrate the following transaction signing capabilities in cases where `userSession.isUserSignedIn()` returns `true`.
 
@@ -101,9 +101,9 @@ interface STXTransferOptions {
 | recipient  | string           | true     | STX address for recipient of transfer                                                                                                                                                                                                 |
 | amount     | string           | true     | Amount of microstacks (1 STX = 1,000,000 microstacks) to be transferred provided as string to prevent floating point errors.                                                                                                          |
 | appDetails | object           | true     | Dictionary that requires `name` and `icon` for app                                                                                                                                                                                    |
-| onFinish   | function         | true     | Callback executed by app when transaction has been signed and broadcasted. [Read more](#onFinish-option)                                                                                                                              |
+| onFinish   | function         | true     | Callback executed by app when transaction has been signed and broadcasted.                                                                                                                                                            |
 | memo       | string           | false    | Optional memo for inclusion with transaction                                                                                                                                                                                          |
-| network    | StacksNetwork    | false    | Specify the network that this transaction should be completed on. [Read more](#network-option)                                                                                                                                        |
+| network    | StacksNetwork    | false    | Specify the network that this transaction should be completed on.                                                                                                                                                                     |
 | fee        | number \| string | false    | Optional fee amount in microstacks (1 STX = 1,000,000 microstacks) for overwriting the wallet's default fee value. [Read more](https://forum.stacks.org/t/mempool-congestion-on-stacks-observations-and-next-steps-from-hiro/12325/5) |
 
 ## Prompt to deploy smart contract
@@ -151,8 +151,8 @@ interface ContractDeployOptions {
 | codeBody     | string           | true     | Clarity source code for contract                                                                                                                                                                                                      |
 | contractName | string           | true     | Name for contract                                                                                                                                                                                                                     |
 | appDetails   | object           | true     | Dictionary that requires `name` and `icon` for app                                                                                                                                                                                    |
-| onFinish     | function         | true     | Callback executed by app when transaction has been signed and broadcasted. [Read more](#onFinish-option)                                                                                                                              |
-| network      | StacksNetwork    | false    | Specify the network that this transaction should be completed on. [Read more](#network-option)                                                                                                                                        |
+| onFinish     | function         | true     | Callback executed by app when transaction has been signed and broadcasted.                                                                                                                                                            |
+| network      | StacksNetwork    | false    | Specify the network that this transaction should be completed on.                                                                                                                                                                     |
 | fee          | number \| string | false    | Optional fee amount in microstacks (1 STX = 1,000,000 microstacks) for overwriting the wallet's default fee value. [Read more](https://forum.stacks.org/t/mempool-congestion-on-stacks-observations-and-next-steps-from-hiro/12325/5) |
 
 :::info
@@ -250,8 +250,8 @@ interface ContractCallOptions {
 | functionName    | string           | true     | Name of function for signing / execution, which needs to be a [public function](https://docs.stacks.co/references/language-functions#define-public).                                                                                  |
 | functionArgs    | `ClarityValue[]` | true     | Arguments for calling the function. [Learn more about constructing clarity values](https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values). Defaults to `[]`.                          |
 | appDetails      | object           | true     | Dictionary that requires `name` and `icon` for app                                                                                                                                                                                    |
-| onFinish        | function         | true     | Callback executed by app when transaction has been signed and broadcasted. [Read more](#onFinish-option)                                                                                                                              |     |
-| network         | StacksNetwork    | false    | Specify the network that this transaction should be completed on. [Read more](#network-option)                                                                                                                                        |
+| onFinish        | function         | true     | Callback executed by app when transaction has been signed and broadcasted.                                                                                                                                                            |     |
+| network         | StacksNetwork    | false    | Specify the network that this transaction should be completed on.                                                                                                                                                                     |
 | fee             | number \| string | false    | Optional fee amount in microstacks (1 STX = 1,000,000 microstacks) for overwriting the wallet's default fee value. [Read more](https://forum.stacks.org/t/mempool-congestion-on-stacks-observations-and-next-steps-from-hiro/12325/5) |
 
 ## Getting the signed transaction back after completion {#onFinish-option}
@@ -416,7 +416,7 @@ interface TransactionResponse {
 
 ## StacksProvider injected variable
 
-When users have the [Stacks Wallet for Web](https://www.hiro.so/wallet/install-web) browser extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication and transaction requests. `@stacks/connect` automatically detects and uses this global variable for you.
+When users have the [Leather wallet](https://leather.io/install-extension) browser extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication and transaction requests. `@stacks/connect` automatically detects and uses this global variable for you.
 
 At the moment, only the Stacks Wallet for Web browser extension includes a `StacksProvider`, however, ideally more wallets (and mobile wallets) support this format, so that your app can be compatible with any Stacks Wallet that has functionality to embed web applications.
 

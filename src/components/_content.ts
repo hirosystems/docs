@@ -5,7 +5,7 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Explore API references, feature guides, and tutorials to integrate Stacks and Ordinals into your application. Start here:",
+    text: 'Explore API references, feature guides, and tutorials to integrate Stacks and Ordinals into your application. Start here:',
     links: [
       {
         text: 'Stacks Blockchain API Client',
@@ -22,12 +22,12 @@ export default {
     ],
   },
   banner: {
-    type: 'info',
-    from: '2023-05-15',
-    to: '2023-06-01', // to leave the message until 2023-05-31 11:59pm, set to = 2023-06-01
-    text: ["Developers, we're listening!", 'Tell us about your experience using Hiro products.'],
-    cta: 'Take the Survey',
-    ctaLink: 'https://survey.hiro.so',
+    type: 'warning',
+    from: '2023-10-31',
+    to: '2024-01-31', // to leave the message until 2024-01-31
+    text: ['Upcoming changes to rate limits for Hiro APIs'],
+    cta: 'Learn more',
+    ctaLink: 'https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis',
   },
   popularSections: {
     title: 'Popular sections',

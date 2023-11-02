@@ -35,7 +35,7 @@ module.exports = {
         {
           type: 'category',
           label: 'How-to Guides',
-          items: ['how-to-use-api-key'],
+          items: ['api-keys'],
         },
         {
           type: 'category',
@@ -101,7 +101,7 @@ module.exports = {
             'stacks-blockchain-api/how-to-guides/how-to-deploy-service-dependencies',
             'stacks-blockchain-api/how-to-guides/how-to-upgrade-stacks-blockchain-api',
             'stacks-blockchain-api/how-to-guides/how-to-query-stacks2.0-blockchain',
-            'how-to-use-api-key',
+            'api-keys',
           ],
         },
         'stacks-blockchain-api/troubleshooting',
@@ -159,7 +159,7 @@ module.exports = {
           items: [
             'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
             'token-metadata-api/how-to-guides/how-to-stop-service',
-            'how-to-use-api-key',
+            'api-keys',
           ],
         },
         {
@@ -251,7 +251,6 @@ module.exports = {
             'clarinet/how-to-guides/how-to-create-new-project',
             'clarinet/how-to-guides/how-to-add-contract',
             'clarinet/how-to-guides/how-to-check-contract',
-            'clarinet/how-to-guides/how-to-test-contract',
             'clarinet/how-to-guides/how-to-debug-contract',
             'clarinet/how-to-guides/how-to-run-integration-environment',
             'clarinet/how-to-guides/how-to-use-deployment-plans',
@@ -338,12 +337,14 @@ module.exports = {
       items: [
         'platform/overview',
         'platform/getting-started',
+        'platform/connect-desktop-to-cloud',
         'platform/create-project',
         'platform/build-contract',
         'platform/create-chainhooks',
         'platform/deployment-plans',
         'platform/deploy-project',
         'platform/archive-project',
+        'platform/faucet',
         'platform/faq',
       ],
     },
@@ -490,6 +491,11 @@ module.exports = {
       items: [
         {
           type: 'link',
+          label: 'August 2023',
+          href: 'https://www.hiro.so/blog/release-roundup-august-2023',
+        },
+        {
+          type: 'link',
           label: 'July 2023',
           href: 'https://www.hiro.so/blog/release-roundup-july-2023',
         },
@@ -581,7 +587,6 @@ module.exports = {
   ],
   'example-apps': [
     'example-apps',
-    'example-apps/to-dos',
     'example-apps/billboard',
     'example-apps/heystack',
   ],
