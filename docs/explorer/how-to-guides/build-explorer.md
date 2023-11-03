@@ -1,16 +1,16 @@
 ---
-Title: Build Explorer
+Title: Build Stacks Explorer
 ---
 
-# Build Explorer
+# Build Stacks Explorer
 
-After installing and configuring your environment, you can run Explorer locally if you wish by running the followning `pnpm` command:
+After installing and configuring your environment, you can run the Stacks Explorer locally if you wish by running the followning `pnpm` command:
 
 `pnpm dev`
 
 ## Building for Production
 
-You may also build a production version of Explorer. Simply run the following command:
+You may also build a production version of the Stacks Explorer. Simply run the following command:
 
 `pnpm build`
 
