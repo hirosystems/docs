@@ -9,7 +9,7 @@ import StacksProviderSection from '../../includes/\_stacks.js-provider-section.m
 
 This guide explains how to change the universal profile of an authenticated user.
 
-When a user creates a new account with Hiro Wallet a basic profile is created and stored on the user's own storage hub. The basic profile contains
+When a user creates a new account with Leather Wallet a basic profile is created and stored on the user's own storage hub. The basic profile contains
 only a public key. It can be extended to contain personal information like an avatar,name and description. It is always cryptographically signed by the user's key, the so-called owner key.
 
 :::info
@@ -26,7 +26,7 @@ In order to update the public profile, apps can make request to the Stacks walle
 ## Install dependency
 
 :::tip
-In order to utilize the latest profile updating with the Hiro Wallet, use a version >= 7.1.0 of the `@stacks/connect` NPM package.
+In order to utilize the latest profile updating with the Leather Wallet, use a version >= 7.1.0 of the `@stacks/connect` NPM package.
 :::
 
 The following dependency must be installed:
@@ -39,7 +39,7 @@ This also installs the NPM package `@stacks/profile`. It contains the data type 
 
 ## Initiate session
 
-Users must authenticate to an app before you request message signing. Users can install an authenticator like [the Hiro Wallet](https://www.hiro.so/wallet/install-web).
+Users must authenticate to an app before you request message signing. Users can install an authenticator like the [Leather Wallet](https://leather.io/install-extension).
 
 See the [authentication guide](https://docs.hiro.so/build-apps/authentication) before proceeding to integrate the following message signing capabilities.
 
@@ -186,7 +186,7 @@ const MyComponent = () => {
 
 ## Profile Update Request / Response Payload
 
-Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Hiro Wallet.
+Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Leather Wallet.
 
 These payloads are tokens that conform to the [JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies.
 
@@ -201,7 +201,7 @@ interface ProfileUpdatePayload {
   profile: PublicPersonProfile;
   publicKey: string;
   /**
-   * Provide the Hiro Wallet with a suggested account to sign this transaction with.
+   * Provide the Leather Wallet with a suggested account to sign this transaction with.
    * This is set by default if a `userSession` option is provided.
    */
   stxAddress?: string;

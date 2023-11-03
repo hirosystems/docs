@@ -9,7 +9,7 @@ import StacksProviderSection from '../../includes/\_stacks.js-provider-section.m
 
 This guide explains how to prompt users to sign a message.
 
-The user will be prompted a popup from the Hiro Wallet showing the message you would like them to sign.
+The user will be prompted a popup from the Leather Wallet showing the message you would like them to sign.
 
 The user can then click on the ‘Sign’ button which will return the signature data and the user's publicKey to your app. You can then verify the signature by passing the signature data and the public key to the [`stacks.js`](https://github.com/hirosystems/stacks.js) `verifySignature` method.
 
@@ -27,7 +27,7 @@ npm install @stacks/connect
 
 ## Initiate session
 
-Users must authenticate to an app before you request message signing. Users can install an authenticator like [the Hiro Wallet](https://www.hiro.so/wallet/install-web).
+Users must authenticate to an app before you request message signing. Users can install an authenticator like the [Leather Wallet](https://leather.io/install-extension).
 
 See the [authentication guide](https://docs.hiro.so/build-apps/authentication) before proceeding to integrate the following message signing capabilities.
 
@@ -163,7 +163,7 @@ const MyComponent = () => {
 
 ## Signature request / response payload
 
-Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Hiro Wallet.
+Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Leather Wallet.
 
 These payloads are tokens that conform to the [JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies.
 
@@ -178,7 +178,7 @@ interface SignatureRequestPayload {
   message: string;
   publicKey: string;
   /**
-   * Provide the Hiro Wallet with a suggested account to sign this transaction with.
+   * Provide the Leather Wallet with a suggested account to sign this transaction with.
    * This is set by default if a `userSession` option is provided.
    */
   stxAddress?: string;

@@ -31,7 +31,7 @@ See the authentication guide before proceeding to integrate the following data s
 
 Gaia serves as a key-value store in which data is saved and retrieved as files to and from Gaia hubs owned by, or managed for, users.
 
-The default Gaia hub for users who authenticate to apps with [the Leather Wallet](https://leather.io/install-extension) is run by Hiro PBC at `https://gaia.blockstack.org/`. It supports files up to 25 megabytes in size.
+The default Gaia hub for users who authenticate to apps with the [Leather Wallet](https://leather.io/install-extension) is run by Hiro PBC at `https://gaia.blockstack.org/`. It supports files up to 25 megabytes in size.
 
 :::tip
 
