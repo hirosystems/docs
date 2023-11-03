@@ -163,7 +163,7 @@ const MyComponent = () => {
 
 ## Signature request / response payload
 
-Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Hiro Wallet.
+Under the hood, `@stacks/connect` will serialize and deserialize data between your app and the Leather Wallet.
 
 These payloads are tokens that conform to the [JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies.
 
@@ -178,7 +178,7 @@ interface SignatureRequestPayload {
   message: string;
   publicKey: string;
   /**
-   * Provide the Hiro Wallet with a suggested account to sign this transaction with.
+   * Provide the Leather Wallet with a suggested account to sign this transaction with.
    * This is set by default if a `userSession` option is provided.
    */
   stxAddress?: string;

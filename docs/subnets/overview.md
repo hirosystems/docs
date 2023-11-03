@@ -26,7 +26,7 @@ This diagram outlines the interaction between a subnet and the Stacks layer-1 ch
 
 ## Features
 
-A subnet is designed to temporarily hold Stacks assets. Users can deposit assets from the Stacks chain, take advantage of faster transactions and lower fees while on the subnet, and withdraw them when finished. While a user's assets are in a subnet, the asset is locked in the subnet contract on the Stacks chain, and representations of those assets are created—appearing in a user's Hiro Wallet—and handled by applications on the subnet.
+A subnet is designed to temporarily hold Stacks assets. Users can deposit assets from the Stacks chain, take advantage of faster transactions and lower fees while on the subnet, and withdraw them when finished. While a user's assets are in a subnet, the asset is locked in the subnet contract on the Stacks chain, and representations of those assets are created—appearing in a user's Leather Wallet—and handled by applications on the subnet.
 
 :::note
 

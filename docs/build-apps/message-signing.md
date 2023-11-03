@@ -33,7 +33,7 @@ npm install @stacks/connect
 
 ## Initiate session
 
-Users must authenticate to an app before you request message signing. Users can install an authenticator like [the Leather Wallet](https://leather.io/install-extension).
+Users must authenticate to an app before you request message signing. Users can install an authenticator like the [Leather Wallet](https://leather.io/install-extension).
 
 See the [authentication guide](https://docs.hiro.so/build-apps/authentication) before proceeding to integrate the following message signing capabilities.
 
@@ -184,7 +184,7 @@ interface SignatureRequestPayload {
   message: string;
   publicKey: string;
   /**
-   * Provide the Hiro Wallet with a suggested account to sign this transaction with.
+   * Provide the Leather Wallet with a suggested account to sign this transaction with.
    * This is set by default if a `userSession` option is provided.
    */
   stxAddress?: string;
