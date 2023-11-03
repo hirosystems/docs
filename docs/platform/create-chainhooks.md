@@ -125,7 +125,7 @@ More status info can be found by hovering over the status element. For example, 
 
 ## References
 
-- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin)
-- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks)
-- [Run chainhook as a service using Bitcoind](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-bitcoind)
-- [Run chainhook as a service using Stacks](https://docs.hiro.so/chainhook/how-to-guides/how-to-run-chainhook-as-a-service-using-stacks)
+- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin)
+- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/guides/chainhooks-with-stacks)
+- [Run chainhook as a service using Bitcoind](https://docs.hiro.so/chainhook/guides/chainhook-as-a-service-bitcoind)
+- [Run chainhook as a service using Stacks](https://docs.hiro.so/chainhook/guides/chainhook-as-a-service-stacks)

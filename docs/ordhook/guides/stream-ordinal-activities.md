@@ -6,7 +6,7 @@ Ordhook is a tool that helps you find ordinal activity from the Bitcoin chain an
 
 ### Configure Ordhook
 
-This section walks you through streaming ordinal activities. To post the ordinal activity, you'll need to configure bitcoind. Refer to [Setting up a bitcoin node](./how-to-run-ordhook-as-a-service-using-bitcoind.md#setting-up-a-bitcoin-node) to understand the steps to configure Bitcoind.
+This section walks you through streaming ordinal activities. To post the ordinal activity, you'll need to configure bitcoind. Refer to [Setting up a bitcoin node](./ordhook-as-a-service-bitcoind.md#setting-up-a-bitcoin-node) to understand the steps to configure Bitcoind.
 
 > **_NOTE_**
 > Ordhook is applicable to the Bitcoin chain only.

@@ -56,28 +56,40 @@ module.exports = {
           routeBasePath: '/metadata',
         },
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-
+          sidebarPath: require.resolve('./sidebars/main.js'),
           editUrl({ docPath }) {
-            const repoUrls = {
-              clarinet: 'https://github.com/hirosystems/clarinet/blob/develop/docs',
-              explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
-              'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
-              'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
-              'stacks-blockchain-api':
-                'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
-              'ordinals-api': 'https://github.com/hirosystems/ordinals-api/tree/develop/docs',
-              'token-metadata-api':
-                'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
-              chainhook: 'https://github.com/hirosystems/chainhook/tree/develop/docs',
-              ordhook: 'https://github.com/hirosystems/ordhook/tree/develop/docs',
+            const baseUrls = {
+              'clarinet': 'https://github.com/hirosystems/clarinet',
+              'explorer': 'https://github.com/hirosystems/explorer',
+              'stacks.js': 'https://github.com/hirosystems/stacks.js',
+              'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets',
+              'stacks-blockchain-api': 'https://github.com/hirosystems/stacks-blockchain-api',
+              'ordinals-api': 'https://github.com/hirosystems/ordinals-api',
+              'token-metadata-api': 'https://github.com/hirosystems/token-metadata-api',
+              'chainhook': 'https://github.com/hirosystems/chainhook',
+              'ordhook': 'https://github.com/hirosystems/ordhook',
             };
-            const [repo, ...rem] = docPath.split('/');
-            if (repo in repoUrls) {
-              return `${repoUrls[repo]}/${rem.join('/')}`;
-            }
-
-            return `https://github.com/hirosystems/docs/blob/main/docs/${docPath}`;
+          
+            const paths = {
+              'clarinet': 'blob/develop/docs',
+              'explorer': 'blob/main/docs',
+              'stacks.js': 'blob/master/docs',
+              'stacks-subnets': 'tree/master/docs',
+              'stacks-blockchain-api': 'blob/master/content',
+              'ordinals-api': 'tree/develop/docs',
+              'token-metadata-api': 'tree/develop/docs',
+              'chainhook': 'tree/develop/docs',
+              'ordhook': 'tree/develop/docs',
+            };
+          
+            const constructUrl = (repo, docPath) => {
+              const baseUrl = baseUrls[repo] || 'https://github.com/hirosystems/docs';
+              const path = paths[repo] || 'blob/main/docs';
+              return `${baseUrl}/${path}/${docPath}`;
+            };
+          
+            const [repo, ...rest] = docPath.split('/');
+            return constructUrl(repo, rest.join('/'));
           },
           routeBasePath: '/',
           breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
@@ -105,6 +117,7 @@ module.exports = {
             type: 'dropdown',
             label: 'References',
             position: 'right',
+            className: 'dropdown-nav',
             items: [
               {
                 type: 'html',
@@ -158,6 +171,7 @@ module.exports = {
             type: 'dropdown',
             label: 'Learn & Build',
             position: 'right',
+            className: 'dropdown-nav',
             items: [
               {
                 type: 'doc',
@@ -181,6 +195,7 @@ module.exports = {
             docId: 'roadmap',
             label: 'Roadmap',
             position: 'right',
+            className: 'dropdown-nav',
           },
           {
             href: 'https://github.com/hirosystems/docs',
@@ -274,17 +289,17 @@ module.exports = {
         additionalLanguages: ['toml'],
       },
       // Algolio DocSearch
-      algolia: {
-        // The application ID provided by Algolia
-        appId: 'UL2NZRAK8K',
+      // algolia: {
+      //   // The application ID provided by Algolia
+      //   appId: 'UL2NZRAK8K',
 
-        // Public API key: it is safe to commit it
-        apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
+      //   // Public API key: it is safe to commit it
+      //   apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
 
-        indexName: 'hiro',
-        contextualSearch: true,
-        searchPagePath: 'search',
-      },
+      //   indexName: 'hiro',
+      //   contextualSearch: true,
+      //   searchPagePath: 'search',
+      // },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },
