@@ -120,9 +120,9 @@ git pull
 git submodule update --recursive
 ```
 
-Now that you have installed and built Clarinet, you can [create a new project](how-to-guides/how-to-create-new-project.md) and then [populate the project with smart contracts](how-to-guides/how-to-add-contract.md).
+Now that you have installed and built Clarinet, you can [create a new project](guides/how-to-create-new-project.md) and then [populate the project with smart contracts](guides/how-to-add-contract.md).
 
-Clarinet also provides tools for interacting with your contracts in a Read, Evaluate, Print, Loop (REPL) console and perform automated [testing of contracts](how-to-guides/how-to-test-contract.md).
+Clarinet also provides tools for interacting with your contracts in a Read, Evaluate, Print, Loop (REPL) console and perform automated [testing of contracts](guides/test-contract-with-clarinet-sdk.md).
 
 ## Setup shell completions
 

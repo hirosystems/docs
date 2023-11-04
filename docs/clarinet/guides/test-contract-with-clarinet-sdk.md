@@ -6,7 +6,7 @@ The [Clarinet SDK](https://www.npmjs.com/package/@hirosystems/clarinet-sdk) allo
 
 > Make sure you are using the latest version of Clarinet to follow this guide. See the [getting started](../getting-started.md) guide to know more.
 
-> Take a look at the [API reference guide](../feature-guides/clarinet-js-sdk.md) for more information about the methods and elements of the clarinet-sdk.
+> Take a look at the [API reference guide](../guides/clarinet-js-sdk.md) for more information about the methods and elements of the clarinet-sdk.
 
 ## Requirements
 
@@ -77,45 +77,35 @@ It can safely be deleted.
 Create a file `tests/counter.test.ts` with the following content:
 
 ```ts
-import { Cl } from "@stacks/transactions";
-import { describe, expect, it } from "vitest";
+import { Cl } from '@stacks/transactions';
+import { describe, expect, it } from 'vitest';
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+const address1 = accounts.get('wallet_1')!;
 
-describe("test `increment` public function", () => {
-  it("increments the count by the given value", () => {
-    const incrementResponse = simnet.callPublicFn(
-      "counter",
-      "increment",
-      [Cl.uint(1)],
-      address1
-    );
+describe('test `increment` public function', () => {
+  it('increments the count by the given value', () => {
+    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
     console.log(Cl.prettyPrint(incrementResponse.result)); // (ok u2)
     expect(incrementResponse.result).toBeOk(Cl.uint(2));
 
-    const count1 = simnet.getDataVar("counter", "count");
+    const count1 = simnet.getDataVar('counter', 'count');
     expect(count1).toBeUint(2);
 
-    simnet.callPublicFn("counter", "increment", [Cl.uint(40)], address1);
-    const count2 = simnet.getDataVar("counter", "count");
+    simnet.callPublicFn('counter', 'increment', [Cl.uint(40)], address1);
+    const count2 = simnet.getDataVar('counter', 'count');
     expect(count2).toBeUint(42);
   });
 
-  it("sends a print event", () => {
-    const incrementResponse = simnet.callPublicFn(
-      "counter",
-      "increment",
-      [Cl.uint(1)],
-      address1
-    );
+  it('sends a print event', () => {
+    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
 
     expect(incrementResponse.events).toHaveLength(1);
     const printEvent = incrementResponse.events[0];
-    expect(printEvent.event).toBe("print_event");
+    expect(printEvent.event).toBe('print_event');
     expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii("count"),
-      action: Cl.stringAscii("incremented"),
+      object: Cl.stringAscii('count'),
+      action: Cl.stringAscii('incremented'),
       value: Cl.uint(2),
     });
   });
@@ -156,41 +146,31 @@ Let us now write a higher coverage test suite by testing the `decrement` and `ge
 These two code blocks can be added at the end of `tests/counter.test.ts`.
 
 ```ts
-describe("test `decrement` public function", () => {
-  it("decrements the count by the given value", () => {
-    const decrementResponse = simnet.callPublicFn(
-      "counter",
-      "decrement",
-      [Cl.uint(1)],
-      address1
-    );
+describe('test `decrement` public function', () => {
+  it('decrements the count by the given value', () => {
+    const decrementResponse = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
     expect(decrementResponse.result).toBeOk(Cl.uint(0));
 
-    const count1 = simnet.getDataVar("counter", "count");
+    const count1 = simnet.getDataVar('counter', 'count');
     expect(count1).toBeUint(0);
 
     // increase the count so that it can be descreased without going < 0
-    simnet.callPublicFn("counter", "increment", [Cl.uint(10)], address1);
+    simnet.callPublicFn('counter', 'increment', [Cl.uint(10)], address1);
 
-    simnet.callPublicFn("counter", "decrement", [Cl.uint(5)], address1);
-    const count2 = simnet.getDataVar("counter", "count");
+    simnet.callPublicFn('counter', 'decrement', [Cl.uint(5)], address1);
+    const count2 = simnet.getDataVar('counter', 'count');
     expect(count2).toBeUint(5);
   });
 
-  it("sends a print event", () => {
-    const decrementResponse = simnet.callPublicFn(
-      "counter",
-      "decrement",
-      [Cl.uint(1)],
-      address1
-    );
+  it('sends a print event', () => {
+    const decrementResponse = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
 
     expect(decrementResponse.events).toHaveLength(1);
     const printEvent = decrementResponse.events[0];
-    expect(printEvent.event).toBe("print_event");
+    expect(printEvent.event).toBe('print_event');
     expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii("count"),
-      action: Cl.stringAscii("decremented"),
+      object: Cl.stringAscii('count'),
+      action: Cl.stringAscii('decremented'),
       value: Cl.uint(0),
     });
   });
@@ -198,13 +178,13 @@ describe("test `decrement` public function", () => {
 ```
 
 ```ts
-describe("test `get-count` read only function", () => {
-  it("returns the counter value", () => {
-    const count1 = simnet.callReadOnlyFn("counter", "read-count", [], address1);
+describe('test `get-count` read only function', () => {
+  it('returns the counter value', () => {
+    const count1 = simnet.callReadOnlyFn('counter', 'read-count', [], address1);
     expect(count1.result).toBeOk(Cl.uint(1));
 
-    simnet.callPublicFn("counter", "increment", [Cl.uint(10)], address1);
-    const count2 = simnet.callReadOnlyFn("counter", "read-count", [], address1);
+    simnet.callPublicFn('counter', 'increment', [Cl.uint(10)], address1);
+    const count2 = simnet.callReadOnlyFn('counter', 'read-count', [], address1);
     expect(count2.result).toBeOk(Cl.uint(11));
   });
 });
@@ -284,9 +264,9 @@ name: Test counter contract
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 jobs:
   build:
@@ -301,7 +281,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - run: npm ci
       - run: npm run test:reports
 ```
@@ -318,13 +298,13 @@ They can check the return values of contracts, ensure that the value is actually
 This matcher can be used to make sure that the value has the right Clarity Type, without checking its value.
 
 ```ts
-import { ClarityType } from "@stacks/transactions";
-import { expect, it } from "vitest";
+import { ClarityType } from '@stacks/transactions';
+import { expect, it } from 'vitest';
 
-const address1 = simnet.getAccounts().get("wallet_1");
+const address1 = simnet.getAccounts().get('wallet_1');
 
-it("ensures <increment> adds 1", () => {
-  const { result } = simnet.callPublicFn("counter", "increment", [], address1);
+it('ensures <increment> adds 1', () => {
+  const { result } = simnet.callPublicFn('counter', 'increment', [], address1);
 
   // make sure it returns a response ok `(ok ...)`
   expect(result).toHaveClarityType(ClarityType.ResponseOk);
@@ -354,12 +334,7 @@ They are called composite types, meaning that they contain another Clarity value
 Check that a response is `ok` and has the expected value. Any Clarity value can be passed.
 
 ```ts
-const decrement = simnet.callPublicFn(
-  "counter",
-  "decrement",
-  [Cl.uint(1)],
-  address1
-);
+const decrement = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
 
 // decrement.result is `(ok (uint 0))`
 expect(decrement.result).toBeOk(Cl.uint(0));
@@ -373,12 +348,7 @@ Consider that the `counter` contract returns and error code 500 `(err u500)` if 
 
 ```ts
 const tooBig = 100000;
-const increment = simnet.callPublicFn(
-  "counter",
-  "increment",
-  [Cl.uint(toBig)],
-  address1
-);
+const increment = simnet.callPublicFn('counter', 'increment', [Cl.uint(toBig)], address1);
 
 // increment.result is `(err u500)`
 expect(increment.result).toBeErr(Cl.uint(500));
@@ -395,15 +365,10 @@ Here, `some` is a composite type, meaning that it contains another Clarity value
 Consider a billboard smart contract that can contain an optional message:
 
 ```ts
-const getMessage = simnet.callPublicFn(
-  "billboard",
-  "get-message",
-  [],
-  address1
-);
+const getMessage = simnet.callPublicFn('billboard', 'get-message', [], address1);
 
 // (some u"Hello world")
-expect(getMessage.result).toBeSome(Cl.stringUtf8("Hello world"));
+expect(getMessage.result).toBeSome(Cl.stringUtf8('Hello world'));
 ```
 
 #### `toBeNone()` <!-- omit from toc -->
@@ -411,12 +376,7 @@ expect(getMessage.result).toBeSome(Cl.stringUtf8("Hello world"));
 Considering the same billboard smart contract but with no saved message:
 
 ```ts
-const getMessage = simnet.callPublicFn(
-  "billboard",
-  "get-message",
-  [],
-  address1
-);
+const getMessage = simnet.callPublicFn('billboard', 'get-message', [], address1);
 
 // none
 expect(getMessage.result).toBeNone();
@@ -460,7 +420,7 @@ expect(result).toBeUint(1n);
 Asserts the value of a Clarity string-ascii.
 
 ```ts
-expect(result).toBeAscii("Hello wolrd");
+expect(result).toBeAscii('Hello wolrd');
 ```
 
 #### `toBeUtf8(expected: string)` <!-- omit from toc -->
@@ -468,7 +428,7 @@ expect(result).toBeAscii("Hello wolrd");
 Asserts the value of a Clarity string-utf8.
 
 ```ts
-expect(result).toBeUtf8("STX");
+expect(result).toBeUtf8('STX');
 ```
 
 #### `toBePrincipal(expected: string)` <!-- omit from toc -->
@@ -476,12 +436,8 @@ expect(result).toBeUtf8("STX");
 Asserts the value of a Clarity principal value. The principal can be a standard or a contract principal.
 
 ```ts
-expect(standardPrincipal).toBePrincipal(
-  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
-);
-expect(contractPrincipal).toBePrincipal(
-  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter"
-);
+expect(standardPrincipal).toBePrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
+expect(contractPrincipal).toBePrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter');
 ```
 
 #### `toBeBuff(expected: Uint8Array)` <!-- omit from toc -->
@@ -492,7 +448,7 @@ It takes as an input an ArrayBuffer (`Uint8Array`).
 Your test case will ultimately depends on how the Uint8Array is built. `@stacks/transaction` can help building these buffers.
 
 ```ts
-it.only("can assert buffer values", () => {
+it.only('can assert buffer values', () => {
   const { result } = simnet.callPublicFn(/* ... */);
 
   // knowing the expected UintArray
@@ -500,11 +456,11 @@ it.only("can assert buffer values", () => {
   expect(result).toBeBuff(value);
 
   // knowing the expected string
-  const bufferFromAscii = Cl.bufferFromAscii("btc");
+  const bufferFromAscii = Cl.bufferFromAscii('btc');
   expect(result).toBeBuff(bufferFromAscii.buffer);
 
   // knowing the expected hex value
-  const bufferFromHex = Cl.bufferFromHex("627463");
+  const bufferFromHex = Cl.bufferFromHex('627463');
   console.log(bufferFromHex.buffer);
 });
 ```
@@ -519,15 +475,10 @@ Check that the value is a `list` containing an array of Clarity values.
 Considering a function that return a list of 3 uints:
 
 ```ts
-const address1 = simnet.getAccounts().get("wallet_1");
+const address1 = simnet.getAccounts().get('wallet_1');
 
-it("can assert list values", () => {
-  const { result } = simnet.callReadOnlyFn(
-    "counter",
-    "func-returning-list-of-uints",
-    [],
-    address1
-  );
+it('can assert list values', () => {
+  const { result } = simnet.callReadOnlyFn('counter', 'func-returning-list-of-uints', [], address1);
 
   expect(result).toBeList([Cl.uint(1), Cl.uint(2), Cl.uint(3)]);
 });
@@ -540,20 +491,15 @@ Check that the value is a `tuple`, it takes a JavaScript object to check the val
 The snippet below shows that composite types can be nested:
 
 ```ts
-const address1 = simnet.getAccounts().get("wallet_1");
+const address1 = simnet.getAccounts().get('wallet_1');
 
-it("can assert tuple values", () => {
-  const { result } = simnet.callPublicFn(
-    "counter",
-    "func-returning-tuple",
-    [],
-    address1
-  );
+it('can assert tuple values', () => {
+  const { result } = simnet.callPublicFn('counter', 'func-returning-tuple', [], address1);
 
   expect(result).toBeTuple({
     id: Cl.uint(1),
     data: Cl.tuple({
-      text: Cl.stringUtf8("Hello world"),
+      text: Cl.stringUtf8('Hello world'),
       owner: Cl.standardPrincipal(address1),
     }),
   });

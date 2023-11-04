@@ -9,7 +9,7 @@ Here is a non-exhaustive list of some of simnet's use-cases:
 - Call public and read-only functions from smart contracts
 - Get clarity maps or data-var values
 - Get contract interfaces (available functions and data)
-- [Write unit tests for Clarity smart contracts](../feature-guides/test-contract-with-clarinet-sdk.md)
+- [Write unit tests for Clarity smart contracts](../guides/test-contract-with-clarinet-sdk.md)
 
 ## Getting Started With the SDK
 
@@ -26,17 +26,17 @@ npm install @hirosystems/clarinet-sdk @stacks/transactions
 Here is a very basic code snippet showing how to use the SDK:
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
-import { Cl } from "@stacks/transactions";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+import { Cl } from '@stacks/transactions';
 
 async function main() {
   const simnet = await initSimnet();
 
   const accounts = simnet.getAccounts();
-  const address1 = accounts.get("wallet_1");
-  if (!address1) throw new Error("invalid wallet name.");
+  const address1 = accounts.get('wallet_1');
+  if (!address1) throw new Error('invalid wallet name.');
 
-  const call = simnet.callPublicFn("counter", "add", [Cl.uint(1)], address1);
+  const call = simnet.callPublicFn('counter', 'add', [Cl.uint(1)], address1);
   console.log(call.result); // Cl.int(Cl.ok(true))
 }
 
@@ -47,7 +47,7 @@ By default, the SDK will look for a Clarinet.toml file in the current working di
 It's also possible to provide the path to the manifest like so:
 
 ```ts
-const simnet = await initSimnet("./path/to/Clarinet.toml");
+const simnet = await initSimnet('./path/to/Clarinet.toml');
 ```
 
 ## API References
@@ -62,11 +62,11 @@ The `initSimnet` function takes the manifest path (`Clarinet.toml`) as an option
 It will often be the first function to call when using the SDK.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 
 const simnet = await initSimnet();
 // or
-const simnet = await initSimnet("./clarity/Clarinet.toml");
+const simnet = await initSimnet('./clarity/Clarinet.toml');
 ```
 
 ### Simnet Properties
@@ -76,7 +76,7 @@ const simnet = await initSimnet("./clarity/Clarinet.toml");
 Returns the current block height of the simnet.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 console.log(simnet.blockHeight); // 0
@@ -87,7 +87,7 @@ console.log(simnet.blockHeight); // 0
 Returns the default deployer address as defined in the project file `./setting/Devnet.toml`.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 console.log(simnet.deployer); // ST1P...GZGM
@@ -104,11 +104,11 @@ getAccounts(): Map<string, string>
 Get the Stacks addresses defined in the project file `./setting/Devnet.toml`.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+const address1 = accounts.get('wallet_1')!;
 console.log(address1); // ST1S...YPD5
 ```
 
@@ -121,11 +121,11 @@ getAssetsMap(): Map<string, Map<string, bigint>>
 Get a list of asset balances by Stacks addresses. This method returns STX balances as well as FT and NFT balances.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 const assets = simnet.getAssetsMap();
-const stxBalances = assets.get("STX")!;
+const stxBalances = assets.get('STX')!;
 
 console.log(stxBalances);
 // Map(10) {
@@ -152,10 +152,10 @@ Given a contract with the following definition:
 It can be accessed with:
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
-const counter = simnet.getDataVar("counter", "count");
+const counter = simnet.getDataVar('counter', 'count');
 // counter is Cl.uint(0)
 ```
 
@@ -177,17 +177,13 @@ Given a contract with the following definition:
 It can be accessed with:
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+const address1 = accounts.get('wallet_1')!;
 
-const participated = simnet.getMapEntry(
-  "counter",
-  "participants",
-  Cl.standardPrincipal(address1)
-);
+const participated = simnet.getMapEntry('counter', 'participants', Cl.standardPrincipal(address1));
 // counter is Cl.some(Cl.bool(true|false)) or Cl.none()
 ```
 
@@ -206,41 +202,26 @@ Call read-only functions exposed by a contract. This method returns an object wi
 It takes function arguments in the form in Clarity Values, available in the package `@stacks/transactions`.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
-import { Cl } from "@stacks/transactions";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+import { Cl } from '@stacks/transactions';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+const address1 = accounts.get('wallet_1')!;
 
-const getCounter = simnet.callReadOnlyFn(
-  "counter",
-  "get-counter",
-  [],
-  address1
-);
+const getCounter = simnet.callReadOnlyFn('counter', 'get-counter', [], address1);
 console.log(getCounter.result); // Cl.uint(1)
 
 // With arguments:
-const callPOX = simnet.callReadOnlyFn(
-  "pox-3",
-  "is-pox-active",
-  [Cl.uint(100)],
-  address1
-);
+const callPOX = simnet.callReadOnlyFn('pox-3', 'is-pox-active', [Cl.uint(100)], address1);
 ```
 
 As in many methods of the SDK, the contract address can be just the contract name, if deployed by the default deployer.
 
 ```ts
-simnet.callReadOnlyFn("counter", "get-counter", [], address1);
+simnet.callReadOnlyFn('counter', 'get-counter', [], address1);
 // equivalent
-simnet.callReadOnlyFn(
-  `${simnet.deployer}.counter`,
-  "get-counter",
-  [],
-  address1
-);
+simnet.callReadOnlyFn(`${simnet.deployer}.counter`, 'get-counter', [], address1);
 ```
 
 #### `Simnet.callPublicFn()`
@@ -257,14 +238,14 @@ callPublicFn(
 Call read-only functions exposed by a contract. This method returns an object with the result of the function call as a Clarity Value and the events fired during the function execution. It takes function arguments in the form in Clarity Values, available in the package `@stacks/transactions`. It will simulate a block being mined and increase the block height by one.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
-import { Cl } from "@stacks/transactions";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+import { Cl } from '@stacks/transactions';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+const address1 = accounts.get('wallet_1')!;
 
-const callAdd = simnet.callPublicFn("counter", "add", [Cl.uint(3)], address1);
+const callAdd = simnet.callPublicFn('counter', 'add', [Cl.uint(3)], address1);
 console.log(callAdd.result); // a Clarity Value such as Cl.bool(true)
 console.log(callAdd.events); // and array of events (such as print event, stx stransfer event, etc)
 ```
@@ -278,12 +259,12 @@ transferSTX(amount: number | bigint, recipient: string, sender: string): ParsedT
 Transfer STX from an address to an other. The amount is in uSTX. It will simulate a block being mined and increase the block height by one.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
-const address2 = accounts.get("wallet_2")!;
+const address1 = accounts.get('wallet_1')!;
+const address2 = accounts.get('wallet_2')!;
 
 const transfer = simnet.transferSTX(100, address1, address2);
 console.log(transfer);
@@ -321,26 +302,21 @@ deployContract(
 Deploy a contract to the Simnet. It will simulate a block being mined and increase the block height by one.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
-import { Cl } from "@stacks/transactions";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+import { Cl } from '@stacks/transactions';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
+const address1 = accounts.get('wallet_1')!;
 
-const source = "(define-public (add (a uint) (b uint)) (ok (+ a b)))";
-const deployRes = simnet.deployContract("op", source, simnet.deployer);
+const source = '(define-public (add (a uint) (b uint)) (ok (+ a b)))';
+const deployRes = simnet.deployContract('op', source, simnet.deployer);
 
-const addRes = simnet.callPublicFn(
-  "op",
-  "add",
-  [Cl.uint(1), Cl.uint(1)],
-  address1
-);
+const addRes = simnet.callPublicFn('op', 'add', [Cl.uint(1), Cl.uint(1)], address1);
 console.log(addRes.result); // Cl.ok(Cl.uint(2))
 
 // specify a clarityVersion
-simnet.deployContract("contract2", source, { clarityVersion: 2 }, deployerAddr);
+simnet.deployContract('contract2', source, { clarityVersion: 2 }, deployerAddr);
 ```
 
 #### `Simnet.mineBlock()`
@@ -356,17 +332,17 @@ It has three methods `.callPublicFn()`, `.transferSTX()`, and `.deployContract()
 
 ```ts
 // import `tx` as well
-import { initSimnet, tx } from "@hirosystems/clarinet-sdk";
-import { Cl } from "@stacks/transactions";
+import { initSimnet, tx } from '@hirosystems/clarinet-sdk';
+import { Cl } from '@stacks/transactions';
 const simnet = await initSimnet();
 
 const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
-const address2 = accounts.get("wallet_2")!;
+const address1 = accounts.get('wallet_1')!;
+const address2 = accounts.get('wallet_2')!;
 
 const block = simnet.mineBlock([
-  tx.callPublicFn("counter", "increment", [], address1),
-  tx.callPublicFn("counter", "add", [Cl.uint(10)], address1),
+  tx.callPublicFn('counter', 'increment', [], address1),
+  tx.callPublicFn('counter', 'add', [Cl.uint(10)], address1),
   tx.transferSTX(100, address1, address2),
 ]);
 
@@ -384,7 +360,7 @@ mineEmptyBlock(): number
 Mine one empty block and increase the block height by one. Returns the new block height.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 console.log(simnet.blockHeight); // 0
@@ -402,7 +378,7 @@ mineEmptyBlocks(count?: number): number
 Mine multiple empty blocks to reach a certain block height. Returns the new block height.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 console.log(simnet.blockHeight); // 0
@@ -422,7 +398,7 @@ The interfaces contain information such as the available functions, data-vars an
 It can be used to get the list of the contracts and iterate of it.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
 const contractInterfaces = simnet.getContractsInterfaces();
@@ -439,13 +415,13 @@ getContractSource(contract: string): string | undefined
 Get the source code of a contract as a string.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
-const source = "(define-public (add (a uint) (b uint)) (ok (+ a b)))";
-simnet.deployContract("contract", source, null, deployerAddr);
+const source = '(define-public (add (a uint) (b uint)) (ok (+ a b)))';
+simnet.deployContract('contract', source, null, deployerAddr);
 
-const contractSource = simnet.getContractSource("contract");
+const contractSource = simnet.getContractSource('contract');
 console.log(contractSource);
 // "(define-public (add (a uint) (b uint)) (ok (+ a b)))"
 ```
@@ -462,8 +438,8 @@ It throws an error if it fails to get the AST or to encode it JS (which should n
 Note: The `ContractAST` TypeScript is still very simple but will be improved over time.
 
 ```ts
-import { initSimnet } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
-const counterAst = simnet.getContractAST("counter");
+const counterAst = simnet.getContractAST('counter');
 ```
