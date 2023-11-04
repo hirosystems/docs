@@ -114,7 +114,7 @@ body {
 }
 
 p {
-  font-family: 'Aeonik Fono';
+  font-family: 'Inter var', system-ui, -apple-system;
 }
 
 [data-theme='dark'] table,
@@ -206,10 +206,10 @@ main[class^='apiMainContainer_'] table {
 
 .navbar__items {
   display: flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   flex-shrink: 1; /* allows this element to shrink */
   max-width: 50%; /* limits width to 50% of the parent's width */
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
 }
 
 .navbar__search {
@@ -295,20 +295,32 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   margin-top: 0.75rem;
 }
 
-.section-title {
-  color: var(--ifm-color-gray-600);
+/* For light theme */
+[data-theme='light'] .section-title {
+  color: var(--ifm-color-gray-900);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  /* margin-top: 1rem !important; */
+}
+
+/* For dark theme */
+[data-theme='dark'] .section-title {
+  color: var(--ifm-color-gray-100);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .dropdown-nav {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .dropdown__menu .section-title {
   margin-top: 0.75rem;
+}
+
+.dropdown__menu a.dropdown__link {
+  font-size: 0.8rem;
 }
 
 .dropdown__link {
@@ -316,7 +328,20 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 }
 
 .menu__link {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  background-color: transparent !important;
+}
+
+.menu__link:hover {
+  background-color: transparent;
+}
+
+[data-theme='light'] .menu__link:hover {
+  color: var(--ifm-color-gray-900);
+}
+
+[data-theme='dark'] .menu__link:hover {
+  color: var(--ifm-color-gray-100);
 }
 
 .back-link a::before {
