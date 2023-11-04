@@ -31,12 +31,58 @@ module.exports = [
   {
     type: 'doc',
     label: 'Introduction',
-    id: 'clarinet/feature-guides/clarinet-js-sdk',
+    id: 'clarinet/guides/clarinet-js-sdk',
   },
   {
     type: 'doc',
     label: 'Test your contracts with Clarinet SDK',
-    id: 'clarinet/feature-guides/test-contract-with-clarinet-sdk',
+    id: 'clarinet/guides/test-contract-with-clarinet-sdk',
+  },
+  {
+    type: 'html',
+    value: 'Clarinet CLI',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Create a new project',
+    id: 'clarinet/guides/how-to-create-new-project',
+  },
+  {
+    type: 'doc',
+    label: 'Add a contract',
+    id: 'clarinet/guides/how-to-add-contract',
+  },
+  {
+    type: 'doc',
+    label: 'Verify a contract',
+    id: 'clarinet/guides/how-to-check-contract',
+  },
+  {
+    type: 'doc',
+    label: 'Debug a contract',
+    id: 'clarinet/guides/how-to-debug-contract',
+  },
+  {
+    type: 'doc',
+    label: 'Deploy a contract',
+    id: 'clarinet/guides/how-to-deploy-contracts',
+  },
+  {
+    type: 'doc',
+    label: 'Deploy a contract with Subnets',
+    id: 'clarinet/guides/how-to-deploy-with-subnets',
+  },
+  {
+    type: 'doc',
+    label: 'Run a local development environment',
+    id: 'clarinet/guides/how-to-set-up-local-development-environment',
+  },
+  {
+    type: 'doc',
+    label: 'Customizing deployment plans',
+    id: 'clarinet/guides/how-to-use-deployment-plans',
   },
   {
     type: 'html',
@@ -47,16 +93,16 @@ module.exports = [
   {
     type: 'doc',
     label: 'Analyze contracts with `check_checker`',
-    id: 'clarinet/feature-guides/analyze-with-check-checker',
+    id: 'clarinet/guides/analyze-with-check-checker',
   },
   {
     type: 'doc',
     label: 'Deploy a contract',
-    id: 'clarinet/feature-guides/clarinet-deploy',
+    id: 'clarinet/guides/clarinet-deploy',
   },
   {
     type: 'doc',
     label: 'How to run a local testing environment',
-    id: 'clarinet/feature-guides/clarinet-integrate',
+    id: 'clarinet/guides/clarinet-integrate',
   },
 ]
