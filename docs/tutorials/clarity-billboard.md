@@ -285,7 +285,7 @@ a contract caller to a new principal address. Additionally, you have learned how
 Clarity contract using Clarinet.
 
 [counter tutorial]: /tutorials/clarity-counter
-[clarinet]: /clarinet/introduction
+[clarinet]: /clarinet/overview
 [installing clarinet]: /clarinet/getting-started
 [visual studio code]: https://code.visualstudio.com/
 [final code for this tutorial]: https://github.com/hirosystems/stacks-billboard

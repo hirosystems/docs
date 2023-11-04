@@ -36,14 +36,14 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **If-this**: Based on the selected chain, you will see a list of available scopes for the `If-this` condition.
 
-- For *Bitcoin*, the available predicate options are `txid`,`outputs`, `stacks_protocols`.
+- For _Bitcoin_, the available predicate options are `txid`,`outputs`, `stacks_protocols`.
 
-- For *Stacks*, the available predicate options are `txid`, `block_height`, `fungible_token_event`,
-`non-fungible_token_event`, `stx_event`, `print_event`, `contract_deployment`.
+- For _Stacks_, the available predicate options are `txid`, `block_height`, `fungible_token_event`,
+  `non-fungible_token_event`, `stx_event`, `print_event`, `contract_deployment`.
 
 > _**Note**_
 >
-> _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks) documents to understand the available predicates and how to use them._
+> _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-stacks) documents to understand the available predicates and how to use them._
 
 **Then-that**: This action is defaulted to `http_post` to allow the chainhook to post events to the URL specified in the below option.
 
@@ -83,13 +83,13 @@ Note that there may be other fields in the UI to create a chainhook based on the
 
 # Uploading a Chainhook
 
-To upload a chainhook, you can either select the _Upload Chainhook_ button and choose the .json file that has the chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area. 
+To upload a chainhook, you can either select the _Upload Chainhook_ button and choose the .json file that has the chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area.
 
 ![Upload Chainhook](./images/chainhook-upload.jpeg)
 
-The upload file must be a .json file containing either a single json object representing a chainhook predicate, or an array of json objects representing one or more chainhook predicates. 
+The upload file must be a .json file containing either a single json object representing a chainhook predicate, or an array of json objects representing one or more chainhook predicates.
 
-Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/how-to-guides/how-to-use-chainhooks-with-stacks) documents to understand the available predicates and how your chainhook predicate json for upload.
+Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-stacks) documents to understand the available predicates and how your chainhook predicate json for upload.
 
 ## Edit Chainhook
 
@@ -117,7 +117,7 @@ Use the ellipse on the chainhook row to delete the chainhook. You will see a con
 
 ## Chainhook Status
 
-The chainhook row has a `STATUS` column that displays whether the chainhook is in an Active, Inactive, or Error state. Active means the chainhook is actively scanning blocks against the chainhook's defined predicate, inactive means the chainhook has reached a terminal state, e.g. its end block has been reached, and it is no longer scanning blocks, and error means the chainhook ran into an error during its execution. 
+The chainhook row has a `STATUS` column that displays whether the chainhook is in an Active, Inactive, or Error state. Active means the chainhook is actively scanning blocks against the chainhook's defined predicate, inactive means the chainhook has reached a terminal state, e.g. its end block has been reached, and it is no longer scanning blocks, and error means the chainhook ran into an error during its execution.
 
 More status info can be found by hovering over the status element. For example, to understand why the chainhook is in an error state, hover over the status element to find out!
 

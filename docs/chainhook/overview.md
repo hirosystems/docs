@@ -10,9 +10,9 @@ Chainhook can be used as a tool in your local development environment and as a s
 
 ## What problem does it solve?
 
-Today, Bitcoin and web3 developers struggle to get reliable blockchain data to power their applications due to forks and reorgs. 
+Today, Bitcoin and web3 developers struggle to get reliable blockchain data to power their applications due to forks and reorgs.
 
-Developers who build applications and services often need to build their own index of the blockchain chainstate. For accurate data, they have to re-index each time there is a reorg of the chainstate, which happens often. Re-indexing is a massive pain point impacting developers building on Bitcoin. 
+Developers who build applications and services often need to build their own index of the blockchain chainstate. For accurate data, they have to re-index each time there is a reorg of the chainstate, which happens often. Re-indexing is a massive pain point impacting developers building on Bitcoin.
 
 With Chainhook, developers can build consistent, reorg-proof databases that index only the information they want and trigger actions in response to on-chain events using IFTTT (if_this, then_that) logic.
 
@@ -21,7 +21,7 @@ With Chainhook, developers can build consistent, reorg-proof databases that inde
 1. **Faster, More Efficient Indexing:** Instead of working with a generic blockchain indexer, taking hours to process every single transaction of every single block, you can create your own index, build, iterate, and refine it in minutes. Chainhook can help you avoid massive storage management and storage scaling issues by avoiding full chain indexation. Lighter indexes lead to faster query results, which helps minimize end-user response time. This leads to a better developer experience and a better end-user experience.
 
 2. **Re-org and Fork Aware:** Chainhook stores possible chain forks and checks each new chain event against the forks to maintain the current valid fork. All triggers, also known as **predicates**, are evaluated against the current valid fork. In the event of a reorg, Chainhook computes a list of new blocks to apply and old blocks to rollback and evaluates the registered predicates against those blocks.
-  
+
 3. **IFTTT Logic, powering your applications:** Chainhook helps developers create elegant event-based architectures using triggers, also known as **predicates**. Developers can write “if_this / then_that” **predicates** that when triggered, are packaged as events and forwarded to the configured destination. By using cloud functions as destinations, developers can also cut costs on processing by only paying for processing when a block that contains some data relevant to the developer's application is being mined.
 
 ## Chainhooks: Trigger IFTTT Logic in your Application
@@ -57,12 +57,11 @@ The `if-this` predicate design can use the following attributes to define the pr
 **Example:**
 
 ```json
-
 {
-    "if_this": {
-        "scope": "txid",
-        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
-    }
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
 }
 ```
 
@@ -80,12 +79,12 @@ The `then-that` predicate design can use the following attributes to output the 
 
 ```jsonc
 {
-    "then_that": {
-        "file_append": {
-            "path": "/tmp/events.json",
-        }
+  "then_that": {
+    "file_append": {
+      "path": "/tmp/events.json"
     }
+  }
 }
 ```
 
-For more information on predicate definitions, refer to [how to use chainhooks with bitcoin](./how-to-guides/how-to-use-chainhooks-with-bitcoin.md) and [how to use chainhooks with Stacks](./how-to-guides/how-to-use-chainhooks-with-stacks.md).
+For more information on predicate definitions, refer to [how to use chainhooks with bitcoin](./guides/chainhooks-with-bitcoin.md) and [how to use chainhooks with Stacks](./guides/chainhooks-with-stacks.md).

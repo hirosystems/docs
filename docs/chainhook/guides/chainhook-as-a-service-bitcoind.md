@@ -128,7 +128,7 @@ Here is a table of the relevant parameters this guide changes in our configurati
 
 ## Scan blockchain based on predicates
 
-Now that your bitcoind and Chainhook configurations are complete, you can define the Chainhook [predicates](../overview.md#if-this-predicate-design) you would like to scan against bitcoin blocks. These predicates are where you specify the kind of blockchain events that trigger Chainhook to deliver a result (either a file appendation or an HTTP POST request). This section helps you with an example JSON file to scan a range of blocks in the blockchain to trigger results. To understand the supported predicates for Bitcoin, refer to [how to use chainhooks with bitcoin](how-to-use-chainhooks-with-bitcoin.md).
+Now that your bitcoind and Chainhook configurations are complete, you can define the Chainhook [predicates](../overview.md#if-this-predicate-design) you would like to scan against bitcoin blocks. These predicates are where you specify the kind of blockchain events that trigger Chainhook to deliver a result (either a file appendation or an HTTP POST request). This section helps you with an example JSON file to scan a range of blocks in the blockchain to trigger results. To understand the supported predicates for Bitcoin, refer to [how to use chainhooks with bitcoin](./chainhooks-with-bitcoin.md).
 
 The following is an example to walk you through an `if_this / then_that` predicate design that appends event payloads to the configured file destination.
 

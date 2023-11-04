@@ -12,7 +12,7 @@ Start with the prerequisite section and configure your files to start the chainh
 
 - Configure your Stacks node using the [Stacks node configuration](https://docs.stacks.co/docs/nodes-and-miners/stacks-node-configuration) documentation.
 - We Recommend using the latest version of Stacks. You can check the latest version by following [this](https://github.com/stacks-network/stacks-blockchain/releases) link.
-- Set up your Bitcoin node by following [this](how-to-run-chainhook-as-a-service-using-bitcoind.md#setting-up-a-bitcoin-node) article, then get the `rpcuser`, `rpcpassword`, and `rpc_port` values defined in the `bitcoin.conf` file.
+- Set up your Bitcoin node by following [this](./chainhook-as-a-service-bitcoind.md#setting-up-a-bitcoin-node) article, then get the `rpcuser`, `rpcpassword`, and `rpc_port` values defined in the `bitcoin.conf` file.
 
 A `Stacks.toml` file is generated when configuring your Stacks node. Below is the sample `Stacks.toml` file.
 
@@ -51,7 +51,7 @@ In this section, you will configure a chainhook to communicate with the network.
 chainhook config generate --mainnet
 ```
 
-Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [Setting up a Bitcoin Node](how-to-run-chainhook-as-a-service-using-bitcoind.md#setting-up-a-bitcoin-node) section. Please update the following parameters accordingly:
+Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [Setting up a Bitcoin Node](./chainhook-as-a-service-bitcoind.md#setting-up-a-bitcoin-node) section. Please update the following parameters accordingly:
 
 1. Update `bitcoind_rpc_username` with the username set for `rpcuser` in `bitcoin.conf`.
 2. Update `bitcoind_rpc_password` with the password set for `rpcpassword` in `bitcoin.conf`.
@@ -116,7 +116,7 @@ Ensure the following configurations are matched to allow chainhook to communicat
 
 ## Scan the blockchain based on predicates
 
-Now that the Stacks and Chainhook configurations are done, you can scan your blocks by defining your [predicates](../overview.md#if-this-predicate-design). This section helps you with sample JSON files to scan blockchain blocks and render the results. To understand the supported predicates for Stacks, refer to [how to use chainhook with stacks](how-to-use-chainhooks-with-stacks.md).
+Now that the Stacks and Chainhook configurations are done, you can scan your blocks by defining your [predicates](../overview.md#if-this-predicate-design). This section helps you with sample JSON files to scan blockchain blocks and render the results. To understand the supported predicates for Stacks, refer to [how to use chainhook with stacks](./chainhooks-with-stacks.md).
 
 The following are the two examples to walk you through `file_append` and `http_post` `then-that` predicate designs.
 

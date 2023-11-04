@@ -5,7 +5,7 @@ title: Getting Started
 
 # Getting Started
 
-You understand subnets from the [overview](https://docs.hiro.so/subnets/overview)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](https://docs.hiro.so/clarinet/how-to-guides/how-to-run-integration-environment) as one of the networks in your Stacks development environment.
+You understand subnets from the [overview](https://docs.hiro.so/subnets/overview)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](https://docs.hiro.so/clarinet/guides/how-to-run-integration-environment) as one of the networks in your Stacks development environment.
 
 ## What to expect
 
