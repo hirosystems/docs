@@ -78,7 +78,7 @@ export default {
         },
         {
           title: 'How-to guides',
-          link: '/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin',
+          link: '/chainhook/guides/chainhooks-with-bitcoin',
           description: 'Explore the how-to guides of Chainhook.',
         },
         {
@@ -104,7 +104,7 @@ export default {
         },
         {
           title: 'Feature guides',
-          link: '/clarinet/feature-guides/analyze-with-check-checker',
+          link: '/clarinet/guides/analyze-with-check-checker',
           description: 'Explore the features of Clarinet.',
         },
         {
