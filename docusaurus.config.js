@@ -115,15 +115,10 @@ module.exports = {
         items: [
           {
             type: 'dropdown',
-            label: 'References',
+            label: 'API References',
             position: 'right',
             className: 'dropdown-nav',
             items: [
-              {
-                type: 'html',
-                value: 'APIs',
-                className: 'section-title',
-              },
               {
                 label: 'Ordinals API',
                 to: '/ordinals',
@@ -136,66 +131,7 @@ module.exports = {
                 label: 'Token Metadata API',
                 to: '/metadata',
               },
-              {
-                type: 'html',
-                value: 'OTHER',
-                className: 'section-title',
-              },
-              {
-                label: 'Stacks CLI',
-                to: '/references/stacks-cli',
-              },
-              {
-                label: 'Stacks.js',
-                href: 'https://stacks.js.org',
-              },
-              {
-                label: 'Stacks Connect',
-                href: 'https://connect.stacks.js.org',
-              },
-              {
-                label: 'Clarity Functions',
-                href: 'https://docs.stacks.co/docs/clarity/language-functions',
-              },
-              {
-                label: 'Clarity Keywords',
-                href: 'https://docs.stacks.co/docs/clarity/language-keywords',
-              },
-              {
-                label: 'Clarity Types',
-                href: 'https://docs.stacks.co/docs/clarity/language-types',
-              },
             ],
-          },
-          {
-            type: 'dropdown',
-            label: 'Learn & Build',
-            position: 'right',
-            className: 'dropdown-nav',
-            items: [
-              {
-                type: 'doc',
-                label: 'Tutorials',
-                docId: 'tutorials',
-              },
-              {
-                type: 'doc',
-                label: 'Example Apps',
-                docId: 'example-apps',
-              },
-              {
-                type: 'doc',
-                label: 'Stacks.js Starters',
-                docId: 'stacksjs-starters',
-              },
-            ],
-          },
-          {
-            type: 'doc',
-            docId: 'roadmap',
-            label: 'Roadmap',
-            position: 'right',
-            className: 'dropdown-nav',
           },
           {
             href: 'https://github.com/hirosystems/docs',
@@ -231,6 +167,35 @@ module.exports = {
               {
                 label: 'Product Changelog',
                 to: 'changelog/changelog-intro',
+              },
+            ],
+          },
+          {
+            title: 'References',
+            items: [
+              {
+                label: 'Stacks CLI',
+                to: '/references/stacks-cli',
+              },
+              {
+                label: 'Stacks.js',
+                href: 'https://stacks.js.org',
+              },
+              {
+                label: 'Stacks Connect',
+                href: 'https://connect.stacks.js.org',
+              },
+              {
+                label: 'Clarity Functions',
+                href: 'https://docs.stacks.co/docs/clarity/language-functions',
+              },
+              {
+                label: 'Clarity Keywords',
+                href: 'https://docs.stacks.co/docs/clarity/language-keywords',
+              },
+              {
+                label: 'Clarity Types',
+                href: 'https://docs.stacks.co/docs/clarity/language-types',
               },
             ],
           },
@@ -289,17 +254,17 @@ module.exports = {
         additionalLanguages: ['toml'],
       },
       // Algolio DocSearch
-      // algolia: {
-      //   // The application ID provided by Algolia
-      //   appId: 'UL2NZRAK8K',
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'UL2NZRAK8K',
 
-      //   // Public API key: it is safe to commit it
-      //   apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
+        // Public API key: it is safe to commit it
+        apiKey: '2b7f4af4606380e8e9d4a39aa9a4237f',
 
-      //   indexName: 'hiro',
-      //   contextualSearch: true,
-      //   searchPagePath: 'search',
-      // },
+        indexName: 'hiro',
+        contextualSearch: true,
+        searchPagePath: 'search',
+      },
       segment: {
         apiKey: 'qabJfWPhi2L9CeMk22A1XlYmabsNtgKy',
       },

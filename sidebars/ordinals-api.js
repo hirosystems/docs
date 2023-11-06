@@ -1,7 +1,7 @@
 module.exports = [
   {
     type: 'category',
-    label: 'Back to home',
+    label: 'Home',
     type: 'link',
     href: '/',
     className: 'back-link'

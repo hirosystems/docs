@@ -1,7 +1,14 @@
 module.exports = [
   {
+    type: 'category',
+    label: 'Home',
+    type: 'link',
+    href: '/',
+    className: 'back-link'
+  },
+  {
     type: 'html',
-    value: 'Getting Started',
+    value: 'Hiro Hacks',
     className: 'section-title',
     defaultStyle: true,
   },

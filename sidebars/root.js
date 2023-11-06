@@ -91,10 +91,9 @@ module.exports = [
     href: '/subnets/overview'
   },
   {
-    type: 'category',
-    label: 'Hiro Archive',
-    type: 'link',
-    href: '/hiro-archive/overview'
+    id: 'hiro-archive/overview',
+    type: 'doc',
+    label: 'Hiro Archive'
   },
   {
     type: 'html',
@@ -103,86 +102,84 @@ module.exports = [
     defaultStyle: true,
   },
   {
-    type: 'category',
-    label: 'Changelog',
-    type: 'link',
-    href: '/hiro-archive/overview'
+    id: 'changelog',
+    type: 'doc',
+    label: 'Changelog'
+  },
+  {
+    id: 'contributors-guide',
+    type: 'doc',
+    label: 'Contributors Guide',
   },
   {
     type: 'category',
-    label: 'Contributors Guide',
-    type: 'link',
-    href: 'contributors-guide'
+    label: 'Release History',
+    items: [
+      {
+        type: 'link',
+        label: 'August 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-august-2023',
+      },
+      {
+        type: 'link',
+        label: 'July 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-july-2023',
+      },
+      {
+        type: 'link',
+        label: 'June 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-june-2023',
+      },
+      {
+        type: 'link',
+        label: 'May 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-may-2023',
+      },
+      {
+        type: 'link',
+        label: 'April 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-april-2023',
+      },
+      {
+        type: 'link',
+        label: 'March 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-march-2023',
+      },
+      {
+        type: 'link',
+        label: 'February 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-february-2023',
+      },
+      {
+        type: 'link',
+        label: 'January 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-january-2023',
+      },
+      {
+        type: 'link',
+        label: 'December 2022',
+        href: 'https://www.hiro.so/blog/release-roundup-december-2022',
+      },
+      {
+        type: 'link',
+        label: 'November 2022',
+        href: 'https://www.hiro.so/blog/release-roundup-november-2022',
+      },
+      {
+        type: 'link',
+        label: 'October 2022',
+        href: 'https://www.hiro.so/blog/release-roundup-october-2022',
+      },
+      {
+        type: 'link',
+        label: 'September 2022',
+        href: 'https://www.hiro.so/blog/release-roundup-september-2022',
+      },
+      {
+        type: 'link',
+        label: 'August 2022',
+        href: 'https://www.hiro.so/blog/release-roundup-august-2022',
+      },
+    ],
   },
-  // {
-  //   type: 'category',
-  //   label: 'Release History',
-  //   items: [
-  //     {
-  //       type: 'link',
-  //       label: 'August 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-august-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'July 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-july-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'June 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-june-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'May 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-may-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'April 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-april-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'March 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-march-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'February 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-february-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'January 2023',
-  //       href: 'https://www.hiro.so/blog/release-roundup-january-2023',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'December 2022',
-  //       href: 'https://www.hiro.so/blog/release-roundup-december-2022',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'November 2022',
-  //       href: 'https://www.hiro.so/blog/release-roundup-november-2022',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'October 2022',
-  //       href: 'https://www.hiro.so/blog/release-roundup-october-2022',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'September 2022',
-  //       href: 'https://www.hiro.so/blog/release-roundup-september-2022',
-  //     },
-  //     {
-  //       type: 'link',
-  //       label: 'August 2022',
-  //       href: 'https://www.hiro.so/blog/release-roundup-august-2022',
-  //     },
-  //   ],
-  // },
 ]

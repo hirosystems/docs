@@ -16,6 +16,11 @@
  const ordhookSidebar = require('./ordhook');
  const chainhookSidebar = require('./chainhook');
  const clarinetSidebar = require('./clarinet');
+ const stacksExplorerSidebar = require('./stacks-explorer');
+ const stacksJsSidebar = require('./stacks-js');
+ const stacksApiSidebar = require('./stacks-api');
+ const tokenMetadataApiSidebar = require('./token-metadata-api');
+ const subnetsSidebar = require('./subnets');
 
 module.exports = {
   'docs': rootSidebar,
@@ -25,6 +30,11 @@ module.exports = {
   'ordhook': ordhookSidebar,
   'chainhook': chainhookSidebar,
   'clarinet': clarinetSidebar,
+  'stacks-explorer': stacksExplorerSidebar,
+  'stacks-js': stacksJsSidebar,
+  'stacks-api': stacksApiSidebar,
+  'token-metadata-api': tokenMetadataApiSidebar,
+  'subnets': subnetsSidebar,
   tutorials: [
     'tutorials',
     {
