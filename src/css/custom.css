@@ -8,6 +8,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @font-face {
   font-family: 'Aeonik Fono';
   src: url('https://alphaassets.hiro.so/AeonikFono-Regular.woff2') format('woff2'),
@@ -212,6 +213,10 @@ main[class^='apiMainContainer_'] table {
   /* justify-content: flex-end; */
 }
 
+.dropdown > .navbar__link:after {
+  margin-left: 0.4rem;
+}
+
 .navbar__search {
   order: -1;
   flex-grow: 1;
@@ -298,7 +303,7 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 /* For light theme */
 [data-theme='light'] .section-title {
   color: var(--ifm-color-gray-900);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -306,7 +311,7 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 /* For dark theme */
 [data-theme='dark'] .section-title {
   color: var(--ifm-color-gray-100);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -344,15 +349,28 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
   color: var(--ifm-color-gray-100);
 }
 
-.back-link a::before {
-  content: url(../../static/img/back-arrow.svg);
-  font-size: 0.25rem;
-  margin-right: 5px;
+a.menu__link.menu__link--sublist.menu__link--sublist-caret::after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 1rem;
 }
 
-.back-link a:hover {
-  background-color: transparent;
-  text-decoration: underline;
+[data-theme='light'] .footer__title {
+  color: var(--ifm-color-gray-900);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'AeonikMono-Regular';
+  text-transform: uppercase;
+}
+
+[data-theme='dark'] .footer__title {
+  color: var(--ifm-color-gray-100);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'AeonikMono-Regular';
+  text-transform: uppercase;
+}
+
+.footer__item a.footer__link-item {
+  font-size: 0.8rem;
 }
 
 /* FEEDBACK ================================================================= */
@@ -388,13 +406,15 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 }
 
 /* tmp content, todo: deduplicate */
+[data-theme='dark'] .card {
+  background-color: var(--color-neutral-000);
+}
 .sectionTitle {
   display: flex;
   align-items: flex-start;
   gap: 16px;
   font-size: 32px;
 }
-
 .subSections {
   display: flex;
   gap: 16px;
@@ -487,7 +507,7 @@ a.HiroLinkExternal {
   /* Modal */
   --docsearch-modal-background: var(--ifm-color-secondary-lighter);
   /* Search box */
-  --docsearch-searchbox-background: var(--ifm-color-secondary);
+  /* --docsearch-searchbox-background: var(--ifm-color-secondary); */
   --docsearch-searchbox-focus-background: var(--ifm-color-white);
   /* Hit */
   --docsearch-hit-color: var(--ifm-font-color-base);
