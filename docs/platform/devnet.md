@@ -43,7 +43,7 @@ When Devnet is ready, the status will change to 'Active', and a 30-minute sessio
 
 ### Exploring the Devnet Dashboard
 
-With Devnet active, clicking on the status pill again will present the option to 'View Devnet Details'. Selecting this takes you to the Devnet dashboard, where you can interact with a block explorer and an "assembly line" of mined blocks.Transactions within each block are accessible here, and a search function is available for efficient block navigation.
+With Devnet active, clicking on the status pill again will present the option to 'View Devnet Details'. Selecting this takes you to the Devnet dashboard, where you can interact with a block explorer and an "assembly line" of mined blocks. Transactions within each block are accessible here, and a search function is available for efficient block navigation.
 
 ![Devnet Dashboard](./images/devnet-dashboard.jpeg)
 
