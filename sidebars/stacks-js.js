@@ -20,8 +20,24 @@ module.exports = [
   },
   {
     type: 'doc',
+    label: 'Installation',
+    id: 'stacks.js/installing',
+  },
+  {
+    type: 'doc',
     label: 'Getting Started',
     id: 'stacks.js/getting-started',
+  },
+  {
+    type: 'html',
+    value: 'Connect',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Overview',
+    id: 'stacks.js/connect',
   },
   {
     type: 'html',
@@ -31,7 +47,7 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'Authenticate users with Connect',
+    label: 'Authenticate with Connect',
     id: 'stacks.js/guides/authenticate-users-with-connect',
   },
   {
@@ -46,7 +62,23 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'How to integrate Stacking',
+    label: 'Integrate Stacking',
     id: 'stacks.js/guides/how-to-integrate-stacking', // TODO: merge both stacking guides
+  },
+  {
+    type: 'html',
+    value: 'Other',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'FAQ',
+    id: 'stacks.js/faq',
+  },
+  {
+    type: 'doc',
+    label: 'Troubleshooting',
+    id: 'stacks.js/troubleshooting',
   },
 ]

@@ -30,7 +30,7 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'How to run an Ordinals Explorer locally',
+    label: 'Run an Ordinals Explorer locally',
     id: 'ordinals-explorer/guides/build-explorer',
   },
 ]

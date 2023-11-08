@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'Run a local development environment',
+    label: 'Set up a local development environment',
     id: 'clarinet/guides/how-to-set-up-local-development-environment',
   },
   {
@@ -97,12 +97,28 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'Deploy a contract',
+    label: 'Create deployment plans',
     id: 'clarinet/guides/clarinet-deploy',
   },
   {
     type: 'doc',
-    label: 'How to run a local testing environment',
+    label: 'Run a local testing environment',
     id: 'clarinet/guides/clarinet-integrate',
+  },
+  {
+    type: 'html',
+    value: 'Other',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'FAQ',
+    id: 'clarinet/faq',
+  },
+  {
+    type: 'doc',
+    label: 'Troubleshooting',
+    id: 'clarinet/troubleshooting',
   },
 ]

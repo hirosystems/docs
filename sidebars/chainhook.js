@@ -30,22 +30,33 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'How to run Chainhook as a service using Bitcoind',
+    label: 'Run Chainhook as a service using Bitcoind',
     id: 'chainhook/guides/chainhook-as-a-service-bitcoind',
   },
   {
     type: 'doc',
-    label: 'How to run Chainhook as a service using Stacks',
+    label: 'Run Chainhook as a service using Stacks',
     id: 'chainhook/guides/chainhook-as-a-service-stacks',
   },
   {
     type: 'doc',
-    label: 'How to use Chainhook with Bitcoin',
+    label: 'Use Chainhook with Bitcoin',
     id: 'chainhook/guides/chainhooks-with-bitcoin',
   },
   {
     type: 'doc',
-    label: 'How to use Chainhook with Stacks',
+    label: 'Use Chainhook with Stacks',
     id: 'chainhook/guides/chainhooks-with-stacks',
+  },
+  {
+    type: 'html',
+    value: 'Other',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'FAQ',
+    id: 'chainhook/faq',
   },
 ]

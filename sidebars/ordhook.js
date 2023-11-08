@@ -30,17 +30,17 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'How to run Ordhook as a service',
+    label: 'Run Ordhook as a service',
     id: 'ordhook/guides/ordhook-as-a-service-bitcoind',
   },
   {
     type: 'doc',
-    label: 'How to scan for Ordinal activity',
+    label: 'Scan for Ordinal activity',
     id: 'ordhook/guides/scan-ordinal-activities',
   },
   {
     type: 'doc',
-    label: 'How to stream for Ordinal activity',
+    label: 'Stream for Ordinal activity',
     id: 'ordhook/guides/stream-ordinal-activities',
   },
 ]
