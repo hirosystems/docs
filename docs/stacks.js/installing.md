@@ -1,5 +1,5 @@
 ---
-sidebar_label: Installing
+title: Installation
 ---
 
 import GithubLink from '../../src/components/GithubLink.tsx';

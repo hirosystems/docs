@@ -1,5 +1,5 @@
 ---
-sidebar_label: Connect
+title: Overview
 ---
 
 # Stacks Connect
