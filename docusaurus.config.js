@@ -161,22 +161,14 @@ module.exports = {
                 to: '/example-apps',
               },
               {
-                label: 'Contributors Guide',
-                to: '/contributors-guide',
-              },
-              {
-                label: 'Product Changelog',
-                to: 'changelog/changelog-intro',
+                label: 'Stacks CLI',
+                to: '/references/stacks-cli',
               },
             ],
           },
           {
             title: 'References',
             items: [
-              {
-                label: 'Stacks CLI',
-                to: '/references/stacks-cli',
-              },
               {
                 label: 'Stacks.js',
                 href: 'https://stacks.js.org',
@@ -196,6 +188,23 @@ module.exports = {
               {
                 label: 'Clarity Types',
                 href: 'https://docs.stacks.co/docs/clarity/language-types',
+              },
+            ],
+          },
+          {
+            title: 'Stacks Community',
+            items: [
+              {
+                label: 'Discord',
+                href: 'https://stacks.chat',
+              },
+              {
+                label: 'Stacks Forum',
+                href: 'https://forum.stacks.org',
+              },
+              {
+                label: 'Reddit',
+                href: 'https://www.reddit.com/r/stacks',
               },
             ],
           },
@@ -225,23 +234,6 @@ module.exports = {
               {
                 label: 'Newsletter',
                 href: 'https://hiro.so/updates-docs',
-              },
-            ],
-          },
-          {
-            title: 'Stacks Community',
-            items: [
-              {
-                label: 'Discord',
-                href: 'https://stacks.chat',
-              },
-              {
-                label: 'Stacks Forum',
-                href: 'https://forum.stacks.org',
-              },
-              {
-                label: 'Reddit',
-                href: 'https://www.reddit.com/r/stacks',
               },
             ],
           },
