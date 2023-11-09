@@ -486,6 +486,11 @@ module.exports = {
       defaultStyle: true,
     },
     {
+      id: 'rate-limiting',
+      type: 'doc',
+      label: 'Rate Limiting',
+    },
+    {
       type: 'category',
       label: 'Release History',
       items: [
