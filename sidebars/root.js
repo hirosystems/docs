@@ -102,6 +102,11 @@ module.exports = [
     defaultStyle: true,
   },
   {
+    id: 'rate-limiting',
+    type: 'doc',
+    label: 'Rate Limiting'
+  },
+  {
     id: 'changelog',
     type: 'doc',
     label: 'Changelog'
