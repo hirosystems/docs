@@ -25,13 +25,29 @@ module.exports = [
   },
   {
     type: 'html',
+    value: 'Features',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Overview',
+    id: 'token-metadata-api/feature-guides/token-metadata-api',
+  },
+  {
+    type: 'html',
     value: 'Guides',
     className: 'section-title',
     defaultStyle: true,
   },
   {
     type: 'doc',
-    label: 'Token Metadata API Features',
-    id: 'token-metadata-api/feature-guides/token-metadata-api',
+    label: 'Stop service',
+    id: 'token-metadata-api/how-to-guides/how-to-stop-service',
+  },
+  {
+    type: 'doc',
+    label: 'Use Image Cache Service',
+    id: 'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
   },
 ]

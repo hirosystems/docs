@@ -24,6 +24,17 @@ module.exports = [
   },
   {
     type: 'html',
+    value: 'Features',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Event dispatching / observer interface',
+    id: 'subnets/event-dispatcher',
+  },
+  {
+    type: 'html',
     value: 'Guides',
     className: 'section-title',
     defaultStyle: true,
@@ -32,5 +43,10 @@ module.exports = [
     type: 'doc',
     label: 'Subnet Architecture',
     id: 'subnets/guides/subnet-participants',
+  },
+  {
+    type: 'doc',
+    label: 'Trust models',
+    id: 'subnets/guides/trust-models',
   },
 ]
