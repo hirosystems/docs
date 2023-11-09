@@ -23,9 +23,9 @@ export default {
   },
   banner: {
     type: 'warning',
-    from: '2023-10-31',
-    to: '2024-01-31', // to leave the message until 2024-01-31
-    text: ['Upcoming changes to rate limits for Hiro APIs'],
+    from: '2023-11-09',
+    to: '2023-11-30', // to leave the message until 2024-01-31
+    text: ["We've made changes to our rate limits for Hiro APIs"],
     cta: 'Learn more',
     ctaLink: 'https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis',
   },
