@@ -57,40 +57,7 @@ module.exports = {
         },
         docs: {
           sidebarPath: require.resolve('./sidebars/main.js'),
-          editUrl({ docPath }) {
-            const baseUrls = {
-              'clarinet': 'https://github.com/hirosystems/clarinet',
-              'explorer': 'https://github.com/hirosystems/explorer',
-              'stacks.js': 'https://github.com/hirosystems/stacks.js',
-              'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets',
-              'stacks-blockchain-api': 'https://github.com/hirosystems/stacks-blockchain-api',
-              'ordinals-api': 'https://github.com/hirosystems/ordinals-api',
-              'token-metadata-api': 'https://github.com/hirosystems/token-metadata-api',
-              'chainhook': 'https://github.com/hirosystems/chainhook',
-              'ordhook': 'https://github.com/hirosystems/ordhook',
-            };
-          
-            const paths = {
-              'clarinet': 'blob/develop/docs',
-              'explorer': 'blob/main/docs',
-              'stacks.js': 'blob/master/docs',
-              'stacks-subnets': 'tree/master/docs',
-              'stacks-blockchain-api': 'blob/master/content',
-              'ordinals-api': 'tree/develop/docs',
-              'token-metadata-api': 'tree/develop/docs',
-              'chainhook': 'tree/develop/docs',
-              'ordhook': 'tree/develop/docs',
-            };
-          
-            const constructUrl = (repo, docPath) => {
-              const baseUrl = baseUrls[repo] || 'https://github.com/hirosystems/docs';
-              const path = paths[repo] || 'blob/main/docs';
-              return `${baseUrl}/${path}/${docPath}`;
-            };
-          
-            const [repo, ...rest] = docPath.split('/');
-            return constructUrl(repo, rest.join('/'));
-          },
+          editUrl: 'https://github.com/hirosystems/docs/tree/main',
           routeBasePath: '/',
           breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
         },
