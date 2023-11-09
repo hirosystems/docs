@@ -1,7 +1,5 @@
 ---
-
 title: Overview
-
 ---
 
 # API - Token Metadata Overview
@@ -13,6 +11,35 @@ Token metadata is a microservice that indexes metadata for all Fungible, Non-Fun
 > To explore the detailed documentation for the API endpoints, request and response formats, you can refer to the [OpenAPI specification](https://docs.hiro.so/metadata).
 >
 > The source code for this project is available in our [GitHub repository](https://github.com/hirosystems/token-metadata-api). You can explore the codebase, [contribute](https://docs.hiro.so/contributors-guide), and raise [issues](https://github.com/hirosystems/token-metadata-api/issues) or [pull requests](https://github.com/hirosystems/token-metadata-api/pulls).
+
+## Features
+
+Following are the features of Token-Metadata API:
+
+- Complete [SIP-016](https://github.com/stacksgov/sips/blob/main/sips/sip-016/sip-016-token-metadata.md) metadata ingestion for
+  - [SIP-009](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md)
+    Non-Fungible Tokens
+  - [SIP-010](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md)
+    Fungible Tokens
+  - [SIP-013](https://github.com/stacksgov/sips/blob/main/sips/sip-013/sip-013-semi-fungible-token-standard.md)
+    Semi-Fungible Tokens
+- Automatic metadata refreshes via [SIP-019](https://github.com/stacksgov/sips/pull/72)
+  notifications
+- Metadata localization support
+- Metadata fetching via `http:`, `https:`, `data:` URIs. Also supported via customizable gateways:
+  - IPFS
+  - Arweave
+- Easy to use REST JSON endpoints with ETag caching.=
+- Prometheus metrics for job queue status, contract and token counts, API performance, etc
+- Image cache/CDN support
+
+## Rate Limiting for Metadata API
+
+The Rate Limit per Minute(RPM) is applied to all the API endpoints based on the requested token addresses.
+
+| **Endpoint**                 | **Rate per minute(RPM) limit** |
+| ---------------------------- | ------------------------------ |
+| api.mainnet.hiro.so/metadata | <br/> 400 <br/> <br/>          |
 
 ## Service architecture
 
@@ -48,13 +75,13 @@ This process runs only once. If the Token metadata API is ever restarted, though
 
 The [`BlockchainSmartContractMonitor`](https://github.com/hirosystems/token-metadata-api/tree/master/src/token-processor/blockchain-api/blockchain-smart-contract-monitor.ts) component constantly listens to the following Stacks Blockchain API events:
 
-* **Smart contract log events**
+- **Smart contract log events**
 
-    If a contract `print` event conforms to SIP-019, it finds the affected tokens and marks them for metadata refresh.
+  If a contract `print` event conforms to SIP-019, it finds the affected tokens and marks them for metadata refresh.
 
-* **Smart contract deployments**
+- **Smart contract deployments**
 
-    If the new contract is a token contract, it saves the new token contract and adds the contract to the job queue for token processing.
+  If the new contract is a token contract, it saves the new token contract and adds the contract to the job queue for token processing.
 
 This process is kept alive throughout the entire service lifetime.
 
@@ -72,8 +99,8 @@ This object essentially runs an infinite loop that follows these steps:
 
 There are two environment variables that can help you tune how the queue performs:
 
-* `ENV.JOB_QUEUE_SIZE_LIMIT`: The in-memory size of the queue, i.e., the number of pending jobs that are loaded from the database while they wait for execution (see step 1 above).
-* `ENV.JOB_QUEUE_CONCURRENCY_LIMIT`: The number of jobs that will be run simultaneously.
+- `ENV.JOB_QUEUE_SIZE_LIMIT`: The in-memory size of the queue, i.e., the number of pending jobs that are loaded from the database while they wait for execution (see step 1 above).
+- `ENV.JOB_QUEUE_CONCURRENCY_LIMIT`: The number of jobs that will be run simultaneously.
 
 This queue runs continuously and can handle an unlimited number of jobs.
 

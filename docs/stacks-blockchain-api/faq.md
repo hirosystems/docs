@@ -21,7 +21,7 @@ Many marketplace contracts are custodial; meaning, you do not actually own the N
 
 The Stacks Blockchain API has a rate limit set to ensure all users can make queries to the API. If you exceed this rate limit, you will receive a 429 error. To avoid receiving this error, you may choose to run your own node and the Stacks Blockchain API, or use websockets.
 
-The current rate limts for Stacks Blockchain API are listed in [this](overview#rate-limiting.md) table.
+The current rate limts for Stacks Blockchain API are listed in [this](../rate-limiting.md) table.
 
 #### **I noticed that the Stacks Blockchain API becomes "stuck" when it is at a certain block height. What can I do to fix this issue?**
 
