@@ -73,7 +73,7 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'FAQ',
+    label: 'FAQs',
     id: 'stacks.js/faq',
   },
   {

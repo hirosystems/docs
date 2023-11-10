@@ -56,7 +56,7 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'FAQ',
+    label: 'FAQs',
     id: 'chainhook/faq',
   },
 ]

@@ -17,10 +17,10 @@ module.exports = [
     label: 'Overview',
     id: 'ordinals-api/overview',
   },
-  {
-    type: 'html',
-    value: 'Guides',
-    className: 'section-title',
-    defaultStyle: true,
-  },
+  // {
+  //   type: 'html',
+  //   value: 'Guides',
+  //   className: 'section-title',
+  //   defaultStyle: true,
+  // },
 ]

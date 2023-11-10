@@ -76,7 +76,7 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'FAQ',
+    label: 'FAQs',
     id: 'platform/faq',
   },
 ]
