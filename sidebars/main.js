@@ -10,6 +10,7 @@
  */
 
  const rootSidebar = require('./root')
+ const platformSidebar = require('./platform')
  const hacksSidebar = require('./hacks')
  const ordinalsExplorerSidebar = require('./ordinals-explorer');
  const ordinalsApiSidebar = require('./ordinals-api');
@@ -25,6 +26,7 @@
 module.exports = {
   'docs': rootSidebar,
   // 'hacks': hacksSidebar, // TODO: add back in when we have content
+  'platform': platformSidebar,
   'ordinals-explorer': ordinalsExplorerSidebar,
   'ordinals-api': ordinalsApiSidebar,
   'ordhook': ordhookSidebar,
