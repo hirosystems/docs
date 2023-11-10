@@ -6,7 +6,7 @@ This article helps you create/build contracts using the [Hiro Platform](https://
 
 ## Prerequisites
 
-- Log in using any of the methods described in the [Getting started](getting-started.md) guide.
+- Log in using any of the methods described in the [Getting started](../getting-started.md) guide.
 - You have created or imported a project by following the steps in the [create project](create-project.md) guide.
 
 ## Build contract
@@ -19,7 +19,7 @@ If you are new to Clarity programming, please try the [Bitcoin Builders Primer](
 
 If you have imported a project with no clarity contracts, you will see a window to open editor, as shown below.
 
-![Open editor](images/open-editor.png)
+![Open editor](../images/open-editor.png)
 
 You can now create contracts using any of the following ways.
 
@@ -42,7 +42,7 @@ Hiro offers a [collection of Clarity smart contracts](https://github.com/hirosys
 4. Inside VS Code, you can see the project directories and files.
 5. Expand _examples_ and see a directory _contracts_ but no contracts are in this folder.
 6. Right-click by selecting the _contracts_ folder, select _New file_ and add a new contract with a name of your choice. Eg: _clarity_contract_1.clar_
-   ![Write new contract](images/write-new-contract.png)
+   ![Write new contract](../images/write-new-contract.png)
 7. This will create a `.clar` file in the _contracts_ folder. Now you can use the [clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
 8. Once you are ready with your `.clar` file, you can update the `Clarinet.toml` file located in the same project directory. Use the following code to update the `.toml` file with these parameters. `[contracts.<your-contract-name>]` and path to use your `.clar` file name as `path = "<your-contract-name.clar>"`.
 

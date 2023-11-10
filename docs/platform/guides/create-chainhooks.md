@@ -8,11 +8,11 @@ With chainhooks, you can automatically trigger an action in response to on-chain
 
 This guide helps you create a chainhook using the [Hiro Platform](https://platform.hiro.so/).
 
-Login to the [Hiro Platform](getting-started.md) and create or import a project by following [this](https://docs.hiro.so/platform/create-project) guide. Next, you can follow the steps below to create a chainhook.
+Login to the [Hiro Platform](../getting-started.md) and create or import a project by following [this](https://docs.hiro.so/platform/guides/create-project) guide. Next, you can follow the steps below to create a chainhook.
 
 Once you are on the [Projects page](https://platform.hiro.so), select the project to create a chainhook.
 
-![Create Projects](./images/chainhook-create-project.jpeg)
+![Create Projects](../images/chainhook-create-project.jpeg)
 
 You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select the _Chainhooks_ tab.
 
@@ -20,11 +20,11 @@ There are two ways to create a chainhook. You can either create a chainhook from
 
 # Creating a Chainhook
 
-![Create Chainhook Window](./images/chainhook-select-chainhook-tab.jpeg)
+![Create Chainhook Window](../images/chainhook-select-chainhook-tab.jpeg)
 
 Select the _Create Chainhook_ button.
 
-![Create Chainhook Window](./images/chainhook-create-chainhook-window.jpeg)
+![Create Chainhook Window](../images/chainhook-create-chainhook-window.jpeg)
 
 A new pane opens up on the right to create a chainhook. Use the following fields to create a chainhook:
 
@@ -73,7 +73,7 @@ Once you define the all the required fields, you can select **Create Chainhook**
 
 The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the chainhook created.
 
-![Chainhook created](images/chainhook-created.jpeg)
+![Chainhook created](../images/chainhook-created.jpeg)
 
 The `NAME`, `CHAIN`, `START BLOCK`, `NETWORK`, `STATUS`, and `LAST UPDATED` headers are updated based on the selected fields used to create a chainhook.
 
@@ -85,7 +85,7 @@ Note that there may be other fields in the UI to create a chainhook based on the
 
 To upload a chainhook, you can either select the _Upload Chainhook_ button and choose the .json file that has the chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area.
 
-![Upload Chainhook](./images/chainhook-upload.jpeg)
+![Upload Chainhook](../images/chainhook-upload.jpeg)
 
 The upload file must be a .json file containing either a single json object representing a chainhook predicate, or an array of json objects representing one or more chainhook predicates.
 
@@ -95,7 +95,7 @@ Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/guides/chainhoo
 
 Once the chainhook is created, you can edit the chainhook by using the ellipse on the created chainhook row.
 
-![Edit chainhook](images/chainhook-edit-chainhook.jpeg)
+![Edit chainhook](../images/chainhook-edit-chainhook.jpeg)
 
 You can update the fields and select **Update chainhook**.
 
@@ -107,13 +107,13 @@ This opens a right pane with all the fields populated to use to create a duplica
 
 You can update the fields or directly select **Create chainhook** to duplicate a copy of the chainhook.
 
-![Duplicate chainhook](images/chainhook-duplicate.jpeg)
+![Duplicate chainhook](../images/chainhook-duplicate.jpeg)
 
 ## Delete Chainhook
 
 Use the ellipse on the chainhook row to delete the chainhook. You will see a confirmation window to confirm if you want to delete the chainhook.
 
-![Delete chainhook](images/chainhook-delete-confirmation-window.jpeg)
+![Delete chainhook](../images/chainhook-delete-confirmation-window.jpeg)
 
 ## Chainhook Status
 
@@ -121,7 +121,7 @@ The chainhook row has a `STATUS` column that displays whether the chainhook is i
 
 More status info can be found by hovering over the status element. For example, to understand why the chainhook is in an error state, hover over the status element to find out!
 
-![Chainhook status](images/chainhook-status-info.jpeg)
+![Chainhook status](../images/chainhook-status-info.jpeg)
 
 ## References
 
