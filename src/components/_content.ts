@@ -33,7 +33,7 @@ export default {
     title: 'Popular sections',
     sections: [
       {
-        title: 'Stacks blockchain API',
+        title: 'Stacks API',
         text: 'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
         href: '/stacks-blockchain-api/overview',
         image: {
@@ -63,28 +63,28 @@ export default {
   },
   sections: [
     {
-      title: 'Chainhook',
+      title: 'Hiro Platform',
       image: {
-        src: '/img/landing/chainhooks-icon.svg',
-        alt: 'Chainhook logo',
+        src: '/img/landing/stacks-logo.svg',
+        alt: 'Stacks logo',
       },
       description:
-        'Chainhook helps you get reliable blockchain data, regardless of forks and reorgs, and enables you to create triggers that respond to on-chain events in real time, using IFTTT (if_this, then_that) logic.',
+        'The Hiro Platform is a cloud-based development environment that enables you to create, build and deploy Clarity smart contracts.',
       subSections: [
         {
           title: 'Getting started',
-          link: '/chainhook/getting-started',
-          description: 'Get started to install Chainhook from the source.',
+          link: '/platform/getting-started',
+          description: 'Get started using the Hiro Platform.',
         },
         {
-          title: 'How-to guides',
-          link: '/chainhook/guides/chainhooks-with-bitcoin',
-          description: 'Explore the how-to guides of Chainhook.',
+          title: 'Guides',
+          link: '/platform/guides/create-project',
+          description: 'Start creating your first project.',
         },
         {
           title: 'FAQ',
-          link: '/chainhook/faq',
-          description: 'Explore our frequently asked questions to address common queries.',
+          link: '/platform/faq',
+          description: 'Explore our troubleshooting guide to unblock yourself.',
         },
       ],
     },
@@ -115,28 +115,28 @@ export default {
       ],
     },
     {
-      title: 'Stacks Blockchain API',
+      title: 'Chainhook',
       image: {
-        src: '/img/landing/stacks-logo.svg',
-        alt: 'Stacks logo',
+        src: '/img/landing/chainhooks-icon.svg',
+        alt: 'Chainhook logo',
       },
       description:
-        'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
+        'Chainhook helps you get reliable blockchain data, regardless of forks and reorgs, and enables you to create triggers that respond to on-chain events in real time, using IFTTT (if_this, then_that) logic.',
       subSections: [
         {
           title: 'Getting started',
-          link: '/stacks-blockchain-api/getting-started',
-          description: 'Get started interacting with the blockchain.',
+          link: '/chainhook/getting-started',
+          description: 'Get started to install Chainhook from the source.',
         },
         {
-          title: 'Feature guides',
-          link: '/stacks-blockchain-api/feature-guides/microblocks',
-          description: 'Explore the features of Stacks Blockchain API.',
+          title: 'How-to guides',
+          link: '/chainhook/guides/chainhooks-with-bitcoin',
+          description: 'Explore the how-to guides of Chainhook.',
         },
         {
-          title: 'Troubleshooting',
-          link: '/Stacks-blockchain-api/troubleshooting',
-          description: 'Explore our troubleshooting guide to unblock yourself.',
+          title: 'FAQ',
+          link: '/chainhook/faq',
+          description: 'Explore our frequently asked questions to address common queries.',
         },
       ],
     },
