@@ -55,6 +55,11 @@ module.exports = [
   },
   {
     type: 'doc',
+    label: 'Using Devnet',
+    id: 'platform/guides/devnet'
+  },
+  {
+    type: 'doc',
     label: 'Connect desktop to the cloud',
     id: 'platform/guides/connect-desktop-to-cloud',
   },
