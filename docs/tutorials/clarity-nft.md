@@ -37,7 +37,7 @@ While this tutorial primarily focuses on local smart contract development, you m
 live blockchain. For simplicity, contract deployment is performed using the [testnet sandbox](https://explorer.hiro.so/sandbox/deploy?chain=testnet).
 If you wish to complete the optional deployment step, you should have the [Leather Wallet](https://leather.io/install-extension)
 installed, and you should request testnet STX tokens from the [testnet faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
-on the testnet explorer. Note that requesting testnet STX from the faucet can take up to 15 minuets, so you may wish to
+on the testnet explorer. Note that requesting testnet STX from the faucet can take up to 15 minutes, so you may wish to
 request the tokens before beginning the tutorial.
 
 ![faucet](/img/nft-faucet.png)
