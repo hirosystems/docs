@@ -23,7 +23,7 @@ Devnet facilitates:
 
 ### Getting Started
 
-First, log into the [Hiro Platform](https://platform.hiro.so/). You can start a new project or import an existing. After setting up your project, navigate to the project page where you'll manage your Devnet.
+First, log into the [Hiro Platform](https://platform.hiro.so/). You can start a new project or import an existing one. After setting up your project, navigate to the project page where you'll manage your Devnet.
 
 ### Starting and Managing Devnet
 
@@ -37,7 +37,7 @@ Once you've started Devnet, it will take a few minutes to spin up. The status in
 
 ### Active Development Session
 
-When Devnet is ready, the status will change to 'Active', and a 30-minute session countdown will begin. This timer manages how long a devnet session will last. Once the 30 minutes are up the devent instance will automatically be shutdown.
+When Devnet is ready, the status will change to 'Active', and a 30-minute session countdown will begin. This timer manages how long a devnet session will last. Once the 30 minutes are up the devnet instance will automatically be shutdown.
 
 ![Devnet Active](./images/devnet-active.jpeg)
 
