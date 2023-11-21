@@ -90,7 +90,7 @@ it runs on.
    i. Enter any key-value pairs you wish to include as tags for your Gaia hub. These are optional and display-only, they
    have no effect on the behavior of the CloudFormation stack.
 
-   ii. Select an IAM role for the Gaia hub. This is optional, if you don't specify am IAM role, the container runs
+   ii. Select an IAM role for the Gaia hub. This is optional, if you don't specify an IAM role, the container runs
    with the same permissions as your AWS account.
 
 7. Click **Next**.
