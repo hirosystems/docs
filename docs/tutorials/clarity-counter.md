@@ -119,7 +119,7 @@ The console should return `(ok 0)`.
 :::note
 
 Changes to your contract will not be loaded into the Clarinet console until it is restarted. Close the console with
-`Ctrl + C` before proceding to the next step.
+`Ctrl + C` before proceeding to the next step.
 
 :::
 
@@ -136,7 +136,7 @@ the contract after the counter getter:
     (ok (var-get counter))))
 ```
 
-The [`begin`][] statement evaluates multiple expressions and returns the value of the last on. In this case, it
+The [`begin`][] statement evaluates multiple expressions and returns the value of the last one. In this case, it
 evaluates an expression to set a new value for the `counter` variable, and then returns the new value.
 
 The first expression in the `begin` statement is the [`var-set`][] expression, which sets a new value for the counter
