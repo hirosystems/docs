@@ -1,5 +1,4 @@
 ---
-id: tutorials
 title: Tutorials
 ---
 
