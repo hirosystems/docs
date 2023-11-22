@@ -121,11 +121,11 @@ module.exports = {
             items: [
               {
                 label: 'Tutorials',
-                to: '/tutorials',
+                to: '/tutorials/overview',
               },
               {
                 label: 'Example Apps',
-                to: '/example-apps',
+                to: '/example-apps/overview',
               },
               {
                 label: 'Stacks CLI',

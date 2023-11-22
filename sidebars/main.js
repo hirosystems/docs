@@ -12,6 +12,8 @@
  const rootSidebar = require('./root')
  const platformSidebar = require('./platform')
  const hacksSidebar = require('./hacks')
+ const exampleAppsSidebar = require('./example-apps')
+ const tutorialsSidebar = require('./tutorials')
  const ordinalsExplorerSidebar = require('./ordinals-explorer');
  const ordinalsApiSidebar = require('./ordinals-api');
  const ordhookSidebar = require('./ordhook');
@@ -19,6 +21,7 @@
  const clarinetSidebar = require('./clarinet');
  const stacksExplorerSidebar = require('./stacks-explorer');
  const stacksJsSidebar = require('./stacks-js');
+ const stacksCliSidebar = require('./stacks-cli');
  const stacksApiSidebar = require('./stacks-api');
  const tokenMetadataApiSidebar = require('./token-metadata-api');
  const subnetsSidebar = require('./subnets');
@@ -37,27 +40,7 @@ module.exports = {
   'stacks-api': stacksApiSidebar,
   'token-metadata-api': tokenMetadataApiSidebar,
   'subnets': subnetsSidebar,
-  tutorials: [
-    'tutorials',
-    {
-      type: 'category',
-      label: 'Stacks basics',
-      items: [
-        'tutorials/managing-accounts',
-        'tutorials/sending-tokens',
-        'tutorials/stacking-using-cli',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Developing with Clarinet',
-      items: [
-        'tutorials/clarity-hello-world',
-        'tutorials/clarity-counter',
-        'tutorials/clarity-billboard',
-        'tutorials/clarity-nft',
-        'tutorials/testing-contracts',
-      ],
-    }
-  ]
+  'example-apps': exampleAppsSidebar,
+  'tutorials': tutorialsSidebar,
+  'stacks-cli': stacksCliSidebar,
 };
