@@ -241,20 +241,20 @@ Try calling the other public functions from the [call a contract][] page.
 You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-[hello world tutorial]: /tutorials/clarity-hello-world
-[clarinet]: /clarinet/introduction
+<!-- [hello world tutorial]: /tutorials/clarity-hello-world
+[clarinet]: /clarinet/overview
 [installing clarinet]: /clarinet/getting-started
 [`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [Leather wallet]: https://leather.io/install-extension
 [testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
-[unit tests]: /clarinet/feature-guides/test-contract-with-clarinet-sdk
+[unit tests]: /clarinet/guides/test-contract-with-clarinet-sdk
 [`var-get`]: https://docs.stacks.co/references/language-functions#var-get
-[`clarinet console`]: /clarinet/how-to-guides/how-to-debug-contract#command-line-debugger
+[`clarinet console`]: /clarinet/guides/how-to-debug-contract#command-line-debugger
 [`begin`]: https://docs.stacks.co/references/language-functions#begin
 [`var-set`]: https://docs.stacks.co/references/language-functions#var-set
 [`+`]: https://docs.stacks.co/references/language-functions#-add
 [clarity language reference]: https://docs.stacks.co/references/language-functions
 [transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
-[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet
+[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet -->

@@ -251,16 +251,16 @@ wallet. The transaction summary page displays the output of the function:
 You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-[clarinet]: /clarinet/introduction
+<!-- [clarinet]: /clarinet/overview
 [installing clarinet]: /clarinet/getting-started
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [Leather wallet]: https://leather.io/install-extension
 [testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
 [step 3]: #step-3-add-code-to-the-hello-world-contract
-[unit tests]: /clarinet/feature-guides/test-contract-with-clarinet-sdk
+[unit tests]: /clarinet/guides/test-contract-with-clarinet-sdk
 [separating concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
 [`ok`]: https://docs.stacks.co/references/language-functions#ok
 [read-only function]: https://docs.stacks.co/references/language-functions#define-read-only
 [transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet
-[clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
+[clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp -->

@@ -148,25 +148,6 @@ const sub = await client.subscribeAddressTransactions(contractCall.txId, event =
 await sub.unsubscribe();
 ```
 
-## Rate limiting
-
-Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) based on the requested token addresses.
-
-You can refer to the rate limit for each endpoint in the table below:
-
-| **Endpoint**                                                                                | **Rate-Limit (RPM)**  |
-| ------------------------------------------------------------------------------------------- | --------------------- |
-| api.mainnet.hiro.so/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/> <br/> |
-| api.mainnet.hiro.so/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/>    | <br/> 200 <br/> <br/> |
-| api.mainnet.hiro.so/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/>             | <br/> 100 <br/> <br/> |
-| api.testnet.hiro.so/extended/ <br/>                                           | 100 <br/>             |
-| api.testnet.hiro.so/v2/ <br/>                                                 | 100 <br/>             |
-| api.testnet.hiro.so/extended/v1/faucets/ <br/>                                | 1 <br/>               |
-
-### STX faucet
-
-The Stacks faucet rate limits depend on the type of request. For stacking requests, a limitation of **1 request per 2 days**. In case of regular Stacks faucet requests, the limits are set to **1 request per minute**.
-
 ## Pagination
 
 To make API responses more compact, lists returned by the API are paginated. For lists, the response body includes:

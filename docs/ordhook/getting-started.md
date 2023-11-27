@@ -47,5 +47,5 @@ This command compiles the Ordhook code and installs it on your system.
 
 With Ordhook installed, you can:
 
-- Scan blocks in your terminal. See the [Scanning Ordinal Activities](./how-to-guides/how-to-scan-ordinal-activities.md) guide.
-- Stream ordinal activity to an external API. Refer to the [Streaming Ordinal Activities](./how-to-guides/how-to-stream-ordinal-activities.md) guide.
+- Scan blocks in your terminal. See the [Scanning Ordinal Activities](./guides/scan-ordinal-activities.md) guide.
+- Stream ordinal activity to an external API. Refer to the [Streaming Ordinal Activities](./guides/stream-ordinal-activities.md) guide.

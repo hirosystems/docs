@@ -10,21 +10,6 @@ const { hero, popularSections, sections } = content;
 export function Landing() {
   return (
     <div className={styles.landingPage}>
-      <section className={styles.hero}>
-        <img src={hero.image.src} alt={hero.image.alt} title={hero.image.alt} />
-        <div>
-          <h1>{hero.title}</h1>
-          <p>{hero.text}</p>
-          <ul>
-            {hero.links.map((link, i) => (
-              <li key={i}>
-                <Link href={link.href}>{link.text}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       <section>
         <h4>{popularSections.title}</h4>
         <div className={styles.popularSections}>

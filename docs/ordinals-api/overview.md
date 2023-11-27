@@ -1,5 +1,6 @@
 ---
 Title: Overview
+displayed_sidebar: ordinals-api
 ---
 
 # Ordinals API Overview
@@ -18,10 +19,18 @@ Here are the key features of the Ordinals API:
 
 **BRC-20 Support**: The API offers support for BRC-20 tokens, a fungible token standard built on top of ordinal theory. Retrieve data for a particular BRC-20 token, a user's BRC-20 holdings, marketplace activity, and more.
 
-**REST JSON Endpoints with ETag Caching**: The API provides easy-to-use REST endpoints that return responses in JSON format. It also supports *ETag caching*, which allows you to cache responses based on inscriptions. This helps optimize performance and reduce unnecessary requests.
+**REST JSON Endpoints with ETag Caching**: The API provides easy-to-use REST endpoints that return responses in JSON format. It also supports _ETag caching_, which allows you to cache responses based on inscriptions. This helps optimize performance and reduce unnecessary requests.
 
 **Auto-Scale Server Configurations**: The Ordinals API supports three run modes based on the `RUN_MODE` environment variable:
 
 - `default`: This mode runs all background jobs and the API server. It is suitable for running a single instance of the API.
 - `readonly`: Only the API server runs in this mode. It is designed for auto-scaled clusters with multiple `readonly` instances and a single `writeonly` instance. The `writeonly` instance is responsible for populating the database.
 - `writeonly`: This mode is used in an auto-scaled environment to consume new inscriptions and push that data to a database. It works in conjunction with multiple `readonly` instances.
+
+# Rate Limiting for Ordinals API
+
+The Rate Limit per Minute(RPM) is applied to all the API endpoints based on the requested token addresses.
+
+| **Endpoint**                                                                                | **Rate per minute(RPM) limit** |
+| ------------------------------------------------------------------------------------------- |-----------------------|
+| api.mainnet.hiro.so/ordinals | <br/> 500 <br/> <br/> |

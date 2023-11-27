@@ -56,29 +56,8 @@ module.exports = {
           routeBasePath: '/metadata',
         },
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-
-          editUrl({ docPath }) {
-            const repoUrls = {
-              clarinet: 'https://github.com/hirosystems/clarinet/blob/develop/docs',
-              explorer: 'https://github.com/hirosystems/explorer/blob/main/docs',
-              'stacks.js': 'https://github.com/hirosystems/stacks.js/blob/master/docs',
-              'stacks-subnets': 'https://github.com/hirosystems/stacks-subnets/tree/master/docs',
-              'stacks-blockchain-api':
-                'https://github.com/hirosystems/stacks-blockchain-api/blob/master/content',
-              'ordinals-api': 'https://github.com/hirosystems/ordinals-api/tree/develop/docs',
-              'token-metadata-api':
-                'https://github.com/hirosystems/token-metadata-api/tree/develop/docs',
-              chainhook: 'https://github.com/hirosystems/chainhook/tree/develop/docs',
-              ordhook: 'https://github.com/hirosystems/ordhook/tree/develop/docs',
-            };
-            const [repo, ...rem] = docPath.split('/');
-            if (repo in repoUrls) {
-              return `${repoUrls[repo]}/${rem.join('/')}`;
-            }
-
-            return `https://github.com/hirosystems/docs/blob/main/docs/${docPath}`;
-          },
+          sidebarPath: require.resolve('./sidebars/main.js'),
+          editUrl: 'https://github.com/hirosystems/docs/tree/main',
           routeBasePath: '/',
           breadcrumbs: false, // todo: enable at some point (breadcrumbs need a design overhaul first)
         },
@@ -103,14 +82,10 @@ module.exports = {
         items: [
           {
             type: 'dropdown',
-            label: 'References',
+            label: 'API References',
             position: 'right',
+            className: 'dropdown-nav',
             items: [
-              {
-                type: 'html',
-                value: 'APIs',
-                className: 'section-title',
-              },
               {
                 label: 'Ordinals API',
                 to: '/ordinals',
@@ -123,15 +98,44 @@ module.exports = {
                 label: 'Token Metadata API',
                 to: '/metadata',
               },
+            ],
+          },
+          {
+            href: 'https://github.com/hirosystems/docs',
+            className: 'header-github-link',
+            title: 'GitHub Repository',
+            'aria-label': 'GitHub Repository',
+            position: 'right',
+          },
+        ],
+      },
+      footer: {
+        logo: {
+          alt: 'Hiro developers',
+          src: 'img/hiro-docs-footer.svg',
+          srcDark: 'img/hiro-docs-footer-light.svg',
+        },
+        links: [
+          {
+            title: 'Hiro Developers',
+            items: [
               {
-                type: 'html',
-                value: 'OTHER',
-                className: 'section-title',
+                label: 'Tutorials',
+                to: '/tutorials/overview',
+              },
+              {
+                label: 'Example Apps',
+                to: '/example-apps/overview',
               },
               {
                 label: 'Stacks CLI',
                 to: '/references/stacks-cli',
               },
+            ],
+          },
+          {
+            title: 'References',
+            items: [
               {
                 label: 'Stacks.js',
                 href: 'https://stacks.js.org',
@@ -155,67 +159,19 @@ module.exports = {
             ],
           },
           {
-            type: 'dropdown',
-            label: 'Learn & Build',
-            position: 'right',
+            title: 'Stacks Community',
             items: [
               {
-                type: 'doc',
-                label: 'Tutorials',
-                docId: 'tutorials',
+                label: 'Discord',
+                href: 'https://stacks.chat',
               },
               {
-                type: 'doc',
-                label: 'Example Apps',
-                docId: 'example-apps',
+                label: 'Stacks Forum',
+                href: 'https://forum.stacks.org',
               },
               {
-                type: 'doc',
-                label: 'Stacks.js Starters',
-                docId: 'stacksjs-starters',
-              },
-            ],
-          },
-          {
-            type: 'doc',
-            docId: 'roadmap',
-            label: 'Roadmap',
-            position: 'right',
-          },
-          {
-            href: 'https://github.com/hirosystems/docs',
-            className: 'header-github-link',
-            title: 'GitHub Repository',
-            'aria-label': 'GitHub Repository',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        logo: {
-          alt: 'Hiro developers',
-          src: 'img/hiro-docs-footer.svg',
-          srcDark: 'img/hiro-docs-footer-light.svg',
-        },
-        links: [
-          {
-            title: 'Hiro Developers',
-            items: [
-              {
-                label: 'Tutorials',
-                to: '/tutorials',
-              },
-              {
-                label: 'Example Apps',
-                to: '/example-apps',
-              },
-              {
-                label: 'Contributors Guide',
-                to: '/contributors-guide',
-              },
-              {
-                label: 'Product Changelog',
-                to: 'changelog/changelog-intro',
+                label: 'Reddit',
+                href: 'https://www.reddit.com/r/stacks',
               },
             ],
           },
@@ -245,23 +201,6 @@ module.exports = {
               {
                 label: 'Newsletter',
                 href: 'https://hiro.so/updates-docs',
-              },
-            ],
-          },
-          {
-            title: 'Stacks Community',
-            items: [
-              {
-                label: 'Discord',
-                href: 'https://stacks.chat',
-              },
-              {
-                label: 'Stacks Forum',
-                href: 'https://forum.stacks.org',
-              },
-              {
-                label: 'Reddit',
-                href: 'https://www.reddit.com/r/stacks',
               },
             ],
           },

@@ -5,7 +5,7 @@ title: Billboard app
 
 import NodeLTS from '../includes/\_node-lts-version.mdx';
 
-This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](/clarinet/how-to-guides/how-to-set-up-local-development-environment), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
+This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](../clarinet/guides/how-to-set-up-local-development-environment.md), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
 
 This app showcases the following features of Stacks and Clarinet:
 

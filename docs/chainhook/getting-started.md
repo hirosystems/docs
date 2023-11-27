@@ -29,11 +29,11 @@ Chainhook can be installed from the source by following the steps below:
 
 3. Run cargo target to install chainhook:
 
-    ```bash
-    cargo chainhook-install
-    ```
+   ```bash
+   cargo chainhook-install
+   ```
 
 If you want to start using Chainhook for extracting data from Bitcoin or Stacks, you can design your predicates using the following guides:
 
-- [How to use chainhooks with bitcoin](./how-to-guides/how-to-use-chainhooks-with-bitcoin.md)
-- [How to use chainhooks with stacks](./how-to-guides/how-to-use-chainhooks-with-stacks.md)
+- [How to use chainhooks with bitcoin](./guides/chainhooks-with-bitcoin.md)
+- [How to use chainhooks with stacks](./guides/chainhooks-with-stacks.md)
