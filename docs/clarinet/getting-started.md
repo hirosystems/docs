@@ -1,5 +1,4 @@
 ---
-# The default id is the same as the one defined below. so not needed
 title: Getting Started
 ---
 

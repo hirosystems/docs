@@ -241,7 +241,7 @@ Try calling the other public functions from the [call a contract][] page.
 You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-[hello world tutorial]: /tutorials/clarity-hello-world
+<!-- [hello world tutorial]: /tutorials/clarity-hello-world
 [clarinet]: /clarinet/overview
 [installing clarinet]: /clarinet/getting-started
 [`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
@@ -257,4 +257,4 @@ the strengths of performing local development without having to wait for block t
 [clarity language reference]: https://docs.stacks.co/references/language-functions
 [transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
-[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet
+[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet -->

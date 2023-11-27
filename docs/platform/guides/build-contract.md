@@ -82,9 +82,9 @@ epoch = "2.05"
 
 You can customize your contracts, test, and debug them using the VS Code terminal inside the Hiro Platform. On your projects page, select the _Open editor_ button to open up the VS Code editor. Select the three horizontal lines icon to open a new terminal. Refer to the following documents to test your contracts in the VS Code terminal.
 
-- [Check contracts](https://docs.hiro.so/clarinet/guides/how-to-check-contract)
-- [Test contracts](https://docs.hiro.so/clarinet/guides/test-contract-with-clarinet-sdk)
-- [Debug contracts](https://docs.hiro.so/clarinet/guides/how-to-debug-contract)
+- [Check contracts](../../clarinet/guides/how-to-check-contract.md)
+- [Test contracts](../../clarinet/guides/test-contract-with-clarinet-sdk.md)
+- [Debug contracts](../../clarinet/guides/how-to-debug-contract.md)
 
 :::note
 

@@ -4,19 +4,19 @@ title: Create Chainhooks
 
 # Create Chainhooks
 
-With chainhooks, you can automatically trigger an action in response to on-chain events on Stacks, Bitcoin, and other Bitcoin layers, enabling you to use IFTTT (if_this, then_that) logic to power your applications. To learn more about Chainhook, refer to [Chainhook overview documentation](https://docs.hiro.so/chainhook/overview).
+With Chainhook, you can automatically trigger an action in response to on-chain events on Stacks, Bitcoin, and other Bitcoin layers, enabling you to use IFTTT (if_this, then_that) logic to power your applications. To learn more about Chainhook, refer to [Chainhook overview documentation](../../chainhook/overview.md).
 
-This guide helps you create a chainhook using the [Hiro Platform](https://platform.hiro.so/).
+This guide helps you create a Chainhook using the [Hiro Platform](https://platform.hiro.so/).
 
-Login to the [Hiro Platform](../getting-started.md) and create or import a project by following [this](https://docs.hiro.so/platform/guides/create-project) guide. Next, you can follow the steps below to create a chainhook.
+Login to the [Hiro Platform](../getting-started.md) and create or import a project by following [this](../guides/create-project.md) guide. Next, you can follow the steps below to create a Chainhook.
 
-Once you are on the [Projects page](https://platform.hiro.so), select the project to create a chainhook.
+Once you are on the [Projects page](https://platform.hiro.so), select the project to create a Chainhook.
 
 ![Create Projects](../images/chainhook-create-project.jpeg)
 
 You'll see a navigation bar with two tabs, Contracts, and Chainhooks. Select the _Chainhooks_ tab.
 
-There are two ways to create a chainhook. You can either create a chainhook from scratch using our form, or you can upload a chainhook(s) that you have already defined in JSON.
+There are two ways to create a Chainhook. You can either create a Chainhook from scratch using our form, or you can upload a Chainhook(s) that you have already defined in JSON.
 
 # Creating a Chainhook
 
@@ -26,11 +26,11 @@ Select the _Create Chainhook_ button.
 
 ![Create Chainhook Window](../images/chainhook-create-chainhook-window.jpeg)
 
-A new pane opens up on the right to create a chainhook. Use the following fields to create a chainhook:
+A new pane opens up on the right to create a Chainhook. Use the following fields to create a Chainhook:
 
-**Name**: Define a chainhook name of your choice.
+**Name**: Define a Chainhook name of your choice.
 
-**Chain**: Select between Bitcoin and Stacks to create a chainhook.
+**Chain**: Select between Bitcoin and Stacks to create a Chainhook.
 
 **Network**: Choose a network between `mainnet` and `testnet` to observe for events.
 
@@ -43,11 +43,11 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 > _**Note**_
 >
-> _Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-stacks) documents to understand the available predicates and how to use them._
+> _Refer to the [Bitcoin predicates](../../chainhook/guides/chainhooks-with-bitcoin.md) and [Stacks predicates](../../chainhook/guides/chainhooks-with-stacks.md) documents to understand the available predicates and how to use them._
 
 **Then-that**: This action is defaulted to `http_post` to allow the chainhook to post events to the URL specified in the below option.
 
-**URL**: Specify a URL to post chainhook events to the HTTP_post method.
+**URL**: Specify a URL to post Chainhook events to the HTTP_post method.
 
 **Authorization Header**: This field is optional to add a Secret to the `authorization` header when posting payloads.
 
@@ -55,7 +55,7 @@ A new pane opens up on the right to create a chainhook. Use the following fields
 
 **End Block**: It is optional to specify the end block. However, to optimize your scan time, it is recommended to specify this field.
 
-**Expire After Occurrence**: You can specify a number greater than or equal to 1 to expire the chainhook after a specific number of occurrences. You can leave this blank if you don't want to set any limit.
+**Expire After Occurrence**: You can specify a number greater than or equal to 1 to expire the Chainhook after a specific number of occurrences. You can leave this blank if you don't want to set any limit.
 
 **Decode Clarity Values**: This is enabled by default for stacks predicates to help you decode clarity values in your contract.
 
@@ -71,29 +71,29 @@ You'll see the following options for Bitcoin chain,
 
 Once you define the all the required fields, you can select **Create Chainhook**.
 
-The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the chainhook created.
+The right pane navigates to the Projects page with the Chainhooks tab open, and you can view the Chainhook created.
 
 ![Chainhook created](../images/chainhook-created.jpeg)
 
-The `NAME`, `CHAIN`, `START BLOCK`, `NETWORK`, `STATUS`, and `LAST UPDATED` headers are updated based on the selected fields used to create a chainhook.
+The `NAME`, `CHAIN`, `START BLOCK`, `NETWORK`, `STATUS`, and `LAST UPDATED` headers are updated based on the selected fields used to create a Chainhook.
 
 Based on the chosen network, the respective status columns in the Chainhook list page will be updated to **Deployed**.
 
-Note that there may be other fields in the UI to create a chainhook based on the predicates defined.
+Note that there may be other fields in the UI to create a Chainhook based on the predicates defined.
 
 # Uploading a Chainhook
 
-To upload a chainhook, you can either select the _Upload Chainhook_ button and choose the .json file that has the chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area.
+To upload a chainhook, you can either select the _Upload Chainhook_ button and choose the .json file that has the Chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area.
 
 ![Upload Chainhook](../images/chainhook-upload.jpeg)
 
-The upload file must be a .json file containing either a single json object representing a chainhook predicate, or an array of json objects representing one or more chainhook predicates.
+The upload file must be a .json file containing either a single json object representing a Chainhook predicate, or an array of json objects representing one or more Chainhook predicates.
 
-Refer to the [Bitcoin predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin) and [Stacks predicates](https://docs.hiro.so/chainhook/guides/chainhooks-with-stacks) documents to understand the available predicates and how your chainhook predicate json for upload.
+Refer to the [Bitcoin predicates](../../chainhook/guides/chainhooks-with-bitcoin.md) and [Stacks predicates](../../chainhook/guides/chainhooks-with-stacks.md) documents to understand the available predicates and how your Chainhook predicate json for upload.
 
 ## Edit Chainhook
 
-Once the chainhook is created, you can edit the chainhook by using the ellipse on the created chainhook row.
+Once the Chainhook is created, you can edit the Chainhook by using the ellipse on the created Chainhook row.
 
 ![Edit chainhook](../images/chainhook-edit-chainhook.jpeg)
 
@@ -101,31 +101,31 @@ You can update the fields and select **Update chainhook**.
 
 ## Duplicate Chainhook
 
-Use the ellipse on the chainhook row to duplicate the chainhook created earlier.
+Use the ellipse on the Chainhook row to duplicate the Chainhook created earlier.
 
-This opens a right pane with all the fields populated to use to create a duplicate chainhook.
+This opens a right pane with all the fields populated to use to create a duplicate Chainhook.
 
-You can update the fields or directly select **Create chainhook** to duplicate a copy of the chainhook.
+You can update the fields or directly select **Create Chainhook** to duplicate a copy of the Chainhook.
 
-![Duplicate chainhook](../images/chainhook-duplicate.jpeg)
+![Duplicate Chainhook](../images/chainhook-duplicate.jpeg)
 
 ## Delete Chainhook
 
-Use the ellipse on the chainhook row to delete the chainhook. You will see a confirmation window to confirm if you want to delete the chainhook.
+Use the ellipse on the Chainhook row to delete the Chainhook. You will see a confirmation window to confirm if you want to delete the Chainhook.
 
-![Delete chainhook](../images/chainhook-delete-confirmation-window.jpeg)
+![Delete Chainhook](../images/chainhook-delete-confirmation-window.jpeg)
 
 ## Chainhook Status
 
-The chainhook row has a `STATUS` column that displays whether the chainhook is in an Active, Inactive, or Error state. Active means the chainhook is actively scanning blocks against the chainhook's defined predicate, inactive means the chainhook has reached a terminal state, e.g. its end block has been reached, and it is no longer scanning blocks, and error means the chainhook ran into an error during its execution.
+The Chainhook row has a `STATUS` column that displays whether the Chainhook is in an Active, Inactive, or Error state. Active means the Chainhook is actively scanning blocks against the Chainhooks defined predicate, inactive means the Chainhook has reached a terminal state, e.g. its end block has been reached, and it is no longer scanning blocks, and error means the Chainhook ran into an error during its execution.
 
-More status info can be found by hovering over the status element. For example, to understand why the chainhook is in an error state, hover over the status element to find out!
+More status info can be found by hovering over the status element. For example, to understand why the Chainhook is in an error state, hover over the status element to find out!
 
 ![Chainhook status](../images/chainhook-status-info.jpeg)
 
 ## References
 
-- [Use Chainhooks with Bitcoin](https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin)
-- [Use Chainhooks with Stacks](https://docs.hiro.so/chainhook/guides/chainhooks-with-stacks)
-- [Run chainhook as a service using Bitcoind](https://docs.hiro.so/chainhook/guides/chainhook-as-a-service-bitcoind)
-- [Run chainhook as a service using Stacks](https://docs.hiro.so/chainhook/guides/chainhook-as-a-service-stacks)
+- [Use Chainhooks with Bitcoin](../../chainhook/guides/chainhooks-with-bitcoin.md)
+- [Use Chainhooks with Stacks](../../chainhook/guides/chainhooks-with-stacks.md)
+- [Run Chainhook as a service using Bitcoind](../../chainhook/guides/chainhook-as-a-service-bitcoind.md)
+- [Run Chainhook as a service using Stacks](../../chainhook/guides/chainhook-as-a-service-stacks.md)

@@ -6,13 +6,13 @@ title: Deployment Plans
 
 Deployment plans are a collection of transactions to publish one or more contracts to a network (testnet or mainnet). This article walks you through deploying your contracts using deployment plans using [Hiro Platform](https://platform.hiro.so/).
 
-To learn more about Deployment plans, refer to [customize deployment](https://docs.hiro.so/clarinet/guides/how-to-use-deployment-plans#deployment-plans) within the Clarinet docs.
+To learn more about Deployment plans, refer to [customize deployment](../../clarinet/guides/how-to-use-deployment-plans.md#deployment-plans) within the Clarinet docs.
 
 ## Generate Deployment Plan
 
 This section helps you generate a deployment plan to deploy your contracts.
 
-First, sign up to the [Hiro Platform](https://platform.hiro.so/) or login to the Platform if you are an existing user with your credentials. Refer to the [getting started](https://docs.hiro.so/platform/getting-started#sign-up-as-a-new-user) guide for guidance. Then, [create or import a project](https://docs.hiro.so/platform/getting-started#create-or-import-project) to use deployment plans.
+First, sign up to the [Hiro Platform](https://platform.hiro.so/) or login to the Platform if you are an existing user with your credentials. Refer to the [getting started](../getting-started.md) guide for guidance. Then, [create or import a project](../getting-started.md#create-or-import-project) to use deployment plans.
 
 To launch the deployment plans pane, select the **deploy** button on the top right corner of the page.
 
@@ -59,11 +59,11 @@ The **Regenerate plan** feature in the deployment plans is helpful when you have
 
 ### Add/update contracts
 
-If you want to create or update a new contract, refer to this [guide](build-contract.md). You can also use the "Open Editor" button to open Visual Studio code to add a new contract.
+If you want to create or update a new contract, refer to this [guide](./build-contract.md). You can also use the "Open Editor" button to open Visual Studio code to add a new contract.
 
 > **_NOTE:_**
 >
-> If you add a new contract through Editor, ensure the new contract is configured to the `Clarinet.toml` file. For guidance, refer to [Clarinet.toml configuration for new contracts](https://docs.hiro.so/platform/guides/build-contract#add-a-new-contract). You can also check your contracts before deploying them by following the [Check contract](https://docs.hiro.so/clarinet/guides/how-to-check-contract) guide.
+> If you add a new contract through Editor, ensure the new contract is configured to the `Clarinet.toml` file. For guidance, refer to [Clarinet.toml configuration for new contracts](./build-contract.md#add-a-new-contract). You can also check your contracts before deploying them by following the [Check contract](../../clarinet/guides/how-to-check-contract.md) guide.
 
 You can then use the **Regenerate plan** button to update your deployment plan with your new or updated contract.
 
@@ -74,6 +74,6 @@ Select the `Remove` button to remove the generated deployment plan.
 ## Additional Resources
 
 - [Deployment Plans video walkthrough](https://www.youtube.com/watch?v=YcIg5VCO98s)
-- [Debug contract](https://docs.hiro.so/clarinet/guides/how-to-debug-contract)
-- [Test contract](https://docs.hiro.so/clarinet/guides/test-contract-with-clarinet-sdk)
-- [Customize deployment](https://docs.hiro.so/clarinet/guides/how-to-use-deployment-plans)
+- [Debug contract](../../clarinet/guides/how-to-debug-contract.md)
+- [Test contract](../../clarinet/guides/test-contract-with-clarinet-sdk.md)
+- [Customize deployment](../../clarinet/guides/how-to-use-deployment-plans.md)

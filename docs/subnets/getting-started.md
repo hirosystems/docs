@@ -5,7 +5,7 @@ title: Getting Started
 
 # Getting Started
 
-You understand subnets from the [overview](https://docs.hiro.so/subnets/overview)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](https://docs.hiro.so/clarinet/guides/how-to-run-integration-environment) as one of the networks in your Stacks development environment.
+You understand subnets from the [overview](./overview.md)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](../clarinet/guides/how-to-run-integration-environment.md) as one of the networks in your Stacks development environment.
 
 ## What to expect
 
@@ -23,7 +23,7 @@ Clarinet provides a tool to set up a complete local development environment, kno
 
 In this section, we will explain how to launch and interact with the devnet's subnet node using a simple NFT example project.
 
-Ensure you have `clarinet` installed and the version is 1.7.1 or above. If you do not already have Clarinet installed, please refer to the Clarinet installation instructions [here](https://docs.hiro.so/clarinet/getting-started#install-clarinet) for installation procedures.
+Ensure you have `clarinet` installed and the version is 1.7.1 or above. If you do not already have Clarinet installed, please refer to the Clarinet installation instructions [here](../clarinet/getting-started.md#install-clarinet) for installation procedures.
 
 ### Create a new project with Clarinet
 

@@ -55,9 +55,9 @@ epoch = "2.1"
 
 This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
-If you are new to Clarinet, refer to the [Getting started](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md) guide to install clarinet, [set up local development environment](https://github.com/hirosystems/clarinet/blob/main/docs/guides/how-to-set-up-local-development-environment.md) and [create your project](https://github.com/hirosystems/clarinet/blob/main/docs/guides/how-to-create-new-project.md).
+If you are new to Clarinet, refer to the [Getting started](./clarinet/getting-started.md) guide to install clarinet, [set up local development environment](./clarinet/guides/how-to-set-up-local-development-environment.md) and [create your project](./clarinet/guides/how-to-create-new-project.md).
 
-To upgrade your clarinet version, you can [install from a pre-built binary](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md#install-from-source-using-cargo).
+To upgrade your clarinet version, you can [install from a pre-built binary](./clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](./clarinet/getting-started.md#install-from-source-using-cargo).
 
 After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (hereafter referred to as **devnet.toml**).
 
