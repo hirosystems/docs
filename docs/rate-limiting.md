@@ -4,14 +4,14 @@ title: Rate Limiting
 
 ## Rate Limiting for Hiro APIs
 
-Hiro’s Rate Limit per Minute (RPM) is applied to all Hiro-hosted API services. As of November 9th, 2023, our policy is:
+The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November, 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
 
-- 50 RPM per client IP for unauthenticated traffic (without an API key)
-- 500 RPM per client IP with an authenticated API key
+- 50 requests per minute, per client IP, for unauthenticated traffic (without an API key)
+- 500 requests per minute (regardless of origin IP) with an authenticated API key
 
 These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow and scale.
 
-If you’re interested in the higher 500 RPM limit, please [complete this form](https://survey.hiro.so/hiroapi) to apply for an API key.
+Please [complete this form](https://survey.hiro.so/hiroapi) to apply for an API key.
 
 ### STX Faucet Rate Limit
 
