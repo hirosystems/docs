@@ -104,6 +104,9 @@ In this code, signUserOut is called when the "Disconnect Wallet" button is click
 
 ## Challenges
 
+
+Now that you've finished creating a front end, here are some additional challenges you can take on to improve your project and add new capabilities:
+
 - **Buy Keys**: Implement a feature that allows users to buy keys. This will involve calling a smart contract function that handles the purchase.
 - **Sell Keys**: Implement a feature that allows users to sell keys. This will involve calling a smart contract function that handles the sale.
 - **Access Control**: Implement a feature that restricts access to certain chatrooms based on whether the user is a key holder. This will involve checking the isKeyHolder state before rendering the chatroom.
