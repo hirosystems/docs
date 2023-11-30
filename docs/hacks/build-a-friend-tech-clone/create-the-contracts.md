@@ -8,7 +8,7 @@ title: Create the contracts
 
 The Friend.tech contract is designed to manage digital "Keys," representing ownership in a social network. Let's break down the key functions and their roles.
 
-### Setting the Stage: The Contract Setup
+### Setting the Stage: the Contract Setup
 
 The contract begins by defining the owner and setting up variables for fee management. These are essential for maintaining the contract's economics and governance.
 
