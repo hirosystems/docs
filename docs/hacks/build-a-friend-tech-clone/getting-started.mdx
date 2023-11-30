@@ -1,0 +1,63 @@
+---
+title: Overview
+---
+
+import { isPast, formatDistanceToNow } from 'date-fns'
+
+
+# Build a Friend.tech Clone
+
+<div className="gap-3 flex flex-wrap mb-6">
+  <a
+    className="inline-block bg-green-300 hover:bg-green-200 rounded-md text-sm text-green-800 px-2 py-1 hover:text-green-800 hover:no-underline transition-colors"
+    href="https://discord.com/channels/621759717756370964/1022879438515486791"
+  >
+    {isPast(new Date('2023-12-06')) ? `Closed` : `Open`}
+  </a>
+  {isPast(new Date('2023-12-06')) ? (
+    <span className="inline-block bg-neutral-200 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors">
+      {formatDistanceToNow(new Date('2023-12-06'))}
+    </span>
+  ) : (
+    <>
+    <a
+      className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
+      href="https://stacks.js.org"
+    >
+      Submission deadline {formatDistanceToNow(new Date('2023-12-06'), { addSuffix: true })}
+    </a>
+    <a
+      className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
+      href="https://discord.com/channels/621759717756370964/1022879438515486791"
+    >
+      Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
+    </a>
+    </>
+  )}
+</div>
+
+In this hack, developers will create a decentralized social network similar to Friend.tech using the Stacks Blockchain. This platform will allow users to buy and sell `keys` linked to their accounts, which offer access to private in-app chatrooms and exclusive content.
+
+### Prerequisites
+
+- Basic understanding of blockchain technology
+- Familiarity with JavaScript and React for front-end development
+- Basic knowledge of Clarity for smart contract development
+
+### Tools
+
+- [Clarinet](../../clarinet/overview)
+- [Stacks.js Library](../../stacks.js/overview)
+- [Leather Wallet for message signing](../../stacks.js/guides/sign-messages)
+
+### What will we cover?
+
+- **[Create the contract](./create-the-contracts)**: Write a Clarity smart contract that allows for keys management, and the tracking of ownership of those keys.
+- **[Build the frontend](./build-the-frontend)**: Create a mechanism for users to access private chatrooms when they own a key. This could involve checking the ownership of a key when a user tries to enter a chatroom.
+- **[Implement Message Signing](./handle-the-messaging)**: Allow users to sign messages with their private keys to prove ownership and access to private chatrooms.
+
+Each section has a few challenges for you to complete. You are free to complete as many or as few of these challenges as you like. We will also provide a few ideas for you to extend your project beyond the scope of this hack.
+
+### Submission & Prizes
+
+You can submit your project to the [Hiro Hack Submission Form](https://rfw7zqyd.paperform.co/) to be eligible for prizes.
