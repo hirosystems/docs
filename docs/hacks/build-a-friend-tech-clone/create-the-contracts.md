@@ -99,6 +99,9 @@ The get-price function is central to the contract. It calculates the price of ke
 
 ## Challenges
 
+
+Once you create your smart contract, here are some challenges you can think about to take your contract to the next level:
+
 - **Buy Keys**: Implement a feature that allows users to buy keys. This will involve calling a smart contract function that handles the purchase.
 - **Sell Keys**: Implement a feature that allows users to sell keys. This will involve calling a smart contract function that handles the sale.
 - **Access Control**: Implement a feature that restricts access to certain chatrooms based on whether the user is a key holder. This will involve checking the isKeyHolder state before rendering the chatroom.
