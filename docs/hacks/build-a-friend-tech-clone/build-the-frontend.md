@@ -52,7 +52,7 @@ const connectWallet = () => {
 
 In this code, showConnect is called when the "Connect Wallet" button is clicked. The onFinish callback is called when the user approves the connection, and the setIsWalletConnected state is set to true.
 
-## Interacting with a Smart Contract
+## Interacting With a Smart Contract
 
 To interact with a smart contract, we'll use the callReadOnlyFunction function from the @stacks/transactions library. This function allows us to call a read-only function on a smart contract and get the result.
 
