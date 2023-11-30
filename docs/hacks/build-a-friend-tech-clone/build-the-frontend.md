@@ -84,7 +84,7 @@ const checkIsKeyHolder = async () => {
 
 In this code, callReadOnlyFunction is called with the necessary parameters to call the is-keyholder function on the keys contract. The result is then converted to a string and compared to 'true' to set the isKeyHolder state.
 
-## Disconnecting from a Wallet
+## Disconnecting From a Wallet
 
 To disconnect from a wallet, we'll use the signUserOut function from the UserSession object. This function clears the session and removes the session data from local storage.
 
