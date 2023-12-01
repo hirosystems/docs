@@ -53,9 +53,9 @@ import { isPast, formatDistanceToNow } from 'date-fns'
 
 What if we could gamify—and reward—being a friend? That's the idea behind friendtech, the decentralized social network that took Web3 by storm. Here we recreate friendtech on the Stacks blockchain.
 
-There are a few central components to this Hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price. But as the supply increases—as people buy more keys—the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation.
+There are a few key components to this Hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price. But as people buy more keys, the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation.
 
-This Hack walks you through building the basics of the dapp. There are also challenges—opportunities to stretch your skills, differentiate your application, and **win prizes**.
+This Hack walks you through the basics. There are also challenges—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://rfw7zqyd.paperform.co/)
 
 ## Clone the Starter Template
 
@@ -268,7 +268,7 @@ If you are here for the prizes, you've come to the right section. The following 
   Intermediate
 </span>
 
-**Access Control**: In a real-world application, you might need to adjust the `protocolFeePercent` or `subjectFeePercent` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent` or `subjectFeePercent` values.
+**Access Control**: In a real-world application, you might need to adjust the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values.
 
 ```clarity
 (define-public (set-protocol-fee-percent (feePercent uint))
