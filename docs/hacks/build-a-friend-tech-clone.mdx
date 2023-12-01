@@ -227,7 +227,8 @@ If you are here for the prizes, you've come to the right section. The following 
   Starter
 </span>
 
-**Balance and Supply Query Functions**: Add two new read-only functions: `get-keys-balance` and `get-keys-supply`.
+**Balance and Supply Query Functions**: Add two new read-only functions: `get-keys-balance` and `get-keys-supply`. These functions will provide valuable information to users about the distribution and availability of `keys`, and can be used in various parts of your application to display this information to users.
+
 ```clarity
 (define-read-only (get-keys-balance (subject principal) (holder principal))
   ;; Return the keysBalance for the given subject and holder
@@ -236,9 +237,6 @@ If you are here for the prizes, you've come to the right section. The following 
 (define-read-only (get-keys-supply (subject principal))
   ;; Return the keysSupply for the given subject
 )
-```
-
-These functions will provide valuable information to users about the distribution and availability of `keys`, and can be used in various parts of your application to display this information to users.
 
 <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
   Starter
