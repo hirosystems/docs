@@ -24,15 +24,20 @@ module.exports = [
     defaultStyle: true,
   },
   {
-    type: 'category',
+    type: 'doc',
     label: 'Build a Friend.tech Clone',
-    items: [
-      'hacks/build-a-friend-tech-clone/getting-started',
-      'hacks/build-a-friend-tech-clone/create-the-contracts',
-      'hacks/build-a-friend-tech-clone/build-the-frontend',
-      'hacks/build-a-friend-tech-clone/handle-the-messaging',
-    ],
+    id: 'hacks/build-a-friend-tech-clone',
   },
+  // {
+  //   type: 'category',
+  //   label: 'Build a Friend.tech Clone',
+  //   items: [
+  //     'hacks/build-a-friend-tech-clone/getting-started',
+  //     'hacks/build-a-friend-tech-clone/create-the-contracts',
+  //     'hacks/build-a-friend-tech-clone/build-the-frontend',
+  //     'hacks/build-a-friend-tech-clone/handle-the-messaging',
+  //   ],
+  // },
   // {
   //   type: 'doc',
   //   label: 'Build a Decentralized Grants Program',
