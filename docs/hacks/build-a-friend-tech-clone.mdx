@@ -51,15 +51,15 @@ import { isPast, formatDistanceToNow } from 'date-fns'
 
 ## Introduction
 
-What if we could gamify—and reward—being a friend? That's the idea behind friendtech, the decentralized social network that took Web3 by storm. Here we recreate friendtech on the Stacks blockchain.
+What if we could gamify—and reward—being a friend? That's the idea behind Friend.tech, the decentralized social network that took Web3 by storm. In this hack, we'll recreate Friend.tech on the Stacks blockchain.
 
-There are a few key components to this Hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price. But as people buy more keys, the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation.
+There are a few key components to this hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price, but as people buy more keys, the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation. These keys can also be used to access exclusive chatrooms with their corresponding subject, receive exclusive airdrops, and more
 
-This Hack walks you through the basics. There are also challenges—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://rfw7zqyd.paperform.co/)
+This Hack walks you through the basics of building a Friend.tech clone. There are also challenges at the end—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://rfw7zqyd.paperform.co/)
 
 ## Clone the Starter Template
 
-In this section, we'll start by setting up our development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required library packages.
+In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required library packages.
 
 To clone the repository, open your terminal and run the following command:
 
@@ -68,7 +68,7 @@ git clone https://github.com/hirosystems/hiro-hacks-template.git
 cd hiro-hacks-template
 ```
 
-## Create Our Contract
+## Create Your Contract
 
 Before we begin, we're assuming that you have `clarinet` installed and a basic understanding of how to use it. If you haven't installed `clarinet` yet, you can do so by referring to our [installation guide](../clarinet/getting-started.md).
 
@@ -217,11 +217,11 @@ Next, let's check some of our contract functionality inside `clarinet console`:
 (contract-call? .keys is-keyholder tx-sender  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) ;; false
 ```
 
-Congratulations! You've successfully created and your contract. You've laid the groundwork for a decentralized social network, just like Friend.tech.
+Congratulations! You've successfully created your contract. You've laid the groundwork for a decentralized social network, just like Friend.tech.
 
 ## Challenges
 
-If you are here for the prizes, you've come to the right section. The following are additional features you can implement to further differentiate your project. Feel free to add any other features you want.
+If you are here for the Hiro Hacks prizes (see the [overview page](https://docs.hiro.so/hacks) for more details), you've come to the right section. The following challenges are additional features you can implement to further differentiate your project. Feel free to add any other features you want.
 
 <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
   Starter
@@ -277,7 +277,7 @@ If you are here for the prizes, you've come to the right section. The following 
 )
 ```
 
-Think about how you can verify the caller of the function is indeed the `contractOwner`. Also, consider what kind of feedback the function should give when someone else tries to call it. Test your implementation to ensure it works as expected.
+Think about how you can verify whether the caller of the function is indeed the `contractOwner`. Also, consider what kind of feedback the function should give when someone else tries to call it. Test your implementation to ensure it works as expected.
 
 <span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
   Intermediate
@@ -309,7 +309,7 @@ By using a similar pattern to the code above, you will be able to **show/hide ch
 
 > _**Note**_
 >
-> If you are planning to experiment with your contract on `Devnet`, make sure to run [`clarinet integrate` to deploy and test your contract locally](https://docs.hiro.so/clarinet/guides/clarinet-integrate). You can then use the `Devnet` network when calling your contract in the [Leather wallet](https://leather.io/install-extension).
+> If you are planning to experiment with your contract on `Devnet`, make sure to run `clarinet integrate` [to deploy and test your contract locally](https://docs.hiro.so/clarinet/guides/clarinet-integrate). You can then use the `Devnet` network when calling your contract in the [Leather wallet](https://leather.io/install-extension).
 
 <span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
   Advanced
@@ -351,4 +351,12 @@ The signed message will serve as a _proof of identity_ - similar to a login, ver
 
 ## Submission & Prizes
 
-You can submit your project to the [Hiro Hack Submission Form](https://rfw7zqyd.paperform.co/) to be eligible for prizes.
+Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.
+
+The deadline to submit is Wednesday, December 6th at midnight ET.
+
+We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.
+
+You can submit your project to the [Hiro Hack Submission Form](https://rfw7zqyd.paperform.co/) to be eligible for these prizes. Good luck!
+
+View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).
