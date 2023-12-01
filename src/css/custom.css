@@ -8,6 +8,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Workaround for https://github.com/hirosystems/docs/issues/567
+ * Based on https://github.com/PrismJS/prism/issues/2443#issuecomment-799188475
+ */
+@layer utilities {
+  .table {
+    display: initial;
+  }
+}
 
 @font-face {
   font-family: 'Aeonik Fono';
