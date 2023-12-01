@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'clarinet/overview',
+    id: 'clarinet/index',
   },
   {
     type: 'doc',
@@ -121,4 +121,4 @@ module.exports = [
     label: 'Troubleshooting',
     id: 'clarinet/troubleshooting',
   },
-]
+];

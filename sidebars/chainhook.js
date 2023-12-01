@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'chainhook/overview',
+    id: 'chainhook/index',
   },
   {
     type: 'doc',
@@ -59,4 +59,4 @@ module.exports = [
     label: 'FAQs',
     id: 'chainhook/faq',
   },
-]
+];

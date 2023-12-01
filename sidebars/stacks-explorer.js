@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'explorer/overview',
+    id: 'explorer/index',
   },
   {
     type: 'doc',
@@ -33,4 +33,4 @@ module.exports = [
     label: 'Run a local instance of Stacks Explorer',
     id: 'explorer/guides/build-explorer',
   },
-]
+];

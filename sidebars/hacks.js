@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,6 +15,6 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'ordinals-api/overview',
+    id: 'ordinals-api/index',
   },
-]
+];
