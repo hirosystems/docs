@@ -43,7 +43,7 @@ slug: /hacks
     <div class="subSectionTitle">
       <h3>Build a Decentralized Grants Program</h3>
     </div>
-    <p>In this hack, developers will create a decentralized grants program using the ExecutorDAO protocol.</p>
+    <p>Build a decentralized grants program using the ExecutorDAO protocol.</p>
   </a>
 </div>
 <div class="subSections my-8">
@@ -52,9 +52,9 @@ slug: /hacks
       Coming soon
     </span>
     <div class="subSectionTitle">
-      <h3>Build a custom Blockchain API</h3>
+      <h3>Build a Custom Blockchain API</h3>
     </div>
-    <p>In this hack, developers will create a custom API for their decentralized application using Chainhook.</p>
+    <p>Launch a custom API for a decentralized application using Chainhook.</p>
   </a>
   <a href="#" className="card-disabled hide">
     <span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-red-400/10 px-2 py-1 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
@@ -67,4 +67,34 @@ slug: /hacks
   </a>
 </div>
 
-_Start your coding adventure with Hiro Hacks – where every challenge is a new possibility!_
+## Compete for BTC Prizes
+
+Every week, we are giving 300K sats each to the 10 best submissions for each hack.
+We will also give a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks.
+
+### How Do You Submit Your Project?
+
+Every week, you can submit your project by sharing your GitHub repo link [via this survey](https://rfw7zqyd.paperform.co/).
+
+You must submit your project by the following Wednesday at midnight ET in order to be eligible for BTC prizes.
+For example, the deadline to submit for the Dec 1st hack is Wednesday, Dec 6th at midnight ET.
+
+After the submission deadline, we'll review all of the projects and pick the 10 winners. If you win, we'll send you sats.
+
+For detailed instructions on what to submit as part of your GitHub repo, please view each hack's readme.
+
+View the official rules of Hiro Hacks [here](https://www.hiro.so/hiro-hacks-rules).
+
+## Need Support?
+
+If you have questions or need help with your project, [reach out to us on Discord](https://stacks.chat/). You can find us on the #builders-general channel on the Stacks discord.
+
+If you're new to the Stacks discord, you'll first need to:
+
+1.  [Join the Stacks discord](https://stacks.chat/).
+2.  React with the 🛠️ emoji in the "pick-interests" channel.
+3.  Ask us questions in the #builders-general channel under the "Builders" drop down and join the Hiro Hacks community.
+
+## Good Luck, Anon
+
+Start your coding adventure with Hiro Hacks: every challenge is a new possibility. Happy coding, anon.
