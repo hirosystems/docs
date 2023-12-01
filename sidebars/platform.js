@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'platform/overview',
+    id: 'platform/index',
   },
   {
     type: 'doc',
@@ -56,7 +56,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Using Devnet',
-    id: 'platform/guides/devnet'
+    id: 'platform/guides/devnet',
   },
   {
     type: 'doc',
@@ -84,4 +84,4 @@ module.exports = [
     label: 'FAQs',
     id: 'platform/faq',
   },
-]
+];

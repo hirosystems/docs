@@ -116,7 +116,7 @@ Ensure the following configurations are matched to allow chainhook to communicat
 
 ## Scan the blockchain based on predicates
 
-Now that the Stacks and Chainhook configurations are done, you can scan your blocks by defining your [predicates](../overview.md#if-this-predicate-design). This section helps you with sample JSON files to scan blockchain blocks and render the results. To understand the supported predicates for Stacks, refer to [how to use chainhook with stacks](./chainhooks-with-stacks.md).
+Now that the Stacks and Chainhook configurations are done, you can scan your blocks by defining your [predicates](../index.md#if-this-predicate-design). This section helps you with sample JSON files to scan blockchain blocks and render the results. To understand the supported predicates for Stacks, refer to [how to use chainhook with stacks](./chainhooks-with-stacks.md).
 
 The following are the two examples to walk you through `file_append` and `http_post` `then-that` predicate designs.
 

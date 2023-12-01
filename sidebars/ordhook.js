@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'ordhook/overview',
+    id: 'ordhook/index',
   },
   {
     type: 'doc',
@@ -43,4 +43,4 @@ module.exports = [
     label: 'Stream for Ordinal activity',
     id: 'ordhook/guides/stream-ordinal-activities',
   },
-]
+];

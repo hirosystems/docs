@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'example-apps/overview',
+    id: 'example-apps/index',
   },
   {
     type: 'doc',
@@ -32,4 +32,4 @@ module.exports = [
     label: 'Angular',
     id: 'example-apps/angular',
   },
-]
+];

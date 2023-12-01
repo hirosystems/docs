@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'ordinals-explorer/overview',
+    id: 'ordinals-explorer/index',
   },
   {
     type: 'doc',
@@ -33,4 +33,4 @@ module.exports = [
     label: 'Run an Ordinals Explorer locally',
     id: 'ordinals-explorer/guides/build-explorer',
   },
-]
+];

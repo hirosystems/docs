@@ -22,7 +22,7 @@ module.exports = [
     type: 'category',
     label: 'Hiro Platform',
     type: 'link',
-    href: '/platform/overview'
+    href: '/platform',
   },
   {
     type: 'html',
@@ -34,19 +34,19 @@ module.exports = [
     type: 'category',
     label: 'Ordinals Explorer',
     type: 'link',
-    href: 'ordinals-explorer/overview'
+    href: 'ordinals-explorer',
   },
   {
     type: 'category',
     label: 'Ordinals API',
     type: 'link',
-    href: '/ordinals-api/overview'
+    href: '/ordinals-api',
   },
   {
     type: 'category',
     label: 'Ordhook',
     type: 'link',
-    href: '/ordhook/overview'
+    href: '/ordhook',
   },
   {
     type: 'html',
@@ -58,48 +58,48 @@ module.exports = [
     type: 'category',
     label: 'Chainhook',
     type: 'link',
-    href: '/chainhook/overview'
+    href: '/chainhook',
   },
   {
     type: 'category',
     label: 'Clarinet',
     type: 'link',
-    href: '/clarinet/overview'
+    href: '/clarinet',
   },
   {
     type: 'category',
     label: 'Stacks Explorer',
     type: 'link',
-    href: '/explorer/overview'
+    href: '/explorer',
   },
   {
     type: 'category',
     label: 'Stacks.js',
     type: 'link',
-    href: '/stacks.js/overview'
+    href: '/stacks.js',
   },
   {
     type: 'category',
     label: 'Stacks API',
     type: 'link',
-    href: '/stacks-blockchain-api/overview'
+    href: '/stacks-blockchain-api',
   },
   {
     type: 'category',
     label: 'Token Metadata API',
     type: 'link',
-    href: '/token-metadata-api/overview'
+    href: '/token-metadata-api',
   },
   {
     type: 'category',
     label: 'Subnets',
     type: 'link',
-    href: '/subnets/overview'
+    href: '/subnets',
   },
   {
-    id: 'hiro-archive/overview',
+    id: 'hiro-archive/index',
     type: 'doc',
-    label: 'Hiro Archive'
+    label: 'Hiro Archive',
   },
   {
     type: 'html',
@@ -110,12 +110,12 @@ module.exports = [
   {
     id: 'rate-limiting',
     type: 'doc',
-    label: 'Rate Limiting'
+    label: 'Rate Limiting',
   },
   {
     id: 'changelog',
     type: 'doc',
-    label: 'Changelog'
+    label: 'Changelog',
   },
   {
     id: 'contributors-guide',
@@ -126,6 +126,16 @@ module.exports = [
     type: 'category',
     label: 'Release History',
     items: [
+      {
+        type: 'link',
+        label: 'October 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-october-2023',
+      },
+      {
+        type: 'link',
+        label: 'September 2023',
+        href: 'https://www.hiro.so/blog/release-roundup-september-2023',
+      },
       {
         type: 'link',
         label: 'August 2023',
@@ -193,4 +203,4 @@ module.exports = [
       },
     ],
   },
-]
+];
