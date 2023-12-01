@@ -268,7 +268,7 @@ If you are here for the prizes, you've come to the right section. The following 
   Intermediate
 </span>
 
-**Access Control**: In a real-world application, you might need to adjust the `protocolFeePercent` or `subjectFeePercent` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent` or `subjectFeePercent` values.
+**Access Control**: In a real-world application, you might need to adjust the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values.
 
 ```clarity
 (define-public (set-protocol-fee-percent (feePercent uint))
