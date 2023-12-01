@@ -4,7 +4,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -15,7 +15,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'tutorials/overview',
+    id: 'tutorials/index',
   },
   {
     type: 'category',
@@ -36,5 +36,5 @@ module.exports = [
       'tutorials/clarity-nft',
       'tutorials/testing-contracts',
     ],
-  }
-]
+  },
+];

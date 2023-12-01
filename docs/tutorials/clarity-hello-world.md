@@ -13,7 +13,7 @@ Clarity smart contracts.
 Clarity, the smart contract language used on the Stacks Blockchain, is a LISP-based language and uses its
 parenthesized notation. Clarity is an [interpreted language](https://en.wikipedia.org/wiki/Interpreted_language), and
 [decidable](https://en.wikipedia.org/wiki/Recursive_language). To learn more basics about the language, see the
-[Introduction to Clarity](https://docs.stacks.co/write-smart-contracts/overview) topic.
+[Introduction to Clarity](https://docs.stacks.co/docs/clarity/) topic.
 
 In this tutorial you will:
 
@@ -251,7 +251,7 @@ wallet. The transaction summary page displays the output of the function:
 You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-<!-- [clarinet]: /clarinet/overview
+<!-- [clarinet]: /clarinet/index
 [installing clarinet]: /clarinet/getting-started
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [Leather wallet]: https://leather.io/install-extension

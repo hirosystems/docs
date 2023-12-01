@@ -19,7 +19,7 @@ Additionally, [Discord](https://discord.gg/pPwMzMx9k8) and [StackOverflow](https
 
 ## I'm hitting rate limits with API Calls
 
-Hiro's Public Stacks API calls [are rate-limited](https://docs.hiro.so/stacks-blockchain-api/overview#rate-limiting) to ensure high availability of the API and prevent abuse by a single or specific group of clients.
+Hiro's Public Stacks API calls [are rate-limited](https://docs.hiro.so/rate-limiting) to ensure high availability of the API and prevent abuse by a single or specific group of clients.
 
 While increasing limits may only be feasible to be fair to some users, clients can employ various techniques to adapt to the rate limit. One example is using an [exponential back-off strategy](https://learn.microsoft.com/en-us/azure/architecture/patterns/retry), which repeatedly retries the operation when hitting a rate limit. However, the time between each retry increases exponentially so that over a more extended period, the rate of requests adapts to the rate limit.
 
