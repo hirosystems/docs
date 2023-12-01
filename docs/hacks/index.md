@@ -22,12 +22,14 @@ slug: /hacks
   </a>
 </div>
 
-**Hiro Hacks** is a series of challenges that prepare developers to build on Bitcoin layers. We are rolling out new challenges every Friday for the first 3 weeks of December (December 1st, 8th, and 15th). Each Friday, we will introduce a new `Hack` that involves:
+**Hiro Hacks** is a series of coding challenges that prepare developers to build on Bitcoin layers. We're dropping a new `Hack` the next three Fridays—December 1st, 8th, and 15th. And as part of the launch, we are giving away BTC prizes for the ten best submissions per week! Each Hack involves:
 
-- **Guided Discovery**: We will help you navigate our products, starting from the basic building blocks to create something awesome.
-- **Creative Freedom**: As you go through the guide, your task is to _make it your own_ through the `Challenges` section, which is designed to push your understanding in creative and rewarding directions.
+- **Discovery**: Build awesome apps, overcome challenges, and win prizes
+- **Advancement**: Become a full-stack Stacks developer before the Bitcoin Halving in April
 - **Supporting Resources**: We'll offer guides and starter templates to enhance your experience and jumpstart each hack.
 - **Community**: Connect with peers and mentors on Discord, and share your creations with the world.
+
+And there's also a grand prize for the hacker who best completes all three hacks...
 
 ## Explore Hiro Hacks
 
