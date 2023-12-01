@@ -1,11 +1,17 @@
 module.exports = [
-  'intro',
-  // {
-  //   type: 'category',
-  //   label: 'Hiro Hacks',
-  //   type: 'link',
-  //   href: 'hiro-hacks'
-  // },
+  {
+    type: 'category',
+    label: 'Home',
+    type: 'link',
+    href: '/',
+    className: 'hidden'
+  },
+  {
+    type: 'category',
+    label: 'Hiro Hacks',
+    type: 'link',
+    href: 'hacks',
+  },
   {
     type: 'html',
     value: 'Tools',
