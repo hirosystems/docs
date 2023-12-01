@@ -208,7 +208,9 @@ Next, let's check some of our contract functionality inside `clarinet console`:
 (contract-call? .keys buy-keys tx-sender u100)
 
 ;; Check if the sender is a keyholder
-(contract-call? .keys is-keyholder tx-sender) ;; true
+(contract-call? .keys is-keyholder tx-sender tx-sender) ;; true
+
+(contract-call? .keys is-keyholder tx-sender  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) ;; false
 ```
 
 Congratulations! You've successfully created and your contract. You've laid the groundwork for a decentralized social network, just like Friend.tech.
