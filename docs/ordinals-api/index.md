@@ -15,7 +15,7 @@ The Ordinals API provides a service that indexes Bitcoin Ordinals data and offer
 
 Here are the key features of the Ordinals API:
 
-**Ordinal Inscription Ingestion**: The API helps with the complete ingestion of ordinal inscriptions. Using our endpoitns, you can retrieve the metadata for a particular inscription, all inscriptions held by a particular address, trading activity for inscriptions, and more.
+**Ordinal Inscription Ingestion**: The API helps with the complete ingestion of ordinal inscriptions. Using our endpoints, you can retrieve the metadata for a particular inscription, all inscriptions held by a particular address, trading activity for inscriptions, and more.
 
 **BRC-20 Support**: The API offers support for BRC-20 tokens, a fungible token standard built on top of ordinal theory. Retrieve data for a particular BRC-20 token, a user's BRC-20 holdings, marketplace activity, and more.
 
