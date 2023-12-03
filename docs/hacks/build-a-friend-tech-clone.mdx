@@ -158,7 +158,7 @@ Next up, the `sell-keys` function:
     (
       (balance (default-to u0 (map-get? keysBalance { subject: subject, holder: tx-sender })))
       (supply (default-to u0 (map-get? keysSupply { subject: subject })))
-      (price (get-price supply amount))
+      (price (get-price (- supply amount) amount))
       (recipient tx-sender)
     )
     (if (and (>= balance amount) (or (> supply u0) (is-eq tx-sender subject)))
