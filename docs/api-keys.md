@@ -1,6 +1,6 @@
 ---
 id: api-keys
-title: API Keysx
+title: API Keys
 ---
 
 Developers have open access to Hiro's APIs, without the use of an API key, subjects to Hiro's [rate limit policy](https://docs.hiro.so/rate-limiting). For developers who need access beyond these rate limits, we provide API keys.
