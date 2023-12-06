@@ -1,6 +1,6 @@
 ---
-Title: API Keys
-displayed_sidebar: ordinals-api
+id: api-keys
+title: API Keys
 ---
 
 Hiro's APIs have open access to developers, without the use of an API key, subjects to each API's rate limits. For developers who need access beyond these rate limits, we provide API keys.

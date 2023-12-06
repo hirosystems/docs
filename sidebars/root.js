@@ -108,6 +108,11 @@ module.exports = [
     defaultStyle: true,
   },
   {
+    id: 'api-keys',
+    type: 'doc',
+    label: 'API Keys',
+  },
+  {
     id: 'rate-limiting',
     type: 'doc',
     label: 'Rate Limiting',
