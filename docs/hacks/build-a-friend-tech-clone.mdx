@@ -8,7 +8,7 @@ import { isPast, formatDistanceToNow } from 'date-fns'
 # Build a Friend.tech Clone
 
 <div className="gap-3 flex flex-wrap mb-6">
-{isPast(new Date('2023-12-06')) ? (
+  {isPast(new Date('2023-12-06')) ? (
   <>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
@@ -46,7 +46,6 @@ import { isPast, formatDistanceToNow } from 'date-fns'
       Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
     </a>
   </>)}
-  
 </div>
 
 ## Introduction
@@ -59,7 +58,7 @@ This Hack walks you through the basics of building a Friend.tech clone. There ar
 
 ## Clone the Starter Template
 
-In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required library packages.
+In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required packages.
 
 To clone the repository, open your terminal and run the following command:
 
@@ -101,18 +100,22 @@ The next thing we need to do is define a function that calculates the price of `
 
 ```clarity
 (define-read-only (get-price (supply uint) (amount uint))
-  (let
-    (
-      (base-price u10)
-      (price-change-factor u100)
-      (adjusted-supply (+ supply amount))
-    )
-    (+ base-price (* amount (/ (* adjusted-supply adjusted-supply) price-change-factor)))
+  (let (
+    (base-price u10) ;; Base price per key in micro-STX
+    (price-change-factor u100) ;; Factor to control the rate of price change
   )
-)
+  ;; Average price per token over the range of supply
+  (/ 
+    (+ 
+      (* base-price amount) 
+      (* amount (/ (+ (* supply supply) (* supply amount) (* amount amount)) (* u3 price-change-factor)))
+    )
+    amount
+  )
+))
 ```
 
-The `get-price` function calculates the price of `keys` using a formula that accounts for the current supply and the amount being bought or sold.
+The `get-price` function calculates the price of `keys` using a formula that calculates the average price per token over the range of supply affected. This can be done by integrating the price function over the range of supply and dividing by the amount.
 
 ### Creating, Buying, and Selling `Keys`
 
@@ -351,14 +354,21 @@ openSignatureRequestPopup({
 
 The signed message will serve as a _proof of identity_ - similar to a login, verifying that the user is indeed who they claim to be. This can be particularly useful in a chatroom setting, where only `is-keyholder` users are allowed to send messages.
 
-## Submission & Prizes
-
-Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.
-
-The deadline to submit is Wednesday, December 6th at midnight ET.
-
-We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.
-
-You can submit your project to the [Hiro Hack Submission Form](https://rfw7zqyd.paperform.co/) to be eligible for these prizes. Good luck!
-
-View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).
+<div>
+  {isPast(new Date('2023-12-06')) ? (
+    <div>
+      <h2>Submission & Prizes</h2>
+      <p>The submission deadline for prize eligibility has now closed.</p>
+      <p>However, you can still <a href="https://rfw7zqyd.paperform.co/">submit your project here</a> to talk to our team and get notified the next time a new hack drops.</p>
+      <p>View the official Hiro Hacks rules <a href="https://www.hiro.so/hiro-hacks-rules">here</a>.</p>
+    </div>
+  ) : (
+    <div>
+      <h2>Submission & Prizes</h2>
+      <p>Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.</p>
+      <p>The deadline to submit is Wednesday, December 13th at midnight ET.</p>
+      <p>We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.</p>
+      <p>You can submit your project to the <a href="https://rfw7zqyd.paperform.co/">Hiro Hack Submission Form</a> to be eligible for these prizes. Good luck!</p>
+    </div>
+  )}
+</div>
