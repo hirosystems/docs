@@ -98,27 +98,7 @@ Before we create our core contract, we need to create `trait` contracts that we'
 
 Traits in Clarity define a set of functions that a contract must implement. In this case, any contract that wants to be a `proposal` or an `extension` must implement the functions defined in the `proposal-trait` and `extension-trait` respectively.
 
-<<<<<<< Updated upstream
-```bash
-clarinet contract new core
-```
-
-This will create a new contract in the `contracts` directory called `core.clar`.
-
-> _**Note**_
->
-> If you don't want to clone the provided starter template, you can create your `Clarinet` project manually by running `clarinet new grants-program && cd grants-program`.
-
-Now let's walk through the key components of this contract.
-
-### Traits
-
-Traits in Clarity define a set of functions that a contract must implement. In this case, any contract that wants to be a proposal or an extension must implement the functions defined in the `proposal-trait` and `extension-trait` respectively.
-
-You will need to add these contracts to your project:
-=======
 In your project's directory, run the following command:
->>>>>>> Stashed changes
 
 ```bash
 clarinet contract new extension-trait && clarinet contract new proposal-trait
@@ -612,66 +592,6 @@ The callback function allows the core contract to request a callback:
 )
 ```
 
-<<<<<<< Updated upstream
-## Initializing our Grants Program
-
-Now that we have our core extension contracts, we can initialize our project. The way we do this is through the `construct` function we wrote inside our `core.clar` contract.
-
-To activate our grants program, we need to create our very first proposal contract. Let's go over what we want to do:
-
-- Enable our extensions for our grants program (`membership-token`, `proposal-submission`, and `proposal-voting`).
-- Distribute the initial token allocation to addresses who will be responsible for voting on grants.
-
-Let's see what that looks like - run the following code to create a new contract:
-
-```bash
-clarinet contract new bootstrap
-```
-
-```clarity
-(impl-trait .proposal-trait.proposal-trait)
-
-(define-public (execute (sender principal))
-  (begin
-    ;; Enable extensions for the grants program
-    (try! (contract-call? .core set-extension .membership-token true))
-    (try! (contract-call? .core set-extension .proposal-submission true))
-    (try! (contract-call? .core set-extension .proposal-voting true))
-
-    ;; Distribute tokens to initial grants voters
-    (try! (contract-call? .membership-token mint u100 tx-sender))
-    (try! (contract-call? .membership-token mint u100 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5))
-    (try! (contract-call? .membership-token mint u100 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG))
-    (ok true)
-  )
-)
-```
-
-This proposal will enable to contracts you have built, allowing the distribution of tokens, proposal submission, and grant voting to 3 addresses.
-
-## Testing Locally
-
-Now let's make sure our contracts are valid and don't have any errors. To do this, we can run the following command:
-
-```bash
-clarinet check
-```
-
-Next, let's try to bootstrap our decentralized grants program inside `clarinet console`:
-
-```clarity
-;; Check if `proposal-submission` extension is enabled
-(contract-call? .core is-extension .proposal-submission) ;; false
-
-;; Initialize your grants program
-(contract-call? .core construct .bootstrap)
-
-;; Re-check if `proposal-submission` extension is enabled 
-(contract-call? .core is-extension .proposal-submission) ;; true
-```
-
-=======
->>>>>>> Stashed changes
 Congratulations! You've successfully created the foundations for a Decentralized Grants Program!
 
 ## Challenges
