@@ -83,7 +83,7 @@ For more details, you can [view the standard contracts in the ExecutorDAO reposi
 
 ## Clone the Starter Template
 
-In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required library packages.
+In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required packages.
 
 To clone the repository, open your terminal and run the following command:
 
@@ -92,12 +92,13 @@ git clone https://github.com/hirosystems/hiro-hacks-template.git
 cd hiro-hacks-template
 ```
 
-## Create Your Core Contract
+## Establishing Your Core Contract
 
-Before we begin, we're assuming that you have `clarinet` installed and a basic understanding of how to use it. If you haven't installed `clarinet` yet, you can do so by referring to our [installation guide](../clarinet/getting-started.md).
+Before we create our core contract, we need to create `trait` contracts that we'll be implementing for our grants program.
 
-To create our core contract, navigate to your project's directory and run the following command:
+Traits in Clarity define a set of functions that a contract must implement. In this case, any contract that wants to be a `proposal` or an `extension` must implement the functions defined in the `proposal-trait` and `extension-trait` respectively.
 
+<<<<<<< Updated upstream
 ```bash
 clarinet contract new core
 ```
@@ -115,10 +116,15 @@ Now let's walk through the key components of this contract.
 Traits in Clarity define a set of functions that a contract must implement. In this case, any contract that wants to be a proposal or an extension must implement the functions defined in the `proposal-trait` and `extension-trait` respectively.
 
 You will need to add these contracts to your project:
+=======
+In your project's directory, run the following command:
+>>>>>>> Stashed changes
 
 ```bash
 clarinet contract new extension-trait && clarinet contract new proposal-trait
 ```
+
+Now in your contracts, respectively, add the following code:
 
 ```clarity
 ;; extension-trait.clar
@@ -136,22 +142,26 @@ clarinet contract new extension-trait && clarinet contract new proposal-trait
     (execute (principal) (response bool uint))
   )
 )
-
-(define-read-only (executed-at (proposal <proposal-trait>))
-  (map-get? executedProposals (contract-of proposal))
-)
 ```
 
-Inside our `core.clar` contract, we need to add our two trait contracts - `extension` and `proposal`:
+Now that we've defined how your set of functions must be implemented, we can now begin to create our core contract - let's run the following command:
+
+```bash
+clarinet contract new core
+```
+
+This will create a new contract in the `contracts` directory called `core.clar`.
+
+Inside our `core.clar` contract, let's add the two trait contracts we've just created from the steps above:
 
 ```clarity
 (use-trait proposal-trait .proposal-trait.proposal-trait)
 (use-trait extension-trait .extension-trait.extension-trait)
 ```
 
-### Constants and Variables
+### Error Handling and State Management
 
-Next, the contract defines some constants and variables:
+Next, we need to define some basic error handling and variables for managing our contracts:
 
 ```clarity
 (define-constant ERR_UNAUTHORIZED (err u1000))
@@ -176,6 +186,10 @@ The `is-self-or-extension` function is a private function that checks if the cal
 
 (define-read-only (is-extension (extension principal))
   (default-to false (map-get? extensions extension))
+)
+
+(define-read-only (executed-at (proposal <proposal-trait>))
+  (map-get? executedProposals (contract-of proposal))
 )
 ```
 
@@ -598,6 +612,7 @@ The callback function allows the core contract to request a callback:
 )
 ```
 
+<<<<<<< Updated upstream
 ## Initializing our Grants Program
 
 Now that we have our core extension contracts, we can initialize our project. The way we do this is through the `construct` function we wrote inside our `core.clar` contract.
@@ -655,6 +670,8 @@ Next, let's try to bootstrap our decentralized grants program inside `clarinet c
 (contract-call? .core is-extension .proposal-submission) ;; true
 ```
 
+=======
+>>>>>>> Stashed changes
 Congratulations! You've successfully created the foundations for a Decentralized Grants Program!
 
 ## Challenges
@@ -665,23 +682,21 @@ If you are here for the Hiro Hacks prizes (see the [overview page](https://docs.
   Starter
 </span>
 
-**Create Grant Proposals**: 
-
-```clarity
-
-```
+**Initializing your Grants Program**: Now that we have our core extension contracts, we can initialize the project. The way we do this is through the `construct` function we wrote inside our `core.clar` contract. Create your first proposal enabling your extensions (`membership-token`, `proposal-submission`, `proposal-voting`) and distribute the initial token allocation to addresses responsible for voting on grants. If you need a little more guidance, check out the example [here](https://github.com/MarvinJanssen/executor-dao/blob/main/contracts/proposals/edp000-bootstrap.clar).
 
 <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
+  Starter
+</span>
+
+**Create Grant Proposals**: After initializing your grants program, the next step is to create grant proposals. This involves using the `propose` function in the `proposal-submission` contract. This function allows anyone to propose a grant, which will then be voted on by the token holders. The proposal includes details such as the title, description, and the proposal contract. Once a proposal is submitted, it can be voted on during the voting period defined by the `proposal-duration` parameter.
+
+<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
   Intermediate
 </span>
 
-**Milestone-based Funding**: Grant recipients can request funds based on completed milestones, ensuring that funding is tied to actual progress.
+**Milestone-based Funding**: To implement milestone-based funding, you'll need to create a new extension contract that tracks the progress of each grant proposal. This extension will manage the milestones for each grant, allowing funds to be released as each milestone is achieved. To enable this extension, you'll need to create a proposal using the propose function in the `proposal-submission` contract. Once enabled, the milestone-based funding extension will provide a more structured and accountable way to distribute funds, ensuring that the grant recipients are making progress before they receive their next round of funding.
 
-```clarity
-
-```
-
-<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
+<span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
   Advanced
 </span>
 
