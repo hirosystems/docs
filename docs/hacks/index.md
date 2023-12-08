@@ -38,9 +38,9 @@ And there's also a grand prize for the hacker who best completes all three hacks
     <div class="subSectionTitle"><h3>Build a Friend.tech Clone</h3><span>→</span></div>
     <p>Create a decentralized social network similar to Friend.tech using the Stacks Blockchain.</p>
   </a>
-  <a href="#" className="card-disabled">
+  <a href="/hacks/build-a-decentralized-grants-program">
     <span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-red-400/10 px-2 py-1 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-      Coming soon
+      New
     </span>
     <div class="subSectionTitle">
       <h3>Build a Decentralized Grants Program</h3>
