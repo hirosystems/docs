@@ -491,7 +491,6 @@ We define a map to store the proposals and another map to store the total votes 
   {
     votes-for: uint,
     votes-against: uint,
-    start-block-height: uint,
     end-block-height: uint,
     concluded: bool,
     passed: bool,
@@ -519,7 +518,7 @@ The is-dao-or-extension function is a private function that checks if the caller
 The add-proposal function allows the core contract or an authorized extension to add a new proposal:
 
 ```clarity
-(define-public (add-proposal (proposal <proposal-trait>) (data {start-block-height: uint, end-block-height: uint, proposer: principal, title: (string-ascii 50), description: (string-utf8 500)}))
+(define-public (add-proposal (proposal <proposal-trait>) (data {end-block-height: uint, proposer: principal, title: (string-ascii 50), description: (string-utf8 500)}))
   (begin
     (try! (is-dao-or-extension))
     (asserts! (is-none (contract-call? .core executed-at proposal)) ERR_PROPOSAL_ALREADY_EXECUTED)
