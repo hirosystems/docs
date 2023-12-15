@@ -1,0 +1,283 @@
+---
+title: Build a Custom Blockchain API
+---
+
+import { isPast, formatDistanceToNow } from 'date-fns'
+
+# Build a Custom Blockchain API
+
+<div className="gap-3 flex flex-wrap mb-6">
+  {isPast(new Date('2023-12-20')) ? (
+  <>
+    <a
+      className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
+      href="https://rfw7zqyd.paperform.co/"
+      target="_blank"
+    >
+      Submit your project
+    </a>
+    <a
+      className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
+      href="https://stacks.chat"
+    >
+      Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
+    </a>
+  </>
+) :
+  (<>
+    <a
+      className="inline-block bg-green-300 rounded-md text-sm text-green-800 px-2 py-1 hover:text-green-800 hover:no-underline transition-colors cursor-default"
+      href="#"
+    >
+    Open   
+    </a>
+    <a
+      className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
+      href="https://rfw7zqyd.paperform.co/"
+      target="_blank"
+    >
+      Submission deadline {formatDistanceToNow(new Date('2023-12-20'), { addSuffix: true })}
+    </a>
+    <a
+      className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
+      href="https://stacks.chat"
+    >
+      Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
+    </a>
+  </>)}
+</div>
+
+## Introduction
+
+In the previous hacks, you built smart contracts that have a lot of complex data living on-chain. And building a robust UI/UX around this data can be challenging due to the nature of blockchains. For instance, with our [Build a Decentralized Grants Program](./build-a-decentralized-grants-program.mdx) hack, you would need a simpler way to *display new grant proposals*, *notify users with updates to existing grants*, and more.
+
+This is where [Chainhook](../chainhook) comes in. Chainhook is a powerful tool that allows you to trigger actions in response to on-chain events on Stacks and Bitcoin.
+
+In this guide, we'll walk you through the process of building a custom API with Chainhook using the [Hiro Platform](https://platform.hiro.so/), with a focus on integrating it with the contracts you built for the decentralized grants program hack.
+
+> _**Note**_
+>
+> You're welcome to use any Clarity app for your submission. The goal is to show you how to use Chainhook to enhance the functionality and user experience of your decentralized applications.
+
+## Creating a Server
+
+In this section, we'll briefly discuss setting up an Express server to handle incoming event data from Chainhook. While a detailed walkthrough of setting up an Express server is beyond the scope of this guide, we provide an example app that you can reference from [here](https://github.com/hirosystems/examples/tree/main/apps/brc20-api).
+
+To illustrate how we can handle this event data, here is an example:
+
+```typescript
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.post("/api/events", (req, res) => {
+  const events = req.body;
+  // Process the event data here
+  res.status(200).send({ message: "Event received" });
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+```
+
+In this example, the server listens for POST requests at the `/api/events` route. When a request is received, in this case our Chainhook that we will set up in the next section, we can extract the event data from the request body and processes it.
+
+### Parsing the Event Data
+
+The Chainhook payload comes with a lot of information, so let's break down some of the more important parts inside of the `req.body` for this guide:
+
+#### Chainhook Payload Structure
+
+```json
+{
+  "apply": [
+    {
+      "transactions": [
+        {
+          "metadata": {
+            "receipt": "..."
+          },
+          "operations": [
+            {
+              "...": "..."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Each item in the `apply` array should contain a `transactions` array. Each `transaction` object should have a `metadata` object with a `receipt` attribute and an `operations` array.
+
+- `transaction.metadata.receipt`: This attribute contains information about any events that were triggered from the function. It's a crucial part of the transaction metadata.
+
+- `transaction.operations`: This is an array that contains more specific information about what happened as a result of the function call. For instance if a *token transfer* occured, each object inside this array would contain various attributes and information regarding the account, amount, type, and status of the token transfer. 
+
+Here's what your POST route might look like after filtering for the relevant data:
+
+```typescript
+app.post("/api/events", async (req, res) => {
+  const events = req.body;
+  // Loop through each item in the apply array
+  events.apply.forEach((item: any) => {
+    // Loop through each transaction in the item
+    item.transactions.forEach((transaction: any) => {
+      // If the transaction has operations, loop through them
+      if (transaction.operations) {
+        transaction.operations.forEach((operation: any) => {
+          // Log the operation
+          console.log({ operation });
+        });
+      }
+    });
+  });
+
+  // Send a response back to Chainhook to acknowledge receipt of the event
+  res.status(200).send({ message: "Proposal added!" });
+});
+```
+
+For the next section, you will need to expose your local server via `https` so that Chainhook can deliver the `payload`. To do that, can run the following command:
+
+```bash
+npx localtunnel --port <your-port-number>
+```
+
+> _**Note**_
+>
+> There are several tools for exposing localhost to the world so choose the one you prefer, for more information on `localtunnel` you can click [here](https://github.com/localtunnel/localtunnel).
+
+
+## Integrating With Chainhook
+
+In this section, we'll guide you through the process of integrating Chainhook with your smart contracts. This involves creating a Chainhook predicate that matches the specific on-chain events you want to respond to. We'll be using the [Hiro Platform](https://platform.hiro.so/) for this process, which provides a user-friendly interface for creating and managing your Chainhooks. By the end of this section, you'll have a Chainhook set up and ready to trigger actions in response to on-chain events.
+
+### Deploying Your Contracts to Testnet
+
+Before we begin, make sure you have logged in to the [Hiro Platform](https://platform.hiro.so/) and created or imported a project. If you need help with this, refer to the [Create Project](../platform/guides/create-project.md) guide.
+
+In order to create our chainhooks, we need to deploy our contracts to `testnet`. From your projects page, click on the Deploy button near the top right of your screen. You'll see your deployment options: let's choose **Generate for Testnet**.
+
+> _**Note**_
+>
+> The Platform will provide a step for requesting Testnet STX, but you can also go straight to the [Stacks Testnet Faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet). Once you have testnet STX tokens, you can deploy your contracts to testnet using the same methods you used for devnet, but with the network parameter set to testnet.
+
+### Creating a Chainhook
+
+Let's create our first Chainhook. We're going to start by creating a predicate that matches the `propose` function in your `proposal-submission` contract. This function is called when a new grant proposal is submitted.
+
+Here's an example of how you might define this predicate for your contract:
+
+```json
+{
+  "chain": "stacks",
+  "uuid": "1",
+  "name": "New Grant Proposal",
+  "version": 1,
+  "networks": {
+    "testnet": {
+      "if_this": {
+        "scope": "contract_call",
+        "contract_identifier": "ST2BSV94A650WGZ2YZ5Y8HM93W01NGT4GY0MGJECG.proposal-submission",
+        "method": "propose"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "<your-https-server-url>",
+          "authorization_header": "Bearer 12345"
+        }
+      },
+      "start_block": 138339
+    }
+  }
+}
+```
+> _**Note**_
+>
+> Make sure to swap out the details above to match your contract ABI
+
+The `if_this` section specifies the conditions for the events that this Chainhook will respond to. In this case, it's looking for calls to the `propose` method in the `proposal-submission` contract on the Stacks testnet.
+
+The `then_that` section specifies what action the Chainhook should take when it detects an event that matches the `if_this` conditions. Here, it's set up to send a POST request to your specified URL with the event data.
+
+The `start_block` field is used to specify the starting block for the Chainhook to start listening from. This is useful for ignoring blocks that were mined before the Chainhook was set up.
+
+Once you have created a similar file for your specific contract. select the _Chainhooks_ tab inside your project and upload your predicate file using the *Upload Chainhook* option. For more information, you can follow the [Create Chainhooks](../platform/guides/create-chainhooks) section. 
+
+## Testing Your Chainhook
+
+Once you've successfully uploaded your Chainhook predicate, it's time to test it out. You can do this by performing an action that aligns with your `if_this` - `then_that` logic. For instance, if your Chainhook is set up to respond to a specific contract call, you can trigger that call and then check your `/api/post` endpoint. If everything is set up correctly, you should see the logs or information you've requested appear there.
+
+This is a crucial step in verifying that your Chainhook is working as expected. If you don't see the expected output, you may need to revisit your predicate and ensure it's correctly configured.
+
+Congratulations on reaching this point! You now have all the building blocks needed to create a custom API using Chainhook and integrate it with your smart contracts. This is a significant step towards enhancing the functionality and user experience of your decentralized applications.
+
+The next section presents several challenges that will help you put the finishing touches on your API. With the foundation you've built, you're well-equipped to take on these challenges and continue your journey in building robust, decentralized applications.
+
+## Challenges
+
+The following challenges are additional features you can implement to further differentiate your project. Feel free to add any other features you want.
+
+<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
+  Starter
+</span>
+
+**Create more than one Chainhook**: Don't stop at just one! Follow the process from above to create more than one Chainhook for your dApp and parse the data accordingly.
+
+<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
+  Intermediate
+</span>
+
+**Create Consumer-Facing API Endpoints**: Up until now, we've shown you how to capture and process the initial `payload` data sent from Chainhook. However, to provide a robust user experience, you'll want to do more than just output raw data. The challenge here is to create additional API endpoints that present the filtered and extracted data from the initial `/api/events` payload in a consumer-friendly format. This could involve adding a database layer for organizing the data, adding additional context, or transforming the data to match the needs of your application's frontend. For a quick db setup, you can try using something like [Supabase](https://supabase.com/docs/guides/getting-started/quickstarts/reactjs).
+
+```typescript
+// Example using Supabase
+
+const supabase = createClient("https://<project>.supabase.co", "<your-anon-key>");
+
+app.post("/api/events", async (req, res) => {
+  // ...
+
+    item.transactions.forEach((transaction: any) => {
+      if (transaction.operations) {
+        transaction.operations.forEach((operation: any) => {
+          const data = operation // Parse out the data you want
+          // Insert and save it to db
+          const { error } = await supabase
+            .from('proposals')
+            .insert(data)
+          });
+      }
+    });
+
+  // ...
+});
+```
+
+<span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
+  Advanced
+</span>
+
+**UI Integration**: The final challenge is to integrate your consumer-facing API into your frontend. This involves taking the data you've processed and organized in your API and displaying it in a meaningful and user-friendly way in your application. This could involve creating dynamic components that update in response to new data, adding interactive elements that allow users to explore the data, or incorporating visualizations to help users understand the data.
+
+<div>
+  {isPast(new Date('2023-12-13')) ? (
+    <div>
+      <h2>Submission & Prizes</h2>
+      <p>The submission deadline for prize eligibility has now closed.</p>
+      <p>However, you can still <a href="https://rfw7zqyd.paperform.co/">submit your project here</a> to talk to our team and get notified the next time a new hack drops.</p>
+      <p>View the official Hiro Hacks rules <a href="https://www.hiro.so/hiro-hacks-rules">here</a>.</p>
+    </div>
+  ) : (
+    <div>
+      <h2>Submission & Prizes</h2>
+      <p>Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.</p>
+      <p>The deadline to submit is Wednesday, December 13th at midnight ET.</p>
+      <p>We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.</p>
+      <p>You can submit your project to the <a href="https://rfw7zqyd.paperform.co/">Hiro Hack Submission Form</a> to be eligible for these prizes. Good luck!</p>
+    </div>
+  )}
+</div>
