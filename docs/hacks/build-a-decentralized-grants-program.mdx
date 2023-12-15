@@ -12,7 +12,7 @@ import { isPast, formatDistanceToNow } from 'date-fns';
   <>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
-      href="https://rfw7zqyd.paperform.co/"
+      href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
       Submit your project
@@ -34,7 +34,7 @@ import { isPast, formatDistanceToNow } from 'date-fns';
     </a>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
-      href="https://rfw7zqyd.paperform.co/"
+      href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
       Submission deadline {formatDistanceToNow(new Date('2023-12-13'), { addSuffix: true })}
@@ -62,7 +62,7 @@ Key features of this project include:
 
 This Hack walks you through the basics of building a decentralized grants program. Over the course of this hack, you will deploy your own functioning grants program.
 
-There are also optional challenges at the end—opportunities to stretch your skills, differentiate your application, and win BTC prizes. [Submit your project here!](https://rfw7zqyd.paperform.co/)
+There are also optional challenges at the end—opportunities to stretch your skills, differentiate your application, and win BTC prizes. [Submit your project here!](https://survey.hiro.so/hirohacks)
 
 Now it's time to hack. First, we'll cover the basics of the core functionalities of our grants program and look at 4 contracts. Let's dive in.
 
@@ -641,21 +641,10 @@ await callReadOnlyFunction({
   senderAddress,
 });
 ```
-<div>
-  {isPast(new Date('2023-12-13')) ? (
-    <div>
-      <h2>Submission & Prizes</h2>
-      <p>The submission deadline for prize eligibility has now closed.</p>
-      <p>However, you can still <a href="https://rfw7zqyd.paperform.co/">submit your project here</a> to talk to our team and get notified the next time a new hack drops.</p>
-      <p>View the official Hiro Hacks rules <a href="https://www.hiro.so/hiro-hacks-rules">here</a>.</p>
-    </div>
-  ) : (
-    <div>
-      <h2>Submission & Prizes</h2>
-      <p>Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.</p>
-      <p>The deadline to submit is Wednesday, December 13th at midnight ET.</p>
-      <p>We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.</p>
-      <p>You can submit your project to the <a href="https://rfw7zqyd.paperform.co/">Hiro Hack Submission Form</a> to be eligible for these prizes. Good luck!</p>
-    </div>
-  )}
-</div>
+## Prizes and Submissions
+
+The submission deadline for prize eligibility has now closed.
+
+However, you can still [submit your project here](https://survey.hiro.so/hirohacks) to talk to our team and get notified the next time a new hack drops.
+
+View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).

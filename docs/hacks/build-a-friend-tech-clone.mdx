@@ -12,7 +12,7 @@ import { isPast, formatDistanceToNow } from 'date-fns'
   <>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
-      href="https://rfw7zqyd.paperform.co/"
+      href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
       Submit your project
@@ -34,7 +34,7 @@ import { isPast, formatDistanceToNow } from 'date-fns'
     </a>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
-      href="https://rfw7zqyd.paperform.co/"
+      href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
       Submission deadline {formatDistanceToNow(new Date('2023-12-06'), { addSuffix: true })}
@@ -54,7 +54,7 @@ What if we could gamify—and reward—being a friend? That's the idea behind Fr
 
 There are a few key components to this hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price, but as people buy more keys, the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation. These keys can also be used to access exclusive chatrooms with their corresponding subject, receive exclusive airdrops, and more
 
-This Hack walks you through the basics of building a Friend.tech clone. There are also challenges at the end—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://rfw7zqyd.paperform.co/)
+This Hack walks you through the basics of building a Friend.tech clone. There are also challenges at the end—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://survey.hiro.so/hirohacks)
 
 ## Clone the Starter Template
 
@@ -354,21 +354,10 @@ openSignatureRequestPopup({
 
 The signed message will serve as a _proof of identity_ - similar to a login, verifying that the user is indeed who they claim to be. This can be particularly useful in a chatroom setting, where only `is-keyholder` users are allowed to send messages.
 
-<div>
-  {isPast(new Date('2023-12-06')) ? (
-    <div>
-      <h2>Submission & Prizes</h2>
-      <p>The submission deadline for prize eligibility has now closed.</p>
-      <p>However, you can still <a href="https://rfw7zqyd.paperform.co/">submit your project here</a> to talk to our team and get notified the next time a new hack drops.</p>
-      <p>View the official Hiro Hacks rules <a href="https://www.hiro.so/hiro-hacks-rules">here</a>.</p>
-    </div>
-  ) : (
-    <div>
-      <h2>Submission & Prizes</h2>
-      <p>Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.</p>
-      <p>The deadline to submit is Wednesday, December 13th at midnight ET.</p>
-      <p>We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.</p>
-      <p>You can submit your project to the <a href="https://rfw7zqyd.paperform.co/">Hiro Hack Submission Form</a> to be eligible for these prizes. Good luck!</p>
-    </div>
-  )}
-</div>
+## Prizes and Submissions
+
+The submission deadline for prize eligibility has now closed.
+
+However, you can still [submit your project here](https://survey.hiro.so/hirohacks) to talk to our team and get notified the next time a new hack drops.
+
+View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).
