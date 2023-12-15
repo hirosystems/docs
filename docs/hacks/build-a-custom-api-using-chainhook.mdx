@@ -67,7 +67,7 @@ In this guide, we'll walk you through the process of building a custom API with 
 
 In this section, we'll briefly discuss setting up an Express server to handle incoming event data from Chainhook. While a detailed walkthrough of setting up an Express server is beyond the scope of this guide, we provide an example app that you can reference from [here](https://github.com/hirosystems/examples/tree/main/apps/brc20-api).
 
-To illustrate how we can handle this event data, here is an example:
+To illustrate how we can handle this event data, here is an example `server.ts` file:
 
 ```typescript
 const express = require('express');
@@ -120,7 +120,7 @@ Each item in the `apply` array should contain a `transactions` array. Each `tran
 
 - `transaction.operations`: This is an array that contains more specific information about what happened as a result of the function call. For instance if a *token transfer* occured, each object inside this array would contain various attributes and information regarding the account, amount, type, and status of the token transfer. 
 
-Here's what your POST route might look like after filtering for the relevant data:
+Here's what your POST route might look like after filtering for the relevant data in your `server.ts` file:
 
 ```typescript
 app.post("/api/events", async (req, res) => {
@@ -173,7 +173,7 @@ In order to create our chainhooks, we need to deploy our contracts to `testnet`.
 
 Let's create our first Chainhook. We're going to start by creating a predicate that matches the `propose` function in your `proposal-submission` contract. This function is called when a new grant proposal is submitted.
 
-Here's an example of how you might define this predicate for your contract:
+Here's an example of how you might define this `predicate.json` file for your contract:
 
 ```json
 {
@@ -201,7 +201,7 @@ Here's an example of how you might define this predicate for your contract:
 ```
 > _**Note**_
 >
-> Make sure to swap out the details above to match your contract ABI
+> Make sure to swap out the details in your `predicate.json` file to match your contracts ABI
 
 The `if_this` section specifies the conditions for the events that this Chainhook will respond to. In this case, it's looking for calls to the `propose` method in the `proposal-submission` contract on the Stacks testnet.
 
