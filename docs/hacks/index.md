@@ -39,19 +39,17 @@ And there's also a grand prize for the hacker who best completes all three hacks
     <p>Create a decentralized social network similar to Friend.tech using the Stacks Blockchain.</p>
   </a>
   <a href="/hacks/build-a-decentralized-grants-program">
-    <span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-red-400/10 px-2 py-1 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-      New
-    </span>
     <div class="subSectionTitle">
       <h3>Build a Decentralized Grants Program</h3>
+      <span>→</span>
     </div>
     <p>Build a decentralized grants program using the ExecutorDAO protocol.</p>
   </a>
 </div>
 <div class="subSections my-8">
-  <a href="#" className="card-disabled">
+  <a href="/hacks/build-a-custom-api-using-chainhook">
     <span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-red-400/10 px-2 py-1 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-      Coming soon
+      New
     </span>
     <div class="subSectionTitle">
       <h3>Build a Custom Blockchain API</h3>
