@@ -65,7 +65,7 @@ In this guide, we'll walk you through the process of building a custom API with 
 
 ## Creating a Server
 
-In this section, we'll briefly discuss setting up an Express server to handle incoming event data from Chainhook. While a detailed walkthrough of setting up an Express server is beyond the scope of this guide, we provide an example app that you can reference from [here](https://github.com/hirosystems/examples/tree/main/apps/brc20-api).
+In this section, we'll briefly discuss setting up an Express server to handle incoming event data from Chainhook. While a detailed walkthrough of setting up an Express server is beyond the scope of this guide, we provide an example app that you can reference from [here](https://github.com/hirosystems/examples/tree/main/apps/chainhook).
 
 To illustrate how we can handle this event data, here is an example `server.ts` file:
 
@@ -89,9 +89,9 @@ In this example, the server listens for POST requests at the `/api/events` route
 
 ### Parsing the Event Data
 
-The Chainhook payload comes with a lot of information, so let's break down some of the more important parts inside of the `req.body` for this guide:
+The Chainhook payload comes with a lot of information, so let's break down some of the more important parts inside of the `req.body` for this guide.
 
-#### Chainhook Payload Structure
+Here is a truncated look at the payload structure from Chainhook:
 
 ```json
 {
@@ -116,7 +116,7 @@ The Chainhook payload comes with a lot of information, so let's break down some 
 
 Each item in the `apply` array should contain a `transactions` array. Each `transaction` object should have a `metadata` object with a `receipt` attribute and an `operations` array.
 
-- `transaction.metadata.receipt`: This attribute contains information about any events that were triggered from the function. It's a crucial part of the transaction metadata.
+- `transaction.metadata.receipt`: This attribute contains information about any events that were triggered from the function.
 
 - `transaction.operations`: This is an array that contains more specific information about what happened as a result of the function call. For instance if a *token transfer* occured, each object inside this array would contain various attributes and information regarding the account, amount, type, and status of the token transfer. 
 
@@ -217,9 +217,9 @@ Once you've successfully uploaded your Chainhook predicate, it's time to test it
 
 For instance, if your Chainhook is set up to respond to a specific contract call, you can trigger that call and then check your `/api/post` endpoint. If everything is set up correctly, you should see any information you've requested to be logged.
 
-Congratulations on reaching this point! You now have all the building blocks needed to create a custom API using Chainhook and integrate it with your smart contracts. This is a significant step towards enhancing the functionality and user experience of your decentralized applications.
-
 The next section presents several challenges that will help you put the finishing touches on your API. With the foundation you've built, you're well-equipped to take on these challenges and continue your journey in building robust, decentralized applications.
+
+Congratulations on reaching this point! You now have all the building blocks needed to create a custom API using Chainhook and integrate it with your smart contracts. This is a significant step towards enhancing the functionality and user experience of your decentralized applications.
 
 > _**Note**_
 >
@@ -271,30 +271,22 @@ app.post("/api/events", async (req, res) => {
 </span>
 
 **UI Integration**: The final challenge is to integrate your consumer-facing API into your frontend. This involves taking the data you've processed and organized in your API and displaying it in a meaningful and user-friendly way in your application. This could involve creating dynamic components that update in response to new data, adding interactive elements that allow users to explore the data, or incorporating visualizations to help users understand the data.
-## Prizes and Submissions
 
-We are giving 300K sats each to the 10 best submissions for this hack. If you've participated in the last 2 hacks and complete this one too, we will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks.
-
-In order to be eligible for both of these prizes, you must complete the hack and submit before the deadline. The deadline for this hack is next Wednesday, December 20th at midnight ET.
-
-To submit your project, [please use this form](https://survey.hiro.so/hirohacks). Good luck!
-
-View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules). 
 <div>
   {isPast(new Date('2023-12-13')) ? (
     <div>
-      <h2>Submission & Prizes</h2>
+      <h2>Prizes and Submissions</h2>
       <p>The submission deadline for prize eligibility has now closed.</p>
       <p>However, you can still <a href="https://rfw7zqyd.paperform.co/">submit your project here</a> to talk to our team and get notified the next time a new hack drops.</p>
       <p>View the official Hiro Hacks rules <a href="https://www.hiro.so/hiro-hacks-rules">here</a>.</p>
     </div>
   ) : (
     <div>
-      <h2>Submission & Prizes</h2>
-      <p>Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.</p>
-      <p>The deadline to submit is Wednesday, December 13th at midnight ET.</p>
-      <p>We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.</p>
-      <p>You can submit your project to the <a href="https://rfw7zqyd.paperform.co/">Hiro Hack Submission Form</a> to be eligible for these prizes. Good luck!</p>
+      <h2>Prizes and Submissions</h2>
+      <p>We are giving 300K sats each to the 10 best submissions for this hack. If you've participated in the last 2 hacks and complete this one too, we will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks.</p>
+      <p>In order to be eligible for both of these prizes, you must complete the hack and submit before the deadline. The deadline for this hack is next Wednesday, December 20th at midnight ET.</p>
+      <p>To submit your project, [please use this form](https://survey.hiro.so/hirohacks). Good luck!</p>
+      <p>View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules). </p>
     </div>
   )}
 </div>
