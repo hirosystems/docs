@@ -49,9 +49,13 @@ import { isPast, formatDistanceToNow } from 'date-fns'
 
 ## Introduction
 
-In the previous hacks, you built smart contracts that have a lot of complex data living on-chain. And building a robust UI/UX around this data can be challenging due to the nature of blockchains. For instance, with our [Build a Decentralized Grants Program](./build-a-decentralized-grants-program.mdx) hack, you would need a simpler way to *display new grant proposals*, *notify users with updates to existing grants*, and more.
+In the previous hacks, you built some pretty complex smart contracts. But building a robust UI/UX around these smart contracts and their on-chain data can be challenging due to the nature of blockchains.
 
-This is where [Chainhook](../chainhook) comes in. Chainhook is a powerful tool that allows you to trigger actions in response to on-chain events on Stacks and Bitcoin.
+Let's take our [Build a Decentralized Grants Program](./build-a-decentralized-grants-program.mdx) hack as an example. In this project, anyone can propose a grant, and these proposals are voted on by token holders. The details of each proposal, including the title, description, and the proposal contract, are stored on the blockchain.
+
+However, directly querying the blockchain for this data every time you want to display it in your application's UI can be slow and inefficient. And that information might not always be formatted and organized in a way that makes sense for your use case.
+
+This is where [Chainhook](../chainhook) comes in. Chainhook allows you to listen for specific on-chain events, such as the submission of a new grant proposal, and trigger actions in response - like inserting specific data into a database to query off-chain.
 
 In this guide, we'll walk you through the process of building a custom API with Chainhook using the [Hiro Platform](https://platform.hiro.so/), with a focus on integrating it with the contracts you built for the decentralized grants program hack.
 
@@ -209,13 +213,18 @@ Once you have created a similar file for your specific contract. select the _Cha
 
 ## Testing Your Chainhook
 
-Once you've successfully uploaded your Chainhook predicate, it's time to test it out. You can do this by performing an action that aligns with your `if_this` - `then_that` logic. For instance, if your Chainhook is set up to respond to a specific contract call, you can trigger that call and then check your `/api/post` endpoint. If everything is set up correctly, you should see the logs or information you've requested appear there.
+Once you've successfully uploaded your Chainhook predicate, it's time to test it out. You can do this by performing an action that aligns with your `if_this` - `then_that` logic.
 
-This is a crucial step in verifying that your Chainhook is working as expected. If you don't see the expected output, you may need to revisit your predicate and ensure it's correctly configured.
+For instance, if your Chainhook is set up to respond to a specific contract call, you can trigger that call and then check your `/api/post` endpoint. If everything is set up correctly, you should see any information you've requested to be logged.
 
 Congratulations on reaching this point! You now have all the building blocks needed to create a custom API using Chainhook and integrate it with your smart contracts. This is a significant step towards enhancing the functionality and user experience of your decentralized applications.
 
 The next section presents several challenges that will help you put the finishing touches on your API. With the foundation you've built, you're well-equipped to take on these challenges and continue your journey in building robust, decentralized applications.
+
+> _**Note**_
+>
+> This is a crucial step in verifying that your Chainhook is working as expected. If you don't see the expected output, you may need to revisit your predicate and ensure it's correctly configured.
+
 
 ## Challenges
 
