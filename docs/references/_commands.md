@@ -9,7 +9,7 @@ Broadcast a message on the blockchain for subscribers to read.  The `MESSAGE_HAS
 If this command succeeds, it will print a transaction ID.  The rest of the Blockstack peer network will process it once the transaction reaches 7 confirmations.
 
 Examples:
-```
+```console
     $ # Tip: You can obtain the owner key with the get_owner_keys command
     $ export OWNER_KEY="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
     $ stx announce 737c631c7c5d911c6617993c21fba731363f1cfe "$OWNER_KEY"
@@ -36,7 +36,7 @@ Run an authentication endpoint for the set of names owned by the given backup ph
 You can supply your encrypted backup phrase instead of the raw backup phrase.  If so, then you will be prompted for your password before any authentication takes place.
 
 Example:
-```
+```console
     $ export BACKUP_PHRASE="oak indicate inside poet please share dinner monitor glow hire source perfect"
     $ export APP_GAIA_HUB="https://1.2.3.4"
     $ export PROFILE_GAIA_HUB="https://hub.blockstack.org"
@@ -60,7 +60,7 @@ Example:
 Query the balance of an account.  Returns the balances of each kind of token that the account owns.  The balances will be in the *smallest possible units* of the token (i.e. satoshis for BTC, microStacks for Stacks, etc.).
 
 Example:
-```
+```console
     $ stx balance 16pm276FpJYpm7Dv3GEaRqTVvGPTdceoY4
     {
       "BTC": "123456"
@@ -107,7 +107,7 @@ Call a function in a deployed Clarity smart contract.
 
 If the command succeeds, it prints out a transaction ID.
 Example:
-```
+```console
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ stx call_contract_func SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X contract_name      contract_function 1 0 "$PAYMENT"
      {
@@ -133,7 +133,7 @@ Call a read-only function in a deployed Clarity smart contract.
 
 If the command succeeds, it prints out a Clarity value.
 Example:
-```
+```console
     $ stx call_read_only_contract_func SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X contract_name     contract_function SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X
      {
        txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
@@ -156,7 +156,7 @@ Decode a serialized Clarity value.
 
 Example:
 
-```
+```console
     $ stx decode_cv 0x050011deadbeef11ababffff11deadbeef11ababffff
     S08XXBDYXW8TQAZZZW8XXBDYXW8TQAZZZZ88551S
     $ stx decode_cv --format json SPA2MZWV9N67TBYVWTE0PSSKMJ2F6YXW7CBE6YPW
@@ -179,7 +179,7 @@ Convert a Bitcoin address to a Stacks address and vice versa.
 
 Example:
 
-```
+```console
     $ stx convert_address 12qdRgXxgNBNPnDeEChy3fYTbSHQ8nfZfD
     {
       "mainnet": {
@@ -231,7 +231,7 @@ Decrypt an encrypted backup phrase with a password.  Decrypts to a 12-word backu
 
 Example:
 
-```
+```console
     $ # password is "asdf"
     $ stx decrypt_keychain "bfMDtOucUGcJXjZo6vkrZWgEzue9fzPsZ7A6Pl4LQuxLI1xsVF0VPgBkMsnSLCmYS5YHh7R3mNtMmX45Bq9sNGPfPsseQMR0fD9XaHi+tBg=
     Enter password:
@@ -252,7 +252,7 @@ Deploys a Clarity smart contract on the network.
 
 If the command succeeds, it prints out a transaction ID.
 Example:
-```
+```console
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ stx deploy_contract ./my_contract.clar my_contract 1 0 "$PAYMENT"
      {
@@ -287,7 +287,7 @@ Encrypt a 12-word backup phrase, which can be decrypted later with the `decrypt_
 
 Example:
 
-```
+```console
      $ # password is "asdf"
      $ stx encrypt_keychain "section amount spend resemble spray verify night immune tattoo best emotion parrot"
      Enter password:
@@ -308,7 +308,7 @@ Encrypt a 12-word backup phrase, which can be decrypted later with the `decrypt_
 
 Example:
 
-```
+```console
      $ # password is "asdf"
      $ blockstack-cli encrypt_keychain "section amount spend resemble spray verify night immune tattoo best emotion parrot"
      Enter password:
@@ -328,7 +328,7 @@ Download the contents of a Gaia hub bucket to a given directory.  The `GAIA_HUB`
 
 Example:
 
-```
+```console
     $ export BACKUP_PHRASE="section amount spend resemble spray verify night immune tattoo best emotion parrot
     $ stx gaia_dump_bucket hello.id.blockstack https://sample.app https://hub.blockstack.org "$BACKUP_PHRASE" ./backups
     Download 3 files...
@@ -357,7 +357,7 @@ Gaia is a key-value store, so it does not have any built-in notion of directorie
 
 Example without encryption:
 
-```
+```console
     $ # Get an unencrypted, unsigned file
     $ stx gaia_getfile ryan.id http://public.ykliao.com statuses.json
     [{"id":0,"text":"Hello, Blockstack!","created_at":1515786983492}]
@@ -392,7 +392,7 @@ Gaia is a key-value store, so it does not have any built-in notion of directorie
 
 Example:
 
-```
+```console
     $ # Store 4 versions of a file: plaintext, encrypted, signed, and encrypted+signed
     $ # Tip: You can obtain the app key with the get_app_keys command.
     $ export APP_KEY="3ac770e8c3d88b1003bf4a0a148ceb920a6172bdade8e0325a1ed1480ab4fb19"
@@ -431,7 +431,7 @@ Example:
 Delete a file in a Gaia hub, as well as its signature metadata (which is stored in a separate file).
 Example:
 
-```
+```console
     $ # Tip: You can obtain the app key with the get_app_keys command.
     $ export APP_KEY="3ac770e8c3d88b1003bf4a0a148ceb920a6172bdade8e0325a1ed1480ab4fb19"
     $ stx gaia_deletefile https://hub.blockstack.org "$APP_KEY" file.txt false
@@ -453,7 +453,7 @@ List all the files in a Gaia hub bucket.  You must have the private key for the 
 
 Example:
 
-```
+```console
     $ # Tip: You can obtain the app key with the get_app_keys command.
     $ export APP_KEY="3ac770e8c3d88b1003bf4a0a148ceb920a6172bdade8e0325a1ed1480ab4fb19"
     $ stx gaia_listfiles "https://hub.blockstack.org" "$APP_KEY"
@@ -477,7 +477,7 @@ Upload the contents of a previously-dumped Gaia bucket to a new Gaia hub.  The `
 
 Example:
 
-```
+```console
     $ export BACKUP_PHRASE="section amount spend resemble spray verify night immune tattoo best emotion parrot"
     $ stx gaia_restore_bucket hello.id.blockstack https://sample.app https://new.gaia.hub "$BACKUP_PHRASE" ./backups
     Uploaded ./backups/hello_world to https://new.gaia.hub/hub/1Lr8ggSgdmfcb4764woYutUfFqQMjEoKHc/hello_world
@@ -544,7 +544,7 @@ Query the history of account debits and credits over a given block range.  Retur
 
 Example:
 
-```
+```console
     $ stx get_account_history SP2H7VMY13ESQDAD5808QEY1EMGESMHZWBJRTN2YA 0
     [
       {
@@ -605,7 +605,7 @@ Query the list of token debits and credits on a given address that occurred at a
 
 Example
 
-```
+```console
     $ stx -t get_account_at SP2NTAQFECYGSTE1W47P71FG21H8F00KZZWFGEVKQ 56789
     [
       {
@@ -636,7 +636,7 @@ Get the address of a private key or multisig private key bundle.  Gives the BTC 
 
 Example:
 
-```
+```console
     $ stx get_address f5185b9ca93bdcb5753fded3b097dab8547a8b47d2be578412d0687a9a0184cb01
     {
       "BTC": "1JFhWyVPpZQjbPcXFtpGtTmU22u4fhBVmq",
@@ -683,7 +683,7 @@ Get the block height and number of confirmations for a transaction.
 
 Example:
 
-```
+```console
     $ stx get_confirmations e41ce043ab64fd5a5fd382fba21acba8c1f46cbb1d7c08771ada858ce7d29eea
     {
       "blockHeight": 567890,
@@ -714,7 +714,7 @@ Get the low-level blockchain-hosted state for a Blockstack namespace.  This comm
 Get the application private key from a 12- or 24-word Secret Key and an index of the enumerated associated accounts.  This is the private key used to sign data in Gaia, and its address is the Gaia bucket address.  If you provide your encrypted backup phrase, you will be asked to decrypt it.  
 Example:
 
-```
+```console
     $ export BACKUP_PHRASE="one race buffalo dynamic icon drip width lake extra forest fee kit"
     $ stx get_app_keys "$BACKUP_PHRASE" 1 https://my.cool.dapp
     {
@@ -740,7 +740,7 @@ Get the list of owner private keys and ID-addresses from a 12-word backup phrase
 
 Example:
 
-```
+```console
     $ # get the first 3 owner keys and addresses for a backup phrase
     $ export BACKUP_PHRASE="soap fog wealth upon actual blossom neither timber phone exile monkey vocal"
     $ stx get_owner_keys "$BACKUP_PHRASE" 3
@@ -781,7 +781,7 @@ Get the payment private key from a 12-word backup phrase.  If you provide an enc
 
 Example
 
-```
+```console
     $ stx get_payment_key "soap fog wealth upon actual blossom neither timber phone exile monkey vocal"
     [
       {
@@ -809,7 +809,7 @@ Get the payment private key from a 24-word backup phrase used by the Stacks wall
 
 Example
 
-```
+```console
     $ stx get_stacks_wallet_key "toast canal educate tissue express melody produce later gospel victory meadow outdoor hollow catch liberty annual gasp hat hello april equip thank neck cruise"
     [
       {
@@ -857,7 +857,7 @@ This command performs these steps in sequence:
 
 Example
 
-```
+```console
     $ stx migrate_subdomains "toast canal educate tissue express melody produce later gospel victory meadow outdoor hollow catch liberty annual gasp hat hello april equip thank neck cruise" https://registrar.stacks.co
 ```
 
@@ -876,7 +876,7 @@ Get a zone file by hash.
 
 Example:
 
-```
+```console
     $ stx get_zonefile ee77ad484b7b229f09461e4c2b6d3bd3e152ba95
     $ORIGIN ryanshea.id
     $TTL 3600
@@ -907,7 +907,7 @@ Get and authenticate the profile and zone file for a Blockstack ID.
 
 Example:
 
-```
+```console
     $ stx lookup example.id
 ```
 
@@ -925,7 +925,7 @@ Get the list of Blockstack IDs owned by an ID-address.
 
 Example:
 
-```
+```console
     $ stx names ID-1FpBChfzHG3TdQQRKWAipbLragCUArueG9
 ```
 
@@ -943,7 +943,7 @@ Generate the owner and payment private keys, optionally from a given 12-word bac
 
 Example:
 
-```
+```console
     $ stx make_keychain
     {
       "mnemonic": "apart spin rich leader siren foil dish sausage fee pipe ethics bundle",
@@ -970,13 +970,13 @@ Example:
 
 Generate a zone file for a Blockstack ID with the given profile URL.  If you know the ID-address for the Blockstack ID, the profile URL usually takes the form of:
 
-     {GAIA_URL_PREFIX}/{ADDRESS}/profile.json
+     `{GAIA_URL_PREFIX}/{ADDRESS}/profile.json`
 
 where `{GAIA_URL_PREFIX}` is the *read* endpoint of your Gaia hub (e.g. https://gaia.blockstack.org/hub) and `{ADDRESS}` is the base58check part of your ID-address (i.e. the string following 'ID-').
 
 Example:
 
-```
+```console
      $ stx make_zonefile example.id ID-1ArdkA2oLaKnbNbLccBaFhEV4pYju8hJ82 https://my.gaia.hub/hub
      $ORIGIN example.id
      $TTL 3600
@@ -1008,7 +1008,7 @@ This command prints out a transaction ID if it succeeds, and it replicates the z
 
 Example:
 
-```
+```console
     $ export REVEAL_KEY="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ export ID_ADDRESS="ID-18e1bqU7B5qUPY3zJgMLxDnexyStTeSnvV"
     $ stx name_import example.id "$ID_ADDRESS" https://gaia.blockstack.org/hub "$REVEAL_KEY"
@@ -1076,7 +1076,7 @@ Get the price of an on-chain Blockstack ID.  Its namespace must already exist.
 
 Example:
 
-```
+```console
     $ stx price example.id
     {
       "units": "BTC",
@@ -1098,7 +1098,7 @@ Get the price of a namespace.
 
 Example:
 
-```
+```console
     $ # get the price of the .hello namespace
     $ stx price_namespace hello
     {
@@ -1121,7 +1121,7 @@ Sign a profile on disk with a given owner private key.  Print out the signed pro
 
 Example:
 
-```
+```console
     $ # Tip: you can get the owner key from your 12-word backup phrase using the get_owner_keys command
     $ stx profile_sign /path/to/profile.json 0ffd299af9c257173be8486ef54a4dd1373407d0629ca25ca68ff24a76be09fb01
 ```
@@ -1154,7 +1154,7 @@ Verify a JWT encoding a profile on disk using an ID-address.  Prints out the con
 
 Example:
 
-```
+```console
     $ # get the raw profile JWT
     $ curl -sL https://raw.githubusercontent.com/jcnelson/profile/master/judecn.id > /tmp/judecn.id.jwt
     $ # Tip: you can get the ID-address for a name with the "whois" command
@@ -1178,7 +1178,7 @@ If you create a new zonefile for your name, you will need to later use `zonefile
 
 Example:
 
-```
+```console
     $ # Tip: you can get your owner key from your backup phrase with "get_owner_keys".
     $ # Tip: you can get your payment key from your backup phrase with "get_payment_key".
     $ export OWNER="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
@@ -1237,7 +1237,7 @@ WARNING: You should *NOT* use the payment private key (`PAYMENT_KEY`) while the 
 
 Example:
 
-```
+```console
     $ export OWNER="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
     $ stx register example.id "$OWNER" salt zonfile```
 
@@ -1270,7 +1270,7 @@ WARNING: You should *NOT* use the payment private key (`PAYMENT_KEY`) while the 
 
 Example:
 
-```
+```console
     $ export ID_ADDRESS="ID-18e1bqU7B5qUPY3zJgMLxDnexyStTeSnvV"
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ stx register_addr example.id "$ID_ADDRESS" "$PAYMENT" https://gaia.blockstack.org/hub
@@ -1293,7 +1293,7 @@ Revoke a name.  This renders it unusable until it expires (if ever).  This comma
 
 Example:
 
-```
+```console
     $ # Tip: you can get your owner and payment keys from your 12-word backup phrase using the get_owner_keys and get_payment_key commands.
     $ export OWNER="6e50431b955fe73f079469b24f06480aee44e4519282686433195b3c4b5336ef01"
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
@@ -1319,7 +1319,7 @@ If the command succeeds, it prints out the transaction ID.  You can track its co
 
 Example:
 
-```
+```console
     $ export PAYMENT="bfeffdf57f29b0cc1fab9ea197bb1413da2561fe4b83e962c7f02fbbe2b1cd5401"
     $ stx send_btc 18qTSE5PPQmypwKKej7QX5Db2XAttgYeA1 123456 "$PAYMENT"
     c7e239fd24da30e36e011e6bc7db153574a5b40a3a8dc3b727adb54ad038acc5
@@ -1393,7 +1393,7 @@ Stack the specified number of Stacks tokens for given number of cycles.
 
 Example:
 
-```
+```console
     $ stx stack 10000000 20 16pm276FpJYpm7Dv3GEaRqTVvGPTdceoY4 136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01
      {
        txid: '0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1',       transaction: 'https://explorer.hiro.so/txid/0x2e33ad647a9cedacb718ce247967dc705bc0c878db899fdba5eae2437c6fa1e1'     }
@@ -1417,7 +1417,7 @@ Get stacking status for specified address.
 
 Example:
 
-```
+```console
     $ stx stacking_status SPZY1V53Z4TVRHHW9Z7SFG8CZNRAG7BD8WJ6SXD0
 ```
 
@@ -1438,7 +1438,7 @@ An ID-address can only own up to 25 Blockstack IDs.  In practice, you should gen
 
 Example:
 
-```
+```console
     $ # Tip: you can get your owner key from your backup phrase with "get_owner_keys".
     $ # Tip: you can get your payment key from your backup phrase with "get_payment_key".
     $ export OWNER="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
@@ -1469,7 +1469,7 @@ Example:
 
 ```console
     $ export PAYMENT="136ff26efa5db6f06b28f9c8c7a0216a1a52598045162abfe435d13036154a1b01"
-    $ stx tx_preorder example.id "$PAYMENT" salt 1000
+    $ stx tx_preorder example.id "$PAYMENT" salt 100
 ```
 
 
@@ -1552,7 +1552,7 @@ Look up the zone file and owner of a Blockstack ID.  Works with both on-chain an
 
 Example:
 
-```
+```console
     $ stx whois example.id
     {
       "address": "1ArdkA2oLaKnbNbLccBaFhEV4pYju8hJ82",
@@ -1585,7 +1585,7 @@ Push a zone file on disk to the Blockstack peer network.  The zone file must cor
 
 Example:
 
-```
+```console
     $ stx -H https://api.hiro.so zonefile_push /path/to/zonefile.txt
     [
       "https://api.hiro.so"
@@ -1606,7 +1606,7 @@ Creates a DID configuration for the given blockstack id and domain to create a l
 The DID configuration should be placed in the json file ".well_known/did_configuration"
 Example:
 
-```
+```console
     $ # Tip: you can get your owner keys from your 12-word backup phrase using the get_owner_keys command.
     $ export PRIVATE_OWNER_KEY="6e50431b955fe73f079469b24f06480aee44e4519282686433195b3c4b5336ef01"
     $ stx get_did_configuration public_profile_for_testing.id.blockstack helloblockstack.com PRIVATE_OWNER_KEY
