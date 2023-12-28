@@ -29,7 +29,6 @@ var markdown =
 
 content.forEach((entry) => {
   const { command, group, usage, args } = entry;
-
   markdown = `${markdown}### ${command}\n\n**Group:** ${group}\n\n${usage}\n\n| Name | Type | Value |\n|-|-|-|\n`;
 
   args.forEach((arg) => {
@@ -40,5 +39,9 @@ content.forEach((entry) => {
 
   markdown = `${markdown}\n`;
 });
+// FIXME: this is a temporary workaround to add MDXv3 relevant escaping (see docs#566)
+// A proper fix would require either updating @stacks/cli directly, or preferably,
+// moving to a local build process that doesn't depend on @stacks/cli.
+markdown = markdown.replace("{GAIA_URL_PREFIX}/{ADDRESS}/profile.json", "`{GAIA_URL_PREFIX}/{ADDRESS}/profile.json`");
 
 fs.writeFileSync(path.resolve(argv.o, argv.f), markdown, { flag: "w+" });
