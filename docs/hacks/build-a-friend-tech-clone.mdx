@@ -41,7 +41,7 @@ import { isPast, formatDistanceToNow } from 'date-fns'
       className="inline-block bg-green-300 rounded-md text-sm text-green-800 px-2 py-1 hover:text-green-800 hover:no-underline transition-colors cursor-default"
       href="#"
     >
-    Open   
+    Open
     </a>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
@@ -272,7 +272,7 @@ If you are here for the Hiro Hacks prizes (see the [overview page](https://docs.
   Intermediate
 </span>
 
-**Fee Management**: When a user buys or sells `keys`, we might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic. 
+**Fee Management**: When a user buys or sells `keys`, we might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic.
 
 ```clarity
 ;; Change the fee values as you wish
