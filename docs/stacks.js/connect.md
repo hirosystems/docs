@@ -8,15 +8,11 @@ title: Overview
   <a
     className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
     href="https://connect.stacks.js.org"
-  >
-    Stacks Connect Reference <span className="i-radix-icons-link-2 align-text-bottom text-lg"></span>
-  </a>
+  >Stacks Connect Reference <span className="i-radix-icons-link-2 align-text-bottom text-lg"></span></a>
   <a
     className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
     href="https://discord.com/channels/621759717756370964/1022879438515486791"
-  >
-    Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
-  </a>
+  >Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span></a>
 </div>
 
 Stacks Connect is a frontend library that allows developers to build Stacks-ready web applications.

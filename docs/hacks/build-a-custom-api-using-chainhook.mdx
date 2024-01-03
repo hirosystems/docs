@@ -25,7 +25,7 @@ import { isPast, formatDistanceToNow } from 'date-fns'
       href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
-      Submit your project
+      Submit your project <span className="i-bi-cloud-upload-fill align-text-top text-lg"></span>
     </a>
     <a
       className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
@@ -129,7 +129,7 @@ Each item in the `apply` array should contain a `transactions` array. Each `tran
 
 - `transaction.metadata.receipt`: This attribute contains information about any events that were triggered from the function.
 
-- `transaction.operations`: This is an array that contains more specific information about what happened as a result of the function call. For instance if a *token transfer* occured, each object inside this array would contain various attributes and information regarding the account, amount, type, and status of the token transfer. 
+- `transaction.operations`: This is an array that contains more specific information about what happened as a result of the function call. For instance if a *token transfer* occured, each object inside this array would contain various attributes and information regarding the account, amount, type, and status of the token transfer.
 
 Here's what your POST route might look like after filtering for the relevant data in your `server.ts` file:
 
@@ -220,7 +220,7 @@ The `then_that` section specifies what action the Chainhook should take when it 
 
 The `start_block` field is used to specify the starting block for the Chainhook to start listening from. This is useful for ignoring blocks that were mined before the Chainhook was set up.
 
-Once you have created a similar file for your specific contract. select the _Chainhooks_ tab inside your project and upload your predicate file using the *Upload Chainhook* option. For more information, you can follow the [Create Chainhooks](../platform/guides/create-chainhooks) section. 
+Once you have created a similar file for your specific contract. select the _Chainhooks_ tab inside your project and upload your predicate file using the *Upload Chainhook* option. For more information, you can follow the [Create Chainhooks](../platform/guides/create-chainhooks) section.
 
 ## Testing Your Chainhook
 
