@@ -1,4 +1,4 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
+const lightCodeTheme = require('prism-react-renderer').github;
 const darkCodeTheme = require('./src/theme/hiro-dark-code.js');
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
@@ -121,11 +121,11 @@ module.exports = {
             items: [
               {
                 label: 'Tutorials',
-                to: '/tutorials/overview',
+                to: '/tutorials',
               },
               {
                 label: 'Example Apps',
-                to: '/example-apps/overview',
+                to: '/example-apps',
               },
               {
                 label: 'Stacks CLI',

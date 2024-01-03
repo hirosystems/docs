@@ -8,6 +8,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Workaround for https://github.com/hirosystems/docs/issues/567
+ * Based on https://github.com/PrismJS/prism/issues/2443#issuecomment-799188475
+ */
+@layer utilities {
+  .table {
+    display: initial;
+  }
+}
 
 @font-face {
   font-family: 'Aeonik Fono';
@@ -123,6 +132,10 @@ p {
 [data-theme='dark'] th,
 [data-theme='dark'] tr {
   border-color: var(--ifm-color-emphasis-200);
+}
+
+.hidden {
+  display: none;
 }
 
 .redocusaurus .redoc-wrap a {
@@ -460,6 +473,16 @@ a.menu__link.menu__link--sublist.menu__link--sublist-caret::after {
 .subSectionTitle {
   display: flex;
   justify-content: space-between;
+  width: 70%;
+}
+
+.card-disabled {
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.hide {
+  visibility: hidden;
 }
 
 /* left nav bar is hdden at 996px */

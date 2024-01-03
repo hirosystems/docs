@@ -35,7 +35,7 @@ export default {
       {
         title: 'Stacks API',
         text: 'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
-        href: '/stacks-blockchain-api/overview',
+        href: '/stacks-blockchain-api',
         image: {
           src: '/img/landing/api.png',
           alt: 'web3 APIs illustration image',
@@ -44,7 +44,7 @@ export default {
       {
         title: 'Ordinals API',
         text: 'Ordinals API is a REST-based service that indexes Bitcoin inscriptions based on Ordinal theory. The API supports Auto-scaling and Etag caching.',
-        href: '/ordinals-api/overview',
+        href: '/ordinals-api',
         image: {
           src: '/img/landing/ordinals-api.png',
           alt: 'Ordinals API',
@@ -53,7 +53,7 @@ export default {
       {
         title: 'Stacks.js',
         text: 'Stacks.js is an SDK with a collection of JavaScript libraries to interact with and transact on the Stacks blockchain.',
-        href: '/stacks.js/overview',
+        href: '/stacks.js',
         image: {
           src: '/img/landing/stacksjs.png',
           alt: 'Abstract blockchain illustration image',

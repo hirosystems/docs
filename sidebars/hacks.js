@@ -1,10 +1,10 @@
 module.exports = [
   {
     type: 'category',
-    label: 'Home',
+    label: 'Back',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -14,7 +14,28 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'Overview',
-    id: 'ordinals-api/overview',
+    label: 'Getting Started',
+    id: 'hacks/index',
   },
-]
+  {
+    type: 'html',
+    value: 'Hacks',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Build a Friend.tech Clone',
+    id: 'hacks/build-a-friend-tech-clone',
+  },
+  {
+    type: 'doc',
+    label: 'Build a Decentralized Grants Program',
+    id: 'hacks/build-a-decentralized-grants-program',
+  },
+  {
+    type: 'doc',
+    label: 'Build a Custom Blockchain API',
+    id: 'hacks/build-a-custom-api-using-chainhook',
+  },
+];

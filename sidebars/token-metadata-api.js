@@ -5,7 +5,7 @@ module.exports = [
     label: 'Home',
     type: 'link',
     href: '/',
-    className: 'back-link'
+    className: 'back-link',
   },
   {
     type: 'html',
@@ -16,7 +16,7 @@ module.exports = [
   {
     type: 'doc',
     label: 'Overview',
-    id: 'token-metadata-api/overview',
+    id: 'token-metadata-api/index',
   },
   {
     type: 'doc',
@@ -50,4 +50,4 @@ module.exports = [
     label: 'Use Image Cache Service',
     id: 'token-metadata-api/how-to-guides/how-to-use-image-cache-service',
   },
-]
+];

@@ -28,7 +28,7 @@
 
 module.exports = {
   'docs': rootSidebar,
-  // 'hacks': hacksSidebar, // TODO: add back in when we have content
+  'hacks': hacksSidebar,
   'platform': platformSidebar,
   'ordinals-explorer': ordinalsExplorerSidebar,
   'ordinals-api': ordinalsApiSidebar,

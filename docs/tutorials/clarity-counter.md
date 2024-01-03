@@ -242,7 +242,7 @@ You have now learned one method of deploying and interacting with smart contract
 the strengths of performing local development without having to wait for block times.
 
 <!-- [hello world tutorial]: /tutorials/clarity-hello-world
-[clarinet]: /clarinet/overview
+[clarinet]: /clarinet/index
 [installing clarinet]: /clarinet/getting-started
 [`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet

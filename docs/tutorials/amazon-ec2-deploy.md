@@ -17,7 +17,7 @@ an S3 or EBS provider for file storage. You should have access to an AWS account
 through a corporate account. This account should have permissions to create resources.
 
 Additionally, you must also own a domain name and be able to update the DNS records associated with that domain name.
-The procedure on this page uses a free domain created on [freenom][https://www.freenom.com], generically the procedure used
+The procedure on this page uses a free domain created on [freenom](https://www.freenom.com), generically the procedure used
 is similar to other domain name providers.
 
 ## Launching the template
