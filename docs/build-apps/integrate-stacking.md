@@ -287,7 +287,7 @@ More details on the lifecycle of transactions can be found in the [transactions 
 Alternatively to the polling, the Stacks Blockchain API client library offers WebSockets. WebSockets can be used to subscribe to specific updates, like transaction status changes. Here is an example:
 
 ```js
-const client = await connectWebSocketClient('ws://stacks-node-api.blockstack.org/');
+const client = await connectWebSocketClient('ws://api.hiro.so/');
 
 // note: txId should be defined previously
 const sub = await client.subscribeAddressTransactions(txId, event => {

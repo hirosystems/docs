@@ -134,7 +134,7 @@ The WebSocket components enable you to subscribe to specific updates, providing 
 
 ```js
 import { connectWebSocketClient } from '@stacks/blockchain-api-client';
-const client = await connectWebSocketClient('ws://stacks-node-api.blockstack.org/');
+const client = await connectWebSocketClient('ws://api.hiro.so/');
 const sub = await client.subscribeAddressTransactions(contractCall.txId, event => {
   console.log(event);
 });
