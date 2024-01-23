@@ -31,7 +31,7 @@ For account usage, that means addresses generated will _only_ be available for t
 
 :::
 
-Using the `-t` flag causes the CLI to connect to the testnet node at `http://api.hiro.so:20443`. To specify a node to connect to, add the `-I` flag followed by the URL of the node:
+Using the `-t` flag causes the CLI to connect to the testnet at `https://api.testnet.hiro.so`. To specify a node to connect to, add the `-I` flag followed by the URL of the node:
 
 ```sh
 stx <command> -I "http://localhost:20443"
