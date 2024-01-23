@@ -243,7 +243,7 @@ import { uintCV, UIntCV, cvToHex, hexToCV, ClarityType } from '@stacks/transacti
 
   const principal: string = 'ST000000000000000000002AMW42H';
 
-  // use most recent from: https://stacks-node-api.<mainnet/testnet>.stacks.co/v2/pox
+  // use most recent from: https://api.<mainnet/testnet>.hiro.so/v2/pox
   const rewardCycle: UIntCV = uintCV(22);
 
   // call a read-only function
@@ -318,7 +318,7 @@ The API allows querying the most recently streamed microblocks:
 
 ```bash
 # for mainnet, remove `.testnet`
-curl 'https://stacks-node-api-microblocks.testnet.stacks.co/extended/v1/microblock'
+curl 'https://api.testnet.hiro.so/extended/v1/microblock'
 ```
 
 ```json
@@ -352,7 +352,7 @@ API provides an endpoint to make nonce handling simpler:
 ```bash
 # for mainnet, remove `.testnet`
 # replace <principal> with your STX address
-curl 'https://stacks-node-api-microblocks.testnet.stacks.co/extended/v1/address/<principal>/nonces'
+curl 'https://api.testnet.hiro.so/extended/v1/address/<principal>/nonces'
 ```
 
 ```json
