@@ -28,4 +28,14 @@ module.exports = [
     label: 'Build a Friend.tech Clone',
     id: 'hacks/build-a-friend-tech-clone',
   },
+  {
+    type: 'doc',
+    label: 'Build a Decentralized Grants Program',
+    id: 'hacks/build-a-decentralized-grants-program',
+  },
+  {
+    type: 'doc',
+    label: 'Build a Custom Blockchain API',
+    id: 'hacks/build-a-custom-api-using-chainhook',
+  },
 ];

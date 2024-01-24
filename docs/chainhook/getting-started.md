@@ -11,7 +11,7 @@ Chainhook can extract data from the Bitcoin and the Stacks blockchains using pre
 - **Chainhook as a development tool** has a few convenient features designed to make developers as productive as possible by allowing them to iterate quickly in their local environments.
 - **Chainhook as a service** can be used to evaluate new Bitcoin and/or Stacks blocks against your predicates. You can also dynamically register new predicates by [enabling predicates registration API](./index.md#then-that-predicate-design).
 
-## Install Chainhook from the Source
+## Install Chainhook from source
 
 Chainhook can be installed from the source by following the steps below:
 

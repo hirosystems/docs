@@ -2,20 +2,31 @@
 title: Build a Friend.tech Clone
 ---
 
+<head>
+  <meta property="og:url" content="https://docs.hiro.so/hacks/build-a-friend-tech-clone" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hiro Hacks | Build a Decentralized Social Network" />
+  <meta
+    property="og:description"
+    content="Learn how to build a decentralized social network on Stacks."
+  />
+  <meta property="og:image" content='/img/hack1-og.png' />
+</head>
+
 import { isPast, formatDistanceToNow } from 'date-fns'
 
 
 # Build a Friend.tech Clone
 
 <div className="gap-3 flex flex-wrap mb-6">
-{isPast(new Date('2023-12-06')) ? (
+  {isPast(new Date('2023-12-06')) ? (
   <>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
-      href="https://rfw7zqyd.paperform.co/"
+      href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
-      Submit your project
+      Submit your project <span className="i-bi-cloud-upload-fill align-text-top text-lg"></span>
     </a>
     <a
       className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
@@ -30,11 +41,11 @@ import { isPast, formatDistanceToNow } from 'date-fns'
       className="inline-block bg-green-300 rounded-md text-sm text-green-800 px-2 py-1 hover:text-green-800 hover:no-underline transition-colors cursor-default"
       href="#"
     >
-    Open   
+    Open
     </a>
     <a
       className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
-      href="https://rfw7zqyd.paperform.co/"
+      href="https://survey.hiro.so/hirohacks"
       target="_blank"
     >
       Submission deadline {formatDistanceToNow(new Date('2023-12-06'), { addSuffix: true })}
@@ -46,7 +57,6 @@ import { isPast, formatDistanceToNow } from 'date-fns'
       Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
     </a>
   </>)}
-  
 </div>
 
 ## Introduction
@@ -55,11 +65,11 @@ What if we could gamify—and reward—being a friend? That's the idea behind Fr
 
 There are a few key components to this hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price, but as people buy more keys, the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation. These keys can also be used to access exclusive chatrooms with their corresponding subject, receive exclusive airdrops, and more
 
-This Hack walks you through the basics of building a Friend.tech clone. There are also challenges at the end—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://rfw7zqyd.paperform.co/)
+This Hack walks you through the basics of building a Friend.tech clone. There are also challenges at the end—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://survey.hiro.so/hirohacks)
 
 ## Clone the Starter Template
 
-In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required library packages.
+In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required packages.
 
 To clone the repository, open your terminal and run the following command:
 
@@ -101,18 +111,22 @@ The next thing we need to do is define a function that calculates the price of `
 
 ```clarity
 (define-read-only (get-price (supply uint) (amount uint))
-  (let
-    (
-      (base-price u10)
-      (price-change-factor u100)
-      (adjusted-supply (+ supply amount))
-    )
-    (+ base-price (* amount (/ (* adjusted-supply adjusted-supply) price-change-factor)))
+  (let (
+    (base-price u10) ;; Base price per key in micro-STX
+    (price-change-factor u100) ;; Factor to control the rate of price change
   )
-)
+  ;; Average price per token over the range of supply
+  (/ 
+    (+ 
+      (* base-price amount) 
+      (* amount (/ (+ (* supply supply) (* supply amount) (* amount amount)) (* u3 price-change-factor)))
+    )
+    amount
+  )
+))
 ```
 
-The `get-price` function calculates the price of `keys` using a formula that accounts for the current supply and the amount being bought or sold.
+The `get-price` function calculates the price of `keys` using a formula that calculates the average price per token over the range of supply affected. This can be done by integrating the price function over the range of supply and dividing by the amount.
 
 ### Creating, Buying, and Selling `Keys`
 
@@ -158,7 +172,7 @@ Next up, the `sell-keys` function:
     (
       (balance (default-to u0 (map-get? keysBalance { subject: subject, holder: tx-sender })))
       (supply (default-to u0 (map-get? keysSupply { subject: subject })))
-      (price (get-price supply amount))
+      (price (get-price (- supply amount) amount))
       (recipient tx-sender)
     )
     (if (and (>= balance amount) (or (> supply u0) (is-eq tx-sender subject)))
@@ -258,7 +272,7 @@ If you are here for the Hiro Hacks prizes (see the [overview page](https://docs.
   Intermediate
 </span>
 
-**Fee Management**: When a user buys or sells `keys`, we might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic. 
+**Fee Management**: When a user buys or sells `keys`, we might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic.
 
 ```clarity
 ;; Change the fee values as you wish
@@ -351,14 +365,10 @@ openSignatureRequestPopup({
 
 The signed message will serve as a _proof of identity_ - similar to a login, verifying that the user is indeed who they claim to be. This can be particularly useful in a chatroom setting, where only `is-keyholder` users are allowed to send messages.
 
-## Submission & Prizes
+## Prizes and Submissions
 
-Once you complete the hack, you can submit your project to compete for BTC prizes. We are giving the 10 best submissions 300K sats each.
+The submission deadline for prize eligibility has now closed.
 
-The deadline to submit is Wednesday, December 6th at midnight ET.
-
-We will also be giving a grand prize of 3M sats to the dev who submits the best and most consistent projects across all 3 hacks in December.
-
-You can submit your project to the [Hiro Hack Submission Form](https://rfw7zqyd.paperform.co/) to be eligible for these prizes. Good luck!
+However, you can still [submit your project here](https://survey.hiro.so/hirohacks) to talk to our team and get notified the next time a new hack drops.
 
 View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).

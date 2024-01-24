@@ -29,8 +29,15 @@ Here are the key features of the Ordinals API:
 
 # Rate Limiting for Ordinals API
 
-The Rate Limit per Minute(RPM) is applied to all the API endpoints based on the requested token addresses.
+The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November, 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
 
-| **Endpoint**                                                                                | **Rate per minute(RPM) limit** |
-| ------------------------------------------------------------------------------------------- |-----------------------|
-| api.mainnet.hiro.so/ordinals | <br/> 500 <br/> <br/> |
+- 50 requests per minute, per client IP, for unauthenticated traffic (without an API key)
+- 500 requests per minute (regardless of origin IP) with an authenticated API key
+
+These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow and scale.
+
+Please [complete this form](https://survey.hiro.so/hiroapi) to apply for an API key.
+
+# Testnet for Ordinals API
+
+A testnet version of the Ordinals API is unavailable, as the vast majority of activity occurs on Bitcoin mainnet. Exploration or testing with the Hiro Ordinals API is permitted, as long as it adheres to our [Terms of Use](https://www.hiro.so/terms)https://www.hiro.so/terms.
