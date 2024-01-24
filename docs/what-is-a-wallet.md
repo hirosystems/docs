@@ -2,7 +2,7 @@
 
 <img className="rounded-xl max-h-[320px] w-full object-cover" src="/img/what-is-a-wallet.png"/>
 
-> _Hiro and partners will NEVER ask for your seed phrase! If you are asked for your seed phrase, you are being scammed._
+<span class="text-gray-500 dark:text-gray-400 tracking-tight">Hiro and partners will NEVER ask for your seed phrase! NEVER share your seed phrase.</span>
 
 ---
 
@@ -26,9 +26,7 @@ Blockchain wallets are integral to navigating the world of digital currencies an
       <h2 className="text-stone-700 dark:text-white mb-2 lg:mb-3 text-base lg:text-lg font-semibold px-0.5 tracking-tight sm:text-xl xl:text-2xl">Leather</h2>
       <a
         className="cursor-pointer rounded-[10px] font-sans border border-[#EFEFF2] px-3 py-1 lg:px-4 lg:py-2 text-sm shadow-[0_1px_2px_0_#0000000A] outline-[#FFBD7A] transition-colors hover:text-[#242629] hover:shadow-[0_1px_2px_0_#00000010] focus:outline focus:outline-[3px] active:scale-95 bg-white text-gray-700 font-bold"
-      >
-        Install &rarr;
-      </a>
+      >Install &rarr;</a>
     </div>
   </div>
   <div className="flex space-x-4 md:space-x-6 lg:space-x-8 items-center">
@@ -42,9 +40,7 @@ Blockchain wallets are integral to navigating the world of digital currencies an
       <h2 className="text-stone-700 dark:text-white mb-2 lg:mb-3 text-base lg:text-lg font-semibold px-0.5 tracking-tight sm:text-xl xl:text-2xl">Xverse</h2>
       <a
         className="cursor-pointer rounded-[10px] font-sans border border-[#EFEFF2] px-3 py-1 lg:px-4 lg:py-2 text-sm shadow-[0_1px_2px_0_#0000000A] outline-[#FFBD7A] transition-colors hover:text-[#242629] hover:shadow-[0_1px_2px_0_#00000010] focus:outline focus:outline-[3px] active:scale-95 bg-white text-gray-700 font-bold"
-      >
-        Install &rarr;
-      </a>
+      >Install &rarr;</a>
     </div>
   </div>
 
