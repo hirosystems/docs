@@ -2,7 +2,7 @@
 
 <img className="rounded-xl max-h-[320px] w-full object-cover" src="/img/what-is-a-wallet.png"/>
 
-<span class="text-gray-500 dark:text-gray-400 tracking-tight">Hiro and partners will NEVER ask for your seed phrase! NEVER share your seed phrase.</span>
+<span class="text-neutral-500 dark:text-neutral-400 tracking-tight">Hiro and partners will NEVER ask for your seed phrase! NEVER share your seed phrase.</span>
 
 ---
 
