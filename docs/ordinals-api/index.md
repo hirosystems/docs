@@ -40,4 +40,4 @@ Please [complete this form](https://survey.hiro.so/hiroapi) to apply for an API 
 
 # Testnet for Ordinals API
 
-A testnet version of the Ordinals API is unavailable, as the vast majority of activity occurs on Bitcoin mainnet. Exploration or testing with the Hiro Ordinals API is permitted, as long as it adheres to our [Terms of Use](https://www.hiro.so/terms)https://www.hiro.so/terms.
+A testnet version of the Ordinals API is unavailable, as the vast majority of activity occurs on Bitcoin mainnet. Exploration or testing with the Hiro Ordinals API is permitted, as long as it adheres to our [Terms of Use](https://www.hiro.so/terms).
