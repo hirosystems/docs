@@ -8,8 +8,9 @@ module.exports = {
   tagline: 'Developer tools for Stacks',
   url: 'https://docs.hiro.so',
   baseUrl: '/',
+  onBrokenAnchors: 'throw',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'hirosystems', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
