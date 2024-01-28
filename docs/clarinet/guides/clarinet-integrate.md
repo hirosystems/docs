@@ -1,20 +1,20 @@
 ---
-title: Clarinet Integrate
+title: Clarinet Devnet Start
 ---
 
 ## Overview
 
-The Clarinet Integrate feature enables you to easily integrate your existing smart contracts with the blockchain in a local testing environment, allowing you to validate and verify your smart contract on an actual blockchain. While unit testing (the process of testing your code to ensure it works correctly) is a valuable way to test your code before implementation, certain features cannot be verified during unit testing, such as how your smart contract interacts with proof of transfer or the Bitcoin chain. Clarinet Integrate provides these additional tests.
+The Clarinet Devnet Start feature enables you to easily integrate your existing smart contracts with the blockchain in a local testing environment, allowing you to validate and verify your smart contract on an actual blockchain. While unit testing (the process of testing your code to ensure it works correctly) is a valuable way to test your code before implementation, certain features cannot be verified during unit testing, such as how your smart contract interacts with proof of transfer or the Bitcoin chain. Clarinet Devnet Start provides these additional tests.
 
-*Topics covered in this guide*:
+_Topics covered in this guide_:
 
-* [What is Clarinet Integrate?](#key-concepts)
-* [Configure your devnet](#devnet)
-* [References](#references)
+- [What is Clarinet Devnet Start?](#key-concepts)
+- [Configure your devnet](#devnet)
+- [References](#references)
 
 ## Key concepts
 
-Before using Clarinet Integrate, you should understand the following concepts described below.
+Before using Clarinet Devnet Start, you should understand the following concepts described below.
 
 ### Mainnet
 
@@ -28,13 +28,13 @@ Testnet refers to a test environment that you can use to validate and verify sma
 
 Devnet refers to an environment where you perform development tasks, including creating smart contracts and other assets. Use this space during the development phase of your work whenever possible.
 
-## Working with clarinet integrate
+## Working with clarinet devnet start
 
-Setting up and configuring your own devnet can be time-consuming. Clarinet Integrate speeds up the deployment process with an embedded orchestrator tool that enables you to run your own devnet network even when offline.
+Setting up and configuring your own devnet can be time-consuming. Clarinet Devnet Start speeds up the deployment process with an embedded orchestrator tool that enables you to run your own devnet network even when offline.
 
 ## References
 
-For a more detailed discussion on how to use Clarinet Integrate, please see the following resources:
+For a more detailed discussion on how to use Clarinet Devnet Start, please see the following resources:
 
 - [Meet 4 New Features in Clarinet](https://www.hiro.so/blog/meet-4-new-features-in-clarinet) blog post.
 
