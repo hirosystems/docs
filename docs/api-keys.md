@@ -11,7 +11,7 @@ API keys are alpha-numeric codes that identify and authenticate an application o
 
 # How to Get an API Key?
 
-If you're interested in obtaining an API key for use with your application, please complete [this form](https://survey.hiro.so/hiroapi?utm_source=Platform&utm_medium=web), and we'll be in touch with details.
+If you're interested in obtaining an API key, you can generate a free key in the [Hiro Platform](https://platform.hiro.so/).
 
 # Steps to Use an API Key
 

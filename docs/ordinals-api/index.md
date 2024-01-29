@@ -31,12 +31,12 @@ Here are the key features of the Ordinals API:
 
 The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November, 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
 
-- 50 requests per minute, per client IP, for unauthenticated traffic (without an API key)
-- 500 requests per minute (regardless of origin IP) with an authenticated API key
+- 50 requests per minute (RPM), per client IP, for unauthenticated traffic (without an API key)
+- 500 requests per minute (RPM) with an authenticated API key, regardless of origin IP
 
-These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow and scale.
+These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
 
-Please [Hiro Platform](https://platform.hiro.so/) to generate an API key.
+Please use the [Hiro Platform](https://platform.hiro.so/) to generate an API key.
 
 # Testnet for Ordinals API
 
