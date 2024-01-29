@@ -36,7 +36,7 @@ The following rate-limits (in requests per minute, or RPM) are applicable for al
 
 These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow and scale.
 
-Please [complete this form](https://survey.hiro.so/hiroapi) to apply for an API key.
+Please [Hiro Platform](https://platform.hiro.so/) to generate an API key.
 
 # Testnet for Ordinals API
 
