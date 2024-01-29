@@ -13,7 +13,7 @@ These rate-limits apply across our 3 public-facing APIs: Stacks Blockchain API, 
 
 These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
 
-Please [complete this form](https://survey.hiro.so/hiroapi) to apply for an API key.
+Please use the [Hiro Platform](https://platform.hiro.so/) to generate an API key.
 
 ### STX Faucet Rate Limit
 
