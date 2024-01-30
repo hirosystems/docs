@@ -53,16 +53,15 @@ The anchor mode enum has three options:
 Here is an example where the transaction must be included in a microblock:
 
 ```js
-import { AnchorMode, makeSTXTokenTransfer } from "@stacks/transactions";
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
+import { AnchorMode, makeSTXTokenTransfer } from '@stacks/transactions';
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
-const BigNum = require("bn.js");
+const BigNum = require('bn.js');
 
 const txOptions = {
-  recipient: "SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159",
+  recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
   amount: new BigNum(12345),
-  senderKey:
-    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
   network: new StacksTestnet(), // for mainnet, use `StacksMainnet()`
   anchorMode: AnchorMode.OffChainOnly, // must be included in a microblock
 };
@@ -83,7 +82,7 @@ Each transaction includes a field that describes zero or more post-conditions th
 | **Attribute**                                                        | **Sample**                                  | **Description**                                                                                  |
 | -------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | [Principal](https://docs.stacks.co/write-smart-contracts/principals) | `SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE` | Original owner of the asset, can be a Stacks address or a contract                               |
-| Asset id                                                             | `STX`                                       | Asset to apply conditions to (could be STX, fungible, or non-fungible tokens)                 |
+| Asset id                                                             | `STX`                                       | Asset to apply conditions to (could be STX, fungible, or non-fungible tokens)                    |
 | Comparator                                                           | `>=`                                        | Compare operation to be applied (could define "how much" or "whether or not the asset is owned") |
 | Literal                                                              | `1000000`                                   | Integer or boolean value used to compare instances of the asset against via the condition        |
 
@@ -133,18 +132,17 @@ Transactions can be constructed and serialized offline. However, it is required 
 ### Stacks Token transfer
 
 ```js
-import { makeSTXTokenTransfer } from "@stacks/transactions";
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
+import { makeSTXTokenTransfer } from '@stacks/transactions';
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
-const BigNum = require("bn.js");
+const BigNum = require('bn.js');
 
 const txOptions = {
-  recipient: "SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159",
+  recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
   amount: new BigNum(12345),
-  senderKey:
-    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
   network: new StacksTestnet(), // for mainnet, use `StacksMainnet()`
-  memo: "test memo",
+  memo: 'test memo',
   nonce: new BigNum(0), // set a nonce manually if you don't want builder to fetch from a Stacks node
   fee: new BigNum(200), // set a tx fee if you don't want the builder to estimate
 };
@@ -161,15 +159,14 @@ Read more about [nonces](http://docs.stacks.co/understand-stacks/network#nonces)
 ### Smart contract deployment
 
 ```js
-import { makeContractDeploy } from "@stacks/transactions";
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
-const BigNum = require("bn.js");
+import { makeContractDeploy } from '@stacks/transactions';
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
+const BigNum = require('bn.js');
 
 const txOptions = {
-  contractName: "contract_name",
-  codeBody: fs.readFileSync("/path/to/contract.clar").toString(),
-  senderKey:
-    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  contractName: 'contract_name',
+  codeBody: fs.readFileSync('/path/to/contract.clar').toString(),
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
   network: new StacksTestnet(), // for mainnet, use `StacksMainnet()`
 };
 
@@ -179,18 +176,17 @@ const transaction = await makeContractDeploy(txOptions);
 ### Smart contract function call
 
 ```js
-import { makeContractCall, BufferCV } from "@stacks/transactions";
-import { StacksTestnet, StacksMainnet } from "@stacks/network";
+import { makeContractCall, BufferCV } from '@stacks/transactions';
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
-const BigNum = require("bn.js");
+const BigNum = require('bn.js');
 
 const txOptions = {
-  contractAddress: "SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X",
-  contractName: "contract_name",
-  functionName: "contract_function",
-  functionArgs: [bufferCVFromString("foo")],
-  senderKey:
-    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  contractAddress: 'SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X',
+  contractName: 'contract_name',
+  functionName: 'contract_function',
+  functionArgs: [bufferCVFromString('foo')],
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
   // attempt to fetch this contracts interface and validate the provided functionArgs
   validateWithAbi: true,
   network: new StacksTestnet(), // for mainnet, use `StacksMainnet()`
@@ -231,7 +227,7 @@ const nothing = noneCV();
 const something = someCV(t);
 
 // construct a buffer clarity value from an existing Buffer
-const buffer = Buffer.from("foo");
+const buffer = Buffer.from('foo');
 const bufCV = bufferCV(buffer);
 
 // construct signed and unsigned integer clarity values
@@ -239,8 +235,8 @@ const i = intCV(-10);
 const u = uintCV(10);
 
 // construct principal clarity values
-const address = "SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B";
-const contractName = "contract-name";
+const address = 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B';
+const contractName = 'contract-name';
 const spCV = standardPrincipalCV(address);
 const cpCV = contractPrincipalCV(address, contractName);
 
@@ -307,7 +303,7 @@ Broadcasting transactions directly to the Stacks Blockchain API or Node RPC API 
 
 ```js
 // to see the raw serialized tx
-const serializedTx = transaction.serialize().toString("hex");
+const serializedTx = transaction.serialize().toString('hex');
 
 console.log(serializedTx);
 ```
@@ -365,10 +361,10 @@ When called the Stacks Blockchain API or Node RPC API, transactions returned wil
 Serialized, raw transactions can be deserialized without access to the internet using [the Stacks Transactions JS library](https://github.com/blockstack/stacks.js/tree/master/packages/transactions):
 
 ```js
-import { BufferReader, deserializeTransaction } from "@stacks/transactions";
+import { BufferReader, deserializeTransaction } from '@stacks/transactions';
 
 // receive raw transaction
-const serializedTx = "808000000...";
+const serializedTx = '808000000...';
 
 const bufferReader = new BufferReader(Buffer.from(serializedTx));
 const deserializedTx = deserializeTransaction(bufferReader);
@@ -601,7 +597,7 @@ Most transactions stay in the mempool due to nonce issues. If you see a transact
 If a transaction is removed from the mempool, the transaction was not processed and no changes were made to the blockchain state.
 
 [bitcoin wiki]: https://en.bitcoin.it/wiki/Vocabulary#Memory_pool
-[256 blocks]: https://github.com/blockstack/stacks-blockchain/blob/master/src/core/mempool.rs#L59
+[256 blocks]: https://github.com/stacks-network/stacks-core/blob/08c4b9d61b48b99475c0197e7e7fea50c7fb0e29/src/core/mempool.rs#L65
 [stacks-blockchain]: https://github.com/blockstack/stacks-blockchain
 [`accounts`]: https://docs.stacks.co/understand-stacks/accounts#get-stacks-stx-balance-and-nonce
 [25 in the current implementation]: https://github.com/blockstack/stacks-blockchain/blob/08c4b9d61b48b99475c0197e7e7fea50c7fb0e29/src/core/mempool.rs#L66
