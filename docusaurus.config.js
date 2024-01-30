@@ -20,6 +20,7 @@ module.exports = {
     require.resolve('docusaurus-plugin-segment'),
     ['./src/_plugins/google-tag-manager', { id: 'GTM-59XXGSG' }],
     ['./src/_plugins/alltius', { id: 'alltius' }],
+    './src/_plugins/stacksjs-deps',
     [
       'docusaurus-plugin-openapi',
       {
