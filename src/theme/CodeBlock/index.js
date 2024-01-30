@@ -14,7 +14,9 @@ export default function CodeBlockWrapper(props) {
       ref.current.innerHTML += args.map(argToHtml()).join('');
     };
     console.error = (...args) => {
-      ref.current.innerHTML += args.map(argToHtml('bg-red-950')).join('');
+      ref.current.innerHTML += args
+        .map(argToHtml('text-red-900 bg-red-100 text-red-50 dark:bg-red-950'))
+        .join('');
     };
 
     const uuid = crypto?.randomUUID() ?? 'uuid';
