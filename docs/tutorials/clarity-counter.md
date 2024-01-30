@@ -27,7 +27,7 @@ If you are using Visual Studio Code, you may want to install the [Clarity Visual
 
 While this tutorial primarily focuses on local smart contract development, you may wish to deploy your contract to
 a live blockchain. For simplicity, contract deployment is performed using the [testnet sandbox][]. If you wish to
-complete the optional deployment step, you should have the [Stacks Web Wallet][] installed, and you should request
+complete the optional deployment step, you should have the [Leather wallet][] installed, and you should request
 testnet STX tokens from the [testnet faucet][] on the testnet explorer. Note that requesting testnet STX from the faucet
 can take up to 15 minutes, so you may wish to request the tokens before beginning the tutorial.
 
@@ -206,13 +206,13 @@ final step.
 ## Optional: deploy and test the contract on the testnet
 
 For this tutorial, you'll use the [testnet sandbox][] to deploy your smart contract. Make sure you have connected your
-[Stacks web wallet][] to the sandbox using the **Connect wallet** button, then copy and paste your smart contract into
+[Leather wallet][] to the sandbox using the **Connect wallet** button, then copy and paste your smart contract into
 the Clarity code editor on the **Write & Deploy** page. Edit the contract name or use the randomly generated name
 provided to you.
 
 ![Counter testnet sandbox](/img/counter-testnet-sandbox.png)
 
-Click **Deploy** to deploy the contract to the blockchain. This will display the Stacks web wallet window with
+Click **Deploy** to deploy the contract to the blockchain. This will display the Leather wallet window with
 information about the transaction. Verify that the transaction looks correct, and the network is set to `Testnet`, and
 click **Confirm**.
 
@@ -221,12 +221,12 @@ to 15 minutes to complete. You can review it on the [transactions][] page of the
 of your web wallet.
 
 When your contract is confirmed, navigate to the [call a contract][] page of the sandbox, and search for your contract.
-Enter your wallet address in the top field, you can copy this address by clicking the Stacks web wallet icon and
+Enter your wallet address in the top field, you can copy this address by clicking the Leather wallet icon and
 clicking the **Copy address** button. Enter the contract name in the bottom field, in this case `counter`. Click
 **Get Contract** to view the contract.
 
 Click the `increment` function in the function summary, then click **Call Function** to perform the function call in the
-sandbox. This will display the Stacks web wallet with information about the transaction. Verify the information, then
+sandbox. This will display the Leather wallet with information about the transaction. Verify the information, then
 click **Confirm** to execute the function call.
 
 The function call is added to the miners mempool, and is executed in the next block of the blockchain. This process
@@ -241,20 +241,20 @@ Try calling the other public functions from the [call a contract][] page.
 You have now learned one method of deploying and interacting with smart contracts on Stacks. You have also learned
 the strengths of performing local development without having to wait for block times.
 
-[hello world tutorial]: /tutorials/clarity-hello-world
-[clarinet]: /smart-contracts/clarinet
-[installing clarinet]: /smart-contracts/clarinet#installing-clarinet
+<!-- [hello world tutorial]: /tutorials/clarity-hello-world
+[clarinet]: /clarinet/index
+[installing clarinet]: /clarinet/getting-started
 [`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
-[testnet sandbox]: https://explorer.stacks.co/sandbox/deploy?chain=testnet
-[stacks web wallet]: https://www.hiro.so/wallet/install-web
-[testnet faucet]: https://explorer.stacks.co/sandbox/faucet?chain=testnet
-[unit tests]: /smart-contracts/clarinet#testing-with-clarinet
+[testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
+[Leather wallet]: https://leather.io/install-extension
+[testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
+[unit tests]: /clarinet/guides/test-contract-with-clarinet-sdk
 [`var-get`]: https://docs.stacks.co/references/language-functions#var-get
-[`clarinet console`]: /smart-contracts/clarinet#testing-with-the-console
+[`clarinet console`]: /clarinet/guides/how-to-debug-contract#command-line-debugger
 [`begin`]: https://docs.stacks.co/references/language-functions#begin
 [`var-set`]: https://docs.stacks.co/references/language-functions#var-set
 [`+`]: https://docs.stacks.co/references/language-functions#-add
 [clarity language reference]: https://docs.stacks.co/references/language-functions
-[transactions]: https://explorer.stacks.co/transactions?chain=testnet
+[transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
-[call a contract]: https://explorer.stacks.co/sandbox/contract-call?chain=testnet
+[call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet -->

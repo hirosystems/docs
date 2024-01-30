@@ -1,0 +1,374 @@
+---
+title: Build a Friend.tech Clone
+---
+
+<head>
+  <meta property="og:url" content="https://docs.hiro.so/hacks/build-a-friend-tech-clone" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hiro Hacks | Build a Decentralized Social Network" />
+  <meta
+    property="og:description"
+    content="Learn how to build a decentralized social network on Stacks."
+  />
+  <meta property="og:image" content='/img/hack1-og.png' />
+</head>
+
+import { isPast, formatDistanceToNow } from 'date-fns'
+
+
+# Build a Friend.tech Clone
+
+<div className="gap-3 flex flex-wrap mb-6">
+  {isPast(new Date('2023-12-06')) ? (
+  <>
+    <a
+      className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
+      href="https://survey.hiro.so/hirohacks"
+      target="_blank"
+    >
+      Submit your project <span className="i-bi-cloud-upload-fill align-text-top text-lg"></span>
+    </a>
+    <a
+      className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
+      href="https://stacks.chat"
+    >
+      Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
+    </a>
+  </>
+) :
+  (<>
+    <a
+      className="inline-block bg-green-300 rounded-md text-sm text-green-800 px-2 py-1 hover:text-green-800 hover:no-underline transition-colors cursor-default"
+      href="#"
+    >
+    Open
+    </a>
+    <a
+      className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
+      href="https://survey.hiro.so/hirohacks"
+      target="_blank"
+    >
+      Submission deadline {formatDistanceToNow(new Date('2023-12-06'), { addSuffix: true })}
+    </a>
+    <a
+      className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
+      href="https://stacks.chat"
+    >
+      Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span>
+    </a>
+  </>)}
+</div>
+
+## Introduction
+
+What if we could gamify—and reward—being a friend? That's the idea behind Friend.tech, the decentralized social network that took Web3 by storm. In this hack, we'll recreate Friend.tech on the Stacks blockchain.
+
+There are a few key components to this hack: namely, **subjects** that have **keys** that anyone can buy. These keys start off low in price, but as people buy more keys, the price goes up faster and faster, rewarding friends who bought keys early. Key owners can sell their keys for a profit, or they can hold on to them to signal their friendship and build reputation. These keys can also be used to access exclusive chatrooms with their corresponding subject, receive exclusive airdrops, and more
+
+This Hack walks you through the basics of building a Friend.tech clone. There are also challenges at the end—opportunities to stretch your skills, differentiate your application, and **win prizes**. [Submit your project here!](https://survey.hiro.so/hirohacks)
+
+## Clone the Starter Template
+
+In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required packages.
+
+To clone the repository, open your terminal and run the following command:
+
+```bash
+git clone https://github.com/hirosystems/hiro-hacks-template.git
+cd hiro-hacks-template
+```
+
+## Create Your Contract
+
+Before we begin, we're assuming that you have `clarinet` installed and a basic understanding of how to use it. If you haven't installed `clarinet` yet, you can do so by referring to our [installation guide](../clarinet/getting-started.md).
+
+To create our contract, navigate to your project's directory and run the following command:
+
+```bash
+clarinet contract new keys
+```
+
+This will create a new contract in the `contracts` directory called `keys.clar`.
+
+> _**Note**_
+>
+> If you don't want to clone the provided starter template, you can create your `Clarinet` project manually by running `clarinet new friendtech && cd friendtech`.
+
+### Defining `Key` Balances and Supply
+
+Inside our `keys.clar` contract, we need to keep track of the balance of `keys` for each user (or _holder_) and the total supply of `keys` for each subject. We can do this using Clarity's `define-map` function:
+
+```clarity
+(define-map keysBalance { subject: principal, holder: principal } uint)
+(define-map keysSupply { subject: principal } uint)
+```
+
+The `keysBalance` stores each holder's `key` balance for a given subject and the `keysSupply` stores the total supply for each subject. These maps will be used in our contract's functions to manage the creation, buying, and selling of `keys`.
+
+### Calculating `Key` Prices
+
+The next thing we need to do is define a function that calculates the price of `keys` for a given a `supply` and `amount`. We can do this by defining a `get-price` function:
+
+```clarity
+(define-read-only (get-price (supply uint) (amount uint))
+  (let (
+    (base-price u10) ;; Base price per key in micro-STX
+    (price-change-factor u100) ;; Factor to control the rate of price change
+  )
+  ;; Average price per token over the range of supply
+  (/ 
+    (+ 
+      (* base-price amount) 
+      (* amount (/ (+ (* supply supply) (* supply amount) (* amount amount)) (* u3 price-change-factor)))
+    )
+    amount
+  )
+))
+```
+
+The `get-price` function calculates the price of `keys` using a formula that calculates the average price per token over the range of supply affected. This can be done by integrating the price function over the range of supply and dividing by the amount.
+
+### Creating, Buying, and Selling `Keys`
+
+These functions form the core of the contract's operations, enabling users to manage keys through buying and selling.
+
+Let's first take a look at the `buy-keys` function:
+
+```clarity
+(define-public (buy-keys (subject principal) (amount uint))
+  (let
+    (
+      (supply (default-to u0 (map-get? keysSupply { subject: subject })))
+      (price (get-price supply amount))
+    )
+    (if (or (> supply u0) (is-eq tx-sender subject))
+      (begin
+        (match (stx-transfer? price tx-sender (as-contract tx-sender))
+          success
+          (begin
+            (map-set keysBalance { subject: subject, holder: tx-sender }
+              (+ (default-to u0 (map-get? keysBalance { subject: subject, holder: tx-sender })) amount)
+            )
+            (map-set keysSupply { subject: subject } (+ supply amount))
+            (ok true)
+          )
+          error
+          (err u2)
+        )
+      )
+      (err u1)
+    )
+  )
+)
+```
+
+This function allows subjects to create their first `keys`, initiating their supply in the contract. The transaction only succeeds if the _subject_ is creating the initial `keys` or if there are already `keys` in circulation, ie `principal-a` cannot buy the initial `keys` for `principal-b`.
+
+Next up, the `sell-keys` function:
+
+```clarity
+(define-public (sell-keys (subject principal) (amount uint))
+  (let
+    (
+      (balance (default-to u0 (map-get? keysBalance { subject: subject, holder: tx-sender })))
+      (supply (default-to u0 (map-get? keysSupply { subject: subject })))
+      (price (get-price (- supply amount) amount))
+      (recipient tx-sender)
+    )
+    (if (and (>= balance amount) (or (> supply u0) (is-eq tx-sender subject)))
+      (begin
+        (match (as-contract (stx-transfer? price tx-sender recipient))
+          success
+          (begin
+            (map-set keysBalance { subject: subject, holder: tx-sender } (- balance amount))
+            (map-set keysSupply { subject: subject } (- supply amount))
+            (ok true)
+          )
+          error
+          (err u2)
+        )
+      )
+      (err u1)
+    )
+  )
+)
+```
+
+This is more or less the same logic as the `buy-keys` function, but instead we deduct the `keysBalance` and `keysSupply` and check if the seller owns enough keys and if they are authorized to sell.
+
+### Verifying Keyholders
+
+Now that we have the ability to buy and sell `keys`, we need a way to verify if a user is a keyholder. We can do this by defining an `is-keyholder` read-only function:
+
+```clarity
+(define-read-only (is-keyholder (subject principal) (holder principal))
+  (>= (default-to u0 (map-get? keysBalance { subject: subject, holder: holder })) u1)
+)
+```
+
+This function checks if the `keysBalance` for a given `subject` and `holder` is greater than or equal to 1. If it is, then the user `is-keyholder`.
+
+## Testing Locally
+
+Let's make sure our contract is valid and doesn't have any errors. To do this, we can run the following command:
+
+```bash
+clarinet check
+```
+
+Next, let's check some of our contract functionality inside `clarinet console`:
+
+```clarity
+;; Get the price of 100 keys when the supply is 0
+(contract-call? .keys get-price u0 u100) ;; u10010
+
+;; Initial purchase of keys
+(contract-call? .keys buy-keys tx-sender u100)
+
+;; Check if the sender is a keyholder
+(contract-call? .keys is-keyholder tx-sender tx-sender) ;; true
+
+(contract-call? .keys is-keyholder tx-sender  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) ;; false
+```
+
+Congratulations! You've successfully created your contract. You've laid the groundwork for a decentralized social network, just like Friend.tech.
+
+## Challenges
+
+If you are here for the Hiro Hacks prizes (see the [overview page](https://docs.hiro.so/hacks) for more details), you've come to the right section. The following challenges are additional features you can implement to further differentiate your project. Feel free to add any other features you want.
+
+<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
+  Starter
+</span>
+
+**Balance and Supply Query Functions**: Add two new read-only functions: `get-keys-balance` and `get-keys-supply`. These functions will provide valuable information to users about the distribution and availability of `keys`, and can be used in various parts of your application to display this information to users.
+
+```clarity
+(define-read-only (get-keys-balance (subject principal) (holder principal))
+  ;; Return the keysBalance for the given subject and holder
+)
+
+(define-read-only (get-keys-supply (subject principal))
+  ;; Return the keysSupply for the given subject
+)
+```
+
+<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
+  Starter
+</span>
+
+**Price Query Functions**: Add two new read-only functions: `get-buy-price` and `get-sell-price`. These helper functions will allow users to query the current price for buying or selling a specific amount of `keys` for a given `subject`.
+```clarity
+(define-read-only (get-buy-price (subject principal) (amount uint))
+  ;; Implement buy price logic
+)
+
+(define-read-only (get-sell-price (subject principal) (amount uint))
+  ;; Implement sell price logic
+)
+```
+
+<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
+  Intermediate
+</span>
+
+**Fee Management**: When a user buys or sells `keys`, we might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic.
+
+```clarity
+;; Change the fee values as you wish
+(define-data-var protocolFeePercent uint u200) ;; or subjectFeePercent
+(define-data-var protocolFeeDestination principal tx-sender)
+```
+
+<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
+  Intermediate
+</span>
+
+**Access Control**: In a real-world application, you might need to adjust the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values.
+
+```clarity
+(define-public (set-protocol-fee-percent (feePercent uint))
+  ;; Check if the caller is the contractOwner
+  ;; Update the protocolFeePercent value
+)
+```
+
+Think about how you can verify whether the caller of the function is indeed the `contractOwner`. Also, consider what kind of feedback the function should give when someone else tries to call it. Test your implementation to ensure it works as expected.
+
+<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
+  Intermediate
+</span>
+
+**UI Integration**: Using the provided [starter template](#clone-the-starter-template), integrate your contract using [Stacks.js](../stacks.js/index.md). For example, if you were calling the `is-keyholder` function, your code might look something like this:
+
+```tsx
+import { callReadOnlyFunction, standardPrincipalCV } from '@stacks/transactions';
+
+const senderAddress = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+const contractAddress = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+const contractName = 'keys';
+const functionName = 'is-keyholder';
+
+const functionArgs = [standardPrincipalCV(senderAddress)];
+
+await callReadOnlyFunction({
+  network,
+  contractAddress,
+  contractName,
+  functionName,
+  functionArgs,
+  senderAddress,
+});
+```
+
+By using a similar pattern to the code above, you will be able to **show/hide chatrooms based on keyholdings**, **create an exchange for buying/selling keys**, or **add a search for displaying subject keyholdings**.
+
+> _**Note**_
+>
+> If you are planning to experiment with your contract on `Devnet`, make sure to run `clarinet integrate` [to deploy and test your contract locally](https://docs.hiro.so/clarinet/guides/clarinet-integrate). You can then use the `Devnet` network when calling your contract in the [Leather wallet](https://leather.io/install-extension).
+
+<span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
+  Advanced
+</span>
+
+**Message Signature**: To further enhance the security and authenticity of your app, try to implemement a _login_ feature using [Message Signing](../stacks.js/guides/sign-messages).
+
+```tsx
+import { openSignatureRequestPopup } from '@stacks/connect';
+import { verifyMessageSignatureRsv } from '@stacks/encryption';
+import { StacksMocknet } from '@stacks/network';
+import { getAddressFromPublicKey } from '@stacks/transactions';
+
+const message = 'Log in to chatroom';
+const network = new StacksMocknet();
+
+openSignatureRequestPopup({
+  message,
+  network,
+  onFinish: async ({ publicKey, signature }) => {
+    const verified = verifyMessageSignatureRsv({
+      message,
+      publicKey,
+      signature
+    });
+    if (verified) {
+      // The signature is verified, so now we can check if the user is a keyholder
+      const address = getAddressFromPublicKey(publicKey, network.version);
+      const isKeyHolder = await checkIsKeyHolder(address);
+      if (isKeyHolder) {
+        // The user is a keyholder, so they are authorized to access the chatroom
+      }
+    }
+  }
+});
+```
+
+The signed message will serve as a _proof of identity_ - similar to a login, verifying that the user is indeed who they claim to be. This can be particularly useful in a chatroom setting, where only `is-keyholder` users are allowed to send messages.
+
+## Prizes and Submissions
+
+The submission deadline for prize eligibility has now closed.
+
+However, you can still [submit your project here](https://survey.hiro.so/hirohacks) to talk to our team and get notified the next time a new hack drops.
+
+View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).

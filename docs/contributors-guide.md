@@ -4,43 +4,45 @@ title: Hiro Contributor's Guide
 
 # Introduction
 
-One of the most important ways that Hiro can build out the Stacks developer community and ecosystem is by having feedback and contributions from the developer community. Having this feedback loop and insight into what works, and what does not work, is helpful in prioritizing what content should be written, what content needs to be updated, and what content may be missing.
+One of the most important ways that Hiro can build out the Stacks developer community and ecosystem is by having feedback and contributions from the developer community. Having this feedback loop and insight into what works and what does not work is helpful in prioritizing what content should be written, what content needs to be updated, and what content may be missing.
 
-This guide describes how to contribute to Hiro documentation and content so feedback is received. Hiro can then incorporate these comments to improve the overall developer documentation experience.
+This guide describes how to contribute to Hiro's documentation and content so feedback is received. Hiro can then incorporate these comments to improve the overall developer documentation experience.
 
-# **Contributing to hiro documentation**
+# **Contributing to Hiro's documentation**
 
 Hiro welcomes all contributions to Hiro documentation. These contributions come in two forms: issues and pull requests.
 
 ## **Issues**
 
-If content is obsolete, technically inaccurate, or unclear, [please create a GitHub Issue](https://github.com/hirosystems/docs/issues/new). This is a great way to give specific feedback and ensures the technical content is up-to-date and technically accurate.
+If the content is obsolete, technically inaccurate, or unclear, [please create a GitHub Issue](https://github.com/hirosystems/docs/issues/new). This is a great way to give specific feedback and ensure the technical content is up-to-date and technically accurate.
 
 ## **Pull requests**
 
 To suggest more comprehensive changes or updates to the content, make documentation changes and then submit a pull request.
 
-For minor changes like typos, click "Edit This Page," located at the bottom of each page. This leads to the source file on GitHub, where a pull request can be submitted.
+For minor changes like typos, click "Edit This Page" at the bottom of each page. This leads to the source file on GitHub, where a pull request can be submitted.
 
-For larger edits or new documents, edit the docs locally, following the steps described below.
+Edit the docs locally for larger edits or new documents, following the steps described below.
 
 ### **Editing docs locally**
 
-To submit a pull request to update the docs, fork the Hiro Docs repository and then clone it. Currently all Hiro docs are located in `/hirosystems/docs`
+To submit a pull request to update the docs, fork the Hiro Docs repository and clone it. Currently, all Hiro docs are located in `/hirosystems/docs`
 
 1. Create a branch and switch to that branch:
-    
-    `git checkout -b <branch-name>`
-    
+    ```sh
+    git checkout -b <branch-name>
+    ```
+
 2. Add or modify the GitHub Markdown files in the directories.
 3. When the suggested changes are complete, commit them with a message with a brief summary message:
-    
-    `git commit -m "commit message"`
-    
+    ```sh
+    git commit -m "commit message"
+    ```
+
 4. Push the branch up:
-    
-    `git push origin <branch-name>`
-    
+    ```sh
+    git push origin <branch-name>
+    ```
 
 When the changes are final, create a pull request from the working branch by following [GitHub's guide](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
 

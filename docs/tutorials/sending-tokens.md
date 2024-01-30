@@ -45,7 +45,7 @@ The API client is generated from the [OpenAPI specification](https://github.com/
 
 ## Step 2: Specifying a sender
 
-In order to build and sign transactions, you will need a Stacks private key. You can easily generate a new, random Stacks 2.0 sender key (see ["Generating an account" from the previous tutorial](/tutorials/managing-accounts#step-2-generating-an-account)).
+In order to build and sign transactions, you will need a Stacks private key. You can easily generate a new, random Stacks 2.0 sender key (see ["Generating an account" from the previous tutorial](/tutorials/managing-accounts#step-2-generate-an-account)).
 
 For this tutorial, we will use an existing Stacks account and instantiate the key object from a private key string:
 
@@ -66,7 +66,7 @@ const { TransactionsApi, Configuration } = require('@stacks/blockchain-api-clien
 const apiConfig = new Configuration({
   fetchApi: fetch,
   // for mainnet, replace `testnet` with `mainnet`
-  basePath: 'https://stacks-node-api.testnet.stacks.co',
+  basePath: 'https://api.testnet.hiro.so',
 });
 
 const key = 'edf9aee84d9b7abc145504dde6726c64f369d37ee34ded868fabd876c26570bc01';
@@ -242,4 +242,4 @@ For all property formats and details, please review the [API reference](https://
 
 ## Step 6: Confirming balance (optional)
 
-Now that the token transfer is confirmed, we can verify the new account balance on the sender address by [following the "Getting account balances" steps from the previous tutorial](/tutorials/managing-accounts#step-5-getting-account-balances).
+Now that the token transfer is confirmed, we can verify the new account balance on the sender address by [following the "Getting account balances" steps from the previous tutorial](/tutorials/managing-accounts#step-5-get-account-balances).

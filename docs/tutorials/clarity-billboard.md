@@ -284,13 +284,13 @@ You have now learned how to store and update data on chain with a variable, and 
 a contract caller to a new principal address. Additionally, you have learned how to write a unit test for a simple
 Clarity contract using Clarinet.
 
-[counter tutorial]: /tutorials/clarity-counter
-[clarinet]: /smart-contracts/clarinet
-[installing clarinet]: /smart-contracts/clarinet#installing-clarinet
+<!-- [counter tutorial]: /tutorials/clarity-counter
+[clarinet]: /clarinet/index
+[installing clarinet]: /clarinet/getting-started
 [visual studio code]: https://code.visualstudio.com/
 [final code for this tutorial]: https://github.com/hirosystems/stacks-billboard
 [`let`]: https://docs.stacks.co/references/language-functions#let
 [`stx-transfer?`]: https://docs.stacks.co/references/language-functions#stx-transfer
 [`as-contract`]: https://docs.stacks.co/references/language-functions#as-contract
 [`unwrap!`]: https://docs.stacks.co/references/language-functions#unwrap
-[clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
+[clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp -->
