@@ -12,7 +12,7 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is PoX-2?
 
-[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.hiro.so/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-core/blob/1d8920ed68be2d1982b91f729522ff0c6e00572f/stackslib/src/chainstate/stacks/boot/pox-2.clar#L1022), aka PoX-2).
+[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.hiro.so/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-core/blob/1d8920ed68be2d1982b91f729522ff0c6e00572f/stackslib/src/chainstate/stacks/boot/pox-2.clar), aka PoX-2).
 
 ### PoX-2 periods
 
