@@ -12,7 +12,7 @@ In this article, you will learn about Stacks 2.05 to 2.1 migration and how the H
 
 ## What is PoX-2?
 
-[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.hiro.so/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-blockchain/blob/master/src/chainstate/stacks/boot/pox-2.clar), aka PoX-2).
+[Proof-of-transfer (PoX)](https://docs.stacks.co/docs/understand-stacks/proof-of-transfer) is a consensus mechanism in modern blockchains. In Stacks 2.05 or earlier versions, this consensus mechanism uses the `.pox` ([boot/pox.clar](https://explorer.hiro.so/txid/SP000000000000000000002Q6VF78.pox?chain=mainnet&_gl=1*6fljeg*_ga*MTY3NTgyOTg2OS4xNjY2MjA3NDM3*_ga_NB2VBT0KY2*MTY3MDk1ODcyNS4xMTEuMC4xNjcwOTU4NzI1LjAuMC4w), aka PoX-1) boot smart contract. With the Stacks 2.1 upgrade, the new fork is updated to `.pox-2` ([boot/pox-2.clar](https://github.com/stacks-network/stacks-core/blob/1d8920ed68be2d1982b91f729522ff0c6e00572f/stackslib/src/chainstate/stacks/boot/pox-2.clar), aka PoX-2).
 
 ### PoX-2 periods
 
@@ -55,9 +55,9 @@ epoch = "2.1"
 
 This section helps you update your Devnet settings to work with the Stacks 2.1 upgrade.
 
-If you are new to Clarinet, refer to the [Getting started](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md) guide to install clarinet, [set up local development environment](https://github.com/hirosystems/clarinet/blob/main/docs/how-to-guides/how-to-set-up-local-development-environment.md) and [create your project](https://github.com/hirosystems/clarinet/blob/main/docs/how-to-guides/how-to-create-new-project.md).
+If you are new to Clarinet, refer to the [Getting started](./clarinet/getting-started.md) guide to install clarinet, [set up local development environment](./clarinet/guides/how-to-set-up-local-development-environment.md) and [create your project](./clarinet/guides/how-to-create-new-project.md).
 
-To upgrade your clarinet version, you can [install from a pre-built binary](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](https://github.com/hirosystems/clarinet/blob/main/docs/getting-started.md#install-from-source-using-cargo).
+To upgrade your clarinet version, you can [install from a pre-built binary](./clarinet/getting-started.md#install-from-a-pre-built-binary) or [install from source using Cargo](./clarinet/getting-started.md#install-from-source-using-cargo).
 
 After installing the latest version of Clarinet, navigate to your project directory and then to `settings/Devnet.toml` (hereafter referred to as **devnet.toml**).
 
@@ -86,7 +86,7 @@ Spin up a local Devnet network using the command:
 clarinet integrate
 ```
 
-If you have any trouble with the above command, refer to the [troubleshooting guide](https://github.com/hirosystems/clarinet/blob/main/docs/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
+If you have any trouble with the above command, refer to the [troubleshooting guide](./clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).
 
 New stacks-node will spin up. At Bitcoin block height 102, the chainstate will migrate to epoch 2.05, a network upgrade introduced earlier this year, reducing operations costs. At bitcoin block height 106, the chainstate will migrate to epoch 2.1.
 
@@ -167,7 +167,7 @@ The PoX-2 support is extended to various functions mentioned [below](#new-pox-in
 
 ## Stacks.js
 
-Stacks 2.1 upgrade for Stacks.js include methods now accepting `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR) and new [Stacking](#new-pox-interaction-functions-clarity) and [Helper](#new-helper-methods) methods.
+Stacks 2.1 upgrade for Stacks.js include methods now accepting `poxAddress` in more BTC address formats (P2PKH, P2SH, P2WPKH, P2WSH, P2TR) and new Stacking and [Helper](#new-helper-methods) methods.
 
 ### New PoX interactive functions for Clarity
 
@@ -200,7 +200,7 @@ npm install @stacks/stacking@^6.0.0
 
 :::caution
 
-There will be a short period of time ([Period 2a](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking#overview-of-transition-periods)), where old versions `@stacks/stacking` (<`6.0.0`) will stack to PoX-1, even though PoX-2 is available.
+There will be a short period of time ([Period 2a](https://www.hiro.so/blog/how-the-stacks-2-1-transition-impacts-stacking#overview-of-transition-periods)), where old versions `@stacks/stacking` (\< `6.0.0`) will stack to PoX-1, even though PoX-2 is available.
 
 :::
 

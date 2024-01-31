@@ -5,7 +5,7 @@ title: Billboard app
 
 import NodeLTS from '../includes/\_node-lts-version.mdx';
 
-This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](/smart-contracts/devnet), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
+This example app demonstrates the integration between a simple web app and a Clarity smart contract. Using the [DevNet](../clarinet/guides/how-to-set-up-local-development-environment.md), a local version of the Stacks blockchain is used as a development and integration environment for the full stack app. This app builds a frontend to the [Billboard smart contract](/tutorials/clarity-billboard), and demonstrates the use of the [Stacks API](/api) in React. The full source of the app is provided and is completely open source for you to modify. This page is a case study highlighting important code snippets and design patterns to help you develop your own Stacks app, as well as use the DevNet feature to integrate your frontend and backend without deploying to a live testnet.
 
 This app showcases the following features of Stacks and Clarinet:
 
@@ -86,9 +86,9 @@ To avoid errors, it is recommended that you bring up the local DevNet and allow 
 
 ### DevNet configuration
 
-DevNet is a highly configurable instance of the Stacks blockchain. You can configure many of the properties of the DevNet through modifying values in the `settings/DevNet.toml` file. When you create a new project with Clarinet, this file is populated with sensible default vales for the local blockchain. If you would like to [change any of the default values](/smart-contracts/devnet#blockchain-configuration), uncomment the line containing the configuration parameter, and change the value to your intended configuration.
+DevNet is a highly configurable instance of the Stacks blockchain. You can configure many of the properties of the DevNet through modifying values in the `settings/DevNet.toml` file. When you create a new project with Clarinet, this file is populated with sensible default vales for the local blockchain. If you would like to change any of the default values, uncomment the line containing the configuration parameter, and change the value to your intended configuration.
 
-The DevNet configuration file also contains [definitions for predefined wallets](/smart-contracts/devnet#accounts-configuration) in the local chain. These wallets are pre-populated with STX tokens, and can be used for testing and integration. The configuration file provides the seed phrase and private key for each wallet as well.
+The DevNet configuration file also contains definitions for predefined wallets in the local chain. These wallets are pre-populated with STX tokens, and can be used for testing and integration. The configuration file provides the seed phrase and private key for each wallet as well.
 
 ## Running the billboard frontend
 

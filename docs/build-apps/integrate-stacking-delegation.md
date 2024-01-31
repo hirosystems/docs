@@ -3,7 +3,7 @@ id: integrate-stacking-delegation
 title: Integrating Stacking Delegation
 ---
 
-import StacksjsStartersNote from '../stacks.js/includes/\_stacks.js-starters-note.mdx';
+import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
@@ -12,8 +12,8 @@ In this guide, you'll learn how to integrate the Stacking delegation flow by int
 This guide highlights the following capabilities:
 
 - As an account holder: delegate STX tokens
-- As a delegator: Stack STX token on behalf of the account holder
-- As a delegator: Commit to Stacking with all delegated STX tokens
+- As a delegator: stack STX token on behalf of the account holder
+- As a delegator: commit to Stacking with all delegated STX tokens
 
 ## Prerequisites
 
@@ -102,7 +102,7 @@ This method calls the [`delegate-stx`](https://docs.stacks.co/references/stackin
 
 :::tip
 
-To avoid handling private keys, it is recommended to use the [Stacks Wallet](https://www.hiro.so/wallet) to sign the delegation transaction
+To avoid handling private keys, we recommend using [Leather](https://leather.io/install-extension) to sign the delegation transaction
 
 :::
 
@@ -126,7 +126,7 @@ This method calls the [`revoke-delegate-stx`](https://docs.stacks.co/references/
 
 :::tip
 
-To avoid handling private keys, it is recommended to use the [Stacks Wallet](https://www.hiro.so/wallet) to sign the revoke transaction
+To avoid handling private keys, we recommend using [Leather](https://leather.io/install-extension) to sign the revoke transaction
 
 :::
 
