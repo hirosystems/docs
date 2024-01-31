@@ -1,6 +1,6 @@
 // Clarity language definition to add clarity support to prismjs
 // from
-// https://github.com/hirosystems/stacks-wallet-web/blob/dev/src/app/common/clarity-prism.ts
+// https://github.com/leather-wallet/extension/blob/dev/src/app/common/clarity-prism.ts
 
 function clarity(Prism) {
   function primitive(pattern) {

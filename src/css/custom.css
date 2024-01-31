@@ -4,6 +4,20 @@
  * work well for content-centric websites.
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Workaround for https://github.com/hirosystems/docs/issues/567
+ * Based on https://github.com/PrismJS/prism/issues/2443#issuecomment-799188475
+ */
+@layer utilities {
+  .table {
+    display: initial;
+  }
+}
+
 @font-face {
   font-family: 'Aeonik Fono';
   src: url('https://alphaassets.hiro.so/AeonikFono-Regular.woff2') format('woff2'),
@@ -11,6 +25,15 @@
   font-weight: normal;
   font-style: normal;
   font-display: optional;
+}
+
+@font-face {
+  font-family: 'AeonikMono-Regular';
+  src: url('https://alphaassets.hiro.so/AeonikMono-Regular.woff2') format('woff2'),
+    url('https://alphaassets.hiro.so/AeonikMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -69,8 +92,9 @@
   --ifm-button-font-weight: var(--ifm-font-weight-semibold);
 
   --ifm-global-radius: 2px;
+  --ifm-code-border-radius: 5px;
   --ifm-global-shadow-lw: 0 1px 2px 0 rgba(0, 0, 0, 0.07);
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 81.25%;
   --ifm-alert-border-left-width: 0px;
 
   --aa-primary-color-rgb: var(--ifm-color-primary-lighter);
@@ -96,6 +120,11 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'AeonikMono-Regular';
+}
+
+p {
+  font-family: 'Inter var', system-ui, -apple-system;
 }
 
 [data-theme='dark'] table,
@@ -103,6 +132,10 @@ body {
 [data-theme='dark'] th,
 [data-theme='dark'] tr {
   border-color: var(--ifm-color-emphasis-200);
+}
+
+.hidden {
+  display: none;
 }
 
 .redocusaurus .redoc-wrap a {
@@ -180,10 +213,27 @@ main[class^='apiMainContainer_'] table {
 /* SEARCH PLUGIN ============================================================ */
 
 /* fix for duplicate padding, after search bar update */
-.navbar__items div[class^='searchBox_'] {
-  padding-top: 0;
-  padding-bottom: 0;
-  min-width: 128px; /* reduces layout shift by late search box loading */
+.navbar__inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar__items {
+  display: flex;
+  /* flex-direction: row-reverse; */
+  flex-shrink: 1; /* allows this element to shrink */
+  max-width: 50%; /* limits width to 50% of the parent's width */
+  /* justify-content: flex-end; */
+}
+
+.dropdown > .navbar__link:after {
+  margin-left: 0.4rem;
+}
+
+.navbar__search {
+  order: -1;
+  flex-grow: 1;
+  margin-right: auto;
 }
 
 .dsla-search-wrapper {
@@ -258,19 +308,82 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 }
 
 /* SIDEBAR & NAVBAR ========================================================= */
-.section-title {
-  color: var(--ifm-color-gray-600);
-  font-size: 0.75rem;
+
+.menu__list-item.section-title {
+  margin-top: 0.75rem;
+}
+
+/* For light theme */
+[data-theme='light'] .section-title {
+  color: var(--ifm-color-gray-900);
+  font-size: 0.8rem;
   font-weight: 600;
-  padding-bottom: 0 !important;
+  text-transform: uppercase;
+}
+
+/* For dark theme */
+[data-theme='dark'] .section-title {
+  color: var(--ifm-color-gray-100);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dropdown-nav {
+  font-size: 0.8rem;
 }
 
 .dropdown__menu .section-title {
-  padding: 0.5rem 0.375rem 0;
+  margin-top: 0.75rem;
+}
+
+.dropdown__menu a.dropdown__link {
+  font-size: 0.8rem;
 }
 
 .dropdown__link {
   margin-top: 0;
+}
+
+.menu__link {
+  font-size: 0.8rem;
+  background-color: transparent !important;
+}
+
+.menu__link:hover {
+  background-color: transparent;
+}
+
+[data-theme='light'] .menu__link:hover {
+  color: var(--ifm-color-gray-900);
+}
+
+[data-theme='dark'] .menu__link:hover {
+  color: var(--ifm-color-gray-100);
+}
+
+a.menu__link.menu__link--sublist.menu__link--sublist-caret::after {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 2rem 1rem;
+}
+
+[data-theme='light'] .footer__title {
+  color: var(--ifm-color-gray-900);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'AeonikMono-Regular';
+  text-transform: uppercase;
+}
+
+[data-theme='dark'] .footer__title {
+  color: var(--ifm-color-gray-100);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'AeonikMono-Regular';
+  text-transform: uppercase;
+}
+
+.footer__item a.footer__link-item {
+  font-size: 0.8rem;
 }
 
 /* FEEDBACK ================================================================= */
@@ -303,4 +416,148 @@ html[data-theme='dark'] body[data-theme='light'] img:first-of-type {
 
 .docsRating .i_thumbsdown {
   transform: scale(-1, -1) translateY(-0.25em);
+}
+
+/* tmp content, todo: deduplicate */
+[data-theme='dark'] .card {
+  background-color: var(--color-neutral-000);
+}
+.sectionTitle {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 32px;
+}
+.subSections {
+  display: flex;
+  gap: 16px;
+  color: var(--color-neutral-300);
+}
+.subSections > a {
+  display: block;
+  flex: 1;
+  position: relative;
+  border-radius: 8px;
+  padding: 16px 16px 32px;
+
+  text-decoration: none;
+
+  background-color: var(--color-neutral-000);
+  color: var(--color-neutral-400);
+  transition: background-color 64ms ease-in-out;
+}
+.subSections > a:hover {
+  background-color: var(--color-neutral-100);
+}
+.subSections > a:focus {
+  background-color: var(--color-neutral-200);
+}
+[data-theme='dark'] .subSections > a {
+  background-color: var(--color-neutral-600);
+  color: var(--color-neutral-200);
+}
+[data-theme='dark'] .subSections > a:hover {
+  background-color: var(--color-neutral-500);
+}
+[data-theme='dark'] .subSections > a:focus {
+  background-color: var(--color-neutral-700);
+}
+.subSections > a span {
+  position: absolute;
+  transition: right 128ms ease-in-out;
+  right: 22px;
+}
+.subSections > a:hover span {
+  right: 16px;
+}
+.subSectionTitle {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.card-disabled {
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+/* left nav bar is hdden at 996px */
+@media screen and (max-width: 860px) {
+  .subSections {
+    flex-direction: column;
+  }
+}
+
+/* CONTENT MARKDOWN ELEMENTS ================================================ */
+/* Prefixed with `Hiro` */
+
+div.HiroLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+a.HiroLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: color 0.15s ease;
+  background-color: ;
+}
+
+a.HiroLinkExternal {
+  color: var(--ifm-color-primary);
+}
+/* ALGOLIA SEARCH BAR STYLING =============================================== */
+/* This section contains the styling for the Algolia search bar. */
+
+[data-theme='light'] .DocSearch {
+  /* --docsearch-primary-color: var(--ifm-color-primary); */
+  /* --docsearch-text-color: var(--ifm-font-color-base); */
+  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
+  --docsearch-container-background: rgba(94, 100, 112, 0.7);
+  /* Modal */
+  --docsearch-modal-background: var(--ifm-color-secondary-lighter);
+  /* Search box */
+  /* --docsearch-searchbox-background: var(--ifm-color-secondary); */
+  --docsearch-searchbox-focus-background: var(--ifm-color-white);
+  /* Hit */
+  --docsearch-hit-color: var(--ifm-font-color-base);
+  --docsearch-hit-active-color: var(--ifm-color-white);
+  --docsearch-hit-background: var(--ifm-color-white);
+  /* Footer */
+  --docsearch-footer-background: var(--ifm-color-white);
+}
+
+[data-theme='dark'] .DocSearch {
+  --docsearch-text-color: var(--ifm-font-color-base);
+  --docsearch-muted-color: var(--ifm-color-secondary-darkest);
+  --docsearch-container-background: rgba(47, 55, 69, 0.7);
+  /* Modal */
+  --docsearch-modal-background: var(--ifm-background-color);
+  /* Search box */
+  --docsearch-searchbox-background: var(--ifm-background-color);
+  --docsearch-searchbox-focus-background: var(--ifm-color-black);
+  /* Hit */
+  --docsearch-hit-color: var(--ifm-font-color-base);
+  --docsearch-hit-active-color: var(--ifm-color-white);
+  --docsearch-hit-background: var(--ifm-color-emphasis-100);
+  /* Footer */
+  --docsearch-footer-background: var(--ifm-background-surface-color);
+  --docsearch-key-gradient: linear-gradient(
+    -26.5deg,
+    var(--ifm-color-emphasis-200) 0%,
+    var(--ifm-color-emphasis-100) 100%
+  );
 }

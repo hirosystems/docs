@@ -139,7 +139,7 @@ The WebSocket components enabled you to subscribe to specific updates, enabling 
 ```js
 import { connectWebSocketClient } from '@stacks/blockchain-api-client';
 
-const client = await connectWebSocketClient('ws://stacks-node-api.blockstack.org/');
+const client = await connectWebSocketClient('ws://api.hiro.so/');
 
 const sub = await client.subscribeAddressTransactions(contractCall.txId, event => {
   console.log(event);
@@ -147,25 +147,6 @@ const sub = await client.subscribeAddressTransactions(contractCall.txId, event =
 
 await sub.unsubscribe();
 ```
-
-## Rate limiting
-
-Rate limiting is only applied to [faucet requests](https://docs.hiro.so/api#tag/Faucets) based on the requested token addresses.
-
-You can refer to the rate limit for each endpoint in the table below:
-
-| **Endpoint**                                                                                | **Rate-Limit (RPM)**  |
-| ------------------------------------------------------------------------------------------- | --------------------- |
-| api.mainnet.hiro.so/extended/ <br/> stacks-node-api.stacks.co/extended/ <br/> | <br/> 500 <br/> <br/> |
-| api.mainnet.hiro.so/rosetta/ <br/> stacks-node-api.stacks.co/rosetta/<br/>    | <br/> 200 <br/> <br/> |
-| api.mainnet.hiro.so/v2/ <br/> stacks-node-api.stacks.co/v2/ <br/>             | <br/> 100 <br/> <br/> |
-| api.testnet.hiro.so/extended/ <br/>                                           | 100 <br/>             |
-| api.testnet.hiro.so/v2/ <br/>                                                 | 100 <br/>             |
-| api.testnet.hiro.so/extended/v1/faucets/ <br/>                                | 1 <br/>               |
-
-### STX faucet
-
-The Stacks faucet rate limits depend on the type of request. For stacking requests, a limitation of **1 request per 2 days**. In case of regular Stacks faucet requests, the limits are set to **1 request per minute**.
 
 ## Pagination
 
@@ -262,7 +243,7 @@ import { uintCV, UIntCV, cvToHex, hexToCV, ClarityType } from '@stacks/transacti
 
   const principal: string = 'ST000000000000000000002AMW42H';
 
-  // use most recent from: https://stacks-node-api.<mainnet/testnet>.stacks.co/v2/pox
+  // use most recent from: https://api.<mainnet/testnet>.hiro.so/v2/pox
   const rewardCycle: UIntCV = uintCV(22);
 
   // call a read-only function
@@ -303,14 +284,14 @@ The Stacks Blockchain API proxies to Node RPC endpoints
 
 While the Node RPC API doesn't give the same functionality as the hosted Stacks 2.0 Blockchain API, you get similar functionality in a way that is scoped to that specific node. The RPC API includes the following endpoints:
 
-- [POST /v2/transactions](https://docs.hiro.so/api#operation/post_core_node_transactions)
-- [GET /v2/contracts/interface/{contract_address}/{contract_name}](https://docs.hiro.so/api#operation/get_contract_interface)
-- [POST /v2/map_entry/{contract_address}/{contract_name}/{map_name}](https://docs.hiro.so/api#operation/get_contract_data_map_entry)
-- [GET /v2/contracts/source/{contract_address}/{contract_name}](https://docs.hiro.so/api#operation/get_contract_source)
-- [GET /v2/accounts/{principal}](https://docs.hiro.so/api#operation/get_account_info)
-- [POST /v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}](https://docs.hiro.so/api#operation/call_read_only_function)
-- [GET /v2/fees/transfer](https://docs.hiro.so/api#operation/get_fee_transfer)
-- [GET /v2/info](https://docs.hiro.so/api#operation/get_core_api_info)
+- [`POST /v2/transactions`](https://docs.hiro.so/api#operation/post_core_node_transactions)
+- [`GET /v2/contracts/interface/{contract_address}/{contract_name}`](https://docs.hiro.so/api#operation/get_contract_interface)
+- [`POST /v2/map_entry/{contract_address}/{contract_name}/{map_name}`](https://docs.hiro.so/api#operation/get_contract_data_map_entry)
+- [`GET /v2/contracts/source/{contract_address}/{contract_name}`](https://docs.hiro.so/api#operation/get_contract_source)
+- [`GET /v2/accounts/{principal}`](https://docs.hiro.so/api#operation/get_account_info)
+- [`POST /v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}`](https://docs.hiro.so/api#operation/call_read_only_function)
+- [`GET /v2/fees/transfer`](https://docs.hiro.so/api#operation/get_fee_transfer)
+- [`GET /v2/info`](https://docs.hiro.so/api#operation/get_core_api_info)
 
 :::info
 
@@ -337,7 +318,7 @@ The API allows querying the most recently streamed microblocks:
 
 ```bash
 # for mainnet, remove `.testnet`
-curl 'https://stacks-node-api-microblocks.testnet.stacks.co/extended/v1/microblock'
+curl 'https://api.testnet.hiro.so/extended/v1/microblock'
 ```
 
 ```json
@@ -371,7 +352,7 @@ API provides an endpoint to make nonce handling simpler:
 ```bash
 # for mainnet, remove `.testnet`
 # replace <principal> with your STX address
-curl 'https://stacks-node-api-microblocks.testnet.stacks.co/extended/v1/address/<principal>/nonces'
+curl 'https://api.testnet.hiro.so/extended/v1/address/<principal>/nonces'
 ```
 
 ```json

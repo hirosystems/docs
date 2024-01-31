@@ -7,18 +7,18 @@ title: Deploying Gaia Hub on Amazon EC2
 
 The template provided on this page provides an easy way to deploy a Gaia hub directly to Amazon EC2. You can use this
 template to deploy your own Gaia hub to your Amazon Web Services (AWS) account. Amazon EC2 is an affordable and
-convenient cloud computing provider. The template provides a one-click deploy for Amazon EC2 with either S3 or EBS as a
+convenient cloud computing provider. The template provides a one-click deployment for Amazon EC2 with either S3 or EBS as a
 storage provider.
 
 ## Prerequisites
 
-This procedure uses Amazon CloudFormation to configure an EC2 cloud compute provider to run the Gaia hub service with
+This procedure uses Amazon CloudFormation to configure an EC2 cloud computing provider to run the Gaia hub service with
 an S3 or EBS provider for file storage. You should have access to an AWS account either through your personal account or
 through a corporate account. This account should have permissions to create resources.
 
 Additionally, you must also own a domain name and be able to update the DNS records associated with that domain name.
-The procedure on this page uses a free domain created on [freenom][], generically the procedure used
-is similar on other domain name providers.
+The procedure on this page uses a free domain created on [freenom](https://www.freenom.com), generically the procedure used
+is similar to other domain name providers.
 
 ## Launching the template
 

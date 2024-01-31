@@ -5,7 +5,7 @@ export default {
       src: '/img/landing/hero.png',
       alt: 'web3 illustration image',
     },
-    text: "Explore API references, feature guides, and tutorials to integrate Stacks and Ordinals into your application. Start here:",
+    text: 'Explore API references, feature guides, and tutorials to integrate Stacks and Ordinals into your application. Start here:',
     links: [
       {
         text: 'Stacks Blockchain API Client',
@@ -23,19 +23,19 @@ export default {
   },
   banner: {
     type: 'info',
-    from: '2023-05-15',
-    to: '2023-06-01', // to leave the message until 2023-05-31 11:59pm, set to = 2023-06-01
-    text: ["Developers, we're listening!", 'Tell us about your experience using Hiro products.'],
-    cta: 'Take the Survey',
-    ctaLink: 'https://survey.hiro.so',
+    from: '2023-11-20',
+    to: '2023-12-31',
+    text: ["We've made changes to our rate limits for Hiro APIs"],
+    cta: 'Learn more',
+    ctaLink: 'https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis',
   },
   popularSections: {
     title: 'Popular sections',
     sections: [
       {
-        title: 'Stacks blockchain API',
+        title: 'Stacks API',
         text: 'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
-        href: '/stacks-blockchain-api/overview',
+        href: '/stacks-blockchain-api',
         image: {
           src: '/img/landing/api.png',
           alt: 'web3 APIs illustration image',
@@ -44,7 +44,7 @@ export default {
       {
         title: 'Ordinals API',
         text: 'Ordinals API is a REST-based service that indexes Bitcoin inscriptions based on Ordinal theory. The API supports Auto-scaling and Etag caching.',
-        href: '/ordinals-api/overview',
+        href: '/ordinals-api',
         image: {
           src: '/img/landing/ordinals-api.png',
           alt: 'Ordinals API',
@@ -53,7 +53,7 @@ export default {
       {
         title: 'Stacks.js',
         text: 'Stacks.js is an SDK with a collection of JavaScript libraries to interact with and transact on the Stacks blockchain.',
-        href: '/stacks.js/overview',
+        href: '/stacks.js',
         image: {
           src: '/img/landing/stacksjs.png',
           alt: 'Abstract blockchain illustration image',
@@ -63,28 +63,28 @@ export default {
   },
   sections: [
     {
-      title: 'Chainhook',
+      title: 'Hiro Platform',
       image: {
-        src: '/img/landing/chainhooks-icon.svg',
-        alt: 'Chainhook logo',
+        src: '/img/landing/stacks-logo.svg',
+        alt: 'Stacks logo',
       },
       description:
-        'Chainhook helps you get reliable blockchain data, regardless of forks and reorgs, and enables you to create triggers that respond to on-chain events in real time, using IFTTT (if_this, then_that) logic.',
+        'The Hiro Platform is a cloud-based development environment that enables you to create, build and deploy Clarity smart contracts.',
       subSections: [
         {
           title: 'Getting started',
-          link: '/chainhook/getting-started',
-          description: 'Get started to install Chainhook from the source.',
+          link: '/platform/getting-started',
+          description: 'Get started using the Hiro Platform.',
         },
         {
-          title: 'How-to guides',
-          link: '/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin',
-          description: 'Explore the how-to guides of Chainhook.',
+          title: 'Guides',
+          link: '/platform/guides/create-project',
+          description: 'Start creating your first project.',
         },
         {
           title: 'FAQ',
-          link: '/chainhook/faq',
-          description: 'Explore our frequently asked questions to address common queries.',
+          link: '/platform/faq',
+          description: 'Explore our troubleshooting guide to unblock yourself.',
         },
       ],
     },
@@ -104,7 +104,7 @@ export default {
         },
         {
           title: 'Feature guides',
-          link: '/clarinet/feature-guides/analyze-with-check-checker',
+          link: '/clarinet/guides/analyze-with-check-checker',
           description: 'Explore the features of Clarinet.',
         },
         {
@@ -115,28 +115,28 @@ export default {
       ],
     },
     {
-      title: 'Stacks Blockchain API',
+      title: 'Chainhook',
       image: {
-        src: '/img/landing/stacks-logo.svg',
-        alt: 'Stacks logo',
+        src: '/img/landing/chainhooks-icon.svg',
+        alt: 'Chainhook logo',
       },
       description:
-        'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
+        'Chainhook helps you get reliable blockchain data, regardless of forks and reorgs, and enables you to create triggers that respond to on-chain events in real time, using IFTTT (if_this, then_that) logic.',
       subSections: [
         {
           title: 'Getting started',
-          link: '/stacks-blockchain-api/getting-started',
-          description: 'Get started interacting with the blockchain.',
+          link: '/chainhook/getting-started',
+          description: 'Get started to install Chainhook from the source.',
         },
         {
-          title: 'Feature guides',
-          link: '/stacks-blockchain-api/feature-guides/microblocks',
-          description: 'Explore the features of Stacks Blockchain API.',
+          title: 'How-to guides',
+          link: '/chainhook/guides/chainhooks-with-bitcoin',
+          description: 'Explore the how-to guides of Chainhook.',
         },
         {
-          title: 'Troubleshooting',
-          link: '/Stacks-blockchain-api/troubleshooting',
-          description: 'Explore our troubleshooting guide to unblock yourself.',
+          title: 'FAQ',
+          link: '/chainhook/faq',
+          description: 'Explore our frequently asked questions to address common queries.',
         },
       ],
     },
