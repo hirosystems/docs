@@ -28,7 +28,7 @@ clarinet-project/
 ... # other project files
 ```
 
-For examples on how to define your predicates, refer to this guide for [Stacks](./chainhooks-with-stacks.md) and [Bitcoin](./chainhooks-with-bitcoin.md).
+For examples on how to define your predicates, refer to the [Stacks](./chainhooks-with-stacks.md) and [Bitcoin](./chainhooks-with-bitcoin.md) guides.
 
 ## Start the Devnet
 
