@@ -14,24 +14,6 @@ This page will also focus on the **easy** path to get the services running, whic
 
 Please note that the following guide is meant for a Unix-like OS (Linux/MacOS). The commands _may_ work on Windows but will likely need some adjustments.
 
-- [Run a Stacks Blockchain API instance with Docker](#run-a-stacks-blockchain-api-instance-with-docker)
-  - [Requirements](#requirements)
-    - [Firewalling](#firewalling)
-    - [Initial Setup](#initial-setup)
-  - [Postgres](#postgres)
-    - [Starting postgres](#starting-postgres)
-    - [Stopping Postgres](#stopping-postgres)
-  - [Stacks Blockchain API](#stacks-blockchain-api)
-    - [Starting stacks-blockchain-api](#starting-stacks-blockchain-api)
-    - [Stopping stacks-blockchain-api](#stopping-stacks-blockchain-api)
-  - [Stacks Blockchain](#stacks-blockchain)
-    - [Starting stacks-blockchain](#starting-stacks-blockchain)
-    - [Stopping stacks-blockchain](#stopping-stacks-blockchain)
-  - [Verify Everything is running correctly](#verify-everything-is-running-correctly)
-    - [Postgres testing](#postgres-testing)
-    - [stacks-blockchain testing](#stacks-blockchain-testing)
-    - [stacks-blockchain-api testing](#stacks-blockchain-api-testing)
-
 ## Requirements
 
 1. [Docker](https://docs.docker.com/engine/install/)

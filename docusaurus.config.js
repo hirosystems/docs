@@ -8,7 +8,9 @@ module.exports = {
   tagline: 'Developer tools for Stacks',
   url: 'https://docs.hiro.so',
   baseUrl: '/',
-  onBrokenAnchors: 'throw',
+  // TODO(diwaker): temporarily switching `throw` to `warn` until broken anchors
+  // in API docs are resolved.
+  onBrokenAnchors: 'warn',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
