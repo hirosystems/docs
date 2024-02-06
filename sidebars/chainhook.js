@@ -40,6 +40,11 @@ module.exports = [
   },
   {
     type: 'doc',
+    label: 'Register Chainhooks on Devnet',
+    id: 'chainhook/guides/register-chainhooks-on-devnet',
+  },
+  {
+    type: 'doc',
     label: 'Use Chainhook with Bitcoin',
     id: 'chainhook/guides/chainhooks-with-bitcoin',
   },
