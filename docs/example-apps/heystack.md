@@ -635,7 +635,7 @@ specific implementation details.
 [`/src/store/auth.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/auth.ts
 [clarity types in javascript]: #clarity-types-in-javascript
 [`@stacks/transactions`]: https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values
-[bitcoin naming system]: https://docs.stacks.co/build-apps/references/bns
+[bitcoin naming system]: https://docs.stacks.co/clarity/example-contracts/bns
 [`src/store/names.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/names.ts
 [javascript types to clarity types]: #clarity-types-in-javascript
 [`@stacks/blockchain-api-client`]: https://github.com/hirosystems/stacks-blockchain-api/tree/master/client

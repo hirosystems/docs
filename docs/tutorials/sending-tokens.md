@@ -27,7 +27,7 @@ You will need [NodeJS](https://nodejs.org/en/download/) `8.12.0` or higher to co
 node --version
 ```
 
-You should also complete the [Accounts Tutorial](https://docs.stacks.co/docs/understand-stacks/accounts). The following steps assume we have access to an existing Stacks 2.0 account.
+You should also complete the [Accounts Tutorial](https://docs.stacks.co/stacks-101/accounts). The following steps assume we have access to an existing Stacks 2.0 account.
 
 ## Step 1: Installing libraries
 
