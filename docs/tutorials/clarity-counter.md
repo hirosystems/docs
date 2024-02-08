@@ -244,17 +244,17 @@ the strengths of performing local development without having to wait for block t
 <!-- [hello world tutorial]: /tutorials/clarity-hello-world
 [clarinet]: /clarinet/index
 [installing clarinet]: /clarinet/getting-started
-[`define-data-var`]: https://docs.stacks.co/references/language-functions#define-data-var
+[`define-data-var`]: https://docs.stacks.co/clarity/functions#define-data-var
 [testnet sandbox]: https://explorer.hiro.so/sandbox/deploy?chain=testnet
 [Leather wallet]: https://leather.io/install-extension
 [testnet faucet]: https://explorer.hiro.so/sandbox/faucet?chain=testnet
 [unit tests]: /clarinet/guides/test-contract-with-clarinet-sdk
-[`var-get`]: https://docs.stacks.co/references/language-functions#var-get
+[`var-get`]: https://docs.stacks.co/clarity/functions#var-get
 [`clarinet console`]: /clarinet/guides/how-to-debug-contract#command-line-debugger
-[`begin`]: https://docs.stacks.co/references/language-functions#begin
-[`var-set`]: https://docs.stacks.co/references/language-functions#var-set
-[`+`]: https://docs.stacks.co/references/language-functions#-add
-[clarity language reference]: https://docs.stacks.co/references/language-functions
+[`begin`]: https://docs.stacks.co/clarity/functions#begin
+[`var-set`]: https://docs.stacks.co/clarity/functions#var-set
+[`+`]: https://docs.stacks.co/clarity/functions#-add
+[clarity language reference]: https://docs.stacks.co/clarity/functions
 [transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp
 [call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet -->
