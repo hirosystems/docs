@@ -7,7 +7,7 @@ import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
-This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/build-apps/references/gaia) by implementing the [`connect`](https://github.com/hirosystems/connect/) and [`storage`](https://stacks.js.org/modules/storage.html) packages of Stacks.js.
+This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/stacks-in-depth/gaia) by implementing the [`connect`](https://github.com/hirosystems/connect/) and [`storage`](https://stacks.js.org/modules/storage.html) packages of Stacks.js.
 
 Data storage provides a way for users to save both public and private data off-chain while retaining complete control over it.
 
