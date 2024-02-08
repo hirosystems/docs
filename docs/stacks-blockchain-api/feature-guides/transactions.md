@@ -41,7 +41,7 @@ A sample of each transaction type can be found in the [Stacks Blockchain API res
 
 ## Anchor mode
 
-Transactions can be mined either in an anchor block or in a [microblock](https://docs.stacks.co/stacks-101/microblocks). If microblocks
+Transactions can be mined either in an anchor block or in a [microblock](https://docs.stacks.co/stacks-101/mining#microblocks). If microblocks
 are selected, the transaction can be confirmed with a lower latency than the anchor block time.
 
 The anchor mode enum has three options:
@@ -152,7 +152,7 @@ const transaction = await makeSTXTokenTransfer(txOptions);
 
 :::info
 
-Read more about [nonces](http://docs.stacks.co/understand-stacks/network#nonces) in the network guide
+Read more about [nonces](https://docs.stacks.co/stacks-101/network#nonces) in the network guide
 
 :::
 

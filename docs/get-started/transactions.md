@@ -159,7 +159,7 @@ const transaction = await makeSTXTokenTransfer(txOptions);
 
 :::info
 
-Read more about [nonces](http://docs.stacks.co/understand-stacks/network#nonces) in the network guide
+Read more about [nonces](https://docs.stacks.co/stacks-101/network#nonces) in the network guide
 
 :::
 

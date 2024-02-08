@@ -5,9 +5,9 @@ title: Non-fungible tokens
 
 ![What you'll build in this tutorial](/img/nft-preview.png)
 
-Non-fungible tokens, or NFTs, are a type of [token](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts) that can
+Non-fungible tokens, or NFTs, are a type of [token](https://docs.stacks.co/tutorials/tokens#non-fungible-tokens-nfts) that can
 represent unique data. NFTs are an emerging technology in blockchain, and there are many different potential uses for
-them. NFTs have desirable [characteristics](https://docs.stacks.co/write-smart-contracts/tokens) like uniqueness, programmability, and
+them. NFTs have desirable [characteristics](https://docs.stacks.co/tutorials/tokens) like uniqueness, programmability, and
 verifiable ownership. Simply put, an NFT is a piece of information that's unique. A common example of an NFT might be a
 piece of digital art.
 
