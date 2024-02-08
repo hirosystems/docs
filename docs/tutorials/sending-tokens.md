@@ -15,7 +15,7 @@ This tutorial walks you through the following steps:
 
 :::note
 
-This tutorial is NodeJS-specific. If you would like to understand how to initiate a token transfer by constructing and broadcasting transactions using a different language/framework, please [review the transactions guide](https://docs.stacks.co/understand-stacks/transactions).
+This tutorial is NodeJS-specific. If you would like to understand how to initiate a token transfer by constructing and broadcasting transactions using a different language/framework, please [review the transactions guide](https://docs.stacks.co/stacks-101/transactions).
 
 :::
 
@@ -134,7 +134,7 @@ If not specified, the transaction builder will automatically estimate the fee. E
 
 :::tip
 
-Learn more about fees in the [network guide](https://docs.stacks.co/understand-stacks/network#fees)
+Learn more about fees in the [network guide](https://docs.stacks.co/stacks-101/network#fees)
 
 :::
 
@@ -179,7 +179,7 @@ As soon as the `broadcastTransaction` is completed, a JSON object with the trans
 
 :::note
 
-Keep in mind that the existence of a transaction ID does not mean the transaction has been successfully processed. Please review the [transaction lifecycle](https://docs.stacks.co/understand-stacks/transactions#lifecycle) for more details.
+Keep in mind that the existence of a transaction ID does not mean the transaction has been successfully processed. Please review the [transaction lifecycle](https://docs.stacks.co/stacks-101/transactions#lifecycle) for more details.
 
 :::
 

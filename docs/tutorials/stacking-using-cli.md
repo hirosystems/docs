@@ -9,7 +9,7 @@ In this tutorial, you'll learn how to use the Stacks CLI to participate in Stack
 
 ## Prerequisites
 
-First, you'll need to understand the [Stacking mechanism](https://docs.stacks.co/understand-stacks/stacking).
+First, you'll need to understand the [Stacking mechanism](https://docs.stacks.co/stacks-101/stacking).
 
 You'll also need [NodeJS](https://nodejs.org/en/download/) `12.10.0` or higher to complete this tutorial. You can verify your installation by opening up your terminal and run the following command:
 

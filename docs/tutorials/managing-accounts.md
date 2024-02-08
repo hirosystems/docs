@@ -14,7 +14,7 @@ This tutorial walks you through the following steps:
 
 :::note
 
-This tutorial is NodeJS-specific. You can [review the accounts guide](https://docs.stacks.co/understand-stacks/accounts) to understand how to manage Stacks 2.0 accounts using a different language/framework.
+This tutorial is NodeJS-specific. You can [review the accounts guide](https://docs.stacks.co/stacks-101/accounts) to understand how to manage Stacks 2.0 accounts using a different language/framework.
 
 :::
 
@@ -96,7 +96,7 @@ async function getAccountInfo() {
 
 :::note
 
-A "principal" is any entity that can have a token balance. Find more details in the [Principals guide](https://docs.stacks.co/write-smart-contracts/principals).
+A "principal" is any entity that can have a token balance. Find more details in the [Principals guide](https://docs.stacks.co/clarity/types).
 
 :::
 

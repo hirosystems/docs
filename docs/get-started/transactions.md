@@ -9,7 +9,7 @@ images:
 
 ## Introduction
 
-Transactions are the fundamental unit of execution in the Stacks blockchain. Each transaction is originated from a [Stacks 2.0 account](https://docs.stacks.co/understand-stacks/accounts), and is retained in the Stacks blockchain history. This guide helps you understand Stacks 2.0 transactions.
+Transactions are the fundamental unit of execution in the Stacks blockchain. Each transaction is originated from a [Stacks 2.0 account](https://docs.stacks.co/stacks-101/accounts), and is retained in the Stacks blockchain history. This guide helps you understand Stacks 2.0 transactions.
 
 ## Lifecycle
 
@@ -44,11 +44,11 @@ The Stacks 2.0 supports a set of different transaction types:
 
 A sample of each transaction type can be found in the [Stacks Blockchain API response definition for transactions](https://docs.hiro.so/api#operation/get_transaction_by_id).
 
-~> Read-only contract call calls do **not** require transactions. Read more about it in the [network guide](https://docs.stacks.co/understand-stacks/network#read-only-function-calls).
+~> Read-only contract call calls do **not** require transactions. Read more about it in the [network guide](https://docs.stacks.co/stacks-101/network#read-only-function-calls).
 
 ## Anchor mode
 
-Transactions can be mined either in an anchor block or in a [microblock](https://docs.stacks.co/understand-stacks/microblocks). If microblocks
+Transactions can be mined either in an anchor block or in a [microblock](https://docs.stacks.co/stacks-101/mining#microblocks). If microblocks
 are selected, the transaction can be confirmed with a lower latency than the anchor block time.
 
 The anchor mode enum has three options:
@@ -88,7 +88,7 @@ Each transaction includes a field that describes zero or more post-conditions th
 
 | **Attribute**                                                        | **Sample**                                  | **Description**                                                                                  |
 | -------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| [Principal](https://docs.stacks.co/write-smart-contracts/principals) | `SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE` | original owner of the asset, can be a Stacks address or a contract                               |
+| [Principal](https://docs.stacks.co/clarity/types) | `SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE` | original owner of the asset, can be a Stacks address or a contract                               |
 | Asset id                                                             | `STX`                                       | Asset to apply conditions to (could be Stacks, fungible, or non-fungible tokens)                 |
 | Comparator                                                           | `>=`                                        | Compare operation to be applied (could define "how much" or "whether or not the asset is owned") |
 | Literal                                                              | `1000000`                                   | Integer or boolean value used to compare instances of the asset against via the condition        |
@@ -128,7 +128,7 @@ The easiest way to construct well-formed transactions is by [using the Stacks Tr
 - Smart contract deploy
 - Smart contract function call
 
-When constructing transactions, it is required to set the network the transaction is intended for. This can be either mainnet or testnet. At the moment of this writing, the only available option is the [testnet network](https://docs.stacks.co/understand-stacks/testnet).
+When constructing transactions, it is required to set the network the transaction is intended for. This can be either mainnet or testnet. At the moment of this writing, the only available option is the [testnet network](https://docs.stacks.co/stacks-101/testnet).
 
 :::info
 
@@ -428,7 +428,7 @@ The API will respond with a `HTTP 200 - OK` if the transaction was successfully 
 There is no explicit time constraint between the construction of a valid signed transaction and when it can be broadcast. There are, however, some constraints to be aware of. The following reasons can deem a transaction invalid after some period:
 
 - Token transfer: Nonce changed in-between construction and broadcast
-- Contract call or deploy: Block height is evaluated (with [`at-block`](https://docs.stacks.co/references/language-functions#at-block)) and changed in-between construction and broadcast
+- Contract call or deploy: Block height is evaluated (with [`at-block`](https://docs.stacks.co/clarity/functions#at-block)) and changed in-between construction and broadcast
 
 ## Mempool
 
@@ -606,5 +606,5 @@ If a transaction is removed from the mempool, the transaction was not processed 
 [bitcoin wiki]: https://en.bitcoin.it/wiki/Vocabulary#Memory_pool
 [256 blocks]: https://github.com/stacks-network/stacks-core/blob/08c4b9d61b48b99475c0197e7e7fea50c7fb0e29/src/core/mempool.rs#L65
 [stacks-blockchain]: https://github.com/blockstack/stacks-blockchain
-[`accounts`]: https://docs.stacks.co/understand-stacks/accounts#get-stacks-stx-balance-and-nonce
+[`accounts`]: https://docs.stacks.co/stacks-101/accounts#get-stacks-stx-balance-and-nonce
 [25 in the current implementation]: https://github.com/blockstack/stacks-blockchain/blob/08c4b9d61b48b99475c0197e7e7fea50c7fb0e29/src/core/mempool.rs#L66

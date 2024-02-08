@@ -7,7 +7,7 @@ import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
-This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/understand-stacks/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
+This guide explains how to prompt users to sign [transactions](https://docs.stacks.co/stacks-101/transactions) and broadcast them to the Stacks blockchain by implementing the [`connect`](https://github.com/hirosystems/connect) package of Stacks.js.
 
 Transaction signing provides a way for users execute Clarity smart contracts that are relevant to your app then handle the result as appropriate.
 
@@ -247,7 +247,7 @@ interface ContractCallOptions {
 | --------------- | ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | contractAddress | string           | true     | Stacks address to which contract is deployed                                                                                                                                                                                          |
 | contractName    | string           | true     | Name of contract to sign                                                                                                                                                                                                              |
-| functionName    | string           | true     | Name of function for signing / execution, which needs to be a [public function](https://docs.stacks.co/references/language-functions#define-public).                                                                                  |
+| functionName    | string           | true     | Name of function for signing / execution, which needs to be a [public function](https://docs.stacks.co/clarity/functions#define-public).                                                                                  |
 | functionArgs    | `ClarityValue[]` | true     | Arguments for calling the function. [Learn more about constructing clarity values](https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values). Defaults to `[]`.                          |
 | appDetails      | object           | true     | Dictionary that requires `name` and `icon` for app                                                                                                                                                                                    |
 | onFinish        | function         | true     | Callback executed by app when transaction has been signed and broadcasted.                                                                                                                                                            |     |

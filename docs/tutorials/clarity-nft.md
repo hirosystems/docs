@@ -87,7 +87,7 @@ Remember that at any point in this tutorial, you can run `clarinet check` to che
 The NFT standard, [SIP-009](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md), defines
 a set of standard traits that a compliant contract must implement. This is useful to ensure that different tokens are
 able to be supported by Stacks wallets without additional development on the wallet. On the live blockchain, a contract
-can declare that it conforms to a specific set of traits with the [`impl-trait`](https://docs.stacks.co/references/language-functions#impl-trait)
+can declare that it conforms to a specific set of traits with the [`impl-trait`](https://docs.stacks.co/clarity/functions#impl-trait)
 Clarity function. When a contract uses `impl-trait` to assert compliance with a set of standard traits, the contract can
 fail deployment to the blockchain if it violates the trait specification.
 
