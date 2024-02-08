@@ -1,7 +1,3 @@
----
-sidebar_label: Overview
----
-
 # Stacks.js Overview
 
 <div className="gap-3 flex flex-wrap mb-6">
@@ -32,14 +28,16 @@ It's a collection of various JavaScript libraries allowing developers to interac
 
 <!-- todo: add color -->
 
+## Getting started
+
 <div class="subSections my-8">
   <a href="/stacks.js/connect">
-    <div class="subSectionTitle"><h3>Stacks Connect 🌐</h3><span>→</span></div>
+    <div class="subSectionTitle"><h3>Build a web-app</h3><span>→</span></div>
     <p>Build Stacks-ready web applications</p>
   </a>
   <a href="/stacks.js/getting-started">
-    <div class="subSectionTitle"><h3>Getting Started</h3><span>→</span></div>
-    <p>Explore all that Stacks.js has to offer</p>
+    <div class="subSectionTitle"><h3>Build a service</h3><span>→</span></div>
+    <p>Dive deeper and build on Stacks</p>
   </a>
 </div>
 
@@ -52,7 +50,7 @@ For example, a web app that allows users to interact with the Stacks blockchain 
 Most users interact via their favorite Stacks wallet.
 Developers can build web apps, which prompt the user for an action (e.g. sign a transaction), and then the wallet will handle the rest.
 The wallet will act in the security, and best interest of the user, and the user will be able to review the transaction before signing.
-[Read more](./connect.md)
+[Read more](/stacks.js/connect)
 
 ### 🔑 With Private Key Access
 
@@ -63,4 +61,4 @@ Developers can build simple scripts and tools intended for "offline" use.
 Users may use the Stacks.js CLI directly to send a transaction.
 Backends may need to automate signing without direct user interaction.
 In these cases, developers can use the same libraries used by Stacks wallets for account handling and transaction signing.
-[Read more](./installing.md)
+[Read more](/stacks.js/learn-the-basics)

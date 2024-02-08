@@ -25,8 +25,13 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'Getting Started',
-    id: 'stacks.js/getting-started',
+    label: 'Learn the basics',
+    id: 'stacks.js/learn-the-basics',
+  },
+  {
+    type: 'doc',
+    label: 'FAQs',
+    id: 'stacks.js/faq',
   },
   {
     type: 'html',
@@ -64,21 +69,5 @@ module.exports = [
     type: 'doc',
     label: 'Integrate Stacking',
     id: 'stacks.js/guides/how-to-integrate-stacking', // TODO: merge both stacking guides
-  },
-  {
-    type: 'html',
-    value: 'Other',
-    className: 'section-title',
-    defaultStyle: true,
-  },
-  {
-    type: 'doc',
-    label: 'FAQs',
-    id: 'stacks.js/faq',
-  },
-  {
-    type: 'doc',
-    label: 'Troubleshooting',
-    id: 'stacks.js/troubleshooting',
   },
 ];
