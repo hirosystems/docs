@@ -5,7 +5,7 @@ title: Overview
 
 # Clarinet Overview
 
-> Announcement: As part of a simplification and improvement process of the Clarinet project, the commands `clarinet test` and `clarinet run` are now be deprecated and won't be available in Clarinet 2 that will be released in October 2023.
+> Announcement: As part of a simplification and improvement process of the Clarinet project, the commands `clarinet test` and `clarinet run` are now deprecated and won't be available in Clarinet 2 that will be released in October 2023.
 > The testing features are available now in the Clarinet SDK.
 
 <!-- See the [Clarinet SDK announcement on our blog](link to come). -->
