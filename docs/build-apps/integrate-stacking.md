@@ -25,7 +25,7 @@ Alternatively to integration using JS libraries, you can use the [Rust CLI](http
 
 ## Prerequisites
 
-First, you'll need to understand the [Stacking mechanism](https://docs.stacks.co/understand-stacks/stacking).
+First, you'll need to understand the [Stacking mechanism](https://docs.stacks.co/stacks-101/stacking).
 
 You'll also need [NodeJS](https://nodejs.org/en/download/) `12.10.0` or higher to complete this tutorial. You can verify your installation by opening up your terminal and run the following command:
 
@@ -35,7 +35,7 @@ node --version
 
 ## Overview
 
-In this tutorial, we'll implement the Stacking flow laid out in the [Stacking guide](https://docs.stacks.co/understand-stacks/stacking#stacking-flow).
+In this tutorial, we'll implement the Stacking flow laid out in the [Stacking guide](https://docs.stacks.co/stacks-101/stacking#stacking-flow).
 
 ## Step 1: Integrate libraries
 
@@ -83,7 +83,7 @@ const client = new StackingClient(stxAddress, new StacksTestnet());
 
 :::info
 
-Review the [accounts guide](https://docs.stacks.co/understand-stacks/accounts) for more details
+Review the [accounts guide](https://docs.stacks.co/stacks-101/accounts) for more details
 
 :::
 
@@ -280,7 +280,7 @@ const resp = await waitForTransactionSuccess(txId);
 
 :::info
 
-More details on the lifecycle of transactions can be found in the [transactions guide](https://docs.stacks.co/understand-stacks/transactions#lifecycle)
+More details on the lifecycle of transactions can be found in the [transactions guide](https://docs.stacks.co/stacks-101/transactions#lifecycle)
 
 :::
 

@@ -5,9 +5,9 @@ title: Non-fungible tokens
 
 ![What you'll build in this tutorial](/img/nft-preview.png)
 
-Non-fungible tokens, or NFTs, are a type of [token](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts) that can
+Non-fungible tokens, or NFTs, are a type of [token](https://docs.stacks.co/tutorials/tokens#non-fungible-tokens-nfts) that can
 represent unique data. NFTs are an emerging technology in blockchain, and there are many different potential uses for
-them. NFTs have desirable [characteristics](https://docs.stacks.co/write-smart-contracts/tokens) like uniqueness, programmability, and
+them. NFTs have desirable [characteristics](https://docs.stacks.co/tutorials/tokens) like uniqueness, programmability, and
 verifiable ownership. Simply put, an NFT is a piece of information that's unique. A common example of an NFT might be a
 piece of digital art.
 
@@ -87,7 +87,7 @@ Remember that at any point in this tutorial, you can run `clarinet check` to che
 The NFT standard, [SIP-009](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md), defines
 a set of standard traits that a compliant contract must implement. This is useful to ensure that different tokens are
 able to be supported by Stacks wallets without additional development on the wallet. On the live blockchain, a contract
-can declare that it conforms to a specific set of traits with the [`impl-trait`](https://docs.stacks.co/references/language-functions#impl-trait)
+can declare that it conforms to a specific set of traits with the [`impl-trait`](https://docs.stacks.co/clarity/functions#impl-trait)
 Clarity function. When a contract uses `impl-trait` to assert compliance with a set of standard traits, the contract can
 fail deployment to the blockchain if it violates the trait specification.
 

@@ -259,8 +259,8 @@ the strengths of performing local development without having to wait for block t
 [step 3]: #step-3-add-code-to-the-hello-world-contract
 [unit tests]: /clarinet/guides/test-contract-with-clarinet-sdk
 [separating concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
-[`ok`]: https://docs.stacks.co/references/language-functions#ok
-[read-only function]: https://docs.stacks.co/references/language-functions#define-read-only
+[`ok`]: https://docs.stacks.co/clarity/functions#ok
+[read-only function]: https://docs.stacks.co/clarity/functions#define-read-only
 [transactions]: https://explorer.hiro.so/transactions?chain=testnet
 [call a contract]: https://explorer.hiro.so/sandbox/contract-call?chain=testnet
 [clarity visual studio code plugin]: https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp -->
