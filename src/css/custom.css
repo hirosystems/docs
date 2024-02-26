@@ -20,7 +20,8 @@
 
 @font-face {
   font-family: 'Aeonik Fono';
-  src: url('https://alphaassets.hiro.so/AeonikFono-Regular.woff2') format('woff2'),
+  src:
+    url('https://alphaassets.hiro.so/AeonikFono-Regular.woff2') format('woff2'),
     url('https://alphaassets.hiro.so/AeonikFono-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
@@ -29,7 +30,8 @@
 
 @font-face {
   font-family: 'AeonikMono-Regular';
-  src: url('https://alphaassets.hiro.so/AeonikMono-Regular.woff2') format('woff2'),
+  src:
+    url('https://alphaassets.hiro.so/AeonikMono-Regular.woff2') format('woff2'),
     url('https://alphaassets.hiro.so/AeonikMono-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
@@ -97,6 +99,9 @@
   --ifm-code-font-size: 81.25%;
   --ifm-alert-border-left-width: 0px;
 
+  --ifm-tabs-padding-vertical: 4px;
+  --ifm-tabs-padding-horizontal: 8px;
+
   --aa-primary-color-rgb: var(--ifm-color-primary-lighter);
 }
 
@@ -124,7 +129,10 @@ body {
 }
 
 p {
-  font-family: 'Inter var', system-ui, -apple-system;
+  font-family:
+    'Inter var',
+    system-ui,
+    -apple-system;
 }
 
 [data-theme='dark'] table,
@@ -488,6 +496,15 @@ a.menu__link.menu__link--sublist.menu__link--sublist-caret::after {
   }
 }
 
+/* CODE TABS ================================================================ */
+.tabs-container ul {
+  font-size: small;
+}
+
+.tabs-container .margin-top--md {
+  margin-top: 0 !important;
+}
+
 /* CONTENT MARKDOWN ELEMENTS ================================================ */
 /* Prefixed with `Hiro` */
 
@@ -509,7 +526,7 @@ a.HiroLink {
   font-size: 0.875rem;
   line-height: 1.25rem;
   transition: color 0.15s ease;
-  background-color: ;
+  background-color:;
 }
 
 a.HiroLinkExternal {
