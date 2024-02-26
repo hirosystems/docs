@@ -3,43 +3,36 @@ import TabItem from '@theme/TabItem';
 
 # Stacks Connect
 
-<div className="gap-3 flex flex-wrap mb-6">
+<div className="gap-3 flex flex-wrap mb-8">
   <a
-    className="inline-block bg-neutral-200 hover:bg-neutral-100 rounded-md text-sm text-neutral-700 px-2 py-1 hover:text-neutral-700 hover:no-underline transition-colors"
+    className="inline-block rounded-md text-sm px-2 py-1 border border-solid border-neutral-200 bg-neutral-100 text-neutral-700 hover:text-neutral-800 hover:no-underline dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-300"
     href="https://connect.stacks.js.org"
   >Stacks Connect Reference <span className="i-radix-icons-link-2 align-text-bottom text-lg"></span></a>
-  <a
-    className="inline-block bg-violet-300 hover:bg-violet-200 rounded-md text-sm text-violet-800 px-2 py-1 hover:text-violet-800 hover:no-underline transition-colors"
-    href="https://discord.com/channels/621759717756370964/1022879438515486791"
-  >Discord Support <span className="i-bi-discord align-text-bottom text-lg"></span></a>
 </div>
 
 Stacks Connect is a frontend library that allows developers to build Stacks-ready web applications.
 
-What are the main things you can do with Stacks Connect?
+<div className='flex justify-center mt-8 mb-10'>
+  <div className="p-4 pb-0 min-w-72 rounded-lg border border-solid border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800">
+    <h3 className='text-lg flex gap-1 items-center'><span className="i-radix-icons-lightning-bolt"/>Quick start!</h3>
+    ```sh
+    npm create stacks
+    ```
+  </div>
+</div>
 
-- 📸 Prompt a user to sign transactions with their Stacks wallet
-- 🛂 Provide the web-app with the user's Stacks and Bitcoin addresses
+What are the main use-cases of Stacks Connect?
 
-## Start from a template with Stacks Connect included
-
-Get started [from a frontend template](/stacksjs-starters), by running the following command:
-
-```sh
-npm create stacks
-```
-
-After you have your project set up, you can start using Stacks Connect. Jump ahead to [Interacting with the wallet](#3-interacting-with-the-wallet) to see more code examples.
+- Prompt a user to sign transactions with their Stacks wallet
+- Provide the web-app with the user's Stacks and Bitcoin addresses
 
 ---
 
-## Manually add Stacks Connect to your project
+## Add Stacks Connect to your project
 
 ### 1. Add the dependency
 
 Add the `@stacks/connect` dependency to your project using your favorite package manager.
-
-
 
 <Tabs><TabItem value="npm" label="npm">
 ```sh
@@ -74,6 +67,8 @@ export const userSession = new UserSession({ appConfig }); // we will use this e
 
 Connecting the wallet is a very simple form of authentication.
 This process gives the web-app information about a wallet account (selected by the user).
+
+![Connect Modal](/img/stacks-connect-modal.png)
 
 The snippet below lets your web-app trigger the wallet to open and _authenticate_ an account.
 If no wallet is installed, an informational modal will be displayed in the web-app.
@@ -193,10 +188,11 @@ const myPostCondition = makeStandardSTXPostCondition(
   postConditions: [ myPostCondition ],
 // ...
 ```
+:::note
+For more examples on constructing different kinds of post-conditions read the [Post-Conditions Guide of Stacks.js](https://github.com/hirosystems/stacks.js/tree/main/packages/transactions#post-conditions).
+:::
 
-> For more examples on constructing different kinds of post-conditions read the [Post-Conditions Guide of Stacks.js](https://github.com/hirosystems/stacks.js/tree/main/packages/transactions#post-conditions).
-
-##### Post-Condition Modes
+#### Post-Condition Modes
 
 If post-conditions `postConditions: [ ... ]` are specified, they will ALWAYS be checked by blockchain nodes.
 If ANY conditions fails, the transaction will fail.
@@ -206,3 +202,20 @@ The _Post-Condition Mode_ only relates to transfers of assets, which were not sp
 - `PostConditionMode.Deny` will fail the transaction if any unspecified assets are transferred
 - `PostConditionMode.Allow` will allow unspecified assets to be transferred
 - In both cases, all `postConditions` will be checked
+
+---
+
+## Manual
+
+The following methods show the Connect modal (to select a wallet) and do a certain action:
+
+- [`showConnect`](https://connect.stacks.js.org/functions/_stacks_connect.showConnect) to request account info
+- [`showSTXTransfer`](https://connect.stacks.js.org/functions/_stacks_connect.showSTXTransfer) to send an STX transfer
+- [`showContractCall`](https://connect.stacks.js.org/functions/_stacks_connect.showContractCall) to call a deployed Clarity contract
+- [`showContractDeploy`](https://connect.stacks.js.org/functions/_stacks_connect.showContractDeploy) to deploy a new Clarity contract
+- [`showSignTransaction`](https://connect.stacks.js.org/functions/_stacks_connect.showSignTransaction) to sign an arbitrary Stacks transaction
+- [`showProfileUpdate`](https://connect.stacks.js.org/functions/_stacks_connect.showProfileUpdate) to update a BNS profile
+- [`showSignMessage`](https://connect.stacks.js.org/functions/_stacks_connect.showSignMessage) to sign a message
+- [`showSignStructuredMessage`](https://connect.stacks.js.org/functions/_stacks_connect.showSignStructuredMessage) to sign a structured message
+- [`showPsbt`](https://connect.stacks.js.org/functions/_stacks_connect.showPsbt) to sign a Bitcoin PSBT
+- [`disconnect`](https://connect.stacks.js.org/functions/_stacks_connect.disconnect) to clear the currently selected wallet (and allow choosing again next `showXyz`)

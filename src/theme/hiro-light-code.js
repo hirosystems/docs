@@ -1,7 +1,7 @@
 module.exports = {
   plain: {
     color: '#9CDCFE',
-    backgroundColor: '#000000',
+    backgroundColor: '#1c1c1e',
   },
   styles: [
     {
@@ -13,25 +13,25 @@ module.exports = {
     {
       types: ['comment'],
       style: {
-        color: '#666',
+        color: '#888',
       },
     },
     {
       types: ['builtin', 'changed', 'keyword', 'interpolation-punctuation'],
       style: {
-        color: '#D69B47',
+        color: '#F8C274',
       },
     },
     {
       types: ['number', 'inserted'],
       style: {
-        color: '#FF9ECF',
+        color: '#ffacd6',
       },
     },
     {
       types: ['constant'],
       style: {
-        color: '#FF9ECF',
+        color: '#ffacd6',
       },
     },
     {
@@ -43,7 +43,7 @@ module.exports = {
     {
       types: ['deleted', 'string', 'attr-value', 'template-punctuation'],
       style: {
-        color: '#FF9ECF',
+        color: '#ffacd6',
       },
     },
     {
