@@ -1,4 +1,4 @@
-const lightCodeTheme = require('prism-react-renderer').github;
+const lightCodeTheme = require('./src/theme/hiro-light-code.js');
 const darkCodeTheme = require('./src/theme/hiro-dark-code.js');
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
