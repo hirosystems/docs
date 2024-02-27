@@ -6,7 +6,7 @@ import StacksjsStartersNote from '../../includes/\_stacks.js-starters-note.mdx';
 
 <StacksjsStartersNote/>
 
-This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/build-apps/references/gaia) by implementing the [`connect`](https://github.com/hirosystems/connect/) and [`storage`](https://stacks.js.org/modules/storage.html) packages of Stacks.js.
+This guide explains how to save and retrieve data for users with [Gaia](https://docs.stacks.co/stacks-in-depth/gaia) by implementing the [`connect`](https://github.com/hirosystems/connect/) and [`storage`](https://stacks.js.org/modules/storage.html) packages of Stacks.js.
 
 Data storage provides a way for users to save both public and private data off-chain while retaining complete control over it.
 
@@ -110,7 +110,7 @@ Encrypted files need `decrypt` set to `true` so the app knows to decrypt the dat
 
 ## Get data for other user
 
-Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns).
+Apps can also retrieve public data saved by users other than the one with the active session, granted those users have registered usernames via the [Blockchain Naming System](https://docs.stacks.co/clarity/example-contracts/bns).
 
 Simply indicate the username of such a user in the `options` object:
 

@@ -21,7 +21,7 @@ npm install @stacks/connect
 
 Authentication provides a way for users to identify themselves to an app while retaining complete control over their credentials and personal details. It can be integrated alone or used in conjunction with [transaction signing](/build-apps/transaction-signing) and [data storage](/build-apps/data-storage), for which it is a prerequisite.
 
-Users who register for your app can subsequently authenticate to any other app with support for the [Blockchain Naming System](https://docs.stacks.co/build-apps/references/bns) and vice versa.
+Users who register for your app can subsequently authenticate to any other app with support for the [Blockchain Naming System](https://docs.stacks.co/clarity/example-contracts/bns) and vice versa.
 
 ### Initiate `userSession`
 

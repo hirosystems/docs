@@ -68,7 +68,7 @@ Specifications in the `Clarinet.toml` file you can change include
 Specifications in the `Devnet.toml` file you can change include
 - Accounts, balances, and names
 - Blockchain environment features, such as block time or API ports, of your devnet
-- [Stacking](https://docs.stacks.co/docs/understand-stacks/stacking) orders
+- [Stacking](https://docs.stacks.co/stacks-101/stacking) orders
 
 ## Adding project contract requirements
 

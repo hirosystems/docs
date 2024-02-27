@@ -619,14 +619,14 @@ specific implementation details.
 [Leather wallet]: https://leather.io/install-extension
 [react]: https://reactjs.org/
 [heystack_gh]: https://github.com/hirosystems/heystack
-[data maps]: https://docs.stacks.co/references/language-functions#define-map
-[`default-to`]: https://docs.stacks.co/references/language-functions#default-to
-[`asserts!`]: https://docs.stacks.co/references/language-functions#asserts
-[`unwrap-panic`]: https://docs.stacks.co/references/language-functions#unwrap-panic
-[`unwrap!`]: https://docs.stacks.co/references/language-functions#unwrap
-[`map-set`]: https://docs.stacks.co/references/language-functions#map-set
+[data maps]: https://docs.stacks.co/clarity/functions#define-map
+[`default-to`]: https://docs.stacks.co/clarity/functions#default-to
+[`asserts!`]: https://docs.stacks.co/clarity/functions#asserts
+[`unwrap-panic`]: https://docs.stacks.co/clarity/functions#unwrap-panic
+[`unwrap!`]: https://docs.stacks.co/clarity/functions#unwrap
+[`map-set`]: https://docs.stacks.co/clarity/functions#map-set
 [sip-010]: https://github.com/hstove/sips/blob/feat/sip-10-ft/sips/sip-010/sip-010-fungible-token-standard.md
-[`impl-trait`]: https://docs.stacks.co/references/language-functions#impl-trait
+[`impl-trait`]: https://docs.stacks.co/clarity/functions#impl-trait
 [`@stacks/connect-react`]: https://github.com/hirosystems/connect#readme
 [`@stacks/auth`]: https://github.com/blockstack/stacks.js/tree/master/packages/auth
 [jotai]: https://github.com/pmndrs/jotai
@@ -635,7 +635,7 @@ specific implementation details.
 [`/src/store/auth.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/auth.ts
 [clarity types in javascript]: #clarity-types-in-javascript
 [`@stacks/transactions`]: https://github.com/blockstack/stacks.js/tree/master/packages/transactions#constructing-clarity-values
-[bitcoin naming system]: https://docs.stacks.co/build-apps/references/bns
+[bitcoin naming system]: https://docs.stacks.co/clarity/example-contracts/bns
 [`src/store/names.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/names.ts
 [javascript types to clarity types]: #clarity-types-in-javascript
 [`@stacks/blockchain-api-client`]: https://github.com/hirosystems/stacks-blockchain-api/tree/master/client

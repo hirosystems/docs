@@ -35,7 +35,7 @@ The Stacks Blockchain API is hosted by Hiro. Using it requires you to trust us a
   - The API also implements the Rosetta spec created by Coinbase -- "an open standard designed to simplify blockchain deployment and interaction."
     - See: https://www.rosetta-api.org/
   - The API also implements the BNS (Blockchain Naming System) endpoints.
-    - See https://docs.stacks.co/build-apps/references/bns
+    - See https://docs.stacks.co/clarity/example-contracts/bns
   - See `/src/api/routes` for the Express.js routes.
 
 - The API creates an "event observer" http server which listens for events from a `stacks-node` "event emitter"
@@ -140,3 +140,14 @@ const sub = await client.subscribeAddressTransactions(contractCall.txId, event =
 });
 await sub.unsubscribe();
 ```
+
+# Rate Limiting for Stacks API
+
+The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November, 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
+
+- 50 requests per minute (RPM), per client IP, for unauthenticated traffic (without an API key)
+- 500 requests per minute (RPM) with an authenticated API key, regardless of origin IP
+
+These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
+
+Please use the [Hiro Platform](https://platform.hiro.so/) to generate an API key.

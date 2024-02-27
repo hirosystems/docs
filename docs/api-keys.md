@@ -5,15 +5,15 @@ title: API Keys
 
 Developers have open access to Hiro's APIs, without the use of an API key, subjects to Hiro's [rate limit policy](https://docs.hiro.so/rate-limiting). For developers who need access beyond these rate limits, we provide API keys.
 
-# What Is an API Key?
+## What Is an API Key?
 
 API keys are alpha-numeric codes that identify and authenticate an application or developer. You can use API keys to control access to your API calls.
 
-# How to Get an API Key?
+## How to Get an API Key?
 
-If you're interested in obtaining an API key for use with your application, please complete [this form](https://survey.hiro.so/hiroapi?utm_source=Platform&utm_medium=web), and we'll be in touch with details.
+If you're interested in obtaining an API key, you can generate a free key in the [Hiro Platform](https://platform.hiro.so/).
 
-# Steps to Use an API Key
+## Steps to Use an API Key
 
 Follow these steps to interact with the API using your API key:
 

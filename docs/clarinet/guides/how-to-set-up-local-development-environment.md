@@ -165,6 +165,6 @@ Smart contracts can best tested with Node.js and Vitest thanks to the clarinet-s
 
 - [Clarinet README](https://github.com/hirosystems/clarinet#clarinet)
 - [clarinet repository](https://github.com/hirosystems/clarinet)
-- [Clarity language reference](https://docs.stacks.co/references/language-functions)
+- [Clarity language reference](https://docs.stacks.co/clarity/functions)
 - [Clarinet SDK](https://www.npmjs.com/package/@hirosystems/clarinet-sdk)
 - [Clarity VSCode extension](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp)

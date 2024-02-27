@@ -14,7 +14,7 @@ This tutorial walks you through the following steps:
 
 :::note
 
-This tutorial is NodeJS-specific. You can [review the accounts guide](https://docs.stacks.co/understand-stacks/accounts) to understand how to manage Stacks 2.0 accounts using a different language/framework.
+This tutorial is NodeJS-specific. You can [review the accounts guide](https://docs.stacks.co/stacks-101/accounts) to understand how to manage Stacks 2.0 accounts using a different language/framework.
 
 :::
 
@@ -96,7 +96,7 @@ async function getAccountInfo() {
 
 :::note
 
-A "principal" is any entity that can have a token balance. Find more details in the [Principals guide](https://docs.stacks.co/write-smart-contracts/principals).
+A "principal" is any entity that can have a token balance. Find more details in the [Principals guide](https://docs.stacks.co/clarity/types).
 
 :::
 
@@ -111,7 +111,7 @@ The API will respond with a balance, nonce (starting at zero), and respective pr
 }
 ```
 
-The `balance` property represents the Stacks token balance, as hex-encoded string of an unsigned 128-bit integer (big-endian). It is not easy to consume the `balance` property in this format. To simplify that, and to obtain all balances for all tokens (Stacks/STX, fungible, and non-fungible), check out [step 5](#step-5-getting-account-balances).
+The `balance` property represents the Stacks token balance, as hex-encoded string of an unsigned 128-bit integer (big-endian). It is not easy to consume the `balance` property in this format. To simplify that, and to obtain all balances for all tokens (Stacks/STX, fungible, and non-fungible), check out [step 5](#step-5-get-account-balances).
 
 ### Disable proofs
 

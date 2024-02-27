@@ -1,12 +1,8 @@
----
-sidebar_label: Getting Started
----
+# Learning the Stacks.js Basics
 
-# Getting Started with Stacks.js
+<div class="bg-neutral-200 rounded-lg text-sm text-neutral-700 p-3">Looking to building Stacks-ready web applications? [Read more on Stacks Connect](/stacks.js/connect)</div>
 
-import StacksjsStartersNote from '../includes/\_stacks.js-starters-note.mdx';
-
-<StacksjsStartersNote/>
+<div class="mb-9"></div>
 
 To introduce the different functionality offered by Stacks.js, we'll walk through a few examples and concepts important to building on the Stacks blockchain.
 
@@ -82,9 +78,6 @@ openSTXTransfer({
   onCancel: () => console.log('User canceled'),
 });
 ```
-
-<!-- todo -->
-<!-- [Read more](./connect.md) about transaction signing with Stacks Connect. -->
 
 ### Using a private key 🔑
 

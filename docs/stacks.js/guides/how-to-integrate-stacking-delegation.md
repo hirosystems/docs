@@ -16,7 +16,7 @@ This guide highlights the following capabilities:
 
 ## Prerequisites
 
-First, you'll need to understand the [Stacking delegation mechanism](https://docs.stacks.co/understand-stacks/stacking).
+First, you'll need to understand the [Stacking delegation mechanism](https://docs.stacks.co/stacks-101/stacking).
 
 You'll also need [NodeJS](https://nodejs.org/en/download/) `12.10.0` or higher to complete this tutorial. You can verify your installation by opening up your terminal and run the following command:
 
@@ -95,7 +95,7 @@ const delegetateResponse = await client.delegateStx({
 // }
 ```
 
-This method calls the [`delegate-stx`](https://docs.stacks.co/references/stacking-contract#delegate-stx) method of the Stacking contract. Note, that the amount can be higher or lower than the current account balance. Delegation does not yet lock the STX tokens, users can still transfer them.
+This method calls the [`delegate-stx`](https://docs.stacks.co/clarity/example-contracts/stacking#delegate-stx) method of the Stacking contract. Note, that the amount can be higher or lower than the current account balance. Delegation does not yet lock the STX tokens, users can still transfer them.
 
 :::tip
 To avoid handling private keys, it is recommended to use the [Stacks Wallet](https://www.hiro.so/wallet) to sign the delegation transaction
@@ -117,7 +117,7 @@ const revokeResponse = await client.revokeDelegateStx(privateKey);
 // }
 ```
 
-This method calls the [`revoke-delegate-stx`](https://docs.stacks.co/references/stacking-contract#revoke-delegate-stx) method of the Stacking contract.
+This method calls the [`revoke-delegate-stx`](https://docs.stacks.co/clarity/example-contracts/stacking#revoke-delegate-stx) method of the Stacking contract.
 
 :::tip
 To avoid handling private keys, it is recommended to use the [Stacks Wallet](https://www.hiro.so/wallet) to sign the revoke transaction
@@ -165,7 +165,7 @@ const delegetateStackResponses = await delegatorClient.delegateStackStx({
 //   }
 ```
 
-This function calls the [`delegate-stack-stx`](https://docs.stacks.co/references/stacking-contract#delegate-stack-stx) method of the Stacking contract to lock up the STX token from the account holder.
+This function calls the [`delegate-stack-stx`](https://docs.stacks.co/clarity/example-contracts/stacking#delegate-stack-stx) method of the Stacking contract to lock up the STX token from the account holder.
 
 The delegator must call this method multiple times (for all stackers), until enough tokens are locked up to participate in Stacking. This is the first part of delegated stacking for the delegator.
 
@@ -192,7 +192,7 @@ const delegetateCommitResponse = await delegatorClient.stackAggregationCommit({
 // }
 ```
 
-This method calls the [`stack-aggregation-commit`](https://docs.stacks.co/references/stacking-contract#stack-aggregation-commit) function of the Stacking contract. This call also includes locked Stacks from previous cycles. This is the second part of delegated stacking for the delegator.
+This method calls the [`stack-aggregation-commit`](https://docs.stacks.co/clarity/example-contracts/stacking#stack-aggregation-commit) function of the Stacking contract. This call also includes locked Stacks from previous cycles. This is the second part of delegated stacking for the delegator.
 
 This method has to be called once for each reward cycle, even if all account holders have already locked their Stacks for several cycles in a row. If no new account holders are added to the pool, then this method call can be made even several cycles before the actual rewards cycle.
 

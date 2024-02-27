@@ -1,6 +1,5 @@
----
-title: Overview
----
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Stacks Connect
 
@@ -16,34 +15,45 @@ title: Overview
 </div>
 
 Stacks Connect is a frontend library that allows developers to build Stacks-ready web applications.
-Kickstart your next project with Stacks Connect templates with React, Vue, and more [→ Stacks.js Starters](/stacksjs-starters)
 
-## Features
+What are the main things you can do with Stacks Connect?
 
 - 📸 Prompt a user to sign transactions with their Stacks wallet
 - 🛂 Provide the web-app with the user's Stacks and Bitcoin addresses
 
-## Getting Started with Stacks Connect
+## Start from a template with Stacks Connect included
 
-- [Add the dependency](#1-add-the-dependency)
-- [Creating `AppConfig` and `UserSession`](#2-creating-appconfig-and-usersession)
-- [Interacting with the wallet](#3-interacting-with-the-wallet)
-  - ["Connect" aka authentication (`showConnect`)](#connect-aka-authentication-showconnect)
-  - [Sending STX (`openSTXTransfer`)](#sending-stx-openstxtransfer)
-  - [Calling Smart-Contracts (`openContractCall`)](#calling-smart-contracts-opencontractcall)
-  - [Sending transactions with post-conditions (`openContractCall`)](#sending-transactions-with-post-conditions-opencontractcall)
-    - [Post-Condition Modes](#post-condition-modes)
+Get started [from a frontend template](/stacksjs-starters), by running the following command:
+
+```sh
+npm create stacks
+```
+
+After you have your project set up, you can start using Stacks Connect. Jump ahead to [Interacting with the wallet](#3-interacting-with-the-wallet) to see more code examples.
+
+---
+
+## Manually add Stacks Connect to your project
 
 ### 1. Add the dependency
 
 Add the `@stacks/connect` dependency to your project using your favorite package manager.
-_Some options below_
 
+
+
+<Tabs><TabItem value="npm" label="npm">
 ```sh
 npm install @stacks/connect
+```
+</TabItem><TabItem value="pnpm" label="pnpm">
+```sh
 pnpm install @stacks/connect
+```
+</TabItem><TabItem value="yarn" label="yarn">
+```sh
 yarn add @stacks/connect
 ```
+</TabItem></Tabs>
 
 ### 2. Creating `AppConfig` and `UserSession`
 
