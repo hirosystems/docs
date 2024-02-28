@@ -1,8 +1,11 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Learning the Stacks.js Basics
 
-<div class="bg-neutral-200 rounded-lg text-sm text-neutral-700 p-3">Looking to building Stacks-ready web applications? [Read more on Stacks Connect](/stacks.js/connect)</div>
+<p class="p-3 rounded-lg bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">Looking to build a Stacks-ready web application? <a class="text-neutral-600 hover:text-neutral-700 dark:text-neutral-300 dark:hover:text-neutral-200" href="/stacks.js/connect">Read more on Stacks Connect</a></p>
 
-<div class="mb-9"></div>
+<div class="mb-16"></div>
 
 To introduce the different functionality offered by Stacks.js, we'll walk through a few examples and concepts important to building on the Stacks blockchain.
 
@@ -31,8 +34,8 @@ const network = new StacksMainnet({ url: 'https://www.mystacksnode.com/' });
 
 ## Accounts and Addresses
 
-:::info Connect 🌐
-For web apps, you can request the user's address via Stacks Connect. [Read more](https://connect.stacks.js.org/modules/_stacks_connect#quotconnectquot-aka-authentication-showconnect)
+:::info Connect
+For web applications, you can request the user's address via Stacks Connect. [Read more](/stacks.js/connect)
 :::
 
 Stacks.js uses the concept of an "account" to represent a user's identity on the blockchain. An account is identified by a unique address. The address is derived from the account's public key, which is derived from the account's private key.
@@ -60,8 +63,7 @@ const testnetAddress = getStxAddress({ account, transactionVersion: TransactionV
 
 The following shows how to create a simple transaction (STX transfer) using Stacks.js in different environments.
 
-### Using Connect 🌐
-
+<Tabs><TabItem value="connect" label="Using Connect">
 ```js
 import { openSTXTransfer } from '@stacks/connect';
 import { StacksTestnet } from '@stacks/network';
@@ -78,9 +80,7 @@ openSTXTransfer({
   onCancel: () => console.log('User canceled'),
 });
 ```
-
-### Using a private key 🔑
-
+</TabItem><TabItem value="private" label="Using a private key">
 For full manual transaction signing, we need to provide the sender's private key.
 Treat the private key as a secret and never expose it to the public!
 
@@ -94,9 +94,7 @@ const tx = await makeSTXTokenTransfer({
   senderKey: 'c3a2d3...0b1c2', // private key (typically derived from a mnemonic)
 });
 ```
-
-<!-- todo -->
-<!-- [Read more](./installing.md) about transaction signing with Stacks.js. -->
+</TabItem></Tabs>
 
 ## Anchor Mode / Block Type
 
@@ -104,9 +102,7 @@ In the examples above, we used `AnchorMode.Any` to indicate that the transaction
 Stacks has two types of blocks: microblocks and (anchor) blocks.
 
 - **Microblocks** (off-chain) are faster, but less reliable. Microblocks can be confirmed quickly but are not final until the microblock is included in an anchor block.
-- **Anchor Blocks** (on-chain) are the normal Stacks block. They are slower, but more reliable. Anchor blocks are final and cannot be reverted.
-
-<!-- todo: Read more about how decentralized blocks work -->
+- **Anchor Blocks** (on-chain) are the normal Stacks blocks. They are slower, but more reliable. Anchor blocks are final and cannot be reverted.
 
 ```js
 // AnchorMode options
@@ -118,15 +114,13 @@ anchorMode: "offChainOnly" | "onChainOnly" | "any",
 In Stacks, transactions can have "post conditions".
 These are additional security to ensure the transaction was executed as expected.
 
-Post conditions can't say anything about the end-state after a transaction, but they can verify that certain things happened during the transaction.
-
-More precisely, post conditions can verify that:
+More precisely, adding post conditions to a transaction can ensure that:
 
 - STX tokens were transferred from an address
 - FTs/NFTs we transferred from an address
 
 :::caution
-Post conditions aren't perfect and can't always guarantee the receival of FTs/NFTs, since they only check senders.
+Post conditions aren't perfect. They can't say anything about the end-state after a transaction. So, they can't guarantee the receival of FTs/NFTs, since they only check for sending.
 :::
 
 An example adding a post condition (of an address sending 1000 uSTX).
@@ -142,7 +136,7 @@ const tx = await makeContractCall({
 });
 ```
 
-### Post Condition "Mode"
+### Post Condition **Mode**
 
 _...aka "allow transfer of unspecified assets?"_
 
@@ -159,9 +153,9 @@ By default, transactions are set to `Deny` mode for additional security.
 
 ## Broadcasting
 
-:::info Connect 🌐
-For web apps via Stacks Connect, the users' wallet will broadcast the transaction and return a txid.
-[Read more](https://connect.stacks.js.org/modules/_stacks_connect)
+:::info Connect
+For web applications, the users' wallet can broadcast transactions created via Stacks Connect.
+[Read more](/stacks.js/connect)
 :::
 
 A finalized transaction can be broadcasted to the network or serialized (to a byte representation) using Stacks.js.
