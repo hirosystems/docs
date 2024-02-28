@@ -27,7 +27,7 @@ First, log into the [Hiro Platform](https://platform.hiro.so/). You can start a 
 
 ### Starting and Managing Devnet
 
-In the top right corner of your project's page, you'll notice a Devnet status indicator. Initially, it should read 'Inactive'. Click on this indicator to reveal a dropdown menu. From here, select 'Start Devnet' to initiate your private blockchain instance. If you want to configure your devnet like you can locally using `clarinet integrate` in the terminal, before you start devnet, open your project's `devnet.toml` file in the platform VSC editor and configure the settings to match your development needs.
+In the top right corner of your project's page, you'll notice a Devnet status indicator. Initially, it should read 'Inactive'. Click on this indicator to reveal a dropdown menu. From here, select 'Start Devnet' to initiate your private blockchain instance. If you want to configure your devnet like you can locally using `clarinet devnet start` in the terminal, before you start devnet, open your project's `devnet.toml` file in the platform VSC editor and configure the settings to match your development needs.
 
 ![Start Devnet](../images/devnet-start.jpeg)
 

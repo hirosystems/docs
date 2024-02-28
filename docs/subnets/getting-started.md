@@ -5,7 +5,7 @@ title: Getting Started
 
 # Getting Started
 
-You understand subnets from the [overview](./index.md)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](../clarinet/guides/how-to-run-integration-environment.md) as one of the networks in your Stacks development environment.
+You understand subnets from the [overview](./index.md)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet devnet start`](../clarinet/guides/how-to-run-integration-environment.md) as one of the networks in your Stacks development environment.
 
 ## What to expect
 
@@ -237,14 +237,14 @@ subnet_api_image_url = "hirosystems/stacks-blockchain-api:latest"
 Once the configuration is complete, run the following command to start the devnet environment:
 
 ```sh
-clarinet integrate
+clarinet devnet start
 ```
 
-This will launch docker containers for a bitcoin node, a Stacks node, the Stacks API service, a subnet node, the subnet API service, and an explorer service. While running, `clarinet integrate` opens a terminal UI that shows various data points about the state of the network.
+This will launch docker containers for a bitcoin node, a Stacks node, the Stacks API service, a subnet node, the subnet API service, and an explorer service. While running, `clarinet devnet start` opens a terminal UI that shows various data points about the state of the network.
 
 All of the nodes and services are running and ready when we see:
 
-![Clarinet integrate services](images/subnet-devnet.png)
+![Local development environment services](images/subnet-devnet.png)
 
 Once this state is reached, we should see successful calls to `commit-block` in the transactions console. This is the subnet miner committing blocks to the L1. Leave this running and perform the next steps in another terminal.
 

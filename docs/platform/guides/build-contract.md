@@ -88,7 +88,7 @@ You can customize your contracts, test, and debug them using the VS Code termina
 
 :::note
 
-The **clarinet integrate** and **deployment plans** are currently not supported in Clarinet installed inside VS Code editor of the Hiro Platform.
+The **clarinet devnet start** and **deployment plans** are currently not supported in Clarinet installed inside VS Code editor of the Hiro Platform.
 
 :::
 

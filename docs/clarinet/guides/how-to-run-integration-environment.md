@@ -1,5 +1,5 @@
 ---
-title: "Run local Integration Environment"
+title: 'Run local Integration Environment'
 ---
 
 Once you have reached a point where your Clarity smart contract is functional, you can develop a web frontend against your contract. This can be challenging, as the contract must be deployed to a live blockchain to interact with it from a web app fully. Clarinet provides an easy method to deploy your contract to a blockchain that is configurable and controllable locally on your machine. This integration feature is called DevNet.
@@ -7,7 +7,6 @@ Once you have reached a point where your Clarity smart contract is functional, y
 DevNet allows you to perform frontend development and integration testing without the need to deploy your contract to public testnet. This is valuable if you are in the early stages of developing a product, contract, or app in stealth. DevNet uses Docker to launch local instances of Bitcoin, Stacks, Stacks API, Explorer, and Bitcoin Explorer and provides total configuration control over all those instances. Once running, DevNet automatically deploys your contracts and creates Stacks accounts with pre-defined balances.
 
 The services launched by DevNet represent a full instance of the Stacks blockchain with the Proof of Transfer consensus mechanism running against a locally running Bitcoin testnet. DevNet allows you to control block times, PoX transactions, and contract deployments. Because DevNet is running locally, it can be reset or reconfigured anytime. This allows for rapid frontend development without interacting with the public blockchain.
-
 
 ## Prerequisites
 
@@ -18,7 +17,7 @@ To run DevNet, you must have [Clarinet installed](../getting-started.md), and yo
 Clarinet provides a sensible default configuration for DevNet. If you wish to use the default configuration, you can launch DevNet from the root of your Clarinet project with the command:
 
 ```sh
-clarinet integrate
+clarinet devnet start
 ```
 
 Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks node, Stacks API node, and the Bitcoin and Explorers. This can take several minutes on the first launch. Once the images are launched, the DevNet interface is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second block of the chain, so you may need to wait for the third block before launching your frontend development environment.
@@ -68,10 +67,9 @@ DevNet provides a sensible default configuration for the local blockchain, with 
 the latest development images for each of the Stacks and Bitcoin nodes. These parameters are defined under the
 `[devnet]` heading. You can customize these defaults by setting any of the following parameters.
 
->  **_NOTE:_**
-> 
+> **_NOTE:_**
+>
 > The default value is used if any of the parameters are not supplied in the configuration file.
-
 
 - `pox_stacking_orders`: defined by stacking orders headings later in the file
 - `orchestrator_port`: the port number for the Bitcoin orchestrator service
@@ -121,4 +119,3 @@ For more information, you can refer to the following links:
 
 - [clarinet installed](../getting-started.md)
 - [docker documentation](https://docs.docker.com/get-docker/)
-

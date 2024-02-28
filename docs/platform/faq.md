@@ -6,7 +6,7 @@ title: FAQs
 
 Your projects are deployed as pods in Kubernetes. Each pod operates with strict security context and resource limits. You are the only one to have access to the data.
 
-### Clarinet Integrate/Devnet is not working in terminal
+### `clarinet devnet start` is not working in terminal
 
 This feature is not supported. It is in the roadmap.
 
@@ -24,4 +24,4 @@ Use the [feedback widget inside Hiro Platform](https://hiro-pbc.canny.io/hiro-pl
 
 ### I see an error: 'Unable to retrieve contract ...' in the browser console. How do I resolve it?
 
-Currently, "clarinet integrate", and "requirements" aren't supported in Clarinet installed in Hiro Platform. These are on the roadmap.
+Currently, "clarinet devnet start", and "requirements" aren't supported in Clarinet installed in Hiro Platform. These are on the roadmap.
