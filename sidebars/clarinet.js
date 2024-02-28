@@ -106,6 +106,11 @@ module.exports = [
     id: 'clarinet/guides/clarinet-integrate',
   },
   {
+    type: 'doc',
+    label: 'Run an integration environment',
+    id: 'clarinet/guides/how-to-run-integration-environment',
+  },
+  {
     type: 'html',
     value: 'Other',
     className: 'section-title',

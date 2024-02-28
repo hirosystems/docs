@@ -20,6 +20,12 @@ Clarinet provides a sensible default configuration for DevNet. If you wish to us
 clarinet devnet start
 ```
 
+For versions of Clarinet < 2.1.0, use:
+
+```sh
+clarinet integrate
+```
+
 Clarinet fetches the appropriate Docker images for the Bitcoin node, Stacks node, Stacks API node, and the Bitcoin and Explorers. This can take several minutes on the first launch. Once the images are launched, the DevNet interface is displayed in your terminal window. The contracts in your project are deployed to the DevNet blockchain in the second block of the chain, so you may need to wait for the third block before launching your frontend development environment.
 
 Review the following sections for information about the DevNet interface and configuration options for DevNet.
