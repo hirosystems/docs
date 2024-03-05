@@ -4,16 +4,6 @@ import DocSidebarItem from '@theme-original/DocSidebarItem';
 export default function DocSidebarItemWrapper(props) {
   const { item } = props;
 
-  if (item.label === 'Hiro Hacks') {
-    return (
-      <div className="flex items-center cursor-default">
-        <DocSidebarItem {...props}/>
-        <span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-red-400/10 px-2 py-1 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-          New
-        </span>
-      </div>
-    );
-  }
   if (item.label === 'Back') {
     return (
       <div className="flex items-baseline align-center cursor-default ml-3">
