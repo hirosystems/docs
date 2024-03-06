@@ -377,8 +377,8 @@ The frontend uses the `doContractCall` function from the [`@stacks/connect-react
 Clarity smart contract. In order to support the mapping of [Javascript types to Clarity types][], helpers exported from
 the [`@stacks/transactions`][] package are used as arguments to the contract call.
 
-Note that the contract call also create post conditions to verify that a single $HEY token is transferred by the
-execution of the contract call. Post conditions are a powerful feature of Clarity that can be used to prevent
+Note that the contract call also create post-conditions to verify that a single $HEY token is transferred by the
+execution of the contract call. Post-conditions are a powerful feature of Clarity that can be used to prevent
 rug-pulling and other detrimental behavior by smart contracts.
 
 ### Reading transactions
@@ -643,5 +643,3 @@ specific implementation details.
 [`src/store/hey.ts`]: https://github.com/hirosystems/heystack/blob/main/src/store/hey.ts
 [`src/components/user-area.tsx`]: https://github.com/hirosystems/heystack/blob/22e4e9020f8bbb404e8c1e36f32f000050f90818/src/components/user-area.tsx#L62
 [separation of concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
-
-
