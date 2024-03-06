@@ -46,7 +46,7 @@ const tx = await makeContractCall({
 
 ## Constructing Post-Conditions
 
-The easiert way to construct a post-conditions in Stacks.js is to use the `Pc` helpers.
+The easiest way to construct a post-condition in Stacks.js is to use the `Pc` helpers.
 This is a builder inspired by BDD (Behavior Driven Development).
 
 Start with the `Pc.address` initializer to specify the address of the principal that will be verified in the post-condition.
