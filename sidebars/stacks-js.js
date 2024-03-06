@@ -35,6 +35,22 @@ module.exports = [
   },
   {
     type: 'html',
+    value: 'Guides',
+    className: 'section-title',
+    defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Integrate Stacking',
+    id: 'stacks.js/guides/how-to-integrate-stacking', // TODO: merge both stacking guides
+  },
+  {
+    type: 'doc',
+    label: 'Post-Conditions',
+    id: 'stacks.js/guides/deep-dive-post-conditions',
+  },
+  {
+    type: 'html',
     value: 'Connect',
     className: 'section-title',
     defaultStyle: true,
@@ -46,7 +62,7 @@ module.exports = [
   },
   {
     type: 'html',
-    value: 'Guides',
+    value: 'Connect Guides',
     className: 'section-title',
     defaultStyle: true,
   },
@@ -64,10 +80,5 @@ module.exports = [
     type: 'doc',
     label: 'Sign messages',
     id: 'stacks.js/guides/sign-messages',
-  },
-  {
-    type: 'doc',
-    label: 'Integrate Stacking',
-    id: 'stacks.js/guides/how-to-integrate-stacking', // TODO: merge both stacking guides
   },
 ];
