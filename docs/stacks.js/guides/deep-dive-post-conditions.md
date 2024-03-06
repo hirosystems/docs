@@ -21,7 +21,7 @@ So, they can't guarantee the receival of FTs/NFTs, since they only check for sen
 
 ## Post-Condition Modes
 
-**All given post-conditions will be always be checked.**
+**All given post-conditions will always be checked.**
 However, in addition to the post-conditions itself, we can also specify a "mode" for the transaction to verify other asset transfers.
 The mode can be either `Allow` or `Deny`.
 
