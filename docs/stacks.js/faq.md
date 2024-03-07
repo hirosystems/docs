@@ -4,7 +4,7 @@ sidebar_label: FAQs
 
 # Stacks.js FAQs
 
-### What are Post Conditions? How do Post Conditions work?
+### What are Post-Conditions? How do Post-Conditions work?
 
 In computer programming, a post-condition is a condition (or a predicate) that must always be true just after the execution of some section of code or after an operation. And on Stacks, transactions are secured by post-conditions. Thus, if a post-condition check fails on a Clarity smart contract then the entire transaction is reverted.
 

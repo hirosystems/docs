@@ -34,30 +34,41 @@ const network = new StacksMainnet({ url: 'https://www.mystacksnode.com/' });
 
 ## Accounts and Addresses
 
-:::info Connect
-For web applications, you can request the user's address via Stacks Connect. [Read more](/stacks.js/connect)
-:::
-
-Stacks.js uses the concept of an "account" to represent a user's identity on the blockchain. An account is identified by a unique address. The address is derived from the account's public key, which is derived from the account's private key.
+Stacks uses the concept of an "account" to represent a user's identity on the blockchain. An account is identified by a unique address. The address is derived from the account's public key, which is derived from the account's private key.
 
 A normal mainnet address starts with `SP`, and a testnet address starts with `ST`.
 e.g. `SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159`, `ST2F4BK4GZH6YFBNHYDDGN4T1RKBA7DA1BJZPJEJJ`
 
+<Tabs><TabItem value="connect" label="Using Connect">
 ```js
-import { generateSecretKey } from '@stacks/wallet-sdk';
+import { showConnect } from '@stacks/connect';
+
+showConnect({
+  appDetails,
+  userSession,
+  onFinish: () => {
+    console.log(userSession.loadUserData().profile.stxAddress.mainnet);
+  },
+});
+```
+</TabItem><TabItem value="private" label="Using a mnemonic">
+```js
+import { TransactionVersion } from "@stacks/transactions";
+import { generateSecretKey, generateWallet, getStxAddress } from "@stacks/wallet-sdk";
 
 const mnemonic = generateSecretKey();
 // aunt birth lounge misery utility blind holiday walnut fuel make gift parent gap picnic exact various express sphere family nerve oil drill engage youth
 
 const wallet = await generateWallet({
-  secretKey: mnemonic,
-  password: 'secretpassword',
+  secretKey: mnemonic, // the same mnemonic will always generate the same wallet accounts
+  password: 'optional-password', // if you want to encrypt the wallet
 });
 
-const account = wallet.accounts[0];
+const account = wallet.accounts[0]; // first account in the wallet
 const mainnetAddress = getStxAddress({ account, transactionVersion: TransactionVersion.Mainnet });
-const testnetAddress = getStxAddress({ account, transactionVersion: TransactionVersion.Testnet });
+// SP1MXSZF4NFC8JQ1TTYGEC2WADMC7Y3GHVZYRX6RF
 ```
+</TabItem></Tabs>
 
 ## Transactions
 
@@ -109,21 +120,21 @@ Stacks has two types of blocks: microblocks and (anchor) blocks.
 anchorMode: "offChainOnly" | "onChainOnly" | "any",
 ```
 
-## Post Conditions
+## Post-Conditions
 
-In Stacks, transactions can have "post conditions".
+In Stacks, transactions can have "post-conditions".
 These are additional security to ensure the transaction was executed as expected.
 
-More precisely, adding post conditions to a transaction can ensure that:
+More precisely, adding post-conditions to a transaction can ensure that:
 
 - STX tokens were transferred from an address
 - FTs/NFTs we transferred from an address
 
 :::caution
-Post conditions aren't perfect. They can't say anything about the end-state after a transaction. So, they can't guarantee the receival of FTs/NFTs, since they only check for sending.
+Post-conditions aren't perfect. They can't say anything about the end-state after a transaction. So, they can't guarantee the receival of FTs/NFTs, since they only check for sending.
 :::
 
-An example adding a post condition (of an address sending 1000 uSTX).
+An example adding a post-condition (of an address sending 1000 uSTX).
 
 ```js
 import { Pc } from '@stacks/transactions';
@@ -136,18 +147,18 @@ const tx = await makeContractCall({
 });
 ```
 
-### Post Condition **Mode**
+### Post-Condition **Mode**
 
 _...aka "allow transfer of unspecified assets?"_
 
-In addition to the post conditions itself, we can also specify a "mode" for the transaction to verify asset transfers.
+In addition to the post-conditions itself, we can also specify a "mode" for the transaction to verify asset transfers.
 The mode can be either `Allow` or `Deny`.
 
-- `Allow` means that the transaction can transfer any asset (assuming no conflicting post conditions).
-- `Deny` means the transaction will fail if any asset transfers (not specified in the post conditions) are attempted.
+- `Allow` means that the transaction can transfer any asset (assuming no conflicting post-conditions).
+- `Deny` means the transaction will fail if any asset transfers (not specified in the post-conditions) are attempted.
 
 :::note
-In either case, all post conditions will still be checked.
+In either case, all post-conditions will still be checked.
 By default, transactions are set to `Deny` mode for additional security.
 :::
 

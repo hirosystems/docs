@@ -223,7 +223,7 @@ const network = new StacksTestnet({ url: "http://localhost:3999" });
 
 // Set transaction options, using command line arguments
 // Note that postConditionMode must be set to 1, which corresponds to Allow
-// Meaning that the transaction issuer does not care about the post conditions
+// Meaning that the transaction issuer does not care about the post-conditions
 const txOptions = {
   contractAddress: argv.a,
   contractName: argv.n,
