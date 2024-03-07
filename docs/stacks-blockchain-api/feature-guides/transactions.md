@@ -79,12 +79,12 @@ Post-conditions are meant to be added by the user (or by the user's wallet softw
 
 Each transaction includes a field that describes zero or more post-conditions that must all be true when the transaction finishes running. The post-condition describes only properties of the owner of the asset before the transaction happened. For a transfer transaction, the post-condition is about the sender, for a burn transaction, the post-condition is about the previous owner. A post-condition includes the following information:
 
-| **Attribute**                                                        | **Sample**                                  | **Description**                                                                                  |
-| -------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Attribute**                                     | **Sample**                                  | **Description**                                                                                  |
+| ------------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | [Principal](https://docs.stacks.co/clarity/types) | `SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE` | Original owner of the asset, can be a Stacks address or a contract                               |
-| Asset id                                                             | `STX`                                       | Asset to apply conditions to (could be STX, fungible, or non-fungible tokens)                    |
-| Comparator                                                           | `>=`                                        | Compare operation to be applied (could define "how much" or "whether or not the asset is owned") |
-| Literal                                                              | `1000000`                                   | Integer or boolean value used to compare instances of the asset against via the condition        |
+| Asset id                                          | `STX`                                       | Asset to apply conditions to (could be STX, fungible, or non-fungible tokens)                    |
+| Comparator                                        | `>=`                                        | Compare operation to be applied (could define "how much" or "whether or not the asset is owned") |
+| Literal                                           | `1000000`                                   | Integer or boolean value used to compare instances of the asset against via the condition        |
 
 ### Evaluation modes
 
@@ -263,9 +263,9 @@ const l = listCV < BooleanCV > [trueCV(), intCV(1)];
 
 ### Setting post-conditions
 
-The Stacks Transactions JS library supports the construction of post conditions.
+The Stacks Transactions JS library supports the construction of post-conditions.
 
-Here is an example of a post condition that ensures the account's balance will only decrease by no more than 1 STX:
+Here is an example of a post-condition that ensures the account's balance will only decrease by no more than 1 STX:
 
 ```js
 const account = 'SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE';
