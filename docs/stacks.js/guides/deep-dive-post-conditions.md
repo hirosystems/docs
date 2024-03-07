@@ -60,19 +60,19 @@ Builder initializer
 
 STX/FT transfer methods
 
-- `.willSendEq(amount: number)` to specify the **exact** amount to be sent
-- `.willSendGte(amount: number)` to specify the **greater than or equal** amount to be sent
-- `.willSendGt(amount: number)` to specify the **greater than** amount to be sent
-- `.willSendLte(amount: number)` to specify the **less than or equal** amount to be sent
-- `.willSendLt(amount: number)` to specify the **less than** amount to be sent
+- `.willSendEq(amount: number)` ensures that the amount to be sent is **exactly** the specified value.
+- `.willSendGte(amount: number)` ensures that the amount to be sent is **greater than or equal** to the specified value.
+- `.willSendGt(amount: number)` ensures that the amount to be sent is **greater than** the specified value.
+- `.willSendLte(amount: number)` ensures that the amount to be sent is **less than or equal** to the specified value.
+- `.willSendLt(amount: number)` ensures that the amount to be sent is **less than** the specified value.
 
 * `.ustx()` to specify uSTX as the FT asset _(ends the builder)_
 * `.ft(contract: string, tokenName: string)` to specify a specific FT asset _(ends the builder)_
 
 NFT transfer methods
 
-- `.willSendAsset()` to specify an asset **should be sent**
-- `.willNotSendAsset()` to specify an asset **should not be sent**
+- `.willSendAsset()` ensures that an asset should **be sent**.
+- `.willNotSendAsset()` to specify an asset should **not be sent**
 
 * `.nft(asset: string, assetId: ClarityValue)` to specify a specific NFT asset _(ends the builder)_
 
