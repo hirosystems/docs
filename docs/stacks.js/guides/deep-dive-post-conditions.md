@@ -127,7 +127,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.tok
 // );
 ```
 
-#### Amount NFT Sent
+#### NFT Sent / Not Sent
 
 With Stacks.js, we can construct a post-condition for sending / not-sending a specific NFT instance.
 
