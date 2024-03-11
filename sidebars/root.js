@@ -40,7 +40,7 @@ module.exports = [
     type: 'category',
     label: 'Ordinals API',
     type: 'link',
-    href: '/ordinals-api',
+    href: '/ordinals',
   },
   {
     type: 'category',
