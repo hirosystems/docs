@@ -50,7 +50,7 @@ It's also possible to provide the path to the manifest like so:
 const simnet = await initSimnet('./path/to/Clarinet.toml');
 ```
 
-## API References
+# API References
 
 ### `initSimnet`
 
@@ -69,9 +69,9 @@ const simnet = await initSimnet();
 const simnet = await initSimnet('./clarity/Clarinet.toml');
 ```
 
-### Simnet Properties
+## Simnet Properties
 
-#### `Simnet.blockHeight`
+### `Simnet.blockHeight`
 
 Returns the current block height of the simnet.
 
@@ -82,7 +82,7 @@ const simnet = await initSimnet();
 console.log(simnet.blockHeight); // 0
 ```
 
-#### `Simnet.deployer`
+### `Simnet.deployer`
 
 Returns the default deployer address as defined in the project file `./setting/Devnet.toml`.
 
@@ -93,9 +93,9 @@ const simnet = await initSimnet();
 console.log(simnet.deployer); // ST1P...GZGM
 ```
 
-### Simnet Methods
+## Simnet Methods
 
-#### `Simnet.getAccounts()`
+### `Simnet.getAccounts()`
 
 ```ts
 getAccounts(): Map<string, string>
@@ -112,7 +112,7 @@ const address1 = accounts.get('wallet_1')!;
 console.log(address1); // ST1S...YPD5
 ```
 
-#### `Simnet.getAssetsMap()`
+### `Simnet.getAssetsMap()`
 
 ```ts
 getAssetsMap(): Map<string, Map<string, bigint>>
@@ -135,7 +135,7 @@ console.log(stxBalances);
 // }
 ```
 
-#### `Simnet.getDataVar()`
+### `Simnet.getDataVar()`
 
 ```ts
 getDataVar(contract: string, dataVar: string): ClarityValue
@@ -159,7 +159,7 @@ const counter = simnet.getDataVar('counter', 'count');
 // counter is Cl.uint(0)
 ```
 
-#### `Simnet.getMapEntry()`
+### `Simnet.getMapEntry()`
 
 ```ts
 getMapEntry(contract: string, mapName: string, mapKey: ClarityValue): ClarityValue
@@ -187,7 +187,7 @@ const participated = simnet.getMapEntry('counter', 'participants', Cl.standardPr
 // counter is Cl.some(Cl.bool(true|false)) or Cl.none()
 ```
 
-#### `Simnet.callReadOnlyFn()`
+### `Simnet.callReadOnlyFn()`
 
 ```ts
 callReadOnlyFn(
@@ -224,7 +224,7 @@ simnet.callReadOnlyFn('counter', 'get-counter', [], address1);
 simnet.callReadOnlyFn(`${simnet.deployer}.counter`, 'get-counter', [], address1);
 ```
 
-#### `Simnet.callPublicFn()`
+### `Simnet.callPublicFn()`
 
 ```ts
 callPublicFn(
@@ -250,7 +250,7 @@ console.log(callAdd.result); // a Clarity Value such as Cl.bool(true)
 console.log(callAdd.events); // and array of events (such as print event, stx stransfer event, etc)
 ```
 
-#### `Simnet.transferSTX()`
+### `Simnet.transferSTX()`
 
 ```ts
 transferSTX(amount: number | bigint, recipient: string, sender: string): ParsedTransactionRes
@@ -284,7 +284,7 @@ console.log(transfer);
 // }
 ```
 
-#### `Simnet.deployContract()`
+### `Simnet.deployContract()`
 
 ```ts
 deployContract(
@@ -319,7 +319,7 @@ console.log(addRes.result); // Cl.ok(Cl.uint(2))
 simnet.deployContract('contract2', source, { clarityVersion: 2 }, deployerAddr);
 ```
 
-#### `Simnet.mineBlock()`
+### `Simnet.mineBlock()`
 
 ```ts
 mineBlock(txs: Tx[]): ParsedTransactionRes[]
@@ -351,7 +351,7 @@ console.log(block[1]); // `add` response with { result, events}
 console.log(block[2]); // `transfer_stx` response with { result, events}
 ```
 
-#### `Simnet.mineEmptyBlock()`
+### `Simnet.mineEmptyBlock()`
 
 ```ts
 mineEmptyBlock(): number
@@ -369,7 +369,7 @@ cosole.log(newHeight); // 1
 console.log(simnet.blockHeight); // 1
 ```
 
-#### `Simnet.mineEmptyBlocks()`
+### `Simnet.mineEmptyBlocks()`
 
 ```ts
 mineEmptyBlocks(count?: number): number
@@ -387,7 +387,29 @@ console.log(newHeight); // 10
 console.log(simnet.blockHeight); // 10
 ```
 
-#### `Simnet.getContractsInterfaces()`
+### `Simnet.runSnippet()`
+
+```ts
+runSnippet(snippet: string): string | ClarityValue
+```
+
+Run arbitrary Clarity code.
+
+```ts
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+const simnet = await initSimnet();
+
+const result = simnet.runSnippet("(stx-account tx-sender)");
+console.log(Cl.prettyPrint(result, 2));
+// {
+//   locked: u0,
+//   unlock-height: u0,
+//   unlocked: u100000000000010
+// }
+```
+
+
+### `Simnet.getContractsInterfaces()`
 
 ```ts
 getContractsInterfaces(): Map<string, ContractInterface>
@@ -406,7 +428,7 @@ let counterInterface = contractInterfaces.get(`${deployerAddr}.counter`);
 console.log(counterInterface?.functions); // array of the functions
 ```
 
-#### `Simnet.getContractSource()`
+### `Simnet.getContractSource()`
 
 ```ts
 getContractSource(contract: string): string | undefined
@@ -426,7 +448,7 @@ console.log(contractSource);
 // "(define-public (add (a uint) (b uint)) (ok (+ a b)))"
 ```
 
-#### `Simnet.getContractAST()`
+### `Simnet.getContractAST()`
 
 ```ts
 getContractAST(contractId: string): ContractAST
