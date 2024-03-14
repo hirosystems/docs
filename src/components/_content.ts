@@ -44,7 +44,7 @@ export default {
       {
         title: 'Ordinals API',
         text: 'Ordinals API is a REST-based service that indexes Bitcoin inscriptions based on Ordinal theory. The API supports Auto-scaling and Etag caching.',
-        href: '/ordinals-api',
+        href: '/ordinals',
         image: {
           src: '/img/landing/ordinals-api.png',
           alt: 'Ordinals API',
