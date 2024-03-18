@@ -17,11 +17,11 @@ module.exports = [
     label: 'Overview',
     id: 'ordinals-explorer/index',
   },
-  {
-    type: 'doc',
-    label: 'Getting Started',
-    id: 'ordinals-explorer/getting-started',
-  },
+  // {
+  //   type: 'doc',
+  //   label: 'Getting Started',
+  //   id: 'ordinals-explorer/getting-started',
+  // },
   {
     type: 'html',
     value: 'Guides',

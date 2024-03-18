@@ -2,18 +2,18 @@
 Title: Build Ordinals Explorer
 ---
 
-# Build Stacks Explorer
+# Build Ordinals Explorer
 
-After installing and configuring your environment, you can run the Stacks Explorer locally if you wish by running the followning `pnpm` command:
+After installing and configuring your environment, you can run the Ordinals Explorer locally if you wish by running the followning `npm` command:
 
-`pnpm dev`
+`npm run dev`
 
 ## Building for Production
 
-You may also build a production version of the Stacks Explorer. Simply run the following command:
+You may also build a production version of the Ordinals Explorer. Simply run the following command:
 
-`pnpm build`
+`npm run build`
 
 > **_NOTE:_**
 >
-> Running `pnpm build` also run the default next.js build task.
+> Running `npm run build` also run the default next.js build task.

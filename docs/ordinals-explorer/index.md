@@ -2,24 +2,27 @@
 Title: Overview
 ---
 
-# Stacks Explorer Overview
+# Ordinals Explorer Overview
 
-The Stacks Explorer frontend user interface is built with [React](https://reactjs.org/), [next.js](https://github.com/vercel/next.js) and [@stacks/ui](https://github.com/hirosystems/ui).
+The Ordinals Explorer is a Next.js (app router) project that uses the [Hiro Ordinals API](https://docs.hiro.so/ordinals).
 
-Before you can run it on your machine locally, you must first clone the [Stacks Explorer](https://github.com/hirosystems/explorer) repository to obtain all of the necessary files and libraries needed.
+There are two main parts of this project:
 
-# Project Dependencies
+- The explorer `app/(explorer)` — A frontend for exploring ordinal inscriptions
+- The preview API `app/(preview)` — An endpoint to render a specific ordinal inscription
 
-Once you have cloned the Stacks Explorer repositories, you will need to install the following project dependencies:
+## Development
 
-- [NodeJS](https://nodejs.dev/en/) that includes `npm`
-- [PNPM](https://pnpm.io/installation/)
-- [Homebrew](https://brew.sh/)
+```bash
+cp .env.sample .env.local
+```
 
-> **_NOTE:_**
->
-> Although Homebrew is not required to install and operate the Stacks Explorer, it is highly recommended.
+```bash
+npm install
+```
 
-Open your terminal window, and make sure you are in the `/explorer` folder. Run the below command to install the dependencies:
+```bash
+npm run dev
+```
 
-`pnpm i`
+Open [`http://localhost:3000`](http://localhost:3000) with your browser to see the result.
