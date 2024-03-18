@@ -38,7 +38,7 @@ It's a collection of various JavaScript libraries allowing developers to interac
     <div class="subSectionTitle"><h3>Build a web-app</h3><span>→</span></div>
     <p>Build Stacks-ready web applications</p>
   </a>
-  <a href="/stacks.js/getting-started">
+  <a href="/stacks.js/learn-the-basics">
     <div class="subSectionTitle"><h3>Build a service</h3><span>→</span></div>
     <p>Dive deeper and build on Stacks</p>
   </a>
