@@ -83,7 +83,7 @@ disable_stacks_api = false
 Spin up a local Devnet network using the command:
 
 ```sh
-clarinet integrate
+clarinet devnet start
 ```
 
 If you have any trouble with the above command, refer to the [troubleshooting guide](./clarinet/troubleshooting.md) or report an issue [here](https://github.com/hirosystems/clarinet/issues).

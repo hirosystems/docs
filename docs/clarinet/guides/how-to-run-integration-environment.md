@@ -1,5 +1,5 @@
 ---
-title: "Run local Integration Environment"
+title: 'Run local Integration Environment'
 ---
 
 Once you have reached a point where your Clarity smart contract is functional, you can develop a web frontend against your contract. This can be challenging, as the contract must be deployed to a live blockchain to interact with it from a web app fully. Clarinet provides an easy method to deploy your contract to a blockchain that is configurable and controllable locally on your machine. This integration feature is called DevNet.
@@ -8,7 +8,6 @@ DevNet allows you to perform frontend development and integration testing withou
 
 The services launched by DevNet represent a full instance of the Stacks blockchain with the Proof of Transfer consensus mechanism running against a locally running Bitcoin testnet. DevNet allows you to control block times, PoX transactions, and contract deployments. Because DevNet is running locally, it can be reset or reconfigured anytime. This allows for rapid frontend development without interacting with the public blockchain.
 
-
 ## Prerequisites
 
 To run DevNet, you must have [Clarinet installed](../getting-started.md), and you also should have Docker installed locally. Refer to the [Docker documentation](https://docs.docker.com/get-docker/) for instructions on installing Docker on your development machine.
@@ -16,6 +15,12 @@ To run DevNet, you must have [Clarinet installed](../getting-started.md), and yo
 ## Launching DevNet
 
 Clarinet provides a sensible default configuration for DevNet. If you wish to use the default configuration, you can launch DevNet from the root of your Clarinet project with the command:
+
+```sh
+clarinet devnet start
+```
+
+For versions of Clarinet < 2.1.0, use:
 
 ```sh
 clarinet integrate
@@ -68,10 +73,9 @@ DevNet provides a sensible default configuration for the local blockchain, with 
 the latest development images for each of the Stacks and Bitcoin nodes. These parameters are defined under the
 `[devnet]` heading. You can customize these defaults by setting any of the following parameters.
 
->  **_NOTE:_**
-> 
+> **_NOTE:_**
+>
 > The default value is used if any of the parameters are not supplied in the configuration file.
-
 
 - `pox_stacking_orders`: defined by stacking orders headings later in the file
 - `orchestrator_port`: the port number for the Bitcoin orchestrator service
@@ -121,4 +125,3 @@ For more information, you can refer to the following links:
 
 - [clarinet installed](../getting-started.md)
 - [docker documentation](https://docs.docker.com/get-docker/)
-
