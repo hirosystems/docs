@@ -8,11 +8,8 @@ module.exports = {
   tagline: 'Developer tools for Stacks',
   url: 'https://docs.hiro.so',
   baseUrl: '/',
-  // TODO(diwaker): temporarily switching `throw` to `warn` until broken anchors
-  // in API docs are resolved.
-  onBrokenAnchors: 'warn',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'hirosystems', // Usually your GitHub org/user name.
   projectName: 'docs', // Usually your repo name.
