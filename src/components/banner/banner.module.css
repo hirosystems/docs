@@ -4,7 +4,7 @@
   font-family: var(--ifm-heading-font-family);
   display: flex;
   gap: 14px;
-  padding: 8px 20px;
+  padding: 16px 20px;
   align-items: center;
 }
 .banner-info {
@@ -12,6 +12,19 @@
 }
 .banner-warning {
   background-color: var(--color-orange);
+}
+
+.topBannerContent {
+  text-align: center;
+  flex-grow: 1;
+  color: var(--color-neutral-black);
+}
+.topBannerContent p {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 19px;
 }
 
 .bannerContent {
@@ -40,6 +53,17 @@
 }
 .banner-warning a:hover {
   color: var(--color-orange);
+}
+
+.topBannerContent a {
+  padding: 0;
+  color: var(--color-neutral-black);
+  background-color: transparent;
+  text-decoration: underline;
+}
+.topBannerContent a:hover {
+  text-decoration: underline;
+  color: var(--color-neutral-600);
 }
 
 .banner > div:first-child {
