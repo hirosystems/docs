@@ -23,10 +23,10 @@ export default {
   },
   banner: {
     type: 'info',
-    from: '2023-11-20',
-    to: '2023-12-31',
-    text: ["We've made changes to our rate limits for Hiro APIs"],
-    cta: 'Learn more',
+    from: '2024-03-15',
+    to: '2024-04-20',
+    text: ['The Nakamoto upgrade is now live on testnet: see a list of Hiro product changes here.'],
+    cta: 'View changes',
     ctaLink: 'https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis',
   },
   popularSections: {
