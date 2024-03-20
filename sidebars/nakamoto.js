@@ -26,26 +26,26 @@ module.exports = [
   {
     type: 'doc',
     label: 'Chainhook',
-    id: 'nakamoto/build-a-friend-tech-clone',
+    id: 'nakamoto/chainhook',
   },
   {
     type: 'doc',
     label: 'Clarinet',
-    id: 'nakamoto/build-a-decentralized-grants-program',
+    id: 'nakamoto/clarinet',
   },
   {
     type: 'doc',
     label: 'Explorer',
-    id: 'nakamoto/build-a-custom-api-using-chainhook',
+    id: 'nakamoto/explorer',
   },
   {
     type: 'doc',
     label: 'Stacks.js',
-    id: 'nakamoto/build-a-custom-api-using-chainhook',
+    id: 'nakamoto/stacks-js',
   },
   {
     type: 'doc',
     label: 'Stacks API',
-    id: 'nakamoto/build-a-custom-api-using-chainhook',
+    id: 'nakamoto/stacks-api',
   },
 ];
