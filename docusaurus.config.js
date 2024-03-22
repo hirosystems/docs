@@ -37,6 +37,14 @@ module.exports = {
         routeBasePath: '/api',
       },
     ],
+    [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'nakamoto',
+        path: 'docs/nakamoto/_api-reference.json',
+        routeBasePath: '/nakamoto-api',
+      },
+    ],
     async function tailwindPlugin(context, options) {
       return {
         name: 'docusaurus-tailwindcss',
@@ -95,6 +103,10 @@ module.exports = {
               {
                 label: 'Stacks Blockchain API',
                 to: '/api',
+              },
+              {
+                label: 'Stacks Blockchain API (Nakamoto)',
+                to: '/nakamoto-api',
               },
               {
                 label: 'Token Metadata API',

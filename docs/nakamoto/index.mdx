@@ -4,3 +4,104 @@ displayed_sidebar: nakamoto
 slug: /nakamoto
 ---
 
+# Nakamoto Upgrade: Changelog
+
+## Stacks Explorer: What's New
+
+### Introducing a Fresh View for Blocks
+
+The Stacks Explorer now features a new way to display blocks, aligning with the Nakamoto upgrade's approach of multiple STX blocks settling into one BTC block.
+
+**[Add image of the new blocks view]**
+
+### Tailored Viewing Experience
+
+This new view is available on Testnet, accessible via the Network dropdown.
+
+#### Two Distinctive Display Modes
+
+1. **Independent Display:** Focuses on STX blocks progress.
+2. **Grouped by Bitcoin Block:** Shows BTC blocks flow alongside STX blocks. (coming soon)
+
+**[Add image of the view selector]**
+
+### Stay in the Loop with Live View
+
+Keep up-to-date with blocks in real-time with our new live view option.
+
+**[Add image of the live view selector]**
+
+---
+
+## Platform: What's New
+
+### Clarinet.next ready!
+
+Support for Nakamoto POX-4 smart contracts with the latest versions of Clarinet and Devnet APIs.
+
+[Learn more about the Clarinet upgrades here.](#) **[Replace with the appropriate link]**
+
+### New Starting Template
+
+Introducing a Nakamoto starting template for a DeFi SIP-10 lend and borrow protocol, showcasing instant transactions.
+
+---
+
+## Stacks.js: What’s New
+
+### StackingClient
+
+Updated to match the latest pox-4 contract with new features and arguments.
+
+#### Example Snippets
+
+**`StackingClient.signPoxSignature`**
+
+```tsx
+tsx
+const client = StackingClient(MY_ADDRESS, new StacksMainnet());
+const signature = client.signPoxSignature({
+topic: 'stack-stx',
+rewardCycle: await client.getPoxInfo().reward_cycle_id,
+poxAddress: MY_BTC_ADDRESS,
+period: 2,
+signerPrivateKey: MY_SIGNER_PRIVATE_KEY
+});
+```
+
+
+---
+
+## Clarinet: What’s New
+
+### `clarinet devnet start` Changes
+
+- Enable Nakamoto functionality with `use_nakamoto = true` in `Devnet.toml`.
+- Requires accurate pox stacking orders.
+- Starts an additional Stacks Signer process.
+
+### `clarinet check` Changes
+
+- Compare current interpreter and clarity wasm outputs with `clarinet check --enable-clarity-wasm`.
+
+### `clarinet console` Changes
+
+- Automatically runs and logs differences between current interpreter and clarity wasm outputs.
+
+---
+
+## Stacks Blockchain API: What’s New
+
+### New Transaction Type `tenure_change`
+
+Affects several endpoints including `/extended/v1/tx` and `/extended/v1/tx/mempool`.
+
+### New Endpoints: `/extended/v2/*`
+
+Introducing new endpoints for mempool fees, burn blocks, transactions, and more.
+
+### Deprecated Endpoints
+
+Several `/extended/v1/*` endpoints are deprecated in favor of the new `/extended/v2/*` endpoints.
+
+View the [API Reference](/nakamoto-api) here.

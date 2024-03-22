@@ -18,6 +18,12 @@ module.exports = [
     id: 'nakamoto/index',
   },
   {
+    type: 'category',
+    label: 'API Reference',
+    type: 'link',
+    href: '/nakamoto-api',
+  },
+  {
     type: 'html',
     value: 'By Product',
     className: 'section-title',
