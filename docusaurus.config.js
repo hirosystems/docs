@@ -41,9 +41,9 @@ module.exports = {
       'docusaurus-plugin-openapi',
       {
         id: 'nakamoto',
-        path: 'docs/nakamoto/_api-reference.json',
+        path: 'openapi/stacks-blockchain-api-pbcblockstack-blockstack.json',
         routeBasePath: '/nakamoto-api',
-      },
+      }
     ],
     async function tailwindPlugin(context, options) {
       return {
