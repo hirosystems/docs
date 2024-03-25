@@ -2,20 +2,54 @@
 title: Nakamoto Updates for Clarinet
 ---
 
-## What's New
+## Launch the Devnet in Nakamoto mode
 
-### `clarinet devnet start` Changes
+As of Clarinet 2.4.0, the Devnet can run the blockchain in Nakamoto mode.
 
-See [Nakamoto Preview 1](https://github.com/hirosystems/clarinet/releases/tag/nakamoto-preview-1) and [Clarinet PR-1350](https://github.com/hirosystems/clarinet/pull/1350) for relevant notes + PRs.
+Once your Devnet reaches the right block height, it will deploy the `pox-4.clar` and run in
+Epoch 2.5.
+From there, Clarinet will send `stack-stx` and `stack-extend` requests to the new PoX contract.
+In Nakamoto mode, the Devnet has 2 signers. Eventually, you can observe the
+`vote-for-aggregate-public-key` transactions that they send.
 
-- Clarinet’s devnet can now be used to test Nakamoto functionality. To enable this, add the `use_nakamoto = true` flag to your `Devnet.toml`.
-- Enabling this feature will require accurate pox stacking orders. (See the release notes above for details)
-- The devnet now starts an additional process - the Stacks Signer. (Details on how to configure the signer address coming soon)
+Do not expect to reach Epoch 3.0 with Clarinet 2.4.0. This release is focusing on Epoch 2.4.
+Epoch 3.0, with fast blocks and others improvements, will come in a future release.
 
-### `clarinet check` Changes
+### Setting up a project for Nakamoto
 
-- Running clarinet check --enable-clarity-wasm now runs the current interpreter and  clarity wasm  side-by-side to allow comparing outputs.
+Using one of you Clarinet projects, or a new one (with `clarinet new nakamoto-project`), update the
+`settings/Devnet.toml`.
 
-### `clarinet console` Changes
+Under the `[devnet]` section, set `use_nakamoto = true`, the `pox-4.clar` contract should be
+deployed around the **Bitcoin block 108**.
 
-- clarinet console now automatically runs the current interpreter and clarity wasm side-by-side and logs any difference in outputs.
+```toml
+[devnet]
+use_nakamoto = true
+```
+
+Start the Devnet with `clarinet devnet start`.
+
+## Deploy contracts on the Nakamoto Testnet
+
+A Nakamoto testnet is available and running in Epoch 2.5. Clarinet can be used to deploy contracts
+on this testnet (available at https://api.nakamoto.testnet.hiro.so).
+
+In a Clarinet project, the `settings/Testnet.toml` file can be updated like so:
+
+```toml
+[network]
+name = "testnet"
+stacks_node_rpc_address = "https://api.nakamoto.testnet.hiro.so"
+deployment_fee_rate = 10
+
+[accounts.deployer]
+mnemonic = "<YOUR PRIVATE TESTNET MNEMONIC HERE>"
+```
+
+Then run the following command to generate the deployments plan and deploy the contracts:
+
+```sh
+clarinet deployments generate --testnet --medium-cost
+clarinet deployments apply --testnet
+```
