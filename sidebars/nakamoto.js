@@ -31,11 +31,6 @@ module.exports = [
   },
   {
     type: 'doc',
-    label: 'Chainhook',
-    id: 'nakamoto/chainhook',
-  },
-  {
-    type: 'doc',
     label: 'Clarinet',
     id: 'nakamoto/clarinet',
   },
