@@ -1,5 +1,5 @@
 ---
-title: Use Nakamoto with Clarient
+title: Use Nakamoto with Clarinet
 --- 
 
 ## Launch the Devnet in Nakamoto mode
