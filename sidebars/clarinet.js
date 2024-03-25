@@ -23,6 +23,11 @@ module.exports = [
     id: 'clarinet/getting-started',
   },
   {
+    type: 'doc',
+    label: 'Try Nakamoto',
+    id: 'clarinet/nakamoto',
+  },
+  {
     type: 'html',
     value: 'Clarinet JS SDK',
     className: 'section-title',
