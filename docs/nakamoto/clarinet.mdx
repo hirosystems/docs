@@ -2,4 +2,20 @@
 title: Nakamoto Updates for Clarinet
 ---
 
-## Changelog
+## What's New
+
+### `clarinet devnet start` Changes
+
+See [Nakamoto Preview 1](https://github.com/hirosystems/clarinet/releases/tag/nakamoto-preview-1) and [Clarinet PR-1350](https://github.com/hirosystems/clarinet/pull/1350) for relevant notes + PRs.
+
+- Clarinet’s devnet can now be used to test Nakamoto functionality. To enable this, add the `use_nakamoto = true` flag to your `Devnet.toml`.
+- Enabling this feature will require accurate pox stacking orders. (See the release notes above for details)
+- The devnet now starts an additional process - the Stacks Signer. (Details on how to configure the signer address coming soon)
+
+### `clarinet check` Changes
+
+- Running clarinet check --enable-clarity-wasm now runs the current interpreter and  clarity wasm  side-by-side to allow comparing outputs.
+
+### `clarinet console` Changes
+
+- clarinet console now automatically runs the current interpreter and clarity wasm side-by-side and logs any difference in outputs.

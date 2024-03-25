@@ -2,4 +2,30 @@
 title: Nakamoto Updates for Stacks.js
 ---
 
-## Changelog
+## What's New
+
+### StackingClient
+
+Install the latest nakamoto version with `npm install @stacks/stacking@nakamoto --save-exact`.
+
+The StackingClient in `@stacks/stacking` was updated to match the latest pox-4 contract.
+
+- Added `StackingClient.signPoxSignature()`
+- Added `Pox4SignatureTopic` enum
+- New stacking arguments for ``StackingClient.stack`
+
+#### Example Snippets
+
+**`StackingClient.signPoxSignature`**
+
+```tsx
+tsx
+const client = StackingClient(MY_ADDRESS, new StacksMainnet());
+const signature = client.signPoxSignature({
+topic: 'stack-stx',
+rewardCycle: await client.getPoxInfo().reward_cycle_id,
+poxAddress: MY_BTC_ADDRESS,
+period: 2,
+signerPrivateKey: MY_SIGNER_PRIVATE_KEY
+});
+```
