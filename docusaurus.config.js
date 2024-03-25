@@ -8,8 +8,7 @@ module.exports = {
   tagline: 'Developer tools for Stacks',
   url: 'https://docs.hiro.so',
   baseUrl: '/',
-  // TODO(diwaker): temporarily switching `throw` to `warn` until broken anchors
-  // in API docs are resolved.
+   // TODO(diwaker): temporarily switching `throw` to `warn` until broken anchors in API docs are resolved.
   onBrokenAnchors: 'warn',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
@@ -37,6 +36,14 @@ module.exports = {
         path: 'openapi/stacks-blockchain-api.json',
         routeBasePath: '/api',
       },
+    ],
+    [
+      'docusaurus-plugin-openapi',
+      {
+        id: 'nakamoto',
+        path: 'openapi/stacks-blockchain-api-pbcblockstack-blockstack.json',
+        routeBasePath: '/nakamoto-api',
+      }
     ],
     async function tailwindPlugin(context, options) {
       return {
@@ -96,6 +103,10 @@ module.exports = {
               {
                 label: 'Stacks Blockchain API',
                 to: '/api',
+              },
+              {
+                label: 'Stacks Blockchain API (Nakamoto)',
+                to: '/nakamoto-api',
               },
               {
                 label: 'Token Metadata API',

@@ -1,0 +1,64 @@
+---
+title: Nakamoto Updates for Stacks.js
+---
+
+## What's New
+
+### StackingClient
+
+Install the latest nakamoto version with `npm install @stacks/stacking@6.13.0`.
+
+The StackingClient in `@stacks/stacking` was updated to match the latest pox-4 contract.
+
+- Added `StackingClient.signPoxSignature()`
+- Added `Pox4SignatureTopic` enum
+- New stacking arguments for `StackingClient.stack`, `StackingClient.stackExtend`, `StackingClient.stackIncrease`, `StackingClient.stackAggregationCommit`, and `StackingClient.stackAggregationCommitIndexed`
+
+### Nakamoto Network
+
+To test using the Nakamoto testnet, you can use the `StacksTestnet` network with a custom URL. The Nakamoto testnet is being hosted at https://api.nakamoto.hiro.so. Use this URL like this:
+
+```tsx
+import { StacksTestnet } from '@stacks/network';
+
+const network = new StacksTestnet({
+  url: 'https://api.nakamoto.testnet.hiro.so',
+});
+```
+
+#### Example Snippets
+
+**`StackingClient.signPoxSignature`**
+
+```ts
+const client = StackingClient(MY_ADDRESS, new StacksTestnet());
+```
+
+```ts
+const signature = client.signPoxSignature({
+  topic: 'stack-stx',
+  rewardCycle: await client.getPoxInfo().reward_cycle_id,
+  poxAddress: MY_BTC_ADDRESS,
+  period: 2,
+  signerPrivateKey: MY_SIGNER_PRIVATE_KEY
+});
+```
+
+**New arguments for e.g. `StackingClient.stack`**
+
+```ts
+const { txid } = await client.stack({
+  amountMicroStx: 10_000_000_000_000,
+  poxAddress: MY_BTC_ADDRESS,
+  cycles: 2,
+  burnBlockHeight: CURRENT_BURN_BLOCK_HEIGHT,
+
+  // NEW ARGS
+  signerKey: MY_SIGNER_PUBLIC_KEY,
+  signerSignature: signature,
+  maxAmount: 10_000_000_000_000,
+  authId: 123n,
+
+  privateKey: MY_STX_PRIVATE_KEY,
+});
+```

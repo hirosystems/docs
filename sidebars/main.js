@@ -11,6 +11,7 @@
 
  const rootSidebar = require('./root')
  const platformSidebar = require('./platform')
+ const nakamotoSidebar = require('./nakamoto')
  const hacksSidebar = require('./hacks')
  const exampleAppsSidebar = require('./example-apps')
  const tutorialsSidebar = require('./tutorials')
@@ -28,6 +29,7 @@
 
 module.exports = {
   'docs': rootSidebar,
+  'nakamoto': nakamotoSidebar,
   'hacks': hacksSidebar,
   'platform': platformSidebar,
   'ordinals-explorer': ordinalsExplorerSidebar,

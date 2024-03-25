@@ -40,6 +40,7 @@ A normal mainnet address starts with `SP`, and a testnet address starts with `ST
 e.g. `SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159`, `ST2F4BK4GZH6YFBNHYDDGN4T1RKBA7DA1BJZPJEJJ`
 
 <Tabs><TabItem value="connect" label="Using Connect">
+
 ```js
 import { showConnect } from '@stacks/connect';
 
@@ -52,6 +53,7 @@ showConnect({
 });
 ```
 </TabItem><TabItem value="private" label="Using a mnemonic">
+
 ```js
 import { TransactionVersion } from "@stacks/transactions";
 import { generateSecretKey, generateWallet, getStxAddress } from "@stacks/wallet-sdk";
@@ -75,6 +77,7 @@ const mainnetAddress = getStxAddress({ account, transactionVersion: TransactionV
 The following shows how to create a simple transaction (STX transfer) using Stacks.js in different environments.
 
 <Tabs><TabItem value="connect" label="Using Connect">
+
 ```js
 import { openSTXTransfer } from '@stacks/connect';
 import { StacksTestnet } from '@stacks/network';
@@ -91,6 +94,7 @@ openSTXTransfer({
   onCancel: () => console.log('User canceled'),
 });
 ```
+
 </TabItem><TabItem value="private" label="Using a private key">
 For full manual transaction signing, we need to provide the sender's private key.
 Treat the private key as a secret and never expose it to the public!

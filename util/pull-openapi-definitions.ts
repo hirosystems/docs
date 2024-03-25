@@ -17,16 +17,14 @@ async function downloadOpenApiJson(apiName: string): Promise<void> {
   console.log(`Downloading OpenAPI definition: ${url}`);
 
   return new Promise((resolve, reject) => {
-    const req = https.get(url, (res) => {
+    const req = https.get(url, res => {
       if (res.statusCode !== 200) {
         reject(new Error(`Failed to get '${apiName}'. Status Code: ${res.statusCode}`));
         return;
       }
-      asyncPipeline(res, fs.createWriteStream(fileName))
-        .then(resolve)
-        .catch(reject);
+      asyncPipeline(res, fs.createWriteStream(fileName)).then(resolve).catch(reject);
     });
-    req.on('error', (err) => {
+    req.on('error', err => {
       reject(err);
     });
   });
@@ -37,4 +35,5 @@ Promise.all([
   downloadOpenApiJson('ordinals-api'),
   downloadOpenApiJson('token-metadata-api'),
   downloadOpenApiJson('stacks-blockchain-api'),
+  downloadOpenApiJson('stacks-blockchain-api-pbcblockstack-blockstack'),
 ]).catch(err => console.error(err));

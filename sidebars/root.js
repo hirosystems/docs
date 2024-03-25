@@ -8,6 +8,12 @@ module.exports = [
   },
   {
     type: 'category',
+    label: 'Nakamoto Updates',
+    type: 'link',
+    href: 'nakamoto',
+  },
+  {
+    type: 'category',
     label: 'Hiro Hacks',
     type: 'link',
     href: 'hacks',
