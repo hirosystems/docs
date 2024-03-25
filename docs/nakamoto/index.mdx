@@ -49,12 +49,12 @@ The StackingClient in `@stacks/stacking` was updated to match the latest pox-4 c
 
 ## Clarinet: What’s New
 
-See [Clarinet 2.4.0](https://github.com/hirosystems/clarinet/releases/tag/v2.4.0) and [Clarinet PR-1350](https://github.com/hirosystems/clarinet/pull/1350) for relevant notes + PRs.
+Make sure to install [Clarinet 2.4.0](https://github.com/hirosystems/clarinet/releases/tag/v2.4.0) or above.
 
 - Clarinet’s devnet can now be used to test Nakamoto functionality. To enable this, add the `use_nakamoto = true` flag to your `Devnet.toml`.
-- The devnet now starts an additional process - the Stacks Signer. (Details on how to configure the signer address coming soon)
+- The devnet now starts starts 2 signers (in 2 processes). (Details on how to configure the signer address coming soon)
 - Running `clarinet check --enable-clarity-wasm` now runs the current interpreter and clarity wasm side-by-side to allow comparing outputs.
-- `clarinet console` now automatically runs the current interpreter and clarity wasm side-by-side and logs any difference in outputs.
+- `clarinet console --enable-clarity-wasm` now automatically runs the current interpreter and clarity wasm side-by-side and logs any difference in outputs.
 
 [Learn more about the new Clarinet updates](/nakamoto/clarinet)
 
