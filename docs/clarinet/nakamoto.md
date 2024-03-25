@@ -8,13 +8,12 @@ As of Clarinet 2.4.0, the Devnet can run the blockchain in Nakamoto mode.
 
 Once your Devnet reaches the right block height, it will deploy the `pox-4.clar` and run in 
 Epoch 2.5.
-From there, Clarinet will send `stack-stx` and `stack-extend` requests to the new PoX contract.
-
+From there, Clarinet will send `stack-stx` and `stack-extend` requests to the new PoX contract.  
 In Nakamoto mode, the Devnet has 2 signers. Eventually, you can observe the 
 `vote-for-aggregate-public-key` transactions that they send.
 
 Do not expect to reach Epoch 3.0 with Clarinet 2.4.0. This release is focusing on Epoch 2.4.
-Epoch 3.0, ith fast blocks and others improvements, will come in a future release.
+Epoch 3.0, with fast blocks and others improvements, will come in a future release.
 
 ### Setting up a project for Nakamoto
 
@@ -22,7 +21,7 @@ Using one of you Clarinet projects, or a new one (with `clarinet new nakamoto-pr
 `settings/Devnet.toml`.
 
 Under the `[devnet]` section, set `use_nakamoto = true`, the `pox-4.clar` contract should be 
-deployed around the Bitcoin block 108.
+deployed around the **Bitcoin block 108**.
 
 ```toml
 [devnet]
