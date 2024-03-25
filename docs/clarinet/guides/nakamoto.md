@@ -31,8 +31,6 @@ use_nakamoto = true
 
 Start the Devnet with `clarinet devnet start`.
 
----
-
 ## Deploy contract on the Nakamoto Testnet
 
 A Nakamoto testnet is available and running in Epoch 2.5. Clarinet can be used to deploy contracts 
