@@ -94,7 +94,7 @@ export default {
         {
           title: 'Develop Smart Contracts',
           link: '/platform/guides/build-contract',
-          description: 'Start building immediately with zero installations.',
+          description: 'Start coding immediately with zero installations.',
         },
       ],
     },
@@ -141,12 +141,12 @@ export default {
         {
           title: 'Create a Bitcoin Chainhook',
           link: '/chainhook/guides/chainhooks-with-bitcoin',
-          description: 'Build a chainhook that reacts to events on the Bitcoin blockchain',
+          description: 'Build a chainhook that reacts to events on the Bitcoin blockchain.',
         },
         {
           title: 'Create a Stacks Chainhook',
           link: '/chainhook/guides/chainhooks-with-stacks',
-          description: 'Explore our frequently asked questions to address common queries.',
+          description: 'Build a chainhook that reacts to events on the Stacks Blockchain.',
         },
       ],
     },
