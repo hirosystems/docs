@@ -1,0 +1,83 @@
+---
+# The default id is the same as the one defined below. so not needed
+title: Overview
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<p class="p-3 rounded-lg bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">Clarinet is a local development environment that offers everything you need to create and deploy smart contracts on Stacks.</p>
+
+<div class="mb-10"></div>
+
+With Clarinet, you can quickly setup your Clarity project through the command line tool. This covers every stage of the development cycle from generating new contracts, an interactive REPL and validating contracts to deployment on a devnet, testnet or mainnet.
+
+### Install Clarinet
+
+<Tabs>
+  <TabItem value="macOS" label="macOS">
+  ```sh
+  brew install clarinet
+  ```
+
+  :::info
+  For a visual guide, please see the [Setting Up Your Clarity Environment (macOS)](https://www.youtube.com/watch?v=dpPopuvYU90) video.
+  :::
+  </TabItem>
+  <TabItem value="Windows" label="Windows">
+  ```sh
+  winget install clarinet
+  ```
+
+  :::info
+  For a visual guide, please see the [Setting Up Your Clarity Environment (Windows)](https://www.youtube.com/watch?v=r5LY1J5oACs) video.
+  :::
+  </TabItem>
+</Tabs>
+
+### Guides
+
+<div class="subSections my-8">
+  <a href="/clarinet/guides/how-to-create-new-project">
+    <div class="subSectionTitle"><h3>Create a new contract</h3><span>→</span></div>
+    <p>Add new contracts to your project and have them automatically configured in your project file.</p>
+  </a>
+  <a href="/clarinet/guides/how-to-debug-contract">
+    <div class="subSectionTitle"><h3>Debug a contract</h3><span>→</span></div>
+    <p>Debug your contract by stepping through your code, printing values, and tracing code execution.</p>
+  </a>
+</div>
+
+<div class="subSections my-8">
+  <a href="/clarinet/guides/test-contract-with-clarinet-sdk">
+    <div class="subSectionTitle"><h3>Write unit tests</h3><span>→</span></div>
+    <p>Write unit tests with the Clarinet SDK to verify contract functiona</p>
+  </a>
+  <a href="/clarinet/guides/how-to-use-deployment-plans">
+    <div class="subSectionTitle"><h3>Create deployment plans</h3><span>→</span></div>
+    <p>Standardize your contract deployments with customizable plans that can execute multi-step processes automatically.</p>
+  </a>
+</div>
+
+<div class="subSections my-8">
+  <a href="/clarinet/guides/clarinet-integrate">
+    <div class="subSectionTitle"><h3>Run a local development environment</h3><span>→</span></div>
+    <p>Deploy your code in private blockchain environments to test and integrate your contracts.</p>
+  </a>
+  <a href="/clarinet/guides/analyze-with-check-checker">
+    <div class="subSectionTitle"><h3>Analyzing contracts for vulnerabilities</h3><span>→</span></div>
+    <p>Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts.</p>
+  </a>
+</div>
+
+### Related Tools
+
+**[Clarinet JS SDK](./guides/clarinet-js-sdk.md)**: Make testing in Clarinet even easier with the Clarinet SDK.
+
+**[Hiro Platform](../platform/index.md)**: Skip the Clarinet installation and go straight to building in a hosted dev platform.
+
+**[Stacks.js](../stacks.js/index.md)**: Don’t reinvent the wheel and build faster with a JS library that handles basic functions.
+
+---
+
+Need help building with Clarinet? Reach out to us on the `#clarinet` channel on Discord under Hiro Developer Tools section. We also host a weekly office hours on Discord every Monday at 11am ET.
