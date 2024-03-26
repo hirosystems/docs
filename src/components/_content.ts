@@ -44,7 +44,7 @@ export default {
     sections: [
       {
         title: 'Stacks API',
-        text: 'Stacks blockchain API allows you to query the Stacks blockchain and interact with smart contracts.',
+        text: 'Query the Stacks blockchain, interact with smart contracts, and broadcast transactions.',
         href: '/stacks-blockchain-api',
         image: {
           src: '/img/landing/api.png',
@@ -53,7 +53,7 @@ export default {
       },
       {
         title: 'Ordinals API',
-        text: 'Ordinals API is a REST-based service that indexes Bitcoin inscriptions based on Ordinal theory. The API supports Auto-scaling and Etag caching.',
+        text: 'Get fast, reliable data for Bitcoin Ordinals and BRC-20 tokens via an easy-to-use REST interface.',
         href: '/ordinals-api',
         image: {
           src: '/img/landing/ordinals-api.png',
@@ -62,7 +62,7 @@ export default {
       },
       {
         title: 'Stacks.js',
-        text: 'Stacks.js is an SDK with a collection of JavaScript libraries to interact with and transact on the Stacks blockchain.',
+        text: 'A collection of JavaScript libraries to build web applications on Stacks.',
         href: '/stacks.js',
         image: {
           src: '/img/landing/stacksjs.png',
@@ -79,22 +79,22 @@ export default {
         alt: 'Stacks logo',
       },
       description:
-        'The Hiro Platform is a cloud-based development environment that enables you to create, build and deploy Clarity smart contracts.',
+        'The Hiro Platform is a cloud-based development environment to kickstart your app development on Stacks.',
       subSections: [
         {
-          title: 'Getting started',
-          link: '/platform/getting-started',
-          description: 'Get started using the Hiro Platform.',
+          title: 'Get Started',
+          link: '/platform',
+          description: 'Start building in a streamlined, hosted environment.',
         },
         {
-          title: 'Guides',
+          title: 'Create a New Project',
           link: '/platform/guides/create-project',
-          description: 'Start creating your first project.',
+          description: 'Choose from a set of starter templates or import your GitHub repo.',
         },
         {
-          title: 'FAQ',
-          link: '/platform/faq',
-          description: 'Explore our troubleshooting guide to unblock yourself.',
+          title: 'Develop Smart Contracts',
+          link: '/platform/guides/build-contract',
+          description: 'Start building immediately with zero installations.',
         },
       ],
     },
@@ -105,22 +105,22 @@ export default {
         alt: 'Clarity logo',
       },
       description:
-        'Clarinet is a command line tool for Clarity smart contract development that provides a CLI package with a clarity runtime, a console, and a testing harness.',
+        'Clarinet is a local development environment that offers everything you need to create, test, and deploy smart contracts on Stacks.',
       subSections: [
         {
-          title: 'Getting started',
-          link: '/clarinet/getting-started',
-          description: 'Get started to install and build with Clarinet.',
+          title: 'Get Started',
+          link: '/clarinet',
+          description: 'Install Clarinet and build on your local device.',
         },
         {
-          title: 'Feature guides',
-          link: '/clarinet/guides/analyze-with-check-checker',
-          description: 'Explore the features of Clarinet.',
+          title: 'Create a New Contract',
+          link: '/clarinet/guides/how-to-add-contract',
+          description: 'Add new contracts to your project and have them automatically configured in your project file.',
         },
         {
-          title: 'Troubleshooting',
-          link: '/clarinet/troubleshooting',
-          description: 'Explore our troubleshooting guide to unblock yourself.',
+          title: 'Write Unit Tests',
+          link: '/clarinet/guides/test-contract-with-clarinet-sdk',
+          description: 'Write unit tests with the Clarinet SDK to verify contract functionality.',
         },
       ],
     },
@@ -131,21 +131,21 @@ export default {
         alt: 'Chainhook logo',
       },
       description:
-        'Chainhook helps you get reliable blockchain data, regardless of forks and reorgs, and enables you to create triggers that respond to on-chain events in real time, using IFTTT (if_this, then_that) logic.',
+        'Chainhook enables you to build custom event streams for Bitcoin layers and trigger actions based on those events.',
       subSections: [
         {
-          title: 'Getting started',
-          link: '/chainhook/getting-started',
-          description: 'Get started to install Chainhook from the source.',
+          title: 'Get Started',
+          link: '/chainhook',
+          description: 'Discover the power of Chainhook.',
         },
         {
-          title: 'How-to guides',
+          title: 'Create a Bitcoin Chainhook',
           link: '/chainhook/guides/chainhooks-with-bitcoin',
-          description: 'Explore the how-to guides of Chainhook.',
+          description: 'Build a chainhook that reacts to events on the Bitcoin blockchain',
         },
         {
-          title: 'FAQ',
-          link: '/chainhook/faq',
+          title: 'Create a Stacks Chainhook',
+          link: '/chainhook/guides/chainhooks-with-stacks',
           description: 'Explore our frequently asked questions to address common queries.',
         },
       ],
