@@ -4,9 +4,13 @@ title: Nakamoto Updates for Stacks API
 
 ## What's New
 
+> **_NOTE:_**
+>
+> The `/extended/v2/*` endpoints represent the modern API that is being continually expanded to support the Nakamoto upgrade. We encourage developers to use v2 endpoints for new developments. Be aware that `/extended/v1/*` are the older set of endpoints. Though they continue to function alongside v2, be advised that they will be deprecated in the coming months.
+
 ### New Testnet URL
 
-`https://api.nakamoto.testnet.hiro.so/`
+`https://api.nakamoto.testnet.hiro.so`
 
 ### Nakamoto endpoints
 
@@ -38,6 +42,9 @@ Affects endpoints:
 -  `/extended/v1/tx/multiple`
 
 ### New endpoints: `/extended/v2/*`
+
+/extended/v1 vs /extended/v2 endpoints: Key Difference
+The ﻿/extended/v2/* endpoints represent the modern API that is being continually expanded to support the Nakamoto upgrade. We encourage developers to use v2 endpoints for new developments. Be aware that ﻿/extended/v1/* are the older set of endpoints. Though they continue to function alongside v2, be advised that they will be deprecated in the coming months.
 
 -  `/extended/v2/mempool/fees`
 -  `/extended/v2/burn-blocks`
