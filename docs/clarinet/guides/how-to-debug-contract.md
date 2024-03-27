@@ -1,16 +1,17 @@
 ---
 title: Debug Contract
+custom_edit_url: null
 ---
 
 ## VS Code Debugger
 
 Clarinet supports the [Debug Adapter Protocol](https://microsoft.github.io/debug-adapter-protocol/) (DAP), which enables you to debug your smart contracts inside of Visual Studio Code (VS Code) or any code editor supporting the DAP protocol.
 
-*Topics covered in this guide*:
+_Topics covered in this guide_:
 
-* [Enable smart-contract debugging in Visual Studio code](#debug-contract)
-* [Use command-line debugger inside the `clarinet console`](#command-line-debugger)
-* [Learn how to use `trace` command](#execution-trace)
+- [Enable smart-contract debugging in Visual Studio code](#debug-contract)
+- [Use command-line debugger inside the `clarinet console`](#command-line-debugger)
+- [Learn how to use `trace` command](#execution-trace)
 
 ## Debug Contract
 
@@ -41,7 +42,7 @@ This will create the file `.vscode/launch.json` with the default template:
 
 Depending on your needs, you will want to set the `name` field to whatever makes sense for your project, then set the `expression` to the Clarity expression you would like to debug. In the case of the default example shown in the template above, the debugger would start executing the `bar` function of the `foo` contract, passing the argument `42`. Once this file is configured, the debugger works as expected for any [VS Code debugging](https://code.visualstudio.com/docs/editor/debugging).
 
-Execution begins paused at the first expression. The debug toolbar includes buttons to continue, 
+Execution begins paused at the first expression. The debug toolbar includes buttons to continue,
 step over, step into, step out, restart, and stop, in that order.
 
 ![debug toolbar](../images/debug-toolbar.png)
@@ -50,7 +51,7 @@ Breakpoints can be set by clicking in the left gutter next to the code or using 
 
 ![breakpoint](../images/breakpoint.png)
 
-Data watchpoints may also be set by clicking the  "+" in the Watch section of the Debug sidebar and typing the contract variable to watch in the format `<principal>.<contract>.<name>`, or using the shortcut for a local contract, `.<contract>.<name>`. When a watchpoint is set on a contract variable, execution will pause when its value changes.
+Data watchpoints may also be set by clicking the "+" in the Watch section of the Debug sidebar and typing the contract variable to watch in the format `<principal>.<contract>.<name>`, or using the shortcut for a local contract, `.<contract>.<name>`. When a watchpoint is set on a contract variable, execution will pause when its value changes.
 
 ![watchpoint](../images/watchpoint.png)
 
@@ -58,7 +59,7 @@ During execution, the values of the current contract's variables, the current fu
 
 ![view of the sidebar, showing variables, watchpoints, and call stack](../images/sidebar.png)
 
-At any point during execution, an expression can be evaluated in the current context via the Debug Console. 
+At any point during execution, an expression can be evaluated in the current context via the Debug Console.
 Simply type any valid Clarity expression and hit enter to evaluate it. Upon completion, the events emitted and the return value are printed to the debug console.
 
 ![debug console](../images/debug-console.png)
@@ -67,7 +68,7 @@ For more information on how to debug your smart contract using the VS Code Exten
 
 ## Command-Line Debugger
 
-Inside the console (`clarinet console`), there is a debugger for stepping through your contracts 
+Inside the console (`clarinet console`), there is a debugger for stepping through your contracts
 on the command line, including support for:
 
 - Breakpoints
@@ -79,7 +80,7 @@ on the command line, including support for:
     ```
     b .crashpunks-v2.transfer
     ```
-  - **Data**: Break on read/write to a variable or map (`watch` or `w` to break on write, `rwatch` or `rw` 
+  - **Data**: Break on read/write to a variable or map (`watch` or `w` to break on write, `rwatch` or `rw`
   - to break on read, and `awatch` or `aw` to break on read or write)
     ```
     w contracts/SP2KAF9RF86PVX3NEE27DFV1CQX0T4WGR41X3S45C.bitcoin-whales.payout
@@ -113,7 +114,7 @@ For a video walkthrough on how to debug your smart contracts, please see the [De
 
 When you are in the console (`clarinet console`), the `::trace <expr>` command enables you to execute an expression and print a trace of the execution, which can be very helpful in identifying problems with the contract.
 
-This trace shows all function calls, both internal calls to private functions and contract calls to other contracts. 
+This trace shows all function calls, both internal calls to private functions and contract calls to other contracts.
 For each call, the parameters and return value are shown in the trace. Any events that are emitted are also shown in the trace.
 
 ![execution trace](../images/trace.png)
