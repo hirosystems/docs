@@ -146,7 +146,7 @@ export default {
         {
           title: 'Create a Stacks Chainhook',
           link: '/chainhook/guides/chainhooks-with-stacks',
-          description: 'Build a chainhook that reacts to events on the Stacks Blockchain.',
+          description: 'Build a chainhook that reacts to events on the Stacks blockchain.',
         },
       ],
     },
