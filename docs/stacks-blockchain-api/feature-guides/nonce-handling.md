@@ -1,8 +1,7 @@
 ---
 Title: Nonce Handling
+custom_edit_url: null
 ---
-
-# Nonce handling
 
 In order to prevent "stuck" transactions, you must track the next available nonce for principals issuing transactions. The
 Stacks Blockchain API provides an endpoint to make nonce handling simpler when using the following command:

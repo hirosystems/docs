@@ -1,8 +1,7 @@
 ---
 Title: Use Clarity Values
+custom_edit_url: null
 ---
-
-# Using Clarity Values
 
 Some endpoints, like the [read-only function contract call](https://docs.hiro.so/api#operation/call_read_only_function), require input to a serialized [Clarity value](https://docs.stacks.co/docs/clarity/). Other endpoints return serialized values that need to be deserialized.
 

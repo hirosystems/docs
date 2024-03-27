@@ -1,8 +1,7 @@
 ---
 title: Transactions
+custom_edit_url: null
 ---
-
-# Transactions
 
 Transactions are the fundamental unit of execution in the Stacks blockchain. Each transaction is originated from a [Stacks account](https://docs.stacks.co/stacks-101/accounts), and is retained in the Stacks blockchain history. This guide helps you understand Stacks transactions.
 
