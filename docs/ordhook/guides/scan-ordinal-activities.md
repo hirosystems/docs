@@ -1,5 +1,6 @@
 ---
 title: Scan Ordinal Activities in Your Terminal
+custom_edit_url: null
 ---
 
 Ordhook is a tool that helps you find ordinal activity on the Bitcoin chain. Think of it like a detective that can find and track this activity for you. Once it finds any activity, that data can be used to help build your own database. This guide will show you how to use Ordhook to scan this activity on the Bitcoin chain in your terminal.

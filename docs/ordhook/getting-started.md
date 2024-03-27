@@ -1,5 +1,6 @@
 ---
 title: Getting Started
+custom_edit_url: null
 ---
 
 Ordhook is a developer tool designed for interacting with [Bitcoin ordinals](https://www.hiro.so/blog/what-are-bitcoin-ordinals), enabling you to retrieve ordinal activity from the Bitcoin chain. Follow the steps below to install Ordhook.
