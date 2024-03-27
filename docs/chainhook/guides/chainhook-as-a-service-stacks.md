@@ -1,5 +1,6 @@
 ---
 title: Run Chainhook as a Service Using Stacks
+custom_edit_url: null
 ---
 
 You can run Chainhook as a service to evaluate Stacks blocks against your predicates. You can also dynamically register new predicates by enabling predicates registration API.
