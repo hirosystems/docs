@@ -1,0 +1,71 @@
+---
+# The default id is the same as the one defined below. so not needed
+title: Overview
+custom_edit_url: null
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<p class="p-3 rounded-lg bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">Chainhook enables you to build custom event streams for Bitcoin layers and trigger actions based on those events.</p>
+
+<div class="mb-10"></div>
+
+Chainhook is a reorg-aware indexer that serves reliable blockchain data—saving you time by avoiding reindexing your database every time there’s a fork. Chainhook also lets you index only the data you need, which means you can build lighter databases, get faster query results, and deliver a better experience to your users.
+
+### Install Chainhook
+
+Clone the [Chainhook Repo](https://github.com/hirosystems/chainhook.git):
+
+```sh
+git clone https://github.com/hirosystems/chainhook.git
+```
+
+Navigate to the root directory and run `cargo chainhook-install` to install:
+
+```sh
+cd chainhook && cargo chainhook-install
+```
+
+### Create Event Streams
+
+<div class="subSections my-8">
+  <a href="/chainhook/guides/chainhooks-with-bitcoin">
+    <div class="subSectionTitle"><h3>Create a Bitcoin chainhook</h3><span>→</span></div>
+    <p>Build a chainhook that reacts to events on the Bitcoin blockchain.</p>
+  </a>
+  <a href="/chainhook/guides/chainhooks-with-stacks">
+    <div class="subSectionTitle"><h3>Create a Stacks chainhook</h3><span>→</span></div>
+    <p>Build a chainhook that reacts to events on the Stacks blockchain.</p>
+  </a>
+</div>
+
+<div class="subSections my-8 w-[50%]">
+  <a href="/chainhook/guides/register-chainhooks-on-devnet">
+    <div class="subSectionTitle"><h3>Test your chainhooks</h3><span>→</span></div>
+    <p>Test and debug your chainhooks in a local environment.</p>
+  </a>
+</div>
+
+### Scan Blocks for Past Events
+
+<div class="subSections my-8">
+  <a href="/chainhook/guides/chainhooks-with-bitcoin">
+    <div class="subSectionTitle"><h3>Index Bitcoin</h3><span>→</span></div>
+    <p>Scan past Bitcoin blocks for the data you need.</p>
+  </a>
+  <a href="/chainhook/guides/chainhooks-with-stacks">
+    <div class="subSectionTitle"><h3>Index Stacks</h3><span>→</span></div>
+    <p>Scan past Stacks blocks for the data you need.</p>
+  </a>
+</div>
+
+### Related Tools
+
+**[Ordhook](../ordhook/index.md)**: Create event streams specifically for Bitcoin Ordinals.
+
+**[Hiro Platform](../platform/index.md)**: Streamline chainhook creation in a cloud-hosted UI.
+
+---
+
+Need help building with Chainhook? Reach out to us on the `#chainhook` channel on Discord under Hiro Developer Tools section. We also host a weekly office hours on Discord every Monday at 11am ET.
