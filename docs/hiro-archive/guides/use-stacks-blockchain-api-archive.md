@@ -8,7 +8,7 @@ custom_edit_url: null
 
 Since the Stacks Blockchain API depends on a Stacks blockchain node being at the same block height, you will need to first [restore a Stacks blockchain node using the Hiro Archive](https://docs/hiro-archive/guides/use-stacks-blockchain-archive) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
 
-In order for the Stacks Blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
+In order for the Stacks blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
 
 - Both archives correspond to the same Stacks network (mainnet/testnet)
 - The API archive version must be compatible with the Stacks Blockchain archive version (See [API release notes](https://github.com/hirosystems/stacks-blockchain-api/releases) for guidance)
