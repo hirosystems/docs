@@ -23,6 +23,16 @@ module.exports = [
     id: 'subnets/getting-started',
   },
   {
+    type: 'doc',
+    label: 'Learn the basics',
+    id: 'subnets/learn-the-basics',
+  },
+  {
+    type: 'doc',
+    label: 'Architecture',
+    id: 'subnets/architecture-overview',
+  },
+  {
     type: 'html',
     value: 'Features',
     className: 'section-title',
