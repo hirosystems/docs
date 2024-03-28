@@ -3,7 +3,7 @@ title: Predicate Design
 custom_edit_url: null
 ---
 
-Predicates are conditions you can define to scan the blocks easier and faster on a blockchain.
+The core design of chainhooks revolves around the concept of predicates. Each individual chainhook has a customizable predicate that specifies what information you are scanning for.
 
 Predicates are defined in the If-this, then-that format. You'll write your condition in the `if-this` condition template and use `then-that` to output the result.
 
