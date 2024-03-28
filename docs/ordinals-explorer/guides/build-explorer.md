@@ -1,5 +1,5 @@
 ---
-Title: Build Ordinals Explorer
+title: Build Ordinals Explorer
 custom_edit_url: null
 ---
 

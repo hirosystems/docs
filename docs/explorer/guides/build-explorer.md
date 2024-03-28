@@ -1,5 +1,5 @@
 ---
-Title: Build Stacks Explorer
+title: Build Stacks Explorer
 custom_edit_url: null
 ---
 
