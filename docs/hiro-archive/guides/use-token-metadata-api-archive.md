@@ -1,6 +1,6 @@
 ---
 title: Use the Token Metadata API Archive
-sidebar_label: Token Metadata API Archive
+sidebar_label: Token Metadata API
 custom_edit_url: null
 ---
 
