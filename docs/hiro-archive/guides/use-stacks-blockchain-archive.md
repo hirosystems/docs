@@ -6,7 +6,7 @@ custom_edit_url: null
 
 ### Where to Download Archives
 
-Stacks Blockchain archives for each network can be found at the following locations:
+Stacks blockchain archives for each network can be found at the following locations:
 
 - mainnet: https://archive.hiro.so/mainnet/stacks-blockchain/
 - testnet: https://archive.hiro.so/testnet/stacks-blockchain/
