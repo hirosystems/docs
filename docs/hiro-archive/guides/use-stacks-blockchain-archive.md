@@ -36,7 +36,7 @@ or the most recent upload for a particular version:
        tar -zxvf <ARCHIVE FILE> -C /target/directory
    ```
 1. [Configure the `working_dir` property in your Stacks blockchain node Config.toml file](https://docs.stacks.co/docs/nodes-and-miners/stacks-node-configuration#node) to match the directory you extracted the archive to.
-1. Launch your Stacks Blockchain node. [You can use one of these example configuration files as a reference.](https://github.com/stacks-network/stacks-blockchain/tree/master/testnet/stacks-node/conf)
+1. Launch your Stacks blockchain node. [You can use one of these example configuration files as a reference.](https://github.com/stacks-network/stacks-blockchain/tree/master/testnet/stacks-node/conf)
 1. Verify the dataset is being used by comparing your nodes [local block height](http://localhost:20443/v2/info) with [Hiro's](https://api.hiro.so/v2/info). If the block height matches or is close to Hiro's block height, the restoration was successful.
    1. It may take a few minutes for the local node to respond on this endpoint.
    1. Your block height may be up to a few hundred blocks away from Hiro's depending on the age of the archive. It should catch up relatively quickly.
