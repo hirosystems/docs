@@ -70,7 +70,7 @@ or the most recent upload for a particular version:
 **If restoring via Postgres dump**
 
 1. Download the archive and shasum for the appropriate network and restoration method
-1. [Verify the archive with the shasum](./verify-archive-data.md)
+1. [Verify the archive with the shasum](https://docs/hiro-archive/guides/verify-archive-data)
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning)
    ```bash
        export PGPASSWORD=<YOUR POSTGRES PASSWORD>
