@@ -11,7 +11,7 @@ Since the Stacks Blockchain API depends on a Stacks blockchain node being at the
 In order for the Stacks blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
 
 - Both archives correspond to the same Stacks network (mainnet/testnet)
-- The API archive version must be compatible with the Stacks Blockchain archive version (See [API release notes](https://github.com/hirosystems/stacks-blockchain-api/releases) for guidance)
+- The API archive version must be compatible with the Stacks blockchain archive version (See [API release notes](https://github.com/hirosystems/stacks-blockchain-api/releases) for guidance)
 - Both archives were created on the same date
 
 ### Restoration Methods
