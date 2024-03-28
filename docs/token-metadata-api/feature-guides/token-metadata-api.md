@@ -1,10 +1,7 @@
 ---
-
 title: Token Metadata API
-
+custom_edit_url: null
 ---
-
-# Token Metadata API
 
 A microservice that indexes metadata for all Fungible, Non-Fungible, and Semi-Fungible Tokens in the Stacks blockchain and exposes it via JSON REST API endpoints.
 
@@ -13,7 +10,6 @@ A microservice that indexes metadata for all Fungible, Non-Fungible, and Semi-Fu
 This section gives you an overview of external and internal architectural diagrams.
 
 ### External architecture
-
 
 The external architectural diagram shows how the Token metadata API is connected to three different systems, Stacks node, Stacks blockchain API database, and Postgres database.
 
@@ -27,13 +23,11 @@ The service needs to fetch external metadata files (JSONs, images) from the inte
 
 ### Internal architecture
 
-
 The following is the internal architectural diagram of the Token metadata API.
 
 ![Flowchart](../../flowchart.png)
 
 #### Blockchain importer
-
 
 The [`BlockchainImporter`](https://github.com/hirosystems/token-metadata-api/tree/master/src/token-processor/blockchain-api/blockchain-importer.ts) is a component in the Token metadata API that takes token contracts from the API database. This component is only used on service boot.
 
@@ -45,31 +39,32 @@ This process runs only once. If the Token metadata API is ever restarted, though
 
 The [`BlockchainSmartContractMonitor`](https://github.com/hirosystems/token-metadata-api/tree/master/src/token-processor/blockchain-api/blockchain-smart-contract-monitor.ts) component constantly listens to the following Stacks Blockchain API events:
 
-* **Smart contract log events**
-    
-    If a contract `print` event conforms to SIP-019, it finds the affected tokens and marks them for metadata refresh.
+- **Smart contract log events**
 
-* **Smart contract deployments**
+  If a contract `print` event conforms to SIP-019, it finds the affected tokens and marks them for metadata refresh.
 
-    If the new contract is a token contract, it saves the new token contract and adds the contract to the job queue for token processing.
+- **Smart contract deployments**
+
+  If the new contract is a token contract, it saves the new token contract and adds the contract to the job queue for token processing.
 
 This process is kept alive throughout the entire service lifetime.
 
 #### Job queue
-
 
 The role of the [`JobQueue`](https://github.com/hirosystems/token-metadata-api/tree/master/src/token-processor/queue/job-queue.ts) is to perform all the smart contract and token processing in the service.
 
 It is a priority queue that organizes all necessary work for contract ingestion and token metadata processing. Every job this queue processes corresponds to one row in the `jobs` DB table, which marks its processing status and related objects to be worked on (smart contract or token).
 
 This object essentially runs an infinite loop that follows these steps:
+
 1. Upon `start()`, it fetches a set number of job rows that are `'pending'` and loads their corresponding `Job` objects into memory for processing, marking those rows now as `'queued'`.
 2. It executes each loaded job to completion concurrently. Depending on success or failure, the job row is marked as either `'done'` or `'failed'`.
 3. Once all loaded jobs are done (and the queue is now empty), it goes back to step 1.
 
 There are two environment variables that can help you tune how the queue performs:
-* `ENV.JOB_QUEUE_SIZE_LIMIT`: The in-memory size of the queue, i.e., the number of pending jobs that are loaded from the database while they wait for execution (see step 1 above).
-* `ENV.JOB_QUEUE_CONCURRENCY_LIMIT`: The number of jobs that will be run simultaneously.
+
+- `ENV.JOB_QUEUE_SIZE_LIMIT`: The in-memory size of the queue, i.e., the number of pending jobs that are loaded from the database while they wait for execution (see step 1 above).
+- `ENV.JOB_QUEUE_CONCURRENCY_LIMIT`: The number of jobs that will be run simultaneously.
 
 This queue runs continuously and can handle an unlimited number of jobs.
 
@@ -83,24 +78,24 @@ This job fetches the metadata JSON object for a single token and other relevant 
 
 ## Features
 
-* Complete
+- Complete
   [SIP-016](https://github.com/stacksgov/sips/blob/main/sips/sip-016/sip-016-token-metadata.md)
   metadata ingestion for
-    * [SIP-009](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md)
-      Non-Fungible Tokens
-    * [SIP-010](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md)
-      Fungible Tokens
-    * [SIP-013](https://github.com/stacksgov/sips/blob/main/sips/sip-013/sip-013-semi-fungible-token-standard.md)
-      Semi-Fungible Tokens
-* Automatic metadata refreshes via [SIP-019](https://github.com/stacksgov/sips/pull/72)
+  - [SIP-009](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md)
+    Non-Fungible Tokens
+  - [SIP-010](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md)
+    Fungible Tokens
+  - [SIP-013](https://github.com/stacksgov/sips/blob/main/sips/sip-013/sip-013-semi-fungible-token-standard.md)
+    Semi-Fungible Tokens
+- Automatic metadata refreshes via [SIP-019](https://github.com/stacksgov/sips/pull/72)
   notifications.
-* Metadata localization support.
-* Metadata fetching via `http:`, `https:`, `data:` URIs. Also supported via customizable gateways:
-    * IPFS
-    * Arweave
-* Easy to use REST JSON endpoints with ETag caching.
-* Prometheus metrics for job queue status, contract and token counts, API performance, etc.
-* Image cache/CDN support.
+- Metadata localization support.
+- Metadata fetching via `http:`, `https:`, `data:` URIs. Also supported via customizable gateways:
+  - IPFS
+  - Arweave
+- Easy to use REST JSON endpoints with ETag caching.
+- Prometheus metrics for job queue status, contract and token counts, API performance, etc.
+- Image cache/CDN support.
 
 ## API reference
 
@@ -147,10 +142,10 @@ When shutting down, you should always prefer to send the `SIGINT` signal instead
 
 The Token metadata API allows you to specify the path to a custom script that can pre-process every image URL detected by the service before it's inserted into the DB. This will enable you to serve CDN image URLs in your metadata responses instead of raw URLs, providing key advantages such as:
 
-* Improves image load speed
-* Increases reliability in case the original image becomes unavailable
-* Protects original image hosts from [DDoS attacks](https://wikipedia.org/wiki/Denial-of-service_attack)
-* Increases user privacy
+- Improves image load speed
+- Increases reliability in case the original image becomes unavailable
+- Protects original image hosts from [DDoS attacks](https://wikipedia.org/wiki/Denial-of-service_attack)
+- Increases user privacy
 
 An example IMGIX processor script is included in [`config/image-cache.js`](https://github.com/hirosystems/token-metadata-api/blob/master/config/image-cache.js).
 You can customize the script path by altering the `METADATA_IMAGE_CACHE_PROCESSOR` environment variable.
