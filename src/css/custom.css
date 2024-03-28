@@ -225,6 +225,67 @@ main[class^='apiMainContainer_'] table {
   table-layout: fixed;
 }
 
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1rem; /* Adjust the spacing between buttons */
+}
+
+.button-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding-top: 0.5rem; /* py-2 */
+  padding-bottom: 0.5rem; /* py-2 */
+  padding-right: 1rem; /* px-4 */
+  padding-left: 1rem; /* px-4 */
+  border-radius: 0.25rem; /* rounded */
+  height: 2.5rem; /* h-10 */
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out; /* transition-colors */
+  border: none;
+  cursor: pointer;
+}
+
+.button-cta.orange {
+  background-color: #ff5722; /* bg-[#ff5722] */
+  color: white; /* text-white */
+}
+
+.button-cta.orange:hover {
+  background-color: rgba(255, 72, 0, 0.9); /* hover:bg-primary/90 */
+  text-decoration: none;
+}
+
+.button-cta.white {
+  background-color: white; /* bg-white */
+  color: #ff5722; /* text-[#ff5722] */
+}
+
+[data-theme='light'] .button-cta.white {
+  border: 1px solid #ff5722;
+}
+
+.button-cta.white:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* hover:bg-white/90 */
+  text-decoration: none;
+}
+
+[data-theme='light'] .button-cta.white:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* hover:bg-white/90 */
+}
+
+.button-cta:disabled {
+  pointer-events: none; /* disabled:pointer-events-none */
+  opacity: 0.5; /* disabled:opacity-50 */
+}
+
+.button-cta p {
+  margin: 0;
+  text-decoration: none;
+}
+
 /* SEARCH PLUGIN ============================================================ */
 
 /* fix for duplicate padding, after search bar update */
