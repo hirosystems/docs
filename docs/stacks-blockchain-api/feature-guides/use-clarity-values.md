@@ -1,5 +1,5 @@
 ---
-Title: Use Clarity Values
+title: Use Clarity Values
 custom_edit_url: null
 ---
 

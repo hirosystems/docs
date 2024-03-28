@@ -1,5 +1,5 @@
 ---
-Title: Upgrade Stacks Blockchain API version
+title: Upgrade Stacks Blockchain API version
 custom_edit_url: null
 ---
 

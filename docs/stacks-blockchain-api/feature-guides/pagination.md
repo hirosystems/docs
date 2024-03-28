@@ -1,5 +1,5 @@
 ---
-Title: Pagination
+title: Pagination
 custom_edit_url: null
 ---
 

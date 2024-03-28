@@ -1,5 +1,5 @@
 ---
-Title: Requesting proofs
+title: Requesting proofs
 custom_edit_url: null
 ---
 

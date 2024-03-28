@@ -1,5 +1,6 @@
 ---
-Title: Stacks Blockchain API
+title: Use Stacks Blockchain API
+sidebar_label: Overview
 custom_edit_url: null
 ---
 

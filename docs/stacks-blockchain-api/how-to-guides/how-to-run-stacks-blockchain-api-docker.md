@@ -1,5 +1,5 @@
 ---
-Title: Run a Stacks Blockchain API instance with Docker
+title: Run a Stacks Blockchain API instance with Docker
 custom_edit_url: null
 ---
 

@@ -1,5 +1,5 @@
 ---
-Title: Search Endpoint
+title: Search Endpoint
 custom_edit_url: null
 ---
 
