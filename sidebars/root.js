@@ -97,9 +97,10 @@ module.exports = [
     href: '/token-metadata-api',
   },
   {
-    id: 'hiro-archive/index',
-    type: 'doc',
+    type: 'category',
     label: 'Hiro Archive',
+    type: 'link',
+    href: '/hiro-archive',
   },
   {
     type: 'html',
