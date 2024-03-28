@@ -53,7 +53,9 @@ This job makes a contract call to the Stacks node to determine the total number 
 
 This job fetches the metadata JSON object for a single token and other relevant properties depending on the token type (symbol, decimals, etc.). Once fetched, it parses and ingests this data to save it into the local database for API endpoints to return.
 
-Following are the features of Token-Metadata API:
+### API Features
+
+Below are some of the core features of the Token-Metadata API:
 
 - Complete [SIP-016](https://github.com/stacksgov/sips/blob/main/sips/sip-016/sip-016-token-metadata.md) metadata ingestion for
   - [SIP-009](https://github.com/stacksgov/sips/blob/main/sips/sip-009/sip-009-nft-standard.md)
