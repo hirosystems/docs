@@ -24,7 +24,7 @@ This is the quickest and most direct method, and it is suitable for most scenari
 
 **Restore via tab-separated-values (TSV) file**
 
-This method is several times slower than restoring from a Postgres dump. The API TSV file contains the raw unprocessed events from a Stacks Blockchain node. The API can ingest this file to process events into a Postgres database.
+This method is several times slower than restoring from a Postgres dump. The API TSV file contains the raw unprocessed events from a Stacks blockchain node. The API can ingest this file to process events into a Postgres database.
 Restoring from a TSV file can be useful when a Postgres database archive for a particular API version is not available or when it cannot be used for any reason.
 
 ### Where to Download Archives
