@@ -1,5 +1,5 @@
 ---
-title: Use Stacks Blockchain API Archive
+title: Use the Stacks Blockchain API Archive
 sidebar_label: Stacks Blockchain API Archive
 custom_edit_url: null
 ---
