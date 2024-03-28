@@ -8,7 +8,7 @@ custom_edit_url: null
 
 Since the Token Metadata API depends on a Stacks Blockchain API, you will need to first launch a Stacks Blockchain API configured for the same Stacks network.
 
-If you don't already have one, you can follow [these instructions](https://docs/hiro-archive/guides/use-stacks-blockchain-archive) to launch one with an archive.
+If you don't already have one, you can follow [these instructions](./use-stacks-blockchain-archive) to launch one with an archive.
 
 ### Where to Download Archives
 
@@ -35,7 +35,7 @@ or the most recent upload for a particular version:
 ### Restoring the Token Metadata API Using the Hiro Archive
 
 1. Download the archive and shasum for the appropriate network
-1. [Verify the archive with the shasum](https://docs/hiro-archive/guides/verify-archive-data)
+1. [Verify the archive with the shasum](./verify-archive-data)
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning)
    ```bash
        export PGPASSWORD=<YOUR POSTGRES PASSWORD>

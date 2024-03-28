@@ -6,7 +6,7 @@ custom_edit_url: null
 
 ### Prerequisites
 
-Since the Stacks Blockchain API depends on a Stacks blockchain node being at the same block height, you will need to first [restore a Stacks blockchain node using the Hiro Archive](https://docs/hiro-archive/guides/use-stacks-blockchain-archive) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
+Since the Stacks Blockchain API depends on a Stacks blockchain node being at the same block height, you will need to first [restore a Stacks blockchain node using the Hiro Archive](./use-stacks-blockchain-archive) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
 
 In order for the Stacks blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
 
@@ -70,7 +70,7 @@ or the most recent upload for a particular version:
 **If restoring via Postgres dump**
 
 1. Download the archive and shasum for the appropriate network and restoration method
-1. [Verify the archive with the shasum](https://docs/hiro-archive/guides/verify-archive-data)
+1. [Verify the archive with the shasum](./verify-archive-data)
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning)
    ```bash
        export PGPASSWORD=<YOUR POSTGRES PASSWORD>
@@ -84,7 +84,7 @@ or the most recent upload for a particular version:
 **If restoring via TSV file**
 
 1. Download the archive and shasum for the appropriate network and restoration method
-1. [Verify the archive with the shasum](https://docs/hiro-archive/guides/verify-archive-data)
+1. [Verify the archive with the shasum](./verify-archive-data)
 1. Extract the archive into the desired directory
    ```bash
        # Target directory must already exist
