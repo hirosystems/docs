@@ -1,6 +1,6 @@
 ---
 title: Verify Archive Data
-sidebar_label: Verify Archive Data
+sidebar_label: Verify archive data
 custom_edit_url: null
 ---
 
