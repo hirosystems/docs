@@ -1,8 +1,8 @@
 ---
+title: Stacks.js FAQs
 sidebar_label: FAQs
+custom_edit_url: null
 ---
-
-# Stacks.js FAQs
 
 ### What are Post-Conditions? How do Post-Conditions work?
 
