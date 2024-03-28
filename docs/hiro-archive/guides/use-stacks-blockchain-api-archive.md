@@ -6,7 +6,7 @@ custom_edit_url: null
 
 ### Prerequisites
 
-Since the Stacks Blockchain API depends on a Stacks Blockchain node being at the same block height, you will need to first [restore a Stacks Blockchain node using the Hiro Archive](#restoring-the-stacks-blockchain-node-using-the-hiro-archive) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
+Since the Stacks Blockchain API depends on a Stacks Blockchain node being at the same block height, you will need to first [restore a Stacks Blockchain node using the Hiro Archive](#restoration-methods) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
 
 In order for the Stacks Blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
 
@@ -69,8 +69,8 @@ or the most recent upload for a particular version:
 
 **If restoring via Postgres dump**
 
-1. [Download the archive and shasum for the appropriate network and restoration method](#where-to-download-archives-1)
-1. [Verify the archive with the shasum](#verifying-integrity)
+1. [Download the archive and shasum for the appropriate network and restoration method](#where-to-download-archives)
+1. [Verify the archive with the shasum](./verify-archive-data.md)
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning)
    ```bash
        export PGPASSWORD=<YOUR POSTGRES PASSWORD>
@@ -83,8 +83,8 @@ or the most recent upload for a particular version:
 
 **If restoring via TSV file**
 
-1. [Download the archive and shasum for the appropriate network and restoration method](#where-to-download-archives-1)
-1. [Verify the archive with the shasum](#verifying-integrity)
+1. [Download the archive and shasum for the appropriate network and restoration method](#where-to-download-archives)
+1. [Verify the archive with the shasum](./verify-archive-data.md)
 1. Extract the archive into the desired directory
    ```bash
        # Target directory must already exist

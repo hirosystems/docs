@@ -10,9 +10,33 @@ import TabItem from '@theme/TabItem';
 
 <div class="mb-16"></div>
 
+There are two main ways developers build applications on the Stacks blockchain:
+
+### 🔒 Without Direct Private Key Access
+
+For example, a web app that allows users to interact with the Stacks blockchain using their Stacks wallet (browser extension or mobile).
+
+Most users interact via their favorite Stacks wallet.
+Developers can build web apps, which prompt the user for an action (e.g. sign a transaction), and then the wallet will handle the rest.
+The wallet will act in the security, and best interest of the user, and the user will be able to review the transaction before signing.
+[Read more](/stacks.js/connect)
+
+### 🔑 With Private Key Access
+
+For example, managing funds with the Stacks.js CLI, building a backend (which can sign transactions directly).
+
+Nevertheless, direct private key access is needed for some use cases.
+Developers can build simple scripts and tools intended for "offline" use.
+Users may use the Stacks.js CLI directly to send a transaction.
+Backends may need to automate signing without direct user interaction.
+In these cases, developers can use the same libraries used by Stacks wallets for account handling and transaction signing.
+[Read more](/stacks.js/learn-the-basics)
+
+## Concepts
+
 To introduce the different functionality offered by Stacks.js, we'll walk through a few examples and concepts important to building on the Stacks blockchain.
 
-## Networks
+### Networks
 
 Typically, we speak of "mainnet" and "testnet" as the networks of Stacks. Most wallets will be configured to "mainnet" by default, this is the actual blockchain that holds real STX tokens.
 As the name suggests, "testnet" is a network for testing.
@@ -35,7 +59,7 @@ import { StacksMainnet } from '@stacks/network';
 const network = new StacksMainnet({ url: 'https://www.mystacksnode.com/' });
 ```
 
-## Accounts and Addresses
+### Accounts and Addresses
 
 Stacks uses the concept of an "account" to represent a user's identity on the blockchain. An account is identified by a unique address. The address is derived from the account's public key, which is derived from the account's private key.
 
@@ -75,7 +99,7 @@ const mainnetAddress = getStxAddress({ account, transactionVersion: TransactionV
 ```
 </TabItem></Tabs>
 
-## Transactions
+### Transactions
 
 The following shows how to create a simple transaction (STX transfer) using Stacks.js in different environments.
 
@@ -114,7 +138,7 @@ const tx = await makeSTXTokenTransfer({
 ```
 </TabItem></Tabs>
 
-## Anchor Mode / Block Type
+### Anchor Mode / Block Type
 
 In the examples above, we used `AnchorMode.Any` to indicate that the transaction can be "mined" in different ways.
 Stacks has two types of blocks: microblocks and (anchor) blocks.
@@ -127,7 +151,7 @@ Stacks has two types of blocks: microblocks and (anchor) blocks.
 anchorMode: "offChainOnly" | "onChainOnly" | "any",
 ```
 
-## Post-Conditions
+### Post-Conditions
 
 In Stacks, transactions can have "post-conditions".
 These are additional security to ensure the transaction was executed as expected.
@@ -154,7 +178,7 @@ const tx = await makeContractCall({
 });
 ```
 
-### Post-Condition **Mode**
+#### Post-Condition **Mode**
 
 _...aka "allow transfer of unspecified assets?"_
 
@@ -169,7 +193,7 @@ In either case, all post-conditions will still be checked.
 By default, transactions are set to `Deny` mode for additional security.
 :::
 
-## Broadcasting
+### Broadcasting
 
 :::info Connect
 For web applications, the users' wallet can broadcast transactions created via Stacks Connect.
