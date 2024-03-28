@@ -29,7 +29,7 @@ Restoring from a TSV file can be useful when a Postgres database archive for a p
 
 ### Where to Download Archives
 
-Depending on the [restoration method](#restoration-methods), Stacks Blockchain API archives for each network can be found at the following locations:
+Depending on the restoration method used above, the Stacks Blockchain API archives for each network can be found at the following locations:
 
 - Postgres database dump
   - mainnet: https://archive.hiro.so/mainnet/stacks-blockchain-api-pg/
