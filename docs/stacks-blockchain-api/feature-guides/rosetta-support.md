@@ -18,7 +18,7 @@ docker run -d \
 rosetta:stable
 ```
 
-To build and run the `rosetta.Dockerfile` image using an [archived chainstate](../../hiro-archive/index.md), run the following command:
+To build and run the `rosetta.Dockerfile` image using an [archived chainstate](../../hiro-archive/index.mdx), run the following command:
 
 ```
 docker build -t rosetta:stable -f rosetta.Dockerfile .
