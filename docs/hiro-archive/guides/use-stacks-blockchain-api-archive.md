@@ -83,7 +83,7 @@ or the most recent upload for a particular version:
 
 **If restoring via TSV file**
 
-1. [Download the archive and shasum for the appropriate network and restoration method](#where-to-download-archives)
+1. Download the archive and shasum for the appropriate network and restoration method
 1. [Verify the archive with the shasum](./verify-archive-data.md)
 1. Extract the archive into the desired directory
    ```bash
