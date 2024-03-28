@@ -4,7 +4,7 @@ title: Getting Started
 custom_edit_url: null
 ---
 
-You understand subnets from the [overview](./index.md)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](../clarinet/guides/how-to-run-integration-environment.md) as one of the networks in your Stacks development environment.
+You understand subnets from the [overview](./index.mdx)—now you can test one out in action. Hiro's Clarinet can serve a local subnet with [`clarinet integrate`](../clarinet/guides/how-to-run-integration-environment.md) as one of the networks in your Stacks development environment.
 
 ## What to expect
 
