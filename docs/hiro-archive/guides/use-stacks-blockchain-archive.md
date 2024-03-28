@@ -28,7 +28,7 @@ or the most recent upload for a particular version:
 
 ### Restoring a Stacks Blockchain Node Using the Hiro Archive
 
-1. [Download the archive and shasum for the appropriate network](#where-to-download-archives)
+1. Download the archive and shasum for the appropriate network
 1. [Verify the archive with the shasum](./verify-archive-data.md)
 1. Extract the archive into the desired directory
    ```bash
