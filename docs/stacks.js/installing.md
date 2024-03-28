@@ -1,10 +1,11 @@
 ---
 title: Installation
+custom_edit_url: null
 ---
 
 import GithubLink from '../../src/components/GithubLink.tsx';
 
-# Installing Stacks.js Packages
+## Installing Stacks.js Packages
 
 Stacks.js is separated into many smaller packages, which can be installed individually.
 Most packages are published to npm under the `@stacks` scope.

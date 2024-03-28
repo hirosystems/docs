@@ -1,13 +1,16 @@
 ---
 title: Add new Contract
+custom_edit_url: null
 ---
+
+## Overview
 
 Clarinet can handle adding a new contract and its configuration to your project.
 
-*Topics covered in this guide*:
+_Topics covered in this guide_:
 
-* [Add a new contract](#new-contract)
-* [Verify contract configuration](#contract-configuration)
+- [Add a new contract](#new-contract)
+- [Verify contract configuration](#contract-configuration)
 
 ## New Contract
 
@@ -18,6 +21,7 @@ clarinet contract new bbtc
 ```
 
 Clarinet will add two files to your project:
+
 - the contract file in the `contracts` directory
 - the contract test file in the `tests` directory
 

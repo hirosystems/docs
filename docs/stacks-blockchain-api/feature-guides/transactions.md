@@ -1,8 +1,7 @@
 ---
 title: Transactions
+custom_edit_url: null
 ---
-
-# Transactions
 
 Transactions are the fundamental unit of execution in the Stacks blockchain. Each transaction is originated from a [Stacks account](https://docs.stacks.co/stacks-101/accounts), and is retained in the Stacks blockchain history. This guide helps you understand Stacks transactions.
 
@@ -289,7 +288,7 @@ const transaction = await makeContractCall(txOptions);
 
 ## Serialization
 
-A well-formed transaction construct is encoded in [Recursive Length Prefix ("RLP")](https://eth.wiki/en/fundamentals/rlp). RLP encoding results in a variable-sized byte array.
+A well-formed transaction construct is encoded in [Recursive Length Prefix ("RLP")](https://ethereum.org/en/developers/docs/data-structures-and-encoding/rlp). RLP encoding results in a variable-sized byte array.
 
 In order to broadcast transactions to and between nodes on the network, RLP data is represented in hexadecimal string (also called the **raw format**).
 

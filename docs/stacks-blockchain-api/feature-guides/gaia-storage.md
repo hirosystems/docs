@@ -1,8 +1,7 @@
 ---
 title: Storing data with Gaia
+custom_edit_url: null
 ---
-
-# Gaia Storage
 
 The Gaia storage system allows you to store private app data off the blockchain and still access it securely
 with Stacks applications. Where possible, apps should only store critical transactional metadata directly on

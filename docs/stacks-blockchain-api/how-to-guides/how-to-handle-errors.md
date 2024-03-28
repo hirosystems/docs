@@ -1,8 +1,7 @@
 ---
 Title: Error Handling
+custom_edit_url: null
 ---
-
-# Error Handling
 
 The API can respond with two different error types:
 

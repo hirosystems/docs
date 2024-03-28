@@ -1,5 +1,6 @@
 ---
 title: How to query Stacks 2.0 blockchain
+custom_edit_url: null
 ---
 
 The Stacks 2.0 blockchain API allows you to query the Stacks 2.0 blockchain and interact with smart contracts. It was built to maintain paginated, materialized views of the Stacks 2.0 Blockchain.

@@ -1,5 +1,6 @@
 ---
 title: Deploy Project
+custom_edit_url: null
 ---
 
 This article walks you through the deployment process of your project. Once you have your clarity contracts ready for your project, you can deploy the project easily using the Hiro Platform.

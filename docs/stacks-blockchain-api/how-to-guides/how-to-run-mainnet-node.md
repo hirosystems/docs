@@ -1,5 +1,6 @@
 ---
 title: How to Run a Mainnet Node
+custom_edit_url: null
 ---
 
 This guide shows you how to run a local mainnet node using Docker images.

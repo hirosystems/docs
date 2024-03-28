@@ -97,12 +97,6 @@ module.exports = [
     href: '/token-metadata-api',
   },
   {
-    type: 'category',
-    label: 'Subnets',
-    type: 'link',
-    href: '/subnets',
-  },
-  {
     id: 'hiro-archive/index',
     type: 'doc',
     label: 'Hiro Archive',

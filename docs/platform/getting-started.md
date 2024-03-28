@@ -1,5 +1,6 @@
 ---
 title: Getting Started
+custom_edit_url: null
 ---
 
 You can register an account or sign in to the [Hiro Platform](https://platform.hiro.so/) using

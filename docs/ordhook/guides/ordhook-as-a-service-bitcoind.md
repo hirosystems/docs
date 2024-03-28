@@ -1,5 +1,6 @@
 ---
 title: Run Ordhook as a Service Using Bitcoind
+custom_edit_url: null
 ---
 
 ## Prerequisites

@@ -1,5 +1,6 @@
 ---
 title: How to install Stacks CLI
+custom_edit_url: null
 ---
 
 The Stacks CLI enables interactions with the Stacks blockchain through a set of commands.

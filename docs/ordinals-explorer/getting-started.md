@@ -1,14 +1,13 @@
 ---
 Title: Getting Started
+custom_edit_url: null
 ---
 
-# Getting Started
-
-The Stacks Explorer is an observability tool that helps users, developers, miners, and investors understand the Stacks Blockchain. It's built with [React](https://reactjs.org/), [Next.js](https://nextjs.org/) and [Chakra UI](https://chakra-ui.com/).
+The Ordinals Explorer is an observability tool that helps users, developers, miners, and investors understand Ordinals. It's built with [React](https://reactjs.org/), [Next.js](https://nextjs.org/) and [Chakra UI](https://chakra-ui.com/).
 
 ## Prerequisites
 
-To run the it locally, you must first clone the [Stacks Explorer repository](https://github.com/hirosystems/explorer).
+To run the it locally, you must first clone the [Ordinals Explorer repository](https://github.com/hirosystems/ordinals-explorer).
 
 You must also enusre you have installed the project dependencies listed below.
 
@@ -26,7 +25,7 @@ To install project dependencies:
 
 ## Setting Environment Variables
 
-The Stacks Explorer application needs the environment variables listed below to work properly.
+The Ordinals Explorer application needs the environment variables listed below to work properly.
 
 ```
 NEXT_PUBLIC_MAINNET_API_SERVER=https://api.hiro.so

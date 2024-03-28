@@ -81,9 +81,9 @@ The `then-that` predicate design can use the following attributes to output the 
 {
   "then_that": {
     "file_append": {
-      "path": "/tmp/events.json"
-    }
-  }
+      "path": "/tmp/events.json",
+    },
+  },
 }
 ```
 

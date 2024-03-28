@@ -1,10 +1,9 @@
 ---
 title: Create Chainhooks
+custom_edit_url: null
 ---
 
-# Create Chainhooks
-
-With Chainhook, you can automatically trigger an action in response to on-chain events on Stacks, Bitcoin, and other Bitcoin layers, enabling you to use IFTTT (if_this, then_that) logic to power your applications. To learn more about Chainhook, refer to [Chainhook overview documentation](../../chainhook/index.md).
+With Chainhook, you can automatically trigger an action in response to on-chain events on Stacks, Bitcoin, and other Bitcoin layers, enabling you to use IFTTT (if_this, then_that) logic to power your applications. To learn more about Chainhook, refer to [Chainhook overview documentation](../../chainhook/index.mdx).
 
 This guide helps you create a Chainhook using the [Hiro Platform](https://platform.hiro.so/).
 

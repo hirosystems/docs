@@ -1,5 +1,6 @@
 ---
 title: Subnet Participants
+custom_edit_url: null
 ---
 
 This guide outlines the potential participants required to run a subnet. The participants are classified into two categories:

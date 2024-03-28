@@ -1,5 +1,6 @@
 ---
 title: How to Run a Testnet Node
+custom_edit_url: null
 ---
 
 This guide shows you how to run a local testnet node using Docker images.

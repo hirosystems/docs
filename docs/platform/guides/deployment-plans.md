@@ -1,8 +1,7 @@
 ---
 title: Deployment Plans
+custom_edit_url: null
 ---
-
-# Deployment Plans
 
 Deployment plans are a collection of transactions to publish one or more contracts to a network (testnet or mainnet). This article walks you through deploying your contracts using deployment plans using [Hiro Platform](https://platform.hiro.so/).
 

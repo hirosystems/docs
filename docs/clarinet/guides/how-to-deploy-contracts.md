@@ -1,13 +1,16 @@
 ---
 title: Deploy Contracts
+custom_edit_url: null
 ---
+
+## Overview
 
 You can use Clarinet to publish your contracts to the public testnet or mainnet for testing or production.
 
-*Topics covered in this guide*:
+_Topics covered in this guide_:
 
-* [Generate deployment plan](#generate-deployment-plan)
-* [Deploy your contract](#deploy)
+- [Generate deployment plan](#generate-deployment-plan)
+- [Deploy your contract](#deploy)
 
 ## Generate Deployment plan
 

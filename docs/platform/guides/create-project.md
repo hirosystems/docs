@@ -1,5 +1,6 @@
 ---
 title: Create Project
+custom_edit_url: null
 ---
 
 This article walks you through the process of creating a new project or importing a project from GitHub.

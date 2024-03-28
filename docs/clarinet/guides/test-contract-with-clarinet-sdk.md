@@ -1,6 +1,9 @@
 ---
 title: Unit Tests With the Clarinet SDK
+custom_edit_url: null
 ---
+
+## Overview
 
 The [Clarinet SDK](https://www.npmjs.com/package/@hirosystems/clarinet-sdk) allows you to write unit tests for your Clarity smart contracts. You can theoritically use any JavaScript test framework, but the SDK supports [Vitest](https://vitest.dev/) out of the box.
 
