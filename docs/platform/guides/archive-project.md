@@ -1,5 +1,6 @@
 ---
 title: Archive Project
+custom_edit_url: null
 ---
 
 Sometimes, you may find it necessary to archive a project from your project list. It is important to understand archiving a project is not the same as deleting a project. Archiving a project means you wish to move the project status from an active project to one that is not active and visible in your project list.
@@ -17,7 +18,7 @@ Follow the steps below to archive a project:
 
 Follow the steps below to unarchive a project:
 
-1. On the [projects page](https://platform.hiro.so), if you wish you unarchive a project, select the *Archive* button at the top and select the far-right three dots and select *Unarchive*.
+1. On the [projects page](https://platform.hiro.so), if you wish you unarchive a project, select the _Archive_ button at the top and select the far-right three dots and select _Unarchive_.
 2. Once the project is unarchived, you should see that project listed on the [projects page](https://platform.hiro.so).
 
 :::note

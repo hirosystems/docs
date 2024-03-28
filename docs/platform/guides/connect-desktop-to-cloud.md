@@ -1,7 +1,7 @@
 ---
 title: Connect Desktop to Cloud Using SSH
+custom_edit_url: null
 ---
-# Setting Up Your Local Editor
 
 The Hiro Platform now supports local development, allowing you to use your preferred local editor (VSCode, Emacs, Vim, etc.) to develop smart contracts. This guide will walk you through the steps to set up your local editor for the Hiro Platform.
 
@@ -26,15 +26,19 @@ You'll then be prompted to enter a passphrase. You can choose to leave that blan
 ## Save Your SSH Key
 
 <!-- markdown-link-check-disable -->
+
 Next, you'll provide your public key to the Hiro Platform. You can do this by copying your public key and pasting it into the SSH Public Key field in the Hiro Platform in Profile -> Settings. [https://platform.hiro.so/settings](https://platform.hiro.so/settings)
+
 <!-- markdown-link-check-enable -->
 
 For Mac, use:
+
 ```
 cat ~/.ssh/id_ed25519.pub | pbcopy
 ```
 
 For Windows, use:
+
 ```
 type %userprofile%\.ssh\id_ed25519.pub | clip
 
@@ -57,8 +61,8 @@ Here are the lines you need to add:
 
 ```bash
 Host *.ssh.platform.hiro.so
-    User hiro 
-    StrictHostKeyChecking no 
+    User hiro
+    StrictHostKeyChecking no
     ProxyCommand openssl s_client -quiet -servername %h -connect %h:22
     ForwardAgent yes
 ```
@@ -71,19 +75,21 @@ See below what each line does:
 - `ProxyCommand openssl s_client -quiet -servername %h -connect %h:22`: This line tells SSH to use OpenSSL as a proxy to connect to the host.
   `-servername %h`: This option sets the Server Name Indication (SNI). The `%h` is a placeholder that SSH replaces with the host name.
 
-- `ForwardAgent yes`: This line enables the forwarding of the authentication agent connection, which is useful if you're using Git. `ForwardAgent` is an option in SSH that allows your local SSH agent to authenticate on a remote server without storing your private keys on the remote server. When `ForwardAgent` is set to `yes`, the SSH client will forward the authentication information to the remote machine that you SSH into. 
+- `ForwardAgent yes`: This line enables the forwarding of the authentication agent connection, which is useful if you're using Git. `ForwardAgent` is an option in SSH that allows your local SSH agent to authenticate on a remote server without storing your private keys on the remote server. When `ForwardAgent` is set to `yes`, the SSH client will forward the authentication information to the remote machine that you SSH into.
 
 If you don't plan to use Git, you can remove the line `ForwardAgent yes`.
 
 ## Get Your Workspace URL
 
 <!-- markdown-link-check-disable -->
+
 To create an SSH connection to your Hiro Platform workspace, you will need your workspace url. To find it, go to [https://platform.hiro.so/projects](https://platform.hiro.so/projects) and click `Connect Your Local Editor`. You will find your workspace url at the bottom.
+
 <!-- markdown-link-check-enable -->
 
 ## Connection Complete!
 
-Now you can access your Hiro Platform projects directly from your local setup. Use an SSH client or editor with SSH support to open your projects. 
+Now you can access your Hiro Platform projects directly from your local setup. Use an SSH client or editor with SSH support to open your projects.
 
 ## Configuring Visual Studio Code
 
@@ -127,7 +133,6 @@ Replace `hiro@<your-workspace-url>` with your actual workspace URL.
 4. Once connected, you should be in your remote workspace. You can now navigate through your files and directories using standard Unix commands.
 
 Remember, to ensure a smooth connection, your public SSH key must be registered with the Hiro Platform, as described in Step 2.
-
 
 ## Configuring Emacs
 
