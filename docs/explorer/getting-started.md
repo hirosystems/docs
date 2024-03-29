@@ -1,8 +1,7 @@
 ---
-Title: Getting Started
+title: Getting Started
+custom_edit_url: null
 ---
-
-# Getting Started
 
 The Stacks Explorer is an observability tool that helps users, developers, miners, and investors understand the Stacks Blockchain. It's built with [React](https://reactjs.org/), [Next.js](https://nextjs.org/) and [Chakra UI](https://chakra-ui.com/).
 

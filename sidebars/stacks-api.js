@@ -24,6 +24,16 @@ module.exports = [
     id: 'stacks-blockchain-api/getting-started',
   },
   {
+    type: 'doc',
+    label: 'Learn the basics',
+    id: 'stacks-blockchain-api/learn-the-basics',
+  },
+  {
+    type: 'doc',
+    label: 'Architecture',
+    id: 'stacks-blockchain-api/architecture-overview',
+  },
+  {
     type: 'html',
     value: 'Features',
     className: 'section-title',

@@ -1,5 +1,6 @@
 ---
 title: Build a Friend.tech Clone
+custom_edit_url: null
 ---
 
 <head>
@@ -299,7 +300,7 @@ Think about how you can verify whether the caller of the function is indeed the 
   Intermediate
 </span>
 
-**UI Integration**: Using the provided [starter template](#clone-the-starter-template), integrate your contract using [Stacks.js](../stacks.js/index.md). For example, if you were calling the `is-keyholder` function, your code might look something like this:
+**UI Integration**: Using the provided [starter template](#clone-the-starter-template), integrate your contract using [Stacks.js](../stacks.js/index.mdx). For example, if you were calling the `is-keyholder` function, your code might look something like this:
 
 ```tsx
 import { callReadOnlyFunction, standardPrincipalCV } from '@stacks/transactions';
@@ -331,7 +332,7 @@ By using a similar pattern to the code above, you will be able to **show/hide ch
   Advanced
 </span>
 
-**Message Signature**: To further enhance the security and authenticity of your app, try to implemement a _login_ feature using [Message Signing](../stacks.js/guides/sign-messages).
+**Message Signature**: To further enhance the security and authenticity of your app, try to implemement a _login_ feature using [Message Signing](../stacks.js/guides/sign-messages.mdx).
 
 ```tsx
 import { openSignatureRequestPopup } from '@stacks/connect';

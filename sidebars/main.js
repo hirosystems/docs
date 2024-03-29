@@ -26,6 +26,7 @@
  const stacksApiSidebar = require('./stacks-api');
  const tokenMetadataApiSidebar = require('./token-metadata-api');
  const subnetsSidebar = require('./subnets');
+ const hiroArchiveSidebar = require('./hiro-archive');
 
 module.exports = {
   'docs': rootSidebar,
@@ -41,6 +42,7 @@ module.exports = {
   'stacks-js': stacksJsSidebar,
   'stacks-api': stacksApiSidebar,
   'token-metadata-api': tokenMetadataApiSidebar,
+  'hiro-archive': hiroArchiveSidebar,
   'subnets': subnetsSidebar,
   'example-apps': exampleAppsSidebar,
   'tutorials': tutorialsSidebar,

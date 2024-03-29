@@ -1,5 +1,6 @@
 ---
 title: Build Contracts
+custom_edit_url: null
 ---
 
 This article helps you create/build contracts using the [Hiro Platform](https://platform.hiro.so/).

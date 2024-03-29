@@ -1,8 +1,9 @@
 ---
 title: Using Devnet on the Hiro Platform
+custom_edit_url: null
 ---
 
-# Using Devnet on the Hiro Platform
+## Using Devnet on the Hiro Platform
 
 Devnet on the Hiro Platform empowers developers with a private instance of the Stacks blockchain, enabling swift and secure smart contract testing. This guide will walk you through the process of using Devnet to expedite your development workflow.
 

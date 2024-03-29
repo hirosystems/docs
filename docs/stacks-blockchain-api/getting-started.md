@@ -1,8 +1,7 @@
 ---
 Title: Getting Started
+custom_edit_url: null
 ---
-
-# Getting Started
 
 This page describes how you can start the API server and service dependencies.
 

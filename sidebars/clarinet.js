@@ -23,6 +23,11 @@ module.exports = [
     id: 'clarinet/getting-started',
   },
   {
+    type: 'doc',
+    label: 'Networks',
+    id: 'clarinet/networks',
+  },
+  {
     type: 'html',
     value: 'Clarinet JS SDK',
     className: 'section-title',

@@ -1,8 +1,7 @@
 ---
-Title: Microblocks 
+title: Microblocks
+custom_edit_url: null
 ---
-
-# Microblocks
 
 > **_NOTE:_**
 > Please review the Microblocks API documentation carefully to ensure you are up-to-date on the latest implementation details for microblocks.

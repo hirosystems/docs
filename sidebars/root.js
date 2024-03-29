@@ -98,14 +98,9 @@ module.exports = [
   },
   {
     type: 'category',
-    label: 'Subnets',
-    type: 'link',
-    href: '/subnets',
-  },
-  {
-    id: 'hiro-archive/index',
-    type: 'doc',
     label: 'Hiro Archive',
+    type: 'link',
+    href: '/hiro-archive',
   },
   {
     type: 'html',

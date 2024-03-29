@@ -1,5 +1,6 @@
 ---
 title: Use Chainhooks with Stacks
+custom_edit_url: null
 ---
 
 This guide helps you define predicates to use Chainhook with Stacks. The predicates are specified based on `if-this`, and `then-that` constructs.

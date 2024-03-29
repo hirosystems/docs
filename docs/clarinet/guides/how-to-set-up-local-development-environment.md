@@ -1,6 +1,9 @@
 ---
 title: Set up local Development Environment
+custom_edit_url: null
 ---
+
+## Overview
 
 ## Developing a Clarity smart contract
 

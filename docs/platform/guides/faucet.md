@@ -1,8 +1,7 @@
 ---
 title: Stacks Testnet Faucet
+custom_edit_url: null
 ---
-
-# Stacks Testnet Faucet
 
 The Stacks Testnet Faucet is a dedicated utility for developers building on the Stacks blockchain. To aid you in deploying and running smart contracts on the Stacks testnet, we've provided this faucet that offers easy access to testnet STX tokens.
 

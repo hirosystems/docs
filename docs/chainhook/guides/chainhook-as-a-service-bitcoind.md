@@ -1,5 +1,6 @@
 ---
 title: Run Chainhook as a Service Using Bitcoind
+custom_edit_url: null
 ---
 
 You can run Chainhook as a service to evaluate your `if_this / then_that` predicates against the Bitcoin blockchain, delivering data—either file appendations or HTTP POST requests to a server you designate—for your application's use case. You can also dynamically register new predicates as the service is running by enabling the predicates registration API.
@@ -128,7 +129,7 @@ Here is a table of the relevant parameters this guide changes in our configurati
 
 ## Scan blockchain based on predicates
 
-Now that your bitcoind and Chainhook configurations are complete, you can define the Chainhook [predicates](../index.md#if-this-predicate-design) you would like to scan against bitcoin blocks. These predicates are where you specify the kind of blockchain events that trigger Chainhook to deliver a result (either a file appendation or an HTTP POST request). This section helps you with an example JSON file to scan a range of blocks in the blockchain to trigger results. To understand the supported predicates for Bitcoin, refer to [how to use chainhooks with bitcoin](./chainhooks-with-bitcoin.md).
+Now that your bitcoind and Chainhook configurations are complete, you can define the Chainhook [predicates](./chainhooks-with-stacks.md) you would like to scan against bitcoin blocks. These predicates are where you specify the kind of blockchain events that trigger Chainhook to deliver a result (either a file appendation or an HTTP POST request). This section helps you with an example JSON file to scan a range of blocks in the blockchain to trigger results. To understand the supported predicates for Bitcoin, refer to [how to use chainhooks with bitcoin](./chainhooks-with-bitcoin.md).
 
 The following is an example to walk you through an `if_this / then_that` predicate design that appends event payloads to the configured file destination.
 
@@ -306,26 +307,26 @@ The sample response should look like this:
   "chainhook": {
     "predicate": {
       "operation": "inscription_feed",
-      "scope": "ordinals_protocol"
+      "scope": "ordinals_protocol",
     },
-    "uuid": "1"
+    "uuid": "1",
   },
   "apply": [
     {
       "block_identifier": {
         "hash": "0x00000000000000000003e3e2ffd3baaff2cddda7d12e84ed0ffe6f7778e988d4",
-        "index": 777534
+        "index": 777534,
       },
       "metadata": {},
       "parent_block_identifier": {
         "hash": "0x0000000000000000000463a1034c59e6dc94c7e52855582af11882743b86e2a7",
-        "index": 777533
+        "index": 777533,
       },
       "timestamp": 1676923039,
       "transactions": [
         {
           "transaction_identifier": {
-            "hash": "0xca20efe5e4d71c16cd9b8dfe4d969efdd225ef0a26136a6a4409cb3afb2e013e"
+            "hash": "0xca20efe5e4d71c16cd9b8dfe4d969efdd225ef0a26136a6a4409cb3afb2e013e",
           },
           "metadata": {
             "ordinal_operations": [
@@ -343,19 +344,19 @@ The sample response should look like this:
                   "ordinal_number": 1728956147664701,
                   "ordinal_offset": 1147664701,
                   "satpoint_post_inscription": "ca20efe5e4d71c16cd9b8dfe4d969efdd225ef0a26136a6a4409cb3afb2e013e:0:0",
-                  "transfers_pre_inscription": 0
-                }
-              }
+                  "transfers_pre_inscription": 0,
+                },
+              },
             ],
-            "proof": null
+            "proof": null,
           },
-          "operations": []
+          "operations": [],
           // Other transactions
-        }
-      ]
-    }
+        },
+      ],
+    },
   ],
-  "rollback": []
+  "rollback": [],
 }
 ```
 

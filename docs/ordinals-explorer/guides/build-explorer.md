@@ -1,8 +1,7 @@
 ---
-Title: Build Ordinals Explorer
+title: Build Ordinals Explorer
+custom_edit_url: null
 ---
-
-# Build Ordinals Explorer
 
 After installing and configuring your environment, you can run the Ordinals Explorer locally if you wish by running the followning `npm` command:
 

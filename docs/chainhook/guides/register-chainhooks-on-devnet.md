@@ -1,5 +1,6 @@
 ---
 title: Register Chainhooks on Devnet
+custom_edit_url: null
 ---
 
 Follow these steps to register your Chainhooks on Devnet using Clarinet:

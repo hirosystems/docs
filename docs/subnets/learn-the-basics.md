@@ -1,12 +1,8 @@
 ---
-title: Overview
+title: Subnets - Learn the basics
+sidebar_label: Learn the basics
+custom_edit_url: null
 ---
-
-# Subnet Overview
-
-A subnet is a layer-2 scaling solution for the Stacks blockchain, offering low latency and high throughput, enabling developers to build fast and reliable user experiences on Stacks.
-
-## Background
 
 A subnet is a network separate from the Stacks mainnet blockchain. A subnet can be thought of as a layer-2 (L2), and the Stacks chain can be thought of as a layer-1 (L1). A subnet interfaces with the Stacks chain via a smart contract specific to the subnet. Different subnets use distinct contracts on the Stacks chain as an interface.
 

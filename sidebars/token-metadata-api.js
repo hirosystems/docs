@@ -24,21 +24,25 @@ module.exports = [
     id: 'token-metadata-api/getting-started',
   },
   {
-    type: 'html',
-    value: 'Features',
-    className: 'section-title',
-    defaultStyle: true,
+    type: 'doc',
+    label: 'Features',
+    id: 'token-metadata-api/features',
   },
   {
     type: 'doc',
-    label: 'Overview',
-    id: 'token-metadata-api/feature-guides/token-metadata-api',
+    label: 'Architecture',
+    id: 'token-metadata-api/architecture-overview',
   },
   {
     type: 'html',
     value: 'Guides',
     className: 'section-title',
     defaultStyle: true,
+  },
+  {
+    type: 'doc',
+    label: 'Run as a service',
+    id: 'token-metadata-api/feature-guides/run-as-a-service',
   },
   {
     type: 'doc',

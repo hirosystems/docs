@@ -23,6 +23,11 @@ module.exports = [
     id: 'chainhook/getting-started',
   },
   {
+    type: 'doc',
+    label: 'Predicate Design',
+    id: 'chainhook/predicate-design',
+  },
+  {
     type: 'html',
     value: 'Guides',
     className: 'section-title',

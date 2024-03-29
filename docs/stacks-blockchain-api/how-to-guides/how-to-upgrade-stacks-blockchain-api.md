@@ -1,8 +1,7 @@
 ---
-Title: Upgrade Stacks Blockchain API version
+title: Upgrade Stacks Blockchain API version
+custom_edit_url: null
 ---
-
-# Upgrade Stacks Blockchain API version
 
 Over time, the Stacks Blockchain API may be updated to a newer version, providing you additonal features and benefits not available in previous versions. When a new API version is released, you may want to upgrade the Stacks Blockchain API version to this new, stable version.
 
@@ -10,7 +9,7 @@ The process to upgrade the API version is descibed below.
 
 # Upgrading the API Version
 
->  **_NOTE:_**
+> **_NOTE:_**
 >
 > If you choose to upgrade the Stacks Blockchain API to a new major version (for example, 3.0.0 to 4.0.0), then the Postgres database from the previous version will not be compatible and the upgrade process will fail to start.
 
@@ -40,13 +39,13 @@ This process is optional, but recommended. If you want to retrieve the V1 BNS da
 
 3. Each file in `./bns` will have a corresponding sha256 value. To verify the sha256 sum value, run the following script:
 
-```for file in `ls /stacks-node/bns/* | grep -v sha256 | grep -v .tar.gz`; do
+``for file in `ls /stacks-node/bns/* | grep -v sha256 | grep -v .tar.gz`; do
     if [ $(sha256sum $file | awk {'print $1'}) == $(cat ${file}.sha256 ) ]; then
         echo "sha256 Matched $file"
     else
         echo "sha256 Mismatch $file"
     fi
-done```
+done``
 
 4. Set the data's location as the value of `BNS_IMPORT_DIR` in your `.env` file.
 
@@ -73,7 +72,7 @@ This command has two modes of operation, specified by the `--mode` option:
 - **archival (default)**: The process will import and ingest all blockchain events that have happened since the first block.
 - **pruned**: The import process will ignore some prunable events (mempool, microblocks) until the import block height has reached `chain tip - 256` blocks. This saves a considerable amount of time during import, but sacrifices some historical data. You can use this mode if you are mostly interested in running an API version that prioritizes real-time information.
 
-Alternatively, instead of performing the `export-events` command in step 1, an environmental variable can be set which enables events to be streamed to a file as they are received, while the application is running normally. To enable this feature, set the `STACKS_EXPORT_EVENTS_FILE` environment variable to the file path where events should be appended. 
+Alternatively, instead of performing the `export-events` command in step 1, an environmental variable can be set which enables events to be streamed to a file as they are received, while the application is running normally. To enable this feature, set the `STACKS_EXPORT_EVENTS_FILE` environment variable to the file path where events should be appended.
 
 For example:
 

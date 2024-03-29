@@ -1,4 +1,7 @@
-# Use Chainhooks with Bitcoin
+---
+title: Use Chainhooks with Bitcoin
+custom_edit_url: null
+---
 
 The following guide helps you define predicates to use Chainhook with Bitcoin. The predicates are specified based on `if-this`, `then-that` constructs.
 
@@ -259,9 +262,9 @@ The following `then_that` constructs are supported:
   "then_that": {
     "http_post": {
       "url": "http://localhost:3000/api/v1/wrapBtc",
-      "authorization_header": "Bearer cn389ncoiwuencr"
-    }
-  }
+      "authorization_header": "Bearer cn389ncoiwuencr",
+    },
+  },
 }
 ```
 
@@ -274,9 +277,9 @@ Append events to a file through the filesystem. Convenient for local tests:
 {
   "then_that": {
     "file_append": {
-      "path": "/tmp/events.json"
-    }
-  }
+      "path": "/tmp/events.json",
+    },
+  },
 }
 ```
 

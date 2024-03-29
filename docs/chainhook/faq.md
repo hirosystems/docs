@@ -1,8 +1,7 @@
 ---
 title: FAQs
+custom_edit_url: null
 ---
-
-# FAQs
 
 #### **Can Chainhook target both Bitcoin and Stacks?**
 
@@ -24,11 +23,11 @@ The chainhook event observer was designed as a library written in Rust, which ma
 
 Oracles, in general, do the following:
 
- 1. Capture relevant on-chain events
- 2. Process the events via some off-chain, centralized logic
- 3. Commit the resultant data on-chain
+1.  Capture relevant on-chain events
+2.  Process the events via some off-chain, centralized logic
+3.  Commit the resultant data on-chain
 
- Chainhook can be used to efficiently capture relevant on-chain events and forward them to off-chain services.
+Chainhook can be used to efficiently capture relevant on-chain events and forward them to off-chain services.
 
 #### **How can I use Chainhook in my application?**
 

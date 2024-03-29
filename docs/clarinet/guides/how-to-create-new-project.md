@@ -1,12 +1,15 @@
 ---
 title: Create new Project
+custom_edit_url: null
 ---
 
-Once you have installed Clarinet, you may then use Clarinet to create a new project. 
+## Overview
 
-*Topic covered in this guide*:
+Once you have installed Clarinet, you may then use Clarinet to create a new project.
 
-* [Create new project](#new-project)
+_Topic covered in this guide_:
+
+- [Create new project](#new-project)
 
 ## New project
 
@@ -14,9 +17,9 @@ To create a new project, enter the command shown below.
 
 ```bash
 clarinet new my-project && cd my-project
-``` 
+```
 
-Clarinet creates a project directory with the following directory layout: 
+Clarinet creates a project directory with the following directory layout:
 
 ```bash
 .
@@ -28,7 +31,6 @@ Clarinet creates a project directory with the following directory layout:
 │   └── Mainnet.toml
 └── tests
 ```
-
 
 The `Clarinet.toml` file contains configuration files for the smart contracts in your project. Clarinet will add contracts to this file when you create contracts in your project.
 

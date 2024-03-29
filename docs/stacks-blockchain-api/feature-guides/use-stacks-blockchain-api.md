@@ -1,8 +1,8 @@
 ---
-Title: Stacks Blockchain API
+title: Use Stacks Blockchain API
+sidebar_label: Overview
+custom_edit_url: null
 ---
-
-# Stacks Blockchain API
 
 The RESTful JSON API can be used without any authorization. The base path for the API is:
 

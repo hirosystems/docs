@@ -1,0 +1,27 @@
+---
+title: Verify Archive Data
+sidebar_label: Verify archive data
+custom_edit_url: null
+---
+
+All datasets have an associated SHA256 hash file which can be used to verify the integrity of the downloaded dataset.
+As some of the archives are quite large, this is useful to ensure the file you've downloaded matches the file maintained in the Archive.
+
+After downloading an archive file and its associated shasum file, you can verify the integrity of the archive file like so:
+
+```bash
+    echo "$(cat <SHASUM FILE> | awk '{print $1}')  <ARCHIVE FILE>" | shasum --check
+    <ARCHIVE FILE>: OK
+
+    # Example
+    echo "$(cat mainnet-stacks-blockchain-api-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-api-latest.gz" | shasum --check
+
+    # If the integrity check succeeds, a log will be printed indicating so
+    mainnet-stacks-blockchain-api-latest.gz: OK
+
+    # Otherwise a log will be printed indicating failure
+    mainnet-stacks-blockchain-api-latest.gz: FAILED
+    shasum: WARNING: 1 computed checksum did NOT match
+```
+
+If the integrity check fails for any reason, you may need to delete the local archive and re-attempt the download. If issues persist, switch to a different network and try again.

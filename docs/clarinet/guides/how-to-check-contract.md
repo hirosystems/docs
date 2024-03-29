@@ -1,12 +1,15 @@
 ---
 title: Check Contracts
+custom_edit_url: null
 ---
 
-Clarinet provides syntax and semantics checkers for Clarity. 
+## Overview
 
-*Topic covered in this guide*:
+Clarinet provides syntax and semantics checkers for Clarity.
 
-* [Check your contracts](#contracts)
+_Topic covered in this guide_:
+
+- [Check your contracts](#contracts)
 
 ## Contracts
 

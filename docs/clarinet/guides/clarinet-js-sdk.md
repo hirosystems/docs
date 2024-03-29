@@ -1,4 +1,9 @@
-# Clarinet SDK
+---
+title: Clarinet SDK
+custom_edit_url: null
+---
+
+## Overview
 
 The Clarinet SDK is a JavaScript library that spawns and interacts with a simulated Clarinet environment, also known as "simnet."
 
@@ -399,7 +404,7 @@ Run arbitrary Clarity code.
 import { initSimnet } from '@hirosystems/clarinet-sdk';
 const simnet = await initSimnet();
 
-const result = simnet.runSnippet("(stx-account tx-sender)");
+const result = simnet.runSnippet('(stx-account tx-sender)');
 console.log(Cl.prettyPrint(result, 2));
 // {
 //   locked: u0,
@@ -407,7 +412,6 @@ console.log(Cl.prettyPrint(result, 2));
 //   unlocked: u100000000000010
 // }
 ```
-
 
 ### `Simnet.getContractsInterfaces()`
 

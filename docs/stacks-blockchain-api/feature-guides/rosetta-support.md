@@ -1,8 +1,7 @@
 ---
-Title: Rosetta support
+title: Rosetta support
+custom_edit_url: null
 ---
-
-# Rosetta Support
 
 The Stacks Blockchain API supports [v1.4.6 of the Rosetta specification](https://www.rosetta-api.org/). This industry open standard makes it easy to integrate blockchain deployment and interaction.
 
@@ -19,7 +18,7 @@ docker run -d \
 rosetta:stable
 ```
 
-To build and run the `rosetta.Dockerfile` image using an [archived chainstate](../../hiro-archive/index.md), run the following command:
+To build and run the `rosetta.Dockerfile` image using an [archived chainstate](../../hiro-archive/index.mdx), run the following command:
 
 ```
 docker build -t rosetta:stable -f rosetta.Dockerfile .
