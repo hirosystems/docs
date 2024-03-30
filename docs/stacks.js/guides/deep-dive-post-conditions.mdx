@@ -1,32 +1,32 @@
 ---
-title: Deep Dive Post-Conditions
+title: Deep Dive Post Conditions
 toc_max_heading_level: 2
 custom_edit_url: null
 ---
 
-In Stacks, transactions can have "post-conditions".
+In Stacks, transactions can have "post conditions".
 These are an additional security to ensure the transaction was executed as expected, without having the user needing to know the code of a smart contract.
 
-Post-conditions can be used on contract calls and FT/NFT transfers.
-Adding post-conditions to a transaction can ensure that:
+Post conditions can be used on contract calls and FT/NFT transfers.
+Adding post conditions to a transaction can ensure that:
 
 - STX tokens were transferred from an address
 - FTs/NFTs we transferred from an address
 
 ### Caveats
 
-Post-conditions aren't perfect!
+Post conditions aren't perfect!
 They can't say anything about the end-state after a transaction.
 So, they can't guarantee the receival of FTs/NFTs, since they only check for sending.
 
-## Post-Condition Modes
+## Post Condition Modes
 
-**All given post-conditions will always be checked.**
-However, in addition to the post-conditions itself, we can also specify a "mode" for the transaction to verify other asset transfers.
+**All given post conditions will always be checked.**
+However, in addition to the post conditions itself, we can also specify a "mode" for the transaction to verify other asset transfers.
 The mode can be either `Allow` or `Deny`.
 
-- `Allow` means that the transaction can transfer any asset (assuming no conflicting post-conditions).
-- `Deny` means the transaction will fail if any asset transfers (not specified in the post-conditions) are attempted.
+- `Allow` means that the transaction can transfer any asset (assuming no conflicting post conditions).
+- `Deny` means the transaction will fail if any asset transfers (not specified in the post conditions) are attempted.
 
 Think of the mode as "allow/deny transfer of unspecified assets".
 
@@ -44,19 +44,19 @@ const tx = await makeContractCall({
 });
 ```
 
-## Constructing Post-Conditions
+## Constructing Post Conditions
 
-The easiest way to construct a post-condition in Stacks.js is to use the `Pc` helpers.
+The easiest way to construct a post condition in Stacks.js is to use the `Pc` helpers.
 This is a builder inspired by BDD (Behavior Driven Development).
 
-Start with the `Pc.address` initializer to specify the address of the principal that will be verified in the post-condition.
-Then auto-complete the rest of the post-condition.
+Start with the `Pc.address` initializer to specify the address of the principal that will be verified in the post condition.
+Then auto-complete the rest of the post condition.
 
 ### Methods
 
 Builder initializer
 
-- `Pc.principal(address: string)` to initialize the principal that will be verified in the post-condition
+- `Pc.principal(address: string)` to initialize the principal that will be verified in the post condition
 
 STX/FT transfer methods
 
@@ -90,7 +90,7 @@ The builder methods construct the same representation as the legacy methods and 
 
 #### Amount uSTX Sent
 
-With Stacks.js, we can construct a post-condition for a certain amount of uSTX to be sent.
+With Stacks.js, we can construct a post condition for a certain amount of uSTX to be sent.
 
 ```ts
 import { Pc } from '@stacks/transactions';
@@ -109,7 +109,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
 
 #### Amount FT Sent
 
-With Stacks.js, we can construct a post-condition for a certain amount of a specific FT to be sent.
+With Stacks.js, we can construct a post condition for a certain amount of a specific FT to be sent.
 
 ```ts
 import { Pc } from '@stacks/transactions';
@@ -129,7 +129,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.tok
 
 #### Amount NFT Sent
 
-With Stacks.js, we can construct a post-condition for sending / not-sending a specific NFT instance.
+With Stacks.js, we can construct a post condition for sending / not-sending a specific NFT instance.
 
 ```ts
 import { Pc } from '@stacks/transactions';
