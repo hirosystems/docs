@@ -1,0 +1,80 @@
+---
+title: Overview
+description: Clarinet is a local development environment that offers everything you need to create, test, and deploy smart contracts on Stacks.
+---
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../../../components/ui/tooltip"
+
+Using a simple command line interface, Clarinet enables you to build and iterate on your contracts locally before moving into production on mainnet.
+
+You can code with <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>Clarity syntax support</span></TooltipTrigger><TooltipContent>The smart contract language for Stacks</TooltipContent></Tooltip></TooltipProvider>, run tests, debug your code line by line, and deploy your contracts to a local Stacks blockchain environment to rapidly iterate on your code.
+
+Clarinet can be used locally or as a hosted service in the cloud via the [Hiro Platform](https://docs.hiro.so/platform).
+
+## Install Clarinet
+
+<Tabs id="os" items={['macOS', 'Windows']} className='border-secondary'>
+  <Tab value="macOS">
+    ```bash title="Terminal"
+    brew install clarinet
+    ```
+    <Callout title="Additional Installation">Check out our [Installation Guide](/docs/clarinet/installation) for more installation options. For a video guide, please see the [Setting Up Your Clarity Environment (Mac) video walkthrough]()</Callout>
+  </Tab>
+  
+  <Tab value="Windows">
+    ```bash title="Terminal"
+    winget install clarinet
+    ```
+    <Callout title="Additional Installation">Check out our [Installation Guide](/docs/clarinet/installation) for more installation options. For a video guide, please see the [Setting Up Your Clarity Environment (Windows) video walkthrough]()</Callout>
+  </Tab>
+</Tabs>
+
+## Guides
+
+<Cards>
+  <Card
+    href="/clarinet/features/create-new-contract"
+    title="Create a new contract"
+    description="Add new contracts to your project and have them automatically configured in your project file."
+  />
+  <Card
+    href="/clarinet/features/debug-contract"
+    title="Debug a contract"
+    description="Utilize powerful debugging tools to step through your code, print values, and trace execution paths."
+  />
+  <Card
+    href="/clarinet/features/write-unit-tests"
+    title="Write unit tests"
+    description="Leverage the Clarinet SDK to write comprehensive unit tests, ensuring your contract performs as expected."
+  />
+  <Card
+    href="/clarinet/features/create-deployment-plans"
+    title="Create deployment plans"
+    description="Employ customizable deployment plans to streamline your contract deployments, facilitating multi-step processes with ease."
+  />
+  <Card
+    href="/clarinet/features/run-local-development-environment"
+    title="Run a local development environment"
+    description="Set up a local devnet environment for developing and testing in a controlled environment before deployment."
+  />
+  <Card
+    href="/clarinet/features/create-deployment-plan"
+    title="Analyzing contracts for vulnerabilities"
+    description="Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts."
+  />
+</Cards>
+
+## Related Tools
+
+- **[Clarinet JS SDK](/platform)**: Simplify your testing with the Clarinet SDK.
+- **[Hiro Platform](/platform)**: Streamline your app development in our hosted dev experience.
+- **[Stacks.js](/platform)**: Leverage a JavaScript library that handles basic functions, such as user authentication and transaction signing.
+
+---
+
+_Need help building with Clarinet?_ Reach out to us on the `#clarinet` channel on Discord under **Hiro Developer Tools** section. We also host a weekly office hours on Discord every Monday at 11am ET.

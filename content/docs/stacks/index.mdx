@@ -1,0 +1,103 @@
+---
+title: Home
+toc: false
+---
+
+import { Braces, Bug, ChevronsRight, Code, Database, Lock, Play, Rocket, Star, Terminal } from 'lucide-react';
+
+<Cards>
+  <Card
+    className='group space-y-1 text-md'
+    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/quickstarts"
+    title="Quickstarts &amp; Tutorials"
+    description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
+  />
+  <Card
+    className='group space-y-1 text-md'
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/api"
+    title="Stacks API Reference"
+    description="Explore the available API endpoints for interacting with the Stacks Blockchain."
+  />
+</Cards>
+
+### <span className='font-light'>Explore by</span> <span className='inline-flex items-center'>Feature <ChevronsRight className='ml-1' /></span>
+
+<Cards className='lg:grid-cols-3'>
+  <Card
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/quickstarts"
+    title="Smart Contract Development"
+    description="Kickstart your smart contract journey with Clarinet and the Clarinet JS SDK."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/chainhook"
+    title="Data Streaming &amp; Events"
+    description="Use Chainhook for custom event streams and real-time Stacks API data."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Lock className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js"
+    title="Frontend Web Development"
+    description="Interact with smart contracts on the web with the Stacks.js library."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/api"
+    title="Backend Development"
+    description="Explore our hosted APIs and libraries or spin up your own node infrastructure."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Cloud-Based Smart Contract Development"
+    description="Accelerate your development in the browser for seamless smart contract creation and deployment on Stacks."
+  />
+</Cards>
+
+### <span className='font-light'>Explore by</span> <span className='inline-flex items-center'>Product <ChevronsRight className='ml-1' /></span>
+
+<Cards className='sm:grid-cols-3'>
+  <Card
+    className='group space-y-3'
+    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/clarinet"
+    title="Clarinet"
+    description="Create, test, and deploy smart contracts on Stacks."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js"
+    title="Stacks.js"
+    description="A collection of JavaScript libraries to build web applications on Stacks."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/chainhook"
+    title="Chainhook"
+    description="Monitor and respond to specific Bitcoin and Stacks blockchain events."
+  />
+   <Card
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Platform"
+    description="A hosted developer experience for creating, testing, and deploying smart contracts."
+  />
+  <Card
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/explorer"
+    title="Explorer"
+    description="A web app for exploring on-chain data, interacting with smart contracts, and more."
+  />
+</Cards>

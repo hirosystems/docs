@@ -1,0 +1,59 @@
+---
+title: Quickstarts
+description: Browse all of our quickstart guides across all products.
+toc: false
+---
+
+import { ArrowLeftRight, ChevronsRight, Code, Database, Play, Scale, Star, Store, Terminal } from 'lucide-react';
+
+### <span className='font-light'>Get started</span> <span className='inline-flex items-center'>quickly <ChevronsRight className='ml-1' /></span>
+
+<Cards className='sm:grid-cols-3'>
+  <Card
+    icon={<Play className='text-primary' />}
+    href="/stacks/clarinet/quickstart"
+    title="Write your first smart contract"
+    description="Create a basic 'Hello World' smart contract with Clarinet."
+  />
+  <Card
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet/quickstart"
+    title="Run a local development environment"
+    description="Spin up a local blockchain, API, and nodes for developing your app locally."
+  />
+  <Card
+    icon={<Database className='text-primary' />}
+    href="/stacks/api"
+    title="Explore API endpoints"
+    description="Dig into our API reference documentation for the Stacks Blockchain API."
+  />
+</Cards>
+
+### <span className='font-light'>Learn by</span> <span className='inline-flex items-center'>use case <ChevronsRight className='ml-1' /></span>
+
+<Cards className='sm:grid-cols-3'>
+  <Card
+    icon={<Store className='text-primary' />}
+    href="/stacks/quickstarts"
+    title="Build an NFT Marketplace"
+    description="Learn how to create and deploy your own NFT marketplace."
+  />
+  <Card
+    icon={<Scale className='text-primary' />}
+    href="/stacks/clarinet"
+    title="Launch a Decentralized Autonomous Organization (DAO)"
+    description="Discover the steps to creating your own DAO."
+  />
+  <Card
+    icon={<ArrowLeftRight className='text-primary' />}
+    href="/stacks/api"
+    title="Build a Swap Mechanism for your DeFi app"
+    description="Learn how to build a swap mechanism for your next DeFi dApp."
+  />
+  <Card
+    icon={<Store className='text-primary' />}
+    href="/stacks/quickstarts"
+    title="Create a no-loss lottery pool"
+    description="A step-by-step guide on how to build a no-loss lottery pool leveraging PoX4 stacking yield."
+  />
+</Cards>

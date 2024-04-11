@@ -1,0 +1,31 @@
+---
+title: Overview
+description: Query the Stacks blockchain, interact with smart contracts, and broadcast transactions with the Stacks Blockchain API, all via a familiar REST interface.
+---
+
+import { Blocks, Braces, CircleUserRound } from 'lucide-react';
+
+The Stacks Blockchain API expands the intentionally minimal RPC endpoints available in Stacks nodes and indexes, cleans, and enriches on-chain data to put everything you need at your fingertips. Who knew getting reliable blockchain data could be this easy?
+
+## Popular Endpoints
+
+<Cards>
+  <Card
+    icon={<Blocks className='text-primary' />}
+    href="/clarinet/features/create-new-contract"
+    title="Get recent transactions"
+    description="Retrieve data about transactions on Stacks."
+  />
+  <Card
+    icon={<Braces className='text-primary' />}
+    href="/clarinet/features/debug-contract"
+    title="Call smart contracts"
+    description="Call a read-only public function on a smart contract."
+  />
+  <Card
+    icon={<CircleUserRound className='text-primary' />}
+    href="/clarinet/features/write-unit-tests"
+    title="Retrieve use information"
+    description="Get information about a user, their account balance, transaction history, and more."
+  />
+</Cards>

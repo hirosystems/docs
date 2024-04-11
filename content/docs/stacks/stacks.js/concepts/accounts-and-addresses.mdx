@@ -1,0 +1,45 @@
+---
+title: Accounts and Addresses
+---
+
+Stacks uses the concept of an "account" to represent a user's identity on the blockchain. An account is identified by a unique address. The address is derived from the account's public key, which is derived from the account's private key.
+
+A normal mainnet address starts with `SP`, and a testnet address starts with `ST`.
+e.g. `SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159`, `ST2F4BK4GZH6YFBNHYDDGN4T1RKBA7DA1BJZPJEJJ`
+
+<Tabs items={['Using Connect', 'Using a mnemonic']}>
+  <Tab value="Using Connect">
+    ```ts
+    import { showConnect } from '@stacks/connect';
+
+    showConnect({
+      appDetails,
+      userSession,
+      onFinish: () => {
+        console.log(userSession.loadUserData().profile.stxAddress.mainnet);  // [!code highlight]
+      },
+    });
+    ```
+  </Tab>
+  <Tab value="Using a mnemonic">
+  ```ts
+  import { TransactionVersion } from "@stacks/transactions";
+  import { generateSecretKey, generateWallet, getStxAddress } from "@stacks/wallet-sdk";
+
+  const mnemonic = generateSecretKey();
+
+  const wallet = await generateWallet({
+    secretKey: mnemonic,
+    password: 'optional-password',
+  });
+
+  const account = wallet.accounts[0];
+  const mainnetAddress = getStxAddress({
+    account,
+    transactionVersion: TransactionVersion.Mainnet
+  });
+  
+  console.log(mainnetAddress) // SP1MXSZF4NFC8JQ1TTYGEC2WADMC7Y3GHVZYRX6RF // [!code highlight]
+  ```
+  </Tab>
+</Tabs>

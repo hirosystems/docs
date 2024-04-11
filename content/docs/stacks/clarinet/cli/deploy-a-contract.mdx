@@ -1,0 +1,38 @@
+---
+title: Deploy a contract
+description: Use Clarinet to publish your contracts to the testnet or mainnet networks.
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../../../../components/ui/tooltip"
+
+The first step to deploying your contracts is to generate a deployment plan.
+
+ ```bash title="Terminal"
+clarinet deployment generate --mainnet --medium-cost
+```
+
+**Clarinet** uses the `Clarinet.toml` file to locate and analyze all the contracts in the project. If the Clarity code is valid, the command will indicate success with the response below.
+
+```bash title="Terminal"
+✔ 2 contracts checked
+```
+
+<Callout title="Warnings" type="info">
+The `clarinet check` command may also report warnings indicating the code is valid.
+</Callout>
+
+You may also perform a syntax-check on a single file by using the command below.
+
+```bash title="Terminal"
+clarinet check <path/to/file.clar>
+```
+
+`Clarinet` reports syntactical errors, but does not perform type-checking or other semantic checks as that would require the <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>full context</span></TooltipTrigger><TooltipContent>Because it only looks at this one contract, it would need the full context to perform a complete check</TooltipContent></Tooltip></TooltipProvider> for a comprehensive analysis.

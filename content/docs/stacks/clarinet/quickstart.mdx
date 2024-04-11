@@ -1,0 +1,125 @@
+---
+title: Quickstart
+description: Create your first project in less than 2 minutes.
+---
+
+import { ChevronsRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+
+## You will learn how to:
+
+- Generate a new project with the `clarinet` CLI 
+- Create a smart contract with Clarity
+- Verify and debug your smart contract in your terminal
+
+---
+
+<div className='steps space-y-10'>
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Install <code className='text-lg'>clarinet</code></p>
+        <p>Let's build a very simple `hello-world` project to demonstrate how easy it is to get started building on Stacks.</p>
+        <p>First, let's make sure we've installed `clarinet` so that we can use the command line tools.</p>
+      </div>
+      <div className="w-full">
+        <Tabs items={['macOS', 'Windows']}>
+          <Tab value="macOS">
+          ```bash title="Terminal"
+          brew install clarinet
+          ```
+
+          </Tab>
+          <Tab value="Windows">
+          ```bash title="Terminal"
+          winget install clarinet
+          ```
+
+          </Tab>
+        </Tabs>
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a new <code className='text-lg'>hello-world</code> project</p>
+        <p>Now let's create a `hello-world` project. This will scaffold all the necessary files and directories for us to get started.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet new hello-world
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a <code className='text-lg'>say-hello</code> contract</p>
+        <p>Now that our project has been generated we can start creating our first contract. Let's name this one `say-hello`.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        cd hello-world
+        clarinet contract new say-hello
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a <code className='text-lg'>read-only</code> function called <code className='text-lg'>say-hi</code></p>
+        <p>Now that we have our `say-hello.clar` file generated, let's create a `read-only` function that prints out **"Hello World"**.</p>
+      </div>
+      <div className="w-full">
+        ```clarity title="say-hello.clar"
+        (define-read-only (say-hi)
+          (print "Hello World")
+        )
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Verify your contracts</p>
+        <p>In order to verify that our code is valid, we can run `clarinet check` inside of our project directory to ensure our `say-hi` function is valid.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet check
+        ✔ 1 contract checked
+        ```
+      </div>
+    </div>
+  </Step>
+</div>
+
+### <span className='font-light'>Next step: </span> <span className='inline-flex items-center'>Add unit tests with the Clarinet SDK <ChevronsRight className='ml-1' /></span>
+
+The [Clarinet SDK]() allows you to write unit tests for your Clarity smart contracts. You can theoretically use any JavaScript test framework, but the SDK supports Vitest out of the box.
+
+## Additional resources
+
+<Cards>
+  <Card
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet"
+    title="Clarinet SDK API Reference"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+  <Card
+    icon={<Code className='text-primary' />}
+    href="/examples"
+    title="Common Clarity Errors"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+</Cards>

@@ -1,0 +1,197 @@
+---
+title: Quickstart
+description: Setup your Clarity project with the Clarinet SDK in less than 2 minutes.
+---
+
+import { ChevronsRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+## You will learn how to:
+
+- Initialize a simulated blockchain environment
+- Retrieve accounts
+- Execute public functions of a smart contract in a simulated environment.
+- Debug smart contract calls by examining return values in the console.
+
+---
+
+<div className='steps space-y-10'>
+<Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Initialize project</p>
+        <p>Before we get started using the SDK, let's first create a new Node project in our terminal.</p>
+      </div>
+      <div className="w-full">
+        <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+          <Tab value="npm">
+          ```bash
+          mkdir clarinet-sdk-project
+          cd clarinet-sdk-project
+          npm init -y
+          ```
+          </Tab>
+          <Tab value="pnpm">
+          ```bash
+          mkdir clarinet-sdk-project
+          cd clarinet-sdk-project
+          pnpm init -y
+          ```
+          </Tab>
+          <Tab value="yarn">
+          ```bash
+          mkdir clarinet-sdk-project
+          cd clarinet-sdk-project
+          yarn init -y
+          ```
+          </Tab>
+          <Tab value="bun">
+          ```bash
+          mkdir clarinet-sdk-project
+          cd clarinet-sdk-project
+          bun init -y
+          ```
+          </Tab>
+        </Tabs>
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Install necessary packages</p>
+        <p>Now that we have our project setup, let's install our required packages: `@hirosystems/clarinet-sdk` and `@stacks/transactions`.</p>
+      </div>
+      <div className="w-full">
+        <Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+          <Tab value="npm">
+          ```bash
+          npm install @hirosystems/clarinet-sdk @stacks/transactions
+          ```
+          </Tab>
+          <Tab value="pnpm">
+          ```bash
+          pnpm add @hirosystems/clarinet-sdk @stacks/transactions
+          ```
+          </Tab>
+          <Tab value="yarn">
+          ```bash
+          yarn add @hirosystems/clarinet-sdk @stacks/transactions
+          ```
+          </Tab>
+          <Tab value="bun">
+          ```bash
+          bun install @hirosystems/clarinet-sdk @stacks/transactions
+          ```
+          </Tab>
+        </Tabs>
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Retrieving accounts on <code className='text-lg'>simnet</code></p>
+        <p>Now let's create a `hello-world` project. This will scaffold all the necessary files and directories for us to get started.</p>
+      </div>
+      <div className="w-full">
+        ```ts title="index.js"
+        import { initSimnet } from '@hirosystems/clarinet-sdk';
+        import { Cl } from '@stacks/transactions';
+
+        async function main() {
+          const simnet = await initSimnet();
+
+          const accounts = simnet.getAccounts();
+          const address1 = accounts.get('wallet_1');
+          if (!address1) throw new Error('invalid wallet name.');
+
+          const call = simnet.callPublicFn('counter', 'add', [Cl.uint(1)], address1);
+          console.log(call.result); // Cl.int(Cl.ok(true))
+        }
+
+        main();
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a <code className='text-lg'>say-hello</code> contract</p>
+        <p>Now that our project has been generated we can start creating our first contract. Let's name this one `say-hello`.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        cd hello-world
+        clarinet contract new say-hello
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a <code className='text-lg'>read-only</code> function called <code className='text-lg'>say-hi</code></p>
+        <p>Now that we have our `say-hello.clar` file generated, let's create a `read-only` function that prints out **"Hello World"**.</p>
+      </div>
+      <div className="w-full">
+        ```clarity title="say-hello.clar"
+        (define-read-only (say-hi)
+          (print "Hello World")
+        )
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Verify your contracts</p>
+        <p>In order to verify that our code is valid, we can run `clarinet check` inside of our project directory to ensure our `say-hi` function is valid.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet check
+        ✔ 1 contract checked
+        ```
+      </div>
+    </div>
+  </Step>
+</div>
+
+<Callout title="Note">
+  By default, the SDK will look for a `Clarinet.toml` file in the current working directory.
+  It's also possible to provide the path to the manifest like so:
+
+  ```ts
+  const simnet = await initSimnet('./path/to/Clarinet.toml');
+  ```
+</Callout>
+
+### <span className='font-light'>Next step: </span> <span className='inline-flex items-center'>Add unit tests with the Clarinet SDK <ChevronsRight className='ml-1' /></span>
+
+The [Clarinet SDK]() allows you to write unit tests for your Clarity smart contracts. You can theoretically use any JavaScript test framework, but the SDK supports Vitest out of the box.
+
+## Additional resources
+
+<Cards>
+  <Card
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet"
+    title="Clarinet SDK API Reference"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+  <Card
+    icon={<Code className='text-primary' />}
+    href="/examples"
+    title="Common Clarity Errors"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+</Cards>

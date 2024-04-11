@@ -1,0 +1,26 @@
+---
+title: Anchor Mode / Block Type
+---
+
+In the examples above, we used `AnchorMode.Any` to indicate that the transaction can be "mined" in different ways.
+Stacks has two types of blocks: microblocks and (anchor) blocks.
+
+- **Microblocks** (off-chain) are faster, but less reliable. Microblocks can be confirmed quickly but are not final until the microblock is included in an anchor block.
+- **Anchor Blocks** (on-chain) are the normal Stacks blocks. They are slower, but more reliable. Anchor blocks are final and cannot be reverted.
+
+
+<TypeTable
+  type={{
+    anchorMode: {
+      description:
+        'Permissions this app is requesting',
+      type: 'offChainOnly" | "onChainOnly" | "any"',
+      default: 'any',
+    },
+  }}
+/>
+
+```js
+// AnchorMode options
+anchorMode: "offChainOnly" | "onChainOnly" | "any",
+```

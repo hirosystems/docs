@@ -1,0 +1,360 @@
+---
+title: Authenticate Users with Connect
+description: This guide explains how to connect to users' wallets and authenticate users with the @stacks/connect package from Stacks.js.
+---
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronsRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+import { GridPattern } from "../../../../../components/grid-pattern";
+import { ConnectWalletButton } from '../../../../../components/code/connect-wallet-button';
+
+## You will learn how to:
+
+- Integrate user authentication in your web app using `@stacks/connect`
+- Initiate a `userSession` with specific permission scopes
+- Trigger the authentication flow with the `showConnect` function
+- Manage pending authentication states, user data and user sign-in status
+
+---
+
+<div className='steps space-y-10'>
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Install <code className='text-lg'>@stacks/connect</code></p>
+        <p>First thing we need to do is install the `@stacks/connect` package in our project.</p>
+      </div>
+      <div className="w-full">
+        ```package-install
+        @stacks/connect
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Initiate a <code className='text-lg'>userSession</code> with specific permission scopes</p>
+        <p>After installing the `@stacks/connect` package, the next step is to initiate a `userSession` with specific permission scopes.</p>
+      </div>
+      <div className="w-full">
+        ```ts twoslash
+        import { AppConfig, UserSession } from '@stacks/connect';
+
+        const appConfig = new AppConfig(['store_write', 'publish_data']);
+        const userSession = new UserSession({ appConfig });
+        ```
+
+        | Scope          | Definition                                                                      |
+        | -------------- | ------------------------------------------------------------------------------- |
+        | `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
+        | `publish_data` | Publish data so other users of the app can discover and interact with the user. |
+        
+        <Callout title="Note">We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.</Callout>
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Trigger the authentication flow with the <code className='text-lg'>showConnect</code> function</p>
+        <p>Let's create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users, one in which they'll authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.</p>
+        <div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
+          <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
+          <div className="relative rounded-xl overflow-auto p-8">
+            <div className="grid place-items-center">
+              <ConnectWalletButton />
+              <GridPattern />
+            </div>
+          </div>
+          <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
+        </div>
+      </div>
+      <div className="w-full">
+        ```ts twoslash
+        // @noErrors
+        function authenticate() {
+          showConnect({
+            appDetails: {
+              name: 'My App',
+              icon: window.location.origin + '/my-app-logo.svg',
+            },
+            redirectTo: '/',
+            onFinish: () => {
+              let userData = userSession.loadUserData();
+            },
+            userSession: userSession,
+          });
+        }
+        ```
+
+        {/* ## `showConnect`
+
+        <TypeTable
+          type={{
+            appDetails: {
+              description: 'Details of the app requesting authentication',
+              type: '{ name: string; icon: string; }',
+              default: null,
+            },
+            redirectTo: {
+              description: 'URL to redirect the user to upon successful authentication',
+              type: 'string',
+              default: null,
+            },
+            onFinish: {
+              description: 'Callback function that executes after successful authentication',
+              type: 'function',
+              default: null,
+            },
+            userSession: {
+              description: 'The userSession object initiated for authentication',
+              type: 'UserSession',
+              default: null,
+            }
+          }}
+        /> */}
+
+        <Accordions>
+
+        <Accordion title={"View Full Code"}>
+          ```tsx twoslash
+          // @noErrors
+          "use client";
+
+          import React from "react";
+          import { AppConfig, UserSession, showConnect } from "@stacks/connect";
+
+          const appConfig = new AppConfig(["store_write", "publish_data"]);
+          const userSession = new UserSession({ appConfig });
+
+          export const App: React.FC = () => {
+            function authenticate() {
+              showConnect({
+                appDetails: {
+                  name: 'My App',
+                  icon: window.location.origin + '/my-app-logo.svg',
+                },
+                redirectTo: '/',
+                onFinish: () => {
+                  let userData = userSession.loadUserData();
+                },
+                userSession: userSession,
+              });
+            }
+
+            return (
+              <button
+                className="bg-white hover:bg-gray-200 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-neutral-900"
+                onClick={authenticate}
+              >
+                Connect wallet
+              </button>
+            );
+          };
+
+
+          ```
+        </Accordion>
+
+        </Accordions>
+
+        Once the user confirms, they will be redirected to the installed web wallet to authenticate with the `authRequest` token.
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Handle Pending Authentication</p>
+        <p>After the authentication process is initiated, it's crucial to handle cases where the user hasn't completed the authentication flow. This involves managing the pending authentication state when the user is redirected back to the app without having confirmed their authentication in the popup window.</p>
+      </div>
+      <div className="w-full">
+        ```tsx twoslash
+        import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+        const appConfig = new AppConfig(['store_write', 'publish_data']);
+        const userSession = new UserSession({ appConfig });
+
+        window.onload = function () {
+          if (userSession.isSignInPending()) {
+            userSession.handlePendingSignIn().then(userData => {
+              // Save or otherwise utilize userData post-authentication
+            });
+          } else if (userSession.isUserSignedIn()) {
+            // Handle case in which user is already authenticated
+          }
+        };
+        ```
+
+        The `isSignInPending` method checks if there's a pending sign-in to process. If so, `handlePendingSignIn` processes the pending sign-in, allowing you to save or use the user's data post-authentication. For users already signed in, you can directly access their session information or proceed with your app's flow.
+
+        <Callout title="Note">Implementing `handlePendingSignIn` is particularly important in mobile app contexts to ensure a smooth user experience across all device types.</Callout>
+      </div>
+    </div>
+  </Step>
+</div>
+
+### <span className='font-light'>Next step: </span> <span className='inline-flex items-center'>Create and broadcast transactions <ChevronsRight className='ml-1' /></span>
+
+Once your users are connected to your app, you will need a way to prompt them to sign transactions and broadcast them to the Stacks blockchain. [This step-by-step guide](./broadcast-transactions) has you covered.
+
+## More resources
+
+<Cards>
+  <Card
+    icon={<Code className='text-primary' />}
+    href="/examples"
+    title="Common Clarity Errors"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+  <Card
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet"
+    title="Clarinet SDK API Reference"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+</Cards>
+
+{/* ## Advanced
+
+### How It Works
+
+The authentication flow with Stacks is similar to the typical client-server flow used by centralized sign in services (for example, OAuth). However, with Stacks the authentication flow happens entirely client-side.
+
+An app and authenticator, such as [the Stacks Wallet](https://www.hiro.so/wallet/install-web), communicate during the authentication flow by passing back and forth two tokens. The requesting app sends the authenticator an `authRequest` token. Once a user approves authentication, the authenticator responds to the app with an `authResponse` token.
+
+These tokens are are based on [a JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies. They are passed via URL query strings.
+
+See the [`authRequest`](#authrequest-payload-schema) and [`authResponse`](#authresponse-payload-schema) payload schemas below for more details about what data they contain.
+
+When a user chooses to authenticate an app, it sends the `authRequest` token to the authenticator via a URL query string with an equally named parameter:
+
+`https://wallet.hiro.so/...?authRequest=j902120cn829n1jnvoa...`
+
+When the authenticator receives the request, it generates an `authResponse` token for the app using an _ephemeral transit key_ . The ephemeral transit key is just used for the particular instance of the app, in this case, to sign the `authRequest`.
+
+The app stores the ephemeral transit key during request generation. The public portion of the transit key is passed in the `authRequest` token. The authenticator uses the public portion of the key to encrypt an _app private key_ which is returned via the `authResponse`.
+
+The authenticator generates the app private key from the user's _identity address private key_ and the app's domain. The app private key serves three functions:
+
+1. It is used to create credentials that give the app access to a storage bucket in the user's Gaia hub
+2. It is used in the end-to-end encryption of files stored for the app in the user's Gaia storage.
+3. It serves as a cryptographic secret that apps can use to perform other cryptographic functions.
+
+Finally, the app private key is deterministic, meaning that the same private key will always be generated for a given Stacks address and domain.
+
+The first two of these functions are particularly relevant to [data storage with Stacks.js](/build-apps/data-storage).
+
+[Learn more about keypairs](#key-pairs) used by authentication.
+
+### Key Pairs
+
+Authentication with Stacks makes extensive use of public key cryptography generally and ECDSA with the `secp256k1` curve in particular.
+
+The following sections describe the three public-private key pairs used, including how they're generated, where they're used and to whom private keys are disclosed.
+
+#### Transit Private Key
+
+The transit private is an ephemeral key that is used to encrypt secrets that
+need to be passed from the authenticator to the app during the
+authentication process. It is randomly generated by the app at the beginning of
+the authentication response.
+
+The public key that corresponds to the transit private key is stored in a single
+element array in the `public_keys` key of the authentication request token. The
+authenticator encrypts secret data such as the app private key using this
+public key and sends it back to the app when the user signs in to the app. The
+transit private key signs the app authentication request.
+
+#### Identity Address Private Key
+
+The identity address private key is derived from the user's keychain phrase and
+is the private key of the Stacks username that the user chooses to use to sign in
+to the app. It is a secret owned by the user and never leaves the user's
+instance of the authenticator.
+
+This private key signs the authentication response token for an app to indicate that the user approves sign in to that app.
+
+#### App Private Key
+
+The app private key is an app-specific private key that is generated from the
+user's identity address private key using the `domain_name` as input.
+
+The app private key is securely shared with the app on each authentication, encrypted by the authenticator with the transit public key. Because the transit key is only stored on the client side, this prevents a man-in-the-middle attack where a server or internet provider could potentially snoop on the app private key.
+
+### `authRequest` Payload Schema
+
+```jsx
+const requestPayload = {
+  jti, // UUID
+  iat, // JWT creation time in seconds
+  exp, // JWT expiration time in seconds
+  iss, // legacy decentralized identifier generated from transit key
+  public_keys, // single entry array with public key of transit key
+  domain_name, // app origin
+  manifest_uri, // url to manifest file - must be hosted on app origin
+  redirect_uri, // url to which the authenticator redirects user on auth approval - must be hosted on app origin
+  version, // version tuple
+  do_not_include_profile, // a boolean flag asking authenticator to send profile url instead of profile object
+  supports_hub_url, // a boolean flag indicating gaia hub support
+  scopes, // an array of string values indicating scopes requested by the app
+};
+```
+
+### `authResponse` Payload Schema
+
+```jsx
+const responsePayload = {
+  jti, // UUID
+  iat, // JWT creation time in seconds
+  exp, // JWT expiration time in seconds
+  iss, // legacy decentralized identifier (string prefix + identity address) - this uniquely identifies the user
+  private_key, // encrypted private key payload
+  public_keys, // single entry array with public key
+  profile, // profile object
+  username, // Stacks username (if any)
+  core_token, // encrypted core token payload
+  email, // email if email scope is requested & email available
+  profile_url, // url to signed profile token
+  hubUrl, // url pointing to user's gaia hub
+  version, // version tuple
+};
+```
+
+### Decode `authRequest` or `authResponse`
+
+To decode a token and see what data it holds:
+
+1. Copy the `authRequest` or `authResponse` string from the URL during authentication.
+2. Navigate to [jwt.io](https://jwt.io/).
+3. Paste the full token there.
+
+The output should look similar to below:
+
+```json
+{
+  "jti": "f65f02db-9f42-4523-bfa9-8034d8edf459",
+  "iat": 1555641911,
+  "exp": 1555645511,
+  "iss": "did:btc-addr:1ANL7TNdT7TTcjVnrvauP7Mq3tjcb8TsUX",
+  "public_keys": ["02f08d5541bf611ded745cc15db08f4447bfa55a55a2dd555648a1de9759aea5f9"],
+  "domain_name": "http://localhost:8080",
+  "manifest_uri": "http://localhost:8080/manifest.json",
+  "redirect_uri": "http://localhost:8080",
+  "version": "1.3.1",
+  "do_not_include_profile": true,
+  "supports_hub_url": true,
+  "scopes": ["store_write", "publish_data"],
+  "private_key": "4447bfa55a55a2dd555648a1d02f08d759aea5f945cc15db08f"
+}
+```
+
+The `iss` property is a decentralized identifier or `did`. This identifies the user and the username to the app. The specific `did` is a `btc-addr`. */}

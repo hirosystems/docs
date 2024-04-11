@@ -1,0 +1,90 @@
+---
+title: Installation
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+<Tabs id="os" items={['macOS', 'Windows', 'Pre-built binary', 'Using Cargo']} className='border-secondary'>
+  <Tab value="macOS">
+    ```bash title="Terminal"
+    brew install clarinet
+    ```
+    <Callout title="Additional Installation">Check out our [Installation Guide](/docs/clarinet/installation) for more installation options. For a video guide, please see the [Setting Up Your Clarity Environment (Mac) video walkthrough]()</Callout>
+  </Tab>
+  
+  <Tab value="Windows">
+    ```bash title="Terminal"
+    winget install clarinet
+    ```
+    <Callout title="Additional Installation">Check out our [Installation Guide](/docs/clarinet/installation) for more installation options. For a video guide, please see the [Setting Up Your Clarity Environment (Windows) video walkthrough]()</Callout>
+  </Tab>
+
+  <Tab value="Pre-built binary">
+    If you would like to install Clarinet from pre-built binaries, you must first download the latest release from the Hiro releases page.
+    
+    When you have downloaded the latest release, unzip the binary and copy it to a location already in your path, such as `/usr/local/bin`, using the commands shown below.
+    
+    ```bash title="Terminal"
+    # note: you can change the v0.27.0 version that is available on the releases page.
+    wget -nv https://github.com/hirosystems/clarinet/releases/download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
+    tar -xf clarinet-linux-x64.tar.gz
+    chmod +x ./clarinet
+    mv ./clarinet /usr/local/bin
+    ```
+
+    <Callout title="For macOS">
+      You may receive security errors when running the pre-compiled binary. To resolve the security warning, use the command below and replace the path `/usr/local/bin/clarinet` with your local binary file.
+
+      ```bash
+      xattr -d com.apple.quarantine /usr/local/bin/clarinet
+      ```
+    </Callout>
+  </Tab>
+
+  <Tab value="Using Cargo">
+    You may also install Clarinet using Cargo. If you choose this option, please be aware that you must first install Rust. For more information on installing Rust, please see the Install Rust page for access to cargo, the Rust package manager.
+
+    If you are using Debian or Ubuntu-based distributions, you must also install the following package to build Clarinet:
+  
+    ```bash title="Terminal"
+    sudo apt install build-essential pkg-config libssl-dev
+    ```
+
+    <h3 className='scroll-m-20'>Build Clarinet</h3>
+
+    Once you have installed Clarinet using Cargo, you can build Clarinet from the source using Cargo with the following commands:
+
+    ```bash title="Terminal"
+    git clone https://github.com/hirosystems/clarinet.git --recursive
+    cd clarinet
+    cargo clarinet-install
+    ```
+
+    By default, you will be placed in our development branch, develop, with code that has not yet been released.
+
+    - If you plan to submit any code changes, this is the right branch for you.
+    - If you prefer the latest stable version, switch to the main branch by entering the command below.
+
+    ```bash title="Terminal"
+    git checkout main
+    ```
+
+    If you have previously checked out the source, ensure you have the latest code (including submodules) before building using this command:
+
+    ```bash title="Terminal"
+      git checkout maingit pull
+      git submodule update --recursive
+    ```
+  </Tab>
+</Tabs>
+
+## Setup Shell Completions
+
+Clarinet already has many different commands built in. Therefore, enabling tab completion in your shell may be useful. Using the command below, you can use `clarinet` to generate the shell completion scripts for many common shells.
+
+```bash title="Terminal"
+clarinet completions (bash|elvish|fish|powershell|zsh)
+```
+
+After generating the file, you can refer to the documentation for your shell to determine where this file should be moved to and what other steps may be necessary to enable tab completion for `clarinet`.

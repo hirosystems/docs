@@ -1,0 +1,76 @@
+---
+title: Overview
+description: Chainhook enables you to target events on the Bitcoin and Stacks blockchain important to your use case in order to trigger actions based on those events.
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+Chainhook is a reorg-aware indexer that serves reliable blockchain data—you don’t have to waste time reindexing your database every time there’s a fork. Chainhook also lets you index only the data you need, which means you can build lighter databases, get faster query results, and deliver a better experience to your users.
+
+## Install Chainhook
+
+<Steps>
+<Step>
+
+Clone the [Chainhook Repo](https://github.com/hirosystems/chainhook):
+
+```bash title="Terminal"
+git clone https://github.com/hirosystems/chainhook.git
+```
+
+</Step>
+
+<Step>
+
+Navigate to the root directory and run `cargo chainhook-install`:
+
+```bash title="Terminal"
+cd chainhook && cargo chainhook-install
+```
+
+</Step>
+</Steps>
+
+## Create Event Streams
+
+<Cards>
+  <Card
+    href="/chainhook/features/create-bitcoin-chainhook"
+    title="Create a Bitcoin chainhook"
+    description="Build a chainhook that reacts to events on the Bitcoin blockchain."
+  />
+  <Card
+    href="/chainhook/features/create-stacks-chainhook"
+    title="Create a Stacks chainhook"
+    description="Build a chainhook that reacts to events on the Stacks blockchain."
+  />
+  <Card
+    href="/chainhook/features/test-your-chainhooks"
+    title="Test your chainhooks"
+    description="Test and debug your chainhooks in a local environment."
+  />
+</Cards>
+
+## Scan Blocks for Past Events
+
+<Cards>
+  <Card
+    href="/chainhook/features/create-bitcoin-chainhook"
+    title="Index Bitcoin"
+    description="Scan past Bitcoin blocks for the data you need."
+  />
+  <Card
+    href="/chainhook/features/create-stacks-chainhook"
+    title="Index Stacks"
+    description="Scan past Stacks blocks for the data you need."
+  />
+</Cards>
+
+## Related Tools
+
+- **[Ordhook](/bitcoin/ordhook)**: Simplify your testing with the Clarinet SDK.
+- **[Hiro Platform](/stacks/platform)**: Streamline your app development in our hosted dev experience.
+
+---
+
+_Need help building with Chainhook?_ Reach out to us on the `#chainhook` channel on Discord under **Hiro Developer Tools** section. We also host a weekly office hours on Discord every Monday at 11am ET.

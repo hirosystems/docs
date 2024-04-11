@@ -1,0 +1,135 @@
+---
+title: BTC Testnet Tokens
+description: Delivers testnet BTC tokens to a specified address.
+toc: false
+---
+
+import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root className='text-md'>
+
+<API className='api'>
+
+<APIInfo method={"POST"} route={"/extended/v1/faucets/btc"}>
+
+## Get BTC Testnet Tokens
+
+Add 1 BTC token to the specified testnet BTC address.
+
+The endpoint returns the transaction ID, which you can use to view the transaction in a testnet Bitcoin block
+explorer. The tokens are delivered once the transaction has been included in a block.
+
+**Note:** This is a testnet only endpoint. This endpoint will not work on the mainnet.
+
+
+### Request Body (Optional)
+
+
+
+<Property required={false} deprecated={false} name={"address"} type={"string"}>
+
+BTC testnet address
+
+</Property>
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Success |
+| `403` | BTC Faucet not fully configured |
+| `500` | Faucet call failed |
+
+</APIInfo>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+```bash title="Terminal"
+curl -X POST \
+  "https://api.testnet.hiro.so/extended/v1/faucets/btc" \
+  -d '{
+  "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
+}'
+```
+
+<Tabs items={["200","403"]}>
+
+<Tab value={"200"}>
+
+POST request that initiates a transfer of tokens to a specified testnet address
+
+```json title="Example Response"
+{
+  "success": true,
+  "txId": "string",
+  "txRaw": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * POST request that initiates a transfer of tokens to a specified testnet address
+ */
+export interface RunFaucetResponse {
+  /**
+   * Indicates if the faucet call was successful
+   */
+  success: boolean;
+  /**
+   * The transaction ID for the faucet call
+   */
+  txId?: string;
+  /**
+   * Raw transaction in hex string representation
+   */
+  txRaw?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"403"}>
+
+
+
+```json title="Example Response"
+{
+  "error": "string",
+  "success": true
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface Response {
+  error?: string;
+  success?: boolean;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

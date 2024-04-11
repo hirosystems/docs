@@ -1,0 +1,19 @@
+---
+title: Broadcasting
+---
+
+A finalized transaction can be broadcasted to the network or serialized (to a byte representation) using Stacks.js.
+
+```ts twoslash
+// @noErrors
+import { bytesToHex } from '@stacks/common';
+import { makeSTXTokenTransfer, broadcastTransaction, AnchorMode } from '@stacks/transactions';
+
+const broadcastResponse = await broadcastTransaction(transaction);
+const txId = broadcastResponse.txid;
+
+const serializedTx = tx.serialize(); // Uint8Array
+const serializedTxHex = bytesToHex(serializedTx); // hex string
+```
+
+<Callout title="Info">For web applications, the users' wallet can broadcast transactions created via [@stacks/connect](../packages/connect).</Callout>

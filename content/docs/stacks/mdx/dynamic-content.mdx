@@ -1,0 +1,30 @@
+---
+title: Dynamic Content
+description: A remark plugin that generates content from files
+---
+
+Add it as a remark plugin.
+
+```ts
+import { remarkDynamicContent } from 'fumadocs-core/mdx-plugins';
+
+const config = {
+    remarkPlugins: [
+      [remarkDynamicContent, { ... }]
+    ],
+}
+```
+
+## Syntax
+
+This will copy the content from a specific file, it only can used in code blocks
+& text.
+
+`|reference:` + `path` + `|`
+
+**Example:** `|reference:./path/to/your/file.ts|`
+
+### Options
+
+- `cwd` the root directory to resolve files
+- `trim` enable trim file content

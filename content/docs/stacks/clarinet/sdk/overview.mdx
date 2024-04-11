@@ -1,0 +1,32 @@
+---
+title: Overview
+description: The Clarinet SDK is a JavaScript library that spawns and interacts with a simulated Clarinet environment.
+---
+
+import { ChevronsRight, Code, Play, Scale, Star, Store, Terminal } from 'lucide-react';
+
+The Clarinet SDK allows you to write unit tests for your Clarity smart contracts. You can theoretically use any JavaScript test framework, but the SDK supports Vitest out of the box.
+
+Here is a non-exhaustive list of some of simnet's use-cases:
+
+- Call public and read-only functions from smart contracts
+- Get clarity maps or data-var values
+- Get contract interfaces (available functions and data)
+- Write unit tests for Clarity smart contracts
+
+### <span className='font-light'>Get started</span> <span className='inline-flex items-center'>quickly <ChevronsRight className='ml-1' /></span>
+
+<Cards>
+  <Card
+    icon={<Code className='text-primary' />}
+    href="/clarinet/guides/testing-with-clarinet-sdk"
+    title="Unit testing with Clarinet SDK"
+    description="Add new contracts to your project and have them automatically configured in your project file."
+  />
+  <Card
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet/features/create-deployment-plan"
+    title="API References"
+    description="Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts."
+  />
+</Cards>

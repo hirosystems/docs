@@ -1,0 +1,124 @@
+---
+title: Contributors Guide
+description: A standard guideline for how to contribute to Hiro's documentation and content.
+---
+
+import { Step } from 'fumadocs-ui/components/steps';
+
+One of the most important ways that Hiro can build out the Stacks developer community and ecosystem is by having feedback and contributions from the developer community.
+
+---
+
+## Issues
+
+If the content is obsolete, technically inaccurate, or unclear, [please create a GitHub Issue](https://github.com/hirosystems/docs/issues/new). This is a great way to give specific feedback and ensure the technical content is up-to-date and technically accurate.
+
+```bash title="Terminal"
+cd /path/to/hiro-docs-repository
+gh issue create
+```
+
+## Pull requests
+
+To suggest more comprehensive changes or updates to the content, make documentation changes and then submit a pull request.
+
+<div className='steps space-y-10'>
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a new <code className='text-lg'>branch</code> and make your changes</p>
+        <p>To submit a pull request to update the docs, [fork the Hiro Docs repository and clone it](https://github.com/hirosystems/docs.git).</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        git checkout -b my-new-feature
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a new <code className='text-lg'>hello-world</code> project</p>
+        <p>Now let's create a `hello-world` project. This will scaffold all the necessary files and directories for us to get started.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet new hello-world
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a <code className='text-lg'>say-hello</code> contract</p>
+        <p>Now that our project has been generated we can start creating our first contract. Let's name this one `say-hello`.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        cd hello-world
+        clarinet contract new say-hello
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Create a <code className='text-lg'>read-only</code> function called <code className='text-lg'>say-hi</code></p>
+        <p>Now that we have our `say-hello.clar` file generated, let's create a `read-only` function that prints out **"Hello World"**.</p>
+      </div>
+      <div className="w-full">
+        ```clarity title="say-hello.clar"
+        (define-read-only (say-hi)
+          (print "Hello World")
+        )
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-xl font-bold m-0'>Verify your contracts</p>
+        <p>In order to verify that our code is valid, we can run `clarinet check` inside of our project directory to ensure our `say-hi` function is valid.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet check
+        ✔ 1 contract checked
+        ```
+      </div>
+    </div>
+  </Step>
+</div>
+
+
+2. Add or modify the GitHub Markdown files in the directories.
+3. When the suggested changes are complete, commit them with a message with a brief summary message:
+    ```sh
+    git commit -m "commit message"
+    ```
+
+4. Push the branch up:
+    ```sh
+    git push origin <branch-name>
+    ```
+
+When the changes are final, create a pull request from the working branch by following [GitHub's guide](https://help.github.com/articles/creating-a-pull-request-from-a-fork/).
+
+### **Titles and descriptions**
+
+For pull requests, please keep the following in mind:
+
+- Pull request titles should be descriptive enough for reviewers to understand *what* is being changed. Some ways of doing this are better than others.
+
+- Every pull request should have a description that explains *why* the change is being made. The description adds context that is critical for reviewers when giving feedback.
+
+- For a quick GitHub refresher, please refer to the [GitHub Get Started Guide](https://docs.github.com/en/get-started/using-git/about-git).
+- For more tips, see GitHub's blog entry on [how to write the perfect pull request](https://github.com/blog/1943-how-to-write-the-perfect-pull-request).

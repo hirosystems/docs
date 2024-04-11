@@ -1,0 +1,34 @@
+---
+title: Create a new project
+description: Once you have installed Clarinet, you may then use Clarinet to create a new project.
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+
+To create a new project, run the `clarinet new` command along with your project name.
+
+ ```bash title="Terminal"
+clarinet new my-project
+```
+
+**Clarinet** will create a project directory with the following directory layout:
+
+<Files className='pointer-events-none'>
+  <Folder name="contracts" />
+  <Folder name="settings" defaultOpen>
+    <File name="Devnet.toml" />
+    <File name="Mainnet.toml" />
+    <File name="Testnet.toml" />
+  </Folder>
+  <Folder name="tests" />
+  <File name=".gitignore" />
+  <File name="Clarinet.toml" />
+  <File name="package.json" />
+  <File name="tsconfig.json" />
+  <File name="vitest.config.js" />
+</Files>
+
+The `Clarinet.toml` file contains configuration for the smart contracts in your project. When you create contracts in your project, Clarinet will add them to this file.
+
+The `settings/Devnet.toml` file contains configuration for accounts in the Clarinet console, including the seed phrases and initial balances. Initial balances are in microSTX.
