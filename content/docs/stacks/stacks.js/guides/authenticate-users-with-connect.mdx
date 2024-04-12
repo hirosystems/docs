@@ -12,7 +12,7 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { GridPattern } from "../../../../../components/grid-pattern";
 import { ConnectWalletButton } from '../../../../../components/code/connect-wallet-button';
 
-## You will learn how to:
+### You will learn how to:
 
 - Integrate user authentication in your web app using `@stacks/connect`
 - Initiate a `userSession` with specific permission scopes
@@ -25,7 +25,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
   <Step>
     <div className="flex flex-col">
       <div className="w-full">
-        <p className='text-xl font-bold m-0'>Install <code className='text-lg'>@stacks/connect</code></p>
+        <p className='text-lg font-bold m-0'>Install <code className='text-lg'>@stacks/connect</code></p>
         <p>First thing we need to do is install the `@stacks/connect` package in our project.</p>
       </div>
       <div className="w-full">
@@ -39,7 +39,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
   <Step>
     <div className="flex flex-col">
       <div className="w-full">
-        <p className='text-xl font-bold m-0'>Initiate a <code className='text-lg'>userSession</code> with specific permission scopes</p>
+        <p className='text-lg font-bold m-0'>Initiate a <code className='text-lg'>userSession</code> with specific permission scopes</p>
         <p>After installing the `@stacks/connect` package, the next step is to initiate a `userSession` with specific permission scopes.</p>
       </div>
       <div className="w-full">
@@ -63,7 +63,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
   <Step>
     <div className="flex flex-col">
       <div className="w-full">
-        <p className='text-xl font-bold m-0'>Trigger the authentication flow with the <code className='text-lg'>showConnect</code> function</p>
+        <p className='text-lg font-bold m-0'>Trigger the authentication flow with the <code className='text-lg'>showConnect</code> function</p>
         <p>Let's create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users, one in which they'll authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.</p>
         <div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
           <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
@@ -173,7 +173,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
   <Step>
     <div className="flex flex-col">
       <div className="w-full">
-        <p className='text-xl font-bold m-0'>Handle Pending Authentication</p>
+        <p className='text-lg font-bold m-0'>Handle Pending Authentication</p>
         <p>After the authentication process is initiated, it's crucial to handle cases where the user hasn't completed the authentication flow. This involves managing the pending authentication state when the user is redirected back to the app without having confirmed their authentication in the popup window.</p>
       </div>
       <div className="w-full">
@@ -206,7 +206,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
 
 Once your users are connected to your app, you will need a way to prompt them to sign transactions and broadcast them to the Stacks blockchain. [This step-by-step guide](./broadcast-transactions) has you covered.
 
-## More resources
+### More resources
 
 <Cards>
   <Card
