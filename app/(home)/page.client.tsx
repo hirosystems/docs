@@ -59,7 +59,7 @@ export function Integration({
         className={cn(
           linkItemVariants(),
           "cursor-pointer",
-          activeSection === "clarinet" && "bg-muted",
+          activeSection === "clarinet" && "bg-muted/80",
           activeSection !== "clarinet" && "hover:bg-muted"
         )}
       >
@@ -75,7 +75,7 @@ export function Integration({
         className={cn(
           linkItemVariants(),
           "cursor-pointer",
-          activeSection === "stacks.js" && "bg-muted",
+          activeSection === "stacks.js" && "bg-muted/80",
           activeSection !== "stacks.js" && "hover:bg-muted"
         )}
       >
@@ -90,7 +90,7 @@ export function Integration({
         className={cn(
           linkItemVariants(),
           "cursor-pointer",
-          activeSection === "chainhook" && "bg-muted",
+          activeSection === "chainhook" && "bg-muted/80",
           activeSection !== "chainhook" && "hover:bg-muted"
         )}
       >

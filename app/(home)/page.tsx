@@ -23,7 +23,7 @@ export default function HomePage(): JSX.Element {
               </h2>
               <ul className="my-8 flex flex-col gap-6">
                 <li>
-                  <span className="font-medium">Guides and code examples.</span>
+                  <span className="font-medium">Guides and code samples.</span>
                   <span className="ml-2 text-muted-foreground">
                     Copy and paste your way to making things work.
                   </span>
@@ -42,7 +42,7 @@ export default function HomePage(): JSX.Element {
                 </li>
               </ul>
               <div className="mt-auto flex flex-row flex-wrap gap-2 border-t pt-8">
-                <Link href="/stacks" className={cn(buttonVariants())}>
+                <Link href="/stacks" className={cn(buttonVariants(), "bg-[rgb(255,85,0)] hover:bg-[rgba(255,85,0,0.9)]")}>
                   View all docs
                 </Link>
                 <a

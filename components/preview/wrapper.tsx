@@ -6,7 +6,7 @@ export function Wrapper(props: HTMLAttributes<HTMLDivElement>): JSX.Element {
     <div
       {...props}
       className={cn(
-        "rounded-xl bg-gradient-to-b from-gray-200 dark:from-neutral-900 to-background p-4 prose-no-margin",
+        "rounded-xl bg-card p-4 prose-no-margin",
         props.className
       )}
     >
