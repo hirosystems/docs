@@ -55,10 +55,10 @@ function Footer(): JSX.Element {
 
         <div className="flex flex-row flex-wrap items-center gap-12">
           <Link
-            href="/examples"
+            href="/guides"
             className="flex flex-row items-center text-sm text-muted-foreground transition-colors hover:text-accent-foreground"
           >
-            Examples
+            Guides
           </Link>
         </div>
       </div>

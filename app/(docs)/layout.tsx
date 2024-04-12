@@ -41,8 +41,8 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   },
   links: [
     {
-      text: "Examples",
-      url: "/examples",
+      text: "Guides",
+      url: "/guides",
       icon: create({ icon: LayoutTemplateIcon }),
     },
   ],

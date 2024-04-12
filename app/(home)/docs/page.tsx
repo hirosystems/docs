@@ -40,10 +40,10 @@ export default function DocsPage(): JSX.Element {
           Github
         </a>
         <Link
-          href="/examples"
+          href="/guides"
           className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
         >
-          Examples
+          Guides
         </Link>
       </div>
       <div className="mt-16 grid grid-cols-1 gap-4 text-left md:grid-cols-2">

@@ -76,7 +76,7 @@ export default function ExamplePage(): JSX.Element {
             return (
               <div
                 key={guide.title}
-                className="flex flex-col relative h-full w-full transform-gpu rounded-lg border bg-white shadow-md dark:bg-background dark:border-neutral-900 md:max-h-[500px] md:max-w-[500px] group hover:cursor-pointer hover:dark:bg-neutral-900/50"
+                className="flex flex-col relative h-full w-full transform-gpu rounded-lg border bg-white shadow-md dark:bg-card md:max-h-[500px] md:max-w-[500px] group hover:cursor-pointer dark:hover:bg-muted/80"
               >
                 <div className="flex flex-col justify-around h-auto">
                   <div className="p-3">
@@ -106,7 +106,7 @@ export default function ExamplePage(): JSX.Element {
           })}
         </div>
       </main>
-      <Wrapper>
+      <Wrapper className="mb-6">
         <div className="flex flex-1 flex-col space-y-3 gap-4 p-4 md:p-8">
           {/* Separate row for the h1 */}
           <div className="flex flex-col">
