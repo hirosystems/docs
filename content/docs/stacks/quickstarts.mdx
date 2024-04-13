@@ -4,7 +4,7 @@ description: Browse all of our quickstart guides across all products.
 toc: false
 ---
 
-import { ArrowLeftRight, ChevronsRight, Code, Database, Play, Scale, Star, Store, Terminal } from 'lucide-react';
+import { ArrowLeftRight, Banknote, ChevronsRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
 
 ### <span className='font-light'>Get started</span> <span className='inline-flex items-center'>quickly <ChevronsRight className='ml-1' /></span>
 
@@ -51,9 +51,15 @@ import { ArrowLeftRight, ChevronsRight, Code, Database, Play, Scale, Star, Store
     description="Learn how to build a swap mechanism for your next DeFi dApp."
   />
   <Card
-    icon={<Store className='text-primary' />}
+    icon={<Ticket className='text-primary' />}
     href="/stacks/quickstarts"
     title="Create a no-loss lottery pool"
     description="A step-by-step guide on how to build a no-loss lottery pool leveraging PoX4 stacking yield."
+  />
+  <Card
+    icon={<Banknote className='text-primary' />}
+    href="/stacks/quickstarts"
+    title="Build a decentralized Kickstarter"
+    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
   />
 </Cards>
