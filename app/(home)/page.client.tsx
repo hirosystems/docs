@@ -290,9 +290,9 @@ export function StacksJsAppAnimation(): JSX.Element {
         {tick > timeCommandRun + 3 && (
           <>
             <span>
-              │ <span className="text-orange-500">●</span> Basic Clarity App
+              │ <span className="text-orange-500">●</span> Blank project
             </span>
-            <span>│ ○ NFT Collection</span>
+            <span>│ ○ NFT Marketplace</span>
           </>
         )}
       </Fragment>
