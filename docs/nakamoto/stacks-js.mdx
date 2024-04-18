@@ -7,13 +7,13 @@ custom_edit_url: null
 
 ### StackingClient
 
-Install the latest nakamoto version with `npm install @stacks/stacking@6.13.0`.
+Install the latest nakamoto version with `npm install @stacks/stacking@latest`.
 
 The StackingClient in `@stacks/stacking` was updated to match the latest pox-4 contract.
 
 - Added `StackingClient.signPoxSignature()`
 - Added `Pox4SignatureTopic` enum
-- New stacking arguments for `StackingClient.stack`, `StackingClient.stackExtend`, `StackingClient.stackIncrease`, `StackingClient.stackAggregationCommit`, and `StackingClient.stackAggregationCommitIndexed`
+- New stacking arguments for `StackingClient.stack`, `StackingClient.stackExtend`, `StackingClient.stackIncrease`, `StackingClient.stackAggregationCommit`, `StackingClient.stackAggregationCommitIndexed`, and `StackingClient.stackAggregationIncrease`
 
 ### Nakamoto Network
 
@@ -41,6 +41,9 @@ const signature = client.signPoxSignature({
   rewardCycle: await client.getPoxInfo().reward_cycle_id,
   poxAddress: MY_BTC_ADDRESS,
   period: 2,
+  maxAmount: 10_000_000_000_000,
+  authId: 123n,
+
   signerPrivateKey: MY_SIGNER_PRIVATE_KEY
 });
 ```
@@ -49,9 +52,9 @@ const signature = client.signPoxSignature({
 
 ```ts
 const { txid } = await client.stack({
-  amountMicroStx: 10_000_000_000_000,
+  amountMicroStx: 10_000_000_000_000, // this can be at most the signature `maxAmount`
   poxAddress: MY_BTC_ADDRESS,
-  cycles: 2,
+  cycles: 2, // this needs to match signature `period`
   burnBlockHeight: CURRENT_BURN_BLOCK_HEIGHT,
 
   // NEW ARGS
