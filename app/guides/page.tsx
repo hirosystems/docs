@@ -54,10 +54,10 @@ const guides = [
     createdAt: new Date().toLocaleDateString(),
   },
   {
-    title: "Test your contracts against PoX4",
-    tags: ["testing"],
+    title: "Validate off-chain price feeds with Pyth",
+    tags: ["oracles"],
     image:
-      "https://assets-global.website-files.com/5ff21113877dd79ed7913b57/65b29f9c83c30afebd95ce21_Hiro-blog-btc-sc.jpg",
+      "https://assets-global.website-files.com/5ff21113877dd79ed7913b57/64e5fbe159b16400aed40a69_Hiro-blog-Pyth.jpg",
     createdAt: new Date().toLocaleDateString(),
   },
 ];
