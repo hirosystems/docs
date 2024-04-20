@@ -34,14 +34,14 @@ Start the Devnet with `clarinet devnet start`.
 ## Deploy contracts on the Nakamoto Testnet
 
 A Nakamoto testnet is available and running in Epoch 2.5. Clarinet can be used to deploy contracts
-on this testnet (available at https://api.nakamoto.testnet.hiro.so).
+on testnet.
 
 In a Clarinet project, the `settings/Testnet.toml` file can be updated like so:
 
 ```toml
 [network]
 name = "testnet"
-stacks_node_rpc_address = "https://api.nakamoto.testnet.hiro.so"
+stacks_node_rpc_address = "https://api.testnet.hiro.so"
 deployment_fee_rate = 10
 
 [accounts.deployer]

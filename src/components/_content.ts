@@ -34,7 +34,7 @@ export default {
     type: 'info',
     from: '2024-03-15',
     to: '2024-04-20',
-    text: ['The Nakamoto upgrade is now live on Testnet! See a list of Hiro product changes here.'],
+    text: ['The Nakamoto upgrade is now live on Mainnet! See a list of Hiro product changes here.'],
     cta: 'View Changes',
     ctaLink: '/nakamoto',
     relativeUrl: true,
