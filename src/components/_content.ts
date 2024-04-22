@@ -32,8 +32,8 @@ export default {
   },
   banner: {
     type: 'info',
-    from: '2024-03-15',
-    to: '2024-04-20',
+    from: '2024-04-22',
+    to: '2024-05-22',
     text: ['The Nakamoto upgrade is now live on Mainnet! See a list of Hiro product changes here.'],
     cta: 'View Changes',
     ctaLink: '/nakamoto',
