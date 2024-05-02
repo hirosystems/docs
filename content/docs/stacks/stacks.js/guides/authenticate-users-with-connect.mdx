@@ -61,7 +61,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
   </Step>
 
   <Step>
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-3">
       <div className="w-full">
         <p className='text-lg font-bold m-0'>Trigger the authentication flow with the <code className='text-lg'>showConnect</code> function</p>
         <p>Let's create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users, one in which they'll authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.</p>
@@ -123,7 +123,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
 
         <Accordions>
 
-        <Accordion title={"View Full Code"}>
+        <Accordion title="View Full Code">
           ```tsx twoslash
           // @noErrors
           "use client";
