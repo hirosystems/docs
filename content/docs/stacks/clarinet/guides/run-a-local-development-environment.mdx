@@ -3,500 +3,245 @@ title: Run a local development environment
 description: Get set up with everything you need to integrate existing smart contracts with the blockchain in a local testing environment.
 ---
 
-## Requirements
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronsRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
 
-The SDK requires Node.js >= 18.0 and NPM to be installed. [Volta](https://volta.sh/) is a great tool to install and manage JS tooling.
+import { GridPattern } from "../../../../../components/grid-pattern";
+import { ConnectWalletButton } from '../../../../../components/code/connect-wallet-button';
 
-To follow this tutorial, you must have the Clarinet CLI installed as well.
+### You will learn how to:
 
-## Set Up the Clarity Contract and Unit Tests
+- Set up a new project
+- Create a simple Clarity contract to deploy to `devnet`
+- Spin up a local blockchain using the Clarinet CLI
 
-Let us consider a `counter` smart contract to understand how to write unit tests for our application requirements.
+---
 
-First, create a new Clarinet project with a `counter` contract.
+<div className='steps space-y-10'>
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0'>Create a new project</p>
+        <p>To demonstrate how to run a local blockchain, we'll need a project to work with. If you don't already have one, we can create a simple `hello-world` project below.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet new hello-world
+        ```
+      </div>
+      <p>This will create a new directory with our project already configured.</p>
+    </div>
+  </Step>
 
-```bash
-clarinet new counter
-cd counter
-clarinet contract new counter
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0'>Create a new contract</p>
+        <p>Before we spin up our local blockchain, we should deploy something to it - let's go ahead and change directories into our project and create a `hello` contract.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        cd hello-world
+        clarinet contract new hello
+        ```
+      </div>
+      <p>In our new `hello.clar` file, let's add a few functions: `say-hi`, `echo-number`, and `check-it`.</p>
+      <div className="w-full">
+        ```clarity
+        ;; A read-only function that returns a message
+        (define-read-only (say-hi)
+          (ok "Hello World")
+        )
+
+        ;; A read-only function that returns an input number
+        (define-read-only (echo-number (val int))
+          (ok val)
+        )
+
+        ;; A public function that conditionally returns an ok or an error
+        (define-public (check-it (flag bool))
+          (if flag (ok 1) (err u100))
+        )
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0'>Run a local blockchain with <code className='text-lg'>clarinet devnet start</code></p>
+        <p>We're now ready to start up our local blockchain and deploy our `hello-world` contract. Run the following command and let's walkthrough what's happening under the hood.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        clarinet devnet start
+        ```
+      </div>
+      <p>At this point, `clarinet` will start creating a deployment plan for your `devnet` network and begin spinning up all the necessary services required and deploying our `hello` contract.</p>
+      <Callout title="Common errors" type="warn">
+        <p>If you are getting `error: clarinet was unable to create network`, make sure you have Docker (or a similar service) installed and running locally. Check out the [Docker installation guide](/guides/install-docker) for more details.</p>
+      </Callout>
+    </div>
+  </Step>
+</div>
+
+### <span className='font-light'>Next step: </span> <span className='inline-flex items-center'>Connect your local devnet to a web wallet <ChevronsRight className='ml-1' /></span>
+
+Now that you have a local devnet running on your machine, it would be nice to be able to interact with your local contracts deployed to that network from a frontend application. [This step-by-step guide](/guides/connect-network-to-wallet) has you covered.
+
+### More resources
+
+<Cards>
+  <Card
+    icon={<Code className='text-primary' />}
+    href="/examples"
+    title="Common Clarity Errors"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+  <Card
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet"
+    title="Clarinet SDK API Reference"
+    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+  />
+</Cards>
+
+{/* ## Advanced
+
+### How It Works
+
+The authentication flow with Stacks is similar to the typical client-server flow used by centralized sign in services (for example, OAuth). However, with Stacks the authentication flow happens entirely client-side.
+
+An app and authenticator, such as [the Stacks Wallet](https://www.hiro.so/wallet/install-web), communicate during the authentication flow by passing back and forth two tokens. The requesting app sends the authenticator an `authRequest` token. Once a user approves authentication, the authenticator responds to the app with an `authResponse` token.
+
+These tokens are are based on [a JSON Web Token (JWT) standard](https://tools.ietf.org/html/rfc7519) with additional support for the `secp256k1` curve used by Bitcoin and many other cryptocurrencies. They are passed via URL query strings.
+
+See the [`authRequest`](#authrequest-payload-schema) and [`authResponse`](#authresponse-payload-schema) payload schemas below for more details about what data they contain.
+
+When a user chooses to authenticate an app, it sends the `authRequest` token to the authenticator via a URL query string with an equally named parameter:
+
+`https://wallet.hiro.so/...?authRequest=j902120cn829n1jnvoa...`
+
+When the authenticator receives the request, it generates an `authResponse` token for the app using an _ephemeral transit key_ . The ephemeral transit key is just used for the particular instance of the app, in this case, to sign the `authRequest`.
+
+The app stores the ephemeral transit key during request generation. The public portion of the transit key is passed in the `authRequest` token. The authenticator uses the public portion of the key to encrypt an _app private key_ which is returned via the `authResponse`.
+
+The authenticator generates the app private key from the user's _identity address private key_ and the app's domain. The app private key serves three functions:
+
+1. It is used to create credentials that give the app access to a storage bucket in the user's Gaia hub
+2. It is used in the end-to-end encryption of files stored for the app in the user's Gaia storage.
+3. It serves as a cryptographic secret that apps can use to perform other cryptographic functions.
+
+Finally, the app private key is deterministic, meaning that the same private key will always be generated for a given Stacks address and domain.
+
+The first two of these functions are particularly relevant to [data storage with Stacks.js](/build-apps/data-storage).
+
+[Learn more about keypairs](#key-pairs) used by authentication.
+
+### Key Pairs
+
+Authentication with Stacks makes extensive use of public key cryptography generally and ECDSA with the `secp256k1` curve in particular.
+
+The following sections describe the three public-private key pairs used, including how they're generated, where they're used and to whom private keys are disclosed.
+
+#### Transit Private Key
+
+The transit private is an ephemeral key that is used to encrypt secrets that
+need to be passed from the authenticator to the app during the
+authentication process. It is randomly generated by the app at the beginning of
+the authentication response.
+
+The public key that corresponds to the transit private key is stored in a single
+element array in the `public_keys` key of the authentication request token. The
+authenticator encrypts secret data such as the app private key using this
+public key and sends it back to the app when the user signs in to the app. The
+transit private key signs the app authentication request.
+
+#### Identity Address Private Key
+
+The identity address private key is derived from the user's keychain phrase and
+is the private key of the Stacks username that the user chooses to use to sign in
+to the app. It is a secret owned by the user and never leaves the user's
+instance of the authenticator.
+
+This private key signs the authentication response token for an app to indicate that the user approves sign in to that app.
+
+#### App Private Key
+
+The app private key is an app-specific private key that is generated from the
+user's identity address private key using the `domain_name` as input.
+
+The app private key is securely shared with the app on each authentication, encrypted by the authenticator with the transit public key. Because the transit key is only stored on the client side, this prevents a man-in-the-middle attack where a server or internet provider could potentially snoop on the app private key.
+
+### `authRequest` Payload Schema
+
+```jsx
+const requestPayload = {
+  jti, // UUID
+  iat, // JWT creation time in seconds
+  exp, // JWT expiration time in seconds
+  iss, // legacy decentralized identifier generated from transit key
+  public_keys, // single entry array with public key of transit key
+  domain_name, // app origin
+  manifest_uri, // url to manifest file - must be hosted on app origin
+  redirect_uri, // url to which the authenticator redirects user on auth approval - must be hosted on app origin
+  version, // version tuple
+  do_not_include_profile, // a boolean flag asking authenticator to send profile url instead of profile object
+  supports_hub_url, // a boolean flag indicating gaia hub support
+  scopes, // an array of string values indicating scopes requested by the app
+};
 ```
 
-Below will be the content of our smart contract.
-It keeps track of an initialized value, allows for incrementing and decrementing, and prints actions as a log.
+### `authResponse` Payload Schema
 
-```clarity
-;; counter.clar
-(define-data-var count uint u1)
-
-(define-public (increment (step uint))
-  (let ((new-val (+ (var-get count) step)))
-    (var-set count new-val)
-    (print { object: "count", action: "incremented", value: new-val })
-    (ok new-val)
-  )
-)
-
-(define-public (decrement (step uint))
-  (let ((new-val (- (var-get count) step)))
-    (var-set count new-val)
-    (print { object: "count", action: "decremented", value: new-val })
-    (ok new-val)
-  )
-)
-
-(define-read-only (read-count)
-  (ok (var-get count))
-)
+```jsx
+const responsePayload = {
+  jti, // UUID
+  iat, // JWT creation time in seconds
+  exp, // JWT expiration time in seconds
+  iss, // legacy decentralized identifier (string prefix + identity address) - this uniquely identifies the user
+  private_key, // encrypted private key payload
+  public_keys, // single entry array with public key
+  profile, // profile object
+  username, // Stacks username (if any)
+  core_token, // encrypted core token payload
+  email, // email if email scope is requested & email available
+  profile_url, // url to signed profile token
+  hubUrl, // url pointing to user's gaia hub
+  version, // version tuple
+};
 ```
 
-### Migrating Between Clarinet v1 and Clarinet v2
+### Decode `authRequest` or `authResponse`
 
-> Note: Clarinet v2 will be released in October 2023, and will create the right boilerplate files. But if a project has been created with Clarinet v1, the following script prepares the project to run the SDK and Vitest.
+To decode a token and see what data it holds:
 
-Executing this script in a Clarinet v1 project will initialise NPM and Vitest. It will also create a sample test file.
+1. Copy the `authRequest` or `authResponse` string from the URL during authentication.
+2. Navigate to [jwt.io](https://jwt.io/).
+3. Paste the full token there.
 
-```console
-npx @hirosystems/clarinet-sdk@latest
-```
-
-This script will ask you if you want to run npm install now; you can press enter to do so.
-This can take a few seconds.
-
-The file `tests/counter_test.ts` that was created by `clarinet contract new counter` can be deleted.
-
-You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest.
-It can safely be deleted.
-
-### Unit Tests for `counter` Example
-
-Create a file `tests/counter.test.ts` with the following content:
-
-```ts
-import { Cl } from '@stacks/transactions';
-import { describe, expect, it } from 'vitest';
-
-const accounts = simnet.getAccounts();
-const address1 = accounts.get('wallet_1')!;
-
-describe('test `increment` public function', () => {
-  it('increments the count by the given value', () => {
-    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
-    console.log(Cl.prettyPrint(incrementResponse.result)); // (ok u2)
-    expect(incrementResponse.result).toBeOk(Cl.uint(2));
-
-    const count1 = simnet.getDataVar('counter', 'count');
-    expect(count1).toBeUint(2);
-
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(40)], address1);
-    const count2 = simnet.getDataVar('counter', 'count');
-    expect(count2).toBeUint(42);
-  });
-
-  it('sends a print event', () => {
-    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
-
-    expect(incrementResponse.events).toHaveLength(1);
-    const printEvent = incrementResponse.events[0];
-    expect(printEvent.event).toBe('print_event');
-    expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii('count'),
-      action: Cl.stringAscii('incremented'),
-      value: Cl.uint(2),
-    });
-  });
-});
-```
-
-To run the test, go back to your console and run the `npm test` command. It should display a report telling you that tests succeeded.
-
-```sh
-npm test
-```
-
-There is a very important thing happening under the hood here. The `simnet` object is available globally in the tests, and is automatically initialized before each test.
-
-> You don't need to know much more about that, but if you want to know in detail how it works, you can have a look at the `vitest.config.js` file at the root of you project.
-
-Getting back to the tests, we just implemented two of them:
-
-- The first test checks that the `increment` function returns the new value and saves it to the `count` variable.
-- The second test checks that an `print_event` is emitted when the increment function is called.
-
-> You can use `Cl.prettyPrint(value: ClarityValue)` to format any Clarity value into readable Clarity code. It can be useful to debug function results or event values.
-
-Note that we are importing `describe`, `expect` and `it` from Vitest.
-
-- `it` allows us to write a test.
-- `describe` is not necessary but allows to organize tests.
-- `expect` is use to make assertions on value.
-
-You can learn more about Vitest on their [website](https://vitest.dev).
-We also implemented some custom matchers to make assertions on Clarity variables (like `toBeUint`).
-The [full list of custom matchers](#custom-vitest-matchers) is available at the end of this guide.
-
-### Comprehensive Unit Tests for `counter`
-
-Let us now write a higher coverage test suite by testing the `decrement` and `get-counter` functions.
-
-These two code blocks can be added at the end of `tests/counter.test.ts`.
-
-```ts
-describe('test `decrement` public function', () => {
-  it('decrements the count by the given value', () => {
-    const decrementResponse = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
-    expect(decrementResponse.result).toBeOk(Cl.uint(0));
-
-    const count1 = simnet.getDataVar('counter', 'count');
-    expect(count1).toBeUint(0);
-
-    // increase the count so that it can be descreased without going < 0
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(10)], address1);
-
-    simnet.callPublicFn('counter', 'decrement', [Cl.uint(5)], address1);
-    const count2 = simnet.getDataVar('counter', 'count');
-    expect(count2).toBeUint(5);
-  });
-
-  it('sends a print event', () => {
-    const decrementResponse = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
-
-    expect(decrementResponse.events).toHaveLength(1);
-    const printEvent = decrementResponse.events[0];
-    expect(printEvent.event).toBe('print_event');
-    expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii('count'),
-      action: Cl.stringAscii('decremented'),
-      value: Cl.uint(0),
-    });
-  });
-});
-```
-
-```ts
-describe('test `get-count` read only function', () => {
-  it('returns the counter value', () => {
-    const count1 = simnet.callReadOnlyFn('counter', 'read-count', [], address1);
-    expect(count1.result).toBeOk(Cl.uint(1));
-
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(10)], address1);
-    const count2 = simnet.callReadOnlyFn('counter', 'read-count', [], address1);
-    expect(count2.result).toBeOk(Cl.uint(11));
-  });
-});
-```
-
-## Measure and Increase Code Coverage
-
-To help developers maximize their test coverage, the test framework can produce a `lcov` report, using `--coverage` flag. You can set it in the scripts in the project `package.json`:
+The output should look similar to below:
 
 ```json
-  "scripts": {
-    "test:coverage": "vitest run -- --coverage",
-    // ...
-  },
+{
+  "jti": "f65f02db-9f42-4523-bfa9-8034d8edf459",
+  "iat": 1555641911,
+  "exp": 1555645511,
+  "iss": "did:btc-addr:1ANL7TNdT7TTcjVnrvauP7Mq3tjcb8TsUX",
+  "public_keys": ["02f08d5541bf611ded745cc15db08f4447bfa55a55a2dd555648a1de9759aea5f9"],
+  "domain_name": "http://localhost:8080",
+  "manifest_uri": "http://localhost:8080/manifest.json",
+  "redirect_uri": "http://localhost:8080",
+  "version": "1.3.1",
+  "do_not_include_profile": true,
+  "supports_hub_url": true,
+  "scopes": ["store_write", "publish_data"],
+  "private_key": "4447bfa55a55a2dd555648a1d02f08d759aea5f945cc15db08f"
+}
 ```
 
-Then run the script with the following command. It will produce a file named `./lcov.info`.
-
-```sh
-npm run test:coverage
-```
-
-From there, you can use the `lcov` tooling suite to produce HTML reports.
-
-```sh
-brew install lcov
-genhtml --branch-coverage -o coverage lcov.info
-open coverage/index.html
-```
-
-## Costs Optimization
-
-The test framework can also be used to optimize costs. When you execute a test suite, Clarinet keeps track of all costs being computed when executing the `contract-call`, and displays the most expensive ones in a table.
-
-To help developers maximize their test coverage, the test framework can produce a `lcov` report, using `--coverage` flag. You can set it in the scripts in the project `package.json`:
-
-```json
-  "scripts": {
-    "test:costs": "vitest run -- --costs",
-    // ...
-  },
-```
-
-And run the script with the following command. It will produce a file named `./costs-reports.json`.
-
-```sh
-npm run test:costs
-```
-
-For now, there isn't much you can do out of the box with a costs report. But in future versions of the clarinet sdk, we will implement features to help keep track of your costs, such as checking that function calls do not go above a certain threshold.
-
-## Produce Both Coverage and Costs Reports
-
-In your package.json, you should already have a script called `test:reports` like so:
-
-```json
-  "scripts": {
-    "test:reports": "vitest run -- --coverage --costs",
-    // ...
-  },
-```
-
-Run it to produce both the coverage and the costs reports:
-
-```sh
-npm run test:reports
-```
-
-## Run Tests in CI
-
-Because the tests only require Node.js and NPM run, they can also be run in GitHub actions and CIs just like any other Node test.
-
-In GitHub, you can directly set up a Node.js workflow like this one:
-
-```yml
-name: Test counter contract
-
-on:
-  push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:reports
-```
-
-## Custom Vitest Matchers
-
-A set of Vitest matchers can be used to make assertions on Clarity values.
-They can check the return values of contracts, ensure that the value is actually a Clarity value, and provide nice error messages.
-
-### Check Clarity Type
-
-#### `toHaveClarityType(expectedType: ClarityType)`
-
-This matcher can be used to make sure that the value has the right Clarity Type, without checking its value.
-
-```ts
-import { ClarityType } from '@stacks/transactions';
-import { expect, it } from 'vitest';
-
-const address1 = simnet.getAccounts().get('wallet_1');
-
-it('ensures <increment> adds 1', () => {
-  const { result } = simnet.callPublicFn('counter', 'increment', [], address1);
-
-  // make sure it returns a response ok `(ok ...)`
-  expect(result).toHaveClarityType(ClarityType.ResponseOk);
-});
-```
-
-It can also be used to check any type:
-
-```ts
-// uint
-expect(result).toHaveClarityType(ClarityType.UInt);
-
-// or tuple
-expect(result).toHaveClarityType(ClarityType.Tuple);
-
-// and so one
-```
-
-### Response Type
-
-The response type is noted `(response <ok-type> <error-type>)` in Clarity.
-It can be `(ok <ok-type>)` or `(err <error-type>)`.
-They are called composite types, meaning that they contain another Clarity value.
-
-#### `toBeOk(expected: ClarityValue)`
-
-Check that a response is `ok` and has the expected value. Any Clarity value can be passed.
-
-```ts
-const decrement = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
-
-// decrement.result is `(ok (uint 0))`
-expect(decrement.result).toBeOk(Cl.uint(0));
-```
-
-#### `toBeErr(expected: ClarityValue)`
-
-Check that a response is `err` and has the expected value. Any Clarity value can be passed.
-
-Consider that the `counter` contract returns and error code 500 `(err u500)` if the value passed to increment is too big:
-
-```ts
-const tooBig = 100000;
-const increment = simnet.callPublicFn('counter', 'increment', [Cl.uint(toBig)], address1);
-
-// increment.result is `(err u500)`
-expect(increment.result).toBeErr(Cl.uint(500));
-```
-
-### Optional Type
-
-The option type is noted `(optional <some-type>)` in Clarity.
-It can be `(some <some-type>)` or `none`.
-Here, `some` is a composite type, meaning that it contains another Clarity value.
-
-#### `toBeSome(expected: ClarityValue)`
-
-Consider a billboard smart contract that can contain an optional message:
-
-```ts
-const getMessage = simnet.callPublicFn('billboard', 'get-message', [], address1);
-
-// (some u"Hello world")
-expect(getMessage.result).toBeSome(Cl.stringUtf8('Hello world'));
-```
-
-#### `toBeNone()`
-
-Considering the same billboard smart contract but with no saved message:
-
-```ts
-const getMessage = simnet.callPublicFn('billboard', 'get-message', [], address1);
-
-// none
-expect(getMessage.result).toBeNone();
-```
-
-### Simple Clarity Types
-
-Custom assertion matchers are available for all types of Clarity values. They will check that the value has the right type and value.
-
-#### `toBeBool(expected: boolean)`
-
-Asserts the value of Clarity boolean (true or false).
-
-```ts
-expect(trueResult).toBeBool(true);
-expect(falseResult).toBeBool(false);
-```
-
-#### `toBeInt(expected: number | bigint)`
-
-Asserts the value of a Clarity int.
-
-```ts
-expect(result).toBeInt(1);
-// it accepts JS bigints
-expect(result).toBeInt(1n);
-```
-
-#### `toBeUint(expected: number | bigint)`
-
-Asserts the value of a Clarity uint.
-
-```ts
-expect(result).toBeUint(1);
-// it accepts JS bigints
-expect(result).toBeUint(1n);
-```
-
-#### `toBeAscii(expected: string)`
-
-Asserts the value of a Clarity string-ascii.
-
-```ts
-expect(result).toBeAscii('Hello wolrd');
-```
-
-#### `toBeUtf8(expected: string)`
-
-Asserts the value of a Clarity string-utf8.
-
-```ts
-expect(result).toBeUtf8('STX');
-```
-
-#### `toBePrincipal(expected: string)`
-
-Asserts the value of a Clarity principal value. The principal can be a standard or a contract principal.
-
-```ts
-expect(standardPrincipal).toBePrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
-expect(contractPrincipal).toBePrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter');
-```
-
-#### `toBeBuff(expected: Uint8Array)`
-
-Asserts the value of a Clarity buffer.  
-It takes as an input an ArrayBuffer (`Uint8Array`).
-
-Your test case will ultimately depends on how the Uint8Array is built. `@stacks/transaction` can help building these buffers.
-
-```ts
-it.only('can assert buffer values', () => {
-  const { result } = simnet.callPublicFn(/* ... */);
-
-  // knowing the expected UintArray
-  const value = Uint8Array.from([98, 116, 99]);
-  expect(result).toBeBuff(value);
-
-  // knowing the expected string
-  const bufferFromAscii = Cl.bufferFromAscii('btc');
-  expect(result).toBeBuff(bufferFromAscii.buffer);
-
-  // knowing the expected hex value
-  const bufferFromHex = Cl.bufferFromHex('627463');
-  console.log(bufferFromHex.buffer);
-});
-```
-
-### Other Composite Types
-
-`list` and `tuple` are composite types, like `ok`, `err`, and `some`. Meanning that they contain another Clarity value.
-
-#### `toBeList(expected: ClarityValue[])`
-
-Check that the value is a `list` containing an array of Clarity values.  
-Considering a function that return a list of 3 uints:
-
-```ts
-const address1 = simnet.getAccounts().get('wallet_1');
-
-it('can assert list values', () => {
-  const { result } = simnet.callReadOnlyFn('counter', 'func-returning-list-of-uints', [], address1);
-
-  expect(result).toBeList([Cl.uint(1), Cl.uint(2), Cl.uint(3)]);
-});
-```
-
-#### `toBeTuple(expected: Record<string, ClarityValue>)`
-
-Check that the value is a `tuple`, it takes a JavaScript object to check the values. It's used in the [tutorial above](#unit-tests-for-counter-example) to check the value of the print event. It can also be used to check function call result.
-
-The snippet below shows that composite types can be nested:
-
-```ts
-const address1 = simnet.getAccounts().get('wallet_1');
-
-it('can assert tuple values', () => {
-  const { result } = simnet.callPublicFn('counter', 'func-returning-tuple', [], address1);
-
-  expect(result).toBeTuple({
-    id: Cl.uint(1),
-    data: Cl.tuple({
-      text: Cl.stringUtf8('Hello world'),
-      owner: Cl.standardPrincipal(address1),
-    }),
-  });
-});
-```
+The `iss` property is a decentralized identifier or `did`. This identifies the user and the username to the app. The specific `did` is a `btc-addr`. */}
