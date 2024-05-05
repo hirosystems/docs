@@ -241,11 +241,11 @@ For now, there isn't much you can do out of the box with a costs report. But in 
 
 ## Produce Both Coverage and Costs Reports
 
-In your package.json, you should already have a script called `test:reports` like so:
+In your package.json, you should already have a script called `test:report` like so:
 
 ```json
   "scripts": {
-    "test:reports": "vitest run -- --coverage --costs",
+    "test:report": "vitest run -- --coverage --costs",
     // ...
   },
 ```
@@ -253,7 +253,7 @@ In your package.json, you should already have a script called `test:reports` lik
 Run it to produce both the coverage and the costs reports:
 
 ```sh
-npm run test:reports
+npm run test:report
 ```
 
 ## Run Tests in CI
@@ -286,7 +286,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run test:reports
+      - run: npm run test:report
 ```
 
 ## Custom Vitest Matchers
