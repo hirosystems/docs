@@ -24,7 +24,7 @@ export default {
   topBanner: {
     type: 'info',
     from: '2024-04-22',
-    to: '2024-08-01',
+    to: '2024-05-12',
     text: ["The Nakamoto upgrade is now live on mainnet and currently in the 'Instantiation' phase"],
     cta: 'View updates to Hiro Products here',
     ctaLink: '/nakamoto',
