@@ -59,8 +59,6 @@ It keeps track of an initialized value, allows for incrementing and decrementing
 
 ### Migrating Between Clarinet v1 and Clarinet v2
 
-> Note: Clarinet v2 will be released in October 2023, and will create the right boilerplate files. But if a project has been created with Clarinet v1, the following script prepares the project to run the SDK and Vitest.
-
 Executing this script in a Clarinet v1 project will initialise NPM and Vitest. It will also create a sample test file.
 
 ```console
@@ -72,8 +70,7 @@ This can take a few seconds.
 
 The file `tests/counter_test.ts` that was created by `clarinet contract new counter` can be deleted.
 
-You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest.
-It can safely be deleted.
+You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest. **It can safely be deleted**.
 
 ### Unit Tests for `counter` Example
 
