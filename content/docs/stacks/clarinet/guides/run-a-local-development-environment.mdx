@@ -9,8 +9,8 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Step } from 'fumadocs-ui/components/steps';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 
-import { GridPattern } from "../../../../../components/grid-pattern";
-import { ConnectWalletButton } from '../../../../../components/code/connect-wallet-button';
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
 ### You will learn how to:
 
@@ -50,7 +50,7 @@ import { ConnectWalletButton } from '../../../../../components/code/connect-wall
       </div>
       <p>In our new `hello.clar` file, let's add a few functions: `say-hi`, `echo-number`, and `check-it`.</p>
       <div className="w-full">
-        ```clarity
+        ```clarity title="hello.clar"
         ;; A read-only function that returns a message
         (define-read-only (say-hi)
           (ok "Hello World")
