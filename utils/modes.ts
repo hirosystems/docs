@@ -19,8 +19,8 @@ export const modes: Mode[] = [
     icon: HiroSVG,
   },
   {
-    param: "bitcoin",
-    name: "Bitcoin",
+    param: "ordinals",
+    name: "Ordinals",
     description: "Developer Tools for Bitcoin Layers",
     version: "1.0.0",
     icon: HiroSVG,

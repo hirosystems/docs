@@ -17,7 +17,7 @@ import { cn } from "./utils/cn";
 
 const shortcuts: Record<string, string> = {
   stacks: "./content/docs/stacks/props.ts",
-  bitcoin: "./content/docs/bitcoin/props.ts",
+  ordinals: "./content/docs/ordinals/props.ts",
 };
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
