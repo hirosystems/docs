@@ -1,6 +1,6 @@
 ---
 title: Authenticate Users with Connect
-description: This guide explains how to connect to users' wallets and authenticate users with the @stacks/connect package from Stacks.js.
+description: This guide demonstrates how to connect to users' wallets and authenticate users using the `@stacks/connect` package.
 ---
 
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
@@ -12,201 +12,114 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { GridPattern } from "@/components/grid-pattern";
 import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
-### You will learn how to:
+import { InlineCode } from '@/components/inline-code';
 
-- Integrate user authentication in your web app using `@stacks/connect`
-- Initiate a `userSession` with specific permission scopes
-- Trigger the authentication flow with the `showConnect` function
-- Manage pending authentication states, user data and user sign-in status
+Authentication is a fundamental part of many web applications, ensuring that users are who they claim to be and that their data is secure. With the Stacks blockchain, user authentication involves connecting to users' wallets and managing their sessions securely.
+
+The `@stacks/connect` package from Stacks.js provides the tools needed to integrate this functionality seamlessly into your web app.
+
+In this guide, you will learn how to:
+
+1. Install and set up the `@stacks/connect` package
+2. Initiate a `userSession` with specific permission scopes
+3. Trigger the authentication flow with the `showConnect` function
+4. Handle pending authentication states and manage user data
+
+The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize them to fit your application's specific needs.
+
+<Callout title="Example Repo">To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
 
 ---
 
-<div className='steps space-y-10'>
-  <Step>
-    <div className="flex flex-col">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0'>Install <code className='text-lg'>@stacks/connect</code></p>
-        <p>First thing we need to do is install the `@stacks/connect` package in our project.</p>
-      </div>
-      <div className="w-full">
-        ```package-install
-        @stacks/connect
-        ```
-      </div>
+## Install and set up the <InlineCode>@stacks/connect</InlineCode> package
+
+First, install the `@stacks/connect` package in your project.
+
+```package-install
+@stacks/connect
+```
+
+## Initiate a <InlineCode>userSession</InlineCode> with specific permission scopes
+
+After installing the `@stacks/connect` package, initiate a `userSession` with the following permission scopes.
+
+```ts twoslash
+import { AppConfig, UserSession } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+```
+
+| Scope          | Definition                                                                      |
+| -------------- | ------------------------------------------------------------------------------- |
+| `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
+| `publish_data` | Publish data so other users of the app can discover and interact with the user. |
+
+<Callout title="Note">We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.</Callout>
+
+## Trigger the authentication flow with the <InlineCode>showConnect</InlineCode> function
+
+Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.
+
+<div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
+  <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
+  <div className="relative rounded-xl overflow-auto p-8">
+    <div className="grid place-items-center">
+      <ConnectWalletButton />
+      <GridPattern />
     </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0'>Initiate a <code className='text-lg'>userSession</code> with specific permission scopes</p>
-        <p>After installing the `@stacks/connect` package, the next step is to initiate a `userSession` with specific permission scopes.</p>
-      </div>
-      <div className="w-full">
-        ```ts twoslash
-        import { AppConfig, UserSession } from '@stacks/connect';
-
-        const appConfig = new AppConfig(['store_write', 'publish_data']);
-        const userSession = new UserSession({ appConfig });
-        ```
-
-        | Scope          | Definition                                                                      |
-        | -------------- | ------------------------------------------------------------------------------- |
-        | `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
-        | `publish_data` | Publish data so other users of the app can discover and interact with the user. |
-        
-        <Callout title="Note">We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.</Callout>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0'>Trigger the authentication flow with the <code className='text-lg'>showConnect</code> function</p>
-        <p>Let's create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users, one in which they'll authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.</p>
-        <div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
-          <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
-          <div className="relative rounded-xl overflow-auto p-8">
-            <div className="grid place-items-center">
-              <ConnectWalletButton />
-              <GridPattern />
-            </div>
-          </div>
-          <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
-        </div>
-      </div>
-      <div className="w-full">
-        ```ts twoslash
-        // @noErrors
-        function authenticate() {
-          showConnect({
-            appDetails: {
-              name: 'My App',
-              icon: window.location.origin + '/my-app-logo.svg',
-            },
-            redirectTo: '/',
-            onFinish: () => {
-              let userData = userSession.loadUserData();
-            },
-            userSession: userSession,
-          });
-        }
-        ```
-
-        {/* ## `showConnect`
-
-        <TypeTable
-          type={{
-            appDetails: {
-              description: 'Details of the app requesting authentication',
-              type: '{ name: string; icon: string; }',
-              default: null,
-            },
-            redirectTo: {
-              description: 'URL to redirect the user to upon successful authentication',
-              type: 'string',
-              default: null,
-            },
-            onFinish: {
-              description: 'Callback function that executes after successful authentication',
-              type: 'function',
-              default: null,
-            },
-            userSession: {
-              description: 'The userSession object initiated for authentication',
-              type: 'UserSession',
-              default: null,
-            }
-          }}
-        /> */}
-
-        <Accordions>
-
-        <Accordion title="View Full Code">
-          ```tsx twoslash
-          // @noErrors
-          "use client";
-
-          import React from "react";
-          import { AppConfig, UserSession, showConnect } from "@stacks/connect";
-
-          const appConfig = new AppConfig(["store_write", "publish_data"]);
-          const userSession = new UserSession({ appConfig });
-
-          export const App: React.FC = () => {
-            function authenticate() {
-              showConnect({
-                appDetails: {
-                  name: 'My App',
-                  icon: window.location.origin + '/my-app-logo.svg',
-                },
-                redirectTo: '/',
-                onFinish: () => {
-                  let userData = userSession.loadUserData();
-                },
-                userSession: userSession,
-              });
-            }
-
-            return (
-              <button
-                className="bg-white hover:bg-gray-200 px-5 py-2 text-sm leading-5 rounded-full font-semibold text-neutral-900"
-                onClick={authenticate}
-              >
-                Connect wallet
-              </button>
-            );
-          };
-
-
-          ```
-        </Accordion>
-
-        </Accordions>
-
-        Once the user confirms, they will be redirected to the installed web wallet to authenticate with the `authRequest` token.
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0'>Handle Pending Authentication</p>
-        <p>After the authentication process is initiated, it's crucial to handle cases where the user hasn't completed the authentication flow. This involves managing the pending authentication state when the user is redirected back to the app without having confirmed their authentication in the popup window.</p>
-      </div>
-      <div className="w-full">
-        ```tsx twoslash
-        import { AppConfig, UserSession, showConnect } from '@stacks/connect';
-
-        const appConfig = new AppConfig(['store_write', 'publish_data']);
-        const userSession = new UserSession({ appConfig });
-
-        window.onload = function () {
-          if (userSession.isSignInPending()) {
-            userSession.handlePendingSignIn().then(userData => {
-              // Save or otherwise utilize userData post-authentication
-            });
-          } else if (userSession.isUserSignedIn()) {
-            // Handle case in which user is already authenticated
-          }
-        };
-        ```
-
-        The `isSignInPending` method checks if there's a pending sign-in to process. If so, `handlePendingSignIn` processes the pending sign-in, allowing you to save or use the user's data post-authentication. For users already signed in, you can directly access their session information or proceed with your app's flow.
-
-        <Callout title="Note">Implementing `handlePendingSignIn` is particularly important in mobile app contexts to ensure a smooth user experience across all device types.</Callout>
-      </div>
-    </div>
-  </Step>
+  </div>
+  <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
 </div>
 
-### <span className='font-light'>Next step: </span> <span className='inline-flex items-center'>Create and broadcast transactions <ChevronRight className='ml-1' /></span>
+```ts twoslash
+// @noErrors
+function authenticate() {
+  showConnect({
+    appDetails: {
+      name: 'My App',
+      icon: window.location.origin + '/my-app-logo.svg',
+    },
+    redirectTo: '/',
+    onFinish: () => {
+      let userData = userSession.loadUserData();
+    },
+    userSession,
+  });
+}
+```
 
-Once your users are connected to your app, you will need a way to prompt them to sign transactions and broadcast them to the Stacks blockchain. [This step-by-step guide](./broadcast-transactions) has you covered.
+## Handle Pending Authentication
 
-### More resources
+After initiating the authentication process, you will most likely need to handle cases where the user hasn't completed the authentication flow.
+
+1. Check if there is a pending sign-in using the `isSignInPending` method of the `userSession` object.
+2. If there is a pending sign-in, handle it by calling `handlePendingSignIn` which processes the sign-in and then utilizes the `userData` returned in a promise.
+
+```tsx twoslash
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+
+window.onload = function () {
+  if (userSession.isSignInPending()) {
+    userSession.handlePendingSignIn().then(userData => {
+      // Save or otherwise utilize userData post-authentication
+    });
+  } else if (userSession.isUserSignedIn()) {
+    // Handle case in which user is already authenticated
+  }
+};
+```
+
+For users already signed in, you can directly access their session information and proceed with your app's flow.
+
+<Callout title="Note">Implementing `handlePendingSignIn` is particularly important in mobile app contexts to ensure a smooth user experience across all device types.</Callout>
+
+---
+
+## Next steps
 
 <Cards>
   <Card

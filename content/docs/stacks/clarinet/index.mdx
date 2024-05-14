@@ -4,6 +4,8 @@ description: Clarinet is a local development environment that offers everything 
 toc: false
 ---
 
+import { ArrowUpRight } from "lucide-react";
+
 import {
   Tooltip,
   TooltipContent,
@@ -17,54 +19,38 @@ You can code with <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span
 
 Clarinet can be used locally or as a hosted service in the cloud via the [Hiro Platform](/stacks/platform).
 
-## Install Clarinet
-
-<Tabs id="os" items={['macOS', 'Windows']} className='border-secondary'>
-  <Tab value="macOS">
-    ```bash title="Terminal"
-    brew install clarinet
-    ```
-    <Callout title="Additional Installation">Check out our [Installation Guide](/docs/clarinet/installation) for more installation options. For a video guide, please see the [Setting Up Your Clarity Environment (Mac) video walkthrough]()</Callout>
-  </Tab>
-  
-  <Tab value="Windows">
-    ```bash title="Terminal"
-    winget install clarinet
-    ```
-    <Callout title="Additional Installation">Check out our [Installation Guide](/docs/clarinet/installation) for more installation options. For a video guide, please see the [Setting Up Your Clarity Environment (Windows) video walkthrough]()</Callout>
-  </Tab>
-</Tabs>
+<Callout title="Installation">To get started, check out our [Installation Guide](/stacks/clarinet/installation).</Callout>
 
 ### Guides
 
 <Cards>
   <Card
-    href="/clarinet/features/create-new-contract"
+    href="/stacks/clarinet/cli/create-a-new-project"
     title="Create a new contract"
     description="Add new contracts to your project and have them automatically configured in your project file."
   />
   <Card
-    href="/clarinet/features/debug-contract"
+    href="/stacks/clarinet/cli/debug-a-contract"
     title="Debug a contract"
     description="Utilize powerful debugging tools to step through your code, print values, and trace execution paths."
   />
   <Card
-    href="/clarinet/features/write-unit-tests"
+    href="/stacks/clarinet/guides/testing-with-clarinet-sdk"
     title="Write unit tests"
     description="Leverage the Clarinet SDK to write comprehensive unit tests, ensuring your contract performs as expected."
   />
   <Card
-    href="/clarinet/features/create-deployment-plans"
+    href="/stacks/clarinet/clarinet/guides/create-deployment-plans"
     title="Create deployment plans"
     description="Employ customizable deployment plans to streamline your contract deployments, facilitating multi-step processes with ease."
   />
   <Card
-    href="/clarinet/features/run-local-development-environment"
+    href="/stacks/clarinet/guides/run-a-local-development-environment"
     title="Run a local development environment"
     description="Set up a local devnet environment for developing and testing in a controlled environment before deployment."
   />
   <Card
-    href="/clarinet/features/create-deployment-plan"
+    href="/stacks/clarinet/cli/validate-a-contract"
     title="Analyzing contracts for vulnerabilities"
     description="Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts."
   />
