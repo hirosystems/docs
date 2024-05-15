@@ -41,21 +41,26 @@ export default function HomePage(): JSX.Element {
                   </span>
                 </li>
               </ul>
-              <div className="mt-auto flex flex-row flex-wrap gap-2 border-t pt-8">
-                <Link href="/stacks" className={cn(buttonVariants(), "bg-[rgb(255,85,0)] hover:bg-[rgba(255,85,0,0.9)]")}>
-                  View all docs
+              <div className="w-full mt-auto flex flex-row flex-wrap *:flex-1 gap-2 border-t pt-8">
+                <Link
+                  href="/stacks"
+                  className={cn(
+                    buttonVariants(),
+                    "bg-[rgb(255,85,0)] hover:bg-[rgba(255,85,0,0.9)]"
+                  )}
+                >
+                  Get started
                 </Link>
-                <a
-                  href="https://githubbox.com/fuma-nama/fumadocs-ui-template"
-                  rel="noreferrer noopener"
+                <Link
+                  href="/guides"
                   className={cn(
                     buttonVariants({
                       variant: "outline",
                     })
                   )}
                 >
-                  Open in CodeSandbox
-                </a>
+                  View all guides
+                </Link>
               </div>
             </div>
 
