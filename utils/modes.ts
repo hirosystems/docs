@@ -25,4 +25,11 @@ export const modes: Mode[] = [
     version: "1.0.0",
     icon: HiroSVG,
   },
+  {
+    param: "guides",
+    name: "Guides",
+    description: "Comprehensive guides for developers",
+    version: "1.0.0",
+    icon: HiroSVG,
+  },
 ];

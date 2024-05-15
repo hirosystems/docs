@@ -1,0 +1,30 @@
+---
+title: Home
+toc: false
+---
+
+import Link from "fumadocs-core/link";
+
+import { Badge } from "@/components/ui/badge";
+
+import { guides } from "@/utils/data";
+
+<Cards>
+  {guides.map(guide => {
+    return ( 
+      <Card
+        key={guide.title}
+        href={guide.href}
+        title={guide.title}
+        description={guide.description}
+      />
+    )
+  })}
+</Cards>
+
+## All Guides
+
+- [Page Structure](/stacks/page-conventions)
+- [Learn I18n](/bitcoin/internationalization)
+- [Theming](/bitcoin/theme)
+- [Code Block](/bitcoin/components/codeblock)

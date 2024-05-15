@@ -20,7 +20,7 @@ clarinet deployment generate --testnet
 ```
 
 <Callout title="What are deployment plans?" type="info">
-These are `yaml` files for creating reproducible deployment steps that publish a collection of on-chain transactions and contracts to a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>network</span></TooltipTrigger><TooltipContent>Available networks are `devnet`, `testnet`, and `mainnet`</TooltipContent></Tooltip></TooltipProvider>.
+These are `yaml` files for creating reproducible deployment steps that publish a collection of on-chain transactions and contracts to a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary text-primary'>network</span></TooltipTrigger><TooltipContent>Available network flags are `--devnet`, `--testnet`, and `--mainnet`</TooltipContent></Tooltip></TooltipProvider>.
 </Callout>
 
 Once you've reviewed your deployment plan at `deployments/<default.<network>-plan.yaml`, you can use the `apply` command to handle the deployments of your contracts.

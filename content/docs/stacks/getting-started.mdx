@@ -6,13 +6,13 @@ toc: false
 
 import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
 
-### <span className='font-light'>Get started</span> <span className='inline-flex items-center'>quickly <ChevronRight className='ml-1' /></span>
+### <span className='font-light'>Simple</span> <span className='inline-flex items-center'> quickstarts <ChevronRight className='ml-1' /></span>
 
 <Cards className='sm:grid-cols-3'>
   <Card
     icon={<Play className='text-primary' />}
     href="/stacks/clarinet/quickstart"
-    title="Create a smart contract"
+    title="Create your first smart contract"
     description="Use Clarinet to build a 'Hello World' smart contract."
   />
   <Card
@@ -23,44 +23,21 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
   <Card
     icon={<Database className='text-primary' />}
+    href="/stacks/stacks.js/quickstart"
+    title="Make a contract call with Stacks.js"
+    description="Learn how to integrate smart contracts into your dApp."
+  />
+  <Card
+    icon={<Database className='text-primary' />}
     href="/stacks/api/quickstart"
-    title="Explore API endpoints"
-    description="Dig into our API reference documentation for the Stacks Blockchain API."
-  />
-</Cards>
-
-### <span className='font-light'>Follow our</span> <span className='inline-flex items-center'>guides <ChevronRight className='ml-1' /></span>
-
-<Cards className='sm:grid-cols-3'>
-  <Card
-    icon={<Store className='text-primary' />}
-    href="/stacks/quickstarts"
-    title="Build an NFT Marketplace"
-    description="Learn how to create and deploy your own NFT marketplace."
+    title="Fetch data from the Stacks API"
+    description="Dig into our endpoints for the Stacks Blockchain API."
   />
   <Card
-    icon={<Scale className='text-primary' />}
-    href="/stacks/clarinet"
-    title="Launch a Decentralized Autonomous Organization (DAO)"
-    description="Discover the steps to creating your own DAO."
-  />
-  <Card
-    icon={<ArrowLeftRight className='text-primary' />}
-    href="/stacks/api"
-    title="Build a Swap Mechanism for your DeFi app"
-    description="Learn how to build a swap mechanism for your next DeFi dApp."
-  />
-  <Card
-    icon={<Ticket className='text-primary' />}
-    href="/stacks/quickstarts"
-    title="Create a no-loss lottery pool"
-    description="A step-by-step guide on how to build a no-loss lottery pool leveraging PoX4 stacking yield."
-  />
-  <Card
-    icon={<Banknote className='text-primary' />}
-    href="/stacks/quickstarts"
-    title="Build a decentralized Kickstarter"
-    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
+    icon={<Database className='text-primary' />}
+    href="/stacks/api/quickstart"
+    title="Stream custom blockchain events"
+    description="Use Chainhook to filter & stream for contract deployments."
   />
 </Cards>
 
@@ -69,7 +46,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
 <Cards className='sm:grid-cols-3'>
   <Card
     icon={<Store className='text-primary' />}
-    href="/stacks/quickstarts"
+    href="/guides/build-an-nft-marketplace"
     title="Build an NFT Marketplace"
     description="Learn how to create and deploy your own NFT marketplace."
   />
@@ -78,12 +55,6 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
     href="/stacks/clarinet"
     title="Launch a Decentralized Autonomous Organization (DAO)"
     description="Discover the steps to creating your own DAO."
-  />
-  <Card
-    icon={<ArrowLeftRight className='text-primary' />}
-    href="/stacks/api"
-    title="Build a Swap Mechanism for your DeFi app"
-    description="Learn how to build a swap mechanism for your next DeFi dApp."
   />
   <Card
     icon={<Ticket className='text-primary' />}
@@ -99,7 +70,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
 </Cards>
 
-### <span className='font-light'>Tooling </span> <span className='inline-flex items-center'>essentials <ChevronRight className='ml-1' /></span>
+### <span className='font-light'>Installation </span> <span className='inline-flex items-center'>guides <ChevronRight className='ml-1' /></span>
 
 <Cards className='sm:grid-cols-3'>
   <Card
@@ -116,8 +87,12 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
   <Card
     icon={<Scale className='text-primary' />}
-    href="/guides/install-docker"
+    href="/guides/how-to-install-docker"
     title="Install and run Docker on your machine"
     description="Essential for running a local development environment with Clarinet."
   />
 </Cards>
+
+---
+
+To view all the guides, check out the [Guides](/guides) section.
