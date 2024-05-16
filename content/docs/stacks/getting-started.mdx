@@ -4,16 +4,17 @@ description: The following guides will cover ways to use our tools to build your
 toc: false
 ---
 
+import { SectionHeader } from '@/components/layout/section-header';
 import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
 
-### <span className='font-light'>Simple</span> <span className='inline-flex items-center'> quickstarts <ChevronRight className='ml-1' /></span>
+<SectionHeader title='Quickstarts' />
 
 <Cards className='sm:grid-cols-3'>
   <Card
     icon={<Play className='text-primary' />}
     href="/stacks/clarinet/quickstart"
     title="Create your first smart contract"
-    description="Use Clarinet to build a 'Hello World' smart contract."
+    description="Build a simple counter contract using Clarinet."
   />
   <Card
     icon={<Terminal className='text-primary' />}
@@ -41,7 +42,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
 </Cards>
 
-### <span className='font-light'>Learn by</span> <span className='inline-flex items-center'>use case <ChevronRight className='ml-1' /></span>
+<SectionHeader title='Learn by use case' />
 
 <Cards className='sm:grid-cols-3'>
   <Card
@@ -70,19 +71,19 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
 </Cards>
 
-### <span className='font-light'>Installation </span> <span className='inline-flex items-center'>guides <ChevronRight className='ml-1' /></span>
+<SectionHeader title='Installation guides' />
 
 <Cards className='sm:grid-cols-3'>
   <Card
     icon={<Store className='text-primary' />}
-    href="/guides/set-up-a-bitcoin-node"
-    title="Set up a Bitcoin node"
+    href="/guides/setup-a-bitcoin-node"
+    title="Setup a Bitcoin node"
     description="Set up and run a node for running tools like Chainhook service."
   />
   <Card
     icon={<ArrowLeftRight className='text-primary' />}
-    href="/guides/set-up-a-stacks-node"
-    title="Set up a Stacks node"
+    href="/guides/setup-a-stacks-node"
+    title="Setup a Stacks node"
     description="Set up and run a node for running tools like Chainhook service."
   />
   <Card
@@ -95,4 +96,4 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
 
 ---
 
-To view all the guides, check out the [Guides](/guides) section.
+For more, check out our [Guides](/guides) section.

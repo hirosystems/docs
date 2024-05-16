@@ -13,13 +13,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-Using a simple command line interface, Clarinet enables you to build and iterate on your contracts locally before moving into production on mainnet.
+Using a simple command line interface, Clarinet enables you to build and iterate on your contracts locally before moving into production on the `mainnet` network.
 
-You can code with <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>Clarity syntax support</span></TooltipTrigger><TooltipContent>The smart contract language for Stacks</TooltipContent></Tooltip></TooltipProvider>, run tests, debug your code line by line, and deploy your contracts to a local Stacks blockchain environment to rapidly iterate on your code.
+You can code with <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>Clarity syntax support</span></TooltipTrigger><TooltipContent>Using the [Clarity VSCode extension](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp#:~:text=This%20VS%20Code%20extension%20brings,safety%20checks%2C%20debugger%20and%20more)</TooltipContent></Tooltip></TooltipProvider>, run tests, debug your code line by line, and deploy your contracts to a local Stacks blockchain environment to rapidly iterate on your code. It can also be used locally or as a hosted service in the cloud via the [Hiro Platform](/stacks/platform).
 
-Clarinet can be used locally or as a hosted service in the cloud via the [Hiro Platform](/stacks/platform).
-
-<Callout title="Installation">To get started, check out our [Installation Guide](/stacks/clarinet/installation).</Callout>
+To get started, check out our [Installation Guide](/stacks/clarinet/installation).
 
 ### Guides
 
@@ -56,7 +54,18 @@ Clarinet can be used locally or as a hosted service in the cloud via the [Hiro P
   />
 </Cards>
 
-## Related Tools
+### Network types
+
+Clarinet supports different network types to cater to various development and testing needs:
+
+| Network          | Description                                                                      | Use case
+| -------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `simnet`       | Optimized for fast feedback loops, introspection, and portability. | Ideal for initial development and unit-testing. |
+| `devnet`       | Local Stacks and Bitcoin nodes running on Docker for faster feedback loops. | Use for integration tests or local frontend development. |
+| `testnet`      | A pre-production network that offers a realistic environment for testing. | Ideal for final testing before deploying to Mainnet. |
+| `mainnet`      | The production network where real transactions occur. | Use when you're ready to deploy your smart contract to production. |
+
+### Related Tools
 
 - **[Clarinet JS SDK](/platform)**: Simplify your testing with the Clarinet SDK.
 - **[Hiro Platform](/platform)**: Streamline your app development in our hosted dev experience.

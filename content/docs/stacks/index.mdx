@@ -3,6 +3,7 @@ title: Home
 toc: false
 ---
 
+import { SectionHeader } from '@/components/layout/section-header';
 import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Terminal } from 'lucide-react';
 
 <Cards>
@@ -22,7 +23,7 @@ import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Te
   />
 </Cards>
 
-### <span className='font-light'>Explore by</span> <span className='inline-flex items-center'>Feature <ChevronRight className='ml-1' /></span>
+<SectionHeader title="Explore by Feature" />
 
 <Cards className='lg:grid-cols-3'>
   <Card
@@ -62,7 +63,7 @@ import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Te
   />
 </Cards>
 
-### <span className='font-light'>Explore by</span> <span className='inline-flex items-center'>Product <ChevronRight className='ml-1' /></span>
+<SectionHeader title="Explore by Product" />
 
 <Cards className='sm:grid-cols-3'>
   <Card

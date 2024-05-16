@@ -5,8 +5,8 @@ toc: false
 
 import Link from "fumadocs-core/link";
 
+import { SectionHeader } from '@/components/layout/section-header';
 import { Badge } from "@/components/ui/badge";
-
 import { guides } from "@/utils/data";
 
 <Cards>
@@ -22,9 +22,10 @@ import { guides } from "@/utils/data";
   })}
 </Cards>
 
-## All Guides
+<SectionHeader title='All guides' />
 
-- [Page Structure](/stacks/page-conventions)
-- [Learn I18n](/bitcoin/internationalization)
-- [Theming](/bitcoin/theme)
-- [Code Block](/bitcoin/components/codeblock)
+<ul>
+  {guides.map(guide => (
+    <li key={guide.title}><a href={guide.href}>{guide.title}</a></li>
+  ))}
+</ul>
