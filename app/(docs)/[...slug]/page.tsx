@@ -31,10 +31,21 @@ export default function Page({ params }: { params: Param }): JSX.Element {
 
     if (page.file?.name === "index" && page.slugs[1]) {
       const segment = page.slugs[1];
-      return (
+      let prefix =
         specialCases[segment.toLowerCase() as keyof typeof specialCases] ||
-        segment.charAt(0).toUpperCase() + segment.slice(1)
-      );
+        segment.charAt(0).toUpperCase() + segment.slice(1);
+
+      // Check if there is a second segment and append it
+      if (page.slugs[2]) {
+        const secondSegment = page.slugs[2];
+        prefix +=
+          " " +
+          (specialCases[
+            secondSegment.toLowerCase() as keyof typeof specialCases
+          ] || secondSegment.charAt(0).toUpperCase() + secondSegment.slice(1));
+      }
+
+      return prefix;
     } else if (["overview", "index"].includes(page.file?.name)) {
       const pathSegments = page.file.dirname.split("/");
       if (pathSegments.length >= 2) {
