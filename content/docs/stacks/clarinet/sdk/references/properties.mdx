@@ -22,14 +22,6 @@ import { InlineCode } from '@/components/inline-code';
 
 Returns the current block height of the simnet.
 
-### Response
-
-<Property required={false} deprecated={false} name={"value"} type={"number"}>
-
-A number representing the current block height in the simnet, ie. `1`.
-
-</Property>
-
 </div>
 
 <APIExample className='api-example xl:w-[50%]'>
@@ -37,7 +29,7 @@ A number representing the current block height in the simnet, ie. `1`.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the current block height</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the current block height</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -48,10 +40,18 @@ A number representing the current block height in the simnet, ie. `1`.
 
     const blockHeight = simnet.blockHeight; // [!code highlight]
 
-    console.log(blockHeight); // 1
+    console.log(blockHeight);
     ```
   </TabsContent>
 </Tabs>
+
+<Accordions>
+  <Accordion title="Response">
+    ```ts
+    1
+    ```
+  </Accordion>
+</Accordions>
 
 </APIExample>
 
@@ -65,15 +65,6 @@ A number representing the current block height in the simnet, ie. `1`.
 
 Returns the default deployer address as defined in the project file.
 
-
-### Response
-
-<Property required={false} deprecated={false} name={"value"} type={"string"}>
-
-A string representing the default deployer address in the simnet, ie. `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`.
-
-</Property>
-
 </div>
 
 <APIExample className='api-example xl:w-[50%]'>
@@ -81,7 +72,10 @@ A string representing the default deployer address in the simnet, ie. `ST1PQHQKV
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the deployer address</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the deployer address</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="set-deployer" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Setting the deployer to a new address</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -92,10 +86,83 @@ A string representing the default deployer address in the simnet, ie. `ST1PQHQKV
 
     const deployer = simnet.deployer; // [!code highlight]
 
-    console.log(deployer); // ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    console.log(deployer);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+  <TabsContent value="set-deployer">
+    ```tsx twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const deployer = simnet.deployer;
+    simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'; // [!code highlight]
+
+    console.log(deployer);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`currentEpoch`</h2>
+
+Returns the current epoch of the simnet.
+
+This represents the Stacks blockchain's progress through discrete time periods, cycles, or upgrades.
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the current epoch of the simnet</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```tsx twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const epoch = simnet.currentEpoch; // [!code highlight]
+
+    console.log(epoch);
     ```
   </TabsContent>
 </Tabs>
+
+<Accordions>
+  <Accordion title="Response">
+    ```ts
+    2.5
+    ```
+  </Accordion>
+</Accordions>
 
 </APIExample>
 

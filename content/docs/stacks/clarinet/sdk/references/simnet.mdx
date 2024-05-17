@@ -37,10 +37,10 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Initialize a simnet</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Creating a new instance of simnet</Badge>
     </TabsTrigger>
     <TabsTrigger value="custom" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Initialize a simnet with a custom path</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With a custom path</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -62,8 +62,8 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 </Tabs>
 
 <Accordions>
-  <Accordion title={"Schema"}>
-    ```ts
+  <Accordion title="Schema">
+    ```bash
     initSimnet(manifestPath?: string): Promise<Simnet>
     ```
   </Accordion>
