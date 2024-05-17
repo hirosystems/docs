@@ -113,14 +113,7 @@ figure.not-prose {
 
 /* Default light mode */
 .highlighted {
-  background-color: rgba(255, 255, 255, 0.043) !important; /* Light mode: slightly white background */
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .highlighted {
-    background-color: #ffffff0b !important; /* Dark mode: slightly black background */
-  }
+  background-color: hsl(var(--primary)/10%);
 }
 
 /* Default light mode */
