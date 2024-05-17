@@ -1,0 +1,104 @@
+---
+title: Properties
+description: The Clarinet SDK provides a couple properties that can be used to interact with the simnet.
+toc: false
+---
+
+import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root className='text-md'>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`blockHeight`</h2>
+
+Returns the current block height of the simnet.
+
+### Response
+
+<Property required={false} deprecated={false} name={"value"} type={"number"}>
+
+A number representing the current block height in the simnet, ie. `1`.
+
+</Property>
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the current block height</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```tsx twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const blockHeight = simnet.blockHeight; // [!code highlight]
+
+    console.log(blockHeight); // 1
+    ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`deployer`</h2>
+
+Returns the default deployer address as defined in the project file.
+
+
+### Response
+
+<Property required={false} deprecated={false} name={"value"} type={"string"}>
+
+A string representing the default deployer address in the simnet, ie. `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`.
+
+</Property>
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the deployer address</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```tsx twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const deployer = simnet.deployer; // [!code highlight]
+
+    console.log(deployer); // ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

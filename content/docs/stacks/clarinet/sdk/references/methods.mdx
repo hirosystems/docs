@@ -1,0 +1,345 @@
+---
+title: Methods
+description: The Clarinet SDK provides several methods that can be used to interact with the simnet.
+toc: false
+---
+
+import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root className='text-md'>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getAccounts`</h2>
+
+Get all of the Stacks addresses defined in the project.
+
+| Response         | Type                 |
+|:-----------------|:---------------------|
+| `Map(10) { ... }`| `Map<string, string>`|
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="get-accounts">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="get-accounts" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get all accounts</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="get-account" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the address of a specific account</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="get-accounts">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const accounts = simnet.getAccounts(); // [!code highlight]
+
+    console.log(accounts);
+    ```
+  </TabsContent>
+  <TabsContent value="get-account">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('wallet_1')!; // [!code highlight]
+
+    console.log(wallet);
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title={"Schema"}>
+    ```ts
+    getAccounts(): Map<string, string>
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getAssetsMap`</h2>
+
+Get a list of asset balances by Stacks addresses.
+
+| Response                              | Type                                 |
+|:--------------------------------------|:-------------------------------------|
+| `Map(1) { "STX": Map(10) { ... } }`   | `Map<string, Map<string, bigint>>`   |
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="get-assets-map">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="get-assets-map" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get account balances</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="get-deployer-balance" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the balance of a specific account</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="get-assets-map">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const assets = simnet.getAssetsMap(); // [!code highlight]
+    const stxBalances = assets.get('STX')!;
+
+    console.log(stxBalances);
+    ```
+  </TabsContent>
+  <TabsContent value="get-deployer-balance">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const assets = simnet.getAssetsMap();
+    const stxBalances = assets.get('STX')!;
+    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!; // [!code highlight]
+
+    console.log(deployerBalance);
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title={"Schema"}>
+    ```ts
+    getAssetsMap(): Map<string, Map<string, bigint>>
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getDataVar`</h2>
+
+Get the value of a `data-var` defined in a contract.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"contract"} type={"string"}>
+The contract identifier of the contract.
+
+<span>Example: `"counter"`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"dataVar"} type={"string"}>
+The name of the `data-var` for the contract.
+
+<span>Example: `"count"`</span>
+</Property>
+
+| Response               | Type          |
+|:-----------------------|:--------------|
+| `{ type: 1, value: 1n }` | `ClarityValue`|
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="count">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="count" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the current value of count</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="contract-owner" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the contract owner address</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="clarity-value" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Normalize response data and return the value</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="count">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const currentCount = simnet.getDataVar('counter', 'count'); // [!code highlight]
+
+    console.log(currentCount);
+    ```
+  </TabsContent>
+  <TabsContent value="contract-owner">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    const simnet = await initSimnet();
+
+    const contractOwner = simnet.getDataVar('counter', 'contractOwner'); // [!code highlight]
+
+    console.log(contractOwner);
+    ```
+  </TabsContent>
+  <TabsContent value="clarity-value">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    import { cvToValue } from '@stacks/transactions';
+
+    const simnet = await initSimnet();
+
+    const contractOwner = simnet.getDataVar("counter", "contractOwner");
+    const normalizedOwnerAddress = cvToValue(contractOwner); // [!code highlight]
+
+    console.log(normalizedOwnerAddress); // ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title={"Schema"}>
+    ```ts
+    getDataVar(contract: string, dataVar: string): ClarityValue
+    ```
+  </Accordion>
+  <Accordion title={"Example Contract"}>
+    ```clarity
+    (define-data-var count uint u0)
+    (define-data-var contractOwner principal tx-sender)
+    
+    (var-set count (+ (var-get count) u1))
+    (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getMapEntry`</h2>
+
+Get the value of a map entry by its key. Note that it will always return an optional value `some` or `none`, just like Clarity `map-get?`.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"contract"} type={"string"}>
+The contract identifier of the contract.
+
+<span>Example: `"pool"`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"mapName"} type={"string"}>
+The name of the map within the contract.
+
+<span>Example: `"Participants"`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"mapKey"} type={"ClarityValue"}>
+The key to access the value in the map.
+
+<span>Example: `Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')`</span>
+</Property>
+
+| Response               | Type          |
+|:-----------------------|:--------------|
+| `{ type: 10, value: { type: 3 } }` | `ClarityValue`|
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Get the value of a map entry</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="clarity-value" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Normalize response data and return the value</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    import { Cl } from '@stacks/transactions';
+
+    const simnet = await initSimnet();
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('wallet_1')!;
+
+    const participant = simnet.getMapEntry("pool", "Participants", Cl.standardPrincipal(wallet)); // [!code highlight]
+    
+    console.log(participant);
+    ```
+  </TabsContent>
+  <TabsContent value="clarity-value">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    import { Cl } from '@stacks/transactions';
+
+    const simnet = await initSimnet();
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('wallet_1')!;
+
+    const participant = simnet.getMapEntry("pool", "Participants", Cl.standardPrincipal(wallet));
+
+    const normalizedParticipant = cvToValue(participant);
+    const hasParticipated = normalizedParticipant.value === true; // [!code highlight]
+
+    console.log(hasParticipated);
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title={"Schema"}>
+    ```ts
+    getMapEntry(contract: string, mapName: string, mapKey: ClarityValue): ClarityValue
+    ```
+  </Accordion>
+  <Accordion title={"Example Contract"}>
+    ```clarity
+    (define-map Participants principal bool)
+
+    (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+</Root>
