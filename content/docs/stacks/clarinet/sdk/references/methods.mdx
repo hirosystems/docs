@@ -1593,4 +1593,255 @@ An array of transactions to be included in the block.
 
 </API>
 
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`mineEmptyBlock`</h2>
+
+Mine one empty block and increase the block height by one.
+
+Returns the new block height.
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine an empty block</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+
+    const newBlockHeight = simnet.mineEmptyBlock(); // [!code highlight]
+
+    console.log(`newBlockHeight: ${newBlockHeight}`);
+    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        "simnet.blockHeight: 1"
+        "newBlockHeight: 2"
+        "simnet.blockHeight: 2"
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        mineEmptyBlock(): number
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`mineEmptyBlocks`</h2>
+
+Mine multiple empty blocks to reach a certain block height.
+
+Returns the new block height.
+
+### Parameters
+
+<Property required={false} deprecated={false} name={"count"} type={"number"}>
+The number of empty blocks to mine. This parameter is optional.
+
+<span>Example: `5`</span>
+</Property>
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine multiple empty blocks</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="options" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine an empty block without a specified count</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    
+    const newHeight = simnet.mineEmptyBlocks(5); // [!code highlight]
+
+    console.log(`newBlockHeight: ${newBlockHeight}`);
+    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        "simnet.blockHeight: 1"
+        "newBlockHeight: 6"
+        "simnet.blockHeight: 6"
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        mineEmptyBlocks(count?: number): number
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+  <TabsContent value="options">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    
+    const newHeight = simnet.mineEmptyBlocks(); // [!code highlight]
+
+    console.log(`newBlockHeight: ${newBlockHeight}`);
+    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        "simnet.blockHeight: 1"
+        "newBlockHeight: 2"
+        "simnet.blockHeight: 2"
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        mineEmptyBlocks(count?: number): number
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`runSnippet`</h2>
+
+Execute arbitrary Clarity code directly, allowing to test and interact with smart contract functions without deploying them.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"snippet"} type={"string"}>
+The Clarity code snippet to be executed.
+
+<span>Example: `'(define-read-only (get-balance) (ok stx-balance))'`</span>
+</Property>
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Execute arbitrary Clarity code</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="transfer" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Run a snippet for a STX transfer</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    import type { ClarityValue } from "@stacks/transactions"; // [!code highlight]
+
+    const simnet = await initSimnet();
+
+    const codeSnippet = simnet.runSnippet('(stx-account tx-sender)') as ClarityValue; // [!code highlight]
+
+    console.log(Cl.prettyPrint(codeSnippet, 2));
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        {
+          locked: u0,
+          unlock-height: u0,
+          unlocked: u100000000000000
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        runSnippet(snippet: string): string | ClarityValue
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+  <TabsContent value="transfer">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    import { cvToValue } from "@stacks/transactions";
+
+    const simnet = await initSimnet();
+    const accounts = simnet.getAccounts();
+    const recipient = accounts.get("wallet_1")!;
+
+    const codeSnippet = simnet.runSnippet(`(stx-transfer? u19000000 tx-sender '${recipient})`) as ClarityValue; // [!code highlight]
+
+    console.log(cvToValue(codeSnippet));
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        {
+          type: "bool",
+          value: true,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        runSnippet(snippet: string): string | ClarityValue
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
 </Root>
