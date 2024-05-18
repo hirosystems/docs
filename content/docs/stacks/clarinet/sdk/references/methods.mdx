@@ -206,13 +206,13 @@ Get the value of a `data-var` defined in a contract.
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
 
-<span>Example: `"counter"`</span>
+<span>Example: `counter`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"dataVar"} type={"string"}>
 The name of the `data-var` for the contract.
 
-<span>Example: `"count"`</span>
+<span>Example: `count`</span>
 </Property>
 
 </div>
@@ -320,13 +320,13 @@ Get the value of a map entry by its key. Note that it will always return an opti
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
 
-<span>Example: `"pool"`</span>
+<span>Example: `pool`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"mapName"} type={"string"}>
 The name of the map within the contract.
 
-<span>Example: `"Participants"`</span>
+<span>Example: `Participants`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"mapKey"} type={"ClarityValue"}>
@@ -461,13 +461,13 @@ This method returns an object with the result of the function call as a `Clarity
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
 
-<span>Example: `"pool"`</span>
+<span>Example: `pool`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"method"} type={"string"}>
 The name of the read-only function within the contract.
 
-<span>Example: `"get-participant"`</span>
+<span>Example: `get-participant`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
@@ -479,7 +479,7 @@ The arguments to pass to the read-only function. If no arguments are needed, pas
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
 The Stacks address of the sender.
 
-<span>Example: `'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'`</span>
+<span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
 </div>
@@ -787,13 +787,13 @@ It will simulate a block being mined and increase the block height by one.
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
 
-<span>Example: `"pool"`</span>
+<span>Example: `pool`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"method"} type={"string"}>
 The name of the public function within the contract.
 
-<span>Example: `"register-participant"`</span>
+<span>Example: `register-participant`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
@@ -805,7 +805,7 @@ The arguments to pass to the public function. If no arguments are needed, pass a
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
 The Stacks address of the sender.
 
-<span>Example: `'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'`</span>
+<span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
 </div>
@@ -1098,13 +1098,13 @@ The amount of `uSTX` to transfer.
 <Property required={true} deprecated={false} name={"recipient"} type={"string"}>
 The Stacks address of the recipient.
 
-<span>Example: `'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'`</span>
+<span>Example: `ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
 The Stacks address of the sender.
 
-<span>Example: `'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'`</span>
+<span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
 </div>
@@ -1301,25 +1301,25 @@ It will simulate a block being mined and increase the block height by one.
 <Property required={true} deprecated={false} name={"name"} type={"string"}>
 The name of the contract to be deployed.
 
-<span>Example: `'hello-world'`</span>
+<span>Example: `hello-world`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"content"} type={"string"}>
 The Clarity source code (or content) of the contract.
 
-<span>Example: `'(define-read-only (say-hi) (ok "Hello World"))'`</span>
+<span>Example: `(define-read-only (say-hi) (ok "Hello World"))`</span>
 </Property>
 
 <Property required={false} deprecated={false} name={"options"} type={"DeployContractOptions | null"}>
 An object to specify options, such as the Clarity version.
 
-<span>Example: `{ clarityVersion: 2 }`</span>
+<span>Example: `{ clarityVersion: 2 }` | `null`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
 The Stacks address of the sender.
 
-<span>Example: `'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'`</span>
+<span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
 </div>
@@ -1501,7 +1501,7 @@ An array of transactions to be included in the block.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine multiple transactions in a single block</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining multiple transactions in a single block</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -1610,7 +1610,7 @@ Returns the new block height.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine an empty block</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining an empty block</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -1675,10 +1675,10 @@ The number of empty blocks to mine. This parameter is optional.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine multiple empty blocks</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining multiple empty blocks</Badge>
     </TabsTrigger>
     <TabsTrigger value="options" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mine an empty block without a specified count</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining an empty block without a specified count</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -1760,7 +1760,7 @@ Execute arbitrary Clarity code directly, allowing to test and interact with smar
 <Property required={true} deprecated={false} name={"snippet"} type={"string"}>
 The Clarity code snippet to be executed.
 
-<span>Example: `'(define-read-only (get-balance) (ok stx-balance))'`</span>
+<span>Example: `(define-read-only (get-balance) (ok stx-balance))`</span>
 </Property>
 
 </div>
@@ -1770,10 +1770,10 @@ The Clarity code snippet to be executed.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Execute arbitrary Clarity code</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Executing arbitrary Clarity code</Badge>
     </TabsTrigger>
     <TabsTrigger value="transfer" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Run a snippet for a STX transfer</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Running a snippet for a STX transfer</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -1781,11 +1781,9 @@ The Clarity code snippet to be executed.
     // @noErrors
     import { initSimnet } from '@hirosystems/clarinet-sdk';
 
-    import type { ClarityValue } from "@stacks/transactions"; // [!code highlight]
-
     const simnet = await initSimnet();
 
-    const codeSnippet = simnet.runSnippet('(stx-account tx-sender)') as ClarityValue; // [!code highlight]
+    const codeSnippet = simnet.runSnippet('(stx-account tx-sender)'); // [!code highlight]
 
     console.log(Cl.prettyPrint(codeSnippet, 2));
     ```
@@ -1817,7 +1815,7 @@ The Clarity code snippet to be executed.
     const accounts = simnet.getAccounts();
     const recipient = accounts.get("wallet_1")!;
 
-    const codeSnippet = simnet.runSnippet(`(stx-transfer? u19000000 tx-sender '${recipient})`) as ClarityValue; // [!code highlight]
+    const codeSnippet = simnet.runSnippet(`(stx-transfer? u19000000 tx-sender '${recipient})`); // [!code highlight]
 
     console.log(cvToValue(codeSnippet));
     ```
@@ -1834,6 +1832,385 @@ The Clarity code snippet to be executed.
       <Accordion title="Schema">
         ```ts
         runSnippet(snippet: string): string | ClarityValue
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getContractsInterfaces`</h2>
+
+Returns the interfaces of the project contracts as a Map of Contracts with the keys being the contract addresses.
+
+The interfaces contain information such as the available `functions`, `data-vars` and `maps`, `NFTs`, and the `FTs` defined in the contract.
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting a specific contract interface</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="filter" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Filtering for functions and maps</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    const contractInterfaces = simnet.getContractsInterfaces(); // [!code highlight]
+
+    const poolContract = contractInterfaces.get(`${simnet.deployer}.pool`); // [!code highlight]
+
+    console.log(poolContract);
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (ok true)
+          )
+        )
+
+        (define-read-only (get-participant (who principal))
+          (map-get? ParticipantStatus who)
+        )
+
+        (define-read-only (is-active)
+          (map-get? Participants tx-sender)
+        )
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          functions: [
+            {
+              name: "register-participant",
+              access: "public",
+              args: [
+                [Object ...]
+              ],
+              outputs: [Object ...],
+            }, {
+              name: "get-participant",
+              access: "read_only",
+              args: [
+                [Object ...]
+              ],
+              outputs: [Object ...],
+            }, {
+              name: "is-active",
+              access: "read_only",
+              args: [],
+              outputs: [Object ...],
+            }
+          ],
+          variables: [],
+          maps: [
+            {
+              name: "ParticipantStatus",
+              key: "principal",
+              value: [Object ...],
+            }, {
+              name: "Participants",
+              key: "principal",
+              value: "bool",
+            }
+          ],
+          fungible_tokens: [],
+          non_fungible_tokens: [],
+          epoch: "Epoch25",
+          clarity_version: "Clarity2",
+        }
+
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        getContractsInterfaces(): Map<string, ContractInterface>
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+  <TabsContent value="filter">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    const contractInterfaces = simnet.getContractsInterfaces(); // [!code highlight]
+
+    const poolContract = contractInterfaces.get(`${simnet.deployer}.pool`);
+
+    console.log({
+      functions: poolContract?.functions, // [!code highlight]
+      maps: poolContract?.maps, // [!code highlight]
+    });
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (ok true)
+          )
+        )
+
+        (define-read-only (get-participant (who principal))
+          (map-get? ParticipantStatus who)
+        )
+
+        (define-read-only (is-active)
+          (map-get? Participants tx-sender)
+        )
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          functions: [
+            {
+              name: "register-participant",
+              access: "public",
+              args: [
+                [Object ...]
+              ],
+              outputs: [Object ...],
+            }, {
+              name: "get-participant",
+              access: "read_only",
+              args: [
+                [Object ...]
+              ],
+              outputs: [Object ...],
+            }, {
+              name: "get-participant-contribution-amount",
+              access: "read_only",
+              args: [
+                [Object ...]
+              ],
+              outputs: [Object ...],
+            }, {
+              name: "is-active",
+              access: "read_only",
+              args: [],
+              outputs: [Object ...],
+            }
+          ],
+          maps: [
+            {
+              name: "ParticipantStatus",
+              key: "principal",
+              value: [Object ...],
+            }, {
+              name: "Participants",
+              key: "principal",
+              value: "bool",
+            }
+          ],
+        }
+
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        getContractsInterfaces(): Map<string, ContractInterface>
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getContractSource`</h2>
+
+Get the source code of a contract as a string.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"contract"} type={"string"}>
+The identifier of the contract for which the source code is requested.
+
+<span>Example: `pool`</span>
+</Property>
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the source code of a contract</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    const contractSource = simnet.getContractSource('pool'); // [!code highlight]
+
+    console.log(contractSource);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```clarity
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (ok true)
+          )
+        )
+
+        (define-read-only (get-participant (who principal))
+          (map-get? ParticipantStatus who)
+        )
+
+        (define-read-only (get-participant-contribution-amount (who principal))
+          (default-to u0 (get contributionAmount (get-participant who)))
+        )
+
+        (define-read-only (is-active)
+          (map-get? Participants tx-sender)
+        )
+
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        getContractSource(contract: string): string | undefined
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='api my-3'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`getContractAST`</h2>
+
+Get the full AST (Abstract Syntax Tree) of a Clarity contract.
+
+It throws an error if it fails to get the AST or to encode it.
+
+<Callout title="WIP" type="warn">
+The ContractAST TypeScript is still very simple but will be improved over time.
+</Callout>
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"contractId"} type={"string"}>
+The identifier of the contract for which the AST (Abstract Syntax Tree) is requested.
+
+<span>Example: `pool`</span>
+</Property>
+
+</div>
+
+<APIExample className='api-example xl:w-[50%]'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the source code of a contract</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+
+    const contractAST = simnet.getContractAST('pool'); // [!code highlight]
+
+    console.log(contractAST);
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        {
+          contract_identifier: {
+            issuer: [ 26, [
+                109, 120, 222, 123, 6, 37, 223, 191, 193, 108, 58, 138, 87, 53, 246, 220,
+                61, 195, 242, 206
+              ] ],
+            name: "pool",
+          },
+          pre_expressions: [],
+          expressions: [
+            {
+              expr: [Object ...],
+              id: 1,
+              span: [Object ...],
+              pre_comments: [],
+              end_line_comment: undefined,
+              post_comments: [],
+            },
+            ...
+          ],
+          top_level_expression_sorting: [ 0, 1, 2, 3, 4, 5 ],
+          referenced_traits: Map {},
+          implemented_traits: [],
+          wasm_module: undefined,
+        }
+
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        getContractAST(contractId: string): ContractAST
         ```
       </Accordion>
     </Accordions>
