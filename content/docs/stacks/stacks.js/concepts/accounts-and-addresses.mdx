@@ -10,19 +10,24 @@ e.g. `SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159`, `ST2F4BK4GZH6YFBNHYDDGN4T1RKBA
 <Tabs items={['Using Connect', 'Using a mnemonic']}>
   <Tab value="Using Connect">
     ```ts
+    // [!code word:user.profile.stxAddress.mainnet]
     import { showConnect } from '@stacks/connect';
 
     showConnect({
       appDetails,
       userSession,
       onFinish: () => {
-        console.log(userSession.loadUserData().profile.stxAddress.mainnet);  // [!code highlight]
+        const user = userSession.loadUserData();
+        const address = user.profile.stxAddress.mainnet;
+        
+        console.log(address); // SP1MXSZF4NFC8JQ1TTYGEC2WADMC7Y3GHVZYRX6RF
       },
     });
     ```
   </Tab>
   <Tab value="Using a mnemonic">
   ```ts
+  // [!code word:getStxAddress]
   import { TransactionVersion } from "@stacks/transactions";
   import { generateSecretKey, generateWallet, getStxAddress } from "@stacks/wallet-sdk";
 
@@ -39,7 +44,7 @@ e.g. `SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159`, `ST2F4BK4GZH6YFBNHYDDGN4T1RKBA
     transactionVersion: TransactionVersion.Mainnet
   });
   
-  console.log(mainnetAddress) // SP1MXSZF4NFC8JQ1TTYGEC2WADMC7Y3GHVZYRX6RF // [!code highlight]
+  console.log(mainnetAddress); // SP1MXSZF4NFC8JQ1TTYGEC2WADMC7Y3GHVZYRX6RF
   ```
   </Tab>
 </Tabs>
