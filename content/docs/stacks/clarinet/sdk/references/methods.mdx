@@ -310,7 +310,7 @@ The name of the `data-var` for the contract.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="counter.clar"
         (define-data-var count uint u0) // [!code highlight]
         (define-data-var contractOwner principal tx-sender)
         
@@ -347,7 +347,7 @@ The name of the `data-var` for the contract.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="counter.clar"
         (define-data-var count uint u0)
         (define-data-var contractOwner principal tx-sender) // [!code highlight]
         
@@ -432,7 +432,7 @@ The key to access the value in the map.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         (define-map Participants principal bool) // [!code highlight]
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
@@ -480,7 +480,7 @@ The key to access the value in the map.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         (define-map Participants principal bool) // [!code highlight]
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
@@ -588,7 +588,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:get-contribution-amount]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -656,7 +656,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:is-active]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -726,7 +726,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:get-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -793,7 +793,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:get-contribution-amount]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -918,7 +918,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:register-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -985,7 +985,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:register-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -1053,7 +1053,7 @@ The Stacks address of the sender.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="pool.clar"
         // [!code word:register-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
@@ -1568,7 +1568,7 @@ An array of transactions to be included in the block.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity
+        ```clarity title="counter.clar"
         // [!code word:increment]
         // [!code word:add]
         (define-data-var count uint u0)

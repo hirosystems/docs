@@ -42,7 +42,6 @@ Returns the current block height of the simnet.
     ```tsx twoslash
     // [!code word:blockHeight]
     // @noErrors
-    const simnet = await initSimnet();
     const currentBlockHeight = simnet.blockHeight;
     ```
   </TabsContent>
@@ -85,7 +84,6 @@ Returns the default deployer address as defined in the project file.
     ```tsx twoslash
     // @noErrors
     // [!code word:deployer]
-    const simnet = await initSimnet();
     const currentDeployerAddress = simnet.deployer;
     ```
 
@@ -142,7 +140,6 @@ This represents the Stacks blockchain's progress through discrete time periods, 
     ```tsx twoslash
     // @noErrors
     // [!code word:currentEpoch]
-    const simnet = await initSimnet();
     const epoch = simnet.currentEpoch;
     ```
   </TabsContent>
