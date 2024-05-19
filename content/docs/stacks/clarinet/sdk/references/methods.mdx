@@ -12,9 +12,15 @@ import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
+### Installation
+
+```package-install
+@hirosystems/clarinet-sdk @stacks/transactions
+```
+
 <Root className='text-md'>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -38,12 +44,8 @@ Retrieve a list of all Stacks addresses configured within the project, including
   <TabsContent value="get-accounts">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    const simnet = await initSimnet();
-
-    const accounts = simnet.getAccounts(); // [!code highlight]
-
-    console.log(accounts);
+    // [!code word:getAccounts]
+    const accounts = simnet.getAccounts();
     ```
 
     <Accordions>
@@ -73,13 +75,9 @@ Retrieve a list of all Stacks addresses configured within the project, including
   <TabsContent value="get-account">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    const simnet = await initSimnet();
-
     const accounts = simnet.getAccounts();
-    const wallet = accounts.get('wallet_1')!; // [!code highlight]
 
-    console.log(wallet);
+    const wallet = accounts.get('wallet_1')!; // [!code highlight]
     ```
 
     <Accordions>
@@ -101,53 +99,56 @@ Retrieve a list of all Stacks addresses configured within the project, including
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
 <h2 className='mt-0'>`getAssetsMap`</h2>
 
-Retrieve a list of asset balances associated with Stacks addresses, providing a clear overview of asset distribution.
+Retrieve a list of asset balances associated with Stacks addresses, including fungible tokens and non-fungible tokens.
 
 </div>
 
 <APIExample className='api-example xl:w-[50%]'>
 
-<Tabs defaultValue="get-assets-map">
+<Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="get-assets-map" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting account balances</Badge>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting STX account balances</Badge>
     </TabsTrigger>
     <TabsTrigger value="get-deployer-balance" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Selecting the balance of a specific account</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Filtering for aspecific account</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="get-ft-balance" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting fungible token balances</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="get-nft-balance" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting non-fungible token balances</Badge>
     </TabsTrigger>
   </TabsList>
-  <TabsContent value="get-assets-map">
+  <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    const simnet = await initSimnet();
+    // [!code word:getAssetsMap]
+    const assets = simnet.getAssetsMap();
 
-    const assets = simnet.getAssetsMap(); // [!code highlight]
-    const stxBalances = assets.get('STX')!;
-
-    console.log(stxBalances);
+    const stxBalances = assets.get('STX')!; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Response">
         ```ts
         Map(10) {
-          "wallet_7": "ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ",
-          "wallet_1": "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
-          "wallet_3": "ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC",
-          "wallet_5": "ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB",
-          "wallet_8": "ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP",
-          "wallet_4": "ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND",
-          "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
-          "wallet_6": "ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0",
-          "wallet_2": "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG",
-          "faucet": "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6",
+          "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM": 100000000000000n,
+          "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5": 100000000000000n,
+          "ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG": 100000000000000n,
+          "ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC": 100000000000000n,
+          "ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND": 100000000000000n,
+          "ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB": 100000000000000n,
+          "ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0": 100000000000000n,
+          "ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP": 100000000000000n,
+          "ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ": 100000000000000n,
+          "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6": 100000000000000n,
         }
         ```
       </Accordion>
@@ -162,20 +163,92 @@ Retrieve a list of asset balances associated with Stacks addresses, providing a 
   <TabsContent value="get-deployer-balance">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    const simnet = await initSimnet();
-
     const assets = simnet.getAssetsMap();
     const stxBalances = assets.get('STX')!;
-    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!; // [!code highlight]
 
-    console.log(deployerBalance);
+    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Response">
         ```ts
         100000000000000n
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```bash
+        getAssetsMap(): Map<string, Map<string, bigint>>
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  <TabsContent value="get-ft-balance">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:sbtc]
+    const contractName = 'token';
+    const sourceCode = `
+      (define-fungible-token sbtc)
+      (ft-mint? sbtc u19 tx-sender)
+    `;
+
+    simnet.deployContract(
+      contractName,
+      sourceCode,
+      null,
+      simnet.deployer
+    );
+
+    const assets = simnet.getAssetsMap();
+
+    const tokenBalance = assets.get('.token.sbtc')!; // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        Map(1) {
+          "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM": 19n,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```bash
+        getAssetsMap(): Map<string, Map<string, bigint>>
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  <TabsContent value="get-nft-balance">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:ticket]
+    const contractName = 'nft';
+    const sourceCode = `
+      (define-non-fungible-token ticket uint)
+      (nft-mint? ticket u42 tx-sender)
+    `;
+
+    simnet.deployContract(
+      contractName,
+      sourceCode,
+      null,
+      simnet.deployer
+    );
+
+    const assets = simnet.getAssetsMap();
+
+    const nftBalance = assets.get('.nft.ticket')!; // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        Map(1) {
+          "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM": 1n,
+        }
         ```
       </Accordion>
       <Accordion title="Schema">
@@ -193,7 +266,7 @@ Retrieve a list of asset balances associated with Stacks addresses, providing a 
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -219,33 +292,29 @@ The name of the `data-var` for the contract.
 
 <APIExample className='api-example xl:w-[50%]'>
 
-<Tabs defaultValue="count">
+<Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="count" className='tab group'>
+    <TabsTrigger value="default" className='tab group'>
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the value of a specific data variable</Badge>
     </TabsTrigger>
     <TabsTrigger value="clarity-value" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling the response</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Converting Clarity values</Badge>
     </TabsTrigger>
   </TabsList>
-  <TabsContent value="count">
+  <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    const simnet = await initSimnet();
-
-    const currentCount = simnet.getDataVar('counter', 'count'); // [!code highlight]
-
-    console.log(currentCount);
+    // [!code word:getDataVar]
+    const currentCount = simnet.getDataVar('counter', 'count');
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
-        (define-data-var count uint u0)
+        (define-data-var count uint u0) // [!code highlight]
         (define-data-var contractOwner principal tx-sender)
         
-        (var-set count (+ (var-get count) u1))
+        (var-set count (+ (var-get count) u1)) // [!code highlight]
         (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
         ```
       </Accordion>
@@ -268,25 +337,22 @@ The name of the `data-var` for the contract.
   <TabsContent value="clarity-value">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { cvToValue } from '@stacks/transactions';
 
     const contractOwner = simnet.getDataVar("counter", "contractOwner");
-    const normalizedOwnerAddress = cvToValue(contractOwner); // [!code highlight]
 
-    console.log(normalizedOwnerAddress);
+    const response = cvToValue(contractOwner); // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
         (define-data-var count uint u0)
-        (define-data-var contractOwner principal tx-sender)
+        (define-data-var contractOwner principal tx-sender) // [!code highlight]
         
         (var-set count (+ (var-get count) u1))
-        (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
+        (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) // [!code highlight]
         ```
       </Accordion>
       <Accordion title="Response">
@@ -307,7 +373,7 @@ The name of the `data-var` for the contract.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -345,29 +411,29 @@ The key to access the value in the map.
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the value of an entry</Badge>
     </TabsTrigger>
     <TabsTrigger value="clarity-value" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling the response</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Converting Clarity values</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:getMapEntry]
     import { Cl } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('wallet_1')!;
 
-    const hasParticipated = simnet.getMapEntry("pool", "Participants", Cl.standardPrincipal(wallet)); // [!code highlight]
-    
-    console.log(hasParticipated);
+    const hasParticipated = simnet.getMapEntry(
+      "pool",
+      "Participants",
+      Cl.standardPrincipal(wallet)
+    );
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
-        (define-map Participants principal bool)
+        (define-map Participants principal bool) // [!code highlight]
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
         ```
@@ -397,25 +463,25 @@ The key to access the value in the map.
   <TabsContent value="clarity-value">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('wallet_1')!;
 
-    const hasParticipated = simnet.getMapEntry("pool", "Participants", Cl.standardPrincipal(wallet));
+    const hasParticipated = simnet.getMapEntry(
+      "pool",
+      "Participants",
+      Cl.standardPrincipal(wallet)
+    );
 
-    const normalizedHasParticipated = cvToValue(hasParticipated); // [!code highlight]
-
-    console.log(normalizedHasParticipated);
+    const response = cvToValue(hasParticipated); // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
-        (define-map Participants principal bool)
+        (define-map Participants principal bool) // [!code highlight]
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
         ```
@@ -446,7 +512,7 @@ The key to access the value in the map.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -489,37 +555,41 @@ The Stacks address of the sender.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Making a call with no arguments</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Making a function call</Badge>
     </TabsTrigger>
-    <TabsTrigger value="with-arguments" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With arguments</Badge>
+    <TabsTrigger value="with-no-arguments" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With no arguments</Badge>
     </TabsTrigger>
     <TabsTrigger value="deployer" className='tab group'>
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With an explicit contract address</Badge>
     </TabsTrigger>
     <TabsTrigger value="clarity-value" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling the response</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Converting Clarity values</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:callReadOnlyFn]
     import { Cl } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('wallet_1')!;
 
-    const isActive = simnet.callReadOnlyFn('pool', 'is-active', [], wallet); // [!code highlight]
+    const getContributionAmount = simnet.callReadOnlyFn(
+      'pool',
+      'get-contribution-amount',
+      [Cl.standardPrincipal(wallet)],
+      wallet
+    );  
     
-    console.log(isActive.result);
+    const response = getContributionAmount.result // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:get-contribution-amount]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -527,7 +597,75 @@ The Stacks address of the sender.
           (map-get? ParticipantStatus who)
         )
 
-        (define-read-only (get-participant-contribution-amount (who principal))
+        (define-read-only (get-contribution-amount (who principal))
+          (default-to u0 (get contributionAmount (get-participant who)))
+        )
+
+        (define-read-only (is-active)
+          (map-get? Participants tx-sender)
+        )
+
+        (map-set Participants tx-sender true)
+        (map-set ParticipantStatus tx-sender { enrollmentBlock: block-height, contributionAmount: u42000000 })
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          type: 1,
+          value: 420000000n,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        type ParsedTransactionResult = {
+            result: ClarityValue;
+            events: ClarityEvent[];
+        }
+        
+        callReadOnlyFn(
+          contract: string,
+          method: string,
+          args: ClarityValue[],
+          sender: string
+        ): ParsedTransactionResult
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  <TabsContent value="with-no-arguments">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:args]
+    import { Cl } from '@stacks/transactions';
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('wallet_1')!;
+
+    const isActive = simnet.callReadOnlyFn(
+      'pool',
+      'is-active',
+      [], // [!code highlight]
+      wallet
+    );
+    
+    const response = isActive.result // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity
+        // [!code word:is-active]
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+
+        (define-read-only (get-participant (who principal))
+          (map-get? ParticipantStatus who)
+        )
+
+        (define-read-only (get-contribution-amount (who principal))
           (default-to u0 (get contributionAmount (get-participant who)))
         )
 
@@ -567,94 +705,29 @@ The Stacks address of the sender.
     </Accordions>
 
   </TabsContent>
-  <TabsContent value="with-arguments">
-    ```ts twoslash
-    // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
-
-    const accounts = simnet.getAccounts();
-    const wallet = accounts.get('wallet_1')!;
-
-    const args = [Cl.standardPrincipal(wallet)]; // [!code highlight]
-
-    const getContributionAmount = simnet.callReadOnlyFn('pool', 'get-participant-contribution-amount', args, wallet); // [!code highlight]
-    
-    console.log(getContributionAmount.result);
-    ```
-
-    <Accordions>
-      <Accordion title="Source code">
-        ```clarity
-        (define-map Participants principal bool)
-        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
-
-        (define-read-only (get-participant (who principal))
-          (map-get? ParticipantStatus who)
-        )
-
-        (define-read-only (get-participant-contribution-amount (who principal))
-          (default-to u0 (get contributionAmount (get-participant who)))
-        )
-
-        (define-read-only (is-active)
-          (map-get? Participants tx-sender)
-        )
-
-        (map-set Participants tx-sender true)
-        (map-set ParticipantStatus tx-sender { enrollmentBlock: block-height, contributionAmount: u42000000 })
-        ```
-      </Accordion>
-      <Accordion title="Response">
-        ```ts
-        {
-          type: 1,
-          value: 420000000n,
-        }
-        ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        type ParsedTransactionResult = {
-            result: ClarityValue;
-            events: ClarityEvent[];
-        }
-        
-        callReadOnlyFn(
-          contract: string,
-          method: string,
-          args: ClarityValue[],
-          sender: string
-        ): ParsedTransactionResult
-        ```
-      </Accordion>
-    </Accordions>
-
-  </TabsContent>
   <TabsContent value="deployer">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
     import { Cl } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('deployer')!;
-
     const contractAddress = `${wallet}.pool`; // [!code highlight]
-    const args = [Cl.standardPrincipal(wallet)];
 
-    const getParticipant = simnet.callReadOnlyFn(contractAddress, 'get-participant', args, wallet); // [!code highlight]
-    
-    console.log(getParticipant.result);
+    const getParticipant = simnet.callReadOnlyFn(
+      contractAddress, // [!code highlight]
+      'get-participant',
+      [Cl.standardPrincipal(wallet)],
+      wallet
+    );
+
+    const response = getParticipant.result; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:get-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -662,7 +735,7 @@ The Stacks address of the sender.
           (map-get? ParticipantStatus who)
         )
 
-        (define-read-only (get-participant-contribution-amount (who principal))
+        (define-read-only (get-contribution-amount (who principal))
           (default-to u0 (get contributionAmount (get-participant who)))
         )
 
@@ -702,26 +775,26 @@ The Stacks address of the sender.
   <TabsContent value="clarity-value">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('deployer')!;
 
-    const args = [Cl.standardPrincipal(wallet)];
+    const getContributionAmount = simnet.callReadOnlyFn(
+      'pool',
+      'get-contribution-amount',
+      [Cl.standardPrincipal(wallet)],
+      wallet
+    );
 
-    const getContributionAmount = simnet.callReadOnlyFn("pool", "get-participant-contribution-amount", args, wallet);
-
-    const normalizedContributionAmount = cvToValue(getContributionAmount.result); // [!code highlight]
-
-    console.log(normalizedContributionAmount);
+    const response = cvToValue(getContributionAmount.result); // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:get-contribution-amount]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -729,7 +802,7 @@ The Stacks address of the sender.
           (map-get? ParticipantStatus who)
         )
 
-        (define-read-only (get-participant-contribution-amount (who principal))
+        (define-read-only (get-contribution-amount (who principal))
           (default-to u0 (get contributionAmount (get-participant who)))
         )
 
@@ -770,7 +843,7 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -815,36 +888,38 @@ The Stacks address of the sender.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Broadcasting your transaction with no arguments</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Broadcasting your transaction</Badge>
     </TabsTrigger>
     <TabsTrigger value="clarity-value" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling the response</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Converting Clarity values</Badge>
     </TabsTrigger>
     <TabsTrigger value="events" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Selecting the events</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Filtering for contract events</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:callPublicFn]
     import { Cl } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('deployer')!;
 
-    const args = [Cl.standardPrincipal(wallet)];
+    const registerParticipant = simnet.callPublicFn(
+      'pool',
+      'register-participant',
+      [Cl.standardPrincipal(wallet)],
+      wallet
+    );
 
-    const registerParticipant = simnet.callPublicFn('pool', 'register-participant', args, wallet); // [!code highlight]
-    
-    console.log(registerParticipant.result);
+    const response = registerParticipant.result; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:register-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -855,18 +930,6 @@ The Stacks address of the sender.
             (print { message: "Registered", who: who, at: block-height })
             (ok true)
           )
-        )
-
-        (define-read-only (get-participant (who principal))
-          (map-get? ParticipantStatus who)
-        )
-
-        (define-read-only (get-participant-contribution-amount (who principal))
-          (default-to u0 (get contributionAmount (get-participant who)))
-        )
-
-        (define-read-only (is-active)
-          (map-get? Participants tx-sender)
         )
 
         (map-set Participants tx-sender true)
@@ -904,26 +967,26 @@ The Stacks address of the sender.
   <TabsContent value="clarity-value">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('deployer')!;
 
-    const args = [Cl.standardPrincipal(wallet)];
-
-    const registerParticipant = simnet.callPublicFn('pool', 'register-participant', args, wallet);
+    const registerParticipant = simnet.callPublicFn(
+      'pool',
+      'register-participant',
+      [Cl.standardPrincipal(wallet)],
+      wallet
+    );
     
-    const normalizedregisterParticipant = cvToValue(registerParticipant.result); // [!code highlight]
-
-    console.log(normalizedregisterParticipant);
+    const response = cvToValue(registerParticipant.result); // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:register-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -934,18 +997,6 @@ The Stacks address of the sender.
             (print { message: "Registered", who: who, at: block-height })
             (ok true)
           )
-        )
-
-        (define-read-only (get-participant (who principal))
-          (map-get? ParticipantStatus who)
-        )
-
-        (define-read-only (get-participant-contribution-amount (who principal))
-          (default-to u0 (get contributionAmount (get-participant who)))
-        )
-
-        (define-read-only (is-active)
-          (map-get? Participants tx-sender)
         )
 
         (map-set Participants tx-sender true)
@@ -981,30 +1032,29 @@ The Stacks address of the sender.
   <TabsContent value="events">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    import type { ClarityValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    // [!code word:ClarityValue]
+    import { Cl, cvToValue, type ClarityValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('deployer')!;
 
-    const args = [Cl.standardPrincipal(wallet)];
-
-    const registerParticipant = simnet.callPublicFn('pool', 'register-participant', args, wallet);
+    const registerParticipant = simnet.callPublicFn(
+      'pool',
+      'register-participant',
+      [Cl.standardPrincipal(wallet)],
+      wallet
+    );
     
     const eventValues = registerParticipant.events.map((event) =>
       cvToValue(event.data.value as ClarityValue) // [!code highlight]
     );
-
-    console.log(eventValues);
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:register-participant]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -1012,21 +1062,9 @@ The Stacks address of the sender.
           (begin
             (map-set Participants who true)
             (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
-            (print { message: "Registered", who: who, at: block-height })
+            (print { message: "Registered", who: who, at: block-height }) // [!code highlight]
             (ok true)
           )
-        )
-
-        (define-read-only (get-participant (who principal))
-          (map-get? ParticipantStatus who)
-        )
-
-        (define-read-only (get-participant-contribution-amount (who principal))
-          (default-to u0 (get contributionAmount (get-participant who)))
-        )
-
-        (define-read-only (is-active)
-          (map-get? Participants tx-sender)
         )
 
         (map-set Participants tx-sender true)
@@ -1077,7 +1115,7 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1092,7 +1130,7 @@ It will simulate a block being mined and increase the block height by one.
 <Property required={true} deprecated={false} name={"amount"} type={"number | bigint"}>
 The amount of `uSTX` to transfer.
 
-<span>Example: `1000000, ie 1 STX`</span>
+<span>Example: `1000000` equals 1 STX</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"recipient"} type={"string"}>
@@ -1117,27 +1155,24 @@ The Stacks address of the sender.
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Transferring STX</Badge>
     </TabsTrigger>
     <TabsTrigger value="clarity-value" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling the response</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Converting Clarity values</Badge>
     </TabsTrigger>
     <TabsTrigger value="events" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Selecting the events</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Filtering for contract events</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
-
+    // [!code word:transferSTX]
     const accounts = simnet.getAccounts();
     const recipient = accounts.get('wallet_1')!;
-    const amount = 42000000; // 42 STX
 
-    const transferSTX = simnet.transferSTX(amount, recipient, simnet.deployer); // [!code highlight]
-    
-    console.log(transferSTX);
+    const transfer = simnet.transferSTX(
+      42000000, // 42 STX
+      recipient,
+      simnet.deployer
+    );
     ```
 
     <Accordions>
@@ -1186,20 +1221,19 @@ The Stacks address of the sender.
   <TabsContent value="clarity-value">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
     const recipient = accounts.get('wallet_1')!;
-    const amount = 42000000; // 42 STX
 
-    const transferSTX = simnet.transferSTX(amount, recipient, simnet.deployer);
+    const transfer = simnet.transferSTX(
+      42000000, // 42 STX
+      recipient,
+      simnet.deployer
+    );
     
-    const normalizedTransferSTX = cvToValue(transferSTX.result); // [!code highlight]
-
-    console.log(normalizedTransferSTX);
+    const response = cvToValue(transfer.result); // [!code highlight]
     ```
 
     <Accordions>
@@ -1231,20 +1265,16 @@ The Stacks address of the sender.
   <TabsContent value="events">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions'; // [!code highlight]
-
-    const simnet = await initSimnet();
-
     const accounts = simnet.getAccounts();
     const recipient = accounts.get('wallet_1')!;
-    const amount = 42000000; // 42 STX
 
-    const transferSTX = simnet.transferSTX(amount, recipient, simnet.deployer);
+    const transfer = simnet.transferSTX(
+      42000000, // 42 STX
+      recipient,
+      simnet.deployer
+    );
 
-    const eventValues = transferSTX.events.map((event) => event); // [!code highlight]
-
-    console.log(eventValues);
+    const events = transfer.events.map((event) => event); // [!code highlight]
     ```
 
     <Accordions>
@@ -1286,7 +1316,7 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1341,17 +1371,20 @@ The Stacks address of the sender.
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    // [!code word:deployContract]
+    import { cvToValue } from '@stacks/transactions';
 
     const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
-    const deployContract = simnet.deployContract('hello-world', sourceCode, null, simnet.deployer); // [!code highlight]
 
-    const normalizedDeployContract = cvToValue(deployContract.result); // [!code highlight]
+    const contract = simnet.deployContract(
+      'hello-world',
+      sourceCode,
+      null,
+      simnet.deployer
+    );
 
-    console.log(normalizedDeployContract);
+    const response = cvToValue(contract.result); // [!code highlight]
     ```
 
     <Accordions>
@@ -1381,17 +1414,19 @@ The Stacks address of the sender.
   <TabsContent value="options">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { cvToValue } from '@stacks/transactions';
 
     const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
-    const deployContract = simnet.deployContract('hello-world', sourceCode, { clarityVersion: 2 }, simnet.deployer); // [!code highlight]
 
-    const normalizedDeployContract = cvToValue(deployContract.result);
+    const contract = simnet.deployContract(
+      'hello-world',
+      sourceCode,
+      { clarityVersion: 2 }, // [!code highlight]
+      simnet.deployer
+    );
 
-    console.log(normalizedDeployContract);
+    const response = cvToValue(contract.result); // [!code highlight]
     ```
 
     <Accordions>
@@ -1421,17 +1456,21 @@ The Stacks address of the sender.
   <TabsContent value="interact">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    import { Cl, cvToValue } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
+    // [!code word:cvToValue]
+    import { cvToValue } from '@stacks/transactions';
 
     const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
-    const deployContract = simnet.deployContract('hello-world', sourceCode, null, simnet.deployer);
+
+    simnet.deployContract(
+      'hello-world',
+      sourceCode,
+      null,
+      simnet.deployer
+    );
 
     const sayHi = simnet.callReadOnlyFn("hello-world", "say-hi", [], simnet.deployer); // [!code highlight]
 
-    console.log(cvToValue(sayHi.result));
+    const response = sayHi.result
     ```
 
     <Accordions>
@@ -1467,7 +1506,7 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1507,29 +1546,31 @@ An array of transactions to be included in the block.
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet, tx } from '@hirosystems/clarinet-sdk'; // [!code highlight]
+    // [!code word:tx]
+    // [!code word:mineBlock]
+    import { tx } from '@hirosystems/clarinet-sdk';
     import { Cl, cvToValue } from '@stacks/transactions';
-
-    const simnet = await initSimnet();
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get("wallet_1")!;
 
-    const block = simnet.mineBlock([ // [!code highlight]
-      tx.callPublicFn("counter", "increment", [], simnet.deployer), // [!code highlight]
-      tx.callPublicFn("counter", "add", [Cl.uint(10)], simnet.deployer), // [!code highlight]
-      tx.transferSTX(19000000, wallet, simnet.deployer), // [!code highlight]
-    ]); // [!code highlight]
+    const block = simnet.mineBlock([
+      tx.callPublicFn("counter", "increment", [], simnet.deployer),
+      tx.callPublicFn("counter", "add", [Cl.uint(10)], simnet.deployer),
+      tx.transferSTX(19000000, wallet, simnet.deployer),
+    ]);
 
-    block.forEach((tx) => {
-      console.log(cvToValue(tx.result));
-      if (tx.events.length > 0) console.log(tx.events);
+    block.forEach((transaction) => {
+      console.log(cvToValue(transaction.result));
+      if (transaction.events.length > 0) console.log(transaction.events);
     });
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity
+        // [!code word:increment]
+        // [!code word:add]
         (define-data-var count uint u0)
 
         (define-public (increment)
@@ -1593,7 +1634,7 @@ An array of transactions to be included in the block.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1616,24 +1657,16 @@ Returns the new block height.
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:mineEmptyBlock]
+    simnet.mineEmptyBlock();
 
-    const simnet = await initSimnet();
-
-    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
-
-    const newBlockHeight = simnet.mineEmptyBlock(); // [!code highlight]
-
-    console.log(`newBlockHeight: ${newBlockHeight}`);
-    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    const response = simnet.blockHeight; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Response">
         ```ts
-        "simnet.blockHeight: 1"
-        "newBlockHeight: 2"
-        "simnet.blockHeight: 2"
+        2
         ```
       </Accordion>
       <Accordion title="Schema">
@@ -1650,7 +1683,7 @@ Returns the new block height.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1678,30 +1711,23 @@ The number of empty blocks to mine. This parameter is optional.
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining multiple empty blocks</Badge>
     </TabsTrigger>
     <TabsTrigger value="options" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining an empty block without a specified count</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Mining an empty block without a count</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:mineEmptyBlocks]
+    // [!code word:5]
+    simnet.mineEmptyBlocks(5);
 
-    const simnet = await initSimnet();
-
-    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
-    
-    const newHeight = simnet.mineEmptyBlocks(5); // [!code highlight]
-
-    console.log(`newBlockHeight: ${newBlockHeight}`);
-    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    const response = simnet.blockHeight; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Response">
         ```ts
-        "simnet.blockHeight: 1"
-        "newBlockHeight: 6"
-        "simnet.blockHeight: 6"
+        6
         ```
       </Accordion>
       <Accordion title="Schema">
@@ -1714,24 +1740,16 @@ The number of empty blocks to mine. This parameter is optional.
   <TabsContent value="options">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:mineEmptyBlocks]
+    simnet.mineEmptyBlocks();
 
-    const simnet = await initSimnet();
-
-    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
-    
-    const newHeight = simnet.mineEmptyBlocks(); // [!code highlight]
-
-    console.log(`newBlockHeight: ${newBlockHeight}`);
-    console.log(`simnet.blockHeight: ${simnet.blockHeight}`);
+    const response = simnet.blockHeight; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Response">
         ```ts
-        "simnet.blockHeight: 1"
-        "newBlockHeight: 2"
-        "simnet.blockHeight: 2"
+        2
         ```
       </Accordion>
       <Accordion title="Schema">
@@ -1747,7 +1765,7 @@ The number of empty blocks to mine. This parameter is optional.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1779,13 +1797,15 @@ The Clarity code snippet to be executed.
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:runSnippet]
+    // [!code word:prettyPrint]
+    import { Cl } from '@stacks/transactions';
 
-    const simnet = await initSimnet();
+    const codeSnippet = simnet.runSnippet(
+      '(stx-account tx-sender)'
+    );
 
-    const codeSnippet = simnet.runSnippet('(stx-account tx-sender)'); // [!code highlight]
-
-    console.log(Cl.prettyPrint(codeSnippet, 2));
+    const response = Cl.prettyPrint(codeSnippet, 2); // [!code highlight]
     ```
 
     <Accordions>
@@ -1808,16 +1828,17 @@ The Clarity code snippet to be executed.
   <TabsContent value="transfer">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:cvToValue]
     import { cvToValue } from "@stacks/transactions";
 
-    const simnet = await initSimnet();
     const accounts = simnet.getAccounts();
     const recipient = accounts.get("wallet_1")!;
 
-    const codeSnippet = simnet.runSnippet(`(stx-transfer? u19000000 tx-sender '${recipient})`); // [!code highlight]
+    const codeSnippet = simnet.runSnippet(
+      `(stx-transfer? u19000000 tx-sender '${recipient})`
+    );
 
-    console.log(cvToValue(codeSnippet));
+    const response = cvToValue(codeSnippet); // [!code highlight]
     ```
 
     <Accordions>
@@ -1842,7 +1863,7 @@ The Clarity code snippet to be executed.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -1862,21 +1883,16 @@ The interfaces contain information such as the available `functions`, `data-vars
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting a specific contract interface</Badge>
     </TabsTrigger>
     <TabsTrigger value="filter" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Filtering for functions and maps</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Filtering for contract functions</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:getContractsInterfaces]
+    const contractInterfaces = simnet.getContractsInterfaces();
 
-    const simnet = await initSimnet();
-
-    const contractInterfaces = simnet.getContractsInterfaces(); // [!code highlight]
-
-    const poolContract = contractInterfaces.get(`${simnet.deployer}.pool`); // [!code highlight]
-
-    console.log(poolContract);
+    const response = contractInterfaces.get(`${simnet.deployer}.pool`); // [!code highlight]
     ```
 
     <Accordions>
@@ -1884,14 +1900,6 @@ The interfaces contain information such as the available `functions`, `data-vars
         ```clarity title="pool.clar"
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
-
-        (define-public (register-participant (who principal))
-          (begin
-            (map-set Participants who true)
-            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
-            (ok true)
-          )
-        )
 
         (define-read-only (get-participant (who principal))
           (map-get? ParticipantStatus who)
@@ -1907,13 +1915,6 @@ The interfaces contain information such as the available `functions`, `data-vars
         {
           functions: [
             {
-              name: "register-participant",
-              access: "public",
-              args: [
-                [Object ...]
-              ],
-              outputs: [Object ...],
-            }, {
               name: "get-participant",
               access: "read_only",
               args: [
@@ -1957,33 +1958,18 @@ The interfaces contain information such as the available `functions`, `data-vars
   <TabsContent value="filter">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-
-    const simnet = await initSimnet();
-
-    const contractInterfaces = simnet.getContractsInterfaces(); // [!code highlight]
-
     const poolContract = contractInterfaces.get(`${simnet.deployer}.pool`);
 
-    console.log({
-      functions: poolContract?.functions, // [!code highlight]
-      maps: poolContract?.maps, // [!code highlight]
-    });
+    const response = poolContract?.functions; // [!code highlight]
     ```
 
     <Accordions>
       <Accordion title="Source code">
         ```clarity title="pool.clar"
+        // [!code word:get-participant]
+        // [!code word:is-active]
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
-
-        (define-public (register-participant (who principal))
-          (begin
-            (map-set Participants who true)
-            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
-            (ok true)
-          )
-        )
 
         (define-read-only (get-participant (who principal))
           (map-get? ParticipantStatus who)
@@ -1996,48 +1982,21 @@ The interfaces contain information such as the available `functions`, `data-vars
       </Accordion>
       <Accordion title="Response">
         ```ts
-        {
-          functions: [
-            {
-              name: "register-participant",
-              access: "public",
-              args: [
-                [Object ...]
-              ],
-              outputs: [Object ...],
-            }, {
-              name: "get-participant",
-              access: "read_only",
-              args: [
-                [Object ...]
-              ],
-              outputs: [Object ...],
-            }, {
-              name: "get-participant-contribution-amount",
-              access: "read_only",
-              args: [
-                [Object ...]
-              ],
-              outputs: [Object ...],
-            }, {
-              name: "is-active",
-              access: "read_only",
-              args: [],
-              outputs: [Object ...],
-            }
-          ],
-          maps: [
-            {
-              name: "ParticipantStatus",
-              key: "principal",
-              value: [Object ...],
-            }, {
-              name: "Participants",
-              key: "principal",
-              value: "bool",
-            }
-          ],
-        }
+        [
+          {
+            name: "get-participant",
+            access: "read_only",
+            args: [
+              [Object ...]
+            ],
+            outputs: [Object ...],
+          }, {
+            name: "is-active",
+            access: "read_only",
+            args: [],
+            outputs: [Object ...],
+          }
+        ]
 
         ```
       </Accordion>
@@ -2054,7 +2013,7 @@ The interfaces contain information such as the available `functions`, `data-vars
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -2083,41 +2042,37 @@ The identifier of the contract for which the source code is requested.
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-
-    const simnet = await initSimnet();
-
-    const contractSource = simnet.getContractSource('pool'); // [!code highlight]
-
-    console.log(contractSource);
+    // [!code word:getContractSource]
+    const contractSource = simnet.getContractSource('pool');
     ```
 
     <Accordions>
-      <Accordion title="Response">
-        ```clarity
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
-
-        (define-public (register-participant (who principal))
-          (begin
-            (map-set Participants who true)
-            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
-            (ok true)
-          )
-        )
 
         (define-read-only (get-participant (who principal))
           (map-get? ParticipantStatus who)
         )
 
-        (define-read-only (get-participant-contribution-amount (who principal))
-          (default-to u0 (get contributionAmount (get-participant who)))
+        (define-read-only (is-active)
+          (map-get? Participants tx-sender)
+        )
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```bash
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+
+        (define-read-only (get-participant (who principal))
+          (map-get? ParticipantStatus who)
         )
 
         (define-read-only (is-active)
           (map-get? Participants tx-sender)
         )
-
         ```
       </Accordion>
       <Accordion title="Schema">
@@ -2133,7 +2088,7 @@ The identifier of the contract for which the source code is requested.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -2142,10 +2097,6 @@ The identifier of the contract for which the source code is requested.
 Get the full AST (Abstract Syntax Tree) of a Clarity contract.
 
 It throws an error if it fails to get the AST or to encode it.
-
-<Callout title="WIP" type="warn">
-The ContractAST TypeScript is still very simple but will be improved over time.
-</Callout>
 
 ### Parameters
 
@@ -2168,13 +2119,8 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
   <TabsContent value="default">
     ```ts twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-
-    const simnet = await initSimnet();
-
-    const contractAST = simnet.getContractAST('pool'); // [!code highlight]
-
-    console.log(contractAST);
+    // [!code word:getContractAST]
+    const contractAST = simnet.getContractAST('pool');
     ```
 
     <Accordions>
@@ -2200,12 +2146,11 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
             },
             ...
           ],
-          top_level_expression_sorting: [ 0, 1, 2, 3, 4, 5 ],
+          top_level_expression_sorting: [ 0, 1, 2, 3 ],
           referenced_traits: Map {},
           implemented_traits: [],
           wasm_module: undefined,
         }
-
         ```
       </Accordion>
       <Accordion title="Schema">

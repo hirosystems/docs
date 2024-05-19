@@ -12,9 +12,15 @@ import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
+### Installation
+
+```package-install
+@hirosystems/clarinet-sdk
+```
+
 <Root className='text-md'>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -34,13 +40,10 @@ Returns the current block height of the simnet.
   </TabsList>
   <TabsContent value="default">
     ```tsx twoslash
+    // [!code word:blockHeight]
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
     const simnet = await initSimnet();
-
-    const blockHeight = simnet.blockHeight; // [!code highlight]
-
-    console.log(blockHeight);
+    const currentBlockHeight = simnet.blockHeight;
     ```
   </TabsContent>
 </Tabs>
@@ -57,7 +60,7 @@ Returns the current block height of the simnet.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -81,12 +84,9 @@ Returns the default deployer address as defined in the project file.
   <TabsContent value="default">
     ```tsx twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:deployer]
     const simnet = await initSimnet();
-
-    const deployer = simnet.deployer; // [!code highlight]
-
-    console.log(deployer);
+    const currentDeployerAddress = simnet.deployer;
     ```
 
     <Accordions>
@@ -100,13 +100,8 @@ Returns the default deployer address as defined in the project file.
   <TabsContent value="set-deployer">
     ```tsx twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
-    const simnet = await initSimnet();
-
-    const deployer = simnet.deployer;
     simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'; // [!code highlight]
-
-    console.log(deployer);
+    const newDeployer = simnet.deployer
     ```
 
     <Accordions>
@@ -123,7 +118,7 @@ Returns the default deployer address as defined in the project file.
 
 </API>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -146,12 +141,9 @@ This represents the Stacks blockchain's progress through discrete time periods, 
   <TabsContent value="default">
     ```tsx twoslash
     // @noErrors
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+    // [!code word:currentEpoch]
     const simnet = await initSimnet();
-
-    const epoch = simnet.currentEpoch; // [!code highlight]
-
-    console.log(epoch);
+    const epoch = simnet.currentEpoch;
     ```
   </TabsContent>
 </Tabs>

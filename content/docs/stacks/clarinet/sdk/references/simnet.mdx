@@ -12,9 +12,15 @@ import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
+### Installation
+
+```package-install
+@hirosystems/clarinet-sdk
+```
+
 <Root className='text-md'>
 
-<API className='api my-3'>
+<API className='api my-24'>
 
 <div className='flex-1'>
 
@@ -40,23 +46,25 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Creating a new instance of simnet</Badge>
     </TabsTrigger>
     <TabsTrigger value="custom" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With a custom path</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With a custom config path</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
     ```ts twoslash
+    // [!code word:initSimnet]
     // @noErrors
     import { initSimnet } from '@hirosystems/clarinet-sdk';
 
-    const simnet = await initSimnet(); // [!code highlight]
+    const simnet = await initSimnet();
     ```
   </TabsContent>
   <TabsContent value="custom">
     ```ts twoslash
     // @noErrors
+    // [!code word:'./config/Clarinet.toml']
     import { initSimnet } from '@hirosystems/clarinet-sdk';
 
-    const simnet = await initSimnet('<path-to-clarinet-toml-file>'); // [!code highlight]
+    const simnet = await initSimnet('./config/Clarinet.toml');
     ```
   </TabsContent>
 </Tabs>
