@@ -113,13 +113,14 @@ figure.not-prose {
 
 /* Default light mode */
 .highlighted {
-  background-color: hsl(var(--primary)/10%);
+  border: none !important;
 }
 
-/* Default light mode */
+/* Adjust styling for Shiki word highlighting */
 .highlighted-word {
-  border-color: var(--background) !important;
-  background-color: var(--background-foreground) !important;
+  border-color: hsl(var(--border) / 1) !important;
+  border-radius: 5px !important;
+  margin: 0 !important;
 }
 
 
