@@ -4,7 +4,6 @@ import {
   remarkDynamicContent,
   remarkInstall,
   rehypeCodeDefaultOptions,
-  rehypeCode,
 } from 'fumadocs-core/mdx-plugins';
 import { transformerTwoslash } from 'fumadocs-twoslash';
 import rehypeKatex from 'rehype-katex';
@@ -21,11 +20,18 @@ const config = {
     // Replaced by root workspace command
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: [],
+  },
 };
 
 const withMDX = createMDX({
   mdxOptions: {
     rehypeCodeOptions: {
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
       transformers: [
         ...rehypeCodeDefaultOptions.transformers,
         transformerTwoslash(),
