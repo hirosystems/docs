@@ -4,30 +4,42 @@ description: Retrieves information about the Core API including the server versi
 toc: false
 ---
 
-import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
-<Root className='text-md'>
+<Root>
 
-<API className='api'>
+<API>
 
-<APIInfo method={"GET"} route={"/v2/info"}>
+<div className='flex-1'>
 
-## Get Core API info
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/extended/v2/info`}</p>
+</h2>
 
 Retrieves information about the Core API including the server version
 
+### Parameters
+
+No parameters.
+
 | Status code | Description |
-| ----------- | ----------- |
-| `200` | Success |
+| :---------- | :---------- |
+| `200`       | Success     |
 
-</APIInfo>
+</div>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 
 ```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/v2/info"
+curl -L \
+  'https://api.mainnet.hiro.so/v2/info' \
+  -H 'Accept: application/json'
 ```
 
 <Tabs items={["200"]}>
@@ -56,7 +68,7 @@ GET request that core node information
 
 <Accordions>
 
-<Accordion title={"Schema"}>
+<Accordion title="Typescript Definition">
 
 ```ts
 /**

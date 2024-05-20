@@ -1,0 +1,91 @@
+---
+title: Network Given Block Time
+description: Retrieves the target block time for a given network.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/extended/v1/info/network_block_time/{network}`}</p>
+</h2>
+
+Retrieves the target block time for a given network. The network can be mainnet or testnet. The block time is hardcoded and will change throughout the implementation phases of the testnet.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"network"} type={"string"}>
+
+the target block time for a given network (testnet, mainnet).
+
+<span>Example:  `"mainnet"`</span>
+
+<span>Value in:  `"testnet" | "mainnet"`</span>
+
+</Property>
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -L \
+  "https://api.mainnet.hiro.so/extended/v1/info/network_block_time/mainnet" \
+  -H 'Accept: application/json'
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that target block time for a given network
+
+```json title="Example Response"
+{
+  "target_block_time": 0
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request that target block time for a given network
+ */
+export interface NetworkBlockTimeResponse {
+  target_block_time: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

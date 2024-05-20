@@ -4,17 +4,23 @@ description: Delivers testnet BTC tokens to a specified address.
 toc: false
 ---
 
-import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
-<Root className='text-md'>
+<Root>
 
-<API className='api'>
+<API>
 
-<APIInfo method={"POST"} route={"/extended/v1/faucets/btc"}>
+<div className='flex-1'>
 
-## Get BTC Testnet Tokens
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
+    POST
+  </div>
+  <p className="text-xs">{`/extended/v1/faucets/btc`}</p>
+</h2>
 
 Add 1 BTC token to the specified testnet BTC address.
 
@@ -23,33 +29,31 @@ explorer. The tokens are delivered once the transaction has been included in a b
 
 **Note:** This is a testnet only endpoint. This endpoint will not work on the mainnet.
 
+### Body Parameters
 
-### Request Body (Optional)
-
-
-
-<Property required={false} deprecated={false} name={"address"} type={"string"}>
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
 
 BTC testnet address
 
 </Property>
 
-| Status code | Description |
-| ----------- | ----------- |
-| `200` | Success |
-| `403` | BTC Faucet not fully configured |
-| `500` | Faucet call failed |
+| Status code | Description                      |
+|:------------|:---------------------------------|
+| `200`       | Success                          |
+| `403`       | BTC Faucet not fully configured  |
+| `500`       | Faucet call failed               |
 
-</APIInfo>
+</div>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 
 ```bash title="Terminal"
 curl -X POST \
   "https://api.testnet.hiro.so/extended/v1/faucets/btc" \
+  -H 'Content-Type: application/json' \
   -d '{
-  "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
-}'
+    "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
+  }'
 ```
 
 <Tabs items={["200","403"]}>
@@ -68,7 +72,7 @@ POST request that initiates a transfer of tokens to a specified testnet address
 
 <Accordions>
 
-<Accordion title={"Schema"}>
+<Accordion title="Typescript Definition">
 
 ```ts
 /**
@@ -110,7 +114,7 @@ export interface RunFaucetResponse {
 
 <Accordions>
 
-<Accordion title={"Schema"}>
+<Accordion title="Typescript Definition">
 
 ```ts
 export interface Response {

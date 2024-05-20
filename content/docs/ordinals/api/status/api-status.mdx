@@ -4,13 +4,14 @@ description: Retrieves the running status of the Stacks Blockchain API.
 toc: false
 ---
 
-import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
-<Root className='text-md'>
+<Root>
 
-<API className='api'>
+<API>
 
 <APIInfo method={"GET"} route={"/bitcoin/v1"}>
 
@@ -24,7 +25,7 @@ Retrieves the running status of the Stacks Blockchain API, including the server 
 
 </APIInfo>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 
 ```bash title="curl"
 curl -X GET "https://api.mainnet.hiro.so/bitcoin/v1"

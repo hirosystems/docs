@@ -4,7 +4,8 @@ description: The Simnet class is the main entry point for the Clarinet SDK. It p
 toc: false
 ---
 
-import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,9 +19,9 @@ import { InlineCode } from '@/components/inline-code';
 @hirosystems/clarinet-sdk
 ```
 
-<Root className='text-md'>
+<Root>
 
-<API className='api my-24'>
+<API className='my-20'>
 
 <div className='flex-1'>
 
@@ -38,7 +39,7 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 
 </div>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>

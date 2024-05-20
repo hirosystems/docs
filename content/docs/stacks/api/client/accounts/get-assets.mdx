@@ -4,13 +4,14 @@ description: Retrieves a list of all assets events associated with an account or
 toc: false
 ---
 
-import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 
-<Root className='text-md'>
+<Root>
 
 <API className='api my-3'>
 
@@ -32,7 +33,7 @@ Optional overrides for the request initialization settings.
 
 </div>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 
 <Tabs defaultValue="get-assets">
   <TabsList className='flex flex-wrap'>
@@ -147,7 +148,7 @@ Decrypts user data for secure storage.
 
 </div>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 <Tabs defaultValue="pending">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="pending" className='tab group'>

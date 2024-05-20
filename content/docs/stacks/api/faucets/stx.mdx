@@ -4,17 +4,23 @@ description: Delivers testnet STX tokens to a specified address.
 toc: false
 ---
 
-import { Root, API, APIInfo, APIExample, Property } from 'fumadocs-ui/components/api'
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
-<Root className='text-md'>
+<Root>
 
-<API className='api'>
+<API>
 
-<APIInfo method={"POST"} route={"/extended/v1/faucets/stx"}>
+<div className='flex-1'>
 
-## Get STX Testnet Tokens
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
+    POST
+  </div>
+  <p className="text-xs">{`/extended/v1/faucets/stx`}</p>
+</h2>
 
 Add 500 STX tokens to the specified testnet address. Testnet STX addresses begin with `ST`. If the `stacking`
 parameter is set to `true`, the faucet will add the required number of tokens for individual stacking to the
@@ -47,31 +53,20 @@ Request the amount of STX tokens needed for individual address stacking
 
 </Property>
 
-| Status code | Description |
-| ----------- | ----------- |
-| `200` | Success |
-| `500` | Faucet call failed |
+| Status code | Description       |
+|:------------|:------------------|
+| `200`       | Success           |
+| `500`       | Faucet call failed|
 
-</APIInfo>
+</div>
 
-<APIExample className='api-example xl:w-[50%]'>
+<APIExample>
 
-<Tabs items={["cURL", "Stacks CLI"]}>
-
-<Tab value={"cURL"}>
-  ```bash title="Terminal"
-  curl -X POST \
-    "https://api.testnet.hiro.so/extended/v1/faucets/stx?address=ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
-  ```
-</Tab>
-
-<Tab value={"Stacks CLI"}>
-  ```bash title="Terminal"
-  stx faucet ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-  ```
-</Tab>
-
-</Tabs>
+```bash title="Terminal"
+curl -X POST \
+  "https://api.testnet.hiro.so/extended/v1/faucets/stx?address=ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM" \
+  -H 'Accept: application/json'
+```
 
 <Tabs items={["200"]}>
 
@@ -89,7 +84,7 @@ POST request that initiates a transfer of tokens to a specified testnet address
 
 <Accordions>
 
-<Accordion title={"Schema"}>
+<Accordion title="Typescript Definition">
 
 ```ts
 /**
