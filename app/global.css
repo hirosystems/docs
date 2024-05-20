@@ -129,13 +129,13 @@ figure.not-prose {
   margin-bottom: 1.5rem;
 }
 
-.api h2 > p {
-  color: var(--foreground); /* Default to light mode color */
-  font-size: 0.875rem !important; /* This size represents Tailwind's text-sm */
+.api h2 {
+  margin-bottom: 1rem;
 }
 
-.dark .api h2 > p {
-  color: var(--accent-foreground); /* Dark mode color */
+.api h2 > p {
+  color: hsl(var(--foreground) / 1);
+  font-size: 0.95rem !important; /* This size represents Tailwind's text-sm */
 }
 
 .size-10 {

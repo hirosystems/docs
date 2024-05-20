@@ -36,7 +36,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
         segment.charAt(0).toUpperCase() + segment.slice(1);
 
       // Check if there is a second segment and append it
-      if (page.slugs[2]) {
+      if (page.slugs[2] && page.slugs[1].toLowerCase() !== "api") {
         const secondSegment = page.slugs[2];
         prefix +=
           " " +
