@@ -864,6 +864,8 @@ The `Uint8Array` buffer that the expected value should have.
     // @noErrors
     // [!code word:toBeBuff]
     // [!code word:bufferFromHex]
+    import { Cl } from '@stacks/transactions';
+
     const { result } = simnet.callReadOnlyFn(
       "helpers",
       "get-tx-hash",
@@ -892,6 +894,158 @@ The `Uint8Array` buffer that the expected value should have.
       <Accordion title="Schema">
         ```ts
         toBeBuff(expected: Uint8Array)
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`toBeList`</h2>
+
+Asserts the value of a Clarity list containing an array of Clarity values.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"expected"} type={"ClarityValue[]"}>
+
+The `Uint8Array` buffer that the expected value should have.
+
+</Property>
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Checking for a list of Clarity values</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:toBelist]
+    import { Cl } from '@stacks/transactions';
+
+    const { result } = simnet.callReadOnlyFn(
+      'helpers',
+      'get-addresses',
+      [],
+      simnet.deployer
+    );
+
+    expect(result).toBeList(
+      [
+        Cl.standardPrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+        Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'),
+        Cl.standardPrincipal('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG')
+      ]
+    );
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+      ```clarity title="helpers.clar"
+      // [!code word:get-addresses]
+      (define-read-only (get-addresses)
+        (list
+          'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+          'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+          'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG
+        )
+      )
+      ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        toBeList(expected: ClarityValue[])
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`toBeTuple`</h2>
+
+Asserts the value of a Clarity tuple.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"expected"} type={"object"}>
+
+The `object` of Clarity values that the expected value should have.
+
+</Property>
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Checking for a tuple</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:toBeTuple]
+    import { Cl } from '@stacks/transactions';
+    
+    const { result } = simnet.callReadOnlyFn(
+      'pool',
+      'get-participant-data',
+      [Cl.standardPrincipal(simnet.deployer)],
+      simnet.deployer
+    );
+
+    expect(result).toBeTuple({
+      enrollmentBlock: Cl.some(Cl.uint(1)),
+      contributionAmount: Cl.some(Cl.uint(19000000)),
+    });
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+      ```clarity title="pool.clar"
+      // [!code word:get-participant-data]
+      (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+
+      (define-read-only (get-participant (who principal))
+        (map-get? ParticipantStatus who)
+      )
+
+      (define-read-only (get-participant-data (who principal))
+        {
+          enrollmentBlock: (get enrollmentBlock (map-get? ParticipantStatus who)),
+          contributionAmount: (get contributionAmount (map-get? ParticipantStatus who))
+        }
+      )
+
+      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 }) // [!code highlight]
+      ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        toBeTuple(expected: Record<string, ClarityValue>)
         ```
       </Accordion>
     </Accordions>
