@@ -73,13 +73,13 @@ Decrypts user data for secure storage.
 <Tabs defaultValue="pending">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="pending" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handle incoming authentication response</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling pending authentication</Badge>
     </TabsTrigger>
     <TabsTrigger value="status" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Check if a user is signed in</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Checking if user is signed in</Badge>
     </TabsTrigger>
     <TabsTrigger value="user-data" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Load data for signed in user</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Loading data for signed in user</Badge>
     </TabsTrigger>
     <TabsTrigger value="sign-out" className='tab group'>
       <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Signing out a user</Badge>
@@ -128,9 +128,7 @@ Decrypts user data for secure storage.
     ```tsx twoslash
     // @noErrors
     // [!code word:signUserOut]
-    function logout() {
-      userSession.signUserOut();
-    }
+    userSession.signUserOut();
     ```
   </TabsContent>
   <TabsContent value='encrypt'>

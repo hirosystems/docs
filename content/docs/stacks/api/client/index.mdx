@@ -12,28 +12,13 @@ The `@stacks/blockchain-api-client` library provides a robust interface for inte
 
 The client includes automatically generated HTTP API methods, comprehensive TypeScript definitions for Clarity smart contract values, and a WebSocket client for real-time data streaming.
 
-<Tabs id="language" persist items={['JS', 'Typescript']}>
-  <Tab value="JS">
-    ```ts twoslash
-    // @noErrors
-    import { AccountsApi } from '@stacks/blockchain-api-client';
-   
-    const accounts = new AccountsApi(apiConfig);
+```ts twoslash
+// @noErrors
+import { AccountsApi } from '@stacks/blockchain-api-client';
 
-    await accounts.getAccountTransactions({
-      principal: 'ST000000000000000000002AMW42H',
-    });
-    ```
-  </Tab>
-  <Tab value="Typescript">
-    ```ts twoslash
-    // @noErrors
-    import { AccountsApi } from '@stacks/blockchain-api-client';
-    const accounts = new AccountsApi(apiConfig);
+const accounts = new AccountsApi(apiConfig);
 
-    await accounts.getAccountTransactions({
-      principal: 'ST000000000000000000002AMW42H',
-    });
-    ```
-  </Tab>
-</Tabs>
+await accounts.getAccountTransactions({
+  principal: 'ST000000000000000000002AMW42H',
+});
+```
