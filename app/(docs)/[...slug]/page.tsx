@@ -47,16 +47,6 @@ export default function Page({ params }: { params: Param }): JSX.Element {
 
       if (page.slugs[1].toLowerCase() === "token-metadata-api") {
         prefix = "Token Metadata API";
-      } else if (
-        page.slugs[2] &&
-        page.slugs[1].toLowerCase() !== "token-metadata-api"
-      ) {
-        const secondSegment = page.slugs[2];
-        prefix +=
-          " " +
-          (specialCases[
-            secondSegment.toLowerCase() as keyof typeof specialCases
-          ] || secondSegment.charAt(0).toUpperCase() + secondSegment.slice(1));
       }
 
       return prefix;
