@@ -5,7 +5,12 @@ import { getHighlighter } from "shiki";
 
 const highlighter = await getHighlighter({
   langs: ["bash", "ts", "tsx"],
-  themes: ["github-light", "github-dark"],
+  themes: [
+    "github-light",
+    "github-dark",
+    "catppuccin-latte",
+    "catppuccin-mocha",
+  ],
 });
 
 export type CodeBlockProps = HTMLAttributes<HTMLPreElement> & {
@@ -26,8 +31,8 @@ export function CodeBlock({
         lang,
         defaultColor: false,
         themes: {
-          light: "github-light",
-          dark: "github-dark",
+          light: "catppuccin-latte",
+          dark: "catppuccin-mocha",
         },
         transformers: [
           {
