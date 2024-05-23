@@ -1,0 +1,179 @@
+---
+title: Get stacking pool members
+description: Retrieves the list of stacking pool members for a given delegator principal.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/extended/beta/stacking/{pool_principal}/delegations`}</p>
+</h2>
+
+Retrieves the list of stacking pool members for a given delegator principal.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"pool_principal"} type={"string"}>
+
+Address principal of the stacking pool delegator
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"after_block"} type={"integer"}>
+
+If specified, only delegation events after the given block will be included
+
+</Property>
+
+<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+
+whether or not to include Stackers from unconfirmed transactions
+
+<span>Example:  `true`</span>
+
+<span>Default:  `false`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+number of items to return
+
+<span>Example:  `100`</span>
+
+<span>Default:  `100`</span>
+
+<span>Maximum:  `200`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+number of items to skip
+
+<span>Example:  `300`</span>
+
+<span>Default:  `0`</span>
+
+</Property>
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/beta/stacking/string/delegations"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns stacking pool member details for a given pool (delegator) principal
+
+```json title="Example Response"
+{
+  "limit": 200,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "stacker": "string",
+      "pox_addr": "string",
+      "amount_ustx": "string",
+      "burn_block_unlock_height": 0,
+      "block_height": 0,
+      "tx_id": "string"
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request that returns stacking pool member details for a given pool (delegator) principal
+ */
+export interface PoolDelegationsResponse {
+  /**
+   * The number of Stackers to return
+   */
+  limit: number;
+  /**
+   * The number to Stackers to skip (starting at `0`)
+   */
+  offset: number;
+  /**
+   * The total number of Stackers
+   */
+  total: number;
+  results: PoolDelegation[];
+}
+export interface PoolDelegation {
+  /**
+   * The principal of the pool member that issued the delegation
+   */
+  stacker: string;
+  /**
+   * The pox-addr value specified by the stacker in the delegation operation
+   */
+  pox_addr?: string;
+  /**
+   * The amount of uSTX delegated by the stacker
+   */
+  amount_ustx: string;
+  /**
+   * The optional burnchain block unlock height that the stacker may have specified
+   */
+  burn_block_unlock_height?: number;
+  /**
+   * The block height at which the stacker delegation transaction was mined at
+   */
+  block_height: number;
+  /**
+   * The tx_id of the stacker delegation operation
+   */
+  tx_id: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

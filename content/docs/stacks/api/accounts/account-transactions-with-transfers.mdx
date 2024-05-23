@@ -1,6 +1,6 @@
 ---
-title: Get account transactions
-description: Retrieves transactions for a specific account.
+title: Get account transactions with transfers
+description: Retrieves transactions for a specific account including STX transfers for each transaction.
 toc: false
 ---
 
@@ -23,13 +23,10 @@ import { InlineCode } from '@/components/inline-code';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/address/{principal}/transactions`}</p>
+  <p className="text-xs">{`/extended/v1/address/{principal}/transactions_with_transfers`}</p>
 </h2>
 
-Retrieves a list of all Transactions for a given Address or Contract Identifier. More information on Transaction types can be found [here](/stacks/api/txs).
-
-If you need to actively monitor new transactions for an address or contract id, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
-
+Retrieve all transactions for an account or contract identifier including STX transfers for each transaction.
 
 ### Path Parameters
 
@@ -47,7 +44,7 @@ Stacks address or a Contract identifier
 
 max number of account transactions to fetch
 
-<span>Example:  `42000`</span>
+<span>Example:  `20`</span>
 
 </Property>
 
@@ -55,7 +52,7 @@ max number of account transactions to fetch
 
 index of first account transaction to fetch
 
-<span>Example:  `42000`</span>
+<span>Example:  `10`</span>
 
 </Property>
 
@@ -63,7 +60,7 @@ index of first account transaction to fetch
 
 Filter for transactions only at this given block height
 
-<span>Example:  `42000`</span>
+<span>Example:  `66119`</span>
 
 </Property>
 
@@ -79,22 +76,22 @@ Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
 <Property required={false} deprecated={false} name={"until_block"} type={"string"}>
 
-returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+returned data representing the state up until that point in time, rather than the current block.
 
 <span>Example:  `60000`</span>
 
 </Property>
 
-| Status code | Description   |
-|:------------|:--------------|
-| `200`       | Success       |
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
 
 </div>
 
 <APIExample>
 
 ```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions_with_transfers"
 ```
 
 <Tabs items={["200"]}>
@@ -110,34 +107,100 @@ GET request that returns account transactions
   "total": 0,
   "results": [
     {
-      "tx_id": "string",
-      "nonce": 0,
-      "fee_rate": "string",
-      "sender_address": "string",
-      "sponsor_nonce": 0,
-      "sponsored": true,
-      "sponsor_address": "string",
-      "post_condition_mode": "allow",
-      "post_conditions": [
-        {
-          "principal": {
-            "type_id": "principal_origin"
-          },
-          "condition_code": "sent_equal_to",
+      "tx": {
+        "tx_id": "string",
+        "nonce": 0,
+        "fee_rate": "string",
+        "sender_address": "string",
+        "sponsor_nonce": 0,
+        "sponsored": true,
+        "sponsor_address": "string",
+        "post_condition_mode": "allow",
+        "post_conditions": [
+          {
+            "principal": {
+              "type_id": "principal_origin"
+            },
+            "condition_code": "sent_equal_to",
+            "amount": "string",
+            "type": "stx"
+          }
+        ],
+        "anchor_mode": "on_chain_only",
+        "block_hash": "string",
+        "block_height": 0,
+        "burn_block_time": 0,
+        "burn_block_time_iso": "string",
+        "parent_burn_block_time": 0,
+        "parent_burn_block_time_iso": "string",
+        "canonical": true,
+        "tx_index": 0,
+        "tx_status": "success",
+        "tx_result": {
+          "hex": "string",
+          "repr": "string"
+        },
+        "event_count": 0,
+        "parent_block_hash": "string",
+        "is_unanchored": true,
+        "microblock_hash": "string",
+        "microblock_sequence": 0,
+        "microblock_canonical": true,
+        "execution_cost_read_count": 0,
+        "execution_cost_read_length": 0,
+        "execution_cost_runtime": 0,
+        "execution_cost_write_count": 0,
+        "execution_cost_write_length": 0,
+        "events": [
+          {
+            "event_index": 0,
+            "event_type": "smart_contract_log",
+            "tx_id": "string",
+            "contract_log": {
+              "contract_id": "string",
+              "topic": "string",
+              "value": {
+                "hex": "string",
+                "repr": "string"
+              }
+            }
+          }
+        ],
+        "tx_type": "token_transfer",
+        "token_transfer": {
+          "recipient_address": "string",
           "amount": "string",
-          "type": "stx"
+          "memo": "string"
+        }
+      },
+      "stx_sent": "string",
+      "stx_received": "string",
+      "stx_transfers": [
+        {
+          "amount": "string",
+          "sender": "string",
+          "recipient": "string"
         }
       ],
-      "anchor_mode": "on_chain_only",
-      "tx_status": "pending",
-      "receipt_time": 0,
-      "receipt_time_iso": "string",
-      "tx_type": "token_transfer",
-      "token_transfer": {
-        "recipient_address": "string",
-        "amount": "string",
-        "memo": "string"
-      }
+      "ft_transfers": [
+        {
+          "asset_identifier": "string",
+          "amount": "string",
+          "sender": "string",
+          "recipient": "string"
+        }
+      ],
+      "nft_transfers": [
+        {
+          "asset_identifier": "string",
+          "value": {
+            "hex": "string",
+            "repr": "string"
+          },
+          "sender": "string",
+          "recipient": "string"
+        }
+      ]
     }
   ]
 }
@@ -148,136 +211,6 @@ GET request that returns account transactions
 <Accordion title={"Typescript Definition"}>
 
 ```ts
-/**
- * Describes all transaction types on Stacks 2.0 blockchain
- */
-export type MempoolTransaction =
-  | MempoolTokenTransferTransaction
-  | MempoolSmartContractTransaction
-  | MempoolContractCallTransaction
-  | MempoolPoisonMicroblockTransaction
-  | MempoolCoinbaseTransaction;
-/**
- * Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset
- */
-export type MempoolTokenTransferTransaction = AbstractMempoolTransaction & TokenTransferTransactionMetadata;
-/**
- * Abstract transaction. This schema makes up all properties common between all Stacks 2.0 transaction types
- */
-export type AbstractMempoolTransaction = BaseTransaction & {
-  tx_status: MempoolTransactionStatus;
-  /**
-   * A unix timestamp (in seconds) indicating when the transaction broadcast was received by the node.
-   */
-  receipt_time: number;
-  /**
-   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) timestamp indicating when the transaction broadcast was received by the node.
-   */
-  receipt_time_iso: string;
-};
-export type PostConditionMode = "allow" | "deny";
-/**
- * Post-conditionscan limit the damage done to a user's assets
- */
-export type PostCondition = PostConditionStx | PostConditionFungible | PostConditionNonFungible;
-export type PostConditionStx = {
-  principal: PostConditionPrincipal;
-} & {
-  condition_code: PostConditionFungibleConditionCode;
-  amount: string;
-  type: "stx";
-};
-export type PostConditionPrincipal =
-  | {
-      /**
-       * String literal of type `PostConditionPrincipalType`
-       */
-      type_id: "principal_origin";
-    }
-  | {
-      /**
-       * String literal of type `PostConditionPrincipalType`
-       */
-      type_id: "principal_standard";
-      address: string;
-    }
-  | {
-      /**
-       * String literal of type `PostConditionPrincipalType`
-       */
-      type_id: "principal_contract";
-      address: string;
-      contract_name: string;
-    };
-/**
- * A fungible condition code encodes a statement being made for either STX or a fungible token, with respect to the originating account.
- */
-export type PostConditionFungibleConditionCode =
-  | "sent_equal_to"
-  | "sent_greater_than"
-  | "sent_greater_than_or_equal_to"
-  | "sent_less_than"
-  | "sent_less_than_or_equal_to";
-export type PostConditionFungible = {
-  principal: PostConditionPrincipal;
-} & {
-  condition_code: PostConditionFungibleConditionCode;
-  type: "fungible";
-  amount: string;
-  asset: {
-    asset_name: string;
-    contract_address: string;
-    contract_name: string;
-  };
-};
-export type PostConditionNonFungible = {
-  principal: PostConditionPrincipal;
-} & {
-  condition_code: PostConditionNonFungibleConditionCode;
-  type: "non_fungible";
-  asset_value: {
-    hex: string;
-    repr: string;
-  };
-  asset: {
-    asset_name: string;
-    contract_address: string;
-    contract_name: string;
-  };
-};
-/**
- * A non-fungible condition code encodes a statement being made about a non-fungible token, with respect to whether or not the particular non-fungible token is owned by the account.
- */
-export type PostConditionNonFungibleConditionCode = "sent" | "not_sent";
-/**
- * `on_chain_only`: the transaction MUST be included in an anchored block, `off_chain_only`: the transaction MUST be included in a microblock, `any`: the leader can choose where to include the transaction.
- */
-export type TransactionAnchorModeType = "on_chain_only" | "off_chain_only" | "any";
-/**
- * Status of the transaction
- */
-export type MempoolTransactionStatus =
-  | "pending"
-  | "dropped_replace_by_fee"
-  | "dropped_replace_across_fork"
-  | "dropped_too_expensive"
-  | "dropped_stale_garbage_collect";
-/**
- * Describes representation of a Type-1 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-1-instantiating-a-smart-contract
- */
-export type MempoolSmartContractTransaction = AbstractMempoolTransaction & SmartContractTransactionMetadata;
-/**
- * Describes representation of a Type 2 Stacks 2.0 transaction: Contract Call
- */
-export type MempoolContractCallTransaction = AbstractMempoolTransaction & ContractCallTransactionMetadata;
-/**
- * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
- */
-export type MempoolPoisonMicroblockTransaction = AbstractMempoolTransaction & PoisonMicroblockTransactionMetadata;
-/**
- * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
- */
-export type MempoolCoinbaseTransaction = AbstractMempoolTransaction & CoinbaseTransactionMetadata;
 /**
  * Describes all transaction types on Stacks 2.0 blockchain
  */
@@ -390,6 +323,84 @@ export type AbstractTransaction = BaseTransaction & {
    */
   events: TransactionEvent[];
 };
+export type PostConditionMode = "allow" | "deny";
+/**
+ * Post-conditionscan limit the damage done to a user's assets
+ */
+export type PostCondition = PostConditionStx | PostConditionFungible | PostConditionNonFungible;
+export type PostConditionStx = {
+  principal: PostConditionPrincipal;
+} & {
+  condition_code: PostConditionFungibleConditionCode;
+  amount: string;
+  type: "stx";
+};
+export type PostConditionPrincipal =
+  | {
+      /**
+       * String literal of type `PostConditionPrincipalType`
+       */
+      type_id: "principal_origin";
+    }
+  | {
+      /**
+       * String literal of type `PostConditionPrincipalType`
+       */
+      type_id: "principal_standard";
+      address: string;
+    }
+  | {
+      /**
+       * String literal of type `PostConditionPrincipalType`
+       */
+      type_id: "principal_contract";
+      address: string;
+      contract_name: string;
+    };
+/**
+ * A fungible condition code encodes a statement being made for either STX or a fungible token, with respect to the originating account.
+ */
+export type PostConditionFungibleConditionCode =
+  | "sent_equal_to"
+  | "sent_greater_than"
+  | "sent_greater_than_or_equal_to"
+  | "sent_less_than"
+  | "sent_less_than_or_equal_to";
+export type PostConditionFungible = {
+  principal: PostConditionPrincipal;
+} & {
+  condition_code: PostConditionFungibleConditionCode;
+  type: "fungible";
+  amount: string;
+  asset: {
+    asset_name: string;
+    contract_address: string;
+    contract_name: string;
+  };
+};
+export type PostConditionNonFungible = {
+  principal: PostConditionPrincipal;
+} & {
+  condition_code: PostConditionNonFungibleConditionCode;
+  type: "non_fungible";
+  asset_value: {
+    hex: string;
+    repr: string;
+  };
+  asset: {
+    asset_name: string;
+    contract_address: string;
+    contract_name: string;
+  };
+};
+/**
+ * A non-fungible condition code encodes a statement being made about a non-fungible token, with respect to whether or not the particular non-fungible token is owned by the account.
+ */
+export type PostConditionNonFungibleConditionCode = "sent" | "not_sent";
+/**
+ * `on_chain_only`: the transaction MUST be included in an anchored block, `off_chain_only`: the transaction MUST be included in a microblock, `any`: the leader can choose where to include the transaction.
+ */
+export type TransactionAnchorModeType = "on_chain_only" | "off_chain_only" | "any";
 /**
  * Status of the transaction
  */
@@ -481,11 +492,78 @@ export type CoinbaseTransaction = AbstractTransaction & CoinbaseTransactionMetad
 /**
  * GET request that returns account transactions
  */
-export interface AddressTransactionsListResponse {
+export interface AddressTransactionsWithTransfersListResponse {
   limit: number;
   offset: number;
   total: number;
-  results: (MempoolTransaction | Transaction)[];
+  results: AddressTransactionWithTransfers[];
+}
+/**
+ * Transaction with STX transfers for a given address
+ */
+export interface AddressTransactionWithTransfers {
+  tx: Transaction;
+  /**
+   * Total sent from the given address, including the tx fee, in micro-STX as an integer string.
+   */
+  stx_sent: string;
+  /**
+   * Total received by the given address in micro-STX as an integer string.
+   */
+  stx_received: string;
+  stx_transfers: {
+    /**
+     * Amount transferred in micro-STX as an integer string.
+     */
+    amount: string;
+    /**
+     * Principal that sent STX. This is unspecified if the STX were minted.
+     */
+    sender?: string;
+    /**
+     * Principal that received STX. This is unspecified if the STX were burned.
+     */
+    recipient?: string;
+  }[];
+  ft_transfers?: {
+    /**
+     * Fungible Token asset identifier.
+     */
+    asset_identifier: string;
+    /**
+     * Amount transferred as an integer string. This balance does not factor in possible SIP-010 decimals.
+     */
+    amount: string;
+    /**
+     * Principal that sent the asset.
+     */
+    sender?: string;
+    /**
+     * Principal that received the asset.
+     */
+    recipient?: string;
+  }[];
+  nft_transfers?: {
+    /**
+     * Non Fungible Token asset identifier.
+     */
+    asset_identifier: string;
+    /**
+     * Non Fungible Token asset value.
+     */
+    value: {
+      hex: string;
+      repr: string;
+    };
+    /**
+     * Principal that sent the asset.
+     */
+    sender?: string;
+    /**
+     * Principal that received the asset.
+     */
+    recipient?: string;
+  }[];
 }
 /**
  * Transaction properties that are available from a raw serialized transactions. These are available for transactions in the mempool as well as mined transactions.
@@ -516,6 +594,18 @@ export interface BaseTransaction {
   post_condition_mode: PostConditionMode;
   post_conditions: PostCondition[];
   anchor_mode: TransactionAnchorModeType;
+}
+export interface AbstractTransactionEvent {
+  event_index: number;
+}
+export interface TransactionEventAsset {
+  asset_event_type?: TransactionEventAssetType;
+  asset_id?: string;
+  sender?: string;
+  recipient?: string;
+  amount?: string;
+  value?: string;
+  memo?: string;
 }
 /**
  * Metadata associated with token-transfer type transactions
@@ -614,18 +704,6 @@ export interface CoinbaseTransactionMetadata {
      */
     alt_recipient?: string;
   };
-}
-export interface AbstractTransactionEvent {
-  event_index: number;
-}
-export interface TransactionEventAsset {
-  asset_event_type?: TransactionEventAssetType;
-  asset_id?: string;
-  sender?: string;
-  recipient?: string;
-  amount?: string;
-  value?: string;
-  memo?: string;
 }
 
 ```

@@ -1,0 +1,136 @@
+---
+title: Get the latest nonce
+description: Retrieves the latest nonce values used by an account by inspecting the mempool and anchored transactions.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/extended/v1/address/{principal}/nonces`}</p>
+</h2>
+
+Retrieves the latest nonce values used by an account by inspecting the mempool and anchored transactions.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+Stacks address
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"block_height"} type={"number"}>
+
+Optionally get the nonce at a given block height.
+
+<span>Example:  `66119`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"block_hash"} type={"string"}>
+
+Optionally get the nonce at a given block hash. Note - Use either of the query parameters but not both at a time.
+
+<span>Example:  `"0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+The latest nonce values used by an account by inspecting the mempool and anchored transactions
+
+```json title="Example Response"
+{
+  "last_mempool_tx_nonce": 0,
+  "last_executed_tx_nonce": 0,
+  "possible_next_nonce": 0,
+  "detected_missing_nonces": [
+    0
+  ],
+  "detected_mempool_nonces": [
+    0
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * The latest nonce values used by an account by inspecting the mempool and anchored transactions
+ */
+export interface AddressNonces {
+  /**
+   * The latest nonce found within mempool transactions sent by this address. Will be null if there are no current mempool transactions for this address.
+   */
+  last_mempool_tx_nonce: number;
+  /**
+   * The latest nonce found within transactions sent by this address, including unanchored microblock transactions. Will be null if there are no current transactions for this address.
+   */
+  last_executed_tx_nonce: number;
+  /**
+   * The likely nonce required for creating the next transaction, based on the last nonces seen by the API. This can be incorrect if the API's mempool or transactions aren't fully synchronized, even by a small amount, or if a previous transaction is still propagating through the Stacks blockchain network when this endpoint is called.
+   */
+  possible_next_nonce: number;
+  /**
+   * Nonces that appear to be missing and likely causing a mempool transaction to be stuck.
+   */
+  detected_missing_nonces: number[];
+  /**
+   * Nonces currently in mempool for this address.
+   */
+  detected_mempool_nonces?: number[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>
