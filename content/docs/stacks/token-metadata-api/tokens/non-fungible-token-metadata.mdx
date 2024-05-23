@@ -1,0 +1,238 @@
+---
+title: Non-Fungible Token Metadata
+description: Retrieves metadata for a SIP-009 Non-Fungible Token
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/metadata/v1/nft/{principal}/{token_id}`}</p>
+</h2>
+
+## Non-Fungible Token Metadata
+
+Retrieves metadata for a SIP-009 Non-Fungible Token
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"locale"} type={"string"}>
+
+Metadata localization to retrieve
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+SIP-009 compliant smart contract principal
+
+<span>Example:  `"SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12"`</span>
+
+<span>Pattern:  `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"token_id"} type={"integer"}>
+
+Token ID to retrieve
+
+<span>Example:  `"35"`</span>
+
+</Property>
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Default Response |
+| `404` | Default Response |
+| `422` | Default Response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12/35"
+```
+
+<Tabs items={["200","404","422"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "token_uri": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json",
+  "metadata": {
+    "sip": 16,
+    "name": "Satoshi's Team #12200",
+    "description": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets",
+    "image": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
+    "cached_image": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
+    "cached_thumbnail_image": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
+    "attributes": [
+      {
+        "trait_type": "Background",
+        "display_type": "string",
+        "value": "value"
+      }
+    ],
+    "properties": {
+      "collection": "Foo Collection",
+      "total_supply": "10000"
+    },
+    "localization": {
+      "uri": "http://token.com/metadata?hl={locale}",
+      "default": "en",
+      "locales": [
+        "en",
+        "jp"
+      ]
+    }
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface NftMetadataResponse {
+  token_uri?: string;
+  metadata?: Metadata;
+}
+export interface Metadata {
+  sip: number;
+  name?: string;
+  description?: string;
+  image?: string;
+  cached_image?: string;
+  cached_thumbnail_image?: string;
+  attributes?: MetadataAttribute[];
+  properties?: MetadataProperties;
+  localization?: MetadataLocalization;
+}
+export interface MetadataAttribute {
+  trait_type: string;
+  display_type?: string;
+  value: MetadataValue;
+}
+export interface MetadataValue {
+  [k: string]: unknown;
+}
+export interface MetadataProperties {
+  [k: string]: MetadataValue1;
+}
+export interface MetadataValue1 {
+  [k: string]: unknown;
+}
+export interface MetadataLocalization {
+  uri: string;
+  default: string;
+  locales: string[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+
+
+```json title="Example Response"
+{
+  "error": "Token not found"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export type NotFoundErrorResponse = TokenNotFoundResponse | ContractNotFoundResponse;
+
+export interface TokenNotFoundResponse {
+  error: "Token not found";
+}
+export interface ContractNotFoundResponse {
+  error: "Contract not found";
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"422"}>
+
+
+
+```json title="Example Response"
+{
+  "error": "Token metadata fetch in progress"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export type ErrorResponse =
+  | TokenMetadataFetchInProgressResponse
+  | LocaleNotFoundResponse
+  | InvalidTokenContractResponse
+  | InvalidTokenMetadataResponse;
+
+export interface TokenMetadataFetchInProgressResponse {
+  error: "Token metadata fetch in progress";
+}
+export interface LocaleNotFoundResponse {
+  error: "Locale not found";
+}
+export interface InvalidTokenContractResponse {
+  error: "Token contract is invalid or does not conform to its token standard";
+}
+export interface InvalidTokenMetadataResponse {
+  error: "Token metadata is unreachable or does not conform to SIP-016";
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

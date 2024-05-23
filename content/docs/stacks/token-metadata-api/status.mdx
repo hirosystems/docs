@@ -1,0 +1,115 @@
+---
+title: Status
+description: Retrieves information about the Token Metadata API including the server version
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/metadata/v1/`}</p>
+</h2>
+
+Retrieves information about the Token Metadata API including the server version
+
+### Parameters
+
+No parameters.
+
+| Status code | Description |
+| :---------- | :---------- |
+| `200`       | Success     |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/metadata/v1/"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "server_version": "token-metadata-api v0.0.1 (master:a1b2c3)",
+  "status": "ready",
+  "tokens": {
+    "ft": 512,
+    "nft": 493452,
+    "sft": 44
+  },
+  "token_contracts": {
+    "sip-009": 3101,
+    "sip-010": 512,
+    "sip-013": 11
+  },
+  "job_queue": {
+    "pending": 430562,
+    "queued": 512,
+    "done": 12532,
+    "failed": 11
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface ApiStatusResponse {
+  server_version: string;
+  status: string;
+  tokens?: ApiTokenCount;
+  token_contracts?: ApiTokenContractCount;
+  job_queue?: ApiJobCount;
+}
+export interface ApiTokenCount {
+  ft?: number;
+  nft?: number;
+  sft?: number;
+}
+export interface ApiTokenContractCount {
+  "sip-009"?: number;
+  "sip-010"?: number;
+  "sip-013"?: number;
+}
+export interface ApiJobCount {
+  pending?: number;
+  queued?: number;
+  done?: number;
+  failed?: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

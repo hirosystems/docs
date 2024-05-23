@@ -1,0 +1,96 @@
+---
+title: Usage
+description: Go over the multiple ways to make requests to the Token Metadata API.
+---
+
+### Making requests
+
+To make a request to the Stacks API, you can paste the `curl` command below in your terminal.
+
+```bash title="Terminal"
+curl -L 'https://api.mainnet.hiro.so/v2/info' \
+-H 'Accept: application/json'
+```
+
+If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key. If you are using a legacy user key and you have multiple projects, you will also need to specify the Project Id. For improved security, we recommend transitioning to project based keys instead.
+
+```bash title="Terminal"
+curl -L 'https://api.mainnet.hiro.so/v2/info' \
+-H 'Accept: application/json' \
+-H 'X-API-Key: $HIRO_API_KEY' # [!code highlight]
+```
+
+You should get a response back that resembles the following:
+
+```json
+{
+  "peer_version": 402653194,
+  "pox_consensus": "0a4786879dc73ab2d9b91be3c4648fb0c4f828b1",
+  "burn_block_height": 844612,
+  "stable_pox_consensus": "dd556423f4ce94dbd02b2da1cbfbb7027637472e",
+  "stable_burn_block_height": 844605,
+  "server_version": "stacks-node 2.5.0.0.3 (release/2.5.0.0.0:52d425d, release build, linux [x86_64])",
+  "network_id": 1,
+  "parent_network_id": 3652501241,
+  "stacks_tip_height": 151040,
+  "stacks_tip": "f8879c3eac9b2d120f815dc796afc87b449d6a8a38288cb000933bb0408f6442",
+  "stacks_tip_consensus_hash": "0a4786879dc73ab2d9b91be3c4648fb0c4f828b1",
+  "genesis_chainstate_hash": "74237aa39aa50a83de11a4f53e9d3bb7d43461d1de9873f402e5453ae60bc59b",
+  "unanchored_tip": null,
+  "unanchored_seq": null,
+  "exit_at_block_height": null,
+  "node_public_key": "02620bc5226229ed02846dd277a87e6fc25bc8c621354bc0620ad088b367d76aa6",
+  "node_public_key_hash": "28c7582ccd946e5fb623d8ecaad925295f4d2bb0",
+  "affirmations": {
+    "heaviest": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "stacks_tip": "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "sortition_tip": "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "tentative_best": "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp"
+  },
+  "last_pox_anchor": {
+    "anchor_block_hash": "b42cf4cc41154b23f7dfd988d64f5fbd830776dadcb9f69cb7b5d55280c9effc",
+    "anchor_block_txid": "7899bd6f1ac7f973f27fe51a1a7d0a3890f332c9bd0bde0319b4e738f9e2ee8d"
+  },
+  "stackerdbs": []
+}
+```
+
+### Making requests using API Client
+
+We also maintain a standalone API client that you can use to make requests to the Stacks API. This client is available as a package on npm and can be installed via npm or yarn.
+
+```package-install title="Terminal"
+@stacks/blockchain-api-client
+```
+
+Example usage:
+
+```ts
+import fetch from 'cross-fetch';
+import {
+  Configuration,
+  AccountsApi,
+  AccountsApiInterface,
+  AddressBalanceResponse,
+  AddressBalanceResponseStx,
+} from '@stacks/blockchain-api-client';
+(async () => {
+  const apiConfig: Configuration = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: 'https://api.testnet.hiro.so', // defaults to http://localhost:3999
+  });
+  const principal: string = 'ST000000000000000000002AMW42H';
+  // initiate the /accounts API with the basepath and fetch library
+  const accountsApi: AccountsApiInterface = new AccountsApi(apiConfig);
+  // get balance for a specific account
+  const balance: AddressBalanceResponse = await accountsApi.getAccountBalance({
+    principal,
+  });
+  // get STX balance details
+  const stxAmount: AddressBalanceResponseStx = balance.stx;
+  console.log(stxAmount);
+})().catch(console.error);
+```
+
+For more information on the API client, you can check out the [API Client documentation](/stacks/api/client).

@@ -1,110 +1,87 @@
 ---
 title: Installation
-description: Support multiple languages in your documentation
+description: Installing Stacks.js packages.
 ---
 
-Fumadocs has built-in support for internationalized routing.
-You can define a list of supported languages and pass it to i18n utilities. Read
-the
-[Next.js Docs](https://nextjs.org/docs/app/building-your-application/routing/internationalization)
-to learn more about implementing I18n in Next.js.
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-```tsx
-<div>Hello World</div>  // [!code highlight]
-<div>Hello World</div>
-<div>Goodbye</div>
-<div>Hello World</div>
-```
+Stacks.js is separated into many smaller packages, which can be installed individually and are published under the `@stacks` scope.
 
-```js
-// [!code word:config]
-const config = {
-  reactStrictMode: true,
-};
-```
+The most commonly used packages are:
 
-## Setup
+<Tabs defaultValue="connect">
+  <TabsList className='flex flex-wrap md:w-max'>
+    <TabsTrigger value="connect" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/connect</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="network" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/network</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="transactions" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/transactions</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="client" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/blockchain-api-client</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="connect">
+    ```package-install
+    @stacks/connect
+    ```
 
-1. Put all supported languages in a file.
+    Stacks Connect, for building Stacks-ready web applications
+  </TabsContent>
+  <TabsContent value="network">
+    ```package-install
+    @stacks/network
+    ```
 
-```ts title="i18n.ts"
-export const defaultLanguage = 'en';
-export const languages = ['en', 'cn'];
-```
+    Network and API library for working with Stacks blockchain nodes.
+  </TabsContent>
+  <TabsContent value="transactions">
+    ```package-install
+    @stacks/transactions
+    ```
 
-2. Change your current source configurations.
+    Construct, decode transactions and work with Clarity smart contracts on the Stacks blockchain.
+  </TabsContent>
+  <TabsContent value="client">
+    ```package-install
+    @stacks/blockchain-api-client
+    ```
 
-```ts title="source.ts"
-import { languages } from '@/i18n';
-import { map } from '@/.map';
-import { loader } from 'fumadocs-core/source';
+    API client library for all Stacks Blockchain API endpoints.
+  </TabsContent>
+</Tabs>
 
-export const { getPage, getPages, pageTree } = loader({
-  languages,
-  ...
-});
-```
+<Accordions>
+  <Accordion title="All available packages">
+  [`@stacks/connect`](/stacks/stacks.js/packages/auth) - Stacks Connect, for building Stacks-ready web applications
 
-3. Create the middleware that redirects users when missing locale.
+  [`@stacks/auth`](/stacks/stacks.js/packages/auth) - Construct and decode authentication requests for Stacks apps.
 
-```ts title="middleware.ts"
-import { defaultLanguage, languages } from '@/i18n';
-import { createI18nMiddleware } from 'fumadocs-core/middleware';
-import { NextRequest } from 'next/server';
+  [`@stacks/transactions`](/stacks/stacks.js/packages/transactions) - Construct, decode transactions and work with Clarity smart contracts on the Stacks blockchain.
 
-export default createI18nMiddleware({
-  languages,
-  defaultLanguage,
-});
+  [`@stacks/wallet-sdk`](/stacks/stacks.js/packages/wallet-sdk) - Library for building wallets, managing accounts, and handling keys for the Stacks blockchain.
 
-export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-};
-```
+  [`@stacks/storage`](/stacks/stacks.js/packages/storage) - Store and fetch files with Gaia, the decentralized storage system.
 
-4. Create a dynamic route, ensure all special files are nested under
-   `/app/[lang]`.
+  [`@stacks/profile`](/stacks/stacks.js/packages/profile) - Functions for manipulating user profiles.
 
-```tsx title="app/[lang]/layout.tsx"
-export default function Layout({ params }: { params: { lang: string } }) {
-  return (
-    <html lang={params.lang}>
-      <body>{children}</body>
-    </html>
-  );
-}
-```
+  [`@stacks/encryption`](/stacks/stacks.js/packages/encryption) - Encryption functions used by stacks.js packages.
 
-### Get Pages
+  [`@stacks/network`](/stacks/stacks.js/packages/network) - Network and API library for working with Stacks blockchain nodes.
 
-To get the pages of a specific language, use the utilities exported from
-`source.ts`.
+  [`@stacks/common`](/stacks/stacks.js/packages/common) - Common utilities used by stacks.js packages.
 
-```ts
-import { getPage, getPages, pageTree } from '@/source';
+  [`@stacks/bns`](/stacks/stacks.js/packages/bns) - Library for interacting with the BNS contract.
 
-// get page tree
-pageTree[params.lang];
+  [`@stacks/stacking`](/stacks/stacks.js/packages/stacking) - Library for PoX stacking.
 
-// get page
-getPage(params.slug, params.lang);
+  [`@stacks/cli`](/stacks/stacks.js/packages/cli) - Command line interface to interact with auth, storage, and Stacks transactions.
 
-// get pages
-getPages(params.lang);
-```
-
-### Static Generation
-
-Generate parameters for every language and page.
-
-```tsx
-export async function generateStaticParams() {
-  return languages.flatMap((lang) =>
-    getPages(lang)!.map((page) => ({
-      slug: page.slug,
-      lang,
-    })),
-  );
-}
-```
+  [`@stacks/blockchain-api-client`](/stacks/api/client) - API client library for all Stacks Blockchain API endpoints.
+  </Accordion>
+</Accordions>
