@@ -12,7 +12,7 @@ curl -L 'https://api.mainnet.hiro.so/v2/info' \
 -H 'Accept: application/json'
 ```
 
-If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key. If you are using a legacy user key and you have multiple projects, you will also need to specify the Project Id. For improved security, we recommend transitioning to project based keys instead.
+If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key.
 
 ```bash title="Terminal"
 curl -L 'https://api.mainnet.hiro.so/v2/info' \
@@ -57,7 +57,7 @@ You should get a response back that resembles the following:
 
 ### Making requests using API Client
 
-We also maintain a standalone API client that you can use to make requests to the Stacks API. This client is available as a package on npm and can be installed via npm or yarn.
+We also maintain a standalone API client that you can use to make requests to the Stacks API. This client is available as a package and can be installed with the following command:
 
 ```package-install title="Terminal"
 @stacks/blockchain-api-client

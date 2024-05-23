@@ -42,7 +42,7 @@ Optional overrides for the request initialization settings.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="get-assets">
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
     
@@ -61,7 +61,7 @@ Optional overrides for the request initialization settings.
     <Accordions>
 
     <Accordion title={"Full Code Sample"}>
-      ```tsx twoslash
+      ```ts twoslash
       import {
         UserSession,
         makeAuthRequest,
@@ -171,7 +171,7 @@ Decrypts user data for secure storage.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="pending">
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:isSignInPending]
     // [!code word:handlePendingSignIn]
@@ -185,14 +185,14 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='status'>
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:isUserSignedIn]
     const isSignedIn = userSession.isUserSignedIn();
     ```
   </TabsContent>
   <TabsContent value='user-data'>
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:loadUserData]
     const isSignedIn = userSession.isUserSignedIn();
@@ -204,7 +204,7 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='sign-out'>
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:signUserOut]
     function logout() {
@@ -213,7 +213,7 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='encrypt'>
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:encryptContent]
     const message = 'My secret message';
@@ -222,7 +222,7 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='decrypt'>
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:decryptContent]
     const message = 'My secret message';

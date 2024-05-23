@@ -40,7 +40,7 @@ Returns the current block height of the simnet.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```tsx twoslash
+    ```ts twoslash
     // [!code word:blockHeight]
     // @noErrors
     const currentBlockHeight = simnet.blockHeight;
@@ -82,7 +82,7 @@ Returns the default deployer address as defined in the project file.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:deployer]
     const currentDeployerAddress = simnet.deployer;
@@ -97,7 +97,7 @@ Returns the default deployer address as defined in the project file.
     </Accordions>
   </TabsContent>
   <TabsContent value="set-deployer">
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'; // [!code highlight]
     const newDeployer = simnet.deployer
@@ -138,7 +138,7 @@ This represents the Stacks blockchain's progress through discrete time periods, 
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```tsx twoslash
+    ```ts twoslash
     // @noErrors
     // [!code word:currentEpoch]
     const epoch = simnet.currentEpoch;
