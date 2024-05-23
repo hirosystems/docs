@@ -1,0 +1,93 @@
+---
+title: Get Proof-of-Transfer details
+description: Retrieves Proof-of-Transfer (PoX) information.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/v2/pox`}</p>
+</h2>
+
+Retrieves Proof-of-Transfer (PoX) information. Can be used for Stacking.
+
+| Status code | Description   |
+|:------------|:--------------|
+| `200`       | Success       |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/v2/pox"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+Get Proof of Transfer (PoX) information
+
+```json title="Example Response"
+{
+  "contract_id": "string",
+  "first_burnchain_block_height": 0,
+  "min_amount_ustx": 0,
+  "registration_window_length": 0,
+  "rejection_fraction": 0,
+  "reward_cycle_id": 0,
+  "reward_cycle_length": 0,
+  "rejection_votes_left_required": 0,
+  "total_liquid_supply_ustx": 0
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Get Proof of Transfer (PoX) information
+ */
+export interface CoreNodePoxResponse {
+  contract_id: string;
+  first_burnchain_block_height: number;
+  min_amount_ustx: number;
+  registration_window_length: number;
+  rejection_fraction: number;
+  reward_cycle_id: number;
+  reward_cycle_length: number;
+  rejection_votes_left_required: number;
+  total_liquid_supply_ustx: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,6 +1,6 @@
 ---
-title: Get the network target block time
-description: Retrieves the target block times for mainnet and testnet.
+title: Get total STX supply in plain text format
+description: Retrieves the total STX supply as plain text.
 toc: false
 ---
 
@@ -19,27 +19,23 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/info/network_block_times`}</p>
+  <p className="text-xs">{`/extended/v1/stx_supply/total/plain`}</p>
 </h2>
 
-Retrieves the target block times for mainnet and testnet. The block time is hardcoded and will change throughout the implementation phases of the testnet.
+Retrieves the total supply for STX tokens as plain text.
 
-### Parameters
-
-No parameters.
+**Note:** this uses the estimated future total supply for the year 2050.
 
 | Status code | Description |
 |:------------|:------------|
-| `200`       | Success     |
+| `200`       | success     |
 
 </div>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -L \
-  "https://api.mainnet.hiro.so/extended/v1/info/network_block_times" \
-  -H 'Accept: application/json'
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply/total/plain"
 ```
 
 <Tabs items={["200"]}>
@@ -49,31 +45,18 @@ curl -L \
 GET request that returns network target block times
 
 ```json title="Example Response"
-{
-  "mainnet": {
-    "target_block_time": 0
-  },
-  "testnet": {
-    "target_block_time": 0
-  }
-}
+"string"
 ```
 
 <Accordions>
 
-<Accordion title="Typescript Definition">
+<Accordion title={"Typescript Definition"}>
 
 ```ts
 /**
  * GET request that returns network target block times
  */
-export interface NetworkBlockTimesResponse {
-  mainnet: TargetBlockTime;
-  testnet: TargetBlockTime;
-}
-export interface TargetBlockTime {
-  target_block_time: number;
-}
+export type GetStxTotalSupplyPlainResponse = string;
 
 ```
 

@@ -1,0 +1,73 @@
+---
+title: Get circulating STX supply in plain text format
+description: Retrieves the circulating STX supply as plain text.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs">{`/extended/v1/stx_supply/circulating/plain`}</p>
+</h2>
+
+Retrieves the STX tokens currently in circulation that have been unlocked as plain text.
+
+| Status code | Description |
+|:------------|:------------|
+| `200`       | success     |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply/circulating/plain"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns network target block times
+
+```json title="Example Response"
+"string"
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Response that retrieves the circulating STX supply in plain text format
+ */
+export type GetStxCirculatingSupplyPlainResponse = string;
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>
