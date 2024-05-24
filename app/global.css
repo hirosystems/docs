@@ -146,3 +146,10 @@ figure.not-prose {
   width: 2.5rem/* 20px */;
   height: 2.5rem/* 20px */;
 }
+
+/* Add a deprecated strike through to sidebar links */
+a[href="/stacks/api/accounts/nft-events"] {
+  text-decoration: line-through;
+  color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
+}
+
