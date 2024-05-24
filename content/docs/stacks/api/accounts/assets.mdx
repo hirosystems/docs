@@ -1,0 +1,227 @@
+---
+title: Get account assets
+description: Retrieves a list of all assets events associated with an account or a Contract Identifier.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/assets`}</p>
+</h2>
+
+Retrieves a list of all assets events associated with an account or a Contract Identifier. This includes Transfers, Mints.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+Stacks address or a Contract identifier
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+max number of account assets to fetch
+
+<span>Example:  `20`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+index of first account assets to fetch
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+
+Include transaction data from unanchored (i.e. unconfirmed) microblocks
+
+<span>Example:  `true`</span>
+
+<span>Default:  `false`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
+
+returned data representing the state at that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+
+<span>Example:  `60000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns address assets
+
+```json title="Example Response"
+{
+  "limit": 30,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "event_index": 0,
+      "event_type": "smart_contract_log",
+      "tx_id": "string",
+      "contract_log": {
+        "contract_id": "string",
+        "topic": "string",
+        "value": {
+          "hex": "string",
+          "repr": "string"
+        }
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export type TransactionEvent =
+  | TransactionEventSmartContractLog
+  | TransactionEventStxLock
+  | TransactionEventStxAsset
+  | TransactionEventFungibleAsset
+  | TransactionEventNonFungibleAsset;
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventSmartContractLog = AbstractTransactionEvent & {
+  event_type: "smart_contract_log";
+  tx_id: string;
+  contract_log: {
+    contract_id: string;
+    topic: string;
+    value: {
+      hex: string;
+      repr: string;
+    };
+  };
+};
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventStxLock = AbstractTransactionEvent & {
+  event_type: "stx_lock";
+  tx_id: string;
+  stx_lock_event: {
+    locked_amount: string;
+    unlock_height: number;
+    locked_address: string;
+  };
+};
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventStxAsset = AbstractTransactionEvent & {
+  event_type: "stx_asset";
+  tx_id: string;
+  asset: TransactionEventAsset;
+};
+export type TransactionEventAssetType = "transfer" | "mint" | "burn";
+export type TransactionEventFungibleAsset = AbstractTransactionEvent & {
+  event_type: "fungible_token_asset";
+  tx_id: string;
+  asset: {
+    asset_event_type: string;
+    asset_id: string;
+    sender: string;
+    recipient: string;
+    amount: string;
+  };
+};
+export type TransactionEventNonFungibleAsset = AbstractTransactionEvent & {
+  event_type: "non_fungible_token_asset";
+  tx_id: string;
+  asset: {
+    asset_event_type: string;
+    asset_id: string;
+    sender: string;
+    recipient: string;
+    value: {
+      hex: string;
+      repr: string;
+    };
+  };
+};
+
+/**
+ * GET request that returns address assets
+ */
+export interface AddressAssetsListResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  results: TransactionEvent[];
+}
+export interface AbstractTransactionEvent {
+  event_index: number;
+}
+export interface TransactionEventAsset {
+  asset_event_type?: TransactionEventAssetType;
+  asset_id?: string;
+  sender?: string;
+  recipient?: string;
+  amount?: string;
+  value?: string;
+  memo?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

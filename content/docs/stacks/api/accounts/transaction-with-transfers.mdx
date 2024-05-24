@@ -23,7 +23,7 @@ import { InlineCode } from '@/components/inline-code';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/address/{principal}/{tx_id}/with_transfers`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/{tx_id}/with_transfers`}</p>
 </h2>
 
 Retrieves transaction details for a given `tx_id`, for a given account or contract Identifier.
@@ -55,8 +55,9 @@ Transaction id
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE/0x34d79c7cfc2fe525438736733e501a4bf0308a5556e3e080d1e2c0858aad7448/with_transfers"
+```bash title="Terminal"
+curl -X GET \
+  "https://api.mainnet.hiro.so/extended/v1/address/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE/0x34d79c7cfc2fe525438736733e501a4bf0308a5556e3e080d1e2c0858aad7448/with_transfers"
 ```
 
 <Tabs items={["200"]}>

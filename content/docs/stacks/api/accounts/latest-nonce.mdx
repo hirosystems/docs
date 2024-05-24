@@ -23,7 +23,7 @@ import { InlineCode } from '@/components/inline-code';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/address/{principal}/nonces`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/nonces`}</p>
 </h2>
 
 Retrieves the latest nonce values used by an account by inspecting the mempool and anchored transactions.
@@ -64,7 +64,7 @@ Optionally get the nonce at a given block hash. Note - Use either of the query p
 
 <APIExample>
 
-```bash title="curl"
+```bash title="Terminal"
 curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces"
 ```
 

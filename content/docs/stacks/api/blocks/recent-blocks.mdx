@@ -1,0 +1,244 @@
+---
+title: Get recent blocks
+description: Retrieves a list of recently mined blocks
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/block`}</p>
+</h2>
+
+Retrieves a list of recently mined blocks
+
+If you need to actively monitor new blocks, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
+
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+max number of blocks to fetch
+
+<span>Default:  `20`</span>
+
+<span>Maximum:  `30`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+index of first block to fetch
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | List of blocks |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/block"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns blocks
+
+```json title="Example Response"
+{
+  "limit": 30,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "canonical": true,
+      "height": 0,
+      "hash": "string",
+      "index_block_hash": "string",
+      "parent_block_hash": "string",
+      "burn_block_time": 0,
+      "burn_block_time_iso": "string",
+      "burn_block_hash": "string",
+      "burn_block_height": 0,
+      "miner_txid": "string",
+      "parent_microblock_hash": "string",
+      "parent_microblock_sequence": 0,
+      "txs": [
+        "string"
+      ],
+      "microblocks_accepted": [
+        "string"
+      ],
+      "microblocks_streamed": [
+        "string"
+      ],
+      "execution_cost_read_count": 0,
+      "execution_cost_read_length": 0,
+      "execution_cost_runtime": 0,
+      "execution_cost_write_count": 0,
+      "execution_cost_write_length": 0,
+      "microblock_tx_count": {
+        "property1": 0,
+        "property2": 0
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request that returns blocks
+ */
+export interface BlockListResponse {
+  /**
+   * The number of blocks to return
+   */
+  limit: number;
+  /**
+   * The number to blocks to skip (starting at `0`)
+   */
+  offset: number;
+  /**
+   * The number of blocks available
+   */
+  total: number;
+  results: Block[];
+}
+/**
+ * A block
+ */
+export interface Block {
+  /**
+   * Set to `true` if block corresponds to the canonical chain tip
+   */
+  canonical: boolean;
+  /**
+   * Height of the block
+   */
+  height: number;
+  /**
+   * Hash representing the block
+   */
+  hash: string;
+  /**
+   * The only hash that can uniquely identify an anchored block or an unconfirmed state trie
+   */
+  index_block_hash: string;
+  /**
+   * Hash of the parent block
+   */
+  parent_block_hash: string;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  burn_block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  burn_block_time_iso: string;
+  /**
+   * Hash of the anchor chain block
+   */
+  burn_block_hash: string;
+  /**
+   * Height of the anchor chain block
+   */
+  burn_block_height: number;
+  /**
+   * Anchor chain transaction ID
+   */
+  miner_txid: string;
+  /**
+   * The hash of the last streamed block that precedes this block to which this block is to be appended. Not every anchored block will have a parent microblock stream. An anchored block that does not have a parent microblock stream has the parent microblock hash set to an empty string, and the parent microblock sequence number set to -1.
+   */
+  parent_microblock_hash: string;
+  /**
+   * The hash of the last streamed block that precedes this block to which this block is to be appended. Not every anchored block will have a parent microblock stream. An anchored block that does not have a parent microblock stream has the parent microblock hash set to an empty string, and the parent microblock sequence number set to -1.
+   */
+  parent_microblock_sequence: number;
+  /**
+   * List of transactions included in the block
+   */
+  txs: string[];
+  /**
+   * List of microblocks that were accepted in this anchor block. Not every anchored block will have a accepted all (or any) of the previously streamed microblocks. Microblocks that were orphaned are not included in this list.
+   */
+  microblocks_accepted: string[];
+  /**
+   * List of microblocks that were streamed/produced by this anchor block's miner. This list only includes microblocks that were accepted in the following anchor block. Microblocks that were orphaned are not included in this list.
+   */
+  microblocks_streamed: string[];
+  /**
+   * Execution cost read count.
+   */
+  execution_cost_read_count: number;
+  /**
+   * Execution cost read length.
+   */
+  execution_cost_read_length: number;
+  /**
+   * Execution cost runtime.
+   */
+  execution_cost_runtime: number;
+  /**
+   * Execution cost write count.
+   */
+  execution_cost_write_count: number;
+  /**
+   * Execution cost write length.
+   */
+  execution_cost_write_length: number;
+  /**
+   * List of txs counts in each accepted microblock
+   */
+  microblock_tx_count: {
+    [k: string]: number;
+  };
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

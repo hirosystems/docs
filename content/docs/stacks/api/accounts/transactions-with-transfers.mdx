@@ -23,7 +23,7 @@ import { InlineCode } from '@/components/inline-code';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/address/{principal}/transactions_with_transfers`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/transactions_with_transfers`}</p>
 </h2>
 
 Retrieve all transactions for an account or contract identifier including STX transfers for each transaction.
@@ -90,8 +90,9 @@ returned data representing the state up until that point in time, rather than th
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions_with_transfers"
+```bash title="Terminal"
+curl -X GET \
+  "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions_with_transfers"
 ```
 
 <Tabs items={["200"]}>

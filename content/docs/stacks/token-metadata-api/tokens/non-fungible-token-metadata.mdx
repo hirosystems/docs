@@ -19,7 +19,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/metadata/v1/nft/{principal}/{token_id}`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/metadata/v1/nft/{principal}/{token_id}`}</p>
 </h2>
 
 Retrieves metadata for a SIP-009 Non-Fungible Token
@@ -62,7 +62,7 @@ Token ID to retrieve
 
 <APIExample>
 
-```bash title="curl"
+```bash title="Terminal"
 curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12/35"
 ```
 

@@ -1,0 +1,182 @@
+---
+title: Get inbound STX transfers
+description: Retrieves a list of STX transfers with memos to the given principal.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/stx_inbound`}</p>
+</h2>
+
+Retrieves a list of STX transfers with memos to the given principal.
+
+This includes regular transfers from a `stx-transfer` transaction type and transfers from contract-call transactions.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+Stacks address or a Contract identifier
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+number of items to return
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+number of items to skip
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"height"} type={"number"}>
+
+Filter for transfers only at this given block height
+
+</Property>
+
+<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+
+Include transaction data from unanchored (i.e. unconfirmed) microblocks
+
+<span>Example:  `true`</span>
+
+<span>Default:  `false`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
+
+returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+
+<span>Example:  `60000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/stx_inbound"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns a list of inbound STX transfers with a memo
+
+```json title="Example Response"
+{
+  "limit": 30,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "sender": "string",
+      "amount": "string",
+      "memo": "string",
+      "block_height": 0,
+      "tx_id": "string",
+      "transfer_type": "bulk-send",
+      "tx_index": 0
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request that returns a list of inbound STX transfers with a memo
+ */
+export interface AddressStxInboundListResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  results: InboundStxTransfer[];
+}
+/**
+ * A inbound STX transfer with a memo
+ */
+export interface InboundStxTransfer {
+  /**
+   * Principal that sent this transfer
+   */
+  sender: string;
+  /**
+   * Transfer amount in micro-STX as integer string
+   */
+  amount: string;
+  /**
+   * Hex encoded memo bytes associated with the transfer
+   */
+  memo: string;
+  /**
+   * Block height at which this transfer occurred
+   */
+  block_height: number;
+  /**
+   * The transaction ID in which this transfer occurred
+   */
+  tx_id: string;
+  /**
+   * Indicates if the transfer is from a stx-transfer transaction or a contract-call transaction
+   */
+  transfer_type: "bulk-send" | "stx-transfer" | "stx-transfer-memo";
+  /**
+   * Index of the transaction within a block
+   */
+  tx_index: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

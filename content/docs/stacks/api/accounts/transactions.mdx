@@ -23,7 +23,7 @@ import { InlineCode } from '@/components/inline-code';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/address/{principal}/transactions`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/transactions`}</p>
 </h2>
 
 Retrieves a list of all Transactions for a given Address or Contract Identifier. More information on Transaction types can be found [here](/stacks/api/txs).
@@ -93,7 +93,7 @@ returned data representing the state up until that point in time, rather than th
 
 <APIExample>
 
-```bash title="curl"
+```bash title="Terminal"
 curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions"
 ```
 

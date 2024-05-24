@@ -23,7 +23,7 @@ import { InlineCode } from '@/components/inline-code';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/beta/stacking/{pool_principal}/delegations`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/beta/stacking/{pool_principal}/delegations`}</p>
 </h2>
 
 Retrieves the list of stacking pool members for a given delegator principal.
@@ -84,7 +84,7 @@ number of items to skip
 
 <APIExample>
 
-```bash title="curl"
+```bash title="Terminal"
 curl -X GET "https://api.mainnet.hiro.so/extended/beta/stacking/string/delegations"
 ```
 

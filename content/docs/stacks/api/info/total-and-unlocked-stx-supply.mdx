@@ -19,7 +19,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/extended/v1/stx_supply`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/stx_supply`}</p>
 </h2>
 
 Retrieves the total and unlocked STX supply. More information on Stacking can be found [here](https://docs.stacks.co/understand-stacks/stacking).
@@ -44,7 +44,7 @@ Supply details are queried from specified block height. If the block height is n
 
 <APIExample>
 
-```bash title="curl"
+```bash title="Terminal"
 curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply"
 ```
 

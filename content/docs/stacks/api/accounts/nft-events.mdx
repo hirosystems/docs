@@ -1,0 +1,169 @@
+---
+title: Get nft events
+description: Retrieves a list of all nft events associated with an account or a Contract Identifier.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/nft_events`}</p>
+</h2>
+
+**NOTE:** This endpoint is <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> in favor of [Get nft holdings](/stacks/api/non-fungible-tokens/holdings).
+
+Retrieves a list of all nfts owned by an address, contains the clarity value of the identifier of the nft.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+Stacks address or a Contract identifier
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+number of items to return
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+number of items to skip
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+
+Include transaction data from unanchored (i.e. unconfirmed) microblocks
+
+<span>Example:  `true`</span>
+
+<span>Default:  `false`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
+
+returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+
+<span>Example:  `60000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nft_events"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "limit": 0,
+  "offset": 0,
+  "total": 0,
+  "nft_events": [
+    {
+      "sender": "string",
+      "recipient": "string",
+      "asset_identifier": "string",
+      "asset_event_type": "string",
+      "value": {
+        "hex": "string",
+        "repr": "string"
+      },
+      "tx_id": "string",
+      "tx_index": 0,
+      "block_height": 0,
+      "event_index": 0
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface AddressNftListResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  nft_events: NftEvent[];
+}
+export interface NftEvent {
+  sender?: string;
+  recipient?: string;
+  asset_identifier: string;
+  asset_event_type: string;
+  /**
+   * Identifier of the NFT
+   */
+  value: {
+    /**
+     * Hex string representing the identifier of the NFT
+     */
+    hex: string;
+    /**
+     * Readable string of the NFT identifier
+     */
+    repr: string;
+  };
+  tx_id: string;
+  tx_index: number;
+  block_height: number;
+  event_index: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -19,7 +19,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
     GET
   </div>
-  <p className="text-xs">{`/metadata/v1/sft/{principal}/{token_id}`}</p>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/metadata/v1/sft/{principal}/{token_id}`}</p>
 </h2>
 
 Retrieves metadata for a SIP-013 Semi-Fungible Token
@@ -62,7 +62,7 @@ Token ID to retrieve
 
 <APIExample>
 
-```bash title="curl"
+```bash title="Terminal"
 curl -X GET "https://api.hiro.so/metadata/v1/sft/SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.key-alex-autoalex-v1/35"
 ```
 
