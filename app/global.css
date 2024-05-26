@@ -148,8 +148,12 @@ figure.not-prose {
 }
 
 /* Add a deprecated strike through to sidebar links */
-a[href="/stacks/api/accounts/nft-events"] {
+a[href="/stacks/api/accounts/nft-events"],
+a[href="/stacks/api/blocks/recent-blocks"],
+a[href="/stacks/api/blocks/block-by-hash"],
+a[href="/stacks/api/blocks/block-by-height"],
+a[href="/stacks/api/blocks/block-by-burn-block-hash"],
+a[href="/stacks/api/blocks/block-by-burn-block-height"] {
   text-decoration: line-through;
   color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
 }
-
