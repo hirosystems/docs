@@ -1,0 +1,138 @@
+---
+title: Get contracts status
+description: Retrieves the deployment status of multiple smart contracts
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/smart-contracts/status`}</p>
+</h2>
+
+Retrieves the deployment status of multiple smart contracts.
+
+
+### Query Parameters
+
+<Property required={true} deprecated={false} name={"contract_id"} type={"array of string"}>
+
+contract ids to fetch status for
+
+<span>Example:  `"SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy"`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | List of smart contract status |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/smart-contracts/status?contract_id=SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns the deployment status of multiple smart contracts.
+
+```json title="Example Response"
+{
+  "property1": {
+    "found": true,
+    "result": {
+      "status": "string",
+      "tx_id": "string",
+      "contract_id": "string",
+      "block_height": 0
+    }
+  },
+  "property2": {
+    "found": true,
+    "result": {
+      "status": "string",
+      "tx_id": "string",
+      "contract_id": "string",
+      "block_height": 0
+    }
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request that returns the deployment status of multiple smart contracts
+ */
+export interface SmartContractsStatusResponse {
+  [k: string]: SmartContractFound | SmartContractNotFound;
+}
+export interface SmartContractFound {
+  found: true;
+  result: SmartContractStatus;
+}
+/**
+ * Deployment status of a smart contract
+ */
+export interface SmartContractStatus {
+  /**
+   * Smart contract deployment transaction status
+   */
+  status: string;
+  /**
+   * Deployment transaction ID
+   */
+  tx_id: string;
+  /**
+   * Smart contract ID
+   */
+  contract_id: string;
+  /**
+   * Height of the transaction confirmation block
+   */
+  block_height?: number;
+}
+export interface SmartContractNotFound {
+  found: false;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

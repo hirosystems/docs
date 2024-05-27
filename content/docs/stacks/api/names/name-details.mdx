@@ -1,0 +1,170 @@
+---
+title: Get name details
+description: Retrieves details of a given name including the `address`, `status` and last transaction id - `last_txid`.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v1/names/{name}`}</p>
+</h2>
+
+Retrieves details of a given name including the `address`, `status` and last transaction id - `last_txid`.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"name"} type={"string"}>
+
+fully-qualified name
+
+<span>Example:  `"muneeb.id"`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+| `400` | Error |
+| `404` | Error |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/v1/names/muneeb.id"
+```
+
+<Tabs items={["200","400","404"]}>
+
+<Tab value={"200"}>
+
+Get name details
+
+```json title="Example Response"
+{
+  "address": "string",
+  "blockchain": "string",
+  "expire_block": 0,
+  "grace_period": 0,
+  "last_txid": "string",
+  "resolver": "string",
+  "status": "string",
+  "zonefile": "string",
+  "zonefile_hash": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Get name details
+ */
+export interface BnsGetNameInfoResponse {
+  address: string;
+  blockchain: string;
+  expire_block?: number;
+  grace_period?: number;
+  last_txid: string;
+  resolver?: string;
+  status: string;
+  zonefile: string;
+  zonefile_hash: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"400"}>
+
+Error
+
+```json title="Example Response"
+{
+  "error": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Error
+ */
+export interface BnsError {
+  error?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+Error
+
+```json title="Example Response"
+{
+  "error": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Error
+ */
+export interface BnsError {
+  error?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

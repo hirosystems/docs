@@ -1,0 +1,208 @@
+---
+title: Get events for an address transaction
+description: Retrieves events for a specific transaction
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/addresses/{address}/transactions/{tx_id}/events`}</p>
+</h2>
+
+Retrieves a paginated list of all STX, FT and NFT events concerning a STX address or Smart Contract ID within a specific transaction.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+STX address or Smart Contract ID
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"tx_id"} type={"string"}>
+
+Transaction ID
+
+<span>Example:  `"0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Number of events to fetch
+
+<span>Example:  `20`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Index of first event to fetch
+
+<span>Example:  `10`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/addresses/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions/0x0a411719e3bfde95f9e227a2d7f8fac3d6c646b1e6cc186db0e2838a2c6cd9c0/events"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET Address Transaction Events
+
+```json title="Example Response"
+{
+  "limit": 30,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "type": "stx",
+      "event_index": 0,
+      "data": {
+        "type": "transfer",
+        "amount": "string",
+        "sender": "string",
+        "recipient": "string"
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Address Transaction Event
+ */
+export type AddressTransactionEvent =
+  | {
+      type: "stx";
+      event_index: number;
+      data: {
+        type: "transfer" | "mint" | "burn";
+        /**
+         * Amount transferred in micro-STX as an integer string.
+         */
+        amount: string;
+        /**
+         * Principal that sent STX. This is unspecified if the STX were minted.
+         */
+        sender?: string;
+        /**
+         * Principal that received STX. This is unspecified if the STX were burned.
+         */
+        recipient?: string;
+      };
+    }
+  | {
+      type: "ft";
+      event_index: number;
+      data: {
+        type: "transfer" | "mint" | "burn";
+        /**
+         * Fungible Token asset identifier.
+         */
+        asset_identifier: string;
+        /**
+         * Amount transferred as an integer string. This balance does not factor in possible SIP-010 decimals.
+         */
+        amount: string;
+        /**
+         * Principal that sent the asset.
+         */
+        sender?: string;
+        /**
+         * Principal that received the asset.
+         */
+        recipient?: string;
+      };
+    }
+  | {
+      type: "nft";
+      event_index: number;
+      data: {
+        type: "transfer" | "mint" | "burn";
+        /**
+         * Non Fungible Token asset identifier.
+         */
+        asset_identifier: string;
+        /**
+         * Non Fungible Token asset value.
+         */
+        value: {
+          hex: string;
+          repr: string;
+        };
+        /**
+         * Principal that sent the asset.
+         */
+        sender?: string;
+        /**
+         * Principal that received the asset.
+         */
+        recipient?: string;
+      };
+    };
+
+/**
+ * GET Address Transaction Events
+ */
+export interface AddressTransactionEventListResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  results: AddressTransactionEvent[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

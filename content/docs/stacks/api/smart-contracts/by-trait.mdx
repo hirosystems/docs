@@ -1,0 +1,132 @@
+---
+title: Get contracts by trait
+description: Retrieves a list of contracts based on the following traits listed in JSON format -  functions, variables, maps, fungible tokens and non-fungible tokens
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/contract/by_trait`}</p>
+</h2>
+
+Retrieves a list of contracts based on the following traits listed in JSON format -  functions, variables, maps, fungible tokens and non-fungible tokens.
+
+### Query Parameters
+
+<Property required={true} deprecated={false} name={"trait_abi"} type={"string"}>
+
+JSON abi of the trait.
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+max number of contracts fetch
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+index of first contract event to fetch
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | List of contracts implement given trait |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/contract/by_trait"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET list of contracts
+
+```json title="Example Response"
+{
+  "limit": 0,
+  "offset": 0,
+  "results": [
+    {
+      "tx_id": "string",
+      "canonical": true,
+      "contract_id": "string",
+      "block_height": 0,
+      "source_code": "string",
+      "abi": "string"
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET list of contracts
+ */
+export interface ContractListResponse {
+  /**
+   * The number of contracts to return
+   */
+  limit: number;
+  /**
+   * The number to contracts to skip (starting at `0`)
+   */
+  offset: number;
+  results: SmartContract[];
+}
+/**
+ * A Smart Contract Detail
+ */
+export interface SmartContract {
+  tx_id: string;
+  canonical: boolean;
+  contract_id: string;
+  block_height: number;
+  source_code: string;
+  abi: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,0 +1,105 @@
+---
+title: Get signer in PoX cycle
+description: Retrieves details for a signer in a PoX cycle
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/pox/cycles/{cycle_number}/signers/{signer_key}`}</p>
+</h2>
+
+Retrieves details for a signer in a PoX cycle.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"cycle_number"} type={"integer"}>
+
+PoX cycle number
+
+<span>Example:  `56`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"signer_key"} type={"string"}>
+
+Signer key
+
+<span>Example:  `"0x038e3c4529395611be9abf6fa3b6987e81d402385e3d605a073f42f407565a4a3d"`</span>
+
+</Property>
+
+| Status code | Description |
+| :--------- | :---------- |
+| `200` | Details for PoX signer |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/pox/cycles/56/signers/0x038e3c4529395611be9abf6fa3b6987e81d402385e3d605a073f42f407565a4a3d"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "signing_key": "string",
+  "weight": 0,
+  "stacked_amount": "string",
+  "weight_percent": 0,
+  "stacked_amount_percent": 0
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface PoxSigner {
+  signing_key: string;
+  weight: number;
+  stacked_amount: string;
+  weight_percent: number;
+  stacked_amount_percent: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

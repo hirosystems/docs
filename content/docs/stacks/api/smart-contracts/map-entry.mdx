@@ -1,0 +1,146 @@
+---
+title: Get contract map entry
+description: Retrieves a specific entry from a contract data map
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
+    POST
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/map_entry/{contract_address}/{contract_name}/{map_name}`}</p>
+</h2>
+
+Attempt to fetch data from a contract data map. The contract is identified with Stacks Address `contract_address` and Contract Name `contract_address` in the URL path. The map is identified with [Map Name].
+
+The key to lookup in the map is supplied via the POST body. This should be supplied as the hex string serialization of the key (which should be a Clarity value). Note, this is a JSON string atom.
+
+In the response, `data` is the hex serialization of the map response. Note that map responses are Clarity option types, for non-existent values, this is a serialized none, and for all other responses, it is a serialized (some ...) object.
+
+
+### Request Body
+
+Hex string serialization of the lookup key (which should be a Clarity value)
+
+<Property required={true} deprecated={false} name={"body"} type={"string"}>
+
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"contract_address"} type={"string"}>
+
+Stacks address
+
+<span>Example:  `"SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"contract_name"} type={"string"}>
+
+Contract name
+
+<span>Example:  `"newyorkcitycoin-core-v2"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"map_name"} type={"string"}>
+
+Map name
+
+<span>Example:  `"approved-contracts"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"proof"} type={"integer"}>
+
+Returns object without the proof field when set to 0
+
+</Property>
+
+<Property required={false} deprecated={false} name={"tip"} type={"string"}>
+
+The Stacks chain tip to query from
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+| `400` | Failed loading data map |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X POST "https://api.mainnet.hiro.so/v2/map_entry/SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11/newyorkcitycoin-core-v2/approved-contracts" \
+  -d 'string'
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+Response of get data map entry request
+
+```json title="Example Response"
+{
+  "data": "string",
+  "proof": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Response of get data map entry request
+ */
+export interface MapEntryResponse {
+  /**
+   * Hex-encoded string of clarity value. It is always an optional tuple.
+   */
+  data: string;
+  /**
+   * Hex-encoded string of the MARF proof for the data
+   */
+  proof?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,0 +1,133 @@
+---
+title: Get names owned by address
+description: Retrieves the list of names owned by a specific address
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v1/addresses/{blockchain}/{address}`}</p>
+</h2>
+
+Retrieves a list of names owned by the address provided.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"blockchain"} type={"string"}>
+
+the layer-1 blockchain for the address
+
+<span>Example:  `"bitcoin"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+the address to lookup
+
+<span>Example:  `"1QJQxDas5JhdiXhEbNS14iNjr8auFT96GP"`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+| `404` | Error |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/v1/addresses/bitcoin/1QJQxDas5JhdiXhEbNS14iNjr8auFT96GP"
+```
+
+<Tabs items={["200","404"]}>
+
+<Tab value={"200"}>
+
+Retrieves a list of names owned by the address provided.
+
+```json title="Example Response"
+{
+  "names": [
+    "string"
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Retrieves a list of names owned by the address provided.
+ */
+export interface BnsNamesOwnByAddressResponse {
+  names: string[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+Error
+
+```json title="Example Response"
+{
+  "error": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Error
+ */
+export interface BnsError {
+  error?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

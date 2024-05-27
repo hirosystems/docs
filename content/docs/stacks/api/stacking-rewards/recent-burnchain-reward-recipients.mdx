@@ -1,0 +1,155 @@
+---
+title: Get recent burnchain reward recipients
+description: Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/burnchain/rewards`}</p>
+</h2>
+
+Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+max number of rewards to fetch
+
+<span>Default:  `96`</span>
+
+<span>Maximum:  `250`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+index of first rewards to fetch
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | List of burnchain reward recipients and amounts |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/burnchain/rewards"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns blocks
+
+```json title="Example Response"
+{
+  "limit": 30,
+  "offset": 0,
+  "results": [
+    {
+      "canonical": true,
+      "burn_block_hash": "string",
+      "burn_block_height": 0,
+      "burn_amount": "string",
+      "reward_recipient": "string",
+      "reward_amount": "string",
+      "reward_index": 0
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request that returns blocks
+ */
+export interface BurnchainRewardListResponse {
+  /**
+   * The number of burnchain rewards to return
+   */
+  limit: number;
+  /**
+   * The number to burnchain rewards to skip (starting at `0`)
+   */
+  offset: number;
+  results: BurnchainReward[];
+}
+/**
+ * Reward payment made on the burnchain
+ */
+export interface BurnchainReward {
+  /**
+   * Set to `true` if block corresponds to the canonical burchchain tip
+   */
+  canonical: boolean;
+  /**
+   * The hash representing the burnchain block
+   */
+  burn_block_hash: string;
+  /**
+   * Height of the burnchain block
+   */
+  burn_block_height: number;
+  /**
+   * The total amount of burnchain tokens burned for this burnchain block, in the smallest unit (e.g. satoshis for Bitcoin)
+   */
+  burn_amount: string;
+  /**
+   * The recipient address that received the burnchain rewards, in the format native to the burnchain (e.g. B58 encoded for Bitcoin)
+   */
+  reward_recipient: string;
+  /**
+   * The amount of burnchain tokens rewarded to the recipient, in the smallest unit (e.g. satoshis for Bitcoin)
+   */
+  reward_amount: string;
+  /**
+   * The index position of the reward entry, useful for ordering when there's more than one recipient per burnchain block
+   */
+  reward_index: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

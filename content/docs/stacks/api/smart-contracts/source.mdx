@@ -1,0 +1,86 @@
+---
+title: Get contract source
+description: Retrieves the Clarity source code of a given contract, along with the block height it was published in, and the MARF proof for the data
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/contracts/source/{contract_address}/{contract_name}`}</p>
+</h2>
+
+Retrieves the Clarity source code of a given contract, along with the block height it was published in, and the MARF proof for the data
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/v2/contracts/source/%7Bcontract_address%7D/%7Bcontract_name%7D"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request to get contract source
+
+```json title="Example Response"
+{
+  "source": "string",
+  "publish_height": 0,
+  "proof": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request to get contract source
+ */
+export interface ContractSourceResponse {
+  source: string;
+  publish_height: number;
+  proof: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

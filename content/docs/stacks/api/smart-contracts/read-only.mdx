@@ -1,0 +1,144 @@
+---
+title: Call read-only function
+description: Calls a read-only public function on a given smart contract
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
+    POST
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}`}</p>
+</h2>
+
+Call a read-only public function on a given smart contract.
+
+The smart contract and function are specified using the URL path. The arguments and the simulated tx-sender are supplied via the POST body in the following JSON format:
+
+### Request Body
+
+map of arguments and the simulated tx-sender where sender is either a Contract identifier or a normal Stacks address, and arguments is an array of hex serialized Clarity values.
+
+<Property required={true} deprecated={false} name={"sender"} type={"string"}>
+
+The simulated tx-sender
+
+</Property>
+
+<Property required={true} deprecated={false} name={"arguments"} type={"array of string"}>
+
+An array of hex serialized Clarity values
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"contract_address"} type={"string"}>
+
+Stacks address
+
+<span>Example:  `"SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"contract_name"} type={"string"}>
+
+Contract name
+
+<span>Example:  `"imaginary-friends-zebras"`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"function_name"} type={"string"}>
+
+Function name
+
+<span>Example:  `"get-token-uri"`</span>
+
+</Property>
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"tip"} type={"string"}>
+
+The Stacks chain tip to query from
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7/imaginary-friends-zebras/get-token-uri" \
+  -d '{
+  "sender": "string",
+  "arguments": [
+    "string"
+  ]
+}'
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request to get contract source
+
+```json title="Example Response"
+{
+  "okay": true,
+  "result": "string",
+  "cause": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * GET request to get contract source
+ */
+export interface ReadOnlyFunctionSuccessResponse {
+  okay: boolean;
+  result?: string;
+  cause?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

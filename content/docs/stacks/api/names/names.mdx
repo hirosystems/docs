@@ -1,0 +1,121 @@
+---
+title: Get all names
+description: Retrieves a list of all names known to the node
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v1/names`}</p>
+</h2>
+
+Retrieves a list of all names known to the node.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"page"} type={"integer"}>
+
+names are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.
+
+<span>Example:  `22`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+| `400` | Error |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/v1/names"
+```
+
+<Tabs items={["200","400"]}>
+
+<Tab value={"200"}>
+
+Fetch a list of all names known to the node.
+
+```json title="Example Response"
+[
+  "string"
+]
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Fetch a list of all names known to the node.
+ */
+export type BnsGetAllNamesResponse = string[];
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"400"}>
+
+Error
+
+```json title="Example Response"
+{
+  "error": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Error
+ */
+export interface BnsError {
+  error?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>
