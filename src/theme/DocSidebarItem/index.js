@@ -24,6 +24,17 @@ export default function DocSidebarItemWrapper(props) {
     );
   }
 
+  if (item.docId === 'stacks.js/roadmap') {
+    return (
+      <div className="flex items-center cursor-default">
+        <DocSidebarItem {...props}/>
+        <span className="inline-flex items-center rounded-md bg-green-100 dark:bg-green-400/10 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
+          What's Next?
+        </span>
+      </div>
+    );
+  }
+
   return (
     <>
       <DocSidebarItem {...props} />

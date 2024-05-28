@@ -34,6 +34,11 @@ module.exports = [
     id: 'stacks.js/faq',
   },
   {
+    type: 'doc',
+    label: 'Roadmap',
+    id: 'stacks.js/roadmap',
+  },
+  {
     type: 'html',
     value: 'Guides',
     className: 'section-title',
