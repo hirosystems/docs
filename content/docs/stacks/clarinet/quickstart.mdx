@@ -1,17 +1,27 @@
 ---
 title: Quickstart
-description: Create a simple counter contract
+description: Learn how to create a simple counter contract using Clarinet.
 ---
 
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Step } from 'fumadocs-ui/components/steps';
 
-### You will learn the following:
+In this quickstart guide, you will be writing a simple counter contract with Clarity. Throughout this tutorial, you'll learn how to generate a new project, create a smart contract, and validate your smart contract code using the Clarinet CLI.
 
-- Generate a new project
-- Create a smart contract with Clarity
-- Test and validate your smart contract code
+Check out the [Create a new project](/stacks/clarinet/guides/create-a-new-project) and [Validate a contract](/stacks/clarinet/guides/deploy-a-contract) guides for a deeper look.
+
+---
+
+### Prerequisites
+
+To follow this quickstart guide, you will need to have Clarinet installed on your machine.
+
+```bash
+brew install clarinet
+```
+
+If you need more installation options, check out the [Installation](/stacks/clarinet/installation) guide.
 
 ---
 
@@ -19,34 +29,9 @@ import { Step } from 'fumadocs-ui/components/steps';
   <Step>
     <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Install <code className='text-lg'>clarinet</code></p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Generate your <code className='text-lg'>counter</code> project</p>
         <div className='flex flex-col space-y-0'>
-          <p>To get started, install the package on your machine:</p>
-        </div>
-      </div>
-      <div className="w-full">
-        <Tabs items={['macOS', 'Windows']}>
-          <Tab value="macOS">
-          ```bash title="Terminal"
-          brew install clarinet
-          ```
-          </Tab>
-          <Tab value="Windows">
-          ```bash title="Terminal"
-          winget install clarinet
-          ```
-          </Tab>
-        </Tabs>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Generate a new <code className='text-lg'>counter</code> project</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Navigate to a directory in your terminal where you want to create your project. Then in your terminal, run the following command:</p>
+          <p>Start by creating a new Clarinet project. This command will create a new directory named <code>counter</code> and set up a basic Clarinet project inside it.</p>
         </div>
       </div>
       <div className="w-full">
@@ -54,8 +39,16 @@ import { Step } from 'fumadocs-ui/components/steps';
         clarinet new counter
         ```
       </div>
+
+      <p>Navigate to the newly created directory:</p>
       <div className="w-full">
-      <p>You should have a new `counter` directory resembling the following:</p>
+        ```bash
+        cd counter
+        ```
+      </div>
+
+      <div className="w-full">
+      <p>You should see the following files and folders:</p>
         <Files className='pointer-events-none'>
           <Folder name="contracts" />
           <Folder name="settings" defaultOpen>
@@ -78,20 +71,15 @@ import { Step } from 'fumadocs-ui/components/steps';
     <div className="flex flex-col space-y-3">
       <div className="w-full">
         <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Create a <code className='text-lg'>counter</code> contract</p>
-        <div className='flex flex-col space-y-0'>
-          <ol>
-            <li>Navigate to your project by running `cd counter` in your terminal.</li>
-            <li>Inside your project, use the `clarinet contract new` command to generate a new contract.</li>
-          </ol>
-        </div>
+        <p>Inside your project, create your first contract. This command will create an empty `counter.clar` file in the <code>contracts</code> folder as well as a `counter.test.ts` file in the <code>tests</code> folder.</p>
       </div>
       <div className="w-full">
         ```bash title="Terminal"
         clarinet contract new counter
         ```
       </div>
+
       <div className="w-full">
-        <p>This will add 2 files to your project: `counter.clar` and `counter.test.ts`.</p>
         <Files className='pointer-events-none'>
           <Folder name="contracts" defaultOpen>
             <File name="counter.clar" className='bg-muted' />
@@ -106,13 +94,17 @@ import { Step } from 'fumadocs-ui/components/steps';
           <File name="tsconfig.json" />
           <File name="vitest.config.js" />
         </Files>
-        <p>It also updates the `Clarinet.toml` file with your new contract.</p>
-        ```toml title="Clarinet.toml"
-        [contracts.counter]
-        path = 'contracts/counter.clar'
-        clarity_version = 2
-        epoch = 2.5
-        ```
+        
+        <p>It also updates the `Clarinet.toml` file inside your project with the necessary settings.</p>
+
+        <div className="w-full">
+          ```toml title="Clarinet.toml"
+          [contracts.counter]
+          path = 'contracts/counter.clar'
+          clarity_version = 2
+          epoch = 2.5
+          ```
+        </div>
       </div>
     </div>
   </Step>
@@ -121,14 +113,17 @@ import { Step } from 'fumadocs-ui/components/steps';
     <div className="flex flex-col space-y-3">
       <div className="w-full">
         <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Variables and functions</p>
-        <p>In Clarity, you can define variables and functions to store and manipulate data. To complete a working `counter` example:</p>
-        
-        1. Define a map called `Counters` to store the count associated with each user.
-        2. Define a public function called `count-up` that increments the count of the user who calls it.
-        3. Add a read-only function called `get-count` that returns the count of the user who calls it.
+        <div className='flex flex-col space-y-0'>
+          <p>In Clarity, you can define variables and functions to store and manipulate data. Inside your `contracts/counter.clar` file:</p>
+          <ol>
+            <li>Define a map called `Counters` to store the count associated with each user.</li>
+            <li>Define a public function called `count-up` that increments the count of the user who calls it.</li>
+            <li>Add a read-only function called `get-count` that returns the count of the user who calls it.</li>
+          </ol>
+        </div>
         
         <div className="w-full">
-          ```clarity
+          ```clarity title="counter.clar"
           (define-map Counters principal uint)
 
           (define-public (count-up)
@@ -147,29 +142,33 @@ import { Step } from 'fumadocs-ui/components/steps';
   <Step>
     <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Validate your contract</p>
-        <p>In order to verify that the syntax of your code is valid, run `clarinet check` inside of your project.</p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Validate your <code className='text-lg'>counter</code> contract</p>
+        <div className='flex flex-col space-y-0'>
+          <p>Now it's time to validate your contract. This command will check your contract for errors and typos.</p>
+        </div>
       </div>
       <div className="w-full">
         ```bash title="Terminal"
         clarinet check
-        ✔ 1 contract checked
         ```
       </div>
-      <p>And now to test the code, you can run `clarinet console` to bring up a REPL where you can interact with your contract directly.</p>
 
-      1. Run `clarinet console` in your terminal.
-      ```bash title="Terminal"
-      clarinet console
-      ```
-      2. In the console, run `(contract-call? .counter count-up)` to call the `count-up` function.
-      ```bash title="Console"
+      <p>When the validation is successful, you should see the following output: <code>✔ 1 contract checked</code>.</p>
+      
+      <div className='flex flex-col space-y-0'>
+        <p>You can go one step further and test your valid contract in a local REPL with the following steps:</p>
+        <ol>
+          <li>Run `clarinet console` from the terminal inside of your project.</li>
+          <li>Call your contract by running `(contract-call? .counter count-up)`.</li>
+          <li>Verify the count of the user has been incremented by calling the `get-count` function with the `tx-sender` as the argument.</li>
+        </ol>
+      </div>
+
+      ```bash
       (contract-call? .counter count-up)
-      ```
-      3. Then verify the count of the user has been incremented by calling the `get-count` function with the `tx-sender` as the argument.
-      ```bash title="Console"
       (contract-call? .counter get-count tx-sender)
       ```
+
     </div>
   </Step>
 </div>
@@ -183,7 +182,13 @@ import { Step } from 'fumadocs-ui/components/steps';
     icon={<Code className='text-primary' />}
     href="/stacks/clarinet/guides/run-a-local-devnet"
     title="Run a local devnet"
-    description="Learn how to set up and run a local development network for your projects using Clarinet."
+    description="Learn how to set up and run a local development network for your project."
+  />
+  <Card
+    icon={<Code className='text-primary' />}
+    href="/stacks/clarinet/guides/testing-with-clarinet-sdk"
+    title="Testing with Clarinet SDK"
+    description="Learn how to test your smart contracts using the Clarinet SDK."
   />
   <Card
     icon={<Terminal className='text-primary' />}

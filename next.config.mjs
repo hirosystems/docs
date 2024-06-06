@@ -63,6 +63,7 @@ const withMDX = createMDX({
     ],
     rehypePlugins: (v) => [rehypeKatex, ...v],
   },
+  buildSearchIndex: {},
 });
 
 export default withAnalyzer(withMDX(config));

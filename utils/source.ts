@@ -11,9 +11,9 @@ import { map } from "@/.map";
 import { create } from "@/components/ui/icon";
 
 const frontmatterSchema = defaultSchemas.frontmatter.extend({
-  preview: z.string().optional(),
-  toc: z.boolean().default(true),
-  index: z.boolean().default(false),
+  preview: z.string().optional() as any,
+  toc: z.boolean().default(true) as any,
+  index: z.boolean().default(false) as any,
 });
 
 export const utils = loader({

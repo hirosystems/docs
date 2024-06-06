@@ -1,146 +1,113 @@
 ---
 title: Quickstart
-description: Make a contract call from your frontend application.
+description: Learn how to make a contract call using the Stacks.js library.
 ---
 
-import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { ChevronRight, Code, Terminal, Folder as FolderIcon } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Step } from 'fumadocs-ui/components/steps';
 
-### You will learn how to:
-
-- Install `clarinet`
-- Generate a new project with the `clarinet` CLI 
-- Create a smart with Clarity
-- Verify and debug your code in your terminal
-
----
-
 <div className='steps space-y-10'>
   <Step>
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0'>Install <code className='text-lg'>clarinet</code></p>
-        <p>Let's build a very simple `hello-world` project to demonstrate how easy it is to get started building on Stacks.</p>
-        <p>First, let's make sure we've installed `clarinet` so that we can use the command line tools.</p>
-      </div>
-      <div className="w-full">
-        <Tabs id="os" items={['macOS', 'Windows']}>
-          <Tab value="macOS">
-          ```bash title="Terminal"
-          brew install clarinet
-          ```
-
-          </Tab>
-          <Tab value="Windows">
-          ```bash title="Terminal"
-          winget install clarinet
-          ```
-
-          </Tab>
-        </Tabs>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0'>Create a new <code className='text-lg'>hello-world</code> project</p>
-        <p>Now let's create a `hello-world` project. This will scaffold all the necessary files and directories for us to get started.</p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Install Stacks.js</p>
+        <div className='flex flex-col space-y-0'>
+          <p>First, install the necessary Stacks.js packages in your project:</p>
+        </div>
       </div>
       <div className="w-full">
         ```bash title="Terminal"
-        clarinet new hello-world
+        npm install @stacks/connect @stacks/transactions
         ```
       </div>
     </div>
   </Step>
 
   <Step>
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0'>Create a <code className='text-lg'>say-hello</code> contract</p>
-        <p>Now that our project has been generated we can start creating our first contract. Let's name this one `say-hello`.</p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Connect to the Stacks Blockchain</p>
+        <div className='flex flex-col space-y-0'>
+          <p>Set up the connection to the Stacks blockchain using the `connect` package:</p>
+        </div>
       </div>
       <div className="w-full">
-        ```bash title="Terminal"
-        cd hello-world
-        clarinet contract new say-hello
+        ```tsx
+        import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+        const appConfig = new AppConfig(['store_write', 'publish_data']);
+        const userSession = new UserSession({ appConfig });
+
+        showConnect({
+          appDetails: {
+            name: 'My App',
+            icon: window.location.origin + '/my-app-logo.svg',
+          },
+          userSession
+        });
         ```
       </div>
     </div>
   </Step>
 
   <Step>
-    <div className="flex flex-col">
+    <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0'>Create a <code className='text-lg'>read-only</code> function called <code className='text-lg'>say-hi</code></p>
-        <p>Now that we have our `say-hello.clar` file generated, let's create a `read-only` function that prints out **"Hello World"**.</p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Make a Contract Call</p>
+        <div className='flex flex-col space-y-0'>
+          <p>Make a contract call using the `transactions` package:</p>
+        </div>
       </div>
       <div className="w-full">
-        ```clarity title="say-hello.clar"
-        (define-read-only (say-hi)
-          (print "Hello World")
-        )
-        ```
-      </div>
-    </div>
-  </Step>
+        ```tsx
+        import { openContractCall } from '@stacks/connect';
+        import { makeContractCall, StacksTestnet } from '@stacks/transactions';
 
-  <Step>
-    <div className="flex flex-col">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0'>Verify your contracts</p>
-        <p>In order to verify that our code is valid, we can run `clarinet check` inside of our project directory to ensure our `say-hi` function is valid.</p>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        clarinet check
-        ✔ 1 contract checked
+        const network = new StacksTestnet();
+        const options = {
+          contractAddress: 'ST1234567890abcdef',
+          contractName: 'test-contract',
+          functionName: 'test-function',
+          functionArgs: [],
+          network,
+          appDetails: {
+            name: 'My App',
+            icon: window.location.origin + '/my-app-logo.svg',
+          },
+          onFinish: (data) => {
+            console.log('Transaction ID:', data.txId);
+            console.log('Raw transaction:', data.txRaw);
+          },
+        };
+
+        openContractCall(options);
         ```
       </div>
     </div>
   </Step>
 </div>
 
-### <span className='font-light'>Next step: </span> <span className='inline-flex items-center'>Add unit tests with the Clarinet SDK <ChevronRight className='ml-1' /></span>
+<Callout title="Stacks.js Example">
+  <p>View the <a href="https://github.com/hiro-so/stacks.js/tree/main/examples/hello-world" target="_blank" rel="noopener noreferrer">source code</a> or clone the repository for this example:</p>
+  ```bash
+  git clone https://github.com/hiro-so/stacks.js
+  ```
+</Callout>
 
-The [Clarinet SDK]() allows you to write unit tests for your Clarity smart contracts. You can theoretically use any JavaScript test framework, but the SDK supports Vitest out of the box.
-
-### More resources
+### Next steps
 
 <Cards>
   <Card
     icon={<Code className='text-primary' />}
-    href="/examples"
-    title="Common Clarity Errors"
-    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+    href="/stacks/stacks.js/guides/authenticate-users-with-connect"
+    title="Authenticate users with Connect"
+    description="Learn how to authenticate users using the Connect package in Stacks.js."
   />
   <Card
     icon={<Terminal className='text-primary' />}
-    href="/stacks/clarinet"
-    title="Clarinet SDK API Reference"
-    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+    href="/stacks/stacks.js/guides/broadcast-transactions"
+    title="Broadcast transactions"
+    description="Learn how to broadcast transactions using Stacks.js."
   />
 </Cards>
-
-{/* And that's it! You can now run `clarinet check` to verify that your contract is valid. 
-
-## Application File Structure
-
-<Files>
-  <Folder name="contracts" defaultOpen>
-    <File name="say-hello.clar" />
-  </Folder>
-  <Folder name="settings">
-    <File name="Devnet.toml" />
-    <File name="Mainnet.toml" />
-    <File name="Testnet.toml" />
-  </Folder>
-  <Folder name="tests" defaultOpen>
-    <File name="say-hello.test.ts" />
-  </Folder>
-  <File name="Clarinet.toml" />
-  <File name="..." />
-</Files> */}

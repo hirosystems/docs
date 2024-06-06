@@ -31,7 +31,7 @@ The examples in this guide are designed to be minimalistic, allowing you to easi
 
 ---
 
-## Install and set up the <InlineCode>@stacks/connect</InlineCode> package
+### Install and set up the <InlineCode>@stacks/connect</InlineCode> package
 
 First, install the `@stacks/connect` package in your project.
 
@@ -39,7 +39,7 @@ First, install the `@stacks/connect` package in your project.
 @stacks/connect
 ```
 
-## Initiate a <InlineCode>userSession</InlineCode> with specific permission scopes
+### Initiate a <InlineCode>userSession</InlineCode> with specific permission scopes
 
 After installing the `@stacks/connect` package, initiate a `userSession` with the following permission scopes.
 
@@ -57,7 +57,7 @@ const userSession = new UserSession({ appConfig });
 
 <Callout title="Note">We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.</Callout>
 
-## Trigger the authentication flow with the <InlineCode>showConnect</InlineCode> function
+### Trigger the authentication flow with the <InlineCode>showConnect</InlineCode> function
 
 Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.
 
@@ -89,7 +89,7 @@ function authenticate() {
 }
 ```
 
-## Handle Pending Authentication
+### Handle Pending Authentication
 
 After initiating the authentication process, you will most likely need to handle cases where the user hasn't completed the authentication flow.
 
@@ -119,7 +119,7 @@ For users already signed in, you can directly access their session information a
 
 ---
 
-## Next steps
+### Next steps
 
 <Cards>
   <Card

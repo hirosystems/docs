@@ -13,7 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-Let's take a simple `counter` contract and walk through how we can leverage all the debugging commands.
+To debug a contract, take this simple `counter` contract as an example:
 
 ```clarity
 (define-map Counters principal uint)
@@ -35,7 +35,7 @@ clarinet console
 
 ## Trace
 
-The `::trace` command expects an expression, so let's make a `contract-call?` with our `count-up` function and see what happens.
+The `::trace` command expects an expression, so make a `contract-call?` with our `count-up` function and see what happens.
 
 ```bash title="Terminal"
 ::trace (contract-call? .counter count-up)

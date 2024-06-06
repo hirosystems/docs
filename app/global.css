@@ -81,7 +81,7 @@ body {
   font-synthesis-weight: none;
 }
 
-h1, h2, h3, h4, h5, h6, a, code {
+h1, h2, h3, h4, h5, h6, a, code, button {
   font-family: 'Aeonik Fono';
 }
 
@@ -102,11 +102,6 @@ figure.not-prose {
   background-color: #262626;
 }
 
-.data-\[state\=active\]\:border-primary[data-state=active] {
-  color: var(--secondary-foreground) !important;
-  border-color: var(--secondary) !important;
-}
-
 .prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   text-decoration-color: var(--secondary) !important;
 }
@@ -125,7 +120,7 @@ figure.not-prose {
 
 
 /* For the <APIExample /> component to provide more spacing between each child sections. */
-.api-example .max-xl\:hidden > *:not(:last-child) {
+.api-example > *:not(:last-child) {
   margin-bottom: 1.5rem;
 }
 

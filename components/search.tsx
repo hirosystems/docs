@@ -65,7 +65,7 @@ export default function CustomSearchDialog(props: SharedProps): JSX.Element {
             rel="noreferrer noopener"
             className="ml-auto text-xs text-muted-foreground"
           >
-            Search powered by OpenAI
+            Search powered by Algolia
           </a>
         </div>
       }

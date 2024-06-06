@@ -1,0 +1,123 @@
+---
+title: txid
+description: Get any transaction matching a given transaction ID mandatory argument admits.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
+
+<h2>`if_this` Specifications</h2>
+
+<Property required={true} deprecated={false} name={"txid"} type={"string"}>
+
+The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"equals"} type={"string"}>
+
+The `equals` property is used to specify the exact transaction ID to match.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by transaction ID</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```json
+    // [!code word:txid]
+    {
+      "if_this": {
+        "scope": "txid",
+        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+      }
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title="Schema">
+    ```bash
+    initSimnet(manifestPath?: string): Promise<Simnet>
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+</Root>
+
+The core design of chainhooks revolves around the concept of predicates. Each individual chainhook has a customizable predicate that specifies what information you are scanning for.
+
+Predicates are defined in the If-this, then-that format. You'll write your condition in the `if-this` condition template and use `then-that` to output the result.
+
+### `if-this` Predicate Design
+
+The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
+
+- scope (mandatory)
+- equals
+- op_return
+  - ends_with
+- p2pkh
+- p2sh
+- p2wpkh
+- operation
+
+**Example:**
+
+```json
+{
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
+}
+```
+
+### `then-that` Predicate Design
+
+The `then-that` predicate design can use the following attributes to output the result based on the `if-this` condition defined.
+
+- http_post
+  - url
+  - authorization_header
+- file_append
+  - path
+
+**Example:**
+
+```jsonc
+{
+  "then_that": {
+    "file_append": {
+      "path": "/tmp/events.json",
+    },
+  },
+}
+```
