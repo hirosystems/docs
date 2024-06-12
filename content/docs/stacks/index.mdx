@@ -1,5 +1,6 @@
 ---
 title: Home
+icon: Braces
 toc: false
 ---
 
@@ -23,7 +24,7 @@ import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Te
   />
 </Cards>
 
-### Explore by Feature
+### Explore by Category
 
 <Cards className='lg:grid-cols-3'>
   <Card
@@ -56,6 +57,13 @@ import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Te
   />
   <Card
     className='group space-y-3'
+    icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/token-metadata-api"
+    title="Token Management"
+    description="Explore our hosted API for fetching token metadata on Stacks."
+  />
+  <Card
+    className='group space-y-3'
     icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/platform"
     title="Cloud-Based Development"
@@ -66,6 +74,13 @@ import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Te
 ### Explore by Product
 
 <Cards className='sm:grid-cols-3'>
+  <Card
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Platform"
+    description="A hosted developer experience for creating, testing, and deploying smart contracts."
+  />
   <Card
     className='group space-y-3'
     icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
@@ -86,13 +101,6 @@ import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Te
     href="/stacks/chainhook"
     title="Chainhook"
     description="Monitor and respond to specific Bitcoin and Stacks blockchain events."
-  />
-   <Card
-    className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/stacks/platform"
-    title="Platform"
-    description="A hosted developer experience for creating, testing, and deploying smart contracts."
   />
   <Card
     className='group space-y-3'
