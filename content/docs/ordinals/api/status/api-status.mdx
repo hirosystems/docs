@@ -13,98 +13,51 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <API>
 
-<APIInfo method={"GET"} route={"/bitcoin/v1"}>
+<APIInfo method={"GET"} route={"/ordinals/v1/"}>
 
-## API status
+## API Status
 
-Retrieves the running status of the Stacks Blockchain API, including the server version and current chain tip information.
+Displays the status of the API
 
 | Status code | Description |
 | ----------- | ----------- |
-| `200` | Success |
+| `200` | Default Response |
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/bitcoin/v1"
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/"
 ```
 
 <Tabs items={["200"]}>
 
 <Tab value={"200"}>
 
-GET blockchain API status
+
 
 ```json title="Example Response"
 {
-  "server_version": "string",
+  "server_version": "",
   "status": "string",
-  "pox_v1_unlock_height": 0,
-  "pox_v2_unlock_height": 0,
-  "pox_v3_unlock_height": 0,
-  "chain_tip": {
-    "block_height": 0,
-    "block_hash": "string",
-    "index_block_hash": "string",
-    "microblock_hash": "string",
-    "microblock_sequence": 0,
-    "burn_block_height": 0
-  }
+  "block_height": 0,
+  "max_inscription_number": 0,
+  "max_cursed_inscription_number": 0
 }
 ```
 
 <Accordions>
 
-<Accordion title={"Schema"}>
+<Accordion title={"Typescript Definition"}>
 
 ```ts
-/**
- * GET blockchain API status
- */
-export interface ServerStatusResponse {
-  /**
-   * the server version that is currently running
-   */
-  server_version?: string;
-  /**
-   * the current server status
-   */
+export interface ApiStatusResponse {
+  server_version: string;
   status: string;
-  pox_v1_unlock_height?: number;
-  pox_v2_unlock_height?: number;
-  pox_v3_unlock_height?: number;
-  chain_tip?: ChainTip;
-}
-/**
- * Current chain tip information
- */
-export interface ChainTip {
-  /**
-   * the current block height
-   */
-  block_height: number;
-  /**
-   * the current block hash
-   */
-  block_hash: string;
-  /**
-   * the current index block hash
-   */
-  index_block_hash: string;
-  /**
-   * the current microblock hash
-   */
-  microblock_hash?: string;
-  /**
-   * the current microblock sequence number
-   */
-  microblock_sequence?: number;
-  /**
-   * the current burn chain block height
-   */
-  burn_block_height: number;
+  block_height?: number;
+  max_inscription_number?: number;
+  max_cursed_inscription_number?: number;
 }
 
 ```
