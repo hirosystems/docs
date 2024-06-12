@@ -1,6 +1,5 @@
 import "./global.css";
 import "fumadocs-ui/twoslash.css";
-import { Star } from "lucide-react";
 import type { Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -13,7 +12,7 @@ export const metadata = createMetadata({
     template: "%s | Hiro",
     default: "Hiro",
   },
-  description: "Hiro Documentation",
+  description: "Hiro Docs",
   metadataBase: baseUrl,
 });
 

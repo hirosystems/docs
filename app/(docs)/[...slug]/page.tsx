@@ -5,7 +5,6 @@ import { DocsPage, DocsBody } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { utils, type Page } from "@/utils/source";
 import { createMetadata } from "@/utils/metadata";
-import Preview from "@/components/preview";
 
 interface Param {
   slug: string[];
@@ -19,7 +18,6 @@ export default function Page({ params }: { params: Param }): JSX.Element {
   if (!page) notFound();
 
   const path = `content/docs/${page.file.path}`;
-  const preview = page.data.preview;
 
   // TODO: this is a less than ideal solution for creating different titles between sidebar and page
   const generatePrefix = (page: any) => {
@@ -98,7 +96,6 @@ export default function Page({ params }: { params: Param }): JSX.Element {
         </p>
       )}
       <DocsBody>
-        {preview && preview in Preview ? Preview[preview] : null}
         {page.data.index ? (
           <Category page={page} />
         ) : (

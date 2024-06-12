@@ -2,10 +2,11 @@
 
 import { cva } from "class-variance-authority";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
 import { modes } from "@/utils/modes";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 
 const itemVariants = cva(
   "rounded-md px-2 py-1 transition-colors hover:text-accent-foreground",
@@ -50,18 +51,28 @@ export function useMode(): string | undefined {
 }
 
 export function SidebarBanner(): JSX.Element {
+  const pathname = usePathname();
   const mode = useMode();
   const currentMode = modes.find((item) => item.param === mode) ?? modes[0];
   const Icon = currentMode.icon;
 
+  if (
+    pathname === "/stacks" ||
+    pathname === "/stacks/getting-started" ||
+    pathname === "/ordinals" ||
+    pathname === "/ordinals/getting-started" ||
+    pathname === "/guides"
+  ) {
+    return <></>;
+  }
+
   return (
     <Link key={currentMode.param} href={`/${currentMode.param}`}>
-      <div className="-mt-2 flex flex-row items-center gap-3 rounded-lg p-2 text-card-foreground transition-colors hover:bg-muted/80">
-        <Icon className="size-9 shrink-0 rounded-md dark:bg-neutral/90 dark:text-neutral-900 bg-primary text-white" />
+      <div className="group flex flex-row items-center gap-2 rounded-lg px-2 transition-colors">
+        <ChevronLeft className="text-muted-foreground size-4 shrink-0 rounded-md group-hover:text-primary" />
         <div>
-          <p className="font-medium">{currentMode.name}</p>
-          <p className="text-xs text-muted-foreground">
-            {currentMode.description}
+          <p className="text-muted-foreground group-hover:text-primary">
+            Back to homepage
           </p>
         </div>
       </div>

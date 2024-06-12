@@ -91,6 +91,24 @@ p {
 
 /* Override CSS */
 
+[data-radix-scroll-area-viewport] .flex.flex-col.gap-8.pb-10.pt-4.max-md\:px-4.md\:pr-3.md\:pt-10 {
+    gap: 0;
+}
+
+
+p.first\:mt-0 {
+  margin-top: 1.5rem !important;
+}
+
+p.first\:mt-0:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1rem;
+  border-width: 0.25px;
+  border-color: hsl(var(--accent));
+}
+
 /* Reduces the vertical space between code blocks and text in the steps guides */
 figure.not-prose {
   margin-top: 0.75rem;
