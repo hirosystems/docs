@@ -11,7 +11,6 @@ import {
 } from "fumadocs-ui/components/codeblock";
 import type { ReactNode } from "react";
 import { Popup, PopupContent, PopupTrigger } from "fumadocs-ui/twoslash/popup";
-import { Wrapper } from "@/components/preview/wrapper";
 import { cn } from "./utils/cn";
 
 const shortcuts: Record<string, string> = {
@@ -36,7 +35,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     TypeTable,
     Accordion,
     Accordions,
-    Wrapper,
     InstallTabs: ({
       items,
       children,
