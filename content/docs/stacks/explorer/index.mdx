@@ -1,63 +1,22 @@
 ---
 title: Overview
-description: Clarinet is a local development environment that offers everything you need to create and deploy smart contracts on Stacks.
+description: Explore and verify data on the Stacks blockchain.
 toc: false
 ---
 
-import Highlight from "@/components/highlight";
-import { RocketIcon } from 'lucide-react';
-
-With Clarinet, you can quickly setup your Clarity project through the command line tool. This covers every stage of the development cycle from generating new contracts, an interactive REPL and validating contracts to deployment on a `devnet`, `testnet` or `mainnet`.
-
-## Install Clarinet
-<Tabs id="os" items={['macOS', 'Windows']}>
-  <Tab value="macOS">
-  Run the following command in your terminal:
-  
-  ```bash
-  brew install clarinet
-  ```
-
-  {/* For more information on how to install Clarinet on macOS, please see the [Setting Up Your Clarity Development Environment (Mac) video walkthrough](). */}
-  </Tab>
-  <Tab value="Windows">
-  Run the following command in your terminal:
-
-  ```bash
-  winget install clarinet
-  ```
-
-  {/* For more information on how to install Clarinet on Windows, please see the [Setting Up Your Clarity Environment (Windows) video walkthrough](). */}
-  </Tab>
-</Tabs>
-
-<Callout title="Additional Installation">For more installation options, check out our [Installation Guide](/docs/clarinet/installation)</Callout>
+import { Button } from "@/components/ui/button";
 
 
-## Features
+The Stacks Explorer lets you explore on-chain data, troubleshoot pending transactions, edit and deploy contracts via the sandbox, discover new tokens, and more. We maintain and support the [Stacks Explorer](https://explorer.hiro.so) as a service for the community, but you can also run your own instance of the explorer.
 
-<Cards>
-  <Card
-    href="/clarinet/features/create-new-contract"
-    title="Create a new contract"
-    description="Add new contracts to your project and have them automatically configured in your project file."
-  />
-  <Card
-    href="/clarinet/features/debug-contract"
-    title="Debug a contract"
-    description="Utilize powerful debugging tools to step through your code, print values, and trace execution paths."
-  />
-  <Card
-    href="/clarinet/features/write-unit-tests"
-    title="Write unit tests"
-    description="Leverage the Clarinet SDK to write comprehensive unit tests, ensuring your contract performs as expected."
-  />
-  <Card
-    href="/clarinet/features/create-deployment-plans"
-    title="Create deployment plans"
-    description="Employ customizable deployment plans to streamline your contract deployments, facilitating multi-step processes with ease."
-  />
-</Cards>
+<div className="flex gap-4">
+  <Button className='bg-orange-500 hover:bg-orange-600'>
+    <a href="https://explorer.hiro.so" target="_blank">
+      View Explorer
+    </a>
+  </Button>
+  <Button variant="outline">Setup your own explorer</Button>
+</div>
 
 ### Guides
 
@@ -76,17 +35,10 @@ With Clarinet, you can quickly setup your Clarity project through the command li
 
 ### Related Products
 
-- **[Clarinet SDK](https://docs.hiro.so/clarinet)**: Enhance your testing capabilities with the Clarinet SDK, designed to simplify and expedite the testing process.
-- **[Hiro Platform](https://www.hiro.so/platform)**: Accelerate your app development with our comprehensive hosted development experience.
-- **[Stacks.js](https://github.com/blockstack/stacks.js)**: Utilize this JavaScript library for essential web app functions like user authentication, contract interactions, and transaction signing.
+**[Stacks Blockchain API](/stacks/api)**: Looking for on-chain data without the front end? Leverage the Stacks Blockchain API.
 
-## Need Help?
+**[Ordinals Explorer](/ordinals/explorer)**: Explore Bitcoin Ordinals and BRC-20 tokens via the Ordinals Explorer.
 
-Encountering challenges while building with Clarinet? We're here to assist:
+---
 
-- **Discord**: Join the conversation in the #clarinet channel under HIRO DEVELOPER TOOLS on [Discord](https://discord.gg/hiro). This is where you'll find our community and team ready to support you.
-- **Hiro Help Chatbot**: For quick questions, our chatbot Hiro Help is available in the bottom right corner of your screen, ready to provide instant answers.
-- **Private Consultation**: Prefer a more personal touch? Schedule a call with us via [Hiro Office Hours](https://www.hiro.so/office-hours) or send us an email for direct support.
-- **Stay Informed**: Keep up with the latest Hiro announcements and insights by subscribing to our newsletter.
-
-[Subscribe to our newsletter](https://www.hiro.so/newsletter)
+Need help building with Stacks Explorer? Reach out to us on the `#stacks-explorer` channel on Discord under the [Hiro Developer Tools section](https://stacks.chat/). There’s also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.
