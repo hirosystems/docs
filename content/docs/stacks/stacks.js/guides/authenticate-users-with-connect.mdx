@@ -1,6 +1,6 @@
 ---
 title: Authenticate users with Connect
-description: This guide demonstrates how to connect to users' wallets and authenticate using Stacks.js packages.
+description: Connect to user wallets and authenticate your users using Stacks.js packages.
 ---
 
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
@@ -25,7 +25,7 @@ In this guide, you will learn how to:
 3. Trigger the authentication flow with the `showConnect` function
 4. Handle pending authentication states and manage user data
 
-The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize them to fit your application's specific needs.
+The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize these examples to fit your application's specific needs.
 
 <Callout title="Example Repo">To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
 
@@ -50,16 +50,18 @@ const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
 ```
 
+Apps may request any of the following scopes:
+
 | Scope          | Definition                                                                      |
 | -------------- | ------------------------------------------------------------------------------- |
 | `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
 | `publish_data` | Publish data so other users of the app can discover and interact with the user. |
 
-<Callout title="Note">We recommend you initiate the `userSession` object just once in your app then reference it using imports where needed.</Callout>
+<Callout title="Note">We recommend you initiate the `userSession` object just once in your app, then reference it using imports where needed.</Callout>
 
 ### Trigger the authentication flow with the <InlineCode>showConnect</InlineCode> function
 
-Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [Secret Key](../concepts/private-keys) that's used to encrypt their private data.
+Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [secret key](../concepts/private-keys) that's used to encrypt their private data.
 
 <div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
   <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
@@ -131,8 +133,8 @@ For users already signed in, you can directly access their session information a
   <Card
     icon={<Terminal className='text-primary' />}
     href="/stacks/stacks.js/guides/deep-dive-into-post-conditions"
-    title="Deep dive into Post-Conditions"
-    description="Learn how to use Post-Conditions to secure your smart contracts."
+    title="Deep dive into post-conditions"
+    description="Learn how to use post-conditions to secure your smart contracts."
   />
 </Cards>
 
