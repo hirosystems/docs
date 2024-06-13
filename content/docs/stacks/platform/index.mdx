@@ -1,89 +1,61 @@
 ---
 title: Overview
-description: Platform Cloud IDE
+description: A cloud-based development environment to kickstart your app development on Stacks.
 toc: false
 ---
 
-With Clarinet, you can quickly setup your Clarity project through the command line tool. This covers every stage of the development cycle from generating new contracts, an interactive REPL and validating contracts to deployment on a `devnet`, `testnet` or `mainnet`.
+The Hiro Platform is a hosted developer experience for creating, testing, and deploying smart contracts. It comes pre-installed with several tools, including Clarinet, VS Code, and a private blockchain network for testing, so you can spend less time setting up and more time building.
 
-## Install Clarinet
-<Tabs id="os" items={['macOS', 'Windows']}>
-  <Tab value="macOS">
-  Run the following command in your terminal:
-  
-  ```bash
-  brew install clarinet
-  ```
+You can also set up custom event streams via chainhooks and manage API keys for Stacks and Ordinals.
 
-  {/* For more information on how to install Clarinet on macOS, please see the [Setting Up Your Clarity Development Environment (Mac) video walkthrough](). */}
-  </Tab>
-  <Tab value="Windows">
-  Run the following command in your terminal:
-
-  ```bash
-  winget install clarinet
-  ```
-
-  {/* For more information on how to install Clarinet on Windows, please see the [Setting Up Your Clarity Environment (Windows) video walkthrough](). */}
-  </Tab>
-</Tabs>
-
-<Callout title="Additional Installation">For more installation options, check out our [Installation Guide](/docs/clarinet/installation)</Callout>
-
-
-## Features
-
-<Cards>
-  <Card
-    href="/clarinet/features/create-new-contract"
-    title="Create a new contract"
-    description="Add new contracts to your project and have them automatically configured in your project file."
-  />
-  <Card
-    href="/clarinet/features/debug-contract"
-    title="Debug a contract"
-    description="Utilize powerful debugging tools to step through your code, print values, and trace execution paths."
-  />
-  <Card
-    href="/clarinet/features/write-unit-tests"
-    title="Write unit tests"
-    description="Leverage the Clarinet SDK to write comprehensive unit tests, ensuring your contract performs as expected."
-  />
-  <Card
-    href="/clarinet/features/create-deployment-plans"
-    title="Create deployment plans"
-    description="Employ customizable deployment plans to streamline your contract deployments, facilitating multi-step processes with ease."
-  />
-</Cards>
+[Spin up your next project in just a few clicks.](/stacks/platform/getting-started)
 
 ### Guides
 
 <Cards>
-  <Card
-    href="/clarinet/features/run-local-development-environment"
-    title="Run a local development environment"
-    description="Set up a local devnet environment for developing and testing in a controlled environment before deployment."
+  <Card 
+    href="/platform/guides/create-project"
+    title="Create a new project"
+    description="Choose from a set of starter templates or import your existing GitHub repo."
   />
-  <Card
-    href="/clarinet/features/create-deployment-plan"
-    title="Analyzing contracts for vulnerabilities"
-    description="Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts."
+
+{" "}
+
+<Card
+  href="/platform/guides/build-contract"
+  title="Develop smart contracts"
+  description="Start building immediately with zero installations required."
+/>
+
+{" "}
+
+<Card
+  href="/platform/guides/create-chainhooks"
+  title="Create event streams"
+  description="Create and manage webhook-like triggers that react to on-chain events in real time."
+/>
+
+{" "}
+
+<Card
+  href="/platform/guides/deployment-plans"
+  title="Deploy your code"
+  description="Deploy your project with customizable deployment plans that can handle contract dependencies."
+/>
+
+  <Card 
+    href="/platform/guides/devnet"
+    title="Iterate rapidly with Devnet"
+    description="Leverage devnet, a private instance of the blockchain, for rapid feedback loops and a better debugging experience."
   />
 </Cards>
 
-### Related Products
+### Related Tools
 
-- **[Clarinet SDK](https://docs.hiro.so/clarinet)**: Enhance your testing capabilities with the Clarinet SDK, designed to simplify and expedite the testing process.
-- **[Hiro Platform](https://www.hiro.so/platform)**: Accelerate your app development with our comprehensive hosted development experience.
-- **[Stacks.js](https://github.com/blockstack/stacks.js)**: Utilize this JavaScript library for essential web app functions like user authentication, contract interactions, and transaction signing.
+- **[Clarinet](/stacks/clarinet)**: Prefer to stay local? Build and deploy smart contracts on your device with Clarinet.
+- **[Chainhook](/stacks/chainhook)**: You don’t need the platform to create event streams. Leverage chainhook independently, so your app can react to on-chain events in real time.
+- **[Stacks.js](/stacks/stacks.js)**: Don’t reinvent the wheel and build faster with a JS library that handles basic functions.
 
-## Need Help?
+---
 
-Encountering challenges while building with Clarinet? We're here to assist:
-
-- **Discord**: Join the conversation in the #clarinet channel under HIRO DEVELOPER TOOLS on [Discord](https://discord.gg/hiro). This is where you'll find our community and team ready to support you.
-- **Hiro Help Chatbot**: For quick questions, our chatbot Hiro Help is available in the bottom right corner of your screen, ready to provide instant answers.
-- **Private Consultation**: Prefer a more personal touch? Schedule a call with us via [Hiro Office Hours](https://www.hiro.so/office-hours) or send us an email for direct support.
-- **Stay Informed**: Keep up with the latest Hiro announcements and insights by subscribing to our newsletter.
-
-[Subscribe to our newsletter](https://www.hiro.so/newsletter)
+_Need help building with Clarinet?_ Reach out to us on the `#clarinet` channel on Discord under **Hiro Developer Tools** section. We also host a weekly office hours on Discord every Monday at 11am ET.
