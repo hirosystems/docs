@@ -13,17 +13,22 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <API>
 
-<APIInfo method={"GET"} route={"/ordinals/v1/"}>
+<div className="flex-1">
 
-## API Status
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/`}</p>
+</h2>
 
 Displays the status of the API
 
 | Status code | Description |
-| ----------- | ----------- |
+| :----------- | :----------- |
 | `200` | Default Response |
 
-</APIInfo>
+</div>
 
 <APIExample>
 
