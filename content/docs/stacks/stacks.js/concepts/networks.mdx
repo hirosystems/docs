@@ -2,13 +2,15 @@
 title: Networks
 ---
 
-Typically, we speak of `mainnet` and `testnet` as the networks of Stacks. Most wallets will be configured to `mainnet` by default, this is the actual blockchain that holds real STX tokens.
+Typically, we speak of `mainnet` and `testnet` as the networks of Stacks. Most wallets will be configured to `mainnet` by default—this is the production environment, the actual blockchain that holds real STX tokens.
 
-As the name suggests, `testnet` is a network for testing. It's a separate blockchain state that holds test tokens, which have no value.
+As the name suggests, `testnet` is a public network for testing. It's a separate blockchain state that holds test tokens, which have no value.
 
 Developers are encouraged to use `StacksTestnet` for testing before rolling out applications and contracts to `StacksMainnet`.
 There is even `StacksDevnet` and `StacksMocknet` for working in a local development environment for development.
 Stacks.js functions can be configured to use whichever network you want.
+
+You can learn more about devnet [here](/stacks/clarinet/guides/run-a-local-devnet).
 
 ```ts twoslash
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
