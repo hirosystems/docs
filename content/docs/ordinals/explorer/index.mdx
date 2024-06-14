@@ -1,111 +1,32 @@
 ---
+# The default id is the same as the one defined below. so not needed
 title: Overview
-description: Clarinet is a local development environment that offers everything you need to create and deploy smart contracts on Stacks.
-icon: Album
+description: Explore and verify ordinals and BRC-20 data on Bitcoin.
 ---
 
-import Highlight from "@/components/highlight";
-import { RocketIcon } from 'lucide-react';
+import { Button } from "@/components/ui/button"
 
-With Clarinet, you can quickly setup your Clarity project through the command line tool. This covers every stage of the development cycle from generating new contracts, an interactive REPL and validating contracts to deployment on a `devnet`, `testnet` or `mainnet`.
+The Ordinals Explorer lets you explore and verify Bitcoin Ordinals and BRC-20 token data. You can also use a variety of filters to discover inscriptions. We maintain and support the [Ordinals Explorer](https://ordinals.hiro.so) as a service for the community, but you can also run your own instance of the explorer if you so choose.
 
-## Install Clarinet
-<Tabs id="os" items={['macOS', 'Windows']}>
-  <Tab value="macOS">
-  Run the following command in your terminal:
-  
-  ```bash
-  brew install clarinet
-  ```
-
-  {/* For more information on how to install Clarinet on macOS, please see the [Setting Up Your Clarity Development Environment (Mac) video walkthrough](). */}
-  </Tab>
-  <Tab value="Windows">
-  Run the following command in your terminal:
-
-  ```bash
-  winget install clarinet
-  ```
-
-  {/* For more information on how to install Clarinet on Windows, please see the [Setting Up Your Clarity Environment (Windows) video walkthrough](). */}
-  </Tab>
-</Tabs>
-
-<Callout title="Additional Installation">For more installation options, check out our [Installation Guide](/docs/clarinet/installation)</Callout>
-
-
-## Features
-
-<Cards>
-  <Card
-    href="/clarinet/features/create-new-contract"
-    title="Create a new contract"
-    description="Add new contracts to your project and have them automatically configured in your project file."
-  />
-  <Card
-    href="/clarinet/features/debug-contract"
-    title="Debug a contract"
-    description="Utilize powerful debugging tools to step through your code, print values, and trace execution paths."
-  />
-  <Card
-    href="/clarinet/features/write-unit-tests"
-    title="Write unit tests"
-    description="Leverage the Clarinet SDK to write comprehensive unit tests, ensuring your contract performs as expected."
-  />
-  <Card
-    href="/clarinet/features/create-deployment-plans"
-    title="Create deployment plans"
-    description="Employ customizable deployment plans to streamline your contract deployments, facilitating multi-step processes with ease."
-  />
-</Cards>
-
-<div className="flex justify-end">
-  <a href="/docs/clarinet/all-features" className="flex items-center gap-2 text-right text-sm">
-    View all features
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </a>
+<div className="flex gap-4">
+  <Button className="bg-orange-500 hover:bg-orange-600">
+    <a href="https://ordinals.hiro.so" target="_blank" className="no-underline">
+      View Ordinals Explorer
+    </a>
+  </Button>
+  <Button variant="outline">
+    <a href="./guides/build-explorer" target="_blank" className="no-underline">
+      Spin up your own Explorer
+    </a>
+  </Button>
 </div>
 
-### Guides
+### Related Tools
 
-<Cards>
-  <Card
-    href="/clarinet/features/run-local-development-environment"
-    title="Run a local development environment"
-    description="Set up a local devnet environment for developing and testing in a controlled environment before deployment."
-  />
-  <Card
-    href="/clarinet/features/create-deployment-plan"
-    title="Analyzing contracts for vulnerabilities"
-    description="Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts."
-  />
-</Cards>
+**[Ordinals API](../api)**: Looking for on-chain data without the front end? Leverage the Ordinals API.
 
-<div className="flex justify-end">
-  <a href="/docs/clarinet/all-features" className="flex items-center gap-2 text-right text-sm">
-    View all guides
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </a>
-</div>
+**[Stacks Explorer](/stacks/explorer/guides/build-explorer)**: Want to build an explorer for the Stacks blockchain?
 
+---
 
-### Related Products
-
-- **[Clarinet SDK](https://docs.hiro.so/clarinet)**: Enhance your testing capabilities with the Clarinet SDK, designed to simplify and expedite the testing process.
-- **[Hiro Platform](https://www.hiro.so/platform)**: Accelerate your app development with our comprehensive hosted development experience.
-- **[Stacks.js](https://github.com/blockstack/stacks.js)**: Utilize this JavaScript library for essential web app functions like user authentication, contract interactions, and transaction signing.
-
-## Need Help?
-
-Encountering challenges while building with Clarinet? We're here to assist:
-
-- **Discord**: Join the conversation in the #clarinet channel under HIRO DEVELOPER TOOLS on [Discord](https://discord.gg/hiro). This is where you'll find our community and team ready to support you.
-- **Hiro Help Chatbot**: For quick questions, our chatbot Hiro Help is available in the bottom right corner of your screen, ready to provide instant answers.
-- **Private Consultation**: Prefer a more personal touch? Schedule a call with us via [Hiro Office Hours](https://www.hiro.so/office-hours) or send us an email for direct support.
-- **Stay Informed**: Keep up with the latest Hiro announcements and insights by subscribing to our newsletter.
-
-[Subscribe to our newsletter](https://www.hiro.so/newsletter)
+Need help building with the Ordinals Explorer? Reach out to us on the `#ordinals` channel on Discord under the [Hiro Developer Tools section](https://stacks.chat/). There’s also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.
