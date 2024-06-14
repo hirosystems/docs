@@ -1,86 +1,26 @@
 ---
 title: Rate Limiting
-description: Turn a source into an unitied interface
+description: Rate Limiting for Hiro APIs
 ---
 
-## Usage
+### API Rate Limits
 
-Source API is a helper to load file-system based source files, it outputs numerous useful properties to integrate with other components, such as Page Tree.
+The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
 
-The output strictly follows [Page Conventions](/stacks/page-conventions). During the process, your input source files will be parsed and form a virtual storage to avoid inconsistent behaviour between different OS.
+| API key | Rate Limit                        |
+|:--------|:----------------------------------|
+| No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
+| Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
-```ts
-import { map } from '@/.map';
-import { createMDXSource } from 'fumadocs-mdx';
-import { loader } from 'fumadocs-core/source';
+These rate-limits apply across our 3 public-facing APIs:
+- [Stacks Blockchain API](./api)
+- [Token Metadata API](./token-metadata-api)
+- [Ordinals API](../bitcoin/api)
 
-export const docs = loader({
-  source: createMDXSource(map),
-});
-```
+The entirety of API traffic, regardless of whether it's from one or all of these APIs, will be attributed to a single default quota: 50 RPM for unauthenticated and 500 RPM for authenticated traffic.
 
-### Custom Source
+These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
 
-Furthermore, you can write your source interface. The `Source` object includes a `files` property which has an array of virtual files.
-Each virtual file must contain its file path and corresponding data.
-
-```ts
-export function createMySource(): Source<{
-  metaData: MetaData; // Your custom type
-  pageData: PageData; // Your custom type
-}> {
-  return {
-    files: [...],
-  };
-}
-```
-
-### Transformer
-
-To perform custom file-system operations before processing the storage, you can add a transformer.
-
-```ts
-loader({
-  transformers: [
-    ({ storage }) => {
-      storage.makeDir();
-    },
-  ],
-});
-```
-
-### Root Directory
-
-All files outside of the root directory will be ignored.
-
-```ts
-loader({
-  rootDir: 'docs',
-});
-```
-
-### Base URL
-
-As the `loader` function also generate an URL for each page, you can override the default base URL.
-
-```ts
-loader({
-  baseUrl: '/docs',
-});
-```
-
-### Icons
-
-Load the [icon](/stacks/page-conventions#icons) from the data of pages and meta files.
-
-```ts
-import { loader } from 'fumadocs-core/source';
-import { icons } from 'lucide-react';
-import { createElement } from 'react';
-
-export const utils = loader({
-  icon(icon) {
-    if (icon in icons) return createElement(icons[icon as keyof typeof icons]);
-  },
-});
-```
+<Callout title='Need an API key?'>
+You can create one for free in the [Hiro Platform](https://platform.hiro.so).
+</Callout>

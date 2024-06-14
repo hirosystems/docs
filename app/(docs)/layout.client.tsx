@@ -61,7 +61,13 @@ export function SidebarBanner(): JSX.Element {
     pathname === "/stacks/getting-started" ||
     pathname === "/ordinals" ||
     pathname === "/ordinals/getting-started" ||
-    pathname === "/guides"
+    pathname === "/guides" ||
+    pathname === "/stacks/api-keys" ||
+    pathname === "/stacks/rate-limiting" ||
+    pathname === "/stacks/contributors-guide" ||
+    pathname === "/ordinals/rate-limiting" ||
+    pathname === "/ordinals/api-keys" ||
+    pathname === "/ordinals/contributors-guide"
   ) {
     return <></>;
   }

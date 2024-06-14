@@ -1,184 +1,148 @@
 ---
-title: Getting Started
-description: Getting Started with Fumadocs
+title: Home
+icon: Home
 toc: false
 ---
 
-Fumadocs UI is the built-in user interface integration for Fumadocs, built on the top of Radix UI.
+import { Card as MainCard, SmallCard } from '@/components/card';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { SectionHeader } from '@/components/layout/section-header';
+import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Terminal } from 'lucide-react';
 
-## Automatic Installation
+import heroImage from '@/public/hero.svg';
 
-Create a new app with `create-fumadocs-app`.
+<div className='flex flex-col space-y-10'>
 
-```clarity
-(define-data-var data {
-  "name": "my-app",
-  "template": "fumadocs-ui-template"
-})
+<div className='flex space-x-6 items-end'>
+  <ImageZoom
+    alt="banner"
+    src={heroImage}
+    className="mt-0 mb-6 first-line:rounded-xl bg-background"
+    priority
+  />
 
-(define-read-only (get-data)
-  (map-get? data { "name" "my-app" "template" "fumadocs-ui-template" })
-)
-```
+  <div className='flex flex-col [&_h2]:mt-0 [&_h2]:mb-2 [&_p]:mb-6'>
 
-## Manual Installation
+  ## Welcome to Hiro Docs
 
-Create a new Next.js application with `create-next-app`, and install required packages.
+  Find all the guides and resources you need to build on Ordinals.
 
-```bash
-fumadocs-ui fumadocs-core
-```
-
-### Configuration
-
-Fumadocs UI is unopinionated and doesn't include content management features by default.
-You can choose a source you prefer, such as Contentlayer and Fumadocs MDX.
-
-There is a list of supported sources:
-
-- [Setup Fumadocs MDX](/stacks)
-- [Setup Contentlayer](/stacks/contentlayer)
-
-You have to configure the library correctly following their setup guide before continuing.
-
-### Styles
-
-You can import the pre-built stylesheet in the root layout.
-
-```ts
-import 'fumadocs-ui/style.css';
-```
-
-For Tailwind CSS projects, you may use [the official plugin](/bitcoin/theme) instead.
-
-> It doesn't come with a default font, you may choose one from `next/font`.
-
-### Root Layout
-
-Wrap the entire application inside [Root Provider](/bitcoin/blocks/root-provider).
-
-```tsx
-import { RootProvider } from 'fumadocs-ui/provider';
-import type { ReactNode } from 'react';
-
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <body>
-        <RootProvider>{children}</RootProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-### Layout
-
-Create a new catch-all route for our docs, and give it a proper layout.
-
-```tsx title="app/docs/layout.tsx"
-import { DocsLayout } from 'fumadocs-ui/layout';
-import type { ReactNode } from 'react';
-
-export default function RootDocsLayout({ children }: { children: ReactNode }) {
-  return (
-    <DocsLayout tree={tree} nav={{ title: 'My App' }}>
-      {children}
-    </DocsLayout>
-  );
-}
-```
-
-> `tree` refers to [Page Tree](/stacks/page-tree), which should be provided by your data source.
-
-### Page
-
-For the `page.tsx`, it may vary depending on your source. You should manually configure static rendering with `generateStaticParams` and metadata with `generateMetadata`.
-
-Make sure to wrap your content in the [Page](/bitcoin/blocks/page) component, this will also configure typography styles.
-
-### Search
-
-By default, it uses the built-in document search based on Flexsearch. [Learn to configure Document Search](/stacks/search/flexsearch) for your data source.
-
-## Enjoy!
-
-Now, Create your first mdx file in the docs folder.
-
-```mdx title="content/docs/index.mdx"
----
-title: Hello World
----
-
-## Yo what's up
-```
-
-Run the app in development mode and see http://localhost:3000/docs.
-
-```bash
-npm run dev
-```
-
-### FAQ
-
-<Accordions>
-<Accordion id='why-fumadocs-ui' title="Why Fumadocs UI?">
-
-Fumadocs UI provides many built-in components, and is more flexible compared to
-other existing frameworks.
-
-And most importantly, it is compatible with Next.js App Router which results in
-a faster page load speed with ~120kb initial Javascript load. You can easily use
-Fumadocs in an existing Next.js project, without refactoring anything.
-
-Feel free to open the demo in CodeSandbox and see if it suits you.
-
-</Accordion>
-<Accordion id='fix-supports-color' title="How to fix 'supports-color' error?">
-
-If you got this error:
-
-```
-Module not found: Can't resolve 'supports-color' in '.../node_modules/debug/src'
-```
-
-Try installing `supports-color@8.1.1`.
-
-</Accordion>
-<Accordion id='fix-dot-map-error' title="How to fix '@/.map' error?">
-
-If you are using Fumadocs MDX, the `.map.ts` file will be generated automatically once you start the dev server.
-
-For more information, see [Setup Guide](/docs/mdx).
-
-</Accordion>
-</Accordions>
-
-### Demo
-
-Open in [CodeSandbox](https://githubbox.com/fuma-nama/fumadocs-ui-template).
-
-## Learn More
+  </div>
+</div>
 
 <Cards>
-  <Card
-    href="/stacks/page-conventions"
-    title="Page Structure"
-    description="Learn how to structure your pages"
+  <MainCard
+    className='group space-y-1 text-md'
+    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/getting-started"
+    title="Get Started"
+    description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
   />
-  <Card
-    href="/bitcoin/internationalization"
-    title="Learn I18n"
-    description="Learn how to implement I18n"
-  />
-  <Card
-    href="/bitcoin/theme"
-    title="Theming"
-    description="Add themes to Fumadocs UI"
-  />
-  <Card
-    href="/bitcoin/components/codeblock"
-    title="Code Block"
-    description="Learn how to use code blocks in MDX"
+  <MainCard
+    className='group space-y-1 text-md'
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/api"
+    title="Stacks API Reference"
+    description="Explore API endpoints for interacting with the Stacks Blockchain."
   />
 </Cards>
+
+<div className='flex flex-col space-y-3'>
+
+### Explore by Category
+
+---
+
+<Cards>
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/clarinet"
+    title="Smart Contract Development"
+    description="Kickstart your smart contract journey with Clarinet and the Clarinet JS SDK."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/chainhook"
+    title="Data Streaming &amp; Events"
+    description="Create custom event streams for real-time data with Chainhook."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Lock className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js"
+    title="Frontend Web Development"
+    description="Interact with smart contracts on the web with the Stacks.js library."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/api"
+    title="Backend Development"
+    description="Explore our hosted APIs or spin up your own node infrastructure."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/token-metadata-api"
+    title="Token Management"
+    description="Explore our hosted API for fetching token metadata on Stacks."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Cloud-Based Development"
+    description="Develop, test, and deploy smart contracts straight from your browser."
+  />
+</Cards>
+</div>
+
+
+<div className='flex flex-col space-y-3'>
+
+### Explore by Product
+
+---
+
+<Cards>
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Platform"
+    description="A hosted developer experience for creating, testing, and deploying smart contracts."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/clarinet"
+    title="Clarinet"
+    description="Create, test, and deploy smart contracts on the Stacks blockchain."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js"
+    title="Stacks.js"
+    description="A collection of JavaScript libraries to build web applications on Stacks."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/chainhook"
+    title="Chainhook"
+    description="Monitor and respond to specific Bitcoin and Stacks blockchain events."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/explorer"
+    title="Explorer"
+    description="A web app for exploring on-chain data, interacting with smart contracts, and more."
+  />
+</Cards>
+</div>
+
+</div>
