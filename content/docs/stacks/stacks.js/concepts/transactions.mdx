@@ -14,7 +14,7 @@ The following shows how to create a simple transaction (STX transfer) using Stac
     openSTXTransfer({
       network: new StacksTestnet(),
 
-      recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK', // which address we are sending to
+      recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK', // which address you are sending to
       amount: 10000, // tokens, denominated in micro-STX
       anchorMode: AnchorMode.Any,
 
@@ -24,14 +24,14 @@ The following shows how to create a simple transaction (STX transfer) using Stac
   ```
   </Tab>
   <Tab value="Using a mnemonic">
-    For full manual transaction signing, we need to provide the sender's private key.
-    Treat the private key as a secret and never expose it to the public!
+    For full manual transaction signing, you need to provide the sender's private key.
+    Treat the private key as a secret and *never* expose it to the public.
 
     ```js
     import { makeSTXTokenTransfer } from '@stacks/transactions';
 
     const tx = await makeSTXTokenTransfer({
-      recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK', // which address we are sending to
+      recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK', // which address you are sending to
       amount: 10000, // tokens, denominated in micro-STX
       anchorMode: 'any',
       senderKey: 'c3a2d3...0b1c2', // private key (typically derived from a mnemonic)
