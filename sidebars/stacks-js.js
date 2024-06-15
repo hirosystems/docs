@@ -55,6 +55,11 @@ module.exports = [
     id: 'stacks.js/guides/deep-dive-post-conditions',
   },
   {
+    type: 'doc',
+    label: 'Expo (React Native)',
+    id: 'stacks.js/guides/react-native-guide',
+  },
+  {
     type: 'html',
     value: 'Connect',
     className: 'section-title',
