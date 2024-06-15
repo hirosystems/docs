@@ -1,5 +1,187 @@
 ---
 title: Get Satoshi Inscriptions
-description: Retrieves the running status of the Stacks Blockchain API.
+description: Retrieves all inscriptions associated with a single satoshi
 toc: false
 ---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/sats/{ordinal}/inscriptions`}</p>
+</h2>
+
+Retrieves all inscriptions associated with a single satoshi.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum: `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum: `1`</span>
+
+<span>Maximum: `60`</span>
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"ordinal"} type={"integer"}>
+
+Ordinal number that uniquely identifies a satoshi
+
+<span>Minimum: `0`</span>
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default Response |
+| `400`       | Default Response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions"
+```
+
+<Tabs items={["200","400"]}>
+
+<Tab value={"200"}>
+
+```json title="Example Response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+      "number": 248751,
+      "address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+      "genesis_address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+      "genesis_block_height": 778921,
+      "genesis_block_hash": "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133",
+      "genesis_tx_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218",
+      "genesis_fee": "3179",
+      "genesis_timestamp": 0,
+      "tx_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218",
+      "location": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0:0",
+      "output": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0",
+      "value": "546",
+      "offset": "0",
+      "sat_ordinal": "1232735286933201",
+      "sat_rarity": "common",
+      "sat_coinbase_height": 430521,
+      "mime_type": "text/plain",
+      "content_type": "text/plain;charset=utf-8",
+      "content_length": 59,
+      "timestamp": 1677733170000,
+      "curse_type": "p2wsh",
+      "recursive": true,
+      "recursion_refs": [
+        "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0"
+      ]
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface PaginatedSatoshiInscriptionsResponse {
+  limit: number
+  offset: number
+  total: number
+  results: InscriptionResponse[]
+}
+export interface InscriptionResponse {
+  id: string
+  number: number
+  address: string | null
+  genesis_address: string | null
+  genesis_block_height: number
+  genesis_block_hash: string
+  genesis_tx_id: string
+  genesis_fee: string
+  genesis_timestamp: number
+  tx_id: string
+  location: string
+  output: string
+  value: string | null
+  offset: string | null
+  sat_ordinal: string
+  sat_rarity: string
+  sat_coinbase_height: number
+  mime_type: string
+  content_type: string
+  content_length: number
+  timestamp: number
+  curse_type: string | null
+  recursive: boolean
+  recursion_refs: string[] | null
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"400"}>
+
+```json title="Example Response"
+{
+  "error": "Invalid satoshi ordinal number"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface InvalidSatoshiNumberResponse {
+  error: "Invalid satoshi ordinal number"
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

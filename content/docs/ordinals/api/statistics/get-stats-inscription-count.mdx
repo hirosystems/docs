@@ -1,5 +1,128 @@
 ---
-title: Get Stats Inscription Count
-description: Retrieves the running status of the Stacks Blockchain API.
+title: Get Inscription Count per Block
+description: Retrieves statistics on the number of inscriptions revealed per block
 toc: false
 ---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/stats/inscriptions`}</p>
+</h2>
+
+Retrieves statistics on the number of inscriptions revealed per block.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"from_block_height"} type={"string"}>
+
+Bitcoin block height
+
+<span>Pattern: `"^[0-9]+$"`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"to_block_height"} type={"string"}>
+
+Bitcoin block height
+
+<span>Pattern: `"^[0-9]+$"`</span>
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default Response |
+| `404`       | Default Response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/stats/inscriptions"
+```
+
+<Tabs items={["200","404"]}>
+
+<Tab value={"200"}>
+
+```json title="Example Response"
+{
+  "results": [
+    {
+      "block_height": "778921",
+      "block_hash": "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133",
+      "inscription_count": "100",
+      "inscription_count_accum": "3100",
+      "timestamp": 1677733170000
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface Response {
+  results: {
+    block_height: string
+    block_hash: string
+    inscription_count: string
+    inscription_count_accum: string
+    timestamp: number
+  }[]
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+```json title="Example Response"
+{
+  "error": "Not found"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface NotFoundResponse {
+  error: "Not found"
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,5 +1,139 @@
 ---
 title: Get BRC-20 Token Details
-description: Retrieves the running status of the Stacks Blockchain API.
+description: Retrieves information for a BRC-20 token including supply and holders
 toc: false
 ---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/brc-20/tokens/{ticker}`}</p>
+</h2>
+
+Retrieves information for a BRC-20 token including supply and holders.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"ticker"} type={"string"}>
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default Response |
+| `404`       | Default Response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/tokens/string"
+```
+
+<Tabs items={["200","404"]}>
+
+<Tab value={"200"}>
+
+```json title="Example Response"
+{
+  "token": {
+    "id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+    "number": 248751,
+    "block_height": 752860,
+    "tx_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218",
+    "address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+    "ticker": "PEPE",
+    "max_supply": "21000000",
+    "mint_limit": "100000",
+    "decimals": 18,
+    "deploy_timestamp": 1677733170000,
+    "minted_supply": "1000000",
+    "tx_count": 300000
+  },
+  "supply": {
+    "max_supply": "21000000",
+    "minted_supply": "1000000",
+    "holders": 240
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface BRC20TokenDetailsResponse {
+  token: BRC20TokenResponse
+  supply: {
+    max_supply: string
+    minted_supply: string
+    holders: number
+  }
+}
+export interface BRC20TokenResponse {
+  id: string
+  number: number
+  block_height: number
+  tx_id: string
+  address: string
+  ticker: string
+  max_supply: string
+  mint_limit: string | null
+  decimals: number
+  deploy_timestamp: number
+  minted_supply: string
+  tx_count: number
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+```json title="Example Response"
+{
+  "error": "Not found"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface NotFoundResponse {
+  error: "Not found"
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>
