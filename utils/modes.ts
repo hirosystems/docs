@@ -1,13 +1,13 @@
 /* eslint-disable import/no-relative-packages -- required */
 import { LayoutIcon, LibraryIcon, type LucideIcon } from "lucide-react";
-import { HiroSVG } from "@/app/(home)/icons";
+import { StacksIcon, OrdinalsIcon } from "@/components/ui/icon";
 
 export interface Mode {
   param: string;
   name: string;
   description: string;
   version: string;
-  icon: React.ElementType;
+  icon?: React.ElementType;
 }
 
 export const modes: Mode[] = [
@@ -16,20 +16,19 @@ export const modes: Mode[] = [
     name: "Stacks",
     description: "Developer Tools for Bitcoin Layers",
     version: "1.0.0",
-    icon: HiroSVG,
+    icon: StacksIcon,
   },
   {
     param: "ordinals",
     name: "Ordinals",
     description: "Developer Tools for Bitcoin Layers",
     version: "1.0.0",
-    icon: HiroSVG,
+    icon: OrdinalsIcon,
   },
   {
     param: "guides",
     name: "Guides",
     description: "Comprehensive guides for developers",
     version: "1.0.0",
-    icon: HiroSVG,
   },
 ];

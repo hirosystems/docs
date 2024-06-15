@@ -6,7 +6,7 @@ import { useParams, usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
 import { modes } from "@/utils/modes";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 const itemVariants = cva(
   "rounded-md px-2 py-1 transition-colors hover:text-accent-foreground",
@@ -38,7 +38,10 @@ export function NavChildren(): JSX.Element {
           href={`/${m.param}`}
           className={cn(itemVariants({ active: mode === m.param }))}
         >
-          {m.name}
+          <div className="inline-flex items-center gap-2">
+            {m.icon && <m.icon className="shrink-0 size-3" />}
+            {m.name}
+          </div>
         </Link>
       ))}
     </div>
@@ -54,7 +57,6 @@ export function SidebarBanner(): JSX.Element {
   const pathname = usePathname();
   const mode = useMode();
   const currentMode = modes.find((item) => item.param === mode) ?? modes[0];
-  const Icon = currentMode.icon;
 
   if (
     pathname === "/stacks" ||

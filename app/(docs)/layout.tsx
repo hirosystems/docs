@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { LayoutTemplateIcon } from "lucide-react";
 import { utils } from "@/utils/source";
 import { create } from "@/components/ui/icon";
-import { FumaDocsSVG, HiroSVG } from "../(home)/icons";
+import { HiroIcon, HiroSVG } from "../(home)/icons";
 import { Body, NavChildren, SidebarBanner } from "./layout.client";
 
 export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
@@ -11,13 +11,11 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   nav: {
     transparentMode: "top",
     title: (
-      <>
-        <HiroSVG
-          className="size-5 shrink-0 rounded-md dark:bg-neutral/90 dark:text-neutral-900 bg-primary text-white"
-          fill="currentColor"
-        />
-        <span className="ml-2 font-semibold max-md:hidden">Hiro Docs</span>
-      </>
+      <div className="text-md flex gap-3 items-center">
+        <HiroIcon className="size-11 shrink-0 rounded-md" fill="currentColor" />
+        <span className="max-md:hidden text-gray-500">|</span>
+        <span className="max-md:hidden text-gray-500">Documentation</span>
+      </div>
     ),
     children: <NavChildren />,
     links: [
