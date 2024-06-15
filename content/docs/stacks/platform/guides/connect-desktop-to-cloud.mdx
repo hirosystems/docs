@@ -1,10 +1,11 @@
 ---
-title: Connect Desktop to Cloud Using SSH
+title: Connect desktop to cloud using SSH
+description: Connect your local editor to the Hiro Platform.
 ---
 
-The Hiro Platform now supports local development, allowing you to use your preferred local editor (VSCode, Emacs, Vim, etc.) to develop smart contracts. This guide will walk you through the steps to set up your local editor for the Hiro Platform.
+The Hiro Platform now supports local development, allowing you to use your preferred local editor (VS Code, Emacs, Vim, etc.) to develop smart contracts. This guide will walk you through the steps to set up your local editor for the Hiro Platform.
 
-## Find or Generate Your SSH Key
+## Find or generate your SSH key
 
 First, you need to check if you already have an existing SSH key on your device. This is often located in `~/.ssh/id_ed25519.pub`. You can view your SSH keys by running the following command in your terminal:
 
@@ -20,11 +21,11 @@ If you don't have an SSH key, you can generate one by running the following comm
 ssh-keygen -t ed25519
 ```
 
-You'll then be prompted to enter a passphrase. You can choose to leave that blank. You should now have a `id_ed25519.pub` file which contains your new public SSH key.
+You'll then be prompted to enter a passphrase. You can choose to leave that blank. You should now have a `id_ed25519.pub` file, which contains your new public SSH key.
 
-## Save Your SSH Key
+## Save your SSH key
 
-Next, you'll provide your public key to the Hiro Platform. You can do this by copying your public key and pasting it into the SSH Public Key field in the Hiro Platform in Profile -> Settings. [https://platform.hiro.so/settings](https://platform.hiro.so/settings)
+Next, you need to provide your public key to the Hiro Platform. You can do this by copying your public key and pasting it into the SSH public key field in the Hiro Platform in Profile -> Settings: [https://platform.hiro.so/settings](https://platform.hiro.so/settings)
 
 For Mac, use:
 
@@ -74,17 +75,17 @@ If you don't plan to use Git, you can remove the line `ForwardAgent yes`.
 
 </Callout>
 
-## Get Your Workspace URL
+## Get your workspace URL
 
 To create an SSH connection to your Hiro Platform workspace, you will need your workspace url. To find it, go to [https://platform.hiro.so/projects](https://platform.hiro.so/projects) and click `Connect Your Local Editor`. You will find your workspace url at the bottom.
 
-## Connection Complete!
+## Connection complete!
 
 Now you can access your Hiro Platform projects directly from your local setup. Use an SSH client or editor with SSH support to open your projects.
 
 ## Configuring Visual Studio Code
 
-You can use the "Remote-SSH" extension to connect to, and work on, your remote server directly from your local VS Code environment. If you don't have it installed already, you can install it from the VS Code Marketplace: [https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+You can use the "Remote-SSH" extension to connect to, and work on, your remote server directly from your local VS Code environment. If you don't have it installed already, you can install it from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh).
 Once the extension is installed, you can connect to your remote server by following the steps below.
 
 1. Open VS Code on your local machine.
