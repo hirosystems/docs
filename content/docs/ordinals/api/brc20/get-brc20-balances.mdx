@@ -1,5 +1,129 @@
 ---
 title: Get BRC-20 Balances
-description: Retrieves the running status of the Stacks Blockchain API.
+description: Retrieves BRC-20 token balances for a Bitcoin address
 toc: false
 ---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/brc-20/balances/{address}`}</p>
+</h2>
+
+Retrieves BRC-20 token balances for a Bitcoin address.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"ticker"} type={"array of string"}>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"block_height"} type={"string"}>
+
+Bitcoin block height
+
+<span>Pattern: `"^[0-9]+$"`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum: `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum: `1`</span>
+
+<span>Maximum: `60`</span>
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+Bitcoin address
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default Response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/balances/string"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+```json title="Example Response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "ticker": "PEPE",
+      "available_balance": "1500.00000",
+      "transferrable_balance": "500.00000",
+      "overall_balance": "2000.00000"
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface PaginatedBRC20BalanceResponse {
+  limit: number
+  offset: number
+  total: number
+  results: {
+    ticker: string
+    available_balance: string
+    transferrable_balance: string
+    overall_balance: string
+  }[]
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

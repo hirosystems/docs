@@ -1,13 +1,13 @@
 ---
 title: Get API Status
-description: Retrieves the running status of the Stacks Blockchain API.
+description: Retrieves the running status of the Ordinals API
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Root, API, APIExample } from "@/components/layout"
+import { APIInfo, Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <Root>
 
@@ -22,11 +22,11 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/`}</p>
 </h2>
 
-Displays the status of the API
+Displays the status of the Ordinals API.
 
-| Status code | Description |
-| :----------- | :----------- |
-| `200` | Default Response |
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default Response |
 
 </div>
 
@@ -39,8 +39,6 @@ curl -X GET "https://api.hiro.so/ordinals/v1/"
 <Tabs items={["200"]}>
 
 <Tab value={"200"}>
-
-
 
 ```json title="Example Response"
 {
@@ -58,13 +56,12 @@ curl -X GET "https://api.hiro.so/ordinals/v1/"
 
 ```ts
 export interface ApiStatusResponse {
-  server_version: string;
-  status: string;
-  block_height?: number;
-  max_inscription_number?: number;
-  max_cursed_inscription_number?: number;
+  server_version: string
+  status: string
+  block_height?: number
+  max_inscription_number?: number
+  max_cursed_inscription_number?: number
 }
-
 ```
 
 </Accordion>

@@ -1,13 +1,13 @@
 ---
 title: Get Inscriptions
-description: Retrieves the running status of the Stacks Blockchain API.
+description: Retrieves a list of inscriptions with options to filter and sort results
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <Root>
 
@@ -22,7 +22,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/inscriptions`}</p>
 </h2>
 
-Retrieves a list of inscriptions with options to filter and sort results
+Retrieves a list of inscriptions with options to filter and sort results.
 
 ### Query Parameters
 
@@ -36,7 +36,7 @@ Bitcoin block identifier (height or hash)
 
 Bitcoin block height
 
-<span>Pattern:  `"^[0-9]+$"`</span>
+<span>Pattern: `"^[0-9]+$"`</span>
 
 </Property>
 
@@ -44,7 +44,7 @@ Bitcoin block height
 
 Bitcoin block height
 
-<span>Pattern:  `"^[0-9]+$"`</span>
+<span>Pattern: `"^[0-9]+$"`</span>
 
 </Property>
 
@@ -64,7 +64,7 @@ Block UNIX epoch timestamp (milliseconds)
 
 Ordinal number that uniquely identifies a satoshi
 
-<span>Minimum:  `0`</span>
+<span>Minimum: `0`</span>
 
 </Property>
 
@@ -72,7 +72,7 @@ Ordinal number that uniquely identifies a satoshi
 
 Ordinal number that uniquely identifies a satoshi
 
-<span>Minimum:  `0`</span>
+<span>Minimum: `0`</span>
 
 </Property>
 
@@ -80,7 +80,7 @@ Ordinal number that uniquely identifies a satoshi
 
 Bitcoin block height
 
-<span>Pattern:  `"^[0-9]+$"`</span>
+<span>Pattern: `"^[0-9]+$"`</span>
 
 </Property>
 
@@ -88,7 +88,7 @@ Bitcoin block height
 
 Bitcoin block height
 
-<span>Pattern:  `"^[0-9]+$"`</span>
+<span>Pattern: `"^[0-9]+$"`</span>
 
 </Property>
 
@@ -120,7 +120,7 @@ Array of inscription numbers
 
 An UTXO for a Bitcoin transaction
 
-<span>Pattern:  `"^[a-fA-F0-9]{64}:[0-9]+$"`</span>
+<span>Pattern: `"^[a-fA-F0-9]{64}:[0-9]+$"`</span>
 
 </Property>
 
@@ -164,7 +164,7 @@ Whether or not the inscription is cursed
 
 Result offset
 
-<span>Minimum:  `0`</span>
+<span>Minimum: `0`</span>
 
 </Property>
 
@@ -172,9 +172,9 @@ Result offset
 
 Results per page
 
-<span>Minimum:  `1`</span>
+<span>Minimum: `1`</span>
 
-<span>Maximum:  `60`</span>
+<span>Maximum: `60`</span>
 
 </Property>
 
@@ -190,10 +190,10 @@ Results order
 
 </Property>
 
-| Status code | Description |
-| :----------- | :----------- |
-| `200` | Default Response |
-| `404` | Default Response |
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default Response |
+| `404`       | Default Response |
 
 </div>
 
@@ -206,8 +206,6 @@ curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions"
 <Tabs items={["200","404"]}>
 
 <Tab value={"200"}>
-
-
 
 ```json title="Example Response"
 {
@@ -253,38 +251,37 @@ curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions"
 
 ```ts
 export interface PaginatedInscriptionsResponse {
-  limit: number;
-  offset: number;
-  total: number;
-  results: InscriptionResponse[];
+  limit: number
+  offset: number
+  total: number
+  results: InscriptionResponse[]
 }
 export interface InscriptionResponse {
-  id: string;
-  number: number;
-  address: string | null;
-  genesis_address: string | null;
-  genesis_block_height: number;
-  genesis_block_hash: string;
-  genesis_tx_id: string;
-  genesis_fee: string;
-  genesis_timestamp: number;
-  tx_id: string;
-  location: string;
-  output: string;
-  value: string | null;
-  offset: string | null;
-  sat_ordinal: string;
-  sat_rarity: string;
-  sat_coinbase_height: number;
-  mime_type: string;
-  content_type: string;
-  content_length: number;
-  timestamp: number;
-  curse_type: string | null;
-  recursive: boolean;
-  recursion_refs: string[] | null;
+  id: string
+  number: number
+  address: string | null
+  genesis_address: string | null
+  genesis_block_height: number
+  genesis_block_hash: string
+  genesis_tx_id: string
+  genesis_fee: string
+  genesis_timestamp: number
+  tx_id: string
+  location: string
+  output: string
+  value: string | null
+  offset: string | null
+  sat_ordinal: string
+  sat_rarity: string
+  sat_coinbase_height: number
+  mime_type: string
+  content_type: string
+  content_length: number
+  timestamp: number
+  curse_type: string | null
+  recursive: boolean
+  recursion_refs: string[] | null
 }
-
 ```
 
 </Accordion>
@@ -294,8 +291,6 @@ export interface InscriptionResponse {
 </Tab>
 
 <Tab value={"404"}>
-
-
 
 ```json title="Example Response"
 {
@@ -309,9 +304,8 @@ export interface InscriptionResponse {
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found";
+  error: "Not found"
 }
-
 ```
 
 </Accordion>
