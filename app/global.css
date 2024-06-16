@@ -51,14 +51,14 @@
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
+    --background: 0 4% 5%;
     --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
+    --card: 20 10% 8%;
     --card-foreground: 0 0% 95%;
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
-    --primary: 24 9.8% 67.5%; /* 346.8 77.2% 49.8%; */
-    --primary-foreground: 355.7 100% 97.3%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
@@ -67,10 +67,11 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
-    --border: 240 3.7% 15.9%;
+    --border: 20 6% 21%;
     --input: 240 3.7% 15.9%;
     --ring: 346.8 77.2% 49.8%;
     --hiro: 20 100% 50%;
+    --card-hover: 15 5% 16%;
   }
 }
 
@@ -90,6 +91,10 @@ p {
 }
 
 /* Override CSS */
+
+nav a[href="/guides"] {
+  text-decoration: underline;
+}
 
 [data-radix-scroll-area-viewport] .flex.flex-col.gap-8.pb-10.pt-4.max-md\:px-4.md\:pr-3.md\:pt-10 {
     gap: 0;

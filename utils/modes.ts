@@ -5,8 +5,7 @@ import { StacksIcon, OrdinalsIcon } from "@/components/ui/icon";
 export interface Mode {
   param: string;
   name: string;
-  description: string;
-  version: string;
+  type: "tab" | "link";
   icon?: React.ElementType;
 }
 
@@ -14,21 +13,13 @@ export const modes: Mode[] = [
   {
     param: "stacks",
     name: "Stacks",
-    description: "Developer Tools for Bitcoin Layers",
-    version: "1.0.0",
+    type: "tab",
     icon: StacksIcon,
   },
   {
     param: "ordinals",
     name: "Ordinals",
-    description: "Developer Tools for Bitcoin Layers",
-    version: "1.0.0",
+    type: "tab",
     icon: OrdinalsIcon,
-  },
-  {
-    param: "guides",
-    name: "Guides",
-    description: "Comprehensive guides for developers",
-    version: "1.0.0",
   },
 ];

@@ -2,6 +2,8 @@ import Link, { type LinkProps } from "fumadocs-core/link";
 import type { HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
+import { Badge } from "@/components/ui/badge";
+
 export function Cards(
   props: HTMLAttributes<HTMLDivElement>
 ): React.ReactElement {
@@ -31,14 +33,14 @@ export function Card({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg p-px border bg-card text-sm text-card-foreground shadow-md transition-colors relative overflow-hidden hover:bg-[#F6F6F7] dark:hover:bg-accent",
+        "not-prose block rounded-lg p-px border bg-card text-md text-card-foreground shadow-md transition-colors relative overflow-hidden hover:bg-accent/80",
         "hover:before:absolute hover:before:inset-0 hover:before:content-['']",
         "hover:before:rounded-[inherit] hover:before:bg-gradient-to-br hover:before:from-transparent hover:before:via-transparent hover:before:to-orange-500",
         "hover:before:transition-opacity hover:before:duration-700 hover:before:opacity-0 hover:hover:before:opacity-100",
         props.className
       )}
     >
-      <div className="relative z-10 bg-card p-4 rounded-[calc(0.75rem-5px)] hover:bg-[#F6F6F7] dark:hover:bg-accent">
+      <div className="relative z-10 bg-card p-4 rounded-md hover:bg-accent">
         {icon ? (
           <div className="mb-2 w-fit rounded-md border bg-muted p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
@@ -47,6 +49,47 @@ export function Card({
         <h3 className="mb-1 font-medium">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
       </div>
+    </Link>
+  );
+}
+
+export type SecondaryCardProps = {
+  icon?: ReactNode;
+  title: string;
+  description: string;
+  tag: string;
+} & Omit<LinkProps, "title">;
+
+export function SecondaryCard({
+  icon,
+  title,
+  description,
+  tag,
+  ...props
+}: SecondaryCardProps): React.ReactElement {
+  return (
+    <Link
+      {...props}
+      className={cn(
+        "not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground shadow-md transition-colors hover:bg-accent/80",
+        props.className
+      )}
+    >
+      {icon ? (
+        <div className="w-full flex justify-between">
+          <div className="mb-2 w-fit rounded-md border bg-muted p-2 text-muted-foreground [&_svg]:size-4">
+            {icon}
+          </div>
+          <Badge
+            variant="outline"
+            className="uppercase rounded-md transition-colors h-fit bg-muted text-primary"
+          >
+            {tag}
+          </Badge>
+        </div>
+      ) : null}
+      <h3 className="mb-1 font-medium">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
     </Link>
   );
 }

@@ -11,10 +11,12 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   nav: {
     transparentMode: "top",
     title: (
-      <div className="text-md flex gap-3 items-center">
+      <div className="text-md flex gap-3 items-center group">
         <HiroIcon className="size-11 shrink-0 rounded-md" fill="currentColor" />
-        <span className="max-md:hidden text-gray-500">|</span>
-        <span className="max-md:hidden text-gray-500">Documentation</span>
+        <span className="max-lg:hidden text-gray-500">|</span>
+        <span className="max-lg:hidden text-gray-500 group-hover:text-primary">
+          Documentation
+        </span>
       </div>
     ),
     children: <NavChildren />,
@@ -41,7 +43,6 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
     {
       text: "Guides",
       url: "/guides",
-      icon: create({ icon: LayoutTemplateIcon }),
     },
   ],
   sidebar: {

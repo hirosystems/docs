@@ -13,7 +13,7 @@ const itemVariants = cva(
   {
     variants: {
       active: {
-        true: "bg-accent text-accent-foreground",
+        true: "bg-background text-accent-foreground",
       },
     },
   }
@@ -31,7 +31,7 @@ export function NavChildren(): JSX.Element {
   const filteredModes = modes.filter((m) => m.param !== "guides");
 
   return (
-    <div className="rounded-md border bg-secondary/50 p-1 text-sm text-muted-foreground max-md:absolute max-md:left-[50%] max-md:translate-x-[-50%]">
+    <div className="rounded-md border bg-secondary p-1 text-sm text-muted-foreground max-md:absolute max-md:left-[50%] max-md:translate-x-[-50%]">
       {filteredModes.map((m) => (
         <Link
           key={m.param}

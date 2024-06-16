@@ -32,14 +32,14 @@ import heroImage from '@/public/hero.svg';
 
 <Cards>
   <MainCard
-    className='group space-y-1 text-md'
+    className='group space-y-1'
     icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/getting-started"
     title="Get Started"
     description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
   />
   <MainCard
-    className='group space-y-1 text-md'
+    className='group space-y-1'
     icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/api"
     title="Stacks API Reference"
@@ -49,7 +49,7 @@ import heroImage from '@/public/hero.svg';
 
 <div className='flex flex-col space-y-3'>
 
-### Explore by Category
+### Explore by category
 
 ---
 
@@ -97,12 +97,13 @@ import heroImage from '@/public/hero.svg';
     description="Develop, test, and deploy smart contracts straight from your browser."
   />
 </Cards>
+
 </div>
 
 
 <div className='flex flex-col space-y-3'>
 
-### Explore by Product
+### Explore by tool
 
 ---
 
@@ -120,6 +121,13 @@ import heroImage from '@/public/hero.svg';
     href="/stacks/clarinet"
     title="Clarinet"
     description="Create, test, and deploy smart contracts on the Stacks blockchain."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/api"
+    title="Stacks Blockchain API"
+    description="Interact with the Stacks blockchain from your backend via our hosted API."
   />
   <SmallCard
     className='group space-y-3'
@@ -143,6 +151,7 @@ import heroImage from '@/public/hero.svg';
     description="A web app for exploring on-chain data, interacting with smart contracts, and more."
   />
 </Cards>
+
 </div>
 
 </div>

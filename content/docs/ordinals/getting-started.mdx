@@ -1,87 +1,53 @@
 ---
 title: Getting started
-description: The following guides will cover ways to use our tools to build your Stacks powered dApps.
+description: The following guides will cover ways to use our tools to build apps on Stacks.
 icon: Play
 toc: false
 ---
 
+import { SecondaryCard, SmallCard } from '@/components/card';
 import { SectionHeader } from '@/components/layout/section-header';
 import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
 
 ### Quickstarts
 
-<Cards className='sm:grid-cols-3'>
-  <Card
-    icon={<Play className='text-primary' />}
-    href="/stacks/clarinet/quickstart"
-    title="Create your first smart contract"
-    description="Build a simple counter contract using Clarinet."
-  />
-  <Card
-    icon={<Terminal className='text-primary' />}
-    href="/stacks/clarinet/sdk/quickstart"
-    title="Simulate a blockchain with Clarinet SDK"
-    description="Learn how to interact with a simulated network without running a node."
-  />
-  <Card
+<Cards>
+  <SecondaryCard
     icon={<Database className='text-primary' />}
-    href="/stacks/stacks.js/quickstart"
-    title="Make a contract call with Stacks.js"
-    description="Learn how to integrate smart contracts into your dApp."
+    href="/ordinals/explorer/quickstart"
+    title="Fetch on-chain data"
+    description="Learn how to fetch on-chain data for Ordinals and meta-protocols."
+    tag='Ordinals Explorer'
   />
-  <Card
+  <SecondaryCard
     icon={<Database className='text-primary' />}
-    href="/stacks/chainhook/quickstart"
+    href="/ordinals/ordhook/quickstart"
     title="Stream custom blockchain events"
-    description="Use Chainhook to filter & stream for contract deployments."
+    description="Use Ordhook to filter & stream for contract deployments."
+    tag='Ordhook'
   />
 </Cards>
 
-### Learn by use case
-
-<Cards className='sm:grid-cols-3'>
-  <Card
-    icon={<Store className='text-primary' />}
-    href="/guides/build-an-nft-marketplace"
-    title="Build an NFT Marketplace"
-    description="Learn how to create and deploy your own NFT marketplace."
-  />
-  <Card
-    icon={<Scale className='text-primary' />}
-    href="/stacks/clarinet"
-    title="Launch a Decentralized Autonomous Organization (DAO)"
-    description="Discover the steps to creating your own DAO."
-  />
-  <Card
-    icon={<Ticket className='text-primary' />}
-    href="/stacks/quickstarts"
-    title="Create a no-loss lottery pool"
-    description="A step-by-step guide on how to build a no-loss lottery pool leveraging PoX4 stacking yield."
-  />
-  <Card
-    icon={<Banknote className='text-primary' />}
-    href="/stacks/quickstarts"
-    title="Build a decentralized Kickstarter"
-    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
-  />
-</Cards>
+<div className='flex flex-col space-y-3'>
 
 ### Installation guides
 
-<Cards className='sm:grid-cols-3'>
-  <Card
+---
+
+<Cards>
+  <SmallCard
     icon={<Store className='text-primary' />}
-    href="/guides/setup-a-bitcoin-node"
-    title="Setup a Bitcoin node"
-    description="Set up and run a node for running tools like Chainhook service."
+    href="/guides/set-up-a-bitcoin-node"
+    title="Set up a Bitcoin node"
+    description="Set up and run a Bitcoin node to use tools like Chainhook."
   />
-  <Card
+  <SmallCard
     icon={<ArrowLeftRight className='text-primary' />}
-    href="/guides/setup-a-stacks-node"
-    title="Setup a Stacks node"
-    description="Set up and run a node for running tools like Chainhook service."
+    href="/guides/set-up-a-stacks-node"
+    title="Set up a Stacks node"
+    description="Set up and run a Stacks node to use tools like Chainhook or spin up your own API."
   />
-  <Card
+  <SmallCard
     icon={<Scale className='text-primary' />}
     href="/guides/how-to-install-docker"
     title="Install and run Docker on your machine"
@@ -89,6 +55,8 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
 </Cards>
 
----
+</div>
 
+<Callout>
 For more, check out our [Guides](/guides) section.
+</Callout>
