@@ -77,7 +77,7 @@ To illustrate the power of breakpoints, first add a couple new functions to your
 )
 ```
 
-To see this in action, let's add a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>break</span></TooltipTrigger><TooltipContent>To add a breakpoint, use the `break` or `b` command</TooltipContent></Tooltip></TooltipProvider> on our `count-up` function when calling our new `double` function.
+Now add a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>break</span></TooltipTrigger><TooltipContent>To add a breakpoint, use the `break` or `b` command.</TooltipContent></Tooltip></TooltipProvider> on the `count-up` function when calling the new `double` function.
 
 ```bash title="Terminal"
 ::debug (contract-call? .counter count-twice)
