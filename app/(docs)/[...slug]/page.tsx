@@ -70,12 +70,11 @@ export default function Page({ params }: { params: Param }): JSX.Element {
   return (
     <DocsPage
       toc={page.data.exports.toc}
-      lastUpdate={page.data.exports.lastModified}
       tableOfContent={{
         enabled: page.data.toc,
         footer: (
           <a
-            href={`https://github.com/ryanwaits/hiro-docs/blob/main/${path}`}
+            href={`https://github.com/hirosystems/docs/blob/main/${path}`}
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center text-xs text-muted-foreground hover:text-foreground"

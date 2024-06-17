@@ -1,6 +1,6 @@
 import { DocsLayout, type DocsLayoutProps } from "fumadocs-ui/layout";
 import type { ReactNode } from "react";
-import { LayoutTemplateIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { utils } from "@/utils/source";
 import { create } from "@/components/ui/icon";
 import { HiroIcon, HiroSVG } from "../(home)/icons";
@@ -25,15 +25,12 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
         label: "Hiro Platform",
         href: "https://platform.hiro.so/",
         icon: (
-          <>
-            <HiroSVG
-              className="size-5 shrink-0 rounded-md dark:bg-neutral/90 dark:text-neutral-900 bg-primary text-white"
-              fill="currentColor"
-            />
+          <div className="flex items-center gap-1">
             <span className="ml-2 font-semibold max-md:hidden">
               Hiro Platform
             </span>
-          </>
+            <ArrowUpRight />
+          </div>
         ),
         external: true,
       },
