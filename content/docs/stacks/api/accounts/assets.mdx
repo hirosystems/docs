@@ -1,6 +1,6 @@
 ---
 title: Get account assets
-description: Retrieves a list of all assets events associated with an account or a Contract Identifier.
+description: Retrieves a list of all asset events associated with an account or a contract identifier.
 toc: false
 ---
 
@@ -26,13 +26,13 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/assets`}</p>
 </h2>
 
-Retrieves a list of all assets events associated with an account or a Contract Identifier. This includes Transfers, Mints.
+Retrieves a list of all asset events associated with an account or a contract identifier. This includes transfers and mints.
 
 ### Path Parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
-Stacks address or a Contract identifier
+Stacks address or a contract identifier
 
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
@@ -42,7 +42,7 @@ Stacks address or a Contract identifier
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of account assets to fetch
+Max number of account assets to fetch
 
 <span>Example:  `20`</span>
 
@@ -50,7 +50,7 @@ max number of account assets to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first account assets to fetch
+Index of first account assets to fetch
 
 <span>Example:  `42000`</span>
 
@@ -68,7 +68,7 @@ Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
 <Property required={false} deprecated={false} name={"until_block"} type={"string"}>
 
-returned data representing the state at that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+Returned data representing the state at that point in time, rather than the current block. Note: use either of the query parameters but not both at a time.
 
 <span>Example:  `60000`</span>
 
