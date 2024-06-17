@@ -63,7 +63,7 @@ export function SidebarBanner(): JSX.Element {
     pathname === "/stacks/getting-started" ||
     pathname === "/ordinals" ||
     pathname === "/ordinals/getting-started" ||
-    pathname === "/guides" ||
+    pathname.startsWith("/guides") ||
     pathname === "/stacks/api-keys" ||
     pathname === "/stacks/rate-limiting" ||
     pathname === "/stacks/contributors-guide" ||
