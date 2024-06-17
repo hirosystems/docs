@@ -23,7 +23,7 @@ Check out the [API Reference](/stacks/stacks.js/packages/transactions) page for 
 
 To follow this quickstart guide, you'll need: 
 
-1. A running instance of the `devnet` network. This can be run using `clarinet devnet start`.
+1. A running instance of the `devnet` network. You can spin up a devnet instance using `clarinet devnet start`.
 
 <Callout>
   To install `clarinet`, [click here](/stacks/clarinet/installation).
@@ -50,7 +50,7 @@ To follow this quickstart guide, you'll need:
     <div className="flex flex-col space-y-3">
       <div className="w-full">
         <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Build the transaction for a STX transfer</p>
-        <p>To set up a STX token transfer transaction, use the `makeSTXTokenTransfer` function. This function requires a `senderKey`, `recipient` address, `amount` to be sent in uSTX, a `network` instance, and an `anchorMode`.</p>
+        <p>To set up a STX token transfer transaction, use the `makeSTXTokenTransfer` function. This function requires a `senderKey`, `recipient` address, `amount` to be sent (denominated in uSTX), a `network` instance, and an `anchorMode`.</p>
       </div>
 
       <Callout>
@@ -75,7 +75,7 @@ To follow this quickstart guide, you'll need:
         ```
       </div>
       
-      <p className='mb-0'>Optional fields for a STX transfer transaction include `memo`, `nonce`, and `fee`:.</p>
+      <p className='mb-0'>There are a few optional fields for a STX transfer transaction, including `memo`, `nonce`, and `fee`:</p>
       
         ```ts
         const transaction = await makeSTXTokenTransfer({
@@ -116,7 +116,7 @@ To follow this quickstart guide, you'll need:
         const txId = broadcastResponse.txid;
         ```
 
-        <p className='mb-0'>On success, this will return a `StacksTransaction` object that contains information about the transaction, including the `txid`.</p>
+        <p className='mb-0'>Upon success, this will return a `StacksTransaction` object that contains information about the transaction, including the `txid`.</p>
       </div>
     </div>
   </Step>
