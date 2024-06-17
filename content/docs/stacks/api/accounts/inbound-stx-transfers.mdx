@@ -28,13 +28,13 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves a list of STX transfers with memos to the given principal.
 
-This includes regular transfers from a `stx-transfer` transaction type and transfers from contract-call transactions.
+This includes regular transfers from a `stx-transfer` transaction type and transfers from `contract-call` transactions.
 
 ### Path Parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
-Stacks address or a Contract identifier
+Stacks address or a contract identifier
 
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
@@ -44,13 +44,13 @@ Stacks address or a Contract identifier
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-number of items to return
+Number of items to return
 
 </Property>
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-number of items to skip
+Number of items to skip
 
 <span>Example:  `42000`</span>
 
@@ -74,7 +74,7 @@ Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
 <Property required={false} deprecated={false} name={"until_block"} type={"string"}>
 
-returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+Returned data representing the state up until that point in time, rather than the current block. Note: use either of the query parameters but not both at a time.
 
 <span>Example:  `60000`</span>
 
