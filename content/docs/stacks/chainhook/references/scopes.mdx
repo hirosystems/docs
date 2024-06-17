@@ -44,7 +44,7 @@ The `equals` property is a 32 bytes hex encoded type used to specify the exact t
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by transaction ID</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By transaction ID</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -105,16 +105,16 @@ The `between` property specifies a range of block heights to match, inclusive of
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by block height</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By block height</Badge>
     </TabsTrigger>
     <TabsTrigger value="higher_than" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With higher_than</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Using higher_than</Badge>
     </TabsTrigger>
     <TabsTrigger value="lower_than" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With lower_than</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Using lower_than</Badge>
     </TabsTrigger>
     <TabsTrigger value="between" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With between</Badge>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Between two block heights</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -157,6 +157,346 @@ The `between` property specifies a range of block heights to match, inclusive of
     "if_this": {
       "scope": "block_height",
       "between": [0, 10000]
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`ft_transfer`</h2>
+
+The `ft_transfer` scope allows you to query transactions based on fungible token transfers. This is useful for tracking specific token movements or auditing token transfer histories.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
+
+The `asset_identifier` property specifies the fully qualified asset identifier to observe, such as `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc`.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"actions"} type={"string[]"}>
+
+The `actions` property specifies the types of token actions to observe, such as `mint`, `transfer`, or `burn`.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By a single action</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="all" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-9000 dark:group-hover:text-white'>Passing all ft actions</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:ft_transfer]
+  {
+    "if_this": {
+      "scope": "ft_transfer",
+      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
+      "actions": ["transfer"]
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="all">
+  ```json
+  {
+    "if_this": {
+      "scope": "ft_transfer",
+      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
+      "actions": ["mint", "transfer", "burn"] // [!code highlight]
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`nft_transfer`</h2>
+
+The `nft_transfer` scope allows you to query transactions based on non-fungible token transfers. This is useful for tracking specific NFT movements or auditing NFT transfer histories.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
+
+The `asset_identifier` property specifies the fully qualified asset identifier to observe, such as `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys`.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"actions"} type={"array of strings"}>
+
+The `actions` property specifies the types of NFT actions to observe, such as `mint`, `transfer`, or `burn`.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By non-fungible token mint</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="all" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Passing all nft actions</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:nft_transfer]
+  {
+    "if_this": {
+      "scope": "nft_transfer",
+      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
+      "actions": ["mint"]
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="all">
+  ```json
+  {
+    "if_this": {
+      "scope": "nft_transfer",
+      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
+      "actions": ["mint", "transfer", "burn"] // [!code highlight]
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`stx_transfer`</h2>
+
+The `stx_transfer` scope allows you to query transactions involving STX token movements. This is crucial for monitoring STX transfers, including minting, burning, and locking actions.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"actions"} type={"array of strings"}>
+
+The `actions` property specifies the types of STX token actions to observe, such as `mint`, `transfer`, `burn`, and `lock`.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by STX token transfer</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:stx_transfer]
+  {
+    "if_this": {
+      "scope": "stx_transfer",
+      "actions": ["transfer", "lock"]
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`print_event`</h2>
+
+The `print_event` scope allows you to query transactions based on specific print events emitted during contract execution. This is useful for monitoring specific events for auditing or tracking purposes.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"contract_identifier"} type={"string"}>
+
+The `contract_identifier` property specifies the fully qualified contract identifier to observe.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"contains"} type={"string"}>
+
+The `contains` property is used for matching an event containing the specified string.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"matches_regex"} type={"string"}>
+
+The `matches_regex` property is used for matching an event that regex matches with the specified string.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by print event</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:print_event]
+  {
+    "if_this": {
+      "scope": "print_event",
+      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+      "contains": "monkey"
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`contract_call`</h2>
+
+The `contract_call` scope allows you to query transactions that involve direct calls to specific methods within a smart contract. This is particularly useful for tracking interactions with critical contract functions.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"contract_identifier"} type={"string"}>
+
+The `contract_identifier` property specifies the fully qualified contract identifier to observe.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"method"} type={"string"}>
+
+The `method` property specifies the specific method within the contract to observe.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by contract method call</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:contract_call]
+  {
+    "if_this": {
+      "scope": "contract_call",
+      "contract_identifier": "SP000000000000000000002Q6VF78.pox",
+      "method": "stack-stx"
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`contract_deployment`</h2>
+
+The `contract_deployment` scope allows you to query transactions involving the deployment of smart contracts. This is crucial for monitoring new contract deployments and ensuring compliance with expected deployments.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"deployer"} type={"string"}>
+
+The `deployer` property specifies the STX address of the deployer to observe.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"implement_trait"} type={"string"}>
+
+The `implement_trait` property specifies the contract trait to observe.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By deployer</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="trait" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By contract trait</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:deployer]
+  {
+    "if_this": {
+      "scope": "contract_deployment",
+      "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="trait">
+  ```json
+  // [!code word:implement_trait]
+  {
+    "if_this": {
+      "scope": "contract_deployment",
+      "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol"
     }
   }
   ```
