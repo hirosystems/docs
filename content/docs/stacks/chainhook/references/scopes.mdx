@@ -1,0 +1,170 @@
+---
+title: Scopes
+description: Reference guide for available scopes for Stacks and Bitcoin.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+
+import { InlineCode } from '@/components/inline-code';
+
+### Installation
+
+```bash
+brew install chainhook
+```
+
+<Root>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`txid`</h2>
+
+The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"equals"} type={"string"}>
+
+The `equals` property is a 32 bytes hex encoded type used to specify the exact transaction ID to match.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by transaction ID</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```json
+    // [!code word:txid]
+    {
+      "if_this": {
+        "scope": "txid",
+        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+      }
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`block_height`</h2>
+
+The `block_height` scope allows you to query blocks based on their height. This is useful for identifying specific blocks or ranges of blocks in the blockchain.
+
+### Parameters
+
+<Property required={true} deprecated={false} name={"equals"} type={"integer"}>
+
+The `equals` property specifies the exact height of the block to match.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"higher_than"} type={"integer"}>
+
+The `higher_than` property specifies that the block height should be greater than the provided value.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"lower_than"} type={"integer"}>
+
+The `lower_than` property specifies that the block height should be less than the provided value.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"between"} type={"array of integers"}>
+
+The `between` property specifies a range of block heights to match, inclusive of the provided start and end values.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by block height</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="higher_than" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With higher_than</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="lower_than" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With lower_than</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="between" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With between</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+  ```json
+  // [!code word:block_height]
+  {
+    "if_this": {
+      "scope": "block_height",
+      "equals": 141200
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="higher_than">
+  ```json
+  // [!code word:higher_than]
+  {
+    "if_this": {
+      "scope": "block_height",
+      "higher_than": 10000
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="lower_than">
+  ```json
+  // [!code word:lower_than]
+  {
+    "if_this": {
+      "scope": "block_height",
+      "lower_than": 10000
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="between">
+  ```json
+  // [!code word:between]
+  {
+    "if_this": {
+      "scope": "block_height",
+      "between": [0, 10000]
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

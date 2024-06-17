@@ -4,6 +4,9 @@ description: Create and deploy your first contract in the Hiro Platform.
 toc: false
 ---
 
+import { Code, Terminal } from 'lucide-react';
+import { SmallCard } from '@/components/card';
+
 In this quickstart guide, you will create a simple `hello-world` contract in the [Hiro Platform](https://platform.hiro.so/). You’ll learn how to create a new project, create a new contract, and deploy that contract to testnet on Stacks.
 
 ## Create your account
@@ -41,7 +44,19 @@ For this quickstart, let’s deploy to testnet. In order to deploy, you will nee
 
 Once your wallet receives the testnet tokens, you can deploy your contract. Congratulations, you’re now a Stacks developer!
 
-## Next steps
+### Next steps
 
-- Take advantage of [devnet](stacks/platform/guides/devnet), a private blockchain environment, to test your code.
-- Create custom event streams for Stacks or Bitcoin with [Chainhook](stacks/platform/guides/create-chainhooks) on the Platform.
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
+    icon={<Code className='text-primary' />}
+    href="/stacks/platform/guides/devnet"
+    title="Running Devnet"
+    description="Learn how to use devnet, a private blockchain environment, to test your code."
+  />
+  <SmallCard
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/platform/guides/create-chainhooks"
+    title="Create and manage Chainhooks"
+    description="Learn how to create custom event streams for Stacks or Bitcoin with Chainhook on the Platform."
+  />
+</Cards>

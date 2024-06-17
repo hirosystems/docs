@@ -1,15 +1,16 @@
 ---
 title: Quickstart
-description: Learn how to test a simple counter contract using the Clarinet SDK.
+description: Learn how to test a simple counter contract using the Clarinet JS SDK.
 ---
 
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Step } from 'fumadocs-ui/components/steps';
+import { SmallCard } from '@/components/card';
 
-In this quickstart guide, you will initialize a simulated development network for testing a smart contract using the Clarinet SDK. You'll learn how to initialize your project, interact with a smart contract, call its functions, and test the results.
+In this quickstart guide, you will initialize a simulated development network for testing a smart contract using the Clarinet JS SDK. You'll learn how to initialize your project, interact with a smart contract, call its functions, and test the results.
 
-Check out the [methods](/stacks/clarinet/sdk/references/methods) page for the Clarinet SDK to learn about the different ways that you can interact with simnet.
+Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the Clarinet JS SDK to learn about the different ways that you can interact with simnet.
 
 ---
 
@@ -85,7 +86,7 @@ To follow this quickstart guide, you'll need:
       <div className="w-full">
         <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Write your first test</p>
         <div className='flex flex-col space-y-0'>
-          <p>The process for writing tests for smart contracts with the Clarinet SDK follows a structured approach similar to testing in JavaScript. Here's a breakdown of the steps involved:</p>
+          <p>The process for writing tests for smart contracts with the Clarinet JS SDK follows a structured approach similar to testing in JavaScript. Here's a breakdown of the steps involved:</p>
           <ol>
             <li>Define the group of tests you want to run using the `describe` block.</li>
             <li>Define the test you want to run using the `it` block.</li>
@@ -139,7 +140,7 @@ To follow this quickstart guide, you'll need:
       <p>Above, the <code>count-up</code> function is called, and the result is asserted to return an `(ok true)`. Then, the count for the user's principal is retrieved and asserted to be `u1`.</p>
     
       <Callout title="Custom matchers">
-        <p>The <code>toBeOk</code> and <code>toBeUint</code> methods are used to ensure the `count-up` function returns the proper Clarity values. For more details, check out the [custom matchers](/stacks/clarinet/sdk/references/custom-matchers) page.</p>
+        <p>The <code>toBeOk</code> and <code>toBeUint</code> methods are used to ensure the `count-up` function returns the proper Clarity values. For more details, check out the [custom matchers](/stacks/clarinet-js-sdk/references/custom-matchers) page.</p>
       </Callout>
     </div>
   </Step>
@@ -177,23 +178,23 @@ To follow this quickstart guide, you'll need:
 
 ### Next steps
 
-<Cards>
-  <Card
+<Cards className='sm:grid-cols-1'>
+<SmallCard
     icon={<Code className='text-primary' />}
-    href="/stacks/clarinet/guides/run-a-local-devnet"
-    title="Run a local devnet"
-    description="Learn how to set up and run a local development network for your project."
+    href="/stacks/clarinet-js-sdk/guides/testing-with-clarinet-sdk"
+    title="Unit testing"
+    description="Learn how to write unit tests for your smart contracts using the Clarinet JS SDK."
   />
-  <Card
+  <SmallCard
     icon={<Code className='text-primary' />}
-    href="/stacks/clarinet/guides/testing-with-clarinet-sdk"
-    title="Testing with the Clarinet SDK"
-    description="Learn how to test your smart contracts using the Clarinet SDK."
+    href="/stacks/clarinet-js-sdk/references/simnet"
+    title="API Reference"
+    description="Dive deeper into the properties and methods available in the Clarinet JS SDK."
   />
-  <Card
-    icon={<Terminal className='text-primary' />}
-    href="/stacks/clarinet/guides/deploy-a-contract"
-    title="Deploy a contract"
-    description="Learn how to deploy your smart contracts using the Clarinet CLI."
+  <SmallCard
+    icon={<Code className='text-primary' />}
+    href="/stacks/clarinet-js-sdk/references/custom-matchers"
+    title="Custom matchers"
+    description="Learn about the custom matchers that are available in the Clarinet JS SDK."
   />
 </Cards>

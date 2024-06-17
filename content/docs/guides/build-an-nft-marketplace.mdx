@@ -4,6 +4,7 @@ description: This guide explains how to create an NFT marketplace that allows us
 ---
 
 import { Code, Terminal } from 'lucide-react';
+import { SmallCard } from '@/components/card';
 
 In this guide, you will learn how to create an NFT marketplace that allows users to list NFTs for sale. Users can specify the following details for their listings:
 - The NFT token to sell.
@@ -286,19 +287,19 @@ Create a private function to validate that a purchase can be fulfilled. This fun
 
 By following this guide, you have created a basic NFT marketplace that allows users to list, buy, and sell NFTs using either STX or fungible tokens. This implementation includes essential functionalities such as whitelisting contracts, validating transactions, and handling errors.
 
-## Next steps
+### Next steps
 
-<Cards>
-  <Card
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
     icon={<Code className='text-primary' />}
     href="/examples"
     title="Common Clarity Errors"
     description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
   />
-  <Card
+  <SmallCard
     icon={<Terminal className='text-primary' />}
     href="/stacks/clarinet"
-    title="Clarinet SDK API Reference"
+    title="Clarinet JS SDK API Reference"
     description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
   />
 </Cards>
