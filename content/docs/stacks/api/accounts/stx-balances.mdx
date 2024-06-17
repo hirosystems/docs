@@ -22,13 +22,13 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/stx`}</p>
 </h2>
 
-Retrieves STX token balance for a given Address or Contract Identifier.
+Retrieves STX token balance for a given address or contract identifier.
 
 ### Path Parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
-Stacks address or a Contract identifier.
+Stacks address or a contract identifier.
 
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
@@ -48,7 +48,7 @@ Include transaction data from unanchored (i.e. unconfirmed) microblocks.
 
 <Property required={false} deprecated={false} name={"until_block"} type={"string"}>
 
-returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+Returned data representing the state up until that point in time, rather than the current block. Note: use either of the query parameters but not both at a time.
 
 <span>Example:  `60000`</span>
 
