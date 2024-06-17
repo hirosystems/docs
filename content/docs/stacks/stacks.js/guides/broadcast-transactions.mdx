@@ -65,106 +65,114 @@ There are three types of transactions:
     </TabsTrigger>
   </TabsList>
   <TabsContent value="transfer">
-    To prompt the user to transfer STX, call the `openSTXTransfer` function provided by the `@stacks/connect` package to trigger the display of a transaction signing prompt for transferring STX:
+    To transfer STX, use the `makeSTXTokenTransfer` function provided by the `@stacks/transactions` package:
 
-    ```ts twoslash
+    ```ts twoslash title="stx-transfer.ts"
     // @noErrors
-    import { openSTXTransfer } from '@stacks/connect';
-    import { StacksTestnet } from '@stacks/network';
+    // [!code word:makeSTXTokenTransfer]
+    import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
+    import { StacksDevnet } from "@stacks/network";
 
-    openSTXTransfer({
-      recipient: 'ST2EB9WEQNR9P0K28D2DC352TM75YG3K0GT7V13CV',
-      amount: '100',
-      memo: 'Reimbursement',
-      network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
-      appDetails: {
-        name: 'My App',
-        icon: window.location.origin + '/my-app-logo.svg',
-      },
-      onFinish: data => {
-        console.log('Stacks Transaction:', data.stacksTransaction);
-        console.log('Transaction ID:', data.txId);
-        console.log('Raw transaction:', data.txRaw);
-      },
+    const transaction = await makeSTXTokenTransfer({
+      recipient: "SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159",
+      amount: 12345n,
+      senderKey:
+        "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
+      network: new StacksDevnet(),
+      anchorMode: AnchorMode.Any,
     });
     ```
 
-    Several parameters are available for calling openSTXTransfer. To learn more, check out our [reference page](/stacks/stacks.js/packages/connect).
+    This builds a STX token transfer transaction. The `makeSTXTokenTransfer` function takes parameters like the `recipient` address, `amount` to transfer, and the sender's private key, ie `senderKey`.
+
+    Several parameters are available for calling `makeSTXTokenTransfer`. To learn more, check out our [transactions reference page](/stacks/stacks.js/packages/transactions).
 
   </TabsContent>
   <TabsContent value="deploy">
-    ```package-install
-    @stacks/network
+    To deploy a contract, use the `makeContractDeploy` function provided by the `@stacks/transactions` package:
+
+    ```ts twoslash title="contract-deploy.ts"
+    // @noErrors
+    // [!code word:makeContractDeploy]
+    import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
+    import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+    const transaction = await makeContractDeploy({
+      contractName: 'hello-world',
+      codeBody: `(define-public (hello)
+      (ok "Hello, world!"))`,
+      senderKey: '753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601',
+      network: new StacksTestnet(),
+      anchorMode: AnchorMode.Any,
+    });
     ```
 
-    Network and API library for working with Stacks blockchain nodes.
+    This builds a contract deployment transaction. The `makeContractDeploy` function takes parameters like the `contractName`, `codeBody`, and the sender's private key, ie `senderKey`.
+
+    Several parameters are available for calling `makeContractDeploy`. To learn more, check out our [transactions reference page](/stacks/stacks.js/packages/transactions).
+
   </TabsContent>
   <TabsContent value="execute">
-    ```package-install
-    @stacks/transactions
+    To execute a contract function, use the `makeContractCall` function provided by the `@stacks/transactions` package:
+
+    ```ts twoslash title="function-call.ts"
+    // @noErrors
+    // [!code word:makeContractCall]
+    import {
+      makeContractCall,
+      broadcastTransaction,
+      AnchorMode,
+      FungibleConditionCode,
+      makeStandardSTXPostCondition,
+      bufferCVFromString,
+    } from '@stacks/transactions';
+    import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+    // Add an optional post condition
+    // See below for details on constructing post conditions
+    const postConditionAddress = 'SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE';
+    const postConditionCode = FungibleConditionCode.GreaterEqual;
+    const postConditionAmount = 1000000n;
+    const postConditions = [
+      makeStandardSTXPostCondition(postConditionAddress, postConditionCode, postConditionAmount),
+    ];
+
+    const transaction = await makeContractCall({
+      contractAddress: 'SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X',
+      contractName: 'contract_name',
+      functionName: 'contract_function',
+      functionArgs: [bufferCVFromString('foo')],
+      senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+      validateWithAbi: true,
+      network: new StacksTestnet(),
+      postConditions,
+      anchorMode: AnchorMode.Any,
+    });
     ```
 
-    Construct, decode transactions and work with Clarity smart contracts on the Stacks blockchain.
+    This builds a contract function call transaction. The `makeContractCall` function takes parameters like the `contractAddress`, `contractName`, `functionName`, `functionArgs`, `senderKey`, `validateWithAbi`, `network`, `postConditions`, and `anchorMode`.
+
+    Several parameters are available for calling `makeContractCall`. To learn more, check out our [transactions reference page](/stacks/stacks.js/packages/transactions).
+
   </TabsContent>
 </Tabs>
 
-```ts twoslash
-// @noErrors
-import { makeSTXTokenTransfer } from '@stacks/transactions';
-
-const transaction = await makeSTXTokenTransfer({ recipient: 'SP3FGQ...SK2T', amount: new BN(123), senderKey: 'your-private-key' });
-```
-This creates a STX token transfer transaction. The `makeSTXTokenTransfer` function takes parameters like the recipient's address, amount to transfer, and the sender's private key.
-
-### Sign and broadcast the transaction
-
-Prompt the user to sign the transaction using the `showConnect` function from the `@stacks/connect` package.
-
-<div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
-  <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
-  <div className="relative rounded-xl overflow-auto p-8">
-    <div className="grid place-items-center">
-      <ConnectWalletButton />
-      <GridPattern />
-    </div>
-  </div>
-  <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
-</div>
-
-```ts twoslash
-// @noErrors
-import { showConnect } from '@stacks/connect';
-
-showConnect({
-  appDetails: {
-    name: 'My App',
-    icon: window.location.origin + '/my-app-logo.svg',
-  },
-  onFinish: (data) => {
-    console.log('Transaction signed!', data.txRaw);
-  },
-  userSession,
-});
-```
-
-This function triggers a UI popup that asks the user to sign the transaction. The onFinish callback is executed once the transaction is signed, providing access to the raw transaction data.
-
 ### Broadcasting the transaction
 
-After building the transaction, broadcast it to the Stacks blockchain network using the `sendTransaction` function from the `@stacks/network` package.
+After building the transaction, broadcast it to the Stacks blockchain network using the `broadcastTransaction` function from the `@stacks/transactions` package.
 
-1. Check if there is a pending sign-in using the `isSignInPending` method of the `userSession` object.
-2. If there is a pending sign-in, handle it by calling `handlePendingSignIn` which processes the sign-in and then utilizes the `userData` returned in a promise.
+1. Pass in the transaction object you created in the previous step to the `broadcastTransaction` function.
+2. Handle the response by logging the response object.
 
 ```tsx twoslash
 // @noErrors
+// [!code word:broadcastTransaction]
 import { broadcastTransaction } from '@stacks/transactions';
 
 const broadcastResponse = await broadcastTransaction(transaction);
-console.log('Transaction ID:', broadcastResponse.txid);
 ```
 
-This code sends the signed transaction to the Stacks blockchain. The broadcastTransaction function returns a response containing the transaction ID, which can be used to track the transaction on the blockchain.
+This code sends the signed transaction to the Stacks blockchain. The `broadcastTransaction` function returns a response containing the transaction ID, which can be used to track the transaction on the blockchain.
 
 ### Handle the results
 
@@ -179,7 +187,7 @@ if (broadcastResponse.success) {
 }
 ```
 
-This checks if the transaction was successful and logs the result. It handles both success and error states, providing feedback based on the transaction outcome.
+This checks if the transaction was successful and logs the `txid`.
 
 ---
 
