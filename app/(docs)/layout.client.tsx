@@ -60,9 +60,9 @@ export function SidebarBanner(): JSX.Element {
 
   if (
     pathname === "/stacks" ||
-    pathname === "/stacks/getting-started" ||
+    pathname === "/stacks/get-started" ||
     pathname === "/ordinals" ||
-    pathname === "/ordinals/getting-started" ||
+    pathname === "/ordinals/get-started" ||
     pathname.startsWith("/guides") ||
     pathname === "/stacks/api-keys" ||
     pathname === "/stacks/rate-limiting" ||
