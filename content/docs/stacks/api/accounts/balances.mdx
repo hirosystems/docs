@@ -1,6 +1,6 @@
 ---
 title: Get user balances
-description: Retrieves account balance information including STX, fungible, and non-fungible tokens.
+description: Retrieves account balance information, including STX, fungible, and non-fungible tokens.
 toc: false
 ---
 
@@ -26,15 +26,13 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/balances`}</p>
 </h2>
 
-Retrieves total account balance information for a given Address or Contract Identifier.
-
-This includes the balances of  STX Tokens, Fungible Tokens and Non-Fungible Tokens for the account.
+Retrieves total account balance information for a given address or contract identifier. This includes the balances of STX tokens, fungible tokens and non-fungible tokens.
 
 ### Path Parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
-Stacks address or a Contract identifier
+Stacks address or a contract identifier
 
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
