@@ -21,7 +21,9 @@ If you have create or imported a project with no Clarity contracts, you will see
 
 ### Write new contracts
 
-To create a new contract, you can simply click the "Create contract" button which will create an empty contract in your project. 
+To create a new contract, you can simply click the "Create contract" button which will create an empty contract in your project.
+
+![Open editor](../images/empty-contract.png)
 
 You can also create a new contract for your project from the editor by following the steps below. Note: the sample project used here is from [Clarity examples](https://github.com/hirosystems/clarity-examples/tree/main/examples/blank-project), and these steps assume that your project has no Clarity contracts already.
 
@@ -34,20 +36,21 @@ You can also create a new contract for your project from the editor by following
 
 1. Click the _Open in Web Editor_ button. If you want to do this locally, you first need to [set up SSH](/stacks/platform/guides/connect-desktop-to-cloud).
 2. This will open up a new tab with VS Code editor, and inside VS Code, you will find the project directories and files.
-3. Expand _examples_ and see a directory _contracts_. There should be no contracts in this folder yet.
-4. Right-click the _contracts_ folder, select _New file_, and add a new contract with a name of your choice. Eg: _clarity_contract_1.clar_
+3. Expand _NEW-PROJECT_ and see a directory _contracts_. There should be no contracts in this folder yet.
+4. Right-click the _contracts_ folder, select _New file_, and add a new contract with a name of your choice. Eg: _counter.clar_
    ![Write new contract](../images/write-new-contract.png)
 5. This will create a `.clar` file in the _contracts_ folder. Now you can use the [Clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
 6. Once your `.clar` file is ready, you can update the `Clarinet.toml` file located in the same project directory. Use the following code to update the `.toml` file with these parameters. `[contracts.<your-contract-name>]` and path to use your `.clar` file name as `path = "<your-contract-name.clar>"`.
 
 ```toml
 [project]
-name = "CLARITY-EXAMPLES-5XE7"
+name = "new-project"
 requirements = []
-[contracts.clarity_contract_1]
-path = "clarity_contract_1.clar"
-clarity_version = 1
-epoch = "2.05"
+
+[contracts.counter]
+path = "contracts/counter.clar"
+clarity_version = 2
+epoch = "2.4"
 ```
 
 Save the file. You can now deploy your contracts in your project by referring to the [deploy project](/stacks/platform/guides/deploy-project) guide.
@@ -58,14 +61,18 @@ If you have a project that already has at least one Clarity contract, it's very 
 
 ```toml
 [project]
-name = "CLARITY-EXAMPLES-5XE7"
+name = "new-project"
 requirements = []
-[contracts.clarity_contract_1.clar]
-[contracts.clarity_contract_2.clar]  # --> new
-path = "clarity_contract_1.clar"
-path = "clarity_contract_2.clar" # --> new
-clarity_version = 1
-epoch = "2.05"
+
+[contracts.counter]
+path = "contracts/counter.clar"
+clarity_version = 2
+epoch = "2.4"
+
+[contracts.clarity_contract_2]  # --> new
+path = "contracts/clarity_contract_2.clar" # --> new
+clarity_version = 2
+epoch = "2.4"
 ```
 
 ### Test contract
@@ -77,8 +84,8 @@ You can customize, test, and debug your contracts using the VS Code terminal ins
 - [Debug contracts](/stacks/clarinet/guides/debug-a-contract)
 
 <Callout title="Requirements" type="info">
-  **Clarinet integrate** and **deployment plans** are currently not
-  supported in Clarinet installed inside the VS Code editor of the Hiro Platform.
+  **Clarinet integrate** and **deployment plans** are currently not supported in
+  Clarinet installed inside the VS Code editor of the Hiro Platform.
 </Callout>
 
 Once you are done adding, customizing, and testing your contracts, save your files. Now it's time to deploy.
