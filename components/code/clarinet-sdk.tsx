@@ -10,7 +10,7 @@ import { Cl } from "@stacks/transactions";
 
 import { getHighlighter } from "shiki";
 
-// TODO: WIP: testing out new clarinet sdk browser lib
+// TODO: WIP: testing out new Clarinet JS SDK browser lib
 export const ClarinetSDK: React.FC = () => {
   const [simnet, setSimnet] = React.useState<any>();
   const [html, setHtml] = React.useState<any>();
