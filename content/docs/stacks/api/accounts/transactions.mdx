@@ -28,7 +28,7 @@ import { InlineCode } from '@/components/inline-code';
 
 **NOTE:** This endpoint has been <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> and may be removed in future versions of the API.
 
-Retrieves a list of all Transactions for a given Address or Contract Identifier. More information on Transaction types can be found [here](/stacks/api/txs).
+Retrieves a list of all transactions for a given address or contract identifier. More information on transaction types can be found [here](/stacks/api/txs).
 
 If you need to actively monitor new transactions for an address or contract id, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
 
@@ -36,7 +36,7 @@ If you need to actively monitor new transactions for an address or contract id, 
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
-Stacks address or a Contract identifier
+Stacks address or a contract identifier
 
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
@@ -46,7 +46,7 @@ Stacks address or a Contract identifier
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of account transactions to fetch
+Max number of account transactions to fetch
 
 <span>Example:  `42000`</span>
 
@@ -54,7 +54,7 @@ max number of account transactions to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first account transaction to fetch
+Index of first account transaction to fetch
 
 <span>Example:  `42000`</span>
 
