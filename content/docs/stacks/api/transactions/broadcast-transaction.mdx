@@ -29,7 +29,7 @@ import { InlineCode } from '@/components/inline-code';
 
 Broadcasts raw transactions on the network. You can use the [@stacks/transactions](/stacks/stacks.js/packages/transactions) project to generate a raw transaction payload.
 
-### Request Body
+### Request body
 
 <Property required={true} deprecated={false} name={"body"} type={"string"}>
 
@@ -57,13 +57,13 @@ curl -X POST "https://api.mainnet.hiro.so/v2/transactions" \
 
 
 
-```json title="Example Response"
+```json title="Example response"
 "e161978626f216b2141b156ade10501207ae535fa365a13ef5d7a7c9310a09f2"
 ```
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 export type Response = string;
