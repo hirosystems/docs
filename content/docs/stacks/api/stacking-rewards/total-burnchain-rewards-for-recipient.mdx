@@ -1,6 +1,6 @@
 ---
 title: Get total burnchain rewards for the given recipient
-description: Retrieves the total burnchain (e.g. Bitcoin) rewards for a given recipient `address`
+description: Retrieves the total burnchain (e.g. Bitcoin) rewards for a given recipient address.
 toc: false
 ---
 
@@ -27,13 +27,13 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/burnchain/rewards/{address}/total`}</p>
 </h2>
 
-Retrieves the total burnchain (e.g. Bitcoin) rewards for a given recipient `address`
+Retrieves the total burnchain (e.g. Bitcoin) rewards for a given recipient `address`.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"address"} type={"string"}>
 
-Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format
+Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided, it will be encoded as into the equivalent burnchain format
 
 <span>Example:  `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
 
@@ -55,7 +55,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/burnchain/rewards/36hQtSEXB
 
 <Tab value={"200"}>
 
-Total burnchain rewards made to a recipient
+GET request that returns total burnchain rewards made to a recipient.
 
 ```json title="Example response"
 {
