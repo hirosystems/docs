@@ -22,9 +22,9 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/info`}</p>
 </h2>
 
-Search blocks, transactions, contracts, or accounts by hash/ID
+Search blocks, transactions, contracts, or accounts by hash/ID.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"id"} type={"string"}>
 
@@ -34,7 +34,7 @@ The hex hash string for a block or transaction, account address, or contract add
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"include_metadata"} type={"boolean"}>
 
@@ -62,7 +62,7 @@ curl -X GET \
 
 complete search result for terms
 
-```json title="Example Response"
+```json title="Example response"
 {
   "found": false,
   "result": {
@@ -74,7 +74,7 @@ complete search result for terms
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
