@@ -22,3 +22,15 @@ await accounts.getAccountTransactions({
   principal: 'ST000000000000000000002AMW42H',
 });
 ```
+
+### Using WebSockets
+
+```ts
+import { connectWebSocketClient } from '@stacks/blockchain-api-client';
+const client = await connectWebSocketClient('ws://api.hiro.so/');
+const sub = await client.subscribeAddressTransactions(contractCall.txId, event => {
+  console.log(event);
+});
+
+await sub.unsubscribe();
+```
