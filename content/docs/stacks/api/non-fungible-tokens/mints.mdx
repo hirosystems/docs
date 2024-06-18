@@ -1,6 +1,6 @@
 ---
 title: Get non-fungible token mints
-description: Retrieves the list of Non-Fungible Token mints for a given asset identifier
+description: Retrieves a list of non-fungible token mints for a given asset identifier
 toc: false
 ---
 
@@ -27,15 +27,15 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tokens/nft/mints`}</p>
 </h2>
 
-Retrieves all mint events for a Non-Fungible Token asset class. Useful to determine which NFTs of a particular collection have been claimed.
+Retrieves all mint events for a non-fungible token asset class. This is useful to determine which NFTs of a particular collection have been claimed.
 
-More information on Non-Fungible Tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
+More information on non-fungible tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
 
-### Query Parameters
+### Query parameters
 
 <Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
 
-token asset class identifier
+Token asset class identifier
 
 <span>Example:  `"SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"`</span>
 
@@ -43,7 +43,7 @@ token asset class identifier
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of events to fetch
+Max number of events to fetch
 
 <span>Default:  `50`</span>
 
@@ -51,7 +51,7 @@ max number of events to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first event to fetch
+Index of first event to fetch
 
 <span>Example:  `42000`</span>
 
@@ -61,7 +61,7 @@ index of first event to fetch
 
 <Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
 
-whether or not to include events from unconfirmed transactions
+Whether or not to include events from unconfirmed transactions
 
 <span>Example:  `true`</span>
 
@@ -71,7 +71,7 @@ whether or not to include events from unconfirmed transactions
 
 <Property required={false} deprecated={false} name={"tx_metadata"} type={"boolean"}>
 
-whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
+Whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
 
 <span>Default:  `false`</span>
 
@@ -93,7 +93,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/tokens/nft/mints"
 
 <Tab value={"200"}>
 
-List of Non-Fungible Token mint events for an asset identifier
+List of non-fungible token mint events for an asset identifier
 
 ```json title="Example response"
 {
