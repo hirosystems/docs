@@ -31,9 +31,9 @@ Call a read-only public function on a given smart contract.
 
 The smart contract and function are specified using the URL path. The arguments and the simulated tx-sender are supplied via the POST body in the following JSON format:
 
-### Request Body
+### Request body
 
-map of arguments and the simulated tx-sender where sender is either a Contract identifier or a normal Stacks address, and arguments is an array of hex serialized Clarity values.
+Map of arguments and the simulated tx-sender where sender is either a contract identifier or a normal Stacks address, and arguments is an array of hex serialized Clarity values.
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
 
@@ -47,7 +47,7 @@ An array of hex serialized Clarity values
 
 </Property>
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"contract_address"} type={"string"}>
 
@@ -73,7 +73,7 @@ Function name
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"tip"} type={"string"}>
 
