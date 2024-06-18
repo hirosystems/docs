@@ -71,7 +71,7 @@ curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions"
 
 <Tab value={"200"}>
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 20,
   "offset": 0,
@@ -111,7 +111,7 @@ curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions"
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export interface PaginatedSatoshiInscriptionsResponse {
@@ -156,7 +156,7 @@ export interface InscriptionResponse {
 
 <Tab value={"400"}>
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "Invalid satoshi ordinal number"
 }
@@ -164,7 +164,7 @@ export interface InscriptionResponse {
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export interface InvalidSatoshiNumberResponse {

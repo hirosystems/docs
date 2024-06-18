@@ -64,7 +64,7 @@ curl -X GET "https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR6
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "name": "Wrapped USD",
   "symbol": "xUSD",
@@ -109,7 +109,7 @@ curl -X GET "https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR6
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export interface FtMetadataResponse {
@@ -169,7 +169,7 @@ export interface MetadataLocalization {
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "Token not found"
 }
@@ -177,7 +177,7 @@ export interface MetadataLocalization {
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export type NotFoundErrorResponse = TokenNotFoundResponse | ContractNotFoundResponse;
@@ -201,7 +201,7 @@ export interface ContractNotFoundResponse {
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "Token metadata fetch in progress"
 }
@@ -209,7 +209,7 @@ export interface ContractNotFoundResponse {
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export type ErrorResponse =

@@ -59,7 +59,7 @@ curl -X GET "https://api.mainnet.hiro.so/v1/names/bar.test/zonefile"
 
 Fetch a user's raw zone file. This only works for RFC-compliant zone files. This method returns an error for names that have non-standard zone files.
 
-```json title="Example Response"
+```json title="Example response"
 {
   "zonefile": "string"
 }
@@ -67,7 +67,7 @@ Fetch a user's raw zone file. This only works for RFC-compliant zone files. This
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 /**
@@ -93,7 +93,7 @@ export type BnsFetchFileZoneResponse =
 
 Error
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "string"
 }
@@ -101,7 +101,7 @@ Error
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 /**
@@ -123,7 +123,7 @@ export interface BnsError {
 
 Error
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "string"
 }
@@ -131,7 +131,7 @@ Error
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 /**

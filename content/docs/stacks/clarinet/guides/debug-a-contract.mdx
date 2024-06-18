@@ -43,7 +43,7 @@ The `::trace` command expects an expression, so make a `contract-call?` with our
 
 We should see a complete trace of our `get-count` function call, outputting the arguments that were passed in (`tx-sender`) and return value (`u0`).
 
-Here's an example response from the `::trace` command:
+Here's an Example response from the `::trace` command:
 ```bash
 (contract-call? .counter count-up)  <console>
 ├── ( get-count tx-sender )  counter:8:38

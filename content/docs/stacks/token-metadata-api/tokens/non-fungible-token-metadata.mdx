@@ -72,7 +72,7 @@ curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "token_uri": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json",
   "metadata": {
@@ -107,7 +107,7 @@ curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export interface NftMetadataResponse {
@@ -157,7 +157,7 @@ export interface MetadataLocalization {
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "Token not found"
 }
@@ -165,7 +165,7 @@ export interface MetadataLocalization {
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export type NotFoundErrorResponse = TokenNotFoundResponse | ContractNotFoundResponse;
@@ -189,7 +189,7 @@ export interface ContractNotFoundResponse {
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "error": "Token metadata fetch in progress"
 }
@@ -197,7 +197,7 @@ export interface ContractNotFoundResponse {
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Schema"}>
 
 ```ts
 export type ErrorResponse =
