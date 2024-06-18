@@ -1,10 +1,11 @@
 ---
 title: Build a Decentralized Grants Program
+description: Learn how to build a decentralized grants program with governance, submissions, and voting.
 ---
 
 ## Introduction
 
-Welcome to a world where funding for innovative projects is fluid and controlled by a community of token holders, not just a select few. This is the value proposition of a decentralized grants program. In this guide, we'll walk you through the process of building such a program using the [ExecutorDAO](https://github.com/MarvinJanssen/executor-dao) protocol on the Stacks blockchain.
+Welcome to a world where funding for innovative projects is fluid and controlled by a community of token holders, not just a select few. This is the value proposition of a decentralized grants program. In this guide, you will build such a program using the [ExecutorDAO](https://github.com/MarvinJanssen/executor-dao) protocol on the Stacks blockchain.
 
 Key features of this project include:
 
@@ -16,11 +17,11 @@ Key features of this project include:
 
 This Hack walks you through the basics of building a decentralized grants program. Over the course of this hack, you will deploy your own functioning grants program.
 
-There are also optional challenges at the end—opportunities to stretch your skills, differentiate your application, and win BTC prizes. [Submit your project here!](https://survey.hiro.so/hirohacks)
+There are also optional challenges at the end to further stretch your skills.
 
 Now it's time to hack. First, we'll cover the basics of the core functionalities of our grants program and look at 4 contracts. Let's dive in.
 
-## Understanding the ExecutorDAO Protocol
+## Understanding the ExecutorDAO protocol
 
 ExecutorDAO is a powerful and flexible protocol that allows for the creation of decentralized autonomous organizations (DAOs) with a high degree of modularity and customization. ExecutorDAO operates on three core tenets:
 
@@ -35,9 +36,9 @@ ExecutorDAO follows a single-address ownership model. The core contract is the d
 
 For more details, you can [view the standard contracts in the ExecutorDAO repository](https://github.com/MarvinJanssen/executor-dao/tree/main/contracts).
 
-## Clone the Starter Template
+## Clone the starter template
 
-In this section, we'll start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required packages.
+Start by setting up your development environment. We've prepared a repository that includes an initialized Clarinet project and a React frontend with some boilerplate code and all the required packages.
 
 To clone the repository, open your terminal and run the following command:
 
@@ -46,9 +47,9 @@ git clone https://github.com/hirosystems/hiro-hacks-template.git
 cd hiro-hacks-template
 ```
 
-## Establishing Your Core Contract
+## Establishing your core contract
 
-Before we create our core contract, we need to create `trait` contracts that we'll be implementing for our grants program.
+Before creating your core contract, you need to create `trait` contracts that you'll be implementing for your grants program.
 
 Traits in Clarity define a set of functions that a contract must implement. In this case, any contract that wants to be a `proposal` or an `extension` must implement the functions defined in the `proposal-trait` and `extension-trait` respectively.
 
@@ -78,7 +79,7 @@ Now in your contracts, respectively, add the following code:
 )
 ```
 
-Now that we've defined how your set of functions must be implemented, we can now begin to create our core contract - let's run the following command:
+Now that you've defined how your set of functions must be implemented, you can begin to create your core contract. First run the following command:
 
 ```bash
 clarinet contract new core
@@ -86,16 +87,16 @@ clarinet contract new core
 
 This will create a new contract in the `contracts` directory called `core.clar`.
 
-Inside our `core.clar` contract, let's add the two trait contracts we've just created from the steps above:
+Inside your `core.clar` contract, add the two trait contracts you've just created from the steps above:
 
 ```clarity
 (use-trait proposal-trait .proposal-trait.proposal-trait)
 (use-trait extension-trait .extension-trait.extension-trait)
 ```
 
-### Error Handling and State Management
+### Error handling and state management
 
-Next, we need to define some basic error handling and variables for managing our contracts:
+Next, you need to define some basic error handling and variables for managing your contracts:
 
 ```clarity
 (define-constant ERR_UNAUTHORIZED (err u1000))
@@ -109,7 +110,7 @@ Next, we need to define some basic error handling and variables for managing our
 
 These constants represent error codes that the contract can return. The variables store the executive principal (the owner of the grants program), a map of executed proposals, and a map of authorized extensions.
 
-### Authorization Check
+### Authorization check
 
 The `is-self-or-extension` function is a private function that checks if the caller of a function is the contract itself or an authorized extension:
 
@@ -127,9 +128,9 @@ The `is-self-or-extension` function is a private function that checks if the cal
 )
 ```
 
-### Extension Management
+### Extension management
 
-Here we provide a function to enable or disable an extension (`set-extension`):
+Here's a function to enable or disable an extension (`set-extension`):
 
 ```clarity
 (define-public (set-extension (extension principal) (enabled bool))
@@ -141,7 +142,7 @@ Here we provide a function to enable or disable an extension (`set-extension`):
 )
 ```
 
-### Proposal Execution
+### Proposal execution
 
 The `execute` function allows for the execution of a proposal:
 
@@ -177,7 +178,7 @@ The `construct` function is used to bootstrap the grants program:
 
 This function checks if the caller is the executive, sets the executive to the contract itself, and then executes the provided proposal.
 
-### Extension Requests
+### Extension requests
 
 The request-extension-callback function allows an extension to request a callback:
 
@@ -198,11 +199,11 @@ This function checks if the caller is an authorized extension and then calls the
 
 These are the key components of the ExecutorDAO core contract. Understanding these will help you in building your own extensions and proposals.
 
-## Create Your Membership Token
+## Create your membership token
 
-In this section, we will create our first `extension`, a non-transferable membership token, which will be used to grant voting rights on proposals. The token will be initially distributed to certain addresses during the bootstrapping process. However, new minting (distribution) and burning (removal) of tokens can be managed through proposals.
+In this section, you will create your first `extension`, a non-transferable membership token, which will be used to grant voting rights on proposals. The token will be initially distributed to certain addresses during the bootstrapping process. However, new minting (distribution) and burning (removal) of tokens can be managed through proposals.
 
-To create our membership token, navigate to your project's directory and run the following command:
+To create your membership token, navigate to your project's directory and run the following command:
 
 ```bash
 clarinet contract new membership-token
@@ -212,7 +213,7 @@ This will create a new contract in the contracts directory called `membership-to
 
 Let's walk through the key components of this contract.
 
-### Constants and Variables
+### Constants and variables
 
 The contract defines some constants and variables:
 
@@ -231,7 +232,7 @@ The contract defines some constants and variables:
 
 These constants represent error codes that the contract can return. The variables store the token name, symbol, URI, and decimals. The define-fungible-token function is used to define our sGrant token.
 
-### Authorization Check
+### Authorization check
 
 The `is-dao-or-extension`, function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
 
@@ -243,7 +244,7 @@ The `is-dao-or-extension`, function is a private function that checks if the cal
 
 This function will allow you to distribute (or burn) tokens to new members, granting them the ability to vote on future grant proposals.
 
-### Token Minting and Burning
+### Token minting and burning
 
 The contract provides functions to `mint` and `burn` tokens:
 
@@ -265,7 +266,7 @@ The contract provides functions to `mint` and `burn` tokens:
 
 These functions check if the caller is authorized and then mint or burn the specified amount of sGrant tokens. And as you can see, these functions must be executed either through an approved grant proposal or an enabled `extension` (more on this later).
 
-### Token Information
+### Token information
 
 The contract provides functions to get the token's name (`get-name`), symbol (`get-symbol`), decimals (`get-decimals`), balance (`get-balance`), total supply (`get-total-supply`), and URI (`get-token-uri`):
 
@@ -299,11 +300,11 @@ These functions return the corresponding information about the `sGrant` token.
 
 These are the key components of the `sGrant` token contract. Understanding these will help you in managing the distribution and burning of tokens through proposals.
 
-## Proposal Submission Contract (Extension)
+## Proposal submission contract (extension)
 
-In this section, we will create our second `extension`, a proposal submission contract. This contract will allow anyone to propose a grant, which will then be voted on by the token holders.
+In this section, you will create your second `extension`, a proposal submission contract. This contract will allow anyone to propose a grant, which will then be voted on by the token holders.
 
-To create our proposal submission contract, navigate to your project's directory and run the following command:
+To create your proposal submission contract, navigate to your project's directory and run the following command:
 
 ```bash
 clarinet contract new proposal-submission
@@ -313,16 +314,16 @@ This will create a new contract in the contracts directory called proposal-submi
 
 Let's walk through the key components of this contract.
 
-### Traits and Constants
+### Traits and constants
 
-First, we need to implement the `extension-trait` and use the `proposal-trait`:
+First, you need to implement the `extension-trait` and use the `proposal-trait`:
 
 ```clarity
 (impl-trait .extension-trait.extension-trait)
 (use-trait proposal-trait .proposal-trait.proposal-trait)
 ```
 
-Next, we define some constants that represent error codes:
+Next, define some constants that represent error codes:
 
 ```clarity
 (define-constant ERR_UNAUTHORIZED (err u3000))
@@ -331,21 +332,21 @@ Next, we define some constants that represent error codes:
 
 ### Variables
 
-We define a map to store the parameters of our contract:
+First, define a map to store the parameters of your contract:
 
 ```clarity
 (define-map parameters (string-ascii 34) uint)
 ```
 
-We set the proposal-duration parameter to a default value. This value represents the duration of a proposal in blocks. For example, if a block is mined approximately every 10 minutes, a proposal-duration of 1440 would be approximately 10 days.
+Set the proposal-duration parameter to a default value. This value represents the duration of a proposal in blocks. For example, if a block is mined approximately every 10 minutes, a proposal-duration of 1440 would be approximately 10 days.
 
 ```clarity
 (map-set parameters "proposal-duration" u1440) ;; ~10 days based on a ~10 minute block time.
 ```
 
-### Authorization Check
+### Authorization check
 
-The is-dao-or-extension function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
+The `is-dao-or-extension` function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
 
 ```clarity
 (define-public (is-dao-or-extension)
@@ -385,7 +386,7 @@ The propose function allows anyone to propose a grant:
 
 This function calls the add-proposal function of the proposal-voting contract, passing the proposal contract, the current block height as the start block height, the current block height plus the proposal-duration as the end block height, the sender as the proposer, and the title and description of the proposal.
 
-### Extension Callback
+### Extension callback
 
 The callback function allows the core contract to request a callback:
 
@@ -397,11 +398,11 @@ The callback function allows the core contract to request a callback:
 
 These are the key components of the proposal submission contract. Understanding these will help you in managing the submission of proposals.
 
-## Proposal Voting Contract (Extension)
+## Proposal voting contract (extension)
 
-In this section, we will create our third extension, a proposal voting contract. This contract will allow token holders to vote on the proposed grants.
+In this section, you will create your third extension, a proposal voting contract. This contract will allow token holders to vote on the proposed grants.
 
-To create our proposal voting contract, navigate to your project's directory and run the following command:
+To create your proposal voting contract, navigate to your project's directory and run the following command:
 
 ```bash
 clarinet contract new proposal-voting
@@ -411,16 +412,16 @@ This will create a new contract in the contracts directory called proposal-votin
 
 Let's walk through the key components of this contract.
 
-### Traits and Constants
+### Traits and constants
 
-First, we need to implement the extension-trait and use the proposal-trait:
+First, you need to implement the extension-trait and use the proposal-trait:
 
 ```clarity
 (impl-trait .extension-trait.extension-trait)
 (use-trait proposal-trait .proposal-trait.proposal-trait)
 ```
 
-Next, we define some constants that represent error codes:
+Next, define some constants that represent error codes:
 
 ```clarity
 (define-constant ERR_UNAUTHORIZED (err u3000))
@@ -437,7 +438,7 @@ Next, we define some constants that represent error codes:
 
 ### Variables
 
-We define a map to store the proposals and another map to store the total votes of each member:
+You need to define a map to store the proposals and another map to store the total votes of each member:
 
 ```clarity
 (define-map proposals
@@ -457,9 +458,9 @@ We define a map to store the proposals and another map to store the total votes 
 (define-map member-total-votes {proposal: principal, voter: principal} uint)
 ```
 
-### Authorization Check
+### Authorization check
 
-The is-dao-or-extension function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
+The `is-dao-or-extension` function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
 
 ```clarity
 (define-public (is-dao-or-extension)
@@ -548,13 +549,13 @@ Congratulations! You've successfully created the foundations for a Decentralized
 
 ## Challenges
 
-If you are here for the Hiro Hacks prizes (see the [overview page](https://docs.hiro.so/hacks) for more details), you've come to the right section. The following challenges are additional features you can implement to further differentiate your project. Feel free to add any other features you want.
+The following challenges are additional features you can implement to continue building and sharpening your skills.
 
 <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
   Starter
 </span>
 
-**Initialize Your Grants Program**: Now that we have our core extension contracts, we can initialize the project. The way we do this is through the `construct` function we wrote inside our `core.clar` contract. Create your first proposal enabling your extensions (`membership-token`, `proposal-submission`, `proposal-voting`) and distribute the initial token allocation to addresses responsible for voting on grants. If you need a little more guidance, check out the example [here](https://github.com/MarvinJanssen/executor-dao/blob/main/contracts/proposals/edp000-bootstrap.clar).
+**Initialize Your Grants Program**: Now that you have your core extension contracts, you can initialize the project. The way you do this is through the `construct` function you wrote inside your `core.clar` contract. Create your first proposal enabling your extensions (`membership-token`, `proposal-submission`, `proposal-voting`) and distribute the initial token allocation to addresses responsible for voting on grants. If you need a little more guidance, check out the example [here](https://github.com/MarvinJanssen/executor-dao/blob/main/contracts/proposals/edp000-bootstrap.clar).
 
 <span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
   Starter
@@ -595,11 +596,3 @@ await callReadOnlyFunction({
   senderAddress
 })
 ```
-
-## Prizes and Submissions
-
-The submission deadline for prize eligibility has now closed.
-
-However, you can still [submit your project here](https://survey.hiro.so/hirohacks) to talk to our team and get notified the next time a new hack drops.
-
-View the official Hiro Hacks rules [here](https://www.hiro.so/hiro-hacks-rules).
