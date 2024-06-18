@@ -30,7 +30,7 @@ Retrieves a list of STX transfers with memos to the given principal.
 
 This includes regular transfers from a `stx-transfer` transaction type and transfers from `contract-call` transactions.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -40,7 +40,7 @@ Stacks address or a contract identifier
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
@@ -98,7 +98,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69
 
 GET request that returns a list of inbound STX transfers with a memo
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 30,
   "offset": 0,
@@ -119,7 +119,7 @@ GET request that returns a list of inbound STX transfers with a memo
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
