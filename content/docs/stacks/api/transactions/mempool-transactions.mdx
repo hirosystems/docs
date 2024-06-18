@@ -32,7 +32,7 @@ Retrieves all transactions that have been recently broadcast to the mempool. The
 If you need to monitor new transactions, we highly recommend subscribing to [WebSockets or Socket.io](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client) for real-time updates.
 
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"sender_address"} type={"string"}>
 
@@ -76,7 +76,7 @@ Option to sort results in ascending or descending order.
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of mempool transactions to fetch
+Max number of mempool transactions to fetch
 
 <span>Example:  `20`</span>
 
@@ -88,7 +88,7 @@ max number of mempool transactions to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first mempool transaction to fetch
+Index of first mempool transaction to fetch
 
 <span>Example:  `42000`</span>
 
@@ -120,9 +120,9 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/mempool"
 
 <Tab value={"200"}>
 
-GET request that returns transactions
+GET request that returns mempool transactions
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 0,
   "offset": 0,
@@ -164,7 +164,7 @@ GET request that returns transactions
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
