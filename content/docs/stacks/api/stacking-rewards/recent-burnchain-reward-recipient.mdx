@@ -1,6 +1,6 @@
 ---
 title: Get recent burnchain reward for the given recipient
-description: Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the given recipient with the associated amounts and block info
+description: Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the given recipient with the associated amounts and block info.
 toc: false
 ---
 
@@ -27,29 +27,29 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/burnchain/rewards/{address}`}</p>
 </h2>
 
-Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the given recipient with the associated amounts and block info
+Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the given recipient with the associated amounts and block info.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"address"} type={"string"}>
 
-Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format
+Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format.
 
 <span>Example:  `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of rewards to fetch
+Max number of rewards to fetch
 
 </Property>
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first rewards to fetch
+Index of first rewards to fetch
 
 <span>Example:  `42000`</span>
 
