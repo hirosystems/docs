@@ -1,6 +1,6 @@
 ---
 title: Get recent burnchain reward recipients
-description: Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info
+description: Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info.
 toc: false
 ---
 
@@ -27,13 +27,13 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/burnchain/rewards`}</p>
 </h2>
 
-Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info
+Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info.
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of rewards to fetch
+Max number of rewards to fetch
 
 <span>Default:  `96`</span>
 
@@ -43,7 +43,7 @@ max number of rewards to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first rewards to fetch
+Index of first rewards to fetch
 
 <span>Example:  `42000`</span>
 
