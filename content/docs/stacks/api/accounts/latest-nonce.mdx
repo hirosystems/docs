@@ -28,7 +28,7 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves the latest nonce values used by an account by inspecting the mempool and anchored transactions.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -38,7 +38,7 @@ Stacks address
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"block_height"} type={"number"}>
 
@@ -74,7 +74,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69
 
 The latest nonce values used by an account by inspecting the mempool and anchored transactions
 
-```json title="Example Response"
+```json title="Example response"
 {
   "last_mempool_tx_nonce": 0,
   "last_executed_tx_nonce": 0,
@@ -90,7 +90,7 @@ The latest nonce values used by an account by inspecting the mempool and anchore
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
