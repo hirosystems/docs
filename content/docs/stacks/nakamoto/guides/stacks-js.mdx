@@ -1,20 +1,21 @@
 ---
 title: Updates for Stacks.js
+descrption: Discover Stacks.js changes related to the Nakamoto upgrade.
 ---
 
-## What's New
+## What's new
 
 ### StackingClient
 
 Install the latest nakamoto version with `npm install @stacks/stacking@latest`.
 
-The StackingClient in `@stacks/stacking` was updated to match the latest pox-4 contract.
+The StackingClient in `@stacks/stacking` was updated to match the latest `pox-4` contract.
 
 - Added `StackingClient.signPoxSignature()`
 - Added `Pox4SignatureTopic` enum
 - New stacking arguments for `StackingClient.stack`, `StackingClient.stackExtend`, `StackingClient.stackIncrease`, `StackingClient.stackAggregationCommit`, `StackingClient.stackAggregationCommitIndexed`, and `StackingClient.stackAggregationIncrease`
 
-### Nakamoto Network
+### Nakamoto network
 
 To test using the Nakamoto testnet, you can use the `StacksTestnet` network with a custom URL. The Nakamoto testnet is being hosted at https://api.testnet.hiro.so. Use this URL like this:
 
@@ -26,7 +27,7 @@ const network = new StacksTestnet({
 })
 ```
 
-#### Example Snippets
+#### Example snippets
 
 **`StackingClient.signPoxSignature`**
 
