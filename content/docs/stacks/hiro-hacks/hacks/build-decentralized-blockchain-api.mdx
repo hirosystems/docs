@@ -7,7 +7,7 @@ description: Learn how to build a custom API with Chainhook.
 
 In the previous hacks, you built some pretty complex smart contracts. But building a robust UI/UX around these smart contracts and their on-chain data can be challenging due to the nature of blockchains.
 
-Let's take the [decentralized grants program](./build-decentralized-grants-program.mdx) hack as an example. In this project, anyone can propose a grant, and these proposals are voted on by token holders. The details of each proposal, including the title, description, and the proposal contract, are stored on the blockchain.
+Let's take the [decentralized grants program](/stacks/hiro-hacks/hacks/build-decentralized-grants-program) hack as an example. In this project, anyone can propose a grant, and these proposals are voted on by token holders. The details of each proposal, including the title, description, and the proposal contract, are stored on the blockchain.
 
 However, directly querying the blockchain for this data every time you want to display it in your application's UI can be slow and inefficient. And that information might not always be formatted and organized in a way that makes sense for your use case.
 
@@ -152,7 +152,7 @@ Here's an example of how you might define this `predicate.json` file for your co
 
 <Callout title="Note" type="info">
   Make sure to swap out the details in your `predicate.json` file to match your
-  contracts ABI
+  contracts ABI.
 </Callout>
 
 The `if_this` section specifies the conditions for the events that this Chainhook will respond to. In this case, it's looking for calls to the `propose` method in the `proposal-submission` contract on the Stacks testnet.
@@ -161,7 +161,7 @@ The `then_that` section specifies what action the Chainhook should take when it 
 
 The `start_block` field is used to specify the starting block for the Chainhook to start listening from. This is useful for ignoring blocks that were mined before the Chainhook was set up.
 
-Once you have created a similar file for your specific contract. select the _Chainhooks_ tab inside your project and upload your predicate file using the _Upload Chainhook_ option. For more information, you can follow the [Create Chainhooks](../platform/guides/create-chainhooks) section.
+Once you have created a similar file for your specific contract. select the _Chainhooks_ tab inside your project and upload your predicate file using the _Upload Chainhook_ option. For more information, you can follow the [Create Chainhooks](/stacks/platform/guides/create-chainhooks) section.
 
 ## Testing your chainhook
 
