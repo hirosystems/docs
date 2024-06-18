@@ -1,6 +1,6 @@
 ---
 title: Get semi-fungible token metadata
-description: Retrieves information about the Semi-Fungible Token Metadata.
+description: Retrieves information about semi-fungible tokens.
 toc: false
 ---
 
@@ -22,9 +22,9 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/metadata/v1/sft/{principal}/{token_id}`}</p>
 </h2>
 
-Retrieves metadata for a SIP-013 Semi-Fungible Token
+Retrieves metadata for a SIP-013 semi-fungible token.
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"locale"} type={"string"}>
 
@@ -32,7 +32,7 @@ Metadata localization to retrieve
 
 </Property>
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -54,9 +54,9 @@ Token ID to retrieve
 
 | Status code | Description |
 | ----------- | ----------- |
-| `200` | Default Response |
-| `404` | Default Response |
-| `422` | Default Response |
+| `200` | Default response |
+| `404` | Default response |
+| `422` | Default response |
 
 </div>
 
