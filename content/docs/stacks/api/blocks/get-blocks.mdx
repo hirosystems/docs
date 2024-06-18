@@ -27,15 +27,13 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/blocks`}</p>
 </h2>
 
-Retrieves a list of recently mined blocks
+Retrieves a list of recently mined blocks. If you need to actively monitor new blocks, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
 
-If you need to actively monitor new blocks, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
-
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of blocks to fetch
+Max number of blocks to fetch
 
 <span>Example:  `20`</span>
 
@@ -43,7 +41,7 @@ max number of blocks to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first burn block to fetch
+Index of first burn block to fetch
 
 <span>Example:  `0`</span>
 
