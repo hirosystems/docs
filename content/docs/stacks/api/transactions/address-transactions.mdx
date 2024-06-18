@@ -1,6 +1,6 @@
 ---
 title: Get address transactions
-description: Retrieves transactions sent or received by a STX address or Smart Contract ID
+description: Retrieves transactions sent or received by a STX address or smart contract ID
 toc: false
 ---
 
@@ -27,19 +27,19 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/addresses/{address}/transactions`}</p>
 </h2>
 
-Retrieves a paginated list of confirmed transactions sent or received by a STX address or Smart Contract ID, alongside the total amount of STX sent or received and the number of STX, FT and NFT transfers contained within each transaction.
+Retrieves a paginated list of confirmed transactions sent or received by a STX address or smart contract ID, alongside the total amount of STX sent or received and the number of STX, FT and NFT transfers contained within each transaction.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"address"} type={"string"}>
 
-STX address or Smart Contract ID
+STX address or smart contract ID
 
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
@@ -697,7 +697,7 @@ export interface TenureChangeTransactionMetadata {
 
 <Accordion title="Notes">
 
-More information on Transaction types can be found [here](https://docs.stacks.co/understand-stacks/transactions#types).
+More information on transaction types can be found [here](https://docs.stacks.co/understand-stacks/transactions#types).
 
 </Accordion>
 
