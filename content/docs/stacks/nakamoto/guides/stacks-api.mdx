@@ -1,5 +1,6 @@
 ---
 title: Updates for Stacks API
+description: Discover Stacks Blockchain API updates related to the Nakamoto upgrade.
 ---
 
 ## What's New
@@ -8,31 +9,30 @@ title: Updates for Stacks API
   The `/extended/v2/*` endpoints represent the modern API that is being
   continually expanded to support the Nakamoto upgrade. We encourage developers
   to use v2 endpoints for new developments. Be aware that `/extended/v1/*` are
-  the older set of endpoints. Though they continue to function alongside v2, be
-  advised that they will be deprecated in the coming months.
+  the older set of endpoints. Though they continue to function alongside v2, they will be deprecated in the coming months.
 </Callout>
 
 ### Nakamoto endpoints
 
 The Stacks Blockchain API has a series of new endpoints to support the upcoming Nakamoto upgrade:
 
-- Get Proof-of-Transfer details per Cycle including Signers and Stackers, with information about stacked STX amounts, payout addresses and signer weights
+- Get Proof-of-Transfer details per Cycle, including Signers and Stackers, with information about stacked STX amounts, payout addresses and signer weights
 - Get a list of Stacks blocks per Bitcoin block to support the new Nakamoto mining mechanism
-- Get all transactions relevant to a STX address or Contract ID including filters for FT and NFT transfers
+- Get all transactions relevant to a STX address or contract ID, including filters for FT and NFT transfers
 - Support for the new Nakamoto `tenure_change` transaction type across all our transaction endpoints
 - Get a summary of current network mempool transaction fees, including statistics for expected confirmation priorities
 - Get the deployment status of multiple smart contracts in one call
 
 All of these endpoints are backwards compatible with Stacks nodes running version 2.4 or earlier
 
-### Event Replay optimizations
+### Event replay optimizations
 
 - Optimize replay speed by creating a new parquet-based ingestion that optimizes for canonical chain information
 - Optimize classic TSV event replay by improving block ingestion times
 
 ### New transaction type `tenure_change`
 
-Affects endpoints:
+This new type affects the following endpoints:
 
 - `/extended/v1/address/{principal}/transactions`
 - `/extended/v1/tx`
@@ -43,8 +43,7 @@ Affects endpoints:
 
 ### New endpoints: `/extended/v2/*`
 
-/extended/v1 vs /extended/v2 endpoints: Key Difference
-The ﻿/extended/v2/_ endpoints represent the modern API that is being continually expanded to support the Nakamoto upgrade. We encourage developers to use v2 endpoints for new developments. Be aware that ﻿/extended/v1/_ are the older set of endpoints. Though they continue to function alongside v2, be advised that they will be deprecated in the coming months.
+One important difference to note between the `/extended/v1` vs the `/extended/v2` endpoints is that the ﻿/extended/v2/_ endpoints represent the current API that is being continually expanded to support the Nakamoto upgrade. We encourage developers to use v2 endpoints for new developments. Be aware that ﻿/extended/v1/_ are the older set of endpoints. Though they continue to function alongside v2, they will be deprecated in the coming months.
 
 - `/extended/v2/mempool/fees`
 - `/extended/v2/burn-blocks`
@@ -76,4 +75,4 @@ The ﻿/extended/v2/_ endpoints represent the modern API that is being continual
 - `/extended/v1/tx/block/{block_hash}`
 - `/extended/v1/tx/block_height/{height}`
 
-View the [API Reference](/stacks/api) here.
+View the [API reference](/stacks/api).
