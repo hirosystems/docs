@@ -1,15 +1,16 @@
 ---
 title: Updates for Clarinet
+description: Discover Clarinet upgrades related to the Nakamoto release.
 ---
 
-## Launch the Devnet in Nakamoto mode
+## Launch devnet in Nakamoto mode
 
-As of [Clarinet 2.4.0](https://github.com/hirosystems/clarinet/releases/tag/v2.4.0), the Devnet can run the blockchain in Nakamoto mode.
+As of [Clarinet 2.4.0](https://github.com/hirosystems/clarinet/releases/tag/v2.4.0), devnet can run the blockchain in Nakamoto mode.
 
-Once your Devnet reaches the right block height, it will deploy the `pox-4.clar` and run in
+Once your devnet reaches the right block height, it will deploy the `pox-4.clar` contract and run in
 Epoch 2.5.
 From there, Clarinet will send `stack-stx` and `stack-extend` requests to the new PoX contract.
-In Nakamoto mode, the Devnet has 2 signers. Eventually, you can observe the
+In Nakamoto mode, devnet has 2 signers. Eventually, you can observe the
 `vote-for-aggregate-public-key` transactions that they send.
 
 Do not expect to reach Epoch 3.0 with Clarinet 2.4.0. This release is focusing on Epoch 2.5.
@@ -28,7 +29,7 @@ deployed around the **Bitcoin block 108**.
 use_nakamoto = true
 ```
 
-Start the Devnet with `clarinet devnet start`.
+Start devnet with `clarinet devnet start`.
 
 ## Deploy contracts on the Nakamoto Testnet
 
