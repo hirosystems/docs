@@ -28,7 +28,7 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves total account balance information for a given address or contract identifier. This includes the balances of STX tokens, fungible tokens and non-fungible tokens.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -38,7 +38,7 @@ Stacks address or a contract identifier
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
 
@@ -78,7 +78,7 @@ curl -L \
 
 GET request that returns address balances
 
-```json title="Example Response"
+```json title="Example response"
 {
   "stx": {
     "balance": "string",
@@ -131,7 +131,7 @@ GET request that returns address balances
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
