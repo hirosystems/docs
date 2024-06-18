@@ -32,7 +32,7 @@ Retrieves a list of all transactions for a given address or contract identifier.
 
 If you need to actively monitor new transactions for an address or contract id, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -42,7 +42,7 @@ Stacks address or a contract identifier
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
@@ -104,7 +104,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69
 
 GET request that returns account transactions
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 30,
   "offset": 0,
@@ -146,7 +146,7 @@ GET request that returns account transactions
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
