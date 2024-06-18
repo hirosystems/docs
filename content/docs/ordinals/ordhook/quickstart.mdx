@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: Learn how to quickly scan for ordinal activity on Bitcoin.
+description: Learn how to create a simple counter contract using Clarinet.
 ---
 
 import { ChevronRight, Code, Terminal } from 'lucide-react';
@@ -8,15 +8,15 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Step } from 'fumadocs-ui/components/steps';
 import { SmallCard } from '@/components/card';
 
-In this quickstart guide, you will write a simple counter contract with Clarity. Throughout this tutorial, you'll learn how to generate a new project, create a smart contract, and validate your smart contract code using the Clarinet CLI.
+In this quickstart guide, you will set up `ordhook` to explore and index Ordinal activities on the Bitcoin blockchain. You will learn how to install `ordhook`, configure it, and run basic commands to scan and stream Ordinal inscriptions and transfers.
 
-Check out the [Create a new project](/stacks/clarinet/guides/create-a-new-project) and [Validate a contract](/stacks/clarinet/guides/deploy-a-contract) guides for a deeper look.
+Check out the [Run Ordhook as a service](/ordinals/ordhook/guides/ordhook-as-a-service) for a more advanced use case.
 
 ---
 
 ### Prerequisites
 
-To follow this quickstart guide, you will need to have Ordhook installed on your machine. If you haven't already, check out the [Installation](/ordinals/ordhook/installation) guide.
+Before starting, ensure you have `ordhook` installed. If you haven't already, check out the [Installation](/ordinals/ordhook/installation) guide.
 
 ---
 
@@ -24,146 +24,43 @@ To follow this quickstart guide, you will need to have Ordhook installed on your
   <Step>
     <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Generate your <code className='text-lg'>counter</code> project</p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Scanning for <code className='text-lg'>Ordinal</code> activity</p>
         <div className='flex flex-col space-y-0'>
-          <p>Start by creating a new Clarinet project. This command will create a new directory named <code>counter</code> and set up a basic Clarinet project inside it.</p>
+          <p>To scan blocks for <code>Ordinal</code> activity, you can use the `scan blocks` command. The output will show details of the inscription, including the block number it was revealed at, `ordinal_number`, and `inscription_number`.</p>
         </div>
       </div>
       <div className="w-full">
         ```bash title="Terminal"
-        clarinet new counter
+        ordhook scan blocks --interval 767430:767753 --mainnet
         ```
       </div>
 
-      <p>Navigate to the newly created directory:</p>
-      <div className="w-full">
-        ```bash
-        cd counter
-        ```
-      </div>
-
-      <div className="w-full">
-      <p>You should see the following files and folders:</p>
-        <Files className='pointer-events-none'>
-          <Folder name="contracts" />
-          <Folder name="settings" defaultOpen>
-            <File name="Devnet.toml" />
-            <File name="Mainnet.toml" />
-            <File name="Testnet.toml" />
-          </Folder>
-          <Folder name="tests" />
-          <File name=".gitignore" />
-          <File name="Clarinet.toml" />
-          <File name="package.json" />
-          <File name="tsconfig.json" />
-          <File name="vitest.config.js" />
-        </Files>
-      </div>
+      <p>The `--interval` flag is used to specify a block range. The range is inclusive, meaning both the start and end blocks will be included in the scan. And the `--mainnet` flag is used to specify the Bitcoin network to scan.</p>
+    
+      <Callout>
+        When running `scan` for the first time, an archive of Bitcoin blockchain data will be downloaded. To learn more, check out the [Hiro Archive](/stacks/archive) section.
+      </Callout>
     </div>
   </Step>
 
   <Step>
     <div className="flex flex-col space-y-3">
       <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Create a <code className='text-lg'>counter</code> contract</p>
-        <p>Inside your project, create your first contract. This command will create an empty `counter.clar` file in the <code>contracts</code> folder as well as a `counter.test.ts` file in the <code>tests</code> folder.</p>
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Inspecting a specific inscription</p>
+        <p>To inspect a specific inscription, you can run a similar command, `scan inscription` and pass in the inscription's ID.</p>
       </div>
       <div className="w-full">
         ```bash title="Terminal"
-        clarinet contract new counter
+        ordhook scan inscription 6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0 --mainnet
         ```
       </div>
 
-      <div className="w-full">
-        <Files className='pointer-events-none'>
-          <Folder name="contracts" defaultOpen>
-            <File name="counter.clar" className='bg-muted' />
-          </Folder>
-          <Folder name="settings" />
-          <Folder name="tests" defaultOpen>
-            <File name="counter.test.ts" className='bg-muted' />
-          </Folder>
-          <File name=".gitignore" />
-          <File name="Clarinet.toml" />
-          <File name="package.json" />
-          <File name="tsconfig.json" />
-          <File name="vitest.config.js" />
-        </Files>
-        
-        <p>It also updates the `Clarinet.toml` file inside your project with the necessary settings.</p>
+      <p>The output will show where and when the inscription was revealed and any subsequent transfer events.</p>
 
-        <div className="w-full">
-          ```toml title="Clarinet.toml"
-          [contracts.counter]
-          path = 'contracts/counter.clar'
-          clarity_version = 2
-          epoch = 2.5
-          ```
-        </div>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Variables and functions</p>
-        <div className='flex flex-col space-y-0'>
-          <p>In Clarity, you can define variables and functions to store and manipulate data. Inside your `contracts/counter.clar` file:</p>
-          <ol>
-            <li>Define a map called `Counters` to store the count associated with each user.</li>
-            <li>Define a public function called `count-up` that increments the count of the user who calls it.</li>
-            <li>Add a read-only function called `get-count` that returns the count of the user who calls it.</li>
-          </ol>
-        </div>
-        
-        <div className="w-full">
-          ```clarity title="counter.clar"
-          (define-map Counters principal uint)
-
-          (define-public (count-up)
-            (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
-          )
-
-          (define-read-only (get-count (who principal))
-            (default-to u0 (map-get? Counters who))
-          )
-          ```
-        </div>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Validate your <code className='text-lg'>counter</code> contract</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Now it's time to validate your contract. This command will check your contract for errors and typos.</p>
-        </div>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        clarinet check
-        ```
-      </div>
-
-      <p>When the validation is successful, you should see the following output: <code>✔ 1 contract checked</code>.</p>
-      
-      <div className='flex flex-col space-y-0'>
-        <p>You can go one step further and test your valid contract in a local REPL with the following steps:</p>
-        <ol>
-          <li>Run `clarinet console` from the terminal inside of your project.</li>
-          <li>Call your contract by running `(contract-call? .counter count-up)`.</li>
-          <li>Verify the count of the user has been incremented by calling the `get-count` function with the `tx-sender` as the argument.</li>
-        </ol>
-      </div>
-
-      ```bash
-      (contract-call? .counter count-up)
-      (contract-call? .counter get-count tx-sender)
+      ```plaintext
+      Inscription 6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0 revealed at block #767430 (ordinal_number 1252201400444387, inscription_number 0)
+      Transferred in transaction bc4c30829a9564c0d58e6287195622b53ced54a25711d1b86be7cd3a70ef61ed at block 785396
       ```
-
     </div>
   </Step>
 </div>
@@ -175,20 +72,14 @@ To follow this quickstart guide, you will need to have Ordhook installed on your
 <Cards className='sm:grid-cols-1'>
   <SmallCard
     icon={<Code className='text-primary' />}
-    href="/stacks/clarinet/guides/run-a-local-devnet"
-    title="Run a local devnet"
-    description="Learn how to set up and run a local development network for your project."
-  />
-  <SmallCard
-    icon={<Code className='text-primary' />}
-    href="/stacks/clarinet/guides/testing-with-clarinet-sdk"
-    title="Testing with the Clarinet JS SDK"
-    description="Learn how to test your smart contracts using the Clarinet JS SDK."
+    href="/ordinals/ordhook/guides/ordhook-as-a-service"
+    title="Run Ordhook as a service"
+    description="Learn how to run Ordhook as a service using Bitcoind."
   />
   <SmallCard
     icon={<Terminal className='text-primary' />}
-    href="/stacks/clarinet/guides/deploy-a-contract"
-    title="Deploy a contract"
-    description="Learn how to deploy your smart contracts using the Clarinet CLI."
+    href="/ordinals/explorer"
+    title="Ordinals Explorer"
+    description="Explore the Ordinals Explorer to view inscriptions and transfers."
   />
 </Cards>

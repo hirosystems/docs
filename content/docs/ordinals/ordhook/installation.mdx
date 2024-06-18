@@ -3,18 +3,13 @@ title: Installation
 description: Ordhook was developed to be environment-agnostic. Below are the different ways to install and build Ordhook on your machine.
 toc: false
 ---
-
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
-
-Clone the [Ordhook repository](https://github.com/hirosystems/ordhook) to your local machine.
+Clone the [Ordhook repository](https://github.com/hirosystems/ordhook) to your local machine and install via `cargo`.
 
 ```bash title="Terminal"
-git clone https://github.com/hirosystems/ordhook.git
-```
-
-Navigate to the root directory and run cargo ordhook-install to install:
-
-```bash title="Terminal"
-cd ordhook && cargo ordhook-install
+# Clone the ordhook repository
+$ git clone https://github.com/hirosystems/ordhook.git
+# Navigate into the ordhook directory
+$ cd ordhook
+# Install ordhook using cargo
+$ cargo ordhook-install
 ```
