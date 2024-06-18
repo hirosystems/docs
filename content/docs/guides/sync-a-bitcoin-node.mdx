@@ -1,0 +1,162 @@
+---
+title: How to sync a Bitcoin node
+description: Learn how to sync a Bitcoin node for building Bitcoin applications.
+---
+
+import { Code, Terminal } from 'lucide-react';
+import { SmallCard } from '@/components/card';
+import { InlineCode } from '@/components/inline-code';
+
+Syncing a Bitcoin node is often one of the first steps a developer takes when building a Bitcoin application. It's a great introduction to the Bitcoin developer ecosystem, and if you're relying on onchain data, there's no safer way to get that data than doing it yourself.
+
+In this guide, you will learn how to:
+
+1. Download Bitcoin Core daemon on your machine
+2. Configure `bitcoind`
+3. Start syncing your node
+4. Properly shutdown and restart your node
+
+<Callout>
+To get started, we first need to download `bitcoind`. In our example, we'll be using version 25.0. You can select a software version compatible with your device [from this list](https://bitcoincore.org/bin/bitcoin-core-25.0). 
+</Callout>
+
+---
+
+### Configure <InlineCode>bitcoind</InlineCode>
+
+Once your download is complete, make note of your path to the `bitcoind` executable.
+
+<Callout>
+When you sync your node, we'll be running the program at `/bitcoin-25.0/bin/bitcoin`, which is where the `bitcoind` executable is located.
+</Callout>
+
+Next up is a couple configuration steps.
+
+1. Select or create a directory to store your Bitcoin data.
+2. Update the `bitcoin.conf` file to include the path to your Bitcoin data directory.
+
+The Bitcoin chainstate is pretty large, and you need a place to store it. In this example, we are going to set up a directory called `bitcoin-data` on an external hard drive that we have mounted at `/Volumes/SSD`.
+
+<Callout>
+  This folder, `bitcoin-data`, can be named whatever you like, and can exist locally or in an external hard drive.
+  
+  The most important part being that it should exist in a place that has enough storage to hold all the Bitcoin data we will be receiving once it starts to sync.
+</Callout>
+
+Now navigate to your `bitcoin.conf` file, which is located in your `/path/to/bitcoin` directory and update the `datadir` field with your directory. 
+
+For our example, it would look like this:
+
+```bash title="bitcoin.conf"
+datadir=/Volumes/SSD/bitcoin-data/
+```
+
+<Accordions>
+<Accordion title="Example bitcoin.conf">
+You can override the default configuration with the following, including the path to where you will be storing all of the Bitcoin data once it starts syncing:
+
+```bash title="bitcoin.conf"
+# [!code word:rpcuser]
+# [!code word:rpcpassword]
+datadir=/your-path-to/bitcoin-data/ # [!code highlight]
+server=1
+rpcuser=devnet
+rpcpassword=devnet
+rpcport=8332
+rpcallowip=0.0.0.0/0
+rpcallowip=::/0
+txindex=1
+listen=1
+discover=0
+dns=0
+dnsseed=0
+listenonion=0
+rpcserialversion=1
+disablewallet=0
+fallbackfee=0.00001
+rpcthreads=8
+blocksonly=1
+dbcache=4096
+
+# Start zeromq
+zmqpubhashblock=tcp://0.0.0.0:18543
+```
+</Accordion>
+</Accordions>
+
+If you plan to use your node to receive transactions, you will need to make note of the `username` and `password` fields for your node.
+
+<Callout>
+In the example `bitcoin.conf` above, `devnet` is listed as the default `username` and `password`.
+</Callout>
+
+### Run the node
+
+Now that you've finished configuring your `bitcoin.conf` file, it's time to start up your node.
+
+This takes the form of `path/to/bitcoind -conf=path/to/bitcoin.conf`, which in our example looks like:
+
+```bash
+/Volumes/SSD/bitcoin-25.0/bin/bitcoind -conf=/Volumes/SSD/bitcoin-25.0/bitcoin.conf
+```
+
+After running this command, you will see `zmq_url` entries in your console's stdout, displaying ZeroMQ logs from your Bitcoin node. Congrats! You're now syncing!
+
+<Callout>
+It might take anywhere from a few hours to a few days to run and fully sync, depending on if it's your first time syncing a node.
+</Callout>
+
+### Proper shutdown and restart procedure
+
+It's important to know how to properly shut down your `bitcoind` node so that you can start them back up where you've left off on another machine or at another time.
+
+Here's a few common practices to follow to ensure that doesn't happen:
+
+1. Shutting down your node
+2. Ejecting your external hard drive
+3. Restarting your node
+
+To shut down your node safely, use the `bitcoin-cli` executable inside of the `bin` directory to run the following command:
+
+```bash
+/path/to/bitcoin-cli \
+  --conf=/path/to/bitcoin.conf \
+  --rpcuser={{your-rpc-username}} \
+  --rpcpassword={{your-rpc-password}} stop
+```
+
+To eject your hard drive safely (if applicable):
+
+<Tabs items={["macOS","Windows"]}>
+  <Tab value={"macOS"}>
+    1. Go to the Finder, then the sidebar, and select the disk you want to eject under “Devices”. Click on the eject icon next to the name.
+    2. Wait for a confirmation message saying it's safe to eject the device before you unplug the drive.
+  </Tab>
+
+  <Tab value={"Windows"}>
+    1. Open File Explorer, select the drive from the list under “This PC” (PC > Devices and Drives), and click the “Eject” button.
+    2. Wait for a confirmation message saying it's safe to eject the device before you unplug the drive.
+  </Tab>
+</Tabs>
+
+To start your node back up, all you need to do is refer to the previous steps from above by running `path/to/bitcoind -conf=path/to/bitcoin.conf`.
+
+---
+
+### Next steps
+
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
+    icon={<Code className='text-primary' />}
+    href="/stacks/connect/guides/sign-transactions"
+    title="Sign transactions"
+    description="Learn how to interact with your smart contracts using Stacks.js."
+  />
+  <SmallCard
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/stacks.js/guides/post-conditions"
+    title="Deep dive into post-conditions"
+    description="Learn how to use post-conditions to secure your smart contracts."
+  />
+</Cards>
+
