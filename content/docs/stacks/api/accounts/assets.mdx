@@ -28,7 +28,7 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves a list of all asset events associated with an account or a contract identifier. This includes transfers and mints.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -38,7 +38,7 @@ Stacks address or a contract identifier
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
@@ -92,7 +92,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69
 
 GET request that returns address assets
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 30,
   "offset": 0,
@@ -117,7 +117,7 @@ GET request that returns address assets
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 export type TransactionEvent =
