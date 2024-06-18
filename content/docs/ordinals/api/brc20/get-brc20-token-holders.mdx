@@ -1,6 +1,6 @@
 ---
 title: Get BRC-20 token holders
-description: Retrieves a list of holders and their balances for a BRC-20 token
+description: Retrieves a list of holders and their balances for a particular BRC-20 token.
 toc: false
 ---
 
@@ -22,9 +22,9 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/brc-20/tokens/{ticker}/holders`}</p>
 </h2>
 
-Retrieves a list of holders and their balances for a BRC-20 token.
+Retrieves a list of holders and their balances for a specified BRC-20 token.
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
@@ -44,7 +44,7 @@ Results per page
 
 </Property>
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"ticker"} type={"string"}>
 
@@ -52,8 +52,8 @@ Results per page
 
 | Status code | Description      |
 | :---------- | :--------------- |
-| `200`       | Default Response |
-| `404`       | Default Response |
+| `200`       | Default response |
+| `404`       | Default response |
 
 </div>
 
