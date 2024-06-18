@@ -29,11 +29,11 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves transactions confirmed in a single block.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"height_or_hash"} type={"integer | string"}>
 
-filter by block height, hash, index block hash or the constant `latest` to filter for the most recent block
+Filter by block height, hash, index block hash or the constant `latest` to filter for the most recent block
 
 </Property>
 
@@ -55,7 +55,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v2/blocks/42000/transactions"
 
 GET request that returns transactions
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 200,
   "offset": 0,
@@ -135,7 +135,7 @@ GET request that returns transactions
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
