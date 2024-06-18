@@ -1,6 +1,6 @@
 ---
 title: Get non-fungible token history
-description: Retrieves the history of a Non-Fungible Token
+description: Retrieves the history of a non-fungible token
 toc: false
 ---
 
@@ -27,15 +27,15 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tokens/nft/history`}</p>
 </h2>
 
-Retrieves all events relevant to a Non-Fungible Token. Useful to determine the ownership history of a particular asset.
+Retrieves all events relevant to a non-fungible token. This is useful when determining the ownership history of a particular asset.
 
-More information on Non-Fungible Tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
+More information on non-fungible tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
 
-### Query Parameters
+### Query parameters
 
 <Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
 
-token asset class identifier
+Token asset class identifier
 
 <span>Example:  `"SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"`</span>
 
@@ -43,7 +43,7 @@ token asset class identifier
 
 <Property required={true} deprecated={false} name={"value"} type={"string"}>
 
-hex representation of the token's unique value
+Hex representation of the token's unique value
 
 <span>Example:  `"0x0100000000000000000000000000000803"`</span>
 
@@ -51,7 +51,7 @@ hex representation of the token's unique value
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of events to fetch
+Max number of events to fetch
 
 <span>Default:  `50`</span>
 
@@ -59,7 +59,7 @@ max number of events to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first event to fetch
+Index of first event to fetch
 
 <span>Example:  `42000`</span>
 
@@ -69,7 +69,7 @@ index of first event to fetch
 
 <Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
 
-whether or not to include events from unconfirmed transactions
+Whether or not to include events from unconfirmed transactions
 
 <span>Example:  `true`</span>
 
@@ -79,7 +79,7 @@ whether or not to include events from unconfirmed transactions
 
 <Property required={false} deprecated={false} name={"tx_metadata"} type={"boolean"}>
 
-whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
+Whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
 
 <span>Default:  `false`</span>
 
@@ -87,7 +87,7 @@ whether or not to include the complete transaction metadata instead of just `tx_
 
 | Status code | Description |
 | :----------- | :----------- |
-| `200` | Non-Fungible Token event history |
+| `200` | Non-fungible token event history |
 
 </div>
 
