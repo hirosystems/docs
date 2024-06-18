@@ -27,7 +27,7 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/contracts/source/{contract_address}/{contract_name}`}</p>
 </h2>
 
-Retrieves the Clarity source code of a given contract, along with the block height it was published in, and the MARF proof for the data
+Retrieves the Clarity source code of a given contract, along with the block height it was published in and the MARF proof for the data.
 
 | Status code | Description |
 | :----------- | :----------- |
@@ -45,7 +45,7 @@ curl -X GET "https://api.mainnet.hiro.so/v2/contracts/source/%7Bcontract_address
 
 <Tab value={"200"}>
 
-GET request to get contract source
+GET request that returns the contract source
 
 ```json title="Example response"
 {
