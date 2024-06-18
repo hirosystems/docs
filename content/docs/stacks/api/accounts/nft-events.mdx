@@ -31,7 +31,7 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves a list of all NFTs owned by an address and contains the Clarity value of the identifier of the NFT.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -41,7 +41,7 @@ Stacks address or a contract identifier
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
@@ -93,7 +93,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69
 
 
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 0,
   "offset": 0,
@@ -119,7 +119,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 export interface AddressNftListResponse {
