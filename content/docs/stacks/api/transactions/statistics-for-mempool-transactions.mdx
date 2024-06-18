@@ -28,7 +28,7 @@ import { InlineCode } from '@/components/inline-code';
 </h2>
 
 Queries for transactions counts, age (by block height), fees (simple average), and size.
-All results broken down by transaction type and percentiles (p25, p50, p75, p95).
+All results are broken down by transaction type and percentiles (p25, p50, p75, p95).
 
 
 | Status code | Description |
@@ -49,7 +49,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/mempool/stats"
 
 GET request that returns stats on mempool transactions
 
-```json title="Example Response"
+```json title="Example response"
 {
   "tx_type_counts": {
     "token_transfer": 0,
@@ -140,7 +140,7 @@ GET request that returns stats on mempool transactions
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
