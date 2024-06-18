@@ -27,9 +27,9 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tx/events`}</p>
 </h2>
 
-Retrieves the list of events filtered by principal (STX address or Smart Contract ID), transaction id or event types. The list of event types is ('smart_contract_log', 'stx_lock', 'stx_asset', 'fungible_token_asset', 'non_fungible_token_asset').
+Retrieves the list of events filtered by principal (STX address or smart contract ID), transaction ID or event types. The list of event types is ('smart_contract_log', 'stx_lock', 'stx_asset', 'fungible_token_asset', 'non_fungible_token_asset').
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"tx_id"} type={"string"}>
 
@@ -39,7 +39,7 @@ Hash of transaction
 
 <Property required={false} deprecated={false} name={"address"} type={"string"}>
 
-Stacks address or a Contract identifier
+Stacks address or a smart contract identifier
 
 <span>Example:  `"ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"`</span>
 
@@ -47,7 +47,7 @@ Stacks address or a Contract identifier
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-number of items to return
+Number of items to return
 
 <span>Example:  `100`</span>
 
@@ -55,7 +55,7 @@ number of items to return
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-number of items to skip
+Number of items to skip
 
 <span>Example:  `42000`</span>
 
@@ -63,7 +63,7 @@ number of items to skip
 
 <Property required={false} deprecated={false} name={"type"} type={"array of string"}>
 
-Filter the events on event type
+Filter the events by event type
 
 <span>Example:  `"stx_lock"`</span>
 
@@ -87,7 +87,7 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/events"
 
 GET event for the given transaction
 
-```json title="Example Response"
+```json title="Example response"
 {
   "limit": 0,
   "offset": 0,
@@ -111,7 +111,7 @@ GET event for the given transaction
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 export type TransactionEvent =
