@@ -1,67 +1,16 @@
 ---
-title: Overview
-toc: false
+title: Updates for Stacks API
 ---
 
-## Stacks Explorer: What's New
+## What's New
 
-### Introducing a Fresh View for Blocks
-
-The Stacks Explorer now features a new way to display blocks, aligning with the Nakamoto upgrade's approach of multiple STX blocks settling into one BTC block.
-
-![Block View](./images/nakamoto-explorer.png)
-
-### Tailored Viewing Experience
-
-This new view is now live on both [Testnet](https://explorer.hiro.so/?chain=testnet) and [Mainnet](https://explorer.hiro.so/?chain=mainnet), accessible via the Network dropdown.
-
-#### Two Distinctive Display Modes
-
-1. **Independent Display:** Focuses on STX blocks progress.
-2. **COMING SOON: Grouped by Bitcoin Block:** Shows BTC blocks flow alongside STX blocks.
-
-![Block View](./images/group-by-block.png)
-
-### Stay in the Loop with Live View
-
-Keep up-to-date with blocks in real-time with our new live view option.
-
----
-
-## Stacks.js: What’s New
-
-### StackingClient
-
-Install the latest nakamoto version with `npm install @stacks/stacking@6.13.0`.
-
-The StackingClient in `@stacks/stacking` was updated to match the latest pox-4 contract.
-
-- Added `StackingClient.signPoxSignature()`
-- Added `Pox4SignatureTopic` enum
-- New stacking arguments for `StackingClient.stack`, `StackingClient.stackExtend`, `StackingClient.stackIncrease`, `StackingClient.stackAggregationCommit`, and `StackingClient.stackAggregationCommitIndexed`
-
-[Learn more about the new Stacks.js updates](/nakamoto/stacks-js)
-
----
-
-## Clarinet: What’s New
-
-Make sure to install [Clarinet 2.4.0](https://github.com/hirosystems/clarinet/releases/tag/v2.4.0) or above.
-
-- Clarinet’s devnet can now be used to test Nakamoto functionality. To enable this, add the `use_nakamoto = true` flag to your `Devnet.toml`.
-- The devnet now starts 2 signer nodes in Nakamoto mode.
-- Running `clarinet check --enable-clarity-wasm` now runs the current interpreter and clarity wasm side-by-side to allow comparing outputs.
-- `clarinet console --enable-clarity-wasm` now automatically runs the current interpreter and clarity wasm side-by-side and logs any difference in outputs.
-
-[Learn more about the new Clarinet updates](/nakamoto/clarinet)
-
----
-
-## Stacks Blockchain API: What’s New
-
-> **_NOTE:_**
->
-> The `/extended/v2/*` endpoints represent the modern API that is being continually expanded to support the Nakamoto upgrade. We encourage developers to use v2 endpoints for new developments. Be aware that `/extended/v1/*` are the older set of endpoints. Though they continue to function alongside v2, be advised that they will be deprecated in the coming months.
+<Callout title="Note" type="info">
+  The `/extended/v2/*` endpoints represent the modern API that is being
+  continually expanded to support the Nakamoto upgrade. We encourage developers
+  to use v2 endpoints for new developments. Be aware that `/extended/v1/*` are
+  the older set of endpoints. Though they continue to function alongside v2, be
+  advised that they will be deprecated in the coming months.
+</Callout>
 
 ### Nakamoto endpoints
 
@@ -93,6 +42,9 @@ Affects endpoints:
 - `/extended/v1/tx/multiple`
 
 ### New endpoints: `/extended/v2/*`
+
+/extended/v1 vs /extended/v2 endpoints: Key Difference
+The ﻿/extended/v2/_ endpoints represent the modern API that is being continually expanded to support the Nakamoto upgrade. We encourage developers to use v2 endpoints for new developments. Be aware that ﻿/extended/v1/_ are the older set of endpoints. Though they continue to function alongside v2, be advised that they will be deprecated in the coming months.
 
 - `/extended/v2/mempool/fees`
 - `/extended/v2/burn-blocks`
