@@ -27,21 +27,21 @@ import { InlineCode } from '@/components/inline-code';
   <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/burn-blocks/{height_or_hash}/blocks`}</p>
 </h2>
 
-Retrieves a list of blocks confirmed by a specific burn block
+Retrieves a list of blocks confirmed by a specific burn block.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"height_or_hash"} type={"integer | string"}>
 
-filter by burn block height, hash, or the constant `latest` to filter for the most recent burn block
+Filter by burn block height, hash, or the constant `latest` to filter for the most recent burn block
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-max number of blocks to fetch
+Max number of blocks to fetch
 
 <span>Example:  `20`</span>
 
@@ -49,7 +49,7 @@ max number of blocks to fetch
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-index of first burn block to fetch
+Index of first burn block to fetch
 
 <span>Example:  `0`</span>
 
