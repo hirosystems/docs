@@ -31,7 +31,7 @@ Retrieves the account data for a given account or contract identifier, where the
 For non-existent accounts, this does not return a 404 error. Rather it returns an object with a balance and nonce of 0.
 
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -41,7 +41,7 @@ Stacks address or a contract identifier
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"proof"} type={"integer"}>
 
@@ -73,7 +73,7 @@ curl -X GET "https://api.mainnet.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH5
 
 GET request for account data
 
-```json title="Example Response"
+```json title="Example response"
 {
   "balance": "string",
   "locked": "string",
@@ -86,7 +86,7 @@ GET request for account data
 
 <Accordions>
 
-<Accordion title={"Typescript Definition"}>
+<Accordion title={"Typescript definition"}>
 
 ```ts
 /**
