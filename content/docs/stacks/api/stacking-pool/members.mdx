@@ -28,7 +28,7 @@ import { InlineCode } from '@/components/inline-code';
 
 Retrieves the list of stacking pool members for a given delegator principal.
 
-### Path Parameters
+### Path parameters
 
 <Property required={true} deprecated={false} name={"pool_principal"} type={"string"}>
 
@@ -36,7 +36,7 @@ Address principal of the stacking pool delegator
 
 </Property>
 
-### Query Parameters
+### Query parameters
 
 <Property required={false} deprecated={false} name={"after_block"} type={"integer"}>
 
@@ -46,7 +46,7 @@ If specified, only delegation events after the given block will be included
 
 <Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
 
-whether or not to include Stackers from unconfirmed transactions
+Whether or not to include Stackers from unconfirmed transactions
 
 <span>Example:  `true`</span>
 
@@ -56,7 +56,7 @@ whether or not to include Stackers from unconfirmed transactions
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-number of items to return
+Number of items to return
 
 <span>Example:  `100`</span>
 
@@ -68,7 +68,7 @@ number of items to return
 
 <Property required={false} deprecated={false} name={"offset"} type={"integer"}>
 
-number of items to skip
+Number of items to skip
 
 <span>Example:  `300`</span>
 
