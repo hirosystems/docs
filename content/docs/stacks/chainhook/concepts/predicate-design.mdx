@@ -1,5 +1,5 @@
 ---
-title: Predicate Design
+title: Predicate design
 description: Predicates are the core of Chainhook. They are the building blocks of Chainhook.
 ---
 
@@ -7,7 +7,7 @@ The core design of chainhooks revolves around the concept of predicates. Each in
 
 Predicates are defined in the If-this, then-that format. You'll write your condition in the `if-this` condition template and use `then-that` to output the result.
 
-### `if-this` Predicate Design
+### `if-this`
 
 The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
 
@@ -20,9 +20,8 @@ The `if-this` predicate design can use the following attributes to define the pr
 - p2wpkh
 - operation
 
-**Example:**
-
 ```json
+// [!code:if_this]
 {
   "if_this": {
     "scope": "txid",
@@ -35,7 +34,7 @@ The `if-this` predicate design can use the following attributes to define the pr
   For more information on predicate definitions, refer to the [scopes](/stacks/chainhook/references/scopes) reference page.
 </Callout>
 
-### `then-that` Predicate Design
+### `then-that`
 
 The `then-that` predicate design can use the following attributes to output the result based on the `if-this` condition defined.
 
@@ -45,9 +44,8 @@ The `then-that` predicate design can use the following attributes to output the 
 - file_append
   - path
 
-**Example:**
-
 ```jsonc
+// [!code:then_that]
 {
   "then_that": {
     "file_append": {
