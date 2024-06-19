@@ -7,7 +7,7 @@ import { Code, Terminal } from 'lucide-react';
 import { SmallCard } from '@/components/card';
 import { InlineCode } from '@/components/inline-code';
 
-Syncing a Bitcoin node is often one of the first steps a developer takes when building a Bitcoin application. It's a great introduction to the Bitcoin developer ecosystem, and if you're relying on onchain data, there's no safer way to get that data than doing it yourself.
+Syncing a Bitcoin node is often one of the first steps a developer takes when building a Bitcoin application. It's a great introduction to the Bitcoin developer ecosystem, and if you're relying on on-chain data, there's no safer way to get that data than doing it yourself.
 
 In this guide, you will learn how to:
 
@@ -40,12 +40,12 @@ The Bitcoin chainstate is pretty large, and you need a place to store it. In thi
 <Callout>
   This folder, `bitcoin-data`, can be named whatever you like, and can exist locally or in an external hard drive.
   
-  The most important part being that it should exist in a place that has enough storage to hold all the Bitcoin data we will be receiving once it starts to sync.
+  The most important thing is that it should exist in a place that has enough storage to hold all the Bitcoin data we will be receiving once it starts to sync.
 </Callout>
 
 Now navigate to your `bitcoin.conf` file, which is located in your `/path/to/bitcoin` directory and update the `datadir` field with your directory. 
 
-For our example, it would look like this:
+In this example, it would look like this:
 
 ```bash title="bitcoin.conf"
 datadir=/Volumes/SSD/bitcoin-data/
@@ -94,7 +94,7 @@ In the example `bitcoin.conf` above, `devnet` is listed as the default `username
 
 Now that you've finished configuring your `bitcoin.conf` file, it's time to start up your node.
 
-This takes the form of `path/to/bitcoind -conf=path/to/bitcoin.conf`, which in our example looks like:
+This takes the form of `path/to/bitcoind -conf=path/to/bitcoin.conf`, which in this example looks like:
 
 ```bash
 /Volumes/SSD/bitcoin-25.0/bin/bitcoind -conf=/Volumes/SSD/bitcoin-25.0/bitcoin.conf
@@ -108,7 +108,7 @@ It might take anywhere from a few hours to a few days to run and fully sync, dep
 
 ### Proper shutdown and restart procedure
 
-It's important to know how to properly shut down your `bitcoind` node so that you can start them back up where you've left off on another machine or at another time.
+It's important to know how to properly shut down your `bitcoind` node, so that you can start them back up where you've left off on another machine or at another time.
 
 1. Shutting down your node
 2. Restarting your node
