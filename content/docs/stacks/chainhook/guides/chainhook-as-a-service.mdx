@@ -1,6 +1,6 @@
 ---
-title: How to run Chainhook as a Service
-description: Learn how to run Chainhook as a service to evaluate your if_this / then_that predicates against the Bitcoin and Stacks blockchains.
+title: How to run Chainhook as a service
+description: Learn how to run Chainhook as a service to evaluate your "if this, then that" predicates against the Bitcoin and Stacks blockchains.
 ---
 
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
@@ -18,11 +18,11 @@ In order to build out a more robust and secure web app, you can run Chainhook as
 
 In this guide, you will learn how to:
 
-1. Configure an existing Bitcoin node to work with Chainhook
-2. Generate a Chainhook predicate to evaluate your events
-3. Scan the Bitcoin blockchain for transactions that match your predicate
-4. Initiate a Chainhook service to watch for matching transactions
-5. Dynamically register your predicate with Chainhook
+1. Configure an existing Bitcoin node to work with Chainhook.
+2. Generate a Chainhook predicate to evaluate your events.
+3. Scan the Bitcoin blockchain for transactions that match your predicate.
+4. Initiate a Chainhook service to watch for matching transactions.
+5. Dynamically register your predicate with Chainhook.
 
 <Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
 
@@ -44,7 +44,7 @@ Next, you will generate a `Chainhook.toml` file to connect Chainhook with your b
 chainhook config generate --mainnet
 ```
 
-Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [Setting up a Bitcoin Node](/guides/sync-a-bitcoin-node) section. Update the following parameters accordingly:
+Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [setting up a Bitcoin node](/guides/sync-a-bitcoin-node) section. Update the following parameters accordingly:
 
 1. Update `bitcoind_rpc_username` with the username set for `rpcuser` in `bitcoin.conf`.
 2. Update `bitcoind_rpc_password` with the password set for `rpcpassword` in `bitcoin.conf`.
@@ -99,7 +99,7 @@ Here is a table of the relevant parameters this guide changes in our configurati
 | rpcport         | bitcoind_rpc_url      |
 | zmqpubhashblock | bitcoind_zmq_url      |
 
-### Scan blockchain based on predicates
+### Scan the blockchain based on predicates
 
 Now that your `bitcoind` and Chainhook configurations are complete, you can define the Chainhook [predicate scope](/stacks/chainhook/references/scopes) you would like to scan for.
 
@@ -142,10 +142,10 @@ Replace the contents of the `stacking-pool.json` file with the following:
 }
 ```
 
-This example demonstrates scanning a portion of the Bitcoin blockchain to capture specific outputs from a Bitcoin address associated with a Stacking pool, [Friedgar Pool](https://pool.friedger.de/). Notice the `file_append` `then_that` predicate.
+This example demonstrates scanning a portion of the Bitcoin blockchain to capture specific outputs from a Bitcoin address associated with a Stacking pool, in this case [Friedgar Pool](https://pool.friedger.de/). Notice the `then_that` predicate specifying a `file_append`.
 
 <Callout>
-You can get blockchain height and current block by referring to the [Explorer](https://explorer.hiro.so/blocks?chain=mainnet).
+You can get blockchain height and current block by referring to the [Stacks Explorer](https://explorer.hiro.so/blocks?chain=mainnet).
 </Callout>
 
 Now, use the following command to scan the blocks based on the predicates defined in the `stacking-pool.json` file.
@@ -158,7 +158,7 @@ The output of the above command will be a text file `bitcoin-transactions.txt` g
 
 ### Sending events to an API endpoint
 
-Let's generate another sample predicate, this time we are going to send the payload to an API endpoint:
+Now you will generate another sample predicate, but this time you will send the payload to an API endpoint:
 
 ```bash title="Terminal"
 chainhook predicates new stacking-pool-api.json --bitcoin
@@ -203,13 +203,13 @@ Once you are finished setting up your endpoint, use the following command to sca
 chainhook predicates scan stacking-pool-api.json --config-path=./Chainhook.toml
 ```
 
-The above command posts events to the URL, `http://localhost:3000/events` mentioned in the JSON file.
+The above command posts events to the URL `http://localhost:3000/events`, mentioned in the JSON file.
 
-### Initiate Chainhook Service
+### Initiate Chainhook service
 
-In the examples above, our Chainhook scanned historical blockchain data against predicates and delivered results. In this next section, let's learn how to set up a Chainhook that acts as an ongoing observer and event-streaming service.
+In the examples above, your Chainhook scanned historical blockchain data against predicates and delivered results. In this next section, you will learn how to set up a Chainhook that acts as an ongoing observer and event-streaming service.
 
-We can start a Chainhook service with an existing predicate. We can also dynamically register new predicates by making an API call to our Chainhook. In both of these instances, our predicates will be delivering their results to a server set up to receive results.
+You can start a Chainhook service with an existing predicate. You can also dynamically register new predicates by making an API call to your chainhook. In both of these instances, your predicates will be delivering their results to a server set up to receive results.
 
 Initiate the chainhook service by passing the predicate path to the command as shown below:
 
@@ -219,7 +219,7 @@ chainhook service start --predicate-path=stacking-pool-api.json --config-path=Ch
 
 The above command registers the predicate based on the predicate definition in the `stacking-pool-api.json` file.
 
-### Dynamically Register Predicates
+### Dynamically register predicates
 
 You can also dynamically register new predicates with your Chainhook service.
 
@@ -330,10 +330,10 @@ The sample response should look like this:
 }
 ```
 
-Understand the output of the above JSON file with the following details.
+To better understand the output of the above JSON file, let's break down some of the details:
 
 - The `apply` payload includes the block header and the transactions that triggered the predicate.
-- The `rollback` payload includes the block header and the transactions that triggered the predicate for a past block that is no longer part of the canonical chain and must be reverted. (Note: This is a chief component of Chainhook's reorg aware functionality, maintaining rollback data for blocks near the chaintip.)
+- The `rollback` payload includes the block header and the transactions that triggered the predicate for a past block that is no longer part of the canonical chain and must be reverted. (Note: this is a chief component of Chainhook's reorg-aware functionality. Chainhook maintains rollback data for blocks near the chaintip.)
 
 <Callout>
 You can also run chainhook service by passing multiple predicates, ie `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml`
@@ -347,8 +347,8 @@ You can also run chainhook service by passing multiple predicates, ie `chainhook
   <SmallCard
     icon={<Code className='text-primary' />}
     href="/stacks/chainhook/guides/register-chainhooks-on-devnet"
-    title="Register Chainhooks on Devnet"
-    description="Learn how to register Chainhooks on Devnet."
+    title="Register Chainhooks on devnet"
+    description="Learn how to register Chainhooks on devnet."
   />
   <SmallCard
     icon={<Terminal className='text-primary' />}
