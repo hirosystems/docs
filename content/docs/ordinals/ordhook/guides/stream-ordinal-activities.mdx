@@ -1,12 +1,13 @@
 ---
-title: Stream Ordinal Activities to an API
+title: Stream Ordinals activity to an API
+description: Learn how to stream data and post it to an external endpoint.
 ---
 
-Ordhook is a tool that helps you find ordinal activity from the Bitcoin chain and build your own customized database with that data. This guide will show you how to use Ordhook to stream ordinal activity.
+Ordhook is a tool that helps you find Ordinals activity on the Bitcoin chain and build your own customized database with that data. This guide will show you how to use Ordhook to stream Ordinals activity.
 
 ### Configure Ordhook
 
-This section walks you through streaming ordinal activities. To post the ordinal activity, you'll need to configure bitcoind. Refer to [Setting up a bitcoin node](./ordhook-as-a-service-bitcoind.md#setting-up-a-bitcoin-node) to understand the steps to configure Bitcoind.
+This section walks you through streaming Ordinals activity. To post that activity, you'll need to configure bitcoind. Refer to [setting up a bitcoin node](./ordhook-as-a-service-bitcoind.md#setting-up-a-bitcoin-node) to understand the steps to configure Bitcoind.
 
 > **_NOTE_**
 > Ordhook is applicable to the Bitcoin chain only.
@@ -23,7 +24,7 @@ The generated `Ordhook.toml` file looks like this:
 [storage]
 working_dir = "ordhook"
 
-# The Http Api allows you to register / deregister
+# The Http API allows you to register / deregister
 # dynamically predicates.
 # Disable by default.
 #
@@ -70,10 +71,10 @@ bitcoind_rpc_password = "devnet"
 bitcoind_zmq_url = "tcp://0.0.0.0:18543"
 ```
 
-### Post Ordinal Activity to an External Endpoint
+### Post Ordinals activity to an external endpoint
 
 After adjusting the `Ordhook.toml` settings to make them match the bitcoind configuration, the following command can be run to scan blocks and post events to a local server:
 
 `ordhook scan blocks 767430 767753 --post-to=http://localhost:3000/api/events --config-path=./Ordhook.toml`
 
-The above command uses Ordhook to stream and then post ordinal activities to `http://localhost:3000/api/events` where you can build out your own database or custom views.
+The above command uses Ordhook to stream and then post Ordinals activity to `http://localhost:3000/api/events` where you can build out your own database or custom views.
