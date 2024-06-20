@@ -34,12 +34,12 @@ You can also create a new contract for your project from the editor by following
   write your own from scratch.
 </Callout>
 
-1. Click the _Open in Web Editor_ button. If you want to do this locally, you first need to [set up SSH](/stacks/platform/guides/connect-desktop-to-cloud).
+1. Click the "Open in Web Editor" button. If you want to do this locally, you first need to [set up SSH](/stacks/platform/guides/connect-desktop-to-cloud).
 2. This will open up a new tab with VS Code editor, and inside VS Code, you will find the project directories and files.
-3. Expand _NEW-PROJECT_ and see a directory _contracts_. There should be no contracts in this folder yet.
-4. Right-click the _contracts_ folder, select _New file_, and add a new contract with a name of your choice. Eg: _counter.clar_
+3. Expand "NEW-PROJECT" and see a directory named "contracts". There should be no contracts in this folder yet.
+4. Right-click the contracts folder, select "New file", and add a new contract with a name of your choice. Eg: `counter.clar`
    ![Write new contract](../images/write-new-contract.png)
-5. This will create a `.clar` file in the _contracts_ folder. Now you can use the [Clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
+5. This will create a `.clar` file in the contracts folder. Now you can use the [Clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
 6. Once your `.clar` file is ready, you can update the `Clarinet.toml` file located in the same project directory. Use the following code to update the `.toml` file with these parameters. `[contracts.<your-contract-name>]` and path to use your `.clar` file name as `path = "<your-contract-name.clar>"`.
 
 ```toml
@@ -57,7 +57,7 @@ Save the file. You can now deploy your contracts in your project by referring to
 
 ## Add a new contract
 
-If you have a project that already has at least one Clarity contract, it's very easy to add more by following the same steps above. If you are using the editor, in the 6th step, where you edit the `Clarinet.toml` file, you will also add two lines of code, as shown below. Note that the below code assumes that the newly added contract is _clarity_contract_2_. You also need to add the path to your new contract as shown below.
+If you have a project that already has at least one Clarity contract, it's very easy to add more by following the same steps above. If you are using the editor, in the 6th step, where you edit the `Clarinet.toml` file, you will also add two lines of code, as shown below. Note that the below code assumes that the newly added contract is `clarity_contract_2`. You also need to add the path to your new contract as shown below.
 
 ```toml
 [project]
@@ -77,7 +77,7 @@ epoch = "2.4"
 
 ### Test contract
 
-You can customize, test, and debug your contracts using the VS Code terminal inside the Hiro Platform. On your projects page, select the _Open editor_ button to open up the VS Code editor. Select the three horizontal lines icon to open a new terminal. Refer to the following documents to test your contracts in the VS Code terminal.
+You can customize, test, and debug your contracts using the VS Code terminal inside the Hiro Platform. On your projects page, select the "Open editor" button to open up the VS Code editor. Select the three horizontal lines icon to open a new terminal. Refer to the following documents to test your contracts in the VS Code terminal.
 
 - [Check contracts](/stacks/clarinet/guides/validate-a-contract)
 - [Test contracts](/stacks/clarinet/guides/testing-with-clarinet-sdk)
