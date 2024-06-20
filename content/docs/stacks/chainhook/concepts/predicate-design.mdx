@@ -11,15 +11,6 @@ Predicates are defined in an `if-this`, `then-that` format. You'll write your co
 
 The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
 
-- scope (mandatory)
-- equals
-- op_return
-  - ends_with
-- p2pkh
-- p2sh
-- p2wpkh
-- operation
-
 ```json
 // [!code word:if_this]
 {
@@ -30,6 +21,16 @@ The `if-this` predicate design can use the following attributes to define the pr
 }
 ```
 
+Other available parameters:
+
+- `equals`
+- `op_return`
+- `ends_with`
+- `p2pkh`
+- `p2sh`
+- `p2wpkh`
+- `operation`
+
 <Callout>
   For more information on predicate definitions, refer to the [scopes](/stacks/chainhook/references/scopes) reference page.
 </Callout>
@@ -38,14 +39,8 @@ The `if-this` predicate design can use the following attributes to define the pr
 
 The `then-that` predicate design can use the following attributes to output the result based on the `if-this` condition defined.
 
-- http_post
-  - url
-  - authorization_header
-- file_append
-  - path
-
 ```jsonc
-// [!code:then_that]
+// [!code word:file_append]
 {
   "then_that": {
     "file_append": {
@@ -54,3 +49,16 @@ The `then-that` predicate design can use the following attributes to output the 
   },
 }
 ```
+
+```jsonc
+// [!code word:http_post]
+{
+  "then_that": {
+    "http_post": {
+      "url": "https://example.com/api/v1/events",
+      "authorization_header": "Bearer 1234567890"
+    }
+  }
+}
+```
+

@@ -3,16 +3,12 @@ title: Bitcoin predicates
 description: A list of predicates to use Chainhook with Bitcoin. The predicates are specified based on if-this, then-that constructs.
 ---
 
-## `if_this` Specifications
-
-Currently, `bitcoin` predicates support the following `if_this` constructs.
+### `if_this` Specifications
 
 Get any transaction matching a given transaction ID (txid):
 
-- `txid` mandatory argument admits:
-  - 32 bytes hex encoded type.
-
-```json
+```jsonc
+// [!code word:txid]
 {
   "if_this": {
     "scope": "txid",
@@ -21,24 +17,16 @@ Get any transaction matching a given transaction ID (txid):
 }
 ```
 
-Get any transaction matching a given `OP_RETURN` payload:
-Example: Given the following `script_pubkey` :
+The `txid` mandatory argument requires a 32-byte hex-encoded type.
 
-```
-OP_RETURN
-PUSHDATA(0x03)
-0x616263
-```
+---
 
-or `0x6a03616263` in hex, the following predicates will match the transaction above.
 
-Get any transaction, where its `OP_RETURN` payload starts with a set of characters:
+Get any transaction, where its `OP_RETURN` payload starts with a set of characters.
 
-- `starts_with` mandatory argument admits:
-  - ASCII string type. Example: `ab`
-  - hex encoded bytes. Example: `0x6162`
-
-```json
+```jsonc
+// [!code word:outputs]
+// [!code word:starts_with]
 {
   "if_this": {
     "scope": "outputs",
@@ -49,13 +37,15 @@ Get any transaction, where its `OP_RETURN` payload starts with a set of characte
 }
 ```
 
-Get any transaction, where its `OP_RETURN` payload is equals to set of characters:
+The `starts_with` mandatory argument admits an ASCII string type, for example, `ab`, or hex encoded bytes, for example, `0x6162`.
 
-- `equals` mandatory argument admits:
-  - ASCII string type: Example `abc`
-  - hex encoded bytes. Example: `0x616263`
+---
 
-```json
+Get any transaction, where its `OP_RETURN` payload is equals to set of characters
+
+```jsonc
+// [!code word:outputs]
+// [!code word:equals]
 {
   "if_this": {
     "scope": "outputs",
@@ -66,13 +56,15 @@ Get any transaction, where its `OP_RETURN` payload is equals to set of character
 }
 ```
 
+The mandatory argument for `equals` accepts either an ASCII string type, for example, `abc`, or hex encoded bytes, for example, `0x616263`.
+
+---
+
 Get any transaction, where its `OP_RETURN` payload ends with a set of characters:
 
-- `ends_with` mandatory argument admits:
-  - ASCII string type. Example: `bc`
-  - hex encoded bytes. Example: `0x6263`
-
-```json
+```jsonc
+// [!code word:outputs]
+// [!code word:ends_with]
 {
   "if_this": {
     "scope": "outputs",
@@ -83,13 +75,15 @@ Get any transaction, where its `OP_RETURN` payload ends with a set of characters
 }
 ```
 
-Get any transaction with a p2pkh output paying a given recipient:
+The mandatory argument for `ends_with` accepts either an ASCII string type, such as `bc`, or hex encoded bytes, such as `0x6263`.
 
-- `p2pkh` construct admits:
-  - ASCII string type. Example: "mr1iPkD9N3RJZZxXRk7xF9d36gffa6exNC"
-  - hex encoded bytes type. Example: "0x76a914ee9369fb719c0ba43ddf4d94638a970b84775f4788ac"
+---
 
-```json
+Get any transaction with a p2pkh output paying a given recipient.
+
+```jsonc
+// [!code word:outputs]
+// [!code word:p2pkh]
 {
   "if_this": {
     "scope": "outputs",
@@ -100,15 +94,21 @@ Get any transaction with a p2pkh output paying a given recipient:
 }
 ```
 
+The `p2pkh` construct admits an ASCII string type: `"mr1iPkD9N3RJZZxXRk7xF9d36gffa6exNC"`.
+
+Or a hex encoded bytes type: `"0x76a914ee9369fb719c0ba43ddf4d94638a970b84775f4788ac"`.
+
+<Callout>
 `p2pkh`(Pay-to-Public-Key-Hash) is a Bitcoin transaction output script type that allows users to send funds to a recipient's hashed public key, providing security and privacy by concealing the actual public key.
+</Callout>
 
-Get any transaction including a p2sh output paying a given recipient `p2sh` construct admits:
+---
 
-- `p2sh` construct admits:
-  - string type. Example: "2MxDJ723HBJtEMa2a9vcsns4qztxBuC8Zb2"
-  - hex encoded bytes type. Example: "0x76a914ee9369fb719c0ba43ddf4d94638a970b84775f4788ac"
+Get any transaction including a p2sh output paying a given recipient.
 
-```json
+```jsonc
+// [!code word:outputs]
+// [!code word:p2sh]
 {
   "if_this": {
     "scope": "outputs",
@@ -119,14 +119,21 @@ Get any transaction including a p2sh output paying a given recipient `p2sh` cons
 }
 ```
 
+The `p2sh` construct accepts the following types:
+  - A string type: `"2MxDJ723HBJtEMa2a9vcsns4qztxBuC8Zb2"`.
+  - A hex encoded bytes type: `"0x76a914ee9369fb719c0ba43ddf4d94638a970b84775f4788ac"`.
+
+<Callout>
 `p2sh`(Pay-to-Script-Hash) is a Bitcoin transaction output script type that enables users to send funds to a script instead of a public key, allowing for more complex transaction conditions and multi-signature addresses.
+</Callout>
 
-Get any transaction, including a `p2wpkh` output paying a given recipient:
+---
 
-- `p2wpkh` construct admits:
-  - string type. Example: "bcrt1qnxknq3wqtphv7sfwy07m7e4sr6ut9yt6ed99jg"
+Get any transaction, including a `p2wpkh` output paying a given recipient.
 
-```json
+```jsonc
+// [!code word:outputs]
+// [!code word:p2wpkh]
 {
   "if_this": {
     "scope": "outputs",
@@ -137,14 +144,19 @@ Get any transaction, including a `p2wpkh` output paying a given recipient:
 }
 ```
 
+The `p2wpkh` construct accepts a string type, ie. `"bcrt1qnxknq3wqtphv7sfwy07m7e4sr6ut9yt6ed99jg"`.
+
+<Callout>
 `p2wpkh`(Pay-to-Witness-Public-Key-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that allows for more efficient and secure transactions by separating the witness data from the transaction data and storing it in a separate block.
+</Callout>
+
+---
 
 Get any transaction, including a `p2wsh` output paying a given recipient:
 
-- `p2wsh` construct admits:
-  - string type. Example: "bc1qklpmx03a8qkv263gy8te36w0z9yafxplc5kwzc"
-
-```json
+```jsonc
+// [!code word:outputs]
+// [!code word:p2wsh]
 {
   "if_this": {
     "scope": "outputs",
@@ -155,8 +167,14 @@ Get any transaction, including a `p2wsh` output paying a given recipient:
 }
 ```
 
-`p2wsh` (Pay-to-Witness-Script-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that enables users to send funds to a hashed script, allowing for more complex transaction conditions and greater scalability by separating the script from the transaction data.
+The `p2wsh` construct accepts a string type, for example, "bc1qklpmx03a8qkv263gy8te36w0z9yafxplc5kwzc".
 
+<Callout>
+`p2wsh` (Pay-to-Witness-Script-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that enables users to send funds to a hashed script, allowing for more complex transaction conditions and greater scalability by separating the script from the transaction data.
+</Callout>
+
+<Accordions>
+<Accordion title="Wallet Descriptors">
 **Wallet Descriptors** provide a compact and semi-standardized method for describing how scripts and addresses within a wallet are generated. Chainhooks users that want to track addresses derived from an extended pubkey or a multisig-wallet for example, can now rely on this feature instead of defining one predicate per address.
 For example if we wanted to track the first 3 addressed generated by the following descriptor:
 
@@ -185,10 +203,16 @@ The following predicate should be defined:
   }
 }
 ```
+</Accordion>
+</Accordions>
+
+---
 
 Get any Bitcoin transaction, including a Block commitment. Broadcasted payloads include _Proof of Transfer_ reward information:
 
-```json
+```jsonc
+// [!code word:stacks_protocol]
+// [!code word:block_committed]
 {
   "if_this": {
     "scope": "stacks_protocol",
@@ -199,9 +223,13 @@ Get any Bitcoin transaction, including a Block commitment. Broadcasted payloads 
 
 **Proof of Transfer(PoT)** is a blockchain consensus mechanism where participants prove ownership of assets outside the blockchain from another network and transfer them to the target blockchain to validate and secure transactions without relying solely on computational work or stake ownership.
 
-Get any transaction, including a key registration operation:
+---
 
-```json
+Get any transaction, including a key registration operation.
+
+```jsonc
+// [!code word:stacks_protocol]
+// [!code word:leader_registered]
 {
   "if_this": {
     "scope": "stacks_protocol",
@@ -210,33 +238,11 @@ Get any transaction, including a key registration operation:
 }
 ```
 
-Get any transaction, including an STX transfer operation:
-// Coming soon
-
-```json
-{
-  "if_this": {
-    "scope": "stacks_protocol",
-    "operation": "stx_transferred"
-  }
-}
-```
-
-Get any transaction, including an STX lock operation:
-// Coming soon
-
-```json
-{
-  "if_this": {
-    "scope": "stacks_protocol",
-    "operation": "stx_locked"
-  }
-}
-```
-
 Get any transaction including a new Ordinal inscription (inscription revealed and transferred)
 
-```json
+```jsonc
+// [!code word:ordinals_protocol]
+// [!code word:inscription_feed]
 {
   "if_this": {
     "scope": "ordinals_protocol",
@@ -245,7 +251,33 @@ Get any transaction including a new Ordinal inscription (inscription revealed an
 }
 ```
 
-## `then_that` Constructs
+Get any transaction, including an STX transfer operation (coming soon).
+
+```jsonc
+// [!code word:stacks_protocol]
+// [!code word:stx_transferred]
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "stx_transferred"
+  }
+}
+```
+
+Get any transaction, including an STX lock operation (coming soon).
+
+```jsonc
+// [!code word:stacks_protocol]
+// [!code word:stx_locked]
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "stx_locked"
+  }
+}
+```
+
+### `then_that` Constructs
 
 The following `then_that` constructs are supported:
 
@@ -281,103 +313,107 @@ Append events to a file through the filesystem. Convenient for local tests:
 }
 ```
 
-## Additional configuration knobs available
+### Additional configuration knobs available
 
 The following additional configurations can be used to improve the performance of Chainhook by preventing a full scan of the blockchain:
 
-- Ignore any block before the given block:
-  `"start_block": 101`
-
-- Ignore any block after the given block:
-  `"end_block": 201`
-
-- Stop evaluating chainhook after a given number of occurrences found:
-  `"expire_after_occurrence": 1`
-
-- Don't include proofs:
-  `"include_proof": false`
-
-- Don't include Bitcoin transaction inputs in the payload:
-  `"include_inputs": false`
-
-- Don't include Bitcoin transaction outputs in the payload:
-  `"include_outputs": false`
-
-- Don't include Bitcoin transaction witnesses in the payload:
-  `"include_witness": false`
-
-## Example predicate definition to post first five transfers
-
-Retrieve and HTTP Post to `http://localhost:3000/api/v1/wrapBtc` the five first transfers to the p2wpkh `bcrt1qnxk...yt6ed99jg` address of any amount, occurring after block height 10200.
-
-> **_NOTE:_**
->
-> The start_block is mandatory to post events using `http_post` `then-that` predicate.
+Ignore any block before the given block:
 
 ```json
-{
-  "chain": "bitcoin",
-  "uuid": "1",
-  "name": "Wrap BTC",
-  "version": 1,
-  "networks": {
-    "testnet": {
-      "if_this": {
-        "scope": "outputs",
-        "p2wpkh": {
-          "equals": "bcrt1qnxknq3wqtphv7sfwy07m7e4sr6ut9yt6ed99jg"
-        }
-      },
-      "then_that": {
-        "http_post": {
-          "url": "http://localhost:3000/api/v1/transfers",
-          "authorization_header": "Bearer cn389ncoiwuencr"
-        }
-      },
-      "start_block": 10200,
-      "expire_after_occurrence": 5 // only prints the first 5 characters
-    }
-  }
-}
+"start_block": 101
 ```
 
-## Example predicate with multiple networks
-
-A specification file can also include different networks. In this case, the Chainhook will select the predicate corresponding to the network it was launched against. In the below example, the testnet and mainnet are two different networks.
+Ignore any block after the given block:
 
 ```json
-{
-  "chain": "bitcoin",
-  "uuid": "1",
-  "name": "Wrap BTC",
-  "version": 1,
-  "networks": {
-    "testnet": {
-      "if_this": {
-        "scope": "ordinals_protocol",
-        "operation": "inscription_feed"
+"end_block": 201
+```
+
+Stop evaluating chainhook after a given number of occurrences found:
+
+```json
+"expire_after_occurrence": 1
+```
+
+Don't include proofs:
+
+```json
+"include_proof": false
+```
+
+Don't include proofs:
+
+```json
+"include_proof": false
+```
+
+Don't include Bitcoin transaction inputs in the payload:
+
+```json
+"include_inputs": false
+```
+
+Don't include Bitcoin transaction outputs in the payload:
+
+```json
+"include_outputs": false
+```
+
+Don't include Bitcoin transaction outputs in the payload:
+
+```json
+"include_outputs": false
+```
+
+Don't include Bitcoin transaction witnesses in the payload:
+
+```json
+"include_witness": false
+```
+
+Don't include Bitcoin transaction witnesses in the payload:
+
+```json
+"include_witness": false
+```
+
+<Accordions>
+  <Accordion title="Example predicate definition with multiple networks">
+  ```json
+  {
+    "chain": "bitcoin",
+    "uuid": "1",
+    "name": "Wrap BTC",
+    "version": 1,
+    "networks": {
+      "testnet": {
+        "if_this": {
+          "scope": "ordinals_protocol",
+          "operation": "inscription_feed"
+        },
+        "then_that": {
+          "http_post": {
+            "url": "http://localhost:3000/api/v1/ordinals",
+            "authorization_header": "Bearer cn389ncoiwuencr"
+          }
+        },
+        "start_block": 10200
       },
-      "then_that": {
-        "http_post": {
-          "url": "http://localhost:3000/api/v1/ordinals",
-          "authorization_header": "Bearer cn389ncoiwuencr"
-        }
-      },
-      "start_block": 10200
-    },
-    "mainnet": {
-      "if_this": {
-        "scope": "ordinals_protocol",
-        "operation": "inscription_feed"
-      },
-      "then_that": {
-        "http_post": {
-          "url": "http://my-protocol.xyz/api/v1/ordinals",
-          "authorization_header": "Bearer cn389ncoiwuencr"
-        }
-      },
-      "start_block": 90232
+      "mainnet": {
+        "if_this": {
+          "scope": "ordinals_protocol",
+          "operation": "inscription_feed"
+        },
+        "then_that": {
+          "http_post": {
+            "url": "http://my-protocol.xyz/api/v1/ordinals",
+            "authorization_header": "Bearer cn389ncoiwuencr"
+          }
+        },
+        "start_block": 90232
+      }
     }
   }
-}
-```
+  ```
+  </Accordion>
+</Accordions>
