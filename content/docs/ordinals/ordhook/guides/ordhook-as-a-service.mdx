@@ -1,10 +1,11 @@
 ---
-title: Run Ordhook as a Service
+title: Run Ordhook as a service
+description: Learn how to run Ordhook to evaluate your "if this, then that" predicates for Ordinals.
 ---
 
 ### Prerequisites
 
-### Setting Up a Bitcoin Node
+### Setting Up a Bitcoin node
 
 The Bitcoin Core daemon (bitcoind) is a program that implements the Bitcoin protocol for remote procedure call (RPC) use. Ordhook can be set up to interact with the Bitcoin chainstate through bitcoind's ZeroMQ interface, its embedded networking library, passing raw blockchain data to be evaluated for relevant events.
 
@@ -12,16 +13,16 @@ This guide is written to work with the latest Bitcoin Core software containing b
 
 > **_NOTE:_**
 >
-> While bitcoind can and will start syncing a Bitcoin node, customizing this node to your use cases beyond supporting a Ordhook is out of scope for this guide. See the Bitcoin wiki for ["Running Bitcoin"](https://en.bitcoin.it/wiki/Running_Bitcoin) or bitcoin.org [Running A Full Node guide](https://bitcoin.org/en/full-node).
+> While bitcoind can and will start syncing a Bitcoin node, customizing this node to your use cases beyond supporting a Ordhook is out of scope for this guide. See the Bitcoin wiki for ["running bitcoin"](https://en.bitcoin.it/wiki/Running_Bitcoin) or bitcoin.org's [running a full node guide](https://bitcoin.org/en/full-node).
 
-- Make note of the path of your `bitcoind` executable (located within the `bin` directory of the `bitcoin-25.0` folder you downloaded above appropriate to your operating system)
-- Navigate to your project folder where your Ordhook node will reside, create a new file, and rename it to `bitcoin.conf`. Copy the configuration below to this `bitcoin.conf` file.
-- Find and copy your Bitcoin data directory and paste to the `datadir` field in the `bitcoin.conf` file below. Either copy the default path (see [list of default directories by operating system](https://en.bitcoin.it/wiki/Data_directory)) or copy the custom path you set for your Bitcoin data
-- Set a username of your choice for bitcoind and use it in the `rpcuser` configuration below (`devnet` is a default).
-- Set a password of your choice for bitcoind and use it in the `rpcpassword` configuration below (`devnet` is a default).
+- Make note of the path of your `bitcoind` executable (located within the `bin` directory of the `bitcoin-25.0` folder you downloaded above)
+- Navigate to the project folder where your Ordhook node will reside, create a new file, and rename it to `bitcoin.conf`. Copy the configuration below to this `bitcoin.conf` file.
+- Find and copy your Bitcoin data directory and paste that value to the `datadir` field in the `bitcoin.conf` file below. Either copy the default path (see [list of default directories by operating system](https://en.bitcoin.it/wiki/Data_directory)) or copy the custom path you set for your Bitcoin data
+- Set a username of your choice for bitcoind and use it in the `rpcuser` configuration below (`devnet` is included in the snippet below as a default).
+- Set a password of your choice for bitcoind and use it in the `rpcpassword` configuration below (`devnet` is set as a default).
 
 ```
-# Bitcoin Core Configuration
+# Bitcoin core configuration
 
 datadir=/path/to/bitcoin/directory/ # Path to Bitcoin directory
 server=1
@@ -49,15 +50,15 @@ zmqpubhashblock=tcp://0.0.0.0:18543
 
 > **_NOTE:_**
 >
-> The below command is a startup process that, if this is your first time syncing a node, might take a few hours to a few days to run. Alternatively, if the directory pointed to in the `datadir` field above contains bitcoin blockchain data, syncing will resume.
+> The below command is a startup process that might take a few hours to a few days to run if this is your first time syncing a node. Alternatively, if the directory pointed to in the `datadir` field above contains Bitcoin blockchain data, syncing will resume.
 
-Now that you have the `bitcoin.conf` file ready with the bitcoind configurations, you can run the bitcoind node. The command takes the form `path/to/bitcoind -conf=path/to/bitcoin.conf`, for example:
+Now that you have the `bitcoin.conf` file ready with the bitcoind configurations, you can run the bitcoind node. The command takes the form `path/to/bitcoind -conf=path/to/bitcoin.conf`. For example:
 
 ```console
 /Volumes/SSD/bitcoin-25.0/bin/bitcoind -conf=/Volumes/SSD/project/Ordhook/bitcoin.conf
 ```
 
-Once the above command runs, you will see `zmq_url` entries in the console's stdout, displaying ZeroMQ logs of your bitcoin node.
+Once the above command runs, you will see `zmq_url` entries in the console's stdout, displaying ZeroMQ logs of your Bitcoin node.
 
 ### Configure Ordhook
 
@@ -69,7 +70,7 @@ Next, you will generate a `Ordhook.toml` file to connect Ordhook with your bitco
 ordhook config generate --mainnet
 ```
 
-Several network parameters in the generated `Ordhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [Setting up a Bitcoin Node](#setting-up-a-bitcoin-node) section. Please update the following parameters accordingly:
+Several network parameters in the generated `Ordhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [setting up a Bitcoin node](#setting-up-a-bitcoin-node) section. Please update the following parameters accordingly:
 
 1. Update `bitcoind_rpc_username` with the username set for `rpcuser` in `bitcoin.conf`.
 2. Update `bitcoind_rpc_password` with the password set for `rpcpassword` in `bitcoin.conf`.
@@ -128,9 +129,9 @@ Here is a table of the relevant parameters this guide changes in our configurati
 | rpcport         | bitcoind_rpc_url      |
 | zmqpubhashblock | bitcoind_zmq_url      |
 
-## Initiate Ordhook Service
+## Initiate Ordhook service
 
-In this section, you'll learn how to run Ordhook as a service using [Ordhook SDK](https://github.com/hirosystems/ordhook/tree/develop/components/ordhook-sdk-js) to post events to a server.
+In this section, you'll learn how to run Ordhook as a service using the [Ordhook SDK](https://github.com/hirosystems/ordhook/tree/develop/components/ordhook-sdk-js) to post events to a server.
 
 Use the following command to start the Ordhook service for streaming and processing new blocks appended to the Bitcoin blockchain:
 
@@ -150,7 +151,7 @@ database_uri = "redis://localhost:6379/"
 
 ## Run ordhook service
 
-Based on the `Ordhook.toml` file configuration, the ordhook service spins up an HTTP API to manage event destinations. Use the following command to start the ordhook service:
+Based on the `Ordhook.toml` file configuration, the Ordhook service spins up an HTTP API to manage event destinations. Use the following command to start the Ordhook service:
 
 `ordhook service start --config-path=./Ordhook.toml`
 
