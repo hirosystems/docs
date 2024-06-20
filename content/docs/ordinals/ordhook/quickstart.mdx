@@ -38,7 +38,7 @@ Before starting, ensure you have `ordhook` installed. If you haven't already, ch
       <p>The `--interval` flag is used to specify a block range. The range is inclusive, meaning both the start and end blocks will be included in the scan. And the `--mainnet` flag is used to specify the Bitcoin network to scan.</p>
     
       <Callout>
-        When running `scan` for the first time, an archive of Bitcoin blockchain data will be downloaded. To learn more, check out the [Hiro Archive](/stacks/archive) section.
+        When running `scan` for the first time, an archive of Bitcoin blockchain data will be downloaded. The subsequent scans will use the cached chainstate if already present, speeding up iterations and the overall feedback loop. To learn more, check out the [Hiro Archive](/stacks/archive) section.
       </Callout>
     </div>
   </Step>
