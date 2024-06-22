@@ -1,502 +1,240 @@
 ---
-title: Create deployment plans
-description: Generate reproducible steps that publish a collection of on-chain transactions and contracts to a network.
+title: Customizing deployment plans
+description: Learn how to customize your deployment plans.
 ---
 
-## Requirements
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { SmallCard } from '@/components/card';
 
-The SDK requires Node.js >= 18.0 and NPM to be installed. [Volta](https://volta.sh/) is a great tool to install and manage JS tooling.
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
-To follow this tutorial, you must have the Clarinet CLI installed as well.
+import { InlineCode } from '@/components/inline-code';
 
-## Set Up the Clarity Contract and Unit Tests
+Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more, while ensuring reproducible deployments critical for testing purposes.
 
-Let us consider a `counter` smart contract to understand how to write unit tests for our application requirements.
+In this guide, you will learn how to:
 
-First, create a new Clarinet project with a `counter` contract.
+1. Generate and configure a deployment plan.
+2. Set deployment plan specifications.
+3. Add project contract requirements.
+4. Customize your deployment plan.
 
-```bash
-clarinet new counter
-cd counter
-clarinet contract new counter
+---
+
+### Prerequisites
+
+To follow this quickstart guide, you will need to have Clarinet installed on your machine. For installation options, go [here](/stacks/clarinet/installation).
+
+---
+
+### View your deployment plan
+
+Clarinet uses a deployment plan for every deployment-whether for a basic simnet (for use in Clarinet's `console`, `test`, and `check` features), a devnet (for use with the `clarinet devnet start` command), or the public `testnet` and `mainnet`.
+
+You can view the current deployment plan saved to disk at any time with the following command (specifying the network `simnet`, `devnet`, `testnet`, `mainnet`)
+
+```bash title="Terminal"
+clarinet deployments generate --<network>
 ```
 
-Below will be the content of our smart contract.
-It keeps track of an initialized value, allows for incrementing and decrementing, and prints actions as a log.
+Upon this command, your project's default deployment plan, a `.yaml` file (for example, `default.devnet-plan.yaml`), is generated from your project specifications and contracts. Here, for example, is the deployment plan for [the counter smart contract](/stacks/clarinet/quickstart) used in our quickstart guide:
 
-```clarity
-;; counter.clar
-(define-data-var count uint u1)
-
-(define-public (increment (step uint))
-  (let ((new-val (+ (var-get count) step)))
-    (var-set count new-val)
-    (print { object: "count", action: "incremented", value: new-val })
-    (ok new-val)
-  )
-)
-
-(define-public (decrement (step uint))
-  (let ((new-val (- (var-get count) step)))
-    (var-set count new-val)
-    (print { object: "count", action: "decremented", value: new-val })
-    (ok new-val)
-  )
-)
-
-(define-read-only (read-count)
-  (ok (var-get count))
-)
+```yaml title="deployments/default.devnet-plan.yaml"
+---
+id: 0
+name: Devnet deployment
+network: devnet
+stacks-node: "http://localhost:20443"
+bitcoin-node: "http://devnet:devnet@localhost:18443"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: counter
+            expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            cost: 6940
+            path: contracts/counter.clar
+            anchor-block-only: true
+            clarity-version: 2
+      epoch: "2.5"
 ```
 
-### Migrating Between Clarinet v1 and Clarinet v2
+### Deployment plan specifications
 
-> Note: Clarinet v2 will be released in October 2023, and will create the right boilerplate files. But if a project has been created with Clarinet v1, the following script prepares the project to run the SDK and Vitest.
+A project's deployment plan specifications are set on two files within a Clarinet project—the `Clarinet.toml` file as well as the network’s corresponding `.toml` file (for example, `Devnet.toml`) in the `settings/` folder.
 
-Executing this script in a Clarinet v1 project will initialise NPM and Vitest. It will also create a sample test file.
+Specifications in the `Clarinet.toml` file you can change include
 
-```console
-npx @hirosystems/clarinet-sdk@latest
+- The Clarity version or blockchain epoch that Clarinet emulates for your smart contracts
+- Project requirements in the form of contract dependencies (see next section)
+
+Specifications in the `Devnet.toml` file you can change include
+
+- Accounts, balances, and names
+- Blockchain environment features, such as block time or API ports, of your devnet
+- Stacking orders
+
+### Adding project contract requirements
+
+Your project can reference a smart contract that already exists on the blockchain. For example, [Stacks Improvement Proposal 009](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md) specifies a trait reference for all non-fungible tokens. Instead of redeploying this trait as a separate contract each time a new NFT collection is published, you can reference the contract directly within deployment plans with the following Clarinet command, including the contract principal reference:
+
+```bash title="Terminal"
+clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
 ```
 
-This script will ask you if you want to run npm install now; you can press enter to do so.
-This can take a few seconds.
+This command updates a Clarinet project's deployment plan for use in development.
 
-The file `tests/counter_test.ts` that was created by `clarinet contract new counter` can be deleted.
+For instance, `clarinet devnet start` would now download a copy of the contract principal via the Stacks API node that is booted alongside each devnet deployment, and remaps the principal that publishes this contract to one of the accounts specified in your `Devnet.toml` file.
 
-You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest.
-It can safely be deleted.
+This permits a developer to maintain the minimum set of contracts their Clarinet project will deploy to mainnet (with a single use of an impl-trait statement in their Clarity contract).
 
-### Unit Tests for `counter` Example
+### Edit your deployment plan
 
-Create a file `tests/counter.test.ts` with the following content:
+Recall that a default deployment plan is used for every deployment, comprising your projects specifications as set in your `Clarinet.toml` and `<network>.toml` files.
 
-```ts
-import { Cl } from '@stacks/transactions';
-import { describe, expect, it } from 'vitest';
+The default plan is generated upon each `clarinet deployments generate --<network>` shell command to your `deployments/` folder.
 
-const accounts = simnet.getAccounts();
-const address1 = accounts.get('wallet_1')!;
+However, you can also manually edit this default deployment `.yaml` file directly—programmatically orchestrating your contract publication and user interaction beyond your plan's defaults.
 
-describe('test `increment` public function', () => {
-  it('increments the count by the given value', () => {
-    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
-    console.log(Cl.prettyPrint(incrementResponse.result)); // (ok u2)
-    expect(incrementResponse.result).toBeOk(Cl.uint(2));
+<Callout>
+When deploying, Clarinet prompts you to overwrite any manually added or edited changes that differ from the specifications laid out in your project's .toml files. Type `no` to proceed with your manually configured deployment plan instead of the default.
+</Callout>
 
-    const count1 = simnet.getDataVar('counter', 'count');
-    expect(count1).toBeUint(2);
+Here are some of the relevant transactions and configurations available to developers manually configuring their deployment plans:
 
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(40)], address1);
-    const count2 = simnet.getDataVar('counter', 'count');
-    expect(count2).toBeUint(42);
-  });
+- `emulated-contract-publish:` Deploy a contract in an in-memory simulated chain (`simnet` only).
+- `emulated-contract-call:` Call a contract that has been deployed in an in-memory simulated chain (`simnet` only).
+- `requirement-publish:` Deploy an external contract (that is, one not published by the same set of private keys as the user wallet currently deploying) on another testnet/devnet using another wallet + search, and replace all the references to this contract in the local contracts to deploy (`devnet`/`testnet` only).
+- `contract-publish:` Deploy a contract (`devnet`/`testnet`/`mainnet`).
+- `contract-call:` Call a contract (`devnet`/`testnet`/`mainnet`).
+- `stx-transfer:` Transfer STX between specified accounts.
+- `btc-transfer:` Simple bitcoin transfer from a p2pkh address to a p2pkh address (experimental, `regtest`/`testnet`/`mainnet`).
 
-  it('sends a print event', () => {
-    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
+Waiting between blocks to make transactions is done by specifying transaction directives in a different batch in the deployment plan (see the `batches` field)
 
-    expect(incrementResponse.events).toHaveLength(1);
-    const printEvent = incrementResponse.events[0];
-    expect(printEvent.event).toBe('print_event');
-    expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii('count'),
-      action: Cl.stringAscii('incremented'),
-      value: Cl.uint(2),
-    });
-  });
-});
+### <code className='text-lg'>emulated-contract-publish</code>
+
+This default transaction is included in every generated deployment for a `simnet` deployment.
+
+```yaml
+- emulated-contract-publish:
+    contract-name: extension-trait
+    emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    path: contracts/dao/traits/extension-trait.clar
+    clarity-version: 1
 ```
 
-To run the test, go back to your console and run the `npm test` command. It should display a report telling you that tests succeeded.
+### <code className='text-lg'>emulated-contract-call</code>
 
-```sh
-npm test
+This is a transaction type for a `simnet` deployment where the developer wants to emulate a contract call.
+
+```yaml
+- emulated-contract-call:
+    contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter
+    emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    method: increment
+    parameters:
+      - u1
 ```
 
-There is a very important thing happening under the hood here. The `simnet` object is available globally in the tests, and is automatically initialized before each test.
+<Callout>
+Read-only functions and functions that take no arguments are passed an empty list like so: `parameters: []`
+</Callout>
 
-> You don't need to know much more about that, but if you want to know in detail how it works, you can have a look at the `vitest.config.js` file at the root of you project.
+### <code className='text-lg'>requirement-publish</code>
 
-Getting back to the tests, we just implemented two of them:
+This cBTC smart contract application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/cbtc/deployments/default.devnet-plan.yaml) that publishes the contract required by its core smart contract.
 
-- The first test checks that the `increment` function returns the new value and saves it to the `count` variable.
-- The second test checks that an `print_event` is emitted when the increment function is called.
-
-> You can use `Cl.prettyPrint(value: ClarityValue)` to format any Clarity value into readable Clarity code. It can be useful to debug function results or event values.
-
-Note that we are importing `describe`, `expect` and `it` from Vitest.
-
-- `it` allows us to write a test.
-- `describe` is not necessary but allows to organize tests.
-- `expect` is use to make assertions on value.
-
-You can learn more about Vitest on their [website](https://vitest.dev).
-We also implemented some custom matchers to make assertions on Clarity variables (like `toBeUint`).
-The [full list of custom matchers](#custom-vitest-matchers) is available at the end of this guide.
-
-### Comprehensive Unit Tests for `counter`
-
-Let us now write a higher coverage test suite by testing the `decrement` and `get-counter` functions.
-
-These two code blocks can be added at the end of `tests/counter.test.ts`.
-
-```ts
-describe('test `decrement` public function', () => {
-  it('decrements the count by the given value', () => {
-    const decrementResponse = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
-    expect(decrementResponse.result).toBeOk(Cl.uint(0));
-
-    const count1 = simnet.getDataVar('counter', 'count');
-    expect(count1).toBeUint(0);
-
-    // increase the count so that it can be descreased without going < 0
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(10)], address1);
-
-    simnet.callPublicFn('counter', 'decrement', [Cl.uint(5)], address1);
-    const count2 = simnet.getDataVar('counter', 'count');
-    expect(count2).toBeUint(5);
-  });
-
-  it('sends a print event', () => {
-    const decrementResponse = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
-
-    expect(decrementResponse.events).toHaveLength(1);
-    const printEvent = decrementResponse.events[0];
-    expect(printEvent.event).toBe('print_event');
-    expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii('count'),
-      action: Cl.stringAscii('decremented'),
-      value: Cl.uint(0),
-    });
-  });
-});
+```yaml
+- requirement-publish:
+    contract-id: SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard
+    remap-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    remap-principals:
+      SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    cost: 8400
+    path: '.cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar'
 ```
 
-```ts
-describe('test `get-count` read only function', () => {
-  it('returns the counter value', () => {
-    const count1 = simnet.callReadOnlyFn('counter', 'read-count', [], address1);
-    expect(count1.result).toBeOk(Cl.uint(1));
+### <code className='text-lg'>contract-publish</code>
 
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(10)], address1);
-    const count2 = simnet.callReadOnlyFn('counter', 'read-count', [], address1);
-    expect(count2.result).toBeOk(Cl.uint(11));
-  });
-});
+This default transaction is included in every generated deployment plan for every contract your Clarinet project has. This `"counter"` application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/counter/deployments/default.devnet-plan.yaml) that publishes its core smart contract.
+
+```yaml
+- contract-publish:
+    contract-name: counter
+    expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    cost: 5960
+    path: contracts/counter.clar
+    anchor-block-only: true
+    clarity-version: 1
 ```
 
-## Measure and Increase Code Coverage
+### <code className='text-lg'>contract-call</code>
 
-To help developers maximize their test coverage, the test framework can produce a `lcov` report, using `--coverage` flag. You can set it in the scripts in the project `package.json`:
+The developer can call a function and pass arguments of any valid Clarity type.
 
-```json
-  "scripts": {
-    "test:coverage": "vitest run -- --coverage",
-    // ...
-  },
+```yaml
+        - contract-call:
+            contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.bitcoin-dao
+            expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            method: add-new-member
+            parameters:
+                - u1
+                - "0x01"
+                - "{ id: u4, username: "Satoshi", address: 'SP1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE }"
+                - "'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+            cost: 5960
 ```
 
-Then run the script with the following command. It will produce a file named `./lcov.info`.
+<Callout>
+Read-only functions and functions that take no arguments are passed an empty list like so: `parameters: []`
+</Callout>
 
-```sh
-npm run test:coverage
+### <code className='text-lg'>stx-transfer</code>
+
+The developer can specify the originating account of an STX transfer, the quantity denominated in microstacks, and the recipient, as well as an optional memo field (Note: the memo field can only contain a Clarity [buffer type](https://book.clarity-lang.org/ch02-02-sequence-types.html) up to 34 bytes in size, pre-fixed with `0x` (for example, `0x68656c6c6f21`), not ASCII text or strings)
+
+```yaml
+- stx-transfer:
+    expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    recipient: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.my-contract
+    mstx-amount: 1000
+    memo: '0x01'
+    cost: 10000
 ```
 
-From there, you can use the `lcov` tooling suite to produce HTML reports.
+### <code className='text-lg'>btc-transfer</code>
 
-```sh
-brew install lcov
-genhtml --branch-coverage -o coverage lcov.info
-open coverage/index.html
+This cBTC smart contract application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/cbtc/deployments/wrap-btc.devnet-plan.yaml) that includes broadcasting a BTC transfer transaction to the emulated bitcoin chain with these parameters.
+
+```yaml
+- btc-transfer:
+    expected-sender: mjSrB3wS4xab3kYqFktwBzfTdPg367ZJ2d
+    recipient: bcrt1qnxknq3wqtphv7sfwy07m7e4sr6ut9yt6ed99jg
+    sats-amount: 100000000
+    sats-per-byte: 10
 ```
 
-## Costs Optimization
-
-The test framework can also be used to optimize costs. When you execute a test suite, Clarinet keeps track of all costs being computed when executing the `contract-call`, and displays the most expensive ones in a table.
-
-To help developers maximize their test coverage, the test framework can produce a `lcov` report, using `--coverage` flag. You can set it in the scripts in the project `package.json`:
-
-```json
-  "scripts": {
-    "test:costs": "vitest run -- --costs",
-    // ...
-  },
-```
-
-And run the script with the following command. It will produce a file named `./costs-reports.json`.
-
-```sh
-npm run test:costs
-```
-
-For now, there isn't much you can do out of the box with a costs report. But in future versions of the Clarinet JS SDK, we will implement features to help keep track of your costs, such as checking that function calls do not go above a certain threshold.
-
-## Produce Both Coverage and Costs Reports
-
-In your package.json, you should already have a script called `test:reports` like so:
-
-```json
-  "scripts": {
-    "test:reports": "vitest run -- --coverage --costs",
-    // ...
-  },
-```
-
-Run it to produce both the coverage and the costs reports:
-
-```sh
-npm run test:reports
-```
-
-## Run Tests in CI
-
-Because the tests only require Node.js and NPM run, they can also be run in GitHub actions and CIs just like any other Node test.
-
-In GitHub, you can directly set up a Node.js workflow like this one:
-
-```yml
-name: Test counter contract
-
-on:
-  push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test:reports
-```
-
-## Custom Vitest Matchers
-
-A set of Vitest matchers can be used to make assertions on Clarity values.
-They can check the return values of contracts, ensure that the value is actually a Clarity value, and provide nice error messages.
-
-### Check Clarity Type
-
-#### `toHaveClarityType(expectedType: ClarityType)`
-
-This matcher can be used to make sure that the value has the right Clarity Type, without checking its value.
-
-```ts
-import { ClarityType } from '@stacks/transactions';
-import { expect, it } from 'vitest';
-
-const address1 = simnet.getAccounts().get('wallet_1');
-
-it('ensures <increment> adds 1', () => {
-  const { result } = simnet.callPublicFn('counter', 'increment', [], address1);
-
-  // make sure it returns a response ok `(ok ...)`
-  expect(result).toHaveClarityType(ClarityType.ResponseOk);
-});
-```
-
-It can also be used to check any type:
-
-```ts
-// uint
-expect(result).toHaveClarityType(ClarityType.UInt);
-
-// or tuple
-expect(result).toHaveClarityType(ClarityType.Tuple);
-
-// and so one
-```
-
-### Response Type
-
-The response type is noted `(response <ok-type> <error-type>)` in Clarity.
-It can be `(ok <ok-type>)` or `(err <error-type>)`.
-They are called composite types, meaning that they contain another Clarity value.
-
-#### `toBeOk(expected: ClarityValue)`
-
-Check that a response is `ok` and has the expected value. Any Clarity value can be passed.
-
-```ts
-const decrement = simnet.callPublicFn('counter', 'decrement', [Cl.uint(1)], address1);
-
-// decrement.result is `(ok (uint 0))`
-expect(decrement.result).toBeOk(Cl.uint(0));
-```
-
-#### `toBeErr(expected: ClarityValue)`
-
-Check that a response is `err` and has the expected value. Any Clarity value can be passed.
-
-Consider that the `counter` contract returns and error code 500 `(err u500)` if the value passed to increment is too big:
-
-```ts
-const tooBig = 100000;
-const increment = simnet.callPublicFn('counter', 'increment', [Cl.uint(toBig)], address1);
-
-// increment.result is `(err u500)`
-expect(increment.result).toBeErr(Cl.uint(500));
-```
-
-### Optional Type
-
-The option type is noted `(optional <some-type>)` in Clarity.
-It can be `(some <some-type>)` or `none`.
-Here, `some` is a composite type, meaning that it contains another Clarity value.
-
-#### `toBeSome(expected: ClarityValue)`
-
-Consider a billboard smart contract that can contain an optional message:
-
-```ts
-const getMessage = simnet.callPublicFn('billboard', 'get-message', [], address1);
-
-// (some u"Hello world")
-expect(getMessage.result).toBeSome(Cl.stringUtf8('Hello world'));
-```
-
-#### `toBeNone()`
-
-Considering the same billboard smart contract but with no saved message:
-
-```ts
-const getMessage = simnet.callPublicFn('billboard', 'get-message', [], address1);
-
-// none
-expect(getMessage.result).toBeNone();
-```
-
-### Simple Clarity Types
-
-Custom assertion matchers are available for all types of Clarity values. They will check that the value has the right type and value.
-
-#### `toBeBool(expected: boolean)`
-
-Asserts the value of Clarity boolean (true or false).
-
-```ts
-expect(trueResult).toBeBool(true);
-expect(falseResult).toBeBool(false);
-```
-
-#### `toBeInt(expected: number | bigint)`
-
-Asserts the value of a Clarity int.
-
-```ts
-expect(result).toBeInt(1);
-// it accepts JS bigints
-expect(result).toBeInt(1n);
-```
-
-#### `toBeUint(expected: number | bigint)`
-
-Asserts the value of a Clarity uint.
-
-```ts
-expect(result).toBeUint(1);
-// it accepts JS bigints
-expect(result).toBeUint(1n);
-```
-
-#### `toBeAscii(expected: string)`
-
-Asserts the value of a Clarity string-ascii.
-
-```ts
-expect(result).toBeAscii('Hello wolrd');
-```
-
-#### `toBeUtf8(expected: string)`
-
-Asserts the value of a Clarity string-utf8.
-
-```ts
-expect(result).toBeUtf8('STX');
-```
-
-#### `toBePrincipal(expected: string)`
-
-Asserts the value of a Clarity principal value. The principal can be a standard or a contract principal.
-
-```ts
-expect(standardPrincipal).toBePrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
-expect(contractPrincipal).toBePrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter');
-```
-
-#### `toBeBuff(expected: Uint8Array)`
-
-Asserts the value of a Clarity buffer.  
-It takes as an input an ArrayBuffer (`Uint8Array`).
-
-Your test case will ultimately depends on how the Uint8Array is built. `@stacks/transaction` can help building these buffers.
-
-```ts
-it.only('can assert buffer values', () => {
-  const { result } = simnet.callPublicFn(/* ... */);
-
-  // knowing the expected UintArray
-  const value = Uint8Array.from([98, 116, 99]);
-  expect(result).toBeBuff(value);
-
-  // knowing the expected string
-  const bufferFromAscii = Cl.bufferFromAscii('btc');
-  expect(result).toBeBuff(bufferFromAscii.buffer);
-
-  // knowing the expected hex value
-  const bufferFromHex = Cl.bufferFromHex('627463');
-  console.log(bufferFromHex.buffer);
-});
-```
-
-### Other Composite Types
-
-`list` and `tuple` are composite types, like `ok`, `err`, and `some`. Meanning that they contain another Clarity value.
-
-#### `toBeList(expected: ClarityValue[])`
-
-Check that the value is a `list` containing an array of Clarity values.  
-Considering a function that return a list of 3 uints:
-
-```ts
-const address1 = simnet.getAccounts().get('wallet_1');
-
-it('can assert list values', () => {
-  const { result } = simnet.callReadOnlyFn('counter', 'func-returning-list-of-uints', [], address1);
-
-  expect(result).toBeList([Cl.uint(1), Cl.uint(2), Cl.uint(3)]);
-});
-```
-
-#### `toBeTuple(expected: Record<string, ClarityValue>)`
-
-Check that the value is a `tuple`, it takes a JavaScript object to check the values. It's used in the [tutorial above](#unit-tests-for-counter-example) to check the value of the print event. It can also be used to check function call result.
-
-The snippet below shows that composite types can be nested:
-
-```ts
-const address1 = simnet.getAccounts().get('wallet_1');
-
-it('can assert tuple values', () => {
-  const { result } = simnet.callPublicFn('counter', 'func-returning-tuple', [], address1);
-
-  expect(result).toBeTuple({
-    id: Cl.uint(1),
-    data: Cl.tuple({
-      text: Cl.stringUtf8('Hello world'),
-      owner: Cl.standardPrincipal(address1),
-    }),
-  });
-});
-```
+---
+
+### Next steps
+
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
+    icon={<Code className='text-primary' />}
+    href="/stacks/clarinet/guides/run-a-local-devnet"
+    title="Run a local devnet"
+    description="Learn how to run a local devnet."
+  />
+  <SmallCard
+    icon={<Terminal className='text-primary' />}
+    href="/stacks/clarinet-js-sdk/references/simnet"
+    title="Simnet Reference"
+    description="Learn how to use Simnet with the Clarinet JS SDK."
+  />
+</Cards>

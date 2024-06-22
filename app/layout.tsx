@@ -9,10 +9,10 @@ import { Provider } from "./provider";
 
 export const metadata = createMetadata({
   title: {
-    template: "%s | Hiro",
-    default: "Hiro",
+    template: "%s | Hiro Docs",
+    default: "Hiro Documentation",
   },
-  description: "Hiro Docs",
+  description: "Hiro Documentation",
   metadataBase: baseUrl,
 });
 

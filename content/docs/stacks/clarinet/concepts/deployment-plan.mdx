@@ -1,0 +1,18 @@
+---
+title: Deployment Plans
+description: Deployment plans are reproducible deployment steps that publish a collection of on-chain transactions and one or more contracts to a network.
+---
+
+The default deployment plan of every Clarinet project is contained within specifications set inside certain files. In addition to this default deployment plan, the user can manually configure each plan, adding additional transactions or contract calls across multiple Stacks or Bitcoin blocks.
+
+You can commit, audit, and test contracts without including any secrets in the Deployment Plan and share these contracts without exposing any sensitive information.
+
+### Deployment plan primitives
+
+| Transaction primitive   | Typical usage                                                                                                                                                                                                               |
+| :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| publish contracts       | deploy a contract to an in-memory simulated Stacks chain <br /> deploy to a public testnet or mainnet <br /> deploy an external contract to your local network for testing |
+| call contract functions | call a contract deployed to any of your local devnets or public networks                                                                                                                                                  |
+| send BTC                | Perform a simple bitcoin transfer from a p2pkh address to a p2pkh address                                                                                                                       |
+| wait for block          | Test or automate contract deployment across multiple Stacks or Bitcoin blocks                                                                                                                                             |
+| send STX                | send stacks to an address or contract                                                                                                                                                                                     |
