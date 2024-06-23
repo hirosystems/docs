@@ -6,6 +6,12 @@ toc: false
 
 import { Code, Terminal } from "lucide-react"
 import { SmallCard } from "@/components/card"
+import { Wrapper } from "@/components/layout"
+import { ImageZoom } from "fumadocs-ui/components/image-zoom"
+import Welcome from "./images/quickstart-welcome.png"
+import ProjectContract from "./images/project-contract.png"
+import DeployContract from "./images/deploy-contract.png"
+import Faucet from "./images/platform-testnet-faucet.png"
 
 In this quickstart guide, you will create a simple `hello-world` contract in the [Hiro Platform](https://platform.hiro.so/). You’ll learn how to create a new project, create a new contract, and deploy that contract to testnet on Stacks.
 
@@ -20,13 +26,27 @@ Start by creating an account in the Hiro Platform. You can create an account wit
 
 Once signed in, you will see an onboarding screen showing all the Hiro Platform has to offer:
 
-![Platform Welcome Screen](./images/quickstart-welcome.png)
+<Wrapper>
+  <ImageZoom
+    alt="Welcome"
+    src={Welcome}
+    className="!my-0 rounded-xl bg-background"
+    priority
+  />
+</Wrapper>
 
 ## Create your smart contract
 
 Click the “Run `hello-world` in Clarity” tile. This will generate a brand new project in the Hiro Platform, along with a `hello-world` contract.
 
-![create smart contract](./images/project-contract.png)
+<Wrapper>
+  <ImageZoom
+    alt="ProjectContract"
+    src={ProjectContract}
+    className="!my-0 rounded-xl bg-background"
+    priority
+  />
+</Wrapper>
 
 From here, you can edit the contract directly in this code preview or edit the contract in VS Code on the web or on your local device via the “Open Project Files” dropdown.
 
@@ -36,11 +56,25 @@ Learn more about [smart contract development in the Hiro Platform](/stacks/platf
 
 For now, click the “Deploy Project” button to deploy your project to a network. This will open a menu where you can choose to deploy to devnet, testnet, or mainnet. The Hiro Platform will automatically generate a deployment plan for your project that will handle any contract dependencies in your project.
 
-![deploy contract](./images/deploy-contract.png)
+<Wrapper>
+  <ImageZoom
+    alt="DeployContract"
+    src={DeployContract}
+    className="!my-0 rounded-xl bg-background"
+    priority
+  />
+</Wrapper>
 
 For this quickstart, let’s deploy to testnet. In order to deploy, you will need testnet STX, which you can request from a testnet faucet in the Hiro Platform.
 
-![platform faucet](./images/platform-testnet-faucet.png)
+<Wrapper>
+  <ImageZoom
+    alt="Faucet"
+    src={Faucet}
+    className="!my-0 rounded-xl bg-background"
+    priority
+  />
+</Wrapper>
 
 Once your wallet receives the testnet tokens, you can deploy your contract. Congratulations, you’re now a Stacks developer!
 

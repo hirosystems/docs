@@ -1,4 +1,5 @@
-export { Root } from "./root";
-export { API } from "./api";
-export { APIExample } from "./api-example";
-export { SectionHeader } from "./section-header";
+export { Root } from "./root"
+export { API } from "./api"
+export { APIExample } from "./api-example"
+export { SectionHeader } from "./section-header"
+export { Wrapper } from "./wrapper"
