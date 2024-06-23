@@ -3,35 +3,65 @@ title: Deep dive into Post-Conditions
 description: This guide explains how to use Post-Conditions to secure your smart contracts.
 ---
 
-In Stacks, transactions can have "post-conditions".
-These are an additional security to ensure the transaction was executed as expected, without having the user needing to know the code of a smart contract.
+import { Badge } from '@/components/ui/badge';
 
-Post-conditions can be used on contract calls and FT/NFT transfers.
-Adding post-conditions to a transaction can ensure that:
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
 
-- STX tokens were transferred from an address
-- FTs/NFTs we transferred from an address
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
-### Caveats
+import { InlineCode } from '@/components/inline-code';
 
-Post-conditions aren't perfect!
-They can't say anything about the end-state after a transaction.
-So, they can't guarantee the receival of FTs/NFTs, since they only check for sending.
+Post-conditions in Stacks transactions provide an additional layer of security. They ensure that transactions execute as expected without requiring the user to know the underlying smart contract code.
 
-### Post-Condition Modes
+In this guide, you will learn how to:
 
-**All given post-conditions will always be checked.**
-However, in addition to the post-conditions itself, we can also specify a "mode" for the transaction to verify other asset transfers.
-The mode can be either `Allow` or `Deny`.
+1. Construct post-conditions
+2. Use post-conditions
+3. Set the post-condition mode
+4. Use the legacy methods/enums
 
-- `Allow` means that the transaction can transfer any asset (assuming no conflicting post-conditions).
-- `Deny` means the transaction will fail if any asset transfers (not specified in the post-conditions) are attempted.
+---
 
-Think of the mode as "allow/deny transfer of unspecified assets".
+### Constructing Post-Conditions
 
-With Stacks.js we can set the mode via an exported enums from `@stacks/transactions`.
+In Stacks.js, post-conditions can be constructed using the Pc helpers. These are inspired by Behavior Driven Development (BDD).
 
-```ts
+Start with the `Pc.address` initializer to specify the address of the principal that will be verified in the post-condition. Then auto-complete the rest of the post-condition.
+
+```ts twoslash
+// @noErrors
+// [!code word:Pc]
+import { Pc } from '@stacks/transactions';
+
+const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+  .willSendEq(1000)
+  .ustx();
+```
+
+### Using Post-Conditions
+
+Post-conditions can be added to contract calls and FT/NFT transfers to ensure assets are transferred as specified.
+
+```ts twoslash
+// @noErrors
+import { Pc } from '@stacks/transactions';
+
+const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+  .willSendEq(1000)
+  .ustx();
+```
+
+### Setting the Post-Condition mode
+
+When creating a transaction, the mode of the transaction can be set to `Allow` or `Deny` to specify whether unspecified asset transfers are permitted.
+
+```ts twoslash
+// @noErrors
+// [!code word:PostConditionMode]
 import { PostConditionMode } from '@stacks/transactions';
 
 const tx = await makeContractCall({
@@ -43,41 +73,23 @@ const tx = await makeContractCall({
 });
 ```
 
-### Constructing Post-Conditions
-
-The easiest way to construct a post-condition in Stacks.js is to use the `Pc` helpers.
-This is a builder inspired by BDD (Behavior Driven Development).
-
-Start with the `Pc.address` initializer to specify the address of the principal that will be verified in the post-condition.
-Then auto-complete the rest of the post-condition.
-
-### Methods
-
-Builder initializer
-
-- `Pc.principal(address: string)` to initialize the principal that will be verified in the post-condition
-
-STX/FT transfer methods
-
-- `.willSendEq(amount: number)` to specify the **exact** amount to be sent
-- `.willSendGte(amount: number)` to specify the **greater than or equal** amount to be sent
-- `.willSendGt(amount: number)` to specify the **greater than** amount to be sent
-- `.willSendLte(amount: number)` to specify the **less than or equal** amount to be sent
-- `.willSendLt(amount: number)` to specify the **less than** amount to be sent
-
-* `.ustx()` to specify uSTX as the FT asset _(ends the builder)_
-* `.ft(contract: string, tokenName: string)` to specify a specific FT asset _(ends the builder)_
-
-NFT transfer methods
-
-- `.willSendAsset()` to specify an asset **should be sent**
-- `.willNotSendAsset()` to specify an asset **should not be sent**
-
-* `.nft(asset: string, assetId: ClarityValue)` to specify a specific NFT asset _(ends the builder)_
-
 ### Legacy methods/enums
 
-The builder methods construct the same representation as the legacy methods and can be used interchangeably.
+Legacy methods and enums can be used interchangeably with the builder methods.
+
+```ts twoslash
+// @noErrors
+// [!code word:createSTXPostCondition]
+import { createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
+
+const postCondition = createSTXPostCondition(
+  "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+  FungibleConditionCode.Equal,
+  1000
+);
+```
+
+Some other examples can be found below:
 
 - [`createSTXPostCondition`](https://stacks.js.org/functions/_stacks_transactions.createSTXPostCondition) Builder method
 - [`createFungiblePostCondition`](https://stacks.js.org/functions/_stacks_transactions.createFungiblePostCondition) Builder method
@@ -85,63 +97,107 @@ The builder methods construct the same representation as the legacy methods and 
 - [`FungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.FungibleConditionCode) Enum
 - [`NonFungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.NonFungibleConditionCode) Enum
 
-### Examples
+<Callout>
+Use the `Pc` helpers to construct post-conditions in a clear and concise manner.
+</Callout>
 
-### Amount uSTX Sent
+### Code examples
 
-With Stacks.js, we can construct a post-condition for a certain amount of uSTX to be sent.
+`Amount uSTX Sent`
 
-```ts
-import { Pc } from '@stacks/transactions';
+Construct a post-condition for a certain amount of uSTX to be sent.
 
-const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
-  .willSendEq(1000)
-  .ustx();
+<Tabs id="eq-ustx" items={["Pc","Legacy"]}>
+  <Tab value={"Pc"}>
+    ```ts twoslash
+    // @noErrors
+    // [!code word:willSendEq]
+    import { Pc } from '@stacks/transactions';
 
-// Equivalent to:
-// createSTXPostCondition(
-//   "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
-//   FungibleConditionCode.Equal,
-//   1000
-// );
+    const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+      .willSendEq(1000)
+      .ustx();
+    ```
+  </Tab>
+  <Tab value={"Legacy"}>
+    ```ts twoslash
+    // @noErrors
+    // [!code word:Equal]
+    import { createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
+
+    const postCondition = createSTXPostCondition(
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+      FungibleConditionCode.Equal,
+      1000
+    );
+    ```
+  </Tab>
+</Tabs>
+
+`Amount FT Sent`
+
+Construct a post-condition for a certain amount of a specific FT to be sent.
+
+<Tabs id="gte-ft" items={["Pc","Legacy"]}>
+  <Tab value={"Pc"}>
+    ```ts twoslash
+    // @noErrors
+    // [!code word:willSendGte]
+    import { Pc } from '@stacks/transactions';
+
+    const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft')
+      .willSendGte(500)
+      .ft('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft', 'token');
 ```
+  </Tab>
+  <Tab value={"Legacy"}>
+    ```ts twoslash
+    // @noErrors
+    // [!code word:GreaterEqual]
+    import { createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
 
-### Amount FT Sent
+    const postCondition = createSTXPostCondition(
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft",
+      FungibleConditionCode.GreaterEqual,
+      500,
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft::token"
+    );
+    ```
+  </Tab>
+</Tabs>
 
-With Stacks.js, we can construct a post-condition for a certain amount of a specific FT to be sent.
+`Amount NFT Sent`
 
-```ts
-import { Pc } from '@stacks/transactions';
+Construct a post-condition for sending / not-sending a specific NFT instance.
 
-const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft')
-  .willSendGte(500)
-  .ft('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft', 'token');
+<Tabs id="post-condition-examples" items={["Pc","Legacy"]}>
+  <Tab value={"Pc"}>
+    ```ts twoslash
+    // @noErrors
+    // [!code word:willNotSendAsset]
+    import { Pc } from '@stacks/transactions';
 
-// Equivalent to:
-// createFungiblePostCondition(
-//   "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft",
-//   FungibleConditionCode.GreaterEqual,
-//   500,
-//   "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft::token"
-// );
+    const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+      .willNotSendAsset()
+      .nft('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-nft::token', Cl.uint(12));
 ```
+  </Tab>
+  <Tab value={"Legacy"}>
+    ```ts twoslash
+    // @noErrors
+    // [!code word:DoesNotSend]
+    import { createNonFungiblePostCondition, NonFungibleConditionCode } from '@stacks/transactions';
 
-### Amount NFT Sent
+    const postCondition = createNonFungiblePostCondition(
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+      NonFungibleConditionCode.DoesNotSend,
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-nft::token",
+      Cl.uint(12)
+    );
+    ```
+  </Tab>
+</Tabs>
 
-With Stacks.js, we can construct a post-condition for sending / not-sending a specific NFT instance.
-
-```ts
-import { Pc } from '@stacks/transactions';
-
-const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
-  .willNotSendAsset()
-  .nft('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-nft::token', Cl.uint(12));
-
-// Equivalent to:
-// createNonFungiblePostCondition(
-//   "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
-//   NonFungibleConditionCode.DoesNotSend,
-//   "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-nft::token",
-//   Cl.uint(12)
-// );
-```
+<Callout type="warn">
+Post-conditions can only ensure the transfer of assets and cannot guarantee the end-state after a transaction. To learn more, read the [post-conditions](/stacks/stacks.js/guides/post-conditions) guide.
+</Callout>
