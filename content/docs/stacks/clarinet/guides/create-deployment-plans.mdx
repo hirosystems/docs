@@ -14,7 +14,7 @@ import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
 import { InlineCode } from '@/components/inline-code';
 
-Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more, while ensuring reproducible deployments critical for testing purposes.
+Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more. Deployment plans ensure reproducible deployments, a critical workflow for testing purposes.
 
 In this guide, you will learn how to:
 
@@ -33,7 +33,7 @@ To follow this quickstart guide, you will need to have Clarinet installed on you
 
 ### View your deployment plan
 
-Clarinet uses a deployment plan for every deployment-whether for a basic simnet (for use in Clarinet's `console`, `test`, and `check` features), a devnet (for use with the `clarinet devnet start` command), or the public `testnet` and `mainnet`.
+Clarinet uses a deployment plan for every deployment—whether for a basic simnet (for use in Clarinet's `console`, `test`, and `check` features), a devnet (for use with the `clarinet devnet start` command), or the public `testnet` and `mainnet`.
 
 You can view the current deployment plan saved to disk at any time with the following command (specifying the network `simnet`, `devnet`, `testnet`, `mainnet`)
 
@@ -68,20 +68,22 @@ plan:
 
 A project's deployment plan specifications are set on two files within a Clarinet project—the `Clarinet.toml` file as well as the network’s corresponding `.toml` file (for example, `Devnet.toml`) in the `settings/` folder.
 
-Specifications in the `Clarinet.toml` file you can change include
+Specifications in the `Clarinet.toml` file you can change include:
 
 - The Clarity version or blockchain epoch that Clarinet emulates for your smart contracts
 - Project requirements in the form of contract dependencies (see next section)
 
-Specifications in the `Devnet.toml` file you can change include
+Specifications in the `Devnet.toml` file you can change include:
 
 - Accounts, balances, and names
-- Blockchain environment features, such as block time or API ports, of your devnet
+- Blockchain environment features of your devnet, such as block time or API ports
 - Stacking orders
 
 ### Adding project contract requirements
 
-Your project can reference a smart contract that already exists on the blockchain. For example, [Stacks Improvement Proposal 009](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md) specifies a trait reference for all non-fungible tokens. Instead of redeploying this trait as a separate contract each time a new NFT collection is published, you can reference the contract directly within deployment plans with the following Clarinet command, including the contract principal reference:
+Your project can reference a smart contract that already exists on the blockchain.
+
+For example, [Stacks Improvement Proposal 009](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md) specifies a trait reference for all non-fungible tokens. Instead of redeploying this trait as a separate contract each time a new NFT collection is published, you can reference the contract directly within deployment plans with the following Clarinet command, including the contract principal reference:
 
 ```bash title="Terminal"
 clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
@@ -89,9 +91,9 @@ clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
 
 This command updates a Clarinet project's deployment plan for use in development.
 
-For instance, `clarinet devnet start` would now download a copy of the contract principal via the Stacks API node that is booted alongside each devnet deployment, and remaps the principal that publishes this contract to one of the accounts specified in your `Devnet.toml` file.
+For instance, `clarinet devnet start` would now download a copy of the contract principal via the Stacks API node that is booted alongside each devnet deployment, and it would remap the principal that publishes this contract to one of the accounts specified in your `Devnet.toml` file.
 
-This permits a developer to maintain the minimum set of contracts their Clarinet project will deploy to mainnet (with a single use of an impl-trait statement in their Clarity contract).
+This permits a developer to maintain the minimum set of contracts their Clarinet project will deploy to mainnet (with a single use of an `impl-trait` statement in their Clarity contract).
 
 ### Edit your deployment plan
 
@@ -115,7 +117,7 @@ Here are some of the relevant transactions and configurations available to devel
 - `stx-transfer:` Transfer STX between specified accounts.
 - `btc-transfer:` Simple bitcoin transfer from a p2pkh address to a p2pkh address (experimental, `regtest`/`testnet`/`mainnet`).
 
-Waiting between blocks to make transactions is done by specifying transaction directives in a different batch in the deployment plan (see the `batches` field)
+Waiting between blocks to make transactions is done by specifying transaction directives in a different batch in the deployment plan (see the `batches` field).
 
 ### <code className='text-lg'>emulated-contract-publish</code>
 
@@ -162,7 +164,7 @@ This cBTC smart contract application has a [devnet deployment plan](https://gith
 
 ### <code className='text-lg'>contract-publish</code>
 
-This default transaction is included in every generated deployment plan for every contract your Clarinet project has. This `"counter"` application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/counter/deployments/default.devnet-plan.yaml) that publishes its core smart contract.
+This default transaction is included in every generated deployment plan for every contract your Clarinet project has. This `counter` application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/counter/deployments/default.devnet-plan.yaml) that publishes its core smart contract.
 
 ```yaml
 - contract-publish:
@@ -234,7 +236,7 @@ This cBTC smart contract application has a [devnet deployment plan](https://gith
   <SmallCard
     icon={<Terminal className='text-primary' />}
     href="/stacks/clarinet-js-sdk/references/simnet"
-    title="Simnet Reference"
-    description="Learn how to use Simnet with the Clarinet JS SDK."
+    title="Simnet reference"
+    description="Learn how to use simnet with the Clarinet JS SDK."
   />
 </Cards>
