@@ -1,10 +1,11 @@
 ---
 title: Providers
+description: Discover a global variable for interacting with Stacks Connect.
 ---
 
-When users have the [Leather Wallet](https://leather.io/install-desktop) extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication, transaction and signature requests. `@stacks/connect` automatically detects and uses this global variable for you.
+When users have the [Leather](https://leather.io/install-desktop) wallet extension installed, the extension will inject a global `StacksProvider` variable into the JavaScript context of your web app. This allows your JavaScript code to hook into the extension, and make authentication, transaction, and signature requests. `@stacks/connect` automatically detects and uses this global variable for you.
 
-At the moment, only the Leather Wallet extension and the Xverse built-in browswer include a `StacksProvider`. However, ideally more wallets (and mobile wallets) will support this format in the future, so that your app can be compatible with any Stacks wallet that has functionality to embed web applications.
+At the moment, only the Leather Wallet extension and the Xverse built-in browser include a `StacksProvider`. However, ideally more wallets (and mobile wallets) will support this format in the future, so that your app can be compatible with any Stacks wallet that has functionality to embed web applications.
 
 In your web application, you can check to see if the user has a compatible wallet installed by checking for the presence of `window.StacksProvider`.
 
