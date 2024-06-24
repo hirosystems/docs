@@ -1,6 +1,6 @@
 ---
 title: Build a no-loss lottery pool
-description: This guide explains how to create a no-loss lottery pool that leverages stacking yield.
+description: Learn how to create a no-loss lottery pool that leverages stacking yield.
 ---
 
 import { Code, Terminal } from 'lucide-react';
@@ -8,7 +8,7 @@ import { SmallCard } from '@/components/card';
 
 A no-loss lottery contract offers a unique way for participants to stack their assets and potentially earn rewards without the risk of losing their initial deposit.
 
-This contract ensures that participants can stack their assets in a yield generating pool, receive an NFT ticket, and have a chance to win additional rewards while retaining their original investment.
+This contract ensures that participants can stack their assets in a yield-generating pool, receive an NFT ticket, and have a chance to win additional rewards while retaining their original investment.
 
 In this guide, you will learn how to:
 
@@ -26,7 +26,7 @@ This example uses the CityCoins protocol for the stacking yield mechanism, but l
 
 ### Define constants and data variables
 
-First, you will define some constants and data variables to manage the state of your contract. Constants are used for fixed values, and data variables store the state that can change during the contract execution.
+First, define some constants and data variables to manage the state of your contract. Constants are used for fixed values, and data variables store the state that can change during the contract execution.
 
 ```clarity
 (define-constant OWNER tx-sender)
@@ -43,7 +43,7 @@ Key data variables include `lotteryPool` for tracking stacked assets, `totalYiel
 
 ### Create and manage participants and tickets
 
-Next, you will define an NFT to represent a ticket and a map to store participant information.
+Next, define an NFT to represent a ticket and a map to store participant information.
 
 ```clarity
 // [!code word:LotteryTicket]
@@ -66,7 +66,7 @@ The `LotteryTicket` defines an NFT for the lottery tickets, crucial for managing
 
 ### Implement the lottery functionality
 
-You will now implement the core function where participants can enter the lottery by depositing their assets.
+Now, it's time to implement the core function of the contract, where participants can enter the lottery by depositing their assets.
 
 ```clarity
 (define-public (roll-the-dice (cityName (string-ascii 10)) (amount uint) (lockPeriod (optional uint)))
@@ -96,16 +96,16 @@ This function is crucial for managing lottery entries and ensuring assets are pr
 
 When a participant calls this function, the following steps occur:
 
-1. **Generate Ticket and Determine Lock Period**: A new ticket ID is generated, and the lock period is set (defaulting to 1 if not specified).
-2. **Transfer Assets and Mint NFT Ticket**: The specified amount of assets is transferred from the participant to the contract, and an NFT representing the lottery ticket is minted and assigned to the participant.
-3. **Update Participant and Ticket Data**: The participant's information, including ticket ID, amount, cycle, and expiration, is stored, and the ticket's ownership information is updated.
-4. **Update Lottery Pool and Return Ticket ID**: The total amount in the lottery pool is updated, the ticket counter is incremented, and the function returns the newly generated ticket ID to the participant.
+1. **Generate ticket and determine lock period**: A new ticket ID is generated, and the lock period is set (defaulting to 1 if not specified).
+2. **Transfer assets and mint NFT ticket**: The specified amount of assets is transferred from the participant to the contract, and an NFT representing the lottery ticket is minted and assigned to the participant.
+3. **Update participant and ticket data**: The participant's information, including ticket ID, amount, cycle, and expiration, is stored, and the ticket's ownership information is updated.
+4. **Update lottery pool and return ticket ID**: The total amount in the lottery pool is updated, the ticket counter is incremented, and the function returns the newly generated ticket ID to the participant.
 
 This streamlined process ensures that each participant's entry is properly recorded and their assets are securely managed within the lottery system.
 
 ### Handling the selection of winners
 
-Now, you will implement the function to select a winner randomly from the participants.
+Now, implement the function to select a winner randomly from the participants.
 
 ```clarity
 (define-private (select-winner)
@@ -130,16 +130,16 @@ The `select-winner` function randomly selects a winner using a number from the V
 
 When this function is called, the following steps occur:
 
-1. **Fetch Random Number**: A random number is obtained from the VRF contract by calling `get-save-rnd` with the previous block height.
-2. **Determine Winning Ticket**: The winning ticket ID is calculated by taking the modulus of the random number with the total number of tickets (`ticketCounter`).
-3. **Retrieve Winner Information**: The winner's ticket and participant information are retrieved using the calculated ticket ID.
-4. **Update Winner Status**: The participant's status is updated to indicate they are a winner by setting `isWinner` to `true` in the `Participants` map.
+1. **Fetch random number**: A random number is obtained from the VRF contract by calling `get-save-rnd` with the previous block height.
+2. **Determine winning ticket**: The winning ticket ID is calculated by taking the modulus of the random number with the total number of tickets (`ticketCounter`).
+3. **Retrieve winner information**: The winner's ticket and participant information are retrieved using the calculated ticket ID.
+4. **Update winner status**: The participant's status is updated to indicate they are a winner by setting `isWinner` to `true` in the `Participants` map.
 
 This process ensures that the winner is selected fairly and their status is accurately updated in the system.
 
 ### Claim and distribute rewards
 
-Lastly, you will implement the function to claim and distribute rewards to the winners.
+Lastly, implement the function to claim and distribute rewards to the winners.
 
 ```clarity
 (define-public (claim-rewards (cityName (string-ascii 10)) (cycle uint))
@@ -165,13 +165,13 @@ The `claim-rewards` function enables participants to claim their staking rewards
 
 When the `claim-rewards` function is called, the following steps occur:
 
-1. **Retrieve City ID and Balance**: The city ID is retrieved using the `get-city-id` function, and the balance for the specified cycle is obtained from the treasury contract.
-2. **Send Stacking Rewards**: Depending on the city (`mia` or `nyc`), the appropriate stacking reward function is called to send the rewards for the specified cycle.
-3. **Claim Stacking Reward**: The contract claims the stacking reward for the specified city and cycle.
+1. **Retrieve city ID and balance**: The city ID is retrieved using the `get-city-id` function, and the balance for the specified cycle is obtained from the treasury contract.
+2. **Send stacking rewards**: Depending on the city (`mia` or `nyc`), the appropriate stacking reward function is called to send the rewards for the specified cycle.
+3. **Claim stacking reward**: The contract claims the stacking reward for the specified city and cycle.
 
 When the `distribute-rewards` function is called, it performs the following step:
 
-1. **Select Winner**: The `select-winner` function is called to randomly select a winner from the participants and update their status.
+1. **Select winner**: The `select-winner` function is called to randomly select a winner from the participants and update their status.
 
 This process ensures that participants can claim their rewards and that winners are selected and rewarded fairly.
 
@@ -188,7 +188,7 @@ To test the contracts, use the following steps inside of `clarinet console`:
 (contract-call? 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.no-loss-lottery-pool claim "mia" u17)
 ```
 
-To bootstrap CityCoins contracts, follow these steps:
+To bootstrap the CityCoins contracts, follow these steps:
 
 ```clarity
 (contract-call? 'SP8A9HZ3PKST0S42VM9523Z9NV42SZ026V4K39WH.ccd004-city-registry get-or-create-city-id "mia")
