@@ -1,6 +1,6 @@
 ---
-title: Deep dive into Post-Conditions
-description: This guide explains how to use Post-Conditions to secure your smart contracts.
+title: Deep dive into post-conditions
+description: This guide explains how to use post-conditions to secure your smart contracts.
 ---
 
 import { Badge } from '@/components/ui/badge';
@@ -19,14 +19,14 @@ Post-conditions in Stacks transactions provide an additional layer of security. 
 
 In this guide, you will learn how to:
 
-1. Construct post-conditions
-2. Use post-conditions
-3. Set the post-condition mode
-4. Use the legacy methods/enums
+1. Construct post-conditions.
+2. Use post-conditions.
+3. Set the post-condition mode.
+4. Use the legacy methods/enums.
 
 ---
 
-### Constructing Post-Conditions
+### Constructing post-conditions
 
 In Stacks.js, post-conditions can be constructed using the Pc helpers. These are inspired by Behavior Driven Development (BDD).
 
@@ -42,7 +42,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
   .ustx();
 ```
 
-### Using Post-Conditions
+### Using post-conditions
 
 Post-conditions can be added to contract calls and FT/NFT transfers to ensure assets are transferred as specified.
 
@@ -55,7 +55,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
   .ustx();
 ```
 
-### Setting the Post-Condition mode
+### Setting the post-condition mode
 
 When creating a transaction, the mode of the transaction can be set to `Allow` or `Deny` to specify whether unspecified asset transfers are permitted.
 
@@ -168,7 +168,7 @@ Construct a post-condition for a certain amount of a specific FT to be sent.
 
 `Amount NFT Sent`
 
-Construct a post-condition for sending / not-sending a specific NFT instance.
+Construct a post-condition for sending / not-sending a specific NFT.
 
 <Tabs id="post-condition-examples" items={["Pc","Legacy"]}>
   <Tab value={"Pc"}>
