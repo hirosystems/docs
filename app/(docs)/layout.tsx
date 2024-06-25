@@ -12,7 +12,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
     transparentMode: "top",
     title: (
       <div className="text-md flex gap-3 items-center group">
-        <HiroIcon className="size-11 shrink-0 rounded-md" fill="currentColor" />
+        <HiroIcon className="size-11 shrink-0 rounded-md" />
         <span className="max-lg:hidden text-gray-500">|</span>
         <span className="max-lg:hidden text-gray-500 group-hover:text-primary">
           Documentation
