@@ -73,7 +73,7 @@ function authenticate() {
 
 ### Prompt users to sign a message
 
-Call the `openSignatureRequestPopup` function provided by the `@stacks/connect` package to trigger the display of the message signing prompt.
+Call the `openSignatureRequestPopup` function provided by the `@stacks/connect` package to trigger the display of the message signing prompt:
 
 ```ts twoslash
 // @noErrors
@@ -97,7 +97,7 @@ openSignatureRequestPopup({
 });
 ```
 
-All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package.
+All of the methods included on this page accept a `network` option. By default, Connect uses a `testnet` network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package:
 
 ```ts
 // [!code word:mainnet]
@@ -114,7 +114,7 @@ openSignatureRequestPopup({
 });
 ```
 
-Several parameters are available for calling `openSignatureRequestPopup`.
+Several parameters are available for calling `openSignatureRequestPopup`:
 
 ```ts
 interface SignatureRequestOptions {
@@ -135,7 +135,7 @@ interface SignatureRequestOptions {
 
 The `openSignatureRequestPopup` method from `@stacks/connect` allows you to specify an `onFinish` callback. This callback will be triggered after the user has successfully signed the message.
 
-You can get the signature of the message via the arguments passed to `onFinish`. Your callback will be fired with a single `data` argument.
+You can get the signature of the message via the arguments passed to `onFinish`. Your callback will be fired with a single `data` argument:
 
 ```ts twoslash
 // @noErrors
@@ -159,7 +159,7 @@ export interface SignatureData {
 
 ### How to verify a signature
 
-Now you can verify the signature using the `@stacks/encryption` package.
+Now you can verify the signature using the `@stacks/encryption` package:
 
 ```ts twoslash
 // @noErrors
