@@ -3,9 +3,20 @@ title: Request testnet STX
 description: Easily request testnet STX, so you can deploy and interact with Stacks testnet.
 ---
 
+import { Wrapper } from "@/components/layout"
+import { ImageZoom } from "fumadocs-ui/components/image-zoom"
+import Faucet from "../images/faucet.png"
+
 The Stacks Testnet Faucet is a dedicated utility for developers building on the Stacks blockchain. To aid you in deploying and running smart contracts on Stacks testnet, we've provided this faucet that offers easy access to testnet STX tokens.
 
-![Create Chainhook Window](../images/faucet.png)
+<Wrapper>
+  <ImageZoom
+    alt="Faucet"
+    src={Faucet}
+    className="!my-0 rounded-xl bg-background"
+    priority
+  />
+</Wrapper>
 
 ## Why use the Stacks Testnet Faucet?
 
