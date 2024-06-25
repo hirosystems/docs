@@ -30,24 +30,17 @@ In this guide, you will learn how to:
 
 In Stacks.js, post-conditions can be constructed using the Pc helpers. These are inspired by Behavior Driven Development (BDD).
 
-Start with the `Pc.address` initializer to specify the address of the principal that will be verified in the post-condition. Then auto-complete the rest of the post-condition.
-
-```ts twoslash
-// @noErrors
-// [!code word:Pc]
-import { Pc } from '@stacks/transactions';
-
-const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
-  .willSendEq(1000)
-  .ustx();
-```
+Start with the `Pc.principal` initializer to specify the address of the principal that will be verified in the post-condition. Then auto-complete the rest of the post-condition.
 
 ### Using post-conditions
 
 Post-conditions can be added to contract calls and FT/NFT transfers to ensure assets are transferred as specified.
 
+For instance, the following post-condition ensures that the principal initiating the transaction must send exactly 1000 uSTX, or else the transaction will abort.
+
 ```ts twoslash
 // @noErrors
+// [!code word:Pc]
 import { Pc } from '@stacks/transactions';
 
 const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -73,9 +66,15 @@ const tx = await makeContractCall({
 });
 ```
 
+Essentially, the `postConditionMode` is what tells the Stacks node whether to require (`Deny`) or ignore (`Allow`) the post-conditions when evaluating the transaction.
+
 ### Legacy methods/enums
 
 Legacy methods and enums can be used interchangeably with the builder methods.
+
+<Callout>
+If you prefer the legacy methods over the `Pc` builder approach, you can import them from the `@stacks/transactions` package.
+</Callout>
 
 ```ts twoslash
 // @noErrors
@@ -91,19 +90,19 @@ const postCondition = createSTXPostCondition(
 
 Some other examples can be found below:
 
-- [`createSTXPostCondition`](https://stacks.js.org/functions/_stacks_transactions.createSTXPostCondition) Builder method
-- [`createFungiblePostCondition`](https://stacks.js.org/functions/_stacks_transactions.createFungiblePostCondition) Builder method
-- [`createNonFungiblePostCondition`](https://stacks.js.org/functions/_stacks_transactions.createNonFungiblePostCondition) Builder method
-- [`FungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.FungibleConditionCode) Enum
-- [`NonFungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.NonFungibleConditionCode) Enum
+- [`createSTXPostCondition`](https://stacks.js.org/functions/_stacks_transactions.createSTXPostCondition)
+- [`createFungiblePostCondition`](https://stacks.js.org/functions/_stacks_transactions.createFungiblePostCondition)
+- [`createNonFungiblePostCondition`](https://stacks.js.org/functions/_stacks_transactions.createNonFungiblePostCondition)
+- [`FungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.FungibleConditionCode)
+- [`NonFungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.NonFungibleConditionCode)
 
 <Callout>
 Use the `Pc` helpers to construct post-conditions in a clear and concise manner.
 </Callout>
 
-### Code examples
+---
 
-`Amount uSTX Sent`
+### Amount uSTX Sent
 
 Construct a post-condition for a certain amount of uSTX to be sent.
 
@@ -134,7 +133,7 @@ Construct a post-condition for a certain amount of uSTX to be sent.
   </Tab>
 </Tabs>
 
-`Amount FT Sent`
+### Amount FT Sent
 
 Construct a post-condition for a certain amount of a specific FT to be sent.
 
@@ -166,7 +165,7 @@ Construct a post-condition for a certain amount of a specific FT to be sent.
   </Tab>
 </Tabs>
 
-`Amount NFT Sent`
+### Amount NFT Sent
 
 Construct a post-condition for sending / not-sending a specific NFT.
 
@@ -199,5 +198,5 @@ Construct a post-condition for sending / not-sending a specific NFT.
 </Tabs>
 
 <Callout type="warn">
-Post-conditions can only ensure the transfer of assets and cannot guarantee the end-state after a transaction. To learn more, read the [post-conditions](/stacks/stacks.js/guides/post-conditions) guide.
+Post-conditions can only ensure the transfer of assets and cannot guarantee the end-state after a transaction. To learn more, read the [post-conditions](/stacks/stacks.js/concepts/post-conditions) guide.
 </Callout>

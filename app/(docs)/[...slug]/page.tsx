@@ -25,6 +25,10 @@ export default function Page({ params }: { params: Param }): JSX.Element {
     const specialCases = {
       api: "API",
       sdk: "SDK",
+      connect: "Stacks Connect",
+      platform: "Hiro Platform",
+      "hiro-hacks": "Hiro Hacks",
+      "clarinet-js-sdk": "Clarinet JS SDK",
     };
 
     if (page.file?.name === "index" && page.slugs[1]) {

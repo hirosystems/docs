@@ -108,11 +108,9 @@ Ensure that the polyfills live in their own file as specified to avoid any runti
 
 ### Use Stacks.js in the project
 
-Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities.
+Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities, starting with the imports.
 
-Imports:
-
-```ts twoslash
+```tsx twoslash title="app/(tabs)/index.tsx"
 // @noErrors
 import {
   TransactionVersion,
@@ -123,9 +121,9 @@ import { Wallet, generateSecretKey, generateWallet } from "@stacks/wallet-sdk";
 import { useState } from "react";
 ```
 
-State management:
+Now you can start to manage the state as follows:
 
-```ts twoslash
+```tsx twoslash title="app/(tabs)/index.tsx"
 // @noErrors
 export default function HomeScreen() {
   const [mnemonic, setMnemonic] = useState("...");
@@ -134,9 +132,9 @@ export default function HomeScreen() {
 }
 ```
 
-Generate wallet and sign transaction:
+Next, to generate a wallet and sign a transaction:
 
-```ts twoslash
+```tsx twoslash title="app/(tabs)/index.tsx"
 // @noErrors
 const generate = async () => {
   const mnemonic = generateSecretKey();
@@ -161,9 +159,9 @@ const generate = async () => {
 };
 ```
 
-UI integration:
+And lastly, to integrate the UI:
 
-```tsx twoslash
+```tsx twoslash title="app/(tabs)/index.tsx"
 // @noErrors
 <ThemedView>
   <ThemedText type="subtitle">Seed Phrase</ThemedText>
