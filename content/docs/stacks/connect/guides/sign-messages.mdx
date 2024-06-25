@@ -17,16 +17,13 @@ import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
 import { InlineCode } from '@/components/inline-code';
 
-The process of broadcasting transactionsis fundamental for interacting with blockchains, whether you're transferring tokens, deploying contracts, or executing contract functions.
+The ability for a user to sign a cryptographic message to prove ownership of a particular address is a key feature provided by Stacks Connect.
 
 In this guide, you will learn how to:
 
-1. Install the necessary packages for building and broadcasting transactions
-2. Build different types of transactions
-3. Sign and broadcast those transactions to the Stacks blockchain
-4. Process and handle the results
-
-The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize these examples to fit your application's specific needs.
+1. Prompt users to sign a message
+2. Verify the signature
+3. Process and handle the results
 
 <Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
 
@@ -34,180 +31,160 @@ The examples in this guide are designed to be minimalistic, allowing you to easi
 
 ### Setup and installation
 
-Install the required packages to start building and broadcasting transactions.
+Using your preferred package manager, setup and install a new project with the following packages:
 
-- **@stacks/network**: Used to interact with the Stacks blockchain network.
-- **@stacks/transactions**: Used to build the transactions.
-- **@stacks/connect**: Used to authenticate users and broadcast the transactions.
+- **`@stacks/network`**: Used to interact with the Stacks blockchain network.
+- **`@stacks/encryption`**: Used to sign and verify messages.
+- **`@stacks/connect`**: Used to authenticate users and broadcast the transactions.
 
 ```package-install
-@stacks/network @stacks/transactions @stacks/connect
+@stacks/network @stacks/encryption @stacks/connect
 ```
 
 ### Initiate a session
 
-Users must authenticate to an app before prompting them to sign and broadcast transactions to the Stacks blockchain with an authenticator such as the [Stacks Wallet](https://leather.io/install-desktop).
+Users must authenticate to an app before you request message signing. Users can install an authenticator like the [Leather Wallet](https://leather.io/install-desktop).
+
+<Callout>
+  If you haven't already, refer to the [authentication guide](/stacks/connect/guides/authenticate-users) before proceeding to integrate the following message signing capabilities.
+</Callout>
 
 ```ts twoslash
-import { AppConfig, UserSession } from '@stacks/connect';
+// @noErrors
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
 const userSession = new UserSession({ appConfig });
-```
 
-See the [authentication guide](/stacks/connect/guides/authenticate-users) for more information and a full example.
-
-### Create a transaction
-
-There are three types of transactions: **STX transfers**, **contract deployments**, and **contract executions**.
-
-<Tabs defaultValue="transfer">
-  <TabsList className='flex flex-wrap md:w-max'>
-    <TabsTrigger value="transfer" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-90 dark:group-hover:text-white'>STX transfer</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="deploy" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-90 dark:group-hover:text-white'>Contract deployment</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="execute" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-90 dark:group-hover:text-white'>Contract execution</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="transfer">
-    To prompt the user to transfer STX, call the `openSTXTransfer` function provided by the `@stacks/connect` package to trigger the display of a transaction signing prompt for transferring STX:
-
-    ```ts twoslash
-    // @noErrors
-    import { openSTXTransfer } from '@stacks/connect';
-    import { StacksTestnet } from '@stacks/network';
-
-    openSTXTransfer({
-      recipient: 'ST2EB9WEQNR9P0K28D2DC352TM75YG3K0GT7V13CV',
-      amount: '100',
-      memo: 'Reimbursement',
-      network: new StacksTestnet(),
-      appDetails: {
-        name: 'My App',
-        icon: window.location.origin + '/my-app-logo.svg',
-      },
-      onFinish: data => {
-        console.log('Stacks Transaction:', data.stacksTransaction);
-        console.log('Transaction ID:', data.txId);
-        console.log('Raw transaction:', data.txRaw);
-      },
-    });
-    ```
-
-    Several parameters are available for calling `openSTXTransfer`. To learn more, check out our [reference page](/stacks/stacks.js/packages/connect).
-  </TabsContent>
-  <TabsContent value="deploy">
-    To prompt the user to deploy a smart contract, call the `openContractDeploy` function provided by the `@stacks/connect` package to trigger the display of a transaction signing prompt for deploying a smart contract:
-  
-    ```ts twoslash
-    // @noErrors
-    import { openContractDeploy } from '@stacks/connect';
-
-    const codeBody = '(begin (print "hello, world"))';
-
-    openContractDeploy({
-      contractName: 'my-contract-name',
-      codeBody,
-      appDetails: {
-        name: 'My App',
-        icon: window.location.origin + '/my-app-logo.svg',
-      },
-      onFinish: data => {
-        console.log('Stacks Transaction:', data.stacksTransaction);
-        console.log('Transaction ID:', data.txId);
-        console.log('Raw transaction:', data.txRaw);
-      },
-    });
-    ```
-
-    Several parameters are available for calling `openContractDeploy`. To learn more, check out our [reference page](/stacks/stacks.js/packages/connect).
-  
-    <Callout>Contracts will deploy to the Stacks address of the authenticated user.</Callout>
-  </TabsContent>
-  <TabsContent value="execute">
-    To prompt the user to execute a smart contract, call the `openContractCall` function provided by the `@stacks/connect` package to trigger the display of a transaction signing prompt for executing a contract:
-
-    As an example, consider this simple Clarity contract:
-
-    ```clarity
-    (define-public (say-hi)
-      (print "hi")
-      (ok u0)
-    )
-    ```
-
-    To execute this function, invoke the `openContractCall` method.
-
-    ```ts twoslash
-    // @noErrors
-    import { openContractCall } from '@stacks/connect';
-    import {
-      uintCV,
-      intCV,
-      bufferCV,
-      stringAsciiCV,
-      stringUtf8CV,
-      standardPrincipalCV,
-      trueCV,
-    } from '@stacks/transactions';
-
-    const functionArgs = [];
-
-    const options = {
-      contractAddress: 'ST22T6ZS7HVWEMZHHFK77H4GTNDTWNPQAX8WZAKHJ',
-      contractName: 'my-contract',
-      functionName: 'my-func',
-      functionArgs,
-      appDetails: {
-        name: 'My App',
-        icon: window.location.origin + '/my-app-logo.svg',
-      },
-      onFinish: data => {
-        console.log('Stacks Transaction:', data.stacksTransaction);
-        console.log('Transaction ID:', data.txId);
-        console.log('Raw transaction:', data.txRaw);
-      },
-    };
-
-    await openContractCall(options);
-    ```
-
-    Several parameters are available for calling `openContractCall`. To learn more, check out our [reference page](/stacks/stacks.js/packages/connect).
-  </TabsContent>
-</Tabs>
-
-### Handle the results of the signed transaction
-
-Each transaction signing method from `@stacks/connect` allows you to specify an `onFinish` callback. This callback will be triggered after the user has successfully broadcasted their transaction. The transaction will be broadcasted, but it will be pending until it has been mined on the Stacks blockchain.
-
-You can access some information about this transaction via the arguments passed to `onFinish`. Your callback will be fired with a single argument, which is an object with the following properties:
-
-```ts
-interface FinishedTxData {
-  stacksTransaction: StacksTransaction;
-  txRaw: string;
-  txId: string;
+function authenticate() {
+  showConnect({
+    appDetails: {
+      name: 'My App',
+      icon: window.location.origin + '/my-app-logo.svg',
+    },
+    redirectTo: '/',
+    onFinish: () => {
+      let userData = userSession.loadUserData();
+    },
+    userSession: userSession,
+  });
 }
 ```
 
-The `StacksTransaction` type comes from the `@stacks/transactions` library.
+### Prompt to sign a message
 
-The `txId` property can be used to provide a link to view the transaction in the explorer.
+Call the `openSignatureRequestPopup` function provided by the `@stacks/connect` package to trigger the display of the message signing prompt.
+
+```ts twoslash
+// @noErrors
+// [!code word:openSignatureRequestPopup]
+import { openSignatureRequestPopup } from '@stacks/connect';
+import { StacksTestnet } from '@stacks/network';
+
+const message = 'Hello World';
+
+openSignatureRequestPopup({
+  message,
+  network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
+  appDetails: {
+    name: 'My App',
+    icon: window.location.origin + '/my-app-logo.svg',
+  },
+  onFinish(data) {
+    console.log('Signature of the message', data.signature);
+    console.log('Use public key:', data.publicKey);
+  },
+});
+```
+
+All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package.
 
 ```ts
-const onFinish = data => {
-  const explorerTransactionUrl = 'https://explorer.stacks.co/txid/${data.txId}';
-  console.log('View transaction in explorer:', explorerTransactionUrl);
+// [!code word:mainnet]
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+const testnet = new StacksTestnet();
+const mainnet = new StacksMainnet();
+
+// use this in your messe signing method:
+
+openSignatureRequestPopup({
+  network: mainnet,
+  // other relevant options
+});
+```
+
+Several parameters are available for calling `openSignatureRequestPopup`.
+
+```ts
+interface SignatureRequestOptions {
+  message: string;
+  onFinish?: (data: SignatureData) => void;
+  onCancel?: (data: SignatureData) => void;
+  appDetails: {
+    name: string;
+    icon: string;
+  };
+  authOrigin?: string;
+  stxAddress?: string;
+  userSession?: UserSession;
+}
+```
+
+### Getting the signed message back after completion
+
+The `openSignatureRequestPopup` method from `@stacks/connect` allows you to specify an `onFinish` callback. This callback will be triggered after the user has successfully signed the message.
+
+You can get the signature of the message via the arguments passed to `onFinish`. Your callback will be fired with a single `data` argument.
+
+```ts twoslash
+// @noErrors
+// [!code word:data]
+const onFinish = (data: SignatureData) => {
+  const { signature, publicKey } = data;
+
+  console.log('Signature', signature);
+  console.log('PublicKey', publicKey);
 };
 ```
 
-### Specifying a network for a transaction
+```ts
+export interface SignatureData {
+  /* Hex encoded DER signature */
+  signature: string;
+  /* Hex encoded private string taken from privateKey */
+  publicKey: string;
+}
+```
 
-All of the methods included on this page accept a network option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package.
+### How to verify a signature
+
+Now you can verify the signature using the `@stacks/encryption` package.
+
+```ts twoslash
+// @noErrors
+// [!code word:verifyMessageSignatureRsv]
+import type { SignatureData } from '@stacks/connect';
+import { verifyMessageSignatureRsv } from '@stacks/encryption';
+
+const message = 'Hello World';
+
+openSignatureRequestPopup({
+  message,
+  network: new StacksTestnet(),
+  appDetails: {
+    name: 'My App',
+    icon: window.location.origin + '/my-app-logo.svg',
+  },
+  onFinish(data: SignatureData) {
+    const { signature, publicKey } = data;
+    const verified = verifyMessageSignatureRsv({ message, publicKey, signature });
+    if (verified) {
+      /* your logic here */ // [!code highlight]
+    }
+  },
+});
+```
 
 ---
 
@@ -216,9 +193,9 @@ All of the methods included on this page accept a network option. By default, Co
 <Cards className='sm:grid-cols-1'>
   <SmallCard
     icon={<Code className='text-primary' />}
-    href="/stacks/connect/guides/sign-messages"
-    title="Sign messages"
-    description="Learn how to sign messages using Stacks.js."
+    href="/stacks/connect/guides/sign-transactions"
+    title="Sign transactions"
+    description="Learn how to sign transactions using Stacks Connect."
   />
   <SmallCard
     icon={<Terminal className='text-primary' />}
