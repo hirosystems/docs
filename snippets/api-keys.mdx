@@ -1,0 +1,37 @@
+import { Step } from 'fumadocs-ui/components/steps';
+
+Developers have open access to Hiro's APIs without the use of an API key, but are subject to [Hiro's rate limit policy](./rate-limiting). For developers who need access beyond these rate limits, we provide API keys.
+
+<Callout title='Where can I get an API key?'>
+If you're interested in obtaining an API key, you can generate one for free in the [Hiro Platform](https://platform.hiro.so).
+</Callout>
+
+## Usage with cURL
+
+The API key is passed in the `header` of your HTTP API request with `x-hiro-api-key`.
+
+```bash title="Terminal"
+curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-api-key>'
+```
+
+## Usage with Node
+
+This snippet shows how to perform a `fetch` request with your API key by including it in the request headers.
+
+```ts title="fetch.ts"
+async function makeApiRequest(apiKey: string) {
+  const url = `https://api.hiro.so/<your-api-endpoint>`;
+  const response = await fetch(url, {
+    headers: {
+      "x-hiro-api-key": apiKey // [!code highlight]
+    }
+  });
+  return response.json();
+}
+```
+
+<Callout title="Caution" type="warn">
+The API key is passed in the header of your HTTP API request and is used only for private use, like in server-side applications.
+
+If you use the API key in your client-side application, attackers can capture it using the client tools (E.g., browser console) and abuse your API key.
+</Callout>
