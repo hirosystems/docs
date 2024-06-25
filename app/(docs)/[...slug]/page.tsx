@@ -27,7 +27,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       sdk: "SDK",
       connect: "Stacks Connect",
       platform: "Hiro Platform",
-      "hiro-hacks": "Hiro Hacks",
+      hacks: "Hiro Hacks",
       "clarinet-js-sdk": "Clarinet JS SDK",
     };
 

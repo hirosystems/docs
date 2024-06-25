@@ -79,9 +79,7 @@ export function SidebarBanner(): JSX.Element {
       <div className="group flex flex-row items-center gap-2 rounded-lg px-2 transition-colors">
         <ChevronLeft className="text-muted-foreground size-4 shrink-0 rounded-md group-hover:text-primary" />
         <div>
-          <p className="text-muted-foreground group-hover:text-primary">
-            Back to homepage
-          </p>
+          <p className="text-muted-foreground group-hover:text-primary">Back</p>
         </div>
       </div>
     </Link>

@@ -7,9 +7,169 @@
       "permanent": false
     },
     {
+      "source": "/chainhook",
+      "destination": "/stacks/chainhook",
+      "permanent": true
+    },
+    {
       "source": "/clarinet",
       "destination": "/stacks/clarinet",
       "permanent": true
+    },
+    {
+      "source": "/explorer",
+      "destination": "/stacks/explorer",
+      "permanent": true
+    },
+    {
+      "source": "/hiro-archive",
+      "destination": "/stacks/archive",
+      "permanent": true
+    },
+    {
+      "source": "/platform",
+      "destination": "/stacks/platform",
+      "permanent": true
+    },
+    {
+      "source": "/platform/guides/:path*",
+      "destination": "/stacks/platform",
+      "permanent": false
+    },
+    {
+      "source": "/stacks.js",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/stacks-blockchain-api",
+      "destination": "/stacks/api",
+      "permanent": true
+    },
+    {
+      "source": "/api-keys",
+      "destination": "/stacks/api-keys",
+      "permanent": true
+    },
+    {
+      "source": "/api-keys",
+      "destination": "/guides/api-keys",
+      "permanent": true
+    },
+    {
+      "source": "/rate-limiting",
+      "destination": "/guides/rate-limiting",
+      "permanent": true
+    },
+    {
+      "source": "/contributors-guide",
+      "destination": "/guides/contributors-guide",
+      "permanent": true
+    },
+    {
+      "source": "/example-apps",
+      "destination": "/stacks/getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/tutorials",
+      "destination": "/stacks/getting-started",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook",
+      "destination": "/ordinals/ordhook",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/getting-started",
+      "destination": "/ordinals/ordhook/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/guides/ordhook-as-a-service-bitcoind",
+      "destination": "/ordinals/ordhook/guides/ordhook-as-a-service",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/guides/scan-ordinal-activities",
+      "destination": "/ordinals/ordhook/guides/scan-ordinal-activities",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/guides/stream-ordinal-activities",
+      "destination": "/ordinals/ordhook/guides/stream-ordinal-activities",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals-explorer",
+      "destination": "/ordinals/explorer",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals-explorer/guides/build-explorer",
+      "destination": "/ordinals/explorer/guides/build-explorer",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals-api",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto",
+      "destination": "/stacks/nakamoto",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto-api",
+      "destination": "/stacks/api",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/clarinet",
+      "destination": "/stacks/nakamoto/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/explorer",
+      "destination": "/stacks/nakamoto/explorer",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/stacks-js",
+      "destination": "/stacks/nakamoto/stacks-js",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/stacks-api",
+      "destination": "/stacks/nakamoto/api",
+      "permanent": true
+    },
+    {
+      "source": "/hacks",
+      "destination": "/stacks/hacks",
+      "permanent": true
+    },
+    {
+      "source": "/hacks/build-a-friend-tech-clone",
+      "destination": "/stacks/hacks/build-a-friend-tech-clone",
+      "permanent": true
+    },
+    {
+      "source": "/hacks/build-a-decentralized-grants-program",
+      "destination": "/stacks/hacks/build-a-decentralized-grants-program",
+      "permanent": true
+    },
+    {
+      "source": "/hacks/build-a-custom-api-using-chainhook",
+      "destination": "/stacks/hacks/build-a-custom-api",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/stacks",
+      "permanent": false
     }
   ]
 }

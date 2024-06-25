@@ -4,6 +4,7 @@ description: Explore and verify data on the Stacks blockchain.
 toc: false
 ---
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button"
 
 The Stacks Explorer lets you explore on-chain data, troubleshoot pending transactions, edit and deploy contracts via the sandbox, discover new tokens, and more. We maintain and support the [Stacks Explorer](https://explorer.hiro.so) as a service for the community, but you can also run your own instance of the explorer.
@@ -14,7 +15,14 @@ The Stacks Explorer lets you explore on-chain data, troubleshoot pending transac
       View Stacks Explorer
     </a>
   </Button>
-  <Button variant="outline">Set up your own explorer</Button>
+  <Button variant="outline">
+    <Link
+      href="/stacks/explorer/guides/build-explorer"
+      className="no-underline"
+    >
+      Set up your own explorer
+    </Link>
+  </Button>
 </div>
 
 ### Related tools
