@@ -1,5 +1,6 @@
 import "./global.css";
 import "fumadocs-ui/twoslash.css";
+import { aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
 import type { Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
@@ -31,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col">

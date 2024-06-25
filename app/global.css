@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Aeonik Fono';
-  src:
-    url('https://alphaassets.hiro.so/AeonikFono-Regular.woff2') format('woff2'),
-    url('https://alphaassets.hiro.so/AeonikFono-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: 'AeonikMono-Regular';
-  src:
-    url('https://alphaassets.hiro.so/AeonikMono-Regular.woff2') format('woff2'),
-    url('https://alphaassets.hiro.so/AeonikMono-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-
-
 
 @layer base {
   :root {
@@ -82,15 +60,26 @@ body {
   font-synthesis-weight: none;
 }
 
-h1, h2, h3, h4, h5, h6, a, code, button {
-  font-family: 'Aeonik Fono';
+/* Override CSS */
+
+h1, h2, h3, h4, h5, h6, code, button {
+  font-family: var(--font-aeonikFono), sans-serif;
+}
+
+/* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
+/* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
+a, p, li, table, input, div.prose .w-0, div.prose .flex-1 span {
+  font-family: var(--font-inter), sans-serif;
 }
 
 p {
   line-height: 1.75;
 }
 
-/* Override CSS */
+nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
+  font-family: var(--font-aeonikFono), sans-serif;
+}
+
 
 a[aria-label="Hiro Platform"] div svg {
   width: 0.75rem;
@@ -107,6 +96,7 @@ nav a[href="/guides"] {
 
 
 p.first\:mt-0 {
+  font-family: var(--font-aeonikFono), sans-serif;
   margin-top: 1.5rem !important;
 }
 
