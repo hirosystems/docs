@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "postbuild": "bun run ./scripts/clean-urls.js && bun run build:index",
     "build:index": "bun run ./scripts/update-index.mts",
-    "build:openapi": "node ./scripts/generate-docs.mjs",
+    "build:openapi": "bun run ./scripts/generate-docs.mjs",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
