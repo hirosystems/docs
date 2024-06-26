@@ -26,6 +26,7 @@ const config = {
 };
 
 const withMDX = createMDX({
+  rootContentPath: './content/docs/',
   mdxOptions: {
     rehypeCodeOptions: {
       themes: {
