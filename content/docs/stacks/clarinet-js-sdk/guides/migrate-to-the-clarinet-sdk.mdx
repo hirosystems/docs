@@ -14,14 +14,12 @@ import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
 import { InlineCode } from '@/components/inline-code';
 
-Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more, while ensuring reproducible deployments critical for testing purposes.
-
 In this guide, you will learn how to:
 
 1. Migrate your existing Clarinet projects to use the Clarinet SDK.
 2. Run your existing tests using the Clarinet SDK.
 
-<Callout type="warn">
+<Callout>
 This guide is for projects that have been created with Clarinet v1 and do not have the v2 boilerplate code auto-generated in their projects.
 </Callout>
 
@@ -98,9 +96,7 @@ npm test
 The `simnet` object is available globally in the tests, and is automatically initialized before each test. You can have a look at the `vitest.config.js` file at the root of you project for more details.
 </Callout>
 
-Getting back to the tests, we just implemented two of them:
-
-The first test checks that the `increment` function returns the new value and saves it to the `count` variable.
+Getting back to the tests - the first test checks that the `increment` function returns the new value and saves it to the `count` variable.
 The second test checks that an `print_event` is emitted when the `increment` function is called.
 
 <Callout>

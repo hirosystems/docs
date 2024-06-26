@@ -89,6 +89,13 @@ function authenticate() {
 }
 ```
 
+The `showConnect` function accepts an object with the following properties:
+
+- The app's `name` and `icon`: provided as strings comprising the `appDetails` object property.
+- The `redirectTo` string: used to provide a URL to which the user should be redirected upon successful authentication.
+- The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
+- The `userSession` object initiated above.
+
 ### Handle pending authentication
 
 After initiating the authentication process, you will most likely need to handle cases where the user hasn't completed the authentication flow.
@@ -132,7 +139,7 @@ For users already signed in, you can directly access their session information a
     icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/stacks.js/guides/post-conditions"
     title="Deep dive into post-conditions"
-    description="Learn how to use post-conditions to secure your smart contracts."
+    description="Learn how to build post-conditions to secure your smart contracts."
   />
 </Cards>
 

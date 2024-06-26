@@ -4,11 +4,22 @@ description: A cloud-based development environment to kickstart your app develop
 toc: false
 ---
 
+import Link from "next/link";
+import { Button } from "@/components/ui/button"
+
 The Hiro Platform is a hosted developer experience for creating, testing, and deploying smart contracts. It comes pre-installed with several tools, including Clarinet, VS Code, and a private blockchain network for testing, so you can spend less time setting up and more time building.
 
 You can also set up custom event streams via chainhooks and manage API keys for Stacks and Ordinals.
 
-[Spin up your next project in just a few clicks.](/stacks/platform/guides/create-project)
+<Button className="bg-orange-500 hover:bg-orange-600">
+  <Link
+    target="_blank"
+    href="https://platform.hiro.so/"
+    className="no-underline"
+  >
+    Get started on the platform
+  </Link>
+</Button>
 
 ### Guides
 
@@ -45,7 +56,7 @@ You can also set up custom event streams via chainhooks and manage API keys for 
 
   <Card 
     href="/platform/guides/devnet"
-    title="Iterate rapidly with devnet"
+    title="Iterate quickly with devnet"
     description="Leverage devnet, a private instance of the blockchain, for rapid feedback loops and a better debugging experience."
   />
 </Cards>

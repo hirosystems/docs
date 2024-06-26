@@ -3,62 +3,34 @@ title: Run Ordhook as a service
 description: Learn how to run Ordhook to evaluate your "if this, then that" predicates for Ordinals.
 ---
 
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { SmallCard } from '@/components/card';
+
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
+
+import { InlineCode } from '@/components/inline-code';
+
+In order to build out a more robust and secure web app, you can run Chainhook as a service to stream your events continously to a server you designate.
+
+In this guide, you will learn how to:
+
+1. Configure an existing Bitcoin node to work with Ordhook.
+2. Generate a Ordhook predicate to target specific transactions.
+3. Scan the Bitcoin blockchain for transactions that match your predicate.
+4. Initiate a Ordhook service to watch for matching transactions.
+5. Dynamically register your predicate with Ordhook.
+
+---
+
 ### Prerequisites
 
-### Setting Up a Bitcoin node
+A fully synced Bitcoin node is required to run Ordhook as a service. Check out our guide on [How to sync a Bitcoin node](/guides/sync-a-bitcoin-node) before proceeding.
 
-The Bitcoin Core daemon (bitcoind) is a program that implements the Bitcoin protocol for remote procedure call (RPC) use. Ordhook can be set up to interact with the Bitcoin chainstate through bitcoind's ZeroMQ interface, its embedded networking library, passing raw blockchain data to be evaluated for relevant events.
-
-This guide is written to work with the latest Bitcoin Core software containing bitcoind, [Bitcoin Core 25.0](https://bitcoincore.org/bin/bitcoin-core-25.0/).
-
-> **_NOTE:_**
->
-> While bitcoind can and will start syncing a Bitcoin node, customizing this node to your use cases beyond supporting a Ordhook is out of scope for this guide. See the Bitcoin wiki for ["running bitcoin"](https://en.bitcoin.it/wiki/Running_Bitcoin) or bitcoin.org's [running a full node guide](https://bitcoin.org/en/full-node).
-
-- Make note of the path of your `bitcoind` executable (located within the `bin` directory of the `bitcoin-25.0` folder you downloaded above)
-- Navigate to the project folder where your Ordhook node will reside, create a new file, and rename it to `bitcoin.conf`. Copy the configuration below to this `bitcoin.conf` file.
-- Find and copy your Bitcoin data directory and paste that value to the `datadir` field in the `bitcoin.conf` file below. Either copy the default path (see [list of default directories by operating system](https://en.bitcoin.it/wiki/Data_directory)) or copy the custom path you set for your Bitcoin data
-- Set a username of your choice for bitcoind and use it in the `rpcuser` configuration below (`devnet` is included in the snippet below as a default).
-- Set a password of your choice for bitcoind and use it in the `rpcpassword` configuration below (`devnet` is set as a default).
-
-```
-# Bitcoin core configuration
-
-datadir=/path/to/bitcoin/directory/ # Path to Bitcoin directory
-server=1
-rpcuser=devnet
-rpcpassword=devnet
-rpcport=8332
-rpcallowip=0.0.0.0/0
-rpcallowip=::/0
-txindex=1
-listen=1
-discover=0
-dns=0
-dnsseed=0
-listenonion=0
-rpcserialversion=1
-disablewallet=0
-fallbackfee=0.00001
-rpcthreads=8
-blocksonly=1
-dbcache=4096
-
-# Start zeromq
-zmqpubhashblock=tcp://0.0.0.0:18543
-```
-
-> **_NOTE:_**
->
-> The below command is a startup process that might take a few hours to a few days to run if this is your first time syncing a node. Alternatively, if the directory pointed to in the `datadir` field above contains Bitcoin blockchain data, syncing will resume.
-
-Now that you have the `bitcoin.conf` file ready with the bitcoind configurations, you can run the bitcoind node. The command takes the form `path/to/bitcoind -conf=path/to/bitcoin.conf`. For example:
-
-```console
-/Volumes/SSD/bitcoin-25.0/bin/bitcoind -conf=/Volumes/SSD/project/Ordhook/bitcoin.conf
-```
-
-Once the above command runs, you will see `zmq_url` entries in the console's stdout, displaying ZeroMQ logs of your Bitcoin node.
+---
 
 ### Configure Ordhook
 
@@ -82,9 +54,8 @@ Additionally, if you want to receive events from the configured Bitcoin node, su
 [storage]
 working_dir = "ordhook"
 
-# The Http Api allows you to register / deregister
-# dynamically predicates.
-# Disable by default.
+# The http API allows you to register / deregister predicates dynamically.
+# This is disabled by default.
 #
 # [http_api]
 # http_port = 20456

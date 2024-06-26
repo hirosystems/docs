@@ -49,6 +49,8 @@ Users must authenticate to an app before you request message signing. Users can 
   If you haven't already, refer to the [authentication guide](/stacks/connect/guides/authenticate-users) before proceeding to integrate the following message signing capabilities.
 </Callout>
 
+To prompt users to log in, use the `showConnect` function from the `@stacks/connect` package:
+
 ```ts twoslash
 // @noErrors
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
@@ -159,7 +161,7 @@ export interface SignatureData {
 
 ### How to verify a signature
 
-Now you can verify the signature using the `@stacks/encryption` package:
+When you verify a signature, you're confirming that the message was indeed created by the claimed sender and that it hasn't been altered since it was signed. To do this, use the `verifyMessageSignatureRsv` function from the `@stacks/encryption` package:
 
 ```ts twoslash
 // @noErrors

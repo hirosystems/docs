@@ -24,9 +24,8 @@ The generated `Ordhook.toml` file looks like this:
 [storage]
 working_dir = "ordhook"
 
-# The Http API allows you to register / deregister
-# dynamically predicates.
-# Disable by default.
+# The http API allows you to register / deregister predicates dynamically.
+# This is disabled by default.
 #
 # [http_api]
 # http_port = 20456
@@ -52,8 +51,7 @@ max_number_of_processing_threads = 16
 bitcoin_concurrent_http_requests_max = 16
 max_caching_memory_size_mb = 32000
 
-# Disable the following section if the state
-# must be built locally
+# Disable the following section if the state must be built locally
 [bootstrap]
 download_url = "https://archive.hiro.so/mainnet/ordhook/mainnet-ordhook-sqlite-latest"
 

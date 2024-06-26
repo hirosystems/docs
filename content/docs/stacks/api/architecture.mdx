@@ -3,6 +3,17 @@ title: Architecture
 description: Understand the architecture of the Stacks Blockchain API.
 ---
 
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+
+<ImageZoom
+  width="700"
+  height="400"
+  alt="stacks-api-architecture"
+  src='/images/api/architecture.png'
+  className="mt-0 mb-6 first-line:rounded-xl bg-background"
+  priority
+/>
+
 The `stacks-node` has its own minimal set of http endpoints referred to as `RPC endpoints`.
 
 - The `stacks-blockchain-api` allows clients to access RPC endpoints by proxying requests to a load-balanced pool of `stacks-nodes`.
@@ -23,15 +34,16 @@ The Stacks Blockchain API implements additional endpoints that provide data unav
 
 The API creates an "event observer" http server which listens for events from a stacks-node "event emitter".
 
-- Events are HTTP POST requests containing:
+Events are HTTP POST requests containing:
   - Blocks
   - Transactions
-  - Byproducts of executed transactions such as:
-    - Asset transfers
-    - Smart-contract log data
+
+Byproducts of executed transactions such as:
+  - Asset transfers
+  - Smart-contract log data
     - Execution cost data
-- The API processes and stores these events as relational data in PostgreSQL.
-- For the "event observer" code, see `/src/event-stream`.
+
+The API processes and stores these events as relational data in PostgreSQL. For the "event observer" code, see `/src/event-stream`.
 
 All http endpoints and responses are defined in OpenAPI and JSON Schema.
 
