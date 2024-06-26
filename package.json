@@ -9,7 +9,8 @@
     "build:openapi": "node ./scripts/generate-docs.mjs",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "fetch-guides": "node ./scripts/fetch-guides.js"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.9.0",
@@ -41,6 +42,7 @@
     "fumadocs-typescript": "^1.0.1",
     "fumadocs-ui": "9.1.0",
     "geist": "^1.2.0",
+    "gray-matter": "^4.0.3",
     "katex": "^0.16.8",
     "lucide-react": "^0.298.0",
     "next": "14.1.0",

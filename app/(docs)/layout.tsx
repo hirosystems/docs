@@ -25,7 +25,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
         label: "Hiro Platform",
         href: "https://platform.hiro.so/",
         icon: (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 bg-secondary p-1.5 rounded-md">
             <span className="ml-2 font-semibold max-md:hidden">
               Hiro Platform
             </span>

@@ -4,14 +4,30 @@ toc: false
 ---
 
 import Link from "fumadocs-core/link";
-
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { SectionHeader } from '@/components/layout/section-header';
 import { Badge } from "@/components/ui/badge";
-import { guides } from "@/utils/data";
+import guidesData from '@/utils/all-guides.json';
+
+
+import guidesImage from '@/public/guides.svg';
+
+<div className='flex flex-col space-y-10'>
+
+<div className='flex space-x-6 items-end'>
+  <ImageZoom
+    alt="banner"
+    src={guidesImage}
+    className="mt-0 mb-6 first-line:rounded-xl bg-background"
+    priority
+  />
+</div>
+
+## Stacks
 
 <Cards>
-  {guides.map(guide => {
-    return ( 
+  {guidesData.stacks.map(guide => {
+    return (
       <Card
         key={guide.title}
         href={guide.href}
@@ -22,10 +38,19 @@ import { guides } from "@/utils/data";
   })}
 </Cards>
 
-### All guides
+## Ordinals
 
-<ul>
-  {guides.map(guide => (
-    <li key={guide.title}><a href={guide.href}>{guide.title}</a></li>
-  ))}
-</ul>
+<Cards>
+  {guidesData.ordinals.map(guide => {
+    return (
+      <Card
+        key={guide.title}
+        href={guide.href}
+        title={guide.title}
+        description={guide.description}
+      />
+    )
+  })}
+</Cards>
+
+</div>
