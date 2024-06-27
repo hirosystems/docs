@@ -147,7 +147,7 @@
       "permanent": true
     },
     {
-      "source": "/hiro-archive",
+      "source": "/hiro-archive/:path*",
       "destination": "/stacks/archive",
       "permanent": true
     },
@@ -157,9 +157,19 @@
       "permanent": true
     },
     {
+      "source": "/platform/getting-started",
+      "destination": "/stacks/platform/quickstart",
+      "permanent": true
+    },
+    {
       "source": "/platform/guides/:path*",
       "destination": "/stacks/platform",
       "permanent": false
+    },
+    {
+      "source": "/platform/faq",
+      "destination": "/stacks/platform",
+      "permanent": true
     },
     {
       "source": "/stacks.js",
@@ -167,8 +177,88 @@
       "permanent": true
     },
     {
-      "source": "/stacks-blockchain-api",
+      "source": "/stacks.js/installing",
+      "destination": "/stacks/stacks.js/installation",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/learn-the-basics",
+      "destination": "/stacks/stacks.js/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/faq",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/roadmap",
+      "destination": "/stacks/stacks.js/roadmap",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/guides/how-to-integrate-stacking",
+      "destination": "/stacks/stacks.js",
+      "permanent": false
+    },
+    {
+      "source": "/stacks.js/guides/deep-dive-post-conditions",
+      "destination": "stacks/stacks.js/guides/post-conditions",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/guides/react-native-guide",
+      "destination": "stacks/stacks.js/guides/use-with-react-native",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/connect",
+      "destination": "stacks/connect",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/guides/authenticate-users-with-connect",
+      "destination": "stacks/connect/guides/authenticate-users",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/guides/sign-transactions",
+      "destination": "stacks/connect/guides/sign-transactions",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/guides/sign-messages",
+      "destination": "stacks/connect/guides/sign-messages",
+      "permanent": true
+    },
+    {
+      "source": "/stacks-blockchain-api/:path*",
       "destination": "/stacks/api",
+      "permanent": true
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/stacks/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/:path*",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/metadata/:path*",
+      "destination": "/stacks/token-metadata-api",
+      "permanent": true
+    },
+    {
+      "source": "/token-metadata-api/:path*",
+      "destination": "/stacks/token-metadata-api",
+      "permanent": true
+    },
+    {
+      "source": "/token-metadata-api/architecture-overview",
+      "destination": "/stacks/token-metadata-api/architecture",
       "permanent": true
     },
     {
@@ -192,12 +282,22 @@
       "permanent": true
     },
     {
-      "source": "/example-apps",
+      "source": "/example-apps/:path*",
       "destination": "/stacks/get-started",
       "permanent": true
     },
     {
-      "source": "/tutorials",
+      "source": "/build-apps/:path*",
+      "destination": "/stacks",
+      "permanent": true
+    },
+    {
+      "source": "/get-started/:path*",
+      "destination": "/stacks/get-started",
+      "permanent": true
+    },
+    {
+      "source": "/tutorials/:path*",
       "destination": "/stacks/get-started",
       "permanent": true
     },
@@ -284,6 +384,21 @@
     {
       "source": "/hacks/build-a-custom-api-using-chainhook",
       "destination": "/stacks/hacks/build-a-custom-api",
+      "permanent": true
+    },
+    {
+      "source": "/references/:path*",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/stacksjs-starters",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/get-started/transactions",
+      "destination": "/stacks/stacks.js/concepts/transactions",
       "permanent": true
     }
   ]
