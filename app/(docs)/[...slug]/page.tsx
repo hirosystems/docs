@@ -131,24 +131,54 @@ function Category({ page }: { page: Page }): JSX.Element {
   );
 }
 
-export function generateMetadata({ params }: { params: Param }): Metadata {
-  const page = utils.getPage(params.slug);
+export const metadata: Metadata = {
+  title: "Hiro Docs",
+  description:
+    "All the developer docs, guides and resources you need to build on Bitcoin layers.",
+  openGraph: {
+    title: "Hiro Docs",
+    description:
+      "All the developer docs, guides and resources you need to build on Bitcoin layers.",
+    url: "https://docs.hiro.so",
+    siteName: "Hiro Docs",
+    images: [
+      {
+        url: "/og.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hiro Docs",
+    description:
+      "All the developer docs, guides and resources you need to build on Bitcoin layers.",
+    creator: "@hirosystems",
+    images: ["/og.png"], // Must be an absolute URL
+  },
+};
 
-  if (!page) notFound();
+// export function generateMetadata({ params }: { params: Param }): Metadata {
+//   const page = utils.getPage(params.slug);
 
-  const description =
-    page.data.description ??
-    "All the developer docs, guides and resources you need to build on Bitcoin layers.";
+//   if (!page) notFound();
 
-  const imageParams = new URLSearchParams();
-  imageParams.set("title", page.data.title);
-  imageParams.set("description", description);
+//   const description =
+//     page.data.description ??
+//     "All the developer docs, guides and resources you need to build on Bitcoin layers.";
 
-  return createMetadata({
-    title: page.data.title,
-    description,
-  });
-}
+//   const imageParams = new URLSearchParams();
+//   imageParams.set("title", page.data.title);
+//   imageParams.set("description", description);
+
+//   return createMetadata({
+//     title: page.data.title,
+//     description,
+//   });
+// }
 
 export function generateStaticParams(): Param[] {
   return utils.getPages().map<Param>((page) => ({
