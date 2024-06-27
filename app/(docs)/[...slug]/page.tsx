@@ -145,7 +145,7 @@ export function generateMetadata({ params }: { params: Param }): Metadata {
   imageParams.set("description", description);
 
   const image = {
-    alt: "Banner",
+    alt: "og",
     url: `/og.png`,
     width: 1200,
     height: 630,
@@ -155,7 +155,7 @@ export function generateMetadata({ params }: { params: Param }): Metadata {
     title: page.data.title,
     description,
     openGraph: {
-      url: `/docs/${page.slugs.join("/")}`,
+      url: `/${page.slugs.join("/")}`,
       images: image,
     },
     twitter: {
