@@ -27,6 +27,7 @@
     --radius: 0.5rem;
     --hiro: 20 100% 50%;
     --icon: 20 14.3% 4.1%;
+    --inverted: 0 4% 5%;
   }
 
   .dark {
@@ -52,6 +53,7 @@
     --hiro: 20 100% 50%;
     --card-hover: 15 5% 16%;
     --icon: 0 0% 100%;
+    --inverted: 0 0% 100%;
   }
 
   
@@ -121,6 +123,18 @@ nav a[href="/guides"] {
     gap: 0;
 }
 
+/* Target the header toggle */
+
+body > div > header > nav > div.rounded-md.border.bg-background.p-1.text-sm.text-muted-foreground.max-md\:absolute.max-md\:left-\[50\%\].max-md\:translate-x-\[-50\%\] > a.rounded-md.px-2.py-1.transition-colors.hover\:text-accent-foreground.bg-background.text-accent-foreground {
+  background-color: hsl(var(--inverted));
+  color: hsl(var(--background));
+}
+
+/* Target the search component */
+
+body > div > header > nav > div.flex.flex-1.flex-row.items-center.justify-end.md\:gap-2 > button.inline-flex.w-full.max-w-\[240px\].items-center.gap-2.rounded-full.border.bg-secondary\/50.p-1\.5.text-sm.text-muted-foreground.transition-colors.hover\:bg-accent.hover\:text-accent-foreground.max-md\:hidden {
+  background-color: hsl(var(--background))
+}
 
 p.first\:mt-0 {
   font-family: var(--font-aeonikFono), sans-serif;

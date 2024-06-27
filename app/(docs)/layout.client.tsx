@@ -31,7 +31,7 @@ export function NavChildren(): JSX.Element {
   const filteredModes = modes.filter((m) => m.param !== "guides");
 
   return (
-    <div className="rounded-md border bg-secondary p-1 text-sm text-muted-foreground max-md:absolute max-md:left-[50%] max-md:translate-x-[-50%]">
+    <div className="rounded-md border bg-background p-1 text-sm text-muted-foreground max-md:absolute max-md:left-[50%] max-md:translate-x-[-50%]">
       {filteredModes.map((m) => (
         <Link
           key={m.param}
