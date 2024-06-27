@@ -58,12 +58,12 @@
 
   
   .ordinals {
-    --primary: 20 100% 60%; /* HSL(24.6, 95%, 53.1%) */
+    --primary: 20 14.3% 4.1%;
     --icon: 20 14.3% 4.1%;
   }
 
   .dark .ordinals {
-    --primary: 20 100% 60%; /* HSL(20.5, 90.2%, 48.2%) */
+    --primary: 0 0% 100%;
     --icon: 0 0% 100%;
   }
 }
@@ -86,10 +86,8 @@ a[aria-label="Hiro Platform"] {
 }
 
 
-a[aria-label="Hiro Platform"] div {
-  &:hover {
-    background-color: hsla(var(--muted-foreground) / 0.1);
-  }
+a[aria-label="Hiro Platform"] div:hover {
+  background-color: hsla(var(--muted-foreground) / 0.1);
 }
 
 h1, h2, h3, h4, h5, h6, code, button, .step {
