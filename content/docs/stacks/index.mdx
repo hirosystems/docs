@@ -7,7 +7,7 @@ toc: false
 import { Card as MainCard, SmallCard } from '@/components/card';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { SectionHeader } from '@/components/layout/section-header';
-import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Terminal } from 'lucide-react';
+import { Braces, Bug, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet } from 'lucide-react';
 
 import heroImage from '@/public/hero.svg';
 
@@ -59,6 +59,13 @@ import heroImage from '@/public/hero.svg';
   <SmallCard
     className='group space-y-3'
     icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Cloud-Based Development"
+    description="Develop, test, and deploy smart contracts straight from your browser."
+  />
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/clarinet"
     title="Smart Contract Development"
     description="Kickstart your smart contract journey with Clarinet and the Clarinet JS SDK."
@@ -72,7 +79,7 @@ import heroImage from '@/public/hero.svg';
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Lock className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Wallet className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/stacks.js"
     title="Frontend Web Development"
     description="Interact with smart contracts on the web with the Stacks.js library."
@@ -90,13 +97,6 @@ import heroImage from '@/public/hero.svg';
     href="/stacks/token-metadata-api"
     title="Token Management"
     description="Explore our hosted API for fetching token metadata on Stacks."
-  />
-  <SmallCard
-    className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/stacks/platform"
-    title="Cloud-Based Development"
-    description="Develop, test, and deploy smart contracts straight from your browser."
   />
 </Cards>
 
