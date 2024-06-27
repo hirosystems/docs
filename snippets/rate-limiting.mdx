@@ -7,12 +7,10 @@ The following rate-limits (in requests per minute, or RPM) are applicable for al
 | No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
 | Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
-These rate-limits apply across our 3 public-facing APIs:
+These rate-limits apply to the entirety of API traffic, regardless of whether it's from one or all of these APIs:
 - [Stacks Blockchain API](./api)
 - [Token Metadata API](./token-metadata-api)
 - [Ordinals API](/ordinals/api)
-
-The entirety of API traffic, regardless of whether it's from one or all of these APIs, will be attributed to a single default quota: 50 RPM for unauthenticated and 500 RPM for authenticated traffic.
 
 These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
 
@@ -21,6 +19,9 @@ You can create one for free in the [Hiro Platform](https://platform.hiro.so).
 </Callout>
 
 ### STX Faucet rate limits
+
+Note: this faucet is for Stacks testnet and provides testnet STX, which has no monetary value.
+
 
 | Type                        | Rate Limit                  |
 |:-----------------------------|:-----------------------------|
