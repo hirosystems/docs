@@ -144,23 +144,9 @@ export function generateMetadata({ params }: { params: Param }): Metadata {
   imageParams.set("title", page.data.title);
   imageParams.set("description", description);
 
-  const image = {
-    alt: "og",
-    url: `/og.png`,
-    width: 1200,
-    height: 630,
-  };
-
   return createMetadata({
     title: page.data.title,
     description,
-    openGraph: {
-      url: `/${page.slugs.join("/")}`,
-      images: image,
-    },
-    twitter: {
-      images: image,
-    },
   });
 }
 
