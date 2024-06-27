@@ -74,14 +74,14 @@ function Footer(): JSX.Element {
           <p className="mb-1 text-sm font-semibold">Hiro Docs</p>
         </div>
 
-        <div className="flex flex-row flex-wrap items-center gap-12">
+        {/* <div className="flex flex-row flex-wrap items-center gap-12">
           <Link
             href="/guides"
             className="flex flex-row items-center text-sm text-muted-foreground transition-colors hover:text-accent-foreground"
           >
             Guides
           </Link>
-        </div>
+        </div> */}
       </div>
     </footer>
   );
