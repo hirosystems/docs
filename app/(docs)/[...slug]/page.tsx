@@ -137,7 +137,8 @@ export function generateMetadata({ params }: { params: Param }): Metadata {
   if (!page) notFound();
 
   const description =
-    page.data.description ?? "The library for building documentation sites";
+    page.data.description ??
+    "All the developer docs, guides and resources you need to build on Bitcoin layers.";
 
   const imageParams = new URLSearchParams();
   imageParams.set("title", page.data.title);
@@ -145,7 +146,7 @@ export function generateMetadata({ params }: { params: Param }): Metadata {
 
   const image = {
     alt: "Banner",
-    url: `/api/og/${params.slug[0]}?${imageParams.toString()}`,
+    url: `/og.png`,
     width: 1200,
     height: 630,
   };
