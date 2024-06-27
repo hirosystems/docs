@@ -79,6 +79,21 @@ It keeps track of an initialized value, allows for incrementing and decrementing
 )
 ```
 
+### Migrating Between Clarinet v1 and Clarinet v2
+
+Executing this script in a Clarinet v1 project will initialise NPM and Vitest. It will also create a sample test file.
+
+```console
+npx @hirosystems/clarinet-sdk@latest
+```
+
+This script will ask you if you want to run npm install now; you can press enter to do so.
+This can take a few seconds.
+
+The file `tests/counter_test.ts` that was created by `clarinet contract new counter` can be deleted.
+
+You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest. **It can safely be deleted**.
+
 ### Unit Tests for `counter` Example
 
 Create a file `tests/counter.test.ts` with the following content:
@@ -245,11 +260,11 @@ For now, there isn't much you can do out of the box with a costs report. But in 
 
 ## Produce Both Coverage and Costs Reports
 
-In your package.json, you should already have a script called `test:reports` like so:
+In your package.json, you should already have a script called `test:report` like so:
 
 ```json
   "scripts": {
-    "test:reports": "vitest run -- --coverage --costs",
+    "test:report": "vitest run -- --coverage --costs",
     // ...
   },
 ```
@@ -257,7 +272,7 @@ In your package.json, you should already have a script called `test:reports` lik
 Run it to produce both the coverage and the costs reports:
 
 ```sh
-npm run test:reports
+npm run test:report
 ```
 
 ## Run Tests in CI
