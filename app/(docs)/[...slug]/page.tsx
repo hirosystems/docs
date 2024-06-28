@@ -146,7 +146,7 @@ export const metadata: Metadata = {
     siteName: "Hiro Docs",
     images: [
       {
-        url: "/og.png",
+        url: "/og.jpg",
         width: 800,
         height: 600,
       },
@@ -160,7 +160,7 @@ export const metadata: Metadata = {
     description:
       "All the developer docs, guides and resources you need to build on Bitcoin layers.",
     creator: "@hirosystems",
-    images: ["/og.png"], // Must be an absolute URL
+    images: ["/og.jpg"], // Must be an absolute URL
   },
 };
 
