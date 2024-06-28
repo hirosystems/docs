@@ -132,6 +132,9 @@ function Category({ page }: { page: Page }): JSX.Element {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_VERCEL_URL || "https://docs.hiro.so"
+  ),
   title: "Hiro Docs",
   description:
     "All the developer docs, guides and resources you need to build on Bitcoin layers.",
