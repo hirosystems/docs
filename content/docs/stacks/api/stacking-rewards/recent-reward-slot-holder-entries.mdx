@@ -1,0 +1,156 @@
+---
+title: Get recent reward slot holder entries
+description: Retrieves a list of the Bitcoin addresses that would validly receive Proof-of-Transfer commitments for a given reward slot holder recipient address.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/burnchain/reward_slot_holders/{address}`}</p>
+</h2>
+
+Retrieves a list of the Bitcoin addresses that would validly receive Proof-of-Transfer commitments for a given reward slot holder recipient address.
+
+### Path parameters
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+Reward slot holder recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format.
+
+<span>Example:  `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
+
+</Property>
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Max number of items to fetch
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Index of the first items to fetch
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | List of burnchain reward recipients and amounts |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/burnchain/reward_slot_holders/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns reward slot holders
+
+```json title="Example response"
+{
+  "limit": 30,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "canonical": true,
+      "burn_block_hash": "string",
+      "burn_block_height": 0,
+      "address": "string",
+      "slot_index": 0
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request that returns reward slot holders
+ */
+export interface BurnchainRewardSlotHolderListResponse {
+  /**
+   * The number of items to return
+   */
+  limit: number;
+  /**
+   * The number of items to skip (starting at `0`)
+   */
+  offset: number;
+  /**
+   * Total number of available items
+   */
+  total: number;
+  results: BurnchainRewardSlotHolder[];
+}
+/**
+ * Reward slot holder on the burnchain
+ */
+export interface BurnchainRewardSlotHolder {
+  /**
+   * Set to `true` if block corresponds to the canonical burchchain tip
+   */
+  canonical: boolean;
+  /**
+   * The hash representing the burnchain block
+   */
+  burn_block_hash: string;
+  /**
+   * Height of the burnchain block
+   */
+  burn_block_height: number;
+  /**
+   * The recipient address that validly received PoX commitments, in the format native to the burnchain (e.g. B58 encoded for Bitcoin)
+   */
+  address: string;
+  /**
+   * The index position of the reward entry, useful for ordering when there's more than one slot per burnchain block
+   */
+  slot_index: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,0 +1,54 @@
+---
+title: Usage
+description: Understand general concepts, response codes, and authentication strategies.
+---
+
+### Base URL
+
+The Stacks API is built on REST principles, enforcing HTTPS for all requests to ensure data security, integrity, and privacy. The base URL for all API requests is:
+
+```plaintext
+https://api.mainnet.hiro.so
+```
+
+### Making requests
+
+To make a request to the Stacks API, you can paste the `curl` command below in your terminal.
+
+```bash title="Terminal"
+curl -L 'https://api.mainnet.hiro.so/v2/info' \
+-H 'Accept: application/json'
+```
+
+### Authentication
+
+If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key.
+
+```bash title="Terminal"
+curl -L 'https://api.mainnet.hiro.so/v2/info' \
+-H 'Accept: application/json' \
+-H 'X-API-Key: $HIRO_API_KEY' # [!code highlight]
+```
+
+### Response codes
+
+The Stacks API uses standard HTTP response codes to indicate the success or failure of an API request:
+
+- **`200`**: Successful request
+- **`400`**: Check that the parameters were correct
+- **`401`**: Missing API key
+- **`403`**: Invalid API key
+- **`404`**: Resource not found
+- **`429`**: Rate limit exceeded
+- **`5xx`**: Server errors
+
+### Rate limits
+
+| API key | Rate limit                        |
+|:--------|:----------------------------------|
+| No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
+| Yes     | 500 requests per minute (RPM) regardless of origin IP, with an authenticated API key |
+
+<Callout title="Rate limits" type="info">
+  For more information on rate limiting, you can check out the [rate limiting documentation](/stacks/rate-limiting).
+</Callout>

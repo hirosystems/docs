@@ -1,0 +1,180 @@
+---
+title: Get account STX balance
+description: Retrieves the STX token balance for a specified address or contract identifier.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/stx`}</p>
+</h2>
+
+Retrieves STX token balance for a given address or contract identifier.
+
+### Path parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+Stacks address or a contract identifier.
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+
+Include transaction data from unanchored (i.e. unconfirmed) microblocks.
+
+<span>Example:  `true`</span>
+
+<span>Default:  `false`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
+
+Returned data representing the state up until that point in time, rather than the current block. Note: use either of the query parameters but not both at a time.
+
+<span>Example:  `60000`</span>
+
+</Property>
+
+| Status code | Description   |
+|:------------|:--------------|
+| `200`       | Success       |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -L \
+  "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/stx" \
+  -H 'Accept: application/json'
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns address balances
+
+```json title="Example response"
+{
+  "balance": "string",
+  "total_sent": "string",
+  "total_received": "string",
+  "total_fees_sent": "string",
+  "total_miner_rewards_received": "string",
+  "lock_tx_id": "string",
+  "locked": "string",
+  "lock_height": 0,
+  "burnchain_lock_height": 0,
+  "burnchain_unlock_height": 0,
+  "token_offering_locked": {
+    "total_locked": "string",
+    "total_unlocked": "string",
+    "unlock_schedule": [
+      {
+        "amount": "string",
+        "block_height": 0
+      }
+    ]
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request that returns address balances
+ */
+export type AddressStxBalanceResponse = StxBalance & {
+  token_offering_locked?: AddressTokenOfferingLocked;
+};
+
+export interface StxBalance {
+  balance: string;
+  total_sent: string;
+  total_received: string;
+  total_fees_sent: string;
+  total_miner_rewards_received: string;
+  /**
+   * The transaction where the lock event occurred. Empty if no tokens are locked.
+   */
+  lock_tx_id: string;
+  /**
+   * The amount of locked STX, as string quoted micro-STX. Zero if no tokens are locked.
+   */
+  locked: string;
+  /**
+   * The STX chain block height of when the lock event occurred. Zero if no tokens are locked.
+   */
+  lock_height: number;
+  /**
+   * The burnchain block height of when the lock event occurred. Zero if no tokens are locked.
+   */
+  burnchain_lock_height: number;
+  /**
+   * The burnchain block height of when the tokens unlock. Zero if no tokens are locked.
+   */
+  burnchain_unlock_height: number;
+}
+/**
+ * Token Offering Locked
+ */
+export interface AddressTokenOfferingLocked {
+  /**
+   * Micro-STX amount still locked at current block height.
+   */
+  total_locked: string;
+  /**
+   * Micro-STX amount unlocked at current block height.
+   */
+  total_unlocked: string;
+  unlock_schedule: AddressUnlockSchedule[];
+}
+/**
+ * Unlock schedule amount and block height
+ */
+export interface AddressUnlockSchedule {
+  /**
+   * Micro-STX amount locked at this block height.
+   */
+  amount: string;
+  block_height: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

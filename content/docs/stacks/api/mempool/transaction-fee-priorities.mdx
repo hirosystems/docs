@@ -1,0 +1,128 @@
+---
+title: Get transaction fee priorities
+description: Retrieves estimated fee priorities (in micro-STX) for all transactions that are currently in the mempool. Also returns priorities separated by transaction type.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/mempool/fees`}</p>
+</h2>
+
+Returns estimated fee priorities (in micro-STX) for all transactions that are currently in the mempool. Also returns priorities separated by transaction type.
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Mempool fee priorities |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/mempool/fees"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns fee priorities from mempool transactions
+
+```json title="Example response"
+{
+  "all": {
+    "no_priority": 0,
+    "low_priority": 0,
+    "medium_priority": 0,
+    "high_priority": 0
+  },
+  "token_transfer": {
+    "no_priority": 0,
+    "low_priority": 0,
+    "medium_priority": 0,
+    "high_priority": 0
+  },
+  "smart_contract": {
+    "no_priority": 0,
+    "low_priority": 0,
+    "medium_priority": 0,
+    "high_priority": 0
+  },
+  "contract_call": {
+    "no_priority": 0,
+    "low_priority": 0,
+    "medium_priority": 0,
+    "high_priority": 0
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request that returns fee priorities from mempool transactions
+ */
+export interface MempoolFeePriorities {
+  all: {
+    no_priority: number;
+    low_priority: number;
+    medium_priority: number;
+    high_priority: number;
+  };
+  token_transfer?: {
+    no_priority: number;
+    low_priority: number;
+    medium_priority: number;
+    high_priority: number;
+  };
+  smart_contract?: {
+    no_priority: number;
+    low_priority: number;
+    medium_priority: number;
+    high_priority: number;
+  };
+  contract_call?: {
+    no_priority: number;
+    low_priority: number;
+    medium_priority: number;
+    high_priority: number;
+  };
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

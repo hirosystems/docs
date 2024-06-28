@@ -1,0 +1,115 @@
+---
+title: Get started
+description: The following guides cover ways to use Hiro tools to build apps on Stacks.
+icon: Play
+toc: false
+---
+
+import { SecondaryCard, SmallCard } from '@/components/card';
+import { SectionHeader } from '@/components/layout/section-header';
+import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
+
+### Quickstarts
+
+<Cards>
+  <SecondaryCard
+    className="group"
+    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/clarinet/quickstart"
+    title="Create your first smart contract"
+    description="Build a simple counter contract using Clarinet."
+    tag='Clarinet'
+  />
+  <SecondaryCard
+    className="group"
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/clarinet-js-sdk/quickstart"
+    title="Simulate a blockchain with the Clarinet JS SDK"
+    description="Learn how to interact with a simulated network without running a node."
+    tag='Clarinet JS SDK'
+  />
+  <SecondaryCard
+    className="group"
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js/quickstart"
+    title="Make a contract call with Stacks.js"
+    description="Learn how to integrate smart contracts into your app."
+    tag='Stacks.js'
+  />
+  <SecondaryCard
+    className="group"
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/chainhook/quickstart"
+    title="Stream custom blockchain events"
+    description="Use Chainhook to filter & stream for contract deployments."
+    tag='Chainhook'
+  />
+</Cards>
+
+<div className='flex flex-col space-y-3'>
+
+### Learn by example
+
+---
+
+<Cards>
+  <SmallCard
+    className="group"
+    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/build-an-nft-marketplace"
+    title="Build an NFT Marketplace"
+    description="Learn how to create and deploy your own NFT marketplace."
+  />
+  {/* <SmallCard
+    className="group"
+    icon={<Scale className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/clarinet"
+    title="Launch a Decentralized Autonomous Organization (DAO)"
+    description="Discover the steps to creating your own DAO."
+  /> */}
+  <SmallCard
+    className="group"
+    icon={<Ticket className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/no-loss-lottery"
+    title="Create a no-loss lottery pool"
+    description="Build a no-loss lottery pool that leverages stacking yield."
+  />
+  {/* <SmallCard
+    className="group"
+    icon={<Banknote className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/quickstarts"
+    title="Build a decentralized Kickstarter"
+    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
+  /> */}
+</Cards>
+
+</div>
+
+<div className='flex flex-col space-y-3'>
+
+### Installation guides
+
+---
+
+<Cards>
+  <SmallCard
+    className="group"
+    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/sync-a-bitcoin-node"
+    title="Sync a Bitcoin node"
+    description="Set up and run a Bitcoin node to use tools like Chainhook."
+  />
+  <SmallCard
+    className="group"
+    icon={<ArrowLeftRight className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/sync-a-stacks-node"
+    title="Sync a Stacks node"
+    description="Set up and run a Stacks node to use tools like Chainhook or spin up your own API."
+  />
+</Cards>
+
+</div>
+
+{/* <Callout>
+For more, check out our [guides](/guides) section.
+</Callout> */}

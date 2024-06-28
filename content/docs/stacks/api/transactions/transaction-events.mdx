@@ -1,0 +1,220 @@
+---
+title: Get transaction events
+description: Retrieves events for a specific transaction.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tx/events`}</p>
+</h2>
+
+Retrieves the list of events filtered by principal (STX address or smart contract ID), transaction ID or event types. The list of event types is ('smart_contract_log', 'stx_lock', 'stx_asset', 'fungible_token_asset', 'non_fungible_token_asset').
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"tx_id"} type={"string"}>
+
+Hash of transaction
+
+</Property>
+
+<Property required={false} deprecated={false} name={"address"} type={"string"}>
+
+Stacks address or a smart contract identifier
+
+<span>Example:  `"ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Number of items to return
+
+<span>Example:  `100`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Number of items to skip
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"type"} type={"array of string"}>
+
+Filter the events by event type
+
+<span>Example:  `"stx_lock"`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/events"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET event for the given transaction
+
+```json title="Example response"
+{
+  "limit": 0,
+  "offset": 0,
+  "results": [
+    {
+      "event_index": 0,
+      "event_type": "smart_contract_log",
+      "tx_id": "string",
+      "contract_log": {
+        "contract_id": "string",
+        "topic": "string",
+        "value": {
+          "hex": "string",
+          "repr": "string"
+        }
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export type TransactionEvent =
+  | TransactionEventSmartContractLog
+  | TransactionEventStxLock
+  | TransactionEventStxAsset
+  | TransactionEventFungibleAsset
+  | TransactionEventNonFungibleAsset;
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventSmartContractLog = AbstractTransactionEvent & {
+  event_type: "smart_contract_log";
+  tx_id: string;
+  contract_log: {
+    contract_id: string;
+    topic: string;
+    value: {
+      hex: string;
+      repr: string;
+    };
+  };
+};
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventStxLock = AbstractTransactionEvent & {
+  event_type: "stx_lock";
+  tx_id: string;
+  stx_lock_event: {
+    locked_amount: string;
+    unlock_height: number;
+    locked_address: string;
+  };
+};
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventStxAsset = AbstractTransactionEvent & {
+  event_type: "stx_asset";
+  tx_id: string;
+  asset: TransactionEventAsset;
+};
+export type TransactionEventAssetType = "transfer" | "mint" | "burn";
+export type TransactionEventFungibleAsset = AbstractTransactionEvent & {
+  event_type: "fungible_token_asset";
+  tx_id: string;
+  asset: {
+    asset_event_type: string;
+    asset_id: string;
+    sender: string;
+    recipient: string;
+    amount: string;
+  };
+};
+export type TransactionEventNonFungibleAsset = AbstractTransactionEvent & {
+  event_type: "non_fungible_token_asset";
+  tx_id: string;
+  asset: {
+    asset_event_type: string;
+    asset_id: string;
+    sender: string;
+    recipient: string;
+    value: {
+      hex: string;
+      repr: string;
+    };
+  };
+};
+
+/**
+ * GET event for the given transaction
+ */
+export interface TransactionEventsResponse {
+  limit: number;
+  offset: number;
+  results: TransactionEvent[];
+}
+export interface AbstractTransactionEvent {
+  event_index: number;
+}
+export interface TransactionEventAsset {
+  asset_event_type?: TransactionEventAssetType;
+  asset_id?: string;
+  sender?: string;
+  recipient?: string;
+  amount?: string;
+  value?: string;
+  memo?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

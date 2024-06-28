@@ -1,0 +1,64 @@
+---
+title: Predicate design
+description: Predicates are the building blocks of Chainhook.
+---
+
+The core design of chainhooks revolves around the concept of predicates. Each individual chainhook has a customizable predicate that specifies what information you are scanning for.
+
+Predicates are defined in an `if-this`, `then-that` format. You'll write your condition in the `if-this` condition template and use `then-that` to output the result.
+
+### `if-this`
+
+The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
+
+```json
+// [!code word:if_this]
+{
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
+}
+```
+
+Other available parameters:
+
+- `equals`
+- `op_return`
+- `ends_with`
+- `p2pkh`
+- `p2sh`
+- `p2wpkh`
+- `operation`
+
+<Callout>
+  For more information on predicate definitions, refer to the [scopes](/stacks/chainhook/references/scopes) reference page.
+</Callout>
+
+### `then-that`
+
+The `then-that` predicate design can use the following attributes to output the result based on the `if-this` condition defined.
+
+```jsonc
+// [!code word:file_append]
+{
+  "then_that": {
+    "file_append": {
+      "path": "/tmp/events.json",
+    },
+  },
+}
+```
+
+```jsonc
+// [!code word:http_post]
+{
+  "then_that": {
+    "http_post": {
+      "url": "https://example.com/api/v1/events",
+      "authorization_header": "Bearer 1234567890"
+    }
+  }
+}
+```
+

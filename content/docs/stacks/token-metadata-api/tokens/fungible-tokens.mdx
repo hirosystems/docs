@@ -1,0 +1,163 @@
+---
+title: Get fungible tokens
+description: Retrieves information about fungible tokens.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/metadata/v1/ft`}</p>
+</h2>
+
+Retrieves a list of fungible tokens.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"name"} type={"string"}>
+
+The name of the token
+
+</Property>
+
+<Property required={false} deprecated={false} name={"symbol"} type={"string"}>
+
+The symbol of the token
+
+</Property>
+
+<Property required={false} deprecated={false} name={"address"} type={"string"}>
+
+Stacks Address
+
+<span>Example:  `"SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9"`</span>
+
+<span>Pattern:  `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}"`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum:  `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum:  `1`</span>
+
+<span>Maximum:  `60`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"order_by"} type={"Any properties in string, string"}>
+
+Parameter to order results by
+
+</Property>
+
+<Property required={false} deprecated={false} name={"order"} type={"Any properties in string, string"}>
+
+Results order
+
+</Property>
+
+| Status code | Description     |
+| :---------- | :-------------- |
+| `200`       | Default response|
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.hiro.so/metadata/v1/ft"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "name": "Wrapped USD",
+      "symbol": "xUSD",
+      "decimals": 8,
+      "total_supply": "9999980000000",
+      "token_uri": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json",
+      "description": "Heavy hitters, all-stars and legends of the game join forces to create a collection of unique varsity jackets",
+      "image_uri": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
+      "image_thumbnail_uri": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
+      "image_canonical_uri": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
+      "tx_id": "0xef2ac1126e16f46843228b1dk4830e19eb7599129e4jf392cab9e65ae83a45c0",
+      "sender_address": "ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA",
+      "contract_principal": "SP1H1733V5MZ3SZ9XRW9FKYGEZT0JDGEB8Y634C7R.miamicoin-token-v2"
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export interface PaginatedFtBasicMetadataResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  results: FtBasicMetadataResponse[];
+}
+export interface FtBasicMetadataResponse {
+  name?: string;
+  symbol?: string;
+  decimals?: number;
+  total_supply?: string;
+  token_uri?: string;
+  description?: string;
+  image_uri?: string;
+  image_thumbnail_uri?: string;
+  image_canonical_uri?: string;
+  tx_id: string;
+  sender_address: string;
+  contract_principal: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

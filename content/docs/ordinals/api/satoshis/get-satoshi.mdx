@@ -1,0 +1,126 @@
+---
+title: Get satoshi ordinal
+description: Retrieves ordinal information for a single satoshi.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/sats/{ordinal}`}</p>
+</h2>
+
+Retrieves ordinal information for a single satoshi.
+
+### Path parameters
+
+<Property required={true} deprecated={false} name={"ordinal"} type={"integer"}>
+
+Ordinal number that uniquely identifies a satoshi
+
+<span>Minimum: `0`</span>
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default response |
+| `400`       | Default response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999"
+```
+
+<Tabs items={["200","400"]}>
+
+<Tab value={"200"}>
+
+```json title="Example response"
+{
+  "coinbase_height": 752860,
+  "cycle": 0,
+  "decimal": "752860.20444193",
+  "degree": "0°122860′892″20444193‴",
+  "inscription_id": "ff4503ab9048d6d0ff4e23def81b614d5270d341ce993992e93902ceb0d4ed79i0",
+  "epoch": 3,
+  "name": "ahehcbywzae",
+  "offset": 20444193,
+  "percentile": "91.15654869285287%",
+  "period": 373,
+  "rarity": "common"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export interface SatoshiResponse {
+  coinbase_height: number
+  cycle: number
+  decimal: string
+  degree: string
+  inscription_id?: string
+  epoch: number
+  name: string
+  offset: number
+  percentile: string
+  period: number
+  rarity: "common" | "uncommon" | "rare" | "epic" | "legendary" | "mythic"
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"400"}>
+
+```json title="Example response"
+{
+  "error": "Invalid satoshi ordinal number"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export interface InvalidSatoshiNumberResponse {
+  error: "Invalid satoshi ordinal number"
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

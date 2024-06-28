@@ -1,0 +1,118 @@
+---
+title: Get total and unlocked STX supply (legacy)
+description: Retrieves the total and unlocked STX supply in legacy format 1.0 API.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/stx_supply/legacy_format`}</p>
+</h2>
+
+Retrieves total supply of STX tokens including those currently in circulation that have been unlocked.
+
+**Note:** this uses the estimated future total supply for the year 2050.
+
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"height"} type={"number"}>
+
+Supply details are queried from a specified block height. If the block height is not specified, the latest block height is taken as the default value.
+
+<span>Example:  `200`</span>
+
+</Property>
+
+| Status code | Description |
+|:------------|:------------|
+| `200`       | Success     |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply/legacy_format"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns network target block times
+
+```json title="Example response"
+{
+  "unlockedPercent": "string",
+  "totalStacks": "string",
+  "totalStacksFormatted": "string",
+  "unlockedSupply": "string",
+  "unlockedSupplyFormatted": "string",
+  "blockHeight": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request that returns network target block times
+ */
+export interface GetStxSupplyLegacyFormatResponse {
+  /**
+   * String quoted decimal number of the percentage of STX that have unlocked
+   */
+  unlockedPercent: string;
+  /**
+   * String quoted decimal number of the total possible number of STX
+   */
+  totalStacks: string;
+  /**
+   * Same as `totalStacks` but formatted with comma thousands separators
+   */
+  totalStacksFormatted: string;
+  /**
+   * String quoted decimal number of the STX that have been mined or unlocked
+   */
+  unlockedSupply: string;
+  /**
+   * Same as `unlockedSupply` but formatted with comma thousands separators
+   */
+  unlockedSupplyFormatted: string;
+  /**
+   * The block height at which this information was queried
+   */
+  blockHeight: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

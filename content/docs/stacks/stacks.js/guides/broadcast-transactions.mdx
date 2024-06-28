@@ -1,0 +1,210 @@
+---
+title: Broadcast transactions
+description: Create and broadcast transactions to the Stacks blockchain network using Stacks.js.
+---
+
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
+
+import { InlineCode } from '@/components/inline-code';
+
+The process of broadcasting transactions is fundamental for interacting with blockchains, whether you're transferring tokens, deploying contracts, or executing contract functions.
+
+In this guide, you will learn how to:
+
+1. Install the necessary packages for building and broadcasting transactions
+2. Build different types of transactions
+3. Sign and broadcast those transactions to the Stacks blockchain
+4. Process and handle the results
+
+The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize these examples to fit your application's specific needs.
+
+{/* <Callout title="Example Repo">To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
+
+---
+
+### Setup and installation
+
+Install the required packages to start building and broadcasting transactions.
+
+```package-install
+@stacks/network @stacks/transactions @stacks/connect
+```
+
+- **@stacks/network**: Used to interact with the Stacks blockchain network.
+- **@stacks/transactions**: Used to build the transactions.
+- **@stacks/connect**: Used to authenticate users and broadcast the transactions.
+
+### Create a transaction
+
+There are three types of transactions:
+
+- STX transfer
+- Contract deployment
+- Contract execution
+
+<Tabs defaultValue="transfer">
+  <TabsList className='flex flex-wrap md:w-max'>
+    <TabsTrigger value="transfer" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-90 dark:group-hover:text-white'>STX transfer</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="deploy" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-90 dark:group-hover:text-white'>Contract deployment</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="execute" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-90 dark:group-hover:text-white'>Contract execution</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="transfer">
+    To transfer STX, use the `makeSTXTokenTransfer` function provided by the `@stacks/transactions` package:
+
+    ```ts twoslash title="stx-transfer.ts"
+    // @noErrors
+    // [!code word:makeSTXTokenTransfer]
+    import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
+    import { StacksDevnet } from "@stacks/network";
+
+    const transaction = await makeSTXTokenTransfer({
+      recipient: "SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159",
+      amount: 12345n,
+      senderKey:
+        "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
+      network: new StacksDevnet(),
+      anchorMode: AnchorMode.Any,
+    });
+    ```
+
+    This builds a STX token transfer transaction. The `makeSTXTokenTransfer` function takes parameters like the `recipient` address, `amount` to transfer, and the sender's private key, ie `senderKey`.
+
+    Several parameters are available for calling `makeSTXTokenTransfer`. To learn more, check out our [transactions reference page](/stacks/stacks.js/packages/transactions).
+
+  </TabsContent>
+  <TabsContent value="deploy">
+    To deploy a contract, use the `makeContractDeploy` function provided by the `@stacks/transactions` package:
+
+    ```ts twoslash title="contract-deploy.ts"
+    // @noErrors
+    // [!code word:makeContractDeploy]
+    import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
+    import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+    const transaction = await makeContractDeploy({
+      contractName: 'hello-world',
+      codeBody: `(define-public (hello)
+      (ok "Hello, world!"))`,
+      senderKey: '753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601',
+      network: new StacksTestnet(),
+      anchorMode: AnchorMode.Any,
+    });
+    ```
+
+    This builds a contract deployment transaction. The `makeContractDeploy` function takes parameters like the `contractName`, `codeBody`, and the sender's private key, ie `senderKey`.
+
+    Several parameters are available for calling `makeContractDeploy`. To learn more, check out our [transactions reference page](/stacks/stacks.js/packages/transactions).
+
+  </TabsContent>
+  <TabsContent value="execute">
+    To execute a contract function, use the `makeContractCall` function provided by the `@stacks/transactions` package:
+
+    ```ts twoslash title="function-call.ts"
+    // @noErrors
+    // [!code word:makeContractCall]
+    import {
+      makeContractCall,
+      broadcastTransaction,
+      AnchorMode,
+      FungibleConditionCode,
+      makeStandardSTXPostCondition,
+      bufferCVFromString,
+    } from '@stacks/transactions';
+    import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+    // Add an optional post condition
+    // See below for details on constructing post conditions
+    const postConditionAddress = 'SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE';
+    const postConditionCode = FungibleConditionCode.GreaterEqual;
+    const postConditionAmount = 1000000n;
+    const postConditions = [
+      makeStandardSTXPostCondition(postConditionAddress, postConditionCode, postConditionAmount),
+    ];
+
+    const transaction = await makeContractCall({
+      contractAddress: 'SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X',
+      contractName: 'contract_name',
+      functionName: 'contract_function',
+      functionArgs: [bufferCVFromString('foo')],
+      senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+      validateWithAbi: true,
+      network: new StacksTestnet(),
+      postConditions,
+      anchorMode: AnchorMode.Any,
+    });
+    ```
+
+    This builds a contract function call transaction. The `makeContractCall` function takes parameters like the `contractAddress`, `contractName`, `functionName`, `functionArgs`, `senderKey`, `validateWithAbi`, `network`, `postConditions`, and `anchorMode`.
+
+    Several parameters are available for calling `makeContractCall`. To learn more, check out our [transactions reference page](/stacks/stacks.js/packages/transactions).
+
+  </TabsContent>
+</Tabs>
+
+### Broadcasting the transaction
+
+After building the transaction, broadcast it to the Stacks blockchain network using the `broadcastTransaction` function from the `@stacks/transactions` package.
+
+1. Pass in the transaction object you created in the previous step to the `broadcastTransaction` function.
+2. Handle the response by logging the response object.
+
+```tsx twoslash
+// @noErrors
+// [!code word:broadcastTransaction]
+import { broadcastTransaction } from '@stacks/transactions';
+
+const broadcastResponse = await broadcastTransaction(transaction);
+```
+
+This code sends the signed transaction to the Stacks blockchain. The `broadcastTransaction` function returns a response containing the transaction ID, which can be used to track the transaction on the blockchain.
+
+### Handle the results
+
+Handle the transaction results by checking the transaction status and responding accordingly.
+
+```ts twoslash
+// @noErrors
+if (broadcastResponse.success) {
+  console.log('Transaction successful with ID:', broadcastResponse.txid);
+} else {
+  console.error('Transaction failed with error:', broadcastResponse.error);
+}
+```
+
+This checks if the transaction was successful and logs the `txid`.
+
+---
+
+### Next steps
+
+<Cards>
+  <Card
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js/guides/broadcast-transactions"
+    title="Broadcast transactions"
+    description="Learn how to interact with your smart contracts using Stacks.js."
+  />
+  <Card
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js/guides/deep-dive-into-post-conditions"
+    title="Deep dive into post-conditions"
+    description="Learn how to use post-conditions to secure your smart contracts."
+  />
+</Cards>
+

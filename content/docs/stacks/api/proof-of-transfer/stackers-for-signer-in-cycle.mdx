@@ -1,0 +1,126 @@
+---
+title: Get stackers for signer in PoX cycle
+description: Retrieves a list of stackers for a signer in a PoX cycle.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/pox/cycles/{cycle_number}/signers/{signer_key}/stackers`}</p>
+</h2>
+
+Retrieves a list of stackers for a signer in a PoX cycle.
+
+### Path parameters
+
+<Property required={true} deprecated={false} name={"cycle_number"} type={"integer"}>
+
+PoX cycle number
+
+<span>Example:  `56`</span>
+
+</Property>
+
+<Property required={true} deprecated={false} name={"signer_key"} type={"string"}>
+
+Signer key
+
+<span>Example:  `"0x038e3c4529395611be9abf6fa3b6987e81d402385e3d605a073f42f407565a4a3d"`</span>
+
+</Property>
+
+| Status code | Description |
+| :--------- | :---------- |
+| `200` | List of stackers |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/pox/cycles/56/signers/0x038e3c4529395611be9abf6fa3b6987e81d402385e3d605a073f42f407565a4a3d/stackers"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns stackers for a signer in a PoX cycle
+
+```json title="Example response"
+{
+  "limit": 200,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "stacker_address": "string",
+      "stacked_amount": "string",
+      "pox_address": "string"
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request that returns stackers for a signer in a PoX cycle
+ */
+export interface PoxCycleSignerStackersListResponse {
+  /**
+   * The number of stackers to return
+   */
+  limit: number;
+  /**
+   * The number to stackers to skip (starting at `0`)
+   */
+  offset: number;
+  /**
+   * The total number of stackers
+   */
+  total: number;
+  results: PoxStacker[];
+}
+export interface PoxStacker {
+  stacker_address: string;
+  stacked_amount: string;
+  pox_address: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

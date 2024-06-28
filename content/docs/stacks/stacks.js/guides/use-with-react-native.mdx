@@ -1,0 +1,183 @@
+---
+title: Using Stacks.js with React Native
+description: Learn how to use Stacks.js with React Native.
+---
+
+import { Badge } from '@/components/ui/badge';
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
+
+import { InlineCode } from '@/components/inline-code';
+
+Using Stacks.js with React Native allows you to integrate Stacks blockchain functionalities into mobile applications.
+
+In this guide, you will learn how to:
+
+1. Set up the Expo project.
+2. Install necessary dependencies.
+3. Add NodeJS polyfills.
+4. Add global polyfills.
+5. Use Stacks.js in the project.
+
+{/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hirosystems/stacks.js-react-native-expo-51).</Callout> */}
+
+---
+
+### Set up the Expo project
+
+Start by creating a new Expo project using `create-expo-app`.
+
+```bash title="Terminal"
+npx create-expo-app@latest
+```
+
+This will generate a boilerplate Expo project. You can run the project with `npm start` and connect a mobile device for previewing via the shown QR code.
+
+### Install necessary dependencies
+
+Install Stacks.js libraries along with other dependencies needed for polyfilling browser-specific and NodeJS-specific APIs.
+
+```bash title="Terminal"
+npm install @stacks/transactions @stacks/wallet-sdk
+npm install --save-dev buffer process react-native-get-random-values text-encoding readable-stream crypto-browserify @peculiar/webcrypto
+```
+
+### Add NodeJS polyfills
+
+Modify the project's Metro configuration to include polyfills for missing NodeJS modules.
+
+```bash title="Terminal"
+npx expo customize metro.config.js
+```
+
+```js title="metro.config.js"
+const { getDefaultConfig } = require("expo/metro-config");
+
+const config = getDefaultConfig(__dirname);
+
+config.resolver.extraNodeModules = {
+  stream: require.resolve("readable-stream"),
+  crypto: require.resolve("crypto-browserify"),
+};
+
+module.exports = config;
+```
+
+### Add global polyfills
+
+Update the Expo entry point to include polyfills.
+
+1. Create `polyfill.js` file
+2. Create `index.js` file
+3. Update the `package.json`
+
+```js title="polyfill.js"
+import { Buffer } from "buffer/";
+import process from "process";
+import "react-native-get-random-values";
+import { TextDecoder, TextEncoder } from "text-encoding";
+
+global.process = process;
+global.Buffer = Buffer;
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+```
+
+```js title="index.js"
+import "./polyfill";
+import { Crypto } from "@peculiar/webcrypto";
+
+Object.assign(global.crypto, new Crypto());
+
+import "expo-router/entry";
+```
+
+```json title="package.json"
+"main": "index.js", // [!code highlight]
+```
+
+<Callout>
+Ensure that the polyfills live in their own file as specified to avoid any runtime issues.
+</Callout>
+
+### Use Stacks.js in the project
+
+Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities, starting with the imports.
+
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
+import {
+  TransactionVersion,
+  getAddressFromPrivateKey,
+  makeSTXTokenTransfer,
+} from "@stacks/transactions";
+import { Wallet, generateSecretKey, generateWallet } from "@stacks/wallet-sdk";
+import { useState } from "react";
+```
+
+Now you can start to manage the state as follows:
+
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
+export default function HomeScreen() {
+  const [mnemonic, setMnemonic] = useState("...");
+  const [wallet, setWallet] = useState<Wallet | null>(null);
+  const [log, setLog] = useState("");
+}
+```
+
+Next, to generate a wallet and sign a transaction:
+
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
+const generate = async () => {
+  const mnemonic = generateSecretKey();
+  setMnemonic(mnemonic);
+
+  const wallet = await generateWallet({
+    secretKey: mnemonic,
+    password: "",
+  });
+  setWallet(wallet);
+
+  await makeSTXTokenTransfer({
+    amount: 1000,
+    anchorMode: "any",
+    recipient: "SP3W993D3BRDYB284CY3SBFDEGTC5XEDJPDEA21CN",
+    senderKey: wallet.accounts[0].stxPrivateKey,
+    fee: 10,
+    network: "mainnet",
+    nonce: 0,
+  });
+  setLog("Transaction signed successfully ☑");
+};
+```
+
+And lastly, to integrate the UI:
+
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
+<ThemedView>
+  <ThemedText type="subtitle">Seed Phrase</ThemedText>
+  <ThemedText>{mnemonic}</ThemedText>
+  <Button title="Generate Seed Phrase" onPress={generate} />
+  {wallet && (
+    <>
+      <ThemedText type="subtitle">Address</ThemedText>
+      <ThemedText>
+        {getAddressFromPrivateKey(
+          wallet.accounts[0].stxPrivateKey,
+          TransactionVersion.Mainnet
+        )}
+      </ThemedText>
+    </>
+  )}
+  {log && <ThemedText>{log}</ThemedText>}
+</ThemedView>
+```

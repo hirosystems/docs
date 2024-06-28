@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 20 14.3% 4.1%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 346.8 77.2% 49.8%;
+    --radius: 0.5rem;
+    --hiro: 20 100% 50%;
+    --icon: 20 14.3% 4.1%;
+    --inverted: 0 4% 5%;
+  }
+
+  .dark {
+    --background: 0 4% 5%;
+    --foreground: 0 0% 95%;
+    --card: 20 10% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 20 6% 21%;
+    --input: 240 3.7% 15.9%;
+    --ring: 346.8 77.2% 49.8%;
+    --hiro: 20 100% 50%;
+    --card-hover: 15 5% 16%;
+    --icon: 0 0% 100%;
+    --inverted: 0 0% 100%;
+  }
+
+  
+  .ordinals {
+    --primary: 20 14.3% 4.1%;
+    --icon: 20 14.3% 4.1%;
+  }
+
+  .dark .ordinals {
+    --primary: 0 0% 100%;
+    --icon: 0 0% 100%;
+  }
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+}
+
+/* Override CSS */
+
+div[cmdk-list-sizer] {
+  font-family: var(--font-inter), sans-serif;
+}
+
+a[aria-label="Hiro Platform"] {
+  padding: 0;
+}
+
+
+a[aria-label="Hiro Platform"] div:hover {
+  background-color: hsla(var(--muted-foreground) / 0.1);
+}
+
+h1, h2, h3, h4, h5, h6, code, button, .step {
+  font-family: var(--font-aeonikFono), sans-serif;
+}
+
+h a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  font-family: var(--font-aeonikFono), sans-serif;
+}
+
+/* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
+/* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
+a, p, li, table, input, div.prose .w-0, div.prose .flex-1 span {
+  font-family: var(--font-inter), sans-serif;
+}
+
+p {
+  line-height: 1.75;
+}
+
+nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
+  font-family: var(--font-aeonikFono), sans-serif;
+}
+
+
+a[aria-label="Hiro Platform"] div svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+nav a[href="/guides"] {
+  text-decoration: underline;
+}
+
+[data-radix-scroll-area-viewport] .flex.flex-col.gap-8.pb-10.pt-4.max-md\:px-4.md\:pr-3.md\:pt-10 {
+    gap: 0;
+}
+
+/* Target the header toggle */
+
+body > div > header > nav > div.rounded-md.border.bg-background.p-1.text-sm.text-muted-foreground.max-md\:absolute.max-md\:left-\[50\%\].max-md\:translate-x-\[-50\%\] > a.rounded-md.px-2.py-1.transition-colors.hover\:text-accent-foreground.bg-background.text-accent-foreground {
+  background-color: hsl(var(--inverted));
+  color: hsl(var(--background));
+}
+
+/* Target the search component */
+
+body > div > header > nav > div.flex.flex-1.flex-row.items-center.justify-end.md\:gap-2 > button.inline-flex.w-full.max-w-\[240px\].items-center.gap-2.rounded-full.border.bg-secondary\/50.p-1\.5.text-sm.text-muted-foreground.transition-colors.hover\:bg-accent.hover\:text-accent-foreground.max-md\:hidden {
+  background-color: hsl(var(--background))
+}
+
+p.first\:mt-0 {
+  font-family: var(--font-aeonikFono), sans-serif;
+  margin-top: 1.5rem !important;
+}
+
+p.first\:mt-0:before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 1rem;
+  border-width: 0.25px;
+  border-color: hsl(var(--accent));
+}
+
+/* Reduces the vertical space between code blocks and text in the steps guides */
+figure.not-prose {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.tab[data-state="active"] > .badge {
+  color: #fff;
+  background-color: #262626;
+}
+
+.prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+  text-decoration-color: var(--secondary) !important;
+}
+
+/* Default light mode */
+.highlighted {
+  border: none !important;
+}
+
+/* Adjust styling for Shiki word highlighting */
+.highlighted-word {
+  border-color: hsl(var(--border) / 1) !important;
+  border-radius: 5px !important;
+  margin: 0 !important;
+}
+
+
+/* For the <APIExample /> component to provide more spacing between each child sections. */
+.api-example > *:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.api-example figure.not-prose {
+  margin-top: 0;
+}
+
+.api h2 {
+  margin-bottom: 1rem;
+}
+
+.api h2 > p {
+  color: hsl(var(--foreground) / 1);
+  font-size: 0.95rem !important; /* This size represents Tailwind's text-sm */
+}
+
+.size-10 {
+  width: 2.5rem/* 20px */;
+  height: 2.5rem/* 20px */;
+}
+
+/* Add a deprecated strike through to sidebar links */
+a[href="/stacks/api/accounts/nft-events"],
+a[href="/stacks/api/blocks/recent-blocks"],
+a[href="/stacks/api/blocks/block-by-hash"],
+a[href="/stacks/api/blocks/block-by-height"],
+a[href="/stacks/api/blocks/block-by-burn-block-hash"],
+a[href="/stacks/api/blocks/block-by-burn-block-height"],
+a[href="/stacks/api/accounts/transactions"],
+a[href="/stacks/api/accounts/transactions-with-transfers"],
+a[href="/stacks/api/accounts/transaction-with-transfers"] {
+  text-decoration: line-through;
+  color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
+}

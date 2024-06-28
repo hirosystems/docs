@@ -1,0 +1,53 @@
+---
+title: Get started
+description: The following guides cover ways to use Hiro tools to build with Bitcoin Ordinals and BRC-20 tokens.
+icon: Play
+toc: false
+---
+
+import { SecondaryCard, SmallCard } from '@/components/card';
+import { SectionHeader } from '@/components/layout/section-header';
+import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
+
+### Quickstarts
+
+<Cards>
+  <SecondaryCard
+    className="group"
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/ordinals/api"
+    title="Integrate ordinals data into your app"
+    description="Use the Ordinals API to get reliable data for Ordinals and BRC-20 tokens."
+    tag='Ordinals API'
+  />
+  <SecondaryCard
+    className="group"
+    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/ordinals/ordhook/quickstart"
+    title="Stream custom blockchain events"
+    description="Use Ordhook to filter and stream for contract deployments."
+    tag='Ordhook'
+  />
+</Cards>
+
+<div className='flex flex-col space-y-3'>
+
+### Installation guides
+
+---
+
+<Cards>
+  <SmallCard
+    className="group"
+    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/sync-a-bitcoin-node"
+    title="Sync a Bitcoin node"
+    description="Set up and run a Bitcoin node to use tools like Ordhook."
+  />
+</Cards>
+
+</div>
+
+{/* <Callout>
+For more, check out our [guides](/guides) section.
+</Callout> */}

@@ -1,0 +1,182 @@
+---
+title: Get transfers per block
+description: Retrieves a list of inscription transfers that ocurred at a specific Bitcoin block.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/inscriptions/transfers`}</p>
+</h2>
+
+Retrieves a list of inscription transfers that ocurred at a specific Bitcoin block.
+
+### Query parameters
+
+<Property required={true} deprecated={false} name={"block"} type={"Any properties in string, string"}>
+
+Bitcoin block identifier (height or hash)
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum: `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum: `1`</span>
+
+<span>Maximum: `60`</span>
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default response |
+| `404`       | Default response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions/transfers"
+```
+
+<Tabs items={["200","404"]}>
+
+<Tab value={"200"}>
+
+```json title="Example response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+      "number": 248751,
+      "from": {
+        "block_height": 778921,
+        "block_hash": "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133",
+        "address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+        "tx_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218",
+        "location": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0:0",
+        "output": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0",
+        "value": "546",
+        "offset": "0",
+        "timestamp": 1677733170000
+      },
+      "to": {
+        "block_height": 778921,
+        "block_hash": "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133",
+        "address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+        "tx_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218",
+        "location": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0:0",
+        "output": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0",
+        "value": "546",
+        "offset": "0",
+        "timestamp": 1677733170000
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export interface PaginatedBlockTransfersResponse {
+  limit: number
+  offset: number
+  total: number
+  results: {
+    id: string
+    number: number
+    from: InscriptionLocationResponse
+    to: InscriptionLocationResponse1
+  }[]
+}
+export interface InscriptionLocationResponse {
+  block_height: number
+  block_hash: string
+  address: string | null
+  tx_id: string
+  location: string
+  output: string
+  value: string | null
+  offset: string | null
+  timestamp: number
+}
+export interface InscriptionLocationResponse1 {
+  block_height: number
+  block_hash: string
+  address: string | null
+  tx_id: string
+  location: string
+  output: string
+  value: string | null
+  offset: string | null
+  timestamp: number
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+```json title="Example response"
+{
+  "error": "Not found"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export interface NotFoundResponse {
+  error: "Not found"
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

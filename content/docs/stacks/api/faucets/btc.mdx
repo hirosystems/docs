@@ -1,0 +1,139 @@
+---
+title: BTC Testnet tokens
+description: Delivers testnet BTC tokens to a specified address.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
+    POST
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/faucets/btc`}</p>
+</h2>
+
+Add 1 BTC token to the specified testnet BTC address.
+
+The endpoint returns the transaction ID, which you can use to view the transaction in a testnet Bitcoin block
+explorer. The tokens are delivered once the transaction has been included in a block.
+
+**Note:** This is a testnet only endpoint. This endpoint will not work on mainnet.
+
+### Body parameters
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+BTC testnet address
+
+</Property>
+
+| Status code | Description                      |
+|:------------|:---------------------------------|
+| `200`       | Success                          |
+| `403`       | BTC Faucet not fully configured  |
+| `500`       | Faucet call failed               |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X POST \
+  "https://api.testnet.hiro.so/extended/v1/faucets/btc" \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
+  }'
+```
+
+<Tabs items={["200","403"]}>
+
+<Tab value={"200"}>
+
+POST request that initiates a transfer of tokens to a specified testnet address
+
+```json title="Example response"
+{
+  "success": true,
+  "txId": "string",
+  "txRaw": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title="Schema">
+
+```ts
+/**
+ * POST request that initiates a transfer of tokens to a specified testnet address
+ */
+export interface RunFaucetResponse {
+  /**
+   * Indicates if the faucet call was successful
+   */
+  success: boolean;
+  /**
+   * The transaction ID for the faucet call
+   */
+  txId?: string;
+  /**
+   * Raw transaction in hex string representation
+   */
+  txRaw?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"403"}>
+
+
+
+```json title="Example response"
+{
+  "error": "string",
+  "success": true
+}
+```
+
+<Accordions>
+
+<Accordion title="Schema">
+
+```ts
+export interface Response {
+  error?: string;
+  success?: boolean;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

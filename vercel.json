@@ -2,154 +2,474 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/clarinet/introduction",
-      "destination": "https://docs.hiro.so/clarinet",
+      "source": "/",
+      "destination": "/stacks",
       "permanent": false
     },
     {
-      "source": "/clarinet/how-to-guides/how-to-set-up-local-development-environment",
-      "destination": "https://docs.hiro.so/clarinet/guides/how-to-set-up-local-development-environment",
+      "source": "/chainhook",
+      "destination": "/stacks/chainhook",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/guides/chainhooks-with-bitcoin",
+      "destination": "/stacks/chainhook/concepts/bitcoin-predicates",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/guides/chainhooks-with-stacks",
+      "destination": "/stacks/chainhook/concepts/stacks-predicates",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/getting-started",
+      "destination": "/stacks/chainhook/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/predicate-design",
+      "destination": "/stacks/chainhook/concepts/predicate-design",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/guides/chainhook-as-a-service-bitcoind",
+      "destination": "/stacks/chainhook/guides/chainhook-as-a-service",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/guides/chainhook-as-a-service-stacks",
+      "destination": "/stacks/chainhook/guides/chainhook-as-a-service-with-stacks-node",
       "permanent": false
     },
     {
-      "source": "/clarinet/feature-guides/test-contract-with-clarinet-sdk",
-      "destination": "https://docs.hiro.so/clarinet/guides/test-contract-with-clarinet-sdk",
+      "source": "/chainhook/guides/register-chainhooks-on-devnet",
+      "destination": "/stacks/chainhook/guides/register-chainhooks-on-devnet",
+      "permanent": true
+    },
+    {
+      "source": "/chainhook/faq",
+      "destination": "/stacks/chainhook",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet",
+      "destination": "/stacks/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-add-contracts-to-clarinet",
+      "destination": "/stacks/clarinet/guides/add-a-contract",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/test-contract-with-clarinet-sdk",
+      "destination": "/stacks/clarinet/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/getting-started",
+      "destination": "/stacks/clarinet/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/networks",
+      "destination": "/stacks/clarinet/concepts/network-types",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/clarinet-js-sdk",
+      "destination": "/stacks/clarinet-js-sdk",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-create-new-project",
+      "destination": "/stacks/clarinet/guides/create-a-new-project",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-check-contract-syntax",
+      "destination": "/stacks/clarinet/guides/validate-a-contract",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-debug-contract",
+      "destination": "/stacks/clarinet/guides/debug-a-contract",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-deploy-contracts",
+      "destination": "/stacks/clarinet/guides/deploy-a-contract",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-deploy-with-subnets",
+      "destination": "/stacks/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-set-up-local-development-environment",
+      "destination": "/stacks/clarinet/guides/run-a-local-devnet",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/how-to-use-deployment-plans",
+      "destination": "/stacks/clarinet/guides/create-deployment-plans",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/analyze-with-check-checker",
+      "destination": "/stacks/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/clarinet-deploy",
+      "destination": "/stacks/clarinet/concepts/deployment-plan",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/guides/clarinet-integrate",
+      "destination": "/stacks/clarinet/guides/run-a-local-devnet",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/faq",
+      "destination": "/stacks/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/clarinet/troubleshooting",
+      "destination": "/stacks/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/explorer/:path*",
+      "destination": "https://explorer.hiro.so",
+      "permanent": true
+    },
+    {
+      "source": "/hiro-archive/:path*",
+      "destination": "/stacks/archive",
+      "permanent": true
+    },
+    {
+      "source": "/platform",
+      "destination": "/stacks/platform",
+      "permanent": true
+    },
+    {
+      "source": "/platform/getting-started",
+      "destination": "/stacks/platform/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/platform/guides/:path*",
+      "destination": "/stacks/platform",
       "permanent": false
     },
     {
-      "source": "/chainhook/how-to-guides/how-to-use-chainhooks-with-bitcoin",
-      "destination": "https://docs.hiro.so/chainhook/guides/chainhooks-with-bitcoin",
+      "source": "/platform/faq",
+      "destination": "/stacks/platform",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/installing",
+      "destination": "/stacks/stacks.js/installation",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/learn-the-basics",
+      "destination": "/stacks/stacks.js/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/faq",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/roadmap",
+      "destination": "/stacks/stacks.js/roadmap",
+      "permanent": true
+    },
+    {
+      "source": "/stacks.js/guides/how-to-integrate-stacking",
+      "destination": "/stacks/stacks.js",
       "permanent": false
     },
     {
-      "source": "/smart-contracts/clarinet",
-      "destination": "https://docs.hiro.so/clarinet",
-      "permanent": false
-    },
-    {
-      "source": "/platform/archive-project",
-      "destination": "https://docs.hiro.so/platform/guides/archive-project",
-      "permanent": false
-    },
-    {
-      "source": "/platform/create-project",
-      "destination": "https://docs.hiro.so/platform/guides/create-project",
-      "permanent": false
-    },
-    {
-      "source": "/platform/deploy-project",
-      "destination": "https://docs.hiro.so/platform/guides/deploy-project",
-      "permanent": false
-    },
-    {
-      "source": "/platform/faucet",
-      "destination": "https://docs.hiro.so/platform/guides/faucet",
-      "permanent": false
-    },
-    {
-      "source": "/platform/build-contract",
-      "destination": "https://docs.hiro.so/platform/guides/build-contract",
-      "permanent": false
-    },
-    {
-      "source": "/clarinet/feature-guides/clarinet-js-sdk",
-      "destination": "https://docs.hiro.so/clarinet/guides/clarinet-js-sdk",
-      "permanent": false
-    },
-    {
-      "source": "/ordhook/how-to-guides/how-to-stream-ordinal-activities",
-      "destination": "https://docs.hiro.so/ordhook/guides/stream-ordinal-activities",
-      "permanent": false
-    },
-    {
-      "source": "/chainhooks",
-      "destination": "https://docs.hiro.so/chainhook",
-      "permanent": false
-    },
-    {
-      "source": "/intro",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/build-apps/overview",
-      "destination": "https://docs.hiro.so/build-apps",
+      "source": "/stacks.js/guides/deep-dive-post-conditions",
+      "destination": "stacks/stacks.js/guides/post-conditions",
       "permanent": true
     },
     {
-      "source": "/chainhook/overview",
-      "destination": "https://docs.hiro.so/chainhook",
+      "source": "/stacks.js/guides/react-native-guide",
+      "destination": "stacks/stacks.js/guides/use-with-react-native",
       "permanent": true
     },
     {
-      "source": "/clarinet/overview",
-      "destination": "https://docs.hiro.so/clarinet",
+      "source": "/stacks.js/connect",
+      "destination": "stacks/connect",
       "permanent": true
     },
     {
-      "source": "/example-apps/overview",
-      "destination": "https://docs.hiro.so/example-apps",
+      "source": "/stacks.js/guides/authenticate-users-with-connect",
+      "destination": "stacks/connect/guides/authenticate-users",
       "permanent": true
     },
     {
-      "source": "/explorer/overview",
-      "destination": "https://docs.hiro.so/explorer",
+      "source": "/stacks.js/guides/sign-transactions",
+      "destination": "stacks/connect/guides/sign-transactions",
       "permanent": true
     },
     {
-      "source": "/hiro-archive/overview",
-      "destination": "https://docs.hiro.so/hiro-archive",
+      "source": "/stacks.js/guides/sign-messages",
+      "destination": "stacks/connect/guides/sign-messages",
       "permanent": true
     },
     {
-      "source": "/ordhook/overview",
-      "destination": "https://docs.hiro.so/ordhook",
+      "source": "/stacks-blockchain-api/:path*",
+      "destination": "/stacks/api",
       "permanent": true
     },
     {
-      "source": "/ordinals-api/overview",
-      "destination": "https://docs.hiro.so/ordinals-api",
+      "source": "/api/:path*",
+      "destination": "/stacks/api",
       "permanent": true
     },
     {
-      "source": "/ordinals-explorer/overview",
-      "destination": "https://docs.hiro.so/ordinals-explorer",
+      "source": "/metadata/:path*",
+      "destination": "/stacks/token-metadata-api",
       "permanent": true
     },
     {
-      "source": "/platform/overview",
-      "destination": "https://docs.hiro.so/platform",
+      "source": "/token-metadata-api/:path*",
+      "destination": "/stacks/token-metadata-api",
       "permanent": true
     },
     {
-      "source": "/stacks-blockchain-api/overview",
-      "destination": "https://docs.hiro.so/stacks-blockchain-api",
+      "source": "/token-metadata-api/architecture-overview",
+      "destination": "/stacks/token-metadata-api/architecture",
       "permanent": true
     },
     {
-      "source": "/stacks.js/overview",
-      "destination": "https://docs.hiro.so/stacks.js",
+      "source": "/api-keys",
+      "destination": "/guides/api-keys",
       "permanent": true
     },
     {
-      "source": "/subnets/overview",
-      "destination": "https://docs.hiro.so/subnets",
+      "source": "/rate-limiting",
+      "destination": "/guides/rate-limiting",
       "permanent": true
     },
     {
-      "source": "/token-metadata-api/overview",
-      "destination": "https://docs.hiro.so/token-metadata-api",
+      "source": "/changelog",
+      "destination": "/stacks",
       "permanent": true
     },
     {
-      "source": "/tutorials/overview",
-      "destination": "https://docs.hiro.so/tutorials",
+      "source": "/contributors-guide",
+      "destination": "/guides/contributors-guide",
       "permanent": true
     },
     {
-      "source": "/stacks.js/getting-started",
-      "destination": "https://docs.hiro.so/stacks.js/learn-the-basics",
-      "permanent": false
+      "source": "/example-apps/:path*",
+      "destination": "/stacks/get-started",
+      "permanent": true
+    },
+    {
+      "source": "/build-apps/:path*",
+      "destination": "/stacks",
+      "permanent": true
+    },
+    {
+      "source": "/get-started/:path*",
+      "destination": "/stacks/get-started",
+      "permanent": true
+    },
+    {
+      "source": "/tutorials/:path*",
+      "destination": "/stacks/get-started",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/introduction",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/api-status",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/list-of-inscriptions",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/satoshi-ordinal",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/inscription-count-per-block",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/brc-20-tokens",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/inscription-content",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/transfers-per-block",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/specific-inscription",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/inscription-transfers",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/satoshi-inscriptions",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/brc-20-token-details",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/brc-20-token-holders",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/brc-20-balances",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals/brc-20-activity",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook",
+      "destination": "/ordinals/ordhook",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/getting-started",
+      "destination": "/ordinals/ordhook/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/guides/ordhook-as-a-service-bitcoind",
+      "destination": "/ordinals/ordhook/guides/ordhook-as-a-service",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/guides/scan-ordinal-activities",
+      "destination": "/ordinals/ordhook/guides/scan-ordinals-activity",
+      "permanent": true
+    },
+    {
+      "source": "/ordhook/guides/stream-ordinal-activities",
+      "destination": "/ordinals/ordhook/guides/stream-ordinals-activity",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals-explorer/:path*",
+      "destination": "https://ordinals.hiro.so",
+      "permanent": true
+    },
+    {
+      "source": "/ordinals-api",
+      "destination": "/ordinals/api",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto",
+      "destination": "/stacks/nakamoto",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto-api/:path*",
+      "destination": "/stacks/api",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/clarinet",
+      "destination": "/stacks/nakamoto/clarinet",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/explorer",
+      "destination": "/stacks/nakamoto/explorer",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/stacks-js",
+      "destination": "/stacks/nakamoto/stacks-js",
+      "permanent": true
+    },
+    {
+      "source": "/nakamoto/stacks-api",
+      "destination": "/stacks/nakamoto/api",
+      "permanent": true
+    },
+    {
+      "source": "/hacks",
+      "destination": "/stacks/hacks",
+      "permanent": true
+    },
+    {
+      "source": "/hacks/build-a-friend-tech-clone",
+      "destination": "/stacks/hacks/build-a-friend-tech-clone",
+      "permanent": true
+    },
+    {
+      "source": "/hacks/build-a-decentralized-grants-program",
+      "destination": "/stacks/hacks/build-a-decentralized-grants-program",
+      "permanent": true
+    },
+    {
+      "source": "/hacks/build-a-custom-api-using-chainhook",
+      "destination": "/stacks/hacks/build-a-custom-api",
+      "permanent": true
+    },
+    {
+      "source": "/references/:path*",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/stacksjs-starters",
+      "destination": "/stacks/stacks.js",
+      "permanent": true
+    },
+    {
+      "source": "/get-started/transactions",
+      "destination": "/stacks/stacks.js/concepts/transactions",
+      "permanent": true
     }
   ]
 }

@@ -1,0 +1,72 @@
+---
+title: Overview
+description: A cloud-based development environment to kickstart your app development on Stacks.
+toc: false
+---
+
+import Link from "next/link";
+import { Button } from "@/components/ui/button"
+
+The Hiro Platform is a hosted developer experience for creating, testing, and deploying smart contracts. It comes pre-installed with several tools, including Clarinet, VS Code, and a private blockchain network for testing, so you can spend less time setting up and more time building.
+
+You can also set up custom event streams via chainhooks and manage API keys for Stacks and Ordinals.
+
+<Button className="bg-orange-500 hover:bg-orange-600">
+  <Link
+    target="_blank"
+    href="https://platform.hiro.so/"
+    className="no-underline"
+  >
+    Get started on the platform
+  </Link>
+</Button>
+
+### Guides
+
+<Cards>
+  <Card 
+    href="/stacks/platform/guides/create-project"
+    title="Create a new project"
+    description="Choose from a set of starter templates or import your existing GitHub repo."
+  />
+
+{" "}
+
+<Card
+  href="/stacks/platform/guides/build-contracts"
+  title="Develop smart contracts"
+  description="Start building immediately with zero installations required."
+/>
+
+{" "}
+
+<Card
+  href="/stacks/platform/guides/create-chainhooks"
+  title="Create event streams with Chainhook"
+  description="Create and manage webhook-like triggers that react to on-chain events in real time."
+/>
+
+{" "}
+
+<Card
+  href="/stacks/platform/guides/deployment-plans"
+  title="Deploy your contracts"
+  description="Deploy your project with customizable deployment plans that can handle contract dependencies."
+/>
+
+  <Card 
+    href="/stacks/platform/guides/devnet"
+    title="Iterate quickly with devnet"
+    description="Leverage devnet, a private instance of the blockchain, for rapid feedback loops and a better debugging experience."
+  />
+</Cards>
+
+### Related tools
+
+- **[Clarinet](/stacks/clarinet)**: Prefer to stay local? Build and deploy smart contracts on your device with Clarinet.
+- **[Chainhook](/stacks/chainhook)**: You don’t need the platform to create event streams. Leverage chainhook independently, so your app can react to on-chain events in real time.
+- **[Stacks.js](/stacks/stacks.js)**: Don’t reinvent the wheel and build faster with a JS library that handles basic functions.
+
+---
+
+_Need help building with Clarinet?_  [Reach out to us](https://stacks.chat/) on the `#clarinet` channel on Discord under **Hiro Developer Tools** section. There's also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.

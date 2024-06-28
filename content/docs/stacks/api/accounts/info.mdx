@@ -1,0 +1,118 @@
+---
+title: Get account info
+description: Retrieves the account data for a given account or contract identifier.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}`}</p>
+</h2>
+
+Retrieves the account data for a given account or contract identifier, where the balance is the hex encoding of a unsigned 128-bit integer (big-endian), the nonce is an unsigned 64-bit integer, and the proofs are provided as hex strings.
+
+For non-existent accounts, this does not return a 404 error. Rather it returns an object with a balance and nonce of 0.
+
+
+### Path parameters
+
+<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+
+Stacks address or a contract identifier
+
+<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"proof"} type={"integer"}>
+
+Returns object without the proof field if set to 0
+
+</Property>
+
+<Property required={false} deprecated={false} name={"tip"} type={"string"}>
+
+The Stacks chain tip to query from
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Success |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request for account data
+
+```json title="Example response"
+{
+  "balance": "string",
+  "locked": "string",
+  "unlock_height": 0,
+  "nonce": 0,
+  "balance_proof": "string",
+  "nonce_proof": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request for account data
+ */
+export interface AccountDataResponse {
+  balance: string;
+  locked: string;
+  unlock_height: number;
+  nonce: number;
+  balance_proof: string;
+  nonce_proof: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

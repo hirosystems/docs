@@ -1,0 +1,87 @@
+---
+title: Installation
+description: Installing Stacks.js packages.
+---
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+Stacks.js is separated into many smaller packages, which can be installed individually and are published under the `@stacks` scope.
+
+The most commonly used packages are:
+
+<Tabs defaultValue="connect">
+  <TabsList className='flex flex-wrap md:w-max'>
+    <TabsTrigger value="connect" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/connect</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="network" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/network</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="transactions" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/transactions</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="client" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>@stacks/blockchain-api-client</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="connect">
+    ```package-install
+    @stacks/connect
+    ```
+
+    Build Stacks-ready web apps and connect to user wallets.
+  </TabsContent>
+  <TabsContent value="network">
+    ```package-install
+    @stacks/network
+    ```
+
+    Network and API library for working with Stacks blockchain nodes.
+  </TabsContent>
+  <TabsContent value="transactions">
+    ```package-install
+    @stacks/transactions
+    ```
+
+    Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
+  </TabsContent>
+  <TabsContent value="client">
+    ```package-install
+    @stacks/blockchain-api-client
+    ```
+
+    API client library for all Stacks Blockchain API endpoints.
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title="All available packages">
+  [`@stacks/connect`](/stacks/stacks.js/packages/auth) - Build Stacks-ready web applications and connect to user wallets.
+
+  [`@stacks/auth`](/stacks/stacks.js/packages/auth) - Construct and decode authentication requests for Stacks apps.
+
+  [`@stacks/transactions`](/stacks/stacks.js/packages/transactions) - Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
+
+  [`@stacks/wallet-sdk`](/stacks/stacks.js/packages/wallet-sdk) - A library for building wallets, managing accounts, and handling keys for the Stacks blockchain.
+
+  [`@stacks/storage`](/stacks/stacks.js/packages/storage) - Store and fetch files with Gaia, the decentralized storage system.
+
+  [`@stacks/profile`](/stacks/stacks.js/packages/profile) - Functions for manipulating user profiles.
+
+  [`@stacks/encryption`](/stacks/stacks.js/packages/encryption) - Encryption functions used by Stacks.js packages.
+
+  [`@stacks/network`](/stacks/stacks.js/packages/network) - A network and API library for working with Stacks blockchain nodes.
+
+  [`@stacks/common`](/stacks/stacks.js/packages/common) - Common utilities used by Stacks.js packages.
+
+  [`@stacks/bns`](/stacks/stacks.js/packages/bns) - A library for interacting with the BNS contract.
+
+  [`@stacks/stacking`](/stacks/stacks.js/packages/stacking) - A library for PoX stacking.
+
+  [`@stacks/cli`](/stacks/stacks.js/packages/cli) - A command line interface to interact with auth, storage, and Stacks transactions.
+
+  [`@stacks/blockchain-api-client`](/stacks/api/client) - API client library for all Stacks Blockchain API endpoints.
+  </Accordion>
+</Accordions>

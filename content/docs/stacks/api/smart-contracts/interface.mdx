@@ -1,0 +1,115 @@
+---
+title: Get contract interface
+description: Retrieves a list of functions, variables, maps, fungible tokens and non-fungible tokens for a given smart contract.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/contracts/interface/{contract_address}/{contract_name}`}</p>
+</h2>
+
+Retrieves a contract interface with a given `contract_address` and `contract name`.
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Contract interface |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET "https://api.mainnet.hiro.so/v2/contracts/interface/SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request to get contract interface
+
+```json title="Example response"
+{
+  "functions": [
+    {}
+  ],
+  "variables": [
+    {}
+  ],
+  "maps": [
+    {}
+  ],
+  "fungible_tokens": [
+    {}
+  ],
+  "non_fungible_tokens": [
+    {}
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request to get contract interface
+ */
+export interface ContractInterfaceResponse {
+  /**
+   * List of defined methods
+   */
+  functions: {}[];
+  /**
+   * List of defined variables
+   */
+  variables: {}[];
+  /**
+   * List of defined data-maps
+   */
+  maps: {}[];
+  /**
+   * List of fungible tokens in the contract
+   */
+  fungible_tokens: {}[];
+  /**
+   * List of non-fungible tokens in the contract
+   */
+  non_fungible_tokens: {}[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

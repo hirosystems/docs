@@ -1,0 +1,161 @@
+---
+title: Properties
+description: The Clarinet JS SDK provides properties that can be used to interact with simnet.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+
+import { InlineCode } from '@/components/inline-code';
+
+### Installation
+
+```package-install
+@hirosystems/clarinet-sdk
+```
+
+<Root>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`blockHeight`</h2>
+
+Returns the current block height of simnet.
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the current block height</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // [!code word:blockHeight]
+    // @noErrors
+    const currentBlockHeight = simnet.blockHeight;
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title="Response">
+    ```ts
+    1
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`deployer`</h2>
+
+Returns the default deployer address as defined in the project file.
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the deployer address</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="set-deployer" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Setting the deployer to a new address</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:deployer]
+    const currentDeployerAddress = simnet.deployer;
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+  <TabsContent value="set-deployer">
+    ```ts twoslash
+    // @noErrors
+    simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'; // [!code highlight]
+    const newDeployer = simnet.deployer
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+        ```
+      </Accordion>
+    </Accordions>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`currentEpoch`</h2>
+
+Returns the current epoch of simnet.
+
+This represents the Stacks blockchain's progress through discrete time periods, cycles, or upgrades.
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Getting the current epoch of simnet</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:currentEpoch]
+    const epoch = simnet.currentEpoch;
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title="Response">
+    ```ts
+    2.5
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+</Root>

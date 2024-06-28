@@ -1,0 +1,175 @@
+---
+title: Get BRC-20 activity
+description: Retrieves BRC-20 activity filtered by ticker, address, operation, or block height.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<div className="flex-1">
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/ordinals/v1/brc-20/activity`}</p>
+</h2>
+
+Retrieves BRC-20 activity filtered by ticker, address, operation, or at a specific block height.
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"ticker"} type={"array of string"}>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"block_height"} type={"string"}>
+
+Bitcoin block height
+
+<span>Pattern: `"^[0-9]+$"`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"operation"} type={"array of Any properties in string, string, string, string"}>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"address"} type={"string"}>
+
+Bitcoin address
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum: `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum: `1`</span>
+
+<span>Maximum: `60`</span>
+
+</Property>
+
+| Status code | Description      |
+| :---------- | :--------------- |
+| `200`       | Default response |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/activity"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+```json title="Example response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "operation": "deploy",
+      "ticker": "PEPE",
+      "inscription_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
+      "block_height": 778921,
+      "block_hash": "0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133",
+      "tx_id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218",
+      "location": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218:0:0",
+      "address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+      "timestamp": 1677733170000,
+      "mint": {
+        "amount": "1000000"
+      },
+      "deploy": {
+        "max_supply": "21000000",
+        "mint_limit": "100000",
+        "decimals": 18
+      },
+      "transfer": {
+        "amount": "1000000",
+        "from_address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+      },
+      "transfer_send": {
+        "amount": "1000000",
+        "from_address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8",
+        "to_address": "bc1pvwh2dl6h388x65rqq47qjzdmsqgkatpt4hye6daf7yxvl0z3xjgq247aq8"
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+export interface PaginatedBRC20ActivityResponse {
+  limit: number
+  offset: number
+  total: number
+  results: {
+    operation: "deploy" | "mint" | "transfer" | "transfer_send"
+    ticker: string
+    inscription_id: string
+    block_height: number
+    block_hash: string
+    tx_id: string
+    location: string
+    address: string
+    timestamp: number
+    mint?: {
+      amount: string | null
+    }
+    deploy?: {
+      max_supply: string
+      mint_limit: string | null
+      decimals: number
+    }
+    transfer?: {
+      amount: string
+      from_address: string
+    }
+    transfer_send?: {
+      amount: string
+      from_address: string
+      to_address: string
+    }
+  }[]
+}
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

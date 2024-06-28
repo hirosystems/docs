@@ -1,0 +1,145 @@
+---
+title: Authenticate users
+description: Connect to user wallets and authenticate your users using Stacks.js.
+---
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { SmallCard } from '@/components/card';
+
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
+
+import { InlineCode } from '@/components/inline-code';
+
+Authentication is a fundamental part of many web applications, ensuring that users are who they claim to be and that their data is secure. With the Stacks blockchain, user authentication involves connecting to users' wallets and managing their sessions securely.
+
+The `@stacks/connect` package from Stacks.js provides the tools needed to integrate this functionality seamlessly into your web app.
+
+In this guide, you will learn how to:
+
+1. Install and set up the `@stacks/connect` package.
+2. Initiate a `userSession` with specific permission scopes.
+3. Trigger the authentication flow with the `showConnect` function.
+4. Handle pending authentication states and manage user data.
+
+{/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
+
+---
+
+### Install and set up the <InlineCode>@stacks/connect</InlineCode> package
+
+First, install the `@stacks/connect` package in your project.
+
+```package-install
+@stacks/connect
+```
+
+### Initiate a <InlineCode>userSession</InlineCode> with specific permission scopes
+
+After installing the `@stacks/connect` package, initiate a `userSession` with the following permission scopes.
+
+```ts twoslash
+import { AppConfig, UserSession } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+```
+
+Apps may request any of the following scopes:
+
+| Scope          | Definition                                                                      |
+| -------------- | ------------------------------------------------------------------------------- |
+| `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
+| `publish_data` | Publish data so other users of the app can discover and interact with the user. |
+
+<Callout>We recommend you initiate the `userSession` object just once in your app, then reference it using imports where needed.</Callout>
+
+### Trigger the authentication flow with the <InlineCode>showConnect</InlineCode> function
+
+Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [secret key](/stacks/stacks.js/concepts/private-keys) that's used to encrypt their private data.
+
+<div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
+  <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
+  <div className="relative rounded-xl overflow-auto p-8">
+    <div className="grid place-items-center">
+      <ConnectWalletButton />
+      <GridPattern />
+    </div>
+  </div>
+  <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
+</div>
+
+```ts twoslash
+// @noErrors
+function authenticate() {
+  showConnect({
+    appDetails: {
+      name: 'My App',
+      icon: window.location.origin + '/my-app-logo.svg',
+    },
+    redirectTo: '/',
+    onFinish: () => {
+      let userData = userSession.loadUserData();
+    },
+    userSession,
+  });
+}
+```
+
+The `showConnect` function accepts an object with the following properties:
+
+- The app's `name` and `icon`: provided as strings comprising the `appDetails` object property.
+- The `redirectTo` string: used to provide a URL to which the user should be redirected upon successful authentication.
+- The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
+- The `userSession` object initiated above.
+
+### Handle pending authentication
+
+After initiating the authentication process, you will most likely need to handle cases where the user hasn't completed the authentication flow.
+
+1. Check if there is a pending sign-in using the `isSignInPending` method of the `userSession` object.
+2. If there is a pending sign-in, handle it by calling `handlePendingSignIn` which processes the sign-in and then utilizes the `userData` returned in a promise.
+
+```tsx twoslash
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+
+window.onload = function () {
+  if (userSession.isSignInPending()) {
+    userSession.handlePendingSignIn().then(userData => {
+      // Save or otherwise utilize userData post-authentication
+    });
+  } else if (userSession.isUserSignedIn()) {
+    // Handle case in which user is already authenticated
+  }
+};
+```
+
+For users already signed in, you can directly access their session information and proceed with your app's flow.
+
+<Callout title="Note">Implementing `handlePendingSignIn` is particularly important in mobile app contexts to ensure a smooth user experience across all device types.</Callout>
+
+---
+
+### Next steps
+
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/connect/guides/sign-transactions"
+    title="Sign transactions"
+    description="Learn how to interact with your smart contracts using Stacks.js."
+  />
+  <SmallCard
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js/guides/post-conditions"
+    title="Deep dive into post-conditions"
+    description="Learn how to build post-conditions to secure your smart contracts."
+  />
+</Cards>
+

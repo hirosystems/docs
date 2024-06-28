@@ -1,0 +1,152 @@
+---
+title: Quickstart
+description: Learn how to transfer STX tokens via a web wallet using Stacks Connect.
+---
+
+import { ChevronRight, Code, Terminal, Folder as FolderIcon } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { SmallCard } from '@/components/card';
+
+In this quickstart guide, you will learn how to set up your project, authenticate users with a web wallet, and initiate a STX token transfer.
+
+For a deeper dive into the authentication process, check out the [authenticate users](/stacks/connect/guides/authenticate-users) guide.
+
+<Callout>
+  To view the full code for this quickstart, [click here](https://github.com/hiro-so/stacks.js/tree/main/examples/hello-world).
+</Callout>
+
+---
+
+<div className='steps space-y-12'>
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Install package dependencies</p>
+        <p className='mb-0'>Add the `@stacks/connect`, `@stacks/transactions`, and `@stacks/network` packages to your project using your preferred package manager.</p>
+      </div>
+      <div className="w-full">
+        ```package-install title="Terminal"
+        @stacks/connect @stacks/transactions @stacks/network
+        ```
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Create an <code className='text-lg'>AppConfig</code> and <code className='text-lg'>UserSession</code></p>
+        <p className='mb-0'>Add a reusable `UserSession` instance to your project. This will allow your app to store authentication state in `localStorage`.</p>
+      </div>
+      <div className="w-full">
+        ```ts twoslash title="session.ts"
+        // @noErrors
+        // [!code word:userSession]
+        import { AppConfig, UserSession } from '@stacks/connect';
+
+        const appConfig = new AppConfig(['store_write', 'publish_data']);
+        export const userSession = new UserSession({ appConfig });
+        ```
+      </div>
+      <p className='mb-0'>You can now import the `userSession` instance in the following step to continue with the authentication process.</p>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Interacting with the user's wallet</p>
+        <p className='mb-0'>The process of connecting to a wallet gives the web app information about the wallet account, which enables interactions with the Stacks blockchain, like calling smart contracts.</p>
+        <p className='mb-0'>Using the `showConnect` function, you can prompt the user to select a wallet to connect to your app.</p>
+      </div>
+      <div className="w-full">
+        ```tsx twoslash title="connect.ts"
+        // @noErrors
+        // [!code word:showConnect]
+        import { showConnect } from '@stacks/connect';
+        import { userSession } from './session';
+
+        const appDetails = {
+          name: "My app",
+          icon: "logo.png",
+        }
+
+        showConnect({
+          appDetails,
+          userSession,
+          onFinish: () => {
+            window.location.reload();
+          },
+          onCancel: () => {
+            console.log('oops');
+          },
+        });
+        ```
+
+        <p className='mb-0'>This will configure the `showConnect` function to display a wallet connection pop-up with your app's name and icon, and handle user confirmation or cancellation actions in the `onFinish` and `onCancel` callbacks.</p>
+      </div>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Initiate a STX transfer</p>
+        <p className='mb-0'>With a connected wallet, you can now initiate a STX transfer to another account.</p>
+        <p className='mb-0'>To prompt the user for a STX transfer call, use the `openSTXTransfer` function.</p>
+      </div>
+      <div className="w-full">
+        ```tsx twoslash title="transfer.ts"
+        // @noErrors
+        // [!code word:openSTXTransfer]
+        import { openSTXTransfer } from '@stacks/connect';
+        import { StacksTestnet } from '@stacks/network';
+        import { userSession } from './session';
+
+        openSTXTransfer({
+          network: new StacksTestnet(),
+          recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK',
+          amount: 10000000,
+          onFinish: response => {
+            console.log(response.txid);
+          },
+          onCancel: () => {
+            console.log('User cancelled');
+          },
+        });
+        ```
+
+        <p>This will prompt the user to confirm and sign a transaction, sending 10 STX to the `recipient` address.</p>
+
+        <Callout>
+          The `amount` field is denominated in `microSTX`, which is the smallest fraction of STX. 1,000,000 microSTX = 1 STX.
+        </Callout>
+
+      </div>
+    </div>
+  </Step>
+</div>
+
+### Next steps
+
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/connect/guides/authenticate-users"
+    title="Authenticate users"
+    description="Learn how to authenticate users using the Connect package in Stacks.js."
+  />
+  <SmallCard
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/connect/guides/sign-transactions"
+    title="Sign transactions"
+    description="Learn how to sign transactions using Stacks.js."
+  />
+  <SmallCard
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/connect/guides/sign-messages"
+    title="Sign messages"
+    description="Learn how to sign messages using Stacks.js."
+  />
+</Cards>

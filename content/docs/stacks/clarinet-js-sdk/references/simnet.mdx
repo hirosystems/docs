@@ -1,0 +1,85 @@
+---
+title: Simnet
+description: The Simnet class is the main entry point for the Clarinet JS SDK. It provides properties and methods for interacting with the Clarinet network.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+
+import { InlineCode } from '@/components/inline-code';
+
+### Installation
+
+```package-install
+@hirosystems/clarinet-sdk
+```
+
+<Root>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`initSimnet`</h2>
+
+The `initSimnet` function initializes a simulated network. It will often be the first function you call when using the SDK.
+
+### Parameters
+
+<Property required={false} deprecated={false} name={"manifestPath"} type={"string"}>
+
+The `manifestPath` is the path to the `Clarinet.toml` manifest file.
+
+</Property>
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Creating a new instance of simnet</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="custom" className='tab group'>
+      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With a custom config path</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // [!code word:initSimnet]
+    // @noErrors
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet();
+    ```
+  </TabsContent>
+  <TabsContent value="custom">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:'./config/Clarinet.toml']
+    import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+    const simnet = await initSimnet('./config/Clarinet.toml');
+    ```
+  </TabsContent>
+</Tabs>
+
+<Accordions>
+  <Accordion title="Schema">
+    ```bash
+    initSimnet(manifestPath?: string): Promise<Simnet>
+    ```
+  </Accordion>
+</Accordions>
+
+</APIExample>
+
+</API>
+
+</Root>

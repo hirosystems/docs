@@ -1,0 +1,67 @@
+---
+title: Usage
+description: Go over the multiple ways to make requests to the Token Metadata API.
+---
+
+### Making requests
+
+To make a request to the Stacks API, you can paste the `curl` command below in your terminal.
+
+```bash title="Terminal"
+curl -L 'https://api.hiro.so/metadata/v1/' \
+-H 'Accept: application/json'
+```
+
+If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key.
+
+```bash title="Terminal"
+curl -L 'https://api.hiro.so/metadata/v1/' \
+-H 'Accept: application/json' \
+-H 'X-API-Key: $HIRO_API_KEY' # [!code highlight]
+```
+
+You should get a response back that resembles the following:
+
+```json
+{
+  "server_version": "token-metadata-api v0.7.0 (master:1aa1603)",
+  "status": "ready",
+  "tokens": {
+    "ft": 1309,
+    "nft": 545094,
+    "sft": 121
+  },
+  "token_contracts": {
+    "sip-009": 4791,
+    "sip-010": 1309,
+    "sip-013": 21
+  },
+  "job_queue": {
+    "done": 443257,
+    "failed": 108606
+  }
+}
+```
+
+### Making requests using API Client
+
+We also maintain a standalone API client that you can use to make requests to the Stacks API. This client is available as a package and can be installed with the following command:
+
+```package-install title="Terminal"
+@hirosystems/token-metadata-api-client
+```
+
+Example usage:
+
+```ts twoslash
+// @noErrors
+import { Configuration, TokensApi } from "@hirosystems/token-metadata-api-client";
+
+const config: Configuration = {}
+const api = new TokensApi(config);
+const result = await api.getFtMetadata(
+  'SP1H1733V5MZ3SZ9XRW9FKYGEZT0JDGEB8Y634C7R.miamicoin-token-v2'
+);
+```
+
+For more information on the API client, you can check out the [API Client documentation](/stacks/token-metadata-api/client).

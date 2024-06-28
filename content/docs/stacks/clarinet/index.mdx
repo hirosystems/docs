@@ -1,0 +1,65 @@
+---
+title: Overview
+description: Clarinet is a local development environment that offers everything you need to create, test, and deploy smart contracts on Stacks.
+toc: false
+---
+
+import { ArrowUpRight } from "lucide-react";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+Using a simple command line interface, Clarinet enables you to build and iterate on your contracts locally before moving into production on the `mainnet` network.
+
+You can code with <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>Clarity syntax support</span></TooltipTrigger><TooltipContent>Using the [Clarity VSCode extension](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp#:~:text=This%20VS%20Code%20extension%20brings,safety%20checks%2C%20debugger%20and%20more)</TooltipContent></Tooltip></TooltipProvider>, run tests, debug your code line by line, and deploy your contracts to a local Stacks blockchain environment to rapidly iterate on your code. Clarinet can also be used as a hosted service in the cloud via the [Hiro Platform](/stacks/platform).
+
+To get started, check out our [installation guide](/stacks/clarinet/installation).
+
+### Guides
+
+<Cards>
+  <Card
+    href="/stacks/clarinet/guides/create-a-new-project"
+    title="Create a new contract"
+    description="Add new contracts to your project and have them automatically configured in your project file."
+  />
+  <Card
+    href="/stacks/clarinet/guides/debug-a-contract"
+    title="Debug a contract"
+    description="Utilize powerful debugging tools to step through your code, print values, and trace execution paths."
+  />
+  <Card
+    href="/stacks/clarinet-js-sdk/guides/testing-with-clarinet-sdk"
+    title="Write unit tests"
+    description="Leverage the Clarinet JS SDK to write comprehensive unit tests, ensuring your contract performs as expected."
+  />
+  <Card
+    href="/stacks/clarinet/guides/create-deployment-plans"
+    title="Create deployment plans"
+    description="Employ customizable deployment plans to streamline your contract deployments, facilitating multi-step processes with ease."
+  />
+  <Card
+    href="/stacks/clarinet/guides/run-a-local-devnet"
+    title="Run a local development environment"
+    description="Set up a local devnet environment for developing and testing in a controlled environment before deployment."
+  />
+  <Card
+    href="/stacks/clarinet/guides/validate-a-contract"
+    title="Analyzing contracts for vulnerabilities"
+    description="Learn how to enable the `check_checker` feature to identify potentially dangerous areas in your contracts."
+  />
+</Cards>
+
+### Related tools
+
+- **[Clarinet JS SDK](/stacks/clarinet-js-sdk)**: Simplify your testing with the Clarinet JS SDK.
+- **[Hiro Platform](/stacks/platform)**: Streamline your app development in our hosted dev experience.
+- **[Stacks.js](/stacks/stacks.js)**: Leverage a JavaScript library that handles basic functions, such as user authentication and transaction signing.
+
+---
+
+_Need help building with Clarinet?_  [Reach out to us](https://stacks.chat/) on the `#clarinet` channel on Discord under the **Hiro Developer Tools** section. There's also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.

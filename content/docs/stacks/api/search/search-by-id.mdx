@@ -1,0 +1,971 @@
+---
+title: Search by ID
+description: Search blocks, transactions, contracts, or accounts by hash/ID.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/info`}</p>
+</h2>
+
+Search blocks, transactions, contracts, or accounts by hash/ID.
+
+### Path parameters
+
+<Property required={true} deprecated={false} name={"id"} type={"string"}>
+
+The hex hash string for a block or transaction, account address, or contract address
+
+<span>Example:  `"0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"`</span>
+
+</Property>
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"include_metadata"} type={"boolean"}>
+
+This includes the detailed data for purticular hash in the response
+
+</Property>
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Success |
+| `404` | Not found |
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X GET \
+"https://api.mainnet.hiro.so/extended/v1/search/0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+complete search result for terms
+
+```json title="Example response"
+{
+  "found": false,
+  "result": {
+    "entity_type": "standard_address"
+  },
+  "error": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * complete search result for terms
+ */
+export type SearchResult = SearchErrorResult | SearchSuccessResult;
+/**
+ * Search success result
+ */
+export type SearchSuccessResult =
+  | AddressSearchResult
+  | BlockSearchResult
+  | ContractSearchResult
+  | MempoolTxSearchResult
+  | TxSearchResult;
+/**
+ * GET request that returns address balances
+ */
+export type AddressStxBalanceResponse = StxBalance & {
+  token_offering_locked?: AddressTokenOfferingLocked;
+};
+/**
+ * Describes all transaction types on Stacks 2.0 blockchain
+ */
+export type MempoolTransaction =
+  | MempoolTokenTransferTransaction
+  | MempoolSmartContractTransaction
+  | MempoolContractCallTransaction
+  | MempoolPoisonMicroblockTransaction
+  | MempoolCoinbaseTransaction
+  | MempoolTenureChangeTransaction;
+/**
+ * Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset
+ */
+export type MempoolTokenTransferTransaction = AbstractMempoolTransaction & TokenTransferTransactionMetadata;
+/**
+ * Abstract transaction. This schema makes up all properties common between all Stacks 2.0 transaction types
+ */
+export type AbstractMempoolTransaction = BaseTransaction & {
+  tx_status: MempoolTransactionStatus;
+  /**
+   * A unix timestamp (in seconds) indicating when the transaction broadcast was received by the node.
+   */
+  receipt_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) timestamp indicating when the transaction broadcast was received by the node.
+   */
+  receipt_time_iso: string;
+};
+export type PostConditionMode = "allow" | "deny";
+/**
+ * Post-conditionscan limit the damage done to a user's assets
+ */
+export type PostCondition = PostConditionStx | PostConditionFungible | PostConditionNonFungible;
+export type PostConditionStx = {
+  principal: PostConditionPrincipal;
+} & {
+  condition_code: PostConditionFungibleConditionCode;
+  amount: string;
+  type: "stx";
+};
+export type PostConditionPrincipal =
+  | {
+      /**
+       * String literal of type `PostConditionPrincipalType`
+       */
+      type_id: "principal_origin";
+    }
+  | {
+      /**
+       * String literal of type `PostConditionPrincipalType`
+       */
+      type_id: "principal_standard";
+      address: string;
+    }
+  | {
+      /**
+       * String literal of type `PostConditionPrincipalType`
+       */
+      type_id: "principal_contract";
+      address: string;
+      contract_name: string;
+    };
+/**
+ * A fungible condition code encodes a statement being made for either STX or a fungible token, with respect to the originating account.
+ */
+export type PostConditionFungibleConditionCode =
+  | "sent_equal_to"
+  | "sent_greater_than"
+  | "sent_greater_than_or_equal_to"
+  | "sent_less_than"
+  | "sent_less_than_or_equal_to";
+export type PostConditionFungible = {
+  principal: PostConditionPrincipal;
+} & {
+  condition_code: PostConditionFungibleConditionCode;
+  type: "fungible";
+  amount: string;
+  asset: {
+    asset_name: string;
+    contract_address: string;
+    contract_name: string;
+  };
+};
+export type PostConditionNonFungible = {
+  principal: PostConditionPrincipal;
+} & {
+  condition_code: PostConditionNonFungibleConditionCode;
+  type: "non_fungible";
+  asset_value: {
+    hex: string;
+    repr: string;
+  };
+  asset: {
+    asset_name: string;
+    contract_address: string;
+    contract_name: string;
+  };
+};
+/**
+ * A non-fungible condition code encodes a statement being made about a non-fungible token, with respect to whether or not the particular non-fungible token is owned by the account.
+ */
+export type PostConditionNonFungibleConditionCode = "sent" | "not_sent";
+/**
+ * `on_chain_only`: the transaction MUST be included in an anchored block, `off_chain_only`: the transaction MUST be included in a microblock, `any`: the leader can choose where to include the transaction.
+ */
+export type TransactionAnchorModeType = "on_chain_only" | "off_chain_only" | "any";
+/**
+ * Status of the transaction
+ */
+export type MempoolTransactionStatus =
+  | "pending"
+  | "dropped_replace_by_fee"
+  | "dropped_replace_across_fork"
+  | "dropped_too_expensive"
+  | "dropped_stale_garbage_collect"
+  | "dropped_problematic";
+/**
+ * Describes representation of a Type-1 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-1-instantiating-a-smart-contract
+ */
+export type MempoolSmartContractTransaction = AbstractMempoolTransaction & SmartContractTransactionMetadata;
+/**
+ * Describes representation of a Type 2 Stacks 2.0 transaction: Contract Call
+ */
+export type MempoolContractCallTransaction = AbstractMempoolTransaction & ContractCallTransactionMetadata;
+/**
+ * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
+ */
+export type MempoolPoisonMicroblockTransaction = AbstractMempoolTransaction & PoisonMicroblockTransactionMetadata;
+/**
+ * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
+ */
+export type MempoolCoinbaseTransaction = AbstractMempoolTransaction & CoinbaseTransactionMetadata;
+/**
+ * Describes representation of a Type 7 Stacks transaction: Tenure Change
+ */
+export type MempoolTenureChangeTransaction = AbstractMempoolTransaction & TenureChangeTransactionMetadata;
+/**
+ * Describes all transaction types on Stacks 2.0 blockchain
+ */
+export type Transaction =
+  | TokenTransferTransaction
+  | SmartContractTransaction
+  | ContractCallTransaction
+  | PoisonMicroblockTransaction
+  | CoinbaseTransaction
+  | TenureChangeTransaction;
+/**
+ * Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset
+ */
+export type TokenTransferTransaction = AbstractTransaction & TokenTransferTransactionMetadata;
+/**
+ * Anchored transaction metadata. All mined/anchored Stacks transactions have these properties.
+ */
+export type AbstractTransaction = BaseTransaction & {
+  /**
+   * Hash of the blocked this transactions was associated with
+   */
+  block_hash: string;
+  /**
+   * Height of the block this transactions was associated with
+   */
+  block_height: number;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  block_time_iso: string;
+  /**
+   * Height of the anchor burn block.
+   */
+  burn_block_height: number;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined
+   */
+  burn_block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) timestamp indicating when this block was mined.
+   */
+  burn_block_time_iso: string;
+  /**
+   * Unix timestamp (in seconds) indicating when this parent block was mined
+   */
+  parent_burn_block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) timestamp indicating when this parent block was mined.
+   */
+  parent_burn_block_time_iso: string;
+  /**
+   * Set to `true` if block corresponds to the canonical chain tip
+   */
+  canonical: boolean;
+  /**
+   * Index of the transaction, indicating the order. Starts at `0` and increases with each transaction
+   */
+  tx_index: number;
+  tx_status: TransactionStatus;
+  /**
+   * Result of the transaction. For contract calls, this will show the value returned by the call. For other transaction types, this will return a boolean indicating the success of the transaction.
+   */
+  tx_result: {
+    /**
+     * Hex string representing the value fo the transaction result
+     */
+    hex: string;
+    /**
+     * Readable string of the transaction result
+     */
+    repr: string;
+  };
+  /**
+   * Number of transaction events
+   */
+  event_count: number;
+  /**
+   * Hash of the previous block.
+   */
+  parent_block_hash: string;
+  /**
+   * True if the transaction is included in a microblock that has not been confirmed by an anchor block.
+   */
+  is_unanchored: boolean;
+  /**
+   * The microblock hash that this transaction was streamed in. If the transaction was batched in an anchor block (not included within a microblock) then this value will be an empty string.
+   */
+  microblock_hash: string;
+  /**
+   * The microblock sequence number that this transaction was streamed in. If the transaction was batched in an anchor block (not included within a microblock) then this value will be 2147483647 (0x7fffffff, the max int32 value), this value preserves logical transaction ordering on (block_height, microblock_sequence, tx_index).
+   */
+  microblock_sequence: number;
+  /**
+   * Set to `true` if microblock is anchored in the canonical chain tip, `false` if the transaction was orphaned in a micro-fork.
+   */
+  microblock_canonical: boolean;
+  /**
+   * Execution cost read count.
+   */
+  execution_cost_read_count: number;
+  /**
+   * Execution cost read length.
+   */
+  execution_cost_read_length: number;
+  /**
+   * Execution cost runtime.
+   */
+  execution_cost_runtime: number;
+  /**
+   * Execution cost write count.
+   */
+  execution_cost_write_count: number;
+  /**
+   * Execution cost write length.
+   */
+  execution_cost_write_length: number;
+  /**
+   * List of transaction events
+   */
+  events: TransactionEvent[];
+};
+/**
+ * Status of the transaction
+ */
+export type TransactionStatus = "success" | "abort_by_response" | "abort_by_post_condition";
+export type TransactionEvent =
+  | TransactionEventSmartContractLog
+  | TransactionEventStxLock
+  | TransactionEventStxAsset
+  | TransactionEventFungibleAsset
+  | TransactionEventNonFungibleAsset;
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventSmartContractLog = AbstractTransactionEvent & {
+  event_type: "smart_contract_log";
+  tx_id: string;
+  contract_log: {
+    contract_id: string;
+    topic: string;
+    value: {
+      hex: string;
+      repr: string;
+    };
+  };
+};
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventStxLock = AbstractTransactionEvent & {
+  event_type: "stx_lock";
+  tx_id: string;
+  stx_lock_event: {
+    locked_amount: string;
+    unlock_height: number;
+    locked_address: string;
+  };
+};
+/**
+ * Only present in `smart_contract` and `contract_call` tx types.
+ */
+export type TransactionEventStxAsset = AbstractTransactionEvent & {
+  event_type: "stx_asset";
+  tx_id: string;
+  asset: TransactionEventAsset;
+};
+export type TransactionEventAssetType = "transfer" | "mint" | "burn";
+export type TransactionEventFungibleAsset = AbstractTransactionEvent & {
+  event_type: "fungible_token_asset";
+  tx_id: string;
+  asset: {
+    asset_event_type: string;
+    asset_id: string;
+    sender: string;
+    recipient: string;
+    amount: string;
+  };
+};
+export type TransactionEventNonFungibleAsset = AbstractTransactionEvent & {
+  event_type: "non_fungible_token_asset";
+  tx_id: string;
+  asset: {
+    asset_event_type: string;
+    asset_id: string;
+    sender: string;
+    recipient: string;
+    value: {
+      hex: string;
+      repr: string;
+    };
+  };
+};
+/**
+ * Describes representation of a Type-1 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-1-instantiating-a-smart-contract
+ */
+export type SmartContractTransaction = AbstractTransaction & SmartContractTransactionMetadata;
+/**
+ * Describes representation of a Type 2 Stacks 2.0 transaction: Contract Call
+ */
+export type ContractCallTransaction = AbstractTransaction & ContractCallTransactionMetadata;
+/**
+ * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
+ */
+export type PoisonMicroblockTransaction = AbstractTransaction & PoisonMicroblockTransactionMetadata;
+/**
+ * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
+ */
+export type CoinbaseTransaction = AbstractTransaction & CoinbaseTransactionMetadata;
+/**
+ * Describes representation of a Type 7 Stacks transaction: Tenure Change
+ */
+export type TenureChangeTransaction = AbstractTransaction & TenureChangeTransactionMetadata;
+
+/**
+ * Error search result
+ */
+export interface SearchErrorResult {
+  /**
+   * Indicates if the requested object was found or not
+   */
+  found: boolean;
+  result: {
+    /**
+     * Shows the currenty category of entity it is searched in.
+     */
+    entity_type: "standard_address" | "unknown_hash" | "contract_address" | "invalid_term";
+  };
+  error: string;
+}
+/**
+ * Address search result
+ */
+export interface AddressSearchResult {
+  /**
+   * Indicates if the requested object was found or not
+   */
+  found: boolean;
+  /**
+   * This object carries the search result
+   */
+  result: {
+    /**
+     * The id used to search this query.
+     */
+    entity_id: string;
+    entity_type: "standard_address";
+    metadata?: AddressStxBalanceResponse;
+  };
+}
+export interface StxBalance {
+  balance: string;
+  total_sent: string;
+  total_received: string;
+  total_fees_sent: string;
+  total_miner_rewards_received: string;
+  /**
+   * The transaction where the lock event occurred. Empty if no tokens are locked.
+   */
+  lock_tx_id: string;
+  /**
+   * The amount of locked STX, as string quoted micro-STX. Zero if no tokens are locked.
+   */
+  locked: string;
+  /**
+   * The STX chain block height of when the lock event occurred. Zero if no tokens are locked.
+   */
+  lock_height: number;
+  /**
+   * The burnchain block height of when the lock event occurred. Zero if no tokens are locked.
+   */
+  burnchain_lock_height: number;
+  /**
+   * The burnchain block height of when the tokens unlock. Zero if no tokens are locked.
+   */
+  burnchain_unlock_height: number;
+}
+/**
+ * Token Offering Locked
+ */
+export interface AddressTokenOfferingLocked {
+  /**
+   * Micro-STX amount still locked at current block height.
+   */
+  total_locked: string;
+  /**
+   * Micro-STX amount unlocked at current block height.
+   */
+  total_unlocked: string;
+  unlock_schedule: AddressUnlockSchedule[];
+}
+/**
+ * Unlock schedule amount and block height
+ */
+export interface AddressUnlockSchedule {
+  /**
+   * Micro-STX amount locked at this block height.
+   */
+  amount: string;
+  block_height: number;
+}
+/**
+ * Block search result
+ */
+export interface BlockSearchResult {
+  /**
+   * Indicates if the requested object was found or not
+   */
+  found: boolean;
+  /**
+   * This object carries the search result
+   */
+  result: {
+    /**
+     * The id used to search this query.
+     */
+    entity_id: string;
+    entity_type: "block_hash";
+    /**
+     * Returns basic search result information about the requested id
+     */
+    block_data: {
+      /**
+       * If the block lies within the canonical chain
+       */
+      canonical: boolean;
+      /**
+       * Refers to the hash of the block
+       */
+      hash: string;
+      parent_block_hash: string;
+      burn_block_time: number;
+      height: number;
+    };
+    metadata?: Block;
+  };
+}
+/**
+ * A block
+ */
+export interface Block {
+  /**
+   * Set to `true` if block corresponds to the canonical chain tip
+   */
+  canonical: boolean;
+  /**
+   * Height of the block
+   */
+  height: number;
+  /**
+   * Hash representing the block
+   */
+  hash: string;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  block_time_iso: string;
+  /**
+   * The only hash that can uniquely identify an anchored block or an unconfirmed state trie
+   */
+  index_block_hash: string;
+  /**
+   * Hash of the parent block
+   */
+  parent_block_hash: string;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  burn_block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  burn_block_time_iso: string;
+  /**
+   * Hash of the anchor chain block
+   */
+  burn_block_hash: string;
+  /**
+   * Height of the anchor chain block
+   */
+  burn_block_height: number;
+  /**
+   * Anchor chain transaction ID
+   */
+  miner_txid: string;
+  /**
+   * The hash of the last streamed block that precedes this block to which this block is to be appended. Not every anchored block will have a parent microblock stream. An anchored block that does not have a parent microblock stream has the parent microblock hash set to an empty string, and the parent microblock sequence number set to -1.
+   */
+  parent_microblock_hash: string;
+  /**
+   * The hash of the last streamed block that precedes this block to which this block is to be appended. Not every anchored block will have a parent microblock stream. An anchored block that does not have a parent microblock stream has the parent microblock hash set to an empty string, and the parent microblock sequence number set to -1.
+   */
+  parent_microblock_sequence: number;
+  /**
+   * List of transactions included in the block
+   */
+  txs: string[];
+  /**
+   * List of microblocks that were accepted in this anchor block. Not every anchored block will have a accepted all (or any) of the previously streamed microblocks. Microblocks that were orphaned are not included in this list.
+   */
+  microblocks_accepted: string[];
+  /**
+   * List of microblocks that were streamed/produced by this anchor block's miner. This list only includes microblocks that were accepted in the following anchor block. Microblocks that were orphaned are not included in this list.
+   */
+  microblocks_streamed: string[];
+  /**
+   * Execution cost read count.
+   */
+  execution_cost_read_count: number;
+  /**
+   * Execution cost read length.
+   */
+  execution_cost_read_length: number;
+  /**
+   * Execution cost runtime.
+   */
+  execution_cost_runtime: number;
+  /**
+   * Execution cost write count.
+   */
+  execution_cost_write_count: number;
+  /**
+   * Execution cost write length.
+   */
+  execution_cost_write_length: number;
+  /**
+   * List of txs counts in each accepted microblock
+   */
+  microblock_tx_count: {
+    [k: string]: number;
+  };
+}
+/**
+ * Contract search result
+ */
+export interface ContractSearchResult {
+  /**
+   * Indicates if the requested object was found or not
+   */
+  found: boolean;
+  /**
+   * This object carries the search result
+   */
+  result: {
+    /**
+     * The id used to search this query.
+     */
+    entity_id: string;
+    entity_type: "contract_address";
+    /**
+     * Returns basic search result information about the requested id
+     */
+    tx_data?: {
+      /**
+       * If the transaction lies within the canonical chain
+       */
+      canonical?: boolean;
+      /**
+       * Refers to the hash of the block for searched transaction
+       */
+      block_hash?: string;
+      burn_block_time?: number;
+      block_height?: number;
+      tx_type?: string;
+      /**
+       * Corresponding tx_id for smart_contract
+       */
+      tx_id?: string;
+    };
+    metadata?: MempoolTransaction | Transaction;
+  };
+}
+/**
+ * Transaction properties that are available from a raw serialized transactions. These are available for transactions in the mempool as well as mined transactions.
+ */
+export interface BaseTransaction {
+  /**
+   * Transaction ID
+   */
+  tx_id: string;
+  /**
+   * Used for ordering the transactions originating from and paying from an account. The nonce ensures that a transaction is processed at most once. The nonce counts the number of times an account's owner(s) have authorized a transaction. The first transaction from an account will have a nonce value equal to 0, the second will have a nonce value equal to 1, and so on.
+   */
+  nonce: number;
+  /**
+   * Transaction fee as Integer string (64-bit unsigned integer).
+   */
+  fee_rate: string;
+  /**
+   * Address of the transaction initiator
+   */
+  sender_address: string;
+  sponsor_nonce?: number;
+  /**
+   * Denotes whether the originating account is the same as the paying account
+   */
+  sponsored: boolean;
+  sponsor_address?: string;
+  post_condition_mode: PostConditionMode;
+  post_conditions: PostCondition[];
+  anchor_mode: TransactionAnchorModeType;
+}
+/**
+ * Metadata associated with token-transfer type transactions
+ */
+export interface TokenTransferTransactionMetadata {
+  tx_type: "token_transfer";
+  token_transfer: {
+    recipient_address: string;
+    /**
+     * Transfer amount as Integer string (64-bit unsigned integer)
+     */
+    amount: string;
+    /**
+     * Hex encoded arbitrary message, up to 34 bytes length (should try decoding to an ASCII string)
+     */
+    memo: string;
+  };
+}
+/**
+ * Metadata associated with a contract-deploy type transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-1-instantiating-a-smart-contract
+ */
+export interface SmartContractTransactionMetadata {
+  tx_type: "smart_contract";
+  smart_contract: {
+    /**
+     * The Clarity version of the contract, only specified for versioned contract transactions, otherwise null
+     */
+    clarity_version?: number;
+    /**
+     * Contract identifier formatted as `<principaladdress>.<contract_name>`
+     */
+    contract_id: string;
+    /**
+     * Clarity code of the smart contract being deployed
+     */
+    source_code: string;
+  };
+}
+/**
+ * Metadata associated with a contract-call type transaction
+ */
+export interface ContractCallTransactionMetadata {
+  tx_type: "contract_call";
+  contract_call: {
+    /**
+     * Contract identifier formatted as `<principaladdress>.<contract_name>`
+     */
+    contract_id: string;
+    /**
+     * Name of the Clarity function to be invoked
+     */
+    function_name: string;
+    /**
+     * Function definition, including function name and type as well as parameter names and types
+     */
+    function_signature: string;
+    /**
+     * List of arguments used to invoke the function
+     */
+    function_args?: {
+      hex: string;
+      repr: string;
+      name: string;
+      type: string;
+    }[];
+  };
+}
+/**
+ * Metadata associated with a poison-microblock type transaction
+ */
+export interface PoisonMicroblockTransactionMetadata {
+  tx_type: "poison_microblock";
+  poison_microblock: {
+    /**
+     * Hex encoded microblock header
+     */
+    microblock_header_1: string;
+    /**
+     * Hex encoded microblock header
+     */
+    microblock_header_2: string;
+  };
+}
+/**
+ * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
+ */
+export interface CoinbaseTransactionMetadata {
+  tx_type: "coinbase";
+  coinbase_payload: {
+    /**
+     * Hex encoded 32-byte scratch space for block leader's use
+     */
+    data: string;
+    /**
+     * A principal that will receive the miner rewards for this coinbase transaction. Can be either a standard principal or contract principal. Only specified for `coinbase-to-alt-recipient` transaction types, otherwise null.
+     */
+    alt_recipient?: string;
+    /**
+     * Hex encoded 80-byte VRF proof
+     */
+    vrf_proof?: string;
+  };
+}
+/**
+ * Describes representation of a Type 7 Stacks transaction: Tenure Change
+ */
+export interface TenureChangeTransactionMetadata {
+  tx_type: "tenure_change";
+  tenure_change_payload?: {
+    /**
+     * Consensus hash of this tenure. Corresponds to the sortition in which the miner of this block was chosen.
+     */
+    tenure_consensus_hash: string;
+    /**
+     * Consensus hash of the previous tenure. Corresponds to the sortition of the previous winning block-commit.
+     */
+    prev_tenure_consensus_hash: string;
+    /**
+     * Current consensus hash on the underlying burnchain. Corresponds to the last-seen sortition.
+     */
+    burn_view_consensus_hash: string;
+    /**
+     * (Hex string) Stacks Block hash
+     */
+    previous_tenure_end: string;
+    /**
+     * The number of blocks produced in the previous tenure.
+     */
+    previous_tenure_blocks: number;
+    /**
+     * Cause of change in mining tenure. Depending on cause, tenure can be ended or extended.
+     */
+    cause: "block_found" | "extended";
+    /**
+     * (Hex string) The ECDSA public key hash of the current tenure.
+     */
+    pubkey_hash: string;
+  };
+}
+export interface AbstractTransactionEvent {
+  event_index: number;
+}
+export interface TransactionEventAsset {
+  asset_event_type?: TransactionEventAssetType;
+  asset_id?: string;
+  sender?: string;
+  recipient?: string;
+  amount?: string;
+  value?: string;
+  memo?: string;
+}
+/**
+ * Contract search result
+ */
+export interface MempoolTxSearchResult {
+  /**
+   * Indicates if the requested object was found or not
+   */
+  found: boolean;
+  /**
+   * This object carries the search result
+   */
+  result: {
+    /**
+     * The id used to search this query.
+     */
+    entity_id: string;
+    entity_type: "mempool_tx_id";
+    /**
+     * Returns basic search result information about the requested id
+     */
+    tx_data: {
+      tx_type: string;
+    };
+    metadata?: MempoolTransaction;
+  };
+}
+/**
+ * Transaction search result
+ */
+export interface TxSearchResult {
+  /**
+   * Indicates if the requested object was found or not
+   */
+  found: boolean;
+  /**
+   * This object carries the search result
+   */
+  result: {
+    /**
+     * The id used to search this query.
+     */
+    entity_id: string;
+    entity_type: "tx_id";
+    /**
+     * Returns basic search result information about the requested id
+     */
+    tx_data: {
+      /**
+       * If the transaction lies within the canonical chain
+       */
+      canonical: boolean;
+      /**
+       * Refers to the hash of the block for searched transaction
+       */
+      block_hash: string;
+      burn_block_time: number;
+      block_height: number;
+      tx_type: string;
+    };
+    metadata?: Transaction;
+  };
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,0 +1,152 @@
+---
+title: Get burn blocks
+description: Retrieves a list of recent burn blocks.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { APIInfo } from "fumadocs-ui/components/api"
+import { Property } from 'fumadocs-ui/components/api'
+import { Badge } from '@/components/ui/badge';
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+import { InlineCode } from '@/components/inline-code';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
+    GET
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/burn-blocks`}</p>
+</h2>
+
+Retrieves a list of recent burn blocks.
+
+### Query parameters
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Max number of burn blocks to fetch
+
+<span>Default:  `20`</span>
+
+<span>Maximum:  `30`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Index of first burn block to fetch
+
+<span>Example:  `42000`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | List of burn blocks |
+
+</div>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/burn-blocks"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+GET request that returns burn blocks
+
+```json title="Example response"
+{
+  "limit": 30,
+  "offset": 0,
+  "total": 0,
+  "results": [
+    {
+      "burn_block_time": 0,
+      "burn_block_time_iso": "string",
+      "burn_block_hash": "string",
+      "burn_block_height": 0,
+      "stacks_blocks": [
+        "string"
+      ]
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Schema"}>
+
+```ts
+/**
+ * GET request that returns burn blocks
+ */
+export interface BurnBlockListResponse {
+  /**
+   * The number of burn blocks to return
+   */
+  limit: number;
+  /**
+   * The number to burn blocks to skip (starting at `0`)
+   */
+  offset: number;
+  /**
+   * The number of burn blocks available (regardless of filter parameters)
+   */
+  total: number;
+  results: BurnBlock[];
+}
+/**
+ * A burn block
+ */
+export interface BurnBlock {
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  burn_block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  burn_block_time_iso: string;
+  /**
+   * Hash of the anchor chain block
+   */
+  burn_block_hash: string;
+  /**
+   * Height of the anchor chain block
+   */
+  burn_block_height: number;
+  /**
+   * Hashes of the Stacks blocks included in the burn block
+   */
+  stacks_blocks: string[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

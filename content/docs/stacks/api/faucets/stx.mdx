@@ -1,0 +1,122 @@
+---
+title: STX Testnet tokens
+description: Delivers testnet STX tokens to a specified address.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+
+<Root>
+
+<API>
+
+<div className='flex-1'>
+
+<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
+  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
+    POST
+  </div>
+  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/faucets/stx`}</p>
+</h2>
+
+Add 500 STX tokens to the specified testnet address. Testnet STX addresses begin with `ST`. If the `stacking`
+parameter is set to `true`, the faucet will add the required number of tokens for individual stacking to the
+specified testnet address.
+
+The endpoint returns the transaction ID, which you can use to view the transaction in the
+[Stacks Explorer](https://explorer.hiro.so/?chain=testnet). The tokens are delivered once the transaction has
+been included in an anchor block.
+
+A common reason for failed faucet transactions is that the faucet has run out of tokens. If you are experiencing
+failed faucet transactions to a testnet address, you can get help in [Discord](https://stacks.chat).
+
+**Note:** This is a testnet only endpoint. This endpoint will not work on mainnet.
+
+### Query parameters
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+A valid testnet address
+
+<span>Example:  `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"stacking"} type={"boolean"}>
+
+Request the amount of STX tokens needed for individual address stacking
+
+<span>Example:  `true` | `false`</span>
+
+</Property>
+
+| Status code | Description       |
+|:------------|:------------------|
+| `200`       | Success           |
+| `500`       | Faucet call failed|
+
+</div>
+
+<APIExample>
+
+```bash title="Terminal"
+curl -X POST \
+  "https://api.testnet.hiro.so/extended/v1/faucets/stx?address=ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM" \
+  -H 'Accept: application/json'
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+POST request that initiates a transfer of tokens to a specified testnet address
+
+```json title="Example response"
+{
+  "success": true,
+  "txId": "string",
+  "txRaw": "string"
+}
+```
+
+<Accordions>
+
+<Accordion title="Schema">
+
+```ts
+/**
+ * POST request that initiates a transfer of tokens to a specified testnet address
+ */
+export interface RunFaucetResponse {
+  /**
+   * Indicates if the faucet call was successful
+   */
+  success: boolean;
+  /**
+   * The transaction ID for the faucet call
+   */
+  txId?: string;
+  /**
+   * Raw transaction in hex string representation
+   */
+  txRaw?: string;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

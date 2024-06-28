@@ -1,0 +1,34 @@
+---
+title: Deploy a contract
+description: Use Clarinet to publish your contracts to the devnet, testnet, or mainnet networks.
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+
+The first step to deploying your contracts is to generate a deployment plan.
+
+ ```bash title="Terminal"
+clarinet deployment generate --testnet
+```
+
+<Callout title="What are deployment plans?" type="info">
+These are `yaml` files for creating reproducible deployment steps that publish a collection of on-chain transactions and contracts to a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary text-primary'>network</span></TooltipTrigger><TooltipContent>Available network flags are `--devnet`, `--testnet`, and `--mainnet`</TooltipContent></Tooltip></TooltipProvider>.
+</Callout>
+
+Once you've reviewed your deployment plan at `deployments/<default.<network>-plan.yaml`, you can use the `apply` command to handle the deployments of your contracts.
+
+```bash title="Terminal"
+clarinet deployment apply --testnet 
+```
+
+<Callout title="Dive deeper" type="info">
+Check out the [create deployment plans](/stacks/clarinet/guides/create-deployment-plans) guide to learn more on how to customize your deployment plans.
+</Callout>
