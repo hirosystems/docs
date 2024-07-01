@@ -48,6 +48,34 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
   .ustx();
 ```
 
+<Accordions>
+  <Accordion title="All transfer methods">
+    STX/FT
+
+    `.willSendEq(amount: number)` ensures that the amount to be sent is **exactly** the specified value.
+    
+    `.willSendGte(amount: number)` ensures that the amount to be sent is **greater than or equal** to the specified value.
+    
+    `.willSendGt(amount: number)` ensures that the amount to be sent is **greater than** the specified value.
+    
+    `.willSendLte(amount: number)` ensures that the amount to be sent is **less than or equal** to the specified value.
+    
+    `.willSendLt(amount: number)` ensures that the amount to be sent is **less than** the specified value.
+
+    `.ustx()` to specify uSTX as the FT asset _(ends the builder)_
+
+    `.ft(contract: string, tokenName: string)` to specify a specific FT asset _(ends the builder)_
+
+    ---
+    
+    NFT
+
+    `.willSendAsset()` ensures that an asset should **be sent**.
+    
+    `.willNotSendAsset()` to specify an asset should **not be sent**
+  </Accordion>
+</Accordions>
+
 ### Setting the post-condition mode
 
 When creating a transaction, the mode of the transaction can be set to `Allow` or `Deny` to specify whether unspecified asset transfers are permitted.
@@ -102,7 +130,7 @@ Use the `Pc` helpers to construct post-conditions in a clear and concise manner.
 
 ---
 
-### Amount uSTX Sent
+### Amount uSTX sent
 
 Construct a post-condition for a certain amount of uSTX to be sent.
 
@@ -133,7 +161,7 @@ Construct a post-condition for a certain amount of uSTX to be sent.
   </Tab>
 </Tabs>
 
-### Amount FT Sent
+### Amount FT sent
 
 Construct a post-condition for a certain amount of a specific FT to be sent.
 
@@ -165,7 +193,7 @@ Construct a post-condition for a certain amount of a specific FT to be sent.
   </Tab>
 </Tabs>
 
-### Amount NFT Sent
+### Amount NFT sent / not sent
 
 Construct a post-condition for sending / not-sending a specific NFT.
 
