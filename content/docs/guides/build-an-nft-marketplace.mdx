@@ -1,6 +1,6 @@
 ---
-title: Build an NFT Marketplace
-description: This guide explains how to create an NFT marketplace that allows users to list NFTs for sale and purchase them using Clarity, the smart contract language for Stacks.
+title: Build an NFT marketplace
+description: Learn how to create an NFT marketplace that allows users to list NFTs for sale and purchase them using Clarity.
 ---
 
 import { Code, Terminal } from 'lucide-react';
@@ -17,7 +17,7 @@ This marketplace leverages the following Clarity traits:
 - `nft-trait` for handling NFTs.
 - `ft-trait` for handling fungible tokens.
 
-You will learn how to:
+Over the course of this guide, you will learn how to:
 1. Define and handle errors.
 2. Create and manage NFT listings.
 3. Whitelist asset contracts.
@@ -25,7 +25,7 @@ You will learn how to:
 
 ---
 
-## Define and Handle Errors
+## Define and handle errors
 
 First, define constants for various errors that may occur during listing, cancelling, or fulfilling NFT transactions. This helps in maintaining clean and readable code.
 
@@ -46,9 +46,9 @@ First, define constants for various errors that may occur during listing, cancel
 (define-constant ERR_PAYMENT_CONTRACT_NOT_WHITELISTED (err u2008))
 ```
 
-## Create and Manage NFT Listings
+## Create and manage NFT listings
 
-### Define Data Structures
+### Define data structures
 
 Create a map data structure for the asset listings and a data variable for unique IDs.
 
@@ -209,9 +209,9 @@ Create a public function to purchase a listing using STX as payment.
 )
 ```
 
-### Fulfill listing with SIP010
+### Fulfill listing with SIP-010
 
-Create a public function to purchase a listing using another fungible token as payment.
+Create a public function to purchase a listing using another fungible token that follows the SIP-010 standard as payment.
 
 ```clarity
 (define-public (fulfil-listing-ft
@@ -292,14 +292,14 @@ By following this guide, you have created a basic NFT marketplace that allows us
 <Cards className='sm:grid-cols-1'>
   <SmallCard
     icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/examples"
-    title="Common Clarity Errors"
-    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+    href="/stacks/connect/guides/authenticate-users"
+    title="Authenticate users"
+    description="Learn how to authenticate users using the Connect package in Stacks.js."
   />
   <SmallCard
     icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/stacks/clarinet"
-    title="Clarinet JS SDK API Reference"
-    description="Explore our end-to-end tutorials and getting started guides for different application stacks using Clerk."
+    href="/stacks/connect/guides/sign-transactions"
+    title="Sign transactions"
+    description="Learn how to sign transactions using Stacks.js."
   />
 </Cards>
