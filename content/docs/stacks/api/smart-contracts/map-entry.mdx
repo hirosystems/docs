@@ -5,8 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Badge } from '@/components/ui/badge';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,21 +17,13 @@ import { InlineCode } from '@/components/inline-code';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
-    POST
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/map_entry/{contract_address}/{contract_name}/{map_name}`}</p>
-</h2>
+<APIInfo method={"POST"} route={"/v2/map_entry/{contract_address}/{contract_name}/{map_name}"}>
 
 Attempt to fetch data from a contract data map. The contract is identified with a Stacks address `contract_address` and contract name `contract_address` in the URL path. The map is identified with [Map Name].
 
 The key to look up in the map is supplied via the POST body. This should be supplied as the hex string serialization of the key (which should be a Clarity value). Note: this is a JSON string atom.
 
 In the response, `data` is the hex serialization of the map response. Note: map responses are Clarity option types. For non-existent values, this is a serialized none, and for all other responses, it is a serialized (some ...) object.
-
 
 ### Request body
 
@@ -88,7 +79,7 @@ The Stacks chain tip to query from
 | `200` | Success |
 | `400` | Failed loading data map |
 
-</div>
+</APIInfo>
 
 <APIExample>
 

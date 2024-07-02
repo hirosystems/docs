@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
@@ -13,14 +13,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
-    POST
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/faucets/stx`}</p>
-</h2>
+<APIInfo method={"POST"} route={"/extended/v1/faucets/stx"}>
 
 Add 500 STX tokens to the specified testnet address. Testnet STX addresses begin with `ST`. If the `stacking`
 parameter is set to `true`, the faucet will add the required number of tokens for individual stacking to the
@@ -58,7 +51,7 @@ Request the amount of STX tokens needed for individual address stacking
 | `200`       | Success           |
 | `500`       | Faucet call failed|
 
-</div>
+</APIInfo>
 
 <APIExample>
 

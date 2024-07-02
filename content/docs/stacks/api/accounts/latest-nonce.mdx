@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Badge } from '@/components/ui/badge';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,16 +15,7 @@ import { InlineCode } from '@/components/inline-code';
 
 <Root>
 
-<API>
-
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/nonces`}</p>
-</h2>
+<APIInfo method={"GET"} route={"/extended/v1/address/{principal}/nonces"}>
 
 Retrieves the latest nonce values used by an account by inspecting the mempool and anchored transactions.
 
@@ -60,7 +51,7 @@ Optionally get the nonce at a given block hash. Note: use either of the query pa
 | :----------- | :----------- |
 | `200` | Success |
 
-</div>
+</APIInfo>
 
 <APIExample>
 
@@ -130,7 +121,5 @@ export interface AddressNonces {
 </Tabs>
 
 </APIExample>
-
-</API>
 
 </Root>

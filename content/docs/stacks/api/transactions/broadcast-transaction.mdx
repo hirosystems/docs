@@ -5,8 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Badge } from '@/components/ui/badge';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,14 +17,7 @@ import { InlineCode } from '@/components/inline-code';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
-    POST
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/transactions`}</p>
-</h2>
+<APIInfo method={"POST"} route={"/v2/transactions"}>
 
 Broadcasts raw transactions on the network. You can use the [@stacks/transactions](/stacks/stacks.js/packages/transactions) project to generate a raw transaction payload.
 
@@ -42,7 +34,7 @@ Broadcasts raw transactions on the network. You can use the [@stacks/transaction
 | `200` | Transaction id of successful post of a raw tx to the node's mempool |
 | `400` | Rejections result in a 400 error |
 
-</div>
+</APIInfo>
 
 <APIExample>
 

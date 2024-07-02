@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
@@ -13,14 +13,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{principal}/stx`}</p>
-</h2>
+<APIInfo method={"GET"} route={"/extended/v1/address/{principal}/stx"}>
 
 Retrieves STX token balance for a given address or contract identifier.
 
@@ -58,7 +51,7 @@ Returned data representing the state up until that point in time, rather than th
 |:------------|:--------------|
 | `200`       | Success       |
 
-</div>
+</APIInfo>
 
 <APIExample>
 

@@ -5,8 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Badge } from '@/components/ui/badge';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,14 +17,7 @@ import { InlineCode } from '@/components/inline-code';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
-    POST
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/v2/fees/transaction`}</p>
-</h2>
+<APIInfo method={"POST"} route={"/v2/fees/transaction"}>
 
 Get an estimated fee for a supplied transaction.  This
 estimates the execution cost of the transaction, the current
@@ -92,8 +84,6 @@ this fee amount by:
 
 ### Request body (optional)
 
-
-
 <Property required={true} deprecated={false} name={"transaction_payload"} type={"string"}>
 
 
@@ -103,14 +93,13 @@ this fee amount by:
 <Property required={false} deprecated={false} name={"estimated_len"} type={"integer"}>
 
 
-
 </Property>
 
 | Status code | Description |
 | :--------- | :---------- |
 | `200` | Estimated fees for the transaction |
 
-</div>
+</APIInfo>
 
 <APIExample>
 
