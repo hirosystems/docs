@@ -1,6 +1,6 @@
 import { generateFiles } from "fumadocs-openapi"
 
 void generateFiles({
-  input: ["./openapi/ordinals-api.json"],
+  input: ["./openapi/runes.json"],
   output: "./openapi"
 })

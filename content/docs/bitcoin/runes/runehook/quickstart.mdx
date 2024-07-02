@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: Learn how to scan the Bitcoin blockchain for Ordinals activity.
+description: Learn how to scan the Bitcoin blockchain for Runes activity.
 ---
 
 import { ChevronRight, Code, Terminal } from 'lucide-react';
@@ -8,19 +8,19 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Step } from 'fumadocs-ui/components/steps';
 import { SmallCard } from '@/components/card';
 
-In this quickstart guide, you will set up `ordhook` to explore and index Ordinal activity on the Bitcoin blockchain. You will learn how to install, configure, and run basic commands to scan and stream Ordinal inscriptions and transfers.
+In this quickstart guide, you will set up `runehook` to explore and index Rune activity on the Bitcoin blockchain. You will learn how to install, configure, and run basic commands to scan and stream Rune inscriptions and transfers.
 
-Check out the [Ordhook as a service](/ordinals/ordhook/guides/ordhook-as-a-service) for a more advanced use case.
+{/* Check out the [Runehook as a service](/bitcoin/runehook/guides/runehook-as-a-service) for a more advanced use case. */}
 
 ---
 
 ### Prerequisites
 
-Before starting, ensure you have `ordhook` installed. If you haven't already, check out the [installation](/ordinals/ordhook/installation) guide.
+Before starting, ensure you have `runehook` installed. If you haven't already, check out the [installation](/bitcoin/runehook/installation) guide.
 
 ---
 
-<div className='steps space-y-10'>
+{/* <div className='steps space-y-10'>
   <Step>
     <div className="flex flex-col space-y-3">
       <div className="w-full">
@@ -63,7 +63,7 @@ Before starting, ensure you have `ordhook` installed. If you haven't already, ch
       ```
     </div>
   </Step>
-</div>
+</div> */}
 
 ---
 
@@ -72,14 +72,9 @@ Before starting, ensure you have `ordhook` installed. If you haven't already, ch
 <Cards className='sm:grid-cols-1'>
   <SmallCard
     icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/ordinals/ordhook/guides/ordhook-as-a-service"
-    title="Run Ordhook as a service"
-    description="Learn how to run Ordhook as a service using Bitcoind."
-  />
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/ordinals/explorer"
-    title="Ordinals Explorer"
-    description="Explore the Ordinals Explorer to view inscriptions and transfers."
+    href="/bitcoin/runes/api"
+    title="Integrate runes data into your app"
+    description="Use the Runes API to get reliable data for Runes and BRC-20 tokens."
+    tag='Runes API'
   />
 </Cards>

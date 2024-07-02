@@ -1,0 +1,85 @@
+---
+title: Quickstart
+description: Learn how to scan the Bitcoin blockchain for Ordinals activity.
+---
+
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
+import { SmallCard } from '@/components/card';
+
+In this quickstart guide, you will set up `ordhook` to explore and index Ordinal activity on the Bitcoin blockchain. You will learn how to install, configure, and run basic commands to scan and stream Ordinal inscriptions and transfers.
+
+Check out the [Ordhook as a service](/bitcoin/ordhook/guides/ordhook-as-a-service) for a more advanced use case.
+
+---
+
+### Prerequisites
+
+Before starting, ensure you have `ordhook` installed. If you haven't already, check out the [installation](/bitcoin/ordhook/installation) guide.
+
+---
+
+<div className='steps space-y-10'>
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Scanning for <code className='text-lg'>Ordinal</code> activity</p>
+        <div className='flex flex-col space-y-0'>
+          <p>To scan blocks for <code>Ordinal</code> activity, you can use the `scan blocks` command. The output will show details of the inscription, including the block number it was revealed at, `ordinal_number`, and `inscription_number`.</p>
+        </div>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        ordhook scan blocks --interval 767430:767753 --mainnet
+        ```
+      </div>
+
+      <p>The `--interval` flag is used to specify a block range. The range is inclusive, meaning both the start and end blocks will be included in the scan. And the `--mainnet` flag is used to specify the Bitcoin network to scan.</p>
+    
+      <Callout>
+        When running `scan` for the first time, an archive of Bitcoin blockchain data will be downloaded. The subsequent scans will use the cached chainstate if already present, speeding up iterations and the overall feedback loop. To learn more, check out the [Hiro Archive](/stacks/archive) section.
+      </Callout>
+    </div>
+  </Step>
+
+  <Step>
+    <div className="flex flex-col space-y-3">
+      <div className="w-full">
+        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Inspecting a specific inscription</p>
+        <p>To inspect a specific inscription, you can run a similar command, `scan inscription` and pass in the inscription's ID.</p>
+      </div>
+      <div className="w-full">
+        ```bash title="Terminal"
+        ordhook scan inscription 6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0 --mainnet
+        ```
+      </div>
+
+      <p>The output will show where and when the inscription was revealed and any subsequent transfer events.</p>
+
+      ```plaintext
+      Inscription 6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0 revealed at block #767430 (ordinal_number 1252201400444387, inscription_number 0)
+      Transferred in transaction bc4c30829a9564c0d58e6287195622b53ced54a25711d1b86be7cd3a70ef61ed at block 785396
+      ```
+    </div>
+  </Step>
+</div>
+
+---
+
+### Next steps
+
+<Cards className='sm:grid-cols-1'>
+  <SmallCard
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/bitcoin/ordhook/guides/ordhook-as-a-service"
+    title="Run Ordhook as a service"
+    description="Learn how to run Ordhook as a service using Bitcoind."
+  />
+  <SmallCard
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/bitcoin/explorer"
+    title="Ordinals Explorer"
+    description="Explore the Ordinals Explorer to view inscriptions and transfers."
+  />
+</Cards>
