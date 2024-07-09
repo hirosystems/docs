@@ -13,14 +13,7 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v2/info`}</p>
-</h2>
+<APIInfo method={"GET"} route={"/extended/v2/info"}>
 
 Search blocks, transactions, contracts, or accounts by hash/ID.
 
@@ -43,11 +36,11 @@ This includes the detailed data for purticular hash in the response
 </Property>
 
 | Status code | Description |
-| ----------- | ----------- |
+| :----------- | :----------- |
 | `200` | Success |
 | `404` | Not found |
 
-</div>
+</APIInfo>
 
 <APIExample>
 

@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
@@ -13,19 +13,11 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-yellow-400/50 bg-yellow-400/20 text-yellow-600 dark:text-yellow-400">
-    POST
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/faucets/btc`}</p>
-</h2>
+<APIInfo method={"POST"} route={"/extended/v1/faucets/btc"}>
 
 Add 1 BTC token to the specified testnet BTC address.
 
-The endpoint returns the transaction ID, which you can use to view the transaction in a testnet Bitcoin block
-explorer. The tokens are delivered once the transaction has been included in a block.
+The endpoint returns the transaction ID, which you can use to view the transaction in a testnet Bitcoin block explorer. The tokens are delivered once the transaction has been included in a block.
 
 **Note:** This is a testnet only endpoint. This endpoint will not work on mainnet.
 
@@ -43,7 +35,7 @@ BTC testnet address
 | `403`       | BTC Faucet not fully configured  |
 | `500`       | Faucet call failed               |
 
-</div>
+</APIInfo>
 
 <APIExample>
 

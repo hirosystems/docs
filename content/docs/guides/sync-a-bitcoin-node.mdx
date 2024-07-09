@@ -108,8 +108,6 @@ It might take anywhere from a few hours to a few days to run and fully sync, dep
 
 ### Proper shutdown and restart procedure
 
-It's important to know how to properly shut down your `bitcoind` node, so that you can start them back up where you've left off on another machine or at another time.
-
 1. Shutting down your node
 2. Restarting your node
 
@@ -144,13 +142,13 @@ To start your node back up, all you need to do is refer to the previous steps fr
 
 <Cards className='sm:grid-cols-1'>
   <SmallCard
-    icon={<Terminal className='text-primary' />}
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/chainhooks/guides/run-chainhook-as-a-service"
     title="Run Chainhook as a service"
     description="Learn how to use Chainhook to build your own custom API."
   />
   <SmallCard
-    icon={<Code className='text-primary' />}
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/guides/sync-a-stacks-node"
     title="Sync a Stacks node"
     description="Learn how to sync a Stacks node for running a local devnet."

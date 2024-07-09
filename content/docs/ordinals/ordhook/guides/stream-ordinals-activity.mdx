@@ -7,7 +7,7 @@ Ordhook is a tool that helps you find Ordinals activity on the Bitcoin chain and
 
 ### Configure Ordhook
 
-This section walks you through streaming Ordinals activity. To post that activity, you'll need to configure bitcoind. Refer to [setting up a bitcoin node](./ordhook-as-a-service-bitcoind.md#setting-up-a-bitcoin-node) to understand the steps to configure Bitcoind.
+This section walks you through streaming Ordinals activity. To post that activity, you'll need to configure bitcoind. Refer to [setting up a bitcoin node](/guides/sync-a-bitcoin-node) to understand the steps to configure Bitcoind.
 
 > **_NOTE_**
 > Ordhook is applicable to the Bitcoin chain only.
@@ -24,9 +24,8 @@ The generated `Ordhook.toml` file looks like this:
 [storage]
 working_dir = "ordhook"
 
-# The Http API allows you to register / deregister
-# dynamically predicates.
-# Disable by default.
+# The http API allows you to register / deregister predicates dynamically.
+# This is disabled by default.
 #
 # [http_api]
 # http_port = 20456
@@ -52,8 +51,7 @@ max_number_of_processing_threads = 16
 bitcoin_concurrent_http_requests_max = 16
 max_caching_memory_size_mb = 32000
 
-# Disable the following section if the state
-# must be built locally
+# Disable the following section if the state must be built locally
 [bootstrap]
 download_url = "https://archive.hiro.so/mainnet/ordhook/mainnet-ordhook-sqlite-latest"
 

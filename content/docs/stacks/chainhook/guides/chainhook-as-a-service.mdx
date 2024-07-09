@@ -19,12 +19,10 @@ In order to build out a more robust and secure web app, you can run Chainhook as
 In this guide, you will learn how to:
 
 1. Configure an existing Bitcoin node to work with Chainhook.
-2. Generate a Chainhook predicate to evaluate your events.
+2. Generate a Chainhook predicate to target specific transactions.
 3. Scan the Bitcoin blockchain for transactions that match your predicate.
 4. Initiate a Chainhook service to watch for matching transactions.
 5. Dynamically register your predicate with Chainhook.
-
-<Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
 
 ---
 
@@ -56,8 +54,7 @@ Additionally, if you want to receive events from the configured Bitcoin node, su
 [storage]
 working_dir = "cache"
 
-# The Http Api allows you to register / deregister
-# predicates dynamically.
+# The http API allows you to register / deregister predicates dynamically.
 # This is disabled by default.
 
 # [http_api]
@@ -221,7 +218,7 @@ The above command registers the predicate based on the predicate definition in t
 
 ### Dynamically register predicates
 
-You can also dynamically register new predicates with your Chainhook service.
+You can also dynamically register new predicates with your Chainhook service. This means you can start a long-running process that exposes HTTP endpoints to register, deregister, and report on new predicates.
 
 <Callout type="warn">
 This section requires that you have Redis running locally. To install, refer to the [Redis documentation](https://redis.io/docs/getting-started/).
@@ -345,13 +342,13 @@ You can also run chainhook service by passing multiple predicates, ie `chainhook
 
 <Cards className='sm:grid-cols-1'>
   <SmallCard
-    icon={<Code className='text-primary' />}
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/chainhook/guides/register-chainhooks-on-devnet"
     title="Register Chainhooks on devnet"
     description="Learn how to register Chainhooks on devnet."
   />
   <SmallCard
-    icon={<Terminal className='text-primary' />}
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/chainhook/references/scopes"
     title="Scopes"
     description="Learn how to use scopes to scan for specific blockchain events."

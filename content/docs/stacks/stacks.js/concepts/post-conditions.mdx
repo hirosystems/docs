@@ -11,11 +11,11 @@ More precisely, adding post-conditions to a transaction can ensure that:
 - STX tokens were transferred from an address
 - FTs/NFTs were transferred from an address
 
-:::caution
+<Callout type="warn">
 Post-conditions aren't perfect. They can't say anything about the end-state after a transaction. In other words, they can't guarantee the receipt of FTs/NFTs, since they only check for sending.
-:::
+</Callout>
 
-Here's an example adding a post-condition (of an address sending 1000 uSTX).
+Here's an example of a post-condition where the `principal` must send 1000 uSTX, or else the transaction will abort:
 
 ```js
 import { Pc } from '@stacks/transactions';
@@ -28,17 +28,15 @@ const tx = await makeContractCall({
 });
 ```
 
-#### Post-condition mode
+### Post-condition mode
 
-_...aka "allow transfer of unspecified assets?"_
-
-In addition to the post-condition itself, we can also specify a "mode" for the transaction to verify asset transfers.
+In addition to the post-condition itself, we can also specify a `mode` for the transaction to verify asset transfers.
 The mode can be either `Allow` or `Deny`.
 
 - `Allow` means that the transaction can transfer any asset (assuming no conflicting post-conditions).
 - `Deny` means the transaction will fail if any asset transfers (not specified in the post-conditions) are attempted.
 
-:::note
+<Callout>
 In either case, all post-conditions will still be checked.
 By default, transactions are set to `Deny` mode for additional security.
-:::
+</Callout>

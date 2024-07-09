@@ -3,15 +3,33 @@ title: How to install Docker
 description: Install Docker to run a local devnet.
 ---
 
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import ClarinetDevnetStart from '@/public/clarinet-devnet-start.png';
+<Tabs id="docker" items={['macOS', 'Windows']}>
+  <Tab value="macOS">
+    1. Go to the [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/) page.
+    2. Download the .dmg file.
+    3. Open the downloaded .dmg file.
+    4. Drag the Docker icon to the Applications folder.
+    5. Open Docker from the Applications folder.
+    6. Grant the necessary permissions if prompted.
+    7. Docker Desktop icon will appear in the menu bar indicating that Docker is running.
+  
+    To verify installation, run `docker --version` in your terminal. You should see the Docker version information.
+  </Tab>
+  
+  <Tab value="Windows">
+    1. Go to the [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/) page.
+    2. Download the executable.
+    3. Run the downloaded executable.
+    4. Follow the installation wizard steps (you may need to restart your computer).
+    5. Ensure the WSL 2 (Windows Subsystem for Linux) backend is checked during installation, if applicable.
+    6. Open Docker Desktop from the Start menu.
+    7. Grant the necessary permissions if prompted.
+    8. Docker icon will appear in the system tray indicating Docker is running.
 
-To run a local devnet, run the `clarinet devnet start` command.
-
- ```bash title="Terminal"
-clarinet devnet start
-```
-
-<Callout title="Common errors" type="warn">
-  <p>If you are getting `error: clarinet was unable to create network`, make sure you have Docker (or a similar service) installed and running locally. Check out the [Docker installation guide](/guides/how-to-install-docker) for more details.</p>
-</Callout>
+    To verify installation, run `docker --version` in your terminal. You should see the Docker version information.
+  
+    <Callout>
+      On Windows, you might need to install additional Windows components like Hyper-V or WSL 2.
+    </Callout>
+  </Tab>
+</Tabs>

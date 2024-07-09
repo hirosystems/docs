@@ -7,7 +7,7 @@ toc: false
 import { Card as MainCard, SmallCard } from '@/components/card';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { SectionHeader } from '@/components/layout/section-header';
-import { Braces, Bug, ChevronRight, Code, Database, Lock, Play, Rocket, Star, Terminal } from 'lucide-react';
+import { Braces, Bug, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet } from 'lucide-react';
 
 import heroImage from '@/public/hero.svg';
 
@@ -23,7 +23,7 @@ import heroImage from '@/public/hero.svg';
 
   <div className='flex flex-col [&_h2]:mt-0 [&_h2]:mb-2 [&_p]:mb-6'>
 
-  ## Welcome to Hiro Docs
+  <h2>Welcome to Hiro Docs</h2>
 
   Find all the guides and resources you need to build on Stacks.
 
@@ -49,11 +49,20 @@ import heroImage from '@/public/hero.svg';
 
 <div className='flex flex-col space-y-3'>
 
-### Explore by category
+<h3 id="explore-by-category" className="scroll-m-20">
+  <a href="#explore-by-category" className="not-prose group text-muted-foreground uppercase">Explore by category</a>
+</h3>
 
 ---
 
 <Cards>
+  <SmallCard
+    className='group space-y-3'
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/platform"
+    title="Cloud-Based Development"
+    description="Develop, test, and deploy smart contracts straight from your browser."
+  />
   <SmallCard
     className='group space-y-3'
     icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
@@ -70,7 +79,7 @@ import heroImage from '@/public/hero.svg';
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Lock className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Wallet className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/stacks.js"
     title="Frontend Web Development"
     description="Interact with smart contracts on the web with the Stacks.js library."
@@ -80,7 +89,7 @@ import heroImage from '@/public/hero.svg';
     icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/api"
     title="Backend Development"
-    description="Explore our hosted APIs or spin up your own node infrastructure."
+    description="Explore our hosted APIs offering a familiar REST interface."
   />
   <SmallCard
     className='group space-y-3'
@@ -89,13 +98,6 @@ import heroImage from '@/public/hero.svg';
     title="Token Management"
     description="Explore our hosted API for fetching token metadata on Stacks."
   />
-  <SmallCard
-    className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/stacks/platform"
-    title="Cloud-Based Development"
-    description="Develop, test, and deploy smart contracts straight from your browser."
-  />
 </Cards>
 
 </div>
@@ -103,7 +105,9 @@ import heroImage from '@/public/hero.svg';
 
 <div className='flex flex-col space-y-3'>
 
-### Explore by tool
+<h3 id="explore-by-tool" className="scroll-m-20">
+  <a href="#explore-by-tool" className="not-prose group text-muted-foreground uppercase">Explore by tool</a>
+</h3>
 
 ---
 
@@ -142,13 +146,6 @@ import heroImage from '@/public/hero.svg';
     href="/stacks/chainhook"
     title="Chainhook"
     description="Create customizable, lightweight databases for on-chain events for Bitcoin and Stacks."
-  />
-  <SmallCard
-    className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/stacks/explorer"
-    title="Explorer"
-    description="A web app for exploring on-chain data, interacting with smart contracts, and more."
   />
 </Cards>
 

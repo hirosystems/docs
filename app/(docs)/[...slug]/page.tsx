@@ -25,6 +25,10 @@ export default function Page({ params }: { params: Param }): JSX.Element {
     const specialCases = {
       api: "API",
       sdk: "SDK",
+      connect: "Stacks Connect",
+      platform: "Hiro Platform",
+      hacks: "Hiro Hacks",
+      "clarinet-js-sdk": "Clarinet JS SDK",
     };
 
     if (page.file?.name === "index" && page.slugs[1]) {
@@ -127,37 +131,57 @@ function Category({ page }: { page: Page }): JSX.Element {
   );
 }
 
-export function generateMetadata({ params }: { params: Param }): Metadata {
-  const page = utils.getPage(params.slug);
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` || "https://docs.hiro.so"
+  ),
+  title: "Hiro Docs",
+  description:
+    "All the developer docs, guides and resources you need to build on Bitcoin layers.",
+  openGraph: {
+    title: "Hiro Docs",
+    description:
+      "All the developer docs, guides and resources you need to build on Bitcoin layers.",
+    url: "https://docs.hiro.so",
+    siteName: "Hiro Docs",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hiro Docs",
+    description:
+      "All the developer docs, guides and resources you need to build on Bitcoin layers.",
+    creator: "@hirosystems",
+    images: ["/og.jpg"], // Must be an absolute URL
+  },
+};
 
-  if (!page) notFound();
+// export function generateMetadata({ params }: { params: Param }): Metadata {
+//   const page = utils.getPage(params.slug);
 
-  const description =
-    page.data.description ?? "The library for building documentation sites";
+//   if (!page) notFound();
 
-  const imageParams = new URLSearchParams();
-  imageParams.set("title", page.data.title);
-  imageParams.set("description", description);
+//   const description =
+//     page.data.description ??
+//     "All the developer docs, guides and resources you need to build on Bitcoin layers.";
 
-  const image = {
-    alt: "Banner",
-    url: `/api/og/${params.slug[0]}?${imageParams.toString()}`,
-    width: 1200,
-    height: 630,
-  };
+//   const imageParams = new URLSearchParams();
+//   imageParams.set("title", page.data.title);
+//   imageParams.set("description", description);
 
-  return createMetadata({
-    title: page.data.title,
-    description,
-    openGraph: {
-      url: `/docs/${page.slugs.join("/")}`,
-      images: image,
-    },
-    twitter: {
-      images: image,
-    },
-  });
-}
+//   return createMetadata({
+//     title: page.data.title,
+//     description,
+//   });
+// }
 
 export function generateStaticParams(): Param[] {
   return utils.getPages().map<Param>((page) => ({

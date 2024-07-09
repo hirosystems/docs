@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: Learn how to transfer STX tokens using Stacks Connect.
+description: Learn how to transfer STX tokens via a web wallet using Stacks Connect.
 ---
 
 import { ChevronRight, Code, Terminal, Folder as FolderIcon } from 'lucide-react';
@@ -10,11 +10,11 @@ import { SmallCard } from '@/components/card';
 
 In this quickstart guide, you will learn how to set up your project, authenticate users with a web wallet, and initiate a STX token transfer.
 
-For a deeper dive into the authentication process, check out the [Authenticate users](/stacks/connect/guides/authenticate-users) guide.
+For a deeper dive into the authentication process, check out the [authenticate users](/stacks/connect/guides/authenticate-users) guide.
 
-<Callout>
+{/* <Callout>
   To view the full code for this quickstart, [click here](https://github.com/hiro-so/stacks.js/tree/main/examples/hello-world).
-</Callout>
+</Callout> */}
 
 ---
 
@@ -37,7 +37,7 @@ For a deeper dive into the authentication process, check out the [Authenticate u
     <div className="flex flex-col space-y-3">
       <div className="w-full">
         <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Create an <code className='text-lg'>AppConfig</code> and <code className='text-lg'>UserSession</code></p>
-        <p className='mb-0'>Add a reusable `UserSession` instance to your project. This will allow your app to store authentication state in localStorage.</p>
+        <p className='mb-0'>Add a reusable `UserSession` instance to your project. This will allow your app to store authentication state in `localStorage`.</p>
       </div>
       <div className="w-full">
         ```ts twoslash title="session.ts"
@@ -132,19 +132,19 @@ For a deeper dive into the authentication process, check out the [Authenticate u
 
 <Cards className='sm:grid-cols-1'>
   <SmallCard
-    icon={<Code className='text-primary' />}
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/connect/guides/authenticate-users"
     title="Authenticate users"
     description="Learn how to authenticate users using the Connect package in Stacks.js."
   />
   <SmallCard
-    icon={<Terminal className='text-primary' />}
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/connect/guides/sign-transactions"
     title="Sign transactions"
     description="Learn how to sign transactions using Stacks.js."
   />
   <SmallCard
-    icon={<Terminal className='text-primary' />}
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/connect/guides/sign-messages"
     title="Sign messages"
     description="Learn how to sign messages using Stacks.js."

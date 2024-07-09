@@ -12,7 +12,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
     transparentMode: "top",
     title: (
       <div className="text-md flex gap-3 items-center group">
-        <HiroIcon className="size-11 shrink-0 rounded-md" fill="currentColor" />
+        <HiroIcon className="size-11 shrink-0 rounded-md" />
         <span className="max-lg:hidden text-gray-500">|</span>
         <span className="max-lg:hidden text-gray-500 group-hover:text-primary">
           Documentation
@@ -25,7 +25,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
         label: "Hiro Platform",
         href: "https://platform.hiro.so/",
         icon: (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 bg-secondary p-1.5 rounded-md">
             <span className="ml-2 font-semibold max-md:hidden">
               Hiro Platform
             </span>
@@ -37,10 +37,10 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
     ],
   },
   links: [
-    {
-      text: "Guides",
-      url: "/guides",
-    },
+    // {
+    //   text: "Guides",
+    //   url: "/guides",
+    // },
   ],
   sidebar: {
     defaultOpenLevel: 0,

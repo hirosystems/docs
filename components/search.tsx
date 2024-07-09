@@ -42,9 +42,6 @@ export default function CustomSearchDialog(props: SharedProps): JSX.Element {
     <SearchDialog
       index={index}
       {...props}
-      searchOptions={{
-        filters: `tag:${tag}`,
-      }}
       footer={
         <div className="flex flex-row items-center gap-1">
           {modes.map((mode) => (

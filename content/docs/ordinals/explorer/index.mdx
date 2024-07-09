@@ -4,6 +4,7 @@ title: Overview
 description: Explore and verify ordinals and BRC-20 data on Bitcoin.
 ---
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button"
 
 The Ordinals Explorer lets you explore and verify Bitcoin Ordinals and BRC-20 token data. You can also use a variety of filters to discover inscriptions. We maintain and support the [Ordinals Explorer](https://ordinals.hiro.so) as a service for the community, but you can also run your own instance of the explorer if you so choose.
@@ -15,16 +16,19 @@ The Ordinals Explorer lets you explore and verify Bitcoin Ordinals and BRC-20 to
     </a>
   </Button>
   <Button variant="outline">
-    <a href="/ordinals/explorer/guides/build-explorer" target="_blank" className="no-underline">
-      Spin up your own Explorer
-    </a>
+    <Link
+      href="/ordinals/explorer/guides/build-explorer"
+      className="no-underline"
+    >
+      Set up your own explorer
+    </Link>
   </Button>
 </div>
 
 ### Related tools
 
 - **[Ordinals API](/ordinals/api)**: Looking for on-chain data without the front end? Leverage the Ordinals API.
-- **[Stacks Explorer](/stacks/explorer/guides/build-explorer)**: Want to build an explorer for the Stacks blockchain?
+- **[Stacks Explorer](https://explorer.hiro.so)**: Looking for a front end to verify activity on the Stacks blockchain? Try the Stacks Explorer.
 
 ---
 

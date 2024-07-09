@@ -17,7 +17,7 @@ import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
 import { InlineCode } from '@/components/inline-code';
 
-The process of broadcasting transactionsis fundamental for interacting with blockchains, whether you're transferring tokens, deploying contracts, or executing contract functions.
+The process of broadcasting transactions is fundamental for interacting with blockchains, whether you're transferring tokens, deploying contracts, or executing contract functions.
 
 In this guide, you will learn how to:
 
@@ -28,7 +28,7 @@ In this guide, you will learn how to:
 
 The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize these examples to fit your application's specific needs.
 
-<Callout title="Example Repo">To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
+{/* <Callout title="Example Repo">To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
 
 ---
 
@@ -195,16 +195,16 @@ This checks if the transaction was successful and logs the `txid`.
 
 <Cards>
   <Card
-    icon={<Code className='text-primary' />}
-    href="/stacks/stacks.js/guides/broadcast-transactions"
-    title="Broadcast transactions"
-    description="Learn how to interact with your smart contracts using Stacks.js."
-  />
-  <Card
-    icon={<Terminal className='text-primary' />}
-    href="/stacks/stacks.js/guides/deep-dive-into-post-conditions"
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js/guides/post-conditions"
     title="Deep dive into post-conditions"
     description="Learn how to use post-conditions to secure your smart contracts."
+  />
+  <Card
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/stacks/stacks.js/packages/transactions"
+    title="API References"
+    description="Dive into the API references for Stacks.js."
   />
 </Cards>
 

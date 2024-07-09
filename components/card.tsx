@@ -82,7 +82,7 @@ export function SecondaryCard({
           </div>
           <Badge
             variant="outline"
-            className="uppercase rounded-md transition-colors h-fit bg-muted text-primary"
+            className="uppercase rounded-md transition-colors h-fit bg-muted text-icon"
           >
             {tag}
           </Badge>

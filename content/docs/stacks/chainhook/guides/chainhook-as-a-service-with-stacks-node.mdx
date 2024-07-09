@@ -24,13 +24,13 @@ In this guide, you will learn how to:
 4. Initiate a Chainhook service to watch for matching transactions.
 5. Dynamically register your predicates with Chainhook.
 
-<Callout>Check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout>
+{/* <Callout>Check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
 
 ---
 
 ### Prerequisites
 
-1. Chainhook installed (Refer to the [Chainhook installation guide](/guides/install-chainhook) if you have not installed Chainhook yet.)
+1. Chainhook installed (Refer to the [Chainhook installation guide](/stacks/chainhook/installation) if you have not installed Chainhook yet.)
 2. A fully synced Bitcoin node is required to run Chainhook as a service. Check out our guide on [How to sync a Bitcoin node](/guides/sync-a-bitcoin-node) before proceeding.
 3. A fully synced Stacks node is required to run Chainhook as a service. Check out our guide on [How to sync a Stacks node](/guides/sync-a-stacks-node) before proceeding.
 
@@ -86,8 +86,7 @@ The generated `Chainhook.toml` file should look like this:
 [storage]
 working_dir = "cache"
 
-# The Http Api allows you to register / deregister
-# predicates dynamically.
+# The http API allows you to register / deregister predicates dynamically.
 # This is disabled by default.
 
 # [http_api]
@@ -334,13 +333,13 @@ The response should look something like this:
 
 <Cards className='sm:grid-cols-1'>
   <SmallCard
-    icon={<Code className='text-primary' />}
+    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/chainhook/guides/register-chainhooks-on-devnet"
     title="Register Chainhooks on devnet"
     description="Learn how to register Chainhooks on devnet."
   />
   <SmallCard
-    icon={<Terminal className='text-primary' />}
+    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/chainhook/references/scopes"
     title="Scopes"
     description="Learn how to use scopes to scan for specific blockchain events."

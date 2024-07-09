@@ -16,29 +16,32 @@ Transactions go through phases before being finally confirmed and propagated on 
 - **Process**: Miners review the mempool and select transactions to be included in the next block. Depending on the transaction type, different actions can happen during this step. For example, post-conditions could be verified for a token transfer, tokens defined in a smart contract could be minted, or an attempt to call an existing smart contract method could be made.
 - **Confirm**: Miners successfully mine blocks, with each block containing a set of transactions. The transactions inside each new block are successfully propagated to the network.
 
-:::info
-
+<Callout>
 A transaction can have one of three states once it is registered: `pending`, `success`, or `failed`.
-
-:::
+</Callout>
 
 ### Types
 
 Stacks supports a set of different transaction types:
 
-| **Type**          | **Value**           | **Description**                                                                                                                                                                                       |
-| ----------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Coinbase          | `coinbase`          | The first transaction in a new block (an entity holding several transactions). Used to register for block rewards. These are not manually generated and broadcasted like other types of transactions. |
-| Token transfer    | `token_transfer`    | Asset transfer from a sender to a recipient                                                                                                                                                           |
-| Contract deploy   | `smart_contract`    | Contract instantiation                                                                                                                                                                                |
-| Contract call     | `contract_call`     | Contract call for a public, non read-only function                                                                                                                                                    |
-| Poison Microblock | `poison_microblock` | Punish leaders who intentionally equivocate about the microblocks they package                                                                                                                        |
+| **Type**          | **Value**           | **Description** |
+| :----------------- | :------------------- | :--------------- |
+| Coinbase          | `coinbase`          | The first transaction in a new block. |
+| Token transfer    | `token_transfer`    | Asset transfer from a sender to a recipient. |
+| Contract deploy   | `smart_contract`    | Contract instantiation. |
+| Contract call     | `contract_call`     | Contract call for a public, non read-only function. |
 
 A sample of each transaction type can be found in the [Stacks Blockchain API response definition for transactions](https://docs.hiro.so/api#operation/get_transaction_by_id).
 
+<Callout>
 Read-only contract call calls do **not** require transactions. Read more about it in the [network guide](https://docs.stacks.co/stacks-101/network#read-only-function-calls).
+</Callout>
 
 ### Anchor mode
+
+<Callout type="warn">
+Microblocks are being deprecated with the Nakamoto upgrade.
+</Callout>
 
 Transactions can be mined either in an anchor block or in a [microblock](https://docs.stacks.co/stacks-101/mining#microblocks). If microblocks
 are selected, the transaction can be confirmed with a lower latency than the anchor block time.
@@ -70,11 +73,15 @@ const transaction = await makeSTXTokenTransfer(txOptions);
 
 ### Post-conditions
 
-Transaction post-conditions are a feature meant to limit the damage malicious smart contract developers and smart contract bugs can do in terms of destroying (or taking) a user's assets. Post-conditions are executed whenever a contract is instantiated or a public method of an existing contract is executed. Whenever a post-condition fails, the transaction is forced to abort.
+Transaction post-conditions are a feature meant to limit the damage malicious smart contract developers and smart contract bugs can do in terms of destroying (or taking) a user's assets. Post-conditions are executed whenever a contract is deployed or a public method of an existing contract is executed. Whenever a post-condition fails, the transaction is forced to abort.
 
 Post-conditions are meant to be added by the user (or by the user's wallet software) at the moment they sign a transaction. For example, a user may append a post-condition saying that upon successful execution, their account's Stacks (STX) balance should have decreased by no more than 1 STX. If this is not the case, then the transaction would abort, and the account would only pay the transaction fee of processing it.
 
-#### Attributes
+<Callout>
+Read more about post-conditions [here](/stacks/stacks.js/concepts/post-conditions).
+</Callout>
+
+### Attributes
 
 Each transaction includes a field that describes zero or more post-conditions that must all be true when the transaction finishes running. The post-condition describes only properties of the owner of the asset before the transaction happened. For a transfer transaction, the post-condition is about the sender, for a burn transaction, the post-condition is about the previous owner.
 
@@ -85,9 +92,9 @@ A post-condition includes the following information:
 | [Principal](https://docs.stacks.co/clarity/types) | `SP2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXHVVQFKE` | Original owner of the asset, can be a Stacks address or a smart contract                               |
 | Asset id                                          | `STX`                                       | Asset to apply conditions to (could be STX, fungible, or non-fungible tokens)                    |
 | Comparator                                        | `>=`                                        | Compare operation to be applied (could define "how much" or "whether or not the asset is owned") |
-| Literal                                           | `1000000`                                   | Integer or boolean value used to compare instances of the asset against via the condition        |
+| Literal                                           | `1000000`                                   | Use a number or true/false value to check if the asset meets the condition        |
 
-#### Evaluation modes
+### Evaluation modes
 
 The Stacks blockchain supports an `allow` or `deny` mode for evaluating post-conditions:
 
@@ -116,21 +123,19 @@ A transaction includes the following information. Multiple-byte fields are encod
 
 ### Construction
 
-The easiest way to construct well-formed transactions is by [using the Stacks.js Transactions library](https://github.com/blockstack/stacks.js/tree/master/packages/transactions#post-conditions). With that library, you can construct the following transaction types:
+The easiest way to construct well-formed transactions is by [using the Stacks.js Transactions library](/stacks/stacks.js/packages/transactions). With that library, you can construct the following transaction types:
 
 - Stacks token transfer
 - Smart contract deploy
 - Smart contract function call
 
-When constructing transactions, it is required to set the network the transaction is intended for. This can be either mainnet or testnet. At the moment of this writing, the only available option is the [testnet network](https://docs.stacks.co/stacks-101/testnet).
+When constructing transactions, it is required to set the network the transaction is intended for. This can be either mainnet or testnet.
 
-:::info
-
+<Callout>
 Transactions can be constructed and serialized offline. However, it is required to know the nonce and estimated fees ahead of time. Once internet access is available, the transaction can be broadcast to the network. Keep in mind that the nonce and fee might change during offline activity, making the transaction invalid.
+</Callout>
 
-:::
-
-#### Stacks token transfer
+### Stacks token transfer
 
 ```js
 import { makeSTXTokenTransfer } from '@stacks/transactions';
@@ -151,11 +156,9 @@ const txOptions = {
 const transaction = await makeSTXTokenTransfer(txOptions);
 ```
 
-:::info
-
+<Callout>
 Read more about [nonces](https://docs.stacks.co/stacks-101/network#nonces) in the network guide.
-
-:::
+</Callout>
 
 #### Smart contract deployment
 
@@ -196,7 +199,7 @@ const txOptions = {
 const transaction = await makeContractCall(txOptions);
 ```
 
-#### Clarity value types
+### Clarity value types
 
 Building transactions that call functions in deployed Clarity contracts requires you to construct valid Clarity values to pass to the function as arguments. The [Clarity type system](https://github.com/stacksgov/sips/blob/main/sips/sip-002/sip-002-smart-contract-language.md#clarity-type-system) contains the following types:
 
@@ -294,7 +297,9 @@ A well-formed transaction construct is encoded in [Recursive Length Prefix ("RLP
 
 In order to broadcast transactions to and between nodes on the network, RLP data is represented in hexadecimal string (also called the **raw format**).
 
+<Callout>
 To support an API-friendly and human-readable representation, the Stacks Blockchain API converts transactions into a JSON format.
+</Callout>
 
 [The Stacks.js Transactions library](/stacks/stacks.js/packages/transactions) supports serialization of transactions.
 
@@ -359,7 +364,7 @@ When called the Stacks Blockchain API or Node RPC API, transactions returned wil
 
 #### Deserializing
 
-Serialized, raw transactions can be deserialized without access to the internet using [the Stacks.js Transactions library](https://github.com/hirosystems/stacks.js/tree/main/packages/transactions):
+Serialized, raw transactions can be deserialized without access to the internet using [the Stacks.js Transactions library](/stacks/stacks.js/packages/transactions):
 
 ```js
 import { BufferReader, deserializeTransaction } from '@stacks/transactions';
@@ -404,7 +409,7 @@ A sponsored transaction is one where a second signer sets and pays the transacti
 
 ### Broadcast
 
-With a serialized transaction in the [raw format](#raw-format), it can be broadcast to the network using the [`POST /v2/transactions`](https://docs.hiro.so/api#operation/post_core_node_transactions) endpoint:
+With a serialized transaction in the [raw format](#raw-format), it can be broadcast to the network using the [`POST /v2/transactions`](/stacks/api/transactions/broadcast-transaction) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -460,13 +465,13 @@ transactions after [256 blocks][].
 
 Transactions on the Stacks network can be queried using the Stacks Blockchain API. The API exposes two interfaces, a RESTful JSON API and a WebSockets API.
 
-Note: The API can be easily consumed using a generated [JS client library](https://hirosystems.github.io/stacks-blockchain-api/client/index.html). The generator uses an OpenAPI specification and supports other languages and frameworks.
-
-@include "stacks-api-pagination.md"
+<Callout>
+The API can be easily consumed using a generated [JS client library](https://hirosystems.github.io/stacks-blockchain-api/client/index.html). The generator uses an OpenAPI specification and supports other languages and frameworks.
+</Callout>
 
 #### Get recent transactions
 
-Recent transactions can be obtained through the [`GET /extended/v1/tx`](https://docs.hiro.so/api#operation/get_transaction_list) endpoint:
+Recent transactions can be obtained through the [`GET /extended/v1/tx`](/stacks/api/transactions/recent-transactions) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -504,7 +509,7 @@ Sample response:
 
 #### Get mempool transactions
 
-Mempool (registered, but not processed) transactions can be obtained using the [`GET /extended/v1/tx/mempool`](/stacks/api/transactions/mempool-transactions) endpoint:
+Mempool (registered, but not processed) transactions can be obtained using the [`GET /extended/v1/tx/mempool`](stacks/api/transactions/mempool-transactions) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -552,7 +557,7 @@ curl 'https://api.testnet.hiro.so/extended/v1/tx/?type=contract_call'
 
 #### Get transaction by ID
 
-A specific transaction can be obtained using the [`GET /extended/v1/tx/<tx_id>`](https://docs.hiro.so/api#operation/get_transaction_by_id) endpoint:
+A specific transaction can be obtained using the [`GET /extended/v1/tx/<tx_id>`](stacks/api/transactions/get-transaction) endpoint:
 
 ```bash
 # for mainnet, replace `testnet` with `mainnet`
@@ -594,9 +599,3 @@ Broadcast transactions stay in the mempool for 256 blocks (~42 hours). If a tran
 Most transactions stay in the mempool due to nonce issues. If you see a transaction pending for an unusual time, review the nonce of the account and the transaction.
 
 If a transaction is removed from the mempool, the transaction was not processed, and no changes were made to the blockchain state.
-
-[bitcoin wiki]: https://en.bitcoin.it/wiki/Vocabulary#Memory_pool
-[256 blocks]: https://github.com/stacks-network/stacks-core/blob/08c4b9d61b48b99475c0197e7e7fea50c7fb0e29/src/core/mempool.rs#L65
-[stacks-blockchain]: https://github.com/blockstack/stacks-blockchain
-[`accounts`]: https://docs.stacks.co/stacks-101/accounts#get-stacks-stx-balance-and-nonce
-[25 in the current implementation]: https://github.com/blockstack/stacks-blockchain/blob/08c4b9d61b48b99475c0197e7e7fea50c7fb0e29/src/core/mempool.rs#L66

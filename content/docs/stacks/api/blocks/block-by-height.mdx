@@ -5,8 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
+import { APIInfo, Property } from 'fumadocs-ui/components/api'
 import { Badge } from '@/components/ui/badge';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
 import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -18,14 +17,7 @@ import { InlineCode } from '@/components/inline-code';
 
 <API>
 
-<div className='flex-1'>
-
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/block/by_height/{height}`}</p>
-</h2>
+<APIInfo method={"GET"} route={"/extended/v1/block/by_height/{height}"}>
 
 **NOTE:** This endpoint is <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> in favor of [Get block](/stacks/api/blocks/get-block).
 
@@ -36,7 +28,7 @@ Retrieves block details of a specific block at a given block height
 | `200` | Block |
 | `404` | Cannot find block with given height |
 
-</div>
+</APIInfo>
 
 <APIExample>
 

@@ -3,119 +3,81 @@ title: Using Stacks.js with React Native
 description: Learn how to use Stacks.js with React Native.
 ---
 
-In this guide we'll setup a Expo project with the necessary changes to use Stacks.js libraries.
+import { Badge } from '@/components/ui/badge';
 
-The steps we take will work similarly for other React Native projects, but may require some additional knowledge.
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Step } from 'fumadocs-ui/components/steps';
 
-Grab the final project source code on [Github](https://github.com/hirosystems/stacks.js-react-native-expo-51).
+import { GridPattern } from "@/components/grid-pattern";
+import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
 
-### Setup
+import { InlineCode } from '@/components/inline-code';
 
-We start from an Expo template using `create-expo-app`.
+Using Stacks.js with React Native allows you to integrate Stacks blockchain functionalities into mobile applications.
 
-```bash
+In this guide, you will learn how to:
+
+1. Set up the Expo project.
+2. Install necessary dependencies.
+3. Add NodeJS polyfills.
+4. Add global polyfills.
+5. Use Stacks.js in the project.
+
+{/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hirosystems/stacks.js-react-native-expo-51).</Callout> */}
+
+---
+
+### Set up the Expo project
+
+Start by creating a new Expo project using `create-expo-app`.
+
+```bash title="Terminal"
 npx create-expo-app@latest
 ```
 
-This will give us a boilerplate Expo project.
-We can run the project with `npm start` and connect a mobile device for previewing via the shown QR code.
+This will generate a boilerplate Expo project. You can run the project with `npm start` and connect a mobile device for previewing via the shown QR code.
 
-### Polyfilling & dependencies
+### Install necessary dependencies
 
-### Installing dependencies
+Install Stacks.js libraries along with other dependencies needed for polyfilling browser-specific and NodeJS-specific APIs.
 
-We will be installing some Stacks.js libraries for basic wallet and signing functionality.
-
-```bash
+```bash title="Terminal"
 npm install @stacks/transactions @stacks/wallet-sdk
-```
-
-However, these libraries expect some browser-specific and NodeJS-specific APIs that are not available in React Native.
-So we will need some more dependencies for polyfilling these APIs.
-
-```bash
 npm install --save-dev buffer process react-native-get-random-values text-encoding readable-stream crypto-browserify @peculiar/webcrypto
 ```
 
-<details>
-<summary>Why we need these dependencies?</summary>
-- `buffer`: Used in encrypting the seed phrase.
-- `process`: Small polyfill sometimes needed for stream and crypto polyfills to work.
-- `react-native-get-random-values`: A polyfill for the crypto `getRandomValues` function.
-- `text-encoding`: Used for text UTF-8 encoding.
-- `readable-stream`: A `stream` NodeJS module polyfill, used by dependencies in the background.
-- `crypto-browserify`: A polyfill for the `crypto` NodeJS module (not used directly, but needed by the web crypto polyfill).
-- `@peculiar/webcrypto`: Polyfills the web crypto API for the browser (using the NodeJS polyfills).
-</details>
+### Add NodeJS polyfills
 
-### Adding the NodeJS polyfills
+Modify the project's Metro configuration to include polyfills for missing NodeJS modules.
 
-To be able to use the NodeJS polyfills in Expo, we need to be able to modify the projects Metro config.
-
-Using the `expo` command, we can make our Metro config available for modification in the `metro.config.js` file.
-
-```bash
+```bash title="Terminal"
 npx expo customize metro.config.js
 ```
 
-After exposing this file, we can add the following code to the `metro.config.js` file. This will expose the missing NodeJS modules `stream` and `crypto` to our project.
-
-```js
-config.resolver.extraNodeModules = {
-  stream: require.resolve("readable-stream"),
-  crypto: require.resolve("crypto-browserify"),
-};
-```
-
-<details className="inline px-2 py-0 float-right leading-6 text-sm">
-<summary>metro.config.js</summary>
-```js
-// Learn more https://docs.expo.io/guides/customizing-metro
+```js title="metro.config.js"
 const { getDefaultConfig } = require("expo/metro-config");
 
-/** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname);
 
-// highlight-start
 config.resolver.extraNodeModules = {
   stream: require.resolve("readable-stream"),
   crypto: require.resolve("crypto-browserify"),
 };
-// highlight-end
 
 module.exports = config;
 ```
-</details>
 
-<div className="clear-both" />
+### Add global polyfills
 
-### Adding global polyfills
+Update the Expo entry point to include polyfills.
 
-<h4 className="text-lg">**1)** Changing the Expo entry point</h4>
+1. Create `polyfill.js` file
+2. Create `index.js` file
+3. Update the `package.json`
 
-To cleanly polyfill globals in Expo, we use an "entry" file to add code to the start of our app.
-
-We can create an `index.js` file in the root of our project to add this code.
-
-`index.js`
-```js
-import "expo-router/entry";
-```
-
-For this to take effect, we will need to update the `main` property in the `package.json` file to point to our `index.js` file.
-
-```json
-"main": "index.js",
-```
-
-At this point our project should still be building and running, as if we didn't change the entry point.
-
-<h4 className="text-lg">**2)** Adding polyfills before the entry</h4>
-
-Before the newly added code in `index.js`, we can add our polyfills. We add another file to the root of our project.
-
-`polyfill.js`
-```js
+```js title="polyfill.js"
 import { Buffer } from "buffer/";
 import process from "process";
 import "react-native-get-random-values";
@@ -127,52 +89,29 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 ```
 
-This file, we now import from our entry `index.js` file.
-
-`index.js`
-```js
-// highlight-start
+```js title="index.js"
 import "./polyfill";
-// highlight-end
-
-import "expo-router/entry";
-```
-
-:::note Important
-For the next step, it's important that the polyfills live in their own file.
-:::
-
-<h4 className="text-lg">**3)** Adding the final polyfill</h4>
-
-Due to a quirk in the polyfills, we need to have `process` polyfilled before attempting to polyfill global crypto.
-This is why we polyfill our last global in the `index.js` file, after loading the initial polyfills.
-
-`index.js`
-```ts
-import "./polyfill";
-
-// highlight-start
 import { Crypto } from "@peculiar/webcrypto";
+
 Object.assign(global.crypto, new Crypto());
-// highlight-end
 
 import "expo-router/entry";
 ```
 
-<br/>
+```json title="package.json"
+"main": "index.js", // [!code highlight]
+```
 
-<i className="block text-center">Now we're ready to use Stacks.js as we normally would!</i>
+<Callout>
+Ensure that the polyfills live in their own file as specified to avoid any runtime issues.
+</Callout>
 
-<br/>
----
+### Use Stacks.js in the project
 
-## Using Stacks.js
+Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities, starting with the imports.
 
-We'll add some Stacks.js wallet generation code to one of the tabs in the example project.
-We edit the `app/(tabs)/index.tsx` file to add the following code.
-
-First some imports:
-```ts
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
 import {
   TransactionVersion,
   getAddressFromPrivateKey,
@@ -182,19 +121,21 @@ import { Wallet, generateSecretKey, generateWallet } from "@stacks/wallet-sdk";
 import { useState } from "react";
 ```
 
-Then we can add state management to the component:
-```ts
+Now you can start to manage the state as follows:
+
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
 export default function HomeScreen() {
-  // highlight-start
   const [mnemonic, setMnemonic] = useState("...");
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [log, setLog] = useState("");
-  // highlight-end
+}
 ```
 
-Now we can call our imported methods from an async function (which we can call from the UI):
+Next, to generate a wallet and sign a transaction:
 
-```ts
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
 const generate = async () => {
   const mnemonic = generateSecretKey();
   setMnemonic(mnemonic);
@@ -217,12 +158,11 @@ const generate = async () => {
   setLog("Transaction signed successfully ☑");
 };
 ```
-> The above code also goes through the process of signing a transaction with the wallet.
-> This example does NOT broadcast the transaction yet. The code is an example showing that the code runs successfully in Expo on a mobile device.
 
-Finally, add some UI to the component for showing the state and initiating the wallet generation:
+And lastly, to integrate the UI:
 
-```tsx
+```tsx twoslash title="app/(tabs)/index.tsx"
+// @noErrors
 <ThemedView>
   <ThemedText type="subtitle">Seed Phrase</ThemedText>
   <ThemedText>{mnemonic}</ThemedText>
@@ -241,14 +181,3 @@ Finally, add some UI to the component for showing the state and initiating the w
   {log && <ThemedText>{log}</ThemedText>}
 </ThemedView>
 ```
-
-To recap, in this example we have now successfully:
-- Generated a seed phrase
-- Initialized a wallet from the seed phrase
-- Used the private key from a wallet account to...
-  - show the equivalent address
-  - sign a transaction
-
----
-
-The full source code is available on [Github](https://github.com/hirosystems/stacks.js-react-native-expo-51).
