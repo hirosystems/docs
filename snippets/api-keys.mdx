@@ -1,5 +1,3 @@
-import { Step } from 'fumadocs-ui/components/steps';
-
 Developers have open access to Hiro's APIs without the use of an API key, but are subject to [Hiro's rate limit policy](./rate-limiting). For developers who need access beyond these rate limits, we provide API keys.
 
 <Callout title='Where can I get an API key?'>
@@ -10,7 +8,7 @@ If you're interested in obtaining an API key, you can generate one for free in t
 
 The API key is passed in the `header` of your HTTP API request with `x-hiro-api-key`.
 
-```console title="Terminal"
+```bash title="Terminal"
 curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-api-key>'
 ```
 
