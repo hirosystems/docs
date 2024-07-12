@@ -19,40 +19,40 @@ Using Stacks.js with React Native allows you to integrate Stacks blockchain func
 
 In this guide, you will learn how to:
 
-1. Set up the Expo project.
-2. Install necessary dependencies.
-3. Add NodeJS polyfills.
-4. Add global polyfills.
-5. Use Stacks.js in the project.
+1. [Set up the Expo project](#set-up-the-expo-project).
+2. [Install necessary dependencies](#install-necessary-dependencies).
+3. [Add NodeJS polyfills](#add-nodejs-polyfills).
+4. [Add global polyfills](#add-global-polyfills).
+5. [Use Stacks.js in the project](#use-stacksjs-in-the-project).
 
 {/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hirosystems/stacks.js-react-native-expo-51).</Callout> */}
 
 ---
 
-### Set up the Expo project
+## Set up the Expo project
 
 Start by creating a new Expo project using `create-expo-app`.
 
-```bash title="Terminal"
+```console title="Terminal"
 npx create-expo-app@latest
 ```
 
 This will generate a boilerplate Expo project. You can run the project with `npm start` and connect a mobile device for previewing via the shown QR code.
 
-### Install necessary dependencies
+## Install necessary dependencies
 
 Install Stacks.js libraries along with other dependencies needed for polyfilling browser-specific and NodeJS-specific APIs.
 
-```bash title="Terminal"
+```console title="Terminal"
 npm install @stacks/transactions @stacks/wallet-sdk
 npm install --save-dev buffer process react-native-get-random-values text-encoding readable-stream crypto-browserify @peculiar/webcrypto
 ```
 
-### Add NodeJS polyfills
+## Add NodeJS polyfills
 
 Modify the project's Metro configuration to include polyfills for missing NodeJS modules.
 
-```bash title="Terminal"
+```console title="Terminal"
 npx expo customize metro.config.js
 ```
 
@@ -69,7 +69,7 @@ config.resolver.extraNodeModules = {
 module.exports = config;
 ```
 
-### Add global polyfills
+## Add global polyfills
 
 Update the Expo entry point to include polyfills.
 
@@ -106,7 +106,7 @@ import "expo-router/entry";
 Ensure that the polyfills live in their own file as specified to avoid any runtime issues.
 </Callout>
 
-### Use Stacks.js in the project
+## Use Stacks.js in the project
 
 Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities, starting with the imports.
 
@@ -181,3 +181,15 @@ And lastly, to integrate the UI:
   {log && <ThemedText>{log}</ThemedText>}
 </ThemedView>
 ```
+
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/stacks.js/packages/transactions"
+    title="API References"
+    description="Dive into the API references for Stacks.js."
+  />
+</Cards>

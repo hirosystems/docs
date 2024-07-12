@@ -3,18 +3,18 @@ title: Usage
 description: Go over the multiple ways to make requests to the Token Metadata API.
 ---
 
-### Making requests
+## Making requests
 
 To make a request to the Stacks API, you can paste the `curl` command below in your terminal.
 
-```bash title="Terminal"
+```console title="Terminal"
 curl -L 'https://api.hiro.so/metadata/v1/' \
 -H 'Accept: application/json'
 ```
 
 If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key.
 
-```bash title="Terminal"
+```console title="Terminal"
 curl -L 'https://api.hiro.so/metadata/v1/' \
 -H 'Accept: application/json' \
 -H 'X-API-Key: $HIRO_API_KEY' # [!code highlight]
@@ -43,7 +43,7 @@ You should get a response back that resembles the following:
 }
 ```
 
-### Making requests using API Client
+## Making requests using API Client
 
 We also maintain a standalone API client that you can use to make requests to the Stacks API. This client is available as a package and can be installed with the following command:
 

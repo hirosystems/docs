@@ -13,7 +13,7 @@ Want to use these latest `next` features? Install the canary version of the pack
 ```
 </Callout>
 
-### Breaking changes
+## Breaking changes
 
 - **Getting rid of the network class** <input type="checkbox" checked /><br/> Instead, Stacks networks are now static objects, which are easier to handle. Also, the fetching logic is separated from the network object.
 - **Changing internal Clarity representation** <input type="checkbox" checked /><br/> Clarity values in JS are hard to inspect. This is now simpler using easy to construct and debug objects.
@@ -23,11 +23,11 @@ Want to use these latest `next` features? Install the canary version of the pack
 - **Removing Triplesec** <input type="checkbox" /><br/> Triplesec has been a legacy mnemonic encryption option for a while. We will remove it to get rid of a dependency on a library that is no longer actively maintained.
 - **Remove legacy Blockstack authentication** <input type="checkbox" /><br/> The Blockstack authentication is no longer maintained and will be removed from Stacks.js (mainly CLI).
 
-#### **Deprecations**
+### **Deprecations**
 
 - **Remove wallet-sdk "restoring" and "config" features** <input type="checkbox" /><br/> These concepts have lead to confusion and have been avoided by wallets. Wallets will not store additional information on Gaia and will not "restore"/detect which accounts have previously been used.
 
-### New Features
+## New Features
 
 - **Adding a maintained `StacksApiClient`** <input type="checkbox" checked /><br/> So far, we only had auto-generated wrappers for the API. Now we will provide a maintained client that is easier to use with post-processing of information (e.g. Clarity values) to make them easier to use.
 

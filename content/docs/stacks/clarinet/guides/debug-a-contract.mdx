@@ -29,22 +29,22 @@ To debug a contract, let's take the simple `counter` contract from the [Clarinet
 
 To initiate a debug session for this contract, first run the `clarinet console` command inside your project.
 
-```bash title="Terminal"
+```console title="Terminal"
 clarinet console
 ```
 
-### Trace
+## Trace
 
 The `::trace` command expects an expression, so make a `contract-call?` with our `count-up` function and see what happens.
 
-```bash title="Terminal"
+```console title="Terminal"
 ::trace (contract-call? .counter count-up)
 ```
 
 We should see a complete trace of our `get-count` function call, outputting the arguments that were passed in (`tx-sender`) and return value (`u0`).
 
 Here's an example response from the `::trace` command:
-```bash
+```console
 (contract-call? .counter count-up)  <console>
 ├── ( get-count tx-sender )  counter:8:38
 │   │ ↳ args: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
@@ -54,7 +54,7 @@ Here's an example response from the `::trace` command:
 
 If we were to run this command again, we should see the return value go from `u0` to `u1`.
 
-### Breakpoints
+## Breakpoints
 
 You also might want to **set a breakpoint** at a specific line to better understand what's happening in your contract.
 
@@ -79,7 +79,7 @@ To illustrate the power of breakpoints, first add a couple new functions to your
 
 Now add a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>break</span></TooltipTrigger><TooltipContent>To add a breakpoint, use the `break` or `b` command.</TooltipContent></Tooltip></TooltipProvider> on the `count-up` function when calling the new `double` function.
 
-```bash title="Terminal"
+```console title="Terminal"
 ::debug (contract-call? .counter count-twice)
 break count-up
 ```

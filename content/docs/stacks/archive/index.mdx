@@ -14,14 +14,14 @@ The Hiro Archive enables you to quickly bootstrap supported services with pre-lo
   </a>
 </Button>
 
-### Verify archive data
+## Verify archive data
 
 All datasets have an associated SHA256 hash file which can be used to verify the integrity of the downloaded dataset.
 As some of the archives are quite large, this is useful to ensure the file you've downloaded matches the file maintained in the Hiro Archive.
 
 After downloading an archive file and its associated shasum file, you can verify the integrity of the archive file like so:
 
-```bash
+```console
     echo "$(cat <SHASUM FILE> | awk '{print $1}')  <ARCHIVE FILE>" | shasum --check
     <ARCHIVE FILE>: OK
 
@@ -38,7 +38,7 @@ After downloading an archive file and its associated shasum file, you can verify
 
 If the integrity check fails for any reason, you may need to delete the local archive and re-attempt the download. If issues persist, switch to a different network and try again.
 
-### Supported services
+## Supported services
 
 We record and archive mainnet and testnet snapshots for the following services every night:
 

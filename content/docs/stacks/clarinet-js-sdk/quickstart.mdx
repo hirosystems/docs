@@ -1,12 +1,11 @@
 ---
 title: Quickstart
 description: Learn how to test a simple counter contract using the Clarinet JS SDK.
-toc: false
 ---
 
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
 import { SmallCard } from '@/components/card';
 
 In this quickstart guide, you will initialize a simulated development network for testing a smart contract using the Clarinet JS SDK. You'll learn how to initialize your project, interact with a smart contract, call its functions, and test the results.
@@ -15,185 +14,138 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
 ---
 
-### Prerequisites
-
-To follow this quickstart guide, you'll need: 
-
-1. NPM and Node.js 18.0 or later installed on your machine. We recommend [Volta](https://volta.sh/) to manage your JS tooling.
-2. The [Clarinet quickstart](/stacks/clarinet/quickstart) project. We will be using the `counter` contract from that quickstart here.
-
----
-
-<div className='steps space-y-10'>
+<Steps>
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Importing dependencies</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Before we dive in, navigate to your project and import the `Cl` helper from the `@stacks/transactions` package in your test file.</p>
-        </div>
-      </div>
+    ## Importing dependencies
+  
+    Before we dive in, navigate to your project and import the `Cl` helper from the `@stacks/transactions` package in your test file.
 
-      <div className="w-full">
-        <Files className='pointer-events-none'>
-          <Folder name="contracts" defaultOpen>
-            <File name="counter.clar" />
-          </Folder>
-          <Folder name="settings" />
-          <Folder name="tests" defaultOpen>
-            <File name="counter.test.ts" className='bg-muted' />
-          </Folder>
-          <File name=".gitignore" />
-          <File name="Clarinet.toml" />
-          <File name="package.json" />
-          <File name="tsconfig.json" />
-          <File name="vitest.config.js" />
-        </Files>
-      </div>
+    <Files className='pointer-events-none'>
+      <Folder name="contracts" defaultOpen>
+        <File name="counter.clar" />
+      </Folder>
+      <Folder name="settings" />
+      <Folder name="tests" defaultOpen>
+        <File name="counter.test.ts" className='bg-muted' />
+      </Folder>
+      <File name=".gitignore" />
+      <File name="Clarinet.toml" />
+      <File name="package.json" />
+      <File name="tsconfig.json" />
+      <File name="vitest.config.js" />
+    </Files>
 
-      <div className="w-full">
-        ```ts title="counter.test.ts"
-        import { describe, expect, it } from "vitest";
-        import { Cl } from "@stacks/transactions"; // [!code highlight]
-        ```
-      </div>
+    ```ts title="counter.test.ts"
+    import { describe, expect, it } from "vitest";
+    import { Cl } from "@stacks/transactions"; // [!code highlight]
+    ```
 
-      <p>The `Cl` namespace simplifies the process of creating and handling Clarity values. This functionality is particularly useful in testing environments where developers need to simulate contract interactions accurately.</p>
-    </div>
+    The `Cl` namespace simplifies the process of creating and handling Clarity values. This functionality is particularly useful in testing environments where developers need to simulate contract interactions accurately.
+   
   </Step>
-
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Retrieve an account from the simnet</p>
-        <p>For most test cases, you'll want to retrieve an account from the network in order to interact with your smart contracts. The following code uses the `getAccounts` method to achieve this.</p>
-      </div>
+    ## Retrieve an account from the simnet
+  
+    For most test cases, you'll want to retrieve an account from the network in order to interact with your smart contracts. The following code uses the `getAccounts` method to achieve this.
 
-      <div className="w-full">
-        ```ts title="counter.test.ts"
-        // [!code word:getAccounts]
-        import { describe, expect, it } from "vitest";
-        import { Cl } from "@stacks/transactions";
+    ```ts title="counter.test.ts"
+    // [!code word:getAccounts]
+    import { describe, expect, it } from "vitest";
+    import { Cl } from "@stacks/transactions";
 
-        const accounts = simnet.getAccounts();
-        const wallet = accounts.get("wallet_1")!;
-        ```
-      </div>
-    </div>
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get("wallet_1")!;
+    ```
+
+    <Callout>
+      The `--stacks` flag is required and allows you to specify the network to scan. Other options include `--bitcoin`.
+    </Callout>
   </Step>
-
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Write your first test</p>
-        <div className='flex flex-col space-y-0'>
-          <p>The process for writing tests for smart contracts with the Clarinet JS SDK follows a structured approach similar to testing in JavaScript. Here's a breakdown of the steps involved:</p>
-          <ol>
-            <li>Define the group of tests you want to run using the `describe` block.</li>
-            <li>Define the test you want to run using the `it` block.</li>
-            <li>Call the function and assert the result using the `expect` function.</li>
-          </ol>
-        </div>
+    ## Write your first test
+  
+    The process for writing tests for smart contracts with the Clarinet JS SDK follows a structured approach similar to testing in JavaScript. Here's a breakdown of the steps involved:
 
-        <p>Now that you understand the key components for writing tests, start by writing a test that ensures the `counter` contract has been deployed.</p>
+    1. Define the group of tests you want to run using the `describe` block.
+    2. Define the test you want to run using the `it` block.
+    3. Call the function and assert the result using the `expect` function.
+
+    Now that you understand the key components for writing tests, start by writing a test that ensures the `counter` contract has been deployed.
+
+    ```ts title="counter.test.ts"
+    describe("counter contract", () => {
+      it("ensures the contract is deployed", () => {
+        const contractSource = simnet.getContractSource("counter"); // [!code highlight]
+        expect(contractSource).toBeDefined();
+      });
+    });
+    ```
+  </Step>
+  <Step>
+    ## Test the count-up function
+  
+    Now it's time to call a public function and assert the result. The <code>count-up</code> function is expected to increment the count of the user's principal by 1. Write a test to ensure this behaves as expected.
+
+    ```ts title="counter.test.ts"
+    describe("counter contract", () => {
+      it("increments the count of the user's principal by 1", () => {
+        const countUpCall = simnet.callPublicFn("counter", "count-up", [], wallet);
+        expect(countUpCall.result).toBeOk(Cl.bool(true)); // [!code highlight]
         
-        <div className="w-full">
-          ```ts title="counter.test.ts"
-          describe("counter contract", () => {
-            it("ensures the contract is deployed", () => {
-              const contractSource = simnet.getContractSource("counter"); // [!code highlight]
-              expect(contractSource).toBeDefined();
-            });
-          });
-          ```
-        </div>
-      </div>
-    </div>
-  </Step>
+        const getCountCall = simnet.callReadOnlyFn(
+          "counter",
+          "get-count",
+          [Cl.principal(wallet)],
+          wallet
+        );
+        expect(getCountCall.result).toBeUint(1); // [!code highlight]
+      });
+    });
+    ```
 
+    Above, the `count-up` function is called, and the result is asserted to return an `(ok true)`. Then, the count for the user's principal is retrieved and asserted to be `u1`.
+
+    <Callout title="Custom matchers">
+      <p>The <code>toBeOk</code> and <code>toBeUint</code> methods are used to ensure the `count-up` function returns the proper Clarity values. For more details, check out the [custom matchers](/stacks/clarinet-js-sdk/references/custom-matchers) page.</p>
+    </Callout>
+  </Step>
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Test the <code className='text-lg'>count-up</code> function</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Now it's time to call a public function and assert the result. The <code>count-up</code> function is expected to increment the count of the user's principal by 1. Write a test to ensure this behaves as expected.</p>
-        </div>
-      </div>
-      <div className="w-full">
-        ```ts title="counter.test.ts"
-          describe("counter contract", () => {
-            it("increments the count of the user's principal by 1", () => {
-              const countUpCall = simnet.callPublicFn("counter", "count-up", [], wallet);
-              expect(countUpCall.result).toBeOk(Cl.bool(true)); // [!code highlight]
-              
-              const getCountCall = simnet.callReadOnlyFn(
-                "counter",
-                "get-count",
-                [Cl.principal(wallet)],
-                wallet
-              );
-              expect(getCountCall.result).toBeUint(1); // [!code highlight]
-            });
-          });
-          ```
-      </div>
+    ## Run your tests
 
-      <p>Above, the <code>count-up</code> function is called, and the result is asserted to return an `(ok true)`. Then, the count for the user's principal is retrieved and asserted to be `u1`.</p>
-    
-      <Callout title="Custom matchers">
-        <p>The <code>toBeOk</code> and <code>toBeUint</code> methods are used to ensure the `count-up` function returns the proper Clarity values. For more details, check out the [custom matchers](/stacks/clarinet-js-sdk/references/custom-matchers) page.</p>
-      </Callout>
-    </div>
+    Every generated project comes with a <code>package.json</code> file that contains the necessary dependencies and scripts to run your tests.
+  
+    ```json title="package.json"
+    "scripts": {
+      "test": "vitest run", // [!code highlight]
+      "test:report": "vitest run -- --coverage --costs",
+      "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
+    }
+    ```
+
+    You can now run your tests, with your preferred package manager, by executing the following command:
+  
+    ```console
+    npm run test
+    ```
   </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Run your tests</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Every generated project comes with a <code>package.json</code> file that contains the necessary dependencies and scripts to run your tests.</p>
-        </div>
-      </div>
-
-      <div className="w-full">
-        ```json title="package.json"
-        "scripts": {
-          "test": "vitest run", // [!code highlight]
-          "test:report": "vitest run -- --coverage --costs",
-          "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
-        }
-        ```
-      </div>
-
-      <p>You can now run your tests, with your preferred package manager, by executing the following command:</p>
-      <div className="w-full">
-        ```bash
-        npm run test
-        ```
-      </div>
-    </div>
-  </Step>
-</div>
+</Steps>
 
 ---
 
-### Next steps
+## Next steps
 
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+<Cards>
+  <Card
     href="/stacks/clarinet-js-sdk/references/simnet"
     title="API Reference"
     description="Dive deeper into the properties and methods available in the Clarinet JS SDK."
   />
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/clarinet-js-sdk/references/custom-matchers"
     title="Custom matchers"
     description="Learn about the custom matchers that are available in the Clarinet JS SDK."
   />
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/clarinet-js-sdk/guides/migrate-to-the-clarinet-sdk"
     title="Migrating your tests to Clarinet SDK"
     description="Learn how to migrate your existing Clarinet projects to the Clarinet JS SDK"

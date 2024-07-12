@@ -3,7 +3,7 @@ title: Use the Stacks Blockchain API archive
 description: Discover how to use the Hiro Archive to spin up a Stacks Blockchain API.
 ---
 
-### Prerequisites
+## Prerequisites
 
 Since the Stacks Blockchain API depends on a Stacks blockchain node being at the same block height, you will need to first [restore a Stacks blockchain node using the Hiro Archive](/stacks/archive/guides/stacks-blockchain) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
 
@@ -13,7 +13,7 @@ In order for the Stacks blockchain and Stacks Blockchain API archives to be comp
 - The API archive version must be compatible with the Stacks blockchain archive version (See [API release notes](https://github.com/hirosystems/stacks-blockchain-api/releases) for guidance).
 - Both archives were created on the same date.
 
-### Restoration methods
+## Restoration methods
 
 There are two ways to restore a Stacks Blockchain API using the Hiro Archive. The archive file you'll need to download will depend on your method of restoration. There is no scenario where you would need both restoration methods.
 
@@ -26,7 +26,7 @@ This is the quickest and most direct method, and it is suitable for most scenari
 This method is several times slower than restoring from a Postgres dump. The API TSV file contains the raw unprocessed events from a Stacks blockchain node. The API can ingest this file to process events into a Postgres database.
 Restoring from a TSV file can be useful when a Postgres database archive for a particular API version is not available or when it cannot be used for any reason.
 
-### Where to download archives
+## Where to download archives
 
 Depending on the restoration method used above, the Stacks Blockchain API archives for each network can be found at the following locations:
 
@@ -64,14 +64,14 @@ or the most recent upload for a particular version:
   - archive: `<network>-stacks-blockchain-api-<API VERSION>-latest.gz`
   - shasum: `<network>-stacks-blockchain-api-<API VERSION>-latest.sha256`
 
-### Restoring the Stacks Blockchain API using the Hiro Archive
+## Restoring the Stacks Blockchain API using the Hiro Archive
 
 **If restoring via Postgres dump**
 
 1. Download the archive and shasum for the appropriate network and restoration method.
 1. [Verify the archive](/stacks/archive/guides/verify-archive-data) with the shasum.
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning):
-   ```bash
+   ```console
        export PGPASSWORD=<YOUR POSTGRES PASSWORD>
        pg_restore --username postgres --verbose --jobs 4 --dbname stacks_blockchain_api /path/to/archive/file
    ```
@@ -85,7 +85,7 @@ or the most recent upload for a particular version:
 1. Download the archive and shasum for the appropriate network and restoration method.
 1. [Verify the archive](/stacks/archive/guides/verify-archive-data) with the shasum.
 1. Extract the archive into the desired directory:
-   ```bash
+   ```console
        # Target directory must already exist
        gzip -d <ARCHIVE FILE> --stdout > /path/to/extracted/file
    ```

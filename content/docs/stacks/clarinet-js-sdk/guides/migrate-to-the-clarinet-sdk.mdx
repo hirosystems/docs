@@ -25,17 +25,11 @@ This guide is for projects that have been created with Clarinet v1 and do not ha
 
 ---
 
-### Prerequisites
-
-The SDK requires Node.js >= 18.0 and NPM to be installed. [Volta](https://volta.sh/) is a great tool to install and manage JS tooling.
-
----
-
-### Executing the migration script
+## Executing the migration script
 
 Inside your Clarinet v1 project, run the following command to initialise NPM and Vitest. It will also create a sample test file.
 
-```bash title="Terminal"
+```console title="Terminal"
 npx @hirosystems/clarinet-sdk@latest
 ```
 
@@ -48,7 +42,7 @@ You can also have a look at `tests/contract.test.ts`. It's a sample file showing
 It can safely be deleted.
 </Callout>
 
-### Unit test for <code className='text-lg'>counter</code> example
+## Unit test for <code className='text-lg'>counter</code> example
 
 ```ts title="tests/counter.test.ts"
 import { Cl } from '@stacks/transactions';
@@ -88,7 +82,7 @@ describe('test `increment` public function', () => {
 
 To run the test, go back to your console and run the `test` command using your preferred package manager. It should display a report telling you that tests succeeded.
 
-```bash title="Terminal"
+```console title="Terminal"
 npm test
 ```
 
@@ -102,3 +96,25 @@ The second test checks that an `print_event` is emitted when the `increment` fun
 <Callout>
 You can use `Cl.prettyPrint(value: ClarityValue)` to format any Clarity value into readable Clarity code. It can be useful to debug function results or event values.
 </Callout>
+
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/clarinet-js-sdk/references/simnet"
+    title="API Reference"
+    description="Dive deeper into the properties and methods available in the Clarinet JS SDK."
+  />
+  <Card
+    href="/stacks/clarinet-js-sdk/references/custom-matchers"
+    title="Custom matchers"
+    description="Learn about the custom matchers that are available in the Clarinet JS SDK."
+  />
+  <Card
+    href="/stacks/clarinet-js-sdk/guides/migrate-to-the-clarinet-sdk"
+    title="Migrating your tests to Clarinet SDK"
+    description="Learn how to migrate your existing Clarinet projects to the Clarinet JS SDK"
+  />
+</Cards>

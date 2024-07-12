@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { getHighlighter } from "shiki";
 
 const highlighter = await getHighlighter({
-  langs: ["bash", "ts", "tsx"],
+  langs: ["bash", "console", "ts", "tsx"],
   themes: [
     "github-light",
     "github-dark",
@@ -16,7 +16,7 @@ const highlighter = await getHighlighter({
 export type CodeBlockProps = HTMLAttributes<HTMLPreElement> & {
   code: string;
   wrapper?: Base.CodeBlockProps;
-  lang: "bash" | "ts" | "tsx";
+  lang: "bash" | "console" | "ts" | "tsx";
 };
 
 export function CodeBlock({

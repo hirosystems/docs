@@ -5,7 +5,7 @@ description: Learn how to scan activity and view data in your terminal.
 
 Ordhook is a tool that helps you find ordinal activity on the Bitcoin chain. Think of it like a detective that can find and track this activity for you. Once it finds any activity, that data can be used to help build your own database. This guide will show you how to use Ordhook to scan this activity on the Bitcoin chain in your terminal.
 
-### Explore Ordinal activity
+## Explore Ordinal activity
 
 You can use the following command to scan a range of blocks on mainnet or testnet:
 
@@ -13,8 +13,9 @@ You can use the following command to scan a range of blocks on mainnet or testne
 
 The above command generates a `hord.sqlite.gz` file in your directory and displays inscriptions and transfers activities occurring in the range of the specified blocks.
 
-> **_NOTE_**
-> By default, Ordhook creates a folder named `ordhook` in your current directory and stores the `hord.sqlite` file there. This file is used to pull in the latest ordinal data and scan against it based on the block numbers you provide.
+<Callout>
+By default, Ordhook creates a folder named `ordhook` in your current directory and stores the `hord.sqlite` file there. This file is used to pull in the latest ordinal data and scan against it based on the block numbers you provide.
+</Callout>
 
 The output of the above command looks like this:
 
@@ -35,3 +36,20 @@ Inscription 6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0 r
 	→ Transferred in transaction 0xbc4c30829a9564c0d58e6287195622b53ced54a25711d1b86be7cd3a70ef61ed (block #785396)
 Number of transfers: 2
 ```
+
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/ordinals/ordhook/guides/ordhook-as-a-service"
+    title="Run Ordhook as a service"
+    description="Learn how to run Ordhook as a service using Bitcoind."
+  />
+  <Card
+    href="/ordinals/explorer"
+    title="Ordinals Explorer"
+    description="Explore the Ordinals Explorer to view inscriptions and transfers."
+  />
+</Cards>

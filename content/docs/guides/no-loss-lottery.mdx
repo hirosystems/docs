@@ -24,7 +24,7 @@ This example uses the CityCoins protocol for the stacking yield mechanism, but l
 
 ---
 
-### Define constants and data variables
+## Define constants and data variables
 
 First, define some constants and data variables to manage the state of your contract. Constants are used for fixed values, and data variables store the state that can change during the contract execution.
 
@@ -41,7 +41,7 @@ The `OWNER` constant defines the contract owner with administrative privileges, 
 
 Key data variables include `lotteryPool` for tracking stacked assets, `totalYield` for accumulated earnings, and `ticketCounter` for managing issued tickets.
 
-### Create and manage participants and tickets
+## Create and manage participants and tickets
 
 Next, define an NFT to represent a ticket and a map to store participant information.
 
@@ -64,7 +64,7 @@ The `Participants` map links participants to their ticket details, while the `Ti
 
 The `LotteryTicket` defines an NFT for the lottery tickets, crucial for managing entries.
 
-### Implement the lottery functionality
+## Implement the lottery functionality
 
 Now, it's time to implement the core function of the contract, where participants can enter the lottery by depositing their assets.
 
@@ -103,7 +103,7 @@ When a participant calls this function, the following steps occur:
 
 This streamlined process ensures that each participant's entry is properly recorded and their assets are securely managed within the lottery system.
 
-### Handling the selection of winners
+## Handling the selection of winners
 
 Now, implement the function to select a winner randomly from the participants.
 
@@ -137,7 +137,7 @@ When this function is called, the following steps occur:
 
 This process ensures that the winner is selected fairly and their status is accurately updated in the system.
 
-### Claim and distribute rewards
+## Claim and distribute rewards
 
 Lastly, implement the function to claim and distribute rewards to the winners.
 
@@ -175,7 +175,7 @@ When the `distribute-rewards` function is called, it performs the following step
 
 This process ensures that participants can claim their rewards and that winners are selected and rewarded fairly.
 
-### Testing the contract
+## Testing the contract
 
 To test the contracts, use the following steps inside of `clarinet console`:
 
@@ -196,3 +196,19 @@ To bootstrap the CityCoins contracts, follow these steps:
 (contract-call? 'SP8A9HZ3PKST0S42VM9523Z9NV42SZ026V4K39WH.ccd002-treasury-mia-stacking set-allowed 'SP1H1733V5MZ3SZ9XRW9FKYGEZT0JDGEB8Y634C7R.miamicoin-token-v2 true)
 (contract-call? 'SP8A9HZ3PKST0S42VM9523Z9NV42SZ026V4K39WH.ccd002-treasury-nyc-stacking set-allowed 'SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11.newyorkcitycoin-token-v2 true)
 ```
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/clarinet/guides/create-a-project"
+    title="Create a new project"
+    description="Learn how to create a new Clarinet project."
+  />
+  <Card
+    href="/stacks/clarinet/guides/deploy-a-contract"
+    title="Deploy a contract"
+    description="Learn how to deploy a contract to a Clarinet network."
+  />
+</Cards>

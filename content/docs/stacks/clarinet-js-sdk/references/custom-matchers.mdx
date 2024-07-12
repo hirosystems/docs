@@ -13,9 +13,9 @@ import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
-### Installation
+## Installation
 
-```bash
+```console
 npx @hirosystems/clarinet-sdk
 ```
 
@@ -29,7 +29,7 @@ npx @hirosystems/clarinet-sdk
 
 Check that a value has the right Clarity type, without checking its value.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expectedType"} type={"ClarityType"}>
 
@@ -96,7 +96,7 @@ The Clarity type that the expected value should have.
 
 Check that a response is `(ok <ok-type>)` and has the expected value. Any Clarity value can be passed.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"ClarityValue"}>
 
@@ -163,7 +163,7 @@ The `ClarityValue` that the expected value should have.
 
 Check that a response is `(err <error-type>)` and has the expected value. Any Clarity value can be passed.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"ClarityValue"}>
 
@@ -238,7 +238,7 @@ The `ClarityValue` that the expected value should have.
 
 Check that a response is `(some <value>)` and has the expected value. Any Clarity value can be passed.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"ClarityValue"}>
 
@@ -363,7 +363,7 @@ Check that a response is `(none)`.
 
 Asserts the value of Clarity boolean (`true` or `false`).
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"boolean"}>
 
@@ -429,7 +429,7 @@ The `boolean` that the expected value should have.
 
 Asserts the value of a Clarity integer.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"boolean"}>
 
@@ -496,7 +496,7 @@ The `integer` that the expected value should have.
 
 Asserts the value of a Clarity unsigned integer.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"boolean"}>
 
@@ -563,7 +563,7 @@ The `unsigned integer` that the expected value should have.
 
 Asserts the value of a Clarity string-ascii.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"string"}>
 
@@ -625,7 +625,7 @@ The `string` that the expected value should have.
 
 Asserts the value of a Clarity string-utf8.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"string"}>
 
@@ -689,7 +689,7 @@ Asserts the value of a Clarity principal.
 
 The principal can be a standard or a contract principal.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"string"}>
 
@@ -764,7 +764,7 @@ For building a buffer, `@stacks/transactions` provides some helper functions:
 - `bufferFromUtf8`
 - `bufferFromHex`
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"Uint8Array"}>
 
@@ -912,7 +912,7 @@ The `Uint8Array` buffer that the expected value should have.
 
 Asserts the value of a Clarity list containing an array of Clarity values.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"ClarityValue[]"}>
 
@@ -986,7 +986,7 @@ The `Uint8Array` buffer that the expected value should have.
 
 Asserts the value of a Clarity tuple.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"expected"} type={"object"}>
 

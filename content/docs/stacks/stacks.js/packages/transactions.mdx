@@ -15,7 +15,7 @@ import { InlineCode } from '@/components/inline-code';
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
-### Installation
+## Installation
 
 ```package-install
 @stacks/transactions
@@ -33,7 +33,7 @@ Configuration data for the current app.
 
 On browser platforms, creating an instance of this class without any arguments will use `window.location.origin` as the app domain. On non-browser platforms, you need to specify an app domain as the second argument.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"scopes"} type={"string[]"}>
 
@@ -200,7 +200,7 @@ The URL of a web-based authenticator to use in the event the user doesn't have S
 
 Represents an instance of a signed in user for a particular app.
 
-### Functions
+## Functions
 
 <Property required={false} deprecated={false} name={"isSignInPending"} type={"function"}>
 
@@ -343,7 +343,7 @@ Decrypts user data for secure storage.
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"transitKey"} type={"string"}>
 
@@ -461,7 +461,7 @@ Additional permissions the app is requesting
 
 Look up a user's profile information by their BNS username.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"username"} type={"string"}>
 
@@ -574,7 +574,7 @@ This library supports the creation of the following Stacks transaction types:
 2. Smart contract deploy
 3. Smart contract function call
 
-### Key Generation
+## Key Generation
 
 ```typescript
 import { createStacksPrivateKey, makeRandomPrivKey, getPublicKey } from '@stacks/transactions';
@@ -589,7 +589,7 @@ const key = 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01'
 const privateKey = createStacksPrivateKey(key);
 ```
 
-### STX Token Transfer Transaction
+## STX Token Transfer Transaction
 
 ```typescript
 import { makeSTXTokenTransfer, broadcastTransaction, AnchorMode } from '@stacks/transactions';
@@ -616,7 +616,7 @@ const broadcastResponse = await broadcastTransaction(transaction);
 const txId = broadcastResponse.txid;
 ```
 
-### Smart Contract Deploy Transaction
+## Smart Contract Deploy Transaction
 
 ```typescript
 import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
@@ -640,7 +640,7 @@ const broadcastResponse = await broadcastTransaction(transaction, network);
 const txId = broadcastResponse.txid;
 ```
 
-### Smart Contract Function Call
+## Smart Contract Function Call
 
 ```typescript
 import {
@@ -693,7 +693,7 @@ const abi: ClarityAbi = JSON.parse(readFileSync('abi.json').toString());
 // For sample abi json see: stacks.js/packages/transactions/tests/abi/test-abi.json
 ```
 
-### Sponsoring Transactions
+## Sponsoring Transactions
 
 To generate a sponsored transaction, first create and sign the transaction as the origin. The `sponsored` property in the options object must be set to true.
 
@@ -749,7 +749,7 @@ const broadcastResponse = await broadcastTransaction(sponsoredTx, network);
 const txId = broadcastResponse.txid;
 ```
 
-### Supporting multi-signature transactions
+## Supporting multi-signature transactions
 
 To generate a multi-sig transaction, first create an unsigned transaction.
 The `numSignatures` and `publicKeys` properties in the options object must be set:
@@ -823,7 +823,7 @@ signer.appendOrigin(pubKeys[2]);
 const serializedSignedTx = deserializedTx.serialize();
 ```
 
-### Calling Read-only Contract Functions
+## Calling Read-only Contract Functions
 
 Read-only contract functions can be called without generating or broadcasting a transaction. Instead it works via a direct API call to a Stacks node.
 
@@ -850,7 +850,7 @@ const options = {
 const result = await callReadOnlyFunction(options);
 ```
 
-### Constructing Clarity Values
+## Constructing Clarity Values
 
 Building transactions that call functions in deployed clarity contracts requires you to construct valid Clarity Values to pass to the function as arguments. The [Clarity type system](https://github.com/stacksgov/sips/blob/master/sip/sip-002-smart-contract-language.md#clarity-type-system) contains the following types:
 
@@ -936,7 +936,7 @@ If you develop in Typescript, the type checker can help prevent you from creatin
 const l = listCV<BooleanCV>([trueCV(), intCV(1)]);
 ```
 
-### Post Conditions
+## Post Conditions
 
 Three types of post conditions can be added to transactions:
 
@@ -946,7 +946,7 @@ Three types of post conditions can be added to transactions:
 
 For details see: https://github.com/stacksgov/sips/blob/main/sips/sip-005/sip-005-blocks-and-transactions.md#transaction-post-conditions
 
-### STX post condition
+## STX post condition
 
 ```typescript
 import {
@@ -978,7 +978,7 @@ const contractSTXPostCondition = makeContractSTXPostCondition(
 );
 ```
 
-### Fungible token post condition
+## Fungible token post condition
 
 ```typescript
 import {
@@ -1020,7 +1020,7 @@ const contractFungiblePostCondition = makeContractFungiblePostCondition(
 );
 ```
 
-### Non-fungible token post condition
+## Non-fungible token post condition
 
 > **Warning**
 > The Stacks blockchain's post-condition processor can NOT check ownership.
@@ -1066,7 +1066,7 @@ const contractNonFungiblePostCondition = makeContractNonFungiblePostCondition(
 );
 ```
 
-### Conversion of Clarity Values to JSON
+## Conversion of Clarity Values to JSON
 
 Clarity Values represent values of Clarity contracts. If a JSON format is required the helper function `cvToJSON` can be used.
 

@@ -6,131 +6,104 @@ description: Learn how to scan the Stacks blockchain for STX transactions.
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
 import { SmallCard } from '@/components/card';
 
 In this quickstart guide, you will set up `Chainhook` to generate and scan predicates on the Stacks blockchain. You will learn how to generate predicates and run basic commands using the CLI to scan and inspect blockchain events.
 
 Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as-a-service) for a more advanced use case.
 
----
-
-### Prerequisites
-
-Before starting, ensure you have `Chainhook` installed. If you haven't already, check out the [installation](/stacks/chainhook/installation) guide.
-
----
-
-<div className='steps space-y-10'>
+<Steps>
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Generate a <code className='text-lg'>predicate</code> file</p>
-        <div className='flex flex-col space-y-0'>
-          <p>To generate a predicate file, use the `predicates new` command. This command generates a template that you can use to help set up your own predicate.</p>
-        </div>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        chainhook predicates new stx-transfer.json --stacks 
-        ```
-      </div>
+    ## Generate a predicate file
+  
+    To generate a predicate file, use the `predicates new` command. This command generates a template that you can use to help set up your own predicate.
 
-      <Callout>
-        The `--stacks` flag is required and allows you to specify the network to scan. Other options include `--bitcoin`.
-      </Callout>
-    </div>
+    ```console title="Terminal"
+    chainhook predicates new stx-transfer.json --stacks 
+    ```
+
+    <Callout>
+      The `--stacks` flag is required and allows you to specify the network to scan. Other options include `--bitcoin`.
+    </Callout>
   </Step>
-
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Track the latest <code className='text-lg'>stx_event</code> for a given address</p>
-        <div className='flex flex-col space-y-0'>
-          <p>The generated file contains helpful boilerplate configuration, but you still need to make some edits to tell it to track specific Stacks-related transactions.</p>
-          <p>To do this, update your `if_this` construct in your `stx-transfer.json` file.</p>
-        </div>
-      </div>
-      <div className="w-full">
-        ```json title="stx-transfer.json"
-        // [!code word:stx_event]
-        {
-          "if_this": {
-            "scope": "stx_event",
-            "actions": ["transfer"]
-          }
-        }
-        ```
-      </div>
+    ## Track the latest stx_event for a given address
+  
+    The generated file contains helpful boilerplate configuration, but you still need to make some edits to tell it to track specific Stacks-related transactions.
 
-      <Accordions>
-        <Accordion title="Full code example">
-          ```json
-            {
-              "chain": "stacks",
-              "uuid": "87ac9bff-1052-4d02-9c79-3768a6f08a09",
-              "name": "STX Transfer",
-              "version": 1,
-              "networks": {
-                "mainnet": {
-                  "start_block": 154670,
-                  "if_this": {
-                    "scope": "stx_event",
-                    "contract_identifier": "SPM113AY78VCMJJ0SDFJ4XJXFHHQ6R9KB3710X7D",
-                    "actions": ["transfer"]
-                  },
-                  "then_that": {
-                    "file_append": {
-                      "path": "stx-transfers.txt"
-                    }
+    To do this, update your `if_this` construct in your `stx-transfer.json` file.
+
+    ```json title="stx-transfer.json"
+    // [!code word:stx_event]
+    {
+      "if_this": {
+        "scope": "stx_event",
+        "actions": ["transfer"]
+      }
+    }
+    ```
+
+    <Accordions>
+      <Accordion title="Full code example">
+        ```json
+          {
+            "chain": "stacks",
+            "uuid": "87ac9bff-1052-4d02-9c79-3768a6f08a09",
+            "name": "STX Transfer",
+            "version": 1,
+            "networks": {
+              "mainnet": {
+                "start_block": 154670,
+                "if_this": {
+                  "scope": "stx_event",
+                  "contract_identifier": "SPM113AY78VCMJJ0SDFJ4XJXFHHQ6R9KB3710X7D",
+                  "actions": ["transfer"]
+                },
+                "then_that": {
+                  "file_append": {
+                    "path": "stx-transfers.txt"
                   }
                 }
               }
             }
-            ```
-        </Accordion>
-      </Accordions>
-    
-      <Callout>
-        Other available `actions` include `mint`, `burn`, and `lock`. For more information on these actions, check out the [predicates](/stacks/chainhook/concepts/stacks-predicates) section.
-      </Callout>
-    </div>
+          }
+          ```
+      </Accordion>
+    </Accordions>
+  
+    <Callout>
+      Other available `actions` include `mint`, `burn`, and `lock`. For more information on these actions, check out the [predicates](/stacks/chainhook/concepts/stacks-predicates) section.
+    </Callout>
   </Step>
-
   <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Scanning for events</p>
-        <p>With your updated predicate file, you can now use the `predicate scan` command to scan for `stx_event` transactions.</p>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        chainhook predicates scan /path/to/stx-transfer.json --mainnet
-        ```
-      </div>
+    ## Scanning for events
+  
+    With your updated predicate file, you can now use the `predicate scan` command to scan for `stx_event` transactions.
 
-      <Callout>
-        When running `scan` for the first time, a chainstate archive will be downloaded. The subsequent scans will use the cached chainstate if already present, speeding up iterations and the overall feedback loop. For more information on the Hiro Archive, click [here](/stacks/archive).
-      </Callout>
-    </div>
+    ```console title="Terminal"
+    chainhook predicates scan /path/to/stx-transfer.json --mainnet
+    ```
+
+    <Callout>
+      When running `scan` for the first time, a chainstate archive will be downloaded. The subsequent scans will use the cached chainstate if already present, speeding up iterations and the overall feedback loop. For more information on the Hiro Archive, click [here](/stacks/archive).
+    </Callout>
   </Step>
-</div>
+</Steps>
 
 ---
 
-### Next steps
+## Next steps
 
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/ordinals/ordhook/guides/ordhook-as-a-service"
-    title="Run Ordhook as a service"
-    description="Learn how to run Ordhook as a service using Bitcoind."
+<Cards>
+  <Card
+    href="/stacks/chainhook/guides/chainhook-as-a-service"
+    title="Run Chainhook as a service"
+    description="Learn how to run Chainhook as a service."
   />
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/ordinals/explorer"
-    title="Ordinals Explorer"
-    description="Leverage the Ordinals Explorer to view inscriptions and transfers."
+  <Card
+    href="/guides/sync-a-stacks-node"
+    title="Sync a Stacks node"
+    description="Learn how to sync a Stacks node for running a local devnet."
   />
 </Cards>

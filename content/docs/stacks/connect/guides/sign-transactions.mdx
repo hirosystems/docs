@@ -21,18 +21,15 @@ The process of broadcasting transactions is fundamental for interacting with blo
 
 In this guide, you will learn how to:
 
-1. Install the necessary packages for building and broadcasting transactions.
-2. Build different types of transactions.
-3. Sign and broadcast those transactions to the Stacks blockchain.
-4. Process and handle the results.
-
-The examples in this guide are designed to be minimalistic, allowing you to easily adapt and customize these examples to fit your application's specific needs.
+1. [Install the necessary packages for building and broadcasting transactions](#setup-and-installation).
+2. [Create and broadcast transactions](#create-a-transaction).
+3. [Process and handle the results](#handle-the-results-of-the-signed-transaction).
 
 {/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
 
 ---
 
-### Setup and installation
+## Setup and installation
 
 Install the required packages to start building and broadcasting transactions.
 
@@ -44,7 +41,7 @@ Install the required packages to start building and broadcasting transactions.
 @stacks/network @stacks/transactions @stacks/connect
 ```
 
-### Initiate a session
+## Initiate a UserSession
 
 Users must authenticate to an app before prompting them to sign and broadcast transactions to the Stacks blockchain with an authenticator such as the [Leather](https://leather.io/install-desktop) wallet.
 
@@ -57,7 +54,7 @@ const userSession = new UserSession({ appConfig });
 
 See the [authentication guide](/stacks/connect/guides/authenticate-users) for more information and a full example.
 
-### Create a transaction
+## Create a transaction
 
 There are three types of transactions: **STX transfers**, **contract deployments**, and **contract executions**.
 
@@ -180,7 +177,7 @@ There are three types of transactions: **STX transfers**, **contract deployments
   </TabsContent>
 </Tabs>
 
-### Handle the results of the signed transaction
+## Handle the results of the signed transaction
 
 Each transaction signing method from `@stacks/connect` allows you to specify an `onFinish` callback. This callback will be triggered after the user has successfully broadcasted their transaction. The transaction will be broadcasted, but it will be pending until it has been mined on the Stacks blockchain.
 
@@ -205,26 +202,44 @@ const onFinish = data => {
 };
 ```
 
-### Specifying a network for a transaction
+<Callout>
+All of the methods included on this page accept a `network` option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package.
+</Callout>
 
-All of the methods included on this page accept a network option. By default, Connect uses a testnet network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package.
+<Accordions>
+<Accordion title="Custom network example">
+  ```ts twoslash
+  // @noErrors
+  // [!code word:mainnet]
+  import { openContractCall } from '@stacks/connect';
+  import { StacksMainnet } from '@stacks/network';
+
+  const mainnet = new StacksMainnet();
+
+  await openContractCall({
+  network: mainnet,
+  contractAddress,
+  contractName,
+  functionName,
+  functionArgs,
+  });
+  ```
+</Accordion>
+</Accordions>
 
 ---
 
-### Next steps
+## Next steps
 
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+<Cards>
+  <Card
     href="/stacks/connect/guides/sign-messages"
     title="Sign messages"
     description="Learn how to sign messages using Stacks.js."
   />
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/stacks.js/guides/post-conditions"
     title="Deep dive into post-conditions"
     description="Learn how to use post-conditions to secure your smart contracts."
   />
 </Cards>
-

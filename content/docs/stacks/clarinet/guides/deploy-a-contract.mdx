@@ -15,7 +15,7 @@ import {
 
 The first step to deploying your contracts is to generate a deployment plan.
 
- ```bash title="Terminal"
+ ```console title="Terminal"
 clarinet deployment generate --testnet
 ```
 
@@ -25,7 +25,7 @@ These are `yaml` files for creating reproducible deployment steps that publish a
 
 Once you've reviewed your deployment plan at `deployments/<default.<network>-plan.yaml`, you can use the `apply` command to handle the deployments of your contracts.
 
-```bash title="Terminal"
+```console title="Terminal"
 clarinet deployment apply --testnet 
 ```
 

@@ -1,5 +1,6 @@
 ---
 title: Networks
+description: Learn how to create a network instance.
 ---
 
 Typically, we speak of `mainnet` and `testnet` as the networks of Stacks. Most wallets will be configured to `mainnet` by default—this is the production environment, the actual blockchain that holds real STX tokens.
@@ -11,6 +12,8 @@ There is even `StacksDevnet` and `StacksMocknet` for working in a local developm
 Stacks.js functions can be configured to use whichever network you want.
 
 You can learn more about devnet [here](/stacks/clarinet/guides/run-a-local-devnet).
+
+## Create a network instance
 
 ```ts twoslash
 import { StacksMainnet, StacksTestnet } from '@stacks/network';

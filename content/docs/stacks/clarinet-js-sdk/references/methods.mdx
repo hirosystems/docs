@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
-### Installation
+## Installation
 
 ```package-install
 @hirosystems/clarinet-sdk @stacks/transactions
@@ -67,7 +67,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getAccounts(): Map<string, string>
         ```
       </Accordion>
@@ -88,7 +88,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getAccounts(): Map<string, string>
         ```
       </Accordion>
@@ -154,7 +154,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -177,7 +177,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -215,7 +215,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -253,7 +253,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -275,7 +275,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
 Get the value of a `data-var` defined in a contract.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
@@ -328,7 +328,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getDataVar(contract: string, dataVar: string): ClarityValue
         ```
       </Accordion>
@@ -362,7 +362,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getDataVar(contract: string, dataVar: string): ClarityValue
         ```
       </Accordion>
@@ -382,7 +382,7 @@ The name of the `data-var` for the contract.
 
 Get the value of a map entry by its key. Note that this method will always return an optional value `some` or `none`, just like Clarity `map-get?`.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
@@ -450,7 +450,7 @@ The key to access the value in the map.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getMapEntry(
           contract: string,
           mapName: string,
@@ -496,7 +496,7 @@ The key to access the value in the map.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```bash
+        ```console
         getMapEntry(
           contract: string,
           mapName: string,
@@ -523,7 +523,7 @@ Call read-only functions exposed by a contract.
 
 This method returns an object with the result of the function call as a `ClarityValue`. It takes function arguments in the form of Clarity values, which are available in the package [`@stacks/transactions`](/stacks/stacks.js/packages/transactions).
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
@@ -856,7 +856,7 @@ This method returns an object with the result of the function call as a `Clarity
 
 This method will simulate a block being mined and increase the block height by one.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The contract identifier of the contract.
@@ -1126,7 +1126,7 @@ Transfer STX from one address to another. The amount transferred is in `uSTX`.
 
 This method will simulate a block being mined and increase the block height by one.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"amount"} type={"number | bigint"}>
 The amount of `uSTX` to transfer.
@@ -1327,7 +1327,7 @@ Deploy a contract to simnet.
 
 This method will simulate a block being mined and increase the block height by one.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"name"} type={"string"}>
 The name of the contract to be deployed.
@@ -1526,7 +1526,7 @@ The `tx` helper has three methods:
 
 These methods have the same interface as simnet methods but instead of performing a transaction, they will build a transaction object that can be passed to the `mineBlock` function.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"txs"} type={"Tx[]"}>
 An array of transactions to be included in the block.
@@ -1694,7 +1694,7 @@ Mine multiple empty blocks to reach a certain block height.
 
 Returns the new block height.
 
-### Parameters
+## Parameters
 
 <Property required={false} deprecated={false} name={"count"} type={"number"}>
 The number of empty blocks to mine. This parameter is optional.
@@ -1774,7 +1774,7 @@ The number of empty blocks to mine. This parameter is optional.
 
 Execute arbitrary Clarity code directly, which allows you to test and interact with smart contract functions without deploying them.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"snippet"} type={"string"}>
 The Clarity code snippet to be executed.
@@ -2022,7 +2022,7 @@ These interfaces contain information such as the available `functions`, `data-va
 
 Get the source code of a contract as a string.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract"} type={"string"}>
 The identifier of the contract for which the source code is requested.
@@ -2063,7 +2063,7 @@ The identifier of the contract for which the source code is requested.
         ```
       </Accordion>
       <Accordion title="Response">
-        ```bash
+        ```console
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -2099,7 +2099,7 @@ Get the full AST (Abstract Syntax Tree) of a Clarity contract.
 
 This method throws an error if it fails to get the AST or to encode it.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contractId"} type={"string"}>
 The identifier of the contract for which the AST (Abstract Syntax Tree) is requested.

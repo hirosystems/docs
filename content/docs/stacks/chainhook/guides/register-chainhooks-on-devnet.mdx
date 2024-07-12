@@ -11,7 +11,7 @@ Follow these steps to register your Chainhooks on devnet using Clarinet:
   This feature requires Clarinet version 2.1.0 or higher. To upgrade or install, refer to our [installation](/stacks/clarinet/installation) page for Clarinet.
 </Callout>
 
-### Create your Chainhook predicates
+## Create your Chainhook predicates
 
 First, within your Clarinet project, you'll need to create your Chainhook predicate files.
 
@@ -38,25 +38,25 @@ These should be situated in the root of your project directory. The files can ei
 
 For examples on how to define your predicates, refer to the [scopes](/stacks/chainhook/references/scopes) reference page.
 
-### Start devnet
+## Start devnet
 
 To start devnet, run the `clarinet devnet start` command from the root of your project directory. Running this command will begin a local Chainhook service in the background that automatically registers your Chainhook files within the project directory against the network.
 
-### Confirm registration
+## Confirm registration
 
 Once your devnet starts, the Chainhook service initiates the registration process. You'll know that the registration of your Chainhooks was successful by checking the confirmation message in your terminal:
 
-```bash
+```console
 INFO Feb  5 15:20:07.233382 2 chainhooks registered
 ```
 
 If you do not see this message at the top of your `clarinet devnet start` logs, verify that you are using `clarinet` version 2.1.0 or higher.
 
-### Working with chainhooks
+## Working with chainhooks
 
 With these steps completed, your chainhooks are ready to trigger whenever local contract actions occur. You can monitor your network activity locally, through the `clarinet devnet start` terminal, to confirm chainhooks execution as you further develop and test your smart contracts. When an action occurs, you should see something like this:
 
-```bash
+```console
 INFO Feb  5 15:21:07.233382 1 hooks triggered
 ```
 
