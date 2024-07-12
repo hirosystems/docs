@@ -77,6 +77,19 @@ body {
 
 /* Override CSS */
 
+li a {
+  text-decoration: none !important;
+}
+
+li a:hover {
+  text-decoration: underline !important;
+}
+
+/* FIXME: This removes the white space margin between frontmatter title and description and start of body content */
+.container article p.mb-8 {
+  margin-bottom: 0rem;
+}
+
 div[cmdk-list-sizer] {
   font-family: var(--font-inter), sans-serif;
 }
@@ -94,7 +107,7 @@ h1, h2, h3, h4, h5, h6, code, button, .step {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
-h a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
@@ -102,6 +115,11 @@ h a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 /* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
 a, p, li, table, input, div.prose .w-0, div.prose .flex-1 span {
   font-family: var(--font-inter), sans-serif;
+}
+
+/* FIXME: This changes font weight on active sidebar tab */
+a.bg-primary\/10 {
+  font-weight: 600;
 }
 
 p {
@@ -178,16 +196,6 @@ figure.not-prose {
   border-color: hsl(var(--border) / 1) !important;
   border-radius: 5px !important;
   margin: 0 !important;
-}
-
-
-/* For the <APIExample /> component to provide more spacing between each child sections. */
-.api-example > *:not(:last-child) {
-  margin-bottom: 1.5rem;
-}
-
-.api-example figure.not-prose {
-  margin-top: 0;
 }
 
 .api h2 {
