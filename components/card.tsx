@@ -33,16 +33,14 @@ export function Card({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg p-px border bg-card text-md text-card-foreground shadow-md transition-colors relative overflow-hidden hover:bg-accent/80",
-        "hover:before:absolute hover:before:inset-0 hover:before:content-['']",
-        "hover:before:rounded-[inherit] hover:before:bg-gradient-to-br hover:before:from-transparent hover:before:via-transparent hover:before:to-orange-500",
-        "hover:before:transition-opacity hover:before:duration-700 hover:before:opacity-0 hover:hover:before:opacity-100",
+        "not-prose block rounded-lg border p-px bg-card text-md text-card-foreground transition-colors relative overflow-hidden",
+        "hover:border hover:bg-gradient-to-r hover:from-border hover:to-[#59564F] dark:hover:to-[#c0bdb4]",
         props.className
       )}
     >
-      <div className="relative z-10 bg-card p-4 rounded-md hover:bg-accent">
+      <div className="group relative z-10 bg-card p-4 rounded-md hover:bg-accent">
         {icon ? (
-          <div className="mb-2 w-fit rounded-md border bg-muted p-2 text-muted-foreground [&_svg]:size-4">
+          <div className="mb-2 w-fit rounded-md border group-hover:bg-border p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
           </div>
         ) : null}
@@ -71,7 +69,7 @@ export function SecondaryCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground shadow-md transition-colors hover:bg-accent/80",
+        "not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80",
         props.className
       )}
     >
@@ -114,8 +112,8 @@ export function SmallCard({
         props.className
       )}
     >
-      <div className="flex space-x-4 hover:bg-accent/80 p-4 rounded-lg">
-        <div className="h-fit w-fit rounded-md border bg-muted p-2 text-muted-foreground [&_svg]:size-4">
+      <div className="group flex space-x-4 bg-background px-3 py-4 rounded-lg hover:bg-accent">
+        <div className="h-fit w-fit rounded-md border bg-accent group-hover:bg-background p-2 text-muted-foreground [&_svg]:size-4">
           {icon}
         </div>
         <div className="flex flex-col w-full">
