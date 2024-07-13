@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { utils } from "@/utils/source";
 import { create } from "@/components/ui/icon";
+import { DocsLogo } from "@/components/ui/icon";
 import { HiroIcon, HiroSVG } from "../(home)/icons";
 import { Body, NavChildren, SidebarBanner } from "./layout.client";
 
@@ -10,15 +11,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   tree: utils.pageTree,
   nav: {
     transparentMode: "top",
-    title: (
-      <div className="text-md flex gap-3 items-center group">
-        <HiroIcon className="size-11 shrink-0 rounded-md" />
-        <span className="max-lg:hidden text-gray-500">|</span>
-        <span className="max-lg:hidden text-gray-500 group-hover:text-primary">
-          Documentation
-        </span>
-      </div>
-    ),
+    title: <DocsLogo className="size-32" />,
     children: <NavChildren />,
     links: [
       {
@@ -37,10 +30,10 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
     ],
   },
   links: [
-    // {
-    //   text: "Guides",
-    //   url: "/guides",
-    // },
+    {
+      text: "Guides",
+      url: "/guides",
+    },
   ],
   sidebar: {
     defaultOpenLevel: 0,
