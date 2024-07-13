@@ -15,7 +15,7 @@
     --primary-foreground: 355.7 100% 97.3%;
     --secondary: 40 13% 91%;
     --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 40 14.3% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 40 13% 91%;
     --accent-foreground: 240 5.9% 10%;
@@ -28,6 +28,7 @@
     --hiro: 21 100% 67.5%;
     --icon: 17 6.5% 21%;
     --inverted: 0 4% 5%;
+    --code: 0 0% 100%;
   }
 
   .dark {
@@ -41,7 +42,7 @@
     --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
+    --muted: 30 5.7% 7.5%;
     --muted-foreground: 240 5% 64.9%;
     --accent: 12 6.2% 15.9%;
     --accent-foreground: 0 0% 98%;
@@ -54,6 +55,7 @@
     --card-hover: 15 5% 16%;
     --icon: 0 0% 100%;
     --inverted: 0 0% 100%;
+    --code: 0 7.7% 5.1%;
   }
 
   
@@ -162,11 +164,44 @@ p {
   line-height: 1.75;
 }
 
+body > div.guides > div > article > div.prose > figure:nth-child(37) > div > div {
+  background: hsl(var(--code));
+}
+
+/* Reduces the vertical space between code blocks and text in the steps guides */
+figure.not-prose {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+figure.not-prose {
+  background: hsl(var(--background));
+}
+
+figure.not-prose:not(:has(figcaption)) {
+  background: hsl(var(--code));
+}
+
+figure:not(:has(figcaption)) {
+  border: none;
+}
+
+figure pre {
+  background: hsl(var(--code));
+}
+
+figure:has(figcaption) pre {
+  margin: 8.5px;
+  border-radius: 0.5rem;
+}
+
 nav.container {
   gap: 2.25rem;
 }
 
 nav.container > *:nth-last-child(2) {
+  position: relative;
+  top: 2px;
   margin-left: -10px;
   text-decoration: none;
   color: hsl(var(--primary));
@@ -180,6 +215,10 @@ nav.container > *:nth-last-child(2):hover {
 
 nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
   font-family: var(--font-aeonikFono), sans-serif;
+}
+
+div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
+  border-bottom: none;
 }
 
 
@@ -223,10 +262,8 @@ p.first\:mt-0:before {
   border-color: hsl(var(--accent));
 }
 
-/* Reduces the vertical space between code blocks and text in the steps guides */
-figure.not-prose {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+body > div.stacks > div > article > div.prose > div.steps > div:nth-child(2) > figure:nth-child(3) > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
+  background: hsl(var(--background)) !important;
 }
 
 .tab[data-state="active"] > .badge {
@@ -245,6 +282,7 @@ figure.not-prose {
 
 /* Adjust styling for Shiki word highlighting */
 .highlighted-word {
+  background: hsl(var(--background)) !important;
   border-color: hsl(var(--border) / 1) !important;
   border-radius: 5px !important;
   margin: 0 !important;
