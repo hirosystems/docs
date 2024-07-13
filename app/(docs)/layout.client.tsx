@@ -8,14 +8,32 @@ import { cn } from "@/utils/cn";
 import { modes } from "@/utils/modes";
 import { ChevronLeft } from "lucide-react";
 
+type Mode = "stacks" | "ordinals" | null | undefined;
+
 const itemVariants = cva(
   "rounded-md px-2 py-1 transition-colors hover:text-accent-foreground",
   {
     variants: {
       active: {
-        true: "bg-background text-accent-foreground",
+        true: "text-accent-foreground",
+      },
+      mode: {
+        ordinals: "bg-[hsl(var(--hiro))]",
+        stacks: "bg-background",
       },
     },
+    compoundVariants: [
+      {
+        active: true,
+        mode: "ordinals",
+        className: "hsl(var(--hiro)) dark:text-background",
+      },
+      {
+        active: true,
+        mode: "stacks",
+        className: "bg-background",
+      },
+    ],
   }
 );
 
@@ -36,7 +54,12 @@ export function NavChildren(): JSX.Element {
         <Link
           key={m.param}
           href={`/${m.param}`}
-          className={cn(itemVariants({ active: mode === m.param }))}
+          className={cn(
+            itemVariants({
+              active: mode === m.param,
+              mode: mode === m.param ? (m.param as Mode) : undefined,
+            })
+          )}
         >
           <div className="inline-flex items-center gap-2">
             {m.icon && <m.icon className="shrink-0 size-3" />}
