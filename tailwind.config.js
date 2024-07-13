@@ -17,6 +17,8 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
         mono: ['var(--font-geist-mono)'],
+        aeonik: ['var(--font-aeonikFono)'],
+        inter: ['var(--font-inter)'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(circle, var(--tw-gradient-stops))',
