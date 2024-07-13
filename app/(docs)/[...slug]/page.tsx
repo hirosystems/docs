@@ -133,7 +133,7 @@ function Category({ page }: { page: Page }): JSX.Element {
   );
 }
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   metadataBase: new URL(
     `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` || "https://docs.hiro.so"
   ),
@@ -166,24 +166,47 @@ export const metadata: Metadata = {
   },
 };
 
-// export function generateMetadata({ params }: { params: Param }): Metadata {
-//   const page = utils.getPage(params.slug);
+function generateCustomTitle(file: {
+  flattenedPath: string;
+  name: string;
+}): string {
+  const segments = file.flattenedPath.split("/");
+  const isRootLevelSegment = segments.length === 3;
+  let relevantSegments: string[] = [];
 
-//   if (!page) notFound();
+  if (isRootLevelSegment) {
+    relevantSegments = [segments[1]];
+  }
 
-//   const description =
-//     page.data.description ??
-//     "All the developer docs, guides and resources you need to build on Bitcoin layers.";
+  return (
+    relevantSegments[0]?.charAt(0)?.toUpperCase() +
+    relevantSegments[0]?.slice(1)
+  );
+}
 
-//   const imageParams = new URLSearchParams();
-//   imageParams.set("title", page.data.title);
-//   imageParams.set("description", description);
+export function generateMetadata({ params }: { params: Param }): Metadata {
+  const page = utils.getPage(params.slug);
 
-//   return createMetadata({
-//     title: page.data.title,
-//     description,
-//   });
-// }
+  if (!page) notFound();
+
+  const description =
+    page.data.description ??
+    "All the developer docs, guides and resources you need to build on Bitcoin layers.";
+
+  const imageParams = new URLSearchParams();
+  imageParams.set("title", page.data.title);
+  imageParams.set("description", description);
+
+  const customTitle = generateCustomTitle(page.file);
+
+  return createMetadata({
+    ...metadata,
+    title: customTitle.length
+      ? `${customTitle} ${page.data.title}`
+      : page.data.title,
+    description,
+  });
+}
 
 export function generateStaticParams(): Param[] {
   return utils.getPages().map<Param>((page) => ({
