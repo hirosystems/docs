@@ -6,9 +6,24 @@ import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import { z } from "zod";
 import type { InferMetaType, InferPageType } from "fumadocs-core/source";
 import { loader } from "fumadocs-core/source";
-import { icons } from "lucide-react";
+import { icons as lucideIcons } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { map } from "@/.map";
 import { create } from "@/components/ui/icon";
+import { StacksIcon, BitcoinIcon } from "@/components/ui/icon";
+
+const customIcons = {
+  StacksIcon,
+  BitcoinIcon,
+};
+
+const icons = { ...lucideIcons, ...customIcons } as any;
+
+export function icon(iconName: string) {
+  if (iconName in icons) {
+    return create({ icon: icons[iconName as keyof typeof icons] });
+  }
+}
 
 const frontmatterSchema = defaultSchemas.frontmatter.extend({
   preview: z.string().optional() as any,

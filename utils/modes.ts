@@ -1,6 +1,6 @@
 /* eslint-disable import/no-relative-packages -- required */
 import { LayoutIcon, LibraryIcon, type LucideIcon } from "lucide-react";
-import { StacksIcon, OrdinalsIcon } from "@/components/ui/icon";
+import { StacksIcon, OrdinalsIcon, BitcoinIcon } from "@/components/ui/icon";
 
 export interface Mode {
   param: string;
@@ -18,8 +18,8 @@ export const modes: Mode[] = [
   },
   {
     param: "ordinals",
-    name: "Ordinals",
+    name: "Bitcoin",
     type: "tab",
-    icon: OrdinalsIcon,
+    icon: BitcoinIcon,
   },
 ];
