@@ -168,31 +168,39 @@ body > div.guides > div > article > div.prose > figure:nth-child(37) > div > div
   background: hsl(var(--code));
 }
 
+figure.not-prose div[data-radix-scroll-area-viewport] {
+  background: hsl(var(--code));
+  width: auto;
+  margin: 8.5px;
+  border-radius: 0.5rem;
+}
+
 /* Reduces the vertical space between code blocks and text in the steps guides */
 figure.not-prose {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
 
+/* This sets the background of a code block to match the theme's background when providing a filename to the code block */
 figure.not-prose {
   background: hsl(var(--background));
+}
+
+/* This removes the border from the code block when providing a filename */
+figure:not(:has(figcaption)) {
+  border: none;
 }
 
 figure.not-prose:not(:has(figcaption)) {
   background: hsl(var(--code));
 }
 
-figure:not(:has(figcaption)) {
-  border: none;
+figure.not-prose:not(:has(figcaption)) div[data-radix-scroll-area-viewport] {
+  margin: 0;
 }
 
 figure pre {
   background: hsl(var(--code));
-}
-
-figure:has(figcaption) pre {
-  margin: 8.5px;
-  border-radius: 0.5rem;
 }
 
 nav.container {
