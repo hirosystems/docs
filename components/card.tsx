@@ -74,13 +74,13 @@ export function SecondaryCard({
       )}
     >
       {icon ? (
-        <div className="w-full flex justify-between">
-          <div className="mb-2 w-fit rounded-md border bg-muted p-2 text-muted-foreground [&_svg]:size-4">
+        <div className="group w-full flex justify-between">
+          <div className="mb-2 w-fit rounded-md border bg-card p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
           </div>
           <Badge
             variant="outline"
-            className="uppercase rounded-md transition-colors h-fit bg-muted text-icon"
+            className="uppercase rounded-md transition-colors h-fit text-card-foreground bg-accent border border-border shadow-md"
           >
             {tag}
           </Badge>
@@ -112,10 +112,12 @@ export function SmallCard({
         props.className
       )}
     >
-      <div className="group flex space-x-4 bg-background px-3 py-4 rounded-lg hover:bg-accent">
-        <div className="h-fit w-fit rounded-md border bg-accent group-hover:bg-background p-2 text-muted-foreground [&_svg]:size-4">
-          {icon}
-        </div>
+      <div className="group flex space-x-4 px-3 py-4 rounded-lg hover:bg-accent">
+        {icon && (
+          <div className="h-fit w-fit rounded-md border bg-card group-hover:bg-background p-2 text-muted-foreground [&_svg]:size-4">
+            {icon}
+          </div>
+        )}
         <div className="flex flex-col w-full">
           <h3 className="mb-1 font-medium">{title}</h3>
           <p className="text-muted-foreground">{description}</p>
