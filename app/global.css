@@ -29,6 +29,7 @@
     --icon: 17 6.5% 21%;
     --inverted: 0 4% 5%;
     --code: 0 0% 100%;
+    --highlight: 40 13% 91%;
   }
 
   .dark {
@@ -56,6 +57,7 @@
     --icon: 0 0% 100%;
     --inverted: 0 0% 100%;
     --code: 0 7.7% 5.1%;
+    --highlight: 12 6.2% 15.9%;
   }
 
   
@@ -89,6 +91,11 @@ li a:hover {
 
 div.container {
   margin-top: 1rem;
+}
+
+:not(pre) > code {
+  background: hsl(var(--accent)) !important;
+  border-color: hsl(var(--border)) !important;
 }
 
 /* FIXME: This removes the white space margin between frontmatter title and description and start of body content */
@@ -270,13 +277,23 @@ p.first\:mt-0:before {
   border-color: hsl(var(--accent));
 }
 
-body > div.stacks > div > article > div.prose > div.steps > div:nth-child(2) > figure:nth-child(3) > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
+div.not-prose, div.prose-no-margin, div[role="tablist"] {
+  background: hsl(var(--background));
+}
+
+.steps > div:nth-child(2) > figure:nth-child(3) > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
   background: hsl(var(--background)) !important;
 }
 
+div.api-example div.max-xl\:hidden > div:nth-child(1) {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Sets the background and text for an active tab in reference pages */
 .tab[data-state="active"] > .badge {
-  color: #fff;
-  background-color: #262626;
+  color: hsl(var(--background));
+  background-color: hsl(var(--inverted));
 }
 
 .prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
@@ -290,19 +307,10 @@ body > div.stacks > div > article > div.prose > div.steps > div:nth-child(2) > f
 
 /* Adjust styling for Shiki word highlighting */
 .highlighted-word {
-  background: hsl(var(--background)) !important;
-  border-color: hsl(var(--border) / 1) !important;
+  background: hsl(var(--accent)) !important;
+  border-color: hsl(var(--accent)) !important;
   border-radius: 5px !important;
   margin: 0 !important;
-}
-
-.api h2 {
-  margin-bottom: 1rem;
-}
-
-.api h2 > p {
-  color: hsl(var(--foreground) / 1);
-  font-size: 0.95rem !important; /* This size represents Tailwind's text-sm */
 }
 
 .size-10 {
@@ -322,4 +330,8 @@ a[href="/stacks/api/accounts/transactions-with-transfers"],
 a[href="/stacks/api/accounts/transaction-with-transfers"] {
   text-decoration: line-through;
   color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
+}
+
+div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
+  background: hsl(var(--background));
 }
