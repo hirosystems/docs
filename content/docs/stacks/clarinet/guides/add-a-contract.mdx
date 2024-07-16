@@ -7,7 +7,7 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 
 To add a new contract, run the `clarinet contract new` command, along with your contract name, inside your project.
 
- ```console title="Terminal"
+```console title="Terminal"
 clarinet contract new my-contract
 ```
 
@@ -15,11 +15,11 @@ clarinet contract new my-contract
 
 <Files className='pointer-events-none'>
   <Folder name="contracts" defaultOpen>
-    <File name="my-contract.clar" className='bg-muted' />
+    <File name="my-contract.clar" className='bg-[hsl(var(--highlight))]' />
   </Folder>
   <Folder name="settings" />
   <Folder name="tests" defaultOpen>
-    <File name="my-contract.test.ts" className='bg-muted' />
+    <File name="my-contract.test.ts" className='bg-[hsl(var(--highlight))]' />
   </Folder>
   <File name=".gitignore" />
   <File name="Clarinet.toml" />
