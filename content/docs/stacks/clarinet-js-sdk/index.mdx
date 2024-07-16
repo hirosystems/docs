@@ -4,7 +4,7 @@ description: The Clarinet JS SDK is a JavaScript library used to write unit test
 toc: false
 ---
 
-import { ChevronRight, Code, Play, Scale, Star, Store, Terminal } from 'lucide-react';
+import { SecondaryCard } from '@/components/card';
 
 The Clarinet JS SDK allows you to write unit tests for your Clarity smart contracts. You can theoretically use any JavaScript test framework, but the SDK supports Vitest out of the box. This SDK leverages `simnet`, a simulated network that offers a rapid feedback loop for initial testing.
 
@@ -22,20 +22,17 @@ Here is a non-exhaustive list of some of simnet's use-cases:
 ## Guides
 
 <Cards>
-  <Card
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <SecondaryCard
     href="/stacks/clarinet-js-sdk/quickstart"
     title="Simulate a blockchain with Clarinet JS SDK"
     description="Learn how to interact with a simulated network without running a node."
   />
-  <Card
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <SecondaryCard
     href="/stacks/clarinet-js-sdk/guides/migrate-to-the-clarinet-sdk"
     title="Migrate v1 tests to Clarinet JS SDK"
     description="Learn how to migrate your existing tests to the Clarinet JS SDK."
   />
-  <Card
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <SecondaryCard
     href="/stacks/clarinet-js-sdk/references/simnet"
     title="SDK reference"
     description="Dive deeper into the methods, properties, and types available in the Clarinet JS SDK."  />

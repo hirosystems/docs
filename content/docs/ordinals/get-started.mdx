@@ -7,14 +7,12 @@ toc: false
 
 import { SecondaryCard, SmallCard } from '@/components/card';
 import { SectionHeader } from '@/components/layout/section-header';
-import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
-
-## Quickstarts
+import { API, Container, Chainhook, BitcoinIcon } from '@/components/ui/icon';
 
 <Cards>
   <SecondaryCard
     className="group"
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/ordinals/api"
     title="Integrate ordinals data into your app"
     description="Use the Ordinals API to get reliable data for Ordinals and BRC-20 tokens."
@@ -22,7 +20,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
   <SecondaryCard
     className="group"
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Chainhook className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/ordinals/ordhook/quickstart"
     title="Stream custom blockchain events"
     description="Use Ordhook to filter and stream for contract deployments."
@@ -39,7 +37,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
 <Cards>
   <SmallCard
     className="group"
-    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<BitcoinIcon className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/guides/sync-a-bitcoin-node"
     title="Sync a Bitcoin node"
     description="Set up and run a Bitcoin node to use tools like Ordhook."

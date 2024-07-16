@@ -8,7 +8,7 @@ import { Card as MainCard, SmallCard } from '@/components/card';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { SectionHeader } from '@/components/layout/section-header';
 import { MessageCircle, Braces, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet } from 'lucide-react';
-import { Newspaper, QuestionIcon, BugIcon, Pulse } from '@/components/ui/icon';
+import { API, Backend, BugIcon, Clarinet, Cloud, Chainhook, Frontend, Hiro, Js, Newspaper, Pulse, QuestionIcon } from '@/components/ui/icon';
 import heroImage from '@/public/stacks-hero.svg';
 
 <div className='flex flex-col space-y-10'>
@@ -40,7 +40,7 @@ import heroImage from '@/public/stacks-hero.svg';
   />
   <MainCard
     className='group space-y-1'
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/api"
     title="Stacks API Reference"
     description="Explore API endpoints for interacting with the Stacks Blockchain."
@@ -58,7 +58,7 @@ import heroImage from '@/public/stacks-hero.svg';
 <Cards>
   <SmallCard
     className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Cloud className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/platform"
     title="Cloud-Based Development"
     description="Develop, test, and deploy smart contracts straight from your browser."
@@ -79,14 +79,14 @@ import heroImage from '@/public/stacks-hero.svg';
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Wallet className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Frontend className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/stacks.js"
     title="Frontend Web Development"
     description="Interact with smart contracts on the web with the Stacks.js library."
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Backend className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/api"
     title="Backend Development"
     description="Explore our hosted APIs offering a familiar REST interface."
@@ -114,35 +114,35 @@ import heroImage from '@/public/stacks-hero.svg';
 <Cards>
   <SmallCard
     className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Hiro className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/platform"
-    title="Platform"
+    title="Hiro Platform"
     description="A hosted developer experience for creating, testing, and deploying smart contracts."
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Clarinet className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/clarinet"
     title="Clarinet"
     description="Create, test, and deploy smart contracts on the Stacks blockchain."
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/api"
     title="Stacks Blockchain API"
     description="Interact with the Stacks blockchain from your backend via our hosted API."
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Js className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/stacks.js"
     title="Stacks.js"
     description="A collection of JavaScript libraries to build web applications on Stacks."
   />
   <SmallCard
     className='group space-y-3'
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Chainhook className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/chainhook"
     title="Chainhook"
     description="Create customizable, lightweight databases for on-chain events for Bitcoin and Stacks."
@@ -153,7 +153,7 @@ import heroImage from '@/public/stacks-hero.svg';
 
 </div>
 
-<div className="relative mt-24 mb-8 bg-accent rounded-lg p-8 not-prose text-card-foreground transition-colors">
+<div className="footer relative mt-24 mb-8 bg-accent rounded-lg p-8 not-prose text-card-foreground transition-colors">
   <div className="flex flex-col space-y-3">
     <div className="flex items-center space-x-2 w-full *:font-aeonik">
       <QuestionIcon className="w-6 h-6" />

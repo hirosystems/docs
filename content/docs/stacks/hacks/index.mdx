@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Code } from 'lucide-react';
-import { SecondaryCard, SmallCard } from '@/components/card';
+import { SecondaryCard } from '@/components/card';
 
 <Callout title="Inactive" type="warn">
 We are planning to bring back a new season of Hiro Hacks with new guides and prizes in the future. In the meantime, feel free to follow these hacks to learn and sharpen your development skills.
@@ -17,24 +17,18 @@ Each hack includes its own guide and starter templates, and are a great way to l
 
 <Cards>
   <SecondaryCard
-    className="group"
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/hacks/build-a-friend-tech-clone"
     title="Build a Friend.tech clone"
     description="Create a decentralized social network similar to Friend.tech using the Stacks Blockchain."
     tag='Stacks.js'
   />
   <SecondaryCard
-    className="group"
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/hiro-hacks/hacks/build-decentralized-grants-program"
     title="Build a decentralized grants program"
     description="Build a decentralized grants program using the ExecutorDAO protocol."
     tag='Clarinet'
   />
   <SecondaryCard
-    className="group"
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/hiro-hacks/hacks/build-decentralized-blockchain-api"
     title="Build a custom blockchain API"
     description="Build a custom API for a decentralized application using Chainhook."

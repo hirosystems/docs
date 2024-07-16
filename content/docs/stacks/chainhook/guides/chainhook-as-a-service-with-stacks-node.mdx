@@ -42,7 +42,7 @@ endpoint = "localhost:20455"
 retry_count = 255
 events_keys = ["*"]
 ```
-<Callout>
+<Callout title="Note">
 Ensure that the `username`, `password`, and `rpc_port` values in the `Stacks.toml` file match the values in the `bitcoin.conf` file. Also, note the `rpc_bind` port to use in the `Chainhook.toml` configuration in the next section.
 </Callout>
 
@@ -112,7 +112,7 @@ Ensure the following configurations are matched to allow Chainhook to communicat
 |                    | rpc_bind    | stacks_node_rpc_url        |
 |                    | endpoint    | stacks_events_ingestion_port |
 
-<Callout>
+<Callout title="Note">
 The `bitcoind_zmq_url` is optional when running Chainhook as a service using Stacks because Stacks will pull the blocks from Stacks and the Bitcoin chain.
 </Callout>
 
@@ -250,7 +250,7 @@ This command registers the predicate and starts the Chainhook service.
 
 You can also dynamically register new predicates with your Chainhook service.
 
-<Callout type="warn"> This section requires that you have Redis running locally. To install, refer to the [Redis documentation](https://redis.io/docs/getting-started/).</Callout>
+<Callout title="Requirements" type="warn"> This section requires that you have Redis running locally. To install, refer to the [Redis documentation](https://redis.io/docs/getting-started/).</Callout>
 
 First, ensure that the following lines in the `Chainhook.toml` file are uncommented to enable the predicate registration server:
 
@@ -308,7 +308,7 @@ The response should look something like this:
 {"result":"42","status":200}
 ```
 
-<Callout>You can also run the Chainhook service by passing multiple predicates: `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml` </Callout>
+<Callout title="Note">You can also run the Chainhook service by passing multiple predicates: `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml` </Callout>
 
 ---
 
