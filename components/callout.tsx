@@ -1,4 +1,5 @@
 import { AlertOctagon, AlertTriangle, Info, Star } from "lucide-react";
+import { HiroSVG } from "@/components/ui/icon";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
@@ -43,7 +44,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
             ),
             help: (
-              <AlertOctagon className="size-4 stroke-foreground dark:stroke-[#EBE9E6] text-card" />
+              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+                <HiroSVG className="stroke-background text-card" />
+              </div>
             ),
           }[type]}
         <div className="w-0 flex-1">
@@ -67,7 +70,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                       <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
                     ),
                     help: (
-                      <AlertOctagon className="size-4 stroke-foreground dark:stroke-[#EBE9E6] text-card" />
+                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+                        <HiroSVG className="stroke-background text-card" />
+                      </div>
                     ),
                   }[type]}
                 <div
@@ -77,7 +82,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                       tip: "text-foreground dark:text-[#CEEFD0]",
                       info: "text-foreground dark:text-[#D1E8FF]",
                       warn: "text-foreground dark:text-[#FF9966]",
-                      help: "text-foreground dark:text-[#EBE9E6]",
+                      help: "font-bold text-foreground dark:text-[#EBE9E6]",
                     }[type]
                   )}
                 >
@@ -86,7 +91,13 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               </>
             ) : null}
           </div>
-          <div className="callout">{children}</div>
+          <div
+            className={cn("callout", {
+              "text-muted-foreground": type === "help",
+            })}
+          >
+            {children}
+          </div>
         </div>
       </div>
     );
