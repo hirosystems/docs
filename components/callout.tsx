@@ -86,7 +86,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               </>
             ) : null}
           </div>
-          <div className="prose-no-margin">{children}</div>
+          <div className="callout">{children}</div>
         </div>
       </div>
     );

@@ -277,6 +277,11 @@ p.first\:mt-0:before {
   border-color: hsl(var(--accent));
 }
 
+/* Override the .prose-no-margin on callout components */
+.callout p {
+  margin: 0;
+}
+
 div.not-prose, div.prose-no-margin, div[role="tablist"] {
   background: hsl(var(--background));
 }
