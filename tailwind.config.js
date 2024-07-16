@@ -8,6 +8,7 @@ module.exports = {
     './content/**/*.mdx',
     './mdx-components.tsx',
     './node_modules/fumadocs-ui/dist/**/*.js',
+    './node_modules/fumadocs-openapi/dist/**/*.js',
   ],
   presets: [createPreset({
     preset: 'default'
