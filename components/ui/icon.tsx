@@ -1,4 +1,5 @@
 import React from "react";
+import type { SVGProps } from "react";
 import type { LucideIcon } from "lucide-react";
 import { TerminalIcon } from "lucide-react";
 
@@ -278,6 +279,32 @@ export function DocsLogo(props: any) {
       <path
         d="M10.3434 6.10889H6.21057L5.77991 7.38317H9.91269L10.3434 6.10889Z"
         fill="hsl(var(--icon))"
+      />
+    </svg>
+  );
+}
+
+export function HiroSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
+  return (
+    <svg
+      width="15"
+      height="12"
+      viewBox="0 0 15 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M9.51367 11.865L13.2384 0.835693H14.657L10.9323 11.865H9.51367Z"
+        fill="hsl(var(--background))"
+      />
+      <path
+        d="M0.257812 11.8648L3.98254 0.835449H5.40038L1.6764 11.8648H0.257812Z"
+        fill="hsl(var(--background))"
+      />
+      <path
+        d="M9.56251 5.76172H5.7494L5.35205 6.93744H9.16516L9.56251 5.76172Z"
+        fill="hsl(var(--background))"
       />
     </svg>
   );

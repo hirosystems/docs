@@ -4,7 +4,6 @@ import { ArrowUpRight } from "lucide-react";
 import { utils } from "@/utils/source";
 import { create } from "@/components/ui/icon";
 import { DocsLogo } from "@/components/ui/icon";
-import { HiroIcon, HiroSVG } from "../(home)/icons";
 import { Body, NavChildren, SidebarBanner } from "./layout.client";
 
 export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
