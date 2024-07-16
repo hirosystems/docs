@@ -20,7 +20,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
       <div
         ref={ref}
         className={cn(
-          "my-6 flex flex-row items-center gap-2 rounded-lg p-3 text-sm text-foreground",
+          "my-6 flex flex-row items-center gap-2 rounded-lg p-4 text-sm text-foreground",
           {
             tip: "bg-[#CEEFD0] dark:bg-background dark:border dark:border-[#CEEFD0]",
             info: "bg-[#B3D9FF] dark:bg-background dark:border dark:border-[#B3D9FF]",
@@ -31,37 +31,61 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         )}
         {...props}
       >
-        {icon ??
+        {(!title && icon) ??
           {
             tip: (
-              <Star className="size-4 stroke-foreground dark:stroke-foreground text-card" />
+              <Star className="size-4 stroke-foreground dark:stroke-[#CEEFD0] text-card" />
             ),
             info: (
-              <Info className="size-4 stroke-foreground dark:stroke-foreground text-card" />
+              <Info className="size-4 stroke-foreground dark:stroke-[#D1E8FF] text-card" />
             ),
             warn: (
-              <AlertTriangle className="size-4 stroke-foreground dark:stroke-foreground text-card" />
+              <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
             ),
             help: (
-              <AlertOctagon className="size-4 stroke-foreground dark:stroke-foreground text-card" />
+              <AlertOctagon className="size-4 stroke-foreground dark:stroke-[#EBE9E6] text-card" />
             ),
           }[type]}
         <div className="w-0 flex-1">
-          {title ? (
-            <div
-              className={cn(
-                "mb-2 font-medium",
-                {
-                  tip: "text-foreground dark:text-[#CEEFD0]",
-                  info: "text-foreground dark:text-[#D1E8FF]",
-                  warn: "text-foreground dark:text-[#FF9966]",
-                  help: "text-foreground dark:text-[#EBE9E6]",
-                }[type]
-              )}
-            >
-              {title}
-            </div>
-          ) : null}
+          <div
+            className={cn("flex flex-row items-center gap-2", {
+              "mb-2": title,
+              "mb-0": !title,
+            })}
+          >
+            {title ? (
+              <>
+                {icon ??
+                  {
+                    tip: (
+                      <Star className="size-4 stroke-foreground dark:stroke-[#CEEFD0] text-card" />
+                    ),
+                    info: (
+                      <Info className="size-4 stroke-foreground dark:stroke-[#D1E8FF] text-card" />
+                    ),
+                    warn: (
+                      <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
+                    ),
+                    help: (
+                      <AlertOctagon className="size-4 stroke-foreground dark:stroke-[#EBE9E6] text-card" />
+                    ),
+                  }[type]}
+                <div
+                  className={cn(
+                    "font-medium",
+                    {
+                      tip: "text-foreground dark:text-[#CEEFD0]",
+                      info: "text-foreground dark:text-[#D1E8FF]",
+                      warn: "text-foreground dark:text-[#FF9966]",
+                      help: "text-foreground dark:text-[#EBE9E6]",
+                    }[type]
+                  )}
+                >
+                  {title}
+                </div>
+              </>
+            ) : null}
+          </div>
           <div className="prose-no-margin">{children}</div>
         </div>
       </div>
