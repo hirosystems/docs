@@ -3,8 +3,8 @@ title: Authenticate users
 description: Connect to user wallets and authenticate your users using Stacks.js.
 ---
 
-import { GridPattern } from "@/components/grid-pattern";
 import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
+import { ContentBackground } from '@/components/ui/icon';
 
 Authentication is a fundamental part of many web applications, ensuring that users are who they claim to be and that their data is secure. With the Stacks blockchain, user authentication involves connecting to users' wallets and managing their sessions securely.
 
@@ -53,15 +53,15 @@ For more detailed information on these scopes and other API references, visit th
 
 Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [secret key](/stacks/stacks.js/concepts/private-keys) that's used to encrypt their private data.
 
-<div className="not-prose relative bg-[#F9F9FA] rounded-xl overflow-hidden dark:bg-[#191919]">
-  <div className="absolute inset-0 bg-[#F9F9FA] dark:bg-[#191919]"></div>
-  <div className="relative rounded-xl overflow-auto p-8">
-    <div className="grid place-items-center">
+<div className="not-prose relative overflow-hidden">
+  <div className="relative bg-card rounded-lg border border-border/50 overflow-auto p-8 h-auto">
+    <div className="absolute inset-x-0 bottom-0">
+      <ContentBackground />
+    </div>
+    <div className="grid place-items-center h-full">
       <ConnectWalletButton />
-      <GridPattern />
     </div>
   </div>
-  <div className="absolute inset-0 pointer-events-none border border-black/5 rounded-xl dark:border-white/5"></div>
 </div>
 
 ```ts twoslash

@@ -7,7 +7,7 @@ toc: false
 import { Card, SmallCard } from '@/components/card';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Database, Play } from 'lucide-react';
-import { API, Backend, Chainhook, Newspaper, QuestionIcon, BugIcon, Pulse } from '@/components/ui/icon';
+import { API, Backend, Chainhook, Newspaper, Ordinals, QuestionIcon, BugIcon, Pulse } from '@/components/ui/icon';
 import heroImage from '@/public/bitcoin-hero.svg';
 
 <div className='flex flex-col space-y-10'>
@@ -48,34 +48,6 @@ import heroImage from '@/public/bitcoin-hero.svg';
 
 <div className='flex flex-col space-y-3'>
 
-<h3 id="explore-by-category" className="scroll-m-20">
-  <a href="#explore-by-category" className="not-prose group text-muted-foreground uppercase">Explore by category</a>
-</h3>
-
----
-
-<Cards>
-  <SmallCard
-    className='group space-y-3'
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/bitcoin/ordinals/ordhook"
-    title="Data Streaming &amp; Events"
-    description="Create custom event streams for real-time data with Ordhook."
-  />
-  <SmallCard
-    className='group space-y-3'
-    icon={<Backend className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/bitcoin/ordinals/api"
-    title="Backend Development"
-    description="Interact with the Ordinals protocol with our hosted API."
-  />
-</Cards>
-
-</div>
-
-
-<div className='flex flex-col space-y-3'>
-
 <h3 id="explore-by-tool" className="scroll-m-20">
   <a href="#explore-by-tool" className="not-prose group text-muted-foreground uppercase">Explore by tool</a>
 </h3>
@@ -85,7 +57,7 @@ import heroImage from '@/public/bitcoin-hero.svg';
 <Cards>
   <SmallCard
     className='group space-y-3'
-    icon={<Chainhook className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Ordinals className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/bitcoin/ordinals/ordhook"
     title="Ordhook"
     description="Create custom event streams for real-time data and analytics with Ordhook."
