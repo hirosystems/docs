@@ -17,7 +17,7 @@ export const modes: Mode[] = [
     icon: StacksIcon,
   },
   {
-    param: "ordinals",
+    param: "bitcoin",
     name: "Bitcoin",
     type: "tab",
     icon: BitcoinIcon,

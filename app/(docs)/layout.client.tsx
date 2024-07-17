@@ -8,7 +8,7 @@ import { cn } from "@/utils/cn";
 import { modes } from "@/utils/modes";
 import { ChevronLeft } from "lucide-react";
 
-type Mode = "stacks" | "ordinals" | null | undefined;
+type Mode = "stacks" | "bitcoin" | null | undefined;
 
 const itemVariants = cva(
   "rounded-md px-2 py-1 transition-colors hover:text-accent-foreground",
@@ -18,14 +18,14 @@ const itemVariants = cva(
         true: "text-accent-foreground",
       },
       mode: {
-        ordinals: "bg-[hsl(var(--hiro))]",
+        bitcoin: "bg-[hsl(var(--hiro))]",
         stacks: "bg-background",
       },
     },
     compoundVariants: [
       {
         active: true,
-        mode: "ordinals",
+        mode: "bitcoin",
         className: "hsl(var(--hiro)) dark:text-background",
       },
       {
@@ -84,15 +84,15 @@ export function SidebarBanner(): JSX.Element {
   if (
     pathname === "/stacks" ||
     pathname === "/stacks/get-started" ||
-    pathname === "/ordinals" ||
-    pathname === "/ordinals/get-started" ||
+    pathname === "/bitcoin" ||
+    pathname === "/bitcoin/get-started" ||
     pathname.startsWith("/guides") ||
     pathname === "/stacks/api-keys" ||
     pathname === "/stacks/rate-limiting" ||
     pathname === "/stacks/contributors-guide" ||
-    pathname === "/ordinals/rate-limiting" ||
-    pathname === "/ordinals/api-keys" ||
-    pathname === "/ordinals/contributors-guide"
+    pathname === "/bitcoin/rate-limiting" ||
+    pathname === "/bitcoin/api-keys" ||
+    pathname === "/bitcoin/contributors-guide"
   ) {
     return <></>;
   }

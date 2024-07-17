@@ -1,0 +1,294 @@
+---
+title: Get etching
+description: Retrieves information for a Rune etching.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { APIInfo, Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<APIInfo method={"GET"} route={"/runes/v1/etchings/{etching}"}>
+
+Retrieves information for a Rune etching.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"etching"} type={"string"}>
+
+Value can represent a Rune ID, Rune number, Rune name, or Rune name with spacers.
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Default Response |
+| `404` | Default Response |
+
+</APIInfo>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ"
+```
+
+<Tabs items={["200","404"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "id": "840000:1",
+  "name": "ZZZZZFEHUZZZZZ",
+  "spaced_name": "Z•Z•Z•Z•Z•FEHU•Z•Z•Z•Z•Z",
+  "number": 1,
+  "divisibility": 2,
+  "symbol": "ᚠ",
+  "turbo": false,
+  "mint_terms": {
+    "amount": "100",
+    "cap": "1111111",
+    "height_start": 840000,
+    "height_end": 1050000,
+    "offset_start": 0,
+    "offset_end": 200
+  },
+  "supply": {
+    "current": "11274916350",
+    "minted": "274916100",
+    "total_mints": "250",
+    "mint_percentage": "59.4567",
+    "mintable": true,
+    "burned": "5100",
+    "total_burns": "17",
+    "premine": "11000000000"
+  },
+  "location": {
+    "block_hash": "00000000000000000000c9787573a1f1775a2b56b403a2d0c7957e9a5bc754bb",
+    "block_height": 840000,
+    "tx_id": "2bb85f4b004be6da54f766c17c1e855187327112c231ef2ff35ebad0ea67c69e",
+    "tx_index": 1,
+    "vout": 100,
+    "output": "2bb85f4b004be6da54f766c17c1e855187327112c231ef2ff35ebad0ea67c69e:100",
+    "timestamp": 1713571767
+  }
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Rune ID
+ */
+export type ID = string;
+/**
+ * Rune name
+ */
+export type Name = string;
+/**
+ * Rune name with spacers
+ */
+export type SpacedName = string;
+/**
+ * Rune number
+ */
+export type Number = number;
+/**
+ * Rune decimal places
+ */
+export type Divisibility = number;
+/**
+ * Rune symbol
+ */
+export type Symbol = string;
+/**
+ * Rune upgradeability
+ */
+export type Turbo = boolean;
+/**
+ * Amount awarded per mint
+ */
+export type MintAmount = string;
+/**
+ * Maximum number of mints allowed
+ */
+export type MintCap = string;
+/**
+ * Block height at which the mint period opens
+ */
+export type MintBlockHeightStart = number;
+/**
+ * Block height at which the mint period closes
+ */
+export type MintBlockHeightEnd = number;
+/**
+ * Block height etching offset at which the mint period opens
+ */
+export type MintBlockHeightOffsetStart = number;
+/**
+ * Block height etching offset at which the mint period closes
+ */
+export type MintBlockHeightOffsetEnd = number;
+/**
+ * Circulating supply including mints, burns and premine
+ */
+export type CurrentSupply = string;
+/**
+ * Total minted amount
+ */
+export type MintedAmount = string;
+/**
+ * Number of mints for this rune
+ */
+export type TotalMints = string;
+/**
+ * Percentage of mints that have been claimed
+ */
+export type MintPercentage = string;
+/**
+ * Whether or not this rune is mintable at this time
+ */
+export type Mintable = boolean;
+/**
+ * Total burned amount
+ */
+export type BurnedAmount = string;
+/**
+ * Number of burns for this rune
+ */
+export type TotalBurns = string;
+/**
+ * Amount premined for this rune
+ */
+export type PremineAmount = string;
+/**
+ * Bitcoin block hash
+ */
+export type BlockHash = string;
+/**
+ * Bitcoin block height
+ */
+export type BlockHeight = number;
+/**
+ * Bitcoin transaction ID
+ */
+export type TransactionID = string;
+/**
+ * Index of this transaction in its Bitcoin block
+ */
+export type TransactionIndex = number;
+/**
+ * Bitcoin transaction output number
+ */
+export type OutputNumber = number;
+/**
+ * Bitcoin transaction output
+ */
+export type TransactionOutput = string;
+/**
+ * Bitcoin transaction timestamp
+ */
+export type Timestamp = number;
+
+export interface Response {
+  id: ID;
+  name: Name;
+  spaced_name: SpacedName;
+  number: Number;
+  divisibility: Divisibility;
+  symbol: Symbol;
+  turbo: Turbo;
+  mint_terms: MintTerms;
+  supply: SupplyInformation;
+  location: TransactionLocation;
+}
+/**
+ * Rune mint terms
+ */
+export interface MintTerms {
+  amount: MintAmount | null;
+  cap: MintCap | null;
+  height_start: MintBlockHeightStart | null;
+  height_end: MintBlockHeightEnd | null;
+  offset_start: MintBlockHeightOffsetStart | null;
+  offset_end: MintBlockHeightOffsetEnd | null;
+}
+/**
+ * Rune supply information
+ */
+export interface SupplyInformation {
+  current: CurrentSupply;
+  minted: MintedAmount;
+  total_mints: TotalMints;
+  mint_percentage: MintPercentage;
+  mintable: Mintable;
+  burned: BurnedAmount;
+  total_burns: TotalBurns;
+  premine: PremineAmount;
+}
+/**
+ * Location of the transaction which confirmed this operation
+ */
+export interface TransactionLocation {
+  block_hash: BlockHash;
+  block_height: BlockHeight;
+  tx_id: TransactionID;
+  tx_index: TransactionIndex;
+  vout?: OutputNumber;
+  output?: TransactionOutput;
+  timestamp: Timestamp;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+
+
+```json title="Example Response"
+{
+  "error": "Not found"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface NotFoundResponse {
+  error: "Not found";
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

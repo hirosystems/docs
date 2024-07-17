@@ -1,0 +1,71 @@
+---
+title: Get API Status
+description: Retrieves the status of the API.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { APIInfo, Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<APIInfo method={"GET"} route={"/runes/v1/"}>
+
+Displays the status of the API.
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Default Response |
+
+</APIInfo>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/runes/v1/"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "server_version": "",
+  "status": "string",
+  "block_height": 0
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface ApiStatusResponse {
+  server_version: string;
+  status: string;
+  block_height?: number;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>
