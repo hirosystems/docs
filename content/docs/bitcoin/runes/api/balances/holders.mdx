@@ -1,0 +1,118 @@
+---
+title: Get rune holders
+description: Retrieves a paginated list of holders for a Rune.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { APIInfo, Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<APIInfo method={"GET"} route={"/runes/v1/etchings/{etching}/holders"}>
+
+Retrieves a paginated list of holders for a Rune.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum:  `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum:  `1`</span>
+
+<span>Maximum:  `60`</span>
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"etching"} type={"string"}>
+
+Value can represent a Rune ID, Rune number, Rune name, or Rune name with spacers.
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Default Response |
+
+</APIInfo>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ/holders"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "address": "bc1q7jd477wc5s88hsvenr0ddtatsw282hfjzg59wz",
+      "balance": "11000000000"
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Bitcoin address which holds this balance
+ */
+export type Address = string;
+/**
+ * Rune balance
+ */
+export type Balance = string;
+
+export interface PaginatedHoldersResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  results: {
+    address?: Address;
+    balance: Balance;
+  }[];
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

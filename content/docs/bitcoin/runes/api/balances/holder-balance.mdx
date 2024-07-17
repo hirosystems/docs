@@ -1,0 +1,122 @@
+---
+title: Get holder balance
+description: Retrieves holder balance for a specific Rune.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { APIInfo, Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<APIInfo method={"GET"} route={"/runes/v1/etchings/{etching}/holders/{address}"}>
+
+Retrieves holder balance for a specific Rune.
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"etching"} type={"string"}>
+
+Value can represent a Rune ID, Rune number, Rune name, or Rune name with spacers.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+Bitcoin address
+
+<span>Example:  `bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Default Response |
+| `404` | Default Response |
+
+</APIInfo>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ/holders/bc1q7jd477wc5s88hsvenr0ddtatsw282hfjzg59wz"
+```
+
+<Tabs items={["200","404"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "address": "bc1q7jd477wc5s88hsvenr0ddtatsw282hfjzg59wz",
+  "balance": "11000000000"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Bitcoin address which holds this balance
+ */
+export type Address = string;
+/**
+ * Rune balance
+ */
+export type Balance = string;
+
+export interface Response {
+  address?: Address;
+  balance: Balance;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+<Tab value={"404"}>
+
+
+
+```json title="Example Response"
+{
+  "error": "Not found"
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+export interface NotFoundResponse {
+  error: "Not found";
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

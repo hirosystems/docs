@@ -1,0 +1,186 @@
+---
+title: Get activity for an address
+description: Retrieves all Rune activity for a Bitcoin address.
+toc: false
+---
+
+import { Root, API, APIExample } from "@/components/layout"
+import { APIInfo, Property } from "fumadocs-ui/components/api"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+
+<Root>
+
+<API>
+
+<APIInfo method={"GET"} route={"/runes/v1/etchings/{etching}/activity/{address}"}>
+
+Retrieves all activity for a Rune address.
+
+### Query Parameters
+
+<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+
+Result offset
+
+<span>Minimum:  `0`</span>
+
+</Property>
+
+<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+
+Results per page
+
+<span>Minimum:  `1`</span>
+
+<span>Maximum:  `60`</span>
+
+</Property>
+
+### Path Parameters
+
+<Property required={true} deprecated={false} name={"etching"} type={"string"}>
+
+Value can represent a Rune ID, Rune number, Rune name, or Rune name with spacers.
+
+</Property>
+
+<Property required={true} deprecated={false} name={"address"} type={"string"}>
+
+Bitcoin address
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Default Response |
+
+</APIInfo>
+
+<APIExample>
+
+```bash title="curl"
+curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ/activity/bc1q7jd477wc5s88hsvenr0ddtatsw282hfjzg59wz"
+```
+
+<Tabs items={["200"]}>
+
+<Tab value={"200"}>
+
+
+
+```json title="Example Response"
+{
+  "limit": 20,
+  "offset": 0,
+  "total": 1,
+  "results": [
+    {
+      "address": "bc1q7jd477wc5s88hsvenr0ddtatsw282hfjzg59wz",
+      "receiver_address": "bc1pgdrveee2v4ez95szaakw5gkd8eennv2dddf9rjdrlt6ch56lzrrsxgvazt",
+      "amount": "11000000000",
+      "operation": "etching",
+      "location": {
+        "block_hash": "00000000000000000000c9787573a1f1775a2b56b403a2d0c7957e9a5bc754bb",
+        "block_height": 840000,
+        "tx_id": "2bb85f4b004be6da54f766c17c1e855187327112c231ef2ff35ebad0ea67c69e",
+        "tx_index": 1,
+        "vout": 100,
+        "output": "2bb85f4b004be6da54f766c17c1e855187327112c231ef2ff35ebad0ea67c69e:100",
+        "timestamp": 1713571767
+      }
+    }
+  ]
+}
+```
+
+<Accordions>
+
+<Accordion title={"Typescript Definition"}>
+
+```ts
+/**
+ * Bitcoin address which initiated this activity
+ */
+export type Address = string;
+/**
+ * Bitcoin address which is receiving rune balance
+ */
+export type ReceiverAddress = string;
+/**
+ * Rune amount relevat to this activity
+ */
+export type Amount = string;
+/**
+ * Type of operation described in this activity
+ */
+export type Operation = "etching" | "mint" | "burn" | "send" | "receive";
+/**
+ * Bitcoin block hash
+ */
+export type BlockHash = string;
+/**
+ * Bitcoin block height
+ */
+export type BlockHeight = number;
+/**
+ * Bitcoin transaction ID
+ */
+export type TransactionID = string;
+/**
+ * Index of this transaction in its Bitcoin block
+ */
+export type TransactionIndex = number;
+/**
+ * Bitcoin transaction output number
+ */
+export type OutputNumber = number;
+/**
+ * Bitcoin transaction output
+ */
+export type TransactionOutput = string;
+/**
+ * Bitcoin transaction timestamp
+ */
+export type Timestamp = number;
+
+export interface PaginatedActivityResponse {
+  limit: number;
+  offset: number;
+  total: number;
+  results: {
+    address?: Address;
+    receiver_address?: ReceiverAddress;
+    amount?: Amount;
+    operation: Operation;
+    location: TransactionLocation;
+  }[];
+}
+/**
+ * Location of the transaction which confirmed this operation
+ */
+export interface TransactionLocation {
+  block_hash: BlockHash;
+  block_height: BlockHeight;
+  tx_id: TransactionID;
+  tx_index: TransactionIndex;
+  vout?: OutputNumber;
+  output?: TransactionOutput;
+  timestamp: Timestamp;
+}
+
+```
+
+</Accordion>
+
+</Accordions>
+
+</Tab>
+
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>

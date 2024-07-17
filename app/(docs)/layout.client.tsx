@@ -61,15 +61,15 @@ export function SidebarBanner(): JSX.Element {
   if (
     pathname === "/stacks" ||
     pathname === "/stacks/get-started" ||
-    pathname === "/ordinals" ||
-    pathname === "/ordinals/get-started" ||
+    pathname === "/bitcoin" ||
+    pathname === "/bitcoin/get-started" ||
     pathname.startsWith("/guides") ||
     pathname === "/stacks/api-keys" ||
     pathname === "/stacks/rate-limiting" ||
     pathname === "/stacks/contributors-guide" ||
-    pathname === "/ordinals/rate-limiting" ||
-    pathname === "/ordinals/api-keys" ||
-    pathname === "/ordinals/contributors-guide"
+    pathname === "/bitcoin/rate-limiting" ||
+    pathname === "/bitcoin/api-keys" ||
+    pathname === "/bitcoin/contributors-guide"
   ) {
     return <></>;
   }
