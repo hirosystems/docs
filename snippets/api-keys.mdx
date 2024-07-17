@@ -8,10 +8,10 @@ If you're interested in obtaining an API key, you can generate one for free in t
 
 ## Usage with cURL
 
-The API key is passed in the `header` of your HTTP API request with `x-hiro-api-key`.
+The API key is passed in the `header` of your HTTP API request with `x-api-key`.
 
 ```bash title="Terminal"
-curl https://api.hiro.so/... -H 'x-hiro-api-key: <your-api-key>'
+curl https://api.hiro.so/... -H 'x-api-key: <your-api-key>'
 ```
 
 ## Usage with Node
@@ -23,7 +23,7 @@ async function makeApiRequest(apiKey: string) {
   const url = `https://api.hiro.so/<your-api-endpoint>`;
   const response = await fetch(url, {
     headers: {
-      "x-hiro-api-key": apiKey // [!code highlight]
+      "x-api-key": apiKey // [!code highlight]
     }
   });
   return response.json();
