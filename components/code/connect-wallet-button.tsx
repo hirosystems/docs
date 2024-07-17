@@ -36,12 +36,7 @@ export const ConnectWalletButton: React.FC = () => {
 
   return (
     <Button
-      className={cn(
-        "px-5 py-2 text-sm leading-5 rounded-full font-semibold z-10",
-        "bg-neutral-900 text-white",
-        "dark:bg-white dark:text-neutral-900",
-        "hover:bg-neutral-900/90 dark:hover:bg-gray-100/90"
-      )}
+      className={cn("px-5 py-2 text-sm leading-5 font-semibold z-10 shadow-lg")}
       onClick={isSignedIn ? logout : authenticate}
     >
       {isSignedIn ? "Log out" : "Connect wallet"}
