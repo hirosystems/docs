@@ -45,7 +45,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
             ),
             help: (
               <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
-                <HiroSVG className="stroke-background text-card" />
+                <HiroSVG />
               </div>
             ),
           }[type]}
@@ -71,7 +71,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                     ),
                     help: (
                       <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
-                        <HiroSVG className="stroke-background text-card" />
+                        <HiroSVG />
                       </div>
                     ),
                   }[type]}
