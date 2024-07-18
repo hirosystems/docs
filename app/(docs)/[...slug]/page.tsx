@@ -77,16 +77,6 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       toc={page.data.exports.toc}
       tableOfContent={{
         enabled: page.data.toc,
-        footer: (
-          <a
-            href={`https://github.com/hirosystems/docs/blob/main/${path}`}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="inline-flex items-center text-xs text-muted-foreground hover:text-foreground"
-          >
-            Edit on Github <ExternalLinkIcon className="ml-1 size-3" />
-          </a>
-        ),
       }}
     >
       <RollButton />
