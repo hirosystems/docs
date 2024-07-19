@@ -13,11 +13,11 @@ To generate a deployment plan, you'll need a project with contracts ready to dep
 
 To launch the deployment plans side bar, select the "Deploy project" button on the top right corner of the page.
 
-![Deploy button](../images/deployment-plans-deploy-button.jpeg)
+![Deploy button](../images/deployment-plans/deploy-button.png)
 
 This brings up the deployment plans side bar, where you can select the network to deploy the contracts using deployment plans.
 
-![Deployment plans pane](../images/generate-deployment-plans.jpeg)
+![Deployment plans pane](../images/deployment-plans/generate.png)
 
 ## Deploy your project
 
@@ -27,36 +27,38 @@ For this guide, generate a deployment plan for testnet.
 - Next, select "Deploy" to deploy that plan and publish your contracts to testnet.
 - This will prompt you to connect your wallet, so you can confirm the deployment.
 
-![Connect wallet](../images/deployment-plans-wallet-confirmation.jpeg)
+![Deploy](../images/deployment-plans/deploy.png)
+![Connect wallet](../images/deployment-plans/wallet-confirmation.png)
 
 - Now, in your list of contracts, you will see the status of your deployment as "In mempool."
 
-![Deployment plan with status in-mempool](../images/deployment-plans-status-in-mempool.jpeg)
+![Deployment plan with status in-mempool](../images/deployment-plans/mempool-status.png)
 
 {" "}
 
 <Callout title="Note" type="info">
-  The deployment process may take a while based on the blockchain traffic at the
-  time of deployment.
+  The deployment process may take a while based on the blockchain traffic at the time of deployment.
 </Callout>
 
 - Upon successful deployment, the status will change to "Deployed."
 
-![Deployment plan with status deployed](../images/deployment-plans-status-deployed.jpeg)
+![Deployment plan with status deployed](../images/deployment-plans/status-deployed.png)
 
-- It's possible that the transaction may fail in the deployment process for a number of different reasons, in which case you will see the status updated as "Failed." If you want to understand more details about why the deployment failed, you can view the transaction in the Stacks Explorer by selecting the pop-out arrow beside the contract.
-
-![Deployment failed](../images/deployment-plans-failed.jpeg)
+<Callout title="Note" type="warn">
+It's possible that the transaction may fail in the deployment process for a number of different reasons, in which case you will see the status updated as "Failed." If you want to understand more details about why the deployment failed, you can view the transaction in the Stacks Explorer by selecting the pop-out arrow beside the contract.
+</Callout>
 
 ## Deploy individual contract
 
 If you want to deploy an individual contract (and not the entire project), you can click the three dots next to the contract name in your project list and click "Deploy to testnet" or "Deploy to mainnet." You will then be prompted to confirm if you want to deploy outside of your deployment plan or use a deployment plan. If you choose to deploy using a deployment plan, follow the steps described above in this article's [deploy](#deploy) section.
 
-![Confirmation to deploy outside of deployment plan](../images/confirmation-to-delpoy-outside-of-deployment-plan.jpeg)
+![Confirmation to deploy outside of deployment plan](../images/deployment-plans/deploy-outside-of-deployment-plan.png)
 
 ## Regenerate deployment plan
 
 The **Regenerate plan** feature in deployment plans is helpful when you have changes in your project (such as adding a new contract), and you need to generate a new deployment plan to account for any new contract dependencies.
+
+![Regenerate deployment plan](../images/deployment-plans/regenerate.png)
 
 ## Add/update contracts
 
@@ -65,7 +67,7 @@ If you want to create or update a new contract, refer to this [guide](/stacks/pl
 <Callout title="Note" type="info">
   If you add a new contract through Editor, ensure the new contract is
   configured to the `Clarinet.toml` file. For guidance, refer to [Clarinet.toml
-  configuration for new contracts](./build-contract.md#add-a-new-contract). You
+  configuration for new contracts](./build-contracts#add-a-new-contract). You
   can also check your contracts before deploying them by following the [Check
   contract]() guide.
 </Callout>

@@ -6,13 +6,15 @@ description: Understand the architecture of the Stacks Blockchain API.
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 
 <ImageZoom
-  width="700"
-  height="400"
+  width="750"
+  height="450"
   alt="stacks-api-architecture"
-  src='/images/api/architecture.png'
+  src='/images/api/architecture.svg'
   className="mt-0 mb-6 first-line:rounded-xl bg-background"
   priority
 />
+
+## RPC Endpoints
 
 The `stacks-node` has its own minimal set of http endpoints referred to as `RPC endpoints`.
 
@@ -24,6 +26,8 @@ The `stacks-node` has its own minimal set of http endpoints referred to as `RPC 
   - `POST /v2/contracts/call-read/<contract>/<function>` - Evaluate and return the result of calling a Clarity function
   - `POST /v2/fees/transaction` - Evaluate a given transaction and provide transaction fee estimation data
   - `GET /v2/accounts/<address>` - Fetch the current nonce required for creating transactions
+
+## Additional Endpoints
 
 The Stacks Blockchain API implements additional endpoints that provide data unavailable directly from Stacks nodes due to various constraints.
 
@@ -45,12 +49,16 @@ Byproducts of executed transactions such as:
 
 The API processes and stores these events as relational data in PostgreSQL. For the "event observer" code, see `/src/event-stream`.
 
+## OpenAPI and JSON Schema
+
 All http endpoints and responses are defined in OpenAPI and JSON Schema.
 
 - See `/docs/openapi.yaml`
 - These are used to auto-generate the docs at https://hirosystems.github.io/stacks-blockchain-api/
 - JSON Schemas are converted into TypeScript interfaces, which are used internally by the db controller module to transform SQL query results into the correct object shapes.
-- OpenAPI and JSON Schemas are also used to generate a standalone @stacks/blockchain-api-client.
+- OpenAPI and JSON Schemas are also used to generate a standalone `@stacks/blockchain-api-client`.
+
+## Development Setup
 
 The easiest/quickest way to develop in this repo is using the VS Code debugger. It uses docker-compose to set up a stacks-node and Postgres instance.
 
