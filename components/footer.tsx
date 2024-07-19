@@ -55,7 +55,7 @@ export function PageFooter(): JSX.Element {
               className="underline text-muted-foreground"
               target="_blank"
             >
-              Check System Status
+              Check system status
             </a>
           </span>
           .
@@ -69,7 +69,7 @@ export function PageFooter(): JSX.Element {
               className="underline text-muted-foreground"
               target="_blank"
             >
-              See our Bounty Program
+              See our bounty program
             </a>
           </span>
           .
