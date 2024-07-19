@@ -17,13 +17,13 @@ description: Learn how to develop contracts and build in the Hiro Platform.
 
 If you have create or imported a project with no Clarity contracts, you will see a window that prompts you to create a new contract or open a web (or local) editor.
 
-![Open editor](../images/open-editor.png)
+![Open editor](../images/build-contracts/open-editor.png)
 
 ## Write new contracts
 
 To create a new contract, you can simply click the "Create contract" button which will create an empty contract in your project.
 
-![Open editor](../images/empty-contract.png)
+![Open editor](../images/build-contracts/empty-contract.png)
 
 You can also create a new contract for your project from the editor by following the steps below. Note: the sample project used here is from [Clarity examples](https://github.com/hirosystems/clarity-examples/tree/main/examples/blank-project), and these steps assume that your project has no Clarity contracts already.
 
@@ -38,7 +38,7 @@ You can also create a new contract for your project from the editor by following
 2. This will open up a new tab with VS Code editor, and inside VS Code, you will find the project directories and files.
 3. Expand "NEW-PROJECT" and see a directory named "contracts". There should be no contracts in this folder yet.
 4. Right-click the contracts folder, select "New file", and add a new contract with a name of your choice. Eg: `counter.clar`
-   ![Write new contract](../images/write-new-contract.png)
+   ![Write new contract](../images/build-contracts/write-new-contract.png)
 5. This will create a `.clar` file in the contracts folder. Now you can use the [Clarity examples](https://github.com/hirosystems/clarity-examples) to customize your contract.
 6. Once your `.clar` file is ready, you can update the `Clarinet.toml` file located in the same project directory. Use the following code to update the `.toml` file with these parameters. `[contracts.<your-contract-name>]` and path to use your `.clar` file name as `path = "<your-contract-name.clar>"`.
 

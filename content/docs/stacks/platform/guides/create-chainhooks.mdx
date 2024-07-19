@@ -7,13 +7,11 @@ With Chainhook, you can automatically trigger an action in response to on-chain 
 
 To get started in the Hiro Platform, login and toggle to the Chainhook page. There are two ways to create a chainhook. You can either create a chainhook from scratch using the platform UI, or you can upload chainhooks that you have already defined in JSON.
 
-# Create a chainhook
+![Create Chainhook Window](../images/chainhook/select-chainhook-tab.png)
 
-![Create Chainhook Window](../images/chainhook-select-chainhook-tab.png)
+Select the "New Chainhook" button.
 
-Select the "Create Chainhook" button.
-
-![Create Chainhook Window](../images/chainhook-create-chainhook-window.png)
+![Create Chainhook Window](../images/chainhook/create-chainhook-window.png)
 
 This will open a panel on the right to create a chainhook. Use the following fields to create a Chainhook:
 
@@ -63,7 +61,7 @@ You'll also see the following options for Bitcoin chainhooks:
 
 Once you define all the required fields, you can select "Create Chainhook", and you can now see your created chainhook on the Chainhook page.
 
-![Chainhook created](../images/chainhook-created.png)
+![Chainhook created](../images/chainhook/created.png)
 
 The `NAME`, `CHAIN`, `START BLOCK`, `NETWORK`, `STATUS`, and `LAST UPDATED` headers are updated based on the selected fields used to create a Chainhook.
 
@@ -71,11 +69,11 @@ Based on the chosen network, the respective status columns in the Chainhook list
 
 Note: there may be other fields in the UI to create a Chainhook based on the predicates defined above.
 
-# Upload a chainhook
+## Upload a chainhook
 
 To upload a chainhook, you can either select the "Upload Chainhook" button and choose the .json file that has the chainhook(s) you want to upload, or you can drag and drop the .json file into the file upload area.
 
-![Upload Chainhook](../images/chainhook-upload.png)
+![Upload Chainhook](../images/chainhook/upload.png)
 
 The upload file must be a .json file containing either a single json object representing a Chainhook predicate, or an array of json objects representing one or more Chainhook predicates.
 
@@ -85,7 +83,7 @@ Refer to the [Bitcoin predicates](../../chainhook/predicates/bitcoin) and [Stack
 
 Once a chainhook is created, you can edit the chainhook by clicking the ellipse on the specific chainhook you want to edit.
 
-![Edit chainhook](../images/chainhook-edit-chainhook.png)
+![Edit chainhook](../images/chainhook/edit-chainhook.png)
 
 Update the fields to reflect your desired changes and then select "Update chainhook."
 
@@ -105,11 +103,11 @@ The Chainhook page has a `STATUS` column that displays whether your chainhooks a
 
 More status info can be found by hovering over the status element. For example, to understand why the Chainhook is in an error state, hover over the status element to find out.
 
-![Chainhook status](../images/chainhook-status-info.png)
+![Chainhook status](../images/chainhook/status-info.png)
 
 ## References
 
-- [Use Chainhooks with Bitcoin](../../chainhook/guides/chainhooks-with-bitcoin.md)
-- [Use Chainhooks with Stacks](../../chainhook/guides/chainhooks-with-stacks.md)
-- [Run Chainhook as a service using Bitcoind](../../chainhook/guides/chainhook-as-a-service-bitcoind.md)
-- [Run Chainhook as a service using Stacks](../../chainhook/guides/chainhook-as-a-service-stacks.md)
+- [Use Chainhooks with Bitcoin](/stacks/chainhook/concepts/bitcoin-predicates)
+- [Use Chainhooks with Stacks](/stacks/chainhook/concepts/stacks-predicates)
+- [Run Chainhook as a service using Bitcoind](/stacks/chainhook/guides/chainhook-as-a-service)
+- [Run Chainhook as a service using Stacks](/stacks/chainhook/guides/chainhook-as-a-service-with-stacks-node)
