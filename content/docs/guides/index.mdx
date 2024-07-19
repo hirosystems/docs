@@ -5,8 +5,7 @@ toc: false
 
 import Link from "fumadocs-core/link";
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import { SectionHeader } from '@/components/layout/section-header';
-import { Badge } from "@/components/ui/badge";
+import { SecondaryCard } from "@/components/card"
 import guidesImage from '@/public/guides.svg';
 import data from '@/utils/all-guides.json';
 
@@ -23,7 +22,7 @@ import data from '@/utils/all-guides.json';
   <Cards>
     {data.guides.map(guide => {
       return (
-        <Card
+        <SecondaryCard
           key={guide.title}
           href={guide.href}
           title={guide.title}
