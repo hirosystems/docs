@@ -49,9 +49,9 @@ import heroImage from '@/public/bitcoin-hero.svg';
 
 <div className='flex flex-col space-y-3'>
 
-<h3 id="explore-by-tool" className="scroll-m-20">
-  <a href="#explore-by-tool" className="not-prose group text-muted-foreground uppercase">Explore by tool</a>
-</h3>
+<h4 id="explore-ordinals" className="scroll-m-20">
+  <a href="#explore-ordinals" className="not-prose group text-muted-foreground uppercase">Explore Ordinals</a>
+</h4>
 
 ---
 
@@ -72,17 +72,30 @@ import heroImage from '@/public/bitcoin-hero.svg';
   />
   <SmallCard
     className='group space-y-3'
-    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/bitcoin/runes/api"
-    title="Runes API"
-    description="Interact with the Runes protocol from your backend via our hosted API."
-  />
-  <SmallCard
-    className='group space-y-3'
     icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/ordinals/explorer"
     title="Explorer"
     description="View on-chain data for Ordinals and meta-protocols with our explorer."
+  />
+</Cards>
+
+</div>
+
+<div className='flex flex-col space-y-3'>
+
+<h4 id="explore-runes" className="scroll-m-20">
+  <a href="#explore-runes" className="not-prose group text-muted-foreground uppercase">Explore Runes</a>
+</h4>
+
+---
+
+<Cards>
+  <SmallCard
+    className='group space-y-3'
+    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/bitcoin/runes/api"
+    title="Runes API"
+    description="Interact with the Runes protocol from your backend via our hosted API."
   />
 </Cards>
 
