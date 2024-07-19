@@ -23,23 +23,6 @@ import guidesImage from '@/public/guides.svg';
   />
 </div>
 
-## Stacks
-
-<Cards>
-  {guidesData.stacks.map(guide => {
-    return (
-      <Card
-        key={guide.title}
-        href={guide.href}
-        title={guide.title}
-        description={guide.description}
-      />
-    )
-  })}
-</Cards>
-
-## Ordinals
-
 <Cards>
   {guidesData.ordinals.map(guide => {
     return (
