@@ -14,7 +14,7 @@ In this guide, you will learn how to:
 3. Start syncing your node
 4. Properly shutdown and restart your node
 
-<Callout>
+<Callout title="Requirements" type="warn">
 To get started, we first need to download `bitcoind`. In our example, we'll be using version 25.0. You can select a software version compatible with your device [from this list](https://bitcoincore.org/bin/bitcoin-core-25.0). 
 </Callout>
 
@@ -24,7 +24,7 @@ To get started, we first need to download `bitcoind`. In our example, we'll be u
 
 Once your download is complete, make note of your path to the `bitcoind` executable.
 
-<Callout>
+<Callout title="Note">
 When you sync your node, we'll be running the program at `/bitcoin-25.0/bin/bitcoin`, which is where the `bitcoind` executable is located.
 </Callout>
 
@@ -35,7 +35,7 @@ Next up is a couple configuration steps.
 
 The Bitcoin chainstate is pretty large, and you need a place to store it. In this example, we are going to set up a directory called `bitcoin-data` on an external hard drive that we have mounted at `/Volumes/SSD`.
 
-<Callout>
+<Callout title="Note">
   This folder, `bitcoin-data`, can be named whatever you like, and can exist locally or in an external hard drive.
   
   The most important thing is that it should exist in a place that has enough storage to hold all the Bitcoin data we will be receiving once it starts to sync.
@@ -84,7 +84,7 @@ zmqpubhashblock=tcp://0.0.0.0:18543
 
 If you plan to use your node to receive transactions, you will need to make note of the `username` and `password` fields for your node.
 
-<Callout>
+<Callout title="Note">
 In the example `bitcoin.conf` above, `devnet` is listed as the default `username` and `password`.
 </Callout>
 
@@ -100,7 +100,7 @@ This takes the form of `path/to/bitcoind -conf=path/to/bitcoin.conf`, which in t
 
 After running this command, you will see `zmq_url` entries in your console's stdout, displaying ZeroMQ logs from your Bitcoin node. Congrats! You're now syncing!
 
-<Callout>
+<Callout title="Note">
 It might take anywhere from a few hours to a few days to run and fully sync, depending on if it's your first time syncing a node.
 </Callout>
 

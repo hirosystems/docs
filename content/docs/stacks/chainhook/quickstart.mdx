@@ -20,7 +20,7 @@ Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as
     chainhook predicates new stx-transfer.json --stacks 
     ```
 
-    <Callout>
+    <Callout title="Note">
       The `--stacks` flag is required and allows you to specify the network to scan. Other options include `--bitcoin`.
     </Callout>
   </Step>
@@ -69,7 +69,7 @@ Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as
       </Accordion>
     </Accordions>
   
-    <Callout>
+    <Callout title="Note">
       Other available `actions` include `mint`, `burn`, and `lock`. For more information on these actions, check out the [predicates](/stacks/chainhook/concepts/stacks-predicates) section.
     </Callout>
   </Step>
@@ -82,7 +82,7 @@ Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as
     chainhook predicates scan /path/to/stx-transfer.json --mainnet
     ```
 
-    <Callout>
+    <Callout title="Note">
       When running `scan` for the first time, a chainstate archive will be downloaded. The subsequent scans will use the cached chainstate if already present, speeding up iterations and the overall feedback loop. For more information on the Hiro Archive, click [here](/stacks/archive).
     </Callout>
   </Step>

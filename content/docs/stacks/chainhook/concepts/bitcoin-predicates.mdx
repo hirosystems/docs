@@ -98,7 +98,7 @@ The `p2pkh` construct admits an ASCII string type: `"mr1iPkD9N3RJZZxXRk7xF9d36gf
 
 Or a hex encoded bytes type: `"0x76a914ee9369fb719c0ba43ddf4d94638a970b84775f4788ac"`.
 
-<Callout>
+<Callout title="Note">
 `p2pkh`(Pay-to-Public-Key-Hash) is a Bitcoin transaction output script type that allows users to send funds to a recipient's hashed public key, providing security and privacy by concealing the actual public key.
 </Callout>
 
@@ -123,7 +123,7 @@ The `p2sh` construct accepts the following types:
   - A string type: `"2MxDJ723HBJtEMa2a9vcsns4qztxBuC8Zb2"`.
   - A hex encoded bytes type: `"0x76a914ee9369fb719c0ba43ddf4d94638a970b84775f4788ac"`.
 
-<Callout>
+<Callout title="Note">
 `p2sh`(Pay-to-Script-Hash) is a Bitcoin transaction output script type that enables users to send funds to a script instead of a public key, allowing for more complex transaction conditions and multi-signature addresses.
 </Callout>
 
@@ -146,7 +146,7 @@ Get any transaction, including a `p2wpkh` output paying a given recipient.
 
 The `p2wpkh` construct accepts a string type, for example: `"bcrt1qnxknq3wqtphv7sfwy07m7e4sr6ut9yt6ed99jg"`.
 
-<Callout>
+<Callout title="Note">
 `p2wpkh`(Pay-to-Witness-Public-Key-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that allows for more efficient and secure transactions by separating the witness data from the transaction data and storing it in a separate block.
 </Callout>
 
@@ -169,7 +169,7 @@ Get any transaction, including a `p2wsh` output paying a given recipient.
 
 The `p2wsh` construct accepts a string type, for example: "bc1qklpmx03a8qkv263gy8te36w0z9yafxplc5kwzc".
 
-<Callout>
+<Callout title="Note">
 `p2wsh` (Pay-to-Witness-Script-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that enables users to send funds to a hashed script, allowing for more complex transaction conditions and greater scalability by separating the script from the transaction data.
 </Callout>
 

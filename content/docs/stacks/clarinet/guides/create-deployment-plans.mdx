@@ -95,7 +95,7 @@ The default plan is generated upon each `clarinet deployments generate --<networ
 
 However, you can also manually edit this default deployment `.yaml` file directly—programmatically orchestrating your contract publication and user interaction beyond your plan's defaults.
 
-<Callout>
+<Callout title="Note">
 When deploying, Clarinet prompts you to overwrite any manually added or edited changes that differ from the specifications laid out in your project's .toml files. Type `no` to proceed with your manually configured deployment plan instead of the default.
 </Callout>
 
@@ -140,7 +140,7 @@ This is a transaction type for a `simnet` deployment where the developer wants t
       - u1
 ```
 
-<Callout>
+<Callout title="Note">
 Read-only functions and functions that take no arguments are passed an empty list like so: `parameters: []`
 </Callout>
 
@@ -189,7 +189,7 @@ The developer can call a function and pass arguments of any valid Clarity type.
     cost: 5960
 ```
 
-<Callout>
+<Callout title="Note">
 Read-only functions and functions that take no arguments are passed an empty list like so: `parameters: []`
 </Callout>
 

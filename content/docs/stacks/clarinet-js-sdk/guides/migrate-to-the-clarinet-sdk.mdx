@@ -24,7 +24,7 @@ npx @hirosystems/clarinet-sdk@latest
 
 Follow the prompts to initialise NPM and Vitest, this can take a few seconds.
 
-<Callout>
+<Callout title="Info">
 The file `tests/counter_test.ts` that was created by `clarinet contract new counter` can be deleted.
 
 You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest.
@@ -75,16 +75,12 @@ To run the test, go back to your console and run the `test` command using your p
 npm test
 ```
 
-<Callout>
+<Callout title="Note">
 The `simnet` object is available globally in the tests, and is automatically initialized before each test. You can have a look at the `vitest.config.js` file at the root of you project for more details.
 </Callout>
 
 Getting back to the tests - the first test checks that the `increment` function returns the new value and saves it to the `count` variable.
 The second test checks that an `print_event` is emitted when the `increment` function is called.
-
-<Callout>
-You can use `Cl.prettyPrint(value: ClarityValue)` to format any Clarity value into readable Clarity code. It can be useful to debug function results or event values.
-</Callout>
 
 ---
 

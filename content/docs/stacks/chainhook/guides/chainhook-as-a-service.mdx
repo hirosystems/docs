@@ -124,7 +124,7 @@ Replace the contents of the `stacking-pool.json` file with the following:
 
 This example demonstrates scanning a portion of the Bitcoin blockchain to capture specific outputs from a Bitcoin address associated with a Stacking pool, in this case [Friedgar Pool](https://pool.friedger.de/). Notice the `then_that` predicate specifying a `file_append`.
 
-<Callout>
+<Callout title="Note">
 You can get blockchain height and current block by referring to the [Stacks Explorer](https://explorer.hiro.so/blocks?chain=mainnet).
 </Callout>
 
@@ -173,7 +173,7 @@ Replace the contents of the `stacking-pool-api.json` file with the following:
 }
 ```
 
-<Callout>
+<Callout title="Note">
 The `start_block` is a required field when using the `http_post` `then_that` predicate.
 </Callout>
 
@@ -315,7 +315,7 @@ To better understand the output of the above JSON file, let's break down some of
 - The `apply` payload includes the block header and the transactions that triggered the predicate.
 - The `rollback` payload includes the block header and the transactions that triggered the predicate for a past block that is no longer part of the canonical chain and must be reverted. (Note: this is a chief component of Chainhook's reorg-aware functionality. Chainhook maintains rollback data for blocks near the chaintip.)
 
-<Callout>
+<Callout title="Note">
 You can also run chainhook service by passing multiple predicates, ie `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml`
 </Callout>
 

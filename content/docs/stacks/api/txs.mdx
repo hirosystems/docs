@@ -33,7 +33,7 @@ Stacks supports a set of different transaction types:
 
 A sample of each transaction type can be found in the [Stacks Blockchain API response definition for transactions](https://docs.hiro.so/api#operation/get_transaction_by_id).
 
-<Callout>
+<Callout title="Note">
 Read-only contract call calls do **not** require transactions. Read more about it in the [network guide](https://docs.stacks.co/stacks-101/network#read-only-function-calls).
 </Callout>
 
@@ -131,7 +131,7 @@ The easiest way to construct well-formed transactions is by [using the Stacks.js
 
 When constructing transactions, it is required to set the network the transaction is intended for. This can be either mainnet or testnet.
 
-<Callout>
+<Callout title="Note">
 Transactions can be constructed and serialized offline. However, it is required to know the nonce and estimated fees ahead of time. Once internet access is available, the transaction can be broadcast to the network. Keep in mind that the nonce and fee might change during offline activity, making the transaction invalid.
 </Callout>
 
@@ -297,7 +297,7 @@ A well-formed transaction construct is encoded in [Recursive Length Prefix ("RLP
 
 In order to broadcast transactions to and between nodes on the network, RLP data is represented in hexadecimal string (also called the **raw format**).
 
-<Callout>
+<Callout title="Note">
 To support an API-friendly and human-readable representation, the Stacks Blockchain API converts transactions into a JSON format.
 </Callout>
 
@@ -465,7 +465,7 @@ transactions after [256 blocks][].
 
 Transactions on the Stacks network can be queried using the Stacks Blockchain API. The API exposes two interfaces, a RESTful JSON API and a WebSockets API.
 
-<Callout>
+<Callout title="Note">
 The API can be easily consumed using a generated [JS client library](https://hirosystems.github.io/stacks-blockchain-api/client/index.html). The generator uses an OpenAPI specification and supports other languages and frameworks.
 </Callout>
 
