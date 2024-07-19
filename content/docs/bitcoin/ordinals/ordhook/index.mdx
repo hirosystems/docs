@@ -3,37 +3,40 @@ title: Overview
 description: Ordhook enables you to build ordinals event streams, so you can create accurate, lightweight databases that gracefully handle Bitcoin forks and reorgs.
 ---
 
+import { SecondaryCard } from '@/components/card';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 Ordhook is a reorg-aware indexer that automatically handles chain forks, so you don’t need to waste time or resources reindexing your database yourself.
 
 With a familiar event-driven framework, you can customize what ordinals data you index in order to create lightweight databases for faster query responses and a better user experience.
 
-### Create event streams
+## Create event streams
 
 <Cards>
-  <Card
+  <SecondaryCard
     href="/bitcoin/ordinals/ordhook/guides/scan-ordinals-activity"
     title="Scan past Ordinals activity"
     description="Fetch historical ordinals activity, whether for a range of blocks or for a particular inscription."
   />
-  <Card
+  <SecondaryCard
     href="/bitcoin/ordinals/ordhook/guides/stream-ordinals-activity"
     title="Stream Ordinals activity"
     description="Create webhook-like triggers that target and post ordinal activity to a custom source."
   />
-  <Card
+  <SecondaryCard
     href="/bitcoin/ordinals/ordhook/guides/ordhook-as-a-service"
     title="Run Ordhook as a Service"
     description="Interact and manage incoming Ordinals activity with your own service."
   />
 </Cards>
 
-### Related tools
+## Related tools
 
 - **[Ordinals API](/bitcoin/ordinals/api)**: Skip the infrastructure setup and get the ordinals data you need from our Ordinals API, which is powered by Ordhook.
 - **[Ordinals Explorer](/ordinals/explorer)**: Explore ordinals inscriptions and BRC-20 tokens rapidly in our Ordinals Explorer.
 
----
+<br />
 
-_Need help building with Ordhook?_ Reach out to us on the `#chainhook` channel on Discord under **Hiro Developer Tools** section. We also host a weekly office hours on Discord every Monday at 11am ET.
+<Callout title="Need help building with Ordhook?" type="help">
+Reach out to us on the <span className="font-bold">#chainhook</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.
+</Callout>

@@ -3,7 +3,7 @@ title: Use the Stacks blockchain archive
 description: Discover how to use the Hiro Archive to spin up a Stacks node.
 ---
 
-### Where to download archives
+## Where to download archives
 
 Stacks blockchain archives for each network can be found at the following locations:
 
@@ -25,14 +25,14 @@ or the most recent upload for a particular version:
 - archive: `<NETWORK>-stacks-blockchain-2.3.0.0.2-latest.tar.gz`
 - shasum: `<NETWORK>-stacks-blockchain-2.3.0.0.2-latest.sha256`
 
-### Restoring a Stacks blockchain node using the Hiro Archive
+## Restoring a Stacks blockchain node using the Hiro Archive
 
 1. Download the archive and shasum for the appropriate network.
 1. [Verify the archive](/stacks/archive/guides/verify-archive-data) with the shasum.
 1. Extract the archive into the desired directory:
-   ```bash
-       # Target directory must already exist
-       tar -zxvf <ARCHIVE FILE> -C /target/directory
+   ```console
+   # Target directory must already exist
+   tar -zxvf <ARCHIVE FILE> -C /target/directory
    ```
 1. [Configure the `working_dir` property](https://docs.stacks.co/docs/nodes-and-miners/stacks-node-configuration#node) in your Stacks blockchain node Config.toml file to match the directory you extracted the archive to.
 1. Launch your Stacks blockchain node. You can use [one of these example configuration files](https://github.com/stacks-network/stacks-blockchain/tree/master/testnet/stacks-node/conf) as a reference.

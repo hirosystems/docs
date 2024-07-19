@@ -41,6 +41,11 @@ export const inter = localFont({
       weight: "normal",
       style: "normal",
     },
+    {
+      path: "./Inter-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
   ],
   display: "swap",
   variable: "--font-inter",

@@ -4,23 +4,24 @@ description: Clarinet can handle adding and configuring a new contract to your p
 ---
 
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
 
 To add a new contract, run the `clarinet contract new` command, along with your contract name, inside your project.
 
- ```bash title="Terminal"
+```console title="Terminal"
 clarinet contract new my-contract
 ```
+
+## Project structure
 
 **Clarinet** will add 2 files to your project: `my-contract.clar` and `my-contract.test.ts`.
 
 <Files className='pointer-events-none'>
   <Folder name="contracts" defaultOpen>
-    <File name="my-contract.clar" className='bg-muted' />
+    <File name="my-contract.clar" className='bg-[hsl(var(--highlight))]' />
   </Folder>
   <Folder name="settings" />
   <Folder name="tests" defaultOpen>
-    <File name="my-contract.test.ts" className='bg-muted' />
+    <File name="my-contract.test.ts" className='bg-[hsl(var(--highlight))]' />
   </Folder>
   <File name=".gitignore" />
   <File name="Clarinet.toml" />
@@ -38,6 +39,6 @@ clarity_version = 2
 epoch = 2.4
 ```
 
-<Callout title="Adding contracts manually" type="warn">
+<Callout title="Adding contracts manually">
 You can also add contracts to your project by adding the files manually. However, you must add the appropriate configuration to `Clarinet.toml` in order for **Clarinet** to recognize the contracts.
 </Callout>

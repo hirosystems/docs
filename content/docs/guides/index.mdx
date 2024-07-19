@@ -5,52 +5,30 @@ toc: false
 
 import Link from "fumadocs-core/link";
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import { SectionHeader } from '@/components/layout/section-header';
-import { Badge } from "@/components/ui/badge";
-import guidesData from '@/utils/all-guides.json';
-
-
+import { SecondaryCard } from "@/components/card"
 import guidesImage from '@/public/guides.svg';
+import data from '@/utils/all-guides.json';
 
 <div className='flex flex-col space-y-10'>
+  <div className='flex space-x-6 items-end'>
+    <ImageZoom
+      alt="banner"
+      src={guidesImage}
+      className="mt-0 mb-6 first-line:rounded-xl bg-background"
+      priority
+    />
+  </div>
 
-<div className='flex space-x-6 items-end'>
-  <ImageZoom
-    alt="banner"
-    src={guidesImage}
-    className="mt-0 mb-6 first-line:rounded-xl bg-background"
-    priority
-  />
-</div>
-
-## Stacks
-
-<Cards>
-  {guidesData.stacks.map(guide => {
-    return (
-      <Card
-        key={guide.title}
-        href={guide.href}
-        title={guide.title}
-        description={guide.description}
-      />
-    )
-  })}
-</Cards>
-
-## Ordinals
-
-<Cards>
-  {guidesData.ordinals.map(guide => {
-    return (
-      <Card
-        key={guide.title}
-        href={guide.href}
-        title={guide.title}
-        description={guide.description}
-      />
-    )
-  })}
-</Cards>
-
+  <Cards>
+    {data.guides.map(guide => {
+      return (
+        <SecondaryCard
+          key={guide.title}
+          href={guide.href}
+          title={guide.title}
+          description={guide.description}
+        />
+      )
+    })}
+  </Cards>
 </div>

@@ -5,7 +5,7 @@ description: Learn how to create a simple counter contract using Clarinet.
 
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
+import { Steps, Step } from 'fumadocs-ui/components/steps';
 import { SmallCard } from '@/components/card';
 
 In this quickstart guide, you will write a simple counter contract with Clarity. Throughout this tutorial, you'll learn how to generate a new project, create a smart contract, and validate your smart contract code using the Clarinet CLI.
@@ -14,185 +14,144 @@ Check out the [create a new project](/stacks/clarinet/guides/create-a-new-projec
 
 ---
 
-### Prerequisites
+<Steps>
+  <Step>
+    ## Generate your counter project
+  
+    Start by creating a new Clarinet project. This command will create a new directory named `counter` and set up a basic Clarinet project inside it.
 
-To follow this quickstart guide, you will need to have Clarinet installed on your machine.
+    ```console title="Terminal"
+    // [!code word:clarinet new]
+    clarinet new counter
+    ```
 
-```bash
-brew install clarinet
-```
+    Navigate to the newly created directory:
 
-If you need more installation options, check out the [installation](/stacks/clarinet/installation) guide.
+    ```console title="Terminal"
+    cd counter
+    ```
+
+    You should see the following files and folders:
+
+    <Files className='pointer-events-none'>
+      <Folder name="contracts" />
+      <Folder name="settings" defaultOpen>
+        <File name="Devnet.toml" />
+        <File name="Mainnet.toml" />
+        <File name="Testnet.toml" />
+      </Folder>
+      <Folder name="tests" />
+      <File name=".gitignore" />
+      <File name="Clarinet.toml" />
+      <File name="package.json" />
+      <File name="tsconfig.json" />
+      <File name="vitest.config.js" />
+    </Files>
+
+    <Callout title="Note">
+      The `--stacks` flag is required and allows you to specify the network to scan. Other options include `--bitcoin`.
+    </Callout>
+  </Step>
+  <Step>
+    ## Create a counter contract
+  
+    Inside your project, create your first contract. This command will create an empty `counter.clar` file in the **contracts** folder as well as a `counter.test.ts` file in the `tests` folder.
+
+    ```console title="Terminal"
+    // [!code word:clarinet contract new]
+    clarinet contract new counter
+    ```
+
+    <Files className='pointer-events-none'>
+      <Folder name="contracts" defaultOpen>
+        <File name="counter.clar" className='bg-[hsl(var(--highlight))]' />
+      </Folder>
+      <Folder name="settings" />
+      <Folder name="tests" defaultOpen>
+        <File name="counter.test.ts" className='bg-[hsl(var(--highlight))]' />
+      </Folder>
+      <File name=".gitignore" />
+      <File name="Clarinet.toml" />
+      <File name="package.json" />
+      <File name="tsconfig.json" />
+      <File name="vitest.config.js" />
+    </Files>
+
+    It also updates the `Clarinet.toml` file inside your project with the necessary settings.
+
+    ```toml title="Clarinet.toml"
+    // [!code word:contracts.counter]
+    [contracts.counter]
+    path = 'contracts/counter.clar'
+    clarity_version = 2
+    epoch = 2.5
+    ```
+  </Step>
+  <Step>
+    ## Variables and functions
+  
+    In Clarity, you can define variables and functions to store and manipulate data. Inside your `contracts/counter.clar` file:
+
+    1. Define a map called `Counters` to store the count associated with each user.
+    2. Define a public function called `count-up` that increments the count of the user who calls it.
+    3. Add a read-only function called `get-count` that returns the count of the user who calls it.
+
+    ```clarity title="counter.clar"
+    (define-map Counters principal uint)
+
+    (define-public (count-up)
+      (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+    )
+
+    (define-read-only (get-count (who principal))
+      (default-to u0 (map-get? Counters who))
+    )
+    ```
+  </Step>
+  <Step>
+    ## Validate your contract
+  
+    Now it's time to validate your contract. This command will check your contract for errors and typos.
+
+    ```console title="Terminal"
+    // [!code word:check]
+    clarinet check
+    ```
+
+    Once your contract is validated, you can interact with it in a local REPL with the following steps:
+
+    1. Run `clarinet console` from the terminal inside of your project.
+    ```console title="Terminal"
+    // [!code word:console]
+    clarinet console
+    ```
+    2. Call your contract by running `(contract-call? .counter count-up)`.
+    ```clarity
+    (contract-call? .counter count-up)
+    ```
+    3. Verify the count of the user has been incremented by calling the `get-count` function with the `tx-sender` as the argument.
+    ```clarity
+    (contract-call? .counter get-count tx-sender)
+    ```
+  </Step>
+</Steps>
 
 ---
 
-<div className='steps space-y-10'>
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Generate your <code className='text-lg'>counter</code> project</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Start by creating a new Clarinet project. This command will create a new directory named <code>counter</code> and set up a basic Clarinet project inside it.</p>
-        </div>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        clarinet new counter
-        ```
-      </div>
+## Next steps
 
-      <p>Navigate to the newly created directory:</p>
-      <div className="w-full">
-        ```bash
-        cd counter
-        ```
-      </div>
-
-      <div className="w-full">
-      <p>You should see the following files and folders:</p>
-        <Files className='pointer-events-none'>
-          <Folder name="contracts" />
-          <Folder name="settings" defaultOpen>
-            <File name="Devnet.toml" />
-            <File name="Mainnet.toml" />
-            <File name="Testnet.toml" />
-          </Folder>
-          <Folder name="tests" />
-          <File name=".gitignore" />
-          <File name="Clarinet.toml" />
-          <File name="package.json" />
-          <File name="tsconfig.json" />
-          <File name="vitest.config.js" />
-        </Files>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Create a <code className='text-lg'>counter</code> contract</p>
-        <p>Inside your project, create your first contract. This command will create an empty `counter.clar` file in the <code>contracts</code> folder as well as a `counter.test.ts` file in the <code>tests</code> folder.</p>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        clarinet contract new counter
-        ```
-      </div>
-
-      <div className="w-full">
-        <Files className='pointer-events-none'>
-          <Folder name="contracts" defaultOpen>
-            <File name="counter.clar" className='bg-muted' />
-          </Folder>
-          <Folder name="settings" />
-          <Folder name="tests" defaultOpen>
-            <File name="counter.test.ts" className='bg-muted' />
-          </Folder>
-          <File name=".gitignore" />
-          <File name="Clarinet.toml" />
-          <File name="package.json" />
-          <File name="tsconfig.json" />
-          <File name="vitest.config.js" />
-        </Files>
-        
-        <p>It also updates the `Clarinet.toml` file inside your project with the necessary settings.</p>
-
-        <div className="w-full">
-          ```toml title="Clarinet.toml"
-          [contracts.counter]
-          path = 'contracts/counter.clar'
-          clarity_version = 2
-          epoch = 2.5
-          ```
-        </div>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Variables and functions</p>
-        <div className='flex flex-col space-y-0'>
-          <p>In Clarity, you can define variables and functions to store and manipulate data. Inside your `contracts/counter.clar` file:</p>
-          <ol>
-            <li>Define a map called `Counters` to store the count associated with each user.</li>
-            <li>Define a public function called `count-up` that increments the count of the user who calls it.</li>
-            <li>Add a read-only function called `get-count` that returns the count of the user who calls it.</li>
-          </ol>
-        </div>
-        
-        <div className="w-full">
-          ```clarity title="counter.clar"
-          (define-map Counters principal uint)
-
-          (define-public (count-up)
-            (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
-          )
-
-          (define-read-only (get-count (who principal))
-            (default-to u0 (map-get? Counters who))
-          )
-          ```
-        </div>
-      </div>
-    </div>
-  </Step>
-
-  <Step>
-    <div className="flex flex-col space-y-3">
-      <div className="w-full">
-        <p className='text-lg font-bold m-0 dark:text-primary-foreground'>Validate your <code className='text-lg'>counter</code> contract</p>
-        <div className='flex flex-col space-y-0'>
-          <p>Now it's time to validate your contract. This command will check your contract for errors and typos.</p>
-        </div>
-      </div>
-      <div className="w-full">
-        ```bash title="Terminal"
-        clarinet check
-        ```
-      </div>
-
-      <p>When the validation is successful, you should see the following output: <code>✔ 1 contract checked</code>.</p>
-      
-      <div className='flex flex-col space-y-0'>
-        <p>You can go one step further and test your valid contract in a local REPL with the following steps:</p>
-        <ol>
-          <li>Run `clarinet console` from the terminal inside of your project.</li>
-          <li>Call your contract by running `(contract-call? .counter count-up)`.</li>
-          <li>Verify the count of the user has been incremented by calling the `get-count` function with the `tx-sender` as the argument.</li>
-        </ol>
-      </div>
-
-      ```bash
-      (contract-call? .counter count-up)
-      (contract-call? .counter get-count tx-sender)
-      ```
-
-    </div>
-  </Step>
-</div>
-
----
-
-### Next steps
-
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+<Cards>
+  <Card
     href="/stacks/clarinet/guides/run-a-local-devnet"
     title="Run a local devnet"
     description="Learn how to set up and run a local development network for your project."
   />
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/clarinet/guides/testing-with-clarinet-sdk"
     title="Testing with the Clarinet JS SDK"
     description="Learn how to test your smart contracts using the Clarinet JS SDK."
   />
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/clarinet/guides/deploy-a-contract"
     title="Deploy a contract"
     description="Learn how to deploy your smart contracts using the Clarinet CLI."

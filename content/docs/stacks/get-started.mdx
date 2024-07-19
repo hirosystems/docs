@@ -5,16 +5,17 @@ icon: Play
 toc: false
 ---
 
+import { Database, Ticket } from 'lucide-react';
+import { Blockchain, BitcoinIcon, Clarinet, Container, DAO, Js, Plant, Shapes, StacksIcon } from '@/components/ui/icon';
 import { SecondaryCard, SmallCard } from '@/components/card';
 import { SectionHeader } from '@/components/layout/section-header';
-import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
 
-### Quickstarts
+<div className='flex flex-col space-y-10'>
 
 <Cards>
   <SecondaryCard
     className="group"
-    icon={<Play className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Clarinet className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/clarinet/quickstart"
     title="Create your first smart contract"
     description="Build a simple counter contract using Clarinet."
@@ -22,15 +23,15 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
   <SecondaryCard
     className="group"
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Blockchain className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/clarinet-js-sdk/quickstart"
-    title="Simulate a blockchain with the Clarinet JS SDK"
-    description="Learn how to interact with a simulated network without running a node."
+    title="Write unit tests for your smart contracts"
+    description="Learn how run unit tests with Clarinet JS SDK."
     tag='Clarinet JS SDK'
   />
   <SecondaryCard
     className="group"
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Js className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/stacks.js/quickstart"
     title="Make a contract call with Stacks.js"
     description="Learn how to integrate smart contracts into your app."
@@ -48,21 +49,23 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
 
 <div className='flex flex-col space-y-3'>
 
-### Learn by example
+<h4 id="learn-by-example" className="scroll-m-20">
+  <a href="#learn-by-example" className="not-prose group text-muted-foreground uppercase">Learn by example</a>
+</h4>
 
 ---
 
 <Cards>
   <SmallCard
     className="group"
-    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Shapes className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/guides/build-an-nft-marketplace"
     title="Build an NFT Marketplace"
     description="Learn how to create and deploy your own NFT marketplace."
   />
   {/* <SmallCard
     className="group"
-    icon={<Scale className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<DAO className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/stacks/clarinet"
     title="Launch a Decentralized Autonomous Organization (DAO)"
     description="Discover the steps to creating your own DAO."
@@ -74,42 +77,53 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
     title="Create a no-loss lottery pool"
     description="Build a no-loss lottery pool that leverages stacking yield."
   />
-  {/* <SmallCard
+  <SmallCard
     className="group"
-    icon={<Banknote className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/stacks/quickstarts"
+    icon={<Plant className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/build-a-decentralized-kickstarter"
     title="Build a decentralized Kickstarter"
     description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
-  /> */}
+  />
 </Cards>
 
 </div>
 
 <div className='flex flex-col space-y-3'>
 
-### Installation guides
+<h4 id="installation-guides" className="scroll-m-20">
+  <a href="#installation-guides" className="not-prose group text-muted-foreground uppercase">Installation guides</a>
+</h4>
 
 ---
 
 <Cards>
   <SmallCard
     className="group"
-    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<BitcoinIcon className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/guides/sync-a-bitcoin-node"
     title="Sync a Bitcoin node"
-    description="Set up and run a Bitcoin node to use tools like Chainhook."
+    description="Set up and run a Bitcoin node to run tools like Chainhook as a service."
   />
   <SmallCard
     className="group"
-    icon={<ArrowLeftRight className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<StacksIcon className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/guides/sync-a-stacks-node"
     title="Sync a Stacks node"
     description="Set up and run a Stacks node to use tools like Chainhook or spin up your own API."
+  />
+  <SmallCard
+    className="group"
+    icon={<Container className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    href="/guides/installing-docker"
+    title="Install and run Docker on your machine"
+    description="Essential for running a local development with Clarinet"
   />
 </Cards>
 
 </div>
 
-{/* <Callout>
+<Callout type="tip">
 For more, check out our [guides](/guides) section.
-</Callout> */}
+</Callout>
+
+</div>

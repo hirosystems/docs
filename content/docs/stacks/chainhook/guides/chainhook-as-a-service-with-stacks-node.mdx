@@ -3,40 +3,21 @@ title: Run Chainhook as a service with a Stacks node
 description: Learn how to run Chainhook as a service with a Stacks node to evaluate Stacks blocks against your predicates.
 ---
 
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { ChevronRight, Code, Terminal } from 'lucide-react';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
-import { SmallCard } from '@/components/card';
-
-import { GridPattern } from "@/components/grid-pattern";
-import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
-
-import { InlineCode } from '@/components/inline-code';
-
 You can run Chainhook as a service to evaluate Stacks blocks against your predicates. You can also dynamically register new predicates by enabling the predicates registration API.
 
 In this guide, you will learn how to:
 
-1. Configure your Stacks node to work with Chainhook.
-2. Generate a Chainhook predicate to evaluate your events.
-3. Scan the Stacks blockchain for transactions that match your predicates.
-4. Initiate a Chainhook service to watch for matching transactions.
-5. Dynamically register your predicates with Chainhook.
+1. [Configure your Stacks node to work with Chainhook](#configure-your-stacks-node).
+2. [Configure Chainhook](#configure-chainhook).
+3. [Create a predicate to evaluate your events](#create-a-predicate).
+4. [Initiate a Chainhook service to watch for matching transactions](#initiate-chainhook-as-a-service).
+5. [Dynamically register your predicates with Chainhook](#dynamically-register-predicates).
 
 {/* <Callout>Check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
 
 ---
 
-### Prerequisites
-
-1. Chainhook installed (Refer to the [Chainhook installation guide](/stacks/chainhook/installation) if you have not installed Chainhook yet.)
-2. A fully synced Bitcoin node is required to run Chainhook as a service. Check out our guide on [How to sync a Bitcoin node](/guides/sync-a-bitcoin-node) before proceeding.
-3. A fully synced Stacks node is required to run Chainhook as a service. Check out our guide on [How to sync a Stacks node](/guides/sync-a-stacks-node) before proceeding.
-
----
-
-### Configure Your Stacks Node
+## Configure Your Stacks Node
 
 If you followed along with the previous guide on syncing a Stacks node, you should generate a `Stacks.toml` file within your Stacks node repository. Below is a sample `Stacks.toml` file:
 
@@ -61,15 +42,15 @@ endpoint = "localhost:20455"
 retry_count = 255
 events_keys = ["*"]
 ```
-<Callout>
+<Callout title="Note">
 Ensure that the `username`, `password`, and `rpc_port` values in the `Stacks.toml` file match the values in the `bitcoin.conf` file. Also, note the `rpc_bind` port to use in the `Chainhook.toml` configuration in the next section.
 </Callout>
 
-### Configure Chainhook
+## Configure Chainhook
 
 In this section, you will configure Chainhook to communicate with the network. Run the following command in your terminal to generate the `Chainhook.toml` file:
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook config generate --mainnet
 ```
 
@@ -131,21 +112,23 @@ Ensure the following configurations are matched to allow Chainhook to communicat
 |                    | rpc_bind    | stacks_node_rpc_url        |
 |                    | endpoint    | stacks_events_ingestion_port |
 
-<Callout>
+<Callout title="Note">
 The `bitcoind_zmq_url` is optional when running Chainhook as a service using Stacks because Stacks will pull the blocks from Stacks and the Bitcoin chain.
 </Callout>
 
-### Scan the blockchain based on predicates
+## Create a predicate
 
 Now that the Stacks and Chainhook configurations are done, you can scan your blocks by defining your predicates.
 
 ### Appending events to a file
 
-```bash title="Terminal"
+The following command will generate a sample JSON file `print-event.json`.
+
+```console title="Terminal"
 chainhook predicates new print-event.json --stacks
 ```
 
-This will generate a sample JSON file `print-event.json`. Update the generated `print-event.json` file with the following content:
+Once the boilerplate predicate code has been generated, update the `print-event.json` file with the following content:
 
 ```json title="print-event.json"
 {
@@ -188,7 +171,7 @@ This will generate a sample JSON file `print-event.json`. Update the generated `
 
 Now, use the following command to scan the blocks based on the predicates defined in the `print-event.json` file:
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook predicates scan print-event.json --mainnet
 ```
 
@@ -196,7 +179,7 @@ The output of the above command will be a file `arkadiko.txt` generated based on
 
 ### Sending events to an API endpoint
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook predicates new print-event-post.json --stacks
 ```
 
@@ -249,25 +232,25 @@ The `start_block` is a required field to use the `http_post` then_that predicate
 
 Now, use the following command to scan the blocks based on the predicates defined in the `print-event-post.json` file:
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook predicates scan print-event-post.json --mainnet
 ```
 
 The above command posts events to the URL `http://localhost:3000/events` mentioned in the `Chainhook.toml` file.
 
-### Initiate Chainhook as a service
+## Initiate Chainhook as a service
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook service start --predicate-path=print-event.json --config-path=Chainhook.toml
 ```
 
 This command registers the predicate and starts the Chainhook service.
 
-### Dynamically register predicates
+## Dynamically register predicates
 
 You can also dynamically register new predicates with your Chainhook service.
 
-<Callout type="warn"> This section requires that you have Redis running locally. To install, refer to the [Redis documentation](https://redis.io/docs/getting-started/).</Callout>
+<Callout title="Requirements" type="warn"> This section requires that you have Redis running locally. To install, refer to the [Redis documentation](https://redis.io/docs/getting-started/).</Callout>
 
 First, ensure that the following lines in the `Chainhook.toml` file are uncommented to enable the predicate registration server:
 
@@ -277,13 +260,13 @@ http_port = 20456
 database_uri = "redis://localhost:6379/"
 ```
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook service start --predicate-path=print-event.json --config-path=Chainhook.toml
 ```
 
 Start the Chainhook service with the following command:
 
-```bash title="Terminal"
+```console title="Terminal"
 chainhook service start --config-path=Chainhook.toml
 ```
 
@@ -291,7 +274,7 @@ To dynamically register a new predicate, send a POST request to the running pred
 
 Use the following `curl` command as an example:
 
-```bash title="Terminal"
+```console title="Terminal"
 curl -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -321,25 +304,23 @@ curl -X POST \
 
 The response should look something like this:
 
-```plaintext
+```console
 {"result":"42","status":200}
 ```
 
-<Callout>You can also run the Chainhook service by passing multiple predicates: `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml` </Callout>
+<Callout title="Note">You can also run the Chainhook service by passing multiple predicates: `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml` </Callout>
 
 ---
 
-### Next steps
+## Next steps
 
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+<Cards>
+  <Card
     href="/stacks/chainhook/guides/register-chainhooks-on-devnet"
     title="Register Chainhooks on devnet"
     description="Learn how to register Chainhooks on devnet."
   />
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/chainhook/references/scopes"
     title="Scopes"
     description="Learn how to use scopes to scan for specific blockchain events."

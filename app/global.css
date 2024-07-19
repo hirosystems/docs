@@ -5,35 +5,38 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40 14.3% 95.9%;
     --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --card: 40 18.7% 93.7%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 20 14.3% 4.1%;
     --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 4.8% 95.9%;
+    --secondary: 40 13% 91%;
     --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 40 14.3% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
+    --accent: 40 13% 91%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
+    --border: 32 13.8% 78.6%;
     --input: 240 5.9% 90%;
     --ring: 346.8 77.2% 49.8%;
     --radius: 0.5rem;
-    --hiro: 20 100% 50%;
-    --icon: 20 14.3% 4.1%;
-    --inverted: 0 4% 5%;
+    --hiro: 21 100% 67.5%;
+    --icon: 17 6.5% 21%;
+    --inverted: 30 5.7% 7.5%;
+    --code: 0 0% 100%;
+    --highlight: 40 13% 91%;
+    --content: 32.31 11.93% 78.63%;
   }
 
   .dark {
-    --background: 0 4% 5%;
+    --background: 30 5.7% 7.5%;
     --foreground: 0 0% 95%;
-    --card: 20 10% 8%;
+    --card: 20 5.3% 11.2%;
     --card-foreground: 0 0% 95%;
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
@@ -41,30 +44,33 @@
     --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
+    --muted: 30 5.7% 7.5%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
+    --accent: 12 6.2% 15.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
-    --border: 20 6% 21%;
+    --border: 17 6.5% 21%;
     --input: 240 3.7% 15.9%;
     --ring: 346.8 77.2% 49.8%;
-    --hiro: 20 100% 50%;
+    --hiro: 24 100% 51.4%;
     --card-hover: 15 5% 16%;
     --icon: 0 0% 100%;
-    --inverted: 0 0% 100%;
+    --inverted: 40 14.3% 95.9%;
+    --code: 0 7.7% 5.1%;
+    --highlight: 12 6.2% 15.9%;
+    --content: 40 5.33% 33.14%;
   }
 
-  
-  .ordinals {
+  .bitcoin {
     --primary: 20 14.3% 4.1%;
     --icon: 20 14.3% 4.1%;
   }
 
-  .dark .ordinals {
+  .dark .bitcoin {
     --primary: 0 0% 100%;
     --icon: 0 0% 100%;
+    
   }
 }
 
@@ -76,6 +82,37 @@ body {
 }
 
 /* Override CSS */
+
+li a {
+  text-decoration: none !important;
+}
+
+li a:hover {
+  text-decoration: underline !important;
+}
+
+div.container {
+  margin-top: 1rem;
+}
+
+:not(pre) > code {
+  background: hsl(var(--accent)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+/* FIXME: This removes the white space margin between frontmatter title and description and start of body content */
+.container article p.mb-8 {
+  margin-bottom: 0rem;
+}
+
+/* FIXME: This changes the background color of the sidebar navigation */
+/* aside div.rounded-md.border.bg-gradient-to-b.from-secondary.p-1.shadow-sm {
+  background: hsl(var(--hiro));
+} */
+
+.mt-4.flex.flex-row.flex-wrap.gap-4.border-t.py-12 {
+  display: none;
+}
 
 div[cmdk-list-sizer] {
   font-family: var(--font-inter), sans-serif;
@@ -94,7 +131,7 @@ h1, h2, h3, h4, h5, h6, code, button, .step {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
-h a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
@@ -104,12 +141,103 @@ a, p, li, table, input, div.prose .w-0, div.prose .flex-1 span {
   font-family: var(--font-inter), sans-serif;
 }
 
+/* This changes the default background color of the root level Home and Get Started tab icons */
+div.bg-gradient-to-b {
+  background: hsl(var(--accent));
+}
+
+/* This changes font weight on active sidebar tab */
+a.bg-primary\/10 {
+  font-weight: 600;
+  background: hsl(var(--accent));
+}
+
+/* This changes the icon colors for active root level sidebar tabs, Stacks */
+a.bg-primary\/10 div:first-child {
+  background: hsl(var(--inverted));
+  border: none;
+}
+
+a.bg-primary\/10 div:first-child svg {
+  color: hsl(var(--background));
+}
+/* This changes the icon colors for active root level sidebar tabs, Ordinals */
+.bitcoin a.bg-primary\/10 div:first-child {
+  background: hsl(var(--hiro));
+  border: none;
+}
+
+.bitcoin a.bg-primary\/10 div:first-child svg {
+  color: hsl(var(--background));
+}
+
 p {
   line-height: 1.75;
 }
 
+body > div.guides > div > article > div.prose > figure:nth-child(37) > div > div {
+  background: hsl(var(--code));
+}
+
+figure.not-prose div[data-radix-scroll-area-viewport] {
+  background: hsl(var(--code));
+  width: auto;
+  margin: 8.5px;
+  border-radius: 0.5rem;
+}
+
+/* Reduces the vertical space between code blocks and text in the steps guides */
+figure.not-prose {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* This sets the background of a code block to match the theme's background when providing a filename to the code block */
+figure.not-prose {
+  background: hsl(var(--background));
+}
+
+/* This removes the border from the code block when providing a filename */
+figure:not(:has(figcaption)) {
+  border: none;
+}
+
+figure.not-prose:not(:has(figcaption)) {
+  background: hsl(var(--code));
+}
+
+figure.not-prose:not(:has(figcaption)) div[data-radix-scroll-area-viewport] {
+  margin: 0;
+}
+
+figure pre {
+  background: hsl(var(--code));
+}
+
+nav.container {
+  gap: 2.25rem;
+}
+
+nav.container > *:nth-last-child(2) {
+  position: relative;
+  top: 2px;
+  margin-left: -10px;
+  text-decoration: none;
+  color: hsl(var(--primary));
+  border-bottom: 2px solid hsl(var(--accent));
+  padding-bottom: 0.15rem;
+}
+
+nav.container > *:nth-last-child(2):hover {
+  border-bottom-color: hsl(var(--primary));
+}
+
 nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
   font-family: var(--font-aeonikFono), sans-serif;
+}
+
+div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
+  border-bottom: none;
 }
 
 
@@ -153,15 +281,32 @@ p.first\:mt-0:before {
   border-color: hsl(var(--accent));
 }
 
-/* Reduces the vertical space between code blocks and text in the steps guides */
-figure.not-prose {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+/* Override the .prose-no-margin on callout components */
+.callout p {
+  margin: 0;
 }
 
+div.not-prose, div.prose-no-margin, div[role="tablist"] {
+  background: hsl(var(--background));
+}
+
+div.prose div.footer.not-prose {
+  background: hsl(var(--accent));
+}
+
+.steps > div:nth-child(2) > figure:nth-child(3) > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
+  background: hsl(var(--background)) !important;
+}
+
+div.api-example div.max-xl\:hidden > div:nth-child(1) {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Sets the background and text for an active tab in reference pages */
 .tab[data-state="active"] > .badge {
-  color: #fff;
-  background-color: #262626;
+  color: hsl(var(--background));
+  background-color: hsl(var(--inverted));
 }
 
 .prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
@@ -175,28 +320,10 @@ figure.not-prose {
 
 /* Adjust styling for Shiki word highlighting */
 .highlighted-word {
-  border-color: hsl(var(--border) / 1) !important;
+  background: hsl(var(--accent)) !important;
+  border-color: hsl(var(--accent)) !important;
   border-radius: 5px !important;
   margin: 0 !important;
-}
-
-
-/* For the <APIExample /> component to provide more spacing between each child sections. */
-.api-example > *:not(:last-child) {
-  margin-bottom: 1.5rem;
-}
-
-.api-example figure.not-prose {
-  margin-top: 0;
-}
-
-.api h2 {
-  margin-bottom: 1rem;
-}
-
-.api h2 > p {
-  color: hsl(var(--foreground) / 1);
-  font-size: 0.95rem !important; /* This size represents Tailwind's text-sm */
 }
 
 .size-10 {
@@ -216,4 +343,8 @@ a[href="/stacks/api/accounts/transactions-with-transfers"],
 a[href="/stacks/api/accounts/transaction-with-transfers"] {
   text-decoration: line-through;
   color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
+}
+
+div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
+  background: hsl(var(--background));
 }

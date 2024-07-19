@@ -4,40 +4,41 @@ description: Query the Stacks blockchain, interact with smart contracts, and bro
 toc: false
 ---
 
-import { Blocks, Braces, CircleUserRound } from 'lucide-react';
+import { SecondaryCard } from '@/components/card';
 
 The Stacks Blockchain API expands the intentionally minimal RPC endpoints available in Stacks nodes and indexes, cleans, and enriches on-chain data to put everything you need at your fingertips. Who knew getting reliable blockchain data could be this easy?
 
-### Popular endpoints
+## Popular endpoints
 
 <Cards>
-  <Card
-    icon={<Blocks className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <SecondaryCard
     href="/stacks/api/transactions/recent-transactions"
     title="Get recent transactions"
     description="Retrieve data about transactions on Stacks."
   />
-  <Card
-    icon={<Braces className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <SecondaryCard
     href="/stacks/api/smart-contracts/read-only"
     title="Call smart contracts"
     description="Call a read-only public function on a smart contract."
   />
-  <Card
-    icon={<CircleUserRound className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <SecondaryCard
     href="/stacks/api/accounts/info"
     title="Retrieve user information"
     description="Get information about a user, their account balance, transaction history, and more."
   />
+  
 </Cards>
 
-### Related tools
+## Related tools
 
 - **[Hiro Archive](/stacks/archive)**: Bootstrap your own instance of the Stacks Blockchain API with the Hiro Archive and save days of setup time.
 - **[Token Metadata API](/stacks/token-metadata-api)**: Fetch fungible and non-fungible token data on the Stacks blockchain.
 - **[Stacks Explorer](https://explorer.hiro.so)**: Looking for a front end to verify activity on the Stacks blockchain? Try the Stacks Explorer.
 
----
+<br />
 
-_Need help building with the Stacks Blockchain API?_  [Reach out to us](https://stacks.chat/) on the `#api` channel on Discord under the **Hiro Developer Tools** section. There's also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.
+<Callout title="Need help building with the Stacks Blockchain API?" type="help">
+Reach out to us on the <span className="font-bold">#api</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://events.stacks.co/event/HD16484710) on Discord every Thursday at 11am ET.
+</Callout>
+
 

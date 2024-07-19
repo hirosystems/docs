@@ -4,8 +4,6 @@ description: Clarinet provides syntax and semantics checkers for the smart contr
 ---
 
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
-
 import {
   Tooltip,
   TooltipContent,
@@ -15,23 +13,25 @@ import {
 
 To verify your contracts, run the `clarinet check` command inside your project.
 
- ```bash title="Terminal"
+```console title="Terminal"
 clarinet check
 ```
 
+## Configuration
+
 **Clarinet** uses the `Clarinet.toml` file to locate and analyze all the contracts in the project. If the Clarity code is valid, the command will indicate success with the response below.
 
-```bash title="Terminal"
+```console title="Terminal"
 ✔ 2 contracts checked
 ```
 
-<Callout title="Warnings" type="info">
+<Callout title="Note">
 The `clarinet check` command may also report warnings indicating the code is valid.
 </Callout>
 
 If you want to check the syntax of just a single file in your project, you can use the command below.
 
-```bash title="Terminal"
+```console title="Terminal"
 clarinet check <path/to/file.clar>
 ```
 

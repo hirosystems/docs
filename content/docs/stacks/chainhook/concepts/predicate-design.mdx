@@ -7,7 +7,7 @@ The core design of chainhooks revolves around the concept of predicates. Each in
 
 Predicates are defined in an `if-this`, `then-that` format. You'll write your condition in the `if-this` condition template and use `then-that` to output the result.
 
-### `if-this`
+## `if-this`
 
 The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
 
@@ -31,11 +31,11 @@ Other available parameters:
 - `p2wpkh`
 - `operation`
 
-<Callout>
+<Callout title="Info">
   For more information on predicate definitions, refer to the [scopes](/stacks/chainhook/references/scopes) reference page.
 </Callout>
 
-### `then-that`
+## `then-that`
 
 The `then-that` predicate design can use the following attributes to output the result based on the `if-this` condition defined.
 

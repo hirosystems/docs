@@ -15,7 +15,7 @@ import { InlineCode } from '@/components/inline-code';
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
-### Installation
+## Installation
 
 ```package-install
 @stacks/network
@@ -33,7 +33,7 @@ Configuration data for the current app.
 
 On browser platforms, creating an instance of this class without any arguments will use `window.location.origin` as the app domain. On non-browser platforms, you need to specify an app domain as the second argument.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"scopes"} type={"string[]"}>
 
@@ -82,10 +82,10 @@ The URL of a web-based authenticator to use in the event the user doesn't have S
 <Tabs defaultValue="config">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="config" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Setting basic app permissions</Badge>
+      <Badge className='badge transition-colors'>Setting basic app permissions</Badge>
     </TabsTrigger>
     <TabsTrigger value="options" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With advanced scopes</Badge>
+      <Badge className='badge transition-colors'>With advanced scopes</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="config">
@@ -200,7 +200,7 @@ The URL of a web-based authenticator to use in the event the user doesn't have S
 
 Represents an instance of a signed in user for a particular app.
 
-### Functions
+## Functions
 
 <Property required={false} deprecated={false} name={"isSignInPending"} type={"function"}>
 
@@ -244,22 +244,22 @@ Decrypts user data for secure storage.
 <Tabs defaultValue="pending">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="pending" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Handling pending auth</Badge>
+      <Badge className='badge transition-colors'>Handling pending auth</Badge>
     </TabsTrigger>
     <TabsTrigger value="status" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Checking if user is signed in</Badge>
+      <Badge className='badge transition-colors'>Checking if user is signed in</Badge>
     </TabsTrigger>
     <TabsTrigger value="user-data" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Loading data for signed in user</Badge>
+      <Badge className='badge transition-colors'>Loading data for signed in user</Badge>
     </TabsTrigger>
     <TabsTrigger value="sign-out" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Signing out a user</Badge>
+      <Badge className='badge transition-colors'>Signing out a user</Badge>
     </TabsTrigger>
     <TabsTrigger value="encrypt" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Encrypting user data</Badge>
+      <Badge className='badge transition-colors'>Encrypting user data</Badge>
     </TabsTrigger>
     <TabsTrigger value="decrypt" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Decrypting user data</Badge>
+      <Badge className='badge transition-colors'>Decrypting user data</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="pending">
@@ -343,7 +343,7 @@ Decrypts user data for secure storage.
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"transitKey"} type={"string"}>
 
@@ -376,7 +376,7 @@ Additional permissions the app is requesting.
 <Tabs defaultValue="auth-request">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="auth-request" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Generate an authentication request</Badge>
+      <Badge className='badge transition-colors'>Generate an authentication request</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="auth-request">
@@ -461,7 +461,7 @@ Additional permissions the app is requesting.
 
 Look up a user's profile information by their BNS username.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"username"} type={"string"}>
 
@@ -489,7 +489,7 @@ URL to fetch the zone file for the username. This is only needed if the zone fil
 <Tabs defaultValue="lookup">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="lookup" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Generate an authentication request</Badge>
+      <Badge className='badge transition-colors'>Generate an authentication request</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="lookup">
@@ -569,9 +569,9 @@ URL to fetch the zone file for the username. This is only needed if the zone fil
 </Root> */}
 
 
-### Usage
+## Usage
 
-### Create a Stacks mainnet, testnet or mocknet network
+## Create a Stacks mainnet, testnet or mocknet network
 
 ```typescript
 import { StacksMainnet, StacksTestnet, StacksMocknet } from '@stacks/network';
@@ -583,19 +583,19 @@ const testnet = new StacksTestnet();
 const mocknet = new StacksMocknet();
 ```
 
-### Set a custom node URL
+## Set a custom node URL
 
 ```typescript
 const network = new StacksMainnet({ url: 'https://www.mystacksnode.com/' });
 ```
 
-### Check if network is mainnet
+## Check if network is mainnet
 
 ```typescript
 const isMainnet = network.isMainnet();
 ```
 
-### Network usage in transaction building
+## Network usage in transaction building
 
 ```typescript
 import { makeSTXTokenTransfer } from '@stacks/transactions';
@@ -610,7 +610,7 @@ const txOptions = {
 const transaction = await makeSTXTokenTransfer(txOptions);
 ```
 
-### Use the built-in API key middleware
+## Use the built-in API key middleware
 
 Some Stacks APIs make use API keys to provide less rate-limited plans.
 
@@ -638,7 +638,7 @@ const response = await broadcastTransaction(transaction, myMainnet); // make sur
 const nonce = await getNonce('SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159', myMainnet);
 ```
 
-### Use custom middleware
+## Use custom middleware
 
 Middleware can be used to hook into network calls before sending a request or after receiving a response.
 
@@ -661,7 +661,7 @@ const network = new StacksTestnet({ fetchFn });
 const nonce = await getNonce('SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159', network);
 ```
 
-### Get various API URLs
+## Get various API URLs
 
 ```typescript
 const txBroadcastUrl = network.getBroadcastApiUrl();

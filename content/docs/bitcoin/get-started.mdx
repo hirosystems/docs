@@ -7,14 +7,14 @@ toc: false
 
 import { SecondaryCard, SmallCard } from '@/components/card';
 import { SectionHeader } from '@/components/layout/section-header';
-import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, Star, Store, Terminal, Ticket } from 'lucide-react';
+import { API, Container, Chainhook, BitcoinIcon } from '@/components/ui/icon';
 
-### Quickstarts
+<div className='flex flex-col space-y-10'>
 
 <Cards>
   <SecondaryCard
     className="group"
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/bitcoin/ordinals/api"
     title="Integrate ordinals data into your app"
     description="Use the Ordinals API to get reliable data for Ordinals and BRC-20 tokens."
@@ -22,7 +22,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
   <SecondaryCard
     className="group"
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<Chainhook className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/bitcoin/ordinals/ordhook/quickstart"
     title="Stream custom blockchain events"
     description="Use Ordhook to filter and stream for contract deployments."
@@ -30,7 +30,7 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
   />
   <SecondaryCard
     className="group"
-    icon={<Database className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<API className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/bitcoin/runes/api"
     title="Get Runes data"
     description="Use Runes API to get reliable data for Runes."
@@ -40,14 +40,16 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
 
 <div className='flex flex-col space-y-3'>
 
-### Installation guides
+<h4 id="installation-guides" className="scroll-m-20">
+  <a href="#installation-guides" className="not-prose group text-muted-foreground uppercase">Installation guides</a>
+</h4>
 
 ---
 
 <Cards>
   <SmallCard
     className="group"
-    icon={<Store className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+    icon={<BitcoinIcon className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
     href="/guides/sync-a-bitcoin-node"
     title="Sync a Bitcoin node"
     description="Set up and run a Bitcoin node to use tools like Ordhook."
@@ -56,6 +58,8 @@ import { ArrowLeftRight, Banknote, ChevronRight, Code, Database, Play, Scale, St
 
 </div>
 
-{/* <Callout>
+<Callout type="tip">
 For more, check out our [guides](/guides) section.
-</Callout> */}
+</Callout>
+
+</div>

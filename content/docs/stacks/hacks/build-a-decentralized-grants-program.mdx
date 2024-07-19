@@ -42,7 +42,7 @@ Start by setting up your development environment. We've prepared a repository th
 
 To clone the repository, open your terminal and run the following command:
 
-```bash
+```console
 git clone https://github.com/hirosystems/hiro-hacks-template.git
 cd hiro-hacks-template
 ```
@@ -55,7 +55,7 @@ Traits in Clarity define a set of functions that a contract must implement. In t
 
 In your project's directory, run the following command:
 
-```bash
+```console
 clarinet contract new extension-trait && clarinet contract new proposal-trait
 ```
 
@@ -81,7 +81,7 @@ Now in your contracts, respectively, add the following code:
 
 Now that you've defined how your set of functions must be implemented, you can begin to create your core contract. First run the following command:
 
-```bash
+```console
 clarinet contract new core
 ```
 
@@ -94,7 +94,7 @@ Inside your `core.clar` contract, add the two trait contracts you've just create
 (use-trait extension-trait .extension-trait.extension-trait)
 ```
 
-### Error handling and state management
+## Error handling and state management
 
 Next, you need to define some basic error handling and variables for managing your contracts:
 
@@ -110,7 +110,7 @@ Next, you need to define some basic error handling and variables for managing yo
 
 These constants represent error codes that the contract can return. The variables store the executive principal (the owner of the grants program), a map of executed proposals, and a map of authorized extensions.
 
-### Authorization check
+## Authorization check
 
 The `is-self-or-extension` function is a private function that checks if the caller of a function is the contract itself or an authorized extension:
 
@@ -128,7 +128,7 @@ The `is-self-or-extension` function is a private function that checks if the cal
 )
 ```
 
-### Extension management
+## Extension management
 
 Here's a function to enable or disable an extension (`set-extension`):
 
@@ -142,7 +142,7 @@ Here's a function to enable or disable an extension (`set-extension`):
 )
 ```
 
-### Proposal execution
+## Proposal execution
 
 The `execute` function allows for the execution of a proposal:
 
@@ -159,7 +159,7 @@ The `execute` function allows for the execution of a proposal:
 
 This function checks if the caller is authorized, inserts the proposal into the `executedProposals` map, and then calls the `execute` function of the proposal contract.
 
-### Bootstrap
+## Bootstrap
 
 The `construct` function is used to bootstrap the grants program:
 
@@ -178,7 +178,7 @@ The `construct` function is used to bootstrap the grants program:
 
 This function checks if the caller is the executive, sets the executive to the contract itself, and then executes the provided proposal.
 
-### Extension requests
+## Extension requests
 
 The request-extension-callback function allows an extension to request a callback:
 
@@ -205,7 +205,7 @@ In this section, you will create your first `extension`, a non-transferable memb
 
 To create your membership token, navigate to your project's directory and run the following command:
 
-```bash
+```console
 clarinet contract new membership-token
 ```
 
@@ -213,7 +213,7 @@ This will create a new contract in the contracts directory called `membership-to
 
 Let's walk through the key components of this contract.
 
-### Constants and variables
+## Constants and variables
 
 The contract defines some constants and variables:
 
@@ -232,7 +232,7 @@ The contract defines some constants and variables:
 
 These constants represent error codes that the contract can return. The variables store the token name, symbol, URI, and decimals. The define-fungible-token function is used to define our sGrant token.
 
-### Authorization check
+## Authorization check
 
 The `is-dao-or-extension`, function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
 
@@ -244,7 +244,7 @@ The `is-dao-or-extension`, function is a private function that checks if the cal
 
 This function will allow you to distribute (or burn) tokens to new members, granting them the ability to vote on future grant proposals.
 
-### Token minting and burning
+## Token minting and burning
 
 The contract provides functions to `mint` and `burn` tokens:
 
@@ -266,7 +266,7 @@ The contract provides functions to `mint` and `burn` tokens:
 
 These functions check if the caller is authorized and then mint or burn the specified amount of sGrant tokens. And as you can see, these functions must be executed either through an approved grant proposal or an enabled `extension` (more on this later).
 
-### Token information
+## Token information
 
 The contract provides functions to get the token's name (`get-name`), symbol (`get-symbol`), decimals (`get-decimals`), balance (`get-balance`), total supply (`get-total-supply`), and URI (`get-token-uri`):
 
@@ -306,7 +306,7 @@ In this section, you will create your second `extension`, a proposal submission 
 
 To create your proposal submission contract, navigate to your project's directory and run the following command:
 
-```bash
+```console
 clarinet contract new proposal-submission
 ```
 
@@ -314,7 +314,7 @@ This will create a new contract in the contracts directory called proposal-submi
 
 Let's walk through the key components of this contract.
 
-### Traits and constants
+## Traits and constants
 
 First, you need to implement the `extension-trait` and use the `proposal-trait`:
 
@@ -330,7 +330,7 @@ Next, define some constants that represent error codes:
 (define-constant ERR_UNKNOWN_PARAMETER (err u3001))
 ```
 
-### Variables
+## Variables
 
 First, define a map to store the parameters of your contract:
 
@@ -344,7 +344,7 @@ Set the proposal-duration parameter to a default value. This value represents th
 (map-set parameters "proposal-duration" u1440) ;; ~10 days based on a ~10 minute block time.
 ```
 
-### Authorization check
+## Authorization check
 
 The `is-dao-or-extension` function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
 
@@ -354,7 +354,7 @@ The `is-dao-or-extension` function is a private function that checks if the call
 )
 ```
 
-### Parameters
+## Parameters
 
 The get-parameter function is a read-only function that returns the value of a parameter:
 
@@ -364,7 +364,7 @@ The get-parameter function is a read-only function that returns the value of a p
 )
 ```
 
-### Proposals
+## Proposals
 
 The propose function allows anyone to propose a grant:
 
@@ -386,7 +386,7 @@ The propose function allows anyone to propose a grant:
 
 This function calls the add-proposal function of the proposal-voting contract, passing the proposal contract, the current block height as the start block height, the current block height plus the proposal-duration as the end block height, the sender as the proposer, and the title and description of the proposal.
 
-### Extension callback
+## Extension callback
 
 The callback function allows the core contract to request a callback:
 
@@ -404,7 +404,7 @@ In this section, you will create your third extension, a proposal voting contrac
 
 To create your proposal voting contract, navigate to your project's directory and run the following command:
 
-```bash
+```console
 clarinet contract new proposal-voting
 ```
 
@@ -412,7 +412,7 @@ This will create a new contract in the contracts directory called proposal-votin
 
 Let's walk through the key components of this contract.
 
-### Traits and constants
+## Traits and constants
 
 First, you need to implement the extension-trait and use the proposal-trait:
 
@@ -436,7 +436,7 @@ Next, define some constants that represent error codes:
 (define-constant ERR_DISABLED (err u3010))
 ```
 
-### Variables
+## Variables
 
 You need to define a map to store the proposals and another map to store the total votes of each member:
 
@@ -458,7 +458,7 @@ You need to define a map to store the proposals and another map to store the tot
 (define-map member-total-votes {proposal: principal, voter: principal} uint)
 ```
 
-### Authorization check
+## Authorization check
 
 The `is-dao-or-extension` function is a private function that checks if the caller of a function is the core contract itself or an authorized extension:
 
@@ -468,7 +468,7 @@ The `is-dao-or-extension` function is a private function that checks if the call
 )
 ```
 
-### Proposals
+## Proposals
 
 The add-proposal function allows the core contract or an authorized extension to add a new proposal:
 
@@ -483,7 +483,7 @@ The add-proposal function allows the core contract or an authorized extension to
 )
 ```
 
-### Votes
+## Votes
 
 The vote function allows a token holder to vote on a proposal. It checks if the voter has at least 1 membership-token:
 
@@ -512,7 +512,7 @@ The vote function allows a token holder to vote on a proposal. It checks if the 
 )
 ```
 
-### Conclusion
+## Conclusion
 
 The `conclude` function allows the core contract or an authorized extension to conclude a proposal:
 
@@ -535,7 +535,7 @@ The `conclude` function allows the core contract or an authorized extension to c
 
 This function concludes a proposal. It first retrieves the proposal data and checks if the proposal has more votes for than against. It then asserts that the proposal has not already been concluded and that the current block height is greater than or equal to the end block height of the proposal. If these conditions are met, it sets the concluded and passed fields of the proposal data and prints an event. If the proposal passed, it also tries to execute the proposal. The function returns whether the proposal passed.
 
-### Extension callback
+## Extension callback
 
 The callback function allows the core contract to request a callback:
 

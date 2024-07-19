@@ -17,7 +17,7 @@ Start by setting up your development environment. We've prepared a repository th
 
 To clone the repository, open your terminal and run the following command:
 
-```bash
+```console
 git clone https://github.com/hirosystems/hiro-hacks-template.git
 cd hiro-hacks-template
 ```
@@ -28,7 +28,7 @@ Before you begin, we're assuming that you have `clarinet` installed and a basic 
 
 To create your contract, navigate to your project's directory and run the following command:
 
-```bash
+```console
 clarinet contract new keys
 ```
 
@@ -40,7 +40,7 @@ This will create a new contract in the `contracts` directory called `keys.clar`.
   friendtech`.
 </Callout>
 
-### Defining `key` balances and supply
+## Defining `key` balances and supply
 
 Inside your `keys.clar` contract, you need to keep track of the balance of `keys` for each user (or _holder_) and the total supply of `keys` for each subject. You can do this using Clarity's `define-map` function:
 
@@ -51,7 +51,7 @@ Inside your `keys.clar` contract, you need to keep track of the balance of `keys
 
 The `keysBalance` stores each holder's `key` balance for a given subject and the `keysSupply` stores the total supply for each subject. These maps will be used in your contract's functions to manage the creation, buying, and selling of `keys`.
 
-### Calculating `key` prices
+## Calculating `key` prices
 
 The next thing you need to do is define a function that calculates the price of `keys` for a given a `supply` and `amount`. You can do this by defining a `get-price` function:
 
@@ -74,7 +74,7 @@ The next thing you need to do is define a function that calculates the price of 
 
 The `get-price` function calculates the price of `keys` using a formula that calculates the average price per token over the range of supply affected. This can be done by integrating the price function over the range of supply and dividing by the amount.
 
-### Creating, buying, and selling `keys`
+## Creating, buying, and selling `keys`
 
 These functions form the core of the contract's operations, enabling users to manage keys through buying and selling.
 
@@ -142,7 +142,7 @@ Next up, the `sell-keys` function:
 
 This is more or less the same logic as the `buy-keys` function, but instead you deduct the `keysBalance` and `keysSupply` and check if the seller owns enough keys and if they are authorized to sell.
 
-### Verifying keyholders
+## Verifying keyholders
 
 Now that you have the ability to buy and sell `keys`, you need a way to verify if a user is a keyholder. You can do this by defining an `is-keyholder` read-only function:
 
@@ -158,7 +158,7 @@ This function checks if the `keysBalance` for a given `subject` and `holder` is 
 
 Make sure your contract is valid and doesn't have any errors. To do this, run the following command:
 
-```bash
+```console
 clarinet check
 ```
 

@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
-### Installation
+## Installation
 
 ```package-install
 @hirosystems/clarinet-sdk
@@ -29,7 +29,7 @@ import { InlineCode } from '@/components/inline-code';
 
 The `initSimnet` function initializes a simulated network. It will often be the first function you call when using the SDK.
 
-### Parameters
+## Parameters
 
 <Property required={false} deprecated={false} name={"manifestPath"} type={"string"}>
 
@@ -44,10 +44,10 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Creating a new instance of simnet</Badge>
+      <Badge className='badge transition-colors'>Creating a new instance of simnet</Badge>
     </TabsTrigger>
     <TabsTrigger value="custom" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>With a custom config path</Badge>
+      <Badge className='badge transition-colors'>With a custom config path</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -72,7 +72,7 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 
 <Accordions>
   <Accordion title="Schema">
-    ```bash
+    ```console
     initSimnet(manifestPath?: string): Promise<Simnet>
     ```
   </Accordion>

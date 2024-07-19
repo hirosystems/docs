@@ -15,9 +15,9 @@ import { InlineCode } from '@/components/inline-code';
 
 Scopes are parameters you use to define the "if this" logic of your chainhook. In other words, scopes specify what on-chain events you are looking to monitor and track. For more information on Chainhook design, please view [predicate design](/stacks/chainhook/concepts/predicate-design).
 
-### Installation
+## Installation
 
-```bash
+```console
 brew install chainhook
 ```
 
@@ -31,7 +31,7 @@ brew install chainhook
 
 The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"equals"} type={"string"}>
 
@@ -46,7 +46,7 @@ The `equals` property is a 32 bytes hex encoded type used to specify the exact t
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By transaction ID</Badge>
+      <Badge className='badge transition-colors'>By transaction ID</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -74,7 +74,7 @@ The `equals` property is a 32 bytes hex encoded type used to specify the exact t
 
 The `block_height` scope allows you to query blocks based on their height. This is useful for identifying specific blocks or ranges of blocks in the blockchain.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"equals"} type={"integer"}>
 
@@ -107,16 +107,16 @@ The `between` property specifies a range of block heights to match, inclusive of
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By block height</Badge>
+      <Badge className='badge transition-colors'>By block height</Badge>
     </TabsTrigger>
     <TabsTrigger value="higher_than" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Using higher_than</Badge>
+      <Badge className='badge transition-colors'>Using higher_than</Badge>
     </TabsTrigger>
     <TabsTrigger value="lower_than" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Using lower_than</Badge>
+      <Badge className='badge transition-colors'>Using lower_than</Badge>
     </TabsTrigger>
     <TabsTrigger value="between" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Between two block heights</Badge>
+      <Badge className='badge transition-colors'>Between two block heights</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -177,7 +177,7 @@ The `between` property specifies a range of block heights to match, inclusive of
 
 The `ft_transfer` scope allows you to query transactions based on fungible token transfers. This is useful for tracking specific token movements or auditing token transfer histories.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
 
@@ -198,10 +198,10 @@ The `actions` property specifies the types of token actions to observe, such as 
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By a single action</Badge>
+      <Badge className='badge transition-colors'>By a single action</Badge>
     </TabsTrigger>
     <TabsTrigger value="all" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-9000 dark:group-hover:text-white'>Passing all ft actions</Badge>
+      <Badge className='badge transition-colors0'>Passing all ft actions</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -241,7 +241,7 @@ The `actions` property specifies the types of token actions to observe, such as 
 
 The `nft_transfer` scope allows you to query transactions based on non-fungible token transfers. This is useful for tracking specific NFT movements or auditing NFT transfer histories.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
 
@@ -262,10 +262,10 @@ The `actions` property specifies the types of NFT actions to observe, such as `m
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By non-fungible token mint</Badge>
+      <Badge className='badge transition-colors'>By non-fungible token mint</Badge>
     </TabsTrigger>
     <TabsTrigger value="all" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Passing all nft actions</Badge>
+      <Badge className='badge transition-colors'>Passing all nft actions</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -305,7 +305,7 @@ The `actions` property specifies the types of NFT actions to observe, such as `m
 
 The `stx_transfer` scope allows you to query transactions involving STX token movements. This is crucial for monitoring STX transfers, including minting, burning, and locking actions.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"actions"} type={"array of strings"}>
 
@@ -320,7 +320,7 @@ The `actions` property specifies the types of STX token actions to observe, such
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by STX token transfer</Badge>
+      <Badge className='badge transition-colors'>Scoping by STX token transfer</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -348,7 +348,7 @@ The `actions` property specifies the types of STX token actions to observe, such
 
 The `print_event` scope allows you to query transactions based on specific print events emitted during contract execution. This is useful for monitoring specific events for auditing or tracking purposes.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract_identifier"} type={"string"}>
 
@@ -375,7 +375,7 @@ The `matches_regex` property is used for matching an event that regex matches wi
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by print event</Badge>
+      <Badge className='badge transition-colors'>Scoping by print event</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -404,7 +404,7 @@ The `matches_regex` property is used for matching an event that regex matches wi
 
 The `contract_call` scope allows you to query transactions that involve direct calls to specific methods within a smart contract. This is particularly useful for tracking interactions with critical contract functions.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"contract_identifier"} type={"string"}>
 
@@ -425,7 +425,7 @@ The `method` property specifies the specific method within the contract to obser
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>Scoping by contract method call</Badge>
+      <Badge className='badge transition-colors'>Scoping by contract method call</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -454,7 +454,7 @@ The `method` property specifies the specific method within the contract to obser
 
 The `contract_deployment` scope allows you to query transactions involving the deployment of smart contracts. This is crucial for monitoring new contract deployments and ensuring compliance with expected deployments.
 
-### Parameters
+## Parameters
 
 <Property required={true} deprecated={false} name={"deployer"} type={"string"}>
 
@@ -475,10 +475,10 @@ The `implement_trait` property specifies the contract trait to observe.
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By deployer</Badge>
+      <Badge className='badge transition-colors'>By deployer</Badge>
     </TabsTrigger>
     <TabsTrigger value="trait" className='tab group'>
-      <Badge variant='outline' className='badge transition-colors hover:text-neutral-900 dark:group-hover:text-white'>By contract trait</Badge>
+      <Badge className='badge transition-colors'>By contract trait</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">

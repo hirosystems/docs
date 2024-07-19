@@ -39,7 +39,7 @@ app.listen(3000, () => {
 
 In this example, the server listens for POST requests at the `/api/events` route. When a request is received from your chainhook (which you will set up in the next section), you can extract the event data from the request body and process it.
 
-### Parsing the event data
+## Parsing the event data
 
 The Chainhook payload comes with a lot of information, so let's break down some of the more important parts inside of the `req.body` for this guide.
 
@@ -97,7 +97,7 @@ app.post("/api/events", async (req, res) => {
 
 For the next section, you will need to expose your local server via `https` so that Chainhook can deliver the `payload`. To do that, run the following command:
 
-```bash
+```console
 npx localtunnel --port <your-port-number>
 ```
 
@@ -109,7 +109,7 @@ npx localtunnel --port <your-port-number>
 
 In this section, you will integrate Chainhook with your smart contracts. This involves creating a chainhook predicate that matches the specific on-chain events you want to respond to. For this process, you'll use the [Hiro Platform](https://platform.hiro.so/), which provides a user-friendly interface for creating and managing your chainhooks. By the end of this section, you'll have a chainhook set up and ready to trigger actions in response to on-chain events.
 
-### Deploying your contracts to testnet
+## Deploying your contracts to testnet
 
 Before you begin, make sure you have logged in to the [Hiro Platform](https://platform.hiro.so/) and created or imported a project. If you need help with this, refer to the [Create Project](/stacks/platform/guides/create-project) guide.
 
@@ -119,7 +119,7 @@ In order to create your chainhook, you need to deploy your contracts to `testnet
 >
 > The Platform will provide a step for requesting Testnet STX, but you can also go straight to the [Stacks Testnet Faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet). Once you have testnet STX tokens, you can deploy your contracts to testnet using the same methods you used for devnet, but with the network parameter set to testnet.
 
-### Creating a Chainhook
+## Creating a Chainhook
 
 Now it's time to create your first Chainhook. Start by creating a predicate that matches the `propose` function in your `proposal-submission` contract. This function is called when a new grant proposal is submitted.
 

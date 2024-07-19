@@ -9,7 +9,7 @@ The Hiro Platform now supports local development, allowing you to use your prefe
 
 First, you need to check if you already have an existing SSH key on your device. This is often located in `~/.ssh/id_ed25519.pub`. You can view your SSH keys by running the following command in your terminal:
 
-```bash title="Terminal"
+```console title="Terminal"
 ls -al ~/.ssh
 ```
 
@@ -17,7 +17,7 @@ Look for the file ending in `.pub`, which contains your public key.
 
 If you don't have an SSH key, you can generate one by running the following command in your terminal:
 
-```bash title="Terminal"
+```console title="Terminal"
 ssh-keygen -t ed25519
 ```
 
@@ -53,7 +53,7 @@ To enable SSH access and Git authentication to your Hiro Platform workspace, you
 
 Here are the lines you need to add:
 
-```bash
+```console
 Host *.ssh.platform.hiro.so
     User hiro
     StrictHostKeyChecking no
@@ -114,7 +114,7 @@ If you prefer using the command line for your development work, you can also con
 
 2. Enter the following command:
 
-```bash title="Terminal"
+```console title="Terminal"
 ssh hiro@<your-workspace-url>
 ```
 
@@ -130,7 +130,7 @@ Remember, to ensure a smooth connection, your public SSH key must be registered 
 
 Emacs has built-in support for SSH through the Tramp mode. To open a file over SSH, use the following command:
 
-```bash
+```console
 C-x C-f /ssh:hiro@<your-workspace-url>:/path/to/project
 ```
 

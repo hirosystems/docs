@@ -8,31 +8,25 @@ import { Badge } from '@/components/ui/badge';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
-
-import { GridPattern } from "@/components/grid-pattern";
-import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
-
-import { InlineCode } from '@/components/inline-code';
 
 Post-conditions in Stacks transactions provide an additional layer of security. They ensure that transactions execute as expected without requiring the user to know the underlying smart contract code.
 
 In this guide, you will learn how to:
 
-1. Construct post-conditions.
-2. Use post-conditions.
-3. Set the post-condition mode.
-4. Use the legacy methods/enums.
+1. [Construct post-conditions](#constructing-post-conditions).
+2. [Use post-conditions](#using-post-conditions).
+3. [Set the post-condition mode](#setting-the-post-condition-mode).
+4. [Use the legacy methods/enums](#using-the-legacy-methods-enums).
 
 ---
 
-### Constructing post-conditions
+## Constructing post-conditions
 
 In Stacks.js, post-conditions can be constructed using the Pc helpers. These are inspired by Behavior Driven Development (BDD).
 
 Start with the `Pc.principal` initializer to specify the address of the principal that will be verified in the post-condition. Then auto-complete the rest of the post-condition.
 
-### Using post-conditions
+## Using post-conditions
 
 Post-conditions can be added to contract calls and FT/NFT transfers to ensure assets are transferred as specified.
 
@@ -76,7 +70,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
   </Accordion>
 </Accordions>
 
-### Setting the post-condition mode
+## Setting the post-condition mode
 
 When creating a transaction, the mode of the transaction can be set to `Allow` or `Deny` to specify whether unspecified asset transfers are permitted.
 
@@ -96,11 +90,11 @@ const tx = await makeContractCall({
 
 Essentially, the `postConditionMode` is what tells the Stacks node whether to require (`Deny`) or ignore (`Allow`) the post-conditions when evaluating the transaction.
 
-### Legacy methods/enums
+## Legacy methods/enums
 
 Legacy methods and enums can be used interchangeably with the builder methods.
 
-<Callout>
+<Callout title="Note">
 If you prefer the legacy methods over the `Pc` builder approach, you can import them from the `@stacks/transactions` package.
 </Callout>
 
@@ -124,13 +118,13 @@ Some other examples can be found below:
 - [`FungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.FungibleConditionCode)
 - [`NonFungibleConditionCode`](https://stacks.js.org/enums/_stacks_transactions.NonFungibleConditionCode)
 
-<Callout>
+<Callout title="Note">
 Use the `Pc` helpers to construct post-conditions in a clear and concise manner.
 </Callout>
 
 ---
 
-### Amount uSTX sent
+## Amount uSTX sent
 
 Construct a post-condition for a certain amount of uSTX to be sent.
 
@@ -161,7 +155,7 @@ Construct a post-condition for a certain amount of uSTX to be sent.
   </Tab>
 </Tabs>
 
-### Amount FT sent
+## Amount FT sent
 
 Construct a post-condition for a certain amount of a specific FT to be sent.
 
@@ -193,7 +187,7 @@ Construct a post-condition for a certain amount of a specific FT to be sent.
   </Tab>
 </Tabs>
 
-### Amount NFT sent / not sent
+## Amount NFT sent / not sent
 
 Construct a post-condition for sending / not-sending a specific NFT.
 
@@ -225,6 +219,23 @@ Construct a post-condition for sending / not-sending a specific NFT.
   </Tab>
 </Tabs>
 
-<Callout type="warn">
+<Callout title="Note" type="warn">
 Post-conditions can only ensure the transfer of assets and cannot guarantee the end-state after a transaction. To learn more, read the [post-conditions](/stacks/stacks.js/concepts/post-conditions) guide.
 </Callout>
+
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/stacks.js/guides/broadcast-transactions"
+    title="Broadcast transactions"
+    description="Learn how to broadcast transactions with Stacks.js."
+  />
+  <Card
+    href="/stacks/stacks.js/packages/transactions"
+    title="API References"
+    description="Dive into the API references for Stacks.js."
+  />
+</Cards>

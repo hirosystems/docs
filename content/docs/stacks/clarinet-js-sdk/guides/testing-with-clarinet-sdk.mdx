@@ -6,13 +6,6 @@ description: Learn how to write and run comprehensive unit tests for your Clarit
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
-import { SmallCard } from '@/components/card';
-
-import { GridPattern } from "@/components/grid-pattern";
-import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
-
-import { InlineCode } from '@/components/inline-code';
 
 Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more, while ensuring reproducible deployments critical for testing purposes.
 
@@ -25,143 +18,12 @@ In this guide, you will learn how to:
 
 ---
 
-### Prerequisites
-
+<Callout title="Requirements" type="warn">
 The SDK requires Node.js >= 18.0 and NPM to be installed. [Volta](https://volta.sh/) is a great tool to install and manage JS tooling.
+</Callout>
 
-To follow this tutorial, you must have the Clarinet CLI installed as well.
 
----
-
-### Requirements
-
-The SDK requires Node.js >= 18.0 and NPM to be installed. [Volta](https://volta.sh/) is a great tool to install and manage JS tooling.
-
-To follow this tutorial, you must have the Clarinet CLI installed as well.
-
-## Set Up the Clarity Contract and Unit Tests
-
-Let us consider a `counter` smart contract to understand how to write unit tests for our application requirements.
-
-First, create a new Clarinet project with a `counter` contract.
-
-```bash
-clarinet new counter
-cd counter
-clarinet contract new counter
-```
-
-Below will be the content of our smart contract.
-It keeps track of an initialized value, allows for incrementing and decrementing, and prints actions as a log.
-
-```clarity
-;; counter.clar
-(define-data-var count uint u1)
-
-(define-public (increment (step uint))
-  (let ((new-val (+ (var-get count) step)))
-    (var-set count new-val)
-    (print { object: "count", action: "incremented", value: new-val })
-    (ok new-val)
-  )
-)
-
-(define-public (decrement (step uint))
-  (let ((new-val (- (var-get count) step)))
-    (var-set count new-val)
-    (print { object: "count", action: "decremented", value: new-val })
-    (ok new-val)
-  )
-)
-
-(define-read-only (read-count)
-  (ok (var-get count))
-)
-```
-
-### Migrating Between Clarinet v1 and Clarinet v2
-
-Executing this script in a Clarinet v1 project will initialise NPM and Vitest. It will also create a sample test file.
-
-```console
-npx @hirosystems/clarinet-sdk@latest
-```
-
-This script will ask you if you want to run npm install now; you can press enter to do so.
-This can take a few seconds.
-
-The file `tests/counter_test.ts` that was created by `clarinet contract new counter` can be deleted.
-
-You can also have a look at `tests/contract.test.ts`. It's a sample file showing how to use the SDK with Vitest. **It can safely be deleted**.
-
-### Unit Tests for `counter` Example
-
-Create a file `tests/counter.test.ts` with the following content:
-
-```ts
-import { Cl } from '@stacks/transactions';
-import { describe, expect, it } from 'vitest';
-
-const accounts = simnet.getAccounts();
-const address1 = accounts.get('wallet_1')!;
-
-describe('test `increment` public function', () => {
-  it('increments the count by the given value', () => {
-    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
-    console.log(Cl.prettyPrint(incrementResponse.result)); // (ok u2)
-    expect(incrementResponse.result).toBeOk(Cl.uint(2));
-
-    const count1 = simnet.getDataVar('counter', 'count');
-    expect(count1).toBeUint(2);
-
-    simnet.callPublicFn('counter', 'increment', [Cl.uint(40)], address1);
-    const count2 = simnet.getDataVar('counter', 'count');
-    expect(count2).toBeUint(42);
-  });
-
-  it('sends a print event', () => {
-    const incrementResponse = simnet.callPublicFn('counter', 'increment', [Cl.uint(1)], address1);
-
-    expect(incrementResponse.events).toHaveLength(1);
-    const printEvent = incrementResponse.events[0];
-    expect(printEvent.event).toBe('print_event');
-    expect(printEvent.data.value).toBeTuple({
-      object: Cl.stringAscii('count'),
-      action: Cl.stringAscii('incremented'),
-      value: Cl.uint(2),
-    });
-  });
-});
-```
-
-To run the test, go back to your console and run the `npm test` command. It should display a report telling you that tests succeeded.
-
-```sh
-npm test
-```
-
-There is a very important thing happening under the hood here. The `simnet` object is available globally in the tests, and is automatically initialized before each test.
-
-> You don't need to know much more about that, but if you want to know in detail how it works, you can have a look at the `vitest.config.js` file at the root of you project.
-
-Getting back to the tests, we just implemented two of them:
-
-- The first test checks that the `increment` function returns the new value and saves it to the `count` variable.
-- The second test checks that an `print_event` is emitted when the increment function is called.
-
-> You can use `Cl.prettyPrint(value: ClarityValue)` to format any Clarity value into readable Clarity code. It can be useful to debug function results or event values.
-
-Note that we are importing `describe`, `expect` and `it` from Vitest.
-
-- `it` allows us to write a test.
-- `describe` is not necessary but allows to organize tests.
-- `expect` is use to make assertions on value.
-
-You can learn more about Vitest on their [website](https://vitest.dev).
-We also implemented some custom matchers to make assertions on Clarity variables (like `toBeUint`).
-The [full list of custom matchers](#custom-vitest-matchers) is available at the end of this guide.
-
-### Comprehensive Unit Tests for `counter`
+## Comprehensive Unit Tests for `counter`
 
 Let us now write a higher coverage test suite by testing the `decrement` and `get-counter` functions.
 

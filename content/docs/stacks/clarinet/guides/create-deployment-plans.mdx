@@ -3,41 +3,32 @@ title: Customizing deployment plans
 description: Learn how to customize your deployment plans.
 ---
 
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { ChevronRight, Code, Terminal } from 'lucide-react';
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Step } from 'fumadocs-ui/components/steps';
-import { SmallCard } from '@/components/card';
-
-import { GridPattern } from "@/components/grid-pattern";
-import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
-
-import { InlineCode } from '@/components/inline-code';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more. Deployment plans ensure reproducible deployments, a critical workflow for testing purposes.
 
 In this guide, you will learn how to:
 
-1. Generate and configure a deployment plan.
-2. Set deployment plan specifications.
-3. Add project contract requirements.
-4. Customize your deployment plan.
+1. [Generate and configure a deployment plan.](#generate-a-deployment-plan)
+2. [Set deployment plan specifications.](#deployment-plan-specifications)
+3. [Add project contract requirements.](#adding-project-contract-requirements)
+4. [Customize your deployment plan.](#edit-your-deployment-plan)
 
 ---
 
-### Prerequisites
+## Generate a deployment plan
 
-To follow this quickstart guide, you will need to have Clarinet installed on your machine. For installation options, go [here](/stacks/clarinet/installation).
-
----
-
-### View your deployment plan
-
-Clarinet uses a deployment plan for every deployment—whether for a basic simnet (for use in Clarinet's `console`, `test`, and `check` features), a devnet (for use with the `clarinet devnet start` command), or the public `testnet` and `mainnet`.
+Clarinet uses a deployment plan for every deployment—whether for a basic `simnet`, `devnet` (for use with the `clarinet devnet start` command), or the public `testnet` and `mainnet`.
 
 You can view the current deployment plan saved to disk at any time with the following command (specifying the network `simnet`, `devnet`, `testnet`, `mainnet`)
 
-```bash title="Terminal"
+```console title="Terminal"
+// [!code word:deployments generate]
 clarinet deployments generate --<network>
 ```
 
@@ -64,7 +55,7 @@ plan:
       epoch: "2.5"
 ```
 
-### Deployment plan specifications
+## Deployment plan specifications
 
 A project's deployment plan specifications are set on two files within a Clarinet project—the `Clarinet.toml` file as well as the network’s corresponding `.toml` file (for example, `Devnet.toml`) in the `settings/` folder.
 
@@ -79,13 +70,14 @@ Specifications in the `Devnet.toml` file you can change include:
 - Blockchain environment features of your devnet, such as block time or API ports
 - Stacking orders
 
-### Adding project contract requirements
+## Adding project contract requirements
 
 Your project can reference a smart contract that already exists on the blockchain.
 
 For example, [Stacks Improvement Proposal 009](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md) specifies a trait reference for all non-fungible tokens. Instead of redeploying this trait as a separate contract each time a new NFT collection is published, you can reference the contract directly within deployment plans with the following Clarinet command, including the contract principal reference:
 
-```bash title="Terminal"
+```console title="Terminal"
+// [!code word:requirements add]
 clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
 ```
 
@@ -95,7 +87,7 @@ For instance, `clarinet devnet start` would now download a copy of the contract 
 
 This permits a developer to maintain the minimum set of contracts their Clarinet project will deploy to mainnet (with a single use of an `impl-trait` statement in their Clarity contract).
 
-### Edit your deployment plan
+## Edit your deployment plan
 
 Recall that a default deployment plan is used for every deployment, comprising your projects specifications as set in your `Clarinet.toml` and `<network>.toml` files.
 
@@ -103,23 +95,27 @@ The default plan is generated upon each `clarinet deployments generate --<networ
 
 However, you can also manually edit this default deployment `.yaml` file directly—programmatically orchestrating your contract publication and user interaction beyond your plan's defaults.
 
-<Callout>
+<Callout title="Note">
 When deploying, Clarinet prompts you to overwrite any manually added or edited changes that differ from the specifications laid out in your project's .toml files. Type `no` to proceed with your manually configured deployment plan instead of the default.
 </Callout>
 
 Here are some of the relevant transactions and configurations available to developers manually configuring their deployment plans:
 
-- `emulated-contract-publish:` Deploy a contract in an in-memory simulated chain (`simnet` only).
-- `emulated-contract-call:` Call a contract that has been deployed in an in-memory simulated chain (`simnet` only).
-- `requirement-publish:` Deploy an external contract (that is, one not published by the same set of private keys as the user wallet currently deploying) on another testnet/devnet using another wallet + search, and replace all the references to this contract in the local contracts to deploy (`devnet`/`testnet` only).
-- `contract-publish:` Deploy a contract (`devnet`/`testnet`/`mainnet`).
-- `contract-call:` Call a contract (`devnet`/`testnet`/`mainnet`).
-- `stx-transfer:` Transfer STX between specified accounts.
-- `btc-transfer:` Simple bitcoin transfer from a p2pkh address to a p2pkh address (experimental, `regtest`/`testnet`/`mainnet`).
+[`emulated-contract-publish:`](#emulated-contract-publish) Deploy a contract in an in-memory simulated chain.
 
-Waiting between blocks to make transactions is done by specifying transaction directives in a different batch in the deployment plan (see the `batches` field).
+[`emulated-contract-call:`](#emulated-contract-call) Call a contract that has been deployed in an in-memory simulated chain.
 
-### <code className='text-lg'>emulated-contract-publish</code>
+[`requirement-publish:`](#requirement-publish) <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>Deploy an external contract</span></TooltipTrigger><TooltipContent>One that is not published by the same set of private keys as the user wallet currently deploying.</TooltipContent></Tooltip></TooltipProvider> on another `testnet`/`devnet` using another wallet.
+
+[`contract-publish:`](#contract-publish) Deploy a contract.
+
+[`contract-call:`](#contract-call) Call a contract.
+
+[`stx-transfer:`](#stx-transfer) Transfer STX between specified accounts.
+
+[`btc-transfer:`](#btc-transfer) Simple bitcoin transfer from a p2pkh address to a p2pkh address (experimental, `regtest`/`testnet`/`mainnet`).
+
+### emulated-contract-publish
 
 This default transaction is included in every generated deployment for a `simnet` deployment.
 
@@ -131,7 +127,7 @@ This default transaction is included in every generated deployment for a `simnet
     clarity-version: 1
 ```
 
-### <code className='text-lg'>emulated-contract-call</code>
+### emulated-contract-call
 
 This is a transaction type for a `simnet` deployment where the developer wants to emulate a contract call.
 
@@ -144,11 +140,11 @@ This is a transaction type for a `simnet` deployment where the developer wants t
       - u1
 ```
 
-<Callout>
+<Callout title="Note">
 Read-only functions and functions that take no arguments are passed an empty list like so: `parameters: []`
 </Callout>
 
-### <code className='text-lg'>requirement-publish</code>
+### requirement-publish
 
 This cBTC smart contract application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/cbtc/deployments/default.devnet-plan.yaml) that publishes the contract required by its core smart contract.
 
@@ -162,7 +158,7 @@ This cBTC smart contract application has a [devnet deployment plan](https://gith
     path: '.cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.clar'
 ```
 
-### <code className='text-lg'>contract-publish</code>
+### contract-publish
 
 This default transaction is included in every generated deployment plan for every contract your Clarinet project has. This `counter` application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/counter/deployments/default.devnet-plan.yaml) that publishes its core smart contract.
 
@@ -176,28 +172,28 @@ This default transaction is included in every generated deployment plan for ever
     clarity-version: 1
 ```
 
-### <code className='text-lg'>contract-call</code>
+### contract-call
 
 The developer can call a function and pass arguments of any valid Clarity type.
 
 ```yaml
-        - contract-call:
-            contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.bitcoin-dao
-            expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            method: add-new-member
-            parameters:
-                - u1
-                - "0x01"
-                - "{ id: u4, username: "Satoshi", address: 'SP1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE }"
-                - "'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
-            cost: 5960
+- contract-call:
+    contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.bitcoin-dao
+    expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    method: add-new-member
+    parameters:
+        - u1
+        - "0x01"
+        - "{ id: u4, username: "Satoshi", address: 'SP1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE }"
+        - "'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+    cost: 5960
 ```
 
-<Callout>
+<Callout title="Note">
 Read-only functions and functions that take no arguments are passed an empty list like so: `parameters: []`
 </Callout>
 
-### <code className='text-lg'>stx-transfer</code>
+### stx-transfer
 
 The developer can specify the originating account of an STX transfer, the quantity denominated in microstacks, and the recipient, as well as an optional memo field (Note: the memo field can only contain a Clarity [buffer type](https://book.clarity-lang.org/ch02-02-sequence-types.html) up to 34 bytes in size, pre-fixed with `0x` (for example, `0x68656c6c6f21`), not ASCII text or strings)
 
@@ -210,7 +206,7 @@ The developer can specify the originating account of an STX transfer, the quanti
     cost: 10000
 ```
 
-### <code className='text-lg'>btc-transfer</code>
+### btc-transfer
 
 This cBTC smart contract application has a [devnet deployment plan](https://github.com/hirosystems/clarinet/blob/develop/components/clarinet-cli/examples/cbtc/deployments/wrap-btc.devnet-plan.yaml) that includes broadcasting a BTC transfer transaction to the emulated bitcoin chain with these parameters.
 
@@ -224,17 +220,15 @@ This cBTC smart contract application has a [devnet deployment plan](https://gith
 
 ---
 
-### Next steps
+## Next steps
 
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+<Cards>
+  <Card
     href="/stacks/clarinet/guides/run-a-local-devnet"
     title="Run a local devnet"
     description="Learn how to run a local devnet."
   />
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/stacks/clarinet-js-sdk/references/simnet"
     title="Simnet reference"
     description="Learn how to use simnet with the Clarinet JS SDK."

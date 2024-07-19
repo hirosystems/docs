@@ -1,5 +1,5 @@
 ---
-title: Post-conditions
+title: Post-Conditions
 ---
 
 In Stacks, transactions can have *post-conditions*.
@@ -11,7 +11,7 @@ More precisely, adding post-conditions to a transaction can ensure that:
 - STX tokens were transferred from an address
 - FTs/NFTs were transferred from an address
 
-<Callout type="warn">
+<Callout title="Info">
 Post-conditions aren't perfect. They can't say anything about the end-state after a transaction. In other words, they can't guarantee the receipt of FTs/NFTs, since they only check for sending.
 </Callout>
 
@@ -28,7 +28,7 @@ const tx = await makeContractCall({
 });
 ```
 
-### Post-condition mode
+## Post-condition mode
 
 In addition to the post-condition itself, we can also specify a `mode` for the transaction to verify asset transfers.
 The mode can be either `Allow` or `Deny`.

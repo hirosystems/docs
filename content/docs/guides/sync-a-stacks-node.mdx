@@ -11,32 +11,26 @@ Running a Stacks node is crucial for developers aiming to interact directly with
 
 In this guide, you will learn how to:
 
-1. Clone the Stacks blockchain Docker repository.
-2. Start the service.
-3. Monitor the node's synchronization process.
+1. [Clone the Stacks blockchain Docker repository](#clone-the-stacks-blockchain-docker-repository).
+2. [Start the service](#start-the-service).
+3. [Monitor the node's synchronization process](#monitor-the-nodes-synchronization-process).
 
 ---
 
-### Prerequisites
-
-If you haven't already, refer to the [how to install Docker](/guides/how-to-install-docker) guide to proceed.
-
----
-
-### Clone the Stacks blockchain Docker repository
+## Clone the Stacks blockchain Docker repository
 
 Clone the Stacks blockchain Docker repository from GitHub:
 
-```bash title="Terminal"
+```console title="Terminal"
 git clone https://github.com/blockstack/stacks-blockchain-docker.git
 cd stacks-blockchain-docker
 ```
 
-### Start the service
+## Start the service
 
 Inside of the `stacks-blockchain-docker` directory, run the following command to start the Stacks node:
 
-```bash title="Terminal"
+```console title="Terminal"
 ./manage.sh -n <network> -a start
 ```
 
@@ -46,11 +40,11 @@ The `<network>` placeholder used below can be replaced with one of:
 - `testnet`
 - `mocknet`
 
-### Monitor the node's synchronization process
+## Monitor the node's synchronization process
 
 To follow the logs for the Stacks node, run the following command:
 
-```bash title="Terminal"
+```console title="Terminal"
 ./manage.sh -n <network> -a logs
 ```
 
@@ -58,20 +52,17 @@ For networks other than `mocknet`, downloading the initial headers can take seve
 
 ---
 
-### Next steps
+## Next steps
 
-<Cards className='sm:grid-cols-1'>
-  <SmallCard
-    icon={<Terminal className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+<Cards>
+  <Card
     href="/stacks/chainhooks/guides/run-chainhook-as-a-service"
     title="Run Chainhook as a service"
     description="Learn how to use Chainhook to build your own custom API."
   />
-  <SmallCard
-    icon={<Code className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
+  <Card
     href="/guides/sync-a-bitcoin-node"
     title="Sync a Bitcoin node"
     description="Learn how to sync a Bitcoin node for running Chainhook as a service."
   />
 </Cards>
-
