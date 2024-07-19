@@ -33,7 +33,7 @@ export function PageFooter(): JSX.Element {
               className="underline text-muted-foreground"
               target="_blank"
             >
-              Newsletter
+              newsletter
             </a>{" "}
             and read our{" "}
             <a
@@ -41,7 +41,7 @@ export function PageFooter(): JSX.Element {
               className="underline text-muted-foreground"
               target="_blank"
             >
-              Blog
+              blog
             </a>
           </span>
           .
