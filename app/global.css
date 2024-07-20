@@ -306,6 +306,17 @@ div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.roun
   top: 4.5rem;
 }
 
+/* For long endpoint names this will truncate the ending and add an ellipsis */
+div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 span:nth-child(n+12) {
+  display: none;
+}
+
+/* And add an ellipsis */
+div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 span:nth-child(11)::after {
+  content: '...';
+  display: inline;
+}
+
 div.prose div.footer.not-prose {
   background: hsl(var(--accent));
 }
@@ -353,14 +364,15 @@ div.api-example div.max-xl\:hidden > div:nth-child(1) {
 
 /* Add a deprecated strike through to sidebar links */
 a[href="/stacks/api/accounts/nft-events"],
-a[href="/stacks/api/blocks/recent-blocks"],
-a[href="/stacks/api/blocks/block-by-hash"],
-a[href="/stacks/api/blocks/block-by-height"],
-a[href="/stacks/api/blocks/block-by-burn-block-hash"],
-a[href="/stacks/api/blocks/block-by-burn-block-height"],
+a[href="/stacks/api/accounts/transaction-with-transfers"],
 a[href="/stacks/api/accounts/transactions"],
 a[href="/stacks/api/accounts/transactions-with-transfers"],
-a[href="/stacks/api/accounts/transaction-with-transfers"] {
+a[href="/stacks/api/blocks/block-by-burn-block-hash"],
+a[href="/stacks/api/blocks/block-by-burn-block-height"],
+a[href="/stacks/api/blocks/block-by-hash"],
+a[href="/stacks/api/blocks/block-by-height"],
+a[href="/stacks/api/blocks/recent-blocks"],
+a[href="/stacks/api/fees/fee-rate"] {
   text-decoration: line-through;
   color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
 }
