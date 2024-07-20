@@ -6,7 +6,7 @@ const args = process.argv.slice(2);
 const fileName = args[0]; // The name of the file to process (e.g., 'stacks-api')
 
 // Define the input file path and output directory
-const inputFilePath = path.join(__dirname, `../openapi/${fileName}.mdx`);
+const inputFilePath = path.join(__dirname, `../openapi/spec/${fileName}.mdx`);
 const outputBaseDir = path.join(__dirname, '../tmp');
 
 // Read the content of the input MDX file
