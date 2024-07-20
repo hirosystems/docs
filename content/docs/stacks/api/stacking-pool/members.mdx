@@ -4,14 +4,21 @@ description: Retrieves the list of stacking pool members for a given delegator p
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,75 +26,103 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/beta/stacking/{pool_principal}/delegations"}>
 
+## Stacking pool members
+
 Retrieves the list of stacking pool members for a given delegator principal.
 
-### Path parameters
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"pool_principal"} type={"string"}>
+<Property name={"pool_principal"} type={"string"} required={true} deprecated={false}>
 
 Address principal of the stacking pool delegator
 
 </Property>
 
-### Query parameters
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"after_block"} type={"integer"}>
+<Property name={"after_block"} type={"integer"} required={false} deprecated={false}>
 
 If specified, only delegation events after the given block will be included
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
-Whether or not to include Stackers from unconfirmed transactions
+whether or not to include Stackers from unconfirmed transactions
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
-
-Number of items to return
-
-<span>Example:  `100`</span>
-
-<span>Default:  `100`</span>
-
-<span>Maximum:  `200`</span>
+<span>Default: `false`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Number of items to skip
+number of items to return
 
-<span>Example:  `300`</span>
+<span>Example: `100`</span>
 
-<span>Default:  `0`</span>
+<span>Default: `100`</span>
+
+<span>Maximum: `200`</span>
+
+</Property>
+
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
+
+number of items to skip
+
+<span>Example: `300`</span>
+
+<span>Default: `0`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/beta/stacking/{pool_principal}/delegations"} path={[{"name":"pool_principal","type":"string","defaultValue":"","isRequired":true}]} query={[{"name":"after_block","type":"number","defaultValue":"","isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":false,"isRequired":false},{"name":"limit","type":"number","defaultValue":100,"isRequired":false},{"name":"offset","type":"number","defaultValue":0,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/beta/stacking/string/delegations"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/beta/stacking/SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP/delegations?after_block=0&unanchored=true&limit=100&offset=300"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/beta/stacking/SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP/delegations?after_block=0&unanchored=true&limit=100&offset=300", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns stacking pool member details for a given pool (delegator) principal
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 200,
   "offset": 0,
@@ -105,9 +140,9 @@ GET request that returns stacking pool member details for a given pool (delegato
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -154,16 +189,15 @@ export interface PoolDelegation {
    */
   tx_id: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

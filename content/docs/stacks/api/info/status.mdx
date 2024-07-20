@@ -4,10 +4,21 @@ description: Retrieves the running status of the Stacks Blockchain API.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,33 +26,55 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"GET"} route={"/extended"}>
 
+## API status
+
 Retrieves the running status of the Stacks Blockchain API, including the server version and current chain tip information.
 
-### Parameters
-
-No parameters.
-
 | Status code | Description |
-|:------------|:------------|
-| `200`       | Success     |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -L \
-  "https://api.mainnet.hiro.so/extended" \
-  -H 'Accept: application/json'
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET blockchain API status
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "server_version": "string",
   "status": "string",
@@ -59,9 +92,9 @@ GET blockchain API status
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title="Schema">
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -110,16 +143,15 @@ export interface ChainTip {
    */
   burn_block_height: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 
