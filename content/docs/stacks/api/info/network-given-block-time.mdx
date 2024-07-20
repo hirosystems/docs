@@ -4,10 +4,21 @@ description: Retrieves the target block time for a given network.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,70 +26,91 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"GET"} route={"/extended/v1/info/network_block_time/{network}"}>
 
-Retrieves the target block time for a given network. The network can be mainnet or testnet. The block time is hardcoded and will change throughout the implementation phases of testnet.
+## Get a given network's target block time
 
-### Path parameters
+Retrieves the target block time for a given network. The network can be mainnet or testnet. The block time is hardcoded and will change throughout the implementation phases of the testnet.
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"network"} type={"string"}>
+<Property name={"network"} type={"string"} required={true} deprecated={false}>
 
 the target block time for a given network (testnet, mainnet).
 
-<span>Example:  `"mainnet"`</span>
+<span>Example: `"mainnet"`</span>
 
-<span>Value in:  `"testnet" | "mainnet"`</span>
+<span>Value in: `"testnet" | "mainnet"`</span>
 
 </Property>
 
 | Status code | Description |
-| ----------- | ----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/info/network_block_time/{network}"} path={[{"name":"network","type":"string","defaultValue":"mainnet","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -L \
-  "https://api.mainnet.hiro.so/extended/v1/info/network_block_time/mainnet" \
-  -H 'Accept: application/json'
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/info/network_block_time/mainnet"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that target block time for a given network
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/info/network_block_time/mainnet", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "target_block_time": 0
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
-/**
- * GET request that target block time for a given network
- */
-export interface NetworkBlockTimeResponse {
+export interface TargetBlockTime {
   target_block_time: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 
 </API>
+
+
 
 </Root>

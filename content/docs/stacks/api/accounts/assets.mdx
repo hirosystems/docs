@@ -4,14 +4,21 @@ description: Retrieves a list of all asset events associated with an account or 
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,73 +26,99 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/address/{principal}/assets"}>
 
-Retrieves a list of all asset events associated with an account or a contract identifier. This includes transfers and mints.
+## Get account assets
 
-### Path parameters
+Retrieves a list of all assets events associated with an account or a Contract Identifier. This includes Transfers, Mints.
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
-Stacks address or a contract identifier
+Stacks address or a Contract identifier
 
-<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+### Query Parameters
+
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
+
+max number of account assets to fetch
+
+<span>Example: `20`</span>
 
 </Property>
 
-### Query parameters
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+index of first account assets to fetch
 
-Max number of account assets to fetch
-
-<span>Example:  `20`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
-
-Index of first account assets to fetch
-
-<span>Example:  `42000`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `false`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
+<Property name={"until_block"} type={"string"} required={false} deprecated={false}>
 
-Returned data representing the state at that point in time, rather than the current block. Note: use either of the query parameters but not both at a time.
+returned data representing the state at that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
 
-<span>Example:  `60000`</span>
+<span>Example: `60000`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/assets"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":20,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false},{"name":"until_block","type":"string","defaultValue":60000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets?limit=20&offset=42000&unanchored=true&until_block=60000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets?limit=20&offset=42000&unanchored=true&until_block=60000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns address assets
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -108,9 +141,9 @@ GET request that returns address assets
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type TransactionEvent =
@@ -202,16 +235,15 @@ export interface TransactionEventAsset {
   value?: string;
   memo?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

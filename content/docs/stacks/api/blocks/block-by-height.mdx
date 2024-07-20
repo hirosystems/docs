@@ -4,14 +4,21 @@ description: Retrieves block details of a specific block for a given chain heigh
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,34 +26,65 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/block/by_height/{height}"}>
 
-**NOTE:** This endpoint is <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> in favor of [Get block](/stacks/api/blocks/get-block).
+## Get block by height
+
+**NOTE:** This endpoint is deprecated in favor of [Get block](/api/get-block).
 
 Retrieves block details of a specific block at a given block height
 
+
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Block |
 | `404` | Cannot find block with given height |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/block/by_height/{height}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/block/by_height/151251"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/block/by_height/%7Bheight%7D"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/block/by_height/%7Bheight%7D", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 A block
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "canonical": true,
   "height": 0,
   "hash": "string",
+  "block_time": 0,
+  "block_time_iso": "string",
   "index_block_hash": "string",
   "parent_block_hash": "string",
   "burn_block_time": 0,
@@ -77,9 +115,9 @@ A block
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -98,6 +136,14 @@ export interface Block {
    * Hash representing the block
    */
   hash: string;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  block_time_iso: string;
   /**
    * The only hash that can uniquely identify an anchored block or an unconfirmed state trie
    */
@@ -173,16 +219,15 @@ export interface Block {
     [k: string]: number;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

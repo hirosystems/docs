@@ -4,14 +4,21 @@ description: Retrieves the deployment status of multiple smart contracts.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,37 +26,66 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v2/smart-contracts/status"}>
 
+## Get smart contracts status
+
 Retrieves the deployment status of multiple smart contracts.
 
-### Query parameters
 
-<Property required={true} deprecated={false} name={"contract_id"} type={"array of string"}>
+### Query Parameters
 
-Contract IDs to fetch status for
+<Property name={"contract_id"} type={"array<string>"} required={true} deprecated={false}>
 
-<span>Example:  `"SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy"`</span>
+contract ids to fetch status for
+
+<span>Example: `"SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of smart contract status |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/smart-contracts/status"} path={[]} query={[{"name":"contract_id","type":"array","isRequired":true,"items":"0"}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/extended/v2/smart-contracts/status?contract_id=SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that returns the deployment status of multiple smart contracts.
+```js
+fetch("https://api.mainnet.hiro.so/extended/v2/smart-contracts/status?contract_id=SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+GET request that returns the deployment status of multiple smart contracts
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "property1": {
     "found": true,
@@ -72,9 +108,9 @@ GET request that returns the deployment status of multiple smart contracts.
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -111,16 +147,15 @@ export interface SmartContractStatus {
 export interface SmartContractNotFound {
   found: false;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

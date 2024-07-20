@@ -4,90 +4,197 @@ description: Retrieves all recently mined transactions.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<div className='flex-1'>
+<APIInfo method={"GET"} route={"/extended/v1/tx"}>
 
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tx`}</p>
-</h2>
+## Get recent transactions
 
-Retrieves all recently mined transactions.
+Retrieves all recently mined transactions
 
-### Query parameters
+If using TypeScript, import typings for this response from our types package:
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+`import type { TransactionResults } from '@stacks/stacks-blockchain-api-types';`
 
-Max number of transactions to fetch
+### Query Parameters
 
-<span>Example:  `100`</span>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-<span>Default:  `96`</span>
+max number of transactions to fetch
 
-<span>Maximum:  `200`</span>
+<span>Example: `100`</span>
 
-</Property>
+<span>Default: `96`</span>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
-
-Index of first transaction to fetch
-
-<span>Example:  `42000`</span>
+<span>Maximum: `200`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"type"} type={"array of string"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
+
+index of first transaction to fetch
+
+<span>Example: `42000`</span>
+
+</Property>
+
+<Property name={"type"} type={"array<string>"} required={false} deprecated={false}>
 
 Filter by transaction type
 
-<span>Example:  `"coinbase"`</span>
+<span>Example: `"coinbase"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"from_address"} type={"string"} required={false} deprecated={false}>
+
+Option to filter results by sender address
+
+</Property>
+
+<Property name={"to_address"} type={"string"} required={false} deprecated={false}>
+
+Option to filter results by recipient address
+
+</Property>
+
+<Property name={"sort_by"} type={"string"} required={false} deprecated={false}>
+
+Option to sort results by block height, timestamp, or fee
+
+<span>Example: `"burn_block_time"`</span>
+
+<span>Default: `"block_height"`</span>
+
+<span>Value in: `"block_height" | "burn_block_time" | "fee"`</span>
+
+</Property>
+
+<Property name={"start_time"} type={"integer"} required={false} deprecated={false}>
+
+Filter by transactions after this timestamp (unix timestamp in seconds)
+
+<span>Example: `1704067200`</span>
+
+</Property>
+
+<Property name={"end_time"} type={"integer"} required={false} deprecated={false}>
+
+Filter by transactions before this timestamp (unix timestamp in seconds)
+
+<span>Example: `1706745599`</span>
+
+</Property>
+
+<Property name={"contract_id"} type={"string"} required={false} deprecated={false}>
+
+Filter by contract call transactions involving this contract ID
+
+<span>Example: `"SP000000000000000000002Q6VF78.pox-4"`</span>
+
+</Property>
+
+<Property name={"function_name"} type={"string"} required={false} deprecated={false}>
+
+Filter by contract call transactions involving this function name
+
+<span>Example: `"delegate-stx"`</span>
+
+</Property>
+
+<Property name={"nonce"} type={"integer"} required={false} deprecated={false}>
+
+Filter by transactions with this nonce
+
+<span>Example: `123`</span>
+
+</Property>
+
+<Property name={"order"} type={"string"} required={false} deprecated={false}>
+
+Option to sort results in ascending or descending order
+
+<span>Example: `"desc"`</span>
+
+<span>Default: `"desc"`</span>
+
+<span>Value in: `"asc" | "desc"`</span>
+
+</Property>
+
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `false`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of transactions |
 
-</div>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tx"} path={[]} query={[{"name":"limit","type":"number","defaultValue":100,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"type","type":"array","isRequired":false,"items":"0"},{"name":"from_address","type":"string","defaultValue":"","isRequired":false},{"name":"to_address","type":"string","defaultValue":"","isRequired":false},{"name":"sort_by","type":"string","defaultValue":"burn_block_time","isRequired":false},{"name":"start_time","type":"number","defaultValue":1704067200,"isRequired":false},{"name":"end_time","type":"number","defaultValue":1706745599,"isRequired":false},{"name":"contract_id","type":"string","defaultValue":"SP000000000000000000002Q6VF78.pox-4","isRequired":false},{"name":"function_name","type":"string","defaultValue":"delegate-stx","isRequired":false},{"name":"nonce","type":"number","defaultValue":123,"isRequired":false},{"name":"order","type":"string","defaultValue":"desc","isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
+
+</APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx?limit=100&offset=42000&type=coinbase&from_address=string&to_address=string&sort_by=burn_block_time&start_time=1704067200&end_time=1706745599&contract_id=SP000000000000000000002Q6VF78.pox-4&function_name=delegate-stx&nonce=123&order=desc&unanchored=true"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/tx?limit=100&offset=42000&type=coinbase&from_address=string&to_address=string&sort_by=burn_block_time&start_time=1704067200&end_time=1706745599&contract_id=SP000000000000000000002Q6VF78.pox-4&function_name=delegate-stx&nonce=123&order=desc&unanchored=true", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns transactions
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 200,
   "offset": 0,
@@ -117,6 +224,7 @@ GET request that returns transactions
       "block_height": 0,
       "block_time": 0,
       "block_time_iso": "string",
+      "burn_block_height": 0,
       "burn_block_time": 0,
       "burn_block_time_iso": "string",
       "parent_burn_block_time": 0,
@@ -165,9 +273,9 @@ GET request that returns transactions
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -204,6 +312,10 @@ export type AbstractTransaction = BaseTransaction & {
    * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
    */
   block_time_iso: string;
+  /**
+   * Height of the anchor burn block.
+   */
+  burn_block_height: number;
   /**
    * Unix timestamp (in seconds) indicating when this block was mined
    */
@@ -659,24 +771,15 @@ export interface TenureChangeTransactionMetadata {
     pubkey_hash: string;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-<Accordion title="Notes">
-If using TypeScript, import typings for this response from our `@stacks/stacks-blockchain-api-types` package:
+</ResponseTypes>
 
-```ts
-import type { TransactionResults } from '@stacks/stacks-blockchain-api-types';
-```
-</Accordion>
+</Response>
 
-</Accordions>
-
-</Tab>
-
-</Tabs>
+</Responses>
 
 </APIExample>
 

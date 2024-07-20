@@ -4,16 +4,29 @@ description: Delivers testnet STX tokens to a specified address.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
 <APIInfo method={"POST"} route={"/extended/v1/faucets/stx"}>
+
+## Get STX testnet tokens
 
 Add 500 STX tokens to the specified testnet address. Testnet STX addresses begin with `ST`. If the `stacking`
 parameter is set to `true`, the faucet will add the required number of tokens for individual stacking to the
@@ -26,48 +39,55 @@ been included in an anchor block.
 A common reason for failed faucet transactions is that the faucet has run out of tokens. If you are experiencing
 failed faucet transactions to a testnet address, you can get help in [Discord](https://stacks.chat).
 
-**Note:** This is a testnet only endpoint. This endpoint will not work on mainnet.
+**Note:** This is a testnet only endpoint. This endpoint will not work on the mainnet.
 
-### Query parameters
 
-<Property required={true} deprecated={false} name={"address"} type={"string"}>
+| Status code | Description |
+| :------ | :------ |
+| `200` | Success |
+| `500` | Faucet call failed |
 
-A valid testnet address
+<APIPlayground authorization={undefined} method={"POST"} route={"/extended/v1/faucets/stx"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
 
-<span>Example:  `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"stacking"} type={"boolean"}>
-
-Request the amount of STX tokens needed for individual address stacking
-
-<span>Example:  `true` | `false`</span>
-
-</Property>
-
-| Status code | Description       |
-|:------------|:------------------|
-| `200`       | Success           |
-| `500`       | Faucet call failed|
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X POST \
-  "https://api.testnet.hiro.so/extended/v1/faucets/stx?address=ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM" \
-  -H 'Accept: application/json'
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X POST "https://api.mainnet.hiro.so/extended/v1/faucets/stx"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/faucets/stx", {
+  method: "POST"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 POST request that initiates a transfer of tokens to a specified testnet address
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "success": true,
   "txId": "string",
@@ -75,9 +95,9 @@ POST request that initiates a transfer of tokens to a specified testnet address
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title="Schema">
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -97,16 +117,15 @@ export interface RunFaucetResponse {
    */
   txRaw?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

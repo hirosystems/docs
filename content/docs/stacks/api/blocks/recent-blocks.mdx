@@ -4,14 +4,21 @@ description: Retrieves a list of recently mined blocks.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,49 +26,79 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/block"}>
 
-**NOTE:** This endpoint is <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> in favor of [Get blocks](/stacks/api/blocks/get-blocks).
+## Get recent blocks
+
+**NOTE:** This endpoint is deprecated in favor of [Get blocks](/api/get-blocks).
 
 Retrieves a list of recently mined blocks
 
-### Query parameters
+If you need to actively monitor new blocks, we highly recommend subscribing to [WebSockets or Socket.io](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client) for real-time updates.
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+### Query Parameters
 
-Max number of blocks to fetch
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-<span>Default:  `20`</span>
+max number of blocks to fetch
 
-<span>Maximum:  `30`</span>
+<span>Default: `20`</span>
+
+<span>Maximum: `30`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Index of first block to fetch
+index of first block to fetch
 
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of blocks |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/block"} path={[]} query={[{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/block"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/block?limit=20&offset=42000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/block?limit=20&offset=42000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns blocks
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -71,6 +108,8 @@ GET request that returns blocks
       "canonical": true,
       "height": 0,
       "hash": "string",
+      "block_time": 0,
+      "block_time_iso": "string",
       "index_block_hash": "string",
       "parent_block_hash": "string",
       "burn_block_time": 0,
@@ -103,9 +142,9 @@ GET request that returns blocks
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -142,6 +181,14 @@ export interface Block {
    * Hash representing the block
    */
   hash: string;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  block_time_iso: string;
   /**
    * The only hash that can uniquely identify an anchored block or an unconfirmed state trie
    */
@@ -217,16 +264,15 @@ export interface Block {
     [k: string]: number;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

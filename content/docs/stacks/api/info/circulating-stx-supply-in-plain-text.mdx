@@ -4,11 +4,21 @@ description: Retrieves the circulating STX supply as plain text.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from 'fumadocs-ui/components/api'
-import { Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -16,49 +26,76 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"GET"} route={"/extended/v1/stx_supply/circulating/plain"}>
 
+## Get circulating STX supply in plain text format
+
 Retrieves the STX tokens currently in circulation that have been unlocked as plain text.
 
 | Status code | Description |
-|:------------|:------------|
-| `200`       | Success     |
+| :------ | :------ |
+| `200` | success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/stx_supply/circulating/plain"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply/circulating/plain"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/stx_supply/circulating/plain", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns network target block times
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 "string"
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
- * Response that retrieves the circulating STX supply in plain text format
+ * GET request that returns network target block times
  */
 export type GetStxCirculatingSupplyPlainResponse = string;
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

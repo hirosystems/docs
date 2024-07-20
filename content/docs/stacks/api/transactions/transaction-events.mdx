@@ -4,90 +4,116 @@ description: Retrieves events for a specific transaction.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<div className='flex-1'>
+<APIInfo method={"GET"} route={"/extended/v1/tx/events"}>
 
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tx/events`}</p>
-</h2>
+## Transaction Events
 
-Retrieves the list of events filtered by principal (STX address or smart contract ID), transaction ID or event types. The list of event types is ('smart_contract_log', 'stx_lock', 'stx_asset', 'fungible_token_asset', 'non_fungible_token_asset').
+Retrieves the list of events filtered by principal (STX address or Smart Contract ID), transaction id or event types. The list of event types is ('smart_contract_log', 'stx_lock', 'stx_asset', 'fungible_token_asset', 'non_fungible_token_asset').
+### Query Parameters
 
-### Query parameters
-
-<Property required={false} deprecated={false} name={"tx_id"} type={"string"}>
+<Property name={"tx_id"} type={"string"} required={false} deprecated={false}>
 
 Hash of transaction
 
 </Property>
 
-<Property required={false} deprecated={false} name={"address"} type={"string"}>
+<Property name={"address"} type={"string"} required={false} deprecated={false}>
 
-Stacks address or a smart contract identifier
+Stacks address or a Contract identifier
 
-<span>Example:  `"ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
-
-Number of items to return
-
-<span>Example:  `100`</span>
+<span>Example: `"ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Number of items to skip
+number of items to return
 
-<span>Example:  `42000`</span>
+<span>Example: `100`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"type"} type={"array of string"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Filter the events by event type
+number of items to skip
 
-<span>Example:  `"stx_lock"`</span>
+<span>Example: `42000`</span>
+
+</Property>
+
+<Property name={"type"} type={"array<string>"} required={false} deprecated={false}>
+
+Filter the events on event type
+
+<span>Example: `"stx_lock"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
 
-</div>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tx/events"} path={[]} query={[{"name":"tx_id","type":"string","defaultValue":"","isRequired":false},{"name":"address","type":"string","defaultValue":"ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4","isRequired":false},{"name":"limit","type":"number","defaultValue":100,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"type","type":"array","isRequired":false,"items":"0"}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
+
+</APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/events"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/events?tx_id=string&address=ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4&limit=100&offset=42000&type=stx_lock"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/tx/events?tx_id=string&address=ST1HB64MAJ1MBV4CQ80GF01DZS4T1DSMX20ADCRA4&limit=100&offset=42000&type=stx_lock", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET event for the given transaction
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 0,
   "offset": 0,
@@ -109,9 +135,9 @@ GET event for the given transaction
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type TransactionEvent =
@@ -202,16 +228,15 @@ export interface TransactionEventAsset {
   value?: string;
   memo?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

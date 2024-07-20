@@ -4,14 +4,21 @@ description: Retrieves a single block.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,35 +26,63 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v2/blocks/{height_or_hash}"}>
 
+## Get block
+
 Retrieves a single block
 
-### Path parameters
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"height_or_hash"} type={"integer | string"}>
+<Property name={"height_or_hash"} type={"integer | string"} required={true} deprecated={false}>
 
-Filter by block height, hash, index block hash or the constant `latest` to filter for the most recent block
+filter by block height, hash, index block hash or the constant `latest` to filter for the most recent block
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Block |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/blocks/{height_or_hash}"} path={[{"name":"height_or_hash","type":"switcher","items":{"integer":{"type":"ref","isRequired":true,"schema":"0"},"string":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{"0":{"type":"number","defaultValue":42000,"isRequired":false},"1":{"type":"string","defaultValue":"0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/extended/v2/blocks/42000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that returns a block
+```js
+fetch("https://api.mainnet.hiro.so/extended/v2/blocks/42000", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+A block
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "canonical": true,
   "height": 0,
@@ -71,9 +106,9 @@ GET request that returns a block
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -157,16 +192,15 @@ export interface NakamotoBlock {
    */
   execution_cost_write_length: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

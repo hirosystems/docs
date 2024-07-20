@@ -4,14 +4,21 @@ description: Retrieves a list of non-fungible token mints for a given asset iden
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,75 +26,103 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/tokens/nft/mints"}>
 
-Retrieves all mint events for a non-fungible token asset class. This is useful to determine which NFTs of a particular collection have been claimed.
+## Non-Fungible Token mints
 
-More information on non-fungible tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
+Retrieves all mint events for a Non-Fungible Token asset class. Useful to determine which NFTs of a particular collection have been claimed.
 
-### Query parameters
+More information on Non-Fungible Tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
 
-<Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
+### Query Parameters
 
-Token asset class identifier
+<Property name={"asset_identifier"} type={"string"} required={true} deprecated={false}>
 
-<span>Example:  `"SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"`</span>
+token asset class identifier
 
-</Property>
-
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
-
-Max number of events to fetch
-
-<span>Default:  `50`</span>
+<span>Example: `"SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Index of first event to fetch
+max number of events to fetch
 
-<span>Example:  `42000`</span>
-
-<span>Default:  `0`</span>
+<span>Default: `50`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Whether or not to include events from unconfirmed transactions
+index of first event to fetch
 
-<span>Example:  `true`</span>
+<span>Example: `42000`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `0`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"tx_metadata"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
-Whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
+whether or not to include events from unconfirmed transactions
 
-<span>Default:  `false`</span>
+<span>Example: `true`</span>
+
+<span>Default: `false`</span>
+
+</Property>
+
+<Property name={"tx_metadata"} type={"boolean"} required={false} deprecated={false}>
+
+whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
+
+<span>Default: `false`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Non-Fungible Token mints |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tokens/nft/mints"} path={[]} query={[{"name":"asset_identifier","type":"string","defaultValue":"SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild::The-Explorer-Guild","isRequired":true},{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false},{"name":"tx_metadata","type":"boolean","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/tokens/nft/mints"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/tokens/nft/mints?asset_identifier=SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild%3A%3AThe-Explorer-Guild&limit=50&offset=42000&unanchored=true&tx_metadata=false"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-List of non-fungible token mint events for an asset identifier
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/tokens/nft/mints?asset_identifier=SP2X0TZ59D5SZ8ACQ6YMCHHNR2ZN51Z32E2CJ173.the-explorer-guild%3A%3AThe-Explorer-Guild&limit=50&offset=42000&unanchored=true&tx_metadata=false", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+List of Non-Fungible Token mint events for an asset identifier
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 200,
   "offset": 0,
@@ -106,9 +141,9 @@ List of non-fungible token mint events for an asset identifier
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -149,6 +184,10 @@ export type AbstractTransaction = BaseTransaction & {
    * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
    */
   block_time_iso: string;
+  /**
+   * Height of the anchor burn block.
+   */
+  burn_block_height: number;
   /**
    * Unix timestamp (in seconds) indicating when this block was mined
    */
@@ -646,16 +685,15 @@ export interface TenureChangeTransactionMetadata {
     pubkey_hash: string;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

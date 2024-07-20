@@ -4,14 +4,21 @@ description: Retrieves the list of subdomains for a specific name.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,61 +26,87 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/v1/names/{name}/subdomains"}>
 
+## Get name subdomains
+
 Retrieves the list of subdomains for a specific name
+### Path Parameters
 
-### Path parameters
+<Property name={"name"} type={"string"} required={true} deprecated={false}>
 
-<Property required={true} deprecated={false} name={"name"} type={"string"}>
+fully-qualified name
 
-Fully-qualified name
-
-<span>Example:  `"id.blockstack"`</span>
+<span>Example: `"id.blockstack"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v1/names/{name}/subdomains"} path={[{"name":"name","type":"string","defaultValue":"id.blockstack","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/v1/names/id.blockstack/subdomains"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/v1/names/id.blockstack/subdomains", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 Fetch a list of subdomains in a name.
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 [
   "string"
 ]
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
  * Fetch a list of subdomains in a name.
  */
 export type GetAllSubdomainsInName = string[];
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

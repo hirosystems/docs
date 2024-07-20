@@ -4,14 +4,21 @@ description: Calls a read-only public function on a given smart contract.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,70 +26,80 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"POST"} route={"/v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}"}>
 
+## Call read-only function
+
 Call a read-only public function on a given smart contract.
 
 The smart contract and function are specified using the URL path. The arguments and the simulated tx-sender are supplied via the POST body in the following JSON format:
 
-### Request body
 
-Map of arguments and the simulated tx-sender where sender is either a contract identifier or a normal Stacks address, and arguments is an array of hex serialized Clarity values.
+### Request Body
 
-<Property required={true} deprecated={false} name={"sender"} type={"string"}>
+map of arguments and the simulated tx-sender where sender is either a Contract identifier or a normal Stacks address, and arguments is an array of hex serialized Clarity values.
+
+<Property name={"sender"} type={"string"} required={true} deprecated={undefined}>
 
 The simulated tx-sender
 
 </Property>
 
-<Property required={true} deprecated={false} name={"arguments"} type={"array of string"}>
+<Property name={"arguments"} type={"array<string>"} required={true} deprecated={undefined}>
 
 An array of hex serialized Clarity values
 
 </Property>
+### Path Parameters
 
-### Path parameters
-
-<Property required={true} deprecated={false} name={"contract_address"} type={"string"}>
+<Property name={"contract_address"} type={"string"} required={true} deprecated={false}>
 
 Stacks address
 
-<span>Example:  `"SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"`</span>
+<span>Example: `"SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"`</span>
 
 </Property>
 
-<Property required={true} deprecated={false} name={"contract_name"} type={"string"}>
+<Property name={"contract_name"} type={"string"} required={true} deprecated={false}>
 
 Contract name
 
-<span>Example:  `"imaginary-friends-zebras"`</span>
+<span>Example: `"imaginary-friends-zebras"`</span>
 
 </Property>
 
-<Property required={true} deprecated={false} name={"function_name"} type={"string"}>
+<Property name={"function_name"} type={"string"} required={true} deprecated={false}>
 
 Function name
 
-<span>Example:  `"get-token-uri"`</span>
+<span>Example: `"get-token-uri"`</span>
 
 </Property>
 
-### Query parameters
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"tip"} type={"string"}>
+<Property name={"tip"} type={"string"} required={false} deprecated={false}>
 
 The Stacks chain tip to query from
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"POST"} route={"/v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}"} path={[{"name":"contract_address","type":"string","defaultValue":"SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7","isRequired":true},{"name":"contract_name","type":"string","defaultValue":"imaginary-friends-zebras","isRequired":true},{"name":"function_name","type":"string","defaultValue":"get-token-uri","isRequired":true}]} query={[{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={{"type":"object","isRequired":true,"description":"Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset","properties":{"sender":{"type":"ref","isRequired":true,"schema":"0"},"arguments":{"type":"ref","isRequired":true,"schema":"1"}},"additionalProperties":false}} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"The simulated tx-sender"},"1":{"type":"array","description":"An array of hex serialized Clarity values","isRequired":false,"items":"2"},"2":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7/imaginary-friends-zebras/get-token-uri" \
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7/imaginary-friends-zebras/get-token-uri?tip=string" \
   -d '{
   "sender": "string",
   "arguments": [
@@ -91,13 +108,31 @@ curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z
 }'
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7/imaginary-friends-zebras/get-token-uri?tip=string", {
+  method: "POST"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request to get contract source
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "okay": true,
   "result": "string",
@@ -105,9 +140,9 @@ GET request to get contract source
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -118,16 +153,15 @@ export interface ReadOnlyFunctionSuccessResponse {
   result?: string;
   cause?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

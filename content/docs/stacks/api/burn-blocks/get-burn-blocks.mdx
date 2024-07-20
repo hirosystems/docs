@@ -4,14 +4,21 @@ description: Retrieves a list of recent burn blocks.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,47 +26,76 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v2/burn-blocks"}>
 
-Retrieves a list of recent burn blocks.
+## Get burn blocks
 
-### Query parameters
+Retrieves a list of recent burn blocks
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
-Max number of burn blocks to fetch
+### Query Parameters
 
-<span>Default:  `20`</span>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-<span>Maximum:  `30`</span>
+max number of burn blocks to fetch
+
+<span>Default: `20`</span>
+
+<span>Maximum: `30`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Index of first burn block to fetch
+index of first burn block to fetch
 
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of burn blocks |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/burn-blocks"} path={[]} query={[{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v2/burn-blocks"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v2/burn-blocks?limit=20&offset=42000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v2/burn-blocks?limit=20&offset=42000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns burn blocks
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -72,15 +108,17 @@ GET request that returns burn blocks
       "burn_block_height": 0,
       "stacks_blocks": [
         "string"
-      ]
+      ],
+      "avg_block_time": 0,
+      "total_tx_count": 0
     }
   ]
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -125,17 +163,24 @@ export interface BurnBlock {
    * Hashes of the Stacks blocks included in the burn block
    */
   stacks_blocks: string[];
+  /**
+   * Average time between blocks in seconds. Returns 0 if there is only one block in the burn block.
+   */
+  avg_block_time: number;
+  /**
+   * Total number of transactions in the Stacks blocks associated with this burn block
+   */
+  total_tx_count: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

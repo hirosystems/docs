@@ -4,10 +4,21 @@ description: Retrieves the total and unlocked STX supply in legacy format 1.0 AP
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,39 +26,66 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"GET"} route={"/extended/v1/stx_supply/legacy_format"}>
 
-Retrieves total supply of STX tokens including those currently in circulation that have been unlocked.
+## Get total and unlocked STX supply (results formatted the same as the legacy 1.0 API)
 
+Retrieves total supply of STX tokens including those currently in circulation that have been unlocked.
 **Note:** this uses the estimated future total supply for the year 2050.
 
-### Query parameters
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"height"} type={"number"}>
+<Property name={"height"} type={"number"} required={false} deprecated={false}>
 
-Supply details are queried from a specified block height. If the block height is not specified, the latest block height is taken as the default value.
+Supply details are queried from specified block height. If the block height is not specified, the latest block height is taken as default value.
 
-<span>Example:  `200`</span>
+<span>Example: `200`</span>
 
 </Property>
 
 | Status code | Description |
-|:------------|:------------|
-| `200`       | Success     |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/stx_supply/legacy_format"} path={[]} query={[{"name":"height","type":"number","defaultValue":200,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply/legacy_format"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/stx_supply/legacy_format?height=200"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/stx_supply/legacy_format?height=200", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns network target block times
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "unlockedPercent": "string",
   "totalStacks": "string",
@@ -58,9 +96,9 @@ GET request that returns network target block times
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -92,16 +130,15 @@ export interface GetStxSupplyLegacyFormatResponse {
    */
   blockHeight: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

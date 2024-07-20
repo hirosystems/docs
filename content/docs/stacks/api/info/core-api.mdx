@@ -4,40 +4,77 @@ description: Retrieves information about the Core API, including the server vers
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<APIInfo method={"GET"} route={"/extended/v2/info"}>
+<APIInfo method={"GET"} route={"/v2/info"}>
+
+## Get Core API info
 
 Retrieves information about the Core API including the server version
 
 | Status code | Description |
-| :---------- | :---------- |
-| `200`       | Success     |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/info"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -L \
-  'https://api.mainnet.hiro.so/v2/info' \
-  -H 'Accept: application/json'
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/v2/info"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/v2/info", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that core node information
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "peer_version": 0,
   "pox_consensus": "string",
@@ -55,9 +92,9 @@ GET request that core node information
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title="Schema">
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -117,16 +154,15 @@ export interface CoreNodeInfoResponse {
    */
   exit_at_block_height: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

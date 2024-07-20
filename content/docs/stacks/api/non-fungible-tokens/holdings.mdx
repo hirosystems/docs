@@ -4,14 +4,21 @@ description: Retrieves a list of non-fungible tokens owned by the given principa
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,84 +26,112 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/tokens/nft/holdings"}>
 
-Retrieves a list of non-fungible tokens owned by the given principal (STX address or smart contract ID).
+## Non-Fungible Token holdings
+
+Retrieves the list of Non-Fungible Tokens owned by the given principal (STX address or Smart Contract ID).
 Results can be filtered by one or more asset identifiers and can include metadata about the transaction that made the principal own each token.
 
-More information on non-fungible tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
+More information on Non-Fungible Tokens on the Stacks blockchain can be found [here](https://docs.stacks.co/write-smart-contracts/tokens#non-fungible-tokens-nfts).
 
-### Query parameters
+### Query Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
-Token owner's STX address or smart contract ID
+token owner's STX address or Smart Contract ID
 
-<span>Example:  `"SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3"`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"asset_identifiers"} type={"array of string"}>
-
-Identifiers of the token asset classes to filter for
-
-<span>Example:  `"SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy::candy"`</span>
+<span>Example: `"SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"asset_identifiers"} type={"array<string>"} required={false} deprecated={false}>
 
-Max number of tokens to fetch
+identifiers of the token asset classes to filter for
 
-<span>Default:  `50`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
-
-Index of first tokens to fetch
-
-<span>Example:  `42000`</span>
-
-<span>Default:  `0`</span>
+<span>Example: `"SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy::candy"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Whether or not to include tokens from unconfirmed transactions
+max number of tokens to fetch
 
-<span>Example:  `true`</span>
-
-<span>Default:  `false`</span>
+<span>Default: `50`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"tx_metadata"} type={"boolean"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
+index of first tokens to fetch
 
-<span>Default:  `false`</span>
+<span>Example: `42000`</span>
+
+<span>Default: `0`</span>
+
+</Property>
+
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
+
+whether or not to include tokens from unconfirmed transactions
+
+<span>Example: `true`</span>
+
+<span>Default: `false`</span>
+
+</Property>
+
+<Property name={"tx_metadata"} type={"boolean"} required={false} deprecated={false}>
+
+whether or not to include the complete transaction metadata instead of just `tx_id`. Enabling this option can affect performance and response times.
+
+<span>Default: `false`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
-| `200` | List of non-fungible token holdings |
+| :------ | :------ |
+| `200` | List of Non-Fungible Token holdings |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tokens/nft/holdings"} path={[]} query={[{"name":"principal","type":"string","defaultValue":"SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3","isRequired":true},{"name":"asset_identifiers","type":"array","isRequired":false,"items":"0"},{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false},{"name":"tx_metadata","type":"boolean","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/tokens/nft/holdings"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/tokens/nft/holdings?principal=SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3&asset_identifiers=SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy%3A%3Acandy&limit=50&offset=42000&unanchored=true&tx_metadata=false"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/tokens/nft/holdings?principal=SPNWZ5V2TPWGQGVDR6T7B6RQ4XMGZ4PXTEE0VQ0S.marketplace-v3&asset_identifiers=SPQZF23W7SEYBFG5JQ496NMY0G7379SRYEDREMSV.Candy%3A%3Acandy&limit=50&offset=42000&unanchored=true&tx_metadata=false", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 List of Non-Fungible Token holdings
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 200,
   "offset": 0,
@@ -115,9 +150,9 @@ List of Non-Fungible Token holdings
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -158,6 +193,10 @@ export type AbstractTransaction = BaseTransaction & {
    * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
    */
   block_time_iso: string;
+  /**
+   * Height of the anchor burn block.
+   */
+  burn_block_height: number;
   /**
    * Unix timestamp (in seconds) indicating when this block was mined
    */
@@ -655,16 +694,15 @@ export interface TenureChangeTransactionMetadata {
     pubkey_hash: string;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,10 +4,21 @@ description: Delivers testnet BTC tokens to a specified address.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,46 +26,74 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"POST"} route={"/extended/v1/faucets/btc"}>
 
+## Add testnet BTC tokens to address
+
 Add 1 BTC token to the specified testnet BTC address.
 
-The endpoint returns the transaction ID, which you can use to view the transaction in a testnet Bitcoin block explorer. The tokens are delivered once the transaction has been included in a block.
+The endpoint returns the transaction ID, which you can use to view the transaction in a testnet Bitcoin block
+explorer. The tokens are delivered once the transaction has been included in a block.
 
-**Note:** This is a testnet only endpoint. This endpoint will not work on mainnet.
+**Note:** This is a testnet only endpoint. This endpoint will not work on the mainnet.
 
-### Body parameters
 
-<Property required={true} deprecated={false} name={"address"} type={"string"}>
+### Request Body (Optional)
+
+<Property name={"address"} type={"string"} required={false} deprecated={undefined}>
 
 BTC testnet address
 
 </Property>
 
-| Status code | Description                      |
-|:------------|:---------------------------------|
-| `200`       | Success                          |
-| `403`       | BTC Faucet not fully configured  |
-| `500`       | Faucet call failed               |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Success |
+| `403` | BTC Faucet not fully configured |
+| `500` | Faucet call failed |
+
+<APIPlayground authorization={undefined} method={"POST"} route={"/extended/v1/faucets/btc"} path={[]} query={[]} header={[]} body={{"type":"object","isRequired":true,"properties":{"address":{"type":"ref","isRequired":false,"schema":"0"}}}} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"BTC testnet address"}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X POST \
-  "https://api.testnet.hiro.so/extended/v1/faucets/btc" \
-  -H 'Content-Type: application/json' \
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X POST "https://api.mainnet.hiro.so/extended/v1/faucets/btc" \
   -d '{
-    "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
-  }'
+  "address": "2N4M94S1ZPt8HfxydXzL2P7qyzgVq7MHWts"
+}'
 ```
 
-<Tabs items={["200","403"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/faucets/btc", {
+  method: "POST"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","403"]}>
+
+<Response value={"200"}>
 
 POST request that initiates a transfer of tokens to a specified testnet address
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "success": true,
   "txId": "string",
@@ -62,9 +101,9 @@ POST request that initiates a transfer of tokens to a specified testnet address
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title="Schema">
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -84,45 +123,45 @@ export interface RunFaucetResponse {
    */
   txRaw?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"403"}>
+<Response value={"403"}>
 
+<ResponseTypes>
 
+<ExampleResponse>
 
-```json title="Example response"
+```json
 {
   "error": "string",
   "success": true
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title="Schema">
+<TypeScriptResponse>
 
 ```ts
 export interface Response {
   error?: string;
   success?: boolean;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,88 +4,113 @@ description: Retrieves transactions for a specific address.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<div className='flex-1'>
+<APIInfo method={"GET"} route={"/extended/v1/address/{address}/mempool"}>
 
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/address/{address}/mempool`}</p>
-</h2>
+## Transactions for address
 
 Retrieves all transactions for a given address that are currently in mempool
-
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"address"} type={"string"}>
+<Property name={"address"} type={"string"} required={true} deprecated={false}>
 
 Transactions for the address
 
-<span>Example:  `"SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9"`</span>
+<span>Example: `"SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9"`</span>
 
 </Property>
-
 ### Query Parameters
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
 max number of transactions to fetch
 
-<span>Example:  `90`</span>
+<span>Example: `90`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
 index of first transaction to fetch
 
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `false`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of Transactions |
 
-</div>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{address}/mempool"} path={[{"name":"address","type":"string","defaultValue":"SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9","isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":90,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9/mempool"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9/mempool?limit=90&offset=42000&unanchored=true"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/address/SP197DVH8KTJGX4STM61QN0WJV8Y9QJWXV83ZGNR9/mempool?limit=90&offset=42000&unanchored=true", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns transactions
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 0,
   "offset": 0,
@@ -125,9 +150,9 @@ GET request that returns transactions
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -444,16 +469,15 @@ export interface TenureChangeTransactionMetadata {
     pubkey_hash: string;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

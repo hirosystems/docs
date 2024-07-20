@@ -4,125 +4,151 @@ description: Retrieves all transactions that have been recently broadcast to the
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<div className='flex-1'>
+<APIInfo method={"GET"} route={"/extended/v1/tx/mempool"}>
 
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tx/mempool`}</p>
-</h2>
+## Get mempool transactions
 
 Retrieves all transactions that have been recently broadcast to the mempool. These are pending transactions awaiting confirmation.
 
 If you need to monitor new transactions, we highly recommend subscribing to [WebSockets or Socket.io](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client) for real-time updates.
 
+### Query Parameters
 
-### Query parameters
-
-<Property required={false} deprecated={false} name={"sender_address"} type={"string"}>
+<Property name={"sender_address"} type={"string"} required={false} deprecated={false}>
 
 Filter to only return transactions with this sender address.
 
-<span>Example:  `"SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10"`</span>
+<span>Example: `"SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"recipient_address"} type={"string"}>
+<Property name={"recipient_address"} type={"string"} required={false} deprecated={false}>
 
 Filter to only return transactions with this recipient address (only applicable for STX transfer tx types).
 
 </Property>
 
-<Property required={false} deprecated={false} name={"address"} type={"string"}>
+<Property name={"address"} type={"string"} required={false} deprecated={false}>
 
 Filter to only return transactions with this address as the sender or recipient (recipient only applicable for STX transfer tx types).
 
 </Property>
 
-<Property required={false} deprecated={false} name={"order_by"} type={"string"}>
+<Property name={"order_by"} type={"string"} required={false} deprecated={false}>
 
 Option to sort results by transaction age, size, or fee rate.
 
-<span>Example:  `"fee"`</span>
+<span>Example: `"fee"`</span>
 
-<span>Value in:  `"age" | "size" | "fee"`</span>
+<span>Value in: `"age" | "size" | "fee"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"order"} type={"string"}>
+<Property name={"order"} type={"string"} required={false} deprecated={false}>
 
 Option to sort results in ascending or descending order.
 
-<span>Example:  `"asc"`</span>
+<span>Example: `"asc"`</span>
 
-<span>Value in:  `"asc" | "desc"`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
-
-Max number of mempool transactions to fetch
-
-<span>Example:  `20`</span>
-
-<span>Default:  `20`</span>
-
-<span>Maximum:  `50`</span>
+<span>Value in: `"asc" | "desc"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Index of first mempool transaction to fetch
+max number of mempool transactions to fetch
 
-<span>Example:  `42000`</span>
+<span>Example: `20`</span>
+
+<span>Default: `20`</span>
+
+<span>Maximum: `50`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
+
+index of first mempool transaction to fetch
+
+<span>Example: `42000`</span>
+
+</Property>
+
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `false`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of mempool transactions |
 
-</div>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tx/mempool"} path={[]} query={[{"name":"sender_address","type":"string","defaultValue":"SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10","isRequired":false},{"name":"recipient_address","type":"string","defaultValue":"","isRequired":false},{"name":"address","type":"string","defaultValue":"","isRequired":false},{"name":"order_by","type":"string","defaultValue":"fee","isRequired":false},{"name":"order","type":"string","defaultValue":"asc","isRequired":false},{"name":"limit","type":"number","defaultValue":20,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/mempool"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/mempool?sender_address=SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10&recipient_address=string&address=string&order_by=fee&order=asc&limit=20&offset=42000&unanchored=true"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that returns mempool transactions
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/tx/mempool?sender_address=SP1GPBP8NBRXDRJBFQBV7KMAZX1Z7W2RFWJEH0V10&recipient_address=string&address=string&order_by=fee&order=asc&limit=20&offset=42000&unanchored=true", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+GET request that returns transactions
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 0,
   "offset": 0,
@@ -162,9 +188,9 @@ GET request that returns mempool transactions
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -481,16 +507,15 @@ export interface TenureChangeTransactionMetadata {
     pubkey_hash: string;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

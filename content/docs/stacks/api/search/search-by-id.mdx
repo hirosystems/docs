@@ -4,58 +4,94 @@ description: Search blocks, transactions, contracts, or accounts by hash/ID.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<APIInfo method={"GET"} route={"/extended/v2/info"}>
+<APIInfo method={"GET"} route={"/extended/v1/search/{id}"}>
 
-Search blocks, transactions, contracts, or accounts by hash/ID.
+## Search
 
-### Path parameters
+Search blocks, transactions, contracts, or accounts by hash/ID
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"id"} type={"string"}>
+<Property name={"id"} type={"string"} required={true} deprecated={false}>
 
 The hex hash string for a block or transaction, account address, or contract address
 
-<span>Example:  `"0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"`</span>
+<span>Example: `"0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"`</span>
 
 </Property>
+### Query Parameters
 
-### Query parameters
-
-<Property required={false} deprecated={false} name={"include_metadata"} type={"boolean"}>
+<Property name={"include_metadata"} type={"boolean"} required={false} deprecated={false}>
 
 This includes the detailed data for purticular hash in the response
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
 | `404` | Not found |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/search/{id}"} path={[{"name":"id","type":"string","defaultValue":"0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d","isRequired":true}]} query={[{"name":"include_metadata","type":"boolean","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET \
-"https://api.mainnet.hiro.so/extended/v1/search/0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/search/0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d?include_metadata=true"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/search/0xcf8b233f19f6c07d2dc1963302d2436efd36e9afac127bf6582824a13961c06d?include_metadata=true", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 complete search result for terms
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "found": false,
   "result": {
@@ -65,9 +101,9 @@ complete search result for terms
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -946,16 +982,15 @@ export interface TxSearchResult {
     metadata?: Transaction;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,14 +4,21 @@ description: Retrieves transactions for a specific account.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,85 +26,111 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/address/{principal}/transactions"}>
 
-**NOTE:** This [endpoint](/api/transactions/transactions-by-block) has been <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> and may be removed in future versions of the API.
+## Get account transactions
 
-Retrieves a list of all transactions for a given address or contract identifier. More information on transaction types can be found [here](/stacks/api/txs).
+**NOTE:** This endpoint is deprecated in favor of [Get address transactions](/api/get-address-transactions).
 
-If you need to actively monitor new transactions for an address or contract id, we highly recommend using the [`@stacks/blockchain-api-client`](/stacks/api/client) library for real-time updates.
+Retrieves a list of all Transactions for a given Address or Contract Identifier. More information on Transaction types can be found [here](https://docs.stacks.co/understand-stacks/transactions#types).
 
-### Path parameters
+If you need to actively monitor new transactions for an address or contract id, we highly recommend subscribing to [WebSockets or Socket.io](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client) for real-time updates.
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
-Stacks address or a contract identifier
+Stacks address or a Contract identifier
 
-<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+### Query Parameters
+
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
+
+max number of account transactions to fetch
+
+<span>Example: `42000`</span>
 
 </Property>
 
-### Query parameters
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+index of first account transaction to fetch
 
-Max number of account transactions to fetch
-
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
-
-Index of first account transaction to fetch
-
-<span>Example:  `42000`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"height"} type={"number"}>
+<Property name={"height"} type={"number"} required={false} deprecated={false}>
 
 Filter for transactions only at this given block height
 
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `false`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
+<Property name={"until_block"} type={"string"} required={false} deprecated={false}>
 
 returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
 
-<span>Example:  `60000`</span>
+<span>Example: `60000`</span>
 
 </Property>
 
-| Status code | Description   |
-|:------------|:--------------|
-| `200`       | Success       |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/transactions"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":42000,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"height","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false},{"name":"until_block","type":"string","defaultValue":60000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions?limit=42000&offset=42000&height=42000&unanchored=true&until_block=60000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/transactions?limit=42000&offset=42000&height=42000&unanchored=true&until_block=60000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns account transactions
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -137,9 +170,9 @@ GET request that returns account transactions
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -150,7 +183,8 @@ export type MempoolTransaction =
   | MempoolSmartContractTransaction
   | MempoolContractCallTransaction
   | MempoolPoisonMicroblockTransaction
-  | MempoolCoinbaseTransaction;
+  | MempoolCoinbaseTransaction
+  | MempoolTenureChangeTransaction;
 /**
  * Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset
  */
@@ -255,7 +289,8 @@ export type MempoolTransactionStatus =
   | "dropped_replace_by_fee"
   | "dropped_replace_across_fork"
   | "dropped_too_expensive"
-  | "dropped_stale_garbage_collect";
+  | "dropped_stale_garbage_collect"
+  | "dropped_problematic";
 /**
  * Describes representation of a Type-1 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-1-instantiating-a-smart-contract
  */
@@ -273,6 +308,10 @@ export type MempoolPoisonMicroblockTransaction = AbstractMempoolTransaction & Po
  */
 export type MempoolCoinbaseTransaction = AbstractMempoolTransaction & CoinbaseTransactionMetadata;
 /**
+ * Describes representation of a Type 7 Stacks transaction: Tenure Change
+ */
+export type MempoolTenureChangeTransaction = AbstractMempoolTransaction & TenureChangeTransactionMetadata;
+/**
  * Describes all transaction types on Stacks 2.0 blockchain
  */
 export type Transaction =
@@ -280,7 +319,8 @@ export type Transaction =
   | SmartContractTransaction
   | ContractCallTransaction
   | PoisonMicroblockTransaction
-  | CoinbaseTransaction;
+  | CoinbaseTransaction
+  | TenureChangeTransaction;
 /**
  * Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset
  */
@@ -297,6 +337,18 @@ export type AbstractTransaction = BaseTransaction & {
    * Height of the block this transactions was associated with
    */
   block_height: number;
+  /**
+   * Unix timestamp (in seconds) indicating when this block was mined.
+   */
+  block_time: number;
+  /**
+   * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
+   */
+  block_time_iso: string;
+  /**
+   * Height of the anchor burn block.
+   */
+  burn_block_height: number;
   /**
    * Unix timestamp (in seconds) indicating when this block was mined
    */
@@ -471,6 +523,10 @@ export type PoisonMicroblockTransaction = AbstractTransaction & PoisonMicroblock
  * Describes representation of a Type 3 Stacks 2.0 transaction: Poison Microblock
  */
 export type CoinbaseTransaction = AbstractTransaction & CoinbaseTransactionMetadata;
+/**
+ * Describes representation of a Type 7 Stacks transaction: Tenure Change
+ */
+export type TenureChangeTransaction = AbstractTransaction & TenureChangeTransactionMetadata;
 
 /**
  * GET request that returns account transactions
@@ -607,6 +663,46 @@ export interface CoinbaseTransactionMetadata {
      * A principal that will receive the miner rewards for this coinbase transaction. Can be either a standard principal or contract principal. Only specified for `coinbase-to-alt-recipient` transaction types, otherwise null.
      */
     alt_recipient?: string;
+    /**
+     * Hex encoded 80-byte VRF proof
+     */
+    vrf_proof?: string;
+  };
+}
+/**
+ * Describes representation of a Type 7 Stacks transaction: Tenure Change
+ */
+export interface TenureChangeTransactionMetadata {
+  tx_type: "tenure_change";
+  tenure_change_payload?: {
+    /**
+     * Consensus hash of this tenure. Corresponds to the sortition in which the miner of this block was chosen.
+     */
+    tenure_consensus_hash: string;
+    /**
+     * Consensus hash of the previous tenure. Corresponds to the sortition of the previous winning block-commit.
+     */
+    prev_tenure_consensus_hash: string;
+    /**
+     * Current consensus hash on the underlying burnchain. Corresponds to the last-seen sortition.
+     */
+    burn_view_consensus_hash: string;
+    /**
+     * (Hex string) Stacks Block hash
+     */
+    previous_tenure_end: string;
+    /**
+     * The number of blocks produced in the previous tenure.
+     */
+    previous_tenure_blocks: number;
+    /**
+     * Cause of change in mining tenure. Depending on cause, tenure can be ended or extended.
+     */
+    cause: "block_found" | "extended";
+    /**
+     * (Hex string) The ECDSA public key hash of the current tenure.
+     */
+    pubkey_hash: string;
   };
 }
 export interface AbstractTransactionEvent {
@@ -621,16 +717,15 @@ export interface TransactionEventAsset {
   value?: string;
   memo?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

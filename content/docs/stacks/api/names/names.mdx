@@ -4,14 +4,21 @@ description: Retrieves a list of all names known to the node.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,74 +26,105 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/v1/names"}>
 
+## Get all names
+
 Retrieves a list of all names known to the node.
 
-### Query parameters
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"page"} type={"integer"}>
+<Property name={"page"} type={"integer"} required={false} deprecated={false}>
 
-Names are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.
+names are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.
 
-<span>Example:  `22`</span>
+<span>Example: `22`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
 | `400` | Error |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v1/names"} path={[]} query={[{"name":"page","type":"number","defaultValue":22,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/v1/names"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/v1/names?page=22"
 ```
 
-<Tabs items={["200","400"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/v1/names?page=22", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","400"]}>
+
+<Response value={"200"}>
 
 Fetch a list of all names known to the node.
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 [
   "string"
 ]
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
  * Fetch a list of all names known to the node.
  */
 export type BnsGetAllNamesResponse = string[];
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"400"}>
+<Response value={"400"}>
 
 Error
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -95,16 +133,15 @@ Error
 export interface BnsError {
   error?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

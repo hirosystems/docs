@@ -4,14 +4,21 @@ description: Retrieves the Clarity source code of a given contract, along with t
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,27 +26,55 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/v2/contracts/source/{contract_address}/{contract_name}"}>
 
-Retrieves the Clarity source code of a given contract, along with the block height it was published in and the MARF proof for the data.
+## Get contract source
+
+Retrieves the Clarity source code of a given contract, along with the block height it was published in, and the MARF proof for the data
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/contracts/source/{contract_address}/{contract_name}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/v2/contracts/source/%7Bcontract_address%7D/%7Bcontract_name%7D"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that returns the contract source
+```js
+fetch("https://api.mainnet.hiro.so/v2/contracts/source/%7Bcontract_address%7D/%7Bcontract_name%7D", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+GET request to get contract source
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "source": "string",
   "publish_height": 0,
@@ -47,9 +82,9 @@ GET request that returns the contract source
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -60,16 +95,15 @@ export interface ContractSourceResponse {
   publish_height: number;
   proof: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

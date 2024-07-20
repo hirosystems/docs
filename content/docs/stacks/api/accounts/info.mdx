@@ -4,14 +4,21 @@ description: Retrieves the account data for a given account or contract identifi
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,54 +26,83 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/v2/accounts/{principal}"}>
 
-Retrieves the account data for a given account or contract identifier, where the balance is the hex encoding of a unsigned 128-bit integer (big-endian), the nonce is an unsigned 64-bit integer, and the proofs are provided as hex strings.
+## Get account info
 
-For non-existent accounts, this does not return a 404 error. Rather it returns an object with a balance and nonce of 0.
+Retrieves the account data for a given Account or a Contract Identifier
 
+Where balance is the hex encoding of a unsigned 128-bit integer (big-endian), nonce is an unsigned 64-bit integer, and the proofs are provided as hex strings.
 
-### Path parameters
+For non-existent accounts, this does not return a 404 error, rather it returns an object with balance and nonce of 0.
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+### Path Parameters
 
-Stacks address or a contract identifier
+<Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
-<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+Stacks address or a Contract identifier
+
+<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
 </Property>
 
-### Query parameters
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"proof"} type={"integer"}>
+<Property name={"proof"} type={"integer"} required={false} deprecated={false}>
 
 Returns object without the proof field if set to 0
 
 </Property>
 
-<Property required={false} deprecated={false} name={"tip"} type={"string"}>
+<Property name={"tip"} type={"string"} required={false} deprecated={false}>
 
 The Stacks chain tip to query from
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/accounts/{principal}"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"proof","type":"number","defaultValue":"","isRequired":false},{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.mainnet.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0?proof=0&tip=string"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0?proof=0&tip=string", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request for account data
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "balance": "string",
   "locked": "string",
@@ -77,9 +113,9 @@ GET request for account data
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -93,16 +129,15 @@ export interface AccountDataResponse {
   balance_proof: string;
   nonce_proof: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

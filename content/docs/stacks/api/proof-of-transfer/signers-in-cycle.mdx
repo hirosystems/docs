@@ -4,14 +4,21 @@ description: Retrieves a list of signers in a PoX cycle.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -19,37 +26,64 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v2/pox/cycles/{cycle_number}/signers"}>
 
-Retrieves a list of signers in a PoX cycle.
+## Get signers in PoX cycle
 
-### Path parameters
+Retrieves a list of signers in a PoX cycle
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"cycle_number"} type={"integer"}>
+<Property name={"cycle_number"} type={"integer"} required={true} deprecated={false}>
 
 PoX cycle number
 
-<span>Example:  `56`</span>
+<span>Example: `56`</span>
 
 </Property>
 
 | Status code | Description |
-| :--------- | :---------- |
+| :------ | :------ |
 | `200` | List of signers for cycle |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/pox/cycles/{cycle_number}/signers"} path={[{"name":"cycle_number","type":"number","defaultValue":56,"isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/extended/v2/pox/cycles/56/signers"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v2/pox/cycles/56/signers", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns signers for a PoX cycle
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 200,
   "offset": 0,
@@ -57,18 +91,21 @@ GET request that returns signers for a PoX cycle
   "results": [
     {
       "signing_key": "string",
+      "signer_address": "string",
       "weight": 0,
       "stacked_amount": "string",
       "weight_percent": 0,
-      "stacked_amount_percent": 0
+      "stacked_amount_percent": 0,
+      "solo_stacker_count": 0,
+      "pooled_stacker_count": 0
     }
   ]
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -91,21 +128,32 @@ export interface PoxCycleSignersListResponse {
 }
 export interface PoxSigner {
   signing_key: string;
+  /**
+   * The Stacks address derived from the signing_key.
+   */
+  signer_address: string;
   weight: number;
   stacked_amount: string;
   weight_percent: number;
   stacked_amount_percent: number;
+  /**
+   * The number of solo stackers associated with this signer.
+   */
+  solo_stacker_count: number;
+  /**
+   * The number of pooled stackers associated with this signer.
+   */
+  pooled_stacker_count: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

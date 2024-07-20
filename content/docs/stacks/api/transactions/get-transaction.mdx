@@ -4,51 +4,81 @@ description: Retrieves details for a specific transaction.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo } from "fumadocs-ui/components/api"
-import { Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { InlineCode } from '@/components/inline-code';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
 <API>
 
-<div className='flex-1'>
+<APIInfo method={"GET"} route={"/extended/v1/tx/{tx_id}"}>
 
-<h2 className="not-prose mb-2 inline-flex items-center gap-3 font-mono">
-  <div className="rounded-lg border px-1 py-0.5 text-xs font-medium border-green-400/50 bg-green-400/20 text-green-600 dark:text-green-400">
-    GET
-  </div>
-  <p className="text-xs break-words overflow-hidden w-[95%]">{`/extended/v1/tx/{tx_id}`}</p>
-</h2>
+## Get transaction
 
-Retrieves transaction details for a given transaction ID.
+Retrieves transaction details for a given transaction ID
+
+`import type { Transaction } from '@stacks/stacks-blockchain-api-types';`
+
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Transaction |
 | `404` | Cannot find transaction for given ID |
 
-</div>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tx/{tx_id}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
 
 <APIExample>
 
-```bash title="curl"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.mainnet.hiro.so/extended/v1/tx/%7Btx_id%7D"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/tx/%7Btx_id%7D", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 Describes all transaction types on Stacks 2.0 blockchain
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "tx_id": "string",
   "nonce": 0,
@@ -73,6 +103,7 @@ Describes all transaction types on Stacks 2.0 blockchain
   "block_height": 0,
   "block_time": 0,
   "block_time_iso": "string",
+  "burn_block_height": 0,
   "burn_block_time": 0,
   "burn_block_time_iso": "string",
   "parent_burn_block_time": 0,
@@ -119,9 +150,9 @@ Describes all transaction types on Stacks 2.0 blockchain
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -158,6 +189,10 @@ export type AbstractTransaction = BaseTransaction & {
    * An ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ) indicating when this block was mined.
    */
   block_time_iso: string;
+  /**
+   * Height of the anchor burn block.
+   */
+  burn_block_height: number;
   /**
    * Unix timestamp (in seconds) indicating when this block was mined
    */
@@ -595,25 +630,15 @@ export interface TenureChangeTransactionMetadata {
     pubkey_hash: string;
   };
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-<Accordion title="Notes">
+</ResponseTypes>
 
-If using TypeScript, import typings for this response from our `@stacks/stacks-blockchain-api-types` package:
+</Response>
 
-```ts
-import type { Transaction } from '@stacks/stacks-blockchain-api-types';
-```
-</Accordion>
-
-</Accordions>
-
-</Tab>
-
-</Tabs>
+</Responses>
 
 </APIExample>
 
