@@ -10,7 +10,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   tree: utils.pageTree,
   nav: {
     transparentMode: "top",
-    title: <DocsLogo className="size-28" />,
+    title: <DocsLogo className="size-28 hidden sm:block" />,
     children: <NavChildren />,
     links: [
       {
