@@ -4,10 +4,21 @@ description: Retrieves the status of the API.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,27 +26,53 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <APIInfo method={"GET"} route={"/runes/v1/"}>
 
-Displays the status of the API.
+## API Status
+
+Displays the status of the API
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/runes/v1/"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.hiro.so/runes/v1/"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/runes/v1/", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example Response"
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "server_version": "",
   "status": "string",
@@ -43,9 +80,9 @@ curl -X GET "https://api.hiro.so/runes/v1/"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Typescript Definition"}>
+<TypeScriptResponse>
 
 ```ts
 export interface ApiStatusResponse {
@@ -53,16 +90,15 @@ export interface ApiStatusResponse {
   status: string;
   block_height?: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

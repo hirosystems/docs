@@ -4,10 +4,21 @@ description: Retrieves BRC-20 token balances for a Bitcoin address.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,14 +26,17 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <APIInfo method={"GET"} route={"/ordinals/v1/brc-20/balances/{address}"}>
 
-Retrieves BRC-20 token balances for a Bitcoin address.
+## BRC-20 Balances
+
+Retrieves BRC-20 token balances for a Bitcoin address
+
 ### Query Parameters
 
-<Property required={false} deprecated={false} name={"ticker"} type={"array of string"}>
+<Property name={"ticker"} type={"array<string>"} required={false} deprecated={false}>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"block_height"} type={"string"}>
+<Property name={"block_height"} type={"Block Height"} required={false} deprecated={false}>
 
 Bitcoin block height
 
@@ -30,7 +44,7 @@ Bitcoin block height
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
@@ -38,7 +52,7 @@ Result offset
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
@@ -47,31 +61,58 @@ Results per page
 <span>Maximum: `60`</span>
 
 </Property>
+
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"address"} type={"string"}>
+<Property name={"address"} type={"Address"} required={true} deprecated={false}>
 
 Bitcoin address
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/brc-20/balances/{address}"} path={[{"name":"address","type":"string","defaultValue":"","isRequired":true,"description":"Address"}]} query={[{"name":"ticker","type":"array","isRequired":false,"items":"0"},{"name":"block_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"},{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/balances/string"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/balances/string?ticker=%5B%0A++%22string%22%0A%5D&block_height=string&offset=0&limit=1"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/brc-20/balances/string?ticker=%5B%0A++%22string%22%0A%5D&block_height=string&offset=0&limit=1", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -87,31 +128,31 @@ curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/balances/string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PaginatedBRC20BalanceResponse {
-  limit: number
-  offset: number
-  total: number
+  limit: number;
+  offset: number;
+  total: number;
   results: {
-    ticker: string
-    available_balance: string
-    transferrable_balance: string
-    overall_balance: string
-  }[]
+    ticker: string;
+    available_balance: string;
+    transferrable_balance: string;
+    overall_balance: string;
+  }[];
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

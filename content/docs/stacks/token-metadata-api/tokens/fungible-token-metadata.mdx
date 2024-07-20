@@ -4,10 +4,21 @@ description: Retrieves metadata for a SIP-010 fungible token.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,49 +26,75 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"GET"} route={"/metadata/v1/ft/{principal}"}>
 
-Retrieves metadata for a SIP-010 fungible token.
+## Fungible Token Metadata
 
-## Query parameters
+Retrieves metadata for a SIP-010 Fungible Token
 
-<Property required={false} deprecated={false} name={"locale"} type={"string"}>
+### Query Parameters
+
+<Property name={"locale"} type={"Localization"} required={false} deprecated={false}>
 
 Metadata localization to retrieve
 
 </Property>
 
-## Path parameters
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"Fungible Token Contract Principal"} required={true} deprecated={false}>
 
 Principal for the contract which owns the SIP-010 token
 
-<span>Example:  `"SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token"`</span>
+<span>Example: `"SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token"`</span>
 
-<span>Pattern:  `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$"`</span>
+<span>Pattern: `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
-| `200` | Default response |
-| `404` | Default response |
-| `422` | Default response |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+| `422` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/metadata/v1/ft/{principal}"} path={[{"name":"principal","type":"string","defaultValue":"SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token","isRequired":true,"description":"Fungible Token Contract Principal"}]} query={[{"name":"locale","type":"string","defaultValue":"","isRequired":false,"description":"Localization"}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```console title="Terminal"
-curl -X GET "https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token?locale=string"
 ```
 
-<Tabs items={["200","404","422"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR643GNEEBXZ.fari-token?locale=string", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example response"
+</Requests>
+
+<Responses items={["200","404","422"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "name": "Wrapped USD",
   "symbol": "xUSD",
@@ -68,8 +105,9 @@ curl -X GET "https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR6
   "image_uri": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
   "image_thumbnail_uri": "https://ipfs.io/ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
   "image_canonical_uri": "ipfs://ipfs/QmZMqhh2ztwuZ3Y8PyEp2z5auyH3TCm3nnr5ZfjjgDjd5q/12199.png",
-  "tx_id": "0xef2ac1126e16f46843228b1dk4830e19eb7599129e4jf392cab9e65ae83a45c0",
-  "sender_address": "ST399W7Z9WS0GMSNQGJGME5JAENKN56D65VGMGKGA",
+  "tx_id": "0x5642ca7d68976b6b2a2055689d9a57de26d67f0dd8b016d1b0d94cb634454cdd",
+  "sender_address": "SPZA22A4D15RKH5G8XDGQ7BPC20Q5JNMH0VQKSR6",
+  "asset_identifier": "SPZA22A4D15RKH5G8XDGQ7BPC20Q5JNMH0VQKSR6.token-ststx-earn-v1::stSTXearn",
   "metadata": {
     "sip": 16,
     "name": "Satoshi's Team #12200",
@@ -100,9 +138,9 @@ curl -X GET "https://api.hiro.so/metadata/v1/ft/SP32XCD69XPS3GKDEXAQ29PJRDSD5AR6
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface FtMetadataResponse {
@@ -117,6 +155,7 @@ export interface FtMetadataResponse {
   image_canonical_uri?: string;
   tx_id: string;
   sender_address: string;
+  asset_identifier: string;
   metadata?: Metadata;
 }
 export interface Metadata {
@@ -149,28 +188,29 @@ export interface MetadataLocalization {
   default: string;
   locales: string[];
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
+<ResponseTypes>
 
+<ExampleResponse>
 
-```json title="Example response"
+```json
 {
   "error": "Token not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type NotFoundErrorResponse = TokenNotFoundResponse | ContractNotFoundResponse;
@@ -181,28 +221,29 @@ export interface TokenNotFoundResponse {
 export interface ContractNotFoundResponse {
   error: "Contract not found";
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"422"}>
+<Response value={"422"}>
 
+<ResponseTypes>
 
+<ExampleResponse>
 
-```json title="Example response"
+```json
 {
   "error": "Token metadata fetch in progress"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type ErrorResponse =
@@ -223,16 +264,15 @@ export interface InvalidTokenContractResponse {
 export interface InvalidTokenMetadataResponse {
   error: "Token metadata is unreachable or does not conform to SIP-016";
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,10 +4,21 @@ description: Retrieves all inscriptions associated with a single satoshi.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,10 +26,13 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <APIInfo method={"GET"} route={"/ordinals/v1/sats/{ordinal}/inscriptions"}>
 
-Retrieves all inscriptions associated with a single satoshi.
+## Satoshi Inscriptions
+
+Retrieves all inscriptions associated with a single satoshi
+
 ### Query Parameters
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
@@ -26,7 +40,7 @@ Result offset
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
@@ -35,9 +49,10 @@ Results per page
 <span>Maximum: `60`</span>
 
 </Property>
+
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"ordinal"} type={"integer"}>
+<Property name={"ordinal"} type={"Ordinal Number"} required={true} deprecated={false}>
 
 Ordinal number that uniquely identifies a satoshi
 
@@ -45,24 +60,50 @@ Ordinal number that uniquely identifies a satoshi
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `400`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `400` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/sats/{ordinal}/inscriptions"} path={[{"name":"ordinal","type":"number","defaultValue":"","isRequired":true,"description":"Ordinal Number"}]} query={[{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions?offset=0&limit=1"
 ```
 
-<Tabs items={["200","400"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions?offset=0&limit=1", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","400"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -100,76 +141,80 @@ curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999/inscriptions"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PaginatedSatoshiInscriptionsResponse {
-  limit: number
-  offset: number
-  total: number
-  results: InscriptionResponse[]
+  limit: number;
+  offset: number;
+  total: number;
+  results: InscriptionResponse[];
 }
 export interface InscriptionResponse {
-  id: string
-  number: number
-  address: string | null
-  genesis_address: string | null
-  genesis_block_height: number
-  genesis_block_hash: string
-  genesis_tx_id: string
-  genesis_fee: string
-  genesis_timestamp: number
-  tx_id: string
-  location: string
-  output: string
-  value: string | null
-  offset: string | null
-  sat_ordinal: string
-  sat_rarity: string
-  sat_coinbase_height: number
-  mime_type: string
-  content_type: string
-  content_length: number
-  timestamp: number
-  curse_type: string | null
-  recursive: boolean
-  recursion_refs: string[] | null
+  id: string;
+  number: number;
+  address: string | null;
+  genesis_address: string | null;
+  genesis_block_height: number;
+  genesis_block_hash: string;
+  genesis_tx_id: string;
+  genesis_fee: string;
+  genesis_timestamp: number;
+  tx_id: string;
+  location: string;
+  output: string;
+  value: string | null;
+  offset: string | null;
+  sat_ordinal: string;
+  sat_rarity: string;
+  sat_coinbase_height: number;
+  mime_type: string;
+  content_type: string;
+  content_length: number;
+  timestamp: number;
+  curse_type: string | null;
+  recursive: boolean;
+  recursion_refs: string[] | null;
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"400"}>
+<Response value={"400"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Invalid satoshi ordinal number"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface InvalidSatoshiNumberResponse {
-  error: "Invalid satoshi ordinal number"
+  error: "Invalid satoshi ordinal number";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,10 +4,21 @@ description: Retrieves information about fungible tokens.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,81 +26,103 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 <APIInfo method={"GET"} route={"/metadata/v1/ft"}>
 
-Retrieves a list of fungible tokens.
+## Fungible Tokens
 
-## Query Parameters
+Retrieves a list of Fungible Tokens
 
-<Property required={false} deprecated={false} name={"name"} type={"string"}>
+### Query Parameters
 
-The name of the token
-
-</Property>
-
-<Property required={false} deprecated={false} name={"symbol"} type={"string"}>
-
-The symbol of the token
+<Property name={"name"} type={"string"} required={false} deprecated={false}>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"address"} type={"string"}>
+<Property name={"symbol"} type={"string"} required={false} deprecated={false}>
+
+</Property>
+
+<Property name={"address"} type={"Stacks Address"} required={false} deprecated={false}>
 
 Stacks Address
 
-<span>Example:  `"SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9"`</span>
+<span>Example: `"SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9"`</span>
 
-<span>Pattern:  `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}"`</span>
+<span>Pattern: `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}"`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
-<span>Minimum:  `0`</span>
+<span>Minimum: `0`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
-<span>Minimum:  `1`</span>
+<span>Minimum: `1`</span>
 
-<span>Maximum:  `60`</span>
+<span>Maximum: `60`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"order_by"} type={"Any properties in string, string"}>
+<Property name={"order_by"} type={"Order By"} required={false} deprecated={false}>
 
 Parameter to order results by
 
 </Property>
 
-<Property required={false} deprecated={false} name={"order"} type={"Any properties in string, string"}>
+<Property name={"order"} type={"Order"} required={false} deprecated={false}>
 
 Results order
 
 </Property>
 
-| Status code | Description     |
-| :---------- | :-------------- |
-| `200`       | Default response|
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/metadata/v1/ft"} path={[]} query={[{"name":"name","type":"string","defaultValue":"","isRequired":false},{"name":"symbol","type":"string","defaultValue":"","isRequired":false},{"name":"address","type":"string","defaultValue":"SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9","isRequired":false,"description":"Stacks Address"},{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"},{"name":"order_by","type":"switcher","description":"Order By","items":{"string":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":false},{"name":"order","type":"switcher","description":"Order","items":{"string":{"type":"ref","isRequired":true,"schema":"3"}},"isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false},"1":{"type":"string","defaultValue":"","isRequired":false},"2":{"type":"string","defaultValue":"","isRequired":false},"3":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```console title="Terminal"
-curl -X GET "https://api.hiro.so/metadata/v1/ft"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/metadata/v1/ft?name=string&symbol=string&address=SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9&offset=0&limit=1&order_by=name&order=asc"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/metadata/v1/ft?name=string&symbol=string&address=SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9&offset=0&limit=1&order_by=name&order=asc", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example response"
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -113,9 +146,9 @@ curl -X GET "https://api.hiro.so/metadata/v1/ft"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PaginatedFtBasicMetadataResponse {
@@ -138,16 +171,15 @@ export interface FtBasicMetadataResponse {
   sender_address: string;
   contract_principal: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

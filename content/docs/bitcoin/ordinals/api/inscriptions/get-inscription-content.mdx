@@ -4,10 +4,21 @@ description: Retrieves the content of a single inscription.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,75 +26,108 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <APIInfo method={"GET"} route={"/ordinals/v1/inscriptions/{id}/content"}>
 
-Retrieves the content of a single inscription.
+## Inscription content
+
+Retrieves the contents of a single inscription
+
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"id"} type={"Any properties in string, integer"}>
+<Property name={"id"} type={"Inscription Identifier"} required={true} deprecated={false}>
 
 Inscription unique identifier (number or ID)
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `404`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/inscriptions/{id}/content"} path={[{"name":"id","type":"switcher","description":"Inscription Identifier","items":{"Inscription ID":{"type":"ref","isRequired":true,"schema":"0"},"Inscription Number":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"Inscription ID"},"1":{"type":"number","defaultValue":"","isRequired":false,"description":"Inscription number"}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions/38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0/content"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/inscriptions/38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0/content", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {}
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface Response {}
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found"
+  error: "Not found";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

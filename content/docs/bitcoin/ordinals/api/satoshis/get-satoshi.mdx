@@ -4,10 +4,21 @@ description: Retrieves ordinal information for a single satoshi.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
 <Root>
 
@@ -15,10 +26,13 @@ import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
 <APIInfo method={"GET"} route={"/ordinals/v1/sats/{ordinal}"}>
 
-Retrieves ordinal information for a single satoshi.
+## Satoshi Ordinal
+
+Retrieves ordinal information for a single satoshi
+
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"ordinal"} type={"integer"}>
+<Property name={"ordinal"} type={"Ordinal Number"} required={true} deprecated={false}>
 
 Ordinal number that uniquely identifies a satoshi
 
@@ -26,24 +40,50 @@ Ordinal number that uniquely identifies a satoshi
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `400`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `400` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/sats/{ordinal}"} path={[{"name":"ordinal","type":"number","defaultValue":"","isRequired":true,"description":"Ordinal Number"}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999"
 ```
 
-<Tabs items={["200","400"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/sats/2099999997689999", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","400"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "coinbase_height": 752860,
   "cycle": 0,
@@ -59,57 +99,61 @@ curl -X GET "https://api.hiro.so/ordinals/v1/sats/2099999997689999"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface SatoshiResponse {
-  coinbase_height: number
-  cycle: number
-  decimal: string
-  degree: string
-  inscription_id?: string
-  epoch: number
-  name: string
-  offset: number
-  percentile: string
-  period: number
-  rarity: "common" | "uncommon" | "rare" | "epic" | "legendary" | "mythic"
+  coinbase_height: number;
+  cycle: number;
+  decimal: string;
+  degree: string;
+  inscription_id?: string;
+  epoch: number;
+  name: string;
+  offset: number;
+  percentile: string;
+  period: number;
+  rarity: "common" | "uncommon" | "rare" | "epic" | "legendary" | "mythic";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"400"}>
+<Response value={"400"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Invalid satoshi ordinal number"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface InvalidSatoshiNumberResponse {
-  error: "Invalid satoshi ordinal number"
+  error: "Invalid satoshi ordinal number";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 
