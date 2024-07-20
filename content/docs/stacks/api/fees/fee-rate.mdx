@@ -1,0 +1,122 @@
+---
+title: Get fee rate
+description: Retrieves an estimated fee rate for transactions.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root>
+
+<API>
+
+<APIInfo method={"POST"} route={"/extended/v1/fee_rate"}>
+
+## Fetch fee rate
+
+**NOTE:** This endpoint is deprecated in favor of [Get approximate fees for a given transaction](/api/get-approximate-fees-for-a-given-transaction).
+
+Retrieves estimated fee rate.
+
+
+### Request Body
+
+<Property name={"transaction"} type={"string"} required={true}>
+
+A serialized transaction
+
+</Property>
+
+| Status code | Description |
+| :------ | :------ |
+| `200` | Transaction fee rate |
+
+<APIPlayground authorization={undefined} method={"POST"} route={"/extended/v1/fee_rate"} path={[]} query={[]} header={[]} body={{"type":"object","isRequired":true,"description":"Request to fetch fee for a transaction","properties":{"transaction":{"type":"ref","isRequired":true,"schema":"0"}},"additionalProperties":false}} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"A serialized transaction"}}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X POST "https://api.mainnet.hiro.so/extended/v1/fee_rate" \
+  -d '{
+  "transaction": "string"
+}'
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.mainnet.hiro.so/extended/v1/fee_rate", {
+  method: "POST"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+Get fee rate information.
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "fee_rate": 0
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+/**
+ * Get fee rate information.
+ */
+export interface FeeRate {
+  fee_rate: number;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>
