@@ -28,9 +28,12 @@ import {
 
 ## Get account transaction information for specific transaction
 
-**NOTE:** This endpoint is deprecated in favor of [Get events for an address transaction](/api/get-address-transaction-events).
+<Callout title="Deprecated" type="warn">
+This endpoint is deprecated in favor of [Get events for an address transaction](/stacks/api/transactions/events-for-an-address-transaction).
+</Callout>
 
 Retrieves transaction details for a given Transaction Id `tx_id`, for a given account or contract Identifier.
+
 ### Path Parameters
 
 <Property name={"principal"} type={"string"} required={true} deprecated={false}>

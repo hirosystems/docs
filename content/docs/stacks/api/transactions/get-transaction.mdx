@@ -32,13 +32,22 @@ Retrieves transaction details for a given transaction ID
 
 `import type { Transaction } from '@stacks/stacks-blockchain-api-types';`
 
+### Path Parameters
+
+<Property name={"tx_id"} type={"string"} required={true} deprecated={false}>
+
+Transaction ID
+
+<span>Example: `"0xe0cc8444f6303fabef13e1fea00fcddb3db6b9519ce808f3f812fafec42fae5b"`</span>
+
+</Property>
 
 | Status code | Description |
 | :------ | :------ |
 | `200` | Transaction |
 | `404` | Cannot find transaction for given ID |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tx/{tx_id}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/tx/{tx_id}"} path={[{"name":"tx_id","type":"string","defaultValue":"0xe0cc8444f6303fabef13e1fea00fcddb3db6b9519ce808f3f812fafec42fae5b","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 

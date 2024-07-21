@@ -34,7 +34,6 @@ The key to lookup in the map is supplied via the POST body. This should be suppl
 
 In the response, `data` is the hex serialization of the map response. Note that map responses are Clarity option types, for non-existent values, this is a serialized none, and for all other responses, it is a serialized (some ...) object.
 
-
 ### Request Body
 
 Hex string serialization of the lookup key (which should be a Clarity value)
@@ -42,6 +41,7 @@ Hex string serialization of the lookup key (which should be a Clarity value)
 <Property name={"body"} type={"string"} required={true} deprecated={undefined}>
 
 </Property>
+
 ### Path Parameters
 
 <Property name={"contract_address"} type={"string"} required={true} deprecated={false}>

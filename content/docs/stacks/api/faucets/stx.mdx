@@ -39,8 +39,9 @@ been included in an anchor block.
 A common reason for failed faucet transactions is that the faucet has run out of tokens. If you are experiencing
 failed faucet transactions to a testnet address, you can get help in [Discord](https://stacks.chat).
 
-**Note:** This is a testnet only endpoint. This endpoint will not work on the mainnet.
-
+<Callout title="Note">
+This is a testnet only endpoint. This endpoint will not work on the mainnet.
+</Callout>
 
 | Status code | Description |
 | :------ | :------ |
@@ -60,7 +61,7 @@ failed faucet transactions to a testnet address, you can get help in [Discord](h
 <Request value={"cURL"}>
 
 ```bash
-curl -X POST "https://api.mainnet.hiro.so/extended/v1/faucets/stx"
+curl -X POST "https://api.testnet.hiro.so/extended/v1/faucets/stx"
 ```
 
 </Request>
@@ -68,7 +69,7 @@ curl -X POST "https://api.mainnet.hiro.so/extended/v1/faucets/stx"
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.mainnet.hiro.so/extended/v1/faucets/stx", {
+fetch("https://api.testnet.hiro.so/extended/v1/faucets/stx", {
   method: "POST"
 });
 ```

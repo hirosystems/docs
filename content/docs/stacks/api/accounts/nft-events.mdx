@@ -19,9 +19,12 @@ import { InlineCode } from '@/components/inline-code';
 
 <APIInfo method={"GET"} route={"/extended/v1/address/{principal}/nft_events"}>
 
-**NOTE:** This endpoint is <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> in favor of [Get nft holdings](/stacks/api/non-fungible-tokens/holdings).
+<Callout title="Deprecated" type="warn">
+This endpoint is deprecated in favor of [Get nft holdings](/stacks/api/non-fungible-tokens/holdings).
+</Callout>
 
 Retrieves a list of all NFTs owned by an address and contains the Clarity value of the identifier of the NFT.
+
 ### Path Parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>

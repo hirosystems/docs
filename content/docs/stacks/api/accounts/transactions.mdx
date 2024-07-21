@@ -28,11 +28,14 @@ import {
 
 ## Get account transactions
 
-**NOTE:** This endpoint is deprecated in favor of [Get address transactions](/api/get-address-transactions).
+<Callout title="Deprecated" type="warn">
+This endpoint is deprecated in favor of [Get address transactions](/stacks/api/transactions/address-transactions).
+</Callout>
 
 Retrieves a list of all Transactions for a given Address or Contract Identifier. More information on Transaction types can be found [here](https://docs.stacks.co/understand-stacks/transactions#types).
 
 If you need to actively monitor new transactions for an address or contract id, we highly recommend subscribing to [WebSockets or Socket.io](https://github.com/hirosystems/stacks-blockchain-api/tree/master/client) for real-time updates.
+
 ### Path Parameters
 
 <Property name={"principal"} type={"string"} required={true} deprecated={false}>
