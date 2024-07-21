@@ -98,7 +98,7 @@ The Stacks chain tip to query from
 <Request value={"cURL"}>
 
 ```bash
-curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance" \
+curl -X POST "https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance" \
   -H "Content-Type: application/json" \
   -d '{
     "sender": "SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335",
@@ -125,7 +125,7 @@ const body = JSON.stringify({
   arguments,
 });
 
-fetch("https://api.mainnet.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance", {
+fetch("https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance", {
   headers: { "Content-Type": "application/json" },
   method: "POST",
   body,
