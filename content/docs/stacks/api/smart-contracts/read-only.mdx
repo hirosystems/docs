@@ -54,7 +54,7 @@ An array of hex serialized Clarity values
 
 Stacks address
 
-<span>Example: `"SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7"`</span>
+<span>Example: `"SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335"`</span>
 
 </Property>
 
@@ -62,7 +62,7 @@ Stacks address
 
 Contract name
 
-<span>Example: `"imaginary-friends-zebras"`</span>
+<span>Example: `"mega"`</span>
 
 </Property>
 
@@ -70,7 +70,7 @@ Contract name
 
 Function name
 
-<span>Example: `"get-token-uri"`</span>
+<span>Example: `"get-balance"`</span>
 
 </Property>
 
@@ -86,7 +86,7 @@ The Stacks chain tip to query from
 | :------ | :------ |
 | `200` | Success |
 
-<APIPlayground authorization={undefined} method={"POST"} route={"/v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}"} path={[{"name":"contract_address","type":"string","defaultValue":"SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7","isRequired":true},{"name":"contract_name","type":"string","defaultValue":"imaginary-friends-zebras","isRequired":true},{"name":"function_name","type":"string","defaultValue":"get-token-uri","isRequired":true}]} query={[{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={{"type":"object","isRequired":true,"description":"Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset","properties":{"sender":{"type":"ref","isRequired":true,"schema":"0"},"arguments":{"type":"ref","isRequired":true,"schema":"1"}},"additionalProperties":false}} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"The simulated tx-sender"},"1":{"type":"array","description":"An array of hex serialized Clarity values","isRequired":false,"items":"2"},"2":{"type":"string","defaultValue":"","isRequired":false}}}>
+<APIPlayground authorization={undefined} method={"POST"} route={"/v2/contracts/call-read/{contract_address}/{contract_name}/{function_name}"} path={[{"name":"contract_address","type":"string","defaultValue":"SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335","isRequired":true},{"name":"contract_name","type":"string","defaultValue":"mega","isRequired":true},{"name":"function_name","type":"string","defaultValue":"get-balance","isRequired":true}]} query={[{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={{"type":"object","isRequired":true,"description":"Describes representation of a Type-0 Stacks 2.0 transaction. https://github.com/blockstack/stacks-blockchain/blob/master/sip/sip-005-blocks-and-transactions.md#type-0-transferring-an-asset","properties":{"sender":{"type":"ref","isRequired":true,"schema":"0"},"arguments":{"type":"ref","isRequired":true,"schema":"1"}},"additionalProperties":false}} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"The simulated tx-sender"},"1":{"type":"array","description":"An array of hex serialized Clarity values","isRequired":false,"items":"2"},"2":{"type":"string","defaultValue":"","isRequired":false}}}>
 
 </APIPlayground>
 
@@ -99,13 +99,8 @@ The Stacks chain tip to query from
 <Request value={"cURL"}>
 
 ```bash
-curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7/imaginary-friends-zebras/get-token-uri?tip=string" \
-  -d '{
-  "sender": "string",
-  "arguments": [
-    "string"
-  ]
-}'
+curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance" \
+  -d '{"sender":"SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335","arguments":["0x0516da6b6c4a62ece9fa5a652278baa014ec83df3644"]}'
 ```
 
 </Request>
@@ -113,8 +108,20 @@ curl -X POST "https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.mainnet.hiro.so/v2/contracts/call-read/SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7/imaginary-friends-zebras/get-token-uri?tip=string", {
-  method: "POST"
+const functionArgs = [
+  principalCV("SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335"),
+];
+
+const arguments = functionArgs.map(arg => cvToHex(arg));
+
+const body = JSON.stringify({
+  sender: "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7",
+  arguments,
+});
+
+fetch("https://api.mainnet.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance", {
+  method: "POST",
+  body,
 });
 ```
 
