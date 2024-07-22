@@ -78,27 +78,8 @@ export function Ordinals(): JSX.Element {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle
-        cx="7.58228"
-        cy="7.05255"
-        r="6.36257"
-        stroke="currentColor"
-        style={{
-          stroke: "currentColor",
-          strokeOpacity: 1,
-          strokeWidth: "1.2651",
-        }}
-      />
-      <circle
-        cx="7.53107"
-        cy="7.04505"
-        r="3.76642"
-        fill="currentColor"
-        style={{
-          fill: "currentColor",
-          fillOpacity: 1,
-        }}
-      />
+      <circle cx="7.58228" cy="7.05255" r="6.36257" stroke="currentColor" />
+      <circle cx="7.53107" cy="7.04505" r="3.76642" fill="currentColor" />
     </svg>
   );
 }
