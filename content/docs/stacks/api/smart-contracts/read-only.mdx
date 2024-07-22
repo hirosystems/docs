@@ -119,17 +119,22 @@ const functionArgs = [
   standardPrincipalCV("SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335"),
 ];
 
-const arguments = functionArgs.map(arg => cvToHex(arg));
+const args = functionArgs.map((arg) => cvToHex(arg));
 const body = JSON.stringify({
   sender: "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7",
-  arguments,
+  arguments: args,
 });
 
-fetch("https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance", {
-  headers: { "Content-Type": "application/json" },
-  method: "POST",
-  body,
-});
+const response = await fetch(
+  "https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance",
+  {
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    body,
+  }
+);
+
+const responseBody = await response.json();
 ```
 
 </Request>
