@@ -131,7 +131,7 @@ h1, h2, h3, h4, h5, h6, code, button, .step {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
-a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, option {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
@@ -290,8 +290,39 @@ div.not-prose, div.prose-no-margin, div[role="tablist"] {
   background: hsl(var(--background));
 }
 
+/* Target the form tag with specific classes */
+form.not-prose.flex.flex-col.gap-4.rounded-lg.border.bg-card.p-4 {
+  background-color: hsl(var(--background));
+}
+
+/* Target the specific div with the given classes */
+.divide-y.divide-border.overflow-hidden.rounded-lg.bg-card.-m-4.mt-2.border-0.text-sm {
+  background-color: hsl(var(--background));
+}
+
+/* overrides the background of APIInfo and adjusts sticky header on scroll */
+div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 {
+  background: hsl(var(--background));
+  top: 4.5rem;
+}
+
+/* For long endpoint names this will truncate the ending and add an ellipsis */
+div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 span:nth-child(n+12) {
+  display: none;
+}
+
+/* And add an ellipsis */
+div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 span:nth-child(11)::after {
+  content: '...';
+  display: inline;
+}
+
 div.prose div.footer.not-prose {
   background: hsl(var(--accent));
+}
+
+#radix-\:r3\: > div > div > div:nth-child(2) > select option {
+  font-family: var(--font-aeonikFono), sans-serif !important;
 }
 
 .steps > div:nth-child(2) > figure:nth-child(3) > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
@@ -333,14 +364,15 @@ div.api-example div.max-xl\:hidden > div:nth-child(1) {
 
 /* Add a deprecated strike through to sidebar links */
 a[href="/stacks/api/accounts/nft-events"],
-a[href="/stacks/api/blocks/recent-blocks"],
-a[href="/stacks/api/blocks/block-by-hash"],
-a[href="/stacks/api/blocks/block-by-height"],
-a[href="/stacks/api/blocks/block-by-burn-block-hash"],
-a[href="/stacks/api/blocks/block-by-burn-block-height"],
+a[href="/stacks/api/accounts/transaction-with-transfers"],
 a[href="/stacks/api/accounts/transactions"],
 a[href="/stacks/api/accounts/transactions-with-transfers"],
-a[href="/stacks/api/accounts/transaction-with-transfers"] {
+a[href="/stacks/api/blocks/block-by-burn-block-hash"],
+a[href="/stacks/api/blocks/block-by-burn-block-height"],
+a[href="/stacks/api/blocks/block-by-hash"],
+a[href="/stacks/api/blocks/block-by-height"],
+a[href="/stacks/api/blocks/recent-blocks"],
+a[href="/stacks/api/fees/fee-rate"] {
   text-decoration: line-through;
   color: hsl(var(--muted-foreground) / var(--tw-text-opacity));
 }

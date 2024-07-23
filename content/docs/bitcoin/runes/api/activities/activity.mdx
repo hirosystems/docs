@@ -4,66 +4,101 @@ description: Retrieves all activity for a Rune.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/runes/v1/etchings/{etching}/activity"}>
 
-Retrieves all activity for a Rune.
+## Rune activity
+
+Retrieves all activity for a Rune
 
 ### Query Parameters
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
-<span>Minimum:  `0`</span>
+<span>Minimum: `0`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
-<span>Minimum:  `1`</span>
+<span>Minimum: `1`</span>
 
-<span>Maximum:  `60`</span>
+<span>Maximum: `60`</span>
 
 </Property>
 
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"etching"} type={"string"}>
-
-Value can represent a Rune ID, Rune number, Rune name, or Rune name with spacers.
+<Property name={"etching"} type={"Any properties in Rune ID, Rune number, Rune name, Rune name with spacers"} required={true} deprecated={false}>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/runes/v1/etchings/{etching}/activity"} path={[{"name":"etching","type":"switcher","items":{"Rune ID":{"type":"ref","isRequired":true,"schema":"0"},"Rune number":{"type":"ref","isRequired":true,"schema":"1"},"Rune name":{"type":"ref","isRequired":true,"schema":"2"},"Rune name with spacers":{"type":"ref","isRequired":true,"schema":"3"}},"isRequired":true}]} query={[{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune ID"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune number"},"2":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune name"},"3":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune name with spacers"}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ/activity"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/runes/v1/etchings/string/activity?offset=0&limit=1"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/runes/v1/etchings/string/activity?offset=0&limit=1", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example Response"
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -88,9 +123,9 @@ curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ/activity"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Typescript Definition"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -162,16 +197,15 @@ export interface TransactionLocation {
   output?: TransactionOutput;
   timestamp: Timestamp;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

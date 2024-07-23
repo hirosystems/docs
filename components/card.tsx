@@ -108,13 +108,13 @@ export function SmallCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block text-sm text-card-foreground transition-colors",
+        "not-prose block text-sm text-card-foreground transition-colors space-y-3",
         props.className
       )}
     >
       <div className="group flex space-x-4 px-3 py-4 rounded-lg hover:bg-accent">
         {icon && (
-          <div className="h-fit w-fit rounded-md border bg-card group-hover:bg-background p-2 text-muted-foreground [&_svg]:size-4">
+          <div className="h-fit w-fit rounded-md border bg-card group-hover:bg-background group-hover:text-primary transition-colors duration-500 ease-in-out p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
           </div>
         )}

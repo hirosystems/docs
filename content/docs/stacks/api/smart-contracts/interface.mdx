@@ -4,42 +4,77 @@ description: Retrieves a list of functions, variables, maps, fungible tokens and
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/v2/contracts/interface/{contract_address}/{contract_name}"}>
 
-Retrieves a contract interface with a given `contract_address` and `contract name`.
+## Get contract interface
+
+Retrieves a contract interface with a given `contract_address` and `contract name`
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Contract interface |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/contracts/interface/{contract_address}/{contract_name}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/v2/contracts/interface/SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/v2/contracts/interface/%7Bcontract_address%7D/%7Bcontract_name%7D"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/v2/contracts/interface/%7Bcontract_address%7D/%7Bcontract_name%7D", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request to get contract interface
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "functions": [
     {}
@@ -59,9 +94,9 @@ GET request to get contract interface
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -89,16 +124,15 @@ export interface ContractInterfaceResponse {
    */
   non_fungible_tokens: {}[];
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

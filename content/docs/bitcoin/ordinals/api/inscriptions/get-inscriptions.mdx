@@ -4,28 +4,42 @@ description: Retrieves a list of inscriptions with options to filter and sort re
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  ObjectCollapsible,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/ordinals/v1/inscriptions"}>
 
-Retrieves a list of inscriptions with options to filter and sort results.
+## List of Inscriptions
 
-### Query parameters
+Retrieves a list of inscriptions with options to filter and sort results
 
-<Property required={false} deprecated={false} name={"genesis_block"} type={"Any properties in string, string"}>
+### Query Parameters
+
+<Property name={"genesis_block"} type={"Block Identifier"} required={false} deprecated={false}>
 
 Bitcoin block identifier (height or hash)
 
 </Property>
 
-<Property required={false} deprecated={false} name={"from_genesis_block_height"} type={"string"}>
+<Property name={"from_genesis_block_height"} type={"Block Height"} required={false} deprecated={false}>
 
 Bitcoin block height
 
@@ -33,7 +47,7 @@ Bitcoin block height
 
 </Property>
 
-<Property required={false} deprecated={false} name={"to_genesis_block_height"} type={"string"}>
+<Property name={"to_genesis_block_height"} type={"Block Height"} required={false} deprecated={false}>
 
 Bitcoin block height
 
@@ -41,19 +55,19 @@ Bitcoin block height
 
 </Property>
 
-<Property required={false} deprecated={false} name={"from_genesis_timestamp"} type={"integer"}>
+<Property name={"from_genesis_timestamp"} type={"Timestamp"} required={false} deprecated={false}>
 
 Block UNIX epoch timestamp (milliseconds)
 
 </Property>
 
-<Property required={false} deprecated={false} name={"to_genesis_timestamp"} type={"integer"}>
+<Property name={"to_genesis_timestamp"} type={"Timestamp"} required={false} deprecated={false}>
 
 Block UNIX epoch timestamp (milliseconds)
 
 </Property>
 
-<Property required={false} deprecated={false} name={"from_sat_ordinal"} type={"integer"}>
+<Property name={"from_sat_ordinal"} type={"Ordinal Number"} required={false} deprecated={false}>
 
 Ordinal number that uniquely identifies a satoshi
 
@@ -61,7 +75,7 @@ Ordinal number that uniquely identifies a satoshi
 
 </Property>
 
-<Property required={false} deprecated={false} name={"to_sat_ordinal"} type={"integer"}>
+<Property name={"to_sat_ordinal"} type={"Ordinal Number"} required={false} deprecated={false}>
 
 Ordinal number that uniquely identifies a satoshi
 
@@ -69,7 +83,7 @@ Ordinal number that uniquely identifies a satoshi
 
 </Property>
 
-<Property required={false} deprecated={false} name={"from_sat_coinbase_height"} type={"string"}>
+<Property name={"from_sat_coinbase_height"} type={"Block Height"} required={false} deprecated={false}>
 
 Bitcoin block height
 
@@ -77,7 +91,7 @@ Bitcoin block height
 
 </Property>
 
-<Property required={false} deprecated={false} name={"to_sat_coinbase_height"} type={"string"}>
+<Property name={"to_sat_coinbase_height"} type={"Block Height"} required={false} deprecated={false}>
 
 Bitcoin block height
 
@@ -85,19 +99,19 @@ Bitcoin block height
 
 </Property>
 
-<Property required={false} deprecated={false} name={"from_number"} type={"integer"}>
+<Property name={"from_number"} type={"Inscription Number"} required={false} deprecated={false}>
 
 Inscription number
 
 </Property>
 
-<Property required={false} deprecated={false} name={"to_number"} type={"integer"}>
+<Property name={"to_number"} type={"Inscription Number"} required={false} deprecated={false}>
 
 Inscription number
 
 </Property>
 
-<Property required={false} deprecated={false} name={"id"} type={"array of string"}>
+<Property name={"id"} type={"Inscription IDs"} required={false} deprecated={false}>
 
 Array of inscription IDs
 
@@ -105,13 +119,13 @@ Array of inscription IDs
 
 </Property>
 
-<Property required={false} deprecated={false} name={"number"} type={"array of integer"}>
+<Property name={"number"} type={"Inscription Numbers"} required={false} deprecated={false}>
 
 Array of inscription numbers
 
 </Property>
 
-<Property required={false} deprecated={false} name={"output"} type={"string"}>
+<Property name={"output"} type={"Transaction Output"} required={false} deprecated={false}>
 
 An UTXO for a Bitcoin transaction
 
@@ -119,43 +133,53 @@ An UTXO for a Bitcoin transaction
 
 </Property>
 
-<Property required={false} deprecated={false} name={"address"} type={"array of string"}>
+<Property name={"address"} type={"Addresses"} required={false} deprecated={false}>
 
 Array of Bitcoin addresses
 
 </Property>
 
-<Property required={false} deprecated={false} name={"genesis_address"} type={"array of string"}>
+<Property name={"genesis_address"} type={"Addresses"} required={false} deprecated={false}>
 
 Array of Bitcoin addresses
 
 </Property>
 
-<Property required={false} deprecated={false} name={"mime_type"} type={"array of string"}>
+<Property name={"mime_type"} type={"MIME Types"} required={false} deprecated={false}>
 
 Array of inscription MIME types
 
 </Property>
 
-<Property required={false} deprecated={false} name={"rarity"} type={"array of Any properties in string, string, string, string, string, string"}>
+<Property name={"rarity"} type={"Rarity"} required={false} deprecated={false}>
 
 Array of satoshi rarity values
 
+<ObjectCollapsible name={"Rarity"}>
+
+<Property name={"element"} type={"Rarity"} required={false} deprecated={undefined}>
+
+Rarity of a single satoshi according to Ordinal Theory
+
 </Property>
 
-<Property required={false} deprecated={false} name={"recursive"} type={"boolean"}>
+</ObjectCollapsible>
+
+</Property>
+
+<Property name={"recursive"} type={"Recursive"} required={false} deprecated={false}>
 
 Whether or not the inscription is recursive
 
 </Property>
 
-<Property required={false} deprecated={false} name={"cursed"} type={"boolean"}>
+<Property name={"cursed"} type={"Cursed"} required={false} deprecated={false}>
 
 Whether or not the inscription is cursed
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
@@ -163,7 +187,7 @@ Result offset
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
@@ -173,36 +197,62 @@ Results per page
 
 </Property>
 
-<Property required={false} deprecated={false} name={"order_by"} type={"Any properties in string, string, string, string"}>
+<Property name={"order_by"} type={"Order By"} required={false} deprecated={false}>
 
 Parameter to order results by
 
 </Property>
 
-<Property required={false} deprecated={false} name={"order"} type={"Any properties in string, string"}>
+<Property name={"order"} type={"Order"} required={false} deprecated={false}>
 
 Results order
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `404`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/inscriptions"} path={[]} query={[{"name":"genesis_block","type":"switcher","description":"Block Identifier","items":{"Block Hash":{"type":"ref","isRequired":true,"schema":"0"},"Block Height":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":false},{"name":"from_genesis_block_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"},{"name":"to_genesis_block_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"},{"name":"from_genesis_timestamp","type":"number","defaultValue":"","isRequired":false,"description":"Timestamp"},{"name":"to_genesis_timestamp","type":"number","defaultValue":"","isRequired":false,"description":"Timestamp"},{"name":"from_sat_ordinal","type":"number","defaultValue":"","isRequired":false,"description":"Ordinal Number"},{"name":"to_sat_ordinal","type":"number","defaultValue":"","isRequired":false,"description":"Ordinal Number"},{"name":"from_sat_coinbase_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"},{"name":"to_sat_coinbase_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"},{"name":"from_number","type":"number","defaultValue":"","isRequired":false,"description":"Inscription Number"},{"name":"to_number","type":"number","defaultValue":"","isRequired":false,"description":"Inscription Number"},{"name":"id","type":"array","description":"Inscription IDs","isRequired":false,"items":"2"},{"name":"number","type":"array","description":"Inscription Numbers","isRequired":false,"items":"3"},{"name":"output","type":"string","defaultValue":"","isRequired":false,"description":"Transaction Output"},{"name":"address","type":"array","description":"Addresses","isRequired":false,"items":"4"},{"name":"genesis_address","type":"array","description":"Addresses","isRequired":false,"items":"5"},{"name":"mime_type","type":"array","description":"MIME Types","isRequired":false,"items":"6"},{"name":"rarity","type":"array","description":"Rarity","isRequired":false,"items":"7"},{"name":"recursive","type":"boolean","defaultValue":"","isRequired":false,"description":"Recursive"},{"name":"cursed","type":"boolean","defaultValue":"","isRequired":false,"description":"Cursed"},{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"},{"name":"order_by","type":"switcher","description":"Order By","items":{"string":{"type":"ref","isRequired":true,"schema":"17"}},"isRequired":false},{"name":"order","type":"switcher","description":"Order","items":{"string":{"type":"ref","isRequired":true,"schema":"19"}},"isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"Bitcoin block hash"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Bitcoin block height"},"2":{"type":"string","defaultValue":"","isRequired":false,"description":"Inscription ID"},"3":{"type":"number","defaultValue":"","isRequired":false,"description":"Inscription number"},"4":{"type":"string","defaultValue":"","isRequired":false,"description":"Bitcoin address"},"5":{"type":"string","defaultValue":"","isRequired":false,"description":"Bitcoin address"},"6":{"type":"string","defaultValue":"","isRequired":false,"description":"MIME type for an inscription content"},"7":{"type":"switcher","description":"Rarity of a single satoshi according to Ordinal Theory","items":{"string":{"type":"ref","isRequired":true,"schema":"13"}},"isRequired":false},"8":{"type":"string","defaultValue":"","isRequired":false},"9":{"type":"string","defaultValue":"","isRequired":false},"10":{"type":"string","defaultValue":"","isRequired":false},"11":{"type":"string","defaultValue":"","isRequired":false},"12":{"type":"string","defaultValue":"","isRequired":false},"13":{"type":"string","defaultValue":"","isRequired":false},"14":{"type":"string","defaultValue":"","isRequired":false},"15":{"type":"string","defaultValue":"","isRequired":false},"16":{"type":"string","defaultValue":"","isRequired":false},"17":{"type":"string","defaultValue":"","isRequired":false},"18":{"type":"string","defaultValue":"","isRequired":false},"19":{"type":"string","defaultValue":"","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions?genesis_block=0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133&from_genesis_block_height=string&to_genesis_block_height=string&from_genesis_timestamp=0&to_genesis_timestamp=0&from_sat_ordinal=2099999997689999&to_sat_ordinal=2099999997689999&from_sat_coinbase_height=string&to_sat_coinbase_height=string&from_number=0&to_number=0&id=%5B%0A++%2238c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0%22%0A%5D&number=%5B%0A++%2210500%22%0A%5D&output=string&address=%5B%0A++%22bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5%22%0A%5D&genesis_address=%5B%0A++%22bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5%22%0A%5D&mime_type=%5B%0A++%22image%2Fpng%22%0A%5D&rarity=%5B%0A++%22uncommon%22%0A%5D&recursive=true&cursed=true&offset=0&limit=1&order_by=number&order=asc"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/inscriptions?genesis_block=0000000000000000000452773967cdd62297137cdaf79950c5e8bb0c62075133&from_genesis_block_height=string&to_genesis_block_height=string&from_genesis_timestamp=0&to_genesis_timestamp=0&from_sat_ordinal=2099999997689999&to_sat_ordinal=2099999997689999&from_sat_coinbase_height=string&to_sat_coinbase_height=string&from_number=0&to_number=0&id=%5B%0A++%2238c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0%22%0A%5D&number=%5B%0A++%2210500%22%0A%5D&output=string&address=%5B%0A++%22bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5%22%0A%5D&genesis_address=%5B%0A++%22bc1p8aq8s3z9xl87e74twfk93mljxq6alv4a79yheadx33t9np4g2wkqqt8kc5%22%0A%5D&mime_type=%5B%0A++%22image%2Fpng%22%0A%5D&rarity=%5B%0A++%22uncommon%22%0A%5D&recursive=true&cursed=true&offset=0&limit=1&order_by=number&order=asc", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -240,76 +290,80 @@ curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PaginatedInscriptionsResponse {
-  limit: number
-  offset: number
-  total: number
-  results: InscriptionResponse[]
+  limit: number;
+  offset: number;
+  total: number;
+  results: InscriptionResponse[];
 }
 export interface InscriptionResponse {
-  id: string
-  number: number
-  address: string | null
-  genesis_address: string | null
-  genesis_block_height: number
-  genesis_block_hash: string
-  genesis_tx_id: string
-  genesis_fee: string
-  genesis_timestamp: number
-  tx_id: string
-  location: string
-  output: string
-  value: string | null
-  offset: string | null
-  sat_ordinal: string
-  sat_rarity: string
-  sat_coinbase_height: number
-  mime_type: string
-  content_type: string
-  content_length: number
-  timestamp: number
-  curse_type: string | null
-  recursive: boolean
-  recursion_refs: string[] | null
+  id: string;
+  number: number;
+  address: string | null;
+  genesis_address: string | null;
+  genesis_block_height: number;
+  genesis_block_hash: string;
+  genesis_tx_id: string;
+  genesis_fee: string;
+  genesis_timestamp: number;
+  tx_id: string;
+  location: string;
+  output: string;
+  value: string | null;
+  offset: string | null;
+  sat_ordinal: string;
+  sat_rarity: string;
+  sat_coinbase_height: number;
+  mime_type: string;
+  content_type: string;
+  content_length: number;
+  timestamp: number;
+  curse_type: string | null;
+  recursive: boolean;
+  recursion_refs: string[] | null;
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found"
+  error: "Not found";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

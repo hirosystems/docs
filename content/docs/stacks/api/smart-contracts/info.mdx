@@ -4,43 +4,78 @@ description: Retrieves details for a specific smart contract.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/contract/{contract_id}"}>
 
-Retrieves details of a contract with a given `contract_id`.
+## Get contract info
+
+Retrieves details of a contract with a given `contract_id`
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Contract found |
 | `404` | Cannot find contract of given ID |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/contract/{contract_id}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/contract/%7Bcontract_id%7D"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/contract/%7Bcontract_id%7D"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that returns smart contract details
+```js
+fetch("https://api.hiro.so/extended/v1/contract/%7Bcontract_id%7D", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+A Smart Contract Detail
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "tx_id": "string",
   "canonical": true,
@@ -51,9 +86,9 @@ GET request that returns smart contract details
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -67,16 +102,15 @@ export interface SmartContract {
   source_code: string;
   abi: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

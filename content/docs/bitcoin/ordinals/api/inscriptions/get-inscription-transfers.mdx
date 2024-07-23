@@ -4,22 +4,35 @@ description: Retrieves all transfers for a single inscription.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/ordinals/v1/inscriptions/{id}/transfers"}>
 
-Retrieves all transfers for a single inscription.
+## Inscription transfers
 
-### Query parameters
+Retrieves all transfers for a single inscription
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+### Query Parameters
+
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
@@ -27,7 +40,7 @@ Result offset
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
@@ -37,32 +50,58 @@ Results per page
 
 </Property>
 
-### Path parameters
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"id"} type={"Any properties in string, integer"}>
+<Property name={"id"} type={"Inscription Identifier"} required={true} deprecated={false}>
 
 Inscription unique identifier (number or ID)
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `404`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/inscriptions/{id}/transfers"} path={[{"name":"id","type":"switcher","description":"Inscription Identifier","items":{"Inscription ID":{"type":"ref","isRequired":true,"schema":"0"},"Inscription Number":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"Inscription ID"},"1":{"type":"number","defaultValue":"","isRequired":false,"description":"Inscription number"}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions/38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0/transfers"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions/38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0/transfers?offset=0&limit=1"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/inscriptions/38c46a8bf7ec90bc7f6b797e7dc84baa97f4e5fd4286b92fe1b50176d03b18dci0/transfers?offset=0&limit=1", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -83,61 +122,65 @@ curl -X GET "https://api.hiro.so/ordinals/v1/inscriptions/38c46a8bf7ec90bc7f6b79
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PaginatedInscriptionLocationsResponse {
-  limit: number
-  offset: number
-  total: number
-  results: InscriptionLocationResponse[]
+  limit: number;
+  offset: number;
+  total: number;
+  results: InscriptionLocationResponse[];
 }
 export interface InscriptionLocationResponse {
-  block_height: number
-  block_hash: string
-  address: string | null
-  tx_id: string
-  location: string
-  output: string
-  value: string | null
-  offset: string | null
-  timestamp: number
+  block_height: number;
+  block_hash: string;
+  address: string | null;
+  tx_id: string;
+  location: string;
+  output: string;
+  value: string | null;
+  offset: string | null;
+  timestamp: number;
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found"
+  error: "Not found";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,68 +4,103 @@ description: Retrieves the latest nonce values used by an account by inspecting 
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
+<Root baseUrl="https://api.hiro.so">
 
-<Root>
+<API>
 
 <APIInfo method={"GET"} route={"/extended/v1/address/{principal}/nonces"}>
 
-Retrieves the latest nonce values used by an account by inspecting the mempool and anchored transactions.
+## Get the latest nonce used by an account
 
-### Path parameters
+Retrieves the latest nonce values used by an account by inspecting the mempool, microblock transactions, and anchored transactions.
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
 Stacks address
 
-<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+
+</Property>
+### Query Parameters
+
+<Property name={"block_height"} type={"number"} required={false} deprecated={false}>
+
+Optionally get the nonce at a given block height.
+
+<span>Example: `66119`</span>
 
 </Property>
 
-### Query parameters
+<Property name={"block_hash"} type={"string"} required={false} deprecated={false}>
 
-<Property required={false} deprecated={false} name={"block_height"} type={"number"}>
+Optionally get the nonce at a given block hash. Note - Use either of the query parameters but not both at a time.
 
-Optionally get the nonce at a given block height
-
-<span>Example:  `66119`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"block_hash"} type={"string"}>
-
-Optionally get the nonce at a given block hash. Note: use either of the query parameters but not both at a time.
-
-<span>Example:  `"0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"`</span>
+<span>Example: `"0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/nonces"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"block_height","type":"number","defaultValue":66119,"isRequired":false},{"name":"block_hash","type":"string","defaultValue":"0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces?block_height=66119&block_hash=0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-The latest nonce values used by an account by inspecting the mempool and anchored transactions
+```js
+fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces?block_height=66119&block_hash=0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+The latest nonce values used by an account by inspecting the mempool, microblock transactions, and anchored transactions
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "last_mempool_tx_nonce": 0,
   "last_executed_tx_nonce": 0,
@@ -79,13 +114,13 @@ The latest nonce values used by an account by inspecting the mempool and anchore
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
- * The latest nonce values used by an account by inspecting the mempool and anchored transactions
+ * The latest nonce values used by an account by inspecting the mempool, microblock transactions, and anchored transactions
  */
 export interface AddressNonces {
   /**
@@ -109,17 +144,18 @@ export interface AddressNonces {
    */
   detected_mempool_nonces?: number[];
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
+
+</API>
 
 </Root>

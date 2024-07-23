@@ -4,70 +4,104 @@ description: Retrieves the historical zone file for a specific name.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/v1/names/{name}/zonefile/{zoneFileHash}"}>
 
+## Get historical zone file
+
 Retrieves the historical zonefile specified by the username and zone hash.
+### Path Parameters
 
-### Path parameters
+<Property name={"name"} type={"string"} required={true} deprecated={false}>
 
-<Property required={true} deprecated={false} name={"name"} type={"string"}>
+fully-qualified name
 
-Fully-qualified name
-
-<span>Example:  `"muneeb.id"`</span>
+<span>Example: `"muneeb.id"`</span>
 
 </Property>
 
-<Property required={true} deprecated={false} name={"zoneFileHash"} type={"string"}>
+<Property name={"zoneFileHash"} type={"string"} required={true} deprecated={false}>
 
-Zone file hash
+zone file hash
 
-<span>Example:  `"b100a68235244b012854a95f9114695679002af9"`</span>
+<span>Example: `"b100a68235244b012854a95f9114695679002af9"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
 | `400` | Error |
 | `404` | Error |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v1/names/{name}/zonefile/{zoneFileHash}"} path={[{"name":"name","type":"string","defaultValue":"muneeb.id","isRequired":true},{"name":"zoneFileHash","type":"string","defaultValue":"b100a68235244b012854a95f9114695679002af9","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/v1/names/muneeb.id/zonefile/b100a68235244b012854a95f9114695679002af9"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/v1/names/muneeb.id/zonefile/b100a68235244b012854a95f9114695679002af9"
 ```
 
-<Tabs items={["200","400","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/v1/names/muneeb.id/zonefile/b100a68235244b012854a95f9114695679002af9", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","400","404"]}>
+
+<Response value={"200"}>
 
 Fetches the historical zonefile specified by the username and zone hash.
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "zonefile": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -80,28 +114,31 @@ export type BnsFetchHistoricalZoneFileResponse =
   | {
       error?: string;
     };
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"400"}>
+<Response value={"400"}>
 
 Error
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -110,28 +147,31 @@ Error
 export interface BnsError {
   error?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
 Error
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -140,16 +180,15 @@ Error
 export interface BnsError {
   error?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

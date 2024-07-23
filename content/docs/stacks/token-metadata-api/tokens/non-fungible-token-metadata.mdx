@@ -4,68 +4,105 @@ description: Retrieves metadata for a SIP-009 non-fungible token.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/metadata/v1/nft/{principal}/{token_id}"}>
 
-Retrieves metadata for a SIP-009 non-fungible token.
+## Non-Fungible Token Metadata
 
-## Query parameters
+Retrieves metadata for a SIP-009 Non-Fungible Token
 
-<Property required={false} deprecated={false} name={"locale"} type={"string"}>
+### Query Parameters
+
+<Property name={"locale"} type={"Localization"} required={false} deprecated={false}>
 
 Metadata localization to retrieve
 
 </Property>
 
-## Path parameters
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"Non-Fungible Token Contract Principal"} required={true} deprecated={false}>
 
 SIP-009 compliant smart contract principal
 
-<span>Example:  `"SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12"`</span>
+<span>Example: `"SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12"`</span>
 
-<span>Pattern:  `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$"`</span>
+<span>Pattern: `"^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$"`</span>
 
 </Property>
 
-<Property required={true} deprecated={false} name={"token_id"} type={"integer"}>
+<Property name={"token_id"} type={"Token ID"} required={true} deprecated={false}>
 
 Token ID to retrieve
 
-<span>Example:  `"35"`</span>
+<span>Example: `"35"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
-| `200` | Default response |
-| `404` | Default response |
-| `422` | Default response |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+| `422` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/metadata/v1/nft/{principal}/{token_id}"} path={[{"name":"principal","type":"string","defaultValue":"SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12","isRequired":true,"description":"Non-Fungible Token Contract Principal"},{"name":"token_id","type":"number","defaultValue":"35","isRequired":true,"description":"Token ID"}]} query={[{"name":"locale","type":"string","defaultValue":"","isRequired":false,"description":"Localization"}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```console title="Terminal"
-curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12/35"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12/35?locale=string"
 ```
 
-<Tabs items={["200","404","422"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5PBSP5VGAQ.boomboxes-cycle-12/35?locale=string", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example response"
+</Requests>
+
+<Responses items={["200","404","422"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "token_uri": "ipfs://ipfs/Qmf9yDYuPTrp8NRUFf8xxDd5Ud24Dx9uYMwMn8o8G2cWPW/12200.json",
   "metadata": {
@@ -98,9 +135,9 @@ curl -X GET "https://api.hiro.so/metadata/v1/nft/SP497E7RX3233ATBS2AB9G4WTHB63X5
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NftMetadataResponse {
@@ -137,28 +174,29 @@ export interface MetadataLocalization {
   default: string;
   locales: string[];
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
+<ResponseTypes>
 
+<ExampleResponse>
 
-```json title="Example response"
+```json
 {
   "error": "Token not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type NotFoundErrorResponse = TokenNotFoundResponse | ContractNotFoundResponse;
@@ -169,28 +207,29 @@ export interface TokenNotFoundResponse {
 export interface ContractNotFoundResponse {
   error: "Contract not found";
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"422"}>
+<Response value={"422"}>
 
+<ResponseTypes>
 
+<ExampleResponse>
 
-```json title="Example response"
+```json
 {
   "error": "Token metadata fetch in progress"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type ErrorResponse =
@@ -211,16 +250,15 @@ export interface InvalidTokenContractResponse {
 export interface InvalidTokenMetadataResponse {
   error: "Token metadata is unreachable or does not conform to SIP-016";
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

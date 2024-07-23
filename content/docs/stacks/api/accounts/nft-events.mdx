@@ -13,17 +13,19 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { InlineCode } from '@/components/inline-code';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/address/{principal}/nft_events"}>
 
-**NOTE:** This endpoint is <span className="rounded-lg border px-1 py-0.5 text-xs font-medium border-orange-400/50 bg-orange-400/20 text-orange-600 dark:text-orange-400">deprecated</span> in favor of [Get nft holdings](/stacks/api/non-fungible-tokens/holdings).
+<Callout title="Deprecated" type="warn">
+This endpoint is deprecated in favor of [Get nft holdings](/stacks/api/non-fungible-tokens/holdings).
+</Callout>
 
 Retrieves a list of all NFTs owned by an address and contains the Clarity value of the identifier of the NFT.
 
-### Path parameters
+### Path Parameters
 
 <Property required={true} deprecated={false} name={"principal"} type={"string"}>
 
@@ -32,8 +34,7 @@ Stacks address or a contract identifier
 <span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
 </Property>
-
-### Query parameters
+### Query Parameters
 
 <Property required={false} deprecated={false} name={"limit"} type={"integer"}>
 
@@ -76,7 +77,7 @@ Returned data representing the state up until that point in time, rather than th
 <APIExample>
 
 ```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nft_events"
+curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nft_events"
 ```
 
 <Tabs items={["200"]}>

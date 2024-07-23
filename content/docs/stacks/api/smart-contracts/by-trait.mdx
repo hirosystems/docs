@@ -4,62 +4,96 @@ description: Retrieves a list of contracts based on the following traits listed 
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/contract/by_trait"}>
 
-Retrieves a list of contracts based on the following traits listed in JSON format -  functions, variables, maps, fungible tokens and non-fungible tokens.
+## Get contracts by trait
 
-### Query parameters
+Retrieves a list of contracts based on the following traits listed in JSON format -  functions, variables, maps, fungible tokens and non-fungible tokens
+### Query Parameters
 
-<Property required={true} deprecated={false} name={"trait_abi"} type={"string"}>
+<Property name={"trait_abi"} type={"string"} required={true} deprecated={false}>
 
 JSON abi of the trait.
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Max number of contracts fetch
+max number of contracts fetch
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Index of first contract event to fetch
+index of first contract event to fetch
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of contracts implement given trait |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/contract/by_trait"} path={[]} query={[{"name":"trait_abi","type":"string","defaultValue":"","isRequired":true},{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/contract/by_trait"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/contract/by_trait?trait_abi=string&limit=0&offset=0"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v1/contract/by_trait?trait_abi=string&limit=0&offset=0", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET list of contracts
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 0,
   "offset": 0,
@@ -76,9 +110,9 @@ GET list of contracts
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -106,16 +140,15 @@ export interface SmartContract {
   source_code: string;
   abi: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

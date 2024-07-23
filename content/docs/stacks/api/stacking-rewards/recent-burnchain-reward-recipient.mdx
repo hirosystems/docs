@@ -4,68 +4,101 @@ description: Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/burnchain/rewards/{address}"}>
 
-Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the given recipient with the associated amounts and block info.
+## Get recent burnchain reward for the given recipient
 
-### Path parameters
+Retrieves a list of recent burnchain (e.g. Bitcoin) rewards for the given recipient with the associated amounts and block info
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"address"} type={"string"}>
+<Property name={"address"} type={"string"} required={true} deprecated={false}>
 
-Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format.
+Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format
 
-<span>Example:  `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
+<span>Example: `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
+
+</Property>
+### Query Parameters
+
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
+
+max number of rewards to fetch
 
 </Property>
 
-### Query parameters
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+index of first rewards to fetch
 
-Max number of rewards to fetch
-
-</Property>
-
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
-
-Index of first rewards to fetch
-
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of burnchain reward recipients and amounts |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/burnchain/rewards/{address}"} path={[{"name":"address","type":"string","defaultValue":"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda","isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/burnchain/rewards/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/burnchain/rewards/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda?limit=0&offset=42000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v1/burnchain/rewards/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda?limit=0&offset=42000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns blocks
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -83,9 +116,9 @@ GET request that returns blocks
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -135,16 +168,15 @@ export interface BurnchainReward {
    */
   reward_index: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

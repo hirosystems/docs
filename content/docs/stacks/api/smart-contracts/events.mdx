@@ -4,76 +4,109 @@ description: Retrieves a list of events that have been triggered by a given smar
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/contract/{contract_id}/events"}>
 
-Retrieves a list of events that have been triggered by a given `contract_id`.
+## Get contract events
 
-### Path parameters
+Retrieves a list of events that have been triggered by a given `contract_id`
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"contract_id"} type={"string"}>
+<Property name={"contract_id"} type={"string"} required={true} deprecated={false}>
 
 Contract identifier formatted as `\<contract_address\>.<contract_name>`
 
-<span>Example:  `"SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"`</span>
+<span>Example: `"SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles"`</span>
+
+</Property>
+### Query Parameters
+
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
+
+max number of contract events to fetch
 
 </Property>
 
-### Query parameters
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+index of first contract event to fetch
 
-Max number of contract events to fetch
-
-</Property>
-
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
-
-Index of first contract event to fetch
-
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
+<span>Default: `false`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of events |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/contract/{contract_id}/events"} path={[{"name":"contract_id","type":"string","defaultValue":"SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles","isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/contract/SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles/events"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/contract/SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles/events?limit=0&offset=42000&unanchored=true"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/extended/v1/contract/SP6P4EJF0VG8V0RB3TQQKJBHDQKEF6NVRD1KZE3C.satoshibles/events?limit=0&offset=42000&unanchored=true", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "event_index": 0,
   "event_type": "smart_contract_log",
@@ -89,9 +122,9 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v1/contract/SP6P4EJF0VG8V0RB3T
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export type TransactionEvent =
@@ -174,16 +207,15 @@ export interface TransactionEventAsset {
   value?: string;
   memo?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

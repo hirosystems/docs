@@ -4,30 +4,35 @@ description: Retrieves statistics on the number of inscriptions revealed per blo
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/ordinals/v1/stats/inscriptions"}>
 
-Retrieves statistics on the number of inscriptions revealed per block.
+## Inscription Count per Block
 
-### Query parameters
+Retrieves statistics on the number of inscriptions revealed per block
 
-<Property required={false} deprecated={false} name={"from_block_height"} type={"string"}>
+### Query Parameters
 
-Bitcoin block height
-
-<span>Pattern: `"^[0-9]+$"`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"to_block_height"} type={"string"}>
+<Property name={"from_block_height"} type={"Block Height"} required={false} deprecated={false}>
 
 Bitcoin block height
 
@@ -35,24 +40,58 @@ Bitcoin block height
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `404`       | Default response |
+<Property name={"to_block_height"} type={"Block Height"} required={false} deprecated={false}>
+
+Bitcoin block height
+
+<span>Pattern: `"^[0-9]+$"`</span>
+
+</Property>
+
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/stats/inscriptions"} path={[]} query={[{"name":"from_block_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"},{"name":"to_block_height","type":"string","defaultValue":"","isRequired":false,"description":"Block Height"}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/ordinals/v1/stats/inscriptions"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/ordinals/v1/stats/inscriptions?from_block_height=string&to_block_height=string"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/stats/inscriptions?from_block_height=string&to_block_height=string", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "results": [
     {
@@ -66,53 +105,57 @@ curl -X GET "https://api.hiro.so/ordinals/v1/stats/inscriptions"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface Response {
   results: {
-    block_height: string
-    block_hash: string
-    inscription_count: string
-    inscription_count_accum: string
-    timestamp: number
-  }[]
+    block_height: string;
+    block_hash: string;
+    inscription_count: string;
+    inscription_count_accum: string;
+    timestamp: number;
+  }[];
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found"
+  error: "Not found";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

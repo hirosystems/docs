@@ -4,62 +4,96 @@ description: Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipien
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/burnchain/rewards"}>
 
-Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info.
+## Get recent burnchain reward recipients
 
-### Query parameters
+Retrieves a list of recent burnchain (e.g. Bitcoin) reward recipients with the associated amounts and block info
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-Max number of rewards to fetch
+max number of rewards to fetch
 
-<span>Default:  `96`</span>
+<span>Default: `96`</span>
 
-<span>Maximum:  `250`</span>
+<span>Maximum: `250`</span>
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
 
-Index of first rewards to fetch
+index of first rewards to fetch
 
-<span>Example:  `42000`</span>
+<span>Example: `42000`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of burnchain reward recipients and amounts |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/burnchain/rewards"} path={[]} query={[{"name":"limit","type":"number","defaultValue":"","isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/burnchain/rewards"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/burnchain/rewards?limit=96&offset=42000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v1/burnchain/rewards?limit=96&offset=42000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns blocks
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -77,9 +111,9 @@ GET request that returns blocks
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -129,16 +163,15 @@ export interface BurnchainReward {
    */
   reward_index: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

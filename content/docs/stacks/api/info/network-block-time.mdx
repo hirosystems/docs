@@ -4,44 +4,77 @@ description: Retrieves the target block times for mainnet and testnet.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/info/network_block_times"}>
 
-Retrieves the target block times for mainnet and testnet. The block time is hardcoded and will change throughout the implementation phases of testnet.
+## Get the network target block time
 
-### Parameters
-
-No parameters.
+Retrieves the target block times for mainnet and testnet. The block time is hardcoded and will change throughout the implementation phases of the testnet.
 
 | Status code | Description |
-|:------------|:------------|
-| `200`       | Success     |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/info/network_block_times"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -L \
-  "https://api.mainnet.hiro.so/extended/v1/info/network_block_times" \
-  -H 'Accept: application/json'
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/info/network_block_times"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v1/info/network_block_times", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns network target block times
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "mainnet": {
     "target_block_time": 0
@@ -52,9 +85,9 @@ GET request that returns network target block times
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title="Schema">
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -67,16 +100,15 @@ export interface NetworkBlockTimesResponse {
 export interface TargetBlockTime {
   target_block_time: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

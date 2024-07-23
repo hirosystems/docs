@@ -4,70 +4,105 @@ description: Retrieves the STX token balance for a specified address or contract
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/address/{principal}/stx"}>
 
-Retrieves STX token balance for a given address or contract identifier.
+## Get account STX balance
 
-### Path parameters
+Retrieves STX token balance for a given Address or Contract Identifier.
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"principal"} type={"string"}>
+<Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
-Stacks address or a contract identifier.
+Stacks address or a Contract identifier.
 
-<span>Example:  `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
 
 </Property>
+### Query Parameters
 
-### Query parameters
-
-<Property required={false} deprecated={false} name={"unanchored"} type={"boolean"}>
+<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
 Include transaction data from unanchored (i.e. unconfirmed) microblocks.
 
-<span>Example:  `true`</span>
+<span>Example: `true`</span>
 
-<span>Default:  `false`</span>
-
-</Property>
-
-<Property required={false} deprecated={false} name={"until_block"} type={"string"}>
-
-Returned data representing the state up until that point in time, rather than the current block. Note: use either of the query parameters but not both at a time.
-
-<span>Example:  `60000`</span>
+<span>Default: `false`</span>
 
 </Property>
 
-| Status code | Description   |
-|:------------|:--------------|
-| `200`       | Success       |
+<Property name={"until_block"} type={"string"} required={false} deprecated={false}>
+
+returned data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+
+<span>Example: `60000`</span>
+
+</Property>
+
+| Status code | Description |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/stx"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false},{"name":"until_block","type":"string","defaultValue":60000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -L \
-  "https://api.mainnet.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/stx" \
-  -H 'Accept: application/json'
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/stx?unanchored=true&until_block=60000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/stx?unanchored=true&until_block=60000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns address balances
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "balance": "string",
   "total_sent": "string",
@@ -92,9 +127,9 @@ GET request that returns address balances
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -155,16 +190,15 @@ export interface AddressUnlockSchedule {
   amount: string;
   block_height: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

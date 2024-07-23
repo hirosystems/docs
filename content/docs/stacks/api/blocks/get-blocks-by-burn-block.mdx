@@ -4,68 +4,103 @@ description: Retrieves a list of blocks confirmed by a specific burn block.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v2/burn-blocks/{height_or_hash}/blocks"}>
 
-Retrieves a list of blocks confirmed by a specific burn block.
+## Get blocks by burn block
 
-### Path parameters
+Retrieves a list of blocks confirmed by a specific burn block
 
-<Property required={true} deprecated={false} name={"height_or_hash"} type={"integer | string"}>
+### Path Parameters
 
-Filter by burn block height, hash, or the constant `latest` to filter for the most recent burn block
+<Property name={"height_or_hash"} type={"integer | string"} required={true} deprecated={false}>
 
-</Property>
-
-### Query parameters
-
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
-
-Max number of blocks to fetch
-
-<span>Example:  `20`</span>
+filter by burn block height, hash, or the constant `latest` to filter for the most recent burn block
 
 </Property>
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+### Query Parameters
 
-Index of first burn block to fetch
+<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
 
-<span>Example:  `0`</span>
+max number of blocks to fetch
+
+<span>Example: `20`</span>
+
+</Property>
+
+<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
+
+index of first burn block to fetch
+
+<span>Example: `0`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of blocks |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/burn-blocks/{height_or_hash}/blocks"} path={[{"name":"height_or_hash","type":"switcher","items":{"integer":{"type":"ref","isRequired":true,"schema":"0"},"string":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":20,"isRequired":false},{"name":"offset","type":"number","defaultValue":0,"isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"number","defaultValue":42000,"isRequired":false},"1":{"type":"string","defaultValue":"0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v2/burn-blocks/42000/blocks"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v2/burn-blocks/42000/blocks?limit=20&offset=0"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v2/burn-blocks/42000/blocks?limit=20&offset=0", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 GET request that returns blocks
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 30,
   "offset": 0,
@@ -96,9 +131,9 @@ GET request that returns blocks
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -200,16 +235,15 @@ export interface NakamotoBlock {
    */
   execution_cost_write_length: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

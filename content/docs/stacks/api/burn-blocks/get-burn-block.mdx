@@ -4,50 +4,84 @@ description: Retrieves a single burn block.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v2/burn-blocks/{height_or_hash}"}>
 
-Retrieves a single burn block.
+## Get burn block
 
-### Path parameters
+Retrieves a single burn block
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"height_or_hash"} type={"integer | string"}>
+<Property name={"height_or_hash"} type={"integer | string"} required={true} deprecated={false}>
 
-Filter by burn block height, hash, or the constant `latest` to filter for the most recent burn block
+filter by burn block height, hash, or the constant `latest` to filter for the most recent burn block
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Burn block |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/burn-blocks/{height_or_hash}"} path={[{"name":"height_or_hash","type":"switcher","items":{"integer":{"type":"ref","isRequired":true,"schema":"0"},"string":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{"0":{"type":"number","defaultValue":42000,"isRequired":false},"1":{"type":"string","defaultValue":"0x4839a8b01cfb39ffcc0d07d3db31e848d5adf5279d529ed5062300b9f353ff79","isRequired":false}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.mainnet.hiro.so/extended/v2/burn-blocks/42000"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v2/burn-blocks/42000"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/extended/v2/burn-blocks/42000", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
 
 A burn block
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "burn_block_time": 0,
   "burn_block_time_iso": "string",
@@ -55,13 +89,15 @@ A burn block
   "burn_block_height": 0,
   "stacks_blocks": [
     "string"
-  ]
+  ],
+  "avg_block_time": 0,
+  "total_tx_count": 0
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -88,17 +124,24 @@ export interface BurnBlock {
    * Hashes of the Stacks blocks included in the burn block
    */
   stacks_blocks: string[];
+  /**
+   * Average time between blocks in seconds. Returns 0 if there is only one block in the burn block.
+   */
+  avg_block_time: number;
+  /**
+   * Total number of transactions in the Stacks blocks associated with this burn block
+   */
+  total_tx_count: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

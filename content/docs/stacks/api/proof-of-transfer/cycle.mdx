@@ -4,52 +4,84 @@ description: Retrieves details for a PoX cycle.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v2/pox/cycles/{cycle_number}"}>
 
-Retrieves details for a PoX cycle.
+## Get PoX cycle
 
-### Path parameters
+Retrieves details for a PoX cycle
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"cycle_number"} type={"integer"}>
+<Property name={"cycle_number"} type={"integer"} required={true} deprecated={false}>
 
 PoX cycle number
 
-<span>Example:  `56`</span>
+<span>Example: `56`</span>
 
 </Property>
 
 | Status code | Description |
-| :--------- | :---------- |
+| :------ | :------ |
 | `200` | Details for cycle |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/pox/cycles/{cycle_number}"} path={[{"name":"cycle_number","type":"number","defaultValue":56,"isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v2/pox/cycles/56"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v2/pox/cycles/56"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/extended/v2/pox/cycles/56", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example response"
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "block_height": 0,
   "index_block_hash": "string",
@@ -60,9 +92,9 @@ curl -X GET "https://api.mainnet.hiro.so/extended/v2/pox/cycles/56"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PoxCycle {
@@ -73,16 +105,15 @@ export interface PoxCycle {
   total_stacked_amount: string;
   total_signers: number;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

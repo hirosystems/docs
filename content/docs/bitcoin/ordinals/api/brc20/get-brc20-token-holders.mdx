@@ -4,22 +4,35 @@ description: Retrieves a list of holders and their balances for a particular BRC
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/ordinals/v1/brc-20/tokens/{ticker}/holders"}>
 
-Retrieves a list of holders and their balances for a specified BRC-20 token.
+## BRC-20 Token Holders
 
-### Query parameters
+Retrieves a list of holders and their balances for a BRC-20 token
 
-<Property required={false} deprecated={false} name={"offset"} type={"integer"}>
+### Query Parameters
+
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
 Result offset
 
@@ -27,7 +40,7 @@ Result offset
 
 </Property>
 
-<Property required={false} deprecated={false} name={"limit"} type={"integer"}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
 Results per page
 
@@ -37,30 +50,56 @@ Results per page
 
 </Property>
 
-### Path parameters
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"ticker"} type={"string"}>
+<Property name={"ticker"} type={"string"} required={true} deprecated={false}>
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `404`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/brc-20/tokens/{ticker}/holders"} path={[{"name":"ticker","type":"string","defaultValue":"","isRequired":true}]} query={[{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/tokens/string/holders"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/tokens/string/holders?offset=0&limit=1"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/brc-20/tokens/string/holders?offset=0&limit=1", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "limit": 20,
   "offset": 0,
@@ -74,53 +113,57 @@ curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/tokens/string/holders"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface PaginatedBRC20HoldersResponse {
-  limit: number
-  offset: number
-  total: number
+  limit: number;
+  offset: number;
+  total: number;
   results: {
-    address: string
-    overall_balance: string
-  }[]
+    address: string;
+    overall_balance: string;
+  }[];
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found"
+  error: "Not found";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

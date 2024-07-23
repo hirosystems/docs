@@ -4,43 +4,82 @@ description: Retrieves information for a BRC-20 token, including supply and hold
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/ordinals/v1/brc-20/tokens/{ticker}"}>
 
-Retrieves information for a BRC-20 token, including supply and holders.
+## BRC-20 Token Details
 
-### Path parameters
+Retrieves information for a BRC-20 token including supply and holders
 
-<Property required={true} deprecated={false} name={"ticker"} type={"string"}>
+### Path Parameters
+
+<Property name={"ticker"} type={"string"} required={true} deprecated={false}>
 
 </Property>
 
-| Status code | Description      |
-| :---------- | :--------------- |
-| `200`       | Default response |
-| `404`       | Default response |
+| Status code | Description |
+| :------ | :------ |
+| `200` | Default Response |
+| `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/ordinals/v1/brc-20/tokens/{ticker}"} path={[{"name":"ticker","type":"string","defaultValue":"","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
 curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/tokens/string"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-```json title="Example response"
+```js
+fetch("https://api.hiro.so/ordinals/v1/brc-20/tokens/string", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "token": {
     "id": "1463d48e9248159084929294f64bda04487503d30ce7ab58365df1dc6fd58218i0",
@@ -64,66 +103,70 @@ curl -X GET "https://api.hiro.so/ordinals/v1/brc-20/tokens/string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface BRC20TokenDetailsResponse {
-  token: BRC20TokenResponse
+  token: BRC20TokenResponse;
   supply: {
-    max_supply: string
-    minted_supply: string
-    holders: number
-  }
+    max_supply: string;
+    minted_supply: string;
+    holders: number;
+  };
 }
 export interface BRC20TokenResponse {
-  id: string
-  number: number
-  block_height: number
-  tx_id: string
-  address: string
-  ticker: string
-  max_supply: string
-  mint_limit: string | null
-  decimals: number
-  deploy_timestamp: number
-  minted_supply: string
-  tx_count: number
+  id: string;
+  number: number;
+  block_height: number;
+  tx_id: string;
+  address: string;
+  ticker: string;
+  max_supply: string;
+  mint_limit: string | null;
+  decimals: number;
+  deploy_timestamp: number;
+  minted_supply: string;
+  tx_count: number;
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
-  error: "Not found"
+  error: "Not found";
 }
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,47 +4,82 @@ description: Retrieves information for a Rune etching.
 toc: false
 ---
 
-import { Root, API, APIExample } from "@/components/layout"
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Tabs, Tab } from "fumadocs-ui/components/tabs"
-import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/runes/v1/etchings/{etching}"}>
 
-Retrieves information for a Rune etching.
+## Rune etching
+
+Retrieves information for a Rune etching
 
 ### Path Parameters
 
-<Property required={true} deprecated={false} name={"etching"} type={"string"}>
-
-Value can represent a Rune ID, Rune number, Rune name, or Rune name with spacers.
+<Property name={"etching"} type={"Any properties in Rune ID, Rune number, Rune name, Rune name with spacers"} required={true} deprecated={false}>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Default Response |
 | `404` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/runes/v1/etchings/{etching}"} path={[{"name":"etching","type":"switcher","items":{"Rune ID":{"type":"ref","isRequired":true,"schema":"0"},"Rune number":{"type":"ref","isRequired":true,"schema":"1"},"Rune name":{"type":"ref","isRequired":true,"schema":"2"},"Rune name with spacers":{"type":"ref","isRequired":true,"schema":"3"}},"isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune ID"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune number"},"2":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune name"},"3":{"type":"string","defaultValue":"","isRequired":false,"description":"Rune name with spacers"}}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="curl"
-curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/runes/v1/etchings/string"
 ```
 
-<Tabs items={["200","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
+```js
+fetch("https://api.hiro.so/runes/v1/etchings/string", {
+  method: "GET"
+});
+```
 
+</Request>
 
-```json title="Example Response"
+</Requests>
+
+<Responses items={["200","404"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "id": "840000:1",
   "name": "ZZZZZFEHUZZZZZ",
@@ -83,9 +118,9 @@ curl -X GET "https://api.hiro.so/runes/v1/etchings/ZZZZZFEHUZZZZZ"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Typescript Definition"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -249,43 +284,43 @@ export interface TransactionLocation {
   output?: TransactionOutput;
   timestamp: Timestamp;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
+<ResponseTypes>
 
+<ExampleResponse>
 
-```json title="Example Response"
+```json
 {
   "error": "Not found"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Typescript Definition"}>
+<TypeScriptResponse>
 
 ```ts
 export interface NotFoundResponse {
   error: "Not found";
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

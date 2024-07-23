@@ -4,61 +4,95 @@ description: Retrieves the total burnchain (e.g. Bitcoin) rewards for a given re
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from "fumadocs-ui/components/api"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/extended/v1/burnchain/rewards/{address}/total"}>
 
-Retrieves the total burnchain (e.g. Bitcoin) rewards for a given recipient `address`.
+## Get total burnchain rewards for the given recipient
 
-### Path parameters
+Retrieves the total burnchain (e.g. Bitcoin) rewards for a given recipient `address`
+### Path Parameters
 
-<Property required={true} deprecated={false} name={"address"} type={"string"}>
+<Property name={"address"} type={"string"} required={true} deprecated={false}>
 
-Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided, it will be encoded as into the equivalent burnchain format
+Reward recipient address. Should either be in the native burnchain's format (e.g. B58 for Bitcoin), or if a STX principal address is provided it will be encoded as into the equivalent burnchain format
 
-<span>Example:  `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
+<span>Example: `"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | List of burnchain reward recipients and amounts |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/burnchain/rewards/{address}/total"} path={[{"name":"address","type":"string","defaultValue":"36hQtSEXBMevo5chpxhfAGiCTSC34QKgda","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/extended/v1/burnchain/rewards/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda/total"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/burnchain/rewards/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda/total"
 ```
 
-<Tabs items={["200"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
 
-GET request that returns total burnchain rewards made to a recipient.
+```js
+fetch("https://api.hiro.so/extended/v1/burnchain/rewards/36hQtSEXBMevo5chpxhfAGiCTSC34QKgda/total", {
+  method: "GET"
+});
+```
 
-```json title="Example response"
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+Total burnchain rewards made to a recipient
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "reward_recipient": "string",
   "reward_amount": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -74,16 +108,15 @@ export interface BurnchainRewardsTotal {
    */
   reward_amount: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 

@@ -4,100 +4,137 @@ description: Retrieves a list of names within a given namespace.
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { APIInfo, Property } from 'fumadocs-ui/components/api'
-import { Badge } from '@/components/ui/badge';
-import { Tabs, Tab } from 'fumadocs-ui/components/tabs'
-import { Tabs as UITabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
 
-import { InlineCode } from '@/components/inline-code';
-
-<Root>
+<Root baseUrl="https://api.hiro.so">
 
 <API>
 
 <APIInfo method={"GET"} route={"/v1/namespaces/{tld}/names"}>
 
+## Get namespace names
+
 Retrieves a list of names within a given namespace.
+### Path Parameters
 
-### Path parameters
+<Property name={"tld"} type={"string"} required={true} deprecated={false}>
 
-<Property required={true} deprecated={false} name={"tld"} type={"string"}>
+the namespace to fetch names from.
 
-The namespace to fetch names from.
-
-<span>Example:  `"id"`</span>
+<span>Example: `"id"`</span>
 
 </Property>
 
-### Query parameters
+### Query Parameters
 
-<Property required={false} deprecated={false} name={"page"} type={"integer"}>
+<Property name={"page"} type={"integer"} required={false} deprecated={false}>
 
-Namespace values are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.
+namespace values are defaulted to page 1 with 100 results. You can query specific page results by using the 'page' query parameter.
 
-<span>Example:  `22`</span>
+<span>Example: `22`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| :------ | :------ |
 | `200` | Success |
 | `400` | Error |
 | `404` | Error |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v1/namespaces/{tld}/names"} path={[{"name":"tld","type":"string","defaultValue":"id","isRequired":true}]} query={[{"name":"page","type":"number","defaultValue":22,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
 
 </APIInfo>
 
 <APIExample>
 
-```bash title="Terminal"
-curl -X GET "https://api.mainnet.hiro.so/v1/namespaces/id/names"
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/v1/namespaces/id/names?page=22"
 ```
 
-<Tabs items={["200","400","404"]}>
+</Request>
 
-<Tab value={"200"}>
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/v1/namespaces/id/names?page=22", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","400","404"]}>
+
+<Response value={"200"}>
 
 Fetch a list of names from the namespace.
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 [
   "string"
 ]
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
  * Fetch a list of names from the namespace.
  */
 export type BnsGetAllNamespacesNamesResponse = string[];
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"400"}>
+<Response value={"400"}>
 
 Error
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -106,28 +143,31 @@ Error
 export interface BnsError {
   error?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-<Tab value={"404"}>
+<Response value={"404"}>
 
 Error
 
-```json title="Example response"
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
 {
   "error": "string"
 }
 ```
 
-<Accordions>
+</ExampleResponse>
 
-<Accordion title={"Schema"}>
+<TypeScriptResponse>
 
 ```ts
 /**
@@ -136,16 +176,15 @@ Error
 export interface BnsError {
   error?: string;
 }
-
 ```
 
-</Accordion>
+</TypeScriptResponse>
 
-</Accordions>
+</ResponseTypes>
 
-</Tab>
+</Response>
 
-</Tabs>
+</Responses>
 
 </APIExample>
 
