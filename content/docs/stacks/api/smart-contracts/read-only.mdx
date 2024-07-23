@@ -101,7 +101,7 @@ The Stacks chain tip to query from
 curl -X POST "https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance" \
   -H "Content-Type: application/json" \
   -d '{
-    "sender": "SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335",
+    "sender": "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7",
     "arguments": [
       "0x0516da6b6c4a62ece9fa5a652278baa014ec83df3644"
     ]
@@ -113,19 +113,12 @@ curl -X POST "https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HE
 <Request value={"JavaScript"}>
 
 ```js
-import { standardPrincipalCV, cvToHex } from "@stacks/transactions";
-
-const functionArgs = [
-  standardPrincipalCV("SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335"),
-];
-
-const args = functionArgs.map((arg) => cvToHex(arg));
 const body = JSON.stringify({
   sender: "SP187Y7NRSG3T9Z9WTSWNEN3XRV1YSJWS81C7JKV7",
-  arguments: args,
+  arguments: ["0x0516da6b6c4a62ece9fa5a652278baa014ec83df3644"],
 });
 
-const response = await fetch(
+fetch(
   "https://api.hiro.so/v2/contracts/call-read/SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335/mega/get-balance",
   {
     headers: { "Content-Type": "application/json" },
