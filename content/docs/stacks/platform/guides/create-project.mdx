@@ -1,38 +1,80 @@
 ---
 title: Create a project
-description: Create a new project or import a project from GitHub.
+description: Learn how to create a new project or import an existing one from GitHub on the Hiro Platform.
 ---
 
-This article walks you through the process of creating a new project or importing a project from GitHub.
+In this guide, you'll discover how to easily create a new project or import an existing project from GitHub within the [Hiro Platform](https://platform.hiro.so/).
 
-After you log into the [Hiro Platform](https://platform.hiro.so/), you will automatically land on the projects tab and be prompted to create a project or import from GitHub.
+After you log in, you'll land on the `/projects` page. This is where you can either create a project from scratch, choose an example project, or import one from GitHub.
+
+## Create or import a project
 
 ![create or import a project](../images/project/create-or-import.png)
 
-## Create new project
+### Create a new project
 
-To create a new project, you can start with a blank project or use one of the examples displayed in the project modal. Those sample projects include a Hello world contract, fungible and non-fungible token contracts, a counter contract, a swap contract, and more. You can also refer to the examples in the [Clarity examples](https://github.com/hirosystems/clarity-examples/tree/main/examples) to view the source code.
+To start a new project, you can begin with a blank project or by choosing one of the example projects provided. The selections includes options such as:
+
+- [Hello world](https://github.com/hirosystems/clarity-examples/tree/main/examples/hello-world)
+- [Fungible token](https://github.com/hirosystems/clarity-examples/tree/main/examples/fungible-token) and [Non-fungible token](https://github.com/hirosystems/clarity-examples/tree/main/examples/non-fungible-token)
+- [Counter](https://github.com/hirosystems/clarity-examples/tree/main/examples/counter) 
+- [DeFi](https://github.com/hirosystems/clarity-examples/tree/main/examples/stx-defi) 
+
+For this example, you are going to create a new project using the **Counter** template.
+
+<Callout title="Examples">
+For the rest of the examples, check out the [Clarity examples](https://github.com/hirosystems/clarity-examples/tree/main/examples) repo.
+</Callout>
+
+Starting on the `/projects` page:
+
+1. Click on the **New project** button.
+2. In the template section, browse the examples. Look for the **Counter** template and select it.
 
 ![Create new project](../images/project/new-project.png)
 
-Once you select a new project from the list, the selected example project will be automatically cloned and displayed on the [projects](https://platform.hiro.so) page. For example, here is a project page with the `counter` project template.
+When you select the **Counter** template, you'll be taken to a new project page as the template will automatically be cloned and displayed.
 
-![Hello world project](../images/project/counter.png)
+Here, you can see a list of contracts with a `.clar` extension.
 
-From this projects page, you can manage all of your projects, and when you click into an individual project, you can then see all of the contracts in that particular project, edit those contracts, and add new ones.
+![Counter project](../images/project/counter.png)
 
-## Import project from GitHub
+On the right hand side of the interface, you can start editing your smart contracts, which will be validated in real-time.
 
-When you import a project from GitHub, there will be a modal displayed on the right where you can enter the GitHub URL of your project.
+To add a new contract, you can click on the **Create Contract** button that sits on the left hand side of the interface above your existing contracts.
+
+<Callout title="Note">
+With a new project now created, you'll now see it on the `/projects` page. Here, you can manage all your projects.
+</Callout>
+
+### Import a project from GitHub
+
+1. Click on the **Import from GitHub** button.
+2. Enter the GitHub URL of the project you wish to import and click on **Clone**.
 
 ![Import from GitHub](../images/project/import-from-github.png)
-
-Once you enter the URL of your project, select _clone_ to clone your project into the Hiro Platform.
 
 <Callout title="Requirements" type="warn">
   The maximum project size allowed for imports is 50 MB.
 </Callout>
 
-You can now find your cloned project on the projects page in the platform, and by clicking into the project, you can see a list of all Clarity contracts ending with `.clar` extension, which will look something like this:
+Similar to creating a new project manually, after cloning, you will be redirected to your project page.
+
+Here, you'll see a list of all Clarity contracts with a `.clar` extension, showcased here:
 
 ![Import Clarinet project from GitHub](../images/project/import-from-clarinet.png)
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/platform/guides/deploy-project"
+    title="Deploy a project"
+    description="Deploy your project to devnet, testnet, or mainnet using the Hiro Platform."
+  />
+  <Card
+    href="/stacks/platform/guides/connect-desktop-to-cloud"
+    title="Connect your local editor to the Hiro Platform"
+    description="Connect your local editor to the cloud."
+  />
+</Cards>
