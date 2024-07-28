@@ -1,0 +1,76 @@
+---
+title: buff-to-int-le
+description: Converting a byte buffer to a signed integer using little-endian encoding in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(buff-to-int-le (buff 16))
+```
+
+- Input: A byte buffer of up to 16 bytes
+- Output: A signed integer (`int`)
+
+## Why it matters
+
+The `buff-to-int-le` function is crucial for:
+
+1. Converting byte data to signed integers using little-endian encoding.
+2. Handling data from external sources or other contracts that use little-endian encoding.
+3. Implementing protocols or algorithms that require little-endian integer representation.
+4. Interoperating with systems that use little-endian byte order.
+
+## When to use it
+
+Use the `buff-to-int-le` function when you need to:
+
+- Convert a little-endian encoded byte buffer to a signed integer.
+- Process input data that represents signed integers in little-endian format.
+- Implement cryptographic or mathematical operations that expect little-endian integer inputs.
+- Ensure compatibility with external systems using little-endian encoding.
+
+## Best Practices
+
+- Ensure the input buffer is no larger than 16 bytes to avoid errors.
+- Be aware that smaller buffers are zero-padded on the right, affecting the resulting integer value.
+- Consider using `buff-to-uint-le` for unsigned integers if the sign is not needed.
+- Handle potential errors when the input buffer might be invalid or empty.
+
+## Practical Example: Decoding a Signed Integer from External Data
+
+Let's implement a function that processes external data containing a little-endian encoded signed integer:
+
+```clarity
+(define-read-only (process-external-data-le (data (buff 16)))
+  (let ((value (buff-to-int-le data)))
+    (if (< value 0)
+        (err "Negative value not allowed")
+        (ok value))))
+
+;; Usage
+(process-external-data-le 0x01000000000000000000000000000000) ;; Returns (ok 1)
+(process-external-data-le 0xffffffffffffffffffffffffffffffff) ;; Returns (err "Negative value not allowed")
+(process-external-data-le 0xffffffffffffffffffffffffffffff7f) ;; Returns (ok 9223372036854775807)
+```
+
+This example demonstrates:
+1. Using `buff-to-int-le` to convert external data to a signed integer.
+2. Handling both positive and negative values resulting from the conversion.
+3. Implementing input validation based on the converted integer value.
+
+## Common Pitfalls
+
+1. Confusing little-endian with big-endian encoding, leading to incorrect integer values.
+2. Not handling potential negative values when working with signed integers.
+3. Assuming a specific buffer length, which could lead to unexpected results with shorter inputs due to right-padding.
+
+## Related Functions
+
+- `buff-to-int-be`: Converts a byte buffer to a signed integer using big-endian encoding.
+- `buff-to-uint-le`: Converts a byte buffer to an unsigned integer using little-endian encoding.
+- `int-to-ascii`: Converts an integer to its ASCII string representation.
+
+## Conclusion
+
+The `buff-to-int-le` function is a powerful tool for working with little-endian encoded signed integers in Clarity smart contracts. By understanding its behavior with different input sizes and potential sign issues, developers can effectively process and validate external data, implement complex algorithms, and ensure compatibility with little-endian systems in their smart contract applications.

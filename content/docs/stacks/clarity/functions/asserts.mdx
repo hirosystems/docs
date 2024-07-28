@@ -1,0 +1,81 @@
+---
+title: asserts!
+description: Using the asserts! function for conditional assertions in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(asserts! bool-expr thrown-value)
+```
+
+- Input: 
+  - `bool-expr`: A boolean expression
+  - `thrown-value`: The value to be returned if the assertion fails
+- Output: `bool` or `thrown-value`
+
+## Why it matters
+
+The `asserts!` function is crucial for:
+
+1. Implementing conditional checks in smart contracts.
+2. Enforcing preconditions before executing critical operations.
+3. Providing meaningful error responses when conditions are not met.
+4. Improving contract security by validating inputs and state.
+
+## When to use it
+
+Use the `asserts!` function when you need to:
+
+- Validate conditions before proceeding with contract execution.
+- Ensure certain requirements are met before performing sensitive operations.
+- Provide clear error messages or codes when conditions are not satisfied.
+- Implement guard clauses to protect against invalid inputs or states.
+
+## Best Practices
+
+- Use `asserts!` early in functions to validate preconditions.
+- Provide meaningful error values that can be easily interpreted by users or other contracts.
+- Combine multiple conditions using `and` or `or` for complex assertions.
+- Consider using `asserts!` in combination with `unwrap!` for handling optional values.
+
+## Practical Example: Token Transfer with Balance Check
+
+Let's implement a simple token transfer function that uses `asserts!` to check the sender's balance:
+
+```clarity
+(define-map balances principal uint)
+
+(define-public (transfer (amount uint) (recipient principal))
+  (let ((sender-balance (default-to u0 (map-get? balances tx-sender))))
+    (asserts! (>= sender-balance amount) (err u1)) ;; Insufficient balance
+    (asserts! (is-eq tx-sender recipient false) (err u2)) ;; Can't send to self
+    
+    (map-set balances tx-sender (- sender-balance amount))
+    (map-set balances recipient (+ (default-to u0 (map-get? balances recipient)) amount))
+    (ok true)))
+
+;; Usage
+(transfer u100 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns (ok true) if successful
+```
+
+This example demonstrates:
+1. Using `asserts!` to check if the sender has sufficient balance before transferring.
+2. Using `asserts!` to prevent sending tokens to oneself.
+3. Providing different error codes for different types of failures.
+
+## Common Pitfalls
+
+1. Forgetting to handle the error case when calling functions that use `asserts!`.
+2. Using `asserts!` excessively, which can make code harder to read and maintain.
+3. Providing vague or unhelpful error values when assertions fail.
+
+## Related Functions
+
+- `unwrap!`: Used to extract values from optionals with a fallback error.
+- `unwrap-panic`: Similar to `unwrap!` but causes a panic instead of returning an error.
+- `try!`: Used for propagating errors in a chain of operations.
+
+## Conclusion
+
+The `asserts!` function is a powerful tool for implementing conditional checks and enforcing invariants in Clarity smart contracts. By using it effectively, developers can create more robust and secure contracts that gracefully handle edge cases and provide meaningful feedback when conditions are not met.

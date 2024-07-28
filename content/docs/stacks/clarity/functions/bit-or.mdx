@@ -1,0 +1,93 @@
+---
+title: bit-or
+description: Using the bit-or function for bitwise OR operations in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(bit-or i1 i2...)
+```
+
+- Input: Two or more integers (`int` or `uint`)
+- Output: An integer of the same type as the inputs (`int` or `uint`)
+
+## Why it matters
+
+The `bit-or` function is crucial for:
+
+1. Performing bitwise OR operations in smart contracts.
+2. Combining flags or bitmasks efficiently.
+3. Implementing certain logical operations and algorithms.
+4. Manipulating binary data at the bit level.
+
+## When to use it
+
+Use the `bit-or` function when you need to:
+
+- Combine multiple flags or bitmasks into a single value.
+- Set specific bits in an integer without affecting others.
+- Implement certain bitwise algorithms or data structures.
+- Perform low-level data manipulations involving binary operations.
+
+## Best Practices
+
+- Ensure all input values are of the same type (either all `int` or all `uint`).
+- Remember that `bit-or` with `0` has no effect, which can be useful for conditional operations.
+- Use `bit-or` in combination with other bitwise operations for complex bit manipulations.
+- Consider readability when using bitwise operations extensively; add comments to explain the purpose.
+
+## Practical Example: Permission System
+
+Let's implement a simple permission system using `bit-or` and other bitwise operations:
+
+```clarity
+(define-constant PERMISSION_READ u1)    ;; 0001
+(define-constant PERMISSION_WRITE u2)   ;; 0010
+(define-constant PERMISSION_EXECUTE u4) ;; 0100
+(define-constant PERMISSION_ADMIN u8)   ;; 1000
+
+(define-map user-permissions principal uint)
+
+(define-public (grant-permission (user principal) (permission uint))
+  (let ((current-permissions (default-to u0 (map-get? user-permissions user))))
+    (ok (map-set user-permissions user (bit-or current-permissions permission)))))
+
+(define-public (revoke-permission (user principal) (permission uint))
+  (let ((current-permissions (default-to u0 (map-get? user-permissions user))))
+    (ok (map-set user-permissions user (bit-and current-permissions (bit-not permission))))))
+
+(define-read-only (has-permission (user principal) (permission uint))
+  (let ((user-permission (default-to u0 (map-get? user-permissions user))))
+    (is-eq permission (bit-and user-permission permission))))
+
+;; Usage
+(grant-permission tx-sender (bit-or PERMISSION_READ PERMISSION_WRITE))
+(has-permission tx-sender PERMISSION_READ) ;; Returns true
+(has-permission tx-sender PERMISSION_EXECUTE) ;; Returns false
+```
+
+
+
+This example demonstrates:
+1. Using `bit-or` to combine multiple permissions into a single value.
+2. Implementing a permission system using bitwise operations for efficient storage and checks.
+3. Combining `bit-or` with other bitwise operations like `bit-and` and `bit-not` for complex permission management.
+
+## Common Pitfalls
+
+1. Mixing signed (`int`) and unsigned (`uint`) integers in a single `bit-or` operation.
+2. Forgetting that `bit-or` with all bits set (`-1` for `int`, maximum value for `uint`) always results in all bits set.
+3. Not considering the full range of bits when using `bit-or` with smaller integer values.
+
+## Related Functions
+
+- `bit-and`: Used for bitwise AND operations.
+- `bit-xor`: Used for bitwise XOR operations.
+- `bit-not`: Used for bitwise NOT operations.
+- `bit-shift-left`: Used for left-shifting bits.
+- `bit-shift-right`: Used for right-shifting bits.
+
+## Conclusion
+
+The `bit-or` function is a powerful tool for bitwise operations in Clarity smart contracts. When used in combination with other bitwise functions, it enables efficient implementation of flags, permissions, and other bit-level data manipulations. Developers should be mindful of the types of integers used and the effects of the operation on the full range of bits to avoid unexpected results.

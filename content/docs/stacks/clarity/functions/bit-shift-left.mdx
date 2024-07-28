@@ -1,0 +1,82 @@
+---
+title: bit-shift-left
+description: Using the bit-shift-left function for bitwise left shift operations in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(bit-shift-left i1 shamt)
+```
+
+- Input: 
+  - `i1`: An integer (`int` or `uint`)
+  - `shamt`: A `uint` representing the number of places to shift
+- Output: An integer of the same type as `i1` (`int` or `uint`)
+
+## Why it matters
+
+The `bit-shift-left` function is crucial for:
+
+1. Performing efficient multiplication by powers of 2.
+2. Implementing certain bitwise algorithms and data structures.
+3. Manipulating binary data at the bit level.
+4. Creating bitmasks for various purposes.
+
+## When to use it
+
+Use the `bit-shift-left` function when you need to:
+
+- Multiply a number by a power of 2 efficiently.
+- Implement certain cryptographic or hashing algorithms.
+- Perform low-level data manipulations involving binary operations.
+- Create specific bit patterns or masks.
+
+## Best Practices
+
+- Be aware that shifting left by `n` bits is equivalent to multiplying by 2^n.
+- Remember that shifting beyond the bit width of the integer (128 bits in Clarity) will result in zero.
+- Use `uint` for `shamt` to avoid potential issues with negative shift amounts.
+- Consider the possibility of overflow when shifting left, especially with large numbers or shift amounts.
+
+## Practical Example: Dynamic Bitmask Creation
+
+Let's implement a simple function that creates a bitmask using `bit-shift-left`:
+
+```clarity
+(define-read-only (create-bitmask (bit-position uint))
+  (if (<= bit-position u127)
+      (bit-shift-left u1 bit-position)
+      u0))
+
+(define-read-only (set-bit (value uint) (bit-position uint))
+  (bit-or value (create-bitmask bit-position)))
+
+;; Usage
+(create-bitmask u3) ;; Returns u8 (binary: 1000)
+(set-bit u5 u2) ;; Returns u7 (binary: 101 | 100 = 111)
+```
+
+
+
+
+This example demonstrates:
+1. Using `bit-shift-left` to create a bitmask with a single bit set at a specified position.
+2. Combining `bit-shift-left` with `bit-or` to set a specific bit in a number.
+3. Handling edge cases where the shift amount exceeds the bit width of the integer.
+
+## Common Pitfalls
+
+1. Forgetting that left-shifting can lead to overflow, especially with signed integers.
+2. Not considering the modulo behavior when shifting by amounts greater than or equal to 128.
+3. Using a negative or non-uint value for the shift amount, which is not allowed.
+
+## Related Functions
+
+- `bit-shift-right`: Used for right-shifting bits.
+- `bit-and`: Often used in combination with `bit-shift-left` for masking operations.
+- `bit-or`: Used for combining bitmasks created with `bit-shift-left`.
+
+## Conclusion
+
+The `bit-shift-left` function is a powerful tool for bitwise operations in Clarity smart contracts. It enables efficient multiplication by powers of 2 and is essential for creating bitmasks and implementing various bitwise algorithms. However, developers should be mindful of potential overflows and the modulo behavior when using large shift amounts.
