@@ -1,0 +1,175 @@
+---
+title: Block Height Transactions
+description: Transactions array for blockheight scope.
+toc: false
+---
+
+import { InlineCode } from "@/components/inline-code";
+
+```json title="Block Height transactions"
+"transactions": [
+    {
+        "transaction_identifier": {
+            "hash": "0xd79a055e0a8a548ec4afef8a2de6e9dcc43871ee723c8da6141e391bd6c8737d"
+        },
+        "operations": [
+            {
+                "operation_identifier": {
+                    "index": 0
+                },
+                "type": "CREDIT",
+                "status": "SUCCESS",
+                "account": {
+                    "address": "SN3Z4MMRJ29FVZB38FGYPE94N1D8ZGF55R7YWH00A"
+                },
+                "amount": {
+                    "value": 13888888889,
+                    "currency": {
+                        "symbol": "STX",
+                        "decimals": 6
+                    }
+                }
+            },
+            {
+                "operation_identifier": {
+                    "index": 1
+                },
+                "type": "CREDIT",
+                "status": "SUCCESS",
+                "account": {
+                    "address": "SN3Z4MMRJ29FVZB38FGYPE94N1D8ZGF55R7YWH00A"
+                },
+                "amount": {
+                    "value": 13888888889,
+                    "currency": {
+                        "symbol": "STX",
+                        "decimals": 6
+                    }
+                }
+            }
+        ],
+        "metadata": {
+            "success": true,
+            "raw_tx": "0x80800000000400ee9369fb719c0ba43ddf4d94638a970b84775f470000000000000003000000000000000000001f6afe5b58ad253130c9ebb84d3155cda589bd59026e5408f4bf569ea659474f5f68a89a79dbc82aa0f3825b074d1549d7a5320fab2576e39037b4e377542782010200000000050000000000000000000000000000000000000000000000000000000000000000051aee9369fb719c0ba43ddf4d94638a970b84775f47",
+            "result": "(ok true)",
+            "sender": "ST3Q96TFVE6E0Q91XVX6S8RWAJW5R8XTZ8YEBM8RQ",
+            "nonce": 3,
+            "fee": 0,
+            "kind": {
+                "type": "Coinbase"
+            },
+            "receipt": {
+                "mutated_contracts_radius": [],
+                "mutated_assets_radius": [],
+                "contract_calls_stack": [],
+                "events": [
+                    {
+                        "type": "STXMintEvent",
+                        "data": {
+                            "recipient": "SN3Z4MMRJ29FVZB38FGYPE94N1D8ZGF55R7YWH00A",
+                            "amount": "13888888889"
+                        }
+                    },
+                    {
+                        "type": "STXMintEvent",
+                        "data": {
+                            "recipient": "SN3Z4MMRJ29FVZB38FGYPE94N1D8ZGF55R7YWH00A",
+                            "amount": "13888888889"
+                        }
+                    }
+                ]
+            },
+            "description": "coinbase",
+            "sponsor": null,
+            "execution_cost": {
+                "write_length": 0,
+                "write_count": 0,
+                "read_length": 0,
+                "read_count": 0,
+                "runtime": 0
+            },
+            "position": {
+                "index": 0
+            }
+        }
+    },
+    {
+        "transaction_identifier": {
+            "hash": "0xd90553e8736e31676e73a3315079c7ad62c361815d7964819996a8c3f57bee74"
+        },
+        "operations": [],
+        "metadata": {
+            "success": true,
+            "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce0000000000000000000000000000291800011a2ba5b7c8636c799f45d1d18d5992ab2d1bc43dfd29037ece61aa7ce7055f6e1dcbfd93fe0b1f86d80d2d1f5d781cb878de05187b66c2f62140f8a6757289e401010000000006020e746573742d66756e6374696f6e730000041c0a3b3b207469746c653a20746573742d66756e6374696f6e730a3b3b2076657273696f6e3a0a3b3b2073756d6d6172793a0a3b3b206465736372697074696f6e3a0a0a3b3b207472616974730a3b3b0a0a3b3b20746f6b656e20646566696e6974696f6e730a28646566696e652d6e6f6e2d66756e6769626c652d746f6b656e20646f632d6e66742075696e74290a28646566696e652d66756e6769626c652d746f6b656e20646f632d6674207531303030290a0a3b3b20636f6e7374616e74730a0a0a3b3b206461746120766172730a3b3b0a0a3b3b2064617461206d6170730a3b3b0a0a3b3b207075626c69632066756e6374696f6e730a28646566696e652d7075626c6963202868656c6c6f2d6d656d6f20286d656d6f2028627566662033342929290a202028626567696e200a20202020287072696e74206d656d6f290a20202020286f6b2074727565290a2020290a290a0a28646566696e652d7075626c696320286d696e742d66742028616d6f756e742075696e74292028726563697069656e74207072696e636970616c29290a20202866742d6d696e743f20646f632d667420616d6f756e7420726563697069656e74290a290a0a28646566696e652d7075626c696320286d696e742d6e6674202869642075696e74292028726563697069656e74207072696e636970616c29290a2020286e66742d6d696e743f20646f632d6e667420696420726563697069656e74290a290a0a28646566696e652d7075626c6963202873656e642d7374782028616d6f756e742075696e7429202873656e646572207072696e636970616c292028726563697069656e74207072696e636970616c29290a2020287374782d7472616e736665723f20616d6f756e742073656e64657220726563697069656e74290a290a0a28646566696e652d7075626c6963202873656e642d7374782d6d656d6f2028616d6f756e742075696e7429202873656e646572207072696e636970616c292028726563697069656e74207072696e636970616c2920286d656d6f2028627566662033342929290a2020287374782d7472616e736665722d6d656d6f3f20616d6f756e742073656e64657220726563697069656e74206d656d6f290a290a0a28646566696e652d7075626c6963202873656e642d7374782d656d6265646465642d6d656d6f290a2020287374782d7472616e736665722d6d656d6f3f20753130302074782d73656e6465722027535431534a3344544535444e375835345944483544363452334243423641324147325a5138595044352028756e777261702d70616e69632028746f2d636f6e73656e7375732d627566663f202248657265206c696573206d656d6f222929290a290a3b3b2072656164206f6e6c792066756e6374696f6e730a3b3b0a0a3b3b20707269766174652066756e6374696f6e730a3b3b0a0a",
+            "result": "(ok true)",
+            "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+            "nonce": 0,
+            "fee": 10520,
+            "kind": {
+                "type": "ContractDeployment",
+                "data": {
+                    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions",
+                    "code": "\n;; title: test-functions\n;; version:\n;; summary:\n;; description:\n\n;; traits\n;;\n\n;; token definitions\n(define-non-fungible-token doc-nft uint)\n(define-fungible-token doc-ft u1000)\n\n;; constants\n\n\n;; data vars\n;;\n\n;; data maps\n;;\n\n;; public functions\n(define-public (hello-memo (memo (buff 34)))\n  (begin \n    (print memo)\n    (ok true)\n  )\n)\n\n(define-public (mint-ft (amount uint) (recipient principal))\n  (ft-mint? doc-ft amount recipient)\n)\n\n(define-public (mint-nft (id uint) (recipient principal))\n  (nft-mint? doc-nft id recipient)\n)\n\n(define-public (send-stx (amount uint) (sender principal) (recipient principal))\n  (stx-transfer? amount sender recipient)\n)\n\n(define-public (send-stx-memo (amount uint) (sender principal) (recipient principal) (memo (buff 34)))\n  (stx-transfer-memo? amount sender recipient memo)\n)\n\n(define-public (send-stx-embedded-memo)\n  (stx-transfer-memo? u100 tx-sender 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 (unwrap-panic (to-consensus-buff? \"Here lies memo\")))\n)\n;; read only functions\n;;\n\n;; private functions\n;;\n\n"
+                }
+            },
+            "receipt": {
+                "mutated_contracts_radius": [],
+                "mutated_assets_radius": [],
+                "contract_calls_stack": [],
+                "events": []
+            },
+            "description": "deployed: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions",
+            "sponsor": null,
+            "execution_cost": {
+                "write_length": 1183,
+                "write_count": 5,
+                "read_length": 1,
+                "read_count": 1,
+                "runtime": 56613
+            },
+            "position": {
+                "index": 1
+            }
+        }
+    },
+    {
+        "transaction_identifier": {
+            "hash": "0xc7536d4061e61c8076752806521b7b12d0e41c87be063e548f1ff7487ddae920"
+        },
+        "operations": [],
+        "metadata": {
+            "success": true,
+            "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce000000000000000100000000000037a000009133fb4404bb267ad83f9a67e4be87294cb090793cfe7c09be8a5c06dff49cf55b09248bde63ae2e9bdeb95960b75338e49b729687b9a13ca7e331bb97facc8f010100000000060211746573742d66756e6374696f6e732d7634000005900a3b3b207469746c653a20746573742d66756e6374696f6e732d76340a3b3b2076657273696f6e3a0a3b3b2073756d6d6172793a0a3b3b206465736372697074696f6e3a0a0a3b3b207472616974730a3b3b0a0a3b3b20746f6b656e20646566696e6974696f6e730a28646566696e652d6e6f6e2d66756e6769626c652d746f6b656e20646f632d6e66742075696e74290a28646566696e652d66756e6769626c652d746f6b656e20646f632d6674207531303030290a0a3b3b20636f6e7374616e74730a0a0a3b3b206461746120766172730a3b3b0a0a3b3b2064617461206d6170730a3b3b0a0a3b3b207075626c69632066756e6374696f6e730a28646566696e652d7075626c6963202868656c6c6f2d6d656d6f20286d656d6f2028627566662033342929290a202028626567696e200a20202020287072696e74206d656d6f290a20202020286f6b2074727565290a2020290a290a0a28646566696e652d7075626c696320286d696e742d66742028616d6f756e742075696e74292028726563697069656e74207072696e636970616c29290a20202866742d6d696e743f20646f632d667420616d6f756e7420726563697069656e74290a290a0a28646566696e652d7075626c696320286d696e742d6e6674202869642075696e74292028726563697069656e74207072696e636970616c29290a2020286e66742d6d696e743f20646f632d6e667420696420726563697069656e74290a290a0a28646566696e652d7075626c6963202873656e642d7374782028616d6f756e742075696e7429202873656e646572207072696e636970616c292028726563697069656e74207072696e636970616c29290a2020287374782d7472616e736665723f20616d6f756e742073656e64657220726563697069656e74290a290a0a28646566696e652d7075626c6963202873656e642d7374782d6d656d6f2028616d6f756e742075696e7429202873656e646572207072696e636970616c292028726563697069656e74207072696e636970616c2920286d656d6f2028627566662033342929290a2020287374782d7472616e736665722d6d656d6f3f20616d6f756e742073656e64657220726563697069656e74206d656d6f290a290a0a28646566696e652d7075626c6963202873656e642d7374782d656d6265646465642d6d656d6f290a2020287374782d7472616e736665722d6d656d6f3f20753130302074782d73656e6465722027535431534a3344544535444e375835345944483544363452334243423641324147325a5138595044352028756e777261702d70616e69632028746f2d636f6e73656e7375732d627566663f202248657265206c696573206d656d6f222929290a290a0a28646566696e652d7075626c6963200a20202873656e642d7374782d6d616e792d726563697069656e7473200a2020202028616d6f756e742075696e74290a2020202028726563697069656e742d6f6e65207072696e636970616c290a2020202028726563697069656e742d74776f207072696e636970616c290a2020202028726563697069656e742d7468726565207072696e636970616c290a2020290a202028626567696e200a2020202028747279212020287374782d7472616e736665723f20616d6f756e742074782d73656e64657220726563697069656e742d6f6e6529290a2020202028747279212020287374782d7472616e736665723f20616d6f756e742074782d73656e64657220726563697069656e742d74776f29290a2020202028747279212020287374782d7472616e736665723f20616d6f756e742074782d73656e64657220726563697069656e742d746872656529290a20202020286f6b2074727565290a2020290a290a3b3b2072656164206f6e6c792066756e6374696f6e730a3b3b0a0a3b3b20707269766174652066756e6374696f6e730a3b3b0a0a",
+            "result": "(ok true)",
+            "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+            "nonce": 1,
+            "fee": 14240,
+            "kind": {
+                "type": "ContractDeployment",
+                "data": {
+                    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4",
+                    "code": "\n;; title: test-functions-v4\n;; version:\n;; summary:\n;; description:\n\n;; traits\n;;\n\n;; token definitions\n(define-non-fungible-token doc-nft uint)\n(define-fungible-token doc-ft u1000)\n\n;; constants\n\n\n;; data vars\n;;\n\n;; data maps\n;;\n\n;; public functions\n(define-public (hello-memo (memo (buff 34)))\n  (begin \n    (print memo)\n    (ok true)\n  )\n)\n\n(define-public (mint-ft (amount uint) (recipient principal))\n  (ft-mint? doc-ft amount recipient)\n)\n\n(define-public (mint-nft (id uint) (recipient principal))\n  (nft-mint? doc-nft id recipient)\n)\n\n(define-public (send-stx (amount uint) (sender principal) (recipient principal))\n  (stx-transfer? amount sender recipient)\n)\n\n(define-public (send-stx-memo (amount uint) (sender principal) (recipient principal) (memo (buff 34)))\n  (stx-transfer-memo? amount sender recipient memo)\n)\n\n(define-public (send-stx-embedded-memo)\n  (stx-transfer-memo? u100 tx-sender 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 (unwrap-panic (to-consensus-buff? \"Here lies memo\")))\n)\n\n(define-public \n  (send-stx-many-recipients \n    (amount uint)\n    (recipient-one principal)\n    (recipient-two principal)\n    (recipient-three principal)\n  )\n  (begin \n    (try!  (stx-transfer? amount tx-sender recipient-one))\n    (try!  (stx-transfer? amount tx-sender recipient-two))\n    (try!  (stx-transfer? amount tx-sender recipient-three))\n    (ok true)\n  )\n)\n;; read only functions\n;;\n\n;; private functions\n;;\n\n"
+                }
+            },
+            "receipt": {
+                "mutated_contracts_radius": [],
+                "mutated_assets_radius": [],
+                "contract_calls_stack": [],
+                "events": []
+            },
+            "description": "deployed: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4",
+            "sponsor": null,
+            "execution_cost": {
+                "write_length": 1597,
+                "write_count": 5,
+                "read_length": 1,
+                "read_count": 1,
+                "runtime": 73627
+            },
+            "position": {
+                "index": 2
+            }
+        }
+    }
+]
+```

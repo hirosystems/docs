@@ -1,0 +1,92 @@
+---
+title: FT Event Transactions
+description: Transactions array for ft event scope.
+toc: false
+---
+
+import { InlineCode } from "@/components/inline-code";
+
+```json title="FT-Event transactions"
+"transactions": [
+    {
+        "transaction_identifier": {
+            "hash": "0xcd9ba28d19d3c27273ddc4a8384d55f699ebf1a5ffbfa1f4234ecdc88a5f74bb"
+        },
+        "operations": [
+            {
+                "operation_identifier": {
+                    "index": 0
+                },
+                "type": "CREDIT",
+                "status": "SUCCESS",
+                "account": {
+                    "address": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                },
+                "amount": {
+                    "value": 100,
+                    "currency": {
+                        "symbol": "TOKEN",
+                        "decimals": 6,
+                        "metadata": {
+                            "asset_class_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4::doc-ft",
+                            "asset_identifier": null,
+                            "standard": "SIP10"
+                        }
+                    }
+                }
+            }
+        ],
+        "metadata": {
+            "success": true,
+            "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce000000000000000300000000000000ce00005da19bdefdda9c31e310184bfba15f51a2f7a9aed4f67ace9fb4c8f700638f3f44a76683349483fc066dde7ce6dc42fe59ed93ac71e634b63b94bdb41b3f1963030200000000021a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce11746573742d66756e6374696f6e732d7634076d696e742d6674000000020100000000000000000000000000000064051a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce",
+            "result": "(ok true)",
+            "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+            "nonce": 3,
+            "fee": 206,
+            "kind": {
+                "type": "ContractCall",
+                "data": {
+                    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4",
+                    "method": "mint-ft",
+                    "args": [
+                        "u100",
+                        "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                    ]
+                }
+            },
+            "receipt": {
+                "mutated_contracts_radius": [
+                    "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4"
+                ],
+                "mutated_assets_radius": [
+                    "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4::doc-ft"
+                ],
+                "contract_calls_stack": [],
+                "events": [
+                    {
+                        "type": "FTMintEvent",
+                        "data": {
+                            "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4::doc-ft",
+                            "recipient": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+                            "amount": "100"
+                        }
+                    }
+                ]
+            },
+            "description": "invoked: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4::mint-ft(u100, ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)",
+            "sponsor": null,
+            "execution_cost": {
+                "write_length": 1,
+                "write_count": 2,
+                "read_length": 1453,
+                "read_count": 5,
+                "runtime": 3753
+            },
+            "position": {
+                "index": 1
+            }
+        }
+    }
+]
+
+```

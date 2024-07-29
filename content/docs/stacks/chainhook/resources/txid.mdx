@@ -1,0 +1,222 @@
+---
+title: Txid Transactions
+description: Transactions array for txid scope.
+toc: false
+---
+
+import { InlineCode } from "@/components/inline-code";
+
+```json title="Txid transactions"
+"transactions": [
+	{
+		"metadata": {
+			"description": "invoked: SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant::claim(SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E)",
+			"execution_cost": {
+				"read_count": 34,
+				"read_length": 14973,
+				"runtime": 123764,
+				"write_count": 5,
+				"write_length": 115
+			},
+			"fee": 23690,
+			"kind": {
+				"data": {
+					"args": [
+						"SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E"
+					],
+					"contract_identifier": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant",
+					"method": "claim"
+				},
+				"type": "ContractCall"
+			},
+			"nonce": 114,
+			"position": {
+				"index": 69
+			},
+			"raw_tx": "0x000000000104006575604c90fce36836fe64b6df1cb32a9b0206f100000000000000720000000000005c8a0001f699b935476c0d3a74b3372e7229745a05b12de9e6503df112804681aab4b04414a9050a7aa09e35ae33be1ec183b4f968744e4ea390de425c70a25fca056a0a030200000002000316402da2c079e5d31d58b9cfc7286d1b1eb2f7834e0e74726561737572792d6772616e7401000000000064e8a2010316402da2c079e5d31d58b9cfc7286d1b1eb2f7834e0e74726561737572792d6772616e7416402da2c079e5d31d58b9cfc7286d1b1eb2f7834e0a746f6b656e2d616c657804616c6578030000000f230dd80b0216402da2c079e5d31d58b9cfc7286d1b1eb2f7834e0e74726561737572792d6772616e7405636c61696d0000000105166575604c90fce36836fe64b6df1cb32a9b0206f1",
+			"receipt": {
+				"contract_calls_stack": [],
+				"events": [
+					{
+						"data": {
+							"contract_identifier": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant",
+							"topic": "print",
+							"value": {
+								"notification": "claim-stx",
+								"payload": {
+									"claimed": 661315449,
+									"participant": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E",
+									"updated-details": {
+										"alex": 583758420420,
+										"stx": 0
+									}
+								}
+							}
+						},
+						"position": {
+							"index": 197
+						},
+						"type": "SmartContractEvent"
+					},
+					{
+						"data": {
+							"contract_identifier": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant",
+							"topic": "print",
+							"value": {
+								"claimed-so-far": 65116861850,
+								"notification": "claim-alex",
+								"payload": {
+									"claimed": 65116861850,
+									"participant": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E"
+								},
+								"remaining": 518641558570
+							}
+						},
+						"position": {
+							"index": 199
+						},
+						"type": "SmartContractEvent"
+					},
+					{
+						"data": {
+							"amount": "6613154",
+							"recipient": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E",
+							"sender": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant"
+						},
+						"position": {
+							"index": 196
+						},
+						"type": "STXTransferEvent"
+					},
+					{
+						"data": {
+							"amount": "65116861850",
+							"asset_identifier": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.token-alex::alex",
+							"recipient": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E",
+							"sender": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant"
+						},
+						"position": {
+							"index": 198
+						},
+						"type": "FTTransferEvent"
+					}
+				],
+				"mutated_assets_radius": [
+					"SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.token-alex::alex"
+				],
+				"mutated_contracts_radius": [
+					"SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant",
+					"SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.token-alex"
+				]
+			},
+			"result": "(ok true)",
+			"sender": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E",
+			"sponsor": null,
+			"success": true
+		},
+		"operations": [
+			{
+				"account": {
+					"address": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant"
+				},
+				"amount": {
+					"currency": {
+						"decimals": 6,
+						"symbol": "STX"
+					},
+					"value": 6613154
+				},
+				"operation_identifier": {
+					"index": 0
+				},
+				"related_operations": [
+					{
+						"index": 1
+					}
+				],
+				"status": "SUCCESS",
+				"type": "DEBIT"
+			},
+			{
+				"account": {
+					"address": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E"
+				},
+				"amount": {
+					"currency": {
+						"decimals": 6,
+						"symbol": "STX"
+					},
+					"value": 6613154
+				},
+				"operation_identifier": {
+					"index": 1
+				},
+				"related_operations": [
+					{
+						"index": 0
+					}
+				],
+				"status": "SUCCESS",
+				"type": "CREDIT"
+			},
+			{
+				"account": {
+					"address": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.treasury-grant"
+				},
+				"amount": {
+					"currency": {
+						"decimals": 6,
+						"metadata": {
+							"asset_class_identifier": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.token-alex::alex",
+							"asset_identifier": null,
+							"standard": "SIP10"
+						},
+						"symbol": "TOKEN"
+					},
+					"value": 65116861850
+				},
+				"operation_identifier": {
+					"index": 2
+				},
+				"related_operations": [
+					{
+						"index": 3
+					}
+				],
+				"status": "SUCCESS",
+				"type": "DEBIT"
+			},
+			{
+				"account": {
+					"address": "SP1JQAR2CJ3YE6T1PZSJBDQRWPCN9P0G6Y59XGR5E"
+				},
+				"amount": {
+					"currency": {
+						"decimals": 6,
+						"metadata": {
+							"asset_class_identifier": "SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.token-alex::alex",
+							"asset_identifier": null,
+							"standard": "SIP10"
+						},
+						"symbol": "TOKEN"
+					},
+					"value": 65116861850
+				},
+				"operation_identifier": {
+					"index": 3
+				},
+				"related_operations": [
+					{
+						"index": 2
+					}
+				],
+				"status": "SUCCESS",
+				"type": "CREDIT"
+			}
+		],
+		"transaction_identifier": {
+			"hash": "0x26ae8c1cdb33c1f207c305af886c0ee2b1ffb07d421818181fc99323f6282a0c"
+		}
+	}
+]
+```

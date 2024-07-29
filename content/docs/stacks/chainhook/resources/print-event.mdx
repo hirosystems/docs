@@ -1,0 +1,63 @@
+---
+title: Print Event Transactions
+description: Transactions array for print event scope.
+toc: false
+---
+
+import { InlineCode } from "@/components/inline-code";
+
+```json title="Print-Event transactions"
+"transactions": [
+    {
+        "transaction_identifier": {
+            "hash": "0x3c74f92418ee6e942fefd5ed03f06b032ec9ab4b88df52033c55f0ae405a21de"
+        },
+        "operations": [],
+        "metadata": {
+            "success": true,
+            "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce000000000000000200000000000000ab00004ab4bcb4199c6f53a378025c6d04ad2e38c97ae8ca42558b043ec63deadd6d8548ff4540a53c1fac1fe1b55702912bb729ecab6bb37223f6da7bb94f6e7ee59e030200000000021a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce11746573742d66756e6374696f6e732d76340b68656c6c6f2d776f726c6400000000",
+            "result": "(ok true)",
+            "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+            "nonce": 2,
+            "fee": 171,
+            "kind": {
+                "type": "ContractCall",
+                "data": {
+                    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4",
+                    "method": "hello-world",
+                    "args": []
+                }
+            },
+            "receipt": {
+                "mutated_contracts_radius": [
+                    "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4"
+                ],
+                "mutated_assets_radius": [],
+                "contract_calls_stack": [],
+                "events": [
+                    {
+                        "type": "SmartContractEvent",
+                        "data": {
+                            "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4",
+                            "topic": "print",
+                            "value": "Hello World"
+                        }
+                    }
+                ]
+            },
+            "description": "invoked: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.test-functions-v4::hello-world()",
+            "sponsor": null,
+            "execution_cost": {
+                "write_length": 0,
+                "write_count": 0,
+                "read_length": 1511,
+                "read_count": 3,
+                "runtime": 3676
+            },
+            "position": {
+                "index": 1
+            }
+        }
+    }
+]
+```
