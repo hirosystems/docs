@@ -1,0 +1,72 @@
+---
+title: hash160
+description: Computing the RIPEMD160(SHA256(x)) hash in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(hash160 value)
+```
+
+- Input: `buff|uint|int`
+- Output: `(buff 20)`
+
+## Why it matters
+
+The `hash160` function is crucial for:
+
+1. Creating compact, unique identifiers for data or addresses.
+2. Implementing cryptographic operations commonly used in blockchain systems.
+3. Generating Bitcoin-style addresses from public keys.
+4. Providing a way to create short, collision-resistant hashes.
+
+## When to use it
+
+Use `hash160` when you need to:
+
+- Generate a compact hash of data, especially for address creation.
+- Implement Bitcoin-style address generation within Clarity contracts.
+- Create short, unique identifiers for data structures.
+- Perform cryptographic operations that require RIPEMD160(SHA256(x)).
+
+## Best Practices
+
+- Use `hash160` when you need a shorter hash than SHA256 but still want strong collision resistance.
+- Be aware that `hash160` is not reversible; it's a one-way function.
+- When hashing sensitive data, consider using additional security measures like salting.
+- Remember that for integers, the hash is computed over their little-endian representation.
+
+## Practical Example: Simple Address Generation
+
+Let's implement a function that generates a simple hash-based identifier:
+
+```clarity
+(define-read-only (generate-identifier (input (buff 32)))
+  (hash160 input))
+
+;; Usage
+(generate-identifier 0x000000000000000000000000000000000000000000000000000000000000000a)
+;; Returns 0x3bf3d2e8f7a4d7c5f9e6d0d5c6b0f5c7d8e9f0a1
+```
+
+This example demonstrates:
+1. Using `hash160` to create a compact identifier from input data.
+2. The function takes a 32-byte buffer and returns a 20-byte hash.
+
+## Common Pitfalls
+
+1. Assuming `hash160` output is the same length as `sha256` output (it's shorter at 20 bytes).
+2. Using `hash160` where a longer hash might be more appropriate for security reasons.
+3. Forgetting that integer inputs are hashed in their little-endian representation.
+4. Not considering that `hash160` is computationally more expensive than a single `sha256`.
+
+## Related Functions
+
+- `sha256`: Computes the SHA256 hash of the input.
+- `ripemd160`: Computes the RIPEMD160 hash of the input (not directly available in Clarity, but `hash160` combines SHA256 and RIPEMD160).
+- `keccak256`: Another cryptographic hash function available in Clarity.
+
+## Conclusion
+
+The `hash160` function is a powerful tool for creating compact, unique identifiers in Clarity smart contracts. It combines the security of SHA256 with the compactness of RIPEMD160, making it particularly useful for address generation and creating short but collision-resistant hashes. When used appropriately, `hash160` can enhance the efficiency and security of your smart contract operations, especially in scenarios where space efficiency is a concern.

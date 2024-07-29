@@ -1,0 +1,79 @@
+---
+title: err
+description: Constructing error responses in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(err value)
+```
+
+- Input: `value` - Any type A
+- Output: `(response A B)` where A is the type of the input value
+
+## Why it matters
+
+The `err` function is crucial for:
+
+1. Creating standardized error responses in public functions.
+2. Indicating that a function execution has failed.
+3. Providing meaningful error information to callers.
+4. Triggering automatic rollback of any database changes during function execution.
+
+## When to use it
+
+Use `err` when you need to:
+
+- Return an error state from a public function.
+- Indicate that a condition or operation has failed.
+- Provide specific error information or codes to the caller.
+- Ensure that any state changes are reverted due to a failure condition.
+
+## Best Practices
+
+- Use descriptive error values that help diagnose the issue.
+- Consider using standardized error codes across your contract.
+- Pair `err` with `ok` to create comprehensive response handling.
+- Remember that returning an `err` will cause all state changes in the current function to be rolled back.
+
+## Practical Example: Token Transfer with Error Handling
+
+Let's implement a simple token transfer function with error handling:
+
+```clarity
+(define-map balances principal uint)
+
+(define-public (transfer (amount uint) (recipient principal))
+  (let ((sender-balance (default-to u0 (map-get? balances tx-sender))))
+    (if (>= sender-balance amount)
+        (begin
+          (map-set balances tx-sender (- sender-balance amount))
+          (map-set balances recipient (+ (default-to u0 (map-get? balances recipient)) amount))
+          (ok true))
+        (err u1))))  ;; Error code 1 for insufficient balance
+
+;; Usage
+(transfer u100 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns (err u1) if balance is insufficient
+```
+
+This example demonstrates:
+1. Using `err` to return an error when the sender has insufficient balance.
+2. Pairing `err` with `ok` to handle both success and failure cases.
+3. Using a simple error code (u1) to indicate the type of error.
+
+## Common Pitfalls
+
+1. Forgetting that returning an `err` will revert all state changes in the current function.
+2. Using non-descriptive error values that make debugging difficult.
+3. Inconsistent error handling across different functions in the contract.
+
+## Related Functions
+
+- `ok`: Used to construct successful responses in public functions.
+- `asserts!`: Often used with `err` for condition checking and error reporting.
+- `try!`: Used to propagate errors up the call stack.
+
+## Conclusion
+
+The `err` function is a fundamental tool for error handling and response construction in Clarity smart contracts. By providing a standardized way to indicate and communicate errors, it enables robust and predictable contract behavior. When used effectively in combination with `ok` and other error-handling mechanisms, `err` contributes to creating more reliable and maintainable smart contracts.

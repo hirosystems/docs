@@ -1,0 +1,80 @@
+---
+title: define-public
+description: Defining public functions in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(define-public (function-name (arg-name-0 arg-type-0) ...) function-body)
+```
+
+- Input: 
+  - `function-name`: The name of the public function
+  - `arg-name-N`: The name of each argument
+  - `arg-type-N`: The type of each argument
+  - `function-body`: The code to be executed when the function is called
+- Output: A ResponseType (using `ok` or `err`)
+
+## Why it matters
+
+The `define-public` function is crucial for:
+
+1. Creating functions that can be called from outside the contract.
+2. Enabling interaction with the contract through transactions.
+3. Implementing the main entry points for contract functionality.
+4. Allowing other contracts to call this contract's functions.
+
+## When to use it
+
+Use `define-public` when you need to:
+
+- Create functions that users can directly interact with.
+- Implement core contract functionality that should be accessible externally.
+- Define functions that other contracts can call via `contract-call?`.
+- Create functions that modify contract state and need to be invoked through transactions.
+
+## Best Practices
+
+- Always return a response type (`(response T E)`) from public functions.
+- Use descriptive names for public functions to clearly indicate their purpose.
+- Implement proper access control for sensitive operations.
+- Handle potential errors and edge cases within the function.
+- Consider gas costs when designing public functions.
+
+## Practical Example: Token Transfer Function
+
+Let's implement a public function for transferring tokens:
+
+```clarity
+(define-public (transfer (amount uint) (recipient principal))
+  (let ((sender tx-sender))
+    (if (>= (get-balance sender) amount)
+        (begin
+          (as-contract (transfer-tokens amount sender recipient))
+          (ok true))
+        (err u1))))
+```
+
+This example demonstrates:
+1. Using `define-public` to create a function that can be called externally.
+2. Taking parameters for the amount and recipient of the transfer.
+3. Implementing basic balance checking logic.
+4. Returning a response type to indicate success or failure.
+
+## Common Pitfalls
+
+1. Forgetting to return a response type, which will cause a contract to be invalid.
+2. Not implementing proper access controls, potentially allowing unauthorized actions.
+3. Overlooking potential error conditions or edge cases.
+4. Creating functions that are too complex or gas-intensive for practical use.
+
+## Related Functions
+
+- `define-private`: Used to define private functions that can only be called within the contract.
+- `define-read-only`: Used to define public read-only functions that don't modify contract state.
+- `contract-call?`: Used by other contracts to call public functions defined with `define-public`.
+
+## Conclusion
+
+The `define-public` function is a fundamental building block for creating interactive and composable smart contracts in Clarity. By defining public functions, developers can create contracts that users and other contracts can interact with, enabling complex decentralized applications. However, it's crucial to design these functions with security, efficiency, and usability in mind.

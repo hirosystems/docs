@@ -1,0 +1,82 @@
+---
+title: default-to
+description: Providing a default value for optional types in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(default-to default-value option-value)
+```
+
+- Input: 
+  - `default-value`: A value of type A
+  - `option-value`: An optional value of type (optional A)
+- Output: A value of type A
+
+## Why it matters
+
+The `default-to` function is crucial for:
+
+1. Safely handling optional values in smart contracts.
+2. Providing fallback values when dealing with potentially missing data.
+3. Simplifying code that works with map lookups or other operations that may return `none`.
+4. Improving readability by reducing nested conditionals for optional handling.
+
+## When to use it
+
+Use the `default-to` function when you need to:
+
+- Provide a default value for a map lookup that might return `none`.
+- Handle optional function parameters or return values.
+- Set a fallback value for potentially missing data in your contract logic.
+- Simplify error handling for operations that might not return a value.
+
+## Best Practices
+
+- Choose meaningful default values that make sense in the context of your contract logic.
+- Use `default-to` to make your code more concise and readable when dealing with optionals.
+- Consider the implications of using the default value in your contract's logic.
+- Combine `default-to` with other Clarity functions like `map-get?` for efficient data handling.
+
+## Practical Example: User Profile Lookup
+
+Let's implement a function that retrieves a user's profile information with default values:
+
+```clarity
+(define-map user-profiles principal { name: (string-ascii 50), age: uint })
+
+(define-read-only (get-user-profile (user principal))
+  (let ((profile (default-to { name: "", age: u0 } (map-get? user-profiles user))))
+    {
+      name: (default-to "Anonymous" (get name profile)),
+      age: (default-to u0 (get age profile))
+    }
+  ))
+
+;; Usage
+(map-set user-profiles tx-sender { name: "Alice", age: u30 })
+(get-user-profile tx-sender) ;; Returns { name: "Alice", age: u30 }
+(get-user-profile 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns { name: "Anonymous", age: u0 }
+```
+
+This example demonstrates:
+1. Using `default-to` with `map-get?` to handle potentially missing user profiles.
+2. Providing default values for individual fields within the profile.
+3. Creating a safe way to retrieve user information without explicit null checks.
+
+## Common Pitfalls
+
+1. Forgetting that `default-to` only works with optional types, not with general error handling.
+2. Using default values that might be indistinguishable from valid data, leading to confusion.
+3. Overusing `default-to` where explicit error handling might be more appropriate.
+
+## Related Functions
+
+- `map-get?`: Often used in combination with `default-to` for safe map lookups.
+- `get`: Can return optional values that are then handled by `default-to`.
+- `some`: Used to create optional values that can be handled by `default-to`.
+
+## Conclusion
+
+The `default-to` function is a powerful tool for handling optional values in Clarity smart contracts. By providing a clean way to specify fallback values, it enhances code readability and safety when dealing with potentially missing data. When used judiciously, `default-to` can significantly simplify your contract logic and make it more robust against unexpected inputs or states.
