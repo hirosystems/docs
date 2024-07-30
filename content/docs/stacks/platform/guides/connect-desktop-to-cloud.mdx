@@ -92,21 +92,25 @@ Once the extension is installed, you can connect to your remote server by follow
 
 1. Open VS Code on your local machine.
 
-2. Type "Remote-SSH: Connect to Host..." and select it from the dropdown list.
+2. Open your user `settings.json` and add the following configuration:
 
-3. Click on "Add New SSH Host...".
+```json
+"remote.SSH.serverInstallPath": {
+  "<your-workspace-url>": "/home/workspace/projects/",
+}
+```
 
-4. Enter your SSH connection command, for example `ssh <your-workspace-url>`, replacing `<your-workspace-url>` with your workspace url.
+3. Open the command palette, select "Remote-SSH: Connect to Host", then paste your `<your-workspace-url>` and hit enter.
 
-5. Select the SSH configuration file to update. This is usually `~/.ssh/config`.
+4. A new VS Code window will open, connected to your remote server.
 
-6. Once the configuration file is updated, you can click on "Connect to Host" again, and you should see your new SSH host. Click on it to connect.
+5. To view all your Platform hosted projects, click "Open Folder" in the Explorer view and navigate to `/home/workspace/projects/`.
 
-7. A new VS Code window will open, connected to your remote server. You can now open folders and files on the server and work on them as if they were local.
+6. You can now open folders and files on the server and work on them as if they were local.
 
 Remember to replace `<your-workspace-url>` with your actual workspace url.
 
-That's it! You've now set up your local editor for Hiro Platform. Happy coding!
+That's it! You've now set up your local editor for Hiro Platform.
 
 ## Connecting via Command Line Interface (CLI)
 
