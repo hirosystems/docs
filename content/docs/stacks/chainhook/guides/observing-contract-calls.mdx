@@ -1,53 +1,54 @@
 ---
 title: Observing Contract Calls with Chainhook
 description: Learn how to use Chainhook to observe contract calls on the Stacks blockchain
-toc: false
 ---
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 
 import SimpleVote from "../resources/simple-vote.mdx";
 
-The `contract_call` predicate scope is designed to allow you to use Chainhook to observe direct functions calls within a smart contract. The payload returned by Chainhook will contain transaction data describing the on-chain events that this function elicits. By designing your smart contract functions in conjunction with your data source and use case, Chainhook and `contract_call` can become an excellent tool for monitoring interactions with critical contract functionality.
+The `contract_call` predicate scope is designed to allow you to use Chainhook to observe direct functions calls within a smart contract. The payload returned by Chainhook will contain transaction data describing the on-chain events that this function elicits.
+
+By designing your smart contract functions in conjunction with your data source and use case, Chainhook and `contract_call` can become an excellent tool for monitoring interactions with critical contract functionality.
+
+<Callout type="warn" title="Requirements">
+  To use Chainhook you can either install it
+  [directly](/stacks/chainhook/installation) or use [Hiro
+  Platform](https://platform.hiro.so/). If you are installing Chainhook, this
+  [quickstart](/stacks/chainhook/quickstart) will walk you through setting up a
+  predicate file and using it to scan for events.
+</Callout>
 
 In this guide, you will learn how to:
 
-1. Install Chainhook locally or create a Chainhook using Hiro's Platform.
-2. Construct a Stacks blockchain predicate and scope to identify a contract call.
-3. Use Chainhook to evaluate your predicate's scope and deliver its payload.
-4. Use a Clarity function to return specific contract data.
-5. Find data related to the contract call within the Chainhook payload.
-
-For this guide we will be using the `contract_call` scope to observe the `cast-vote` function within a simple voting contract.
-
-<Accordions>
-  <Accordion title="simple-vote-v0.clar">
-    <SimpleVote />
-  </Accordion>
-</Accordions>
-
-<Callout type="info">
-  This contract has been deployed to the Stacks [testnet
-  network](https://explorer.hiro.so/txid/0x312a3c559af0f75381a9eb4540912c310d74682ed3036207ec890ad8cd1aebe6?chain=testnet)
-  under the name `STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0`.
-</Callout>
+1. [Construct a Stacks blockchain Chainhook predicate for a contract call scope](#creating-the-predicate).
+2. [Run your Chainhook predicate to generate a payload](#running-the-predicate).
+3. [Use a Clarity function to return specific contract data](#return-contract-data-with-the-clarity-function).
+4. [Find data related to the contract call within the Chainhook payload](#chainhook-payload).
 
 <Steps>
 <Step>
 
-### Installation
+## Creating the predicate
 
-To use Chainhook you can either install it [directly](https://docs.hiro.so/stacks/chainhook/installation) or use Hiro's [Platform](https://platform.hiro.so/). If you are installing Chainhook, this [quickstart](https://docs.hiro.so/stacks/chainhook/quickstart) will walk you through setting up a predicate file and use it to scan for events.
+The `predicate` json object is the primary tool for interacting with the Chainhook data indexer. Chainhook will evaluate our `predicate` to determine what blockchain, network and scope it will use to observe matching transactions.
 
-</Step>
-<Step>
+Run the below command to generate a template to help you generate your Stacks predicate.
 
-### Predicate Overview
+```console
+chainhook predicates new contract-call-chainhook.json --stacks
+```
 
-The `predicate` json object is the primary tool for interacting with the Chainhook data indexer. Chainhook will evaluate our `predicate` to determine what blockchain, network and scope it will use to observe matching transactions. You can view the full predicate example we will be using in this guide below.
+<Callout type="info" title="Note">
+  Alternatively, [Hiro Platform](https://platform.hiro.so/) has an excellent UI
+  to help you to create a `predicate` using a form builder or upload a json file
+  containing your `predicate`.
+</Callout>
+
+You can view the full predicate example will be using in this guide below.
 
 <Accordions>
-  <Accordion title="Full contract_call predicate">
+  <Accordion title="contract-call-chainhook.json">
 
 ```json
 {
@@ -79,30 +80,12 @@ The `predicate` json object is the primary tool for interacting with the Chainho
   </Accordion>
 </Accordions>
 
----
-
-### Creating the Predicate
-
-If you have installed Chainhook, you can run the below command to generate a template to help you generate your Stacks predicate.
-
-```console
-chainhook predicates new contract-call-chainhook.json --stacks
-```
-
-<Callout type="info">
-  Alternatively, [Hiro Platform](https://platform.hiro.so/) has an excellent UI
-  to help you to create a `predicate` using a form builder or upload a json file
-  containing your `predicate`.
-</Callout>
-
----
-
-### Configuring the Predicate
+### Configuring the predicate
 
 To construct the `predicate`, we will specify the Stacks test network `testnet` and the the start_block `21443` (block containing the successful contract deployment).
 
-```json title="predicate configuration"
-// [!code word:network]
+```json title="contract-call-chainhook.json"
+// [!code word:networks]
 // [!code word:start_block]
 {
   "chain": "stacks",
@@ -120,22 +103,20 @@ To construct the `predicate`, we will specify the Stacks test network `testnet` 
 }
 ```
 
-<Callout type="info">
+<Callout type="info" title="Note">
   If you do not want to specify certain configurable like `end-block` and
   `expire_after_occurence`, simply leave these elements out of your `predicate`.
   For more details on the other configurations, as well as the `if_this` and
   `then_that` specifications discussed below, check out [Stacks
-  predicates](https://docs.hiro.so/stacks/chainhook/concepts/stacks-predicates).
+  predicates](/stacks/chainhook/concepts/stacks-predicates).
 </Callout>
 
----
-
-### Defining the Scope with the if_this Specification
+### Defining the scope with the if_this specification
 
 Next, we will need to define the scope of the `predicate` within the `if_this` specification. The `contract_call` scope within our predicate allows Chainhook to observe blockchain data when the specified method is directly called from its contract. In this scope, we identify the contract that contains the method we want to observe using `contract_identifier` and the name of the function in `method`.
 
-```json title="if_this"
-// [!code word:contract_call]
+```json title="contract-call-chainhook.json"
+// [!code word:if_this]
 {
   "if_this": {
     "scope": "contract_call",
@@ -145,36 +126,32 @@ Next, we will need to define the scope of the `predicate` within the `if_this` s
 }
 ```
 
-<Callout type="warn">
+<Callout type="warn" title="Warning">
   The function defined in the `method` must be directly called for Chainhook to
   observe events. Calling the function from another contract or from within a
   different function on the same contract will not generate a `payload`.
-</Callout>
 
-```clarity title="simple-vote.clar"
+```clarity
 (define-public (call-cast-vote)
   (cast-vote)
 )
 ```
 
-<Callout type="info">
-  You can view other `scope` definitions on the
-  [Scopes](https://docs.hiro.so/stacks/chainhook/references/scopes) reference
-  page.
 </Callout>
 
-</Step>
-<Step>
+<Callout type="info">
+  You can view other `scope` definitions on the
+  [Scopes](/stacks/chainhook/references/scopes) reference page.
+</Callout>
 
-### Deliver the Payload with the then_that Specification
+### Defining the payload destination with the then_that specification
 
 Finally, we will define how Chainhook should deliver its data payload when it is triggered by our `predicate` within the `then_that` specification.
 
 When using `file_append`, we specify the `path` we want Chainhook to write its data payload to.
 
-```json title="then_that file_append"
-// [!code word:file_append]
-// [!code word:path]
+```json title="contract-call-chainhook.json"
+// [!code word:then_that]
 {
   "then_that": {
     "file_append": {
@@ -190,7 +167,8 @@ When using `file_append`, we specify the `path` we want Chainhook to write its d
 
 Chainhook can also post its payload to an endpoint using `http_post`, allowing us to specify the endpoint's `url` and `authorization_header`.
 
-```json title="then_that http_post"
+```json title="contract-call-chainhook.json"
+// [!code word:then_that]
 "then_that": {
         "http_post": {
           "url": "https://webhook.site/abc123456-789e-0fgh-1ijk-23lmno456789",
@@ -199,15 +177,16 @@ Chainhook can also post its payload to an endpoint using `http_post`, allowing u
       }
 ```
 
-<Callout>
+<Callout type="info" title="Note">
   Chainhook requires `https` to post to your endpoint. You can use a service
   like [LocalTunnel](https://github.com/localtunnel/localtunnel) to test locally
   or a site like [WebhookSite](https://webhook.site).
 </Callout>
 
----
+</Step>
+<Step>
 
-### Running the Predicate
+## Running the predicate
 
 Now that we have built our Stacks blockchain `predicate`, we are ready to use Chainhook to scan for blocks that match our `contract_call` scope and view the payload it returns. Whenever this method is directly called within a transaction, Chainhook will observe this event and generate a block level payload with transaction data.
 
@@ -225,11 +204,11 @@ chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
 </Step>
 <Step>
 
-### Return Contract Data with the Clarity Function
+## Return contract data with the clarity function
 
 Before we begin looking at our `payload`, let's review the `cast-vote` Clarity function we have specificed in our predicate. This function takes the address calling it, records a vote and stores the voting address. It also `print` to log data that will be useful for building a DApp around the on-chain events we want track. As we review the `payload`, this is the data we will look for.
 
-```clarity title="cast-vote function"
+```clarity title="simple-vote-v0.clar"
 // [!code word:cast-vote]
 (define-public (cast-vote)
   (begin
@@ -254,37 +233,51 @@ Before we begin looking at our `payload`, let's review the `cast-vote` Clarity f
 )
 ```
 
+<Accordions>
+  <Accordion title="simple-vote-v0.clar">
+    <SimpleVote />
+  </Accordion>
+</Accordions>
+
+<Callout type="info" title="Note">
+  This contract has been deployed to the Stacks [testnet
+  network](https://explorer.hiro.so/txid/0x312a3c559af0f75381a9eb4540912c310d74682ed3036207ec890ad8cd1aebe6?chain=testnet)
+  under the name `STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0`.
+</Callout>
+
 </Step>
 <Step>
 
-### Chainhook Payload
+## Chainhook payload
 
 <Callout type="info">
-  You can view the full [Chainhook
-  payload](https://docs.hiro.so/contract-call-payload.json) here.
+  You can view the full
+  [contract-call-payload.json](/contract-call-payload.json) here.
 </Callout>
 
 When triggered by our predicate, the `payload` returned by Chainhook is a standarized, block level observation in json format.
-Within the `apply` arrays element, the `block_identifer` object gives us the `block height` for the observed block.
+Within the `apply` arrays element, the `block_identifer` object gives us the `index` for the observed block height.
 
-```json title="block_identifer object"
+```json title="contract-call-payload.json"
+// [!code word:block_identifier]
+// [!code word:index]
   "block_identifier": {
         "hash": "0x4d88015a6df9ec4f6df875941d87337ce64f8d51608563f80b6e27adeb327e4d",
         "index": 21544
       }
 ```
 
-<Callout type="warn">
+<Callout type="warn" title="Warning">
   The hash returned in the `block_identifer` object is not that block hash you
-  would see in [Hiro's Explorer](https://explorer.hiro.so/?chain=testnet), but
+  would see in [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
   `index_block_hash` returned from the Stacks API [get
-  block](https://docs.hiro.so/stacks/api/blocks/get-block) endpoint. You can use
-  the `apply` array's metadata object to get the `stacks_block_hash`.
+  block](/stacks/api/blocks/get-block) endpoint. You can use the `apply` array's
+  metadata object to get the `stacks_block_hash`.
 </Callout>
 
-We can retrieve the `stacks_block_hash` by navigating to the the `apply` arrays object `metadata` element. This hash will match the block hash display in Hiro's Explorer.
+We can retrieve the `stacks_block_hash` by navigating to the the `apply` arrays object `metadata` element. This hash will match the block hash display in the Stacks Explorer.
 
-```json title="stacks_block_hash"
+```json title="contract-call-payload.json"
 // [!code word:stacks_block_hash]
 "apply": [
   {
@@ -299,24 +292,22 @@ We can retrieve the `stacks_block_hash` by navigating to the the `apply` arrays 
 
 There is also also a `timestamp` value returned in the `apply` array. This UNIX time stamp represents the initiation of the Stacks block.
 
-```json title="timestamp"
+```json title="contract-call-payload.json"
 "timestamp": 1722208524
 ```
 
-<Callout type="warn">
+<Callout type="warn" title="Warning">
   The timestamp returned in this object is not the finalized block time you
-  would see in [Hiro's Explorer](https://explorer.hiro.so/?chain=testnet), but
+  would see in [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
   `block_time` returned from the Stacks API [get
-  block](https://docs.hiro.so/stacks/api/blocks/get-block) endpoint.
+  block](/stacks/api/blocks/get-block) endpoint.
 </Callout>
 
----
-
-### Transaction Object
+### Transaction object
 
 Because Chainhook is triggered on the block level, we will receive a single response that contains data specific to each `transaction` that matches our predicate's `contract_call` scope. To find this data, we start with the `apply` array element of the `payload` object. The single object that makes up the `apply` array contains a child element, the `transactions` array. Every `transaction` will be represents by a single object within this array. This `transaction` object contains its own children elements which can be seen in the example below.
 
-```json title="Payload object structure"
+```json
 {
   "apply": [
     {
@@ -339,13 +330,13 @@ Because Chainhook is triggered on the block level, we will receive a single resp
 
 With our `transaction` object returned, let's start looking at some of the important data elements we can derive from it. The first element `transcation_identifier` is straightforward, containing a hash value that identifies our transaction.
 
-```json title="transaction_identifier object"
+```json title="contract-call-payload.json"
 "transaction_identifier": {
   "hash": "0x98195af8f888d2f9ca3462c41c1691e7798ea6d9e5e3afe42955c0921f981f2c"
 }
 ```
 
-<Callout type="info">
+<Callout type="info" title="Note">
   The `operations` array in our example is empty, as our function does not
   involve the transfer of any assets. When assets are transferred the
   `operations` array would contain a record of every `debit` and `credit` of
@@ -355,21 +346,19 @@ With our `transaction` object returned, let's start looking at some of the impor
 
 The next element we will look for data related to our `contract_call` is the `metadata` object and its children elements. Since we are looking to build out our data source, knowing the success state of our transaction will be important. Transactions are broadcasted and observed by Chainhook regardless of whether or not it is successfull, so we will use the the `success` object and its boolean value. We can also derive the transaction `sender` and the contract's returned `result`.
 
-```json title="transaction object metadata"
-{
-  "metadata": {
-    ...
-    "success": true,
-    "sender": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV",
-    "result": "(ok \"Vote cast successfully\")"
-    ...
-  }
+```json title="contract-call-payload.json"
+"metadata": {
+  ...
+  "success": true,
+  "sender": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV",
+  "result": "(ok \"Vote cast successfully\")"
+  ...
 }
 ```
 
 Next, we will look at our `kind` object and its elements. Within the `data` object, we find data related to the contracts our function exists on as a value of `contract_identifier`, the function called on that contract as a value of `method` and the arguments passed to this function when invoking it as an array of `args`. In this instance, our `cast-vote` function does not accept any arguements so the `args` array is empty.
 
-```json title="kind object"
+```json title="contract-call-payload.json"
 // [!code word:kind]
 {
   "metadata":
@@ -388,9 +377,10 @@ Next, we will look at our `kind` object and its elements. Within the `data` obje
 
 The last element of the `metadata` object we will examine is the `receipt` object and its `events` array and its object elements. In our `contract_call` example, the information we want to pull into our data source will be found in the `data` object of these elements. Like the `kind` object above, our `data` object also contains a `contract_identifer` key with our `simple-vote-v0` contract as its value. Because we are returning data from our contract's `cast-vote` function using `print`, we will find the `topic` and `value` keys. `Topic` shows us that we are using `print` to return the data set in our function and the `value` returns the data we defined in that `print`.
 
-```json title="receipt object"
+```json title="contract-call-payload.json"
 // [!code word:receipt]
-{ "metadata":
+{
+  "metadata":
   ...
   "receipt": {
     "contract_calls_stack": [],
@@ -428,10 +418,23 @@ The last element of the `metadata` object we will examine is the `receipt` objec
 
 ---
 
-### Summary
-
 Now that we have identified where the relevant data lives in the Chainhook payload, you can build the necessary logic into your API to extract it. You should be able to build a data source for your DApp based on the `contract_call` predicate that looks like the example below.
 
 | Block Height | Timestamp  | Transaction Identifier                                             | Success | Sender                                   | Result                        | Args | Contract Identifier                                     | Function  | Value                                                                                                                                                   |
 | ------------ | ---------- | ------------------------------------------------------------------ | ------- | ---------------------------------------- | ----------------------------- | ---- | ------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 21544        | 1722208524 | 0x98195af8f888d2f9ca3462c41c1691e7798ea6d9e5e3afe42955c0921f981f2c | True    | STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV | (ok "Vote cast successfully") | []   | STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0 | cast-vote | \{"notification": "cast-vote", "payload": \{"status": "Has voted set to true", "totalVotes": 1, "voter": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV"\}\} |
+
+## Next steps
+
+<Cards>
+  <Card
+    href="stacks/chainhook/guides/chainhook-as-a-service"
+    title="Chainhook as a Service"
+    description="Learn how to run Chainhooks as a service."
+  />
+  <Card
+    href="/stacks/chainhook/references/scopes"
+    title="Scopes"
+    description="Learn how to use scopes to scan for specific blockchain events."
+  />
+</Cards>
