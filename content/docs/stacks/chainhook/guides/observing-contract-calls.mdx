@@ -9,8 +9,6 @@ import SimpleVote from "../resources/simple-vote.mdx";
 
 The `contract_call` predicate scope is designed to target direct function calls within a smart contract. When triggered, Chainhook will return a payload with transaction data detailing the on-chain events contained in these functions.
 
-By designing your smart contract functions in conjunction with your data source and use case, Chainhook and `contract_call` can become an excellent tool for monitoring interactions with critical contract functionality.
-
 <Callout type="warn" title="Requirements">
   To use Chainhook you can either install it
   [directly](/stacks/chainhook/installation) or use [Hiro
@@ -190,7 +188,7 @@ Chainhook can also post its payload to an endpoint using `http_post`, allowing u
 
 With our `predicate` set up, we can now use Chainhook to monitor blocks that match our `contract_call` scope and analyze the returned payload. Chainhook will track events where this function is directly invoked in a transaction and generate a detailed payload containing transaction data at the block level.
 
-If you previously installed Chainhook, we will specify our `contract-call-chainhook.json` predicate file in the following command to scan the Stacks blockchain.
+Specify our `contract-call-chainhook.json` predicate file in the following command to scan the Stacks blockchain.
 
 ```console
 chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
@@ -256,6 +254,7 @@ Before we begin looking at our `payload`, let's review the `cast-vote` Clarity f
 </Callout>
 
 When triggered by our predicate, the `payload` returned by Chainhook is a standarized, block level observation in json format.
+
 Within the `apply` arrays element, the `block_identifer` object gives us the `index` for the observed block height.
 
 ```json title="contract-call-payload.json"
@@ -305,7 +304,7 @@ There is also also a `timestamp` value returned in the `apply` array. This UNIX 
 
 ### Transaction object
 
-Because Chainhook is triggered on the block level, we will receive a single response that contains data specific to each `transaction` that matches our predicate's `contract_call` scope. To find this data, we start with the `apply` array element of the `payload` object. The single object that makes up the `apply` array contains a child element, the `transactions` array. Every `transaction` will be represents by a single object within this array. This `transaction` object contains its own children elements which can be seen in the example below.
+Because Chainhook is triggered on the block level, we will receive a single response that contains data specific to each `transaction` that matches your predicate's `contract_call` scope. To find this data, we start with the `apply` array element of the `payload` object. The single object that makes up the `apply` array contains a child element, the `transactions` array. Every `transaction` will be represents by a single object within this array. This `transaction` object contains its own children elements which can be seen in the example below.
 
 ```json
 {
@@ -328,7 +327,7 @@ Because Chainhook is triggered on the block level, we will receive a single resp
 }
 ```
 
-Once the `transaction` object is returned, we can begin examining important data elements it contains. The first element, `transaction_identifier`, includes a hash value that uniquely identifies our transaction.
+Once the `transaction` object is returned, we can begin examining important data elements it contains. The first element, `transaction_identifier`, includes a hash value that uniquely identifies your transaction.
 
 ```json title="contract-call-payload.json"
 "transaction_identifier": {
@@ -337,14 +336,14 @@ Once the `transaction` object is returned, we can begin examining important data
 ```
 
 <Callout type="info" title="Note">
-  The `operations` array in our example is empty, as our function does not
-  involve the transfer of any assets. When assets are transferred the
+  The `operations` array in your example is empty, as `cast-vote` function does
+  not involve the transfer of any assets. When assets are transferred the
   `operations` array would contain a record of every `debit` and `credit` of
   those assets as functions are executed by smart contracts. These records are
   not exclusive to a specific predicate scope.
 </Callout>
 
-Next, focus on the `metadata` object within your `contract_call` data. It's crucial to determine the success state of your transaction. Chainhook captures and reports on transactions regardless of their outcome. Utilize the `success` object to assess transaction success. Additionally, extract the sender of the transaction and the `result` returned by the contract.
+Next, focus on the `metadata` object within your `contract_call` data. It's crucial to determine the success state of your transaction. Chainhook captures and reports on transactions regardless of their outcome. Utilize the `success` object to assess transaction success. Additionally, extract the `sender` of the transaction and the `result` returned by the contract.
 
 ```json title="contract-call-payload.json"
 "metadata": {
@@ -356,7 +355,7 @@ Next, focus on the `metadata` object within your `contract_call` data. It's cruc
 }
 ```
 
-Moving forward, examine the `kind` object and its components within your `contract_call`. The data object contains crucial information: `contract_identifier` specifies the contract our function resides on, `method` identifies the function called, and `args` lists the arguments passed when invoking this function. In our case, the `cast-vote` function accepts no arguments, resulting in an empty `args` array.
+Moving forward, examine the `kind` object and its components within your `contract_call`. The data object contains crucial information: `contract_identifier` specifies the contract your function resides on, `method` identifies the function called, and `args` lists the arguments passed when invoking this function. In this case, the `cast-vote` function accepts no arguments, resulting in an empty `args` array.
 
 ```json title="contract-call-payload.json"
 // [!code word:kind]
