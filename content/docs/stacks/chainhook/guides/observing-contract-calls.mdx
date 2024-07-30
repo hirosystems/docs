@@ -1,13 +1,13 @@
 ---
 title: Observing Contract Calls with Chainhook
-description: Learn how to use Chainhook to observe contract calls on the Stacks blockchain
+description: Learn how to use Chainhook to observe smart contract calls.
 ---
 
 import { Step, Steps } from "fumadocs-ui/components/steps";
 
 import SimpleVote from "../resources/simple-vote.mdx";
 
-The `contract_call` predicate scope is designed to allow you to use Chainhook to observe direct functions calls within a smart contract. The payload returned by Chainhook will contain transaction data describing the on-chain events that this function elicits.
+The `contract_call` predicate scope is designed to target direct function calls within a smart contract. When triggered, Chainhook will return a payload with transaction data detailing the on-chain events contained in these functions.
 
 By designing your smart contract functions in conjunction with your data source and use case, Chainhook and `contract_call` can become an excellent tool for monitoring interactions with critical contract functionality.
 
@@ -31,9 +31,9 @@ In this guide, you will learn how to:
 
 ## Creating the predicate
 
-The `predicate` json object is the primary tool for interacting with the Chainhook data indexer. Chainhook will evaluate our `predicate` to determine what blockchain, network and scope it will use to observe matching transactions.
+The `predicate` is your main interface for querying the Chainhook data indexer. Chainhook uses your specified `predicate` to select the appropriate blockchain, network, and scope for monitoring transactions.
 
-Run the below command to generate a template to help you generate your Stacks predicate.
+Run the following command to generate a template for your Stacks `predicate`:
 
 ```console
 chainhook predicates new contract-call-chainhook.json --stacks
@@ -45,7 +45,7 @@ chainhook predicates new contract-call-chainhook.json --stacks
   containing your `predicate`.
 </Callout>
 
-You can view the full predicate example will be using in this guide below.
+You can view the full predicate example we will be using in this guide below.
 
 <Accordions>
   <Accordion title="contract-call-chainhook.json">
@@ -146,9 +146,9 @@ Next, we will need to define the scope of the `predicate` within the `if_this` s
 
 ### Defining the payload destination with the then_that specification
 
-Finally, we will define how Chainhook should deliver its data payload when it is triggered by our `predicate` within the `then_that` specification.
+Finally, you need to define how Chainhook delivers the payload when it is triggered by our `predicate` within the `then_that` specification.
 
-When using `file_append`, we specify the `path` we want Chainhook to write its data payload to.
+When using `file_append`, specify the `path` you want Chainhook to post the payload data to.
 
 ```json title="contract-call-chainhook.json"
 // [!code word:then_that]
@@ -188,7 +188,7 @@ Chainhook can also post its payload to an endpoint using `http_post`, allowing u
 
 ## Running the predicate
 
-Now that we have built our Stacks blockchain `predicate`, we are ready to use Chainhook to scan for blocks that match our `contract_call` scope and view the payload it returns. Whenever this method is directly called within a transaction, Chainhook will observe this event and generate a block level payload with transaction data.
+With our `predicate` set up, we can now use Chainhook to monitor blocks that match our `contract_call` scope and analyze the returned payload. Chainhook will track events where this function is directly invoked in a transaction and generate a detailed payload containing transaction data at the block level.
 
 If you previously installed Chainhook, we will specify our `contract-call-chainhook.json` predicate file in the following command to scan the Stacks blockchain.
 
@@ -328,7 +328,7 @@ Because Chainhook is triggered on the block level, we will receive a single resp
 }
 ```
 
-With our `transaction` object returned, let's start looking at some of the important data elements we can derive from it. The first element `transcation_identifier` is straightforward, containing a hash value that identifies our transaction.
+Once the `transaction` object is returned, we can begin examining important data elements it contains. The first element, `transaction_identifier`, includes a hash value that uniquely identifies our transaction.
 
 ```json title="contract-call-payload.json"
 "transaction_identifier": {
@@ -344,7 +344,7 @@ With our `transaction` object returned, let's start looking at some of the impor
   not exclusive to a specific predicate scope.
 </Callout>
 
-The next element we will look for data related to our `contract_call` is the `metadata` object and its children elements. Since we are looking to build out our data source, knowing the success state of our transaction will be important. Transactions are broadcasted and observed by Chainhook regardless of whether or not it is successfull, so we will use the the `success` object and its boolean value. We can also derive the transaction `sender` and the contract's returned `result`.
+Next, focus on the `metadata` object within your `contract_call` data. It's crucial to determine the success state of your transaction. Chainhook captures and reports on transactions regardless of their outcome. Utilize the `success` object to assess transaction success. Additionally, extract the sender of the transaction and the `result` returned by the contract.
 
 ```json title="contract-call-payload.json"
 "metadata": {
@@ -356,7 +356,7 @@ The next element we will look for data related to our `contract_call` is the `me
 }
 ```
 
-Next, we will look at our `kind` object and its elements. Within the `data` object, we find data related to the contracts our function exists on as a value of `contract_identifier`, the function called on that contract as a value of `method` and the arguments passed to this function when invoking it as an array of `args`. In this instance, our `cast-vote` function does not accept any arguements so the `args` array is empty.
+Moving forward, examine the `kind` object and its components within your `contract_call`. The data object contains crucial information: `contract_identifier` specifies the contract our function resides on, `method` identifies the function called, and `args` lists the arguments passed when invoking this function. In our case, the `cast-vote` function accepts no arguments, resulting in an empty `args` array.
 
 ```json title="contract-call-payload.json"
 // [!code word:kind]
@@ -375,7 +375,13 @@ Next, we will look at our `kind` object and its elements. Within the `data` obje
 }
 ```
 
-The last element of the `metadata` object we will examine is the `receipt` object and its `events` array and its object elements. In our `contract_call` example, the information we want to pull into our data source will be found in the `data` object of these elements. Like the `kind` object above, our `data` object also contains a `contract_identifer` key with our `simple-vote-v0` contract as its value. Because we are returning data from our contract's `cast-vote` function using `print`, we will find the `topic` and `value` keys. `Topic` shows us that we are using `print` to return the data set in our function and the `value` returns the data we defined in that `print`.
+The final element to analyze in the `metadata` object is the `receipt` object, particularly its `events` array and the objects within it.
+
+For your `contract_call`, the relevant data is housed in the `data` object of these elements. Similar to the `kind` object, our `data` object includes a `contract_identifier` key, which in this case is linked to the `simple-vote-v0` contract.
+
+Since you are using the `print` statement to return data from your contract's `cast-vote` function, the `events` array will contain `topic` and `value` keys.
+
+The `topic` indicates that the print statement is being used to output data, while the `value` key will display the specific data set within that `print` function.
 
 ```json title="contract-call-payload.json"
 // [!code word:receipt]
@@ -418,7 +424,9 @@ The last element of the `metadata` object we will examine is the `receipt` objec
 
 ---
 
-Now that we have identified where the relevant data lives in the Chainhook payload, you can build the necessary logic into your API to extract it. You should be able to build a data source for your DApp based on the `contract_call` predicate that looks like the example below.
+Now that you've located the relevant data in the payload, you can start to extract the relevant information into your API.
+
+The following is an example of how you might store your information in a database table:
 
 | Block Height | Timestamp  | Transaction Identifier                                             | Success | Sender                                   | Result                        | Args | Contract Identifier                                     | Function  | Value                                                                                                                                                   |
 | ------------ | ---------- | ------------------------------------------------------------------ | ------- | ---------------------------------------- | ----------------------------- | ---- | ------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
