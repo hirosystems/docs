@@ -43,7 +43,7 @@ chainhook predicates new contract-call-chainhook.json --stacks
   containing your `predicate`.
 </Callout>
 
-You can view the full predicate example we will be using in this guide below.
+View the full predicate example we will be using in this guide below.
 
 <Accordions>
   <Accordion title="contract-call-chainhook.json">
@@ -111,7 +111,7 @@ To construct the `predicate`, we will specify the Stacks test network `testnet` 
 
 ### Defining the scope with the if_this specification
 
-Next, we will need to define the scope of the `predicate` within the `if_this` specification. The `contract_call` scope within our predicate allows Chainhook to observe blockchain data when the specified method is directly called from its contract. In this scope, we identify the contract that contains the method we want to observe using `contract_identifier` and the name of the function in `method`.
+Next, define the scope of the `predicate` within the `if_this` specification. The `contract_call` scope within your predicate allows Chainhook to observe blockchain data when the specified method is directly called from its contract. In this scope, you identify the contract that contains the method you want to observe using `contract_identifier` and the name of the function in `method`.
 
 ```json title="contract-call-chainhook.json"
 // [!code word:if_this]
@@ -144,7 +144,7 @@ Next, we will need to define the scope of the `predicate` within the `if_this` s
 
 ### Defining the payload destination with the then_that specification
 
-Finally, you need to define how Chainhook delivers the payload when it is triggered by our `predicate` within the `then_that` specification.
+Finally, define how Chainhook delivers the payload when it is triggered by your `predicate` within the `then_that` specification.
 
 When using `file_append`, specify the `path` you want Chainhook to post the payload data to.
 
@@ -186,9 +186,9 @@ Chainhook can also post its payload to an endpoint using `http_post`, allowing u
 
 ## Running the predicate
 
-With our `predicate` set up, we can now use Chainhook to monitor blocks that match our `contract_call` scope and analyze the returned payload. Chainhook will track events where this function is directly invoked in a transaction and generate a detailed payload containing transaction data at the block level.
+With your `predicate` set up, we can now use Chainhook to monitor blocks that match the `contract_call` scope and analyze the returned payload. Chainhook will track events where this function is directly invoked in a transaction and generate a detailed payload containing transaction data at the block level.
 
-Specify our `contract-call-chainhook.json` predicate file in the following command to scan the Stacks blockchain.
+Specify your `contract-call-chainhook.json` predicate file in the following command to scan the Stacks blockchain.
 
 ```console
 chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
@@ -204,7 +204,7 @@ chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
 
 ## Return contract data with the clarity function
 
-Before we begin looking at our `payload`, let's review the `cast-vote` Clarity function we have specificed in our predicate. This function takes the address calling it, records a vote and stores the voting address. It also `print` to log data that will be useful for building a DApp around the on-chain events we want track. As we review the `payload`, this is the data we will look for.
+Before you begin to analyze your `payload`, review the `cast-vote` Clarity function we have specificed in the predicate. This function takes the address calling it, records a vote and stores the voting address. It also `print` to log data that will be useful for building a DApp around the on-chain events we want track. As we review the `payload`, this is the data we will look for.
 
 ```clarity title="simple-vote-v0.clar"
 // [!code word:cast-vote]
@@ -253,7 +253,7 @@ Before we begin looking at our `payload`, let's review the `cast-vote` Clarity f
   [contract-call-payload.json](/contract-call-payload.json) here.
 </Callout>
 
-When triggered by our predicate, the `payload` returned by Chainhook is a standarized, block level observation in json format.
+When triggered by your predicate, the `payload` returned by Chainhook is a standarized, block level observation in json format.
 
 Within the `apply` arrays element, the `block_identifer` object gives us the `index` for the observed block height.
 
@@ -376,7 +376,7 @@ Moving forward, examine the `kind` object and its components within your `contra
 
 The final element to analyze in the `metadata` object is the `receipt` object, particularly its `events` array and the objects within it.
 
-For your `contract_call`, the relevant data is housed in the `data` object of these elements. Similar to the `kind` object, our `data` object includes a `contract_identifier` key, which in this case is linked to the `simple-vote-v0` contract.
+For your `contract_call`, the relevant data is housed in the `data` object of these elements. Similar to the `kind` object, the `data` object includes a `contract_identifier` key, which in this case is linked to the `simple-vote-v0` contract.
 
 Since you are using the `print` statement to return data from your contract's `cast-vote` function, the `events` array will contain `topic` and `value` keys.
 
