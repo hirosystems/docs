@@ -1,0 +1,99 @@
+{
+  "apply": [
+    {
+      "block_identifier": {
+        "hash": "0x4d88015a6df9ec4f6df875941d87337ce64f8d51608563f80b6e27adeb327e4d",
+        "index": 21544
+      },
+      "metadata": {
+        "bitcoin_anchor_block_identifier": {
+          "hash": "0x289fd46f79db3551ad1bdf67a9492f1c45ffdd89187e540665400e52f3ed2c27",
+          "index": 30089
+        },
+        "confirm_microblock_identifier": null,
+        "pox_cycle_index": 2998,
+        "pox_cycle_length": 10,
+        "pox_cycle_position": 8,
+        "stacks_block_hash": "0x4ad36f77ff76042f3b7355006556375970b0f99d1232b14a3b4a2eadda4a806a"
+      },
+      "parent_block_identifier": {
+        "hash": "0xbd8fe27ca93096c6c11baccfaf8667fd749f3da89c4de9330f60ed43b77bbf55",
+        "index": 21543
+      },
+      "timestamp": 1722208524,
+      "transactions": [
+        {
+          "metadata": {
+            "description": "invoked: STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0::cast-vote()",
+            "execution_cost": {
+              "read_count": 8,
+              "read_length": 1308,
+              "runtime": 19581,
+              "write_count": 2,
+              "write_length": 57
+            },
+            "fee": 3000,
+            "kind": {
+              "data": {
+                "args": [],
+                "contract_identifier": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0",
+                "method": "cast-vote"
+              },
+              "type": "ContractCall"
+            },
+            "nonce": 4,
+            "position": {
+              "index": 1
+            },
+            "raw_tx": "0x808000000004002480b05cb5e2f59bba8142894eca5f2861a702e800000000000000040000000000000bb80001ef1cb9264eae5f0d5989e68f78bc005e979fd5e9786b64cd12077ce0ac90fdf073b5f835d2e07c3ab9c76bf37bd5f71d61e4cc73dd6ae52babf5ee8fa2b4947a030200000000021a2480b05cb5e2f59bba8142894eca5f2861a702e80e73696d706c652d766f74652d763009636173742d766f746500000000",
+            "receipt": {
+              "contract_calls_stack": [],
+              "events": [
+                {
+                  "data": {
+                    "contract_identifier": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0",
+                    "topic": "print",
+                    "value": {
+                      "notification": "cast-vote",
+                      "payload": {
+                        "status": "Has voted set to true",
+                        "totalVotes": 1,
+                        "voter": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV"
+                      }
+                    }
+                  },
+                  "position": {
+                    "index": 0
+                  },
+                  "type": "SmartContractEvent"
+                }
+              ],
+              "mutated_assets_radius": [],
+              "mutated_contracts_radius": [
+                "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0"
+              ]
+            },
+            "result": "(ok \"Vote cast successfully\")",
+            "sender": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV",
+            "sponsor": null,
+            "success": true
+          },
+          "operations": [],
+          "transaction_identifier": {
+            "hash": "0x98195af8f888d2f9ca3462c41c1691e7798ea6d9e5e3afe42955c0921f981f2c"
+          }
+        }
+      ]
+    }
+  ],
+  "chainhook": {
+    "is_streaming_blocks": false,
+    "predicate": {
+      "contract_identifier": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0",
+      "method": "cast-vote",
+      "scope": "contract_call"
+    },
+    "uuid": "13d0eebe-cc1b-4964-9ac5-3f70d03f18d7"
+  },
+  "rollback": []
+}
