@@ -132,6 +132,36 @@ When using `http_post`, specify the endpoint's `url` and `authorization_header`.
 }
 ```
 
+<Accordions>
+  <Accordion title={"Full predicate file"}>
+  ```json
+  {
+    "chain": "stacks",
+    "uuid": "1",
+    "name": "Contract-Call-Chainhook",
+    "version": 1,
+    "networks": {
+      "testnet": {
+        "start_block": 21443,
+        "decode_clarity_values": true,
+        "expire_after_occurrence": 1,
+        "if_this": {
+          "scope": "contract_call",
+          "contract_identifier": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0",
+          "method": "cast-vote"
+        },
+        "then_that": {
+          "file_append": {
+            "path": "/tmp/events.json"
+          }
+        }
+      }
+    }
+  }
+  ```
+  </Accordion>
+</Accordions>
+
 <Callout title="Note">
   Chainhook requires `https` to post to your endpoint. You can use a service like [LocalTunnel](https://github.com/localtunnel/localtunnel) to test locally or a site like [WebhookSite](https://webhook.site).
 </Callout>
@@ -139,7 +169,7 @@ When using `http_post`, specify the endpoint's `url` and `authorization_header`.
 </Step>
 <Step>
 
-## Running the predicate
+## Scan the predicate
 
 With your `predicate` set up, you can now scan for blocks that match the `contract_call` scope and analyze the returned payload.
 
@@ -196,7 +226,7 @@ When you examine the `payload`, this is the data you will look for.
 </Step>
 <Step>
 
-## Chainhook payload
+## Dive deeper into the Chainhook payload
 
 When triggered by your predicate, the `payload` returned by Chainhook is a standarized, block level observation in json format.
 
