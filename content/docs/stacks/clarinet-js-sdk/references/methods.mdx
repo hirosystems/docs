@@ -1526,6 +1526,8 @@ The `tx` helper has three methods:
 
 These methods have the same interface as simnet methods but instead of performing a transaction, they will build a transaction object that can be passed to the `mineBlock` function.
 
+In epochs from 3.0 on, the stacks chaintip is advanced separately from the burn chaintip. This means `mineBlock` will only affect the stacks chaintip. If you'd like to also mine burn blocks, use the `mineEmptyBurnBlock` function.
+
 ## Parameters
 
 <Property required={true} deprecated={false} name={"txs"} type={"Tx[]"}>
