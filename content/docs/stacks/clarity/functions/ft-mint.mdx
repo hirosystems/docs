@@ -1,0 +1,82 @@
+---
+title: ft-mint?
+description: Minting new fungible tokens in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(ft-mint? token-name amount recipient)
+```
+
+- Input: 
+  - `token-name`: The name of the fungible token
+  - `amount`: The amount of tokens to mint (uint)
+  - `recipient`: The principal to receive the newly minted tokens
+- Output: `(response bool uint)`
+
+## Why it matters
+
+The `ft-mint?` function is crucial for:
+
+1. Creating new tokens and increasing the total supply of a fungible token.
+2. Implementing token issuance mechanisms in smart contracts.
+3. Rewarding users or other contracts with newly created tokens.
+4. Managing the token economy within a decentralized application.
+
+## When to use it
+
+Use `ft-mint?` when you need to:
+
+- Create new tokens as part of your contract's logic.
+- Implement token distribution mechanisms (e.g., airdrops, rewards).
+- Increase the balance of a specific principal with new tokens.
+- Execute token minting operations based on certain conditions or events.
+
+## Best Practices
+
+- Implement proper access controls to restrict who can mint new tokens.
+- Consider using a maximum supply cap to prevent unlimited minting.
+- Emit events or use a logging mechanism to track minting operations for transparency.
+- Be cautious of potential overflow when minting large amounts of tokens.
+
+## Practical Example: Reward Minting
+
+Let's implement a simple reward system that mints tokens:
+
+```clarity
+(define-fungible-token reward-token)
+
+(define-constant contract-owner tx-sender)
+
+(define-public (mint-reward (amount uint) (recipient principal))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) (err u403))
+    (ft-mint? reward-token amount recipient)))
+
+;; Usage
+(mint-reward u100 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true) if called by contract-owner
+```
+
+This example demonstrates:
+1. Using `ft-mint?` to create new tokens and assign them to a recipient.
+2. Implementing a basic access control check before minting.
+3. Returning the result of the minting operation.
+
+## Common Pitfalls
+
+1. Minting tokens without proper access controls, allowing unauthorized token creation.
+2. Not considering the total supply limit, potentially leading to economic imbalances.
+3. Forgetting to handle the error case when minting fails (e.g., due to supply cap).
+4. Overlooking the gas costs associated with minting, especially for large amounts.
+
+## Related Functions
+
+- `ft-burn?`: Used to destroy tokens, decreasing the total supply.
+- `ft-transfer?`: Used to transfer tokens between principals.
+- `ft-get-balance`: Used to check the token balance of a principal.
+- `ft-get-supply`: Used to get the current total supply of tokens.
+
+## Conclusion
+
+The `ft-mint?` function is a fundamental tool for managing fungible token creation in Clarity smart contracts. It allows for controlled increase of token supply and distribution to specified recipients. When used responsibly with proper access controls and supply management, it enables the implementation of sophisticated token economies within decentralized applications on the Stacks blockchain.

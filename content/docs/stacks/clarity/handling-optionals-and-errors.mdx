@@ -1,0 +1,128 @@
+---
+title: Optional values and error handling
+description: Safely handling optional values and error cases in Clarity smart contracts.
+---
+
+Clarity provides robust mechanisms for dealing with optional values and error cases. These features are crucial for writing secure and predictable smart contracts that can gracefully handle unexpected situations.
+
+## Why these functions matter
+
+Clarity's optional value and error handling functions are designed with several important considerations in mind:
+
+1. Safety: They prevent unexpected null or undefined errors that could crash a contract.
+2. Explicitness: They force developers to consider and handle all possible outcomes.
+3. Readability: They make the code's intent clear, improving maintainability.
+4. Composability: They allow for clean function composition and chaining of operations.
+
+## Core Optional and Error Handling Functions
+
+### 1. is-some and is-none
+
+**What**: Check if an optional value contains a value (some) or is empty (none).
+**Why**: Essential for safely working with optional values before attempting to use them.
+**When**: Use when you need to check if an optional value is present before proceeding.
+**How**: 
+```clarity
+(is-some value)
+(is-none value)
+```
+
+**Best Practices**: 
+- Always check optional values before unwrapping them.
+- Use in combination with unwrap functions for safe value extraction.
+
+**Example Use Case**: Checking if a user exists in a map before performing an operation.
+
+```clarity
+(define-map users principal { balance: uint })
+
+(define-public (check-balance (user principal))
+  (if (is-some (map-get? users user))
+      (ok "User exists")
+      (err "User not found")))
+```
+
+### 2. unwrap! and unwrap-panic
+
+**What**: Extract the value from an optional or response type.
+**Why**: Allows safe extraction of values, with controlled behavior on failure.
+**When**: Use when you're certain a value exists or when you want to halt execution if it doesn't.
+**How**: 
+```clarity
+(unwrap! value error-expr)
+(unwrap-panic value)
+```
+
+**Best Practices**: 
+- Use `unwrap!` when you want to provide a custom error message or value.
+- Use `unwrap-panic` sparingly, typically only in situations where failure is truly unexpected.
+
+**Example Use Case**: Retrieving a user's balance, with a custom error if the user doesn't exist.
+
+```clarity
+(define-public (get-balance (user principal))
+  (ok (unwrap! (get balance (map-get? users user))
+               (err "User not found"))))
+```
+
+### 3. try!
+
+**What**: Attempts to unwrap a response, returning early with an error if it fails.
+**Why**: Simplifies error handling in functions that return responses.
+**When**: Use when you want to propagate errors up the call stack.
+**How**: 
+```clarity
+(try! expression)
+```
+
+**Best Practices**: 
+- Use to chain multiple operations that might fail.
+- Helps keep code clean by avoiding nested if-else statements.
+
+**Example Use Case**: Transferring tokens between users, with multiple checks.
+
+```clarity
+(define-public (transfer (from principal) (to principal) (amount uint))
+  (let ((sender-balance (try! (get-balance from)))
+        (recipient-balance (try! (get-balance to))))
+    (try! (check-sufficient-balance sender-balance amount))
+    (try! (update-balance from (- sender-balance amount)))
+    (try! (update-balance to (+ recipient-balance amount)))
+    (ok true)))
+```
+
+## Practical Example: Safe Token Transfer System
+
+Let's implement a simple token system that demonstrates the use of optional values and error handling:
+
+```clarity
+(define-map balances principal uint)
+
+(define-read-only (get-balance (user principal))
+  (ok (default-to u0 (map-get? balances user))))
+
+(define-public (transfer (to principal) (amount uint))
+  (let ((sender-balance (unwrap! (get-balance tx-sender) (err "Failed to get sender balance")))
+        (recipient-balance (unwrap! (get-balance to) (err "Failed to get recipient balance"))))
+    (if (>= sender-balance amount)
+        (begin
+          (try! (as-contract (stx-transfer? amount tx-sender to)))
+          (map-set balances tx-sender (- sender-balance amount))
+          (map-set balances to (+ recipient-balance amount))
+          (ok true))
+        (err "Insufficient balance"))))
+
+(define-public (deposit (amount uint))
+  (let ((current-balance (unwrap! (get-balance tx-sender) (err "Failed to get balance"))))
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (ok (map-set balances tx-sender (+ current-balance amount)))))
+```
+
+This example demonstrates:
+1. Using `unwrap!` to safely extract balances from the optional values returned by `map-get?`.
+2. Using `try!` to handle potential errors in the STX transfer operations.
+3. Proper error handling and propagation throughout the contract functions.
+
+## Conclusion
+
+Proper handling of optional values and error cases is crucial for writing secure and reliable Clarity smart contracts. By leveraging Clarity's built-in functions like `is-some`, `unwrap!`, and `try!`, developers can create robust contracts that gracefully handle unexpected situations and provide clear feedback when errors occur. Always consider all possible outcomes and use these tools to make your contracts more predictable and maintainable.

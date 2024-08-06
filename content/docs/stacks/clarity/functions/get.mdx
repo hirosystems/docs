@@ -1,0 +1,91 @@
+---
+title: get
+description: Retrieving a value from a tuple in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(get key-name tuple)
+```
+
+- Input: 
+  - `key-name`: The name of the key in the tuple
+  - `tuple`: The tuple to retrieve the value from
+- Output: The value associated with the key in the tuple
+
+## Why it matters
+
+The `get` function is crucial for:
+
+1. Accessing specific values within tuple data structures.
+2. Extracting information from complex data types in contracts.
+3. Enabling efficient data retrieval in contract logic.
+4. Working with structured data returned by other functions or stored in variables.
+
+## When to use it
+
+Use `get` when you need to:
+
+- Access a specific field in a tuple.
+- Extract values from structured data returned by other functions.
+- Work with complex data types in your contract logic.
+- Implement data processing that involves tuple manipulation.
+
+## Best Practices
+
+- Ensure the key exists in the tuple to avoid runtime errors.
+- Use meaningful key names for better code readability.
+- Consider using `get` in combination with `optional` for safer data access.
+- Be aware of the performance implications when working with large tuples.
+
+## Practical Example: User Profile Management
+
+Let's implement a simple user profile system using tuples and the `get` function:
+
+```clarity
+(define-map user-profiles principal { name: (string-ascii 50), age: uint })
+
+(define-public (set-profile (name (string-ascii 50)) (age uint))
+  (ok (map-set user-profiles tx-sender { name: name, age: age })))
+
+(define-read-only (get-profile-name (user principal))
+  (match (map-get? user-profiles user)
+    profile (ok (get name profile))
+    (err u404)))
+
+(define-read-only (get-profile-age (user principal))
+  (match (map-get? user-profiles user)
+    profile (ok (get age profile))
+    (err u404)))
+
+;; Usage
+(set-profile "Alice" u30)
+(get-profile-name tx-sender) ;; Returns (ok "Alice")
+(get-profile-age tx-sender) ;; Returns (ok u30)
+```
+
+
+
+
+
+This example demonstrates:
+1. Using `get` to retrieve specific fields from a tuple stored in a map.
+2. Implementing getter functions that use `get` to access tuple data.
+3. Handling cases where the profile might not exist.
+
+## Common Pitfalls
+
+1. Attempting to `get` a key that doesn't exist in the tuple, causing a runtime error.
+2. Forgetting that `get` is case-sensitive for key names.
+3. Not considering the performance impact of frequently accessing large tuples.
+
+## Related Functions
+
+- `merge`: Used to combine tuples, potentially creating new fields to `get`.
+- `tuple`: Used to create tuples that can be accessed with `get`.
+- `map-get?`: Often used in combination with `get` to retrieve data from maps.
+
+## Conclusion
+
+The `get` function is a fundamental tool for working with tuples in Clarity smart contracts. It provides a straightforward way to access structured data, enabling developers to work with complex data types efficiently. When used effectively, `get` enhances the contract's ability to manage and process structured information, leading to more organized and maintainable smart contract code.

@@ -1,0 +1,81 @@
+---
+title: ft-get-supply
+description: Retrieving the total supply of a fungible token in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(ft-get-supply token-name)
+```
+
+- Input: 
+  - `token-name`: The name of the fungible token
+- Output: `uint`
+
+## Why it matters
+
+The `ft-get-supply` function is crucial for:
+
+1. Querying the current total supply of a fungible token.
+2. Implementing supply-dependent logic in token contracts.
+3. Providing transparency about the token's circulating supply.
+4. Enabling other contracts or off-chain applications to verify token supply.
+
+## When to use it
+
+Use `ft-get-supply` when you need to:
+
+- Check the current total supply of a token.
+- Implement logic that depends on the token's supply (e.g., minting limits).
+- Provide supply information to users or other contracts.
+- Verify the integrity of token operations by checking supply changes.
+
+## Best Practices
+
+- Use `ft-get-supply` in combination with `ft-mint?` and `ft-burn?` to manage token supply.
+- Consider caching the supply result if queried frequently to optimize gas usage.
+- Be aware that the supply can change between checks due to minting or burning operations.
+- Use in conjunction with `ft-get-balance` for comprehensive token management.
+
+## Practical Example: Supply-Limited Minting
+
+Let's implement a function that mints tokens only if it doesn't exceed a certain supply cap:
+
+```clarity
+(define-fungible-token my-token)
+(define-constant max-supply u1000000)
+
+(define-public (mint-if-under-cap (amount uint) (recipient principal))
+  (let ((current-supply (ft-get-supply my-token)))
+    (if (<= (+ current-supply amount) max-supply)
+        (ft-mint? my-token amount recipient)
+        (err u1))))
+
+;; Usage
+(mint-if-under-cap u500000 tx-sender) ;; Returns (ok true)
+(ft-get-supply my-token) ;; Returns u500000
+(mint-if-under-cap u600000 tx-sender) ;; Returns (err u1)
+```
+
+This example demonstrates:
+1. Using `ft-get-supply` to check the current token supply before minting.
+2. Implementing a supply cap check to limit token minting.
+3. Combining `ft-get-supply` with `ft-mint?` for supply management.
+
+## Common Pitfalls
+
+1. Assuming the supply remains constant between checks and operations.
+2. Not considering the potential for overflow when adding to the supply.
+3. Overusing `ft-get-supply` in loops, which can be inefficient for gas consumption.
+
+## Related Functions
+
+- `ft-mint?`: Used to create new tokens, increasing the total supply.
+- `ft-burn?`: Used to destroy tokens, decreasing the total supply.
+- `ft-get-balance`: Used to get the token balance of a specific principal.
+- `define-fungible-token`: Used to define the fungible token initially.
+
+## Conclusion
+
+The `ft-get-supply` function is an essential tool for managing and querying the total supply of fungible tokens in Clarity smart contracts. It provides a straightforward way to access the current circulating supply, enabling developers to implement supply-dependent logic and maintain transparency in token operations. When used effectively in combination with other token functions, it ensures the integrity and accuracy of token supply management within your smart contracts.

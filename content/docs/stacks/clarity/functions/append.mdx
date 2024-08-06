@@ -1,0 +1,85 @@
+---
+title: append
+description: Using the append function to add elements to lists in Clarity smart contracts, with considerations for maximum list length.
+---
+
+## Function Signature
+
+```clarity
+(append (list A) A)
+```
+
+- Input: A list of type A, and a single element of type A
+- Output: A new list of type A with the element appended
+
+## Why it matters
+
+The `append` function is crucial for:
+
+1. Dynamically growing lists within smart contracts.
+2. Adding new elements to existing data structures.
+3. Implementing queue-like behaviors in contract logic.
+4. Constructing lists incrementally during contract execution.
+
+## When to use it
+
+Use the `append` function when you need to:
+
+- Add a new element to the end of an existing list.
+- Construct a list by adding elements one at a time.
+- Implement data structures that require adding elements in order.
+- Combine existing lists with single elements.
+
+## Best Practices
+
+- Always use `as-max-len?` before appending to ensure the list doesn't exceed its maximum length.
+- Be mindful of the maximum list length specified when defining the list.
+- Consider using `concat` for joining two lists instead of repeatedly using `append`.
+- Remember that `append` creates a new list; it doesn't modify the original list in-place.
+- Use type-appropriate elements that match the list's declared type.
+
+## Practical Example: Event Log with Max Length Check
+
+Let's implement a simple event log system using `append` with a maximum length check:
+
+```clarity
+(define-data-var event-log (list 50 (string-ascii 50)) (list))
+
+(define-public (log-event (event (string-ascii 50)))
+  (let ((current-log (var-get event-log)))
+    (match (as-max-len? (append current-log event) u2)
+      success (ok (var-set event-log success))
+      (err u1))))
+
+(define-read-only (get-event-log)
+  (ok (var-get event-log)))
+
+;; Usage
+(log-event "Contract initialized")
+(log-event "User registered")
+(get-event-log) ;; Returns (ok ("Contract initialized" "User registered"))
+```
+
+This example demonstrates:
+1. Using `append` to add new events to an existing log.
+2. Using `as-max-len?` to check if appending would exceed the maximum list length.
+3. Handling the case where the list would exceed its maximum length.
+4. Combining `append` with other Clarity functions like `var-set` and `var-get`.
+
+## Common Pitfalls
+
+1. Forgetting to use `as-max-len?` when appending to a list with a maximum length.
+2. Attempting to append an element of the wrong type to a typed list.
+3. Assuming `append` will always succeed without checking the list's current length.
+4. Inefficiently using `append` in a loop when `concat` might be more appropriate.
+
+## Related Functions
+
+- `as-max-len?`: Used to check if a sequence exceeds a maximum length.
+- `concat`: Used for joining two lists together.
+- `list`: Used for creating new lists.
+- `len`: Used for getting the current length of a list.
+
+## Conclusion
+
+The `append` function is a powerful tool for manipulating lists in Clarity smart contracts. By understanding its behavior, limitations, and the necessity of using `as-max-len?` with lists that have a maximum length, developers can effectively manage dynamic data structures within their contracts. This enables more flexible and responsive smart contract designs while maintaining safeguards against exceeding predefined list size limits.

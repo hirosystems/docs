@@ -1,0 +1,71 @@
+---
+title: concat
+description: Concatenating sequences in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(concat sequence1 sequence2)
+```
+
+- Input: Two sequences of the same type (`sequence_A`, `sequence_A`)
+- Output: A concatenated sequence of the same type (`sequence_A`)
+
+## Why it matters
+
+The `concat` function is crucial for:
+
+1. Combining two sequences of the same type into a single sequence.
+2. Building longer strings, buffers, or lists from smaller components.
+3. Dynamically constructing data structures in smart contracts.
+4. Implementing string or data manipulation operations.
+
+## When to use it
+
+Use the `concat` function when you need to:
+
+- Join two strings together.
+- Combine two byte buffers into a single buffer.
+- Merge two lists into a single list.
+- Build complex data structures from simpler components.
+
+## Best Practices
+
+- Ensure that both input sequences are of the same type (e.g., both strings, both buffers, or both lists).
+- Be aware of the maximum length limitations for the resulting sequence type.
+- Consider using `concat` in combination with other sequence manipulation functions for more complex operations.
+- When working with strings, remember that Clarity distinguishes between ASCII and UTF-8 strings.
+
+## Practical Example: Dynamic Message Construction
+
+Let's implement a function that constructs a personalized message:
+
+```clarity
+(define-public (create-greeting (name (string-ascii 20)))
+  (ok (concat (concat "Hello, " name) "! Welcome to our dApp.")))
+
+;; Usage
+(create-greeting "Alice") ;; Returns (ok "Hello, Alice! Welcome to our dApp.")
+```
+
+This example demonstrates:
+1. Using `concat` to join multiple string components.
+2. Nesting `concat` calls to build a more complex string.
+3. Combining static and dynamic parts of a message.
+
+## Common Pitfalls
+
+1. Attempting to concatenate sequences of different types, which will result in an error.
+2. Not considering the maximum length of the resulting sequence, potentially leading to truncation.
+3. Forgetting that `concat` only works with two sequences at a time, requiring nested calls for multiple concatenations.
+
+## Related Functions
+
+- `len`: Used to get the length of a sequence.
+- `slice?`: Can be used to extract parts of a sequence before concatenation.
+- `append`: Used to add elements to the end of a list (similar to `concat` for lists).
+
+## Conclusion
+
+The `concat` function is a versatile tool for combining sequences in Clarity smart contracts. Whether you're working with strings, byte buffers, or lists, `concat` provides a straightforward way to join sequences together. By understanding its behavior and limitations, developers can effectively use `concat` to build dynamic data structures and implement various string and data manipulation operations in their smart contracts.

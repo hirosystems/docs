@@ -1,0 +1,78 @@
+---
+title: bit-shift-right
+description: Using the bit-shift-right function for bitwise right shift operations in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(bit-shift-right i1 shamt)
+```
+
+- Input: 
+  - `i1`: An integer (`int` or `uint`)
+  - `shamt`: A `uint` representing the number of places to shift
+- Output: An integer of the same type as `i1` (`int` or `uint`)
+
+## Why it matters
+
+The `bit-shift-right` function is crucial for:
+
+1. Performing efficient division by powers of 2.
+2. Implementing certain bitwise algorithms and data structures.
+3. Manipulating binary data at the bit level.
+4. Extracting specific bit patterns from integers.
+
+## When to use it
+
+Use the `bit-shift-right` function when you need to:
+
+- Divide a number by a power of 2 efficiently.
+- Implement certain cryptographic or hashing algorithms.
+- Perform low-level data manipulations involving binary operations.
+- Extract specific bits or bit patterns from integers.
+
+## Best Practices
+
+- Be aware that shifting right by `n` bits is equivalent to integer division by 2^n.
+- Remember that for signed integers (`int`), the sign bit is preserved during right shifts.
+- Use `uint` for `shamt` to avoid potential issues with negative shift amounts.
+- Consider the differences in behavior between signed and unsigned integers when right-shifting.
+
+## Practical Example: Efficient Power of 2 Division
+
+Let's implement a function that efficiently divides by powers of 2 using `bit-shift-right`:
+
+```clarity
+(define-read-only (divide-by-power-of-2 (value int) (power uint))
+  (bit-shift-right value power))
+
+(define-read-only (extract-lowest-bits (value uint) (num-bits uint))
+  (bit-and value (- (bit-shift-left u1 num-bits) u1)))
+
+;; Usage
+(divide-by-power-of-2 128 u3) ;; Returns 16 (128 / 2^3)
+(divide-by-power-of-2 -128 u3) ;; Returns -16 (-128 / 2^3)
+(extract-lowest-bits u171 u4) ;; Returns u11 (binary: 1011)
+```
+
+This example demonstrates:
+1. Using `bit-shift-right` for efficient division by powers of 2.
+2. Handling both positive and negative numbers in division.
+3. Combining `bit-shift-right` with other bitwise operations to extract specific bit patterns.
+
+## Common Pitfalls
+
+1. Forgetting that right-shifting signed integers preserves the sign bit.
+2. Not considering the modulo behavior when shifting by amounts greater than or equal to 128.
+3. Using a negative or non-uint value for the shift amount, which is not allowed.
+
+## Related Functions
+
+- `bit-shift-left`: Used for left-shifting bits.
+- `bit-and`: Often used in combination with `bit-shift-right` for masking operations.
+- `/`: Used for general division, but less efficient for powers of 2 compared to bit shifting.
+
+## Conclusion
+
+The `bit-shift-right` function is a powerful tool for bitwise operations in Clarity smart contracts. It enables efficient division by powers of 2 and is essential for extracting specific bit patterns and implementing various bitwise algorithms. Developers should be mindful of the differences between signed and unsigned integers when using this function, as well as its behavior with large shift amounts.

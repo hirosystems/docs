@@ -1,0 +1,169 @@
+---
+title: Access control
+description: Managing Permissions and Access Control with Principal Functions.
+---
+
+Principal functions in Clarity are essential tools for implementing robust access control and permission management in smart contracts. These functions allow developers to identify, authenticate, and authorize different entities interacting with the contract, ensuring that only the right parties can perform specific actions or access certain data.
+
+## Why these functions matter
+
+Clarity's principal functions are designed with blockchain-specific considerations in mind:
+
+1. Identify and authenticate users and contracts interacting with your smart contract.
+2. Implement role-based access control for different contract functions.
+3. Ensure that only authorized entities can perform certain actions or access specific data.
+4. Create multi-signature schemes for enhanced security.
+
+## Core Principal Functions
+
+### 1. tx-sender
+
+**What**: Returns the current transaction sender.
+**Why**: Essential for identifying who is calling a contract function.
+**When**: Use when you need to check permissions or record actions associated with the caller.
+**How**: 
+```clarity
+(tx-sender)
+```
+
+**Best Practices**: 
+- Always validate tx-sender before performing sensitive operations.
+- Don't rely solely on tx-sender for complex authentication schemes.
+
+**Example Use Case**: Restricting a function to be called only by the contract owner.
+
+```clarity
+(define-data-var contract-owner principal tx-sender)
+
+(define-public (restricted-function)
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err u1))
+    ;; Function logic here
+    (ok true)))
+```
+
+### 2. contract-caller
+
+**What**: Returns the immediate caller of the current contract.
+**Why**: Allows for more granular control in contract-to-contract interactions.
+**When**: Use when your contract might be called by other contracts and you need to distinguish between the original sender and the immediate caller.
+**How**: 
+```clarity
+(contract-caller)
+```
+
+**Best Practices**: 
+- Use in conjunction with tx-sender for comprehensive access control.
+- Be cautious of potential confusion between tx-sender and contract-caller in complex call chains.
+
+**Example Use Case**: Implementing a whitelist for contracts allowed to call a function.
+
+```clarity
+(define-map allowed-callers principal bool)
+
+(define-public (whitelisted-function)
+  (begin
+    (asserts! (default-to false (map-get? allowed-callers (contract-caller))) (err u2))
+    ;; Function logic here
+    (ok true)))
+```
+
+### 3. is-eq
+
+**What**: Checks if two values are equal.
+**Why**: Crucial for comparing principals and implementing access control logic.
+**When**: Use when you need to verify if a caller matches a specific principal or if two principals are the same.
+**How**: 
+```clarity
+(is-eq value1 value2)
+```
+
+**Best Practices**: 
+- Use for exact matching of principals.
+- Consider using in combination with other checks for more robust authentication.
+
+**Example Use Case**: Multi-signature functionality requiring approval from specific principals.
+
+```clarity
+(define-constant approver-1 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQRV9EJ7)
+(define-constant approver-2 'SP3X6QWWETNBZWGBK6DRGTR1KX50S74D3433WDGJY)
+
+(define-public (approve-transaction (transaction-id uint))
+  (begin
+    (asserts! (or (is-eq tx-sender approver-1) (is-eq tx-sender approver-2)) (err u3))
+    ;; Approval logic here
+    (ok true)))
+```
+
+## Practical Example: Simple Governance Contract
+
+Let's implement a basic governance contract that demonstrates role-based access control using principal functions. This contract will have an owner, administrators, and regular members, each with different permissions.
+
+```clarity
+;; Define maps to store roles
+(define-map administrators principal bool)
+(define-map members principal bool)
+
+;; Define data variables
+(define-data-var contract-owner principal tx-sender)
+(define-data-var proposal-counter uint u0)
+
+;; Define a map to store proposals
+(define-map proposals
+  uint
+  {
+    title: (string-ascii 50),
+    proposer: principal,
+    votes-for: uint,
+    votes-against: uint
+  }
+)
+
+;; Function to add an administrator (only owner can do this)
+(define-public (add-administrator (new-admin principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err u1))
+    (ok (map-set administrators new-admin true))))
+
+;; Function to add a member (only administrators can do this)
+(define-public (add-member (new-member principal))
+  (begin
+    (asserts! (default-to false (map-get? administrators contract-caller)) (err u2))
+    (ok (map-set members new-member true))))
+
+;; Function to create a proposal (only members can do this)
+(define-public (create-proposal (title (string-ascii 50)))
+  (let ((proposal-id (var-get proposal-counter)))
+    (asserts! (default-to false (map-get? members tx-sender)) (err u3))
+    (map-set proposals proposal-id
+      {
+        title: title,
+        proposer: tx-sender,
+        votes-for: u0,
+        votes-against: u0
+      })
+    (var-set proposal-counter (+ proposal-id u1))
+    (ok proposal-id)))
+
+;; Function to vote on a proposal (only members can do this)
+(define-public (vote (proposal-id uint) (vote-for bool))
+  (let ((proposal (unwrap! (map-get? proposals proposal-id) (err u4))))
+    (asserts! (default-to false (map-get? members tx-sender)) (err u5))
+    (if vote-for
+      (map-set proposals proposal-id
+        (merge proposal { votes-for: (+ (get votes-for proposal) u1) }))
+      (map-set proposals proposal-id
+        (merge proposal { votes-against: (+ (get votes-against proposal) u1) })))
+    (ok true)))
+
+;; Function to transfer ownership (only current owner can do this)
+(define-public (transfer-ownership (new-owner principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get contract-owner)) (err u6))
+    (var-set contract-owner new-owner)
+    (ok true)))
+```
+
+## Conclusion
+
+Principal functions in Clarity provide powerful tools for implementing secure and flexible access control in smart contracts. By understanding when and how to use these functions, developers can create robust permission systems, ensuring that only authorized entities can perform specific actions or access certain data. Always consider the specific security requirements of your application when implementing access control mechanisms using these principal functions.

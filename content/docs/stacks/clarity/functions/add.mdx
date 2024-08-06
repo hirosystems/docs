@@ -1,0 +1,97 @@
+---
+title: add
+description: Using the addition function for arithmetic operations in Clarity smart contracts.
+---
+
+The addition function (`+`) in Clarity performs addition on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
+
+## Function Signature
+
+```clarity
+(+ i1 i2...)
+```
+
+- Input: Two or more integers (int or uint)
+- Output: A single integer (int or uint)
+
+## Why it matters
+
+The addition function is crucial for:
+
+1. Performing basic arithmetic calculations within smart contracts.
+2. Incrementing counters or values.
+3. Combining multiple quantities or balances.
+4. Implementing mathematical formulas that involve addition.
+
+## When to use it
+
+Use the addition function when you need to:
+
+- Perform basic addition in your contract logic.
+- Increment values or counters.
+- Sum up multiple values.
+- Implement mathematical formulas that involve addition.
+
+## Best Practices
+
+- Always consider the possibility of overflow when adding large numbers.
+- Use appropriate types (int or uint) based on your needs and expected value ranges.
+- Be aware that adding negative numbers to positive numbers can result in subtraction.
+- Consider using checked arithmetic functions if overflow detection is critical.
+
+## Practical Example: Token Staking Rewards
+
+Let's implement a simple token staking contract that uses addition to calculate and distribute rewards:
+
+```clarity
+;; Define constants
+(define-constant REWARD_RATE u100)  ;; 100 tokens per block
+(define-constant BLOCKS_PER_YEAR u52560)  ;; Approximately 1 year in blocks
+
+;; Define data variables
+(define-map stakers principal uint)
+(define-data-var total-staked uint u0)
+
+;; Function to stake tokens
+(define-public (stake (amount uint))
+  (let ((current-stake (default-to u0 (map-get? stakers tx-sender))))
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (map-set stakers tx-sender (+ current-stake amount))
+    (var-set total-staked (+ (var-get total-staked) amount))
+    (ok true)))
+
+;; Function to calculate rewards
+(define-read-only (calculate-rewards (staker principal))
+  (let ((stake (default-to u0 (map-get? stakers staker))))
+    (if (is-eq stake u0)
+        u0
+        (let ((reward-share (/ (* stake BLOCKS_PER_YEAR) (var-get total-staked))))
+          (* reward-share REWARD_RATE)))))
+
+;; Function to claim rewards
+(define-public (claim-rewards)
+  (let ((rewards (calculate-rewards tx-sender)))
+    (try! (as-contract (stx-transfer? rewards tx-sender tx-sender)))
+    (ok rewards)))
+```
+
+This example demonstrates:
+1. Using addition to update the total staked amount when a user stakes tokens.
+2. Using addition in combination with multiplication and division to calculate rewards.
+3. Incrementing user stakes by adding new stake amounts to existing stakes.
+
+## Common Pitfalls
+
+1. Overlooking potential overflow when adding large numbers.
+2. Not considering the effect of adding negative numbers (for int types).
+3. Forgetting to update related variables or state when incrementing values.
+
+## Related Functions
+
+- `-`: Used for subtraction operations.
+- `*`: Used for multiplication operations.
+- `/`: Used for division operations.
+
+## Conclusion
+
+The addition function is a fundamental tool for performing arithmetic operations in Clarity smart contracts. By understanding its behavior with different types of inputs and potential edge cases, developers can use it effectively to implement various mathematical operations in their contracts, from simple increments to more complex reward calculations.

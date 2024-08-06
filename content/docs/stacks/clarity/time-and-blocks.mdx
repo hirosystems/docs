@@ -1,0 +1,131 @@
+---
+title: Time-based logic
+description: Implementing time-based logic with block info functions in Clarity.
+---
+
+Block info functions in Clarity provide crucial tools for implementing time-based logic in smart contracts. These functions allow developers to create contracts that can respond to the passage of time and changing blockchain states.
+
+## Why these functions matter
+
+Clarity's block info functions are designed with blockchain-specific considerations in mind:
+
+1. Determinism: These functions provide a consistent view of time across all nodes, ensuring contract behavior is predictable.
+2. Security: By relying on block information rather than system time, contracts are protected against time-based manipulations.
+3. Flexibility: Developers can create time-locked features, scheduled events, and other time-dependent logic.
+4. Blockchain Awareness: Contracts can make decisions based on the current state of the blockchain.
+
+## Core Block Info Functions
+
+### 1. block-height
+
+**What**: Returns the current block height of the Stacks blockchain.
+**Why**: Essential for creating logic based on blockchain progression.
+**When**: Use when you need to trigger actions or changes based on block height milestones.
+**How**: 
+```clarity
+(block-height)
+```
+
+**Best Practices**: 
+- Use for long-term time measurements (hours/days) rather than short intervals.
+- Consider potential variations in block time when planning time-sensitive operations.
+
+**Example Use Case**: Implementing a phased token release schedule.
+
+```clarity
+(define-public (claim-tokens)
+  (let ((release-height u100000))
+    (if (>= block-height release-height)
+        (ok (release-tokens))
+        (err u1))))
+```
+
+### 2. burn-block-height
+
+**What**: Returns the current block height of the underlying burn chain (Bitcoin).
+**Why**: Provides a more stable time reference, as Bitcoin has more consistent block times.
+**When**: Use for more precise time-based logic or when synchronizing with Bitcoin network events.
+**How**: 
+```clarity
+(burn-block-height)
+```
+
+**Best Practices**: 
+- Prefer this over `block-height` for more accurate time estimations.
+- Remember that Bitcoin block times can still vary, so allow for some flexibility.
+
+**Example Use Case**: Creating a time-locked vault that opens after a specific Bitcoin block height.
+
+```clarity
+(define-constant unlock-height u700000)
+
+(define-public (withdraw-from-vault (amount uint))
+  (if (>= burn-block-height unlock-height)
+      (ok (transfer-tokens amount))
+      (err u2)))
+```
+
+### 3. get-block-info?
+
+**What**: Retrieves information about a specific block.
+**Why**: Allows contracts to access historical block data for complex time-based logic.
+**When**: Use when you need to verify or act on information from past blocks.
+**How**: 
+```clarity
+(get-block-info? property-name block-height-int)
+```
+
+**Best Practices**: 
+- Cache retrieved information when possible to save processing costs.
+- Be aware of the limit on how far back you can query block information.
+
+**Example Use Case**: Implementing a reward system based on user activity in specific time periods.
+
+```clarity
+(define-public (claim-period-reward (period uint))
+  (let ((period-end-height (get-period-end-height period))
+        (current-winner (get-block-info? winner-id period-end-height)))
+    (if (is-eq current-winner tx-sender)
+        (ok (distribute-reward tx-sender))
+        (err u3))))
+```
+
+### Practical Example: Token Balance Snapshot for Voting
+
+Let's implement a simple voting system where voting power is determined by a user's token balance at a specific "snapshot" block height. This example combines the use of `at-block` and `get-block-info?` functions to create a time-based voting mechanism.
+
+```clarity
+;; Define a simple token balance map
+(define-map token-balances principal uint)
+
+;; Define a map to store votes
+(define-map votes principal uint)
+
+;; Set a snapshot block height
+(define-data-var snapshot-height uint u100000)
+
+;; Function to get a user's balance at the snapshot height
+(define-read-only (get-snapshot-balance (user principal))
+  (match (get-block-info? id-header-hash (var-get snapshot-height))
+    snapshot-block (at-block snapshot-block
+      (default-to u0 (map-get? token-balances user)))
+    u0))
+
+;; Function to cast a vote
+(define-public (cast-vote (amount uint))
+  (let 
+    ((snapshot-balance (get-snapshot-balance tx-sender))
+     (current-votes (default-to u0 (map-get? votes tx-sender))))
+    (asserts! (<= amount snapshot-balance) (err u1)) ;; Can't vote more than snapshot balance
+    (asserts! (< (+ amount current-votes) (+ snapshot-balance u1)) (err u2)) ;; Prevent overflow
+    (map-set votes tx-sender (+ amount current-votes))
+    (ok true)))
+
+;; Function to check total votes
+(define-read-only (get-total-votes)
+  (fold + (map-values votes) u0))
+```
+
+## Conclusion
+
+Block info functions in Clarity provide powerful tools for implementing time-based logic in smart contracts. By understanding when and how to use these functions, developers can create contracts that respond dynamically to the progression of the blockchain, enabling features like time-locks, scheduled events, and historical data analysis. Always consider the specific requirements of your application and the potential for block time variations when implementing time-based logic using these block info functions.

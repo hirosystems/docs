@@ -1,0 +1,83 @@
+---
+title: as-contract
+description: Using the as-contract function to execute expressions as the contract principal in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(as-contract expr)
+```
+
+- Input: An expression `expr`
+- Output: The result of `expr`
+
+## Why it matters
+
+The `as-contract` function is crucial for:
+
+1. Executing operations with the contract's authority.
+2. Allowing the contract to send assets or perform privileged actions.
+3. Implementing contract-owned resources or funds.
+4. Enabling more complex contract interactions and architectures.
+
+## When to use it
+
+Use the `as-contract` function when you need to:
+
+- Perform actions that require the contract's principal.
+- Send assets (like STX or tokens) from the contract's balance.
+- Execute privileged operations that should only be done by the contract itself.
+- Implement contract-owned resources or escrow-like functionality.
+
+## Best Practices
+
+- Use `as-contract` sparingly and only when necessary to minimize potential security risks.
+- Ensure that the logic leading to `as-contract` calls is properly secured and access-controlled.
+- Be aware that `as-contract` changes the `tx-sender` context for the duration of the expression.
+- Combine `as-contract` with other security measures like `contract-caller` checks for robust security.
+
+## Practical Example: Contract-Managed Treasury
+
+Let's implement a simple treasury system where the contract can distribute funds:
+
+```clarity
+(define-data-var treasury-balance uint u0)
+
+(define-public (deposit (amount uint))
+  (begin
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (var-set treasury-balance (+ (var-get treasury-balance) amount))
+    (ok true)))
+
+(define-public (withdraw (recipient principal) (amount uint))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) (err u403))
+    (asserts! (<= amount (var-get treasury-balance)) (err u401))
+    (try! (as-contract (stx-transfer? amount tx-sender recipient)))
+    (var-set treasury-balance (- (var-get treasury-balance) amount))
+    (ok true)))
+
+(define-constant contract-owner tx-sender)
+```
+
+This example demonstrates:
+1. Using `as-contract` in the `deposit` function to receive funds as the contract.
+2. Using `as-contract` in the `withdraw` function to send funds from the contract's balance.
+3. Combining `as-contract` with access control (`is-eq tx-sender contract-owner`) for security.
+
+## Common Pitfalls
+
+1. Using `as-contract` unnecessarily, which can lead to unexpected behavior.
+2. Forgetting that `as-contract` changes the `tx-sender` context, potentially affecting other parts of the code.
+3. Not implementing proper access controls around `as-contract` calls, which could lead to unauthorized actions.
+
+## Related Functions
+
+- `contract-caller`: Used to get the original caller of a contract function.
+- `tx-sender`: Represents the current sender (changes within `as-contract`).
+- `stx-transfer?`: Often used with `as-contract` for token transfers.
+
+## Conclusion
+
+The `as-contract` function is a powerful tool in Clarity that allows contracts to perform actions with their own authority. While it enables complex contract architectures and functionalities, it should be used judiciously and with proper security measures to prevent potential vulnerabilities or unintended behaviors in smart contracts.
