@@ -13,10 +13,13 @@ Once the devnet reaches the right block height, (Bitcoin block #108 by default),
 `stack-extend` requests to the new PoX contract. In Nakamoto mode, devnet has 2 signers. Eventually,
 you can observe the `vote-for-aggregate-public-key` transactions that they send.
 
-By default, the Devnet will not get to Epoch 3.0 ("Nakamoto activation" with fast blocks). For that, the `epoch_3_0` height as to be set manually in the `Devnet.toml` file. Using one of your Clarinet projects, or a new one (with `$ clarinet new nakademo`), update the
-`settings/Devnet.toml` with the following settings:
+By default, the Devnet will not get to Epoch 3.0 ("Nakamoto activation" with fast blocks). For that,
+the `epoch_3_0` height as to be set manually in the `Devnet.toml` file. Using one of your Clarinet
+projects, or a new one (with `$ clarinet new <project-name>`), update the `settings/Devnet.toml`
+with the following settings:
 
 ```toml
+# settings/Devnet.toml
 [devnet]
 epoch_3_0 = 144
 
@@ -24,20 +27,58 @@ stacks_node_image_url = "quay.io/hirosystems/stacks-node:devnet-3.0"
 stacks_signer_image_url = "quay.io/hirosystems/stacks-signer:devnet-3.0"
 ```
 
-Set a contract to be deployed in epoch 3.0 with Clarity 3. You can create a new one with `$ clarinet contract new nakademo`). It needs to be manually update in the project manifest (Clarinet.toml)
+At the end of the `Devnet.toml` file, you must make sure that the `pox_stacking_orders` are properly
+set. You should have 3 stacking orders from 3 different accounts. All should start at **cycle 1**
+and take at least **2 slots**. You also need to enable the auto-extends property. Becasue Nakamoto
+relies on the Stackers to sign blocks, these settings ensure that there are engouh stacked STX for
+each cycles. Here is what it looks like by default in new projects:
 
 ```toml
+# settings/Devnet.toml
+[[devnet.pox_stacking_orders]]
+start_at_cycle = 1
+duration = 10
+auto_extend = true
+wallet = "wallet_1"
+slots = 2
+btc_address = "mr1iPkD9N3RJZZxXRk7xF9d36gffa6exNC"
+
+[[devnet.pox_stacking_orders]]
+start_at_cycle = 1
+duration = 10
+auto_extend = true
+wallet = "wallet_2"
+slots = 2
+btc_address = "muYdXKmX9bByAueDe6KFfHd5Ff1gdN9ErG"
+
+[[devnet.pox_stacking_orders]]
+start_at_cycle = 1
+duration = 10
+auto_extend = true
+wallet = "wallet_3"
+slots = 2
+btc_address = "mvZtbibDAAA3WLpY7zXXFqRa3T4XSknBX7"
+```
+
+Set a contract to be deployed in epoch 3.0 with Clarity 3. You can create a new one with
+`$ clarinet contract new <contract-name>`). It needs to be manually update in the project manifest
+(Clarinet.toml)
+
+```toml
+# Clarinet.toml
 [contracts.nakademo]
 path = 'contracts/nakademo.clar'
 clarity_version = 3
 epoch = 3.0
 ```
 
-Start devnet with `clarinet devnet start`.
+Start devnet with `clarinet devnet start`, you should see epoch 3.0 and fast blocks at Bitcoin
+block 144.
 
 ## Deploy contracts on the Nakamoto Testnets
 
-A Nakamoto testnet is available and running in Epoch 3.0. Clarinet can be used to deploy Clarity 3 contracts on this tesnet.
+A Nakamoto testnet is available and running in Epoch 3.0. Clarinet can be used to deploy Clarity 3
+contracts on this tesnet.
 
 In a Clarinet project, the `settings/Testnet.toml` file can be updated like so:
 
