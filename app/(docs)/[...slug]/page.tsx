@@ -18,8 +18,6 @@ export default function Page({ params }: { params: Param }): JSX.Element {
 
   if (!page) notFound();
 
-  const path = `content/docs/${page.file.path}`;
-
   // TODO: this is a less than ideal solution for creating different titles between sidebar and page
   const generatePrefix = (page: any) => {
     // Mapping of words to their desired capitalization forms
@@ -30,6 +28,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       platform: "Hiro Platform",
       hacks: "Hiro Hacks",
       "clarinet-js-sdk": "Clarinet JS SDK",
+      "platform-api": "Platform API",
     };
 
     if (page.file?.name === "index" && page.slugs[1]) {
