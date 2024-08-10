@@ -1,0 +1,94 @@
+---
+title: is-err
+description: Checking if a response is an error in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(is-err value)
+```
+
+- Input: `(response A B)`
+- Output: `bool`
+
+## Why it matters
+
+The `is-err` function is crucial for:
+
+1. Determining if a response value represents an error.
+2. Implementing error handling and validation logic.
+3. Ensuring robust contract behavior by checking for errors.
+4. Simplifying conditional checks based on response types.
+
+## When to use it
+
+Use `is-err` when you need to:
+
+- Check if a response value is an error.
+- Implement conditional logic based on the success or failure of operations.
+- Validate the results of function calls that return response types.
+- Handle errors gracefully in your contract logic.
+
+## Best Practices
+
+- Use `is-err` in combination with `match` or `if` for comprehensive error handling.
+- Ensure that the response value being checked is of the correct type.
+- Use meaningful variable names for better readability.
+- Combine with other response handling functions like `is-ok` for complete validation.
+
+## Practical Example: Validating a Token Transfer
+
+Let's implement a function that validates a token transfer and checks for errors:
+
+```clarity
+(define-map userBalances { userId: principal } { balance: uint })
+
+(define-public (transfer-tokens (amount uint) (recipient principal))
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? userBalances { userId: tx-sender })))
+      (recipientBalance (default-to u0 (map-get? userBalances { userId: recipient })))
+      (transferResult (if (>= senderBalance amount)
+        (begin
+          (map-set userBalances { userId: tx-sender } { balance: (- senderBalance amount) })
+          (map-set userBalances { userId: recipient } { balance: (+ recipientBalance amount) })
+          (ok true)
+        )
+        (err u1)
+      ))
+    )
+    (if (is-err transferResult)
+      (err u2)
+      (ok true)
+    )
+  )
+)
+
+;; Usage
+(map-set userBalances { userId: tx-sender } { balance: u100 })
+(transfer-tokens u50 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true)
+(transfer-tokens u200 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (err u2)
+```
+
+This example demonstrates:
+1. Using `is-err` to check if the token transfer operation resulted in an error.
+2. Implementing conditional logic based on the success or failure of the transfer.
+3. Handling both the success and error cases appropriately.
+
+## Common Pitfalls
+
+1. Assuming the response value is always of the correct type, leading to type errors.
+2. Not handling all possible error cases, resulting in incomplete error handling.
+3. Overlooking the need for comprehensive validation and error checking.
+4. Using `is-err` without meaningful error codes or messages, making debugging harder.
+
+## Related Functions
+
+- `is-ok`: Checks if a response value is `ok`.
+- `err`: Constructs an error response.
+- `ok`: Constructs a success response.
+
+## Conclusion
+
+The `is-err` function is a fundamental tool for error handling in Clarity smart contracts. It allows developers to check if a response value represents an error, enabling robust and comprehensive error handling and validation logic. When used effectively, `is-err` enhances the reliability and maintainability of your smart contract code by ensuring that errors are detected and handled appropriately.

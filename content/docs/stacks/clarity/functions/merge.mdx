@@ -1,0 +1,83 @@
+---
+title: merge
+description: Merging tuples in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(merge tuple1 tuple2)
+```
+
+- Input: `tuple, tuple`
+- Output: `tuple`
+
+## Why it matters
+
+The `merge` function is crucial for:
+
+1. Combining fields from two tuples into a single tuple.
+2. Simplifying the process of updating and managing data structures.
+3. Ensuring data integrity by creating new tuples without mutating the original ones.
+4. Enhancing code readability and maintainability by abstracting tuple merging operations.
+
+## When to use it
+
+Use `merge` when you need to:
+
+- Combine fields from two tuples into a single tuple.
+- Update and manage data structures in a clean and efficient manner.
+- Ensure data integrity by creating new tuples without mutating the original ones.
+- Simplify and abstract tuple merging operations.
+
+## Best Practices
+
+- Ensure the tuples being merged have compatible fields.
+- Use meaningful variable names for better readability.
+- Combine with other tuple and map functions for comprehensive data management.
+- Be aware of the performance implications of frequent tuple merging in large data structures.
+
+## Practical Example: Merging User Data
+
+Let's implement a function that merges additional data into a user's existing data:
+
+```clarity
+(define-map users { id: int } { name: (string-ascii 12), address: (optional principal) })
+
+(define-public (update-user-address (user-id int) (new-address principal))
+  (let
+    (
+      (user (unwrap-panic (map-get? users { id: user-id })))
+      (updated-user (merge user { address: (some new-address) }))
+    )
+    (map-set users { id: user-id } updated-user)
+  )
+)
+
+;; Usage
+(map-insert users { id: 1337 } { name: "john", address: none }) ;; Returns true
+(update-user-address 1337 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns true
+(map-get? users { id: 1337 }) ;; Returns (some (tuple (name "john") (address (some SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF))))
+```
+
+This example demonstrates:
+1. Using `merge` to combine a user's existing data with new address data.
+2. Implementing a public function to update the user's address.
+3. Handling both the retrieval and updating of user data in a clean and efficient manner.
+
+## Common Pitfalls
+
+1. Using `merge` with tuples that have incompatible fields, causing runtime errors.
+2. Assuming the tuples will always have the expected fields, leading to unhandled cases.
+3. Not handling all possible conditions, resulting in incomplete data management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `map-set`: Sets the value associated with a key in a map.
+- `map-get?`: Retrieves an entry from a map.
+- `map-insert`: Inserts a value into a map if the key does not already exist.
+
+## Conclusion
+
+The `merge` function is a fundamental tool for combining tuples in Clarity smart contracts. It allows developers to manage and update data structures efficiently, ensuring data integrity and enhancing code readability. When used effectively, `merge` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to manage tuple merging operations.

@@ -1,0 +1,125 @@
+---
+title: tuple
+description: Using tuples to group data values with named fields in Clarity smart contracts.
+---
+
+## Type Definition
+
+```clarity
+{label-0: value-type-0, label-1: value-type-1, ...}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Input: `various types`
+- Output: `tuple`
+
+## Why it matters
+
+The `tuple` type is crucial for:
+
+1. Grouping related data values with named fields.
+2. Implementing complex data structures in smart contracts.
+3. Ensuring data integrity by providing a clear structure for related values.
+4. Simplifying the process of handling grouped data in smart contracts.
+
+## When to use it
+
+Use `tuple` when you need to:
+
+- Group related data values with named fields.
+- Implement complex data structures in your smart contract.
+- Ensure data integrity by providing a clear structure for related values.
+- Handle grouped data in your smart contract.
+
+## Best Practices
+
+- Use descriptive names for tuple fields for better readability.
+- Ensure the types of the tuple fields are appropriate for the data they represent.
+- Combine with other data types and functions for comprehensive data management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Using Tuples to Store User Information
+
+Let's implement a function that stores and retrieves user information using tuples:
+
+```clarity
+(define-map user-info { user-id: principal } { name: (string-ascii 20), age: uint })
+
+(define-public (set-user-info (user principal) (name (string-ascii 20)) (age uint))
+  (map-set user-info { user-id: user } { name: name, age: age })
+  (ok true)
+)
+
+(define-public (get-user-info (user principal))
+  (map-get? user-info { user-id: user })
+)
+
+;; Usage
+(set-user-info tx-sender "Alice" u30) ;; Sets the user info
+(get-user-info tx-sender) ;; Returns (some { name: "Alice", age: u30 })
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+This example demonstrates:
+1. Using tuples to store user information with named fields.
+2. Implementing functions to set and get user information using tuples.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using non-descriptive names for tuple fields, causing confusion.
+2. Assuming the tuple structure will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete data management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `map-set`: Sets a value in a map.
+- `map-get?`: Retrieves a value from a map.
+- `default-to`: Provides a default value if an optional is `none`.
+
+## Conclusion
+
+The `tuple` type is a fundamental tool for grouping related data values with named fields in Clarity smart contracts. It allows developers to implement complex data structures, ensuring data integrity and simplifying data management. When used effectively, `tuple` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle grouped data.

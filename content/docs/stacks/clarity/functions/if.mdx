@@ -1,0 +1,85 @@
+---
+title: if
+description: Conditional evaluation in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(if bool expr1 expr2)
+```
+
+- Input: 
+  - `bool`: A boolean expression
+  - `expr1`: An expression to evaluate if `bool` is true
+  - `expr2`: An expression to evaluate if `bool` is false
+- Output: The result of `expr1` if `bool` is true, otherwise the result of `expr2`
+
+## Why it matters
+
+The `if` function is crucial for:
+
+1. Implementing conditional logic in smart contracts.
+2. Making decisions based on dynamic conditions.
+3. Controlling the flow of contract execution.
+4. Simplifying complex logic by branching based on conditions.
+
+## When to use it
+
+Use `if` when you need to:
+
+- Execute different code paths based on a condition.
+- Implement logic that depends on the state or input values.
+- Control the flow of your contract based on dynamic conditions.
+- Simplify complex decision-making processes.
+
+## Best Practices
+
+- Ensure that both `expr1` and `expr2` return the same type.
+- Use clear and meaningful boolean expressions for readability.
+- Avoid deeply nested `if` statements for better maintainability.
+- Combine with other control flow functions like `match` for more complex logic.
+
+## Practical Example: Conditional Token Transfer
+
+```clarity
+(define-map userBalances { userId: principal } { balance: uint })
+
+(define-public (transfer-tokens (amount uint) (recipient principal))
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? userBalances { userId: tx-sender })))
+    )
+    (if (>= senderBalance amount)
+      (begin
+        (map-set userBalances { userId: tx-sender } { balance: (- senderBalance amount) })
+        (map-set userBalances { userId: recipient } { balance: (+ (default-to u0 (map-get? userBalances { userId: recipient })) amount) })
+        (ok true)
+      )
+      (err u1)
+    )
+  )
+)
+```
+
+This example demonstrates:
+1. Using `if` to check if the sender has sufficient balance before transferring tokens.
+2. Executing different code paths based on the result of the balance check.
+3. Handling both the success and failure cases appropriately.
+
+## Common Pitfalls
+
+1. Forgetting that both `expr1` and `expr2` must return the same type.
+2. Using overly complex boolean expressions, making the code hard to read.
+3. Not handling all possible conditions, leading to unexpected behavior.
+4. Overusing `if` for logic that could be simplified with other control flow functions.
+
+## Related Functions
+
+- `match`: Used for pattern matching and handling multiple conditions.
+- `and`: Logical AND operator for combining boolean expressions.
+- `or`: Logical OR operator for combining boolean expressions.
+
+## Conclusion
+
+The `if` function is a fundamental tool for implementing conditional logic in Clarity smart contracts. It allows developers to control the flow of contract execution based on dynamic conditions, enabling more complex and responsive contract behavior. When used effectively, `if` simplifies decision-making processes and enhances the readability and maintainability of your smart contract code.

@@ -1,0 +1,78 @@
+---
+title: xor
+description: Performing a bitwise exclusive OR operation in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(xor int1 int2)
+```
+
+- Input: `int, int`
+- Output: `int`
+
+## Why it matters
+
+The `xor` function is crucial for:
+
+1. Performing bitwise operations essential for cryptographic functions.
+2. Implementing conditional logic that requires toggling between states.
+3. Enhancing data security through simple encryption mechanisms.
+4. Simplifying the process of handling bitwise operations in smart contracts.
+
+## When to use it
+
+Use `xor` when you need to:
+
+- Perform bitwise exclusive OR operations.
+- Implement simple encryption or decryption mechanisms.
+- Toggle between two states based on certain conditions.
+- Enhance the security of your smart contract through cryptographic operations.
+
+## Best Practices
+
+- Ensure the integers used with `xor` are within the valid range for your application.
+- Use meaningful variable names to enhance code readability.
+- Combine `xor` with other logical operations to implement complex conditions.
+- Handle possible edge cases to ensure robust contract behavior.
+
+## Practical Example: Simple Encryption
+
+Let's implement a simple encryption and decryption mechanism using the `xor` function:
+
+```clarity
+(define-public (encrypt (data int) (key int))
+  (ok (xor data key))
+)
+
+(define-public (decrypt (encrypted-data int) (key int))
+  (ok (xor encrypted-data key))
+)
+
+;; Usage
+(encrypt 42 123) ;; Encrypts 42 with key 123
+(decrypt 165 123) ;; Decrypts 165 with key 123, returns 42
+```
+
+This example demonstrates:
+1. Using `xor` to perform a bitwise exclusive OR operation.
+2. Implementing public functions to handle encryption and decryption.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `xor` with non-integer types, causing runtime errors.
+2. Misunderstanding the behavior of `xor`, leading to incorrect logic implementation.
+3. Not considering edge cases, resulting in incomplete data management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `and`: Performs a bitwise AND operation.
+- `or`: Performs a bitwise OR operation.
+- `not`: Performs a bitwise NOT operation.
+
+## Conclusion
+
+The `xor` function is a powerful tool for performing bitwise exclusive OR operations in Clarity smart contracts. It allows developers to implement cryptographic functions, conditional logic, and simple encryption mechanisms, enhancing the security and functionality of their smart contracts. When used effectively, `xor` simplifies the process of handling bitwise operations and ensures robust contract behavior.

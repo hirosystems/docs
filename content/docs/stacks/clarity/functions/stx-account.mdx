@@ -1,0 +1,74 @@
+---
+title: stx-account
+description: Querying STX account information in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(stx-account principal)
+```
+
+- Input: `principal`
+- Output: `(tuple (balance uint) (nonce uint) (stx-locked uint))`
+
+## Why it matters
+
+The `stx-account` function is crucial for:
+
+1. Querying detailed information about a STX account.
+2. Implementing logic that requires account balance, nonce, and locked STX information.
+3. Ensuring data integrity by providing accurate account details.
+4. Simplifying the process of handling account-related operations in smart contracts.
+
+## When to use it
+
+Use `stx-account` when you need to:
+
+- Query detailed information about a STX account.
+- Implement logic that requires account balance, nonce, and locked STX information.
+- Ensure accurate account details for data integrity.
+- Handle account-related operations in your smart contract.
+
+## Best Practices
+
+- Ensure the `principal` is correctly formatted and valid.
+- Use meaningful variable names for better readability.
+- Combine with other account functions for comprehensive account management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Querying STX Account Information
+
+Let's implement a function that queries the STX account information for a given principal:
+
+```clarity
+(define-public (get-stx-account-info (account principal))
+  (stx-account account)
+)
+
+;; Usage
+(get-stx-account-info 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) 
+;; Returns (tuple (balance u1000) (nonce u0) (stx-locked u0))
+```
+
+This example demonstrates:
+1. Using `stx-account` to query detailed information about a STX account.
+2. Implementing a public function to handle the account information query.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `stx-account` with an incorrectly formatted or invalid `principal`, causing the operation to fail.
+2. Assuming the account information will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete account management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `stx-get-balance`: Queries the STX balance of a principal.
+- `stx-transfer?`: Transfers STX from one principal to another.
+- `stx-burn?`: Burns STX from a principal's account.
+
+## Conclusion
+
+The `stx-account` function is a fundamental tool for querying detailed STX account information in Clarity smart contracts. It allows developers to implement logic that requires account balance, nonce, and locked STX information, ensuring data integrity and simplifying account-related operations. When used effectively, `stx-account` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle account information queries.

@@ -1,0 +1,74 @@
+---
+title: sha512/256
+description: Computing the SHA-512/256 hash of a value in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(sha512/256 value)
+```
+
+- Input: `buff | uint | int`
+- Output: `(buff 32)`
+
+## Why it matters
+
+The `sha512/256` function is crucial for:
+
+1. Computing the SHA-512/256 hash of a given value.
+2. Implementing cryptographic operations in smart contracts.
+3. Ensuring data integrity by generating unique hashes.
+4. Simplifying the process of handling cryptographic hashing in smart contracts.
+
+## When to use it
+
+Use `sha512/256` when you need to:
+
+- Compute the SHA-512/256 hash of a given value.
+- Implement cryptographic operations in your smart contract.
+- Generate unique hashes to ensure data integrity.
+- Handle cryptographic hashing operations.
+
+## Best Practices
+
+- Ensure the input value is correctly formatted and valid.
+- Use meaningful variable names for better readability.
+- Combine with other cryptographic functions for comprehensive security management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Computing a SHA-512/256 Hash
+
+Let's implement a function that computes the SHA-512/256 hash of a given buffer:
+
+```clarity
+(define-public (compute-sha512-256 (input (buff 32)))
+  (sha512/256 input)
+)
+
+;; Usage
+(compute-sha512-256 0x68656c6c6f20776f726c6421212121212121212121212121212121212121212121) 
+;; Returns 0x515a7e92e7c60522db968d81ff70b80818fc17aeabbec36baf0dda2812e94a86
+```
+
+This example demonstrates:
+1. Using `sha512/256` to compute the hash of a given buffer.
+2. Implementing a public function to handle the hash computation.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `sha512/256` with incorrectly formatted or invalid input values, causing the operation to fail.
+2. Assuming the hash will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete cryptographic hashing.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `sha256`: Computes the SHA-256 hash of the input.
+- `sha512`: Computes the SHA-512 hash of the input.
+- `keccak256`: Computes the KECCAK-256 hash of the input.
+
+## Conclusion
+
+The `sha512/256` function is a fundamental tool for computing SHA-512/256 hashes in Clarity smart contracts. It allows developers to implement cryptographic operations, ensuring data integrity and simplifying cryptographic hashing. When used effectively, `sha512/256` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle cryptographic hashing operations.

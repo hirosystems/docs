@@ -1,0 +1,88 @@
+---
+title: int-to-utf8
+description: Converting integers to UTF-8 string representations in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(int-to-utf8 value)
+```
+
+
+
+
+- Input: `int | uint`
+- Output: `(string-utf8 40)`
+
+## Why it matters
+
+The `int-to-utf8` function is crucial for:
+
+1. Converting integer values to their UTF-8 string representations.
+2. Facilitating the display and logging of numeric data in a more versatile encoding.
+3. Enabling the use of numeric values in contexts that require UTF-8 strings.
+4. Simplifying the process of creating human-readable outputs from numeric data.
+
+## When to use it
+
+Use `int-to-utf8` when you need to:
+
+- Convert an integer or unsigned integer to a UTF-8 string.
+- Display numeric values in a human-readable format.
+- Log or store numeric data as UTF-8 strings.
+- Prepare numeric data for concatenation with other UTF-8 strings.
+
+## Best Practices
+
+- Ensure the integer value is within the range that can be represented as a string.
+- Use meaningful variable names for better readability.
+- Combine with other string functions for more complex string manipulations.
+- Be aware of the maximum length of the resulting string (40 characters).
+
+## Practical Example: Logging a User's Balance
+
+Let's implement a function that logs a user's balance as a UTF-8 string:
+
+```clarity
+(define-map userBalances { userId: principal } { balance: uint })
+
+(define-public (log-balance (user principal))
+  (let
+    (
+      (balance (default-to u0 (map-get? userBalances { userId: user })))
+      (balanceStr (int-to-utf8 balance))
+    )
+    (print balanceStr)
+  )
+)
+
+;; Usage
+(map-set userBalances { userId: tx-sender } { balance: u100 })
+(log-balance tx-sender) ;; Logs "100"
+```
+
+
+
+
+This example demonstrates:
+1. Using `int-to-utf8` to convert a user's balance to a UTF-8 string.
+2. Logging the string representation of the balance using `print`.
+3. Handling the case where the user has no balance set.
+
+## Common Pitfalls
+
+1. Assuming the resulting string will always fit within 40 characters.
+2. Forgetting to handle cases where the integer value is not set or is zero.
+3. Using `int-to-utf8` in performance-critical sections without considering the overhead.
+4. Not combining with other string functions for more complex manipulations.
+
+## Related Functions
+
+- `print`: Used to log or display string values.
+- `concat`: Used to concatenate multiple strings.
+- `default-to`: Used to provide default values for optional types.
+
+## Conclusion
+
+The `int-to-utf8` function is a powerful tool for converting integer values to their UTF-8 string representations in Clarity smart contracts. It enables developers to create human-readable outputs from numeric data, facilitating logging, display, and storage of numeric values as strings. When used effectively, `int-to-utf8` enhances the readability and usability of numeric data within your smart contract code.

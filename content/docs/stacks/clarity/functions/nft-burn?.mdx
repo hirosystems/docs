@@ -1,0 +1,77 @@
+---
+title: nft-burn?
+description: Burning a non-fungible token (NFT) in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(nft-burn? asset-class asset-identifier sender)
+```
+
+- Input: `AssetName, A, principal`
+- Output: `(response bool uint)`
+
+## Why it matters
+
+The `nft-burn?` function is crucial for:
+
+1. Reducing the circulating supply of a non-fungible token (NFT).
+2. Managing the lifecycle of NFTs by allowing their destruction.
+3. Ensuring data integrity by removing ownership records of burned NFTs.
+4. Simplifying the process of handling NFT burn operations in smart contracts.
+
+## When to use it
+
+Use `nft-burn?` when you need to:
+
+- Reduce the circulating supply of an NFT.
+- Manage the lifecycle of NFTs by allowing their destruction.
+- Remove ownership records of burned NFTs.
+- Handle NFT burn operations in your smart contract.
+
+## Best Practices
+
+- Ensure the `sender` principal owns the NFT before attempting to burn it.
+- Use meaningful variable names for better readability.
+- Combine with other NFT functions for comprehensive NFT management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Burning an NFT
+
+Let's implement a function that burns an NFT owned by the sender:
+
+```clarity
+(define-non-fungible-token stackaroo (string-ascii 40))
+
+(define-public (burn-nft (id (string-ascii 40)))
+  (nft-burn? stackaroo id tx-sender)
+)
+
+;; Usage
+(nft-mint? stackaroo "Roo" tx-sender) ;; Returns (ok true)
+(burn-nft "Roo") ;; Returns (ok true)
+(nft-burn? stackaroo "Roo" tx-sender) ;; Returns (err u3) because the asset no longer exists
+```
+
+This example demonstrates:
+1. Using `nft-burn?` to burn an NFT owned by the sender.
+2. Implementing a public function to handle the burn operation.
+3. Handling both the successful burn and the case where the asset no longer exists.
+
+## Common Pitfalls
+
+1. Using `nft-burn?` without ensuring the `sender` owns the NFT, causing the operation to fail.
+2. Assuming the NFT will always exist, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete NFT management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `nft-mint?`: Mints a new non-fungible token.
+- `nft-transfer?`: Transfers ownership of a non-fungible token.
+- `nft-get-owner?`: Retrieves the owner of a non-fungible token.
+
+## Conclusion
+
+The `nft-burn?` function is a fundamental tool for managing the lifecycle of non-fungible tokens in Clarity smart contracts. It allows developers to reduce the circulating supply of NFTs, manage their destruction, and ensure data integrity. When used effectively, `nft-burn?` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle NFT burn operations.

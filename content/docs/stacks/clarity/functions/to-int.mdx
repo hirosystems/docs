@@ -1,0 +1,75 @@
+---
+title: to-int
+description: Converting an unsigned integer to a signed integer in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(to-int value)
+```
+
+- Input: `uint`
+- Output: `int`
+
+## Why it matters
+
+The `to-int` function is crucial for:
+
+1. Converting unsigned integers to signed integers.
+2. Implementing logic that requires signed integer operations.
+3. Ensuring data integrity by validating the conversion process.
+4. Simplifying the process of handling integer conversions in smart contracts.
+
+## When to use it
+
+Use `to-int` when you need to:
+
+- Convert an unsigned integer to a signed integer.
+- Implement logic that requires signed integer operations.
+- Validate the conversion process to ensure data integrity.
+- Handle integer conversions in your smart contract.
+
+## Best Practices
+
+- Ensure the input value is within the range that can be represented as a signed integer.
+- Use meaningful variable names for better readability.
+- Combine with other integer functions for comprehensive data management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Converting Unsigned Integer to Signed Integer
+
+Let's implement a function that converts an unsigned integer to a signed integer:
+
+```clarity
+(define-public (convert-to-int (input uint))
+  (to-int input)
+)
+
+;; Usage
+(convert-to-int u42) ;; Returns 42
+(convert-to-int u0) ;; Returns 0
+(convert-to-int u1000000) ;; Returns 1000000
+```
+
+This example demonstrates:
+1. Using `to-int` to convert an unsigned integer to a signed integer.
+2. Implementing a public function to handle the conversion process.
+3. Handling both small and large input values.
+
+## Common Pitfalls
+
+1. Using `to-int` with values that exceed the range of signed integers, causing unexpected behavior.
+2. Assuming the conversion will always succeed, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete data management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `to-uint`: Converts a signed integer to an unsigned integer.
+- `int-to-ascii`: Converts an integer to a string-ascii representation.
+- `int-to-utf8`: Converts an integer to a string-utf8 representation.
+
+## Conclusion
+
+The `to-int` function is a fundamental tool for converting unsigned integers to signed integers in Clarity smart contracts. It allows developers to implement logic that requires signed integer operations, ensuring data integrity and simplifying integer conversions. When used effectively, `to-int` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle integer conversions.

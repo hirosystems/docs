@@ -1,0 +1,77 @@
+---
+title: try!
+description: Handling errors in Clarity smart contracts using the `try!` function.
+---
+
+## Function Signature
+
+```clarity
+(try! expression)
+```
+
+- Input: `expression` (of type `(response T E)`)
+- Output: `T` (if the response is `ok`) or causes a runtime error (if the response is `err`)
+
+## Why it matters
+
+The `try!` function is crucial for:
+
+1. Simplifying error handling in Clarity smart contracts.
+2. Implementing logic that requires automatic error propagation.
+3. Ensuring data integrity by validating operations and handling errors gracefully.
+4. Simplifying the process of handling responses in smart contracts.
+
+## When to use it
+
+Use `try!` when you need to:
+
+- Simplify error handling in your smart contract.
+- Implement logic that requires automatic error propagation.
+- Validate operations and handle errors gracefully.
+- Handle responses in your smart contract.
+
+## Best Practices
+
+- Ensure the expression returns a response type `(response T E)`.
+- Use meaningful variable names for better readability.
+- Combine with other error handling functions for comprehensive error management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Handling Errors in a Transfer Function
+
+Let's implement a function that transfers STX and handles errors using `try!`:
+
+```clarity
+(define-public (transfer-stx (amount uint) (recipient principal))
+  (try! (stx-transfer? amount tx-sender recipient))
+  (ok true)
+)
+
+;; Usage
+(transfer-stx u60 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) 
+;; Returns (ok true) if successful
+(transfer-stx u50 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) 
+;; Returns (err u1) if the sender does not have enough balance
+```
+
+This example demonstrates:
+1. Using `try!` to handle errors in a STX transfer operation.
+2. Implementing a public function to handle the transfer and error propagation.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `try!` with expressions that do not return a response type, causing runtime errors.
+2. Assuming the operation will always succeed, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete error management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `unwrap!`: Unwraps an optional value, causing a runtime error if the value is `none`.
+- `asserts!`: Asserts a condition, causing a runtime error if the condition is false.
+- `is-err`: Checks if a response is an error.
+
+## Conclusion
+
+The `try!` function is a fundamental tool for handling errors in Clarity smart contracts. It allows developers to simplify error handling, ensuring data integrity and automatic error propagation. When used effectively, `try!` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle responses and errors.
