@@ -47,22 +47,24 @@ Let's implement a simple flag system using `bit-not` and other bitwise operation
 (define-constant FLAG_C u4)  ;; 0100
 (define-constant FLAG_D u8)  ;; 1000
 
-(define-data-var user-flags uint u0)
+(define-data-var userFlags uint u0)
 
 (define-public (toggle-flag (flag uint))
-  (ok (var-set user-flags (bit-xor (var-get user-flags) flag))))
+  (ok (var-set userFlags (bit-xor (var-get userFlags) flag)))
+)
 
 (define-public (clear-all-flags-except (flag uint))
-  (ok (var-set user-flags (bit-and (var-get user-flags) flag))))
+  (ok (var-set userFlags (bit-and (var-get userFlags) flag)))
+)
 
 (define-public (set-all-flags-except (flag uint))
-  (ok (var-set user-flags (bit-and (bit-not (var-get user-flags)) flag))))
+  (ok (var-set userFlags (bit-and (bit-not (var-get userFlags)) flag)))
+)
 
 (define-read-only (has-flag (flag uint))
-  (is-eq flag (bit-and (var-get user-flags) flag)))
+  (is-eq flag (bit-and (var-get userFlags) flag))
+)
 ```
-
-
 
 This example demonstrates:
 1. Using `bit-not` in combination with `bit-and` to set all flags except a specific one.

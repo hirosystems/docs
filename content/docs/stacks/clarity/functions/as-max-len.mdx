@@ -44,12 +44,20 @@ Use the `as-max-len?` function when you need to:
 Let's implement a function that safely appends to a list with a maximum length:
 
 ```clarity
-(define-data-var my-list (list 5 uint) (list))
+(define-data-var myList (list 5 uint) (list))
 
 (define-public (safe-append (item uint))
-  (let ((new-list (unwrap! (as-max-len? (append (var-get my-list) item) u5)
-                           (err u1))))
-    (ok (var-set my-list new-list))))
+  (let
+    (
+      (newList (unwrap! (as-max-len? (append (var-get myList) item) u5) (err u1)))
+    )
+    (ok (var-set myList newList))
+  )
+)
+
+(define-read-only (get-list)
+  (var-get myList)
+)
 
 ;; Usage
 (safe-append u1) ;; Returns (ok true)
@@ -58,6 +66,8 @@ Let's implement a function that safely appends to a list with a maximum length:
 (safe-append u4) ;; Returns (ok true)
 (safe-append u5) ;; Returns (ok true)
 (safe-append u6) ;; Returns (err u1)
+
+(get-list) ;; Returns (list u1 u2 u3 u4 u5)
 ```
 
 This example demonstrates:

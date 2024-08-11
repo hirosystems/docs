@@ -44,19 +44,22 @@ Let's implement a simple toggle mechanism using `bit-xor`:
 ```clarity
 (define-data-var flags uint u0)
 
-(define-read-only (get-flag (flag-position uint))
-  (is-eq (bit-and (var-get flags) (bit-shift-left u1 flag-position)) u0))
+(define-read-only (get-flag (flagPosition uint))
+  (is-eq (bit-and (var-get flags) (bit-shift-left u1 flagPosition)) u0)
+)
 
-(define-public (toggle-flag (flag-position uint))
+(define-public (toggle-flag (flagPosition uint))
   (begin
-    (asserts! (< flag-position u8) (err u1)) ;; Ensure flag position is valid
-    (ok (var-set flags (bit-xor (var-get flags) (bit-shift-left u1 flag-position))))))
+    (asserts! (< flagPosition u8) (err u1)) ;; Ensure flag position is valid
+    (ok (var-set flags (bit-xor (var-get flags) (bit-shift-left u1 flagPosition))))
+  )
+)
 
 ;; Usage
-(toggle-flag u2) ;; Sets the 3rd bit (position 2)
-(get-flag u2) ;; Returns true
-(toggle-flag u2) ;; Unsets the 3rd bit
+(toggle-flag u2) ;; Toggles the 3rd bit (position 2)
 (get-flag u2) ;; Returns false
+(toggle-flag u2) ;; Toggles the 3rd bit again (position 2)
+(get-flag u2) ;; Returns true
 ```
 
 This example demonstrates:

@@ -43,7 +43,8 @@ Let's implement a function that constructs a personalized message:
 
 ```clarity
 (define-public (create-greeting (name (string-ascii 20)))
-  (ok (concat (concat "Hello, " name) "! Welcome to our dApp.")))
+  (ok (concat (concat "Hello, " name) "! Welcome to our dApp."))
+)
 
 ;; Usage
 (create-greeting "Alice") ;; Returns (ok "Hello, Alice! Welcome to our dApp.")

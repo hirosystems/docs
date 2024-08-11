@@ -46,7 +46,8 @@ Let's implement a function that transfers tokens using a standard token contract
 
 ```clarity
 (define-public (transfer-tokens (amount uint) (recipient principal))
-  (contract-call? .token-contract transfer amount tx-sender recipient))
+  (contract-call? .token-contract transfer amount tx-sender recipient)
+)
 
 ;; Usage
 (transfer-tokens u100 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)

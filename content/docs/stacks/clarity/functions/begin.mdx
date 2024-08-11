@@ -43,17 +43,18 @@ Use the `begin` function when you need to:
 Let's implement a simple user registration function that performs multiple actions:
 
 ```clarity
-(define-map users principal bool)
-(define-data-var user-count uint u0)
+(define-map Users principal bool)
+(define-data-var userCount uint u0)
 
 (define-public (register-user)
   (begin
-    (asserts! (is-none (map-get? users tx-sender)) (err u1)) ;; Check if user already exists
-    (map-set users tx-sender true)                           ;; Register the user
-    (var-set user-count (+ (var-get user-count) u1))         ;; Increment user count
-    (print (concat "New user registered: " (to-ascii (serialize tx-sender))))
-    (ok true)                                                ;; Return success
-  ))
+    (asserts! (is-none (map-get? Users tx-sender)) (err u1))
+    (map-set Users tx-sender true)
+    (var-set userCount (+ (var-get userCount) u1))
+    (print { registered: true, user: tx-sender })
+    (ok true)
+  )
+)
 
 ;; Usage
 (register-user) ;; Returns (ok true) and logs the new user

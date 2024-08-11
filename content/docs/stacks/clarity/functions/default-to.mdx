@@ -44,20 +44,24 @@ Use the `default-to` function when you need to:
 Let's implement a function that retrieves a user's profile information with default values:
 
 ```clarity
-(define-map user-profiles principal { name: (string-ascii 50), age: uint })
+(define-map UserProfiles principal { name: (string-ascii 50), age: uint })
 
 (define-read-only (get-user-profile (user principal))
-  (let ((profile (default-to { name: "", age: u0 } (map-get? user-profiles user))))
+  (let
+    (
+      (profile (map-get? UserProfiles user))
+    )
     {
       name: (default-to "Anonymous" (get name profile)),
       age: (default-to u0 (get age profile))
     }
-  ))
+  )
+)
 
 ;; Usage
-(map-set user-profiles tx-sender { name: "Alice", age: u30 })
+(map-set UserProfiles tx-sender { name: "Alice", age: u30 })
 (get-user-profile tx-sender) ;; Returns { name: "Alice", age: u30 }
-(get-user-profile 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns { name: "Anonymous", age: u0 }
+(get-user-profile 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) ;; Returns { name: "Anonymous", age: u0 }
 ```
 
 This example demonstrates:

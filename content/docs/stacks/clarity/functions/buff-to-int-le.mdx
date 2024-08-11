@@ -43,10 +43,16 @@ Let's implement a function that processes external data containing a little-endi
 
 ```clarity
 (define-read-only (process-external-data-le (data (buff 16)))
-  (let ((value (buff-to-int-le data)))
+  (let
+    (
+      (value (buff-to-int-le data))
+    )
     (if (< value 0)
-        (err "Negative value not allowed")
-        (ok value))))
+      (err "Negative value not allowed")
+      (ok value)
+    )
+  )
+)
 
 ;; Usage
 (process-external-data-le 0x01000000000000000000000000000000) ;; Returns (ok 1)

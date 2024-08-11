@@ -45,10 +45,12 @@ Let's implement a function that efficiently divides by powers of 2 using `bit-sh
 
 ```clarity
 (define-read-only (divide-by-power-of-2 (value int) (power uint))
-  (bit-shift-right value power))
+  (bit-shift-right value power)
+)
 
-(define-read-only (extract-lowest-bits (value uint) (num-bits uint))
-  (bit-and value (- (bit-shift-left u1 num-bits) u1)))
+(define-read-only (extract-lowest-bits (value uint) (numBits uint))
+  (bit-and value (- (bit-shift-left u1 numBits) u1))
+)
 
 ;; Usage
 (divide-by-power-of-2 128 u3) ;; Returns 16 (128 / 2^3)

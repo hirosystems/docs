@@ -43,10 +43,16 @@ Let's implement a function that processes external data containing a big-endian 
 
 ```clarity
 (define-read-only (process-external-data (data (buff 16)))
-  (let ((value (buff-to-int-be data)))
+  (let
+    (
+      (value (buff-to-int-be data))
+    )
     (if (< value 0)
-        (err "Negative value not allowed")
-        (ok value))))
+      (err "Negative value not allowed")
+      (ok value)
+    )
+  )
+)
 
 ;; Usage
 (process-external-data 0x0000000000000001) ;; Returns (ok 1)

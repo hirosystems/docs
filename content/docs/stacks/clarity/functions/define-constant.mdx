@@ -63,8 +63,8 @@ Let's implement a simple token contract using constants for configuration:
   TOKEN_DECIMALS
 )
 
-(define-read-only (get-balance (account principal))
-  (ok (ft-get-balance DOG-GO-TO-THE-MOON account))
+(define-read-only (get-balance (who principal))
+  (ok (ft-get-balance DOG-GO-TO-THE-MOON who))
 )
 ```
 

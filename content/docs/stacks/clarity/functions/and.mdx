@@ -39,42 +39,40 @@ Use the `and` function when you need to:
 - Use parentheses to group complex logical expressions for clarity.
 - Consider breaking very complex `and` expressions into separate functions or variables for readability.
 
-## Practical Example: Multi-Signature Wallet
+## Practical Example: Simple Access Control
 
-Let's implement a simple multi-signature wallet that uses the `and` function to check multiple conditions:
+Let's implement a simple access control function that uses the `and` function to check multiple conditions:
 
 ```clarity
-(define-data-var required-signatures uint u2)
-(define-map signers principal bool)
+(define-constant CONTRACT_OWNER tx-sender)
+(define-data-var isAdmin bool false)
+(define-data-var isActive bool true)
 
-(define-public (set-signer (signer principal) (is-signer bool))
+(define-public (set-admin (enabled bool))
   (begin
-    (asserts! (is-eq tx-sender contract-owner) (err u1))
-    (ok (map-set signers signer is-signer))))
+    (asserts! (is-eq tx-sender CONTRACT_OWNER) (err u1))
+    (ok (var-set isAdmin enabled))
+  )
+)
 
-(define-public (execute-transaction (recipient principal) (amount uint) (sig1 (buff 65)) (sig2 (buff 65)))
-  (let
-    (
-      (tx-hash (sha256 (concat (serialize-principal recipient) (uint-to-buff amount))))
-      (signer1 (unwrap! (recover-signature? tx-hash sig1) (err u2)))
-      (signer2 (unwrap! (recover-signature? tx-hash sig2) (err u3)))
-    )
-    (asserts! 
-      (and 
-        (>= (var-get required-signatures) u2)
-        (is-some (map-get? signers signer1))
-        (is-some (map-get? signers signer2))
-        (not (is-eq signer1 signer2))
-      )
-      (err u4))
-    (try! (stx-transfer? amount tx-sender recipient))
-    (ok true)))
+(define-public (perform-sensitive-action)
+  (begin
+    (asserts! (and (var-get isAdmin) (var-get isActive)) (err u2))
+    ;; Perform the sensitive action here
+    (ok true)
+  )
+)
+
+;; Usage
+(perform-sensitive-action) ;; Returns (err u2)
+(set-admin true) ;; Returns (ok true)
+(perform-sensitive-action) ;; Returns (ok true)
 ```
 
 This example demonstrates:
-1. Using `and` to check multiple conditions for a multi-signature transaction.
-2. Combining different types of checks (threshold, signer validity, uniqueness) in a single `and` expression.
-3. Leveraging short-circuiting to avoid unnecessary computations if early conditions fail.
+1. Using `and` to check if the sender is an admin and if the contract is active.
+2. Combining multiple conditions in a single `and` expression.
+3. Leveraging short-circuiting to avoid unnecessary computations if the first condition fails.
 
 ## Common Pitfalls
 

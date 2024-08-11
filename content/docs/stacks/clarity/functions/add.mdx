@@ -39,46 +39,29 @@ Use the addition function when you need to:
 - Be aware that adding negative numbers to positive numbers can result in subtraction.
 - Consider using checked arithmetic functions if overflow detection is critical.
 
-## Practical Example: Token Staking Rewards
+## Practical Example: Simple Counter
 
-Let's implement a simple token staking contract that uses addition to calculate and distribute rewards:
+Let's implement a simple counter that uses the addition function to increment its value:
 
 ```clarity
-;; Define constants
-(define-constant REWARD_RATE u100)  ;; 100 tokens per block
-(define-constant BLOCKS_PER_YEAR u52560)  ;; Approximately 1 year in blocks
+(define-data-var counter int 0)
 
-;; Define data variables
-(define-map stakers principal uint)
-(define-data-var total-staked uint u0)
+(define-public (increment-counter (amount int))
+  (begin
+    (var-set counter (+ (var-get counter) amount))
+    (ok (var-get counter))
+  )
+)
 
-;; Function to stake tokens
-(define-public (stake (amount uint))
-  (let ((current-stake (default-to u0 (map-get? stakers tx-sender))))
-    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
-    (map-set stakers tx-sender (+ current-stake amount))
-    (var-set total-staked (+ (var-get total-staked) amount))
-    (ok true)))
-
-;; Function to calculate rewards
-(define-read-only (calculate-rewards (staker principal))
-  (let ((stake (default-to u0 (map-get? stakers staker))))
-    (if (is-eq stake u0)
-        u0
-        (let ((reward-share (/ (* stake BLOCKS_PER_YEAR) (var-get total-staked))))
-          (* reward-share REWARD_RATE)))))
-
-;; Function to claim rewards
-(define-public (claim-rewards)
-  (let ((rewards (calculate-rewards tx-sender)))
-    (try! (as-contract (stx-transfer? rewards tx-sender tx-sender)))
-    (ok rewards)))
+;; Usage
+(increment-counter 1) ;; Increments the counter by 1
+(increment-counter 5) ;; Increments the counter by 5
 ```
 
 This example demonstrates:
-1. Using addition to update the total staked amount when a user stakes tokens.
-2. Using addition in combination with multiplication and division to calculate rewards.
-3. Incrementing user stakes by adding new stake amounts to existing stakes.
+1. Using addition to increment the value of a counter.
+2. Implementing a public function to handle the increment operation.
+3. Returning the updated counter value.
 
 ## Common Pitfalls
 
@@ -94,4 +77,4 @@ This example demonstrates:
 
 ## Conclusion
 
-The addition function is a fundamental tool for performing arithmetic operations in Clarity smart contracts. By understanding its behavior with different types of inputs and potential edge cases, developers can use it effectively to implement various mathematical operations in their contracts, from simple increments to more complex reward calculations.
+The addition function is a fundamental tool for performing arithmetic operations in Clarity smart contracts. By understanding its behavior with different types of inputs and potential edge cases, developers can use it effectively to implement various mathematical operations in their contracts, from simple increments to more complex calculations.

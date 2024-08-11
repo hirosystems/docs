@@ -44,17 +44,20 @@ Use the `bit-shift-left` function when you need to:
 Let's implement a simple function that creates a bitmask using `bit-shift-left`:
 
 ```clarity
-(define-read-only (create-bitmask (bit-position uint))
-  (if (<= bit-position u127)
-      (bit-shift-left u1 bit-position)
-      u0))
+(define-read-only (create-bitmask (bitPosition uint))
+  (if (<= bitPosition u127)
+    (bit-shift-left u1 bitPosition)
+    u0
+  )
+)
 
-(define-read-only (set-bit (value uint) (bit-position uint))
-  (bit-or value (create-bitmask bit-position)))
+(define-read-only (set-bit (value uint) (bitPosition uint))
+  (bit-or value (create-bitmask bitPosition))
+)
 
 ;; Usage
-(create-bitmask u3) ;; Returns u8 (binary: 1000)
-(set-bit u5 u2) ;; Returns u7 (binary: 101 | 100 = 111)
+(create-bitmask u3) ;; Returns u8
+(set-bit u5 u2) ;; Returns u5
 ```
 
 

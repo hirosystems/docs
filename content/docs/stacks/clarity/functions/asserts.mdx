@@ -44,19 +44,28 @@ Use the `asserts!` function when you need to:
 Let's implement a simple token transfer function that uses `asserts!` to check the sender's balance:
 
 ```clarity
-(define-map balances principal uint)
+(define-map Balances principal uint)
 
 (define-public (transfer (amount uint) (recipient principal))
-  (let ((sender-balance (default-to u0 (map-get? balances tx-sender))))
-    (asserts! (>= sender-balance amount) (err u1)) ;; Insufficient balance
-    (asserts! (is-eq tx-sender recipient false) (err u2)) ;; Can't send to self
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
+    (asserts! (>= senderBalance amount) (err u1)) ;; Insufficient balance
+    (asserts! (not (is-eq tx-sender recipient)) (err u2)) ;; Can't send to self
     
-    (map-set balances tx-sender (- sender-balance amount))
-    (map-set balances recipient (+ (default-to u0 (map-get? balances recipient)) amount))
-    (ok true)))
+    (map-set Balances tx-sender (- senderBalance amount))
+    (map-set Balances recipient (+ (default-to u0 (map-get? Balances recipient)) amount))
+    (ok true)
+  )
+)
+
+(map-set Balances tx-sender u1000) ;; Set the sender's balance to 1000
 
 ;; Usage
-(transfer u100 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns (ok true) if successful
+(transfer u100 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) ;; Returns (ok true)
+(transfer u100 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns (err u2) Can't send to self
+(transfer u1000 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) ;; Returns (err u1) Insufficient balance
 ```
 
 This example demonstrates:

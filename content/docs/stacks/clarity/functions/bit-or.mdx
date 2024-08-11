@@ -47,19 +47,34 @@ Let's implement a simple permission system using `bit-or` and other bitwise oper
 (define-constant PERMISSION_EXECUTE u4) ;; 0100
 (define-constant PERMISSION_ADMIN u8)   ;; 1000
 
-(define-map user-permissions principal uint)
+(define-map UserPermissions principal uint)
 
 (define-public (grant-permission (user principal) (permission uint))
-  (let ((current-permissions (default-to u0 (map-get? user-permissions user))))
-    (ok (map-set user-permissions user (bit-or current-permissions permission)))))
+  (let
+    (
+      (currentPermissions (default-to u0 (map-get? UserPermissions user)))
+    )
+    (ok (map-set UserPermissions user (bit-or currentPermissions permission)))
+  )
+)
 
 (define-public (revoke-permission (user principal) (permission uint))
-  (let ((current-permissions (default-to u0 (map-get? user-permissions user))))
-    (ok (map-set user-permissions user (bit-and current-permissions (bit-not permission))))))
+  (let
+    (
+      (currentPermissions (default-to u0 (map-get? UserPermissions user)))
+    )
+    (ok (map-set UserPermissions user (bit-and currentPermissions (bit-not permission))))
+  )
+)
 
 (define-read-only (has-permission (user principal) (permission uint))
-  (let ((user-permission (default-to u0 (map-get? user-permissions user))))
-    (is-eq permission (bit-and user-permission permission))))
+  (let
+    (
+      (userPermission (default-to u0 (map-get? UserPermissions user)))
+    )
+    (is-eq permission (bit-and userPermission permission))
+  )
+)
 
 ;; Usage
 (grant-permission tx-sender (bit-or PERMISSION_READ PERMISSION_WRITE))

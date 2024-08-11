@@ -45,15 +45,22 @@ Use the `at-block` function when you need to:
 Let's implement a simple function that checks if a price was above a certain threshold at a specific block:
 
 ```clarity
-(define-map asset-prices uint uint)
+(define-map AssetPrices uint uint)
 
 (define-public (set-price (price uint))
-  (ok (map-set asset-prices block-height price)))
+  (ok (map-set AssetPrices block-height price))
+)
 
-(define-read-only (was-price-above-at-block (threshold uint) (block-hash (buff 32)))
-  (at-block block-hash
-    (let ((past-price (default-to u0 (map-get? asset-prices block-height))))
-      (> past-price threshold))))
+(define-read-only (was-price-above-at-block (threshold uint) (blockHash (buff 32)))
+  (at-block blockHash
+    (let
+      (
+        (pastPrice (default-to u0 (map-get? AssetPrices block-height)))
+      )
+      (> pastPrice threshold)
+    )
+  )
+)
 
 ;; Usage
 (set-price u100)

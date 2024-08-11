@@ -43,21 +43,28 @@ Use the `append` function when you need to:
 Let's implement a simple event log system using `append` with a maximum length check:
 
 ```clarity
-(define-data-var event-log (list 50 (string-ascii 50)) (list))
+(define-data-var eventLog (list 50 (string-ascii 50)) (list))
 
 (define-public (log-event (event (string-ascii 50)))
-  (let ((current-log (var-get event-log)))
-    (match (as-max-len? (append current-log event) u2)
-      success (ok (var-set event-log success))
-      (err u1))))
+  (let
+    (
+      (current-log (var-get eventLog))
+    )
+    (match (as-max-len? (append current-log event) u2) success
+      (ok (var-set eventLog success))
+      (err u1)
+    )
+  )
+)
 
-(define-read-only (get-event-log)
-  (ok (var-get event-log)))
+(define-read-only (get-eventLog)
+  (ok (var-get eventLog))
+)
 
 ;; Usage
 (log-event "Contract initialized")
 (log-event "User registered")
-(get-event-log) ;; Returns (ok ("Contract initialized" "User registered"))
+(get-eventLog) ;; Returns (ok ("Contract initialized" "User registered"))
 ```
 
 This example demonstrates:

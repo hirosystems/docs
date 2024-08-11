@@ -42,29 +42,32 @@ Use the `as-contract` function when you need to:
 Let's implement a simple treasury system where the contract can distribute funds:
 
 ```clarity
-(define-data-var treasury-balance uint u0)
+(define-constant CONTRACT_OWNER tx-sender)
+(define-data-var treasuryBalance uint u0)
 
 (define-public (deposit (amount uint))
   (begin
     (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
-    (var-set treasury-balance (+ (var-get treasury-balance) amount))
-    (ok true)))
+    (var-set treasuryBalance (+ (var-get treasuryBalance) amount))
+    (ok true)
+  )
+)
 
 (define-public (withdraw (recipient principal) (amount uint))
   (begin
-    (asserts! (is-eq tx-sender contract-owner) (err u403))
-    (asserts! (<= amount (var-get treasury-balance)) (err u401))
+    (asserts! (is-eq tx-sender CONTRACT_OWNER) (err u403))
+    (asserts! (<= amount (var-get treasuryBalance)) (err u401))
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
-    (var-set treasury-balance (- (var-get treasury-balance) amount))
-    (ok true)))
-
-(define-constant contract-owner tx-sender)
+    (var-set treasuryBalance (- (var-get treasuryBalance) amount))
+    (ok true)
+  )
+)
 ```
 
 This example demonstrates:
 1. Using `as-contract` in the `deposit` function to receive funds as the contract.
 2. Using `as-contract` in the `withdraw` function to send funds from the contract's balance.
-3. Combining `as-contract` with access control (`is-eq tx-sender contract-owner`) for security.
+3. Combining `as-contract` with access control (`is-eq tx-sender CONTRACT_OWNER`) for security.
 
 ## Common Pitfalls
 
