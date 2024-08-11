@@ -51,39 +51,46 @@ Let's implement a simple token vesting contract that uses the less than or equal
 (define-constant TOTAL_ALLOCATION u1000000) ;; 1 million tokens
 
 ;; Define data variables
-(define-data-var vesting-start-time uint u0)
-(define-data-var tokens-claimed uint u0)
+(define-data-var vestingStartTime uint u0)
+(define-data-var tokensClaimed uint u0)
 
 ;; Function to start vesting
 (define-public (start-vesting)
   (begin
-    (asserts! (is-eq (var-get vesting-start-time) u0) (err u1))
-    (var-set vesting-start-time block-height)
-    (ok true)))
+    (asserts! (is-eq (var-get vestingStartTime) u0) (err u1))
+    (var-set vestingStartTime block-height)
+    (ok true)
+  )
+)
 
 ;; Function to calculate vested amount
 (define-read-only (get-vested-amount)
   (let
     (
-      (elapsed-time (- block-height (var-get vesting-start-time)))
+      (elapsed-time (- block-height (var-get vestingStartTime)))
       (vesting-ratio (/ elapsed-time VESTING_PERIOD))
     )
     (if (<= elapsed-time VESTING_PERIOD)
-        (* TOTAL_ALLOCATION vesting-ratio)
-        TOTAL_ALLOCATION)))
+      (* TOTAL_ALLOCATION vesting-ratio)
+      TOTAL_ALLOCATION
+    )
+  )
+)
 
 ;; Function to claim vested tokens
 (define-public (claim-tokens)
   (let
     (
       (vested-amount (get-vested-amount))
-      (claimable-amount (- vested-amount (var-get tokens-claimed)))
+      (claimable-amount (- vested-amount (var-get tokensClaimed)))
     )
     (asserts! (> claimable-amount u0) (err u2))
-    (var-set tokens-claimed vested-amount)
+    (var-set tokensClaimed vested-amount)
     ;; Here you would typically transfer tokens
     ;; For simplicity, we're just returning the claimed amount
-    (ok claimable-amount)))
+    (ok claimable-amount)
+  )
+)
 ```
 
 This example demonstrates:

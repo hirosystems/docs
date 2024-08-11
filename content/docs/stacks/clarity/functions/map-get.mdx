@@ -42,20 +42,20 @@ Use `map-get?` when you need to:
 Let's implement a function that retrieves a user's data from a map:
 
 ```clarity
-(define-map userData { userId: principal } { data: (buff 32) })
+(define-map UserData { userId: principal } { data: (buff 32) })
 
 (define-read-only (get-user-data (user principal))
-  (map-get? userData { userId: user })
+  (map-get? UserData { userId: user })
 )
 
 ;; Usage
-(map-set userData { userId: tx-sender } { data: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef })
+(map-set UserData { userId: tx-sender } { data: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef })
 (get-user-data tx-sender) ;; Returns (some (tuple (data 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef)))
 (get-user-data 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns none
 ```
 
 This example demonstrates:
-1. Using `map-get?` to retrieve a user's data from the `userData` map.
+1. Using `map-get?` to retrieve a user's data from the `UserData` map.
 2. Implementing a read-only function to return the retrieved data.
 3. Handling both the case where the user's data is present and where it is not.
 

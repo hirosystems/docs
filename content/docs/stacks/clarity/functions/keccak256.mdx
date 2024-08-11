@@ -42,12 +42,12 @@ Use `keccak256` when you need to:
 Let's implement a function that computes the Keccak-256 hash of a user's data:
 
 ```clarity
-(define-map userData { userId: principal } { data: (buff 32) })
+(define-map UserData { userId: principal } { data: (buff 32) })
 
 (define-public (hash-user-data (user principal))
   (let
     (
-      (data (default-to (buff 0) (map-get? userData { userId: user })))
+      (data (default-to (buff 0) (map-get? UserData { userId: user })))
       (hash (keccak256 data))
     )
     (ok hash)
@@ -55,7 +55,7 @@ Let's implement a function that computes the Keccak-256 hash of a user's data:
 )
 
 ;; Usage
-(map-set userData { userId: tx-sender } { data: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef })
+(map-set UserData { userId: tx-sender } { data: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef })
 (hash-user-data tx-sender) ;; Returns the Keccak-256 hash of the data
 ```
 

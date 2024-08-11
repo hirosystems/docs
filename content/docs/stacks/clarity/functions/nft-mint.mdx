@@ -42,10 +42,10 @@ Use `nft-mint?` when you need to:
 Let's implement a function that mints a new NFT and assigns it to the recipient:
 
 ```clarity
-(define-non-fungible-token stackaroo (string-ascii 40))
+(define-non-fungible-token Stackaroo (string-ascii 40))
 
 (define-public (mint-nft (id (string-ascii 40)) (recipient principal))
-  (nft-mint? stackaroo id recipient)
+  (nft-mint? Stackaroo id recipient)
 )
 
 ;; Usage

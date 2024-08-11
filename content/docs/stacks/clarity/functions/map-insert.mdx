@@ -42,19 +42,19 @@ Use `map-insert` when you need to:
 Let's implement a function that inserts a user's data into a map:
 
 ```clarity
-(define-map userData { userId: principal } { data: (buff 32) })
+(define-map UserData { userId: principal } { data: (buff 32) })
 
 (define-public (insert-user-data (user principal) (data (buff 32)))
-  (map-insert userData { userId: user } { data: data })
+  (ok (map-insert UserData { userId: user } { data: data }))
 )
 
 ;; Usage
-(insert-user-data tx-sender 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef) ;; Returns true if the entry is inserted
-(insert-user-data tx-sender 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef) ;; Returns false if the entry already exists
+(insert-user-data tx-sender 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef) ;; Returns (ok true) if the entry is inserted
+(insert-user-data tx-sender 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef) ;; Returns (ok false) if the entry already exists
 ```
 
 This example demonstrates:
-1. Using `map-insert` to add a user's data to the `userData` map.
+1. Using `map-insert` to add a user's data to the `UserData` map.
 2. Implementing a public function to insert the data.
 3. Handling both the case where the entry is successfully inserted and where it already exists.
 

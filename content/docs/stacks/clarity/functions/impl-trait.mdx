@@ -52,18 +52,18 @@ Let's define a simple token trait and implement it in a contract:
 
 (impl-trait token-trait)
 
-(define-map balances { user: principal } { balance: uint })
+(define-map Balances { user: principal } { balance: uint })
 
 (define-public (transfer (sender principal) (recipient principal) (amount uint))
   (let
     (
-      (senderBalance (default-to u0 (map-get? balances { user: sender })))
-      (recipientBalance (default-to u0 (map-get? balances { user: recipient })))
+      (senderBalance (default-to u0 (map-get? Balances { user: sender })))
+      (recipientBalance (default-to u0 (map-get? Balances { user: recipient })))
     )
     (if (>= senderBalance amount)
       (begin
-        (map-set balances { user: sender } { balance: (- senderBalance amount) })
-        (map-set balances { user: recipient } { balance: (+ recipientBalance amount) })
+        (map-set Balances { user: sender } { balance: (- senderBalance amount) })
+        (map-set Balances { user: recipient } { balance: (+ recipientBalance amount) })
         (ok true)
       )
       (err u1)
@@ -72,7 +72,7 @@ Let's define a simple token trait and implement it in a contract:
 )
 
 (define-read-only (get-balance (user principal))
-  (ok (default-to u0 (map-get? balances { user: user })))
+  (ok (default-to u0 (map-get? Balances { user: user })))
 )
 ```
 

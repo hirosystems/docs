@@ -48,35 +48,50 @@ Let's implement a basic escrow contract that uses subtraction to manage balances
 (define-constant ESCROW_FEE u100)  ;; 100 tokens as escrow fee
 
 ;; Define data variables
-(define-map balances principal uint)
-(define-data-var escrow-balance uint u0)
+(define-map Balances principal uint)
+(define-data-var escrowBalance uint u0)
 
 ;; Function to deposit funds
 (define-public (deposit (amount uint))
-  (let ((current-balance (default-to u0 (map-get? balances tx-sender))))
+  (let
+    (
+      (currentBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
     (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
-    (map-set balances tx-sender (+ current-balance amount))
-    (ok true)))
+    (map-set Balances tx-sender (+ currentBalance amount))
+    (ok true)
+  )
+)
 
 ;; Function to initiate escrow
 (define-public (start-escrow (recipient principal) (amount uint))
-  (let ((sender-balance (default-to u0 (map-get? balances tx-sender))))
-    (asserts! (>= sender-balance (+ amount ESCROW_FEE)) (err u1))
-    (map-set balances tx-sender (- sender-balance (+ amount ESCROW_FEE)))
-    (var-set escrow-balance (+ (var-get escrow-balance) amount))
-    (ok true)))
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
+    (asserts! (>= senderBalance (+ amount ESCROW_FEE)) (err u1))
+    (map-set Balances tx-sender (- senderBalance (+ amount ESCROW_FEE)))
+    (var-set escrowBalance (+ (var-get escrowBalance) amount))
+    (ok true)
+  )
+)
 
 ;; Function to complete escrow and transfer funds
 (define-public (complete-escrow (recipient principal) (amount uint))
-  (let ((escrow-amount (var-get escrow-balance)))
-    (asserts! (>= escrow-amount amount) (err u2))
+  (let
+    (
+      (escrowAmount (var-get escrowBalance))
+    )
+    (asserts! (>= escrowAmount amount) (err u2))
     (try! (as-contract (stx-transfer? amount tx-sender recipient)))
-    (var-set escrow-balance (- escrow-amount amount))
-    (ok true)))
+    (var-set escrowBalance (- escrowAmount amount))
+    (ok true)
+  )
+)
 ```
 
 This example demonstrates:
-1. Using subtraction to update balances when initiating an escrow.
+1. Using subtraction to update `Balances` when initiating an escrow.
 2. Using subtraction to update the escrow balance when completing a transfer.
 3. Combining subtraction with addition to handle fees and balance updates.
 

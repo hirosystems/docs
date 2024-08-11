@@ -42,19 +42,19 @@ Use `map-delete` when you need to:
 Let's implement a function that deletes a user's data from a map:
 
 ```clarity
-(define-map userData { userId: principal } { data: (buff 32) })
+(define-map UserData { userId: principal } { data: (buff 32) })
 
 (define-public (delete-user-data (user principal))
-  (map-delete userData { userId: user })
+  (ok (map-delete UserData { userId: user }))
 )
 
 ;; Usage
-(map-set userData { userId: tx-sender } { data: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef })
-(delete-user-data tx-sender) ;; Returns true
+(map-set UserData { userId: tx-sender } { data: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef }) ;; Returns true
+(delete-user-data tx-sender) ;; Returns (ok true)
 ```
 
 This example demonstrates:
-1. Using `map-delete` to remove a user's data from the `userData` map.
+1. Using `map-delete` to remove a user's data from the `UserData` map.
 2. Implementing a public function to delete the data.
 3. Handling the case where the user's data is present and needs to be removed.
 

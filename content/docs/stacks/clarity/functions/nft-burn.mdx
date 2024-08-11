@@ -42,16 +42,16 @@ Use `nft-burn?` when you need to:
 Let's implement a function that burns an NFT owned by the sender:
 
 ```clarity
-(define-non-fungible-token stackaroo (string-ascii 40))
+(define-non-fungible-token Stackaroo (string-ascii 40))
 
 (define-public (burn-nft (id (string-ascii 40)))
-  (nft-burn? stackaroo id tx-sender)
+  (nft-burn? Stackaroo id tx-sender)
 )
 
 ;; Usage
-(nft-mint? stackaroo "Roo" tx-sender) ;; Returns (ok true)
+(nft-mint? Stackaroo "Roo" tx-sender) ;; Returns (ok true)
 (burn-nft "Roo") ;; Returns (ok true)
-(nft-burn? stackaroo "Roo" tx-sender) ;; Returns (err u3) because the asset no longer exists
+(nft-burn? Stackaroo "Roo" tx-sender) ;; Returns (err u3) because the asset no longer exists
 ```
 
 This example demonstrates:

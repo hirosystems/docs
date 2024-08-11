@@ -65,16 +65,19 @@ Use `unwrap!` when you need to:
 Let's implement a function that retrieves a value from a map and unpacks it using `unwrap!`:
 
 ```clarity
-(define-map user-info { user-id: principal } { name: (string-ascii 20), age: uint })
+(define-map UserInfo { userId: principal } { name: (string-ascii 20), age: uint })
 
 (define-public (get-user-age (user principal))
-  (let ((user-data (unwrap! (map-get? user-info { user-id: user }) (err "User not found"))))
-    (ok (get age user-data))
+  (let
+    (
+      (userData (unwrap! (map-get? UserInfo { userId: user }) (err "User not found")))
+    )
+    (ok (get age userData))
   )
 )
 
 ;; Usage
-(map-set user-info { user-id: tx-sender } { name: "Alice", age: u30 })
+(map-set UserInfo { userId: tx-sender } { name: "Alice", age: u30 })
 (get-user-age tx-sender) ;; Returns (ok u30)
 (get-user-age 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) ;; Returns (err "User not found")
 ```

@@ -43,17 +43,17 @@ Use `nft-transfer?` when you need to:
 Let's implement a function that transfers an NFT from the sender to the recipient:
 
 ```clarity
-(define-non-fungible-token stackaroo (string-ascii 40))
+(define-non-fungible-token Stackaroo (string-ascii 40))
 
 (define-public (transfer-nft (id (string-ascii 40)) (recipient principal))
-  (nft-transfer? stackaroo id tx-sender recipient)
+  (nft-transfer? Stackaroo id tx-sender recipient)
 )
 
 ;; Usage
-(nft-mint? stackaroo "Roo" tx-sender) ;; Returns (ok true)
+(nft-mint? Stackaroo "Roo" tx-sender) ;; Returns (ok true)
 (transfer-nft "Roo" 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true)
-(nft-transfer? stackaroo "Roo" tx-sender 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (err u1) because the sender no longer owns the asset
-(nft-transfer? stackaroo "NonExistent" tx-sender 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (err u2) because the asset does not exist
+(nft-transfer? Stackaroo "Roo" tx-sender 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (err u1) because the sender no longer owns the asset
+(nft-transfer? Stackaroo "NonExistent" tx-sender 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (err u2) because the asset does not exist
 ```
 
 This example demonstrates:

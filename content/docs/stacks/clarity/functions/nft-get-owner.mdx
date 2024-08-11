@@ -42,14 +42,14 @@ Use `nft-get-owner?` when you need to:
 Let's implement a function that retrieves the owner of an NFT:
 
 ```clarity
-(define-non-fungible-token stackaroo (string-ascii 40))
+(define-non-fungible-token Stackaroo (string-ascii 40))
 
 (define-read-only (get-nft-owner (id (string-ascii 40)))
-  (nft-get-owner? stackaroo id)
+  (nft-get-owner? Stackaroo id)
 )
 
 ;; Usage
-(nft-mint? stackaroo "Roo" tx-sender) ;; Returns (ok true)
+(nft-mint? Stackaroo "Roo" tx-sender) ;; Returns (ok true)
 (get-nft-owner "Roo") ;; Returns (some tx-sender)
 (get-nft-owner "NonExistent") ;; Returns none
 ```

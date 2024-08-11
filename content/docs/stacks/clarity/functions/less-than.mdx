@@ -49,32 +49,38 @@ Let's implement a simple auction contract that uses the less than function to en
 (define-constant AUCTION_END_HEIGHT u100)
 
 ;; Define data variables
-(define-data-var current-highest-bid uint u0)
-(define-data-var highest-bidder (optional principal) none)
+(define-data-var currentHighestBid uint u0)
+(define-data-var highestBidder (optional principal) none)
 
 ;; Function to place a bid
 (define-public (place-bid (bid uint))
   (let
-    ((current-block-height block-height))
+    (
+      (current-block-height block-height)
+    )
     ;; Check if the auction is still open
     (asserts! (< current-block-height AUCTION_END_HEIGHT) (err u1))
     ;; Check if the bid is less than the maximum allowed bid
     (asserts! (< bid MAX_BID) (err u2))
     ;; Check if the bid is higher than the current highest bid
-    (asserts! (> bid (var-get current-highest-bid)) (err u3))
+    (asserts! (> bid (var-get currentHighestBid)) (err u3))
     ;; Place the bid
     (try! (stx-transfer? bid tx-sender (as-contract tx-sender)))
-    (var-set current-highest-bid bid)
-    (var-set highest-bidder (some tx-sender))
-    (ok bid)))
+    (var-set currentHighestBid bid)
+    (var-set highestBidder (some tx-sender))
+    (ok bid)
+  )
+)
 
 ;; Function to check current highest bid
 (define-read-only (get-highest-bid)
-  (ok (var-get current-highest-bid)))
+  (ok (var-get currentHighestBid))
+)
 
 ;; Function to check if auction has ended
 (define-read-only (auction-ended)
-  (>= block-height AUCTION_END_HEIGHT))
+  (>= block-height AUCTION_END_HEIGHT)
+)
 ```
 
 This example demonstrates:

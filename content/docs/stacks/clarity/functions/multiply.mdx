@@ -45,40 +45,49 @@ Let's implement a simple token vesting contract that uses multiplication to calc
 
 ```clarity
 ;; Define constants
-(define-constant vesting-period u365)  ;; 1 year in days
-(define-constant total-allocation u1000000)  ;; Total tokens to vest
+(define-constant VESTING_PERIOD u365)  ;; 1 year in days
+(define-constant TOTAL_ALLOCATION u1000000)  ;; Total tokens to vest
 
 ;; Define data variables
-(define-data-var start-time uint u0)
+(define-data-var startTime uint u0)
 (define-data-var beneficiary principal tx-sender)
 
 ;; Function to initialize vesting
 (define-public (start-vesting (recipient principal))
   (begin
     (asserts! (is-eq tx-sender (var-get beneficiary)) (err u1))
-    (var-set start-time block-height)
+    (var-set startTime block-height)
     (var-set beneficiary recipient)
-    (ok true)))
+    (ok true)
+  )
+)
 
 ;; Function to calculate vested amount
 (define-read-only (get-vested-amount)
   (let
     (
-      (elapsed-time (- block-height (var-get start-time)))
-      (vesting-rate (/ total-allocation vesting-period))
+      (elapsed-time (- block-height (var-get startTime)))
+      (vesting-rate (/ TOTAL_ALLOCATION VESTING_PERIOD))
     )
-    (if (>= elapsed-time vesting-period)
-      total-allocation
-      (* vesting-rate elapsed-time))))
+    (if (>= elapsed-time VESTING_PERIOD)
+      TOTAL_ALLOCATION
+      (* vesting-rate elapsed-time)
+    )
+  )
+)
 
 ;; Function to claim vested tokens
 (define-public (claim-tokens)
   (let
-    ((vested-amount (get-vested-amount)))
+    (
+      (vested-amount (get-vested-amount))
+    )
     (asserts! (> vested-amount u0) (err u2))
     ;; Here you would typically transfer tokens
     ;; For simplicity, we're just returning the amount
-    (ok vested-amount)))
+    (ok vested-amount)
+  )
+)
 ```
 
 This example demonstrates:

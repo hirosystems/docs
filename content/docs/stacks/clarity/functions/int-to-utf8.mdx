@@ -45,12 +45,12 @@ Use `int-to-utf8` when you need to:
 Let's implement a function that logs a user's balance as a UTF-8 string:
 
 ```clarity
-(define-map userBalances { userId: principal } { balance: uint })
+(define-map UserBalances { userId: principal } { balance: uint })
 
 (define-public (log-balance (user principal))
   (let
     (
-      (balance (default-to u0 (map-get? userBalances { userId: user })))
+      (balance (default-to u0 (map-get? UserBalances { userId: user })))
       (balanceStr (int-to-utf8 balance))
     )
     (print balanceStr)
@@ -58,7 +58,7 @@ Let's implement a function that logs a user's balance as a UTF-8 string:
 )
 
 ;; Usage
-(map-set userBalances { userId: tx-sender } { balance: u100 })
+(map-set UserBalances { userId: tx-sender } { balance: u100 })
 (log-balance tx-sender) ;; Logs "100"
 ```
 

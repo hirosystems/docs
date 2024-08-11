@@ -42,19 +42,19 @@ Use `map-set` when you need to:
 Let's implement a function that sets a user's data in a map:
 
 ```clarity
-(define-map userData { userId: principal } { data: (buff 32) })
+(define-map UserData { userId: principal } { data: (buff 32) })
 
 (define-public (set-user-data (user principal) (data (buff 32)))
-  (map-set userData { userId: user } { data: data })
+  (ok (map-set UserData { userId: user } { data: data }))
 )
 
 ;; Usage
-(set-user-data tx-sender 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef) ;; Returns true
-(set-user-data tx-sender 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef) ;; Returns true
+(set-user-data tx-sender 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef) ;; Returns (ok true)
+(set-user-data tx-sender 0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef) ;; Returns (ok true)
 ```
 
 This example demonstrates:
-1. Using `map-set` to set a user's data in the `userData` map.
+1. Using `map-set` to set a user's data in the `UserData` map.
 2. Implementing a public function to set the data.
 3. Handling both the case where the entry is newly created and where it is updated.
 

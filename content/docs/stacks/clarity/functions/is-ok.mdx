@@ -42,17 +42,17 @@ Use `is-ok` when you need to:
 Let's implement a function that validates a token transfer and checks for success:
 
 ```clarity
-(define-map userBalances { userId: principal } { balance: uint })
+(define-map UserBalances { userId: principal } { balance: uint })
 
 (define-public (transfer-tokens (amount uint) (recipient principal))
   (let
     (
-      (senderBalance (default-to u0 (map-get? userBalances { userId: tx-sender })))
-      (recipientBalance (default-to u0 (map-get? userBalances { userId: recipient })))
+      (senderBalance (default-to u0 (map-get? UserBalances { userId: tx-sender })))
+      (recipientBalance (default-to u0 (map-get? UserBalances { userId: recipient })))
       (transferResult (if (>= senderBalance amount)
         (begin
-          (map-set userBalances { userId: tx-sender } { balance: (- senderBalance amount) })
-          (map-set userBalances { userId: recipient } { balance: (+ recipientBalance amount) })
+          (map-set UserBalances { userId: tx-sender } { balance: (- senderBalance amount) })
+          (map-set UserBalances { userId: recipient } { balance: (+ recipientBalance amount) })
           (ok true)
         )
         (err u1)
@@ -66,7 +66,7 @@ Let's implement a function that validates a token transfer and checks for succes
 )
 
 ;; Usage
-(map-set userBalances { userId: tx-sender } { balance: u100 })
+(map-set UserBalances { userId: tx-sender } { balance: u100 })
 (transfer-tokens u50 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true)
 (transfer-tokens u200 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (err u2)
 ```

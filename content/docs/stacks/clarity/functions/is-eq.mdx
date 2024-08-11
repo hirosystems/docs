@@ -45,21 +45,20 @@ Use `is-eq` when you need to:
 Let's implement a function that checks if a user has a specific role:
 
 ```clarity
-(define-map userRoles { userId: principal } { role: (string-ascii 10) })
-
 (define-constant ADMIN_ROLE "admin")
+(define-map UserRoles { userId: principal } { role: (string-ascii 10) })
 
 (define-read-only (is-admin (user principal))
   (let
     (
-      (userRole (default-to "none" (map-get? userRoles { userId: user })))
+      (userRole (default-to "none" (map-get? UserRoles { userId: user })))
     )
     (is-eq userRole ADMIN_ROLE)
   )
 )
 
 ;; Usage
-(map-set userRoles { userId: tx-sender } { role: "admin" })
+(map-set UserRoles { userId: tx-sender } { role: "admin" })
 (is-admin tx-sender) ;; Returns true
 ```
 

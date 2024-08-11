@@ -64,15 +64,15 @@ Use `tuple` when you need to:
 Let's implement a function that stores and retrieves user information using tuples:
 
 ```clarity
-(define-map user-info { user-id: principal } { name: (string-ascii 20), age: uint })
+(define-map UserInfo { userId: principal } { name: (string-ascii 20), age: uint })
 
 (define-public (set-user-info (user principal) (name (string-ascii 20)) (age uint))
-  (map-set user-info { user-id: user } { name: name, age: age })
+  (map-set UserInfo { userId: user } { name: name, age: age })
   (ok true)
 )
 
 (define-public (get-user-info (user principal))
-  (map-get? user-info { user-id: user })
+  (map-get? UserInfo { userId: user })
 )
 
 ;; Usage

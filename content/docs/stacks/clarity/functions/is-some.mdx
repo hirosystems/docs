@@ -42,14 +42,14 @@ Use `is-some` when you need to:
 Let's implement a function that checks if a user's profile data exists:
 
 ```clarity
-(define-map userProfiles { userId: principal } { name: (string-ascii 50), age: uint })
+(define-map UserProfiles { userId: principal } { name: (string-ascii 50), age: uint })
 
 (define-read-only (is-profile-existing (user principal))
-  (is-some (map-get? userProfiles { userId: user }))
+  (is-some (map-get? UserProfiles { userId: user }))
 )
 
 ;; Usage
-(map-set userProfiles { userId: tx-sender } { name: "Alice", age: u30 })
+(map-set UserProfiles { userId: tx-sender } { name: "Alice", age: u30 })
 (is-profile-existing tx-sender) ;; Returns true
 (is-profile-existing 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns false
 ```
