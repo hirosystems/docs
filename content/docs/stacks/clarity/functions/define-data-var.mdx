@@ -50,19 +50,22 @@ Let's implement a basic counter using `define-data-var`:
 (define-public (increment)
   (begin
     (var-set counter (+ (var-get counter) u1))
-    (ok (var-get counter))))
+    (ok (var-get counter))
+  )
+)
 
 (define-public (decrement)
   (begin
     (asserts! (> (var-get counter) u0) (err u"Counter cannot be negative"))
     (var-set counter (- (var-get counter) u1))
-    (ok (var-get counter))))
+    (ok (var-get counter))
+  )
+)
 
 (define-read-only (get-counter)
-  (ok (var-get counter)))
+  (ok (var-get counter))
+)
 ```
-
-
 
 This example demonstrates:
 1. Using `define-data-var` to create a mutable counter.

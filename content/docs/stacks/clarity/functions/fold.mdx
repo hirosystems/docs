@@ -46,7 +46,8 @@ Let's implement a function that sums all numbers in a list:
 
 ```clarity
 (define-read-only (sum-list (numbers (list 10 uint)))
-  (fold + numbers u0))
+  (fold + numbers u0)
+)
 
 ;; Usage
 (sum-list (list u1 u2 u3 u4 u5)) ;; Returns u15

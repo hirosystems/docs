@@ -42,16 +42,23 @@ Use `err` when you need to:
 Let's implement a simple token transfer function with error handling:
 
 ```clarity
-(define-map balances principal uint)
+(define-map Balances principal uint)
 
 (define-public (transfer (amount uint) (recipient principal))
-  (let ((sender-balance (default-to u0 (map-get? balances tx-sender))))
-    (if (>= sender-balance amount)
-        (begin
-          (map-set balances tx-sender (- sender-balance amount))
-          (map-set balances recipient (+ (default-to u0 (map-get? balances recipient)) amount))
-          (ok true))
-        (err u1))))  ;; Error code 1 for insufficient balance
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
+    (if (>= senderBalance amount)
+      (begin
+        (map-set Balances tx-sender (- senderBalance amount))
+        (map-set Balances recipient (+ (default-to u0 (map-get? Balances recipient)) amount))
+        (ok true)
+      )
+      (err u1)
+    )
+  )
+)
 
 ;; Usage
 (transfer u100 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM) ;; Returns (err u1) if balance is insufficient

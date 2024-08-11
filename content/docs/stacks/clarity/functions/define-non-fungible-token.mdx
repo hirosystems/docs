@@ -44,28 +44,32 @@ Use `define-non-fungible-token` when you need to:
 Let's implement a basic digital art NFT system:
 
 ```clarity
-(define-non-fungible-token digital-art uint)
+(define-non-fungible-token SharkoBarko uint)
 
-(define-data-var art-index uint u0)
+(define-data-var index uint u0)
 
-(define-public (mint-artwork (artist principal) (artwork-uri (string-utf8 256)))
-  (let ((token-id (var-get art-index)))
-    (try! (nft-mint? digital-art token-id artist))
-    (var-set art-index (+ token-id u1))
-    (ok token-id)))
+(define-public (mint (who principal) (artwork-uri (string-utf8 256)))
+  (let
+    (
+      (tokenId (var-get index))
+    )
+    (try! (nft-mint? SharkoBarko tokenId who))
+    (var-set index (+ tokenId u1))
+    (ok tokenId)
+  )
+)
 
-(define-read-only (get-owner (token-id uint))
-  (ok (nft-get-owner? digital-art token-id)))
+(define-read-only (get-owner (tokenId uint))
+  (ok (nft-get-owner? SharkoBarko tokenId))
+)
 
-(define-public (transfer (token-id uint) (sender principal) (recipient principal))
+(define-public (transfer (tokenId uint) (sender principal) (recipient principal))
   (begin
     (asserts! (is-eq tx-sender sender) (err u403))
-    (nft-transfer? digital-art token-id sender recipient)))
+    (nft-transfer? SharkoBarko tokenId sender recipient)
+  )
+)
 ```
-
-
-
-
 
 This example demonstrates:
 1. Using `define-non-fungible-token` to create a new NFT class for digital artwork.

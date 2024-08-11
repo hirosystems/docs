@@ -45,32 +45,28 @@ Use `define-map` when you need to:
 Let's implement a basic user profile system using `define-map`:
 
 ```clarity
-(define-map user-profiles 
-  principal 
-  { name: (string-ascii 50), age: uint, is-active: bool })
+(define-map UserProfiles principal { name: (string-ascii 50), age: uint, isActive: bool })
 
 (define-public (set-profile (name (string-ascii 50)) (age uint))
-  (ok (map-set user-profiles tx-sender { name: name, age: age, is-active: true })))
+  (ok (map-set UserProfiles tx-sender { name: name, age: age, isActive: true }))
+)
 
 (define-read-only (get-profile (user principal))
-  (default-to 
-    { name: "", age: u0, is-active: false }
-    (map-get? user-profiles user)))
+  (default-to { name: "", age: u0, isActive: false } (map-get? UserProfiles user))
+)
 
 (define-public (deactivate-profile)
-  (match (map-get? user-profiles tx-sender)
-    profile (ok (map-set user-profiles tx-sender 
-                  (merge profile { is-active: false })))
-    (err u404)))
+  (match (map-get? UserProfiles tx-sender) profile
+    (ok (map-set UserProfiles tx-sender (merge profile { isActive: false })))
+    (err u404)
+  )
+)
 
 ;; Usage
-(set-profile "Alice" u30)
+(set-profile "Ryan" u38)
 (get-profile tx-sender)
 (deactivate-profile)
 ```
-
-
-
 
 This example demonstrates:
 1. Using `define-map` to create a user profile storage system.
@@ -91,6 +87,7 @@ This example demonstrates:
 - `map-set`: Used to set or update a value in a map.
 - `map-delete`: Used to remove a key-value pair from a map.
 - `map-insert`: Used to insert a new key-value pair only if the key doesn't already exist.
+- `merge`: Used to merge two maps, combining their key-value pairs.
 
 ## Conclusion
 

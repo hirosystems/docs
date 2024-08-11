@@ -44,30 +44,31 @@ Use `get` when you need to:
 Let's implement a simple user profile system using tuples and the `get` function:
 
 ```clarity
-(define-map user-profiles principal { name: (string-ascii 50), age: uint })
+(define-map UserProfiles { userId: principal } { name: (string-ascii 50), age: uint })
 
 (define-public (set-profile (name (string-ascii 50)) (age uint))
-  (ok (map-set user-profiles tx-sender { name: name, age: age })))
+  (ok (map-set UserProfiles { userId: tx-sender } { name: name, age: age }))
+)
 
 (define-read-only (get-profile-name (user principal))
-  (match (map-get? user-profiles user)
-    profile (ok (get name profile))
-    (err u404)))
+  (match (map-get? UserProfiles { userId: user }) profile
+    (ok (get name profile))
+    (err u404)
+  )
+)
 
 (define-read-only (get-profile-age (user principal))
-  (match (map-get? user-profiles user)
-    profile (ok (get age profile))
-    (err u404)))
+  (match (map-get? UserProfiles { userId: user }) profile
+    (ok (get age profile))
+    (err u404)
+  )
+)
 
 ;; Usage
 (set-profile "Alice" u30)
 (get-profile-name tx-sender) ;; Returns (ok "Alice")
 (get-profile-age tx-sender) ;; Returns (ok u30)
 ```
-
-
-
-
 
 This example demonstrates:
 1. Using `get` to retrieve specific fields from a tuple stored in a map.

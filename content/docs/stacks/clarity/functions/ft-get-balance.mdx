@@ -44,18 +44,24 @@ Use `ft-get-balance` when you need to:
 Let's implement a function that checks balance before transferring tokens:
 
 ```clarity
-(define-fungible-token my-token)
+(define-fungible-token cBtc)
 
-(define-public (transfer-if-sufficient (amount uint) (recipient principal))
-  (let ((sender-balance (ft-get-balance my-token tx-sender)))
-    (if (>= sender-balance amount)
-        (ft-transfer? my-token amount tx-sender recipient)
-        (err u1))))
+(define-public (transfer (amount uint) (recipient principal))
+  (let
+    (
+      (senderBalance (ft-get-balance cBtc tx-sender))
+    )
+    (if (>= senderBalance amount)
+      (ft-transfer? cBtc amount tx-sender recipient)
+      (err u1)
+    )
+  )
+)
 
 ;; Usage
-(ft-mint? my-token u100 tx-sender)
-(transfer-if-sufficient u50 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true)
-(ft-get-balance my-token tx-sender) ;; Returns u50
+(ft-mint? cBtc u100 tx-sender)
+(transfer u50 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true)
+(ft-get-balance cBtc tx-sender) ;; Returns u50
 ```
 
 This example demonstrates:

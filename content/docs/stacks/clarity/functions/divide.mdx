@@ -49,34 +49,42 @@ Let's implement a simple token distribution contract that uses division to alloc
 (define-constant DISTRIBUTION_ROUNDS u10)
 
 ;; Define data variables
-(define-map participant-shares principal uint)
-(define-data-var current-round uint u0)
-(define-data-var participants-count uint u0)
+(define-map ParticipantShares principal uint)
+(define-data-var currentRound uint u0)
+(define-data-var participantsCount uint u0)
 
 ;; Function to register as a participant
 (define-public (register-participant)
-  (let ((current-participants (var-get participants-count)))
-    (asserts! (< current-participants DISTRIBUTION_ROUNDS) (err u1))
-    (map-set participant-shares tx-sender u0)
-    (var-set participants-count (+ current-participants u1))
-    (ok true)))
+  (let
+    (
+      (currentParticipants (var-get participantsCount))
+    )
+    (asserts! (< currentParticipants DISTRIBUTION_ROUNDS) (err u1))
+    (map-set ParticipantShares tx-sender u0)
+    (var-set participantsCount (+ currentParticipants u1))
+    (ok true)
+  )
+)
 
 ;; Function to distribute tokens
 (define-public (distribute-tokens)
   (let
     (
-      (current-participants (var-get participants-count))
-      (tokens-per-participant (/ TOTAL_TOKENS current-participants))
+      (currentParticipants (var-get participantsCount))
+      (tokensPerParticipant (/ TOTAL_TOKENS currentParticipants))
     )
-    (asserts! (> current-participants u0) (err u2))
-    (asserts! (< (var-get current-round) DISTRIBUTION_ROUNDS) (err u3))
-    (map-set participant-shares tx-sender tokens-per-participant)
-    (var-set current-round (+ (var-get current-round) u1))
-    (ok tokens-per-participant)))
+    (asserts! (> currentParticipants u0) (err u2))
+    (asserts! (< (var-get currentRound) DISTRIBUTION_ROUNDS) (err u3))
+    (map-set ParticipantShares tx-sender tokensPerParticipant)
+    (var-set currentRound (+ (var-get currentRound) u1))
+    (ok tokensPerParticipant)
+  )
+)
 
 ;; Function to check participant's share
 (define-read-only (get-participant-share (participant principal))
-  (default-to u0 (map-get? participant-shares participant)))
+  (default-to u0 (map-get? ParticipantShares participant))
+)
 ```
 
 This example demonstrates:

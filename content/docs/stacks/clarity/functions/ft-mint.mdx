@@ -45,17 +45,19 @@ Use `ft-mint?` when you need to:
 Let's implement a simple reward system that mints tokens:
 
 ```clarity
-(define-fungible-token reward-token)
+(define-fungible-token RewardToken)
 
-(define-constant contract-owner tx-sender)
+(define-constant CONTRACT_OWNER tx-sender)
 
 (define-public (mint-reward (amount uint) (recipient principal))
   (begin
-    (asserts! (is-eq tx-sender contract-owner) (err u403))
-    (ft-mint? reward-token amount recipient)))
+    (asserts! (is-eq tx-sender CONTRACT_OWNER) (err u403))
+    (ft-mint? RewardToken amount recipient)
+  )
+)
 
 ;; Usage
-(mint-reward u100 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true) if called by contract-owner
+(mint-reward u100 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true) if called by CONTRACT_OWNER
 ```
 
 This example demonstrates:

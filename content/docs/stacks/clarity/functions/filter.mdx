@@ -45,15 +45,16 @@ Let's implement a function that filters even numbers from a list:
 
 ```clarity
 (define-private (is-even (num int))
-  (is-eq (mod num 2) 0))
+  (is-eq (mod num 2) 0)
+)
 
 (define-read-only (get-even-numbers (numbers (list 10 int)))
-  (filter is-even numbers))
+  (filter is-even numbers)
+)
 
 ;; Usage
 (get-even-numbers (list 1 2 3 4 5 6 7 8 9 10)) ;; Returns (2 4 6 8 10)
 ```
-
 
 This example demonstrates:
 1. Defining a private helper function `is-even` to check if a number is even.

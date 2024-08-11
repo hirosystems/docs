@@ -42,25 +42,50 @@ Use `define-public` when you need to:
 - Handle potential errors and edge cases within the function.
 - Consider gas costs when designing public functions.
 
-## Practical Example: Token Transfer Function
+## Practical Examples
 
-Let's implement a public function for transferring tokens:
+### Example 1: Simple Counter
+
+Let's implement a simple counter that can be incremented by users:
 
 ```clarity
-(define-public (transfer (amount uint) (recipient principal))
-  (let ((sender tx-sender))
-    (if (>= (get-balance sender) amount)
-        (begin
-          (as-contract (transfer-tokens amount sender recipient))
-          (ok true))
-        (err u1))))
+(define-data-var counter int 0)
+
+(define-public (increment-counter)
+  (begin
+    (var-set counter (+ (var-get counter) 1))
+    (ok (var-get counter))
+  )
+)
 ```
 
 This example demonstrates:
 1. Using `define-public` to create a function that can be called externally.
-2. Taking parameters for the amount and recipient of the transfer.
-3. Implementing basic balance checking logic.
-4. Returning a response type to indicate success or failure.
+2. Incrementing a counter and returning the new value.
+3. Returning a response type to indicate success.
+
+### Example 2: Setting a Value
+
+Let's implement a function that sets a value if it meets certain conditions:
+
+```clarity
+(define-data-var storedValue uint u0)
+
+(define-public (set-value (value uint))
+  (if (> value u0)
+    (begin
+      (var-set storedValue value)
+      (ok value)
+    )
+    (err u1)
+  )
+)
+```
+
+This example demonstrates:
+1. Using `define-public` to create a function that can be called externally.
+2. Setting a value only if it meets a condition.
+3. Returning a response type to indicate success or failure.
 
 ## Common Pitfalls
 

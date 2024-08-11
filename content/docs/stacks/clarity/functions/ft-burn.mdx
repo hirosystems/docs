@@ -45,18 +45,20 @@ Use `ft-burn?` when you need to:
 Let's implement a simple token burning function:
 
 ```clarity
-(define-fungible-token my-token)
+(define-fungible-token cBtc)
+
+(define-data-var tokenAdmin principal tx-sender)
 
 (define-public (burn-tokens (amount uint))
-  (ft-burn? my-token amount tx-sender))
+  (ft-burn? cBtc amount tx-sender)
+)
 
 (define-public (burn-tokens-from (amount uint) (owner principal))
   (begin
-    (asserts! (is-eq tx-sender (var-get token-admin)) (err u3))
-    (ft-burn? my-token amount owner)))
-
-;; Initialize admin
-(define-data-var token-admin principal tx-sender)
+    (asserts! (is-eq tx-sender (var-get tokenAdmin)) (err u3))
+    (ft-burn? cBtc amount owner)
+  )
+)
 ```
 
 This example demonstrates:

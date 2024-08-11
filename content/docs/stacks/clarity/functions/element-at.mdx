@@ -44,18 +44,27 @@ Use `element-at?` when you need to:
 Let's implement a function that retrieves an item from a todo list:
 
 ```clarity
-(define-data-var todo-list (list 10 (string-ascii 50)) (list))
+(define-data-var todoList (list 10 (string-ascii 50)) (list))
 
 (define-public (add-todo (item (string-ascii 50)))
-  (let ((current-list (var-get todo-list)))
-    (if (< (len current-list) u10)
-        (ok (var-set todo-list (append current-list item)))
-        (err u1))))
+  (let
+    (
+      (currentList (var-get todoList))
+      (newList (as-max-len? (append currentList item) u10))
+    )
+    (match newList
+      newListValue (ok (var-set todoList newListValue))
+      (err u1)
+    )
+  )
+)
 
 (define-read-only (get-todo (index uint))
-  (match (element-at? (var-get todo-list) index)
-    item (ok item)
-    (err u404)))
+  (match (element-at? (var-get todoList) index) item
+    (ok item)
+    (err u404)
+  )
+)
 
 ;; Usage
 (add-todo "Buy milk")
@@ -63,9 +72,6 @@ Let's implement a function that retrieves an item from a todo list:
 (get-todo u1) ;; Returns (ok "Walk the dog")
 (get-todo u5) ;; Returns (err u404)
 ```
-
-
-
 
 This example demonstrates:
 1. Using `element-at?` to retrieve an item from a list stored in a data variable.

@@ -44,14 +44,16 @@ Use `from-consensus-buff?` when you need to:
 Let's implement a function that deserializes a buffer into a tuple:
 
 ```clarity
-(define-read-only (deserialize-user-data (serialized-data (buff 128)))
-  (match (from-consensus-buff? { name: (string-ascii 50), age: uint } serialized-data)
+(define-read-only (deserialize-user-data (serializedData (buff 128)))
+  (match (from-consensus-buff? { name: (string-ascii 50), age: uint } serializedData)
     success success
-    failure (err u1)))
+    (err u1)
+  )
+)
 
 ;; Usage
-(deserialize-user-data 0x0c00000002046e616d65110000003248656c6c6f20576f726c64000000000000000000000000000000000000000000000000000000000000000000036167650100000000000000000000000000000018)
-;; Returns (ok (tuple (name "Hello World") (age u24)))
+(deserialize-user-data 0x0c00000002036167650100000000000000000000000000000005046e616d650d0000000a48617270657220446f67)
+;; Returns (ok (tuple (name "Harper Dog") (age u5)))
 ```
 
 This example demonstrates:

@@ -44,10 +44,12 @@ Use `get-burn-block-info?` when you need to:
 Let's implement a function that verifies if a given Bitcoin block hash matches a specific height:
 
 ```clarity
-(define-read-only (verify-btc-block-hash (height uint) (expected-hash (buff 32)))
-  (match (get-burn-block-info? header-hash height)
-    hash (is-eq hash expected-hash)
-    false))
+(define-read-only (verify-btc-block-hash (height uint) (expectedHash (buff 32)))
+  (match (get-burn-block-info? header-hash height) hash
+    (is-eq hash expectedHash)
+    false
+  )
+)
 
 ;; Usage
 (verify-btc-block-hash u700000 0x00000000000000000009a11b3972c8e532e964e262c196556bd958b7fd0c55c3)

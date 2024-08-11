@@ -44,26 +44,28 @@ Use `define-constant` when you need to:
 Let's implement a simple token contract using constants for configuration:
 
 ```clarity
-(define-constant TOKEN_NAME "MyToken")
-(define-constant TOKEN_SYMBOL "MTK")
+(define-constant TOKEN_NAME "DOG-GO-TO-THE-MOON")
+(define-constant TOKEN_SYMBOL "DOG")
 (define-constant TOKEN_DECIMALS u6)
 (define-constant TOKEN_SUPPLY u1000000000000) ;; 1 million tokens with 6 decimals
 
-(define-fungible-token my-token TOKEN_SUPPLY)
+(define-fungible-token DOG-GO-TO-THE-MOON TOKEN_SUPPLY)
 
 (define-read-only (get-name)
-  TOKEN_NAME)
+  TOKEN_NAME
+)
 
 (define-read-only (get-symbol)
-  TOKEN_SYMBOL)
+  TOKEN_SYMBOL
+)
 
 (define-read-only (get-decimals)
-  TOKEN_DECIMALS)
+  TOKEN_DECIMALS
+)
 
 (define-read-only (get-balance (account principal))
-  (ok (ft-get-balance my-token account)))
-
-;; Other token functions...
+  (ok (ft-get-balance DOG-GO-TO-THE-MOON account))
+)
 ```
 
 This example demonstrates:

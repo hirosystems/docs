@@ -43,7 +43,8 @@ Let's implement a function that generates a simple hash-based identifier:
 
 ```clarity
 (define-read-only (generate-identifier (input (buff 32)))
-  (hash160 input))
+  (hash160 input)
+)
 
 ;; Usage
 (generate-identifier 0x000000000000000000000000000000000000000000000000000000000000000a)

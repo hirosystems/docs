@@ -52,36 +52,45 @@ Let's implement a simple token unlock schedule that uses the greater than or equ
 (define-constant TOTAL_UNLOCKS u10) ;; 10 total unlocks
 
 ;; Define data variables
-(define-data-var start-block uint u0)
-(define-data-var unlocks-claimed uint u0)
+(define-data-var startBlock uint u0)
+(define-data-var unlocksClaimed uint u0)
 
 ;; Function to start the unlock schedule
 (define-public (start-unlock-schedule)
   (begin
-    (asserts! (is-eq (var-get start-block) u0) (err u1))
-    (var-set start-block block-height)
-    (ok true)))
+    (asserts! (is-eq (var-get startBlock) u0) (err u1))
+    (var-set startBlock block-height)
+    (ok true)
+  )
+)
 
 ;; Function to calculate claimable tokens
 (define-read-only (get-claimable-tokens)
   (let
     (
-      (elapsed-blocks (- block-height (var-get start-block)))
-      (unlocks-due (/ elapsed-blocks UNLOCK_INTERVAL))
+      (elapsedBlocks (- block-height (var-get startBlock)))
+      (unlocksDue (/ elapsedBlocks UNLOCK_INTERVAL))
     )
-    (if (>= unlocks-due TOTAL_UNLOCKS)
-        (* UNLOCK_AMOUNT (- TOTAL_UNLOCKS (var-get unlocks-claimed)))
-        (* UNLOCK_AMOUNT (- unlocks-due (var-get unlocks-claimed))))))
+    (if (>= unlocksDue TOTAL_UNLOCKS)
+      (* UNLOCK_AMOUNT (- TOTAL_UNLOCKS (var-get unlocksClaimed)))
+      (* UNLOCK_AMOUNT (- unlocksDue (var-get unlocksClaimed)))
+    )
+  )
+)
 
 ;; Function to claim tokens
 (define-public (claim-tokens)
   (let
-    ((claimable-amount (get-claimable-tokens)))
-    (asserts! (> claimable-amount u0) (err u2))
-    (var-set unlocks-claimed (+ (var-get unlocks-claimed) (/ claimable-amount UNLOCK_AMOUNT)))
+    (
+      (claimableAmount (get-claimable-tokens))
+    )
+    (asserts! (> claimableAmount u0) (err u2))
+    (var-set unlocksClaimed (+ (var-get unlocksClaimed) (/ claimableAmount UNLOCK_AMOUNT)))
     ;; Here you would typically transfer tokens
     ;; For simplicity, we're just returning the claimed amount
-    (ok claimable-amount)))
+    (ok claimableAmount)
+  )
+)
 ```
 
 This example demonstrates:

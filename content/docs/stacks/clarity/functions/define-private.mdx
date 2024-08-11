@@ -47,14 +47,18 @@ Let's implement a private function for input validation:
 
 ```clarity
 (define-private (validate-amount (amount uint))
-  (and (> amount u0) (<= amount u1000000)))
+  (and (> amount u0) (<= amount u1000000))
+)
 
 (define-public (transfer (recipient principal) (amount uint))
   (if (validate-amount amount)
-      (begin
-        ;; Perform transfer logic here
-        (ok true))
-      (err u1)))
+    (begin
+      ;; Perform transfer logic here
+      (ok true)
+    )
+    (err u1)
+  )
+)
 ```
 
 This example demonstrates:

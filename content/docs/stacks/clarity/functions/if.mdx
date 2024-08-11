@@ -43,17 +43,17 @@ Use `if` when you need to:
 ## Practical Example: Conditional Token Transfer
 
 ```clarity
-(define-map userBalances { userId: principal } { balance: uint })
+(define-map UserBalances { userId: principal } { balance: uint })
 
 (define-public (transfer-tokens (amount uint) (recipient principal))
   (let
     (
-      (senderBalance (default-to u0 (map-get? userBalances { userId: tx-sender })))
+      (senderBalance (default-to u0 (map-get? UserBalances { userId: tx-sender })))
     )
     (if (>= senderBalance amount)
       (begin
-        (map-set userBalances { userId: tx-sender } { balance: (- senderBalance amount) })
-        (map-set userBalances { userId: recipient } { balance: (+ (default-to u0 (map-get? userBalances { userId: recipient })) amount) })
+        (map-set UserBalances { userId: tx-sender } { balance: (- senderBalance amount) })
+        (map-set UserBalances { userId: recipient } { balance: (+ (default-to u0 (map-get? UserBalances { userId: recipient })) amount) })
         (ok true)
       )
       (err u1)

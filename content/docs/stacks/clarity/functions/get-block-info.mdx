@@ -44,17 +44,16 @@ Use `get-block-info?` when you need to:
 Let's implement a function that checks if a given block was mined after a certain time:
 
 ```clarity
-(define-read-only (block-after-time? (block-height uint) (target-time uint))
-  (match (get-block-info? time block-height)
-    time (> time target-time)
-    false))
+(define-read-only (block-after-time? (blockHeight uint) (targetTime uint))
+  (match (get-block-info? time blockHeight) time
+    (> time targetTime)
+    false
+  )
+)
 
 ;; Usage
 (block-after-time? u100 u1600000000) ;; Returns true if block 100 was mined after Unix timestamp 1600000000
 ```
-
-
-
 
 This example demonstrates:
 1. Using `get-block-info?` to retrieve the `time` property of a block.

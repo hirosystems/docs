@@ -49,25 +49,29 @@ Let's implement a simple token sale contract that uses the greater than function
 (define-constant TOKEN_PRICE u50000) ;; 0.0005 STX per token
 
 ;; Define data variables
-(define-data-var tokens-sold uint u0)
+(define-data-var tokensSold uint u0)
 
 ;; Function to purchase tokens
 (define-public (purchase-tokens (amount uint))
-  (let (
-    (tokens-to-mint (/ amount TOKEN_PRICE))
-    (payment amount)
-  )
+  (let
+    (
+      (tokensToMint (/ amount TOKEN_PRICE))
+      (payment amount)
+    )
     ;; Check if the purchase amount is greater than the minimum
     (asserts! (> payment MIN_PURCHASE) (err u1))
     ;; Perform the token purchase
     (try! (stx-transfer? payment tx-sender (as-contract tx-sender)))
-    (var-set tokens-sold (+ (var-get tokens-sold) tokens-to-mint))
+    (var-set tokensSold (+ (var-get tokensSold) tokensToMint))
     ;; Here you would typically mint or transfer tokens to the buyer
-    (ok tokens-to-mint)))
+    (ok tokensToMint)
+  )
+)
 
 ;; Function to check total tokens sold
-(define-read-only (get-tokens-sold)
-  (ok (var-get tokens-sold)))
+(define-read-only (get-tokensSold)
+  (ok (var-get tokensSold))
+)
 ```
 
 This example demonstrates:

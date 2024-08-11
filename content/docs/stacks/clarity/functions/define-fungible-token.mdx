@@ -44,27 +44,28 @@ Use `define-fungible-token` when you need to:
 Let's implement a basic fungible token with a fixed supply:
 
 ```clarity
-(define-fungible-token my-token u1000000)
+(define-fungible-token DOG-GO-TO-THE-MOON u1000000)
+
+(define-data-var tokenAdmin principal tx-sender)
 
 (define-public (transfer (amount uint) (sender principal) (recipient principal))
   (begin
     (asserts! (is-eq tx-sender sender) (err u1))
-    (ft-transfer? my-token amount sender recipient)))
+    (ft-transfer? DOG-GO-TO-THE-MOON amount sender recipient)
+  )
+)
 
 (define-read-only (get-balance (account principal))
-  (ok (ft-get-balance my-token account)))
+  (ok (ft-get-balance DOG-GO-TO-THE-MOON account))
+)
 
 (define-public (mint (amount uint) (recipient principal))
   (begin
-    (asserts! (is-eq tx-sender (var-get token-admin)) (err u3))
-    (ft-mint? my-token amount recipient)))
-
-;; Initialize admin
-(define-data-var token-admin principal tx-sender)
+    (asserts! (is-eq tx-sender (var-get tokenAdmin)) (err u3))
+    (ft-mint? DOG-GO-TO-THE-MOON amount recipient)
+  )
+)
 ```
-
-
-
 
 This example demonstrates:
 1. Using `define-fungible-token` to create a new token with a fixed supply of 1,000,000.
@@ -73,7 +74,7 @@ This example demonstrates:
 
 ## Common Pitfalls
 
-1. Forgetting that omitting the total supply parameter allows unlimited minting.
+1. Forgetting that omitting the total supply parameter allows unlimited minting, if not handled manually.
 2. Not implementing proper access controls for sensitive operations like minting.
 3. Overlooking the need for additional functionality like burning or pausing.
 

@@ -47,18 +47,24 @@ Use `ft-transfer?` when you need to:
 Let's implement a public function for transferring tokens with some basic checks:
 
 ```clarity
-(define-fungible-token my-token)
+(define-fungible-token cBtc)
 
 (define-public (transfer-tokens (amount uint) (recipient principal))
-  (let ((sender tx-sender))
+  (let
+    (
+      (sender tx-sender)
+    )
     (asserts! (not (is-eq sender recipient)) (err u2))
     (asserts! (> amount u0) (err u3))
-    (match (ft-transfer? my-token amount sender recipient)
+    (match (ft-transfer? cBtc amount sender recipient)
       success (ok success)
-      error (err error))))
+      error (err error)
+    )
+  )
+)
 
 ;; Usage
-(ft-mint? my-token u100 tx-sender)
+(ft-mint? cBtc u100 tx-sender)
 (transfer-tokens u50 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true)
 ```
 

@@ -46,19 +46,16 @@ Use `define-read-only` when you need to:
 Let's implement a read-only function for checking token balances:
 
 ```clarity
-(define-map balances principal uint)
+(define-map Balances principal uint)
 
 (define-read-only (get-balance (account principal))
-  (default-to u0 (map-get? balances account)))
-
-(define-read-only (get-total-supply)
-  (fold + (map-values balances) u0))
+  (default-to u0 (map-get? Balances account))
+)
 ```
 
 This example demonstrates:
 1. Using `define-read-only` to create functions for querying token balances.
 2. Implementing a getter function for individual account balances.
-3. Creating a function to calculate the total token supply without modifying state.
 
 ## Common Pitfalls
 
