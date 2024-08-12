@@ -1,6 +1,6 @@
 ---
-title: Stacks Blockchain API
-description: Proxy for the Stacks Blockchain API on a development network (devnet).
+title: Bitcoin Node
+description: Proxy for the Bitcoin node on a development network (devnet).
 toc: false
 ---
 
@@ -24,11 +24,11 @@ import {
 
 <API>
 
-<APIInfo method={"GET"} route={"/v1/ext/{apiKey}/stacks-blockchain-api/{*}"}>
+<APIInfo method={"GET"} route={"/v1/ext/{apiKey}/bitcoin-node/{*}"}>
 
-## Stacks Blockchain API
+## Bitcoin Node
 
-This endpoint is designed to proxy requests to the Stacks blockchain API on a development network (devnet).
+This endpoint is designed to proxy requests to the Bitcoin node on a development network (devnet).
 
 It is accessible only with an API key and supports various HTTP methods (GET, POST, PUT, DELETE, PATCH, OPTIONS).
 
@@ -44,17 +44,17 @@ Hiro API key
 
 <Property name={"*"} type={"string"} required={true} deprecated={false}>
 
-The path (endpoint) for the Stacks Blockchain API
+The path (endpoint) for the Bitcoin node RPC
 
-<span>Pattern: `"extended/v1/tx"`</span>
+<span>Pattern: `"rest/chaininfo"`</span>
 
 </Property>
 
 | Status code | Description |
-| :----------- | :----------- |
+| ----------- | ----------- |
 | `200` | Default Response |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/v1/ext/{apiKey}/stacks-blockchain-api/{*}"} path={[{"name":"apiKey","type":"string","defaultValue":"","isRequired":true,"description":"API key"},{"name":"*","type":"string","defaultValue":"","isRequired":true,"description":"API Endpoint"}]} query={[]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/v1/ext/{apiKey}/bitcoin-node/{*}"} path={[{"name":"apiKey","type":"string","defaultValue":"","isRequired":true,"description":"API key"},{"name":"*","type":"string","defaultValue":"","isRequired":true,"description":"API Endpoint"}]} query={[]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -67,7 +67,7 @@ The path (endpoint) for the Stacks Blockchain API
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.platform.hiro.so/v1/ext/{apiKey}/stacks-blockchain-api/extended/v1/tx"
+curl -X GET "https://api.platform.hiro.so/v1/ext/{apiKey}/bitcoin-node/extended/v1/tx"
 ```
 
 </Request>
@@ -75,7 +75,7 @@ curl -X GET "https://api.platform.hiro.so/v1/ext/{apiKey}/stacks-blockchain-api/
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.platform.hiro.so/v1/ext/{apiKey}/stacks-blockchain-api/extended/v1/tx", {
+fetch("https://api.platform.hiro.so/v1/ext/{apiKey}/bitcoin-node/extended/v1/tx", {
   method: "GET"
 });
 ```
@@ -120,11 +120,11 @@ export interface Response {
 
 <API>
 
-<APIInfo method={"POST"} route={"/v1/ext/{apiKey}/stacks-blockchain-api/{*}"}>
+<APIInfo method={"POST"} route={"/v1/ext/{apiKey}/bitcoin-node/{*}"}>
 
-## Stacks Blockchain API
+## Bitcoin node
 
-This endpoint is designed to proxy requests to the Stacks blockchain API on a development network (devnet).
+This endpoint is designed to proxy requests to the Bitcoin node on a development network (devnet).
 
 It is accessible only with an API key and supports various HTTP methods (GET, POST, PUT, DELETE, PATCH, OPTIONS).
 
@@ -140,17 +140,17 @@ Hiro API key
 
 <Property name={"*"} type={"string"} required={true} deprecated={false}>
 
-The path (endpoint) for the Stacks Blockchain API
+The path (endpoint) for the Bitcoin node RPC
 
-<span>Pattern: `"extended/v1/tx"`</span>
+<span>Pattern: `"rest/chaininfo"`</span>
 
 </Property>
 
 | Status code | Description |
-| ----------- | ----------- |
+| :----------- | :----------- |
 | `200` | Default Response |
 
-<APIPlayground authorization={undefined} method={"POST"} route={"/v1/ext/{apiKey}/stacks-blockchain-api/{*}"} path={[{"name":"apiKey","type":"string","defaultValue":"","isRequired":true,"description":"API key"},{"name":"*","type":"string","defaultValue":"","isRequired":true,"description":"API Endpoint"}]} query={[]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"POST"} route={"/v1/ext/{apiKey}/bitcoin-node/{*}"} path={[{"name":"apiKey","type":"string","defaultValue":"","isRequired":true,"description":"API key"},{"name":"*","type":"string","defaultValue":"","isRequired":true,"description":"API Endpoint"}]} query={[]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -163,7 +163,7 @@ The path (endpoint) for the Stacks Blockchain API
 <Request value={"cURL"}>
 
 ```bash
-curl -X POST "https://api.platform.hiro.so/v1/ext/{apiKey}/stacks-blockchain-api/v2/transactions"
+curl -X POST "https://api.platform.hiro.so/v1/ext/{apiKey}/bitcoin-node/rest/chaininfo"
 ```
 
 </Request>
@@ -171,7 +171,7 @@ curl -X POST "https://api.platform.hiro.so/v1/ext/{apiKey}/stacks-blockchain-api
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.platform.hiro.so/v1/ext/{apiKey}/stacks-blockchain-api/v2/transactions", {
+fetch("https://api.platform.hiro.so/v1/ext/{apiKey}/bitcoin-node/rest/chaininfo", {
   method: "POST"
 });
 ```
