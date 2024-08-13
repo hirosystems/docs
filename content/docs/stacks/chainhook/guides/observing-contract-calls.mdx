@@ -1,5 +1,5 @@
 ---
-title: Observing Contract Calls with Chainhook
+title: Observing contract calls with Chainhook
 description: Learn how to use Chainhook to observe a function call for a voting contract.
 ---
 
@@ -29,7 +29,7 @@ In this guide, you will learn how to:
 
 ## Create the predicate
 
-The `predicate` is your main interface for querying the Chainhook data indexer. Chainhook uses this to select the appropriate blockchain, network, and scope for monitoring transactions.
+The `predicate` is your main interface for querying the Chainhook data indexer. Chainhook uses this predicate to select the appropriate blockchain, network, and scope for monitoring transactions.
 
 For the Stacks blockchain, run the following command to generate a `predicate` template:
 
@@ -92,7 +92,7 @@ The `contract_call` scope allows Chainhook to observe blockchain data when the s
 ```
 
 <Callout type="warn" title="Warning">
-  The function defined in the `method` property of your `predicate` must be directly called for Chainhook to observe events. Calling the function from another contract or from within a different function on the same contract will not generate a `payload`. Below is an example of a `cast-vote` function that would not trigger an event.
+  The function defined in the `method` property of your `predicate` must be directly called in order for Chainhook to observe events. Calling the function from another contract or from within a different function on the same contract will not generate a `payload`. Below is an example of a `cast-vote` function that would not trigger an event.
   ```clarity
   (define-public (call-cast-vote)
     (cast-vote)
@@ -105,7 +105,7 @@ Finally, define how Chainhook delivers the payload when it is triggered by your 
 1. `file_append`
 2. `http_post`
 
-When choosing to use file_append, specify the path where Chainhook will post the payload data.
+When choosing to use `file_append`, specify the path where Chainhook will post the payload data.
 
 ```json title="contract-call-chainhook.json"
 // [!code word:file_append]
@@ -188,7 +188,7 @@ chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
 </Step>
 <Step>
 
-## Return contract data with the clarity function
+## Return contract data with the Clarity function
 
 The `cast-vote` function records a vote by storing the address that calls it. It also logs relevant data using the `print` function, which can be useful for when you want to track additional on-chain events that are not part of the built-in Clarity functions.
 
@@ -244,12 +244,12 @@ Within the `apply` arrays element, the `block_identifer` object gives us the `in
 <Callout type="warn" title="Warning">
   The hash returned in the `block_identifer` object is not that block hash you
   would see in [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
-  `index_block_hash` returned from the Stacks API [get
+  `index_block_hash` returned from the Stacks API's [get
   block](/stacks/api/blocks/get-block) endpoint. You can use the `apply` array's
   metadata object to get the `stacks_block_hash`.
 </Callout>
 
-We can retrieve the `stacks_block_hash` by navigating to the the `apply` arrays object `metadata` element. This hash will match the block hash display in the Stacks Explorer.
+We can retrieve the `stacks_block_hash` by navigating to the `apply` arrays object `metadata` element. This hash will match the block hash display in the Stacks Explorer.
 
 ```json title="contract-call-payload.json"
 // [!code word:stacks_block_hash]
@@ -262,7 +262,7 @@ We can retrieve the `stacks_block_hash` by navigating to the the `apply` arrays 
 ]
 ```
 
-There is also also a `timestamp` value returned in the `apply` array. This UNIX time stamp represents the initiation of the Stacks block.
+There is also a `timestamp` value returned in the `apply` array. This UNIX time stamp represents the initiation of the Stacks block.
 
 ```json title="contract-call-payload.json"
 "timestamp": 1722208524
@@ -270,14 +270,16 @@ There is also also a `timestamp` value returned in the `apply` array. This UNIX 
 
 <Callout type="warn" title="Warning">
   The timestamp returned in this object is not the finalized block time you
-  would see in [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
-  `block_time` returned from the Stacks API [get
+  would see in the [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
+  `block_time` returned from the Stacks API's [get
   block](/stacks/api/blocks/get-block) endpoint.
 </Callout>
 
 ### Transaction object
 
-Because Chainhook is triggered on the block level, we will receive a single response that contains data specific to each `transaction` that matches your predicate's `contract_call` scope. To find this data, we start with the `apply` array element of the `payload` object. The single object that makes up the `apply` array contains a child element, the `transactions` array. Every `transaction` will be represents by a single object within this array. This `transaction` object contains its own children elements which can be seen in the example below.
+Because Chainhook is triggered on the block level, we will receive a single response that contains data specific to each `transaction` that matches your predicate's `contract_call` scope.
+
+To find this data, we start with the `apply` array element of the `payload` object. The single object that makes up the `apply` array contains a child element, the `transactions` array. Every `transaction` will be represents by a single object within this array. This `transaction` object contains its own children elements which can be seen in the example below.
 
 ```json
 {
@@ -297,7 +299,7 @@ Because Chainhook is triggered on the block level, we will receive a single resp
 }
 ```
 
-Once the `transaction` object is returned, we can begin examining important data elements it contains. The first element, `transaction_identifier`, includes a hash value that uniquely identifies your transaction.
+Once the `transaction` object is returned, we can begin examining the important data elements this object contains. The first element, `transaction_identifier`, includes a hash value that uniquely identifies your transaction.
 
 ```json title="contract-call-payload.json"
 "transaction_identifier": {
@@ -319,7 +321,7 @@ Utilize the `success` object to assess transaction success and extract the `send
 
 Moving forward, examine the `kind` object and its components within your `contract_call`. The data object contains crucial information:
 
-- `contract_identifier` specifies the contract your function resides on
+- `contract_identifier` specifies the contract your function resides in
 - `method` identifies the function called
 - `args` lists the arguments passed when invoking this function
 
