@@ -28,6 +28,18 @@ import {
 
 ## Start Devnet
 
+This endpoint starts a devnet service.
+
+### Form Data Parameters
+
+<Property name={"file"} type={"file"} required={true} deprecated={false}>
+  
+JSON file containing the devnet plan. The file can be created using `clarinet devnet package`.
+
+<span>Example: `@default.devnet-plan.json`</span>
+
+</Property>
+
 ### Path Parameters
 
 <Property name={"apiKey"} type={"string"} required={true} deprecated={false}>
@@ -63,7 +75,7 @@ Project name
 <Request value={"cURL"}>
 
 ```bash
-curl -X PUT "https://api.platform.hiro.so/v1/ext/{apiKey}/devnet/{projectName}"
+curl -X PUT -F "file=@default.devnet-plan.json" "https://api.platform.hiro.so/v1/ext/{apiKey}/devnet/{projectName}"
 ```
 
 </Request>
