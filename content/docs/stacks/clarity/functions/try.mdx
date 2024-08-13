@@ -43,8 +43,10 @@ Let's implement a function that transfers STX and handles errors using `try!`:
 
 ```clarity
 (define-public (transfer-stx (amount uint) (recipient principal))
-  (try! (stx-transfer? amount tx-sender recipient))
-  (ok true)
+  (begin
+    (try! (stx-transfer? amount tx-sender recipient))
+    (ok true)
+  )
 )
 
 ;; Usage

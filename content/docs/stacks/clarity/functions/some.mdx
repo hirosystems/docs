@@ -9,26 +9,6 @@ description: Constructing an optional type from a value in Clarity smart contrac
 (some value)
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - Input: `A`
 - Output: `(optional A)`
 
@@ -62,7 +42,7 @@ Use `some` when you need to:
 Let's implement a function that constructs an optional type from a given integer:
 
 ```clarity
-(define-public (wrap-in-optional (input int))
+(define-read-only (wrap-in-optional (input int))
   (some input)
 )
 
@@ -70,26 +50,6 @@ Let's implement a function that constructs an optional type from a given integer
 (wrap-in-optional 42) ;; Returns (some 42)
 (wrap-in-optional -1) ;; Returns (some -1)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 This example demonstrates:
 1. Using `some` to construct an optional type from a given integer.

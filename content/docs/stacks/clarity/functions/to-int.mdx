@@ -42,7 +42,7 @@ Use `to-int` when you need to:
 Let's implement a function that converts an unsigned integer to a signed integer:
 
 ```clarity
-(define-public (convert-to-int (input uint))
+(define-read-only (convert-to-int (input uint))
   (to-int input)
 )
 

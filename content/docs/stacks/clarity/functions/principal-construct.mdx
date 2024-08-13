@@ -42,8 +42,8 @@ Use `principal-construct?` when you need to:
 Let's implement a function that constructs a standard principal:
 
 ```clarity
-(define-public (create-standard-principal (version-byte (buff 1)) (hash-bytes (buff 20)))
-  (principal-construct? version-byte hash-bytes)
+(define-public (create-standard-principal (versionByte (buff 1)) (hashBytes (buff 20)))
+  (principal-construct? versionByte hashBytes)
 )
 
 ;; Usage
@@ -57,7 +57,7 @@ This example demonstrates:
 
 ## Common Pitfalls
 
-1. Using `principal-construct?` with incorrectly formatted `version-byte` or `hash-bytes`, causing the operation to fail.
+1. Using `principal-construct?` with incorrectly formatted `versionByte` or `hashBytes`, causing the operation to fail.
 2. Assuming the principal will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete principal management.
 4. Overlooking the need for proper error handling and validation.

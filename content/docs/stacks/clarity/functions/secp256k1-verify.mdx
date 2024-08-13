@@ -42,8 +42,8 @@ Use `secp256k1-verify` when you need to:
 Let's implement a function that verifies a signature against a message hash and public key:
 
 ```clarity
-(define-public (verify-signature (message-hash (buff 32)) (signature (buff 65)) (public-key (buff 33)))
-  (secp256k1-verify message-hash signature public-key)
+(define-read-only (verify-signature (messageHash (buff 32)) (signature (buff 65)) (publicKey (buff 33)))
+  (secp256k1-verify messageHash signature publicKey)
 )
 
 ;; Usage

@@ -39,7 +39,7 @@ Use `print` when you need to:
 Let's implement a function that prints the result of an addition operation:
 
 ```clarity
-(define-public (add-and-print (a int) (b int))
+(define-read-only (add-and-print (a int) (b int))
   (print (+ a b))
 )
 

@@ -42,7 +42,7 @@ Use `slice?` when you need to:
 Let's implement a function that extracts a sub-sequence from a string:
 
 ```clarity
-(define-public (extract-substring (input (string-ascii 20)) (start uint) (end uint))
+(define-read-only (extract-substring (input (string-ascii 20)) (start uint) (end uint))
   (slice? input start end)
 )
 

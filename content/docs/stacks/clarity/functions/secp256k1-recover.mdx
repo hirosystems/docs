@@ -42,8 +42,8 @@ Use `secp256k1-recover?` when you need to:
 Let's implement a function that recovers the public key from a message hash and signature:
 
 ```clarity
-(define-public (recover-public-key (message-hash (buff 32)) (signature (buff 65)))
-  (secp256k1-recover? message-hash signature)
+(define-read-only (recover-public-key (messageHash (buff 32)) (signature (buff 65)))
+  (secp256k1-recover? messageHash signature)
 )
 
 ;; Usage

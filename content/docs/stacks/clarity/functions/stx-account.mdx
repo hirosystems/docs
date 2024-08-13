@@ -42,13 +42,13 @@ Use `stx-account` when you need to:
 Let's implement a function that queries the STX account information for a given principal:
 
 ```clarity
-(define-public (get-stx-account-info (account principal))
+(define-read-only (get-stx-account-info (account principal))
   (stx-account account)
 )
 
 ;; Usage
 (get-stx-account-info 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) 
-;; Returns (tuple (balance u1000) (nonce u0) (stx-locked u0))
+;; Returns (tuple (balance u0) (nonce u0) (stx-locked u0))
 ```
 
 This example demonstrates:

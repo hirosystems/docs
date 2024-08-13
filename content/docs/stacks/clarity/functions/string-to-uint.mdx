@@ -42,7 +42,7 @@ Use `string-to-uint?` when you need to:
 Let's implement a function that converts a string to an optional unsigned integer:
 
 ```clarity
-(define-public (convert-string-to-uint (input (string-ascii 20)))
+(define-read-only (convert-string-to-uint (input (string-ascii 20)))
   (string-to-uint? input)
 )
 

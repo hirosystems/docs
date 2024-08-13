@@ -42,7 +42,7 @@ Use `string-to-int?` when you need to:
 Let's implement a function that converts a string to an optional integer:
 
 ```clarity
-(define-public (convert-string-to-int (input (string-ascii 20)))
+(define-read-only (convert-string-to-int (input (string-ascii 20)))
   (string-to-int? input)
 )
 

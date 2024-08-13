@@ -42,13 +42,13 @@ Use `sha512/256` when you need to:
 Let's implement a function that computes the SHA-512/256 hash of a given buffer:
 
 ```clarity
-(define-public (compute-sha512-256 (input (buff 32)))
+(define-read-only (compute-sha512-256 (input (buff 32)))
   (sha512/256 input)
 )
 
 ;; Usage
-(compute-sha512-256 0x68656c6c6f20776f726c6421212121212121212121212121212121212121212121) 
-;; Returns 0x515a7e92e7c60522db968d81ff70b80818fc17aeabbec36baf0dda2812e94a86
+(compute-sha512-256 0x68656c6c6f20776f726c64000000000000000000000000000000000000000000)
+;; Returns 0xcf0edb437886eae39b21ebad0caeea342d2bd61c98e9d09d0e89109a546d01fc
 ```
 
 This example demonstrates:

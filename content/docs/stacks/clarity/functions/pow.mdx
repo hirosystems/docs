@@ -37,25 +37,26 @@ Use `pow` when you need to:
 - Combine with other mathematical functions for comprehensive calculations.
 - Be aware of the performance implications of large exponentiation operations.
 
-## Practical Example: Calculating Powers
+## Practical Example: Calculating Token Balances in Decimal Format
 
-Let's implement a function that calculates the power of a number:
+Let's implement a function that calculates the power of a number, specifically for converting integer representations of tokens or uStx:
 
 ```clarity
-(define-read-only (calculate-power (base int) (exponent int))
-  (pow base exponent)
+(define-constant MICRO_TOKENS (pow u10 u6)) ;; 6 decimal places
+(define-data-var userBalance uint u100) ;; Amount reprented in a clear and readable format
+
+(define-read-only (get-total-micro-balance (userAddress principal))
+  (* (var-get userBalance) MICRO_TOKENS)
 )
 
 ;; Usage
-(calculate-power 2 3) ;; Returns 8
-(calculate-power 5 2) ;; Returns 25
-(calculate-power 10 0) ;; Returns 1
+(get-total-micro-balance tx-sender)
 ```
 
 This example demonstrates:
-1. Using `pow` to calculate the power of a number.
-2. Implementing a read-only function to return the result of the exponentiation.
-3. Handling both small and large input values.
+1. Using `pow` to define a constant for micro tokens with 6 decimal places.
+2. Implementing a read-only function to calculate the total balance in decimal format.
+3. Handling balances from different versions of a token contract.
 
 ## Common Pitfalls
 

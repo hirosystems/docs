@@ -43,8 +43,11 @@ Let's implement a function that processes an error response using `unwrap-err-pa
 
 ```clarity
 (define-public (process-error-response (input (response int int)))
-  (let ((error-value (unwrap-err-panic input)))
-    (ok error-value)
+  (let
+    (
+      (errorValue (unwrap-err-panic input))
+    )
+    (ok errorValue)
   )
 )
 

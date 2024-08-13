@@ -45,7 +45,7 @@ Let's implement a function that sets the value of a data variable:
 (define-data-var cursor int 6)
 
 (define-public (increment-cursor)
-  (var-set cursor (+ (var-get cursor) 1))
+  (ok (var-set cursor (+ (var-get cursor) 1)))
 )
 
 ;; Usage

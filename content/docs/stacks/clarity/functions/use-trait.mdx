@@ -9,32 +9,6 @@ description: Importing and using traits from other contracts in Clarity smart co
 (use-trait trait-alias trait-identifier)
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - Input: `VarName, TraitIdentifier`
 - Output: `Not Applicable`
 
@@ -71,41 +45,13 @@ Let's implement a function that imports a trait and uses it in a contract:
 (use-trait token-trait 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR.token-trait)
 
 (define-public (forward-get-balance (user principal) (contract <token-trait>))
-  (begin
-    (ok (contract-of contract))
-  )
+  (ok (contract-of contract))
 )
 
 ;; Usage
 (forward-get-balance tx-sender 'SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR.token-trait)
 ;; Returns the principal of the contract implementing the token-trait
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 This example demonstrates:
 1. Using `use-trait` to import a trait from another contract.

@@ -42,7 +42,7 @@ Use `stx-get-balance` when you need to:
 Let's implement a function that queries the STX balance of a given principal:
 
 ```clarity
-(define-public (get-stx-balance (account principal))
+(define-read-only (get-stx-balance (account principal))
   (stx-get-balance account)
 )
 
