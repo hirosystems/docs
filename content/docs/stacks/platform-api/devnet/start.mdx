@@ -30,7 +30,7 @@ import {
 
 This endpoint starts a devnet service.
 
-### Form Data Parameters
+### Request Body
 
 <Property name={"file"} type={"file"} required={true} deprecated={false}>
   
@@ -83,8 +83,16 @@ curl -X PUT -F "file=@default.devnet-plan.json" "https://api.platform.hiro.so/v1
 <Request value={"JavaScript"}>
 
 ```js
+const devnetPlan = {
+  // Your devnet plan object here
+};
+
 fetch("https://api.platform.hiro.so/v1/ext/{apiKey}/devnet/{projectName}", {
-  method: "PUT"
+  method: "PUT",
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(devnetPlan)
 });
 ```
 
