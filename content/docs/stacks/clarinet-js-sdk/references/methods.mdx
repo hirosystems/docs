@@ -4,14 +4,14 @@ description: The Clarinet JS SDK provides several methods that can be used to in
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Root, API, APIExample } from "@/components/layout"
+import { Property } from "fumadocs-ui/components/api"
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
 
-import { InlineCode } from '@/components/inline-code';
+import { InlineCode } from "@/components/inline-code"
 
 ## Installation
 
@@ -25,7 +25,7 @@ import { InlineCode } from '@/components/inline-code';
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getAccounts`</h2>
+<h2 className="mt-0">`getAccounts`</h2>
 
 Retrieve a list of all Stacks addresses configured within the project, including wallets, deployers, and faucets.
 
@@ -72,6 +72,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
   <TabsContent value="get-account">
     ```ts twoslash
@@ -93,6 +94,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
@@ -104,7 +106,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getAssetsMap`</h2>
+<h2 className="mt-0">`getAssetsMap`</h2>
 
 Retrieve a list of asset balances associated with Stacks addresses, including fungible and non-fungible tokens.
 
@@ -262,7 +264,6 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
   </TabsContent>
 </Tabs>
 
-
 </APIExample>
 
 </API>
@@ -271,7 +272,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getDataVar`</h2>
+<h2 className="mt-0">`getDataVar`</h2>
 
 Get the value of a `data-var` defined in a contract.
 
@@ -314,7 +315,7 @@ The name of the `data-var` for the contract.
         ```clarity title="counter.clar"
         (define-data-var count uint u0) // [!code highlight]
         (define-data-var contractOwner principal tx-sender)
-        
+
         (var-set count (+ (var-get count) u1)) // [!code highlight]
         (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
         ```
@@ -351,7 +352,7 @@ The name of the `data-var` for the contract.
         ```clarity title="counter.clar"
         (define-data-var count uint u0)
         (define-data-var contractOwner principal tx-sender) // [!code highlight]
-        
+
         (var-set count (+ (var-get count) u1))
         (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) // [!code highlight]
         ```
@@ -367,6 +368,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
@@ -378,7 +380,7 @@ The name of the `data-var` for the contract.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getMapEntry`</h2>
+<h2 className="mt-0">`getMapEntry`</h2>
 
 Get the value of a map entry by its key. Note that this method will always return an optional value `some` or `none`, just like Clarity `map-get?`.
 
@@ -517,7 +519,7 @@ The key to access the value in the map.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`callReadOnlyFn`</h2>
+<h2 className="mt-0">`callReadOnlyFn`</h2>
 
 Call read-only functions exposed by a contract.
 
@@ -582,8 +584,8 @@ The Stacks address of the sender.
       'get-contribution-amount',
       [Cl.standardPrincipal(wallet)],
       wallet
-    );  
-    
+    );
+
     const response = getContributionAmount.result // [!code highlight]
     ```
 
@@ -624,7 +626,7 @@ The Stacks address of the sender.
             result: ClarityValue;
             events: ClarityEvent[];
         }
-        
+
         callReadOnlyFn(
           contract: string,
           method: string,
@@ -651,7 +653,7 @@ The Stacks address of the sender.
       [], // [!code highlight]
       wallet
     );
-    
+
     const response = isActive.result // [!code highlight]
     ```
 
@@ -694,7 +696,7 @@ The Stacks address of the sender.
             result: ClarityValue;
             events: ClarityEvent[];
         }
-        
+
         callReadOnlyFn(
           contract: string,
           method: string,
@@ -761,7 +763,7 @@ The Stacks address of the sender.
             result: ClarityValue;
             events: ClarityEvent[];
         }
-        
+
         callReadOnlyFn(
           contract: string,
           method: string,
@@ -826,7 +828,7 @@ The Stacks address of the sender.
             result: ClarityValue;
             events: ClarityEvent[];
         }
-        
+
         callReadOnlyFn(
           contract: string,
           method: string,
@@ -836,7 +838,7 @@ The Stacks address of the sender.
         ```
       </Accordion>
     </Accordions>
-    
+
   </TabsContent>
 </Tabs>
 
@@ -848,7 +850,7 @@ The Stacks address of the sender.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`callPublicFn`</h2>
+<h2 className="mt-0">`callPublicFn`</h2>
 
 Call public functions exposed by a contract.
 
@@ -953,7 +955,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         callPublicFn(
           contract: string,
           method: string,
@@ -980,7 +982,7 @@ The Stacks address of the sender.
       [Cl.standardPrincipal(wallet)],
       wallet
     );
-    
+
     const response = cvToValue(registerParticipant.result); // [!code highlight]
     ```
 
@@ -1018,7 +1020,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         callPublicFn(
           contract: string,
           method: string,
@@ -1046,7 +1048,7 @@ The Stacks address of the sender.
       [Cl.standardPrincipal(wallet)],
       wallet
     );
-    
+
     const eventValues = registerParticipant.events.map((event) =>
       cvToValue(event.data.value as ClarityValue) // [!code highlight]
     );
@@ -1098,7 +1100,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         callPublicFn(
           contract: string,
           method: string,
@@ -1120,7 +1122,210 @@ The Stacks address of the sender.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`transferSTX`</h2>
+<h2 className="mt-0">`callPrivateFn`</h2>
+
+Call private functions exposed by a contract.
+
+This method returns an object with the result of the function call as a `ClarityValue` and the events, if any, fired during the function execution. It takes function arguments in the form of Clarity values, which are available in the package [`@stacks/transactions`](/stacks/stacks.js/packages/transactions).
+
+This method will simulate a block being mined and increase the block height by one.
+
+## Parameters
+
+<Property required={true} deprecated={false} name={"contract"} type={"string"}>
+The contract identifier of the contract.
+
+<span>Example: `pool`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"method"} type={"string"}>
+The name of the private function within the contract.
+
+<span>Example: `reward-participant-points`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
+The arguments to pass to the private function. If no arguments are needed, pass an empty array.
+
+<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"sender"} type={"string"}>
+The Stacks address of the sender.
+
+<span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
+</Property>
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge className='badge transition-colors'>Broadcasting your transaction</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="clarity-value" className='tab group'>
+      <Badge className='badge transition-colors'>Converting Clarity values</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:callPrivateFn]
+    import { Cl } from '@stacks/transactions';
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('deployer')!;
+    const address1 = accounts.get("wallet_1")!
+
+    const rewardParticipantPoints = simnet.callPrivateFn(
+      "pool",
+      "reward-participant-points",
+      [Cl.standardPrincipal(address1)],
+      wallet
+    );
+
+    const response = rewardParticipantPoints.result; // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
+        // [!code word:reward-participant-points]
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+        (define-map ParticipantPoints principal int)
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (reward-participant-points who)
+            (print { message: "Registered", who: who, at: block-height })
+            (ok true)
+          )
+        )
+
+        (define-private (reward-participant-points (who principal))
+            (map-insert ParticipantPoints who 100)
+        )
+
+        (map-set Participants tx-sender true)
+        (map-set ParticipantStatus tx-sender { enrollmentBlock: block-height, contributionAmount: u42000000 })
+        (map-set ParticipantPoints tx-sender 1000)
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          type: 3,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        type ParsedTransactionResult = {
+          result: ClarityValue;
+          events: ClarityEvent[];
+        }
+
+        callPrivateFn(
+          contract: string,
+          method: string,
+          args: ClarityValue[],
+          sender: string
+        ): ParsedTransactionResult
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  <TabsContent value="clarity-value">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:cvToValue]
+    import { Cl, cvToValue } from '@stacks/transactions';
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('deployer')!;
+    const address1 = accounts.get("wallet_1")!
+
+    const rewardParticipantPoints = simnet.callPrivateFn(
+      "pool",
+      "reward-participant-points",
+      [Cl.standardPrincipal(address1)],
+      wallet
+    );
+
+    const response = cvToValue(registerParticipant.result); // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
+        // [!code word:reward-participant-points]
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+        (define-map ParticipantPoints principal int)
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (reward-participant-points who)
+            (print { message: "Registered", who: who, at: block-height })
+            (ok true)
+          )
+        )
+
+        (define-private (reward-participant-points (who principal))
+            (map-insert ParticipantPoints who 100)
+        )
+
+        (map-set Participants tx-sender true)
+        (map-set ParticipantStatus tx-sender { enrollmentBlock: block-height, contributionAmount: u42000000 })
+        (map-set ParticipantPoints tx-sender 1000)
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          type: "bool",
+          value: true,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        type ParsedTransactionResult = {
+          result: ClarityValue;
+          events: ClarityEvent[];
+        }
+
+        callPrivateFn(
+          contract: string,
+          method: string,
+          args: ClarityValue[],
+          sender: string
+        ): ParsedTransactionResult
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className="mt-0">`transferSTX`</h2>
 
 Transfer STX from one address to another. The amount transferred is in `uSTX`.
 
@@ -1208,7 +1413,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         transferSTX(
           amount: number | bigint,
           recipient: string,
@@ -1233,7 +1438,7 @@ The Stacks address of the sender.
       recipient,
       simnet.deployer
     );
-    
+
     const response = cvToValue(transfer.result); // [!code highlight]
     ```
 
@@ -1252,7 +1457,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         transferSTX(
           amount: number | bigint,
           recipient: string,
@@ -1300,7 +1505,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         transferSTX(
           amount: number | bigint,
           recipient: string,
@@ -1321,7 +1526,7 @@ The Stacks address of the sender.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`deployContract`</h2>
+<h2 className="mt-0">`deployContract`</h2>
 
 Deploy a contract to simnet.
 
@@ -1400,7 +1605,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         deployContract(
           name: string,
           content: string,
@@ -1442,7 +1647,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         deployContract(
           name: string,
           content: string,
@@ -1489,7 +1694,7 @@ The Stacks address of the sender.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         deployContract(
           name: string,
           content: string,
@@ -1511,7 +1716,7 @@ The Stacks address of the sender.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`mineBlock`</h2>
+<h2 className="mt-0">`mineBlock`</h2>
 
 The `callPublicFn`, `transferSTX`, and `deployContract` methods all mine one block with only one transaction. It can also be useful to mine a block with multiple transactions.
 
@@ -1520,6 +1725,7 @@ This is what `mineBlock` is for.
 This method takes an array of transaction objects. The transactions can be built with the `tx` helper exported by the SDK.
 
 The `tx` helper has three methods:
+
 - `callPublicFn`
 - `transferSTX`
 - `deployContract`
@@ -1624,7 +1830,7 @@ An array of transactions to be included in the block.
           result: ClarityValue;
           events: ClarityEvent[];
         }
-        
+
         mineBlock(txs: Tx[]): ParsedTransactionResult[]
         ```
       </Accordion>
@@ -1641,7 +1847,7 @@ An array of transactions to be included in the block.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`mineEmptyBlock`</h2>
+<h2 className="mt-0">`mineEmptyBlock`</h2>
 
 Mine one empty block and increase the block height by one.
 
@@ -1690,7 +1896,7 @@ Returns the new block height.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`mineEmptyBlocks`</h2>
+<h2 className="mt-0">`mineEmptyBlocks`</h2>
 
 Mine multiple empty blocks to reach a certain block height.
 
@@ -1739,6 +1945,7 @@ The number of empty blocks to mine. This parameter is optional.
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
   <TabsContent value="options">
     ```ts twoslash
@@ -1761,6 +1968,7 @@ The number of empty blocks to mine. This parameter is optional.
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
@@ -1772,7 +1980,7 @@ The number of empty blocks to mine. This parameter is optional.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`runSnippet`</h2>
+<h2 className="mt-0">`runSnippet`</h2>
 
 Execute arbitrary Clarity code directly, which allows you to test and interact with smart contract functions without deploying them.
 
@@ -1827,6 +2035,7 @@ The Clarity code snippet to be executed.
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
   <TabsContent value="transfer">
     ```ts twoslash
@@ -1859,6 +2068,7 @@ The Clarity code snippet to be executed.
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
@@ -1870,7 +2080,7 @@ The Clarity code snippet to be executed.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getContractsInterfaces`</h2>
+<h2 className="mt-0">`getContractsInterfaces`</h2>
 
 Returns the interfaces of the project contracts as a Map of Contracts, with the keys being the contract addresses.
 
@@ -1957,6 +2167,7 @@ These interfaces contain information such as the available `functions`, `data-va
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
   <TabsContent value="filter">
     ```ts twoslash
@@ -2009,6 +2220,7 @@ These interfaces contain information such as the available `functions`, `data-va
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
@@ -2020,7 +2232,7 @@ These interfaces contain information such as the available `functions`, `data-va
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getContractSource`</h2>
+<h2 className="mt-0">`getContractSource`</h2>
 
 Get the source code of a contract as a string.
 
@@ -2084,6 +2296,7 @@ The identifier of the contract for which the source code is requested.
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
@@ -2095,7 +2308,7 @@ The identifier of the contract for which the source code is requested.
 
 <div className='flex-1'>
 
-<h2 className='mt-0'>`getContractAST`</h2>
+<h2 className="mt-0">`getContractAST`</h2>
 
 Get the full AST (Abstract Syntax Tree) of a Clarity contract.
 
@@ -2162,6 +2375,7 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
         ```
       </Accordion>
     </Accordions>
+
   </TabsContent>
 </Tabs>
 
