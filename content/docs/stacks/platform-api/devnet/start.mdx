@@ -1,0 +1,135 @@
+---
+title: Start Devnet
+description: Start a development network (devnet).
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl="https://api.platform.hiro.so">
+
+<API>
+
+<APIInfo method={"PUT"} route={"/v1/ext/{apiKey}/devnet/{projectName}"}>
+
+## Start Devnet
+
+This endpoint starts a devnet service.
+
+### Request Body
+
+<Property name={"file"} type={"file"} required={true} deprecated={false}>
+  
+JSON file containing the devnet plan. The file can be created using `clarinet devnet package`.
+
+<span>Example: `@default.devnet-plan.json`</span>
+
+</Property>
+
+### Path Parameters
+
+<Property name={"apiKey"} type={"string"} required={true} deprecated={false}>
+
+Hiro API key
+
+<span>Pattern: `"0941f307fd270ace19a5bfed67fbd3bc"`</span>
+
+</Property>
+
+<Property name={"projectName"} type={"string"} required={true} deprecated={false}>
+
+Project name
+
+<span>Pattern: `"clarity-bitcoin-197s"`</span>
+
+</Property>
+
+| Status code | Description |
+| :----------- | :----------- |
+| `200` | Default Response |
+
+<APIPlayground authorization={undefined} method={"PUT"} route={"/v1/ext/{apiKey}/devnet/{projectName}"} path={[{"name":"apiKey","type":"string","defaultValue":"","isRequired":true},{"name":"projectName","type":"string","defaultValue":"","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X PUT -F "file=@default.devnet-plan.json" "https://api.platform.hiro.so/v1/ext/{apiKey}/devnet/{projectName}"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+const devnetPlan = {
+  // Your devnet plan object here
+};
+
+fetch("https://api.platform.hiro.so/v1/ext/{apiKey}/devnet/{projectName}", {
+  method: "PUT",
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(devnetPlan)
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+export interface Response {}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>
