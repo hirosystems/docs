@@ -1,64 +1,62 @@
 ---
 title: Predicate design
 description: Predicates are the building blocks of Chainhook.
+toc: true
 ---
 
-The core design of chainhooks revolves around the concept of predicates. Each individual chainhook has a customizable predicate that specifies what information you are scanning for.
+The core design of Chainhook revolves around the concept of predicates. Each individual Chainhook has a customizable predicate that specifies what the Bitcoin or Stacks blockchain data you are scanning for.
 
-Predicates are defined in an `if-this`, `then-that` format. You'll write your condition in the `if-this` condition template and use `then-that` to output the result.
+The `predicate` is a JSON object that is composed of elements that allows you to:
+- Identify the predicate in the payload Chainhook returns
+- Determine the blockchain and network Chainhook will evaluate the predicate against
+- Define the scope Chainhook uses to observe transactions and their data
+- Deliver the Chainhook payload to specfied end point or file destination
+- Setup Stacks and Bitcoin specific configurations for the Chainhook payload
 
-## `if-this`
-
-The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
+## Predicate JSON object
 
 ```json
-// [!code word:if_this]
-{
-  "if_this": {
-    "scope": "txid",
-    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
-  }
-}
-```
-
-Other available parameters:
-
-- `equals`
-- `op_return`
-- `ends_with`
-- `p2pkh`
-- `p2sh`
-- `p2wpkh`
-- `operation`
-
-<Callout title="Info">
-  For more information on predicate definitions, refer to the [scopes](/stacks/chainhook/references/scopes) reference page.
-</Callout>
-
-## `then-that`
-
-The `then-that` predicate design can use the following attributes to output the result based on the `if-this` condition defined.
-
-```jsonc
-// [!code word:file_append]
-{
-  "then_that": {
-    "file_append": {
-      "path": "/tmp/events.json",
-    },
-  },
-}
-```
-
-```jsonc
-// [!code word:http_post]
-{
-  "then_that": {
-    "http_post": {
-      "url": "https://example.com/api/v1/events",
-      "authorization_header": "Bearer 1234567890"
+  {
+    // Chain configuration
+    "chain": "stacks",
+    // Idenfication
+    "uuid": "1",
+    "name": "STX_Transfer_Predicate",
+    "version": 1.0,
+    // Network definition
+    "networks": {
+      "testnet": {
+        // if_this specification       
+        "if_this": {
+          "scope": "stx_transfer",
+          "actions": ["transfer"]
+        },
+        // then_that specification
+        "then_that": {
+          "file_append": {
+            "path": "/tmp/events.json"
+          }
+        },
+      // Additional blockchain specific configurations
+        "start_block": 21443,
+        "decode_clarity_values": true,
+        "expire_after_occurrence": 1,
+      }
     }
   }
-}
+  ```
+
+<Callout type="info" title="Note">
+
+With Chainhook [installed](/stacks/chainhook/installation), the following commands allow you to generate a predicate template for the specified blockchain.
+
 ```
+chainhook predicates new your-bitcoin-predicate.json --bitcoin
+```
+```
+chainhook predicates new your-stacks-predicate.json --stacks
+```
+
+</Callout>
+
 
