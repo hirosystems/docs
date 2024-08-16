@@ -1,0 +1,24 @@
+---
+title: If_this Specification
+description: The if_this specification is where the scope for your predicate is defined.
+toc: true
+---
+
+
+## The if_this specification
+
+The `if-this` predicate design can use the following attributes to define the predicates. The 'scope' parameter is mandatory to use with any other parameters.
+
+```json
+// [!code word:if_this]
+{
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
+}
+```
+
+<Callout title="Info">
+  For more information on predicate definitions, refer to the [Bitcoin scopes](/stacks/chainhook/references/scopes/bitcoin-scopes) and[Stacks scope](/stacks/chainhook/references/scopes/stacks-scopes) reference pages.
+</Callout>
