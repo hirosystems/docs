@@ -72,7 +72,7 @@ To begin, you need to configure the `predicate` to target the voting contract. A
 ```
 
 <Callout title="Note">
-  This block height of `21443` represents when the voting contract was deployed. For more details on optional configurations, check out the [Stacks predicates](/stacks/chainhook/concepts/stacks-predicates#additional-configurations-available) page.
+  This block height of `21443` represents when the voting contract was deployed. For more details on optional configurations and other predicate elements, check out the [Predicate Design](/stacks/chainhook/concepts/predicate-design) page.
 </Callout>
 
 Next, define the scope of the `predicate` within the `if_this` specification.
@@ -100,12 +100,9 @@ The `contract_call` scope allows Chainhook to observe blockchain data when the s
   ```
 </Callout>
 
-Finally, define how Chainhook delivers the payload when it is triggered by your `predicate` using the `then_that` specification. There are 2 options available:
+Finally, define how Chainhook delivers the payload when it is triggered by your `predicate` using the `then_that` specification. 
 
-1. `file_append`
-2. `http_post`
-
-When choosing to use file_append, specify the path where Chainhook will post the payload data.
+Using `file_append`, specify the path where Chainhook will post the payload data.
 
 ```json title="contract-call-chainhook.json"
 // [!code word:file_append]
@@ -113,20 +110,6 @@ When choosing to use file_append, specify the path where Chainhook will post the
   "then_that": {
     "file_append": {
       "path": "/tmp/events.json"
-    }
-  }
-}
-```
-
-When using `http_post`, specify the endpoint's `url` and `authorization_header`.
-
-```json title="contract-call-chainhook.json"
-// [!code word:http_post]
-{
-  "then_that": {
-    "http_post": {
-      "url": "https://webhook.site/abc123456-789e-0fgh-1ijk-23lmno456789",
-      "authorization_header": "12345"
     }
   }
 }
@@ -161,10 +144,6 @@ When using `http_post`, specify the endpoint's `url` and `authorization_header`.
   ```
   </Accordion>
 </Accordions>
-
-<Callout title="Note">
-  Chainhook requires `https` to post to your endpoint. You can use a service like [LocalTunnel](https://github.com/localtunnel/localtunnel) to test locally or a site like [WebhookSite](https://webhook.site).
-</Callout>
 
 </Step>
 <Step>
