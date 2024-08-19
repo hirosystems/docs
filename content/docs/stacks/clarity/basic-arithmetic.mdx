@@ -24,14 +24,20 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 - Consider overflow protection
 - Use with uint for non-negative values like token amounts
 
-**Example Use Case**: Calculating total rewards in a staking system.
+**Example Use Case**: Calculating total rewards in a stacking system.
 
 ```clarity
-(define-public (add-staking-reward (staker principal) (new-reward uint))
-  (let ((current-rewards (default-to u0 (map-get? staking-rewards staker))))
-    (map-set staking-rewards staker (+ current-rewards new-reward))
+(define-map StackingRewards principal uint)
+
+(define-public (add-stacking-reward (stacker principal) (newReward uint))
+  (let
+    (
+      (currentRewards (default-to u0 (map-get? StackingRewards stacker)))
+    )
+    (map-set StackingRewards stacker (+ currentRewards newReward))
     (ok true)
-  ))
+  )
+)
 ```
 
 ### 2. Subtraction (-)
@@ -44,17 +50,25 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 - Guard against underflow
 - Consider using uint for values that shouldn't go negative
 
-**Example Use Case**: Calculating remaining votes in a governance system.
+**Example Use Case**: Updating user points in a rewards system.
 
 ```clarity
-(define-public (cast-votes (proposal-id uint) (vote-count uint))
-  (let ((remaining-votes (- (get-user-votes tx-sender) vote-count)))
-    (asserts! (>= remaining-votes u0) (err u1))
-    (map-set votes proposal-id 
-      (+ (default-to u0 (map-get? votes proposal-id)) vote-count))
-    (map-set user-votes tx-sender remaining-votes)
-    (ok remaining-votes)
-  ))
+(define-map UserPoints principal uint)
+
+(define-public (deduct-points (amount uint))
+  (let
+    (
+      (currentPoints (default-to u0 (map-get? UserPoints tx-sender)))
+    )
+    (asserts! (>= currentPoints amount) (err u1))
+    (map-set UserPoints tx-sender (- currentPoints amount))
+    (ok true)
+  )
+)
+
+(define-read-only (get-points (user principal))
+  (default-to u0 (map-get? UserPoints user))
+)
 ```
 
 ### 3. Multiplication (*)
@@ -67,13 +81,17 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 - Consider overflow protection
 - Use with uint for non-negative values like token amounts
 
-**Example Use Case**: Calculating rewards based on staking amount and duration.
+**Example Use Case**: Calculating rewards based on stacking amount and duration.
 
 ```clarity
 (define-public (calculate-rewards (amount uint) (days uint))
-  (let ((reward-rate u10) ;; 10 tokens per day per 1000 staked
-        (rewards (* amount days reward-rate)))
-    (/ rewards u1000))
+  (let
+    (
+      (rewardRate u10) ;; 10 tokens per day per 1000 stacked
+      (rewards (* amount days rewardRate))
+    )
+    (ok (/ rewards u1000))
+  )
 )
 ```
 
@@ -87,13 +105,15 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 - Guard against division by zero
 - Consider using uint for non-negative values like token amounts
 
-**Example Use Case**: Distributing profits among stakeholders.
+**Example Use Case**: Calculating price per item when buying in bulk.
 
 ```clarity
-(define-public (distribute-profits (total-profit uint))
-  (let ((share-per-stakeholder (/ total-profit (get-stakeholder-count))))
-    ;; ... distribution logic here
-  ))
+(define-read-only (calculate-price-per-item (totalPrice uint) (itemCount uint))
+  (if (> itemCount u0)
+    (ok (/ totalPrice itemCount))
+    (err u0)
+  )
+)
 ```
 
 ## Best Practices and Considerations

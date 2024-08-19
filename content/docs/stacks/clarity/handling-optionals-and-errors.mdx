@@ -34,12 +34,14 @@ Clarity's optional value and error handling functions are designed with several 
 **Example Use Case**: Checking if a user exists in a map before performing an operation.
 
 ```clarity
-(define-map users principal { balance: uint })
+(define-map Users principal { balance: uint })
 
 (define-public (check-balance (user principal))
-  (if (is-some (map-get? users user))
+  (if (is-some (map-get? Users user))
       (ok "User exists")
-      (err "User not found")))
+      (err "User not found")
+  )
+)
 ```
 
 ### 2. unwrap! and unwrap-panic
@@ -60,9 +62,11 @@ Clarity's optional value and error handling functions are designed with several 
 **Example Use Case**: Retrieving a user's balance, with a custom error if the user doesn't exist.
 
 ```clarity
+(define-map Users principal { balance: uint })
+
 (define-public (get-balance (user principal))
-  (ok (unwrap! (get balance (map-get? users user))
-               (err "User not found"))))
+  (ok (unwrap! (get balance (map-get? Users user)) (err "User not found")))
+)
 ```
 
 ### 3. try!
@@ -83,12 +87,17 @@ Clarity's optional value and error handling functions are designed with several 
 
 ```clarity
 (define-public (transfer (from principal) (to principal) (amount uint))
-  (let ((sender-balance (try! (get-balance from)))
-        (recipient-balance (try! (get-balance to))))
-    (try! (check-sufficient-balance sender-balance amount))
-    (try! (update-balance from (- sender-balance amount)))
-    (try! (update-balance to (+ recipient-balance amount)))
-    (ok true)))
+  (let
+    (
+      (senderBalance (try! (get-balance from)))
+      (recipientBalance (try! (get-balance to)))
+    )
+    (try! (check-sufficient-balance senderBalance amount))
+    (try! (update-balance from (- senderBalance amount)))
+    (try! (update-balance to (+ recipientBalance amount)))
+    (ok true)
+  )
+)
 ```
 
 ## Practical Example: Safe Token Transfer System
@@ -96,32 +105,44 @@ Clarity's optional value and error handling functions are designed with several 
 Let's implement a simple token system that demonstrates the use of optional values and error handling:
 
 ```clarity
-(define-map balances principal uint)
+(define-map Balances principal uint)
 
 (define-read-only (get-balance (user principal))
-  (ok (default-to u0 (map-get? balances user))))
+  (default-to u0 (map-get? Balances user))
+)
 
 (define-public (transfer (to principal) (amount uint))
-  (let ((sender-balance (unwrap! (get-balance tx-sender) (err "Failed to get sender balance")))
-        (recipient-balance (unwrap! (get-balance to) (err "Failed to get recipient balance"))))
-    (if (>= sender-balance amount)
+  (let
+    (
+      (senderBalance (get-balance tx-sender))
+      (recipientBalance (get-balance to))
+    )
+    (if (>= senderBalance amount)
         (begin
           (try! (as-contract (stx-transfer? amount tx-sender to)))
-          (map-set balances tx-sender (- sender-balance amount))
-          (map-set balances to (+ recipient-balance amount))
-          (ok true))
-        (err "Insufficient balance"))))
+          (map-set Balances tx-sender (- senderBalance amount))
+          (map-set Balances to (+ recipientBalance amount))
+          (ok true)
+        )
+        (err u1)
+    )
+  )
+)
 
 (define-public (deposit (amount uint))
-  (let ((current-balance (unwrap! (get-balance tx-sender) (err "Failed to get balance"))))
+  (let
+    (
+      (currentBalance (get-balance tx-sender))
+    )
     (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
-    (ok (map-set balances tx-sender (+ current-balance amount)))))
+    (ok (map-set Balances tx-sender (+ currentBalance amount)))
+  )
+)
 ```
 
 This example demonstrates:
-1. Using `unwrap!` to safely extract balances from the optional values returned by `map-get?`.
-2. Using `try!` to handle potential errors in the STX transfer operations.
-3. Proper error handling and propagation throughout the contract functions.
+1. Using `try!` to handle potential errors in the STX transfer operations.
+2. Proper error handling and propagation throughout the contract functions.
 
 ## Conclusion
 
