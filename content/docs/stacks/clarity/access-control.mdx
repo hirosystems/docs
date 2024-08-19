@@ -1,6 +1,6 @@
 ---
 title: Access control
-description: Managing Permissions and Access Control with Principal Functions.
+description: Managing permissions and access control with principal functions.
 ---
 
 Principal functions in Clarity are essential tools for implementing robust access control and permission management in smart contracts. These functions allow developers to identify, authenticate, and authorize different entities interacting with the contract, ensuring that only the right parties can perform specific actions or access certain data.
@@ -14,7 +14,7 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 3. Ensure that only authorized entities can perform certain actions or access specific data.
 4. Create multi-signature schemes for enhanced security.
 
-## Key Elements for Access Control
+## Key elements for access control
 
 ### 1. asserts!
 
@@ -24,11 +24,11 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 
 **When**: Use when you need to ensure a condition is true before proceeding with a function.
 
-**Best Practices**: 
-- Use asserts! to enforce access control rules and validate conditions.
-- Consider using asserts! in combination with other principal functions for robust access control.
+**Best practices**: 
+- Use `asserts!` to enforce access control rules and validate conditions.
+- Consider using `asserts!` in combination with other principal functions for robust access control.
 
-**Example Use Case**: Using asserts! to check if a user has sufficient balance before performing a transfer.
+**Example use case**: Using `asserts!` to check if a user has sufficient balance before performing a transfer.
 
 ```clarity
 ;; Define a map to store user balances
@@ -64,11 +64,11 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 
 **When**: Use when you need to check permissions or record actions associated with the caller.
 
-**Best Practices**: 
-- Always validate tx-sender before performing sensitive operations.
-- Don't rely solely on tx-sender for complex authentication schemes.
+**Best practices**: 
+- Always validate `tx-sender` before performing sensitive operations.
+- Don't rely solely on `tx-sender` for complex authentication schemes.
 
-**Example Use Case**: Restricting a function to be called only by the contract owner.
+**Example use case**: Restricting a function to be called only by the contract owner.
 
 ```clarity
 (define-data-var contractOwner principal tx-sender)
@@ -90,11 +90,11 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 
 **When**: Use when your contract might be called by other contracts and you need to distinguish between the original sender and the immediate caller.
 
-**Best Practices**: 
-- Use in conjunction with tx-sender for comprehensive access control.
-- Be cautious of potential confusion between tx-sender and contract-caller in complex call chains.
+**Best practices**: 
+- Use in conjunction with `tx-sender` for comprehensive access control.
+- Be cautious of potential confusion between `tx-sender` and `contract-caller` in complex call chains.
 
-**Example Use Case**: Implementing a whitelist for contracts allowed to call a function.
+**Example use case**: Implementing a whitelist for contracts allowed to call a function.
 
 ```clarity
 (define-map AllowedCallers principal bool)
@@ -116,11 +116,11 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 
 **When**: Use when you need to verify if a caller matches a specific principal or if two principals are the same.
 
-**Best Practices**: 
+**Best practices**: 
 - Use for exact matching of principals.
 - Consider using in combination with other checks for more robust authentication.
 
-**Example Use Case**: Multi-signature functionality requiring approval from specific principals.
+**Example use case**: Multi-signature functionality requiring approval from specific principals.
 
 ```clarity
 (define-constant APPROVER_ONE 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
@@ -135,7 +135,7 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 )
 ```
 
-## Practical Example: Simple Governance Contract
+## Practical example: simple governance contract
 
 Let's implement a basic governance contract that demonstrates role-based access control using principal functions. This contract will have an owner, administrators, and regular members, each with different permissions.
 
