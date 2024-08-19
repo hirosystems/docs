@@ -14,17 +14,55 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 3. Ensure that only authorized entities can perform certain actions or access specific data.
 4. Create multi-signature schemes for enhanced security.
 
-## Core Principal Functions
+## Key Elements for Access Control
 
-### 1. tx-sender
+### 1. asserts!
 
-**What**: Returns the current transaction sender.
-**Why**: Essential for identifying who is calling a contract function.
-**When**: Use when you need to check permissions or record actions associated with the caller.
-**How**: 
+**What**: A function that checks a condition and throws an error if it's not met.
+
+**Why**: Essential for enforcing access control rules and validating conditions.
+
+**When**: Use when you need to ensure a condition is true before proceeding with a function.
+
+**Best Practices**: 
+- Use asserts! to enforce access control rules and validate conditions.
+- Consider using asserts! in combination with other principal functions for robust access control.
+
+**Example Use Case**: Using asserts! to check if a user has sufficient balance before performing a transfer.
+
 ```clarity
-(tx-sender)
+;; Define a map to store user balances
+(define-map Balances principal uint)
+
+;; Function to transfer tokens
+(define-public (transfer (amount uint) (recipient principal))
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
+    ;; Assert that the sender has sufficient balance
+    (asserts! (>= senderBalance amount) (err u1))
+    
+    ;; If assertion passes, proceed with the transfer
+    (map-set Balances tx-sender (- senderBalance amount))
+    (map-set Balances recipient (+ (default-to u0 (map-get? Balances recipient)) amount))
+    (ok true)
+  )
+)
+
+;; Function to check balance
+(define-read-only (get-balance (user principal))
+  (default-to u0 (map-get? Balances user))
+)
 ```
+
+### 2. tx-sender
+
+**What**: A keyword that represents the current transaction sender.
+
+**Why**: Important for identifying who is calling a contract function.
+
+**When**: Use when you need to check permissions or record actions associated with the caller.
 
 **Best Practices**: 
 - Always validate tx-sender before performing sensitive operations.
@@ -44,16 +82,13 @@ Clarity's principal functions are designed with blockchain-specific consideratio
 )
 ```
 
-### 2. contract-caller
+### 3. contract-caller
 
-**What**: Returns the immediate caller of the current contract.
+**What**: A keyword that represents the immediate caller of the current contract.
+
 **Why**: Allows for more granular control in contract-to-contract interactions.
-**When**: Use when your contract might be called by other contracts and you need to distinguish between the original sender and the immediate caller.
-**How**:
 
-```clarity
-contract-caller
-```
+**When**: Use when your contract might be called by other contracts and you need to distinguish between the original sender and the immediate caller.
 
 **Best Practices**: 
 - Use in conjunction with tx-sender for comprehensive access control.
@@ -73,16 +108,13 @@ contract-caller
 )
 ```
 
-### 3. is-eq
+### 4. is-eq
 
 **What**: Checks if two values are equal.
-**Why**: Crucial for comparing principals and implementing access control logic.
-**When**: Use when you need to verify if a caller matches a specific principal or if two principals are the same.
-**How**:
 
-```clarity
-(is-eq value1 value2)
-```
+**Why**: Crucial for comparing principals and implementing access control logic.
+
+**When**: Use when you need to verify if a caller matches a specific principal or if two principals are the same.
 
 **Best Practices**: 
 - Use for exact matching of principals.
