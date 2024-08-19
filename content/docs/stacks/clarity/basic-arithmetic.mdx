@@ -8,7 +8,7 @@ Smart contracts often need to perform calculations, whether it's for token balan
 ## Why these functions matter
 Clarity's arithmetic functions are designed with blockchain-specific considerations in mind:
 
-1. Overflow Protection: Unlike some languages, Clarity prevents integer overflow by default, enhancing contract security.
+1. Overflow protection: Unlike some languages, Clarity prevents integer overflow by default, enhancing contract security.
 2. Precision: Clarity uses 128-bit integers, allowing for high-precision calculations crucial in financial applications.
 3. Determinism: The behavior of these functions is consistent across all nodes, ensuring blockchain consensus.
 
@@ -22,11 +22,11 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to increase values, combine quantities, or perform any additive calculation.
 
-**Best Practices**: 
+**Best practices**: 
 - Consider overflow protection
 - Use with uint for non-negative values like token amounts
 
-**Example Use Case**: Calculating total rewards in a stacking system.
+**Example use case**: Calculating total rewards in a stacking system.
 
 ```clarity
 (define-map StackingRewards principal uint)
@@ -50,11 +50,11 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to decrease values, calculate differences, or perform any subtractive operation.
 
-**Best Practices**: 
+**Best practices**: 
 - Guard against underflow
 - Consider using uint for values that shouldn't go negative
 
-**Example Use Case**: Updating user points in a rewards system.
+**Example use case**: Updating user points in a rewards system.
 
 ```clarity
 (define-map UserPoints principal uint)
@@ -83,11 +83,11 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to scale values, calculate rates, or perform any multiplicative operation.
 
-**Best Practices**: 
+**Best practices**: 
 - Consider overflow protection
 - Use with uint for non-negative values like token amounts
 
-**Example Use Case**: Calculating rewards based on stacking amount and duration.
+**Example use case**: Calculating rewards based on stacking amount and duration.
 
 ```clarity
 (define-public (calculate-rewards (amount uint) (days uint))
@@ -109,11 +109,11 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to divide values, calculate rates, or perform any division operation.
 
-**Best Practices**: 
+**Best practices**: 
 - Guard against division by zero
 - Consider using uint for non-negative values like token amounts
 
-**Example Use Case**: Calculating price per item when buying in bulk.
+**Example use case**: Calculating price per item when buying in bulk.
 
 ```clarity
 (define-read-only (calculate-price-per-item (totalPrice uint) (itemCount uint))
@@ -124,19 +124,19 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 )
 ```
 
-## Best Practices and Considerations
+## Best practices and considerations
 
-1. **Order of Operations**: Clarity doesn't have operator precedence. Use parentheses to explicitly define the order of operations.
+1. **Order of operations**: Clarity doesn't have operator precedence. Use parentheses to explicitly define the order of operations.
 
-2. **Handling Remainders**: When using division, consider how to handle remainders. You might need to use combination of division and modulo.
+2. **Handling remainders**: When using division, consider how to handle remainders. You might need to use combination of division and modulo.
 
-3. **Scaling for Precision**: When dealing with percentages or fractions, consider scaling up your numbers to maintain precision.
+3. **Scaling for precision**: When dealing with percentages or fractions, consider scaling up your numbers to maintain precision.
 
-4. **Guarding Against Division by Zero**: Always check for zero before performing division to avoid runtime errors.
+4. **Guarding against division by zero**: Always check for zero before performing division to avoid runtime errors.
 
 5. **Using uint vs int**: Choose `uint` for values that can't be negative (like token amounts) and `int` when negative values are possible.
 
-## Practical Example: Simple Interest Calculator
+## Practical example: Simple interest calculator
 
 Let's combine these functions to create a simple interest calculator:
 
