@@ -1,12 +1,16 @@
 ---
 title: Overview
-description: REST API for the Hiro Platform.
+description: Leverage programmatic API access in order to seamlessly interact with devnet and manage chainhooks.
 toc: false
 ---
 
 import { SecondaryCard } from '@/components/card';
 
-The Platform API is a service that offers a REST API, so you can query Platform related service such as Devnet services and Chainhooks.
+The Platform API unlocks powerful automation opportunities in your application code, development and CI scripts, and more, via a familiar REST interface.
+
+In particular, this API lets you programmatically create, update, query, and delete chainhooks as well as interact with a platform-hosted devnet from your local machine.
+
+In order to use these endpoints, you first need to [create an API key](/stacks/api-keys) in the Hiro Platform.
 
 ## Popular endpoints
 
@@ -14,12 +18,12 @@ The Platform API is a service that offers a REST API, so you can query Platform 
   <SecondaryCard
     href="/stacks/platform-api/devnet/stacks-blockchain-api"
     title="Query devnet API endpoints"
-    description="Query Stacks API endpoints for Devnet services."
+    description="Query Stacks API endpoints for data related to your devnet."
   />
   <SecondaryCard
     href="/stacks/platform-api/devnet/start"
     title="Start a devnet service"
-    description="Start a devnet service through the Platform API."
+    description="Start a hosted devnet through the Platform API."
   />
   <SecondaryCard
     href="/stacks/platform-api/chainhooks/create"
