@@ -1,0 +1,109 @@
+---
+title: divide
+description: Using the division function for arithmetic operations in Clarity smart contracts.
+---
+
+The division function (`/`) in Clarity performs integer division on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
+
+## Function Signature
+
+```clarity
+(/ i1 i2...)
+```
+
+- Input: Two or more integers (int or uint)
+- Output: A single integer (int or uint)
+
+## Why it matters
+
+The division function is crucial for:
+
+1. Performing basic arithmetic calculations within smart contracts.
+2. Calculating rates, percentages, or proportions.
+3. Distributing resources or tokens evenly.
+4. Implementing mathematical formulas that involve division.
+
+## When to use it
+
+Use the division function when you need to:
+
+- Perform basic division in your contract logic.
+- Calculate rates or percentages.
+- Distribute resources evenly among participants.
+- Implement mathematical formulas that involve division.
+
+## Best Practices
+
+- Always consider the possibility of division by zero, which throws a runtime error.
+- Be aware that Clarity uses integer division, so results are always rounded down.
+- Use appropriate types (int or uint) based on your needs and expected value ranges.
+- Consider using multiplication by fractions instead of division for more precise calculations.
+
+## Practical Example: Token Distribution Contract
+
+Let's implement a simple token distribution contract that uses division to allocate tokens evenly:
+
+```clarity
+;; Define constants
+(define-constant TOTAL_TOKENS u1000000)
+(define-constant DISTRIBUTION_ROUNDS u10)
+
+;; Define data variables
+(define-map ParticipantShares principal uint)
+(define-data-var currentRound uint u0)
+(define-data-var participantsCount uint u0)
+
+;; Function to register as a participant
+(define-public (register-participant)
+  (let
+    (
+      (currentParticipants (var-get participantsCount))
+    )
+    (asserts! (< currentParticipants DISTRIBUTION_ROUNDS) (err u1))
+    (map-set ParticipantShares tx-sender u0)
+    (var-set participantsCount (+ currentParticipants u1))
+    (ok true)
+  )
+)
+
+;; Function to distribute tokens
+(define-public (distribute-tokens)
+  (let
+    (
+      (currentParticipants (var-get participantsCount))
+      (tokensPerParticipant (/ TOTAL_TOKENS currentParticipants))
+    )
+    (asserts! (> currentParticipants u0) (err u2))
+    (asserts! (< (var-get currentRound) DISTRIBUTION_ROUNDS) (err u3))
+    (map-set ParticipantShares tx-sender tokensPerParticipant)
+    (var-set currentRound (+ (var-get currentRound) u1))
+    (ok tokensPerParticipant)
+  )
+)
+
+;; Function to check participant's share
+(define-read-only (get-participant-share (participant principal))
+  (default-to u0 (map-get? ParticipantShares participant))
+)
+```
+
+This example demonstrates:
+1. Using division to calculate the number of tokens each participant should receive.
+2. Handling potential division by zero by checking the number of participants.
+3. Using integer division to evenly distribute tokens among participants.
+
+## Common Pitfalls
+
+1. Forgetting to handle division by zero, which causes a runtime error.
+2. Not accounting for integer division rounding down, which can lead to unexpected results.
+3. Dividing before multiplying in complex calculations, potentially losing precision.
+
+## Related Functions
+
+- `*`: Used for multiplication operations.
+- `+`: Used for addition operations.
+- `-`: Used for subtraction operations.
+
+## Conclusion
+
+The division function is a fundamental tool for performing arithmetic operations in Clarity smart contracts. By understanding its behavior with integer division and potential edge cases, developers can use it effectively to implement various mathematical operations in their contracts, from simple divisions to more complex token distribution algorithms.

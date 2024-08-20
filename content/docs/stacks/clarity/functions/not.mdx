@@ -1,0 +1,72 @@
+---
+title: not
+description: Logical negation in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(not boolean-expression)
+```
+
+- Input: `bool`
+- Output: `bool`
+
+## Why it matters
+
+The `not` function is crucial for:
+
+1. Implementing logical negation in conditional statements.
+2. Simplifying the process of inverting boolean expressions.
+3. Enhancing code readability and maintainability by abstracting logical negation.
+
+## When to use it
+
+Use `not` when you need to:
+
+- Invert a boolean expression.
+- Implement logical negation in conditional statements.
+- Simplify and abstract the process of inverting boolean values.
+
+## Best Practices
+
+- Ensure the input is a boolean expression.
+- Use meaningful variable names for better readability.
+- Combine with other logical functions for comprehensive boolean logic.
+- Be aware of the performance implications of complex logical operations.
+
+## Practical Example: Inverting a Boolean Expression
+
+Let's implement a function that checks if a number is not zero:
+
+```clarity
+(define-read-only (is-not-zero (n int))
+  (not (is-eq n 0))
+)
+
+;; Usage
+(is-not-zero 5) ;; Returns true
+(is-not-zero 0) ;; Returns false
+```
+
+This example demonstrates:
+1. Using `not` to invert the result of a boolean expression.
+2. Implementing a read-only function to check if a number is not zero.
+3. Handling both true and false cases.
+
+## Common Pitfalls
+
+1. Using `not` with non-boolean expressions, causing type errors.
+2. Assuming the result will always be true or false, leading to incorrect logic.
+3. Not handling all possible conditions, resulting in incomplete boolean logic.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `and`: Logical conjunction of multiple boolean expressions.
+- `or`: Logical disjunction of multiple boolean expressions.
+- `is-eq`: Checks if two values are equal.
+
+## Conclusion
+
+The `not` function is a fundamental tool for implementing logical negation in Clarity smart contracts. It allows developers to invert boolean expressions, enabling robust and comprehensive boolean logic. When used effectively, `not` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to manage logical negation.

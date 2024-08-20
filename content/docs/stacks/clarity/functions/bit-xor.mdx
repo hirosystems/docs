@@ -1,0 +1,86 @@
+---
+title: bit-xor
+description: Using the bit-xor function for bitwise exclusive OR operations in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(bit-xor i1 i2...)
+```
+
+- Input: Two or more integers (`int` or `uint`)
+- Output: An integer of the same type as the inputs (`int` or `uint`)
+
+## Why it matters
+
+The `bit-xor` function is crucial for:
+
+1. Performing bitwise exclusive OR operations in smart contracts.
+2. Implementing certain cryptographic algorithms and hash functions.
+3. Creating toggle mechanisms for binary flags.
+4. Detecting changes between two bit patterns.
+
+## When to use it
+
+Use the `bit-xor` function when you need to:
+
+- Implement exclusive OR logic on binary data.
+- Toggle specific bits in a value without affecting others.
+- Compare two bit patterns to find differences.
+- Create simple encryption or hashing mechanisms.
+
+## Best Practices
+
+- Ensure all input values are of the same type (either all `int` or all `uint`).
+- Remember that `bit-xor` with 0 returns the original value, which can be useful for conditional operations.
+- Use `bit-xor` in combination with other bitwise operations for complex bit manipulations.
+- Consider the readability of your code when using bitwise operations extensively; add comments to explain the purpose.
+
+## Practical Example: Simple Toggle Mechanism
+
+Let's implement a simple toggle mechanism using `bit-xor`:
+
+```clarity
+(define-data-var flags uint u0)
+
+(define-read-only (get-flag (flagPosition uint))
+  (is-eq (bit-and (var-get flags) (bit-shift-left u1 flagPosition)) u0)
+)
+
+(define-public (toggle-flag (flagPosition uint))
+  (begin
+    (asserts! (< flagPosition u8) (err u1)) ;; Ensure flag position is valid
+    (ok (var-set flags (bit-xor (var-get flags) (bit-shift-left u1 flagPosition))))
+  )
+)
+
+;; Usage
+(toggle-flag u2) ;; Toggles the 3rd bit (position 2)
+(get-flag u2) ;; Returns false
+(toggle-flag u2) ;; Toggles the 3rd bit again (position 2)
+(get-flag u2) ;; Returns true
+```
+
+This example demonstrates:
+1. Using `bit-xor` to toggle individual bits in a flags variable.
+2. Combining `bit-xor` with other bitwise operations like `bit-and` and `bit-shift-left`.
+3. Implementing a simple flag system using bitwise operations for efficient storage and manipulation.
+
+## Common Pitfalls
+
+1. Mixing signed (`int`) and unsigned (`uint`) integers in a single `bit-xor` operation.
+2. Forgetting that `bit-xor` of a value with itself always results in 0.
+3. Not considering the full range of bits when using `bit-xor` with smaller integer values.
+
+## Related Functions
+
+- `bit-and`: Used for bitwise AND operations.
+- `bit-or`: Used for bitwise OR operations.
+- `bit-not`: Used for bitwise NOT operations.
+- `bit-shift-left`: Often used in combination with `bit-xor` for flag operations.
+- `bit-shift-right`: Used for right-shifting bits.
+
+## Conclusion
+
+The `bit-xor` function is a powerful tool for bitwise operations in Clarity smart contracts. When used in combination with other bitwise functions, it enables efficient implementation of toggles, flags, and other bit-level data manipulations. Developers should be mindful of the types of integers used and the effects of the operation on the full range of bits to avoid unexpected results.

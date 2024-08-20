@@ -1,0 +1,78 @@
+---
+title: define-trait
+description: Defining traits for interface-like behavior in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(define-trait trait-name ((func1-name (arg1-type arg2-type ...) (return-type)) ...))
+```
+
+- Input: 
+  - `trait-name`: The name of the trait being defined
+  - `func1-name`: The name of a function in the trait
+  - `arg1-type, arg2-type, ...`: The types of the function's arguments
+  - `return-type`: The return type of the function
+- Output: Not applicable (definition statement)
+
+## Why it matters
+
+The `define-trait` function is crucial for:
+
+1. Creating standardized interfaces for contracts to implement.
+2. Enabling polymorphic behavior in smart contract interactions.
+3. Facilitating contract composability and interoperability.
+4. Allowing for dynamic dispatch of contract calls based on traits.
+
+## When to use it
+
+Use `define-trait` when you need to:
+
+- Define a common interface that multiple contracts should adhere to.
+- Create a contract that can interact with any other contract implementing a specific trait.
+- Establish standards for token contracts or other common smart contract patterns.
+- Enable more flexible and modular smart contract architectures.
+
+## Best Practices
+
+- Use clear and descriptive names for traits and their functions.
+- Keep traits focused on a single responsibility or concept.
+- Consider creating traits for common patterns like token standards.
+- Use traits in combination with `use-trait` and `contract-call?` for dynamic contract interactions.
+
+## Practical Example: Token Trait
+
+Let's define a simple trait for a token contract:
+
+```clarity
+(define-trait token-trait
+  (
+    (transfer? (principal principal uint) (response bool uint))
+    (get-balance (principal) (response uint uint))
+    (get-token-uri () (response (optional (string-utf8 256)) uint))
+  )
+)
+```
+
+This example demonstrates:
+1. Defining a trait with multiple functions.
+2. Specifying function signatures with argument types and return types.
+3. Using response types to handle success and failure cases.
+
+## Common Pitfalls
+
+1. Defining overly complex traits that are difficult for other contracts to implement.
+2. Forgetting that traits are not implementations, just interface definitions.
+3. Not considering backwards compatibility when updating traits in newer contract versions.
+
+## Related Functions
+
+- `use-trait`: Used to import trait definitions from other contracts.
+- `impl-trait`: Used to declare that a contract implements a specific trait.
+- `contract-call?`: Often used in combination with traits for dynamic contract calls.
+- `contract-of`: Used to get the principal of a contract implementing a trait.
+
+## Conclusion
+
+The `define-trait` function is a powerful tool for creating standardized interfaces in Clarity smart contracts. By defining traits, developers can create more modular, interoperable, and flexible smart contract ecosystems. Traits enable contracts to interact with each other in a predictable way, fostering the development of complex decentralized applications and standards within the Stacks ecosystem.

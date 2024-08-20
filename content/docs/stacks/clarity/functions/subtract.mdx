@@ -1,0 +1,112 @@
+---
+title: subtract
+description: Using the subtraction function for arithmetic operations in Clarity smart contracts.
+---
+
+The subtraction function (`-`) in Clarity performs subtraction on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
+
+## Function Signature
+
+```clarity
+(- i1 i2...)
+```
+
+- Input: Two or more integers (int or uint)
+- Output: A single integer (int or uint)
+
+## Why it matters
+
+The subtraction function is crucial for:
+
+1. Performing basic arithmetic calculations within smart contracts.
+2. Decreasing values or counters.
+3. Calculating differences between quantities.
+4. Implementing mathematical formulas that involve subtraction.
+
+## When to use it
+
+Use the subtraction function when you need to:
+
+- Perform basic subtraction in your contract logic.
+- Decrement values or counters.
+- Calculate the difference between two or more values.
+- Implement mathematical formulas that involve subtraction.
+
+## Best Practices
+
+- Always consider the possibility of underflow when subtracting from small numbers.
+- Use appropriate types (int or uint) based on your needs and expected value ranges.
+- Be aware that subtracting a negative number results in addition.
+- Consider using checked arithmetic functions if underflow detection is critical.
+
+## Practical Example: Simple Escrow Contract
+
+Let's implement a basic escrow contract that uses subtraction to manage balances:
+
+```clarity
+;; Define constants
+(define-constant ESCROW_FEE u100)  ;; 100 tokens as escrow fee
+
+;; Define data variables
+(define-map Balances principal uint)
+(define-data-var escrowBalance uint u0)
+
+;; Function to deposit funds
+(define-public (deposit (amount uint))
+  (let
+    (
+      (currentBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (map-set Balances tx-sender (+ currentBalance amount))
+    (ok true)
+  )
+)
+
+;; Function to initiate escrow
+(define-public (start-escrow (recipient principal) (amount uint))
+  (let
+    (
+      (senderBalance (default-to u0 (map-get? Balances tx-sender)))
+    )
+    (asserts! (>= senderBalance (+ amount ESCROW_FEE)) (err u1))
+    (map-set Balances tx-sender (- senderBalance (+ amount ESCROW_FEE)))
+    (var-set escrowBalance (+ (var-get escrowBalance) amount))
+    (ok true)
+  )
+)
+
+;; Function to complete escrow and transfer funds
+(define-public (complete-escrow (recipient principal) (amount uint))
+  (let
+    (
+      (escrowAmount (var-get escrowBalance))
+    )
+    (asserts! (>= escrowAmount amount) (err u2))
+    (try! (as-contract (stx-transfer? amount tx-sender recipient)))
+    (var-set escrowBalance (- escrowAmount amount))
+    (ok true)
+  )
+)
+```
+
+This example demonstrates:
+1. Using subtraction to update `Balances` when initiating an escrow.
+2. Using subtraction to update the escrow balance when completing a transfer.
+3. Combining subtraction with addition to handle fees and balance updates.
+
+## Common Pitfalls
+
+1. Overlooking potential underflow when subtracting from small numbers.
+2. Not considering the effect of subtracting negative numbers (for int types).
+3. Forgetting to update related variables or state when decrementing values.
+
+## Related Functions
+
+- `+`: Used for addition operations.
+- `*`: Used for multiplication operations.
+- `/`: Used for division operations.
+
+## Conclusion
+
+The subtraction function is a fundamental tool for performing arithmetic operations in Clarity smart contracts. By understanding its behavior with different types of inputs and potential edge cases, developers can use it effectively to implement various mathematical operations in their contracts, from simple decrements to more complex financial calculations.

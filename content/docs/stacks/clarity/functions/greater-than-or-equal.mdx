@@ -1,0 +1,115 @@
+---
+title: greater than or equal
+description: Using the greater than or equal function for comparisons in Clarity smart contracts.
+---
+
+The greater than or equal function (`>=`) in Clarity compares two values and returns true if the first value is greater than or equal to the second. It's a fundamental comparison operation used in many smart contract conditions and logic flows.
+
+## Function Signature
+
+```clarity
+(>= v1 v2)
+```
+
+- Input: Two values of the same type (int, uint, string-ascii, string-utf8, or buff)
+- Output: A boolean (true or false)
+
+## Why it matters
+
+The greater than or equal function is crucial for:
+
+1. Implementing conditional logic in smart contracts.
+2. Comparing numerical values for financial operations.
+3. Ordering and sorting data.
+4. Implementing minimum thresholds or limits in contract logic.
+5. Checking for equality alongside greater than comparisons.
+
+## When to use it
+
+Use the greater than or equal function when you need to:
+
+- Compare two numerical values to determine if one is larger or equal.
+- Implement minimum thresholds for certain operations, including the threshold value itself.
+- Create conditional logic based on numerical comparisons, including equality.
+- Sort or order data based on numerical or lexicographical order, including equal values.
+
+## Best Practices
+
+- Ensure that both inputs are of the same type to avoid runtime errors.
+- Be aware of the differences in comparison between signed (int) and unsigned (uint) integers.
+- When comparing strings or buffers, understand that the comparison is lexicographical.
+- Consider edge cases, especially when dealing with the limits of integer ranges.
+- Use `>=` instead of `>` when you want to include equality in your comparison.
+
+## Practical Example: Token Unlock Schedule
+
+Let's implement a simple token unlock schedule that uses the greater than or equal function to manage token releases:
+
+```clarity
+;; Define constants
+(define-constant UNLOCK_AMOUNT u1000000) ;; 1 million tokens per unlock
+(define-constant UNLOCK_INTERVAL u17280) ;; Approximately 30 days in blocks
+(define-constant TOTAL_UNLOCKS u10) ;; 10 total unlocks
+
+;; Define data variables
+(define-data-var startBlock uint u0)
+(define-data-var unlocksClaimed uint u0)
+
+;; Function to start the unlock schedule
+(define-public (start-unlock-schedule)
+  (begin
+    (asserts! (is-eq (var-get startBlock) u0) (err u1))
+    (var-set startBlock block-height)
+    (ok true)
+  )
+)
+
+;; Function to calculate claimable tokens
+(define-read-only (get-claimable-tokens)
+  (let
+    (
+      (elapsedBlocks (- block-height (var-get startBlock)))
+      (unlocksDue (/ elapsedBlocks UNLOCK_INTERVAL))
+    )
+    (if (>= unlocksDue TOTAL_UNLOCKS)
+      (* UNLOCK_AMOUNT (- TOTAL_UNLOCKS (var-get unlocksClaimed)))
+      (* UNLOCK_AMOUNT (- unlocksDue (var-get unlocksClaimed)))
+    )
+  )
+)
+
+;; Function to claim tokens
+(define-public (claim-tokens)
+  (let
+    (
+      (claimableAmount (get-claimable-tokens))
+    )
+    (asserts! (> claimableAmount u0) (err u2))
+    (var-set unlocksClaimed (+ (var-get unlocksClaimed) (/ claimableAmount UNLOCK_AMOUNT)))
+    ;; Here you would typically transfer tokens
+    ;; For simplicity, we're just returning the claimed amount
+    (ok claimableAmount)
+  )
+)
+```
+
+This example demonstrates:
+1. Using `>=` to check if the number of unlocks due is greater than or equal to the total number of unlocks.
+2. Combining the greater than or equal check with other contract logic for a token unlock system.
+3. Implementing a minimum threshold (the unlock interval) that includes the exact unlock time.
+
+## Common Pitfalls
+
+1. Comparing values of different types, which will result in a runtime error.
+2. Confusing `>=` with `>` when setting thresholds, potentially excluding valid values.
+3. Overlooking the inclusive nature of `>=` in boundary conditions.
+
+## Related Functions
+
+- `>`: Used for strict greater than comparisons.
+- `<`: Used for less than comparisons.
+- `<=`: Used for less than or equal to comparisons.
+
+## Conclusion
+
+The greater than or equal function is a fundamental tool for implementing comparison logic in Clarity smart contracts. By understanding its behavior with different types and potential edge cases, developers can create robust conditional logic and enforce important thresholds in their contracts, including scenarios where equality is a valid condition.

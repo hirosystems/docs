@@ -1,0 +1,90 @@
+---
+title: define-constant
+description: Defining immutable constants in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(define-constant name expression)
+```
+
+- Input: 
+  - `name`: The name of the constant
+  - `expression`: The value to be assigned to the constant
+- Output: Not applicable (definition statement)
+
+## Why it matters
+
+The `define-constant` function is crucial for:
+
+1. Declaring immutable values that can be reused throughout the contract.
+2. Improving code readability by giving meaningful names to fixed values.
+3. Optimizing gas costs by avoiding repeated computations of fixed values.
+4. Ensuring certain values remain unchanged throughout the contract's lifecycle.
+
+## When to use it
+
+Use `define-constant` when you need to:
+
+- Define fixed values that won't change during contract execution.
+- Create named constants for magic numbers or frequently used values.
+- Declare contract-wide configuration parameters.
+- Optimize gas usage for values that are computed but never change.
+
+## Best Practices
+
+- Use uppercase names for constants to distinguish them from variables.
+- Place constant definitions at the top of your contract for better visibility.
+- Use constants for values that are used multiple times in your contract.
+- Consider using constants for contract configuration that might need to change between deployments.
+
+## Practical Example: Token Configuration
+
+Let's implement a simple token contract using constants for configuration:
+
+```clarity
+(define-constant TOKEN_NAME "DOG-GO-TO-THE-MOON")
+(define-constant TOKEN_SYMBOL "DOG")
+(define-constant TOKEN_DECIMALS u6)
+(define-constant TOKEN_SUPPLY u1000000000000) ;; 1 million tokens with 6 decimals
+
+(define-fungible-token DOG-GO-TO-THE-MOON TOKEN_SUPPLY)
+
+(define-read-only (get-name)
+  TOKEN_NAME
+)
+
+(define-read-only (get-symbol)
+  TOKEN_SYMBOL
+)
+
+(define-read-only (get-decimals)
+  TOKEN_DECIMALS
+)
+
+(define-read-only (get-balance (who principal))
+  (ok (ft-get-balance DOG-GO-TO-THE-MOON who))
+)
+```
+
+This example demonstrates:
+1. Using `define-constant` to set up token configuration parameters.
+2. Referencing these constants in various parts of the contract.
+3. Improving readability and maintainability of the contract.
+
+## Common Pitfalls
+
+1. Attempting to modify a constant after it's defined, which is not allowed.
+2. Using `define-constant` for values that need to change during contract execution (use `define-data-var` instead).
+3. Overusing constants for values used only once, which can decrease readability.
+
+## Related Functions
+
+- `define-data-var`: Used for defining mutable variables.
+- `define-map`: Used for defining data maps.
+- `var-get`: Used to retrieve the value of a data variable (not needed for constants).
+
+## Conclusion
+
+The `define-constant` function is a powerful tool for creating immutable, named values in Clarity smart contracts. By using constants effectively, developers can improve code readability, optimize gas usage, and ensure certain values remain fixed throughout the contract's lifecycle. When designing your contract, consider which values should be constants and which might need to be mutable variables.

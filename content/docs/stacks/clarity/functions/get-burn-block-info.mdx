@@ -1,0 +1,84 @@
+---
+title: get-burn-block-info?
+description: Fetching information about burnchain blocks in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(get-burn-block-info? prop-name block-height)
+```
+
+- Input: 
+  - `prop-name`: A BurnBlockInfoPropertyName
+  - `block-height`: A uint representing the burnchain block height
+- Output: `(optional buff) | (optional (tuple (addrs (list 2 (tuple (hashbytes (buff 32)) (version (buff 1))))) (payout uint)))`
+
+## Why it matters
+
+The `get-burn-block-info?` function is crucial for:
+
+1. Accessing historical data from the underlying burnchain (Bitcoin).
+2. Implementing cross-chain verification or logic based on Bitcoin block information.
+3. Retrieving PoX (Proof of Transfer) related data for advanced stacking operations.
+4. Enabling contracts to react to or validate burnchain events.
+
+## When to use it
+
+Use `get-burn-block-info?` when you need to:
+
+- Verify Bitcoin block hashes within your Stacks contract.
+- Access information about PoX payouts and addresses.
+- Implement logic that depends on burnchain block data.
+- Build cross-chain applications that reference Bitcoin state.
+
+## Best Practices
+
+- Always check if the returned value is `none`, as it will be for non-existent or future blocks.
+- Be aware of the potential for chain reorganizations when using recent block data.
+- Use the appropriate property name for the data you need to retrieve.
+- Consider caching results for frequently accessed block information to save on execution costs.
+
+## Practical Example: Verifying a Bitcoin Block Hash
+
+Let's implement a function that verifies if a given Bitcoin block hash matches a specific height:
+
+```clarity
+(define-read-only (verify-btc-block-hash (height uint) (expectedHash (buff 32)))
+  (match (get-burn-block-info? header-hash height) hash
+    (is-eq hash expectedHash)
+    false
+  )
+)
+
+;; Usage
+(verify-btc-block-hash u700000 0x00000000000000000009a11b3972c8e532e964e262c196556bd958b7fd0c55c3)
+```
+
+This example demonstrates:
+1. Using `get-burn-block-info?` to retrieve the `header-hash` of a burnchain block.
+2. Handling the optional return value with `match`.
+3. Comparing the retrieved hash with an expected value.
+
+## Available Properties
+
+- `header-hash`: Returns a 32-byte buffer representing the header hash of the burnchain block.
+- `pox-addrs`: Returns a tuple containing PoX payout information:
+  - `addrs`: A list of up to two PoX addresses that received payouts.
+  - `payout`: The amount of burnchain tokens paid to each address.
+
+## Common Pitfalls
+
+1. Assuming all properties are available for all blocks.
+2. Not handling the `none` case when the block height is invalid or in the future.
+3. Misinterpreting the `pox-addrs` data, especially during different PoX phases.
+4. Overlooking the fact that burn addresses may be included in the `pox-addrs` list.
+
+## Related Functions
+
+- `get-block-info?`: Used to get information about Stacks blocks.
+- `burn-block-height`: Keyword that returns the current burn chain block height.
+
+## Conclusion
+
+The `get-burn-block-info?` function is a powerful tool for accessing burnchain data in Clarity smart contracts. It allows developers to incorporate Bitcoin blockchain information into their contract logic, enabling cross-chain verification and advanced PoX-related functionalities. When used correctly, it provides valuable insights into the underlying Bitcoin blockchain's state and can be used to implement sophisticated, cross-chain aware contract behaviors.

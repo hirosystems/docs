@@ -1,0 +1,82 @@
+---
+title: buff-to-int-be
+description: Converting a byte buffer to a signed integer using big-endian encoding in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(buff-to-int-be (buff 16))
+```
+
+- Input: A byte buffer of up to 16 bytes
+- Output: A signed integer (`int`)
+
+## Why it matters
+
+The `buff-to-int-be` function is crucial for:
+
+1. Converting byte data to signed integers in smart contracts.
+2. Handling data from external sources or other contracts that use big-endian encoding.
+3. Implementing protocols or algorithms that require big-endian integer representation.
+4. Interoperating with systems that use big-endian byte order.
+
+## When to use it
+
+Use the `buff-to-int-be` function when you need to:
+
+- Convert a big-endian encoded byte buffer to a signed integer.
+- Process input data that represents signed integers in big-endian format.
+- Implement cryptographic or mathematical operations that expect big-endian integer inputs.
+- Ensure compatibility with external systems using big-endian encoding.
+
+## Best Practices
+
+- Ensure the input buffer is no larger than 16 bytes to avoid errors.
+- Be aware that smaller buffers are zero-padded on the left, affecting the resulting integer value.
+- Consider using `buff-to-uint-be` for unsigned integers if the sign is not needed.
+- Handle potential errors when the input buffer might be invalid or empty.
+
+## Practical Example: Decoding a Signed Integer from External Data
+
+Let's implement a function that processes external data containing a big-endian encoded signed integer:
+
+```clarity
+(define-read-only (process-external-data (data (buff 16)))
+  (let
+    (
+      (value (buff-to-int-be data))
+    )
+    (if (< value 0)
+      (err "Negative value not allowed")
+      (ok value)
+    )
+  )
+)
+
+;; Usage
+(process-external-data 0x0000000000000001) ;; Returns (ok 1)
+(process-external-data 0xffffffffffffffff) ;; Returns (err "Negative value not allowed")
+(process-external-data 0x7fffffffffffffff) ;; Returns (ok 9223372036854775807)
+```
+
+This example demonstrates:
+1. Using `buff-to-int-be` to convert external data to a signed integer.
+2. Handling both positive and negative values resulting from the conversion.
+3. Implementing input validation based on the converted integer value.
+
+## Common Pitfalls
+
+1. Forgetting that the function interprets the input as big-endian, which might lead to unexpected values if the data is actually little-endian.
+2. Not handling potential negative values when working with signed integers.
+3. Assuming a specific buffer length, which could lead to unexpected results with shorter inputs due to left-padding.
+
+## Related Functions
+
+- `buff-to-int-le`: Converts a byte buffer to a signed integer using little-endian encoding.
+- `buff-to-uint-be`: Converts a byte buffer to an unsigned integer using big-endian encoding.
+- `int-to-ascii`: Converts an integer to its ASCII string representation.
+
+## Conclusion
+
+The `buff-to-int-be` function is a powerful tool for working with big-endian encoded signed integers in Clarity smart contracts. By understanding its behavior with different input sizes and potential sign issues, developers can effectively process and validate external data, implement complex algorithms, and ensure compatibility with big-endian systems in their smart contract applications.

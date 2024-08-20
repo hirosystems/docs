@@ -1,0 +1,74 @@
+---
+title: secp256k1-recover?
+description: Recovering the public key from a message hash and signature in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(secp256k1-recover? message-hash signature)
+```
+
+- Input: `(buff 32), (buff 65)`
+- Output: `(response (buff 33) uint)`
+
+## Why it matters
+
+The `secp256k1-recover?` function is crucial for:
+
+1. Verifying the authenticity of a message by recovering the public key from a signature.
+2. Implementing cryptographic verification in smart contracts.
+3. Ensuring data integrity by validating signatures.
+4. Simplifying the process of handling cryptographic operations in smart contracts.
+
+## When to use it
+
+Use `secp256k1-recover?` when you need to:
+
+- Verify the authenticity of a message by recovering the public key from a signature.
+- Implement cryptographic verification in your smart contract.
+- Validate signatures to ensure data integrity.
+- Handle cryptographic operations.
+
+## Best Practices
+
+- Ensure the `message-hash` and `signature` are correctly formatted and valid.
+- Use meaningful variable names for better readability.
+- Combine with other cryptographic functions for comprehensive security management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Recovering a Public Key
+
+Let's implement a function that recovers the public key from a message hash and signature:
+
+```clarity
+(define-read-only (recover-public-key (messageHash (buff 32)) (signature (buff 65)))
+  (secp256k1-recover? messageHash signature)
+)
+
+;; Usage
+(recover-public-key 0xde5b9eb9e7c5592930eb2e30a01369c36586d872082ed8181ee83d2a0ec20f04 0x8738487ebe69b93d8e51583be8eee50bb4213fc49c767d329632730cc193b873554428fc936ca3569afc15f1c9365f6591d6251a89fee9c9ac661116824d3a1301) 
+;; Returns (ok 0x03adb8de4bfb65db2cfd6120d55c6526ae9c52e675db7e47308636534ba7786110)
+```
+
+This example demonstrates:
+1. Using `secp256k1-recover?` to recover a public key from a message hash and signature.
+2. Implementing a public function to handle the public key recovery.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `secp256k1-recover?` with incorrectly formatted or invalid `message-hash` or `signature`, causing the operation to fail.
+2. Assuming the public key will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete cryptographic verification.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `principal-of?`: Returns the principal derived from a public key.
+- `hash160`: Computes the RIPEMD-160 hash of the SHA-256 hash of the input.
+- `sha256`: Computes the SHA-256 hash of the input.
+
+## Conclusion
+
+The `secp256k1-recover?` function is a fundamental tool for recovering public keys from message hashes and signatures in Clarity smart contracts. It allows developers to verify the authenticity of messages, ensuring data integrity and simplifying cryptographic operations. When used effectively, `secp256k1-recover?` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle cryptographic verification.

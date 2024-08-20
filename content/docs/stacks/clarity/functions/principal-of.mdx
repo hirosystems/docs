@@ -1,0 +1,73 @@
+---
+title: principal-of?
+description: Deriving a principal from a public key in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(principal-of? public-key)
+```
+
+- Input: `(buff 33)`
+- Output: `(response principal uint)`
+
+## Why it matters
+
+The `principal-of?` function is crucial for:
+
+1. Deriving a principal from a public key.
+2. Managing identities and permissions in smart contracts.
+3. Ensuring data integrity by validating public key to principal conversion.
+4. Simplifying the process of handling principals derived from public keys.
+
+## When to use it
+
+Use `principal-of?` when you need to:
+
+- Derive a principal from a public key.
+- Manage identities and permissions in your smart contract.
+- Validate the conversion of a public key to a principal.
+- Handle principal derivation operations.
+
+## Best Practices
+
+- Ensure the `public-key` is correctly formatted and valid.
+- Use meaningful variable names for better readability.
+- Combine with other principal functions for comprehensive identity management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Deriving a Principal
+
+Let's implement a function that derives a principal from a public key:
+
+```clarity
+(define-public (derive-principal (public-key (buff 33)))
+  (principal-of? public-key)
+)
+
+;; Usage
+(derive-principal 0x0390a5cac7c33fda49f70bc1b0866fa0ba7a9440d9de647fecb8132ceb76a94dfa) ;; Returns (ok 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)
+```
+
+This example demonstrates:
+1. Using `principal-of?` to derive a principal from a public key.
+2. Implementing a public function to handle the principal derivation.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `principal-of?` with an incorrectly formatted or invalid `public-key`, causing the operation to fail.
+2. Assuming the principal will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete principal management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `principal-construct?`: Constructs a principal from its components.
+- `principal-destruct?`: Decomposes a principal into its components.
+- `contract-caller`: Returns the caller of the current contract context.
+
+## Conclusion
+
+The `principal-of?` function is a fundamental tool for deriving principals from public keys in Clarity smart contracts. It allows developers to manage identities and permissions, ensuring data integrity and simplifying principal handling. When used effectively, `principal-of?` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle principal derivation operations.

@@ -1,0 +1,91 @@
+---
+title: is-standard
+description: Checking if a value is a standard principal in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(is-standard value)
+```
+
+- Input: `principal`
+- Output: `bool`
+
+## Why it matters
+
+The `is-standard` function is crucial for:
+
+1. Determining if a principal is a standard principal (i.e., a user address).
+2. Implementing conditional logic based on the type of principal.
+3. Ensuring that certain operations are only performed by standard principals.
+4. Simplifying checks for principal types in smart contract code.
+
+## When to use it
+
+Use `is-standard` when you need to:
+
+- Check if a principal is a standard user address.
+- Implement logic that depends on the type of principal.
+- Validate the type of principal before performing certain operations.
+- Handle cases where only standard principals are allowed.
+
+## Best Practices
+
+- Use `is-standard` in combination with `if` or `match` for comprehensive principal type handling.
+- Ensure that the value being checked is of the correct principal type.
+- Use meaningful variable names for better readability.
+- Note that you can pass in a valid contract principal as well, not just a standard principal (e.g., `'SP12` or `'SP12.contract`).
+
+## Practical Example: Restricting Access to Standard Principals
+
+Let's implement a function that restricts access to standard principals:
+
+```clarity
+(define-map UserBalances { userId: principal } { balance: uint })
+
+(define-public (transfer-tokens (amount uint) (recipient principal))
+  (if (is-standard tx-sender)
+    (let
+      (
+        (senderBalance (default-to u0 (map-get? UserBalances { userId: tx-sender })))
+        (recipientBalance (default-to u0 (map-get? UserBalances { userId: recipient })))
+      )
+      (if (>= senderBalance amount)
+        (begin
+          (map-set UserBalances { userId: tx-sender } { balance: (- senderBalance amount) })
+          (map-set UserBalances { userId: recipient } { balance: (+ recipientBalance amount) })
+          (ok true)
+        )
+        (err u1)
+      )
+    )
+    (err u2)
+  )
+)
+
+;; Usage
+(map-set UserBalances { userId: tx-sender } { balance: u100 })
+(transfer-tokens u50 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns (ok true) if tx-sender is a standard principal
+```
+
+This example demonstrates:
+1. Using `is-standard` to check if the transaction sender is a standard principal.
+2. Implementing conditional logic based on the type of principal.
+3. Handling both the case where the principal is standard and where it is not.
+
+## Common Pitfalls
+
+1. Assuming the principal will always be standard, leading to unhandled cases.
+2. Using `is-standard` on non-principal types, causing type errors.
+3. Not handling all possible conditions, resulting in incomplete principal type checks.
+4. Overlooking the need for comprehensive validation and error checking.
+
+## Related Functions
+
+- `tx-sender`: Returns the principal that initiated the transaction.
+- `contract-caller`: Returns the caller of the current contract context.
+
+## Conclusion
+
+The `is-standard` function is a fundamental tool for checking principal types in Clarity smart contracts. It allows developers to determine if a principal is a standard user address, enabling robust and comprehensive principal type handling and validation logic. When used effectively, `is-standard` enhances the reliability and maintainability of your smart contract code by ensuring that operations are performed by the correct type of principal.

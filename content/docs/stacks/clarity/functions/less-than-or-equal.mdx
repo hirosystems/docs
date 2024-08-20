@@ -1,0 +1,115 @@
+---
+title: less than or equal
+description: Using the less than or equal function for comparisons in Clarity smart contracts.
+---
+
+The less than or equal function (`<=`) in Clarity compares two values and returns true if the first value is less than or equal to the second. It's a fundamental comparison operation used in many smart contract conditions and logic flows.
+
+## Function Signature
+
+```clarity
+(<= v1 v2)
+```
+
+- Input: Two values of the same type (int, uint, string-ascii, string-utf8, or buff)
+- Output: A boolean (true or false)
+
+## Why it matters
+
+The less than or equal function is crucial for:
+
+1. Implementing conditional logic in smart contracts.
+2. Comparing numerical values for financial operations.
+3. Ordering and sorting data.
+4. Implementing maximum thresholds or limits in contract logic.
+5. Checking for equality alongside less than comparisons.
+
+## When to use it
+
+Use the less than or equal function when you need to:
+
+- Compare two numerical values to determine if one is smaller or equal.
+- Implement maximum thresholds for certain operations, including the threshold value itself.
+- Create conditional logic based on numerical comparisons, including equality.
+- Sort or order data based on numerical or lexicographical order, including equal values.
+
+## Best Practices
+
+- Ensure that both inputs are of the same type to avoid runtime errors.
+- Be aware of the differences in comparison between signed (int) and unsigned (uint) integers.
+- When comparing strings or buffers, understand that the comparison is lexicographical.
+- Consider edge cases, especially when dealing with the limits of integer ranges.
+- Use `<=` instead of `<` when you want to include equality in your comparison.
+
+## Practical Example: Token Vesting Contract
+
+Let's implement a simple token vesting contract that uses the less than or equal function to manage vesting periods:
+
+```clarity
+;; Define constants
+(define-constant VESTING_PERIOD u31536000) ;; 1 year in seconds
+(define-constant TOTAL_ALLOCATION u1000000) ;; 1 million tokens
+
+;; Define data variables
+(define-data-var vestingStartTime uint u0)
+(define-data-var tokensClaimed uint u0)
+
+;; Function to start vesting
+(define-public (start-vesting)
+  (begin
+    (asserts! (is-eq (var-get vestingStartTime) u0) (err u1))
+    (var-set vestingStartTime block-height)
+    (ok true)
+  )
+)
+
+;; Function to calculate vested amount
+(define-read-only (get-vested-amount)
+  (let
+    (
+      (elapsed-time (- block-height (var-get vestingStartTime)))
+      (vesting-ratio (/ elapsed-time VESTING_PERIOD))
+    )
+    (if (<= elapsed-time VESTING_PERIOD)
+      (* TOTAL_ALLOCATION vesting-ratio)
+      TOTAL_ALLOCATION
+    )
+  )
+)
+
+;; Function to claim vested tokens
+(define-public (claim-tokens)
+  (let
+    (
+      (vested-amount (get-vested-amount))
+      (claimable-amount (- vested-amount (var-get tokensClaimed)))
+    )
+    (asserts! (> claimable-amount u0) (err u2))
+    (var-set tokensClaimed vested-amount)
+    ;; Here you would typically transfer tokens
+    ;; For simplicity, we're just returning the claimed amount
+    (ok claimable-amount)
+  )
+)
+```
+
+This example demonstrates:
+1. Using `<=` to check if the elapsed time is within or equal to the vesting period.
+2. Combining the less than or equal check with other contract logic for a vesting system.
+3. Implementing a maximum threshold (the vesting period) that includes the exact end time.
+
+## Common Pitfalls
+
+1. Comparing values of different types, which will result in a runtime error.
+2. Confusing `<=` with `<` when setting thresholds, potentially excluding valid values.
+3. Overlooking the inclusive nature of `<=` in boundary conditions.
+
+## Related Functions
+
+- `<`: Used for strict less than comparisons.
+- `>`: Used for greater than comparisons.
+- `>=`: Used for greater than or equal to comparisons.
+
+## Conclusion
+
+The less than or equal function is a fundamental tool for implementing comparison logic in Clarity smart contracts. By understanding its behavior with different types and potential edge cases, developers can create robust conditional logic and enforce important thresholds in their contracts, including scenarios where equality is a valid condition.

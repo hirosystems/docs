@@ -1,0 +1,90 @@
+---
+title: get-block-info?
+description: Fetching information about Stacks blocks in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(get-block-info? prop-name block-height)
+```
+
+- Input: 
+  - `prop-name`: A BlockInfoPropertyName
+  - `block-height`: A uint representing the Stacks block height
+- Output: `(optional buff) | (optional uint) | (optional principal)` depending on the property
+
+## Why it matters
+
+The `get-block-info?` function is crucial for:
+
+1. Accessing historical block data within smart contracts.
+2. Implementing time-based logic using block information.
+3. Verifying block-related properties for security or validation purposes.
+4. Building applications that need to reference specific blockchain states.
+
+## When to use it
+
+Use `get-block-info?` when you need to:
+
+- Retrieve information about past Stacks blocks.
+- Implement logic that depends on block times or miner information.
+- Verify block hashes or other block-specific data.
+- Access block rewards or miner spending data (in Stacks 2.1+).
+
+## Best Practices
+
+- Always check if the returned value is `none`, as it will be for non-existent or future blocks.
+- Be aware of the potential for chain reorganizations when using recent block data.
+- Use the appropriate property name for the data you need to retrieve.
+- Consider caching results for frequently accessed block information to save on execution costs.
+
+## Practical Example: Block Time Verification
+
+Let's implement a function that checks if a given block was mined after a certain time:
+
+```clarity
+(define-read-only (block-after-time? (blockHeight uint) (targetTime uint))
+  (match (get-block-info? time blockHeight) time
+    (> time targetTime)
+    false
+  )
+)
+
+;; Usage
+(block-after-time? u100 u1600000000) ;; Returns true if block 100 was mined after Unix timestamp 1600000000
+```
+
+This example demonstrates:
+1. Using `get-block-info?` to retrieve the `time` property of a block.
+2. Handling the optional return value with `match`.
+3. Comparing the block time to a target time.
+
+## Available Properties
+
+- `burnchain-header-hash`: Returns the burnchain block header hash (buff 32).
+- `id-header-hash`: Returns the Stacks block's index block hash (buff 32).
+- `header-hash`: Returns the Stacks block's header hash (buff 32).
+- `miner-address`: Returns the block miner's principal.
+- `time`: Returns the block time as a Unix epoch timestamp (uint).
+
+New in Stacks 2.1:
+- `block-reward`: Returns the total block reward (uint).
+- `miner-spend-total`: Returns the total spent by miners for this block (uint).
+
+## Common Pitfalls
+
+1. Assuming all properties are available for all blocks (e.g., `block-reward` is only available for mature blocks).
+2. Not handling the `none` case when the block height is invalid or in the future.
+3. Relying on exact block times, which can be inaccurate up to two hours.
+4. Using `header-hash` when global uniqueness is required (use `id-header-hash` instead).
+
+## Related Functions
+
+- `get-burn-block-info?`: Used to get information about the underlying burn chain blocks.
+- `block-height`: Keyword that returns the current block height.
+- `burn-block-height`: Keyword that returns the current burn chain block height.
+
+## Conclusion
+
+The `get-block-info?` function is a powerful tool for accessing historical block data in Clarity smart contracts. It allows developers to incorporate block-specific information into their contract logic, enabling a wide range of applications that can reference and utilize blockchain state. When used correctly, it provides valuable insights into the Stacks blockchain's history and can be used to implement sophisticated, time-aware contract behaviors.

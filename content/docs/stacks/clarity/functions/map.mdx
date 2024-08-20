@@ -1,0 +1,78 @@
+---
+title: map
+description: Applying a function to each element of a list in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(map function list)
+```
+
+- Input: `(function (A) => B)`, `(list A)`
+- Output: `(list B)`
+
+## Why it matters
+
+The `map` function is crucial for:
+
+1. Applying a function to each element of a list.
+2. Transforming lists by applying operations to their elements.
+3. Simplifying the process of performing bulk operations on lists.
+4. Enhancing code readability and maintainability by abstracting repetitive operations.
+
+## When to use it
+
+Use `map` when you need to:
+
+- Apply a function to each element of a list.
+- Transform a list by applying operations to its elements.
+- Perform bulk operations on lists.
+- Simplify and abstract repetitive operations on list elements.
+
+## Best Practices
+
+- Ensure the function being applied is compatible with the elements of the list.
+- Use meaningful variable names for better readability.
+- Combine with other list functions for comprehensive list handling.
+- Be aware of the performance implications of applying functions to large lists.
+
+## Practical Example: Doubling Each Element in a List
+
+Let's implement a function that doubles each element in a list of integers:
+
+```clarity
+(define-private (double (n int))
+  (* n 2)
+)
+
+(define-read-only (double-elements (numbers (list 10 int)))
+  (map double numbers)
+)
+
+;; Usage
+(double-elements (list 1 2 3 4 5)) ;; Returns (list 2 4 6 8 10)
+```
+
+This example demonstrates:
+1. Defining a private function `double` to double an integer.
+2. Using `map` to apply the `double` function to each element in a list.
+3. Implementing a read-only function to return the transformed list.
+4. Handling both small and large input lists.
+
+## Common Pitfalls
+
+1. Using `map` with incompatible function and list element types, causing type errors.
+2. Assuming the list will always be within a certain length, leading to unhandled cases.
+3. Not handling all possible conditions, resulting in incomplete list transformations.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `filter`: Filters elements of a list based on a predicate function.
+- `fold`: Reduces a list to a single value by applying a function.
+- `len`: Returns the length of a list.
+
+## Conclusion
+
+The `map` function is a fundamental tool for applying functions to each element of a list in Clarity smart contracts. It allows developers to transform lists, perform bulk operations, and simplify repetitive tasks. When used effectively, `map` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to manage list transformations.
