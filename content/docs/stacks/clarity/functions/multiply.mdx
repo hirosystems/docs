@@ -5,7 +5,7 @@ description: Using the multiplication function for arithmetic operations in Clar
 
 The multiplication function (`*`) in Clarity performs multiplication on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (* i1 i2...)
@@ -32,14 +32,14 @@ Use the multiplication function when you need to:
 - Calculate compound values or rates.
 - Implement mathematical formulas that involve multiplication.
 
-## Best Practices
+## Best practices
 
 - Always consider the possibility of overflow when multiplying large numbers.
 - Use appropriate types (int or uint) based on your needs and expected value ranges.
 - Consider using `mul-overflow?` for checked multiplication if overflow detection is needed.
 - Be aware that multiplying by zero will always return zero.
 
-## Practical Example: Token Vesting Contract
+## Practical example: Token vesting contract
 
 Let's implement a simple token vesting contract that uses multiplication to calculate vested amounts:
 
@@ -95,13 +95,13 @@ This example demonstrates:
 2. Combining multiplication with division to implement a linear vesting schedule.
 3. Using multiplication as part of a larger mathematical formula in a smart contract context.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Overlooking potential overflow when multiplying large numbers.
 2. Not considering the effect of integer division when combined with multiplication.
 3. Assuming multiplication always increases a value (forgetting about multiplication by fractions < 1 in integer arithmetic).
 
-## Related Functions
+## Related functions
 
 - `/`: Used for division operations.
 - `+`: Used for addition operations.

@@ -3,7 +3,7 @@ title: log2
 description: Calculating the base-2 logarithm of a number in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (log2 n)
@@ -30,14 +30,14 @@ Use `log2` when you need to:
 - Determine the power of 2 needed to obtain a given value.
 - Simplify mathematical operations involving logarithms.
 
-## Best Practices
+## Best practices
 
 - Ensure the input value is non-negative, as `log2` fails on negative numbers.
 - Use meaningful variable names for better readability.
 - Combine with other mathematical functions for comprehensive calculations.
 - Be aware of the integer rounding behavior of `log2`.
 
-## Practical Example: Calculating Logarithm of a Number
+## Practical example: Calculate logarithm of a number
 
 Let's implement a function that calculates the base-2 logarithm of a given number:
 
@@ -56,14 +56,14 @@ This example demonstrates:
 2. Implementing a read-only function to return the logarithm.
 3. Handling both small and large input values.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `log2` on negative numbers, causing the function to fail.
 2. Assuming the result will always be an integer, leading to incorrect expectations.
 3. Not handling all possible conditions, resulting in incomplete calculations.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `sqrti`: Returns the largest integer that is less than or equal to the square root of a number.
 - `pow`: Raises a number to the power of another number.

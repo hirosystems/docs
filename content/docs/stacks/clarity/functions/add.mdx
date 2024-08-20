@@ -5,7 +5,7 @@ description: Using the addition function for arithmetic operations in Clarity sm
 
 The addition function (`+`) in Clarity performs addition on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (+ i1 i2...)
@@ -32,14 +32,14 @@ Use the addition function when you need to:
 - Sum up multiple values.
 - Implement mathematical formulas that involve addition.
 
-## Best Practices
+## Best practices
 
 - Always consider the possibility of overflow when adding large numbers.
 - Use appropriate types (int or uint) based on your needs and expected value ranges.
 - Be aware that adding negative numbers to positive numbers can result in subtraction.
 - Consider using checked arithmetic functions if overflow detection is critical.
 
-## Practical Example: Simple Counter
+## Practical example: Simple counter
 
 Let's implement a simple counter that uses the addition function to increment its value:
 
@@ -63,13 +63,13 @@ This example demonstrates:
 2. Implementing a public function to handle the increment operation.
 3. Returning the updated counter value.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Overlooking potential overflow when adding large numbers.
 2. Not considering the effect of adding negative numbers (for int types).
 3. Forgetting to update related variables or state when incrementing values.
 
-## Related Functions
+## Related functions
 
 - `-`: Used for subtraction operations.
 - `*`: Used for multiplication operations.

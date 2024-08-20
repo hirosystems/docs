@@ -3,7 +3,7 @@ title: map-insert
 description: Inserting an entry into a map in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (map-insert map-name key-tuple value-tuple)
@@ -30,14 +30,14 @@ Use `map-insert` when you need to:
 - Manage data in your smart contract.
 - Create unique key-value pairs in maps.
 
-## Best Practices
+## Best practices
 
 - Ensure the key-tuple and value-tuple are correctly formatted.
 - Use meaningful variable names for better readability.
 - Combine with other map functions for comprehensive map management.
 - Handle the case where the key already exists to avoid unexpected behavior.
 
-## Practical Example: Inserting User Data
+## Practical example: Insert user data
 
 Let's implement a function that inserts a user's data into a map:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to insert the data.
 3. Handling both the case where the entry is successfully inserted and where it already exists.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `map-insert` with incorrectly formatted tuples, causing the insertion to fail.
 2. Assuming the entry will always be inserted, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `map-set`: Sets the value associated with a key in a map, overwriting any existing value.
 - `map-delete`: Removes an entry from a map.

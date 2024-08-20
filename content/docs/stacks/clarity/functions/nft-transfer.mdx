@@ -3,7 +3,7 @@ title: nft-transfer?
 description: Transferring ownership of a non-fungible token (NFT) in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (nft-transfer? asset-class asset-identifier sender recipient)
@@ -30,7 +30,7 @@ Use `nft-transfer?` when you need to:
 - Update ownership records in your smart contract.
 - Handle NFT transfer operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the `sender` principal owns the NFT before attempting to transfer it.
 - Ensure the `sender` and `recipient` are different principals.
@@ -38,7 +38,7 @@ Use `nft-transfer?` when you need to:
 - Combine with other NFT functions for comprehensive NFT management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Transferring an NFT
+## Practical example: Transfer an NFT
 
 Let's implement a function that transfers an NFT from the sender to the recipient:
 
@@ -62,14 +62,14 @@ This example demonstrates:
 3. Handling both the successful transfer and the case where the sender no longer owns the asset.
 4. Handling the case where the asset does not exist.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `nft-transfer?` without ensuring the `sender` owns the NFT, causing the operation to fail.
 2. Assuming the `sender` and `recipient` are the same principal, leading to an invalid transfer.
 3. Not handling all possible conditions, resulting in incomplete NFT management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `nft-mint?`: Mints a new non-fungible token.
 - `nft-get-owner?`: Retrieves the owner of a non-fungible token.

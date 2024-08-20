@@ -3,7 +3,7 @@ title: define-trait
 description: Defining traits for interface-like behavior in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-trait trait-name ((func1-name (arg1-type arg2-type ...) (return-type)) ...))
@@ -34,14 +34,14 @@ Use `define-trait` when you need to:
 - Establish standards for token contracts or other common smart contract patterns.
 - Enable more flexible and modular smart contract architectures.
 
-## Best Practices
+## Best practices
 
 - Use clear and descriptive names for traits and their functions.
 - Keep traits focused on a single responsibility or concept.
 - Consider creating traits for common patterns like token standards.
 - Use traits in combination with `use-trait` and `contract-call?` for dynamic contract interactions.
 
-## Practical Example: Token Trait
+## Practical example: Token trait
 
 Let's define a simple trait for a token contract:
 
@@ -57,16 +57,16 @@ Let's define a simple trait for a token contract:
 
 This example demonstrates:
 1. Defining a trait with multiple functions.
-2. Specifying function signatures with argument types and return types.
+2. Specifying Function signatures with argument types and return types.
 3. Using response types to handle success and failure cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Defining overly complex traits that are difficult for other contracts to implement.
 2. Forgetting that traits are not implementations, just interface definitions.
 3. Not considering backwards compatibility when updating traits in newer contract versions.
 
-## Related Functions
+## Related functions
 
 - `use-trait`: Used to import trait definitions from other contracts.
 - `impl-trait`: Used to declare that a contract implements a specific trait.

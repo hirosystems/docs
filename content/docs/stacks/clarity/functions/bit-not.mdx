@@ -3,7 +3,7 @@ title: bit-not
 description: Using the bit-not function for bitwise complement operations in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (bit-not i1)
@@ -30,14 +30,14 @@ Use the `bit-not` function when you need to:
 - Implement certain cryptographic or hashing algorithms.
 - Perform low-level data manipulations.
 
-## Best Practices
+## Best practices
 
 - Be aware of the differences between signed (`int`) and unsigned (`uint`) integers when using `bit-not`.
 - Remember that `bit-not` on a `uint` will result in a large positive number due to two's complement representation.
 - Use `bit-not` in combination with other bitwise operations (`bit-and`, `bit-or`, `bit-xor`) for complex bit manipulations.
 - Consider the readability of your code when using bitwise operations extensively.
 
-## Practical Example: Simple Flag System
+## Practical example: Simple flag system
 
 Let's implement a simple flag system using `bit-not` and other bitwise operations:
 
@@ -71,13 +71,13 @@ This example demonstrates:
 2. Implementing a flag system using bitwise operations for efficient storage and manipulation.
 3. Combining `bit-not` with other bitwise operations for complex flag manipulations.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that `bit-not` on a `uint` results in a large positive number, not a negative number.
 2. Overlooking the sign bit when using `bit-not` with signed integers.
 3. Not considering the full range of bits when applying `bit-not` to smaller integer values.
 
-## Related Functions
+## Related functions
 
 - `bit-and`: Used for bitwise AND operations.
 - `bit-or`: Used for bitwise OR operations.

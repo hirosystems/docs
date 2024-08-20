@@ -3,7 +3,7 @@ title: contract-call?
 description: Executing public functions in other smart contracts from within a Clarity smart contract.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (contract-call? .contract-name function-name arg0 arg1 ...)
@@ -33,14 +33,14 @@ Use the `contract-call?` function when you need to:
 - Split complex logic across multiple contracts for better organization.
 - Implement upgradeable systems by calling into newer contract versions.
 
-## Best Practices
+## Best practices
 
 - Always check the return value of `contract-call?` as it returns a response type.
 - Be aware that `contract-call?` cannot be used to call functions within the same contract.
 - Consider the gas costs of external contract calls in your overall transaction budget.
 - Use `as-contract` when appropriate to make calls with the contract's own principal.
 
-## Practical Example: Interacting with a Token Contract
+## Practical example: Interact with a token contract
 
 Let's implement a function that transfers tokens using a standard token contract:
 
@@ -58,13 +58,13 @@ This example demonstrates:
 2. Passing arguments to the called function, including the current `tx-sender`.
 3. Returning the response from the called function directly.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to handle the response from `contract-call?`, which can lead to unexpected behavior.
 2. Attempting to use `contract-call?` to call functions within the same contract, which is not allowed.
 3. Not considering the possibility of the called contract changing or being upgraded.
 
-## Related Functions
+## Related functions
 
 - `as-contract`: Often used in combination with `contract-call?` to make calls as the contract principal.
 - `try!`: Useful for handling the response from `contract-call?` and propagating errors.

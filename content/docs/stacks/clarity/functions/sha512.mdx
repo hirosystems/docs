@@ -3,7 +3,7 @@ title: sha512
 description: Computing the SHA-512 hash of a value in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (sha512 value)
@@ -30,14 +30,14 @@ Use `sha512` when you need to:
 - Generate unique hashes to ensure data integrity.
 - Handle cryptographic hashing operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the input value is correctly formatted and valid.
 - Use meaningful variable names for better readability.
 - Combine with other cryptographic functions for comprehensive security management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Computing a SHA-512 Hash
+## Practical example: Compute a SHA-512 hash
 
 Let's implement a function that computes the SHA-512 hash of a given buffer:
 
@@ -56,14 +56,14 @@ This example demonstrates:
 2. Implementing a public function to handle the hash computation.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `sha512` with incorrectly formatted or invalid input values, causing the operation to fail.
 2. Assuming the hash will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete cryptographic hashing.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `sha256`: Computes the SHA-256 hash of the input.
 - `sha512/256`: Computes the SHA-512/256 hash of the input.

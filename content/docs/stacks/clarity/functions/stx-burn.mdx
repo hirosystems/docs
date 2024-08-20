@@ -3,7 +3,7 @@ title: stx-burn?
 description: Burning STX from a principal's account in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (stx-burn? amount sender)
@@ -30,14 +30,14 @@ Use `stx-burn?` when you need to:
 - Validate the burn operation to ensure data integrity.
 - Handle STX burning operations in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the `amount` is positive and the `sender` has sufficient balance.
 - Use meaningful variable names for better readability.
 - Combine with other STX functions for comprehensive account management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Burning STX from an Account
+## Practical example: Burn STX from an account
 
 Let's implement a function that burns a specified amount of STX from the `tx-sender`:
 
@@ -55,14 +55,14 @@ This example demonstrates:
 2. Implementing a public function to handle the STX burning operation.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `stx-burn?` with a non-positive amount, causing the operation to fail.
 2. Assuming the burn operation will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete account management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `stx-get-balance`: Queries the STX balance of a principal.
 - `stx-transfer?`: Transfers STX from one principal to another.

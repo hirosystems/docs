@@ -3,7 +3,7 @@ title: if
 description: Conditional evaluation in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (if bool expr1 expr2)
@@ -33,14 +33,14 @@ Use `if` when you need to:
 - Control the flow of your contract based on dynamic conditions.
 - Simplify complex decision-making processes.
 
-## Best Practices
+## Best practices
 
 - Ensure that both `expr1` and `expr2` return the same type.
 - Use clear and meaningful boolean expressions for readability.
 - Avoid deeply nested `if` statements for better maintainability.
 - Combine with other control flow functions like `match` for more complex logic.
 
-## Practical Example: Conditional Token Transfer
+## Practical example: Conditional token transfer
 
 ```clarity
 (define-map UserBalances { userId: principal } { balance: uint })
@@ -67,14 +67,14 @@ This example demonstrates:
 2. Executing different code paths based on the result of the balance check.
 3. Handling both the success and failure cases appropriately.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that both `expr1` and `expr2` must return the same type.
 2. Using overly complex boolean expressions, making the code hard to read.
 3. Not handling all possible conditions, leading to unexpected behavior.
 4. Overusing `if` for logic that could be simplified with other control flow functions.
 
-## Related Functions
+## Related functions
 
 - `match`: Used for pattern matching and handling multiple conditions.
 - `and`: Logical AND operator for combining boolean expressions.

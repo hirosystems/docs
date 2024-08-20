@@ -3,7 +3,7 @@ title: impl-trait
 description: Implementing traits in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (impl-trait trait-name)
@@ -31,14 +31,14 @@ Use `impl-trait` when you need to:
 - Ensure your contract adheres to specific standards or behaviors.
 - Enable dynamic function calls using `contract-call?`.
 
-## Best Practices
+## Best practices
 
 - Define traits at the top level of your contract for clarity and organization.
 - Ensure all required functions in the trait are implemented in your contract.
 - Use meaningful and descriptive names for traits and their functions.
 - Document the purpose and usage of each trait in your contract.
 
-## Practical Example: Implementing a Token Trait
+## Practical example: Implement a token trait
 
 Let's define a simple token trait and implement it in a contract:
 
@@ -81,14 +81,14 @@ This example demonstrates:
 2. Implementing the `token-trait` in a contract using `impl-trait`.
 3. Providing implementations for the `transfer` and `get-balance` functions.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to implement all required functions in the trait, leading to deployment errors.
-2. Using inconsistent function signatures between the trait and the implementation.
+2. Using inconsistent Function signatures between the trait and the implementation.
 3. Not documenting the purpose and usage of traits, making the contract harder to understand.
 4. Overlooking the need for proper error handling in trait functions.
 
-## Related Functions
+## Related functions
 
 - `define-trait`: Used to define a new trait.
 - `contract-call?`: Used to call functions dynamically on contracts that implement a trait.

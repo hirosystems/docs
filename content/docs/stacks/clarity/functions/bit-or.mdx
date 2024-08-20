@@ -3,7 +3,7 @@ title: bit-or
 description: Using the bit-or function for bitwise OR operations in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (bit-or i1 i2...)
@@ -30,14 +30,14 @@ Use the `bit-or` function when you need to:
 - Implement certain bitwise algorithms or data structures.
 - Perform low-level data manipulations involving binary operations.
 
-## Best Practices
+## Best practices
 
 - Ensure all input values are of the same type (either all `int` or all `uint`).
 - Remember that `bit-or` with `0` has no effect, which can be useful for conditional operations.
 - Use `bit-or` in combination with other bitwise operations for complex bit manipulations.
 - Consider readability when using bitwise operations extensively; add comments to explain the purpose.
 
-## Practical Example: Permission System
+## Practical example: Permission system
 
 Let's implement a simple permission system using `bit-or` and other bitwise operations:
 
@@ -89,13 +89,13 @@ This example demonstrates:
 2. Implementing a permission system using bitwise operations for efficient storage and checks.
 3. Combining `bit-or` with other bitwise operations like `bit-and` and `bit-not` for complex permission management.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Mixing signed (`int`) and unsigned (`uint`) integers in a single `bit-or` operation.
 2. Forgetting that `bit-or` with all bits set (`-1` for `int`, maximum value for `uint`) always results in all bits set.
 3. Not considering the full range of bits when using `bit-or` with smaller integer values.
 
-## Related Functions
+## Related functions
 
 - `bit-and`: Used for bitwise AND operations.
 - `bit-xor`: Used for bitwise XOR operations.

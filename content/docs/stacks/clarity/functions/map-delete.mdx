@@ -3,7 +3,7 @@ title: map-delete
 description: Removing an entry from a map in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (map-delete map-name key-tuple)
@@ -30,14 +30,14 @@ Use `map-delete` when you need to:
 - Ensure data integrity by deleting obsolete or incorrect entries.
 - Maintain clean and accurate data in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the key-tuple accurately identifies the entry to be deleted.
 - Use meaningful variable names for better readability.
 - Combine with other map functions for comprehensive map management.
 - Be aware of the performance implications of frequent deletions in large maps.
 
-## Practical Example: Deleting a User's Data
+## Practical example: Delete a user's data
 
 Let's implement a function that deletes a user's data from a map:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to delete the data.
 3. Handling the case where the user's data is present and needs to be removed.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `map-delete` with an incorrect key-tuple, causing the deletion to fail.
 2. Assuming the entry will always exist, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `map-set`: Sets the value associated with a key in a map.
 - `map-get?`: Retrieves an entry from a map.

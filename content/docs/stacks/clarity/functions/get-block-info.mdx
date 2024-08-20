@@ -3,7 +3,7 @@ title: get-block-info?
 description: Fetching information about Stacks blocks in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (get-block-info? prop-name block-height)
@@ -32,14 +32,14 @@ Use `get-block-info?` when you need to:
 - Verify block hashes or other block-specific data.
 - Access block rewards or miner spending data (in Stacks 2.1+).
 
-## Best Practices
+## Best practices
 
 - Always check if the returned value is `none`, as it will be for non-existent or future blocks.
 - Be aware of the potential for chain reorganizations when using recent block data.
 - Use the appropriate property name for the data you need to retrieve.
 - Consider caching results for frequently accessed block information to save on execution costs.
 
-## Practical Example: Block Time Verification
+## Practical example: Block time verification
 
 Let's implement a function that checks if a given block was mined after a certain time:
 
@@ -72,14 +72,14 @@ New in Stacks 2.1:
 - `block-reward`: Returns the total block reward (uint).
 - `miner-spend-total`: Returns the total spent by miners for this block (uint).
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming all properties are available for all blocks (e.g., `block-reward` is only available for mature blocks).
 2. Not handling the `none` case when the block height is invalid or in the future.
 3. Relying on exact block times, which can be inaccurate up to two hours.
 4. Using `header-hash` when global uniqueness is required (use `id-header-hash` instead).
 
-## Related Functions
+## Related functions
 
 - `get-burn-block-info?`: Used to get information about the underlying burn chain blocks.
 - `block-height`: Keyword that returns the current block height.

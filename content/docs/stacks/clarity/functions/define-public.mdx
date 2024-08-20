@@ -3,7 +3,7 @@ title: define-public
 description: Defining public functions in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-public (function-name (arg-name-0 arg-type-0) ...) function-body)
@@ -34,7 +34,7 @@ Use `define-public` when you need to:
 - Define functions that other contracts can call via `contract-call?`.
 - Create functions that modify contract state and need to be invoked through transactions.
 
-## Best Practices
+## Best practices
 
 - Always return a response type (`(response T E)`) from public functions.
 - Use descriptive names for public functions to clearly indicate their purpose.
@@ -87,14 +87,14 @@ This example demonstrates:
 2. Setting a value only if it meets a condition.
 3. Returning a response type to indicate success or failure.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to return a response type, which will cause a contract to be invalid.
 2. Not implementing proper access controls, potentially allowing unauthorized actions.
 3. Overlooking potential error conditions or edge cases.
 4. Creating functions that are too complex or gas-intensive for practical use.
 
-## Related Functions
+## Related functions
 
 - `define-private`: Used to define private functions that can only be called within the contract.
 - `define-read-only`: Used to define public read-only functions that don't modify contract state.

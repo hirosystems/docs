@@ -3,7 +3,7 @@ title: map-get?
 description: Retrieving an entry from a map in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (map-get? map-name key-tuple)
@@ -30,14 +30,14 @@ Use `map-get?` when you need to:
 - Check for the existence of values in a map.
 - Access stored data in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the key-tuple accurately identifies the entry to be retrieved.
 - Use meaningful variable names for better readability.
 - Combine with other map functions for comprehensive map management.
 - Handle the `none` case to avoid runtime errors.
 
-## Practical Example: Retrieving User Data
+## Practical example: Retrieve user data
 
 Let's implement a function that retrieves a user's data from a map:
 
@@ -59,14 +59,14 @@ This example demonstrates:
 2. Implementing a read-only function to return the retrieved data.
 3. Handling both the case where the user's data is present and where it is not.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `map-get?` with an incorrect key-tuple, causing the retrieval to fail.
 2. Assuming the entry will always exist, leading to unhandled `none` cases.
 3. Not handling all possible conditions, resulting in incomplete data retrieval.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `map-set`: Sets the value associated with a key in a map.
 - `map-delete`: Removes an entry from a map.

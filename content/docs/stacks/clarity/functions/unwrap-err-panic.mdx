@@ -3,7 +3,7 @@ title: unwrap-err-panic
 description: Unpacking error responses and throwing runtime errors in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (unwrap-err-panic response-input)
@@ -30,14 +30,14 @@ Use `unwrap-err-panic` when you need to:
 - Validate the error unpacking process to ensure data integrity.
 - Handle error responses in your smart contract and throw runtime errors when necessary.
 
-## Best Practices
+## Best practices
 
 - Ensure the input value is a response type.
 - Use meaningful variable names for better readability.
 - Combine with other error handling functions for comprehensive error management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Unpacking an Error Response and Throwing a Runtime Error
+## Practical example: Unpack an error response and throwing a runtime error
 
 Let's implement a function that processes an error response using `unwrap-err-panic`:
 
@@ -61,14 +61,14 @@ This example demonstrates:
 2. Implementing a public function to handle the error unpacking process.
 3. Handling both successful and error cases, with runtime errors thrown for `ok` values.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `unwrap-err-panic` with values that are not response types, causing runtime errors.
 2. Assuming the error unpacking will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete error management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `unwrap!`: Unpacks optional and response types, returning a thrown value if unpacking fails.
 - `unwrap-err!`: Unpacks error responses, returning a thrown value if the response is `ok`.

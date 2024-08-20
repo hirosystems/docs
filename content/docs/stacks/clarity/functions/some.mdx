@@ -3,7 +3,7 @@ title: some
 description: Constructing an optional type from a value in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (some value)
@@ -30,14 +30,14 @@ Use `some` when you need to:
 - Explicitly handle optional values to ensure data integrity.
 - Work with optional types in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the value passed to `some` is the intended value to be wrapped in an optional type.
 - Use meaningful variable names for better readability.
 - Combine with other optional functions for comprehensive optional type management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Constructing an Optional Type
+## Practical example: Construct an optional type
 
 Let's implement a function that constructs an optional type from a given integer:
 
@@ -56,14 +56,14 @@ This example demonstrates:
 2. Implementing a public function to handle the optional type construction.
 3. Handling both positive and negative input values.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `some` without ensuring the value is the intended value to be wrapped, causing unexpected behavior.
 2. Assuming the optional type will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete optional type management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `is-some`: Checks if an optional type contains a value.
 - `is-none`: Checks if an optional type is empty.

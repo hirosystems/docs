@@ -3,7 +3,7 @@ title: define-fungible-token
 description: Defining a new fungible token in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-fungible-token token-name <total-supply>)
@@ -32,14 +32,14 @@ Use `define-fungible-token` when you need to:
 - Establish a foundation for token-based features in your contract.
 - Create utility tokens, governance tokens, or other custom fungible assets.
 
-## Best Practices
+## Best practices
 
 - Place `define-fungible-token` at the top level of your contract, as it's a definition statement.
 - Consider carefully whether to specify a total supply or leave it unlimited.
 - Use meaningful and descriptive names for your tokens.
 - Implement proper access controls for minting and burning operations if required.
 
-## Practical Example: Simple Token Creation
+## Practical example: Simple token creation
 
 Let's implement a basic fungible token with a fixed supply:
 
@@ -72,13 +72,13 @@ This example demonstrates:
 2. Implementing basic token operations like transfer and balance checking.
 3. Adding a mint function with admin-only access control.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that omitting the total supply parameter allows unlimited minting, if not handled manually.
 2. Not implementing proper access controls for sensitive operations like minting.
 3. Overlooking the need for additional functionality like burning or pausing.
 
-## Related Functions
+## Related functions
 
 - `ft-transfer?`: Used to transfer tokens between principals.
 - `ft-mint?`: Used to create new tokens (if allowed by the token definition).

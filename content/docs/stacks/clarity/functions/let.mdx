@@ -3,7 +3,7 @@ title: let
 description: Binding variables to expressions in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (let ((name1 expr1) (name2 expr2) ...) expr-body1 expr-body2 ... expr-body-last)
@@ -30,14 +30,14 @@ Use `let` when you need to:
 - Improve the readability and maintainability of your code.
 - Ensure sequential evaluation of expressions.
 
-## Best Practices
+## Best practices
 
 - Use meaningful variable names for better readability.
 - Ensure that the expressions are evaluated in the correct order.
 - Combine with other control flow functions for more complex logic.
 - Be aware that `let` bindings are sequential and can refer to prior bindings.
 
-## Practical Example: Calculating a Sum
+## Practical example: Calculate a sum
 
 Let's implement a function that calculates the sum of two numbers using `let`:
 
@@ -60,14 +60,14 @@ This example demonstrates:
 2. Returning the sum as the result of the function.
 3. Simplifying the function body by breaking it into smaller parts.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `let` bindings out of order, leading to incorrect evaluations.
 2. Not handling all possible conditions, resulting in incomplete logic.
 3. Overlooking the need for proper error handling and validation.
 4. Using `let` for simple expressions where it is not necessary.
 
-## Related Functions
+## Related functions
 
 - `begin`: Evaluates multiple expressions sequentially, returning the last expression's value.
 - `if`: Implements conditional logic based on boolean expressions.

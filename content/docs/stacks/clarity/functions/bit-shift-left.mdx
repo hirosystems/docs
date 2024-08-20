@@ -3,7 +3,7 @@ title: bit-shift-left
 description: Using the bit-shift-left function for bitwise left shift operations in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (bit-shift-left i1 shamt)
@@ -32,14 +32,14 @@ Use the `bit-shift-left` function when you need to:
 - Create specific bit patterns or masks.
 - Optimize certain bitwise operations.
 
-## Best Practices
+## Best practices
 
 - Remember that shifting beyond the bit width of the integer (128 bits in Clarity) will result in zero.
 - Use `uint` for `shamt` to avoid potential issues with negative shift amounts.
 - Be aware of the potential for overflow when shifting left, especially with large numbers or shift amounts.
 - For multiplication by powers of 2, use the `pow` function instead, as it provides built-in overflow protection.
 
-## Practical Example: Flag Management
+## Practical example: Flag management
 
 Let's implement a simple flag management system using `bit-shift-left`:
 
@@ -71,13 +71,13 @@ This example demonstrates:
 2. Combining `bit-shift-left` with `bit-or` to set flags.
 3. Using `bit-and` to check if a specific flag is set.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `bit-shift-left` for multiplication without considering overflow risks.
 2. Not considering the modulo behavior when shifting by amounts greater than or equal to 128.
 3. Using a negative or non-uint value for the shift amount, which is not allowed.
 
-## Related Functions
+## Related functions
 
 - `bit-shift-right`: Used for right-shifting bits.
 - `bit-and`: Often used in combination with `bit-shift-left` for masking operations.

@@ -3,7 +3,7 @@ title: err
 description: Constructing error responses in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (err value)
@@ -30,14 +30,14 @@ Use `err` when you need to:
 - Provide specific error information or codes to the caller.
 - Ensure that any state changes are reverted due to a failure condition.
 
-## Best Practices
+## Best practices
 
 - Use descriptive error values that help diagnose the issue.
 - Consider using standardized error codes across your contract.
 - Pair `err` with `ok` to create comprehensive response handling.
 - Remember that returning an `err` will cause all state changes in the current function to be rolled back.
 
-## Practical Example: Token Transfer with Error Handling
+## Practical example: Token transfer with error handling
 
 Let's implement a simple token transfer function with error handling:
 
@@ -69,13 +69,13 @@ This example demonstrates:
 2. Pairing `err` with `ok` to handle both success and failure cases.
 3. Using a simple error code (u1) to indicate the type of error.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that returning an `err` will revert all state changes in the current function.
 2. Using non-descriptive error values that make debugging difficult.
 3. Inconsistent error handling across different functions in the contract.
 
-## Related Functions
+## Related functions
 
 - `ok`: Used to construct successful responses in public functions.
 - `asserts!`: Often used with `err` for condition checking and error reporting.

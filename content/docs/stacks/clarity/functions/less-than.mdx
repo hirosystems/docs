@@ -5,7 +5,7 @@ description: Using the less than function for comparisons in Clarity smart contr
 
 The less than function (`<`) in Clarity compares two values and returns true if the first value is less than the second. It's a fundamental comparison operation used in many smart contract conditions and logic flows.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (< v1 v2)
@@ -32,14 +32,14 @@ Use the less than function when you need to:
 - Create conditional logic based on numerical comparisons.
 - Sort or order data based on numerical or lexicographical order.
 
-## Best Practices
+## Best practices
 
 - Ensure that both inputs are of the same type to avoid runtime errors.
 - Be aware of the differences in comparison between signed (int) and unsigned (uint) integers.
 - When comparing strings or buffers, understand that the comparison is lexicographical.
 - Consider edge cases, especially when dealing with the limits of integer ranges.
 
-## Practical Example: Auction Contract with Maximum Bid
+## Practical example: Auction contract with maximum bid
 
 Let's implement a simple auction contract that uses the less than function to enforce a maximum bid amount:
 
@@ -88,13 +88,13 @@ This example demonstrates:
 2. Using `<` to ensure the bid is less than the maximum allowed bid.
 3. Combining the less than check with other contract logic for an auction system.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Comparing values of different types, which will result in a runtime error.
 2. Not considering the inclusive nature of `<=` vs the exclusive nature of `<` when setting thresholds.
 3. Overlooking potential integer underflow when working with very small numbers.
 
-## Related Functions
+## Related functions
 
 - `>`: Used for greater than comparisons.
 - `<=`: Used for less than or equal to comparisons.

@@ -3,7 +3,7 @@ title: begin
 description: Using the begin function to evaluate multiple expressions in sequence in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (begin expr1 expr2 expr3 ... expr-last)
@@ -31,14 +31,14 @@ Use the `begin` function when you need to:
 - Group multiple expressions where only one is allowed (e.g., in function bodies or condition branches).
 - Create more complex, multi-step logic within your smart contract functions.
 
-## Best Practices
+## Best practices
 
 - Use `begin` to keep related operations together for better readability.
 - Ensure that any expressions that return a response type (ok or err) are properly checked.
 - Be mindful of the order of expressions, as they are evaluated sequentially.
 - Use `begin` to make your code more expressive and easier to understand.
 
-## Practical Example: User Registration with Logging
+## Practical example: User registration with logging
 
 Let's implement a simple user registration function that performs multiple actions:
 
@@ -66,13 +66,13 @@ This example demonstrates:
 2. Performing checks, updates, and logging in a specific order.
 3. Executing side effects (printing) before returning the final value.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to return a value in the last expression of a `begin` block.
 2. Not properly handling responses from functions that return (ok) or (err) within the `begin` block.
 3. Relying on side effects of earlier expressions without considering their order of execution.
 
-## Related Functions
+## Related functions
 
 - `let`: Used for creating local bindings within a limited scope.
 - `asserts!`: Often used within `begin` blocks for condition checking.

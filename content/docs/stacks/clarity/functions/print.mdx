@@ -3,7 +3,7 @@ title: print
 description: Evaluating and printing expressions in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (print expr)
@@ -28,13 +28,13 @@ Use `print` when you need to:
 - Evaluate and return an input expression.
 - Output intermediate values for better understanding of contract behavior.
 
-## Best Practices
+## Best practices
 
 - Use `print` primarily for debugging and development purposes.
 - Ensure that the expression passed to `print` is meaningful and necessary for debugging.
 - Remove or comment out `print` statements in production code to avoid unnecessary output.
 
-## Practical Example: Printing an Expression
+## Practical example: Print an expression
 
 Let's implement a function that prints the result of an addition operation:
 
@@ -53,13 +53,13 @@ This example demonstrates:
 2. Implementing a public function to handle the addition and printing.
 3. Handling both small and large input values.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `print` excessively, leading to cluttered output and reduced readability.
 2. Assuming `print` is necessary for all expressions, leading to overuse.
 3. Not removing or commenting out `print` statements in production code, resulting in unnecessary output.
 
-## Related Functions
+## Related functions
 
 - `+`: Adds two or more numbers.
 - `-`: Subtracts one number from another.

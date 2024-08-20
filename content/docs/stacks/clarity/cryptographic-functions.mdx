@@ -26,7 +26,7 @@ Clarity's cryptographic functions are designed with blockchain-specific consider
 ```clarity
 (sha256 value)
 ```
-**Best Practices**: 
+**Best practices**: 
 - Use for creating unique identifiers for data
 - Combine with other data before hashing to prevent rainbow table attacks
 
@@ -48,7 +48,7 @@ Clarity's cryptographic functions are designed with blockchain-specific consider
 ```clarity
 (keccak256 value)
 ```
-**Best Practices**: 
+**Best practices**: 
 - Use when SHA256 is not suitable for your specific use case
 - Be aware of the differences in output compared to SHA256
 
@@ -69,7 +69,7 @@ Clarity's cryptographic functions are designed with blockchain-specific consider
 ```clarity
 (secp256k1-recover? message-hash signature)
 ```
-**Best Practices**: 
+**Best practices**: 
 - Always check the return value as it's an optional type
 - Use in combination with `secp256k1-verify` for complete signature verification
 
@@ -82,7 +82,7 @@ Clarity's cryptographic functions are designed with blockchain-specific consider
     (map-set votes tx-sender vote)
     (ok true)))
 
-## Practical Example: Document Verification System
+## Practical example: Document verification system
 
 Let's implement a basic document verification system that demonstrates the use of Clarity's cryptographic functions. This system will allow users to submit document hashes, sign them, and later verify the authenticity of the document and the signer.
 

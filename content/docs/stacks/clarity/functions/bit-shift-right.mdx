@@ -3,7 +3,7 @@ title: bit-shift-right
 description: Using the bit-shift-right function for bitwise right shift operations in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (bit-shift-right i1 shamt)
@@ -32,14 +32,14 @@ Use the `bit-shift-right` function when you need to:
 - Perform low-level data manipulations involving binary operations.
 - Extract specific bits or bit patterns from integers.
 
-## Best Practices
+## Best practices
 
 - Be aware that shifting right by `n` bits is equivalent to integer division by 2^n.
 - Remember that for signed integers (`int`), the sign bit is preserved during right shifts.
 - Use `uint` for `shamt` to avoid potential issues with negative shift amounts.
 - Consider the differences in behavior between signed and unsigned integers when right-shifting.
 
-## Practical Example: Efficient Power of 2 Division
+## Practical example: Power of 2 division
 
 Let's implement a function that efficiently divides by powers of 2 using `bit-shift-right`:
 
@@ -63,13 +63,13 @@ This example demonstrates:
 2. Handling both positive and negative numbers in division.
 3. Combining `bit-shift-right` with other bitwise operations to extract specific bit patterns.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that right-shifting signed integers preserves the sign bit.
 2. Not considering the modulo behavior when shifting by amounts greater than or equal to 128.
 3. Using a negative or non-uint value for the shift amount, which is not allowed.
 
-## Related Functions
+## Related functions
 
 - `bit-shift-left`: Used for left-shifting bits.
 - `bit-and`: Often used in combination with `bit-shift-right` for masking operations.

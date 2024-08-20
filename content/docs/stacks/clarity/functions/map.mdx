@@ -3,7 +3,7 @@ title: map
 description: Applying a function to each element of a list in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (map function list)
@@ -30,14 +30,14 @@ Use `map` when you need to:
 - Perform bulk operations on lists.
 - Simplify and abstract repetitive operations on list elements.
 
-## Best Practices
+## Best practices
 
 - Ensure the function being applied is compatible with the elements of the list.
 - Use meaningful variable names for better readability.
 - Combine with other list functions for comprehensive list handling.
 - Be aware of the performance implications of applying functions to large lists.
 
-## Practical Example: Doubling Each Element in a List
+## Practical example: Double each element in a list
 
 Let's implement a function that doubles each element in a list of integers:
 
@@ -60,14 +60,14 @@ This example demonstrates:
 3. Implementing a read-only function to return the transformed list.
 4. Handling both small and large input lists.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `map` with incompatible function and list element types, causing type errors.
 2. Assuming the list will always be within a certain length, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete list transformations.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `filter`: Filters elements of a list based on a predicate function.
 - `fold`: Reduces a list to a single value by applying a function.

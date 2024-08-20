@@ -3,7 +3,7 @@ title: replace-at?
 description: Replacing an element at a specific index in a sequence in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (replace-at? sequence index new-element)
@@ -30,14 +30,14 @@ Use `replace-at?` when you need to:
 - Validate the index and element replacement in your smart contract.
 - Handle sequence modification operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the `index` is within the bounds of the sequence.
 - Use meaningful variable names for better readability.
 - Combine with other sequence functions for comprehensive sequence management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Replacing an Element in a List
+## Practical example: Replace an element in a list
 
 Let's implement a function that replaces an element in a list at a specific index:
 
@@ -56,14 +56,14 @@ This example demonstrates:
 2. Implementing a public function to handle the element replacement.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `replace-at?` with an index that is out of bounds, causing the operation to fail.
 2. Assuming the sequence will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete sequence management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `append`: Adds an element to the end of a list.
 - `index-of?`: Returns the first index at which an item can be found in a sequence.

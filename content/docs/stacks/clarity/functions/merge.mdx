@@ -3,7 +3,7 @@ title: merge
 description: Merging tuples in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (merge tuple1 tuple2)
@@ -30,14 +30,14 @@ Use `merge` when you need to:
 - Ensure data integrity by creating new tuples without mutating the original ones.
 - Simplify and abstract tuple merging operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the tuples being merged have compatible fields.
 - Use meaningful variable names for better readability.
 - Combine with other tuple and map functions for comprehensive data management.
 - Be aware of the performance implications of frequent tuple merging in large data structures.
 
-## Practical Example: Merging User Data
+## Practical example: Merge user data
 
 Let's implement a function that merges additional data into a user's existing data:
 
@@ -65,14 +65,14 @@ This example demonstrates:
 2. Implementing a public function to update the user's address.
 3. Handling both the retrieval and updating of user data in a clean and efficient manner.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `merge` with tuples that have incompatible fields, causing runtime errors.
 2. Assuming the tuples will always have the expected fields, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `map-set`: Sets the value associated with a key in a map.
 - `map-get?`: Retrieves an entry from a map.

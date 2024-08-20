@@ -3,7 +3,7 @@ title: define-private
 description: Defining private functions in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-private (function-name (arg-name-0 arg-type-0) ...) function-body)
@@ -34,14 +34,14 @@ Use `define-private` when you need to:
 - Break down large functions into smaller, more manageable pieces.
 - Improve the readability and maintainability of your contract.
 
-## Best Practices
+## Best practices
 
 - Use descriptive names for private functions to clearly indicate their purpose.
 - Keep private functions focused on a single task or operation.
 - Use private functions to avoid code duplication within your contract.
 - Remember that private functions can return any type, not just response types.
 
-## Practical Example: Helper Function for Validation
+## Practical example: Helper function for validation
 
 Let's implement a private function for input validation:
 
@@ -66,13 +66,13 @@ This example demonstrates:
 2. Calling the private function from within a public function.
 3. Improving code readability by separating validation logic.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to call private functions from outside the contract, which is not allowed.
 2. Overusing private functions, leading to overly complex contract structure.
 3. Forgetting that private functions can modify contract state, which may lead to unexpected behavior if not carefully managed.
 
-## Related Functions
+## Related functions
 
 - `define-public`: Used to define public functions that can be called from outside the contract.
 - `define-read-only`: Used to define public read-only functions that don't modify contract state.

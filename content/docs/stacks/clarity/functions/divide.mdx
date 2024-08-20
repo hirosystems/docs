@@ -5,7 +5,7 @@ description: Using the division function for arithmetic operations in Clarity sm
 
 The division function (`/`) in Clarity performs integer division on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (/ i1 i2...)
@@ -32,14 +32,14 @@ Use the division function when you need to:
 - Distribute resources evenly among participants.
 - Implement mathematical formulas that involve division.
 
-## Best Practices
+## Best practices
 
 - Always consider the possibility of division by zero, which throws a runtime error.
 - Be aware that Clarity uses integer division, so results are always rounded down.
 - Use appropriate types (int or uint) based on your needs and expected value ranges.
 - Consider using multiplication by fractions instead of division for more precise calculations.
 
-## Practical Example: Token Distribution Contract
+## Practical example: Token distribution contract
 
 Let's implement a simple token distribution contract that uses division to allocate tokens evenly:
 
@@ -92,13 +92,13 @@ This example demonstrates:
 2. Handling potential division by zero by checking the number of participants.
 3. Using integer division to evenly distribute tokens among participants.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to handle division by zero, which causes a runtime error.
 2. Not accounting for integer division rounding down, which can lead to unexpected results.
 3. Dividing before multiplying in complex calculations, potentially losing precision.
 
-## Related Functions
+## Related functions
 
 - `*`: Used for multiplication operations.
 - `+`: Used for addition operations.

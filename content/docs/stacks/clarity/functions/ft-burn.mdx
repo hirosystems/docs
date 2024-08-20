@@ -3,7 +3,7 @@ title: ft-burn?
 description: Burning fungible tokens in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (ft-burn? token-name amount sender)
@@ -33,14 +33,14 @@ Use `ft-burn?` when you need to:
 - Allow users to voluntarily destroy their tokens.
 - Execute deflationary mechanisms in your token economy.
 
-## Best Practices
+## Best practices
 
 - Ensure that the `sender` has sufficient balance before attempting to burn.
 - Use `ft-burn?` in conjunction with proper access controls.
 - Consider emitting events or logging burns for transparency.
 - Be cautious when burning tokens from a different principal than `tx-sender`.
 
-## Practical Example: Token Burning Mechanism
+## Practical example: Token burning mechanism
 
 Let's implement a simple token burning function:
 
@@ -66,14 +66,14 @@ This example demonstrates:
 2. Implementing an admin function to burn tokens from any account.
 3. Using assertions to ensure only the admin can burn tokens from other accounts.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to burn more tokens than the `sender` has in their balance.
 2. Not checking the return value of `ft-burn?` to handle potential errors.
 3. Allowing unauthorized burning of tokens from other accounts.
 4. Forgetting that burned tokens are permanently destroyed and cannot be recovered.
 
-## Related Functions
+## Related functions
 
 - `ft-mint?`: Used to create new tokens, increasing the total supply.
 - `ft-transfer?`: Used to transfer tokens between principals.

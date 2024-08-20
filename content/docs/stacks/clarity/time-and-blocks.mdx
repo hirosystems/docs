@@ -26,7 +26,7 @@ Clarity's block info functions are designed with blockchain-specific considerati
 (block-height)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Use for long-term time measurements (hours/days) rather than short intervals.
 - Consider potential variations in block time when planning time-sensitive operations.
 
@@ -50,7 +50,7 @@ Clarity's block info functions are designed with blockchain-specific considerati
 (burn-block-height)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Prefer this over `block-height` for more accurate time estimations.
 - Remember that Bitcoin block times can still vary, so allow for some flexibility.
 
@@ -75,7 +75,7 @@ Clarity's block info functions are designed with blockchain-specific considerati
 (get-block-info? property-name block-height-int)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Cache retrieved information when possible to save processing costs.
 - Be aware of the limit on how far back you can query block information.
 
@@ -90,7 +90,7 @@ Clarity's block info functions are designed with blockchain-specific considerati
         (err u3))))
 ```
 
-### Practical Example: Token Balance Snapshot for Voting
+### Practical example: Token balance snapshot for voting
 
 Let's implement a simple voting system where voting power is determined by a user's token balance at a specific "snapshot" block height. This example combines the use of `at-block` and `get-block-info?` functions to create a time-based voting mechanism.
 

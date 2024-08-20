@@ -3,7 +3,7 @@ title: element-at?
 description: Retrieving an element from a list at a specific index in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (element-at? list-expr uint)
@@ -32,14 +32,14 @@ Use `element-at?` when you need to:
 - Safely handle potential out-of-bounds access in list operations.
 - Work with lists in a way that may involve accessing elements at varying positions.
 
-## Best Practices
+## Best practices
 
 - Always check the returned optional value to handle cases where the index is out of bounds.
 - Use in combination with `len` to ensure you're not attempting to access beyond the list's length.
 - Consider using `map` or `fold` for operations that need to process all elements instead of accessing by index.
 - Be mindful of the zero-based indexing when using `element-at?`.
 
-## Practical Example: Retrieving a Specific Item
+## Practical example: Retrieve a specific item
 
 Let's implement a function that retrieves an item from a todo list:
 
@@ -78,13 +78,13 @@ This example demonstrates:
 2. Handling the optional return value with `match` to provide meaningful responses.
 3. Safely accessing list elements without risking out-of-bounds errors.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that list indices are zero-based in Clarity.
 2. Not handling the case where `element-at?` returns `none` for out-of-bounds access.
 3. Using `element-at?` in a loop to process all elements, which is less efficient than using `map` or `fold`.
 
-## Related Functions
+## Related functions
 
 - `list`: Used to create lists that can be accessed with `element-at?`.
 - `len`: Often used in conjunction with `element-at?` to check list bounds.

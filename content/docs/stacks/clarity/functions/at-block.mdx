@@ -3,7 +3,7 @@ title: at-block
 description: Using the at-block function to evaluate expressions at a specific block in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (at-block id-block-hash expr)
@@ -33,14 +33,14 @@ Use the `at-block` function when you need to:
 - Verify past conditions without relying on stored state.
 - Create time-locked or checkpoint-based features in your contract.
 
-## Best Practices
+## Best practices
 
 - Only use `at-block` when historical data is necessary, as it can be computationally expensive.
 - Ensure the block hash used is from the `id-header-hash` property, not `header-hash`.
 - Use read-only expressions within `at-block` to maintain determinism.
 - Be aware of the potential for chain reorganizations when using recent block hashes.
 
-## Practical Example: Historical Price Check
+## Practical example: Historical price check
 
 Let's implement a simple function that checks if a price was above a certain threshold at a specific block:
 
@@ -74,13 +74,13 @@ This example demonstrates:
 2. Combining `at-block` with map lookups to access past state.
 3. Implementing a read-only function that depends on blockchain history.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `header-hash` instead of `id-header-hash`, which can lead to inconsistencies across forks.
 2. Attempting to modify state within an `at-block` expression, which is not allowed.
 3. Overusing `at-block`, which can lead to performance issues due to the cost of historical lookups.
 
-## Related Functions
+## Related functions
 
 - `get-block-info?`: Used to retrieve information about specific blocks.
 - `block-height`: Often used in conjunction with `at-block` for time-based logic.

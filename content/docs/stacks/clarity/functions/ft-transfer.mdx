@@ -3,7 +3,7 @@ title: ft-transfer?
 description: Transferring fungible tokens between principals in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (ft-transfer? token-name amount sender recipient)
@@ -34,7 +34,7 @@ Use `ft-transfer?` when you need to:
 - Allow users to send tokens to each other within your dApp.
 - Move tokens as part of more complex contract operations.
 
-## Best Practices
+## Best practices
 
 - Always check the return value to ensure the transfer was successful.
 - Implement proper access controls to prevent unauthorized transfers.
@@ -42,7 +42,7 @@ Use `ft-transfer?` when you need to:
 - Be aware that any principal can call this function, so add necessary guards.
 - Verify sender has sufficient balance before attempting a transfer.
 
-## Practical Example: Token Transfer Function
+## Practical example: Token transfer function
 
 Let's implement a public function for transferring tokens with some basic checks:
 
@@ -73,14 +73,14 @@ This example demonstrates:
 2. Implementing basic checks for valid transfer conditions.
 3. Handling the response from `ft-transfer?` and propagating it to the caller.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that `ft-transfer?` can be called by any principal, potentially leading to unauthorized transfers.
 2. Not handling all possible error cases returned by `ft-transfer?`.
 3. Attempting to transfer more tokens than the sender's balance.
 4. Using `ft-transfer?` with a token name that hasn't been defined in the contract.
 
-## Related Functions
+## Related functions
 
 - `ft-mint?`: Used to create new tokens and assign them to a principal.
 - `ft-burn?`: Used to destroy tokens, reducing the balance of a principal.

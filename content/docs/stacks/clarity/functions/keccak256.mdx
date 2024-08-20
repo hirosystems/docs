@@ -3,7 +3,7 @@ title: keccak256
 description: Computing the Keccak-256 hash of a buffer in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (keccak256 value)
@@ -30,14 +30,14 @@ Use `keccak256` when you need to:
 - Generate unique identifiers for data.
 - Implement cryptographic operations in your contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the input buffer is of the correct length and format.
 - Use meaningful variable names for better readability.
 - Combine with other cryptographic functions for more complex operations.
 - Be aware of the security implications of using cryptographic hashes.
 
-## Practical Example: Hashing a User's Data
+## Practical example: Hash a user's data
 
 Let's implement a function that computes the Keccak-256 hash of a user's data:
 
@@ -64,14 +64,14 @@ This example demonstrates:
 2. Implementing a public function to return the hash.
 3. Handling the case where the user's data is not set by providing a default value.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `keccak256` on non-buffer types, causing type errors.
 2. Not handling cases where the input buffer is empty or invalid.
 3. Overlooking the need for proper error handling and validation.
 4. Assuming the hash function is collision-resistant without understanding its limitations.
 
-## Related Functions
+## Related functions
 
 - `sha256`: Computes the SHA-256 hash of a buffer.
 - `hash160`: Computes the RIPEMD-160 hash of the SHA-256 hash of a buffer.

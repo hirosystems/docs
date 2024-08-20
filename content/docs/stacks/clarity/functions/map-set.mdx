@@ -3,7 +3,7 @@ title: map-set
 description: Setting an entry in a map in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (map-set map-name key-tuple value-tuple)
@@ -30,14 +30,14 @@ Use `map-set` when you need to:
 - Ensure data integrity by updating existing entries.
 - Maintain accurate data in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the key-tuple and value-tuple are correctly formatted.
 - Use meaningful variable names for better readability.
 - Combine with other map functions for comprehensive map management.
 - Be aware of the performance implications of frequent updates in large maps.
 
-## Practical Example: Setting User Data
+## Practical example: Set user data
 
 Let's implement a function that sets a user's data in a map:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to set the data.
 3. Handling both the case where the entry is newly created and where it is updated.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `map-set` with incorrectly formatted tuples, causing the operation to fail.
 2. Assuming the entry will always be updated, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `map-insert`: Inserts a value into a map if the key does not already exist.
 - `map-delete`: Removes an entry from a map.

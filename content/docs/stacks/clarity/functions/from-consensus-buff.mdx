@@ -3,7 +3,7 @@ title: from-consensus-buff?
 description: Deserializing a buffer into a Clarity value in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (from-consensus-buff? type-signature buffer)
@@ -32,14 +32,14 @@ Use `from-consensus-buff?` when you need to:
 - Implement cross-contract communication protocols involving serialized data.
 - Deserialize stored data that was previously serialized for efficiency.
 
-## Best Practices
+## Best practices
 
 - Always specify the correct type signature to ensure proper deserialization.
 - Handle the `none` case when the deserialization fails.
 - Use in conjunction with `to-consensus-buff?` for serialization-deserialization workflows.
 - Be aware of the gas costs associated with deserializing large or complex data structures.
 
-## Practical Example: Deserializing a Tuple
+## Practical example: Deserialize a tuple
 
 Let's implement a function that deserializes a buffer into a tuple:
 
@@ -61,14 +61,14 @@ This example demonstrates:
 2. Specifying the expected type structure for the deserialization.
 3. Handling both successful and failed deserialization attempts.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Specifying an incorrect type signature, leading to deserialization failures.
 2. Not handling the `none` case when deserialization fails.
 3. Attempting to deserialize data that wasn't properly serialized using the SIP-005 standard.
 4. Overlooking potential out-of-memory errors when deserializing very large structures.
 
-## Related Functions
+## Related functions
 
 - `to-consensus-buff?`: Used to serialize Clarity values into buffers.
 - `unwrap-panic`: Often used to forcibly unwrap the optional result (use with caution).
