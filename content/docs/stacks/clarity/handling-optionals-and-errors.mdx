@@ -14,7 +14,7 @@ Clarity's optional value and error handling functions are designed with several 
 3. Readability: They make the code's intent clear, improving maintainability.
 4. Composability: They allow for clean function composition and chaining of operations.
 
-## Core Optional and Error Handling Functions
+## Core optional and error handling functions
 
 ### 1. is-some and is-none
 
@@ -27,11 +27,11 @@ Clarity's optional value and error handling functions are designed with several 
 (is-none value)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Always check optional values before unwrapping them.
 - Use in combination with unwrap functions for safe value extraction.
 
-**Example Use Case**: Checking if a user exists in a map before performing an operation.
+**Example use case**: Checking if a user exists in a map before performing an operation.
 
 ```clarity
 (define-map Users principal { balance: uint })
@@ -55,11 +55,11 @@ Clarity's optional value and error handling functions are designed with several 
 (unwrap-panic value)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Use `unwrap!` when you want to provide a custom error message or value.
 - Use `unwrap-panic` sparingly, typically only in situations where failure is truly unexpected.
 
-**Example Use Case**: Retrieving a user's balance, with a custom error if the user doesn't exist.
+**Example use case**: Retrieving a user's balance, with a custom error if the user doesn't exist.
 
 ```clarity
 (define-map Users principal { balance: uint })
@@ -79,11 +79,11 @@ Clarity's optional value and error handling functions are designed with several 
 (try! expression)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Use to chain multiple operations that might fail.
 - Helps keep code clean by avoiding nested if-else statements.
 
-**Example Use Case**: Transferring tokens between users, with multiple checks.
+**Example use case**: Transferring tokens between users, with multiple checks.
 
 ```clarity
 (define-public (transfer (from principal) (to principal) (amount uint))
@@ -100,7 +100,7 @@ Clarity's optional value and error handling functions are designed with several 
 )
 ```
 
-## Practical Example: Safe Token Transfer System
+## Practical example: safe token transfer system
 
 Let's implement a simple token system that demonstrates the use of optional values and error handling:
 
