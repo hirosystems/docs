@@ -5,6 +5,7 @@ import type { Viewport } from "next";
 import { baseUrl, createMetadata } from "@/utils/metadata";
 import { Provider } from "./provider";
 import { GoogleTagManager } from "@next/third-parties/google";
+import { Banner } from "@/components/ui/banner";
 import { Discord, Github, HiroSVG, Youtube, X } from "@/components/ui/icon";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID as string;
@@ -39,6 +40,15 @@ export default function RootLayout({
       <GoogleTagManager gtmId={GTM_ID} />
       <body className="flex min-h-screen flex-col">
         <Provider>
+          <Banner
+            id="master-of-clarity"
+            cta="Compete and find out"
+            url="https://hirosystems.mmm.page/masterofclarity"
+            startDate="2024-08-21"
+            endDate="2024-08-28"
+          >
+            Are you a Master of Clarity?
+          </Banner>
           {children}
           <Footer />
         </Provider>

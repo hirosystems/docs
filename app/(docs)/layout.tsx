@@ -2,7 +2,6 @@ import { DocsLayout, type DocsLayoutProps } from "fumadocs-ui/layout";
 import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { utils } from "@/utils/source";
-import { create } from "@/components/ui/icon";
 import { DocsLogo } from "@/components/ui/icon";
 import { Body, NavChildren, SidebarBanner } from "./layout.client";
 
