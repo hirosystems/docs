@@ -3,7 +3,7 @@ title: asserts!
 description: Using the asserts! function for conditional assertions in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (asserts! bool-expr thrown-value)
@@ -32,14 +32,14 @@ Use the `asserts!` function when you need to:
 - Provide clear error messages or codes when conditions are not satisfied.
 - Implement guard clauses to protect against invalid inputs or states.
 
-## Best Practices
+## Best practices
 
 - Use `asserts!` early in functions to validate preconditions.
 - Provide meaningful error values that can be easily interpreted by users or other contracts.
 - Combine multiple conditions using `and` or `or` for complex assertions.
 - Consider using `asserts!` in combination with `unwrap!` for handling optional values.
 
-## Practical Example: Token Transfer with Balance Check
+## Practical example: Token transfer with balance check
 
 Let's implement a simple token transfer function that uses `asserts!` to check the sender's balance:
 
@@ -73,13 +73,13 @@ This example demonstrates:
 2. Using `asserts!` to prevent sending tokens to oneself.
 3. Providing different error codes for different types of failures.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to handle the error case when calling functions that use `asserts!`.
 2. Using `asserts!` excessively, which can make code harder to read and maintain.
 3. Providing vague or unhelpful error values when assertions fail.
 
-## Related Functions
+## Related functions
 
 - `unwrap!`: Used to extract values from optionals with a fallback error.
 - `unwrap-panic`: Similar to `unwrap!` but causes a panic instead of returning an error.

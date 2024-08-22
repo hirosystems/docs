@@ -3,7 +3,7 @@ title: ok
 description: Constructing a successful response type in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (ok value)
@@ -30,14 +30,14 @@ Use `ok` when you need to:
 - Clearly distinguish between success and error states.
 - Handle function return values in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the value passed to `ok` is the intended successful result.
 - Use meaningful variable names for better readability.
 - Combine with `err` for comprehensive response handling.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Returning a Successful Response
+## Practical example: Return a successful response
 
 Let's implement a function that returns a successful response with a value:
 
@@ -55,14 +55,14 @@ This example demonstrates:
 2. Implementing a read-only function to return a successful response.
 3. Handling the successful response case.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `ok` with an incorrect or invalid value, causing unexpected behavior.
 2. Assuming the response will always be successful, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete response handling.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `err`: Constructs an error response type.
 - `match`: Handles different branches or cases for optional and response types.

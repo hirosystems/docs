@@ -3,7 +3,7 @@ title: is-some
 description: Checking if an optional value is some in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (is-some value)
@@ -30,14 +30,14 @@ Use `is-some` when you need to:
 - Validate the results of function calls that return optional types.
 - Handle cases where values might be present or absent.
 
-## Best Practices
+## Best practices
 
 - Use `is-some` in combination with `match` or `if` for comprehensive value handling.
 - Ensure that the value being checked is of the correct optional type.
 - Use meaningful variable names for better readability.
 - Combine with other optional handling functions like `is-none` for complete validation.
 
-## Practical Example: Checking for Existing User Data
+## Practical example: Check for existing user data
 
 Let's implement a function that checks if a user's profile data exists:
 
@@ -59,14 +59,14 @@ This example demonstrates:
 2. Implementing a read-only function to determine the presence of user data.
 3. Handling both the case where the profile data is present and where it is absent.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming the value will always be `some`, leading to unhandled `none` cases.
 2. Using `is-some` on non-optional types, causing type errors.
 3. Not handling all possible conditions, resulting in incomplete value checks.
 4. Overlooking the need for comprehensive validation and error checking.
 
-## Related Functions
+## Related functions
 
 - `is-none`: Checks if an optional value is `none`.
 - `match`: Used for pattern matching and handling multiple conditions.

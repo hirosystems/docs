@@ -3,7 +3,7 @@ title: as-contract
 description: Using the as-contract function to execute expressions as the contract principal in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (as-contract expr)
@@ -30,14 +30,14 @@ Use the `as-contract` function when you need to:
 - Execute privileged operations that should only be done by the contract itself.
 - Implement contract-owned resources or escrow-like functionality.
 
-## Best Practices
+## Best practices
 
 - Use `as-contract` sparingly and only when necessary to minimize potential security risks.
 - Ensure that the logic leading to `as-contract` calls is properly secured and access-controlled.
 - Be aware that `as-contract` changes the `tx-sender` context for the duration of the expression.
 - Combine `as-contract` with other security measures like `contract-caller` checks for robust security.
 
-## Practical Example: Contract-Managed Treasury
+## Practical example: Contract managed treasury
 
 Let's implement a simple treasury system where the contract can distribute funds:
 
@@ -69,13 +69,13 @@ This example demonstrates:
 2. Using `as-contract` in the `withdraw` function to send funds from the contract's balance.
 3. Combining `as-contract` with access control (`is-eq tx-sender CONTRACT_OWNER`) for security.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `as-contract` unnecessarily, which can lead to unexpected behavior.
 2. Forgetting that `as-contract` changes the `tx-sender` context, potentially affecting other parts of the code.
 3. Not implementing proper access controls around `as-contract` calls, which could lead to unauthorized actions.
 
-## Related Functions
+## Related functions
 
 - `contract-caller`: Used to get the original caller of a contract function.
 - `tx-sender`: Represents the current sender (changes within `as-contract`).

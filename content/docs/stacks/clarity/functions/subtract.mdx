@@ -5,7 +5,7 @@ description: Using the subtraction function for arithmetic operations in Clarity
 
 The subtraction function (`-`) in Clarity performs subtraction on a variable number of integer inputs. It's a fundamental arithmetic operation used in many smart contract calculations.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (- i1 i2...)
@@ -32,14 +32,14 @@ Use the subtraction function when you need to:
 - Calculate the difference between two or more values.
 - Implement mathematical formulas that involve subtraction.
 
-## Best Practices
+## Best practices
 
 - Always consider the possibility of underflow when subtracting from small numbers.
 - Use appropriate types (int or uint) based on your needs and expected value ranges.
 - Be aware that subtracting a negative number results in addition.
 - Consider using checked arithmetic functions if underflow detection is critical.
 
-## Practical Example: Simple Escrow Contract
+## Practical example: Simple escrow contract
 
 Let's implement a basic escrow contract that uses subtraction to manage balances:
 
@@ -95,13 +95,13 @@ This example demonstrates:
 2. Using subtraction to update the escrow balance when completing a transfer.
 3. Combining subtraction with addition to handle fees and balance updates.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Overlooking potential underflow when subtracting from small numbers.
 2. Not considering the effect of subtracting negative numbers (for int types).
 3. Forgetting to update related variables or state when decrementing values.
 
-## Related Functions
+## Related functions
 
 - `+`: Used for addition operations.
 - `*`: Used for multiplication operations.

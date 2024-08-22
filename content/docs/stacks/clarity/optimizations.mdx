@@ -27,7 +27,7 @@ Clarity's map functions are designed with blockchain-specific considerations in 
 (define-map map-name {key-type} {value-type})
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Choose appropriate key and value types to represent your data efficiently.
 - Consider using composite keys (tuples) for more complex data relationships.
 
@@ -47,7 +47,7 @@ Clarity's map functions are designed with blockchain-specific considerations in 
 (map-set map-name key value)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Always check if the key exists before updating to avoid unintended overwrites.
 - Use in conjunction with appropriate access controls.
 
@@ -70,7 +70,7 @@ Clarity's map functions are designed with blockchain-specific considerations in 
 (map-get? map-name key)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Always handle the case where the key might not exist (returns none).
 - Use `unwrap!` or `unwrap-panic` when you're certain the key exists.
 
@@ -91,7 +91,7 @@ Clarity's map functions are designed with blockchain-specific considerations in 
 (map-delete map-name key)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Be cautious when deleting data, as it can't be recovered once deleted.
 - Consider using a "soft delete" approach for data that might need to be referenced later.
 
@@ -104,7 +104,7 @@ Clarity's map functions are designed with blockchain-specific considerations in 
     (ok (map-delete user-balances user))))
 ```
 
-## Practical Example: Simple Voting System
+## Practical example: Simple voting system
 
 Let's implement a basic voting system using map functions to demonstrate their practical use:
 

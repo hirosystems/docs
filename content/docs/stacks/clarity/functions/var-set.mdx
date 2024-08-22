@@ -3,7 +3,7 @@ title: var-set
 description: Setting the value of a data variable in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (var-set var-name expr1)
@@ -30,14 +30,14 @@ Use `var-set` when you need to:
 - Validate the update process to ensure data integrity.
 - Handle data variables in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the variable name is correctly formatted and valid.
 - Use meaningful variable names for better readability.
 - Combine with other data functions for comprehensive data management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Setting a Data Variable
+## Practical example: Set a data variable
 
 Let's implement a function that sets the value of a data variable:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to handle the update process.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `var-set` with incorrectly formatted or invalid variable names, causing runtime errors.
 2. Assuming the update will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `var-get`: Retrieves the value of a data variable.
 - `map-set`: Sets a value in a map.

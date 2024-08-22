@@ -5,7 +5,7 @@ description: Using the greater than function for comparisons in Clarity smart co
 
 The greater than function (`>`) in Clarity compares two values and returns true if the first value is greater than the second. It's a fundamental comparison operation used in many smart contract conditions and logic flows.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (> v1 v2)
@@ -32,14 +32,14 @@ Use the greater than function when you need to:
 - Create conditional logic based on numerical comparisons.
 - Sort or order data based on numerical or lexicographical order.
 
-## Best Practices
+## Best practices
 
 - Ensure that both inputs are of the same type to avoid runtime errors.
 - Be aware of the differences in comparison between signed (int) and unsigned (uint) integers.
 - When comparing strings or buffers, understand that the comparison is lexicographical.
 - Consider edge cases, especially when dealing with the limits of integer ranges.
 
-## Practical Example: Token Sale with Minimum Purchase
+## Practical example: Token sale with minimum purchase
 
 Let's implement a simple token sale contract that uses the greater than function to enforce a minimum purchase amount:
 
@@ -79,13 +79,13 @@ This example demonstrates:
 2. Combining the greater than check with other contract logic for a token sale.
 3. Implementing a minimum purchase amount to prevent small, potentially spam transactions.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Comparing values of different types, which will result in a runtime error.
 2. Not considering the inclusive nature of `>=` vs the exclusive nature of `>` when setting thresholds.
 3. Overlooking potential integer overflow when working with very large numbers.
 
-## Related Functions
+## Related functions
 
 - `<`: Used for less than comparisons.
 - `>=`: Used for greater than or equal to comparisons.

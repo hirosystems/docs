@@ -3,7 +3,7 @@ title: define-map
 description: Defining a data map in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-map map-name key-type value-type)
@@ -33,14 +33,14 @@ Use `define-map` when you need to:
 - Organize data that needs to be accessed by a specific identifier.
 - Create data structures that can be efficiently updated and queried.
 
-## Best Practices
+## Best practices
 
 - Choose appropriate types for keys and values to ensure efficient storage and retrieval.
 - Use meaningful names for your maps that reflect their purpose in the contract.
 - Consider using composite keys (tuples) for more complex data relationships.
 - Be mindful of the gas costs associated with map operations, especially for large datasets.
 
-## Practical Example: Simple User Profile System
+## Practical example: Simple user profile system
 
 Let's implement a basic user profile system using `define-map`:
 
@@ -74,14 +74,14 @@ This example demonstrates:
 3. Using map operations like `map-set`, `map-get?`, and `merge` to manipulate map data.
 4. Handling cases where a profile might not exist using `default-to`.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that maps are not iterable in Clarity; you can't loop through all entries.
 2. Not handling cases where a key might not exist in the map.
 3. Overusing maps for data that might be better suited for other data structures.
 4. Not considering the gas costs of map operations in complex contracts.
 
-## Related Functions
+## Related functions
 
 - `map-get?`: Used to retrieve a value from a map, returns an optional.
 - `map-set`: Used to set or update a value in a map.

@@ -3,7 +3,7 @@ title: define-read-only
 description: Defining public read-only functions in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-read-only (function-name (arg-name-0 arg-type-0) ...) function-body)
@@ -34,14 +34,14 @@ Use `define-read-only` when you need to:
 - Provide public interfaces for querying contract data without modifying state.
 - Create helper functions that other contracts can call without incurring state change costs.
 
-## Best Practices
+## Best practices
 
 - Use descriptive names for read-only functions to clearly indicate their purpose.
 - Ensure that read-only functions do not attempt to modify contract state.
 - Utilize read-only functions for complex calculations that don't require state changes.
 - Consider using read-only functions in combination with public functions to separate read and write operations.
 
-## Practical Example: Token Balance Checker
+## Practical example: Token balance checker
 
 Let's implement a read-only function for checking token balances:
 
@@ -57,13 +57,13 @@ This example demonstrates:
 1. Using `define-read-only` to create functions for querying token balances.
 2. Implementing a getter function for individual account balances.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to modify contract state within a read-only function, which will cause an error.
 2. Overusing read-only functions for complex calculations that might be better suited for off-chain computation.
 3. Forgetting that read-only functions can still consume gas when called, even though they don't modify state.
 
-## Related Functions
+## Related functions
 
 - `define-public`: Used to define public functions that can modify contract state.
 - `define-private`: Used to define private functions that can only be called within the contract.

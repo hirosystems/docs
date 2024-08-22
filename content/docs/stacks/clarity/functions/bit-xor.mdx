@@ -3,7 +3,7 @@ title: bit-xor
 description: Using the bit-xor function for bitwise exclusive OR operations in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (bit-xor i1 i2...)
@@ -30,14 +30,14 @@ Use the `bit-xor` function when you need to:
 - Compare two bit patterns to find differences.
 - Create simple encryption or hashing mechanisms.
 
-## Best Practices
+## Best practices
 
 - Ensure all input values are of the same type (either all `int` or all `uint`).
 - Remember that `bit-xor` with 0 returns the original value, which can be useful for conditional operations.
 - Use `bit-xor` in combination with other bitwise operations for complex bit manipulations.
 - Consider the readability of your code when using bitwise operations extensively; add comments to explain the purpose.
 
-## Practical Example: Simple Toggle Mechanism
+## Practical example: Simple toggle mechanism
 
 Let's implement a simple toggle mechanism using `bit-xor`:
 
@@ -67,13 +67,13 @@ This example demonstrates:
 2. Combining `bit-xor` with other bitwise operations like `bit-and` and `bit-shift-left`.
 3. Implementing a simple flag system using bitwise operations for efficient storage and manipulation.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Mixing signed (`int`) and unsigned (`uint`) integers in a single `bit-xor` operation.
 2. Forgetting that `bit-xor` of a value with itself always results in 0.
 3. Not considering the full range of bits when using `bit-xor` with smaller integer values.
 
-## Related Functions
+## Related functions
 
 - `bit-and`: Used for bitwise AND operations.
 - `bit-or`: Used for bitwise OR operations.

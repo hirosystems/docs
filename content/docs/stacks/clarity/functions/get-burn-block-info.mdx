@@ -3,7 +3,7 @@ title: get-burn-block-info?
 description: Fetching information about burnchain blocks in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (get-burn-block-info? prop-name block-height)
@@ -32,16 +32,16 @@ Use `get-burn-block-info?` when you need to:
 - Implement logic that depends on burnchain block data.
 - Build cross-chain applications that reference Bitcoin state.
 
-## Best Practices
+## Best practices
 
 - Always check if the returned value is `none`, as it will be for non-existent or future blocks.
 - Be aware of the potential for chain reorganizations when using recent block data.
 - Use the appropriate property name for the data you need to retrieve.
 - Consider caching results for frequently accessed block information to save on execution costs.
 
-## Practical Example: Verifying a Bitcoin Block Hash
+## Practical example: Verify a bitcoin block hash
 
-Let's implement a function that verifies if a given Bitcoin block hash matches a specific height:
+Let's implement a function that verifies if a given bitcoin block hash matches a specific height:
 
 ```clarity
 (define-read-only (verify-btc-block-hash (height uint) (expectedHash (buff 32)))
@@ -67,14 +67,14 @@ This example demonstrates:
   - `addrs`: A list of up to two PoX addresses that received payouts.
   - `payout`: The amount of burnchain tokens paid to each address.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming all properties are available for all blocks.
 2. Not handling the `none` case when the block height is invalid or in the future.
 3. Misinterpreting the `pox-addrs` data, especially during different PoX phases.
 4. Overlooking the fact that burn addresses may be included in the `pox-addrs` list.
 
-## Related Functions
+## Related functions
 
 - `get-block-info?`: Used to get information about Stacks blocks.
 - `burn-block-height`: Keyword that returns the current burn chain block height.

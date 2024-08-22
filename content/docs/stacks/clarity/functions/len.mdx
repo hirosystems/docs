@@ -3,7 +3,7 @@ title: len
 description: Getting the length of a sequence in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (len sequence)
@@ -30,14 +30,14 @@ Use `len` when you need to:
 - Validate the length of input data.
 - Handle cases where the size of a sequence is important.
 
-## Best Practices
+## Best practices
 
 - Ensure the sequence type is compatible with the `len` function.
 - Use meaningful variable names for better readability.
 - Combine with other functions for comprehensive sequence handling.
 - Be aware of the maximum length of sequences in Clarity.
 
-## Practical Example: Validating a List Length
+## Practical example: Validate a list length
 
 Let's implement a function that validates the length of a list of integers:
 
@@ -64,14 +64,14 @@ This example demonstrates:
 2. Implementing conditional logic based on the length of the list.
 3. Handling both the case where the list length is valid and where it is not.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `len` on incompatible types, causing type errors.
 2. Assuming the length will always be within a certain range, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete length checks.
 4. Overlooking the need for comprehensive validation and error checking.
 
-## Related Functions
+## Related functions
 
 - `as-max-len?`: Ensures a sequence does not exceed a maximum length.
 - `concat`: Concatenates multiple sequences.

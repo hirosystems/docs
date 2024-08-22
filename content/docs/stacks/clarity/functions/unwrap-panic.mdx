@@ -3,7 +3,7 @@ title: unwrap-panic
 description: Unpacking optional and response types and throwing runtime errors in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (unwrap-panic option-input)
@@ -45,14 +45,14 @@ Use `unwrap-panic` when you need to:
 - Validate the unpacking process to ensure data integrity.
 - Handle optional and response types in your smart contract and throw runtime errors when necessary.
 
-## Best Practices
+## Best practices
 
 - Ensure the input value is an optional or response type.
 - Use meaningful variable names for better readability.
 - Combine with other error handling functions for comprehensive error management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Unpacking an Optional Value and Throwing a Runtime Error
+## Practical example: Unpack an optional value and throwing a runtime error
 
 Let's implement a function that retrieves a value from a map and unpacks it using `unwrap-panic`:
 
@@ -74,14 +74,14 @@ Let's implement a function that retrieves a value from a map and unpacks it usin
 (get-user-age 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) ;; Throws a runtime exception
 ```
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `unwrap-panic` with values that are not optional or response types, causing runtime errors.
 2. Assuming the unpacking will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete error management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `unwrap!`: Unpacks optional and response types, returning a thrown value if unpacking fails.
 - `unwrap-err!`: Unpacks error responses, returning a thrown value if the response is `ok`.

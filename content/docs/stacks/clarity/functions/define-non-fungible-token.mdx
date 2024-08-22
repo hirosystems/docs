@@ -3,7 +3,7 @@ title: define-non-fungible-token
 description: Defining a new non-fungible token class in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-non-fungible-token asset-name asset-identifier-type)
@@ -32,14 +32,14 @@ Use `define-non-fungible-token` when you need to:
 - Establish a foundation for NFT-based features in your contract.
 - Create collectibles, digital art tokens, or other unique digital assets.
 
-## Best Practices
+## Best practices
 
 - Place `define-non-fungible-token` at the top level of your contract, as it's a definition statement.
 - Choose an appropriate asset identifier type that ensures uniqueness for each token.
 - Use meaningful and descriptive names for your NFT classes.
 - Consider the scalability and gas costs associated with your chosen identifier type.
 
-## Practical Example: Simple Digital Art NFT
+## Practical example: Simple digital art NFT
 
 Let's implement a basic digital art NFT system:
 
@@ -76,13 +76,13 @@ This example demonstrates:
 2. Implementing basic NFT operations like minting, checking ownership, and transferring.
 3. Using a simple incrementing integer as the token identifier.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that each token in an NFT class must have a unique identifier.
 2. Not implementing proper access controls for minting and transferring operations.
 3. Choosing an identifier type that may lead to collisions or scalability issues.
 
-## Related Functions
+## Related functions
 
 - `nft-mint?`: Used to create new tokens within the NFT class.
 - `nft-transfer?`: Used to transfer ownership of an NFT.

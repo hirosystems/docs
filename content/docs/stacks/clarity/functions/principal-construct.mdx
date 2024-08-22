@@ -3,7 +3,7 @@ title: principal-construct?
 description: Constructing a principal in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (principal-construct? version-byte hash-bytes [contract-name])
@@ -30,14 +30,14 @@ Use `principal-construct?` when you need to:
 - Validate the construction of principals.
 - Handle principal creation operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the `version-byte` and `hash-bytes` are correctly formatted.
 - Use meaningful variable names for better readability.
 - Combine with other principal functions for comprehensive identity management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Constructing a Principal
+## Practical example: Construct a principal
 
 Let's implement a function that constructs a standard principal:
 
@@ -55,14 +55,14 @@ This example demonstrates:
 2. Implementing a public function to handle the principal construction.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `principal-construct?` with incorrectly formatted `versionByte` or `hashBytes`, causing the operation to fail.
 2. Assuming the principal will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete principal management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `principal-of?`: Returns the principal derived from a public key.
 - `contract-caller`: Returns the caller of the current contract context.

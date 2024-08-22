@@ -3,7 +3,7 @@ title: contract-of
 description: Retrieving the principal of a contract implementing a trait in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (contract-of <trait-reference>)
@@ -32,14 +32,14 @@ Use the `contract-of` function when you need to:
 - Manage routing logic between different versions of contracts for upgradeable smart contracts.
 - Implement access control mechanisms to restrict function calls to designated contracts.
 
-## Best Practices
+## Best practices
 
 - Use `contract-of` in combination with traits to create more flexible and composable smart contracts.
 - Remember that `contract-of` returns a principal, which can be used in other Clarity functions expecting a contract address.
 - Consider using `contract-of` when implementing proxy or router contracts that work with multiple similar contracts.
 - Be aware that `contract-of` can only be used with trait references, not with direct contract references.
 
-## Practical Example: Modular Approach to Extension Contracts
+## Practical example: Modular approach to extension contracts
 
 Let's implement a system where specific functions can only be called by designated extension contracts:
 
@@ -111,13 +111,13 @@ This example demonstrates:
 3. Restricting access to certain functions based on the authorized extension contracts.
 4. Allowing the authorized extension contracts to call specific functions.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to use `contract-of` with a direct contract reference instead of a trait reference.
 2. Forgetting that `contract-of` returns a principal, not a contract reference itself.
 3. Not handling potential errors when working with trait references that might not be properly initialized.
 
-## Related Functions
+## Related functions
 
 - `use-trait`: Used to define trait references that can be used with `contract-of`.
 - `contract-call?`: Often used in combination with `contract-of` to call functions on the retrieved contract.

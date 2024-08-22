@@ -3,7 +3,7 @@ title: concat
 description: Concatenating sequences in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (concat sequence1 sequence2)
@@ -30,14 +30,14 @@ Use the `concat` function when you need to:
 - Merge two lists into a single list.
 - Build complex data structures from simpler components.
 
-## Best Practices
+## Best practices
 
 - Ensure that both input sequences are of the same type (e.g., both strings, both buffers, or both lists).
 - Be aware of the maximum length limitations for the resulting sequence type.
 - Consider using `concat` in combination with other sequence manipulation functions for more complex operations.
 - When working with strings, remember that Clarity distinguishes between ASCII and UTF-8 strings.
 
-## Practical Example: Dynamic Message Construction
+## Practical example: Dynamic message construction
 
 Let's implement a function that constructs a personalized message:
 
@@ -55,13 +55,13 @@ This example demonstrates:
 2. Nesting `concat` calls to build a more complex string.
 3. Combining static and dynamic parts of a message.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to concatenate sequences of different types, which will result in an error.
 2. Not considering the maximum length of the resulting sequence, potentially leading to truncation.
 3. Forgetting that `concat` only works with two sequences at a time, requiring nested calls for multiple concatenations.
 
-## Related Functions
+## Related functions
 
 - `len`: Used to get the length of a sequence.
 - `slice?`: Can be used to extract parts of a sequence before concatenation.

@@ -3,7 +3,7 @@ title: use-trait
 description: Importing and using traits from other contracts in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (use-trait trait-alias trait-identifier)
@@ -30,14 +30,14 @@ Use `use-trait` when you need to:
 - Ensure code reusability and modularity by leveraging traits.
 - Handle trait imports in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Use descriptive names for trait aliases for better readability.
 - Ensure the trait identifier is correctly formatted and valid.
 - Combine with other contract functions for comprehensive contract management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Importing and Using a Trait
+## Practical example: Import and use a trait
 
 Let's implement a function that imports a trait and uses it in a contract:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to use the imported trait.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `use-trait` with incorrectly formatted or invalid trait identifiers, causing runtime errors.
 2. Assuming the trait import will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete contract management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `contract-of`: Returns the principal of the contract implementing the trait.
 - `define-trait`: Defines a new trait in the current contract.

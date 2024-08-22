@@ -3,7 +3,7 @@ title: list
 description: Constructing lists in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (list expr1 expr2 expr3 ...)
@@ -30,14 +30,14 @@ Use `list` when you need to:
 - Pass lists as arguments to functions.
 - Perform operations on collections of data.
 
-## Best Practices
+## Best practices
 
 - Ensure all elements in the list are of the same type.
 - Use meaningful variable names for better readability.
 - Combine with other list functions for comprehensive list handling.
 - Be aware of the maximum length of lists in Clarity.
 
-## Practical Example: Creating a List of Integers
+## Practical example: Create a list of integers
 
 Let's implement a function that creates a list of integers and returns its length:
 
@@ -60,14 +60,14 @@ This example demonstrates:
 2. Binding the list to a variable using `let`.
 3. Returning the length of the list using `len`.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `list` with elements of different types, causing type errors.
 2. Assuming the list will always be within a certain length, leading to unhandled cases.
 3. Not handling all possible conditions, resulting in incomplete list checks.
 4. Overlooking the need for comprehensive validation and error checking.
 
-## Related Functions
+## Related functions
 
 - `len`: Returns the length of a list.
 - `append`: Adds an element to the end of a list.

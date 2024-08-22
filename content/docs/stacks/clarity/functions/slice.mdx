@@ -3,7 +3,7 @@ title: slice?
 description: Extracting a sub-sequence from a sequence in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (slice? sequence left-position right-position)
@@ -30,14 +30,14 @@ Use `slice?` when you need to:
 - Validate indices for slicing to ensure data integrity.
 - Handle sub-sequence extraction operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the `left-position` and `right-position` are within the bounds of the sequence.
 - Use meaningful variable names for better readability.
 - Combine with other sequence functions for comprehensive sequence management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Extracting a Sub-sequence from a String
+## Practical example: Extract a sub-sequence from a string
 
 Let's implement a function that extracts a sub-sequence from a string:
 
@@ -57,14 +57,14 @@ This example demonstrates:
 2. Implementing a public function to handle the sub-sequence extraction.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `slice?` with indices that are out of bounds, causing the operation to fail.
 2. Assuming the sub-sequence will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete sequence management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `len`: Returns the length of a sequence.
 - `concat`: Concatenates two sequences.

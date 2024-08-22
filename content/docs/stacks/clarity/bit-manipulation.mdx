@@ -26,7 +26,7 @@ Clarity's bit manipulation functions are designed with several important conside
 (bit-and i1 i2...)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Use to check if a specific flag is set in a bitfield.
 - Combine with bit-or for more complex flag manipulations.
 
@@ -55,7 +55,7 @@ Clarity's bit manipulation functions are designed with several important conside
 (bit-or i1 i2...)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Use to add new permissions or flags to an existing set.
 - Combine with bit-and for more complex flag manipulations.
 
@@ -79,7 +79,7 @@ Clarity's bit manipulation functions are designed with several important conside
 (bit-not i1)
 ```
 
-**Best Practices**: 
+**Best practices**: 
 - Use carefully with signed integers, as it affects the sign bit.
 - Combine with bit-and to clear specific bits.
 
@@ -93,7 +93,7 @@ Clarity's bit manipulation functions are designed with several important conside
 (remove-permission u7 PERMISSION_WRITE)  ;; Returns (ok u5)
 ```
 
-## Practical Example: Compact User Profile Flags
+## Practical example: Compact user profile flags
 
 Let's implement a system that stores multiple user profile settings in a single integer using bit flags:
 

@@ -3,7 +3,7 @@ title: get
 description: Retrieving a value from a tuple in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (get key-name tuple)
@@ -32,14 +32,14 @@ Use `get` when you need to:
 - Work with complex data types in your contract logic.
 - Implement data processing that involves tuple manipulation.
 
-## Best Practices
+## Best practices
 
 - Ensure the key exists in the tuple to avoid runtime errors.
 - Use meaningful key names for better code readability.
 - Consider using `get` in combination with `optional` for safer data access.
 - Be aware of the performance implications when working with large tuples.
 
-## Practical Example: User Profile Management
+## Practical example: User profile management
 
 Let's implement a simple user profile system using tuples and the `get` function:
 
@@ -75,13 +75,13 @@ This example demonstrates:
 2. Implementing getter functions that use `get` to access tuple data.
 3. Handling cases where the profile might not exist.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to `get` a key that doesn't exist in the tuple, causing a runtime error.
 2. Forgetting that `get` is case-sensitive for key names.
 3. Not considering the performance impact of frequently accessing large tuples.
 
-## Related Functions
+## Related functions
 
 - `merge`: Used to combine tuples, potentially creating new fields to `get`.
 - `tuple`: Used to create tuples that can be accessed with `get`.

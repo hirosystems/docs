@@ -3,7 +3,7 @@ title: fold
 description: Reducing a sequence to a single value in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (fold <function> <sequence> <initial-value>)
@@ -33,14 +33,14 @@ Use `fold` when you need to:
 - Apply a function to each element of a sequence while maintaining state.
 - Implement algorithms that would typically require recursion.
 
-## Best Practices
+## Best practices
 
 - Ensure the function passed to `fold` is commutative if the order of operations doesn't matter.
 - Use meaningful initial values that make sense for your aggregation.
 - Consider using `fold` instead of explicit loops for cleaner, more functional code.
 - Be mindful of the performance implications when folding over large sequences.
 
-## Practical Example: Summing a List of Numbers
+## Practical example: Sum a list of numbers
 
 Let's implement a function that sums all numbers in a list:
 
@@ -58,13 +58,13 @@ This example demonstrates:
 2. Starting with an initial value of `u0`.
 3. Applying the operation to each element in the list.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using an initial value of the wrong type or that doesn't make sense for the operation.
 2. Forgetting that `fold` processes elements from left to right, which matters for non-commutative operations.
 3. Overusing `fold` for operations that might be more clearly expressed with other functions like `map` or `filter`.
 
-## Related Functions
+## Related functions
 
 - `map`: Applies a function to each element in a sequence, returning a new sequence.
 - `filter`: Selects elements from a sequence based on a predicate function.

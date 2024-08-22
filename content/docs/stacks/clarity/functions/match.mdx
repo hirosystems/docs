@@ -3,7 +3,7 @@ title: match
 description: Handling different branches or cases in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (match opt-input some-binding-name some-branch none-branch)
@@ -31,14 +31,14 @@ Use `match` when you need to:
 - Enhance the readability and maintainability of your code.
 - Ensure comprehensive handling of all possible cases.
 
-## Best Practices
+## Best practices
 
 - Ensure all possible branches are covered to avoid unhandled cases.
 - Use meaningful variable names for better readability.
 - Combine with other control flow functions for more complex logic.
 - Be aware of the performance implications of extensive branching.
 
-## Practical Example: Handling Optional and Response Values
+## Practical example: Handle optional and response values
 
 Let's implement functions that handle optional and response values using `match`:
 
@@ -67,14 +67,14 @@ This example demonstrates:
 2. Using `match` to handle the result of a response value.
 3. Implementing functions to return the appropriate result based on the input type.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `match` without covering all possible branches, leading to unhandled cases.
 2. Assuming the value will always match a certain branch, causing runtime errors.
 3. Not handling all possible conditions, resulting in incomplete logic.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `if`: Implements conditional logic based on boolean expressions.
 - `let`: Binds variables to expressions within a local scope.

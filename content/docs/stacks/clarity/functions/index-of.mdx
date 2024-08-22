@@ -3,7 +3,7 @@ title: index-of
 description: Finding the index of an element in a list in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (index-of list element)
@@ -32,14 +32,14 @@ Use `index-of` when you need to:
 - Implement logic that depends on the order or position of elements.
 - Simplify list search operations without writing custom loops.
 
-## Best Practices
+## Best practices
 
 - Ensure the list and element types are compatible.
 - Handle the `none` case when the element is not found in the list.
 - Use meaningful variable names for better readability.
 - Consider the performance implications when searching large lists.
 
-## Practical Example: Finding an Element in a List
+## Practical example: Find an element in a list
 
 Let's implement a function that finds the index of a given element in a list of integers:
 
@@ -57,14 +57,14 @@ This example demonstrates:
 1. Using `index-of` to find the position of an element in a list.
 2. Handling both the case where the element is found and where it is not found.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming the element will always be found, leading to unhandled `none` cases.
 2. Using `index-of` on lists with incompatible element types.
 3. Overlooking the performance impact of searching very large lists.
 4. Not considering that `index-of` returns a 0-based index.
 
-## Related Functions
+## Related functions
 
 - `filter`: Used to create a new list containing only elements that match a condition.
 - `map`: Applies a function to each element in a list, transforming the elements.

@@ -3,7 +3,7 @@ title: ft-mint?
 description: Minting new fungible tokens in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (ft-mint? token-name amount recipient)
@@ -33,14 +33,14 @@ Use `ft-mint?` when you need to:
 - Increase the balance of a specific principal with new tokens.
 - Execute token minting operations based on certain conditions or events.
 
-## Best Practices
+## Best practices
 
 - Implement proper access controls to restrict who can mint new tokens.
 - Consider using a maximum supply cap to prevent unlimited minting.
 - Emit events or use a logging mechanism to track minting operations for transparency.
 - Be cautious of potential overflow when minting large amounts of tokens.
 
-## Practical Example: Reward Minting
+## Practical example: Reward minting
 
 Let's implement a simple reward system that mints tokens:
 
@@ -65,14 +65,14 @@ This example demonstrates:
 2. Implementing a basic access control check before minting.
 3. Returning the result of the minting operation.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Minting tokens without proper access controls, allowing unauthorized token creation.
 2. Not considering the total supply limit, potentially leading to economic imbalances.
 3. Forgetting to handle the error case when minting fails (e.g., due to supply cap).
 4. Overlooking the gas costs associated with minting, especially for large amounts.
 
-## Related Functions
+## Related functions
 
 - `ft-burn?`: Used to destroy tokens, decreasing the total supply.
 - `ft-transfer?`: Used to transfer tokens between principals.

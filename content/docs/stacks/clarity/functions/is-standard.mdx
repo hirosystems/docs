@@ -3,7 +3,7 @@ title: is-standard
 description: Checking if a value is a standard principal in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (is-standard value)
@@ -30,14 +30,14 @@ Use `is-standard` when you need to:
 - Validate the type of principal before performing certain operations.
 - Handle cases where only standard principals are allowed.
 
-## Best Practices
+## Best practices
 
 - Use `is-standard` in combination with `if` or `match` for comprehensive principal type handling.
 - Ensure that the value being checked is of the correct principal type.
 - Use meaningful variable names for better readability.
 - Note that you can pass in a valid contract principal as well, not just a standard principal (e.g., `'SP12` or `'SP12.contract`).
 
-## Practical Example: Restricting Access to Standard Principals
+## Practical example: Restrict access to standard principals
 
 Let's implement a function that restricts access to standard principals:
 
@@ -74,14 +74,14 @@ This example demonstrates:
 2. Implementing conditional logic based on the type of principal.
 3. Handling both the case where the principal is standard and where it is not.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming the principal will always be standard, leading to unhandled cases.
 2. Using `is-standard` on non-principal types, causing type errors.
 3. Not handling all possible conditions, resulting in incomplete principal type checks.
 4. Overlooking the need for comprehensive validation and error checking.
 
-## Related Functions
+## Related functions
 
 - `tx-sender`: Returns the principal that initiated the transaction.
 - `contract-caller`: Returns the caller of the current contract context.

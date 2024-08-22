@@ -3,7 +3,7 @@ title: string-to-uint?
 description: Converting a string to an optional unsigned integer in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (string-to-uint? string)
@@ -30,14 +30,14 @@ Use `string-to-uint?` when you need to:
 - Validate string-to-unsigned-integer conversions to ensure data integrity.
 - Handle numeric conversions in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the input string is correctly formatted and represents a valid unsigned integer.
 - Use meaningful variable names for better readability.
 - Combine with other string and numeric functions for comprehensive data management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Converting a String to an Unsigned Integer
+## Practical example: Convert a string to an unsigned integer
 
 Let's implement a function that converts a string to an optional unsigned integer:
 
@@ -57,14 +57,14 @@ This example demonstrates:
 2. Implementing a public function to handle the string-to-unsigned-integer conversion.
 3. Handling both valid and invalid string inputs.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `string-to-uint?` with incorrectly formatted or invalid string inputs, causing the operation to return `none`.
 2. Assuming the conversion will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `string-to-int?`: Converts a string to an optional signed integer.
 - `int-to-ascii`: Converts an integer to a string-ascii representation.

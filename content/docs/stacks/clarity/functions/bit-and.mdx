@@ -5,7 +5,7 @@ description: Using the bit-and function for bitwise operations in Clarity smart 
 
 The `bit-and` function in Clarity performs a bitwise AND operation on two or more integer inputs. It's a powerful tool for working with compact data representations and flag systems in smart contracts.
 
-## Function Signature
+## Function signature
 
 ```clarity
 (bit-and i1 i2...)
@@ -32,14 +32,14 @@ Use `bit-and` when you need to:
 - Clear specific bits while leaving others unchanged
 - Perform certain low-level optimizations
 
-## Best Practices
+## Best practices
 
 - Always use constants for bit flags to improve readability and maintainability.
 - Be cautious when using with signed integers, as the sign bit can affect results.
 - Combine with other bitwise operations like `bit-or` and `bit-not` for more complex manipulations.
 - Document your bit flag meanings clearly in your contract.
 
-## Practical Example: Role-Based Access Control
+## Practical example: Role-based access control
 
 Let's implement a simple role-based access control system using `bit-and`:
 
@@ -89,13 +89,13 @@ This example demonstrates:
 2. Combining `bit-and` with `bit-or` and `bit-not` for role management.
 3. Efficient storage of multiple roles in a single integer.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that `bit-and` with 0 always results in 0.
 2. Not accounting for the sign bit when using signed integers.
 3. Overcomplicating bit flag systems, making them hard to maintain.
 
-## Related Functions
+## Related functions
 
 - `bit-or`: Used to set bits or combine flags.
 - `bit-not`: Used to invert bits, often in combination with `bit-and` for clearing specific bits.

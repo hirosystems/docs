@@ -3,7 +3,7 @@ title: define-data-var
 description: Defining mutable variables in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-data-var name type value)
@@ -33,14 +33,14 @@ Use `define-data-var` when you need to:
 - Store temporary or intermediate state that may be modified by contract functions.
 - Maintain configurable parameters that can be updated by authorized parties.
 
-## Best Practices
+## Best practices
 
 - Use `define-data-var` for values that need to change; for immutable values, use `define-constant` instead.
 - Initialize variables with meaningful default values.
 - Consider access control for functions that modify important data variables.
 - Use clear and descriptive names for your variables to enhance readability.
 
-## Practical Example: Simple Counter
+## Practical example: Simple counter
 
 Let's implement a basic counter using `define-data-var`:
 
@@ -73,13 +73,13 @@ This example demonstrates:
 3. Using `var-get` and `var-set` to read and modify the variable's value.
 4. Adding a safety check to prevent the counter from becoming negative.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that `define-data-var` creates mutable state, which can lead to unexpected behavior if not managed carefully.
 2. Not considering the initial value's impact on contract logic, especially if the contract relies on the variable's state.
 3. Overusing mutable variables when constants or maps might be more appropriate for the use case.
 
-## Related Functions
+## Related functions
 
 - `var-get`: Used to retrieve the current value of a data variable.
 - `var-set`: Used to update the value of a data variable.

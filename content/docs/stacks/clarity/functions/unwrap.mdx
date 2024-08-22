@@ -3,7 +3,7 @@ title: unwrap!
 description: Unpacking optional and response types in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (unwrap! option-input thrown-value)
@@ -53,14 +53,14 @@ Use `unwrap!` when you need to:
 - Validate the unpacking process to ensure data integrity.
 - Handle optional and response types in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the input value is an optional or response type.
 - Use meaningful variable names for better readability.
 - Combine with other error handling functions for comprehensive error management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Unpacking an Optional Value
+## Practical example: Unpack an optional value
 
 Let's implement a function that retrieves a value from a map and unpacks it using `unwrap!`:
 
@@ -110,14 +110,14 @@ This example demonstrates:
 2. Implementing a public function to handle the unpacking process.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `unwrap!` with values that are not optional or response types, causing runtime errors.
 2. Assuming the unpacking will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete error management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `try!`: Unpacks optional and response types, returning `none` or the `err` value if unpacking fails.
 - `unwrap-panic`: Unpacks optional and response types, throwing a runtime error if unpacking fails.

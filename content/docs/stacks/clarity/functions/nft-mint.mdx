@@ -3,7 +3,7 @@ title: nft-mint?
 description: Minting a non-fungible token (NFT) in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (nft-mint? asset-class asset-identifier recipient)
@@ -30,14 +30,14 @@ Use `nft-mint?` when you need to:
 - Prevent duplicate NFT creation.
 - Handle NFT minting operations in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the `asset-identifier` is unique and correctly formatted.
 - Use meaningful variable names for better readability.
 - Combine with other NFT functions for comprehensive NFT management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Minting an NFT
+## Practical example: Mint an NFT
 
 Let's implement a function that mints a new NFT and assigns it to the recipient:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to handle the minting operation.
 3. Handling both the successful mint and the case where the asset already exists.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `nft-mint?` with a non-unique `asset-identifier`, causing the operation to fail.
 2. Assuming the NFT will always be minted, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete NFT management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `nft-get-owner?`: Retrieves the owner of a non-fungible token.
 - `nft-transfer?`: Transfers ownership of a non-fungible token.

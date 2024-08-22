@@ -3,7 +3,7 @@ title: principal-destruct?
 description: Decomposing a principal into its components in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (principal-destruct? principal-address)
@@ -30,14 +30,14 @@ Use `principal-destruct?` when you need to:
 - Validate the components of a principal.
 - Handle principal decomposition operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the `principal` is correctly formatted.
 - Use meaningful variable names for better readability.
 - Combine with other principal functions for comprehensive identity management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Decomposing a Principal
+## Practical example: Deconstruct a principal
 
 Let's implement a function that destructs a principal back into its components:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to handle the principal decomposition.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `principal-destruct?` with incorrectly formatted principals, causing the operation to fail.
 2. Assuming the principal will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete principal management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `principal-construct?`: Constructs a principal from its components.
 - `principal-of?`: Returns the principal derived from a public key.

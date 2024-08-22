@@ -3,7 +3,7 @@ title: nft-get-owner?
 description: Retrieving the owner of a non-fungible token (NFT) in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (nft-get-owner? asset-class asset-identifier)
@@ -30,14 +30,14 @@ Use `nft-get-owner?` when you need to:
 - Verify ownership records in your smart contract.
 - Access ownership information for NFTs.
 
-## Best Practices
+## Best practices
 
 - Ensure the `asset-identifier` is correctly formatted and exists.
 - Use meaningful variable names for better readability.
 - Combine with other NFT functions for comprehensive NFT management.
 - Handle the `none` case to avoid runtime errors.
 
-## Practical Example: Retrieving NFT Owner
+## Practical example: Retrieve NFT owner
 
 Let's implement a function that retrieves the owner of an NFT:
 
@@ -59,14 +59,14 @@ This example demonstrates:
 2. Implementing a read-only function to return the owner's principal.
 3. Handling both the case where the NFT exists and where it does not.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `nft-get-owner?` with an incorrect or non-existent `asset-identifier`, causing the function to return `none`.
 2. Assuming the NFT will always exist, leading to unhandled `none` cases.
 3. Not handling all possible conditions, resulting in incomplete ownership checks.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `nft-mint?`: Mints a new non-fungible token.
 - `nft-transfer?`: Transfers ownership of a non-fungible token.

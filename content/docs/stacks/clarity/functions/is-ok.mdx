@@ -3,7 +3,7 @@ title: is-ok
 description: Checking if a response is ok in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (is-ok value)
@@ -30,14 +30,14 @@ Use `is-ok` when you need to:
 - Validate the results of function calls that return response types.
 - Handle success cases gracefully in your contract logic.
 
-## Best Practices
+## Best practices
 
 - Use `is-ok` in combination with `match` or `if` for comprehensive response handling.
 - Ensure that the response value being checked is of the correct type.
 - Use meaningful variable names for better readability.
 - Combine with other response handling functions like `is-err` for complete validation.
 
-## Practical Example: Validating a Token Transfer
+## Practical example: Validate a token transfer
 
 Let's implement a function that validates a token transfer and checks for success:
 
@@ -76,14 +76,14 @@ This example demonstrates:
 2. Implementing conditional logic based on the success of the transfer.
 3. Handling both the success and error cases appropriately.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming the response value is always of the correct type, leading to type errors.
 2. Not handling all possible success and error cases, resulting in incomplete response handling.
 3. Overlooking the need for comprehensive validation and error checking.
 4. Using `is-ok` without meaningful success codes or messages, making debugging harder.
 
-## Related Functions
+## Related functions
 
 - `is-err`: Checks if a response value is `err`.
 - `err`: Constructs an error response.

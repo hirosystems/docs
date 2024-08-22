@@ -3,7 +3,7 @@ title: int-to-ascii
 description: Converting integers to ASCII string representations in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (int-to-ascii value)
@@ -30,14 +30,14 @@ Use `int-to-ascii` when you need to:
 - Log or store numeric data as strings.
 - Prepare numeric data for concatenation with other strings.
 
-## Best Practices
+## Best practices
 
 - Ensure the integer value is within the range that can be represented as a string.
 - Use meaningful variable names for better readability.
 - Combine with other string functions for more complex string manipulations.
 - Be aware of the maximum length of the resulting string (40 characters).
 
-## Practical Example: Logging a User's Balance
+## Practical example: Log a user's balance
 
 Let's implement a function that logs a user's balance as a string:
 
@@ -64,14 +64,14 @@ This example demonstrates:
 2. Logging the string representation of the balance using `print`.
 3. Handling the case where the user has no balance set.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming the resulting string will always fit within 40 characters.
 2. Forgetting to handle cases where the integer value is not set or is zero.
 3. Using `int-to-ascii` in performance-critical sections without considering the overhead.
 4. Not combining with other string functions for more complex manipulations.
 
-## Related Functions
+## Related functions
 
 - `print`: Used to log or display string values.
 - `concat`: Used to concatenate multiple strings.

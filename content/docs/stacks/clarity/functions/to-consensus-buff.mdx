@@ -3,7 +3,7 @@ title: to-consensus-buff?
 description: Serializing a Clarity value into a buffer for consensus in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (to-consensus-buff? value)
@@ -30,14 +30,14 @@ Use `to-consensus-buff?` when you need to:
 - Validate the serialization process to ensure data integrity.
 - Handle value serialization in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the input value is correctly formatted and valid.
 - Use meaningful variable names for better readability.
 - Combine with other serialization functions for comprehensive data management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Serializing a Clarity Value
+## Practical example: Serialize a Clarity value
 
 Let's implement a function that serializes an integer value into a buffer:
 
@@ -61,14 +61,14 @@ This example demonstrates:
 2. Implementing a public function to handle the serialization process.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `to-consensus-buff?` with incorrectly formatted or invalid input values, causing the operation to fail.
 2. Assuming the serialization will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete data management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `from-consensus-buff?`: Deserializes a buffer into a Clarity value.
 - `buff-to-int-be`: Converts a big-endian buffer to an integer.

@@ -3,7 +3,7 @@ title: ft-get-balance
 description: Retrieving the balance of a fungible token for a principal in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (ft-get-balance token-name principal)
@@ -32,14 +32,14 @@ Use `ft-get-balance` when you need to:
 - Provide balance information to users or other contracts.
 - Verify sufficient funds for token transfers or burns.
 
-## Best Practices
+## Best practices
 
 - Use `ft-get-balance` before attempting transfers to ensure sufficient balance.
 - Consider caching balance results if queried frequently to optimize gas usage.
 - Be aware that balances can change between checks and actual token operations.
 - Use in combination with other ft-* functions for comprehensive token management.
 
-## Practical Example: Balance Check Before Transfer
+## Practical example: Balance check before transfer
 
 Let's implement a function that checks balance before transferring tokens:
 
@@ -69,13 +69,13 @@ This example demonstrates:
 2. Implementing a conditional transfer based on the balance check.
 3. Combining `ft-get-balance` with other ft-* functions for token management.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Assuming balances remain constant between checking and performing operations.
 2. Not handling the case where a principal might not have any balance (returns 0).
 3. Overusing `ft-get-balance` in loops, which can be inefficient for gas consumption.
 
-## Related Functions
+## Related functions
 
 - `ft-transfer?`: Used to transfer tokens between principals.
 - `ft-mint?`: Used to create new tokens, increasing the balance of a principal.

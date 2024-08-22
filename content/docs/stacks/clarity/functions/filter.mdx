@@ -3,7 +3,7 @@ title: filter
 description: Filtering elements from a list based on a predicate function in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (filter <function> <sequence>)
@@ -32,14 +32,14 @@ Use `filter` when you need to:
 - Implement data validation or selection logic on lists.
 - Prepare data for further processing by removing irrelevant elements.
 
-## Best Practices
+## Best practices
 
 - Ensure the predicate function is efficient, especially for large lists.
 - Use `filter` in combination with other list functions like `map` or `fold` for complex list operations.
 - Be mindful of gas costs when filtering large lists.
 - Consider using `filter` with `define-private` functions for reusable filtering logic.
 
-## Practical Example: Filtering Even Numbers
+## Practical example: Filter even numbers
 
 Let's implement a function that filters even numbers from a list:
 
@@ -61,13 +61,13 @@ This example demonstrates:
 2. Using `filter` with the `is-even` function to create a new list of even numbers.
 3. Applying the filter operation to a list of integers.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that `filter` creates a new list and does not modify the original.
 2. Using a computationally expensive predicate function, which could lead to high gas costs.
 3. Not considering the potential for an empty result list if no elements match the predicate.
 
-## Related Functions
+## Related functions
 
 - `map`: Applies a function to each element in a list, transforming the elements.
 - `fold`: Reduces a list to a single value by applying a function to each element.

@@ -3,7 +3,7 @@ title: stx-transfer-memo?
 description: Transferring STX with a memo field in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (stx-transfer-memo? amount sender recipient memo)
@@ -30,14 +30,14 @@ Use `stx-transfer-memo?` when you need to:
 - Validate the transfer operation to ensure data integrity.
 - Handle STX transfers with memos in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the `amount` is positive and the `sender` has sufficient balance.
 - Use meaningful variable names for better readability.
 - Combine with other STX functions for comprehensive account management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Transferring STX with a Memo
+## Practical example: Transfer STX with a memo
 
 Let's implement a function that transfers STX with a memo from the `tx-sender` to a recipient:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a public function to handle the STX transfer with a memo.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `stx-transfer-memo?` with a non-positive amount, causing the operation to fail.
 2. Assuming the transfer operation will always succeed, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete account management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `stx-get-balance`: Queries the STX balance of a principal.
 - `stx-transfer?`: Transfers STX from one principal to another without a memo.

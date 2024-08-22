@@ -3,7 +3,7 @@ title: as-max-len?
 description: Using the as-max-len? function to check and limit sequence lengths in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (as-max-len? sequence max_length)
@@ -32,14 +32,14 @@ Use the `as-max-len?` function when you need to:
 - Validate user input or data from external sources.
 - Implement logic that depends on sequence length constraints.
 
-## Best Practices
+## Best practices
 
 - Always use `as-max-len?` before appending to lists or other sequences with maximum lengths.
 - Combine with `unwrap!` or `unwrap-panic` when you're certain the length should be within limits.
 - Use meaningful error handling when the length check fails.
 - Consider the performance impact of frequent length checks in your contract logic.
 
-## Practical Example: Safe List Append
+## Practical example: Safe list append
 
 Let's implement a function that safely appends to a list with a maximum length:
 
@@ -75,13 +75,13 @@ This example demonstrates:
 2. Combining `as-max-len?` with `unwrap!` for concise error handling.
 3. Safely updating a list variable only if the length check passes.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting to use `as-max-len?` when appending to sequences with maximum lengths.
 2. Using a variable for the `max_length` parameter, which is not allowed (it must be a uint literal).
 3. Not handling the `none` case when `as-max-len?` returns an optional.
 
-## Related Functions
+## Related functions
 
 - `append`: Used to add elements to lists.
 - `concat`: Used to join two sequences together.

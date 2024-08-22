@@ -3,7 +3,7 @@ title: mod
 description: Calculating the remainder of integer division in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (mod i1 i2)
@@ -30,14 +30,14 @@ Use `mod` when you need to:
 - Perform operations that require remainders.
 - Simplify and abstract modular operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the divisor is not zero to avoid runtime errors.
 - Use meaningful variable names for better readability.
 - Combine with other mathematical functions for comprehensive calculations.
 - Be aware of the performance implications of frequent modular operations.
 
-## Practical Example: Calculating Remainders
+## Practical example: Calculate remainders
 
 Let's implement a function that calculates the remainder of dividing two numbers:
 
@@ -57,14 +57,14 @@ This example demonstrates:
 2. Implementing a read-only function to return the remainder.
 3. Handling both small and large input values.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `mod` with a divisor of zero, causing a runtime error.
 2. Assuming the result will always be positive, leading to incorrect expectations.
 3. Not handling all possible conditions, resulting in incomplete calculations.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `+`: Adds two numbers.
 - `-`: Subtracts one number from another.

@@ -3,7 +3,7 @@ title: define-constant
 description: Defining immutable constants in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (define-constant name expression)
@@ -32,14 +32,14 @@ Use `define-constant` when you need to:
 - Declare contract-wide configuration parameters.
 - Optimize gas usage for values that are computed but never change.
 
-## Best Practices
+## Best practices
 
 - Use uppercase names for constants to distinguish them from variables.
 - Place constant definitions at the top of your contract for better visibility.
 - Use constants for values that are used multiple times in your contract.
 - Consider using constants for contract configuration that might need to change between deployments.
 
-## Practical Example: Token Configuration
+## Practical example: Token configuration
 
 Let's implement a simple token contract using constants for configuration:
 
@@ -73,13 +73,13 @@ This example demonstrates:
 2. Referencing these constants in various parts of the contract.
 3. Improving readability and maintainability of the contract.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Attempting to modify a constant after it's defined, which is not allowed.
 2. Using `define-constant` for values that need to change during contract execution (use `define-data-var` instead).
 3. Overusing constants for values used only once, which can decrease readability.
 
-## Related Functions
+## Related functions
 
 - `define-data-var`: Used for defining mutable variables.
 - `define-map`: Used for defining data maps.

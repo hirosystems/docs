@@ -3,7 +3,7 @@ title: default-to
 description: Providing a default value for optional types in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (default-to default-value option-value)
@@ -32,14 +32,14 @@ Use the `default-to` function when you need to:
 - Set a fallback value for potentially missing data in your contract logic.
 - Simplify error handling for operations that might not return a value.
 
-## Best Practices
+## Best practices
 
 - Choose meaningful default values that make sense in the context of your contract logic.
 - Use `default-to` to make your code more concise and readable when dealing with optionals.
 - Consider the implications of using the default value in your contract's logic.
 - Combine `default-to` with other Clarity functions like `map-get?` for efficient data handling.
 
-## Practical Example: User Profile Lookup
+## Practical example: User profile lookup
 
 Let's implement a function that retrieves a user's profile information with default values:
 
@@ -69,13 +69,13 @@ This example demonstrates:
 2. Providing default values for individual fields within the profile.
 3. Creating a safe way to retrieve user information without explicit null checks.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Forgetting that `default-to` only works with optional types, not with general error handling.
 2. Using default values that might be indistinguishable from valid data, leading to confusion.
 3. Overusing `default-to` where explicit error handling might be more appropriate.
 
-## Related Functions
+## Related functions
 
 - `map-get?`: Often used in combination with `default-to` for safe map lookups.
 - `get`: Can return optional values that are then handled by `default-to`.

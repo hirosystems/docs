@@ -3,7 +3,7 @@ title: stx-account
 description: Querying STX account information in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (stx-account principal)
@@ -30,14 +30,14 @@ Use `stx-account` when you need to:
 - Ensure accurate account details for data integrity.
 - Handle account-related operations in your smart contract.
 
-## Best Practices
+## Best practices
 
 - Ensure the `principal` is correctly formatted and valid.
 - Use meaningful variable names for better readability.
 - Combine with other account functions for comprehensive account management.
 - Handle the possible error cases to ensure robust contract behavior.
 
-## Practical Example: Querying STX Account Information
+## Practical example: Query STX account information
 
 Let's implement a function that queries the STX account information for a given principal:
 
@@ -56,14 +56,14 @@ This example demonstrates:
 2. Implementing a public function to handle the account information query.
 3. Handling both successful and error cases.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `stx-account` with an incorrectly formatted or invalid `principal`, causing the operation to fail.
 2. Assuming the account information will always be valid, leading to unhandled error cases.
 3. Not handling all possible conditions, resulting in incomplete account management.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `stx-get-balance`: Queries the STX balance of a principal.
 - `stx-transfer?`: Transfers STX from one principal to another.

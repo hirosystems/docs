@@ -3,7 +3,7 @@ title: pow
 description: Calculating the power of a number in Clarity smart contracts.
 ---
 
-## Function Signature
+## Function signature
 
 ```clarity
 (pow base exponent)
@@ -30,14 +30,14 @@ Use `pow` when you need to:
 - Raise numbers to a power.
 - Simplify and abstract exponentiation operations.
 
-## Best Practices
+## Best practices
 
 - Ensure the base and exponent are correctly formatted and within acceptable ranges.
 - Use meaningful variable names for better readability.
 - Combine with other mathematical functions for comprehensive calculations.
 - Be aware of the performance implications of large exponentiation operations.
 
-## Practical Example: Calculating Token Balances in Decimal Format
+## Practical example: Calculate token balances in decimal format
 
 Let's implement a function that calculates the power of a number, specifically for converting integer representations of tokens or uStx:
 
@@ -58,14 +58,14 @@ This example demonstrates:
 2. Implementing a read-only function to calculate the total balance in decimal format.
 3. Handling balances from different versions of a token contract.
 
-## Common Pitfalls
+## Common pitfalls
 
 1. Using `pow` with negative exponents, which is not supported and will cause a runtime error.
 2. Assuming the result will always be within acceptable ranges, leading to overflow errors.
 3. Not handling all possible conditions, resulting in incomplete calculations.
 4. Overlooking the need for proper error handling and validation.
 
-## Related Functions
+## Related functions
 
 - `*`: Multiplies two or more numbers.
 - `+`: Adds two or more numbers.
