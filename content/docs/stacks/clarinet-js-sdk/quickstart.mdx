@@ -128,6 +128,82 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
     npm run test
     ```
   </Step>
+    <Step>
+    ## Run your tests with code coverage and cost analysis
+
+    Clarinet can automatically also produce a code coverage report and cost analysis on the test you ran.
+
+    ```json title="package.json"
+    "scripts": {
+      "test": "vitest run",
+      "test:report": "vitest run -- --coverage --costs", // [!code highlight]
+      "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
+    }
+    ```
+
+    By running the `npm run test:report` command in your terminal, an `lcov.info` and `costs-reports.json` file will appear in your root folder:
+
+    <Files className='pointer-events-none'>
+      <Folder name="contracts" defaultOpen>
+        <File name="counter.clar" />
+      </Folder>
+      <Folder name="settings" />
+      <Folder name="tests" defaultOpen>
+        <File name="counter.test.ts" />
+      </Folder>
+      <File name=".gitignore" />
+      <File name="Clarinet.toml" />
+      <File name="costs-reports.json" className='bg-[hsl(var(--highlight))]' />
+      <File name="lcov.info" className='bg-[hsl(var(--highlight))]' />
+      <File name="package.json" />
+      <File name="tsconfig.json" />
+      <File name="vitest.config.js" />
+    </Files>
+
+    The `costs-reports.json` file will output the cost analysis for every function ran in your tests. Since the `count-up` function was used in our test, this is how the cost analysis output would look like for that function:
+
+    ```json title="costs-reports.json"
+      {
+        "test_name": "tests/counter.test.ts__counter contract__increments the count of the user's principal by 1",
+        "contract_id": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter",
+        "method": "count-up",
+        "args": [],
+        "cost_result": {
+          "total": {
+            "write_length": 41,
+            "write_count": 1,
+            "read_length": 245,
+            "read_count": 5,
+            "runtime": 4752
+          },
+          "limit": {
+            "write_length": 15000000,
+            "write_count": 15000,
+            "read_length": 100000000,
+            "read_count": 15000,
+            "runtime": 5000000000
+          },
+          "memory": 40,
+          "memory_limit": 100000000
+        }
+      }
+    ```
+
+    To access and read the `lcov.info` file in a human-readable format, we can first install the `lcov` [package](https://github.com/linux-test-project/lcov) that helps generate a graphical front-end for coverage testing tools.
+
+    ```console title="Terminal"
+    brew install lcov
+    ```
+
+    Then we'll run the `genhtml` command below with the following options. This command and its options will generate the actual html file, add in additional branch coverage, and will automatically store the files in a new folder called `coverage`.
+
+    ```console title="Terminal"
+    genhtml lcov.info --branch-coverage -o coverage
+    ```
+
+    You can then navigate into the new `coverage` folder and run the command `open index.html` to view your coverage report. In addition, a summary of the coverage report will be outputted in the terminal.
+
+  </Step>
 </Steps>
 
 ---

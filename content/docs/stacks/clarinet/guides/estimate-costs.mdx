@@ -1,0 +1,85 @@
+---
+title: Estimating contract costs
+description: Analyze execution costs pertaining to your contract.
+---
+
+import { File, Folder, Files } from "fumadocs-ui/components/files"
+
+Transactions on the Stacks blockchain comes with execution costs that can dictate transaction fees for your users. To analyze the execution costs of your contract's functions, let's continue with the simple `counter` contract from the [Clarinet quickstart](/stacks/clarinet/quickstart) as an example.
+
+```clarity
+(define-map Counters principal uint)
+
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
+
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+```
+
+To start analyzing execution costs, first run the `clarinet console` command inside your project.
+
+```console title="Terminal"
+clarinet console
+```
+
+## Get Costs
+
+The `::get_costs <expr>` command in the Clarinet console will display the cost analysis of the given expression as well as the return value of the given expression. The `::get_costs` command expects an expression, so make a `contract-call?` with our `count-up` function and see what happens.
+
+```console title="Terminal"
+::get_costs (contract-call? .counter count-up)
+```
+
+We should see a chart breaking down the different types of execution costs in the console. Here's the execution cost analysis returned from running the above command:
+
+```console
+>> ::get_costs (contract-call? .counter count-up)
++----------------------+-------------+----------------+-----------------+
+|                               | Consumed   | Limit              | Percentage       |
++----------------------+-------------+----------------+-----------------+
+| Runtime                  | 4752           | 5000000000    | 0.00 %              |
++----------------------+-------------+----------------+-----------------+
+| Read count              | 5                | 15000             | 0.03 %              |
++----------------------+-------------+----------------+-----------------+
+| Read length (bytes) | 245             | 100000000      | 0.00 %             |
++----------------------+-------------+----------------+-----------------+
+| Write count             | 1                 | 15000              | 0.01 %            |
++----------------------+-------------+----------------+-----------------+
+| Write length (bytes) | 41              | 15000000        | 0.00 %             |
++----------------------+-------------+----------------+-----------------+
+
+
+(ok true)
+```
+
+As you can see from the chart, execution costs are broken into 5 different categories, each with its own limit. The limit is pertaining to what each Stacks block is limited to.
+
+<Callout title="Execution Cost Categories">
+The below lists out each of the 5 different categories of Clarity execution costs. ([source](https://book.clarity-lang.org/ch12-00-runtime-cost-analysis.html))
+
+- **Runtime** costs limits overall complexity of the code that can be executed. For example, negating a boolean value is less complex than calculating SHA512 hash, therefore (not false) will consume less runtime costs than (sha512 "hello world"). This category is also affected by contract size.
+- **Read count** limits how many times we can read from memory or chain state to a extract piece of information. It is affected by reading constants, variables, intermediate variables created with let, maps, but also by some functions that needs to save intermediate results during execution.
+- **Read length (bytes)** limits how much data we can read from memory or the chain. It is also affected by contract size. Calling into a contract using contract-call? Increases the read length by an amount equal to the contract size in bytes, every time. If you call into a contract with a length of 2,000 bytes twice, the read length is increased twice.
+- **Write count** limits how many times we can write data into chain. It increments when writing to variables and maps.
+- **Write length (bytes)** limits how much data we can write to the chain.
+
+</Callout>
+
+The percentage column shows what percentage of the execution costs your expression consumed out of the block limit given.
+
+## Toggle costs
+
+You can toggle the cost analysis to always be displayed after every expression execution in the console by toggling this feature on with the command `::toggle_costs`.
+
+```console title="Terminal"
+::toggle_costs
+```
+
+To turn it off, just run the `::toggle_costs` command again.
+
+Check out the Clarity Book section on [runtime cost analysis](https://book.clarity-lang.org/ch12-00-runtime-cost-analysis.html) to read up on cost optimization techniques and recommendations.
+
+To see how you can run automated cost analysis on your unit tests, check out our [quickstart](/stacks/clarinet-js-sdk/quickstart#run-your-tests-with-code-coverage-and-cost-analysis) section for the Clarinet JS SDK.
