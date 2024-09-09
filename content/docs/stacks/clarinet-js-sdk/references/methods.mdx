@@ -1120,6 +1120,209 @@ The Stacks address of the sender.
 
 <div className='flex-1'>
 
+<h2 className="mt-0">`callPrivateFn`</h2>
+
+Call private functions exposed by a contract.
+
+This method returns an object with the result of the function call as a `ClarityValue` and the events, if any, fired during the function execution. It takes function arguments in the form of Clarity values, which are available in the package [`@stacks/transactions`](/stacks/stacks.js/packages/transactions).
+
+This method will simulate a block being mined and increase the block height by one.
+
+## Parameters
+
+<Property required={true} deprecated={false} name={"contract"} type={"string"}>
+The contract identifier of the contract.
+
+<span>Example: `pool`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"method"} type={"string"}>
+The name of the private function within the contract.
+
+<span>Example: `reward-participant-points`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
+The arguments to pass to the private function. If no arguments are needed, pass an empty array.
+
+<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+</Property>
+
+<Property required={true} deprecated={false} name={"sender"} type={"string"}>
+The Stacks address of the sender.
+
+<span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
+</Property>
+
+</div>
+
+<APIExample>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge className='badge transition-colors'>Broadcasting your transaction</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="clarity-value" className='tab group'>
+      <Badge className='badge transition-colors'>Converting Clarity values</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:callPrivateFn]
+    import { Cl } from '@stacks/transactions';
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('deployer')!;
+    const address1 = accounts.get("wallet_1")!
+
+    const rewardParticipantPoints = simnet.callPrivateFn(
+      "pool",
+      "reward-participant-points",
+      [Cl.standardPrincipal(address1)],
+      wallet
+    );
+
+    const response = rewardParticipantPoints.result; // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
+        // [!code word:reward-participant-points]
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+        (define-map ParticipantPoints principal int)
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (reward-participant-points who)
+            (print { message: "Registered", who: who, at: block-height })
+            (ok true)
+          )
+        )
+
+        (define-private (reward-participant-points (who principal))
+            (map-insert ParticipantPoints who 100)
+        )
+
+        (map-set Participants tx-sender true)
+        (map-set ParticipantStatus tx-sender { enrollmentBlock: block-height, contributionAmount: u42000000 })
+        (map-set ParticipantPoints tx-sender 1000)
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          type: 3,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        type ParsedTransactionResult = {
+          result: ClarityValue;
+          events: ClarityEvent[];
+        }
+
+        callPrivateFn(
+          contract: string,
+          method: string,
+          args: ClarityValue[],
+          sender: string
+        ): ParsedTransactionResult
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  <TabsContent value="clarity-value">
+    ```ts twoslash
+    // @noErrors
+    // [!code word:cvToValue]
+    import { Cl, cvToValue } from '@stacks/transactions';
+
+    const accounts = simnet.getAccounts();
+    const wallet = accounts.get('deployer')!;
+    const address1 = accounts.get("wallet_1")!
+
+    const rewardParticipantPoints = simnet.callPrivateFn(
+      "pool",
+      "reward-participant-points",
+      [Cl.standardPrincipal(address1)],
+      wallet
+    );
+
+    const response = cvToValue(registerParticipant.result); // [!code highlight]
+    ```
+
+    <Accordions>
+      <Accordion title="Source code">
+        ```clarity title="pool.clar"
+        // [!code word:reward-participant-points]
+        (define-map Participants principal bool)
+        (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+        (define-map ParticipantPoints principal int)
+
+        (define-public (register-participant (who principal))
+          (begin
+            (map-set Participants who true)
+            (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
+            (reward-participant-points who)
+            (print { message: "Registered", who: who, at: block-height })
+            (ok true)
+          )
+        )
+
+        (define-private (reward-participant-points (who principal))
+            (map-insert ParticipantPoints who 100)
+        )
+
+        (map-set Participants tx-sender true)
+        (map-set ParticipantStatus tx-sender { enrollmentBlock: block-height, contributionAmount: u42000000 })
+        (map-set ParticipantPoints tx-sender 1000)
+        ```
+      </Accordion>
+      <Accordion title="Response">
+        ```ts
+        {
+          type: "bool",
+          value: true,
+        }
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        type ParsedTransactionResult = {
+          result: ClarityValue;
+          events: ClarityEvent[];
+        }
+
+        callPrivateFn(
+          contract: string,
+          method: string,
+          args: ClarityValue[],
+          sender: string
+        ): ParsedTransactionResult
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
 <h2 className='mt-0'>`transferSTX`</h2>
 
 Transfer STX from one address to another. The amount transferred is in `uSTX`.
