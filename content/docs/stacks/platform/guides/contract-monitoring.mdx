@@ -1,16 +1,16 @@
 ---
-title: Monitor Contracts
-description: Learn how to monitor your contract, post-mainnet deployment, with custom alerts.
+title: Monitor contracts
+description: Learn how to monitor your contract with custom alerts after you deploy to mainnet.
 ---
 
 ## Prerequisites
 
-- Create or import a project by following the steps in the [create project](/stacks/platform/guides/create-project) guide.
-- Deploy a project's Clarity smart contract to mainnet by following the [Deployment](/stacks/platform/guides/deploy-project) guide.
+- Create or import a project by following the steps in the [create project guide](/stacks/platform/guides/create-project).
+- Deploy a project's Clarity smart contract to mainnet by following the [Deployment guide](/stacks/platform/guides/deploy-project).
 
 This feature goes beyond just security—it’s also a way to better understand how your contracts are being used. You can also set up alerts for various public functions in your smart contract to gain insight on which functions are receiving the most calls and how users are interacting with your contract.
 
-## Start contract monitoring
+## Set up contract monitoring
 
 <Callout title="Note">
   Make sure to have successfully deployed your contracts to the Stacks mainnet if you plan on setting up alert monitoring for your own contracts.
@@ -28,7 +28,7 @@ Alternatively, you can also connect your wallet to view your deployment history 
 
 ![Add contract](../images/contract-monitoring/add-contract.png)
 
-Your contract will then appear under Contract Monitoring. Once you are monitoring a contract, you can view its transaction history and any pending transactions in the mempool. Click on "Create an alert" to create a specific alert you want to monitor for. 
+Your contract will then appear under Contract Monitoring. Once you are monitoring a particular contract, you can view its transaction history and any pending transactions in the mempool. Click on "Create an alert" to create a specific alert you want to monitor for. 
 
 ![Added contract](../images/contract-monitoring/added-contract.png)
 
@@ -36,23 +36,21 @@ Your contract will then appear under Contract Monitoring. Once you are monitorin
 
 You can configure alerts for any contract calls on mainnet, whether that’s a `set-contract-owner` function, a transfer/mint/burn function, or anything else you’ve implemented that you want to monitor.
 
-Once you identify the calls you want to monitor, you can further hone in on the specific function calls by creating specific filters for argument values and the address of the wallet which called the function. 
+Once you identify the function calls you want to monitor, you can further hone in on the specific calls by creating filters for argument values and the address of the wallet which called the function. 
 
-The specific conditions you can choose to monitor for is when a:
+The specific conditions you can choose to monitor for include:
 
-- Function is called
-- Function is called with argument
-- Function is called by address
+- When a particular function is called
+- When a particular function is called with a specified argument
+- When a particular function is called by a specified address
 
-You can monitor these alerts in the Hiro Platform, and you can also choose to receive email alerts every time one of those alerts is triggered. Or configure webhook calls, which can be used for all kinds of customized alerting flows.
+You can monitor these alerts in the Hiro Platform, and you can also choose to receive email alerts every time one of those alerts is triggered. Alternatively, you can configure webhook calls, which can be used for all kinds of customized alerting flows.
 
 ![Create alert form](../images/contract-monitoring/create-alert-form.png)
 
 ## Monitor your alerts
 
-With each alert you set up, you can view the alert’s history and the response status from any webhook calls made. You also have the ability to edit existing alerts to hone in your conditions or notification preferences over time.
+With each alert you set up, you can view the alert’s history and the response status from any webhook calls made. You also have the ability to edit existing alerts to change your alert conditions or notification preferences at any time.
 
 ![View alerts page](../images/contract-monitoring/view-alerts-page.png)
-
-We hope this new feature increases your confidence in your code as well as your code’s security.
 
