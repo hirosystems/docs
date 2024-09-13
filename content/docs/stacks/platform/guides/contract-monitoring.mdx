@@ -54,3 +54,98 @@ With each alert you set up, you can view the alert’s history and the response 
 
 ![View alerts page](../images/contract-monitoring/view-alerts-page.png)
 
+## What to expect from alerts
+
+If you've specified an email as the notification type, alert notification emails will come from Hiro Platform `<platform@hiro.so>`.
+
+If you've specified a webhook to send an alert to an API endpoint, then the alert payload will look like `sample-alert-payload.json` below.
+
+<Callout type="info">
+  Note that `tx_status` will always return a "pending" status for monitor alert notifications. This is because contract monitoring alerts will only send notifications when your custom notification alert on a particular function hits the mempool, but not when it gets confirmed in the blockchain.
+</Callout>
+
+<Tabs items={['Sample Alert Payload', 'Alert Payload Interface']}>
+  <Tab value="Sample Alert Payload">
+    ```json title="sample-alert-payload.json"
+    // [!code word:tx_status]
+    {
+      "tx_id": "0xa7f511b3f379efef6fe71d0de57712ed13a89c5b6e24dd049eb2cc9a7c24fcb5",
+      "nonce": 5,
+      "fee_rate": "250",
+      "sender_address": "SP2W9QYAHJNS7YTQY9EK2MSTQGX9E2NDMV766JP9Z",
+      "sponsored": false,
+      "post_condition_mode": "deny",
+      "post_conditions": [
+        {
+          "type": "stx",
+          "condition_code": "sent_equal_to",
+          "amount": "3000000",
+          "principal": {
+            "type_id": "principal_standard",
+            "address": "SP2W9QYAHJNS7YTQY9EK2MSTQGX9E2NDMV766JP9Z"
+          }
+        }
+      ],
+      "anchor_mode": "any",
+      "tx_status": "pending",
+      "receipt_time": 1726104636,
+      "receipt_time_iso": "2024-09-12T01:30:36.000Z",
+      "tx_type": "contract_call",
+      "contract_call": {
+        "contract_id": "SPHW0EJK5KPDMK03ZX792EMP0Q5J3A39ZMTVZZCY.sample-contract",
+        "function_name": "donate",
+        "function_signature": "(define-public (donate (amount uint)))",
+        "function_args": [
+          {
+            "hex": "0x01000000000000000000000000002dc6c0",
+            "repr": "u3000000",
+            "name": "amount",
+            "type": "uint"
+          }
+        ]
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Alert Payload Interface">
+  ```ts title="sample-alert-interface.ts"
+  interface Body {
+  tx_id: string;
+  nonce: number;
+  fee_rate: string;
+  sender_address: string;
+  sponsored: boolean;
+  post_condition_mode: string;
+  post_conditions: Postcondition[];
+  anchor_mode: string;
+  tx_status: string;
+  receipt_time: number;
+  receipt_time_iso: string;
+  tx_type: string;
+  contract_call: Contractcall;
+  }
+  interface Contractcall {
+    contract_id: string;
+    function_name: string;
+    function_signature: string;
+    function_args: Functionarg[];
+  }
+  interface Functionarg {
+    hex: string;
+    repr: string;
+    name: string;
+    type: string;
+  }
+  interface Postcondition {
+    type: string;
+    condition_code: string;
+    amount: string;
+    principal: Principal;
+  }
+  interface Principal {
+    type_id: string;
+    address: string;
+  }
+  ```
+  </Tab>
+</Tabs>
