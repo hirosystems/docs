@@ -1,0 +1,145 @@
+---
+title: Integration testing with Clarinet JS SDK
+description: Learn how to write and run integration tests for your Clarity smart contracts using the Clarinet JS SDK and Vitest.
+---
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+This guide demonstrates how to write integration tests for Clarity smart contracts using the Clarinet JS SDK and Vitest. You'll learn to set up the testing environment, write tests for a DeFi contract, and generate coverage reports.
+
+In this guide, you will:
+
+1. Set up the Clarinet JS SDK in your project.
+2. Write integration tests for the `stx-defi` smart contract.
+3. Run tests and generate coverage reports.
+
+---
+
+<Callout title="Requirements" type="warn">
+This guide requires Node.js >= 18.0 and NPM. We recommend using [Volta](https://volta.sh/) to manage your JavaScript tooling.
+</Callout>
+
+## Set up the Clarinet JS SDK
+
+First, install the Clarinet JS SDK and Vitest as development dependencies in your project:
+
+```bash
+npm install --save-dev @clarinet-js/sdk clarinet-js-sdk-vitest
+```
+
+This will create a `tests` directory in your project root and add a `vitest.config.ts` file:
+
+```ts
+import { defineConfig } from 'vitest/config'
+  export default defineConfig({
+  test: {
+    globals: true,
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+    },
+  },
+})
+```
+
+This configuration enables global test functions and sets up coverage reporting.
+
+## Write Integration tests for `stx-defi`
+
+Create a new file `stx-defi.test.ts` in the `tests` directory. We'll start by importing the necessary functions from the Clarinet SDK and setting up the test environment:
+
+```ts
+import { describe, beforeEach, it, expect } from 'vitest';
+import { Chain, Account, Tx, types } from '@hirosystems/clarinet-sdk';
+import { principalCV, uintCV } from '@stacks/transactions';
+
+describe('stx-defi contract test suite', () => {
+  let chain: Chain;
+  let deployer: Account;
+  let wallet1: Account;
+  let wallet2: Account;
+
+  beforeEach(() => {
+    chain = new Chain();
+    [deployer, wallet1, wallet2] = chain.accounts.get('deployer', 'wallet_1', 'wallet_2');
+  });
+
+  // The following tests will be added here
+});
+```
+
+This setup creates a new `Chain` instance for each test, ensuring a clean state. It also retrieves account information for the deployer and two test wallets.
+
+Now, add some tests for the main functions of our DeFi contract:
+
+```ts
+// ...rest of your code
+
+it('allows users to deposit STX', () => {
+  const depositAmount = 1000;
+  const block = chain.mineBlock([
+    Tx.contractCall('stx-defi', 'deposit', [uintCV(depositAmount)], wallet1.address),
+  ]);
+  
+  // Check if the transaction was successful
+  block.receipts[0].result.expectOk().expectBool(true);
+  
+  // Verify the deposit balance
+  const balanceResponse = chain.callReadOnlyFn('stx-defi', 'get-balance-by-sender', [], wallet1.address);
+  balanceResponse.result.expectOk().expectSome().expectUint(depositAmount);
+});
+
+it('allows users to borrow STX', () => {
+  const depositAmount = 1000;
+  const borrowAmount = 500;
+  
+  // First, deposit some STX
+  chain.mineBlock([
+    Tx.contractCall('stx-defi', 'deposit', [uintCV(depositAmount)], wallet1.address),
+  ]);
+  
+  // Then, try to borrow
+  const block = chain.mineBlock([
+    Tx.contractCall('stx-defi', 'borrow', [uintCV(borrowAmount)], wallet1.address),
+  ]);
+  
+  // Check if the borrow transaction was successful
+  block.receipts[0].result.expectOk().expectBool(true);
+  
+  // Verify the borrowed amount
+  const amountOwedResponse = chain.callReadOnlyFn('stx-defi', 'get-amount-owed', [], wallet1.address);
+  amountOwedResponse.result.expectOk().expectUint(borrowAmount);
+});
+```
+
+These tests verify the deposit and borrow functionalities of the contract. They simulate transactions, check for successful execution, and verify the resulting state changes.
+
+## Run tests and generate coverage reports
+
+To run your tests, add the following script to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  }
+}
+```
+
+Now you can run your tests with:
+
+```bash
+npm run test
+```
+
+To generate a coverage report, use:
+
+```bash
+npm run test:coverage
+```
+
+This will run your tests and produce a detailed coverage report, helping you identify any untested parts of your contract.
+
+By following this guide, you've set up a testing environment for your Clarity smart contracts using the Clarinet JS SDK and Vitest. You've written tests for key functions of a DeFi contract and learned how to run tests and generate coverage reports. This approach allows you to catch bugs early and ensure your contracts behave as expected before deployment.
