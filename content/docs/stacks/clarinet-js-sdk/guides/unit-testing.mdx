@@ -1,0 +1,217 @@
+---
+title: Unit testing
+description: Learn how to write and run unit tests for your Clarity smart contracts using the Clarinet JS SDK and Vitest.
+---
+
+import { Accordions, Accordion } from 'fumadocs-ui/components/accordion';
+
+Unit testing is the process of testing individual components or functions of your smart contracts to ensure they work as expected. The Clarinet JS SDK provides a testing framework that allows you to write these tests using the Vitest testing framework, helping you to catch bugs and errors early in the development process.
+
+In this guide, you will:
+
+1. [Set up a new Clarinet project with a `defi` contract](#set-up-a-new-clarinet-project).
+2. [Write a unit test covering the `deposit` function](#test-the-deposit-function).
+3. [Run tests and generate coverage reports](#run-tests-and-generate-coverage-reports).
+
+---
+
+## Set up a new Clarinet project
+
+Start by creating a new project with the Clarinet CLI. This command create a project structure inside of `defi` with the necessary files and folders, including the Clarinet JS SDK already set up for testing.
+
+```console title="Terminal"
+clarinet new stx-defi
+cd stx-defi
+```
+
+After changing into your project directory, run `npm install` to install the package dependencies for testing.
+
+```console title="Terminal"
+npm install
+```
+
+Since the smart contract code is out of scope for this guide, we are going to use a pre-existing contract. First, generate a new file using the `clarinet contract new` command in order setup our project with the necessary configuration and test files.
+
+```console title="Terminal"
+clarinet contract new defi
+```
+
+Now, inside your `defi.clar` file, copy and paste the following contract code:
+
+```clarity
+  ;; Holds the total amount of deposits in the contract, initialized to 0.
+  (define-data-var total-deposits uint u0)
+
+  ;; Maps a user's principal address to their deposited amount.
+  (define-map deposits { owner: principal } { amount: uint })
+
+  ;; Public function for users to deposit STX into the contract.
+  ;; Updates their balance and the total deposits in the contract.
+  (define-public (deposit (amount uint))
+    (let
+      (
+        ;; Fetch the current balance or default to 0 if none exists.
+        (current-balance (default-to u0 (get amount (map-get? deposits { owner: tx-sender }))))
+      )
+      ;; Transfer the STX from sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM" to recipient = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.defi (ie: contract identifier on the chain!)".
+      (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+      ;; Update the user's deposit amount in the map.
+      (map-set deposits { owner: tx-sender } { amount: (+ current-balance amount) })
+      ;; Update the total deposits variable.
+      (var-set total-deposits (+ (var-get total-deposits) amount))
+      ;; Return success.
+      (ok true)
+    )
+  )
+
+  ;; Read-only function to get the total balance by tx-sender
+  (define-read-only (get-balance-by-sender)
+    (ok (map-get? deposits { owner: tx-sender }))
+  )
+```
+
+Run `clarinet check` to ensure that your smart contract is valid and ready for testing.
+
+<Callout>
+You can find the full code for this project in [this repo](https://github.com/hirosystems/clarity-examples/tree/main/examples/stx-defi).
+</Callout>
+
+## Test the deposit function
+
+This function allows users to deposit STX into the contract, updating their balance inside a `deposits` map and adds to the total deposits stored in a `total-deposits` variable. The key tests we want to cover are that the deposit is successful and that the user's balance, as well as the contract's total deposits, are updated correctly.
+
+Inside of your `defi.test.ts` file, add the following setup code:
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { Cl } from '@stacks/transactions';
+
+const accounts = simnet.getAccounts();
+const wallet1 = accounts.get('wallet_1')!;
+```
+
+These imports provide the testing framework and utilities we need. We also get the `wallet_1` account, which will act as our test user.
+
+Next, define the test suite and the specific test case:
+
+```typescript
+describe('stx-defi', () => {
+  it('allows users to deposit STX', () => {
+    // Test code will go here
+  });
+});
+```
+
+This structure comes from our Vitest integration and organizes our tests and describes what we're testing. The `describe` block groups multiple test cases together, while the `it` block represents a single test case.
+
+Now, let's simulate a deposit. Inside of the `it` block, define the amount to deposit and call the `deposit` function:
+
+
+```typescript
+const amount = 1000;
+const depositCall = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1.address);
+```
+
+This code simulates a deposit by calling the `deposit` function in our contract with a specified amount, just as a user would in the real world.
+
+After making the deposit, verify that the call itself was successful:
+
+```typescript
+expect(depositCall.result).toBeOk(Cl.bool(true));
+```
+
+Let's go over a few of the keywords in this line:
+
+`expect` is a function from Vitest that makes an assertion about the value we expect to get back from the `deposit` function.
+
+But how do we test against Clarity types and values? This is where the `Cl` and `toBeOk` helpers come in.
+
+- `toBeOk` is a custom matcher function built into Vitest that checks if the result of the deposit call is an `Ok` response, which is a Clarity type. This is important because it confirms that the deposit transaction was processed successfully.
+- `Cl` helper is from the `@stacks/transactions` package and is used to create Clarity values in JavaScript. In this case, it's used to create a Clarity boolean with the value of `true`.
+
+<Callout>
+To see more custom matcher examples, check out the [reference page](/stacks/clarinet-js-sdk/references/custom-matchers).
+</Callout>
+
+Once we can confirm that the deposit was successful, write a test to verify that the contract's total deposits have been updated correctly.
+
+```typescript
+const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
+expect(totalDeposits).toBeUint(1000);
+```
+
+This check ensures that the contract accepted our deposit without any issues.
+
+Lastly, verify that the user's balance has been updated correctly:
+
+```typescript
+const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1.address);
+expect(balance.result).toBeOk(Cl.some(Cl.uint(depositAmount)));
+```
+
+We call the `get-balance-by-sender` function and check if it matches the amount we just deposited.
+
+By following these steps, our test comprehensively verifies that the `deposit` function works as intended, updating individual balances and total deposits accurately.
+
+<Accordions>
+  <Accordion title="Full code snippet">
+```typescript
+  import { describe, it, expect } from 'vitest';
+  import { Cl } from '@stacks/transactions';
+
+  const accounts = simnet.getAccounts();
+  const wallet1 = accounts.get('wallet_1')!;
+
+  describe('stx-defi', () => {
+    it('allows users to deposit STX', () => {
+      const amount = 1000;
+      const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1.address);
+
+      const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
+      expect(totalDeposits).toBeUint(1000);
+
+      const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1.address);
+      expect(balance.result).toBeOk(Cl.some(Cl.uint(amount)));
+    });
+  });
+```
+  </Accordion>
+</Accordions>
+
+## Run tests and generate coverage reports
+
+To run your tests, use:
+
+```console title="Terminal"
+npm run test
+```
+
+To generate a coverage report, use:
+
+```console title="Terminal"
+npm run coverage
+```
+
+This will run your tests and produce a detailed coverage report, helping you identify any untested parts of your contract.
+
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/clarinet-js-sdk/references/simnet"
+    title="API Reference"
+    description="Dive deeper into the properties and methods available in the Clarinet JS SDK."
+  />
+  <Card
+    href="/stacks/clarinet-js-sdk/references/custom-matchers"
+    title="Custom matchers"
+    description="Learn about the custom matchers that are available in the Clarinet JS SDK."
+  />
+  <Card
+    href="/stacks/clarinet-js-sdk/references/methods"
+    title="SDK methods"
+    description="Learn about the methods available in the Clarinet JS SDK."
+  />
+</Cards>
