@@ -109,7 +109,7 @@ Now, let's simulate a deposit. Inside of the `it` block, define the amount to de
 
 ```typescript
 const amount = 1000;
-const depositCall = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
+const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
 ```
 
 This code simulates a deposit by calling the `deposit` function in our contract with a specified amount, just as a user would in the real world.
@@ -117,7 +117,7 @@ This code simulates a deposit by calling the `deposit` function in our contract 
 After making the deposit, create an assertion to verify that the call itself was successful and returns an `ok` response type with the value `true`:
 
 ```typescript
-expect(depositCall.result).toBeOk(Cl.bool(true));
+expect(deposit.result).toBeOk(Cl.bool(true));
 ```
 
 Run `npm run test` to confirm that this test passes.
@@ -139,7 +139,7 @@ Once we can confirm that the deposit was successful, write a test to verify that
 
 ```typescript
 const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
-expect(totalDeposits).toBeUint(1000);
+expect(totalDeposits).toBeUint(amount);
 ```
 
 Run `npm run test` again to confirm that this test also passes.
@@ -176,12 +176,19 @@ By following these steps, our test comprehensively verifies that the `deposit` f
     it('allows users to deposit STX', () => {
       const amount = 1000;
       const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
+      expect(deposit.result).toBeOk(Cl.bool(true));
 
       const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
-      expect(totalDeposits).toBeUint(1000);
+      expect(totalDeposits).toBeUint(amount);
 
       const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1);
-      expect(balance.result).toBeOk(Cl.some(Cl.uint(amount)));
+      expect(balance.result).toBeOk(
+        Cl.some(
+          Cl.tuple({
+            amount: Cl.uint(amount),
+          })
+        )
+      );
     });
   });
 ```
