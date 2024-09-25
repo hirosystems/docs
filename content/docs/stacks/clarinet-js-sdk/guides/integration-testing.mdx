@@ -30,7 +30,7 @@ After changing into your project directory, run `npm install` to install the pac
 npm install
 ```
 
-We are going to use the same `defi` contract that we used in the [unit testing guide](/stacks/clarinet-js-sdk/guides/unit-testing), but with some additional functionality - the ability to `borrow` STX from the contract. If you don't have this project setup already, follow the steps below:
+We are going to use the same `defi` contract that we used in the [unit testing guide](/stacks/clarinet-js-sdk/guides/unit-testing), but with some additional functionality - the ability to `borrow` STX from the contract. If you don't have this project set up already, follow the steps below:
 
 ```console title="Terminal"
 clarinet contract new defi
@@ -163,7 +163,7 @@ describe("stx-defi", () => {
 
 In this integration test, we're simulating a scenario where a user deposits STX into our DeFi contract and then borrows against that deposit. Let's walk through the process step by step.
 
-We start by simulating a deposit of 1000 STX from wallet1. To do this, we use the `simnet.callPublicFn()` method, which allows us to call public functions in our smart contract just as we would on the actual blockchain.
+We start by simulating a deposit of 1000 STX from `wallet1`. To do this, we use the `simnet.callPublicFn()` method, which allows us to call public functions in our smart contract just as we would on the actual blockchain.
 
 After making the deposit, we want to verify that it was successful. We do this by checking the total deposits in the contract using `simnet.getDataVar()`.
 
@@ -181,8 +181,8 @@ After the borrowing operation, we want to check how much `wallet1` owes. We use 
 
 Finally, we verify the amount owed using another custom matcher, `toBeOk(Cl.uint(10))`. This matcher is particularly useful because it checks two things at once:
 
-1. Ensures that our contract returned a successful Clarity response type
-2. The value returned is a Clarity unsigned integer with the exact value we expect (`10`).
+1. That our contract returned a successful Clarity response type.
+2. That the value returned is a Clarity unsigned integer with the exact value we expect (`10`).
 
 These custom matchers and simnet methods are powerful tools and allow you to simulate complex interactions with your smart contracts and make detailed assertions about the results.
 
