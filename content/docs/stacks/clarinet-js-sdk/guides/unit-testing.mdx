@@ -80,7 +80,7 @@ You can find the full code for this project in [this repo](https://github.com/hi
 
 This `deposit` function allows users to deposit STX into the contract, updating their balance inside a `deposits` map and adding to the total deposits stored in a `total-deposits` variable. The key tests we want to cover are that the deposit is successful and that the user's balance, as well as the contract's total deposits, are updated correctly.
 
-Inside of your `defi.test.ts` file, add the following setup code:
+Inside of your `defi.test.ts` file, replace the boilerplate code and add the following:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -109,18 +109,20 @@ Now, let's simulate a deposit. Inside of the `it` block, define the amount to de
 
 ```typescript
 const amount = 1000;
-const depositCall = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1.address);
+const depositCall = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
 ```
 
 This code simulates a deposit by calling the `deposit` function in our contract with a specified amount, just as a user would in the real world.
 
-After making the deposit, verify that the call itself was successful:
+After making the deposit, create an assertion to verify that the call itself was successful and returns an `ok` response type with the value `true`:
 
 ```typescript
 expect(depositCall.result).toBeOk(Cl.bool(true));
 ```
 
-Let's go over a few of the keywords in this line.
+Run `npm run test` to confirm that this test passes.
+
+Let's go over some of the code in this assertion:
 
 - `expect` is a function from Vitest that makes an assertion about the value we expect to get back from the `deposit` function.
 
@@ -140,13 +142,21 @@ const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
 expect(totalDeposits).toBeUint(1000);
 ```
 
+Run `npm run test` again to confirm that this test also passes.
+
 This check ensures that the contract accepted our deposit without any issues.
 
 Lastly, verify that the user's balance has been updated correctly:
 
 ```typescript
-const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1.address);
-expect(balance.result).toBeOk(Cl.some(Cl.uint(depositAmount)));
+const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1);
+expect(balance.result).toBeOk(
+  Cl.some(
+    Cl.tuple({
+      amount: Cl.uint(amount),
+    })
+  )
+);
 ```
 
 We call the `get-balance-by-sender` function and check if it matches the amount we just deposited.
@@ -165,12 +175,12 @@ By following these steps, our test comprehensively verifies that the `deposit` f
   describe('stx-defi', () => {
     it('allows users to deposit STX', () => {
       const amount = 1000;
-      const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1.address);
+      const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
 
       const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
       expect(totalDeposits).toBeUint(1000);
 
-      const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1.address);
+      const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1);
       expect(balance.result).toBeOk(Cl.some(Cl.uint(amount)));
     });
   });
