@@ -20,8 +20,8 @@ In this guide, you will:
 Start by creating a new Clarinet project. This command will create a new directory named `defi` and set up a basic Clarinet project inside it.
 
 ```console title="Terminal"
-clarinet new defi
-cd defi
+clarinet new stx-defi
+cd stx-defi
 ```
 
 After changing into your project directory, run `npm install` to install the package dependencies for testing.
@@ -112,6 +112,22 @@ Then, inside your `defi.clar` file, copy and paste the following contract code:
   (ok (map-get? deposits { owner: tx-sender }))
 )
 
+;; Read-only function to get the total amount owed by the user.
+(define-read-only (get-amount-owed)
+  (let
+    (
+      ;; Fetch current loan details or default to initial values.
+      (current-loan-details (default-to { amount: u0, last-interaction-block: u0 } (map-get? loans tx-sender )))
+      ;; Calculate accrued interest on the current loan.
+      (accrued-interest (calculate-accrued-interest (get amount current-loan-details) (get last-interaction-block current-loan-details)))
+      ;; Calculate the total amount due including interest.
+      (total-due (+ (get amount current-loan-details) (unwrap-panic accrued-interest)))
+    )
+    ;; Return the total amount due.
+    (ok total-due)
+  )
+)
+
 ;; Private function to calculate the accrued interest on a loan.
 (define-private (calculate-accrued-interest (principal uint) (start-block uint))
   (let
@@ -139,35 +155,35 @@ You can find the full code for this project in [this repo](https://github.com/hi
 
 In order to `borrow` STX from the contract, users must first `deposit` STX into it. Therefore, we need to write an integration test that simulates the interaction between these two functions.
 
-Inside of your `defi.test.ts` file, add the following test:
+Inside of your `defi.test.ts` file, replace the boilerplate code and add the following:
 
 ```typescript
-import { describe, it, expect } from "vitest";
-import { Cl } from "@stacks/transactions";
+import { describe, it, expect } from 'vitest';
+import { Cl } from '@stacks/transactions';
 
 const accounts = simnet.getAccounts();
-const wallet1 = accounts.get("wallet_1")!;
+const wallet1 = accounts.get('wallet_1')!;
 
-describe("stx-defi", () => {
+describe('stx-defi', () => {
   it('borrows 10 and verifies the amount owed to be 10', () => {
-    simnet.callPublicFn('stx-defi', 'deposit', [Cl.uint(1000)], wallet1);
-    const totalDeposits = simnet.getDataVar('stx-defi', 'total-deposits');
+    simnet.callPublicFn('defi', 'deposit', [Cl.uint(1000)], wallet1);
+    const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
     expect(totalDeposits).toBeUint(1000);
 
-    simnet.callPublicFn('stx-defi', 'borrow', [Cl.uint(10)], wallet1);
-    const { result } = simnet.callReadOnlyFn('stx-defi', 'get-amount-owed', [], wallet1);
+    simnet.callPublicFn('defi', 'borrow', [Cl.uint(10)], wallet1);
+    const { result } = simnet.callReadOnlyFn('defi', 'get-amount-owed', [], wallet1);
     expect(result).toBeOk(Cl.uint(10));
   });
 });
 ```
 
-In this integration test, we're simulating a scenario where a user deposits STX into our DeFi contract and then borrows against that deposit. Let's walk through the process step by step.
+In this integration test, we're simulating a scenario where a user deposits STX into the DeFi contract and then borrows against that deposit. Let's walk through the process step by step.
 
-We start by simulating a deposit of 1000 STX from `wallet1`. To do this, we use the `simnet.callPublicFn()` method, which allows us to call public functions in our smart contract just as we would on the actual blockchain.
+We start by simulating a deposit of 1000 STX from `wallet1`. To do this, we use the `callPublicFn` method from the Clarinet JS SDK `simnet` object, which allows us to call public functions in our smart contract just as we would on the actual blockchain.
 
-After making the deposit, we want to verify that it was successful. We do this by checking the total deposits in the contract using `simnet.getDataVar()`.
+After making the deposit, we want to verify that it was successful. We do this by checking the total deposits in the contract using `getDataVar`.
 
-This handy method lets us peek at the value of data variables defined in our contract.
+This handy method lets us peek at the value of data variables defined in your contract.
 
 <Callout>
 To learn more about available methods for integration testing, check out the [reference page](/stacks/clarinet-js-sdk/references/methods).
@@ -175,9 +191,9 @@ To learn more about available methods for integration testing, check out the [re
 
 To ensure the deposit was recorded correctly, we use a custom matcher, `toBeUint`. This matcher is specifically designed to check if a value is a Clarity unsigned integer with the exact value we expect.
 
-With the deposit confirmed, we simulate `wallet1` borrowing 10 STX. We do this with another call to `simnet.callPublicFn()`, this time invoking the `borrow` function of our contract.
+With the deposit confirmed, we simulate `wallet1` borrowing 10 STX. We do this with another call to `callPublicFn`, this time invoking the `borrow` function of our contract.
 
-After the borrowing operation, we want to check how much `wallet1` owes. We use `simnet.callReadOnlyFn()` to call a read-only function named `get-amount-owed` in our contract.
+After the borrowing operation, we want to check how much `wallet1` owes. We use `callReadOnlyFn` to call a read-only function named `get-amount-owed` in our contract.
 
 Finally, we verify the amount owed using another custom matcher, `toBeOk(Cl.uint(10))`. This matcher is particularly useful because it checks two things at once:
 

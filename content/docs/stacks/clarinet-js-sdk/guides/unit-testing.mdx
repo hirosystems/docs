@@ -106,13 +106,12 @@ This structure comes from our Vitest integration, and it organizes our tests and
 
 Now, let's simulate a deposit. Inside of the `it` block, define the amount to deposit and call the `deposit` function:
 
-
 ```typescript
 const amount = 1000;
 const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
 ```
 
-This code simulates a deposit by calling the `deposit` function in our contract with a specified amount, just as a user would in the real world.
+This code simulates a deposit by calling the `deposit` function, using the `callPublicFn` method from the Clarinet JS SDK, in our contract with a specified amount, just as a user would in the real world.
 
 After making the deposit, create an assertion to verify that the call itself was successful and returns an `ok` response type with the value `true`:
 
