@@ -9,9 +9,9 @@ By using integration tests, you can ensure that your smart contracts function co
 
 In this guide, you will:
 
-1. Set up a Clarinet project with a `defi` contract.
-2. Write an integration test for the smart contract.
-3. Run tests and generate coverage reports.
+1. [Set up a Clarinet project with a `defi` contract.](#set-up-a-clarinet-project)
+2. [Write an integration test for the smart contract.](#test-the-deposit-and-borrow-functionality)
+3. [Run tests and generate coverage reports.](#run-tests-and-generate-coverage-reports)
 
 ---
 
@@ -143,27 +143,19 @@ Inside of your `defi.test.ts` file, add the following test:
 
 ```typescript
 import { describe, it, expect } from "vitest";
-import { Cl, cvToValue } from "@stacks/transactions";
+import { Cl } from "@stacks/transactions";
 
 const accounts = simnet.getAccounts();
-const deployer = accounts.get("deployer")!;
 const wallet1 = accounts.get("wallet_1")!;
 
 describe("stx-defi", () => {
   it('borrows 10 and verifies the amount owed to be 10', () => {
-    // wallet1 deposits 1000 to "their principal", which will be "locked" in the contract (on the chain)
     simnet.callPublicFn('stx-defi', 'deposit', [Cl.uint(1000)], wallet1);
     const totalDeposits = simnet.getDataVar('stx-defi', 'total-deposits');
     expect(totalDeposits).toBeUint(1000);
 
-    // wallet1 attempts to borrow 10 from their initial deposit for 1000 (which is "locked" in the contract, on the chain)
-    const borrowResponse = simnet.callPublicFn('stx-defi', 'borrow', [Cl.uint(10)], wallet1);
-    console.log("borrow response: " + Cl.prettyPrint(borrowResponse.result));
-    
-    // verify the amount owed is exactly what the wallet1 borrowed, which is 10 (because borrow and owed check are happening on the 
-    // "same block", so no interest will be applied)
+    simnet.callPublicFn('stx-defi', 'borrow', [Cl.uint(10)], wallet1);
     const { result } = simnet.callReadOnlyFn('stx-defi', 'get-amount-owed', [], wallet1);
-    console.log("owed amount: " + Cl.prettyPrint(result));
     expect(result).toBeOk(Cl.uint(10));
   });
 });
@@ -187,9 +179,12 @@ With the deposit confirmed, we simulate `wallet1` borrowing 10 STX. We do this w
 
 After the borrowing operation, we want to check how much `wallet1` owes. We use `simnet.callReadOnlyFn()` to call a read-only function named `get-amount-owed` in our contract.
 
-Finally, we verify the amount owed using another custom matcher, `toBeOk(Cl.uint(10))`. This matcher is particularly useful because it checks two things at once: it ensures that our contract returned a successful Clarity response type and that the value returned is a Clarity unsigned integer with the exact value we expect (10).
+Finally, we verify the amount owed using another custom matcher, `toBeOk(Cl.uint(10))`. This matcher is particularly useful because it checks two things at once:
 
-These custom matchers and simnet methods are powerful tools in our testing arsenal. They allow us to simulate complex interactions with our smart contracts and make detailed assertions about the results.
+1. Ensures that our contract returned a successful Clarity response type
+2. The value returned is a Clarity unsigned integer with the exact value we expect (`10`).
+
+These custom matchers and simnet methods are powerful tools and allow you to simulate complex interactions with your smart contracts and make detailed assertions about the results.
 
 ## Run tests and generate coverage reports
 
