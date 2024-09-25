@@ -39,35 +39,35 @@ clarinet contract new defi
 Now, inside your `defi.clar` file, copy and paste the following contract code:
 
 ```clarity
-  ;; Holds the total amount of deposits in the contract, initialized to 0.
-  (define-data-var total-deposits uint u0)
+;; Holds the total amount of deposits in the contract, initialized to 0.
+(define-data-var total-deposits uint u0)
 
-  ;; Maps a user's principal address to their deposited amount.
-  (define-map deposits { owner: principal } { amount: uint })
+;; Maps a user's principal address to their deposited amount.
+(define-map deposits { owner: principal } { amount: uint })
 
-  ;; Public function for users to deposit STX into the contract.
-  ;; Updates their balance and the total deposits in the contract.
-  (define-public (deposit (amount uint))
-    (let
-      (
-        ;; Fetch the current balance or default to 0 if none exists.
-        (current-balance (default-to u0 (get amount (map-get? deposits { owner: tx-sender }))))
-      )
-      ;; Transfer the STX from sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM" to recipient = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.defi (ie: contract identifier on the chain!)".
-      (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
-      ;; Update the user's deposit amount in the map.
-      (map-set deposits { owner: tx-sender } { amount: (+ current-balance amount) })
-      ;; Update the total deposits variable.
-      (var-set total-deposits (+ (var-get total-deposits) amount))
-      ;; Return success.
-      (ok true)
+;; Public function for users to deposit STX into the contract.
+;; Updates their balance and the total deposits in the contract.
+(define-public (deposit (amount uint))
+  (let
+    (
+      ;; Fetch the current balance or default to 0 if none exists.
+      (current-balance (default-to u0 (get amount (map-get? deposits { owner: tx-sender }))))
     )
+    ;; Transfer the STX from sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM" to recipient = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.defi (ie: contract identifier on the chain!)".
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    ;; Update the user's deposit amount in the map.
+    (map-set deposits { owner: tx-sender } { amount: (+ current-balance amount) })
+    ;; Update the total deposits variable.
+    (var-set total-deposits (+ (var-get total-deposits) amount))
+    ;; Return success.
+    (ok true)
   )
+)
 
-  ;; Read-only function to get the total balance by tx-sender
-  (define-read-only (get-balance-by-sender)
-    (ok (map-get? deposits { owner: tx-sender }))
-  )
+;; Read-only function to get the total balance by tx-sender
+(define-read-only (get-balance-by-sender)
+  (ok (map-get? deposits { owner: tx-sender }))
+)
 ```
 
 Run `clarinet check` to ensure that your smart contract is valid and ready for testing.
