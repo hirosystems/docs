@@ -5,8 +5,8 @@ description: Discover Clarinet upgrades related to the Nakamoto release.
 
 ## Setting up a project for Nakamoto
 
-As of [Clarinet 2.8.0](https://github.com/hirosystems/clarinet/releases/tag/v2.8.0), devnet can run
-the blockchain in Nakamoto mode and support Clarity 3 contracts.
+As of [Clarinet 2.9.0](https://github.com/hirosystems/clarinet/releases/tag/v2.9.0), devnet can run
+the lastest Stacks blockchain version, enabling Nakamoto and support Clarity 3 contracts.
 
 Once the devnet reaches the right block height, (Bitcoin block #108 by default), it will deploy the
 `pox-4.clar` contract and run in Epoch 2.5. From there, Clarinet will send `stack-stx` and
@@ -23,8 +23,8 @@ with the following settings:
 [devnet]
 epoch_3_0 = 144
 
-stacks_node_image_url = "quay.io/hirosystems/stacks-node:devnet-3.0"
-stacks_signer_image_url = "quay.io/hirosystems/stacks-signer:devnet-3.0"
+stacks_node_image_url = "quay.io/hirosystems/stacks-node:devnet2.9.0-epoch3.0"
+stacks_signer_image_url = "quay.io/hirosystems/stacks-signer:devnet2.9.0-epoch3.0"
 ```
 
 At the end of the `Devnet.toml` file, you must make sure that the `pox_stacking_orders` are properly
