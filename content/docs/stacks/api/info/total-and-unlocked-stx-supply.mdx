@@ -40,19 +40,11 @@ Supply details are queried from specified block height. If the block height is n
 
 </Property>
 
-<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
-
-Include data from unanchored (i.e. unconfirmed) microblocks
-
-<span>Default: `false`</span>
-
-</Property>
-
 | Status code | Description |
 | :----------- | :----------- |
 | `200` | GET request that returns total and unlocked STX supply |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/stx_supply/"} path={[]} query={[{"name":"height","type":"number","defaultValue":"","isRequired":false,"description":"Block height"},{"name":"unanchored","type":"boolean","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/stx_supply/"} path={[]} query={[{"name":"height","type":"number","defaultValue":"","isRequired":false,"description":"Block height"}]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -65,7 +57,7 @@ Include data from unanchored (i.e. unconfirmed) microblocks
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/extended/v1/stx_supply/?height=0&unanchored=false"
+curl -X GET "https://api.hiro.so/extended/v1/stx_supply"
 ```
 
 </Request>
@@ -73,7 +65,7 @@ curl -X GET "https://api.hiro.so/extended/v1/stx_supply/?height=0&unanchored=fal
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/extended/v1/stx_supply/?height=0&unanchored=false", {
+fetch("https://api.hiro.so/extended/v1/stx_supply", {
   method: "GET"
 });
 ```
