@@ -17,18 +17,17 @@ const itemVariants = cva(
         true: "bg-accent text-accent-foreground",
       },
     },
-  }
+  },
 );
 
 const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
 const apiKey = process.env.NEXT_PUBLIC_ALGOLIA_API_KEY;
 const indexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX;
 
-if (!appId || !apiKey || !indexName) throw new Error("Algolia credentials");
-
-const client = algo(appId, apiKey);
-
-const index = client.initIndex(indexName);
+const index =
+  appId && apiKey && indexName
+    ? algo(appId, apiKey).initIndex(indexName)
+    : null;
 
 export default function CustomSearchDialog(props: SharedProps): JSX.Element {
   const defaultTag = useMode() ?? "stacks";
@@ -37,6 +36,13 @@ export default function CustomSearchDialog(props: SharedProps): JSX.Element {
   useEffect(() => {
     setTag(defaultTag);
   }, [defaultTag]);
+
+  if (!index) {
+    console.warn(
+      "Algolia search is disabled. Set up the environment variables to use it.",
+    );
+    return <div />;
+  }
 
   return (
     <SearchDialog

@@ -3,9 +3,12 @@ title: Basic arithmetic
 description: Brief overview of arithmetic operations in Clarity and their importance in smart contract development.
 ---
 
+import { ClarityPlayground } from "../../../../components/code/clarinet-sdk";
+
 Smart contracts often need to perform calculations, whether it's for token balances, voting weights, or complex financial operations. Understanding Clarity's arithmetic functions is crucial for implementing these features efficiently and securely.
 
 ## Why these functions matter
+
 Clarity's arithmetic functions are designed with blockchain-specific considerations in mind:
 
 1. Overflow protection: Unlike some languages, Clarity prevents integer overflow by default, enhancing contract security.
@@ -22,7 +25,8 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to increase values, combine quantities, or perform any additive calculation.
 
-**Best practices**: 
+**Best practices**:
+
 - Consider overflow protection
 - Use with uint for non-negative values like token amounts
 
@@ -42,6 +46,13 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 )
 ```
 
+export const snippet = `(define-public (add (a int) (b int))
+  (ok (+ a b))
+)
+(add 1 2)`;
+
+<ClarityPlayground snippet={snippet} />
+
 ### 2. Subtraction (-)
 
 **What**: Subtracts integers from the first argument.
@@ -50,7 +61,8 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to decrease values, calculate differences, or perform any subtractive operation.
 
-**Best practices**: 
+**Best practices**:
+
 - Guard against underflow
 - Consider using uint for values that shouldn't go negative
 
@@ -75,7 +87,7 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 )
 ```
 
-### 3. Multiplication (*)
+### 3. Multiplication (\*)
 
 **What**: Multiplies two or more integers.
 
@@ -83,7 +95,8 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to scale values, calculate rates, or perform any multiplicative operation.
 
-**Best practices**: 
+**Best practices**:
+
 - Consider overflow protection
 - Use with uint for non-negative values like token amounts
 
@@ -109,7 +122,8 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
 
 **When**: Use when you need to divide values, calculate rates, or perform any division operation.
 
-**Best practices**: 
+**Best practices**:
+
 - Guard against division by zero
 - Consider using uint for non-negative values like token amounts
 
