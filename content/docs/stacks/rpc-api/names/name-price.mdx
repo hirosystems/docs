@@ -1,0 +1,119 @@
+---
+title: Get name price
+description: Retrieves the price of a name.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl="https://api.hiro.so">
+
+<API>
+
+<APIInfo method={"GET"} route={"/v2/prices/names/{name}"}>
+
+## Get name price
+
+Retrieves the price of a name. The `amount` given will be in the smallest possible units of the currency.
+### Path Parameters
+
+<Property name={"name"} type={"string"} required={true} deprecated={false}>
+
+the name to query price information for
+
+<span>Example: `"muneeb.id"`</span>
+
+</Property>
+
+| Status code | Description |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/prices/names/{name}"} path={[{"name":"name","type":"string","defaultValue":"muneeb.id","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/v2/prices/names/muneeb.id"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/v2/prices/names/muneeb.id", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+Fetch price for name.
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "units": "string",
+  "amount": "string"
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+/**
+ * Fetch price for name.
+ */
+export interface BnsGetNamePriceResponse {
+  units: string;
+  amount: string;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -1,0 +1,124 @@
+---
+title: Get Proof-of-Transfer details
+description: Retrieves Proof-of-Transfer (PoX) information.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl="https://api.hiro.so">
+
+<API>
+
+<APIInfo method={"GET"} route={"/v2/pox"}>
+
+## Get Proof-of-Transfer details
+
+Retrieves Proof-of-Transfer (PoX) information. Can be used for Stacking.
+
+| Status code | Description |
+| :------ | :------ |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/pox"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so/v2/pox"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so/v2/pox", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+Get Proof of Transfer (PoX) information
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "contract_id": "string",
+  "first_burnchain_block_height": 0,
+  "min_amount_ustx": 0,
+  "registration_window_length": 0,
+  "rejection_fraction": 0,
+  "reward_cycle_id": 0,
+  "reward_cycle_length": 0,
+  "rejection_votes_left_required": 0,
+  "total_liquid_supply_ustx": 0
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+/**
+ * Get Proof of Transfer (PoX) information
+ */
+export interface CoreNodePoxResponse {
+  contract_id: string;
+  first_burnchain_block_height: number;
+  min_amount_ustx: number;
+  registration_window_length: number;
+  rejection_fraction: number;
+  reward_cycle_id: number;
+  reward_cycle_length: number;
+  rejection_votes_left_required: number;
+  total_liquid_supply_ustx: number;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>
