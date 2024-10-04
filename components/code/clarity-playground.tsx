@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { cn } from "@/utils/cn";
 import { Button } from "@/components/ui/button";
 import * as Base from "fumadocs-ui/components/codeblock";
@@ -83,25 +83,24 @@ export const ClarityPlayground: React.FC<ClarityPlaygroundProps> = ({
 
   return (
     <>
-      <div
-        className="w-full"
-        // style={{ height: 24 * snippetRows, lineHeight: "24px" }}
-      >
-        {/* className="absolute font-sm t-0 b-0 l-0 r-0" */}
-        <Base.CodeBlock style={{ lineHeight: "24px" }}>
+      <div className="w-full relative clarity-playground">
+        <Base.CodeBlock>
           <Base.Pre
+            style={{ height: `${21 * snippetRows + 16 * 2}px` }}
             dangerouslySetInnerHTML={{ __html: snippetHTML }}
           ></Base.Pre>
         </Base.CodeBlock>
-
-        {/* className="absolute t-0 b-0 l-0 r-0 background-none p-2 font-sm font-mono opacity-50" */}
-        <textarea
-          className="background-none p-2 font-sm font-mono display-block w-full"
-          style={{ lineHeight: "24px" }}
-          rows={snippetRows}
-          value={snippetValue}
-          onChange={(e) => setSnippetValue(e.target.value)}
-        />
+        <pre className="w-full m-0 absolute nd-codeblock" style={{ top: 0 }}>
+          <code className="w-full" style={{ height: `${21 * snippetRows}px` }}>
+            <textarea
+              tabIndex={-1}
+              rows={snippetRows}
+              value={snippetValue}
+              onChange={(e) => setSnippetValue(e.target.value)}
+              autoComplete="off"
+            />
+          </code>
+        </pre>
       </div>
 
       <Button

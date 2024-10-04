@@ -3,9 +3,19 @@ title: Basic arithmetic
 description: Brief overview of arithmetic operations in Clarity and their importance in smart contract development.
 ---
 
-import { ClarityPlayground } from "../../../../components/code/clarinet-sdk";
+import { ClarityPlayground } from "../../../../components/code/clarity-playground";
 
 Smart contracts often need to perform calculations, whether it's for token balances, voting weights, or complex financial operations. Understanding Clarity's arithmetic functions is crucial for implementing these features efficiently and securely.
+
+export const snippet = `(define-public (add (a int) (b int))
+  (ok (+ a b))
+)
+
+(add 1 2)
+
+(add 1 2)`;
+
+<ClarityPlayground snippet={snippet} />
 
 ## Why these functions matter
 
@@ -45,13 +55,6 @@ Clarity's arithmetic functions are designed with blockchain-specific considerati
   )
 )
 ```
-
-export const snippet = `(define-public (add (a int) (b int))
-  (ok (+ a b))
-)
-(add 1 2)`;
-
-<ClarityPlayground snippet={snippet} />
 
 ### 2. Subtraction (-)
 
