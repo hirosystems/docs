@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 40 14.3% 95.9%;
@@ -72,7 +71,6 @@
   .dark .bitcoin {
     --primary: 0 0% 100%;
     --icon: 0 0% 100%;
-    
   }
 }
 
@@ -124,22 +122,42 @@ a[aria-label="Hiro Platform"] {
   padding: 0;
 }
 
-
 a[aria-label="Hiro Platform"] div:hover {
   background-color: hsla(var(--muted-foreground) / 0.1);
 }
 
-h1, h2, h3, h4, h5, h6, code, button, .step {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+code,
+button,
+.step {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
-a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, option {
+a,
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+option {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
 /* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
 /* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
-a, p, li, table, input, div.prose .w-0, div.prose .flex-1 span {
+a,
+p,
+li,
+table,
+input,
+div.prose .w-0,
+div.prose .flex-1 span {
   font-family: var(--font-inter), sans-serif;
 }
 
@@ -177,7 +195,14 @@ p {
   line-height: 1.75;
 }
 
-body > div.guides > div > article > div.prose > figure:nth-child(37) > div > div {
+body
+  > div.guides
+  > div
+  > article
+  > div.prose
+  > figure:nth-child(37)
+  > div
+  > div {
   background: hsl(var(--code));
 }
 
@@ -234,14 +259,21 @@ nav.container > *:nth-last-child(2):hover {
   border-bottom-color: hsl(var(--primary));
 }
 
-nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
+nav.container a,
+figure,
+pre,
+pre a,
+code,
+code a,
+th,
+code > span,
+.not-prose div {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
 div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
   border-bottom: none;
 }
-
 
 a[aria-label="Hiro Platform"] div svg {
   width: 0.75rem;
@@ -252,21 +284,32 @@ nav a[href="/guides"] {
   text-decoration: underline;
 }
 
-[data-radix-scroll-area-viewport] .flex.flex-col.gap-8.pb-10.pt-4.max-md\:px-4.md\:pr-3.md\:pt-10 {
-    gap: 0;
+[data-radix-scroll-area-viewport]
+  .flex.flex-col.gap-8.pb-10.pt-4.max-md\:px-4.md\:pr-3.md\:pt-10 {
+  gap: 0;
 }
 
 /* Target the header toggle */
 
-body > div > header > nav > div.rounded-md.border.bg-background.p-1.text-sm.text-muted-foreground.max-md\:absolute.max-md\:left-\[50\%\].max-md\:translate-x-\[-50\%\] > a.rounded-md.px-2.py-1.transition-colors.hover\:text-accent-foreground.bg-background.text-accent-foreground {
+body
+  > div
+  > header
+  > nav
+  > div.rounded-md.border.bg-background.p-1.text-sm.text-muted-foreground.max-md\:absolute.max-md\:left-\[50\%\].max-md\:translate-x-\[-50\%\]
+  > a.rounded-md.px-2.py-1.transition-colors.hover\:text-accent-foreground.bg-background.text-accent-foreground {
   background-color: hsl(var(--inverted));
   color: hsl(var(--background));
 }
 
 /* Target the search component */
 
-body > div > header > nav > div.flex.flex-1.flex-row.items-center.justify-end.md\:gap-2 > button.inline-flex.w-full.max-w-\[240px\].items-center.gap-2.rounded-full.border.bg-secondary\/50.p-1\.5.text-sm.text-muted-foreground.transition-colors.hover\:bg-accent.hover\:text-accent-foreground.max-md\:hidden {
-  background-color: hsl(var(--background))
+body
+  > div
+  > header
+  > nav
+  > div.flex.flex-1.flex-row.items-center.justify-end.md\:gap-2
+  > button.inline-flex.w-full.max-w-\[240px\].items-center.gap-2.rounded-full.border.bg-secondary\/50.p-1\.5.text-sm.text-muted-foreground.transition-colors.hover\:bg-accent.hover\:text-accent-foreground.max-md\:hidden {
+  background-color: hsl(var(--background));
 }
 
 p.first\:mt-0 {
@@ -288,7 +331,9 @@ p.first\:mt-0:before {
   margin: 0;
 }
 
-div.not-prose, div.prose-no-margin, div[role="tablist"] {
+div.not-prose,
+div.prose-no-margin,
+div[role="tablist"] {
   background: hsl(var(--background));
 }
 
@@ -303,7 +348,8 @@ form.not-prose.flex.flex-col.gap-4.rounded-lg.border.bg-card.p-4 {
 }
 
 /* overrides the background of APIInfo and adjusts sticky header on scroll */
-div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 {
+div.prose-no-margin
+  .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 {
   background: hsl(var(--background));
   top: 4.5rem;
 }
@@ -318,21 +364,24 @@ div.prose-no-margin .sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.roun
 }
 
 /* Style for the POST span */
-.sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 > span:first-child {
+.sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10
+  > span:first-child {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
 }
 
 /* Style for the button */
-.sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 > button {
+.sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10
+  > button {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
 }
 
 /* Target the inner div containing the endpoint spans */
-.sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10 > div {
+.sticky.top-24.z-\[2\].flex.flex-row.items-center.gap-2.rounded-lg.border.bg-card.p-3.md\:top-10
+  > div {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -348,7 +397,10 @@ div.prose div.footer.not-prose {
   font-family: var(--font-aeonikFono), sans-serif !important;
 }
 
-.steps > div:nth-child(2) > figure:nth-child(3) > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
+.steps
+  > div:nth-child(2)
+  > figure:nth-child(3)
+  > div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
   background: hsl(var(--background)) !important;
 }
 
@@ -363,7 +415,7 @@ div.api-example div.max-xl\:hidden > div:nth-child(1) {
   background-color: hsl(var(--inverted));
 }
 
-.prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   text-decoration-color: var(--secondary) !important;
 }
 
@@ -381,8 +433,8 @@ div.api-example div.max-xl\:hidden > div:nth-child(1) {
 }
 
 .size-10 {
-  width: 2.5rem/* 20px */;
-  height: 2.5rem/* 20px */;
+  width: 2.5rem /* 20px */;
+  height: 2.5rem /* 20px */;
 }
 
 /* Add a deprecated strike through to sidebar links */
@@ -402,4 +454,43 @@ a[href="/stacks/api/fees/fee-rate"] {
 
 div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
   background: hsl(var(--background));
+}
+
+div.clarity-playground {
+  --line-height: 21px;
+
+  & > * {
+    box-sizing: border-box;
+  }
+  pre.nd-codeblock {
+    overflow: hidden;
+
+    span.line {
+      display: inline;
+      height: var(--line-height);
+      line-height: var(--line-height);
+      border: none;
+    }
+  }
+
+  code:has(textarea) {
+    display: block;
+    background: none;
+    border: none;
+    line-height: var(--line-height);
+    overflow: hidden;
+  }
+
+  textarea {
+    position: absolute;
+    width: 100%;
+    top: 16px;
+    left: 16px;
+    resize: none;
+    outline: none;
+
+    background: none;
+    color: transparent;
+    caret-color: white;
+  }
 }
