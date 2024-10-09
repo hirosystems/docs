@@ -1,0 +1,71 @@
+---
+title: Get Nakamoto tenure metadata
+description: Fetch metadata about the ongoing Nakamoto tenure.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl={"http://localhost:20443"}>
+
+<API>
+
+<APIInfo method={"GET"} route={"/v3/tenures/info"}>
+
+## Fetch metadata about the ongoing Nakamoto tenure
+
+Fetch metadata about the ongoing Nakamoto tenure. This information is sufficient to obtain and authenticate the highest complete tenure, as well as obtain new tenure blocks.
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Metadata about the ongoing tenure |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v3/tenures/info"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "http://localhost:20443/v3/tenures/info"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("http://localhost:20443/v3/tenures/info", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+</APIExample>
+
+</API>
+
+</Root>

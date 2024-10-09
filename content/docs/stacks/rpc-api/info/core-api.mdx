@@ -20,7 +20,7 @@ import {
   TypeScriptResponse
 } from 'fumadocs-openapi/ui';
 
-<Root baseUrl="https://api.hiro.so">
+<Root baseUrl={"http://localhost:20443"}>
 
 <API>
 
@@ -28,10 +28,10 @@ import {
 
 ## Get Core API info
 
-Retrieves information about the Core API including the server version
+Get Core API information
 
 | Status code | Description |
-| :------ | :------ |
+| ----------- | ----------- |
 | `200` | Success |
 
 <APIPlayground authorization={undefined} method={"GET"} route={"/v2/info"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
@@ -47,7 +47,7 @@ Retrieves information about the Core API including the server version
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/v2/info"
+curl -X GET "http://localhost:20443/v2/info"
 ```
 
 </Request>
@@ -55,7 +55,7 @@ curl -X GET "https://api.hiro.so/v2/info"
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/v2/info", {
+fetch("http://localhost:20443/v2/info", {
   method: "GET"
 });
 ```
@@ -76,19 +76,19 @@ GET request that core node information
 
 ```json
 {
-  "peer_version": 402653194,
+  "peer_version": 0,
   "pox_consensus": "string",
-  "burn_block_height": 863576,
+  "burn_block_height": 0,
   "stable_pox_consensus": "string",
-  "stable_burn_block_height": 863569,
+  "stable_burn_block_height": 0,
   "server_version": "string",
-  "network_id": 1,
-  "parent_network_id": 3652501241,
-  "stacks_tip_height": 167976,
+  "network_id": 0,
+  "parent_network_id": 0,
+  "stacks_tip_height": 0,
   "stacks_tip": "string",
   "stacks_tip_consensus_hash": "string",
-  "unanchored_tip": null,
-  "exit_at_block_height": null
+  "unanchored_tip": "string",
+  "exit_at_block_height": 0
 }
 ```
 

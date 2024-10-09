@@ -1,6 +1,6 @@
 ---
-title: Get transfer fee estimate
-description: Retrieves an estimated fee rate for STX transfer transactions.
+title: Get Nakamoto block
+description: Fetch a Nakamoto block by its index block hash.
 toc: false
 ---
 
@@ -24,17 +24,26 @@ import {
 
 <API>
 
-<APIInfo method={"GET"} route={"/v2/fees/transfer"}>
+<APIInfo method={"GET"} route={"/v3/blocks/{block_id}"}>
 
-## Get estimated fee
+## Fetch a Nakamoto block
 
-Get an estimated fee rate for STX transfer transactions. This a a fee rate / byte, and is returned as a JSON integer
+Fetch a Nakamoto block by its index block hash.
+
+### Path Parameters
+
+<Property name={"block_id"} type={"string"} required={true} deprecated={false}>
+
+The block's ID hash
+
+</Property>
 
 | Status code | Description |
 | ----------- | ----------- |
-| `200` | Success |
+| `200` | The raw SIP-003-encoded block will be returned. |
+| `404` | The block could not be found |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/v2/fees/transfer"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/v3/blocks/{block_id}"} path={[{"name":"block_id","type":"string","defaultValue":"","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -47,7 +56,7 @@ Get an estimated fee rate for STX transfer transactions. This a a fee rate / byt
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "http://localhost:20443/v2/fees/transfer"
+curl -X GET "http://localhost:20443/v3/blocks/string"
 ```
 
 </Request>
@@ -55,7 +64,7 @@ curl -X GET "http://localhost:20443/v2/fees/transfer"
 <Request value={"JavaScript"}>
 
 ```js
-fetch("http://localhost:20443/v2/fees/transfer", {
+fetch("http://localhost:20443/v3/blocks/string", {
   method: "GET"
 });
 ```
@@ -67,8 +76,6 @@ fetch("http://localhost:20443/v2/fees/transfer", {
 <Responses items={["200"]}>
 
 <Response value={"200"}>
-
-GET fee estimates
 
 <ResponseTypes>
 
@@ -83,10 +90,7 @@ GET fee estimates
 <TypeScriptResponse>
 
 ```ts
-/**
- * GET fee estimates
- */
-export type CoreNodeFeeResponse = string;
+export type Response = string;
 ```
 
 </TypeScriptResponse>

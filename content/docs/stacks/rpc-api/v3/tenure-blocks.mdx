@@ -1,6 +1,6 @@
 ---
-title: Get transfer fee estimate
-description: Retrieves an estimated fee rate for STX transfer transactions.
+title: Get Nakamoto tenure blocks
+description: Fetch a sequence of Nakamoto blocks in a tenure.
 toc: false
 ---
 
@@ -24,17 +24,17 @@ import {
 
 <API>
 
-<APIInfo method={"GET"} route={"/v2/fees/transfer"}>
+<APIInfo method={"GET"} route={"/v3/tenures/{block_id}"}>
 
-## Get estimated fee
+## Fetch a sequence of Nakamoto blocks in a tenure
 
-Get an estimated fee rate for STX transfer transactions. This a a fee rate / byte, and is returned as a JSON integer
+Fetch a sequence of Nakamoto blocks in a tenure.  The blocks will be served in order from highest to lowest.  The blocks will be encoded in their SIP-003 wire format, and concatenated together.
 
 | Status code | Description |
 | ----------- | ----------- |
-| `200` | Success |
+| `200` | SIP-003-encoded Nakamoto blocks, concatenated together |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/v2/fees/transfer"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/v3/tenures/{block_id}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -47,7 +47,7 @@ Get an estimated fee rate for STX transfer transactions. This a a fee rate / byt
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "http://localhost:20443/v2/fees/transfer"
+curl -X GET "http://localhost:20443/v3/tenures/%7Bblock_id%7D"
 ```
 
 </Request>
@@ -55,7 +55,7 @@ curl -X GET "http://localhost:20443/v2/fees/transfer"
 <Request value={"JavaScript"}>
 
 ```js
-fetch("http://localhost:20443/v2/fees/transfer", {
+fetch("http://localhost:20443/v3/tenures/%7Bblock_id%7D", {
   method: "GET"
 });
 ```
@@ -67,8 +67,6 @@ fetch("http://localhost:20443/v2/fees/transfer", {
 <Responses items={["200"]}>
 
 <Response value={"200"}>
-
-GET fee estimates
 
 <ResponseTypes>
 
@@ -83,10 +81,7 @@ GET fee estimates
 <TypeScriptResponse>
 
 ```ts
-/**
- * GET fee estimates
- */
-export type CoreNodeFeeResponse = string;
+export type Response = string;
 ```
 
 </TypeScriptResponse>
