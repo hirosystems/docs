@@ -20,7 +20,7 @@ import {
   TypeScriptResponse
 } from 'fumadocs-openapi/ui';
 
-<Root baseUrl="https://api.hiro.so">
+<Root baseUrl={"http://localhost:20443"}>
 
 <API>
 
@@ -28,10 +28,10 @@ import {
 
 ## Get estimated fee
 
-Retrieves an estimated fee rate for STX transfer transactions. This a a fee rate / byte, and is returned as a JSON integer
+Get an estimated fee rate for STX transfer transactions. This a a fee rate / byte, and is returned as a JSON integer
 
 | Status code | Description |
-| :------ | :------ |
+| ----------- | ----------- |
 | `200` | Success |
 
 <APIPlayground authorization={undefined} method={"GET"} route={"/v2/fees/transfer"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
@@ -47,7 +47,7 @@ Retrieves an estimated fee rate for STX transfer transactions. This a a fee rate
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/v2/fees/transfer"
+curl -X GET "http://localhost:20443/v2/fees/transfer"
 ```
 
 </Request>
@@ -55,7 +55,7 @@ curl -X GET "https://api.hiro.so/v2/fees/transfer"
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/v2/fees/transfer", {
+fetch("http://localhost:20443/v2/fees/transfer", {
   method: "GET"
 });
 ```

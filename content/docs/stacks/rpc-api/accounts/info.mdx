@@ -20,7 +20,7 @@ import {
   TypeScriptResponse
 } from 'fumadocs-openapi/ui';
 
-<Root baseUrl="https://api.hiro.so">
+<Root baseUrl={"http://localhost:20443"}>
 
 <API>
 
@@ -28,19 +28,18 @@ import {
 
 ## Get account info
 
-Retrieves the account data for a given Account or a Contract Identifier
+Get the account data for the provided principal
 
-Where balance is the hex encoding of a unsigned 128-bit integer (big-endian), nonce is an unsigned 64-bit integer, and the proofs are provided as hex strings.
+Where balance is the hex encoding of a unsigned 128-bit integer (big-endian), nonce is a unsigned 64-bit integer, and the proofs are provided as hex strings.
 
-For non-existent accounts, this does not return a 404 error, rather it returns an object with balance and nonce of 0.
+For non-existent accounts, this does not 404, rather it returns an object with balance and nonce of 0.
+
 
 ### Path Parameters
 
 <Property name={"principal"} type={"string"} required={true} deprecated={false}>
 
-Stacks address or a Contract identifier
-
-<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
+Stacks address or a Contract identifier (e.g. `SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0.get-info`)
 
 </Property>
 
@@ -54,15 +53,15 @@ Returns object without the proof field if set to 0
 
 <Property name={"tip"} type={"string"} required={false} deprecated={false}>
 
-The Stacks chain tip to query from
+The Stacks chain tip to query from. If tip == latest, the query will be run from the latest known tip (includes unconfirmed state).
 
 </Property>
 
 | Status code | Description |
-| :------ | :------ |
+| ----------- | ----------- |
 | `200` | Success |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/v2/accounts/{principal}"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"proof","type":"number","defaultValue":"","isRequired":false},{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/accounts/{principal}"} path={[{"name":"principal","type":"string","defaultValue":"","isRequired":true}]} query={[{"name":"proof","type":"number","defaultValue":"","isRequired":false},{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -75,7 +74,7 @@ The Stacks chain tip to query from
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0?proof=0&tip=string"
+curl -X GET "http://localhost:20443/v2/accounts/string?proof=0&tip=string"
 ```
 
 </Request>
@@ -83,7 +82,7 @@ curl -X GET "https://api.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/v2/accounts/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0?proof=0&tip=string", {
+fetch("http://localhost:20443/v2/accounts/string?proof=0&tip=string", {
   method: "GET"
 });
 ```

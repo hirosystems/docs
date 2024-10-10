@@ -20,7 +20,7 @@ import {
   TypeScriptResponse
 } from 'fumadocs-openapi/ui';
 
-<Root baseUrl="https://api.hiro.so">
+<Root baseUrl={"http://localhost:20443"}>
 
 <API>
 
@@ -28,10 +28,10 @@ import {
 
 ## Get contract interface
 
-Retrieves a contract interface with a given `contract_address` and `contract name`
+Get contract interface using a `contract_address` and `contract name`
 
 | Status code | Description |
-| :------ | :------ |
+| ----------- | ----------- |
 | `200` | Contract interface |
 
 <APIPlayground authorization={undefined} method={"GET"} route={"/v2/contracts/interface/{contract_address}/{contract_name}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
@@ -47,7 +47,7 @@ Retrieves a contract interface with a given `contract_address` and `contract nam
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/v2/contracts/interface/%7Bcontract_address%7D/%7Bcontract_name%7D"
+curl -X GET "http://localhost:20443/v2/contracts/interface/%7Bcontract_address%7D/%7Bcontract_name%7D"
 ```
 
 </Request>
@@ -55,7 +55,7 @@ curl -X GET "https://api.hiro.so/v2/contracts/interface/%7Bcontract_address%7D/%
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/v2/contracts/interface/%7Bcontract_address%7D/%7Bcontract_name%7D", {
+fetch("http://localhost:20443/v2/contracts/interface/%7Bcontract_address%7D/%7Bcontract_name%7D", {
   method: "GET"
 });
 ```
@@ -90,9 +90,7 @@ GET request to get contract interface
   ],
   "non_fungible_tokens": [
     {}
-  ],
-  "epoch": "string",
-  "clarity_version": "string"
+  ]
 }
 ```
 
