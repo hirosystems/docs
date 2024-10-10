@@ -29,7 +29,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       hacks: "Hiro Hacks",
       "clarinet-js-sdk": "Clarinet JS SDK",
       "platform-api": "Platform API",
-      "rpc-api": "Stacks Core RPC",
+      "rpc-api": "Stacks Node RPC",
     };
 
     if (page.file?.name === "index" && page.slugs[1]) {
@@ -53,7 +53,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       }
 
       if (page.slugs[1].toLowerCase() === "rpc-api") {
-        prefix = "Stacks Core RPC";
+        prefix = "Stacks Node RPC";
       }
 
       return prefix;
