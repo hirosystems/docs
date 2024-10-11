@@ -29,6 +29,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       hacks: "Hiro Hacks",
       "clarinet-js-sdk": "Clarinet JS SDK",
       "platform-api": "Platform API",
+      "rpc-api": "Stacks Node RPC",
     };
 
     if (page.file?.name === "index" && page.slugs[1]) {
@@ -51,11 +52,16 @@ export default function Page({ params }: { params: Param }): JSX.Element {
         prefix = "Token Metadata API";
       }
 
+      if (page.slugs[1].toLowerCase() === "rpc-api") {
+        prefix = "Stacks Node RPC API";
+      }
+
       return prefix;
     } else if (["overview", "index"].includes(page.file?.name)) {
       const pathSegments = page.file.dirname.split("/");
       if (pathSegments.length >= 2) {
         const relevantSegments = pathSegments.slice(-2); // Get the last two segments
+
         return relevantSegments
           .map(
             (segment: string) =>

@@ -20,7 +20,7 @@ import {
   TypeScriptResponse
 } from 'fumadocs-openapi/ui';
 
-<Root baseUrl="https://api.hiro.so">
+<Root baseUrl={"http://localhost:20443"}>
 
 <API>
 
@@ -28,11 +28,12 @@ import {
 
 ## Get specific data-map inside a contract
 
-Attempt to fetch data from a contract data map. The contract is identified with Stacks Address `contract_address` and Contract Name `contract_address` in the URL path. The map is identified with [Map Name].
+Attempt to fetch data from a contract data map. The contract is identified with [Stacks Address] and [Contract Name] in the URL path. The map is identified with [Map Name].
 
 The key to lookup in the map is supplied via the POST body. This should be supplied as the hex string serialization of the key (which should be a Clarity value). Note, this is a JSON string atom.
 
 In the response, `data` is the hex serialization of the map response. Note that map responses are Clarity option types, for non-existent values, this is a serialized none, and for all other responses, it is a serialized (some ...) object.
+
 
 ### Request Body
 
@@ -48,23 +49,17 @@ Hex string serialization of the lookup key (which should be a Clarity value)
 
 Stacks address
 
-<span>Example: `"SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11"`</span>
-
 </Property>
 
 <Property name={"contract_name"} type={"string"} required={true} deprecated={false}>
 
 Contract name
 
-<span>Example: `"newyorkcitycoin-core-v2"`</span>
-
 </Property>
 
 <Property name={"map_name"} type={"string"} required={true} deprecated={false}>
 
 Map name
-
-<span>Example: `"approved-contracts"`</span>
 
 </Property>
 
@@ -78,16 +73,16 @@ Returns object without the proof field when set to 0
 
 <Property name={"tip"} type={"string"} required={false} deprecated={false}>
 
-The Stacks chain tip to query from
+The Stacks chain tip to query from. If tip == latest, the query will be run from the latest known tip (includes unconfirmed state).
 
 </Property>
 
 | Status code | Description |
-| :------ | :------ |
+| ----------- | ----------- |
 | `200` | Success |
 | `400` | Failed loading data map |
 
-<APIPlayground authorization={undefined} method={"POST"} route={"/v2/map_entry/{contract_address}/{contract_name}/{map_name}"} path={[{"name":"contract_address","type":"string","defaultValue":"SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11","isRequired":true},{"name":"contract_name","type":"string","defaultValue":"newyorkcitycoin-core-v2","isRequired":true},{"name":"map_name","type":"string","defaultValue":"approved-contracts","isRequired":true}]} query={[{"name":"proof","type":"number","defaultValue":"","isRequired":false},{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={{"type":"string","defaultValue":"","isRequired":true}} schemas={{}}>
+<APIPlayground authorization={undefined} method={"POST"} route={"/v2/map_entry/{contract_address}/{contract_name}/{map_name}"} path={[{"name":"contract_address","type":"string","defaultValue":"","isRequired":true},{"name":"contract_name","type":"string","defaultValue":"","isRequired":true},{"name":"map_name","type":"string","defaultValue":"","isRequired":true}]} query={[{"name":"proof","type":"number","defaultValue":"","isRequired":false},{"name":"tip","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={{"type":"string","defaultValue":"","isRequired":true}} schemas={{}}>
 
 </APIPlayground>
 
@@ -100,7 +95,7 @@ The Stacks chain tip to query from
 <Request value={"cURL"}>
 
 ```bash
-curl -X POST "https://api.hiro.so/v2/map_entry/SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11/newyorkcitycoin-core-v2/approved-contracts?proof=0&tip=string" \
+curl -X POST "http://localhost:20443/v2/map_entry/string/string/string?proof=0&tip=string" \
   -d 'string'
 ```
 
@@ -109,7 +104,7 @@ curl -X POST "https://api.hiro.so/v2/map_entry/SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/v2/map_entry/SPSCWDV3RKV5ZRN1FQD84YE1NQFEDJ9R1F4DYQ11/newyorkcitycoin-core-v2/approved-contracts?proof=0&tip=string", {
+fetch("http://localhost:20443/v2/map_entry/string/string/string?proof=0&tip=string", {
   method: "POST"
 });
 ```

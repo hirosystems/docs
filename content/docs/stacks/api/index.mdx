@@ -1,6 +1,6 @@
 ---
 title: Overview
-description: Query the Stacks blockchain, interact with smart contracts, and broadcast transactions with the Stacks Blockchain API, all via a familiar REST interface.
+description: Query the Stacks blockchain with the Stacks Blockchain API.
 toc: false
 ---
 
@@ -11,7 +11,7 @@ The Stacks Blockchain API expands the intentionally minimal RPC endpoints availa
 ## Popular endpoints
 
 <Callout title="RPC endpoints" type="info">
-Use our `/v2` route to access the Stacks API node endpoints. For more information, see the [Stacks Node RPC API](https://docs.stacks.co/reference/api#stacks-node-rpc-api-endpoints) documentation.
+If you're looking for direct access to the Stacks node, including the ability to broadcast transactions and interact with smart contracts, check out our [Stacks Node RPC](/stacks/rpc-api) documentation.
 </Callout>
 
 <Cards>
@@ -21,21 +21,21 @@ Use our `/v2` route to access the Stacks API node endpoints. For more informatio
     description="Retrieve data about transactions on Stacks."
   />
   <SecondaryCard
-    href="/stacks/api/smart-contracts/read-only"
-    title="Call smart contracts"
-    description="Call a read-only public function on a smart contract."
+    href="/stacks/api/smart-contracts/events"
+    title="Get contract events"
+    description="Retrieves a list of events that have been triggered by a given smart contract."
   />
   <SecondaryCard
-    href="/stacks/api/accounts/info"
-    title="Retrieve user information"
-    description="Get information about a user, their account balance, transaction history, and more."
+    href="/stacks/api/blocks/get-block"
+    title="Get data from a block"
+    description="Retrieves a block by its height or hash."
   />
   
 </Cards>
 
 ## Related tools
 
-- **[Hiro Archive](/stacks/archive)**: Bootstrap your own instance of the Stacks Blockchain API with the Hiro Archive and save days of setup time.
+- **[Stacks Node RPC](/stacks/rpc-api)**: Fetch data and broadcast transactions from the Stacks Node RPC API.
 - **[Token Metadata API](/stacks/token-metadata-api)**: Fetch fungible and non-fungible token data on the Stacks blockchain.
 - **[Stacks Explorer](https://explorer.hiro.so)**: Looking for a front end to verify activity on the Stacks blockchain? Try the Stacks Explorer.
 
