@@ -53,7 +53,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
       }
 
       if (page.slugs[1].toLowerCase() === "rpc-api") {
-        prefix = "Stacks Node RPC";
+        prefix = "Stacks Node RPC API";
       }
 
       return prefix;
