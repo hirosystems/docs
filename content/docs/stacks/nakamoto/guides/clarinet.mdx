@@ -74,27 +74,3 @@ epoch = 3.0
 
 Start devnet with `clarinet devnet start`, you should see epoch 3.0 and fast blocks at Bitcoin
 block 144.
-
-## Deploy contracts on the Nakamoto Testnets
-
-A Nakamoto testnet is available and running in Epoch 3.0. Clarinet can be used to deploy Clarity 3
-contracts on this tesnet.
-
-In a Clarinet project, the `settings/Testnet.toml` file can be updated like so:
-
-```toml
-[network]
-name = "testnet"
-stacks_node_rpc_address = "https://api.nakamoto-1.hiro.so"
-deployment_fee_rate = 10
-
-[accounts.deployer]
-mnemonic = "<YOUR PRIVATE TESTNET MNEMONIC HERE>"
-```
-
-Then run the following command to generate the deployments plan and deploy the contracts:
-
-```sh
-clarinet deployments generate --testnet --medium-cost
-clarinet deployments apply --testnet
-```
