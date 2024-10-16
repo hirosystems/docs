@@ -1,25 +1,18 @@
 ---
-title: Scopes
-description: Reference guide for available scopes for Stacks and Bitcoin.
+title: Stacks Scopes
+description: Reference guide for available scopes for Stacks.
 toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
 import { Property } from 'fumadocs-ui/components/api'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 
 import { InlineCode } from '@/components/inline-code';
 
-Scopes are parameters you use to define the "if this" logic of your chainhook. In other words, scopes specify what on-chain events you are looking to monitor and track. For more information on Chainhook design, please view [predicate design](/stacks/chainhook/concepts/predicate-design).
-
-## Installation
-
-```console
-brew install chainhook
-```
+Stacks scopes are parameters you use to define the `if this` specification logic of your Chainhook on the Stacks blockchain. In other words, scopes specify what on-chain events you are looking to monitor and track. For more information on Chainhook design, please view [predicate design](/stacks/chainhook/concepts/predicate-design).
 
 <Root>
 
@@ -55,7 +48,7 @@ The `equals` property is a 32 bytes hex encoded type used to specify the exact t
     {
       "if_this": {
         "scope": "txid",
-        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f" // [!code highlight]
       }
     }
     ```
@@ -125,40 +118,40 @@ The `between` property specifies a range of block heights to match, inclusive of
   {
     "if_this": {
       "scope": "block_height",
-      "equals": 141200
+      "equals": 141200 // [!code highlight]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="higher_than">
   ```json
-  // [!code word:higher_than]
+  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "higher_than": 10000
+      "higher_than": 10000 // [!code highlight]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="lower_than">
   ```json
-  // [!code word:lower_than]
+  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "lower_than": 10000
+      "lower_than": 10000 // [!code highlight]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="between">
   ```json
-  // [!code word:between]
+  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "between": [0, 10000]
+      "between": [0, 10000] // [!code highlight]
     }
   }
   ```
@@ -181,7 +174,7 @@ The `ft_transfer` scope allows you to query transactions based on fungible token
 
 <Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
 
-The `asset_identifier` property specifies the fully qualified asset identifier to observe, such as `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc`.
+The `asset_identifier` property specifies the fully qualified asset identifier to observe.
 
 </Property>
 
@@ -211,12 +204,13 @@ The `actions` property specifies the types of token actions to observe, such as 
     "if_this": {
       "scope": "ft_transfer",
       "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
-      "actions": ["transfer"]
+      "actions": ["transfer"] // [!code highlight]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="all">
+    // [!code word:ft_transfer]
   ```json
   {
     "if_this": {
@@ -245,7 +239,7 @@ The `nft_transfer` scope allows you to query transactions based on non-fungible 
 
 <Property required={true} deprecated={false} name={"asset_identifier"} type={"string"}>
 
-The `asset_identifier` property specifies the fully qualified asset identifier to observe, such as `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys`.
+The `asset_identifier` property specifies the fully qualified asset identifier to observe.
 
 </Property>
 
@@ -275,13 +269,14 @@ The `actions` property specifies the types of NFT actions to observe, such as `m
     "if_this": {
       "scope": "nft_transfer",
       "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
-      "actions": ["mint"]
+      "actions": ["mint"] // [!code highlight]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="all">
   ```json
+  // [!code word:nft_transfer]
   {
     "if_this": {
       "scope": "nft_transfer",
@@ -320,7 +315,10 @@ The `actions` property specifies the types of STX token actions to observe, such
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Scoping by STX token transfer</Badge>
+      <Badge className='badge transition-colors'>By STX token transfer</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="all" className='tab group'>
+      <Badge className='badge transition-colors'>Passing all actions</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -329,7 +327,18 @@ The `actions` property specifies the types of STX token actions to observe, such
   {
     "if_this": {
       "scope": "stx_transfer",
-      "actions": ["transfer", "lock"]
+      "actions": ["transfer"] // [!code highlight]
+    }
+  }
+  ```
+  </TabsContent>
+    <TabsContent value="all">
+  ```json
+  // [!code word:stx_transfer]
+  {
+    "if_this": {
+      "scope": "stx_transfer",
+      "actions": ["mint", "transfer", "burn", "lock"] // [!code highlight]
     }
   }
   ```
@@ -375,7 +384,10 @@ The `matches_regex` property is used for matching an event that regex matches wi
 <Tabs defaultValue="default">
   <TabsList className='flex flex-wrap'>
     <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Scoping by print event</Badge>
+      <Badge className='badge transition-colors'>Using contains</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="matches_regex" className='tab group'>
+      <Badge className='badge transition-colors'>Using matches_regex</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -385,7 +397,19 @@ The `matches_regex` property is used for matching an event that regex matches wi
     "if_this": {
       "scope": "print_event",
       "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-      "contains": "monkey"
+      "contains": "monkey" // [!code highlight]
+    }
+  }
+  ```
+  </TabsContent>
+  <TabsContent value="matches_regex">
+  ```json
+  // [!code word:print_event]
+  {
+    "if_this": {
+      "scope": "print_event",
+      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+      "matches_regex": "(?:^|\\W)monkey(?:$|\\W)" // [!code highlight]
     }
   }
   ```
@@ -435,7 +459,7 @@ The `method` property specifies the specific method within the contract to obser
     "if_this": {
       "scope": "contract_call",
       "contract_identifier": "SP000000000000000000002Q6VF78.pox",
-      "method": "stack-stx"
+      "method": "stack-stx" // [!code highlight]
     }
   }
   ```
@@ -483,22 +507,22 @@ The `implement_trait` property specifies the contract trait to observe.
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:deployer]
+  // [!code word:contract_deployment]
   {
     "if_this": {
       "scope": "contract_deployment",
-      "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+      "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"  // [!code highlight]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="trait">
   ```json
-  // [!code word:implement_trait]
+  // [!code word:contract_deployment]
   {
     "if_this": {
       "scope": "contract_deployment",
-      "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol"
+      "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol" // [!code highlight]
     }
   }
   ```
