@@ -1,0 +1,313 @@
+---
+title: DocsKit
+description: DocsKit usage
+---
+
+```ts title="function-call.ts"
+const transaction = await makeContractCall({
+  contractAddress: "SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X",
+  contractName: "contract_name",
+  functionName: "contract_function",
+  functionArgs: [bufferCVFromString("foo")],
+  senderKey:
+    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  validateWithAbi: true,
+  network: new StacksTestnet(),
+  postConditions,
+  anchorMode: AnchorMode.Any,
+});
+```
+
+```ts function-call.ts -cn
+const transaction = await makeContractCall({
+  contractAddress: "SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X",
+  contractName: "contract_name",
+  functionName: "contract_function",
+  functionArgs: [bufferCVFromString("foo")],
+  senderKey:
+    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  validateWithAbi: true,
+  network: new StacksTestnet(),
+  postConditions,
+  anchorMode: AnchorMode.Any,
+});
+```
+
+This is a code blocks:
+
+```js
+const lorem = ipsum(dolor, sit);
+```
+
+With title, language icon, and horizontal scroll:
+
+```py foo.py
+def lorem():
+  return ipsum(dolor, sit) + amet + consectetur(adipiscing, elit)
+```
+
+With line numbers, word wrap, and copy button:
+
+```js index.js -nwc
+function lorem() {
+  return ipsum(dolor, sit) + amet + consectetur(adipiscing, elit);
+}
+```
+
+```clarity foo
+;; Define listing errors
+(define-constant ERR_EXPIRY_IN_PAST (err u1000))
+(define-constant ERR_PRICE_ZERO (err u1001))
+
+;; Define cancelling and fulfilling errors
+;; !mark
+(define-constant ERR_UNKNOWN_LISTING (err u2000))
+(define-constant ERR_UNAUTHORISED (err u2001))
+(define-constant ERR_LISTING_EXPIRED (err u2002))
+(define-constant ERR_NFT_ASSET_MISMATCH (err u2003))
+(define-constant ERR_PAYMENT_ASSET_MISMATCH (err u2004))
+(define-constant ERR_MAKER_TAKER_EQUAL (err u2005))
+(define-constant ERR_UNINTENDED_TAKER (err u2006))
+(define-constant ERR_ASSET_CONTRACT_NOT_WHITELISTED (err u2007))
+(define-constant ERR_PAYMENT_CONTRACT_NOT_WHITELISTED (err u2008))
+```
+
+### Marks
+
+Highlighting lines with default and custom colors:
+
+```js
+function lorem(ipsum, dolor = 1) {
+  // !mark
+  return dolor;
+}
+
+function ipsum(lorem, dolor = 1) {
+  // !mark(1:2) gold
+  const sit = lorem == null ? 0 : 1;
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(lorem) : [];
+}
+```
+
+Highlighting tokens using regex:
+
+```js
+// !mark[/sit/mg] #d946ef
+function ipsum(lorem, dolor = 1) {
+  // !mark[/lorem == null/]
+  const sit = lorem == null ? 0 : 1;
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(lorem) : [];
+}
+```
+
+Highlighting diffs:
+
+```js
+function lorem(ipsum, dolor = 1) {
+  const sit = 10;
+  // !diff -
+  dolor = ipsum - sit;
+  // !diff +
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum) : [];
+}
+```
+
+### Callouts
+
+<WithNotes>
+
+How to use `lorem` from the `ipsum` package:
+
+```js index.js
+// !callout[/ipsum/] description
+import lorem from "ipsum";
+
+// !callout[/sit/] inspect
+const sit = lorem({ a: 1, b: 2 });
+
+012345678901234567890;
+// !callout[/5/] foo
+000005678901234567890;
+```
+
+```js !inspect
+sit = [
+  { name: "a", value: 1 },
+  { name: "b", value: 2 },
+];
+```
+
+```js !foo foo.js
+sit = [
+  { name: "a", value: 1 },
+  { name: "b", value: 2 },
+];
+```
+
+## !description
+
+The default export of the `ipsum` package is a function that **returns an array**.
+
+Kind of like _`Object.entries(x)`_ but different.
+
+</WithNotes>
+
+### Tooltips
+
+<WithNotes>
+
+Using `read` and `write` functions from the `lorem` package:
+
+```js demo.js
+// !tooltip[/lorem/] install
+import { read, write } from "lorem";
+
+// !tooltip[/data.json/] data
+var data = read("data.json");
+
+// !tooltip[/test-123/] apikey
+write({ x: 1 }, { apiKey: "test-123" });
+```
+
+We can also use tooltips [here](tooltip "install") in [prose](tooltip "data") text.
+
+```json !data data.json
+{
+  "lorem": "ipsum dolor sit amet",
+  "foo": [4, 8, 15, 16]
+}
+```
+
+## !install
+
+This is a **fake library**. You can install it with:
+
+```terminal
+$ npm install lorem
+```
+
+It lets you read and write data.
+
+## !apikey
+
+This is a public sample test mode [API key](https://example.com). Don’t submit any personally information using this key.
+
+Replace this with your secret key found on the [API Keys page](https://example.com) in the dashboard.
+
+</WithNotes>
+
+### Tabs
+
+This is how you build a website:
+
+<CodeTabs flags="acn">
+
+```html !! index.html
+<link rel="stylesheet" href="styles.css" />
+<body>
+  <h1>Hello, world!</h1>
+  <script src="main.js"></script>
+</body>
+```
+
+```css !! styles.css
+body {
+  margin: 0;
+  padding: 0;
+}
+```
+
+```js !! main.js
+function main() {
+  console.log("Hello, world!");
+}
+
+main();
+```
+
+</CodeTabs>
+
+### Lang Switcher
+
+<CodeTabs storage="switcher" flags="a">
+
+```java !! Java
+public class Main {
+  public static int factorial(int n) {
+    if (n == 0) {
+      return 1;
+    } else {
+      return n * factorial(n - 1);
+    }
+  }
+}
+```
+
+```cpp !! C++
+int factorial(int n) {
+  if (n == 0) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
+```
+
+</CodeTabs>
+
+### Collapsible code
+
+Collapsing groups of lines:
+
+```js index.js
+// !collapse(1:4)
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : 1;
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum) : [];
+}
+
+// !collapse(1:4) collapsed
+function ipsum(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : 1;
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum) : [];
+}
+```
+
+Folding tokens using regex:
+
+```jsx
+// !fold[/className="(.*?)"/gm]
+function Foo() {
+  return (
+    <div className="bg-red-200 opacity-50">
+      <span className="block">hey</span>
+    </div>
+  );
+}
+```
+
+### Inline code
+
+This is a variable in JavaScript: _`var x = 10`_.
+
+In CSS it looks like this: _css`a { --x: 10 }`_.
+
+And in Pascal it's _pascal`x := 10`_.
+
+### Links
+
+How to use `baz`:
+
+```js usage.js
+// !link[/foo/mg] https://example.com
+// !link[/bar/mg] https://example.com
+import { foo, bar } from "baz";
+
+const x = foo(10);
+const y = bar(x);
+```

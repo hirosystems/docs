@@ -139,7 +139,7 @@ a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, option {
 
 /* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
 /* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
-a, p, li, table, input, div.prose .w-0, div.prose .flex-1 span {
+a, p, li, table, input, div.prose .w-0, div.prose .flex-1 :not(pre) span {
   font-family: var(--font-inter), sans-serif;
 }
 
@@ -403,3 +403,75 @@ a[href="/stacks/api/fees/fee-rate"] {
 div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
   background: hsl(var(--background));
 }
+
+/* START Docskit theme */
+
+@layer base {
+  :root {
+    --ch-0: light;
+    --ch-1: #4c4f69;
+    --ch-2: #7c7f93;
+    --ch-3: #9ca0b0;
+    --ch-4: #40a02b;
+    --ch-5: #ea76cb;
+    --ch-6: #fe640b;
+    --ch-7: #8839ef;
+    --ch-8: #179299;
+    --ch-9: #1e66f5;
+    --ch-10: #df8e1d;
+    --ch-11: #e64553;
+    --ch-12: #d20f39;
+    --ch-13: #04a5e5;
+    --ch-14: #dd7878;
+    --ch-15: #6c6f85;
+    --ch-16: #7287fd;
+    --ch-17: #dc8a78;
+    --ch-18: #eff1f5;
+    --ch-19: #4c4f6912;
+    --ch-20: #04a5e540;
+    --ch-21: #1a85ff;
+    --ch-22: #7c7f934d;
+    --ch-23: #e6e9ef;
+    --ch-24: #acb0be;
+    --ch-25: #dce0e8;
+    --ch-26: #8c8fa1;
+    --ch-27: #ccd0da;
+    --ch-28: #ccd0da80;
+    --ch-29: #eff1f5e6;
+  }
+
+  .dark {
+    --ch-0: dark;
+    --ch-1: #cdd6f4;
+    --ch-2: #9399b2;
+    --ch-3: #6c7086;
+    --ch-4: #a6e3a1;
+    --ch-5: #f5c2e7;
+    --ch-6: #fab387;
+    --ch-7: #cba6f7;
+    --ch-8: #94e2d5;
+    --ch-9: #89b4fa;
+    --ch-10: #f9e2af;
+    --ch-11: #eba0ac;
+    --ch-12: #f38ba8;
+    --ch-13: #89dceb;
+    --ch-14: #f2cdcd;
+    --ch-15: #a6adc8;
+    --ch-16: #b4befe;
+    --ch-17: #f5e0dc;
+    --ch-18: #1e1e2e;
+    --ch-19: #cdd6f412;
+    --ch-20: #89dceb40;
+    --ch-21: #3794ff;
+    --ch-22: #9399b240;
+    --ch-23: #181825;
+    --ch-24: #585b70;
+    --ch-25: #11111b;
+    --ch-26: #7f849c;
+    --ch-27: #313244;
+    --ch-28: #31324480;
+    --ch-29: #1e1e2ee6;
+  }
+}
+
+/* END Docskit theme */
