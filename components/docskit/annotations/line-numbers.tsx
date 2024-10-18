@@ -8,7 +8,7 @@ export const lineNumbers: AnnotationHandler = {
       <>
         <span
           style={{ minWidth: `${width}ch` }}
-          className="text-right text-code-line-number select-none"
+          className="text-right text-code-line-number select-none mr-1"
         >
           {props.lineNumber}
         </span>

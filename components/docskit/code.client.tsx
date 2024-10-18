@@ -1,32 +1,11 @@
 "use client";
 
-import { HighlightedCode } from "codehike/code";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/utils/cn";
 import { CopyButton } from "./copy-button";
 import React from "react";
 import { useLocalStorage } from "./hooks/local-storage";
-
-const TITLEBAR =
-  "border-b-[1px] border-code-border !bg-code-tabs-background px-2 py-1 w-full h-10 font-inter";
-
-type CodeOptions = {
-  copyButton?: boolean;
-  lineNumbers?: boolean;
-  wordWrap?: boolean;
-};
-
-type CodeGroup = {
-  type: "TABS" | "SINGLE" | "TITLELESS";
-  storage?: string;
-  options: CodeOptions;
-  tabs: {
-    options: CodeOptions;
-    highlighted: HighlightedCode;
-    element: React.ReactNode;
-    icon: React.ReactNode;
-  }[];
-};
+import { CodeGroup, TITLEBAR } from "./code-group";
 
 export function CodeClient(props: { group: CodeGroup; className?: string }) {
   const { group, className } = props;

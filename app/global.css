@@ -138,10 +138,13 @@ a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, option {
 }
 
 /* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
-/* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
-a, p, li, table, input, div.prose .w-0, div.prose .flex-1 :not(pre) span {
+a, p, li, table, input, div.prose .w-0 {
   font-family: var(--font-inter), sans-serif;
 }
+/* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
+/* div.prose .flex-1 span {
+  font-family: var(--font-inter), sans-serif;
+} */
 
 /* This changes the default background color of the root level Home and Get Started tab icons */
 div.bg-gradient-to-b {

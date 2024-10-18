@@ -1,5 +1,10 @@
 import { themeIcons } from "seti-icons";
 
+const langs: Record<string, string> = {
+  TypeScript: "ts",
+  JavaScript: "js",
+};
+
 export function CodeIcon({
   title,
   className,
@@ -14,6 +19,8 @@ export function CodeIcon({
   } else if (filename.endsWith(".mjs")) {
     filename = filename.slice(0, -4);
     filename += ".js";
+  } else if (langs[filename]) {
+    filename = filename + "." + langs[filename];
   }
 
   const { svg, color } = getIcon("x." + filename);

@@ -3,106 +3,188 @@ title: DocsKit
 description: DocsKit usage
 ---
 
-```ts title="function-call.ts"
-const transaction = await makeContractCall({
-  contractAddress: "SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X",
-  contractName: "contract_name",
-  functionName: "contract_function",
-  functionArgs: [bufferCVFromString("foo")],
-  senderKey:
-    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
-  validateWithAbi: true,
-  network: new StacksTestnet(),
-  postConditions,
-  anchorMode: AnchorMode.Any,
-});
+Lorem ipsum
+
+```ts
+const l = listCV<BooleanCV>([trueCV(), intCV(1)]);
 ```
 
-```ts function-call.ts -cn
-const transaction = await makeContractCall({
-  contractAddress: "SPBMRFRPPGCDE3F384WCJPK8PQJGZ8K9QKK7F59X",
-  contractName: "contract_name",
-  functionName: "contract_function",
-  functionArgs: [bufferCVFromString("foo")],
-  senderKey:
-    "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
-  validateWithAbi: true,
-  network: new StacksTestnet(),
-  postConditions,
-  anchorMode: AnchorMode.Any,
-});
+Lorem ipsum dolor sit amet
+
+```toml Clarinet.toml -c
+[contracts.counter]
+path = 'contracts/counter.clar'
+clarity_version = 2
+epoch = 2.5
 ```
 
-This is a code blocks:
+## Mark
 
-```js
-const lorem = ipsum(dolor, sit);
+```clarity counter.clar -c
+;; !mark[/Counters/mg]
+(define-map Counters principal uint)
+
+;; !mark(1:3)
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
 ```
 
-With title, language icon, and horizontal scroll:
+## Inline code
 
-```py foo.py
-def lorem():
-  return ipsum(dolor, sit) + amet + consectetur(adipiscing, elit)
+Call your contract by running _clarity`(contract-call? .counter count-up)`_ and verify the count with _clarity`(contract-call? .counter get-count tx-sender)`_.
+
+## Line numbers + word wrap
+
+```clarity -cnw
+;; some comment
+(define-public (request-extension-callback (extension <extension-trait>) (memo (buff 34)))
+  (let
+    (
+      (sender tx-sender)
+    )
+    (asserts! (is-extension contract-caller) ERR_INVALID_EXTENSION)
+    (asserts! (is-eq contract-caller (contract-of extension)) ERR_INVALID_EXTENSION)
+    (as-contract (contract-call? extension callback sender memo))
+  )
+)
 ```
 
-With line numbers, word wrap, and copy button:
+## Tabs + collapse
 
-```js index.js -nwc
-function lorem() {
-  return ipsum(dolor, sit) + amet + consectetur(adipiscing, elit);
+<CodeTabs flags="c">
+
+```jsonc !! sample-alert-payload.json
+{
+  "tx_id": "0xa7f511b3f379efef6fe71d0de57712ed13a89c5b6e24dd049eb2cc9a7c24fcb5",
+  "nonce": 5,
+  "fee_rate": "250",
+  "sender_address": "SP2W9QYAHJNS7YTQY9EK2MSTQGX9E2NDMV766JP9Z",
+  "sponsored": false,
+  "post_condition_mode": "deny",
+  // !collapse(1:10) collapsed
+  "post_conditions": [
+    {
+      "type": "stx",
+      "condition_code": "sent_equal_to",
+      "amount": "3000000",
+      "principal": {
+        "type_id": "principal_standard",
+        "address": "SP2W9QYAHJNS7YTQY9EK2MSTQGX9E2NDMV766JP9Z",
+      },
+    },
+  ],
+  "anchor_mode": "any",
+  "tx_status": "pending",
+  "receipt_time": 1726104636,
+  "receipt_time_iso": "2024-09-12T01:30:36.000Z",
+  "tx_type": "contract_call",
+  // !collapse(1:12) collapsed
+  "contract_call": {
+    "contract_id": "SPHW0EJK5KPDMK03ZX792EMP0Q5J3A39ZMTVZZCY.sample-contract",
+    "function_name": "donate",
+    "function_signature": "(define-public (donate (amount uint)))",
+    "function_args": [
+      {
+        "hex": "0x01000000000000000000000000002dc6c0",
+        "repr": "u3000000",
+        "name": "amount",
+        "type": "uint",
+      },
+    ],
+  },
 }
 ```
 
-```clarity foo
-;; Define listing errors
-(define-constant ERR_EXPIRY_IN_PAST (err u1000))
-(define-constant ERR_PRICE_ZERO (err u1001))
-
-;; Define cancelling and fulfilling errors
-;; !mark
-(define-constant ERR_UNKNOWN_LISTING (err u2000))
-(define-constant ERR_UNAUTHORISED (err u2001))
-(define-constant ERR_LISTING_EXPIRED (err u2002))
-(define-constant ERR_NFT_ASSET_MISMATCH (err u2003))
-(define-constant ERR_PAYMENT_ASSET_MISMATCH (err u2004))
-(define-constant ERR_MAKER_TAKER_EQUAL (err u2005))
-(define-constant ERR_UNINTENDED_TAKER (err u2006))
-(define-constant ERR_ASSET_CONTRACT_NOT_WHITELISTED (err u2007))
-(define-constant ERR_PAYMENT_CONTRACT_NOT_WHITELISTED (err u2008))
-```
-
-### Marks
-
-Highlighting lines with default and custom colors:
-
-```js
-function lorem(ipsum, dolor = 1) {
-  // !mark
-  return dolor;
+```ts !! sample-alert-interface.ts
+interface Body {
+  tx_id: string;
+  nonce: number;
+  fee_rate: string;
+  sender_address: string;
+  sponsored: boolean;
+  post_condition_mode: string;
+  post_conditions: Postcondition[];
+  anchor_mode: string;
+  tx_status: string;
+  receipt_time: number;
+  receipt_time_iso: string;
+  tx_type: string;
+  contract_call: Contractcall;
 }
-
-function ipsum(lorem, dolor = 1) {
-  // !mark(1:2) gold
-  const sit = lorem == null ? 0 : 1;
-  dolor = sit - amet(dolor);
-  return sit ? consectetur(lorem) : [];
+interface Contractcall {
+  contract_id: string;
+  function_name: string;
+  function_signature: string;
+  function_args: Functionarg[];
 }
-```
-
-Highlighting tokens using regex:
-
-```js
-// !mark[/sit/mg] #d946ef
-function ipsum(lorem, dolor = 1) {
-  // !mark[/lorem == null/]
-  const sit = lorem == null ? 0 : 1;
-  dolor = sit - amet(dolor);
-  return sit ? consectetur(lorem) : [];
+interface Functionarg {
+  hex: string;
+  repr: string;
+  name: string;
+  type: string;
+}
+interface Postcondition {
+  type: string;
+  condition_code: string;
+  amount: string;
+  principal: Principal;
+}
+interface Principal {
+  type_id: string;
+  address: string;
 }
 ```
 
-Highlighting diffs:
+</CodeTabs>
+
+## Lang Switcher
+
+<CodeTabs flags="ac" storage="ts">
+
+```ts !! TypeScript
+(async () => {
+  const apiConfig: Configuration = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: "https://api.testnet.hiro.so",
+  });
+})().catch(console.error);
+```
+
+```js !! JavaScript
+(async () => {
+  const apiConfig = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: "https://api.testnet.hiro.so",
+  });
+})().catch(console.error);
+```
+
+</CodeTabs>
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+<CodeTabs flags="ac" storage="ts">
+
+```ts !! TypeScript
+const principal = "ST000000000000000000002AMW42H";
+const rewardCycle: UIntCV = uintCV(22);
+```
+
+```js !! JavaScript
+const principal = "ST000000000000000000002AMW42H";
+const rewardCycle = uintCV(22);
+```
+
+</CodeTabs>
+
+## Diff
 
 ```js
 function lorem(ipsum, dolor = 1) {
@@ -115,7 +197,7 @@ function lorem(ipsum, dolor = 1) {
 }
 ```
 
-### Callouts
+## Callouts
 
 <WithNotes>
 
@@ -127,20 +209,9 @@ import lorem from "ipsum";
 
 // !callout[/sit/] inspect
 const sit = lorem({ a: 1, b: 2 });
-
-012345678901234567890;
-// !callout[/5/] foo
-000005678901234567890;
 ```
 
 ```js !inspect
-sit = [
-  { name: "a", value: 1 },
-  { name: "b", value: 2 },
-];
-```
-
-```js !foo foo.js
 sit = [
   { name: "a", value: 1 },
   { name: "b", value: 2 },
@@ -155,7 +226,7 @@ Kind of like _`Object.entries(x)`_ but different.
 
 </WithNotes>
 
-### Tooltips
+## Tooltips
 
 <WithNotes>
 
@@ -199,107 +270,7 @@ Replace this with your secret key found on the [API Keys page](https://example.c
 
 </WithNotes>
 
-### Tabs
-
-This is how you build a website:
-
-<CodeTabs flags="acn">
-
-```html !! index.html
-<link rel="stylesheet" href="styles.css" />
-<body>
-  <h1>Hello, world!</h1>
-  <script src="main.js"></script>
-</body>
-```
-
-```css !! styles.css
-body {
-  margin: 0;
-  padding: 0;
-}
-```
-
-```js !! main.js
-function main() {
-  console.log("Hello, world!");
-}
-
-main();
-```
-
-</CodeTabs>
-
-### Lang Switcher
-
-<CodeTabs storage="switcher" flags="a">
-
-```java !! Java
-public class Main {
-  public static int factorial(int n) {
-    if (n == 0) {
-      return 1;
-    } else {
-      return n * factorial(n - 1);
-    }
-  }
-}
-```
-
-```cpp !! C++
-int factorial(int n) {
-  if (n == 0) {
-    return 1;
-  } else {
-    return n * factorial(n - 1);
-  }
-}
-```
-
-</CodeTabs>
-
-### Collapsible code
-
-Collapsing groups of lines:
-
-```js index.js
-// !collapse(1:4)
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : 1;
-  dolor = sit - amet(dolor);
-  return sit ? consectetur(ipsum) : [];
-}
-
-// !collapse(1:4) collapsed
-function ipsum(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : 1;
-  dolor = sit - amet(dolor);
-  return sit ? consectetur(ipsum) : [];
-}
-```
-
-Folding tokens using regex:
-
-```jsx
-// !fold[/className="(.*?)"/gm]
-function Foo() {
-  return (
-    <div className="bg-red-200 opacity-50">
-      <span className="block">hey</span>
-    </div>
-  );
-}
-```
-
-### Inline code
-
-This is a variable in JavaScript: _`var x = 10`_.
-
-In CSS it looks like this: _css`a { --x: 10 }`_.
-
-And in Pascal it's _pascal`x := 10`_.
-
-### Links
+## Links
 
 How to use `baz`:
 
@@ -310,4 +281,14 @@ import { foo, bar } from "baz";
 
 const x = foo(10);
 const y = bar(x);
+```
+
+## Terminal
+
+```terminal
+# note: you can change the v0.27.0 version that is available on the releases page.
+wget -nv https://github.com/hirosystems/clarinet/releases/download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
+tar -xf clarinet-linux-x64.tar.gz
+chmod +x ./clarinet
+mv ./clarinet /usr/local/bin
 ```

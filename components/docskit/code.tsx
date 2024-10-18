@@ -1,7 +1,6 @@
 import {
   AnnotationHandler,
   highlight,
-  HighlightedCode,
   Inline,
   Pre,
   RawCode,
@@ -22,37 +21,17 @@ import { link } from "./annotations/link";
 import { tokenTransitions } from "./annotations/token-transitions";
 import { tooltip } from "./annotations/tooltip";
 import { callout } from "./annotations/callout";
+import { CodeGroup, flagsToOptions, TITLEBAR } from "./code-group";
 
 const CODEBLOCK =
   "border rounded selection:bg-code-selection border-code-border overflow-hidden my-4 relative";
-const TITLEBAR =
-  "border-b-[1px] border-code-border bg-code-tabs-background px-2 py-1 w-full h-10 font-inter";
-
-type CodeOptions = {
-  copyButton?: boolean;
-  lineNumbers?: boolean;
-  wordWrap?: boolean;
-  animate?: boolean;
-};
-
-type CodeGroup = {
-  type: "TABS" | "SINGLE" | "TITLELESS";
-  storage?: string;
-  options: CodeOptions;
-  tabs: {
-    options: CodeOptions;
-    highlighted: HighlightedCode;
-    element: React.ReactNode;
-    icon: React.ReactNode;
-  }[];
-};
 
 export async function InlineCode({ codeblock }: { codeblock: RawCode }) {
   const highlighted = await highlight(codeblock, theme);
   return (
     <Inline
       code={highlighted}
-      className="selection:bg-code-selection rounded border border-code-border px-1 py-0.5 whitespace-nowrap text-[15px] !bg-code-background"
+      className="selection:bg-code-selection rounded border border-code-border px-1 py-0.5 whitespace-nowrap !bg-code-background"
       style={highlighted.style}
     />
   );
@@ -161,22 +140,4 @@ function extractFlags(codeblock: RawCode) {
       ? ""
       : codeblock.meta.replace(" " + flags, "").trim();
   return { title, flags: flags.slice(1) };
-}
-
-function flagsToOptions(flags: string = "") {
-  const options: CodeOptions = {};
-  const map = {
-    c: "copyButton",
-    n: "lineNumbers",
-    w: "wordWrap",
-    a: "animate",
-  };
-  flags.split("").forEach((flag) => {
-    // @ts-ignore
-    if (map[flag]) {
-      // @ts-ignore
-      options[map[flag]] = true;
-    }
-  });
-  return options;
 }

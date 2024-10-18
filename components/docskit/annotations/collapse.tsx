@@ -43,7 +43,7 @@ const collapseTrigger: AnnotationHandler = {
   name: "CollapseTrigger",
   onlyIfAnnotated: true,
   AnnotatedLine: ({ annotation, ...props }) => (
-    <CollapsibleTrigger className="group contents">
+    <CollapsibleTrigger className="group contents font-mono">
       <InnerLine merge={props} data={{ icon }} />
     </CollapsibleTrigger>
   ),
