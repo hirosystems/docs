@@ -28,11 +28,11 @@ export const callout: AnnotationHandler = {
             minWidth: `${column + 4}ch`,
             marginLeft: `${indentation}ch`,
           }}
-          className="w-fit border bg-code-tabs-background border-code-border rounded px-0 relative my-1 whitespace-break-spaces select-none"
+          className="w-fit border bg-background border-code-border rounded px-0 relative my-1 whitespace-break-spaces select-none"
         >
           <div
             style={{ left: `${column - indentation - 1}ch` }}
-            className="absolute border-l border-t border-code-border w-2 h-2 rotate-45 -translate-y-1/2 -top-[1px] bg-code-tabs-background"
+            className="absolute border-l border-t border-code-border w-2 h-2 rotate-45 -translate-y-1/2 -top-[1px] bg-background"
           />
           <CalloutContent query={annotation.query} />
         </div>

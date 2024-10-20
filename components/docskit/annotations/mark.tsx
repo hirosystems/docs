@@ -34,15 +34,8 @@ export const mark: AnnotationHandler = {
 };
 
 function getColor(annotation?: { query?: string }) {
-  const n = Number(annotation?.query || "2") % colors.length;
+  const n = Number(annotation?.query || "0") % colors.length;
   return colors[n] || annotation?.query;
 }
 
-const colors = [
-  "#22c55e",
-  "#14b8a6",
-  "#0ea5e9",
-  "#8b5cf6",
-  "#d946ef",
-  "#ec4899",
-];
+const colors = ["var(--ch-16)", "var(--ch-7)", "var(--ch-8)"];

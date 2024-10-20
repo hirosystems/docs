@@ -37,7 +37,6 @@ const chConfig = {
   ignoreCode: ({ lang, meta }) =>
     lang === "bash" ||
     lang === "console" ||
-    lang === "package-install" ||
     meta?.startsWith("title") ||
     meta?.startsWith("twoslash"),
 };
