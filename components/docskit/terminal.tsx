@@ -1,12 +1,18 @@
 import theme from "./theme.mjs";
 import {
   AnnotationHandler,
+  BlockAnnotation,
   highlight,
   HighlightedCode,
   Pre,
   RawCode,
 } from "codehike/code";
-import { TerminalChrome, Line, OutputBlock } from "./terminal.client";
+import {
+  TerminalChrome,
+  Line,
+  OutputBlock,
+  CommandBlock,
+} from "./terminal.client";
 import { Block, CodeBlock, parseProps } from "codehike/blocks";
 import { z } from "zod";
 import { tokenTransitions } from "./annotations/token-transitions";
@@ -36,6 +42,35 @@ export async function Terminal({ codeblock }: { codeblock: RawCode }) {
   );
 }
 
+export function PackageInstall({ codeblock }: { codeblock: RawCode }) {
+  return (
+    // @ts-ignore
+    <TerminalPicker
+      store="package-install"
+      code={[
+        {
+          ...codeblock,
+          value: "$ npm install " + codeblock.value,
+          meta: "npm",
+          lang: "bash",
+        },
+        {
+          ...codeblock,
+          value: "$ yarn add " + codeblock.value,
+          meta: "yarn",
+          lang: "bash",
+        },
+        {
+          ...codeblock,
+          value: "$ pnpm add " + codeblock.value,
+          meta: "pnpm",
+          lang: "bash",
+        },
+      ]}
+    />
+  );
+}
+
 const output: AnnotationHandler = {
   name: "output",
   Block: OutputBlock,
@@ -43,7 +78,7 @@ const output: AnnotationHandler = {
 
 const command: AnnotationHandler = {
   name: "command",
-  AnnotatedLine: Line,
+  Block: CommandBlock,
 };
 
 export async function TerminalPicker(props: any) {
@@ -78,7 +113,7 @@ export async function TerminalPicker(props: any) {
 
 function extractAnnotations(code: string) {
   const lines = code.split(/\r?\n/);
-  const annotations = [] as HighlightedCode["annotations"];
+  const annotations = [] as BlockAnnotation[];
   lines.forEach((line, index) => {
     if (line.startsWith("$ ")) {
       annotations.push({
@@ -89,7 +124,10 @@ function extractAnnotations(code: string) {
       });
     } else {
       let last = annotations[annotations.length - 1];
-      if (!last || last.name !== "output") {
+      if (last.name === "command" && last.query.endsWith("\\")) {
+        last.query = last.query + "\n" + line;
+        last.toLineNumber = index + 1;
+      } else if (!last || last.name !== "output") {
         annotations.push({
           name: "output",
           query: "",

@@ -296,21 +296,16 @@ $ chmod +x ./clarinet
 $ mv ./clarinet /usr/local/bin
 ```
 
-```bash
-# note: you can change the v0.27.0 version that is available on the releases page.
-wget -nv https://github.com/hirosystems/clarinet/releases/download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
-tar -xf clarinet-linux-x64.tar.gz
-chmod +x ./clarinet
-mv ./clarinet /usr/local/bin
-```
-
 ```terminal
 $ npx create-next-app@latest
 Need to install the following packages:
 create-next-app@14.2.13
 [32m✔[0m [1mWhat is your project?[0m [90m…[0m my-app
 $ npm install @next/mdx
-$ npm run dev
+$ /path/to/bitcoin-cli \
+  --conf=/path/to/bitcoin.conf \
+  --rpcuser={{your-rpc-username}} \
+  --rpcpassword={{your-rpc-password}} stop
 > next dev
 
   [38;2;173;127;168;1m▲ Next.js 14.2.13
@@ -321,4 +316,11 @@ $ npm run dev
 
 ```sh Terminal
 $ foo bar
+```
+
+```terminal
+$ /path/to/bitcoin-cli \
+  --conf=/path/to/bitcoin.conf \
+  --rpcuser={{your-rpc-username}} \
+  --rpcpassword={{your-rpc-password}} stop
 ```

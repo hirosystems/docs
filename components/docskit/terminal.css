@@ -1,12 +1,12 @@
-.line {
-  --line-accent: 113, 113, 122;
-}
-
-[data-mode="light"] .line {
+.ch-terminal-line {
   --line-accent: 161, 161, 170;
 }
 
-.content {
+.dark .ch-terminal-line {
+  --line-accent: 113, 113, 122;
+}
+
+.ch-terminal-content {
   display: inline-block;
   transition: all 0.3s;
   background-size: 400% auto;
@@ -24,7 +24,19 @@
   margin: 0 -4px;
 }
 
-.button {
+.ch-terminal-line:hover .ch-terminal-content {
+  background-position-x: 33.3%;
+}
+
+.ch-terminal-line:has(.ch-terminal-button:hover) .ch-terminal-content {
+  background-position-x: 37%;
+}
+
+.ch-terminal-line[data-active="true"] .ch-terminal-content {
+  background-position-x: 66.6% !important;
+}
+
+.ch-terminal-button {
   opacity: 0;
   transform: translateX(-4px);
   cursor: pointer;
@@ -34,27 +46,15 @@
   padding: 0 6px;
 }
 
-.button:hover {
+.ch-terminal-button:hover {
   background-color: rgb(var(--line-accent), 0.3);
 }
 
-.line[data-active="true"] .button {
+.ch-terminal-line[data-active="true"] .ch-terminal-button {
   background-color: rgb(var(--line-accent), 0.6);
 }
 
-.line:hover .button {
+.ch-terminal-line:hover .ch-terminal-button {
   opacity: 1;
   transform: translateX(0);
-}
-
-.line:hover .content {
-  background-position-x: 33.3%;
-}
-
-.line:has(.button:hover) .content {
-  background-position-x: 37%;
-}
-
-.line[data-active="true"] .content {
-  background-position-x: 66.6% !important;
 }

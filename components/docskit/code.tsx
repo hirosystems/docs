@@ -21,10 +21,7 @@ import { link } from "./annotations/link";
 import { tokenTransitions } from "./annotations/token-transitions";
 import { tooltip } from "./annotations/tooltip";
 import { callout } from "./annotations/callout";
-import { CodeGroup, flagsToOptions, TITLEBAR } from "./code-group";
-
-const CODEBLOCK =
-  "border rounded selection:bg-ch-selection border-ch-border overflow-hidden my-4 relative";
+import { CODEBLOCK, CodeGroup, flagsToOptions, TITLEBAR } from "./code-group";
 
 export async function InlineCode({ codeblock }: { codeblock: RawCode }) {
   const highlighted = await highlight(codeblock, theme);

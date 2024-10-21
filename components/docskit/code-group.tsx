@@ -2,6 +2,8 @@ import { HighlightedCode } from "codehike/code";
 
 export const TITLEBAR =
   "border-b-[1px] border-ch-border bg-ch-tabs-background px-2 py-1 w-full h-10 font-inter";
+export const CODEBLOCK =
+  "border rounded selection:bg-ch-selection border-ch-border overflow-hidden my-4 relative";
 
 type CodeOptions = {
   copyButton?: boolean;

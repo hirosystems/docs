@@ -10,11 +10,9 @@ import {
   InnerLine,
 } from "codehike/code";
 import React from "react";
-import { TITLEBAR } from "./code-group";
+import { CODEBLOCK, TITLEBAR } from "./code-group";
 import { cn } from "@/utils/cn";
 
-const CODEBLOCK =
-  "border rounded selection:bg-ch-selection border-ch-border overflow-hidden my-4 relative";
 export function TerminalChrome({
   options,
   storeKey,
@@ -72,13 +70,13 @@ export const Line: CustomLineWithAnnotation = ({ annotation, ...props }) => {
   return (
     <InnerLine
       merge={props}
-      className="group px-1 flex line"
+      className="px-1 flex ch-terminal-line"
       data-active={active}
     >
       <span className="select-none text-ch-line-number shrink-0">$ </span>
-      <span className="content break-all">{props.children}</span>
+      <span className="ch-terminal-content break-all">{props.children}</span>
       <span
-        className="button select-none self-start"
+        className="ch-terminal-button select-none self-start"
         onClick={() => {
           navigator.clipboard.writeText(annotation?.query || "");
           setActive(true);
@@ -88,6 +86,29 @@ export const Line: CustomLineWithAnnotation = ({ annotation, ...props }) => {
         Copy
       </span>
     </InnerLine>
+  );
+};
+
+export const CommandBlock: AnnotationHandler["Block"] = ({
+  children,
+  annotation,
+}) => {
+  const [active, setActive] = React.useState(false);
+  return (
+    <div className="px-1 flex ch-terminal-line" data-active={active}>
+      <span className="select-none text-ch-line-number shrink-0">$ </span>
+      <span className="ch-terminal-content break-all">{children}</span>
+      <span
+        className="ch-terminal-button select-none self-start"
+        onClick={() => {
+          navigator.clipboard.writeText(annotation?.query || "");
+          setActive(true);
+          setTimeout(() => setActive(false), 350);
+        }}
+      >
+        Copy
+      </span>
+    </div>
   );
 };
 

@@ -4,43 +4,18 @@ import { NoteTooltip } from "./notes.tooltip";
 import { z } from "zod";
 import { RawCode } from "codehike/code";
 import { parseProps, Block, CodeBlock } from "codehike/blocks";
-import { Terminal, TerminalPicker } from "./terminal";
+import { PackageInstall, Terminal } from "./terminal";
 
 function DocsKitCode(props: { codeblock: RawCode }) {
   const { codeblock, ...rest } = props;
 
   if (codeblock.lang == "package-install") {
-    return (
-      // @ts-ignore
-      <TerminalPicker
-        store="package-install"
-        code={[
-          {
-            ...codeblock,
-            value: "$ npm install " + codeblock.value,
-            meta: "npm",
-            lang: "bash",
-          },
-          {
-            ...codeblock,
-            value: "$ yarn add " + codeblock.value,
-            meta: "yarn",
-            lang: "bash",
-          },
-          {
-            ...codeblock,
-            value: "$ pnpm add " + codeblock.value,
-            meta: "pnpm",
-            lang: "bash",
-          },
-        ]}
-      />
-    );
+    return <PackageInstall codeblock={codeblock} />;
   }
 
   if (codeblock.lang == "terminal") {
     // @ts-ignore
-    return <Terminal codeblock={{ ...codeblock, lang: "terminal" }} />;
+    return <Terminal codeblock={codeblock} />;
   }
 
   // @ts-ignore
