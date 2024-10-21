@@ -75,10 +75,10 @@ export const Line: CustomLineWithAnnotation = ({ annotation, ...props }) => {
       className="group px-1 flex line"
       data-active={active}
     >
-      <span className="select-none text-code-line-number">$ </span>
-      <span className="content">{props.children}</span>
+      <span className="select-none text-code-line-number shrink-0">$ </span>
+      <span className="content break-all">{props.children}</span>
       <span
-        className="button select-none"
+        className="button select-none self-start"
         onClick={() => {
           navigator.clipboard.writeText(annotation?.query || "");
           setActive(true);

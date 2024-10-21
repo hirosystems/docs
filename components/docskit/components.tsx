@@ -40,7 +40,7 @@ function DocsKitCode(props: { codeblock: RawCode }) {
 
   if (codeblock.lang == "terminal") {
     // @ts-ignore
-    return <Terminal codeblock={{ ...codeblock, lang: "bash" }} />;
+    return <Terminal codeblock={{ ...codeblock, lang: "terminal" }} />;
   }
 
   // @ts-ignore

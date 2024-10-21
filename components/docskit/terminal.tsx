@@ -25,7 +25,7 @@ export async function Terminal({ codeblock }: { codeblock: RawCode }) {
           children: (
             <Pre
               code={highlighted}
-              handlers={[output, command]}
+              handlers={[output, wordWrap, command]}
               className="bg-code-background py-3 px-2 m-0 leading-6 font-mono"
               style={{ color: highlighted.style.color }}
             />

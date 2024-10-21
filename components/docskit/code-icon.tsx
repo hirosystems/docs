@@ -13,17 +13,11 @@ export function CodeIcon({
   className?: string;
 }) {
   let filename = title || "";
-  if (filename.endsWith(".mdx")) {
-    filename = filename.slice(0, -4);
-    filename += ".md";
-  } else if (filename.endsWith(".mjs")) {
-    filename = filename.slice(0, -4);
-    filename += ".js";
-  } else if (langs[filename]) {
+  if (langs[filename]) {
     filename = filename + "." + langs[filename];
   }
 
-  const { svg, color } = getIcon("x." + filename);
+  const { svg, color } = getIcon(filename);
   const __html = svg.replace(
     /svg/,
     `svg fill='hsl(var(--muted-foreground))' height='28' style='margin: -8px'`
