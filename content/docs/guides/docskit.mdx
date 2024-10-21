@@ -1,0 +1,326 @@
+---
+title: DocsKit
+description: DocsKit usage
+---
+
+Lorem ipsum
+
+```ts
+const l = listCV<BooleanCV>([trueCV(), intCV(1)]);
+```
+
+Lorem ipsum dolor sit amet
+
+```toml Clarinet.toml -c
+[contracts.counter]
+path = 'contracts/counter.clar'
+clarity_version = 2
+epoch = 2.5
+```
+
+## Mark
+
+```clarity counter.clar -c
+;; !mark[/Counters/mg]
+(define-map Counters principal uint)
+
+;; !mark(1:3)
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
+```
+
+## Inline code
+
+Call your contract by running _clarity`(contract-call? .counter count-up)`_ and verify the count with _clarity`(contract-call? .counter get-count tx-sender)`_.
+
+## Line numbers + word wrap
+
+```clarity -cnw
+;; some comment
+(define-public (request-extension-callback (extension <extension-trait>) (memo (buff 34)))
+  (let
+    (
+      (sender tx-sender)
+    )
+    (asserts! (is-extension contract-caller) ERR_INVALID_EXTENSION)
+    (asserts! (is-eq contract-caller (contract-of extension)) ERR_INVALID_EXTENSION)
+    (as-contract (contract-call? extension callback sender memo))
+  )
+)
+```
+
+## Tabs + collapse
+
+<CodeTabs flags="c">
+
+```jsonc !! sample-alert-payload.json
+{
+  "tx_id": "0xa7f511b3f379efef6fe71d0de57712ed13a89c5b6e24dd049eb2cc9a7c24fcb5",
+  "nonce": 5,
+  "fee_rate": "250",
+  "sender_address": "SP2W9QYAHJNS7YTQY9EK2MSTQGX9E2NDMV766JP9Z",
+  "sponsored": false,
+  "post_condition_mode": "deny",
+  // !collapse(1:10) collapsed
+  "post_conditions": [
+    {
+      "type": "stx",
+      "condition_code": "sent_equal_to",
+      "amount": "3000000",
+      "principal": {
+        "type_id": "principal_standard",
+        "address": "SP2W9QYAHJNS7YTQY9EK2MSTQGX9E2NDMV766JP9Z",
+      },
+    },
+  ],
+  "anchor_mode": "any",
+  "tx_status": "pending",
+  "receipt_time": 1726104636,
+  "receipt_time_iso": "2024-09-12T01:30:36.000Z",
+  "tx_type": "contract_call",
+  // !collapse(1:12) collapsed
+  "contract_call": {
+    "contract_id": "SPHW0EJK5KPDMK03ZX792EMP0Q5J3A39ZMTVZZCY.sample-contract",
+    "function_name": "donate",
+    "function_signature": "(define-public (donate (amount uint)))",
+    "function_args": [
+      {
+        "hex": "0x01000000000000000000000000002dc6c0",
+        "repr": "u3000000",
+        "name": "amount",
+        "type": "uint",
+      },
+    ],
+  },
+}
+```
+
+```ts !! sample-alert-interface.ts
+interface Body {
+  tx_id: string;
+  nonce: number;
+  fee_rate: string;
+  sender_address: string;
+  sponsored: boolean;
+  post_condition_mode: string;
+  post_conditions: Postcondition[];
+  anchor_mode: string;
+  tx_status: string;
+  receipt_time: number;
+  receipt_time_iso: string;
+  tx_type: string;
+  contract_call: Contractcall;
+}
+interface Contractcall {
+  contract_id: string;
+  function_name: string;
+  function_signature: string;
+  function_args: Functionarg[];
+}
+interface Functionarg {
+  hex: string;
+  repr: string;
+  name: string;
+  type: string;
+}
+interface Postcondition {
+  type: string;
+  condition_code: string;
+  amount: string;
+  principal: Principal;
+}
+interface Principal {
+  type_id: string;
+  address: string;
+}
+```
+
+</CodeTabs>
+
+## Lang Switcher
+
+<CodeTabs flags="ac" storage="ts">
+
+```ts !! TypeScript
+(async () => {
+  const apiConfig: Configuration = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: "https://api.testnet.hiro.so",
+  });
+})().catch(console.error);
+```
+
+```js !! JavaScript
+(async () => {
+  const apiConfig = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: "https://api.testnet.hiro.so",
+  });
+})().catch(console.error);
+```
+
+</CodeTabs>
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+<CodeTabs flags="ac" storage="ts">
+
+```ts !! TypeScript
+const principal = "ST000000000000000000002AMW42H";
+const rewardCycle: UIntCV = uintCV(22);
+```
+
+```js !! JavaScript
+const principal = "ST000000000000000000002AMW42H";
+const rewardCycle = uintCV(22);
+```
+
+</CodeTabs>
+
+## Diff
+
+```js
+function lorem(ipsum, dolor = 1) {
+  const sit = 10;
+  // !diff -
+  dolor = ipsum - sit;
+  // !diff +
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum) : [];
+}
+```
+
+## Callouts
+
+<WithNotes>
+
+How to use `lorem` from the `ipsum` package:
+
+```js index.js
+// !callout[/ipsum/] description
+import lorem from "ipsum";
+
+// !callout[/sit/] inspect
+const sit = lorem({ a: 1, b: 2 });
+```
+
+```js !inspect
+sit = [
+  { name: "a", value: 1 },
+  { name: "b", value: 2 },
+];
+```
+
+## !description
+
+The default export of the `ipsum` package is a function that **returns an array**.
+
+Kind of like _`Object.entries(x)`_ but different.
+
+</WithNotes>
+
+## Tooltips
+
+<WithNotes>
+
+Using `read` and `write` functions from the `lorem` package:
+
+```js demo.js
+// !tooltip[/lorem/] install
+import { read, write } from "lorem";
+
+// !tooltip[/data.json/] data
+var data = read("data.json");
+
+// !tooltip[/test-123/] apikey
+write({ x: 1 }, { apiKey: "test-123" });
+```
+
+We can also use tooltips [here](tooltip "install") in [prose](tooltip "data") text.
+
+```json !data data.json
+{
+  "lorem": "ipsum dolor sit amet",
+  "foo": [4, 8, 15, 16]
+}
+```
+
+## !install
+
+This is a **fake library**. You can install it with:
+
+```terminal
+$ npm install lorem
+```
+
+It lets you read and write data.
+
+## !apikey
+
+This is a public sample test mode [API key](https://example.com). Don’t submit any personally information using this key.
+
+Replace this with your secret key found on the [API Keys page](https://example.com) in the dashboard.
+
+</WithNotes>
+
+## Links
+
+How to use `baz`:
+
+```js usage.js
+// !link[/foo/mg] https://example.com
+// !link[/bar/mg] https://example.com
+import { foo, bar } from "baz";
+
+const x = foo(10);
+const y = bar(x);
+```
+
+## Terminal
+
+```package-install
+@stacks/connect
+```
+
+```terminal
+$ wget -nv https://github.com/hirosystems/clarinet/releases/download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
+$ tar -xf clarinet-linux-x64.tar.gz
+$ chmod +x ./clarinet
+$ mv ./clarinet /usr/local/bin
+```
+
+```terminal
+$ npx create-next-app@latest
+Need to install the following packages:
+create-next-app@14.2.13
+[32m✔[0m [1mWhat is your project?[0m [90m…[0m my-app
+$ npm install @next/mdx
+$ /path/to/bitcoin-cli \
+  --conf=/path/to/bitcoin.conf \
+  --rpcuser={{your-rpc-username}} \
+  --rpcpassword={{your-rpc-password}} stop
+> next dev
+
+  [38;2;173;127;168;1m▲ Next.js 14.2.13
+[0m  - Local:        http://localhost:3000
+
+ [32;1m✓[0m Starting...
+```
+
+```sh Terminal
+$ foo bar
+```
+
+```terminal
+$ /path/to/bitcoin-cli \
+  --conf=/path/to/bitcoin.conf \
+  --rpcuser={{your-rpc-username}} \
+  --rpcpassword={{your-rpc-password}} stop
+```

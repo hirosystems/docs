@@ -4,6 +4,7 @@ import { Callout } from "@/components/callout";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
+import { docskit } from "@/components/docskit/components";
 import {
   CodeBlock,
   type CodeBlockProps,
@@ -48,5 +49,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     blockquote: (props) => <Callout>{props.children}</Callout>,
     ...components,
+    ...(docskit as any), // TODO: new typescript version should fix this
   };
 }
