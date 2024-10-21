@@ -24,14 +24,14 @@ import { callout } from "./annotations/callout";
 import { CodeGroup, flagsToOptions, TITLEBAR } from "./code-group";
 
 const CODEBLOCK =
-  "border rounded selection:bg-code-selection border-code-border overflow-hidden my-4 relative";
+  "border rounded selection:bg-ch-selection border-ch-border overflow-hidden my-4 relative";
 
 export async function InlineCode({ codeblock }: { codeblock: RawCode }) {
   const highlighted = await highlight(codeblock, theme);
   return (
     <Inline
       code={highlighted}
-      className="selection:bg-code-selection rounded border border-code-border px-1 py-0.5 whitespace-nowrap !bg-code-background"
+      className="selection:bg-ch-selection rounded border border-ch-border px-1 py-0.5 whitespace-nowrap !bg-ch-background"
       style={highlighted.style}
     />
   );
@@ -70,7 +70,7 @@ export async function Code(props: {
         element: (
           <Pre
             code={highlighted}
-            className="overflow-auto px-0 py-2 m-0 rounded-none !bg-code-background font-mono font-sm"
+            className="overflow-auto px-0 py-2 m-0 rounded-none !bg-ch-background font-mono font-sm"
             style={highlighted.style}
             handlers={handlers}
           />
@@ -103,7 +103,7 @@ export async function Code(props: {
             className={cn(
               TITLEBAR,
               "flex items-center gap-2",
-              "text-code-tab-active-foreground text-sm font-mono"
+              "text-ch-tab-active-foreground text-sm font-mono"
             )}
           >
             <CodeIcon title={meta} className="pl-2 pr-1" />
@@ -112,7 +112,7 @@ export async function Code(props: {
               <div className={cn("ml-auto mr-1 items-center")}>
                 <CopyButton
                   text={code}
-                  className="text-code-tab-inactive-foreground"
+                  className="text-ch-tab-inactive-foreground"
                 />
               </div>
             )}
@@ -121,7 +121,7 @@ export async function Code(props: {
         {mergedOptions.copyButton && group.type === "TITLELESS" && (
           <CopyButton
             text={code}
-            className="absolute right-4 my-0 top-2 text-code-tab-inactive-foreground"
+            className="absolute right-4 my-0 top-2 text-ch-tab-inactive-foreground"
           />
         )}
         {element}

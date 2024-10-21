@@ -1,7 +1,7 @@
 import { HighlightedCode } from "codehike/code";
 
 export const TITLEBAR =
-  "border-b-[1px] border-code-border bg-code-tabs-background px-2 py-1 w-full h-10 font-inter";
+  "border-b-[1px] border-ch-border bg-ch-tabs-background px-2 py-1 w-full h-10 font-inter";
 
 type CodeOptions = {
   copyButton?: boolean;

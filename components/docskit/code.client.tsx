@@ -39,11 +39,11 @@ export function CodeClient(props: { group: CodeGroup; className?: string }) {
             value={highlighted.meta}
             className={cn(
               "rounded-none relative transition-colors duration-200 gap-2 px-3 font-mono",
-              "[&[data-state=active]>.absolute]:bg-code-background", // bottom border
-              "border-transparent border-x data-[state=active]:border-x-code-border first:border-l-0", // x-border
-              "border-t data-[state=active]:border-t-code-active-border", // top border
-              "text-code-tab-inactive-foreground data-[state=active]:text-code-tab-active-foreground hover:text-code-tab-active-foreground", // text
-              "data-[state=active]:bg-code-background"
+              "[&[data-state=active]>.absolute]:bg-ch-background", // bottom border
+              "border-transparent border-x data-[state=active]:border-x-ch-border first:border-l-0", // x-border
+              "border-t data-[state=active]:border-t-ch-active-border", // top border
+              "text-ch-tab-inactive-foreground data-[state=active]:text-ch-tab-active-foreground hover:text-ch-tab-active-foreground", // text
+              "data-[state=active]:bg-ch-background"
             )}
           >
             {icon}

@@ -26,7 +26,7 @@ export async function Terminal({ codeblock }: { codeblock: RawCode }) {
             <Pre
               code={highlighted}
               handlers={[output, wordWrap, command]}
-              className="bg-code-background py-3 px-2 m-0 leading-6 font-mono"
+              className="bg-ch-background py-3 px-2 m-0 leading-6 font-mono"
               style={{ color: highlighted.style.color }}
             />
           ),
@@ -63,7 +63,7 @@ export async function TerminalPicker(props: any) {
           <Pre
             code={highlighted}
             handlers={[output, command, tokenTransitions]}
-            className="bg-code-background py-3 px-2 m-0 leading-6 font-mono"
+            className="bg-ch-background py-3 px-2 m-0 leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
         ),

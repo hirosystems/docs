@@ -16,14 +16,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "code-border": "hsl(var(--border))", // editorGroup.border
-        "code-selection": "var(--ch-22)", // editor.selectionBackground
-        "code-tabs-background": "hsl(var(--card))", // editorGroupHeader.tabsBackground
-        "code-tab-active-foreground": "hsl(var(--card-foreground))", // tab.activeForeground
-        "code-tab-inactive-foreground": "hsl(var(--muted-foreground))", // tab.inactiveForeground
-        "code-background": "hsl(var(--code))", // editor.background
-        "code-active-border": "hsl(var(--hiro))", // tab.activeBorderTop
-        "code-line-number": "var(--ch-26)", // editorLineNumber.foreground
+        "ch-border": "hsl(var(--border))", // editorGroup.border
+        "ch-selection": "var(--ch-22)", // editor.selectionBackground
+        "ch-tabs-background": "hsl(var(--card))", // editorGroupHeader.tabsBackground
+        "ch-tab-active-foreground": "hsl(var(--card-foreground))", // tab.activeForeground
+        "ch-tab-inactive-foreground": "hsl(var(--muted-foreground))", // tab.inactiveForeground
+        "ch-background": "hsl(var(--code))", // editor.background
+        "ch-active-border": "hsl(var(--hiro))", // tab.activeBorderTop
+        "ch-line-number": "var(--ch-26)", // editorLineNumber.foreground
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)'],

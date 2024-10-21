@@ -14,7 +14,7 @@ import { TITLEBAR } from "./code-group";
 import { cn } from "@/utils/cn";
 
 const CODEBLOCK =
-  "border rounded selection:bg-code-selection border-code-border overflow-hidden my-4 relative";
+  "border rounded selection:bg-ch-selection border-ch-border overflow-hidden my-4 relative";
 export function TerminalChrome({
   options,
   storeKey,
@@ -34,7 +34,7 @@ export function TerminalChrome({
         className={cn(
           TITLEBAR,
           "flex items-center gap-2",
-          "text-code-tab-active-foreground text-sm font-mono"
+          "text-ch-tab-active-foreground text-sm font-mono"
         )}
       >
         <TerminalIcon size={16} className="ml-2 mr-1" />
@@ -43,7 +43,7 @@ export function TerminalChrome({
           <div className="ml-auto">
             <ToggleGroup
               type="single"
-              className="rounded-md inline-flex px-1 bg-code-background"
+              className="rounded-md inline-flex px-1 bg-ch-background"
               variant="outline"
               value={currentName}
               onValueChange={setCurrentName}
@@ -53,7 +53,7 @@ export function TerminalChrome({
                   key={index}
                   value={option.name}
                   aria-label={`Toggle ${option.name}`}
-                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-code-tab-inactive-foreground data-[state=on]:text-code-tab-active-foreground"
+                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-ch-tab-active-foreground"
                 >
                   {option.name}
                 </ToggleGroupItem>
@@ -75,7 +75,7 @@ export const Line: CustomLineWithAnnotation = ({ annotation, ...props }) => {
       className="group px-1 flex line"
       data-active={active}
     >
-      <span className="select-none text-code-line-number shrink-0">$ </span>
+      <span className="select-none text-ch-line-number shrink-0">$ </span>
       <span className="content break-all">{props.children}</span>
       <span
         className="button select-none self-start"
