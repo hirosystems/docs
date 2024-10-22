@@ -3,15 +3,14 @@ title: Announcing Stacks.js v7
 description: Discover the future of Stacks.js.
 ---
 
-Read about what's coming in the `next` version of Stacks.js.
-v7 will be here soon!
-This version will bring a lot of improvements and new features, but it also adds some breaking changes.
+Read about what's new in the latest version of Stacks.js.
+This version comes with a lot of improvements and new features, but it also adds some breaking changes.
 
 <Callout type="Info">
-Want to use these latest `next` features? Install the release candidate of the packages:
+Want to use these latest features? Install packages using the `latest` tag:
 
 ```package-install
-@stacks/transactions@next
+@stacks/transactions@latest
 ```
 </Callout>
 
@@ -29,9 +28,8 @@ Private keys were also included unnecessary `type` properties with raw byte arra
 
 #### Solution
 
-We will be switching to a system where most values will be represented as strings.
+We switched to a system where most values will be represented as strings.
 This makes them easier to inspect and diff.
-
 
 Clarity example, [Read more](#clarity-representation)
 ```ts
@@ -65,11 +63,11 @@ This breaks the signatures of many functions:
 
 For a long time, Stacks.js "network" instances were used for "networking" and "network" definitions.
 This caused confusion, as most users use `mainnet` or `testnet` for most of their interactions.
-The "networking" (aka fetching) logic is now separated from the network object.
-
-This split should make it more obvious when functions are using network object properties vs when they are doing actual networking.
+The "networking" (aka fetching) logic is now more clearly customizable.
 
 From now on "network" objects are static (aka constants) and don't require instantiation.
+
+These changes should make it more obvious when functions are using network object properties vs when they are doing actual networking.
 
 In most cases, developers shouldn't need the `@stacks/network` package anymore.
 The `network` parameter can be used with string literals: `'mainnet'`, `'testnet'`, `'devnet'`, `'mocknet'`.
@@ -92,11 +90,12 @@ makeSTXTokenTransfer({
 });
 ```
 
+
 #### Stacks Network `client`
 
-Networks don't have a `fetch` function anymore and split the fetching logic into a separate parameter where applicable.
-
-For easing the transition, the functions which depended on a network instance now accept an `client` parameter.
+In case a function also takes a `client` parameter, it will be doing actual networking.
+This way you can use string literal networks with a custom node.
+You can also still use network objects with the `client` parameter as part of the network object.
 The `client` parameter can be any object-like structure containing a `baseUrl` and `fetch` property.
 
 - The `baseUrl` property should be a string containing the base URL of the Stacks node you want to use.
@@ -111,6 +110,26 @@ const transaction = await makeSTXTokenTransfer({
 + network: 'testnet', // optional, defaults to 'mainnet'
 + client: { baseUrl: "mynode-optional.com", fetch: myFetchOptional } // optional, defaults inferred from network
 });
+```
+
+The `client` property is also part of the network object.
+You can still keep ONE single network object for your whole application.
+
+```ts
+// [!code word:OLD]
+// [!code word:NEW]
+// OLD:
+import { StacksTestnet } from '@stacks/network';
+
+const network = new StacksTestnet({ url: "https://mynode.com", fetchFn: myFetch });
+
+// NEW:
+import { STACKS_TESTNET } from '@stacks/network';
+
+const network = {
+  ...STACKS_TESTNET, // extending a static object
+  client: { baseUrl: "https://mynode.com", fetch: myFetch }
+};
 ```
 
 ### A `To` B Helpers
