@@ -21,6 +21,7 @@ export type CardProps = {
   icon?: ReactNode;
   title: string;
   description: string;
+  innerClassName?: string;
 } & Omit<LinkProps, "title">;
 
 export function Card({
@@ -38,7 +39,12 @@ export function Card({
         props.className
       )}
     >
-      <div className="group relative z-10 bg-card p-4 rounded-md hover:bg-accent">
+      <div
+        className={cn(
+          "group relative z-10 bg-card p-4 rounded-[7px] hover:bg-accent",
+          props.innerClassName
+        )}
+      >
         {icon ? (
           <div className="mb-2 w-fit rounded-md border group-hover:bg-border p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
