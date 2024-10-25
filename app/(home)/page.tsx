@@ -1,119 +1,169 @@
-import { Cards, Card as MainCard, SmallCard } from "@/components/card";
-import { Play } from "lucide-react";
-import { API } from "@/components/ui/icon";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StacksCardIcon, BitcoinCardIcon } from "@/components/ui/icon";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Link from "fumadocs-core/link";
 
 export default function HomePage(): JSX.Element {
   return (
-    <main className="min-h-screen container py-4 lg:py-16">
-      <div className="max-w-full space-y-12">
-        <header className="space-y-2">
-          <h1 className="text-4xl">Welcome to Hiro Docs.</h1>
-          <p className="text-4xl">Let's start building.</p>
-        </header>
+    <main className="container max-w-7xl mx-auto my-12 space-y-10">
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold text-gray-900">
+          Welcome to Hiro Docs.
+        </h1>
+        <h2 className="text-4xl font-bold text-gray-900">
+          Let's start building.
+        </h2>
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center space-x-4">
-              <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                <Play className="text-white" size={24} />
-              </div>
-              <div>
-                <CardTitle className="text-xl font-semibold">
-                  Stacks Docs
-                </CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Find all the guides and resources you need to build on Stacks.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "CLARINET",
-                  "CHAINHOOK",
-                  "STACKS.JS",
-                  "HIRO PLATFORM",
-                  "STACKS API",
-                  "TOKEN METADATA API",
-                ].map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="bg-gray-200 text-gray-700 rounded-full"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              <Badge
-                variant="secondary"
-                className="bg-gray-200 text-gray-700 rounded-full mt-2"
-              >
-                +3 MORE
-              </Badge>
-            </CardContent>
-          </Card>
+      <div className="grid md:grid-cols-2 gap-6 mb-16">
+        {/* Stacks Docs Card */}
+        <Link
+          href="/stacks"
+          className="not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80"
+        >
+          <div className="mb-6">
+            <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
+              <StacksCardIcon />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Stacks Docs</h3>
+            <p className="text-muted-foreground">
+              Find all the guides and resources you need to build on Stacks.
+            </p>
+          </div>
 
-          <Card className="border-orange-300 border-2">
-            <CardHeader className="flex flex-row items-center space-x-4">
-              <div className="w-12 h-12 bg-orange-400 rounded-lg flex items-center justify-center">
-                <API className="text-white" />
-              </div>
-              <div>
-                <CardTitle className="text-xl font-semibold">
-                  Bitcoin Docs
-                </CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Find all the guides and resources you need to build on Ordinals
-                and Runes.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {["ORDHOOK", "ORDINALS API", "RUNES API"].map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="bg-gray-200 text-gray-700 rounded-full"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              CLARINET
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              CHAINHOOK
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              STACKS.JS
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              HIRO PLATFORM
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              STACKS API
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              TOKEN METADATA API
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              +3 MORE
+            </Badge>
+          </div>
+        </Link>
+        <Link
+          href="/bitcoin"
+          className="not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80"
+        >
+          <div className="mb-6">
+            <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
+              <BitcoinCardIcon />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Bitcoin Docs</h3>
+            <p className="text-muted-foreground">
+              Find all the guides and resources you need to build on Ordinals
+              and Runes.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              ORDHOOK
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              ORDINALS API
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              RUNES API
+            </Badge>
+          </div>
+        </Link>
+      </div>
 
-        <div className="space-y-4">
-          <h2 className="text-2xl font-mono font-bold">
-            Need help getting started?
-          </h2>
-          <p className="text-xl font-mono text-gray-600">
+      <main className="space-y-6">
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold">Need help getting started?</h2>
+          <p className="text-xl text-muted-foreground">
             Check these resources.
           </p>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {["Guides", "Resource #1", "Resource #1", "Resource #2"].map(
-              (title, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold">
-                      {title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
-                  </CardContent>
-                </Card>
-              )
-            )}
-          </div>
         </div>
-      </div>
+
+        <div className="grid md:grid-cols-4 gap-6">
+          <Link href="/stacks/get-started" className="block">
+            <Card className="p-6 border bg-card">
+              <h3 className="text-lg font-semibold mb-2">
+                Get started with Stacks
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Learn how to build on Stacks with guides and tutorials.
+              </p>
+            </Card>
+          </Link>
+          <Link href="/stacks/api" className="block">
+            <Card className="p-6 border bg-card">
+              <h3 className="text-lg font-semibold mb-2">
+                Stacks API Overview
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Learn how to use the Stacks API to build on Stacks.
+              </p>
+            </Card>
+          </Link>
+          <Link href="/bitcoin/get-started" className="block">
+            <Card className="p-6 border bg-card">
+              <h3 className="text-lg font-semibold mb-2">
+                Get started with Bitcoin
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Learn how to build on Bitcoin with guides and tutorials.
+              </p>
+            </Card>
+          </Link>
+          <Link href="/bitcoin/ordinals/api" className="block">
+            <Card className="p-6 border bg-card">
+              <h3 className="text-lg font-semibold mb-2">
+                Ordinals API Overview
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Learn how to use the Ordinals API to build on Bitcoin.
+              </p>
+            </Card>
+          </Link>
+        </div>
+      </main>
     </main>
   );
 }
