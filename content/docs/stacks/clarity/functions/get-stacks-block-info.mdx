@@ -1,0 +1,89 @@
+---
+title: get-stacks-block-info?
+description: Fetching information about Stacks blocks in Clarity smart contracts.
+---
+
+<Callout>
+In Clarity 3, this function replaces the deprecated `get-block-info?` function.
+</Callout>
+
+## Function Signature
+
+```clarity
+(get-stacks-block-info? prop-name block-height)
+```
+
+- Input: 
+  - `prop-name`: A StacksBlockInfoPropertyName
+  - `block-height`: A uint representing the Stacks block height
+- Output: `(optional buff) | (optional uint)` depending on the property
+
+## Why it matters
+
+The `get-stacks-block-info?` function is crucial for:
+
+1. Accessing historical Stacks block data within smart contracts
+2. Retrieving globally unique block identifiers
+3. Implementing time-based logic using block information
+4. Verifying block-related properties for security or validation purposes
+
+## When to use it
+
+Use `get-stacks-block-info?` when you need to:
+
+- Retrieve unique identifiers for Stacks blocks
+- Access block timestamps for time-based logic
+- Verify block hashes for validation purposes
+- Implement logic that depends on block information
+
+## Best Practices
+
+- Always use `id-header-hash` when global uniqueness is required
+- Handle the `none` case for non-existent or future blocks
+- Be aware of the different timestamp sources before and after epoch 3.0
+- Consider caching frequently accessed block information
+
+## Practical Example: Block Hash Verification
+
+```clarity
+(define-read-only (verify-block-hash (blockHeight uint) (expectedHash (buff 32)))
+  (match (get-stacks-block-info? id-header-hash blockHeight)
+    hash (is-eq hash expectedHash)
+    false
+  )
+)
+
+;; Usage
+(verify-block-hash u100 0x374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb)
+```
+
+This example demonstrates:
+1. Retrieving a block's unique identifier
+2. Handling the optional return value
+3. Comparing block hashes for verification
+
+## Available Properties
+
+- `id-header-hash`: Returns the globally unique index block hash (buff 32)
+- `header-hash`: Returns the Stacks block's header hash (buff 32)
+- `time`: Returns the block time as Unix epoch timestamp (uint)
+
+## Common Pitfalls
+
+1. Using `header-hash` when global uniqueness is required (use `id-header-hash` instead)
+2. Not handling the `none` case for invalid or future block heights
+3. Assuming block times are exact (accuracy varies by epoch):
+   - Pre-epoch 3.0: Accurate within two hours
+   - Post-epoch 3.0: Must be greater than previous block and at most 15 seconds in the future
+4. Not considering the different timestamp sources across epochs
+
+## Related Functions
+
+- `get-tenure-info?`: Used to get information about block tenures
+- `block-height`: Returns the current block height
+- `at-block`: Used with `id-header-hash` for historical state access
+
+## Conclusion
+
+The `get-stacks-block-info?` function, introduced in Clarity 3, provides essential access to Stacks block data in smart contracts. It offers reliable ways to access block identifiers and timestamps, with important considerations for global uniqueness and time accuracy across different epochs. Understanding its properties and limitations is crucial for building robust smart contracts that interact with historical blockchain state.
+

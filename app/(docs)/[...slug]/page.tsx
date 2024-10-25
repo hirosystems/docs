@@ -48,6 +48,10 @@ export default function Page({ params }: { params: Param }): JSX.Element {
           ] || secondSegment.charAt(0).toUpperCase() + secondSegment.slice(1));
       }
 
+      if (page.slugs[1].toLowerCase() === "platform-api") {
+        prefix = "Platform API";
+      }
+
       if (page.slugs[1].toLowerCase() === "token-metadata-api") {
         prefix = "Token Metadata API";
       }
