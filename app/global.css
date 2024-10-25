@@ -31,6 +31,7 @@
     --highlight: 40 13% 91%;
     --content: 32.31 11.93% 78.63%;
     --dark: 20 14.3% 4.1%;
+    --contrast:0 7.7% 5.1%;
   }
 
   .dark {
@@ -61,6 +62,7 @@
     --highlight: 12 6.2% 15.9%;
     --content: 40 5.33% 33.14%;
     --dark: 20 14.3% 4.1%;
+    --contrast: 0 0% 100%;
   }
 
   .bitcoin {
@@ -245,34 +247,17 @@ nav.container {
   gap: 2.25rem;
 }
 
-nav.container > *:nth-last-child(2) {
-  position: relative;
-  top: 2px;
-  margin-left: -10px;
-  text-decoration: none;
-  color: hsl(var(--primary));
-  border-bottom: 2px solid hsl(var(--accent));
-  padding-bottom: 0.15rem;
-}
-
-nav.container > *:nth-last-child(2):hover {
-  border-bottom-color: hsl(var(--primary));
-}
-
-nav.container a,
-figure,
-pre,
-pre a,
-code,
-code a,
-th,
-code > span,
-.not-prose div {
+nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
 div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
   border-bottom: none;
+}
+
+/* For dark mode specifically, FIXME: This is a temporary fix to change the background of the theme toggle icon when inactive in dark mode */
+.dark button[aria-label="Toggle Theme"] svg:first-of-type {
+  background: hsl(var(--background));
 }
 
 a[aria-label="Hiro Platform"] div svg {
