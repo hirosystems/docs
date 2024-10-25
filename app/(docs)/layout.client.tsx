@@ -18,7 +18,7 @@ const itemVariants = cva(
         true: "text-accent-foreground",
       },
       mode: {
-        bitcoin: "bg-[hsl(var(--hiro))]",
+        bitcoin: "bg-hiro",
         stacks: "bg-background",
       },
     },
@@ -26,7 +26,7 @@ const itemVariants = cva(
       {
         active: true,
         mode: "bitcoin",
-        className: "hsl(var(--hiro)) dark:text-background",
+        className: "bg-hiro dark:text-background",
       },
       {
         active: true,
