@@ -1,33 +1,48 @@
 ---
 title: Networks
-description: Learn how to create a network instance.
+description: Learn how to use different networks.
 ---
 
-Typically, we speak of `mainnet` and `testnet` as the networks of Stacks. Most wallets will be configured to `mainnet` by default—this is the production environment, the actual blockchain that holds real STX tokens.
+import { Star } from 'lucide-react';
 
-As the name suggests, `testnet` is a public network for testing. It's a separate blockchain state that holds test tokens, which have no value.
+Typically, we speak of `mainnet` and `testnet` as the networks of Stacks.
+Most wallets are configured to `mainnet` by default—this is the production environment, the actual blockchain that holds real STX tokens.
 
-Developers are encouraged to use `StacksTestnet` for testing before rolling out applications and contracts to `StacksMainnet`.
-There is even `StacksDevnet` and `StacksMocknet` for working in a local development environment for development.
-Stacks.js functions can be configured to use whichever network you want.
+As the name suggests, `testnet` is a public network for testing.
+It's a separate blockchain state that holds test tokens, which have no value.
 
-You can learn more about devnet [here](/stacks/clarinet/guides/run-a-local-devnet).
+For completeness we also mention `devnet`.
+This isn't "one" network, but how developers refer to ephemeral local networks used for testing.
+It is the same as `testnet`, but for local development.
+[Learn more](/stacks/clarinet/guides/run-a-local-devnet).
 
-## Create a network instance
+## Setting the network
 
-```ts twoslash
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
+Most Stacks.js functions accept a `network` parameter or an optional last argument.
 
-const mainnet = new StacksMainnet();
-const testnet = new StacksTestnet();
-```
+The `network` type is a string, and can be one of:
+- `'mainnet'` (default)
+- `'testnet'`
+- `'devnet'`
+- `'mocknet'` (alias of `devnet`)
 
-The constructors can also be passed a custom URL to an API, if you want to use a different API than the default.
+### Examples
 
-```ts twoslash
-import { StacksMainnet } from '@stacks/network';
-
-const network = new StacksMainnet({
-  url: 'https://www.mystacksnode.com/',
+Network in transaction signing:
+```ts
+const tx = makeSTXTokenTransfer({
+  // ...
+  network: 'testnet',
 });
 ```
+
+Network in address derivation:
+```ts
+const address = privateKeyToAddress(privateKey, 'devnet');
+// ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP
+```
+
+<Callout type="tip">
+  For more advanced uses, you can pass an object of a network configuration.
+  Read more about the network object in the [`@stacks/network`](/stacks/stacks.js/packages/network) package.
+</Callout>
