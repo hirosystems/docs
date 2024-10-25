@@ -11,7 +11,7 @@ export default function HomePage(): JSX.Element {
           Welcome to Hiro Docs.
         </h1>
         <h2 className="text-4xl font-bold text-gray-900">
-          Let's start building.
+          Explore our tutorials, guides, API references, and more.
         </h2>
       </div>
 
@@ -27,7 +27,7 @@ export default function HomePage(): JSX.Element {
             </div>
             <h3 className="text-xl font-semibold mb-2">Stacks Docs</h3>
             <p className="text-muted-foreground">
-              Find all the guides and resources you need to build on Stacks.
+              Start building on Stacks.
             </p>
           </div>
 
@@ -86,7 +86,7 @@ export default function HomePage(): JSX.Element {
             </div>
             <h3 className="text-xl font-semibold mb-2">Bitcoin Docs</h3>
             <p className="text-muted-foreground">
-              Find all the guides and resources you need to build on Ordinals
+              Start building on Ordinals
               and Runes.
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function HomePage(): JSX.Element {
         <div className="space-y-2">
           <h2 className="text-2xl font-bold">Need help getting started?</h2>
           <p className="text-xl text-muted-foreground">
-            Check these resources.
+            Check out these resources.
           </p>
         </div>
 
@@ -128,7 +128,7 @@ export default function HomePage(): JSX.Element {
                 Get started with Stacks
               </h3>
               <p className="text-muted-foreground text-sm">
-                Learn how to build on Stacks with guides and tutorials.
+                Learn how to build on Stacks with some of our most popular guides and tutorials.
               </p>
             </Card>
           </Link>
@@ -138,7 +138,7 @@ export default function HomePage(): JSX.Element {
                 Stacks API Overview
               </h3>
               <p className="text-muted-foreground text-sm">
-                Learn how to use the Stacks API to build on Stacks.
+                View the API reference for the Stacks API.
               </p>
             </Card>
           </Link>
@@ -148,7 +148,7 @@ export default function HomePage(): JSX.Element {
                 Get started with Bitcoin
               </h3>
               <p className="text-muted-foreground text-sm">
-                Learn how to build on Bitcoin with guides and tutorials.
+                Learn how to build on Bitcoin with some of our most popular guides and tutorials.
               </p>
             </Card>
           </Link>
@@ -158,7 +158,7 @@ export default function HomePage(): JSX.Element {
                 Ordinals API Overview
               </h3>
               <p className="text-muted-foreground text-sm">
-                Learn how to use the Ordinals API to build on Bitcoin.
+                View the API reference for our Ordinals API.
               </p>
             </Card>
           </Link>
