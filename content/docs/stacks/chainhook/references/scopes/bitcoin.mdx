@@ -1,0 +1,395 @@
+---
+title: Bitcoin Scopes
+description: Reference guide for available scopes for Bitcoin.
+toc: false
+---
+
+import { Root, API, APIExample } from '@/components/layout';
+import { Property } from 'fumadocs-ui/components/api'
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import { InlineCode } from '@/components/inline-code';
+
+Bitcoin scopes are parameters you use to define the `if this` specification logic of your Chainhook on the Bitcoin blockchain. In other words, scopes specify what on-chain events you are looking to monitor and track. For more information on Chainhook design, please view [predicate design](/stacks/chainhook/concepts/predicate-design).
+
+<Root>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`txid`</h2>
+
+The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
+
+## Parameters
+
+<Property required={true} deprecated={false} name={"equals"} type={"string"}>
+
+The `equals` property is a 32 byte hex encoded type used to specify the exact transaction ID to match.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="default">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="default" className='tab group'>
+      <Badge className='badge transition-colors'>By transaction ID</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="default">
+
+  ```json
+  // [!code word:txid]
+  {
+    "if_this": {
+      "scope": "txid",
+      "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f" // [!code highlight]
+    }
+  }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`outputs`</h2>
+
+The `outputs` scope allows you to query blocks based on the payload returned by the specified operation.
+
+## Parameters
+
+<Property required={true} deprecated={false} name={"operation"} type={"object"}>
+ 
+The `operation` property is used to identify the Bitcoin operation that will trigger Chainhook as it observes Bitcoin transactions.  The available operations are `op_return`, `p2pkh`, `p2sh`,`p2wpkh` and `p2wsh`.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="op_return">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="op_return" className='tab group'>
+      <Badge className='badge transition-colors'>Using op_return</Badge>
+    </TabsTrigger>
+     <TabsTrigger value="p2kph" className='tab group'>
+      <Badge className='badge transition-colors'>Using p2pkh</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="p2sh" className='tab group'>
+      <Badge className='badge transition-colors'>Using p2sh</Badge>
+    </TabsTrigger>
+     <TabsTrigger value="p2wpkh" className='tab group'>
+      <Badge className='badge transition-colors'>Using p2wpkh</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="p2wsh" className='tab group'>
+      <Badge className='badge transition-colors'>Using p2wsh</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="descriptor" className='tab group'>
+      <Badge className='badge transition-colors'>Using descriptor</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="op_return">
+
+  ```json
+  // [!code word:outputs]
+  {
+    "if_this": {
+      "scope": "outputs",
+      "op_return": { // [!code highlight]
+        "equals": "0xbtc21000042stx016" // [!code highlight]
+      }
+    }
+  }
+  ```
+  <Accordions>
+    <Accordion title="Parameters">
+      <Property required={true} deprecated={false} name="equals" type="string/32-byte encoded hex">
+        The `equals` property specifies the exact characters of the string or 32 byte encoded hex to match.
+      </Property>
+      <Property required={true} deprecated={false} name="starts_with" type="string/32-byte encoded hex">
+        The `starts_with` property specifies the starting characters of the string or 32 byte encoded hex to match.
+      </Property>
+      <Property required={true} deprecated={false} name="ends_with" type="string/32-byte encoded hex">
+        The `ends_with` property specifies the ending characters of the string or 32 byte encoded hex to match.
+      </Property>
+    </Accordion>
+  </Accordions>
+  <Callout type="info" title="Note">
+    The `op_return` operation allows for `equals`, `starts_with` and `ends_with` for matching against the desired input. 
+  </Callout>
+  </TabsContent>
+  <TabsContent value="p2kph">
+
+  ```json
+  // [!code word:outputs]
+  {
+    "if_this": {
+      "scope": "outputs",
+      "p2kph": { // [!code highlight]
+        "equals": "0xbtc21000042stx016" // [!code highlight]
+      }
+    }
+  }
+  ```
+  <Accordions>
+    <Accordion title="Parameters">
+      <Property required={true} deprecated={false} name="equals" type="string/32-byte encoded hex">
+        The `equals` property specifies the exact characters of the string or 32 byte encoded hex to match.
+      </Property>
+    </Accordion>
+  </Accordions>
+  <Callout type="info" title="Note">
+    `p2pkh`(Pay-to-Public-Key-Hash) is a Bitcoin transaction output script type that allows users to send funds to a recipient's hashed public key, providing security and privacy by concealing the actual public key.
+  </Callout>
+  </TabsContent>
+  <TabsContent value="p2sh">
+
+  ```json
+  // [!code word:outputs]
+  {
+    "if_this": {
+      "scope": "outputs",
+      "p2sh": { // [!code highlight]
+        "equals": "0xbtc21000042stx016" // [!code highlight]
+      }
+    }
+  }
+  ```
+  <Accordions>
+    <Accordion title="Parameters">
+      <Property required={true} deprecated={false} name="equals" type="string/32-byte encoded hex">
+        The `equals` property specifies the exact characters of the string or 32 byte encoded hex to match.
+      </Property>
+    </Accordion>
+  </Accordions>
+  <Callout type="info" title="Note">
+    `p2sh`(Pay-to-Script-Hash) is a Bitcoin transaction output script type that enables users to send funds to a script instead of a public key, allowing for more complex transaction conditions and multi-signature addresses.
+  </Callout>
+  </TabsContent>
+  <TabsContent value="p2wpkh">
+
+  ```json
+  // [!code word:outputs]
+  {
+    "if_this": {
+      "scope": "outputs",
+      "p2wpkh": { // [!code highlight]
+        "equals": "0xbtc21000042stx016" // [!code highlight]
+      }
+    }
+  }
+  ```
+  <Accordions>
+    <Accordion title="Parameters">
+      <Property required={true} deprecated={false} name="equals" type="string">
+        The `equals` property specifies the exact characters of the string to match.
+      </Property>
+    </Accordion>
+  </Accordions>
+  <Callout type="info" title="Note">
+    `p2wpkh`(Pay-to-Witness-Public-Key-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that allows for more efficient and secure transactions by separating the witness data from the transaction data and storing it in a separate block. 
+  </Callout>
+  </TabsContent>
+  <TabsContent value="p2wsh">
+
+  ```json
+  // [!code word:outputs]
+  {
+    "if_this": {
+      "scope": "outputs",
+      "p2wsh": { // [!code highlight]
+        "equals": "0xbtc21000042stx016" // [!code highlight]
+      }
+    }
+  }
+  ```
+  <Accordions>
+    <Accordion title="Parameters">
+      <Property required={true} deprecated={false} name="equals" type="string">
+        The `equals` property specifies the exact characters of the string to match.
+      </Property>
+    </Accordion>
+  </Accordions>
+  <Callout type="info" title="Note">
+    `p2wsh` (Pay-to-Witness-Script-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that enables users to send funds to a hashed script, allowing for more complex transaction conditions and greater scalability by separating the script from the transaction data.
+  </Callout>
+  </TabsContent>
+  <TabsContent value="descriptor">
+
+  ```json
+  // [!code word:outputs]
+  {
+    "if_this": {
+      "scope": "outputs",
+      "descriptor": {
+        "expression": "wpkh(tprv8ZgxMBicQKsPePxn6j3TjvB2MBzQkuhGgc6oRh2WZancZQgxktcnjZJ44XdsRiw3jNkbVTK9JW6KFHvnRKgAMtSyuBevMJprSkZ4PTfmTgV/84'/1'/0'/0/*)", // [!code highlight]
+        "range": [0, 3] // [!code highlight]
+      }
+    }
+  }
+  ```
+  <Accordions>
+    <Accordion title="Parameters">
+     <Property required={true} deprecated={false} name="expression" type="string">
+        The `expression` property specifies the exact characters of the string to match.
+      </Property>
+      <Property required={true} deprecated={false} name="range" type="integer[]">
+        The `range` property specifies and array of integers representing the desired indexes.
+      </Property>
+    </Accordion>
+  </Accordions>
+  <Callout type="info" title="Note">
+    <Accordions>
+      <Accordion title="Wallet descriptors">
+        Wallet descriptors provide a compact and semi-standardized method for describing how scripts and addresses within a wallet are generated. Chainhook users that want to track addresses derived from an extended pubkey or a multisig-wallet can now rely on this feature instead of defining one predicate per address.
+        For example, let's say we wanted to track the first 3 addresses generated by the following descriptor:
+
+        ```
+        wpkh(tprv8ZgxMBicQKsPePxn6j3TjvB2MBzQkuhGgc6oRh2WZancZQgxktcnjZJ44XdsRiw3jNkbVTK9JW6KFHvnRKgAMtSyuBevMJprSkZ4PTfmTgV/84'/1'/0'/0/*)
+        ```
+
+        This descriptor reads: describe a P2WPKH output with the specified extended public key, and it produces these BIP84 addresses:
+
+        ```
+        bcrt1qzy2rdyvu8c57qd8exyyp0mw7dk5drsu9ewzdsu
+        bcrt1qsfsjnagr29m8h3a3vdand2s85cg4cefkcwk2fy
+        bcrt1qauewfytqe5mtr0xwp786r6fl39kmum2lr65kmj
+        ```
+      </Accordion>
+    </Accordions>
+  </Callout>
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+<API className='my-20'>
+
+<div className='flex-1'>
+
+<h2 className='mt-0'>`stacks_protocol`</h2>
+
+The `stacks_protocol` scope allows you query Bitcoin transactions related to the Stacks Proof of Transfer (PoT) [concensus mechanism](https://www.hiro.so/blog/securing-web3-apps-through-bitcoin-an-overview-of-stacks-consensus-mechanism).
+
+## Parameters
+
+<Property required={true} deprecated={false} name={"operation"} type={"string"}>
+
+The `operation` property is used to identify the Stacks operation that will trigger Chainhook as it observes Bitcoin transactions.  The available operations are `block_committed`, `leader_registered`, `inscription_feed`, `stx_transferred` and `stx_locked`.
+
+</Property>
+
+</div>
+
+<APIExample className='w-full'>
+
+<Tabs defaultValue="block_committed">
+  <TabsList className='flex flex-wrap'>
+    <TabsTrigger value="block_committed" className='tab group'>
+      <Badge className='badge transition-colors'>Using block_committed</Badge>
+    </TabsTrigger>
+     <TabsTrigger value="leader_registered" className='tab group'>
+      <Badge className='badge transition-colors'>Using leader_registered</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="inscription_feed" className='tab group'>
+      <Badge className='badge transition-colors'>Using inscription_feed</Badge>
+    </TabsTrigger>
+     <TabsTrigger value="stx_transferred" className='tab group'>
+      <Badge className='badge transition-colors'>Using stx_transferred</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="stx_locked" className='tab group'>
+      <Badge className='badge transition-colors'>Using stx_locked</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="block_committed">
+
+  ```json
+    // [!code word:stacks_protocol]
+    {
+      "if_this": {
+        "scope": "stacks_protocol",
+        "operation": "block_committed" // [!code highlight]
+      }
+    }
+  ```
+  </TabsContent>
+  <TabsContent value="leader_registered">
+
+   ```json
+    // [!code word:stacks_protocol]
+    {
+      "if_this": {
+        "scope": "stacks_protocol",
+        "operation": "leader_registered" // [!code highlight]
+      }
+    }
+  ```
+  </TabsContent>
+  <TabsContent value="inscription_feed">
+
+   ```json
+    // [!code word:stacks_protocol]
+    {
+      "if_this": {
+        "scope": "stacks_protocol",
+        "operation": "inscription_feed" // [!code highlight]
+      }
+    }
+  ```
+
+  <Callout type="info" title="Note">
+    `inscription_feed` observes the reveal and transfer of an Ordinal inscription.
+  </Callout>
+  </TabsContent>
+  <TabsContent value="stx_transferred">
+
+   ```json
+    // [!code word:stacks_protocol]
+    {
+      "if_this": {
+        "scope": "stacks_protocol",
+        "operation": "stx_transferred" // [!code highlight]
+      }
+    }
+  ```
+  </TabsContent>
+  <TabsContent value="stx_locked">
+
+   ```json
+    // [!code word:stacks_protocol]
+    {
+      "if_this": {
+        "scope": "stacks_protocol",
+        "operation": "stx_locked" // [!code highlight]
+      }
+    }
+  ```
+  </TabsContent>
+</Tabs>
+
+</APIExample>
+
+</API>
+
+</Root>
