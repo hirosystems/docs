@@ -1,0 +1,88 @@
+---
+title: is-eq
+description: Comparing values for equality in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(is-eq v1 v2 ...)
+```
+
+
+
+
+- Input: `A, A, ...`
+- Output: `bool`
+
+## Why it matters
+
+The `is-eq` function is crucial for:
+
+1. Comparing values to check for equality.
+2. Implementing conditional logic based on value comparisons.
+3. Ensuring data integrity by verifying that values match expected results.
+4. Simplifying equality checks in smart contract code.
+
+## When to use it
+
+Use `is-eq` when you need to:
+
+- Compare multiple values for equality.
+- Implement logic that depends on whether values are equal.
+- Verify that input values match expected constants or variables.
+- Simplify equality checks in your contract.
+
+## Best Practices
+
+- Ensure all values being compared are of the same type to avoid type errors.
+- Use `is-eq` for simple equality checks and combine with other logical functions for complex conditions.
+- Be aware that `is-eq` does not short-circuit; all values are evaluated.
+- Use meaningful variable names for better readability.
+
+## Practical Example: Checking User Role
+
+Let's implement a function that checks if a user has a specific role:
+
+```clarity
+(define-constant ADMIN_ROLE "admin")
+(define-map UserRoles { userId: principal } { role: (string-ascii 10) })
+
+(define-read-only (is-admin (user principal))
+  (let
+    (
+      (userRole (default-to "none" (map-get? UserRoles { userId: user })))
+    )
+    (is-eq userRole ADMIN_ROLE)
+  )
+)
+
+;; Usage
+(map-set UserRoles { userId: tx-sender } { role: "admin" })
+(is-admin tx-sender) ;; Returns true
+```
+
+
+
+
+This example demonstrates:
+1. Using `is-eq` to compare a user's role with the constant `ADMIN_ROLE`.
+2. Handling the case where the user role is not set by providing a default value.
+3. Implementing a read-only function to check if a user is an admin.
+
+## Common Pitfalls
+
+1. Comparing values of different types, leading to type errors.
+2. Assuming `is-eq` short-circuits like `and` or `or` (it does not).
+3. Using `is-eq` for complex conditions where other logical functions might be more appropriate.
+4. Not handling cases where values might be `none` or unset.
+
+## Related Functions
+
+- `is-some`: Checks if an optional value is `some`.
+- `is-none`: Checks if an optional value is `none`.
+- `asserts!`: Asserts a condition and throws an error if it is false.
+
+## Conclusion
+
+The `is-eq` function is a fundamental tool for comparing values in Clarity smart contracts. It provides a straightforward way to check for equality, enabling developers to implement conditional logic and verify data integrity. When used effectively, `is-eq` simplifies equality checks and enhances the readability and maintainability of your smart contract code.

@@ -1,0 +1,104 @@
+---
+title: Get transfer fee estimate
+description: Retrieves an estimated fee rate for STX transfer transactions.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl={"http://localhost:20443"}>
+
+<API>
+
+<APIInfo method={"GET"} route={"/v2/fees/transfer"}>
+
+## Get estimated fee
+
+Get an estimated fee rate for STX transfer transactions. This a a fee rate / byte, and is returned as a JSON integer
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/fees/transfer"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "http://localhost:20443/v2/fees/transfer"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("http://localhost:20443/v2/fees/transfer", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+GET fee estimates
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+"string"
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+/**
+ * GET fee estimates
+ */
+export type CoreNodeFeeResponse = string;
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>

@@ -31,7 +31,7 @@ import {
 
 ### Request Body
 
-<Property name={"config"} type={"JSON"} required={true} deprecated={undefined}>
+<Property name={"body"} type={"string"} required={true} deprecated={undefined}>
 
 Chainhook predicate configuration
 
@@ -39,32 +39,30 @@ Chainhook predicate configuration
 
 ```json
 {
-  "config": {
-    "name": "platform-api",
-    "uuid": "aa3626dc-2090-49cd-8f1e-8f9994393aed",
-    "chain": "stacks",
-    "version": 1,
-    "networks": {
-      "mainnet": {
-        "if_this": {
-          "scope": "block_height",
-          "higher_than": 161620
-        },
-        "end_block": null,
-        "then_that": {
-          "http_post": {
-            "url": "https://webhook.site",
-            "authorization_header": "12345"
-          }
-        },
-        "start_block": 161620,
-        "decode_clarity_values": true,
-        "expire_after_occurrence": null
-      }
+  "name": "platform-api",
+  "uuid": "aa3626dc-2090-49cd-8f1e-8f9994393aed",
+  "chain": "stacks",
+  "version": 1,
+  "networks": {
+    "mainnet": {
+      "if_this": {
+        "scope": "block_height",
+        "higher_than": 161620
+      },
+      "end_block": null,
+      "then_that": {
+        "http_post": {
+          "url": "https://webhook.site",
+          "authorization_header": "12345"
+        }
+      },
+      "start_block": 161620,
+      "decode_clarity_values": true,
+      "expire_after_occurrence": null
     }
   }
 }
-    ```
+```
 
 </ObjectCollapsible>
 

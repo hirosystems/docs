@@ -1,0 +1,74 @@
+---
+title: some
+description: Constructing an optional type from a value in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(some value)
+```
+
+- Input: `A`
+- Output: `(optional A)`
+
+## Why it matters
+
+The `some` function is crucial for:
+
+1. Constructing an optional type from a given value.
+2. Implementing logic that requires optional types.
+3. Ensuring data integrity by explicitly handling optional values.
+4. Simplifying the process of working with optional types in smart contracts.
+
+## When to use it
+
+Use `some` when you need to:
+
+- Construct an optional type from a given value.
+- Implement logic that requires optional types.
+- Explicitly handle optional values to ensure data integrity.
+- Work with optional types in your smart contract.
+
+## Best Practices
+
+- Ensure the value passed to `some` is the intended value to be wrapped in an optional type.
+- Use meaningful variable names for better readability.
+- Combine with other optional functions for comprehensive optional type management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Constructing an Optional Type
+
+Let's implement a function that constructs an optional type from a given integer:
+
+```clarity
+(define-read-only (wrap-in-optional (input int))
+  (some input)
+)
+
+;; Usage
+(wrap-in-optional 42) ;; Returns (some 42)
+(wrap-in-optional -1) ;; Returns (some -1)
+```
+
+This example demonstrates:
+1. Using `some` to construct an optional type from a given integer.
+2. Implementing a public function to handle the optional type construction.
+3. Handling both positive and negative input values.
+
+## Common Pitfalls
+
+1. Using `some` without ensuring the value is the intended value to be wrapped, causing unexpected behavior.
+2. Assuming the optional type will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete optional type management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `is-some`: Checks if an optional type contains a value.
+- `is-none`: Checks if an optional type is empty.
+- `unwrap!`: Unwraps an optional type, returning the contained value or throwing an error if empty.
+
+## Conclusion
+
+The `some` function is a fundamental tool for constructing optional types in Clarity smart contracts. It allows developers to implement logic that requires optional types, ensuring data integrity and simplifying optional type handling. When used effectively, `some` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle optional type construction.

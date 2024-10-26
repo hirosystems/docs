@@ -1,0 +1,110 @@
+---
+title: element-at?
+description: Retrieving an element from a list at a specific index in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(element-at? list-expr uint)
+```
+
+- Input: 
+  - `list-expr`: A list expression
+  - `uint`: An unsigned integer representing the index
+- Output: `(optional A)` where A is the type of elements in the list
+
+## Why it matters
+
+The `element-at?` function is crucial for:
+
+1. Safely accessing elements in a list at a specific index.
+2. Handling potential out-of-bounds access without causing errors.
+3. Implementing logic that depends on retrieving specific elements from lists.
+4. Providing a way to work with lists in a more flexible manner.
+
+## When to use it
+
+Use `element-at?` when you need to:
+
+- Retrieve a specific element from a list by its position.
+- Implement algorithms that require access to list elements by index.
+- Safely handle potential out-of-bounds access in list operations.
+- Work with lists in a way that may involve accessing elements at varying positions.
+
+## Best Practices
+
+- Always check the returned optional value to handle cases where the index is out of bounds.
+- Use in combination with `len` to ensure you're not attempting to access beyond the list's length.
+- Consider using `map` or `fold` for operations that need to process all elements instead of accessing by index.
+- Be mindful of the zero-based indexing when using `element-at?`.
+
+## Practical Example: Retrieving a Specific Item
+
+Let's implement a function that retrieves an item from a todo list:
+
+```clarity
+(define-data-var todoList (list 10 (string-ascii 50)) (list))
+
+(define-public (add-todo (item (string-ascii 50)))
+  (let
+    (
+      (currentList (var-get todoList))
+      (newList (as-max-len? (append currentList item) u10))
+    )
+    (match newList
+      newListValue (ok (var-set todoList newListValue))
+      (err u1)
+    )
+  )
+)
+
+(define-read-only (get-todo (index uint))
+  (match (element-at? (var-get todoList) index) item
+    (ok item)
+    (err u404)
+  )
+)
+
+;; Usage
+(add-todo "Buy milk")
+(add-todo "Walk the dog")
+(get-todo u1) ;; Returns (ok "Walk the dog")
+(get-todo u5) ;; Returns (err u404)
+```
+
+This example demonstrates:
+1. Using `element-at?` to retrieve an item from a list stored in a data variable.
+2. Handling the optional return value with `match` to provide meaningful responses.
+3. Safely accessing list elements without risking out-of-bounds errors.
+
+## Common Pitfalls
+
+1. Forgetting that list indices are zero-based in Clarity.
+2. Not handling the case where `element-at?` returns `none` for out-of-bounds access.
+3. Using `element-at?` in a loop to process all elements, which is less efficient than using `map` or `fold`.
+
+## Related Functions
+
+- `list`: Used to create lists that can be accessed with `element-at?`.
+- `len`: Often used in conjunction with `element-at?` to check list bounds.
+- `map`: An alternative for processing all elements in a list.
+- `fold`: Another alternative for reducing a list to a single value.
+
+## Clarity 1 Version: element-at
+
+In Clarity 1, this function was named `element-at` (without the question mark) and had a slightly different behavior:
+
+```clarity
+(element-at list-expr uint)
+```
+
+The key differences are:
+1. It returns the element directly, not wrapped in an optional.
+2. It throws a runtime error if the index is out of bounds.
+
+When migrating from Clarity 1 to newer versions, replace `element-at` with `element-at?` and add appropriate error handling for out-of-bounds cases.
+
+## Conclusion
+
+The `element-at?` function is a safer and more flexible way to access list elements in Clarity smart contracts compared to its predecessor. By returning an optional value, it allows developers to handle out-of-bounds access gracefully, leading to more robust and error-resistant code. When working with lists in Clarity, `element-at?` is an essential tool for accessing specific elements while maintaining the integrity and safety of your contract operations.

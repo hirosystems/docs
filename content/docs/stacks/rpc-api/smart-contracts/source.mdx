@@ -1,0 +1,112 @@
+---
+title: Get contract source
+description: Retrieves the Clarity source code of a given contract, along with the block height it was published in, and the MARF proof for the data.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl={"http://localhost:20443"}>
+
+<API>
+
+<APIInfo method={"GET"} route={"/v2/contracts/source/{contract_address}/{contract_name}"}>
+
+## Get contract source
+
+Returns the Clarity source code of a given contract, along with the block height it was published in, and the MARF proof for the data
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Success |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/v2/contracts/source/{contract_address}/{contract_name}"} path={[]} query={[]} header={[]} body={undefined} schemas={{}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "http://localhost:20443/v2/contracts/source/%7Bcontract_address%7D/%7Bcontract_name%7D"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("http://localhost:20443/v2/contracts/source/%7Bcontract_address%7D/%7Bcontract_name%7D", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200"]}>
+
+<Response value={"200"}>
+
+GET request to get contract source
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "source": "string",
+  "publish_height": 0,
+  "proof": "string"
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+/**
+ * GET request to get contract source
+ */
+export interface ContractSourceResponse {
+  source: string;
+  publish_height: number;
+  proof: string;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>

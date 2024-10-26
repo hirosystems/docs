@@ -69,6 +69,14 @@ Specifications in the `Devnet.toml` file you can change include:
 - Accounts, balances, and names
 - Blockchain environment features of your devnet, such as block time or API ports
 - Stacking orders
+- Specifying derivation path of a given account:
+
+```toml title="settings/devnet.toml"
+[accounts.deployer]
+mnemonic = "<YOUR PRIVATE TESTNET MNEMONIC HERE>"
+balance = 100_000_000_000_000
+derivation = "m/44'/5757'/0'/0/2" // [!code highlight]
+```
 
 ## Adding project contract requirements
 

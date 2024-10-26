@@ -1,0 +1,77 @@
+---
+title: is-none
+description: Checking if an optional value is none in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(is-none value)
+```
+
+- Input: `(optional A)`
+- Output: `bool`
+
+## Why it matters
+
+The `is-none` function is crucial for:
+
+1. Determining if an optional value is `none`.
+2. Implementing conditional logic based on the presence or absence of values.
+3. Ensuring robust contract behavior by checking for missing values.
+4. Simplifying checks for optional values in smart contract code.
+
+## When to use it
+
+Use `is-none` when you need to:
+
+- Check if an optional value is `none`.
+- Implement logic that depends on whether a value is present or absent.
+- Validate the results of function calls that return optional types.
+- Handle cases where values might be missing or not set.
+
+## Best Practices
+
+- Use `is-none` in combination with `match` or `if` for comprehensive value handling.
+- Ensure that the value being checked is of the correct optional type.
+- Use meaningful variable names for better readability.
+- Combine with other optional handling functions like `is-some` for complete validation.
+
+## Practical Example: Checking for Missing User Data
+
+Let's implement a function that checks if a user's profile data is missing:
+
+```clarity
+(define-map UserProfiles { userId: principal } { name: (string-ascii 50), age: uint })
+
+(define-read-only (is-profile-missing (user principal))
+  (is-none (map-get? UserProfiles { userId: user }))
+)
+
+;; Usage
+(map-set UserProfiles { userId: tx-sender } { name: "Alice", age: u30 })
+(is-profile-missing tx-sender) ;; Returns false
+(is-profile-missing 'SPAXYA5XS51713FDTQ8H94EJ4V579CXMTRNBZKSF) ;; Returns true
+```
+
+This example demonstrates:
+1. Using `is-none` to check if a user's profile data is missing.
+2. Implementing a read-only function to determine the presence of user data.
+3. Handling both the case where the profile data is present and where it is missing.
+
+## Common Pitfalls
+
+1. Assuming the value will always be `some`, leading to unhandled `none` cases.
+2. Using `is-none` on non-optional types, causing type errors.
+3. Not handling all possible conditions, resulting in incomplete value checks.
+4. Overlooking the need for comprehensive validation and error checking.
+
+## Related Functions
+
+- `is-some`: Checks if an optional value is `some`.
+- `match`: Used for pattern matching and handling multiple conditions.
+- `default-to`: Provides default values for optional types.
+
+## Conclusion
+
+The `is-none` function is a fundamental tool for checking optional values in Clarity smart contracts. It allows developers to determine if a value is `none`, enabling robust and comprehensive value handling and validation logic. When used effectively, `is-none` enhances the reliability and maintainability of your smart contract code by ensuring that missing values are detected and handled appropriately.

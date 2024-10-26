@@ -1,0 +1,75 @@
+---
+title: slice?
+description: Extracting a sub-sequence from a sequence in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(slice? sequence left-position right-position)
+```
+
+- Input: `sequence_A, uint, uint`
+- Output: `(optional sequence_A)`
+
+## Why it matters
+
+The `slice?` function is crucial for:
+
+1. Extracting sub-sequences from sequences.
+2. Implementing logic that requires partial data extraction.
+3. Ensuring data integrity by validating indices for slicing.
+4. Simplifying the process of handling sub-sequence extraction in smart contracts.
+
+## When to use it
+
+Use `slice?` when you need to:
+
+- Extract a sub-sequence from a sequence.
+- Implement logic that requires partial data extraction.
+- Validate indices for slicing to ensure data integrity.
+- Handle sub-sequence extraction operations.
+
+## Best Practices
+
+- Ensure the `left-position` and `right-position` are within the bounds of the sequence.
+- Use meaningful variable names for better readability.
+- Combine with other sequence functions for comprehensive sequence management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Extracting a Sub-sequence from a String
+
+Let's implement a function that extracts a sub-sequence from a string:
+
+```clarity
+(define-read-only (extract-substring (input (string-ascii 20)) (start uint) (end uint))
+  (slice? input start end)
+)
+
+;; Usage
+(extract-substring "blockstack" u5 u10) ;; Returns (some "stack")
+(extract-substring "blockstack" u0 u5) ;; Returns (some "block")
+(extract-substring "blockstack" u5 u15) ;; Returns none (out of bounds)
+```
+
+This example demonstrates:
+1. Using `slice?` to extract a sub-sequence from a string.
+2. Implementing a public function to handle the sub-sequence extraction.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `slice?` with indices that are out of bounds, causing the operation to fail.
+2. Assuming the sub-sequence will always be valid, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete sequence management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `len`: Returns the length of a sequence.
+- `concat`: Concatenates two sequences.
+- `index-of?`: Returns the first index at which an item can be found in a sequence.
+
+## Conclusion
+
+The `slice?` function is a fundamental tool for extracting sub-sequences in Clarity smart contracts. It allows developers to implement logic that requires partial data extraction, ensuring data integrity and simplifying sequence handling. When used effectively, `slice?` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle sub-sequence extraction operations.

@@ -1,0 +1,76 @@
+---
+title: mod
+description: Calculating the remainder of integer division in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(mod i1 i2)
+```
+
+- Input: `int, int | uint, uint | string-ascii, string-ascii | string-utf8, string-utf8 | buff, buff`
+- Output: `int | uint`
+
+## Why it matters
+
+The `mod` function is crucial for:
+
+1. Calculating the remainder of integer division.
+2. Implementing logic that depends on modular arithmetic.
+3. Simplifying the process of performing operations that require remainders.
+4. Enhancing code readability and maintainability by abstracting modular operations.
+
+## When to use it
+
+Use `mod` when you need to:
+
+- Calculate the remainder of integer division.
+- Implement logic that depends on modular arithmetic.
+- Perform operations that require remainders.
+- Simplify and abstract modular operations.
+
+## Best Practices
+
+- Ensure the divisor is not zero to avoid runtime errors.
+- Use meaningful variable names for better readability.
+- Combine with other mathematical functions for comprehensive calculations.
+- Be aware of the performance implications of frequent modular operations.
+
+## Practical Example: Calculating Remainders
+
+Let's implement a function that calculates the remainder of dividing two numbers:
+
+```clarity
+(define-read-only (calculate-remainder (a int) (b int))
+  (mod a b)
+)
+
+;; Usage
+(calculate-remainder 5 2) ;; Returns 1
+(calculate-remainder 7 3) ;; Returns 1
+(calculate-remainder 10 4) ;; Returns 2
+```
+
+This example demonstrates:
+1. Using `mod` to calculate the remainder of dividing two numbers.
+2. Implementing a read-only function to return the remainder.
+3. Handling both small and large input values.
+
+## Common Pitfalls
+
+1. Using `mod` with a divisor of zero, causing a runtime error.
+2. Assuming the result will always be positive, leading to incorrect expectations.
+3. Not handling all possible conditions, resulting in incomplete calculations.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `+`: Adds two numbers.
+- `-`: Subtracts one number from another.
+- `*`: Multiplies two numbers.
+- `/`: Divides one number by another.
+
+## Conclusion
+
+The `mod` function is a fundamental tool for calculating the remainder of integer division in Clarity smart contracts. It allows developers to perform modular arithmetic, enabling robust and comprehensive mathematical operations. When used effectively, `mod` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to manage modular calculations.

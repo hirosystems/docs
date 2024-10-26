@@ -1,0 +1,76 @@
+---
+title: stx-transfer?
+description: Transferring STX between principals in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(stx-transfer? amount sender recipient)
+```
+
+- Input: `uint, principal, principal`
+- Output: `(response bool uint)`
+
+## Why it matters
+
+The `stx-transfer?` function is crucial for:
+
+1. Transferring STX between principals.
+2. Implementing logic that requires moving STX from one account to another.
+3. Ensuring data integrity by validating the transfer operation.
+4. Simplifying the process of handling STX transfers in smart contracts.
+
+## When to use it
+
+Use `stx-transfer?` when you need to:
+
+- Transfer STX between principals.
+- Implement logic that requires moving STX from one account to another.
+- Validate the transfer operation to ensure data integrity.
+- Handle STX transfers in your smart contract.
+
+## Best Practices
+
+- Ensure the `amount` is positive and the `sender` has sufficient balance.
+- Use meaningful variable names for better readability.
+- Combine with other STX functions for comprehensive account management.
+- Handle the possible error cases to ensure robust contract behavior.
+
+## Practical Example: Transferring STX
+
+Let's implement a function that transfers STX from the `tx-sender` to a recipient:
+
+```clarity
+(define-public (transfer-stx (amount uint) (recipient principal))
+  (stx-transfer? amount tx-sender recipient)
+)
+
+;; Usage
+(transfer-stx u60 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) 
+;; Returns (ok true) if successful
+(transfer-stx u50 'SZ2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKQ9H6DPR) 
+;; Returns (err u1) if the sender does not have enough balance
+```
+
+This example demonstrates:
+1. Using `stx-transfer?` to transfer STX from the `tx-sender` to a recipient.
+2. Implementing a public function to handle the STX transfer.
+3. Handling both successful and error cases.
+
+## Common Pitfalls
+
+1. Using `stx-transfer?` with a non-positive amount, causing the operation to fail.
+2. Assuming the transfer operation will always succeed, leading to unhandled error cases.
+3. Not handling all possible conditions, resulting in incomplete account management.
+4. Overlooking the need for proper error handling and validation.
+
+## Related Functions
+
+- `stx-get-balance`: Queries the STX balance of a principal.
+- `stx-transfer-memo?`: Transfers STX from one principal to another with a memo.
+- `stx-burn?`: Burns STX from a principal's account.
+
+## Conclusion
+
+The `stx-transfer?` function is a fundamental tool for transferring STX between principals in Clarity smart contracts. It allows developers to implement logic that requires moving STX from one account to another, ensuring data integrity and simplifying STX transfer operations. When used effectively, `stx-transfer?` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle STX transfers.

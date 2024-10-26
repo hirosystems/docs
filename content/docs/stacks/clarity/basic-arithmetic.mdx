@@ -1,0 +1,160 @@
+---
+title: Basic arithmetic
+description: Brief overview of arithmetic operations in Clarity and their importance in smart contract development.
+---
+
+Smart contracts often need to perform calculations, whether it's for token balances, voting weights, or complex financial operations. Understanding Clarity's arithmetic functions is crucial for implementing these features efficiently and securely.
+
+## Why these functions matter
+Clarity's arithmetic functions are designed with blockchain-specific considerations in mind:
+
+1. Overflow protection: Unlike some languages, Clarity prevents integer overflow by default, enhancing contract security.
+2. Precision: Clarity uses 128-bit integers, allowing for high-precision calculations crucial in financial applications.
+3. Determinism: The behavior of these functions is consistent across all nodes, ensuring blockchain consensus.
+
+## Core functions
+
+### 1. Addition (+)
+
+**What**: Adds two or more integers.
+
+**Why**: Essential for calculations involving cumulative values.
+
+**When**: Use when you need to increase values, combine quantities, or perform any additive calculation.
+
+**Best practices**: 
+- Consider overflow protection
+- Use with uint for non-negative values like token amounts
+
+**Example use case**: Calculating total rewards in a stacking system.
+
+```clarity
+(define-map StackingRewards principal uint)
+
+(define-public (add-stacking-reward (stacker principal) (newReward uint))
+  (let
+    (
+      (currentRewards (default-to u0 (map-get? StackingRewards stacker)))
+    )
+    (map-set StackingRewards stacker (+ currentRewards newReward))
+    (ok true)
+  )
+)
+```
+
+### 2. Subtraction (-)
+
+**What**: Subtracts integers from the first argument.
+
+**Why**: Crucial for calculations involving decreasing values or finding differences.
+
+**When**: Use when you need to decrease values, calculate differences, or perform any subtractive operation.
+
+**Best practices**: 
+- Guard against underflow
+- Consider using uint for values that shouldn't go negative
+
+**Example use case**: Updating user points in a rewards system.
+
+```clarity
+(define-map UserPoints principal uint)
+
+(define-public (deduct-points (amount uint))
+  (let
+    (
+      (currentPoints (default-to u0 (map-get? UserPoints tx-sender)))
+    )
+    (asserts! (>= currentPoints amount) (err u1))
+    (map-set UserPoints tx-sender (- currentPoints amount))
+    (ok true)
+  )
+)
+
+(define-read-only (get-points (user principal))
+  (default-to u0 (map-get? UserPoints user))
+)
+```
+
+### 3. Multiplication (*)
+
+**What**: Multiplies two or more integers.
+
+**Why**: Important for calculations involving scaling, rates, or proportions.
+
+**When**: Use when you need to scale values, calculate rates, or perform any multiplicative operation.
+
+**Best practices**: 
+- Consider overflow protection
+- Use with uint for non-negative values like token amounts
+
+**Example use case**: Calculating rewards based on stacking amount and duration.
+
+```clarity
+(define-public (calculate-rewards (amount uint) (days uint))
+  (let
+    (
+      (rewardRate u10) ;; 10 tokens per day per 1000 stacked
+      (rewards (* amount days rewardRate))
+    )
+    (ok (/ rewards u1000))
+  )
+)
+```
+
+### 4. Division (/)
+
+**What**: Performs integer division.
+
+**Why**: Crucial for calculations involving rates, proportions, or sharing.
+
+**When**: Use when you need to divide values, calculate rates, or perform any division operation.
+
+**Best practices**: 
+- Guard against division by zero
+- Consider using uint for non-negative values like token amounts
+
+**Example use case**: Calculating price per item when buying in bulk.
+
+```clarity
+(define-read-only (calculate-price-per-item (totalPrice uint) (itemCount uint))
+  (if (> itemCount u0)
+    (ok (/ totalPrice itemCount))
+    (err u0)
+  )
+)
+```
+
+## Best practices and considerations
+
+1. **Order of operations**: Clarity doesn't have operator precedence. Use parentheses to explicitly define the order of operations.
+
+2. **Handling remainders**: When using division, consider how to handle remainders. You might need to use combination of division and modulo.
+
+3. **Scaling for precision**: When dealing with percentages or fractions, consider scaling up your numbers to maintain precision.
+
+4. **Guarding against division by zero**: Always check for zero before performing division to avoid runtime errors.
+
+5. **Using uint vs int**: Choose `uint` for values that can't be negative (like token amounts) and `int` when negative values are possible.
+
+## Practical example: simple interest calculator
+
+Let's combine these functions to create a simple interest calculator:
+
+```clarity
+(define-public (calculate-interest (principal uint) (rate uint) (time uint))
+  (let (
+    (scaled-rate (/ rate u100))  ;; Convert percentage to decimal
+    (interest (/ (* principal scaled-rate time) u365))  ;; Simple interest formula
+  )
+  (ok interest))
+)
+
+;; Usage: calculate interest for 1000 tokens at 5% APR for 30 days
+(calculate-interest u1000 u5 u30)
+```
+
+This example demonstrates how to combine multiple arithmetic operations while handling precision (scaling the rate) and using integer division appropriately.
+
+## Conclusion
+
+Mastering Clarity's arithmetic functions is essential for building robust smart contracts. By understanding these operations and their nuances, you can implement complex financial logic, manage token economics, and create secure, efficient blockchain applications.

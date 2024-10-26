@@ -1,110 +1,168 @@
-import Link from "next/link";
-import { cn } from "@/utils/cn";
-import { buttonVariants } from "@/components/ui/button";
-import { CodeBlock } from "@/components/code-block";
-import { Integration } from "./page.client";
+import { StacksCardIcon, BitcoinCardIcon } from "@/components/ui/icon";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "fumadocs-core/link";
 
 export default function HomePage(): JSX.Element {
   return (
-    <>
-      <div
-        className="absolute inset-x-0 top-[200px] h-[250px] max-md:hidden"
-        style={{
-          background:
-            "repeating-linear-gradient(to right, hsl(var(--border)), transparent 1px, transparent 50px), repeating-linear-gradient(to bottom, hsl(var(--border)), transparent 1px, transparent 50px)",
-        }}
-      />
-      <main className="container relative max-w-[1250px] px-8 py-4 lg:py-16">
-        <div className="relative border-b">
-          <div className="grid grid-cols-1 bg-background border-r md:grid-cols-2 lg:grid-cols-3">
-            <div className="relative flex flex-col overflow-hidden border-l border-t px-6 py-10">
-              <h2 className="text-7xl font-extrabold font-sans">
-                Build on Bitcoin Layers.
-              </h2>
-              <ul className="my-8 flex flex-col gap-6">
-                <li>
-                  <span className="font-medium">Guides and code samples.</span>
-                  <span className="ml-2 text-muted-foreground">
-                    Copy and paste your way to making things work.
-                  </span>
-                </li>
-                <li>
-                  <span className="font-medium">Interactive.</span>
-                  <span className="ml-2 text-muted-foreground">
-                    Play around and get results before installing anything.
-                  </span>
-                </li>
-                <li>
-                  <span className="font-medium">Fully open-source.</span>
-                  <span className="ml-2 text-muted-foreground">
-                    Open source, available on Github for contributions.
-                  </span>
-                </li>
-              </ul>
-              <div className="w-full mt-auto flex flex-row flex-wrap *:flex-1 gap-2 border-t pt-8">
-                <Link
-                  href="/stacks"
-                  className={cn(
-                    buttonVariants(),
-                    "bg-[rgb(255,85,0)] hover:bg-[rgba(255,85,0,0.9)]"
-                  )}
-                >
-                  Get started
-                </Link>
-                <Link
-                  href="/guides"
-                  className={cn(
-                    buttonVariants({
-                      variant: "outline",
-                    })
-                  )}
-                >
-                  View all guides
-                </Link>
-              </div>
-            </div>
+    <main className="container max-w-7xl mx-auto my-12 space-y-10">
+      <div className="space-y-1">
+        <h1 className="text-4xl font-bold text-gray-900">
+          Welcome to Hiro Docs.
+        </h1>
+        <h2 className="text-2xl font-bold text-muted-foreground">
+          Explore our tutorials, guides, API references, and more.
+        </h2>
+      </div>
 
-            <Integration
-              className="border-t lg:col-span-2"
-              codeBlocks={[
-                {
-                  key: "clarinet",
-                  message: "Install now and start building!",
-                  block: (
-                    <CodeBlock
-                      wrapper={{ className: "mt-2" }}
-                      lang="bash"
-                      code="brew install clarinet"
-                    />
-                  ),
-                },
-                {
-                  key: "stacks.js",
-                  message: "Try it in your terminal!",
-                  block: (
-                    <CodeBlock
-                      wrapper={{ className: "mt-2" }}
-                      lang="bash"
-                      code="npx create stacks"
-                    />
-                  ),
-                },
-                {
-                  key: "chainhook",
-                  message: "Install now and start scanning!",
-                  block: (
-                    <CodeBlock
-                      wrapper={{ className: "mt-2" }}
-                      lang="bash"
-                      code="brew install chainhook"
-                    />
-                  ),
-                },
-              ]}
-            />
+      <div className="grid md:grid-cols-2 gap-6 mb-16">
+        {/* Stacks Docs Card */}
+        <Link
+          href="/stacks"
+          className="not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80"
+        >
+          <div className="mb-6">
+            <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
+              <StacksCardIcon />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Stacks Docs</h3>
+            <p className="text-muted-foreground">Start building on Stacks.</p>
           </div>
+
+          <div className="flex flex-wrap gap-2">
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              CLARINET
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              CHAINHOOK
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              STACKS.JS
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              HIRO PLATFORM
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              STACKS API
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              TOKEN METADATA API
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              +3 MORE
+            </Badge>
+          </div>
+        </Link>
+        <Link
+          href="/bitcoin"
+          className="not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80"
+        >
+          <div className="mb-6">
+            <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
+              <BitcoinCardIcon />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Bitcoin Docs</h3>
+            <p className="text-muted-foreground">
+              Start building on Ordinals and Runes.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              ORDHOOK
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              ORDINALS API
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="bg-background/95 text-gray-900"
+            >
+              RUNES API
+            </Badge>
+          </div>
+        </Link>
+      </div>
+
+      <main className="space-y-6">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-bold">Need help getting started?</h2>
+          <p className="text-xl text-muted-foreground">
+            Check out these resources.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-4 gap-6">
+          <Link href="/stacks/get-started" className="block h-full">
+            <Card className="p-6 border bg-card h-full flex flex-col">
+              <h3 className="text-lg font-semibold mb-2">
+                Get started with Stacks
+              </h3>
+              <p className="text-muted-foreground text-sm flex-grow">
+                Build on Stacks with some of our most popular guides and
+                tutorials.
+              </p>
+            </Card>
+          </Link>
+          <Link href="/stacks/api" className="block h-full">
+            <Card className="p-6 border bg-card h-full flex flex-col">
+              <h3 className="text-lg font-semibold mb-2">
+                Stacks API Overview
+              </h3>
+              <p className="text-muted-foreground text-sm flex-grow">
+                View the API reference for the Stacks API.
+              </p>
+            </Card>
+          </Link>
+          <Link href="/bitcoin/get-started" className="block h-full">
+            <Card className="p-6 border bg-card h-full flex flex-col">
+              <h3 className="text-lg font-semibold mb-2">
+                Get started with Bitcoin
+              </h3>
+              <p className="text-muted-foreground text-sm flex-grow">
+                Build on Bitcoin with some of our most popular guides and
+                tutorials.
+              </p>
+            </Card>
+          </Link>
+          <Link href="/bitcoin/ordinals/api" className="block h-full">
+            <Card className="p-6 border bg-card h-full flex flex-col">
+              <h3 className="text-lg font-semibold mb-2">
+                Ordinals API Overview
+              </h3>
+              <p className="text-muted-foreground text-sm flex-grow">
+                View the API reference for our Ordinals API.
+              </p>
+            </Card>
+          </Link>
         </div>
       </main>
-    </>
+    </main>
   );
 }

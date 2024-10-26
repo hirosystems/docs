@@ -24,7 +24,7 @@ import {
 
 <API>
 
-<APIInfo method={"GET"} route={"/extended/v1/pox3/{pool_principal}/delegations"}>
+<APIInfo method={"GET"} route={"/extended/v1/pox4/{pool_principal}/delegations"}>
 
 ## Stacking pool members
 
@@ -80,7 +80,7 @@ number of items to skip
 | :------ | :------ |
 | `200` | Success |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/pox3/{pool_principal}/delegations"} path={[{"name":"pool_principal","type":"string","defaultValue":"SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP","isRequired":true}]} query={[{"name":"after_block","type":"number","defaultValue":"","isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":false,"isRequired":false},{"name":"limit","type":"number","defaultValue":3,"isRequired":false},{"name":"offset","type":"number","defaultValue":0,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/pox4/{pool_principal}/delegations"} path={[{"name":"pool_principal","type":"string","defaultValue":"SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP","isRequired":true}]} query={[{"name":"after_block","type":"number","defaultValue":"","isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":false,"isRequired":false},{"name":"limit","type":"number","defaultValue":3,"isRequired":false},{"name":"offset","type":"number","defaultValue":0,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
 
 </APIPlayground>
 
@@ -93,7 +93,7 @@ number of items to skip
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/extended/v1/pox3/SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP/delegations?unanchored=false&limit=5"
+curl -X GET "https://api.hiro.so/extended/v1/pox4/SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP/delegations?unanchored=false&limit=5"
 ```
 
 </Request>
@@ -101,7 +101,7 @@ curl -X GET "https://api.hiro.so/extended/v1/pox3/SP21YTSM60CAY6D011EZVEVNKXVW8F
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/extended/v1/pox3/SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP/delegations?after_block=0&unanchored=true&limit=100&offset=300", {
+fetch("https://api.hiro.so/extended/v1/pox4/SP21YTSM60CAY6D011EZVEVNKXVW8FVZE198XEFFP/delegations?after_block=0&unanchored=true&limit=100&offset=300", {
   method: "GET"
 });
 ```

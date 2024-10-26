@@ -60,7 +60,7 @@ Transaction ID
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so/extended/v1/tx/%7Btx_id%7D"
+curl -X GET "https://api.hiro.so/extended/v1/tx/{tx_id}"
 ```
 
 </Request>
@@ -68,7 +68,7 @@ curl -X GET "https://api.hiro.so/extended/v1/tx/%7Btx_id%7D"
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/extended/v1/tx/%7Btx_id%7D", {
+fetch("https://api.hiro.so/extended/v1/tx/{tx_id}", {
   method: "GET"
 });
 ```
@@ -81,7 +81,7 @@ fetch("https://api.hiro.so/extended/v1/tx/%7Btx_id%7D", {
 
 <Response value={"200"}>
 
-Describes all transaction types on Stacks 2.0 blockchain
+Fetches transaction details for a given transaction ID
 
 <ResponseTypes>
 

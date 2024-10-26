@@ -1,35 +1,328 @@
 ---
-title: Roadmap
+title: Announcing Stacks.js v7
 description: Discover the future of Stacks.js.
 ---
 
-We're working hard on `v7` of Stacks.js. This version will bring a lot of improvements and new features, but it also adds some breaking changes.
+Read about what's new in the latest version of Stacks.js.
+This version comes with a lot of improvements and new features, but it also adds some breaking changes.
 
 <Callout type="Info">
-Want to use these latest `next` features? Install the canary version of the packages, e.g.
+Want to use these latest features? Install packages using the `latest` tag:
 
 ```package-install
-@stacks/transactions@next
+@stacks/transactions@latest
 ```
 </Callout>
 
-## Breaking changes
+### Strings
+_aka, reducing wrapper types and magic numbers_
 
-- **Getting rid of the network class** <input type="checkbox" checked /><br/> Instead, Stacks networks are now static objects, which are easier to handle. Also, the fetching logic is separated from the network object.
-- **Changing internal Clarity representation** <input type="checkbox" checked /><br/> Clarity values in JS are hard to inspect. This is now simpler using easy to construct and debug objects.
-- **Changing internal post-conditions representation** <input type="checkbox" checked /><br/> Post-conditions are now easier to inspect as well.
-- **Defaulting to hex** <input type="checkbox" checked /><br/> In a lot of places Stacks.js defaults to bytes/Uint8Arrays. This is now updated to default to hex strings, which should be enough for most users. For advanced users, the bytes are still available as new methods.
-- **Simplifying addressess & tokens** <input type="checkbox" /><br/> Addresses and tokens can be confusing. It's preferred to always have a single string representation for addresses and tokens.
-- **Removing Triplesec** <input type="checkbox" /><br/> Triplesec has been a legacy mnemonic encryption option for a while. We will remove it to get rid of a dependency on a library that is no longer actively maintained.
-- **Remove legacy Blockstack authentication** <input type="checkbox" /><br/> The Blockstack authentication is no longer maintained and will be removed from Stacks.js (mainly CLI).
+<img src="/string-meme.png" className="max-w-[300px] mx-auto" alt="String Meme" />
 
-### **Deprecations**
+#### Problem
 
-- **Remove wallet-sdk "restoring" and "config" features** <input type="checkbox" /><br/> These concepts have lead to confusion and have been avoided by wallets. Wallets will not store additional information on Gaia and will not "restore"/detect which accounts have previously been used.
+Many Stacks.js representations we're not debuggable for developers.
+Logging Clarity values resulted in unintelligible `type` and `value` numbers, confusing even experienced Stacks developers.
+Private keys were also included unnecessary `type` properties with raw byte arrays.
+"Magic" numbers are all accross the codebase (as they are needed for serialization), but these shouldn't be part of the "public" interfaces.
 
-## New Features
+#### Solution
 
-- **Adding a maintained `StacksApiClient`** <input type="checkbox" checked /><br/> So far, we only had auto-generated wrappers for the API. Now we will provide a maintained client that is easier to use with post-processing of information (e.g. Clarity values) to make them easier to use.
+We switched to a system where most values will be represented as strings.
+This makes them easier to inspect and diff.
+
+Clarity example, [Read more](#clarity-representation)
+```ts
+// [!code word:OLD]
+// [!code word:NEW]
+// OLD:
+{ type: 1, value: 12n }
+
+// NEW:
+{ type: "uint", value: "12" }
+```
+
+Private key example, [Read more](/stacks/stacks.js/concepts/private-keys)
+```ts
+// [!code word:OLD]
+// [!code word:NEW]
+signMessageHashRsv({
+  // OLD:
+  privateKey: createStacksPrivateKey("f5a3...2801"), // { compressed: true, data: [245,163,...] }
+  // NEW:
+  privateKey: "f5a3...2801"
+})
+```
+
+This breaks the signatures of many functions:
+
+- `signMessageHashRsv`, `signWithKey` now return the message signature as a `string` directly.
+- `nextSignature`, `nextVerification`, `publicKeyFromSignatureVrs`, `publicKeyFromSignatureRsv` now take in the message signature as a `string`.
+
+### Stacks Network
+
+For a long time, Stacks.js "network" instances were used for "networking" and "network" definitions.
+This caused confusion, as most users use `mainnet` or `testnet` for most of their interactions.
+The "networking" (aka fetching) logic is now more clearly customizable.
+
+From now on "network" objects are static (aka constants) and don't require instantiation.
+
+These changes should make it more obvious when functions are using network object properties vs when they are doing actual networking.
+
+In most cases, developers shouldn't need the `@stacks/network` package anymore.
+The `network` parameter can be used with string literals: `'mainnet'`, `'testnet'`, `'devnet'`, `'mocknet'`.
+
+```ts
+// [!code word:OLD]
+// [!code word:NEW]
+// OLD:
+import { StacksTestnet } from '@stacks/network';
+
+makeSTXTokenTransfer({
+  network: new StacksTestnet(), // [!code highlight]
+  // ...
+});
+
+// NEW:
+makeSTXTokenTransfer({
+  network: 'testnet' // [!code highlight]
+  // ...
+});
+```
+
+
+#### Stacks Network `client`
+
+In case a function also takes a `client` parameter, it will be doing actual networking.
+This way you can use string literal networks with a custom node.
+You can also still use network objects with the `client` parameter as part of the network object.
+The `client` parameter can be any object-like structure containing a `baseUrl` and `fetch` property.
+
+- The `baseUrl` property should be a string containing the base URL of the Stacks node you want to use.
+- The `fetch` property can be any (fetch)[https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API] compatible function.
+
+The following diffs show examples of how to migrate to the new pattern.
+
+```diff
+const transaction = await makeSTXTokenTransfer({
+  // ...
+- network: new StacksTestnet({ url: "mynode-optional.com", fetchFn: myFetch }), // optional options
++ network: 'testnet', // optional, defaults to 'mainnet'
++ client: { baseUrl: "mynode-optional.com", fetch: myFetchOptional } // optional, defaults inferred from network
+});
+```
+
+The `client` property is also part of the network object.
+You can still keep ONE single network object for your whole application.
+
+```ts
+// [!code word:OLD]
+// [!code word:NEW]
+// OLD:
+import { StacksTestnet } from '@stacks/network';
+
+const network = new StacksTestnet({ url: "https://mynode.com", fetchFn: myFetch });
+
+// NEW:
+import { STACKS_TESTNET } from '@stacks/network';
+
+const network = {
+  ...STACKS_TESTNET, // extending a static object
+  client: { baseUrl: "https://mynode.com", fetch: myFetch }
+};
+```
+
+### A To B Helpers
+
+Where possible, Stacks.js now offers function to translate between different representations and concepts.
+The naming is consistent across the board and uses `A To B` naming.
+For example, if we have a private key and want to get the address, we can use the `privateKeyToAddress` function.
+
+```ts
+// [!code word:privateKeyToAddress]
+import { privateKeyToAddress } from "@stacks/transactions";
+
+const privateKey = "f5a3...2801";
+const address = privateKeyToAddress(privateKey); // SP1MXSZF4NFC8JQ1TTYGEC2WADMC7Y3GHVZYRX6RF
+```
+
+### Fetch Methods
+
+To make it easier to discover all fetching functions, they now all start with `fetch`.
+
+The following methods were renamed:
+
+- `estimateFee` → `fetchFeeEstimate`
+- `estimateTransfer` → `fetchFeeEstimateTransfer`
+- `estimateTransaction` → `fetchFeeEstimateTransaction`
+- `getAbi` → `fetchAbi`
+- `getNonce` → `fetchNonce`
+- `getContractMapEntry` → `fetchContractMapEntry`
+- `callReadOnlyFunction` → `fetchCallReadOnlyFunction`
+
+`broadcastTransaction` wasn't renamed to highlight the uniqueness of the method.
+Namely, the node/API it is sent to will "broadcast" the transaction to the mempool and is more of an irreversible action.
+
+### Clarity Representation
+
+The `ClarityType` enum was replaced by a more readable version.
+The previous (wire format compatible) enum is still available as `ClarityWireType`.
+These types are considered somewhat internal and shouldn't cause breaking changes for most use-cases.
+
+The property holding the value of the data type is now called `value` in all cases.
+Previously, there was a mix of `value`, `list`, `buffer` etc.
+For `bigint` values, the type of the `value` property is a now `string`, for better serialization compatibility.
+
+```diff
+{
+-  type: 1,
++  type: "uint",
+-  value: 12n,
++  value: "12",
+}
+```
+
+```diff
+{
+-  type: 11,
++  type: "list",
+-  list: [ ... ],
++  value: [ ... ],
+}
+```
+
+### Post-conditions
+
+The old `PostCondition` type was renamed to `PostConditionWire`.
+A new human-readable `PostCondition` type was introduced in its place.
+
+Below is an example of the new `PostCondition` types.
+
+```ts
+// STX post-condition
+const stxPostCondition: StxPostCondition = {
+  type: 'stx-postcondition',
+  address: 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B',
+  condition: 'gte',
+  amount: '100',
+};
+
+// Fungible token post-condition
+const ftPostCondition: FungiblePostCondition = {
+  type: 'ft-postcondition',
+  address: 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B',
+  condition: 'eq',
+  amount: '100',
+  asset: 'SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-ft-token::my-token',
+};
+
+// Non-fungible token post-condition
+const nftPostCondition: NonFungiblePostCondition = {
+  type: 'nft-postcondition',
+  address: 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B',
+  condition: 'sent',
+  asset: 'SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-nft::my-asset',
+  assetId: Cl.uint(602),
+};
+```
+
+### Advanced
+
+#### serialize methods
+
+Existing methods now take or return **hex-encoded strings** _instead_ of `Uint8Array`s.
+
+> If you were already converting returned bytes to hex-strings in your code, you can now skip the conversion step — hex-strings are the new default.
+
+For easier migrating, renaming the following methods is possible to keep the previous behavior:
+
+- `StacksTransaction.serialize` → `StacksTransaction.serializeBytes`
+- `serializeCV` → `serializeCVBytes`
+- `serializeAddress` → `serializeAddressBytes`
+- `deserializeAddress` → `deserializeAddressBytes`
+- `serializeLPList` → `serializeLPListBytes`
+- `deserializeLPList` → `deserializeLPListBytes`
+- `serializeLPString` → `serializeLPStringBytes`
+- `deserializeLPString` → `deserializeLPStringBytes`
+- `serializePayload` → `serializePayloadBytes`
+- `deserializePayload` → `deserializePayloadBytes`
+- `serializePublicKey` → `serializePublicKeyBytes`
+- `deserializePublicKey` → `deserializePublicKeyBytes`
+- `serializeStacksMessage` → `serializeStacksMessageBytes`
+- `deserializeStacksMessage` → `deserializeStacksMessageBytes`
+- `serializeMemoString` → `serializeMemoStringBytes`
+- `deserializeMemoString` → `deserializeMemoStringBytes`
+- `serializeTransactionAuthField` → `serializeTransactionAuthFieldBytes`
+- `deserializeTransactionAuthField` → `deserializeTransactionAuthFieldBytes`
+- `serializeMessageSignature` → `serializeMessageSignatureBytes`
+- `deserializeMessageSignature` → `deserializeMessageSignatureBytes`
+- `serializePostCondition` → `serializePostConditionBytes`
+- `deserializePostCondition` → `deserializePostConditionBytes`
+- `serializeStacksMessage` → `serializeStacksWireBytes`
+- `deserializeStacksMessage` → `deserializeStacksWireBytes`
+
+#### Asset Helper Methods
+
+The following interfaces and methods were renamed:
+
+- `AssetInfo` → `Asset`
+- `StacksWireType.AssetInfo` → `StacksWireType.Asset`
+- `createAssetInfo` → `createAsset`
+- `parseAssetInfoString` → `parseAssetString`
+
+#### CLI
+
+- Removed the `authenticator` method for legacy Blockstack authentication.
+
+#### Triplesec
+
+Support for encrypting/decrypting mnemonics with `triplesec` was removed.
+This impacts the methods: `decrypt`, `decryptMnemonic`, and `decryptLegacy`.
+Make sure to update your code to if mnemonics are stored somewhere encrypted using the legacy method.
+
+#### WireType
+
+Renamed internals to avoid confusion between "message" and wire-format for serialization.
+This is only used for advanced serialization use-cases internally and should not be needed for most users.
+
+- `StacksMessage` → `StacksWire`
+- `StacksMessageType` → `StacksWireType`
+- `serializeStacksMessage` → `serializeStacksWireBytes`
+- `deserializeStacksMessage` → `deserializeStacksWireBytes`
+
+More types were renamed to indicate use for serialization to _wire-format_:
+
+- `MessageSignature` → `MessageSignatureWire`
+- `StacksPublicKey` → `PublicKeyWire`
+- `TransactionAuthField` → `TransactionAuthFieldWire`
+- `Asset` → `AssetWire`
+- `Address` → `AddressWire`
+- `PostCondition` → `PostConditionWire`
+- `PostConditionPrincipal` → `PostConditionPrincipalWire`
+- `STXPostCondition` → `STXPostConditionWire`
+- `FungiblePostCondition` → `FungiblePostConditionWire`
+- `NonFungiblePostCondition` → `NonFungiblePostConditionWire`
+- `LengthPrefixedString` → `LengthPrefixedStringWire`
+- `CoinbasePayload` → `CoinbasePayloadWire`
+- `PoisonPayload` → `PoisonPayloadWire`
+- `SmartContractPayload` → `SmartContractPayloadWire`
+- `TokenTransferPayload` → `TokenTransferPayloadWire`
+- `VersionedSmartContractPayload` → `VersionedSmartContractPayloadWire`
+- `NakamotoCoinbasePayload` → `NakamotoCoinbasePayloadWire`
+- `TenureChangePayload` → `TenureChangePayloadWire`
+- `StandardPrincipal` → `StandardPrincipalWire`
+- `ContractPrincipal` → `ContractPrincipalWire`
+
+#### Signed BigInt
+
+The `intToBigInt` method no longer supports two's complement signed integers and removed the `signed` boolean parameter.
+This likely was a misunderstood and unused feature.
+
+#### Refactorings
+
+- `AddressHashMode`: The `Serialize` prefixes were removed for brevity.
+- `makeRandomPrivKey` was renamed to `randomPrivateKey` and now returns a compressed private key.
+- `generateSecretKey` was renamed to `randomSeedPhrase`.
 
 <Callout>
 **Have an idea?** Please let us know on [Discord #stacks-js](https://stacks.chat) or open an issue on [Github](https://github.com/hirosystems/stacks.js/issues/new/choose).

@@ -1,0 +1,82 @@
+---
+title: len
+description: Getting the length of a sequence in Clarity smart contracts.
+---
+
+## Function Signature
+
+```clarity
+(len sequence)
+```
+
+- Input: `sequence_A`
+- Output: `uint`
+
+## Why it matters
+
+The `len` function is crucial for:
+
+1. Determining the length of various sequence types.
+2. Implementing logic that depends on the size of sequences.
+3. Ensuring data integrity by validating sequence lengths.
+4. Simplifying length checks in smart contract code.
+
+## When to use it
+
+Use `len` when you need to:
+
+- Get the length of a list, buffer, or string.
+- Implement logic that depends on the size of sequences.
+- Validate the length of input data.
+- Handle cases where the size of a sequence is important.
+
+## Best Practices
+
+- Ensure the sequence type is compatible with the `len` function.
+- Use meaningful variable names for better readability.
+- Combine with other functions for comprehensive sequence handling.
+- Be aware of the maximum length of sequences in Clarity.
+
+## Practical Example: Validating a List Length
+
+Let's implement a function that validates the length of a list of integers:
+
+```clarity
+(define-read-only (validate-list-length (numbers (list 10 int)))
+  (let
+    (
+      (length (len numbers))
+    )
+    (if (<= length u10)
+      (ok length)
+      (err u1)
+    )
+  )
+)
+
+;; Usage
+(validate-list-length (list 1 2 3 4 5)) ;; Returns (ok u5)
+(validate-list-length (list 1 2 3 4 5 6 7 8 9 10 11)) ;; Returns (err u1)
+```
+
+This example demonstrates:
+1. Using `len` to get the length of a list of integers.
+2. Implementing conditional logic based on the length of the list.
+3. Handling both the case where the list length is valid and where it is not.
+
+## Common Pitfalls
+
+1. Using `len` on incompatible types, causing type errors.
+2. Assuming the length will always be within a certain range, leading to unhandled cases.
+3. Not handling all possible conditions, resulting in incomplete length checks.
+4. Overlooking the need for comprehensive validation and error checking.
+
+## Related Functions
+
+- `as-max-len?`: Ensures a sequence does not exceed a maximum length.
+- `concat`: Concatenates multiple sequences.
+- `default-to`: Provides default values for optional types.
+
+## Conclusion
+
+The `len` function is a fundamental tool for getting the length of sequences in Clarity smart contracts. It allows developers to determine the size of lists, buffers, and strings, enabling robust and comprehensive sequence handling and validation logic. When used effectively, `len` enhances the reliability and maintainability of your smart contract code by ensuring that sequence lengths are detected and handled appropriately.

@@ -15,74 +15,76 @@ The most commonly used packages are:
 <Tabs defaultValue="connect">
   <TabsList className='flex flex-wrap md:w-max'>
     <TabsTrigger value="connect" className='tab group'>
-      <Badge className='badge transition-colors'>@stacks/connect</Badge>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/connect</Badge>
     </TabsTrigger>
     <TabsTrigger value="network" className='tab group'>
-      <Badge className='badge transition-colors'>@stacks/network</Badge>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/network</Badge>
     </TabsTrigger>
     <TabsTrigger value="transactions" className='tab group'>
-      <Badge className='badge transition-colors'>@stacks/transactions</Badge>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/transactions</Badge>
     </TabsTrigger>
     <TabsTrigger value="client" className='tab group'>
-      <Badge className='badge transition-colors'>@stacks/blockchain-api-client</Badge>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/blockchain-api-client</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="connect">
+    Build Stacks-ready web apps and connect to user wallets.
+
     ```package-install
     @stacks/connect
     ```
-
-    Build Stacks-ready web apps and connect to user wallets.
   </TabsContent>
   <TabsContent value="network">
+    Network library for working with Stacks network objects.
+
     ```package-install
     @stacks/network
     ```
-
-    Network and API library for working with Stacks blockchain nodes.
   </TabsContent>
   <TabsContent value="transactions">
+    Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
+
     ```package-install
     @stacks/transactions
     ```
-
-    Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
   </TabsContent>
   <TabsContent value="client">
+    API client library for all Stacks Blockchain API endpoints.
+
     ```package-install
     @stacks/blockchain-api-client
     ```
-
-    API client library for all Stacks Blockchain API endpoints.
   </TabsContent>
 </Tabs>
 
+---
+
 <Accordions>
   <Accordion title="All available packages">
-  [`@stacks/connect`](/stacks/connect/packages/connect) - Build Stacks-ready web applications and connect to user wallets.
+  [`@stacks/connect`](/stacks/connect/packages/connect) — Build Stacks-ready web applications and connect to user wallets.
 
-  `@stacks/auth` - Construct and decode authentication requests for Stacks apps.
+  `@stacks/auth` — Construct and decode authentication requests for Stacks apps.
 
-  [`@stacks/transactions`](/stacks/stacks.js/packages/transactions) - Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
+  [`@stacks/transactions`](/stacks/stacks.js/packages/transactions) — Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
 
-  `@stacks/wallet-sdk` - A library for building wallets, managing accounts, and handling keys for the Stacks blockchain.
+  `@stacks/wallet-sdk` — A library for building wallets, managing accounts, and handling keys for the Stacks blockchain.
 
-  `@stacks/storage` - Store and fetch files with Gaia, the decentralized storage system.
+  `@stacks/storage` — Store and fetch files with Gaia, the decentralized storage system.
 
-  `@stacks/profile` - Functions for manipulating user profiles.
+  `@stacks/profile` — Functions for manipulating user profiles.
 
-  `@stacks/encryption` - Encryption functions used by Stacks.js packages.
+  `@stacks/encryption` — Encryption functions used by Stacks.js packages.
 
-  [`@stacks/network`](/stacks/stacks.js/packages/network) - A network and API library for working with Stacks blockchain nodes.
+  [`@stacks/network`](/stacks/stacks.js/packages/network) — A network and API library for working with Stacks blockchain nodes.
 
-  `@stacks/common` - Common utilities used by Stacks.js packages.
+  `@stacks/common` — Common utilities used by Stacks.js packages.
 
-  `@stacks/bns` - A library for interacting with the BNS contract.
+  `@stacks/bns` — A library for interacting with the BNS contract.
 
-  `@stacks/stacking` - A library for PoX stacking.
+  `@stacks/stacking` — A library for PoX stacking.
 
-  `@stacks/cli` - A command line interface to interact with auth, storage, and Stacks transactions.
+  `@stacks/cli` — A command line interface to interact with auth, storage, and Stacks transactions.
 
-  `@stacks/blockchain-api-client` - API client library for all Stacks Blockchain API endpoints.
+  `@stacks/blockchain-api-client` — API client library for all Stacks Blockchain API endpoints.
   </Accordion>
 </Accordions>

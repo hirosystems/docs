@@ -1,0 +1,96 @@
+---
+title: greater than
+description: Using the greater than function for comparisons in Clarity smart contracts.
+---
+
+The greater than function (`>`) in Clarity compares two values and returns true if the first value is greater than the second. It's a fundamental comparison operation used in many smart contract conditions and logic flows.
+
+## Function Signature
+
+```clarity
+(> v1 v2)
+```
+
+- Input: Two values of the same type (int, uint, string-ascii, string-utf8, or buff)
+- Output: A boolean (true or false)
+
+## Why it matters
+
+The greater than function is crucial for:
+
+1. Implementing conditional logic in smart contracts.
+2. Comparing numerical values for financial operations.
+3. Ordering and sorting data.
+4. Implementing thresholds or limits in contract logic.
+
+## When to use it
+
+Use the greater than function when you need to:
+
+- Compare two numerical values to determine if one is larger.
+- Implement minimum thresholds for certain operations.
+- Create conditional logic based on numerical comparisons.
+- Sort or order data based on numerical or lexicographical order.
+
+## Best Practices
+
+- Ensure that both inputs are of the same type to avoid runtime errors.
+- Be aware of the differences in comparison between signed (int) and unsigned (uint) integers.
+- When comparing strings or buffers, understand that the comparison is lexicographical.
+- Consider edge cases, especially when dealing with the limits of integer ranges.
+
+## Practical Example: Token Sale with Minimum Purchase
+
+Let's implement a simple token sale contract that uses the greater than function to enforce a minimum purchase amount:
+
+```clarity
+;; Define constants
+(define-constant MIN_PURCHASE u100000000) ;; 1 STX
+(define-constant TOKEN_PRICE u50000) ;; 0.0005 STX per token
+
+;; Define data variables
+(define-data-var tokensSold uint u0)
+
+;; Function to purchase tokens
+(define-public (purchase-tokens (amount uint))
+  (let
+    (
+      (tokensToMint (/ amount TOKEN_PRICE))
+      (payment amount)
+    )
+    ;; Check if the purchase amount is greater than the minimum
+    (asserts! (> payment MIN_PURCHASE) (err u1))
+    ;; Perform the token purchase
+    (try! (stx-transfer? payment tx-sender (as-contract tx-sender)))
+    (var-set tokensSold (+ (var-get tokensSold) tokensToMint))
+    ;; Here you would typically mint or transfer tokens to the buyer
+    (ok tokensToMint)
+  )
+)
+
+;; Function to check total tokens sold
+(define-read-only (get-tokensSold)
+  (ok (var-get tokensSold))
+)
+```
+
+This example demonstrates:
+1. Using `>` to check if the payment amount exceeds the minimum purchase threshold.
+2. Combining the greater than check with other contract logic for a token sale.
+3. Implementing a minimum purchase amount to prevent small, potentially spam transactions.
+
+## Common Pitfalls
+
+1. Comparing values of different types, which will result in a runtime error.
+2. Not considering the inclusive nature of `>=` vs the exclusive nature of `>` when setting thresholds.
+3. Overlooking potential integer overflow when working with very large numbers.
+
+## Related Functions
+
+- `<`: Used for less than comparisons.
+- `>=`: Used for greater than or equal to comparisons.
+- `<=`: Used for less than or equal to comparisons.
+
+## Conclusion
+
+The greater than function is a fundamental tool for implementing comparison logic in Clarity smart contracts. By understanding its behavior with different types and potential edge cases, developers can create robust conditional logic and enforce important thresholds in their contracts.
