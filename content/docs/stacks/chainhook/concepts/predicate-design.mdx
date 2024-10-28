@@ -3,10 +3,10 @@ title: Predicate design
 description: Predicates are the building blocks of Chainhook.
 ---
 
-The core design of Chainhook revolves around the concept of predicates. Each individual Chainhook has a customizable predicate that specifies what the Bitcoin or Stacks blockchain data you are scanning for.
+The core design of Chainhook revolves around the concept of predicates. Each individual chainhook has a customizable predicate that specifies what Bitcoin or Stacks blockchain data you are scanning for.
 
 <Callout type="warn" title="Requirements">
-  Commands outlined here will require that you have installed Chainhook [directly](/stacks/chainhook/installation).
+  Commands outlined here will require that you have [installed Chainhook directly](/stacks/chainhook/installation) first.
 </Callout>
 
 ## Predicate design
@@ -14,7 +14,7 @@ Below is the general strucure of the `predicate` JSON with its primary elements.
 
 - Chainhook will evaluate the predicate against the specfied blockchain specified in `chain`.
 - The `uuid` will be returned in the Chainhook payload, providing a record of the predicate that triggers it.
-- Identify your predicate for your DApp using `name` and `version`.
+- Identify your predicate for your app using `name` and `version`.
 
 ```json
   {
@@ -332,8 +332,8 @@ When using `http_post`, specify the endpoint's `url` and `authorization_header`.
   />
   <Card
     href="/stacks/platform/guides/create-chainhooks"
-    title="Create a Chainhook"
-    description="Learn how to create a Chainhook using the Hiro Platform."
+    title="Create a chainhook"
+    description="Learn how to create a chainhook using the Hiro Platform."
   />
   <Card
     href="/stacks/chainhook/references/scopes/stacks"
