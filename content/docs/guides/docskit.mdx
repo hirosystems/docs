@@ -1,0 +1,37 @@
+---
+title: DocsKit
+description: DocsKit usage
+---
+
+Lorem ipsum
+
+```ts
+const l = listCV<BooleanCV>([trueCV(), intCV(1)]);
+```
+
+Lorem ipsum dolor sit amet
+
+```toml Clarinet.toml -c
+[contracts.counter]
+path = 'contracts/counter.clar'
+clarity_version = 2
+epoch = 2.5
+```
+
+## Mark
+
+```clarity counter.clar -c
+;; !mark[/Counters/mg]
+(define-map Counters principal uint)
+;; !mark(1:3)
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
+```
+
+## Inline code
+
+Call your contract by running _clarity`(contract-call? .counter count-up)`_ and verify the count with _clarity`(contract-call? .counter get-count tx-sender)`_.

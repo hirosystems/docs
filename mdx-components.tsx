@@ -12,6 +12,7 @@ import {
 import type { ReactNode } from "react";
 import { Popup, PopupContent, PopupTrigger } from "fumadocs-ui/twoslash/popup";
 import { cn } from "./utils/cn";
+import { docskit } from "@/components/docskit/components";
 
 const shortcuts: Record<string, string> = {
   stacks: "./content/docs/stacks/props.ts",
@@ -48,5 +49,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     blockquote: (props) => <Callout>{props.children}</Callout>,
     ...components,
+    ...(docskit as any), // TODO: new @types/react version should fix this
   };
 }

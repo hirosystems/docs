@@ -152,16 +152,13 @@ option {
 }
 
 /* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
-/* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
-a,
-p,
-li,
-table,
-input,
-div.prose .w-0,
-div.prose .flex-1 span {
+a, p, li, table, input, div.prose .w-0 {
   font-family: var(--font-inter), sans-serif;
 }
+/* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
+/* div.prose .flex-1 span {
+  font-family: var(--font-inter), sans-serif;
+} */
 
 /* This changes the default background color of the root level Home and Get Started tab icons */
 div.bg-gradient-to-b {
@@ -440,3 +437,83 @@ a[href="/stacks/api/fees/fee-rate"] {
 div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
   background: hsl(var(--background));
 }
+
+/* START Docskit theme */
+
+@layer base {
+  :root {
+    --ch-0: light;
+    --ch-1: #4C4F69;
+    --ch-2: #7C7F93;
+    --ch-3: #9CA0B0;
+    --ch-4: #40A02B;
+    --ch-5: #EA76CB;
+    --ch-6: #FE640B;
+    --ch-7: #8839EF;
+    --ch-8: #179299;
+    --ch-9: #1E66F5;
+    --ch-10: #DF8E1D;
+    --ch-11: #E64553;
+    --ch-12: #D20F39;
+    --ch-13: #04A5E5;
+    --ch-14: #DD7878;
+    --ch-15: #6C6F85;
+    --ch-16: #7287FD;
+    --ch-17: #DC8A78;
+    --ch-18: #EFF1F5;
+    --ch-19: #4C4F6912;
+    --ch-20: #04A5E540;
+    --ch-21: #1A85FF;
+    --ch-22: #7C7F934D;
+    --ch-23: #E6E9EF;
+    --ch-24: #ACB0BE;
+    --ch-25: #DCE0E8;
+    --ch-26: #8C8FA1;
+    --ch-27: #CCD0DA;
+    --ch-28: #CCD0DA80;
+    --ch-29: #EFF1F5E6;
+    --ch-30: #BCC0CC;
+    --ch-31: #6C6F85;
+    --ch-32: #5C5F77;
+    --ch-33: #ACB0BE;
+  }
+
+  .dark {
+    --ch-0: dark;
+    --ch-1: #CDD6F4;
+    --ch-2: #9399B2;
+    --ch-3: #6C7086;
+    --ch-4: #A6E3A1;
+    --ch-5: #F5C2E7;
+    --ch-6: #FAB387;
+    --ch-7: #CBA6F7;
+    --ch-8: #94E2D5;
+    --ch-9: #89B4FA;
+    --ch-10: #F9E2AF;
+    --ch-11: #EBA0AC;
+    --ch-12: #F38BA8;
+    --ch-13: #89DCEB;
+    --ch-14: #F2CDCD;
+    --ch-15: #A6ADC8;
+    --ch-16: #B4BEFE;
+    --ch-17: #F5E0DC;
+    --ch-18: #1E1E2E;
+    --ch-19: #CDD6F412;
+    --ch-20: #89DCEB40;
+    --ch-21: #3794FF;
+    --ch-22: #9399B240;
+    --ch-23: #181825;
+    --ch-24: #585B70;
+    --ch-25: #11111B;
+    --ch-26: #7F849C;
+    --ch-27: #313244;
+    --ch-28: #31324480;
+    --ch-29: #1E1E2EE6;
+    --ch-30: #A6ADC8;
+    --ch-31: #585B70;
+    --ch-32: #45475A;
+    --ch-33: #BAC2DE;
+  }
+}
+
+/* END Docskit theme */
