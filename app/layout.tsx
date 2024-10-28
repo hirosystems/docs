@@ -59,7 +59,7 @@ export default function RootLayout({
 
 function Footer(): JSX.Element {
   return (
-    <footer className="mt-auto border-t bg-background py-12 text-secondary-foreground">
+    <footer className="mt-auto border-t border-accent bg-background py-12 text-secondary-foreground">
       <div className="container flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row items-center gap-6">
