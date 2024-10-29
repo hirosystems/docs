@@ -44,9 +44,19 @@ module.exports = {
       contrast: 'hsl(var(--contrast) / <alpha-value>)',
     },
     extend: {
+      colors: {
+        "ch-border": "hsl(var(--border))", // editorGroup.border
+        "ch-selection": "var(--ch-22)", // editor.selectionBackground
+        "ch-tabs-background": "hsl(var(--card))", // editorGroupHeader.tabsBackground
+        "ch-tab-active-foreground": "hsl(var(--card-foreground))", // tab.activeForeground
+        "ch-tab-inactive-foreground": "hsl(var(--muted-foreground))", // tab.inactiveForeground
+        "ch-background": "hsl(var(--code))", // editor.background
+        "ch-active-border": "hsl(var(--hiro))", // tab.activeBorderTop
+        "ch-line-number": "var(--ch-26)", // editorLineNumber.foreground
+      },
       fontFamily: {
         sans: ['var(--font-geist-sans)'],
-        mono: ['var(--font-geist-mono)'],
+        mono: ["var(--font-aeonikMono)"],
         aeonik: ['var(--font-aeonikFono)'],
         inter: ['var(--font-inter)'],
       },

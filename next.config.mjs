@@ -8,6 +8,7 @@ import {
 import { transformerTwoslash } from 'fumadocs-twoslash';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
+import { recmaCodeHike, remarkCodeHike } from "codehike/mdx";
 
 const withAnalyzer = createBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -23,6 +24,21 @@ const config = {
   images: {
     domains: [],
   },
+};
+
+/**
+ * @type {import('codehike/mdx').CodeHikeConfig}
+ */
+const chConfig = {
+  components: {
+    code: "DocsKitCode",
+    inlineCode: "DocsKitInlineCode",
+  },
+  ignoreCode: ({ lang, meta }) =>
+    lang === "bash" ||
+    lang === "console" ||
+    meta?.startsWith("title") ||
+    meta?.startsWith("twoslash"),
 };
 
 const withMDX = createMDX({
@@ -56,12 +72,15 @@ const withMDX = createMDX({
       ],
     },
     lastModifiedTime: 'git',
-    remarkPlugins: [
+    remarkPlugins: (v) => [
+      [remarkCodeHike, chConfig],
       remarkMath,
       remarkDynamicContent,
       [remarkInstall, { Tabs: 'InstallTabs' }],
+      ...v,
     ],
     rehypePlugins: (v) => [rehypeKatex, ...v],
+    recmaPlugins: [[recmaCodeHike, chConfig]],
   },
   buildSearchIndex: {},
 });
