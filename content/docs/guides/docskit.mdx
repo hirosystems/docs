@@ -3,35 +3,366 @@ title: DocsKit
 description: DocsKit usage
 ---
 
-Lorem ipsum
+## Features
 
-```ts
-const l = listCV<BooleanCV>([trueCV(), intCV(1)]);
+DocsKit features:
+
+- adds [flags](#flags) and [annotations](#annotations) to codeblocks
+- includes a special syntax for [inline code](#inline-code)
+- adds three components that can be used in MDX: [_`<CodeTabs />`_](#codetabs), [_`<WithNotes />`_](#withnotes), and [_`<TerminalPicker />`_](#terminal-picker)
+- adds a [language switcher](#language-switcher) (which is another usage of _`<CodeTabs />`_)
+- codeblocks with language [`terminal`](#terminal) or [`package-install`](#package-install) are rendered with a different component
+
+## Flags
+
+````txt flags-example.md
+# !mark[/-wn/]
+```js index.js -wn
 ```
+````
 
-Lorem ipsum dolor sit amet
+- `-n` add line numbers
+- `-c` add copy button
+- `-w` word wrap
+- `-a` animate (for tabs)
 
-```toml Clarinet.toml -c
-[contracts.counter]
-path = 'contracts/counter.clar'
-clarity_version = 2
-epoch = 2.5
+## Annotations
+
+````txt annotations-example.md
+```js
+const x = 1;
+# !mark[/!mark/]
+// !mark(1:2)
+const y = 2;
+const z = 3;
 ```
+````
+
+- `!mark` - highlight a line, a range of lines, or a regex
+- `!diff` - highlight added or removed lines
+- `!collapse` - collapse a range of lines
+- `!fold` - fold a regex pattern inline
+- `!link` - add a link
+- `!tooltip` - add a tooltip
+- `!callout` - add a callout
+
+Learn more about using annotations from Code Hike docs:
+
+- [Annotation comments](https://codehike.org/docs/concepts/annotations#annotation-comments)
+- [Using regular expressions](https://codehike.org/docs/concepts/annotations#using-regular-expressions-instead-of-ranges)
 
 ## Mark
 
-```clarity counter.clar -c
+You can use it for one line (`!mark`), a range of lines (`!mark(1:3)`), a range of columns (`!mark[5:10]`), or a regex pattern (`!mark[/pattern/]`).
+
+You can provide any valid CSS color, for example: `!mark(1:3) red` or `!mark(1:3) hsl(var(--hiro))`.
+
+```clarity
 ;; !mark[/Counters/mg]
 (define-map Counters principal uint)
+
 ;; !mark(1:3)
 (define-public (count-up)
   (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
 )
+
+;; !mark hsl(var(--hiro))
 (define-read-only (get-count (who principal))
   (default-to u0 (map-get? Counters who))
 )
 ```
 
+## Diff
+
+```js
+function lorem(ipsum, dolor = 1) {
+  const sit = 10;
+  // !diff -
+  dolor = ipsum - sit;
+  // !diff +
+  dolor = sit - amet(dolor);
+  return sit ? consectetur(ipsum) : [];
+}
+```
+
+## Collapse
+
+```jsonc sample-alert-payload.json -cwn
+{
+  "nonce": 5,
+  "fee_rate": "250",
+  "sponsored": false,
+  "post_condition_mode": "deny",
+  // !collapse(1:9) collapsed
+  "post_conditions": [
+    {
+      "type": "stx",
+      "condition_code": "sent_equal_to",
+      "amount": "3000000",
+      "principal": {
+        "type_id": "principal_standard",
+      },
+    },
+  ],
+  "anchor_mode": "any",
+  "tx_status": "pending",
+  "receipt_time": 1726104636,
+  "tx_type": "contract_call",
+  // !collapse(1:11) collapsed
+  "contract_call": {
+    "function_name": "donate",
+    "function_signature": "(define-public (donate (amount uint)))",
+    "function_args": [
+      {
+        "hex": "0x01000000000000000000000000002dc6c0",
+        "repr": "u3000000",
+        "name": "amount",
+        "type": "uint",
+      },
+    ],
+  },
+}
+```
+
+## Fold
+
+```jsx
+// !fold[/className="(.*?)"/gm]
+function Foo() {
+  return (
+    <div className="bg-red-200 opacity-50">
+      <span className="block">hey</span>
+    </div>
+  );
+}
+```
+
+## Link
+
+```js
+// !link[/foo/mg] https://example.com
+// !link[/bar/mg] https://example.com
+import { foo, bar } from "baz";
+
+const x = foo(10);
+const y = bar(x);
+```
+
+## CodeTabs
+
+````txt tabs-example.md
+# !mark[/!!/mg]
+<CodeTabs flags="ac">
+
+```ts !! index.ts
+
+```
+
+```css !! styles.css
+
+```
+</CodeTabs>
+````
+
+Note: the codeblocks inside the _`<CodeTabs />`_ component should have the `!!` decoration and a title.
+
+You can pass flags to the _`<CodeTabs />`_ component to apply them to all codeblocks inside it. The `a` flag will animate the transition between tabs.
+
+Example:
+
+<CodeTabs flags="ac">
+
+```clarity !! one.clar
+;; !mark[/increment/mg]
+(define-data-var count uint u0)
+
+(define-public (increment)
+  (begin
+    (var-set count (+ (var-get count) u1))
+    (ok (var-get count)) ;; !mark
+  )
+)
+```
+
+```clarity !! two.clar
+;; !mark[/add/mg]
+(define-constant TOO_BIG u10)
+(define-data-var count uint u0)
+
+(define-public (add (amount uint))
+  (begin
+    (let ((new-count (+ (var-get count) amount)))
+      (if (<= new-count TOO_BIG)
+        (begin
+          (var-set count new-count)
+          (ok (var-get count))
+        )
+        (err u500) ;; !mark
+      )
+    )
+  )
+)
+```
+
+</CodeTabs>
+
+### Language switcher
+
+To switch between languages, use the _`<CodeTabs />`_ component with the `storage` prop. The `storage` prop is used to store the selected language in the local storage and sync all the _`<CodeTabs storage="some-id" />`_ using the same `storage` key.
+
+<CodeTabs flags="ac" storage="ts">
+
+```ts !! TypeScript
+(async () => {
+  const apiConfig: Configuration = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: "https://api.testnet.hiro.so",
+  });
+})().catch(console.error);
+```
+
+```js !! JavaScript
+(async () => {
+  const apiConfig = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: "https://api.testnet.hiro.so",
+  });
+})().catch(console.error);
+```
+
+</CodeTabs>
+
+## WithNotes
+
+For `!callout` and `!tooltip` annotations, you can use the _`<WithNotes />`_ to define the content you want to show.
+
+### Callouts
+
+<WithNotes>
+
+```js index.js
+// !callout[/ipsum/] description
+import lorem from "ipsum";
+
+// !callout[/sit/] inspect
+const sit = lorem({ a: 1, b: 2 });
+```
+
+```js !inspect
+sit = [
+  { name: "a", value: 1 },
+  { name: "b", value: 2 },
+];
+```
+
+## !description
+
+The default export of the `ipsum` package is a function that **returns an array**.
+
+Kind of like _`Object.entries(x)`_ but different.
+
+</WithNotes>
+
+### Tooltips
+
+<WithNotes>
+
+```js demo.js
+// !tooltip[/lorem/] install
+import { read, write } from "lorem";
+
+// !tooltip[/data.json/] data
+var data = read("data.json");
+
+// !tooltip[/test-123/] apikey
+write({ x: 1 }, { apiKey: "test-123" });
+```
+
+We can also use tooltips [here](tooltip "install") in [prose](tooltip "data") text.
+
+```json !data data.json
+{
+  "lorem": "ipsum dolor sit amet",
+  "foo": [4, 8, 15, 16]
+}
+```
+
+## !install
+
+This is a **fake library**. You can install it with:
+
+```terminal
+$ npm install lorem
+```
+
+It lets you read and write data.
+
+## !apikey
+
+This is a public sample test mode [API key](https://example.com). Don’t submit any personally information using this key.
+
+Replace this with your secret key found on the [API Keys page](https://example.com) in the dashboard.
+
+</WithNotes>
+
 ## Inline code
 
-Call your contract by running _clarity`(contract-call? .counter count-up)`_ and verify the count with _clarity`(contract-call? .counter get-count tx-sender)`_.
+To use inline codeyou need to use a special syntax: ``_`code`_``.
+
+This syntax also allows you to specify the language for inline code ``_clarity`(contract-call? .counter count-up)`_`` renders: _clarity`(contract-call? .counter count-up)`_
+
+## Terminal
+
+To use the terminal component, set the language of a codeblock to `terminal`, and start each command with `$`.
+
+```terminal
+$ tar -xf clarinet-linux-x64.tar.gz
+$ chmod +x ./clarinet
+$ mv ./clarinet /usr/local/bin
+```
+
+The lines that don't start with `$` are rendered as collapsed output. The output can use ANSI colors and styles.
+
+```terminal
+$ npx create-next-app@latest
+create-next-app@14.2.13
+[32m✔[0m [1mWhat is your project?[0m [90m…[0m my-app
+$ npm run dev
+```
+
+### Terminal Picker
+
+<TerminalPicker>
+
+```terminal !! macOS
+$ brew install clarinet
+```
+
+```terminal !! Windows
+$ winget install clarinet
+```
+
+```terminal !! Cargo
+$ sudo apt install build-essential pkg-config libssl-dev
+```
+
+</TerminalPicker>
+
+### Package Install
+
+You can use `package-install` as a language to get a picker for JS package managers.
+
+```package-install
+@stacks/connect
+```
+
+### Opting out of the terminal component
+
+To use features from the normal codeblock component, you can still use languages like `sh` or `bash` or even `txt`.
+
+```sh Terminal -w
+# !tooltip[/v0.27.0/] You can change the v0.27.0 version that is available on the releases page.
+$ wget -nv download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
+```

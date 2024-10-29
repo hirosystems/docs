@@ -37,7 +37,9 @@ export function TerminalClient({
               className="rounded-md inline-flex px-1 bg-ch-background"
               variant="outline"
               value={currentName}
-              onValueChange={setCurrentName}
+              onValueChange={(value) => {
+                if (value) setCurrentName(value);
+              }}
             >
               {tabs.map((tab, index) => (
                 <ToggleGroupItem

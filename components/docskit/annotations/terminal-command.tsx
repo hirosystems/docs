@@ -2,6 +2,7 @@
 import "./terminal-command.css";
 import { AnnotationHandler } from "codehike/code";
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 export const CommandBlock: AnnotationHandler["Block"] = ({
   children,
@@ -12,7 +13,8 @@ export const CommandBlock: AnnotationHandler["Block"] = ({
     <div className="px-1 flex ch-terminal-line" data-active={active}>
       <span className="select-none text-ch-line-number shrink-0">$ </span>
       <span className="ch-terminal-content break-all">{children}</span>
-      <span
+      <button
+        aria-label="Copy command"
         className="ch-terminal-button select-none self-start"
         onClick={() => {
           navigator.clipboard.writeText(annotation?.query || "");
@@ -21,7 +23,7 @@ export const CommandBlock: AnnotationHandler["Block"] = ({
         }}
       >
         Copy
-      </span>
+      </button>
     </div>
   );
 };
