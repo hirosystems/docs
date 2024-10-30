@@ -7,6 +7,7 @@ import defaultComponents from "fumadocs-ui/mdx";
 import type { ReactNode } from "react";
 import { Popup, PopupContent, PopupTrigger } from "fumadocs-ui/twoslash/popup";
 import { docskit } from "@/components/docskit/components";
+import { CustomTable, TableProps } from "@/components/table";
 
 const shortcuts: Record<string, string> = {
   stacks: "./content/docs/stacks/props.ts",
@@ -36,6 +37,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </Tabs>
     ),
+    table: (props: TableProps) => <CustomTable {...props} />,
     blockquote: (props) => <Callout>{props.children}</Callout>,
     ...components,
     ...docskit,
