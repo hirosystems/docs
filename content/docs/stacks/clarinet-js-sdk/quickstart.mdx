@@ -37,7 +37,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     ```ts title="counter.test.ts"
     import { describe, expect, it } from "vitest";
-    import { Cl } from "@stacks/transactions"; // [!code highlight]
+    import { Cl } from "@stacks/transactions";
     ```
 
     The `Cl` namespace simplifies the process of creating and handling Clarity values. This functionality is particularly useful in testing environments where developers need to simulate contract interactions accurately.
@@ -48,8 +48,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
   
     For most test cases, you'll want to retrieve an account from the network in order to interact with your smart contracts. The following code uses the `getAccounts` method to achieve this.
 
-    ```ts title="counter.test.ts"
-    // [!code word:getAccounts]
+    ```ts counter.test.ts
     import { describe, expect, it } from "vitest";
     import { Cl } from "@stacks/transactions";
 
@@ -72,10 +71,10 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     Now that you understand the key components for writing tests, start by writing a test that ensures the `counter` contract has been deployed.
 
-    ```ts title="counter.test.ts"
+    ```ts counter.test.ts
     describe("counter contract", () => {
       it("ensures the contract is deployed", () => {
-        const contractSource = simnet.getContractSource("counter"); // [!code highlight]
+        const contractSource = simnet.getContractSource("counter");
         expect(contractSource).toBeDefined();
       });
     });
@@ -86,11 +85,11 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
   
     Now it's time to call a public function and assert the result. The <code>count-up</code> function is expected to increment the count of the user's principal by 1. Write a test to ensure this behaves as expected.
 
-    ```ts title="counter.test.ts"
+    ```ts counter.test.ts
     describe("counter contract", () => {
       it("increments the count of the user's principal by 1", () => {
         const countUpCall = simnet.callPublicFn("counter", "count-up", [], wallet);
-        expect(countUpCall.result).toBeOk(Cl.bool(true)); // [!code highlight]
+        expect(countUpCall.result).toBeOk(Cl.bool(true));
         
         const getCountCall = simnet.callReadOnlyFn(
           "counter",
@@ -98,7 +97,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
           [Cl.principal(wallet)],
           wallet
         );
-        expect(getCountCall.result).toBeUint(1); // [!code highlight]
+        expect(getCountCall.result).toBeUint(1);
       });
     });
     ```
@@ -116,7 +115,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
   
     ```json package.json
     "scripts": {
-      "test": "vitest run", // [!code highlight]
+      "test": "vitest run",
       "test:report": "vitest run -- --coverage --costs",
       "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
     }

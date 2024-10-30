@@ -32,9 +32,7 @@ Post-conditions can be added to contract calls and FT/NFT transfers to ensure as
 
 For instance, the following post-condition ensures that the principal initiating the transaction must send exactly 1000 uSTX, or else the transaction will abort.
 
-```ts twoslash
-// @noErrors
-// [!code word:Pc]
+```ts
 import { Pc } from '@stacks/transactions';
 
 const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -74,9 +72,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
 
 When creating a transaction, the mode of the transaction can be set to `Allow` or `Deny` to specify whether unspecified asset transfers are permitted.
 
-```ts twoslash
-// @noErrors
-// [!code word:PostConditionMode]
+```ts
 import { PostConditionMode } from '@stacks/transactions';
 
 const tx = await makeContractCall({
@@ -98,9 +94,7 @@ Legacy methods and enums can be used interchangeably with the builder methods.
 If you prefer the legacy methods over the `Pc` builder approach, you can import them from the `@stacks/transactions` package.
 </Callout>
 
-```ts twoslash
-// @noErrors
-// [!code word:createSTXPostCondition]
+```ts
 import { createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
 
 const postCondition = createSTXPostCondition(
@@ -130,9 +124,7 @@ Construct a post-condition for a certain amount of uSTX to be sent.
 
 <Tabs id="eq-ustx" items={["Pc","Legacy"]}>
   <Tab value={"Pc"}>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:willSendEq]
+    ```ts
     import { Pc } from '@stacks/transactions';
 
     const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -141,9 +133,7 @@ Construct a post-condition for a certain amount of uSTX to be sent.
     ```
   </Tab>
   <Tab value={"Legacy"}>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:Equal]
+    ```ts
     import { createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
 
     const postCondition = createSTXPostCondition(
@@ -161,9 +151,7 @@ Construct a post-condition for a certain amount of a specific FT to be sent.
 
 <Tabs id="gte-ft" items={["Pc","Legacy"]}>
   <Tab value={"Pc"}>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:willSendGte]
+    ```ts
     import { Pc } from '@stacks/transactions';
 
     const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft')
@@ -172,9 +160,7 @@ Construct a post-condition for a certain amount of a specific FT to be sent.
 ```
   </Tab>
   <Tab value={"Legacy"}>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:GreaterEqual]
+    ```ts
     import { createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
 
     const postCondition = createSTXPostCondition(
@@ -193,9 +179,7 @@ Construct a post-condition for sending / not-sending a specific NFT.
 
 <Tabs id="post-condition-examples" items={["Pc","Legacy"]}>
   <Tab value={"Pc"}>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:willNotSendAsset]
+    ```ts
     import { Pc } from '@stacks/transactions';
 
     const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -204,9 +188,7 @@ Construct a post-condition for sending / not-sending a specific NFT.
 ```
   </Tab>
   <Tab value={"Legacy"}>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:DoesNotSend]
+    ```ts
     import { createNonFungiblePostCondition, NonFungibleConditionCode } from '@stacks/transactions';
 
     const postCondition = createNonFungiblePostCondition(

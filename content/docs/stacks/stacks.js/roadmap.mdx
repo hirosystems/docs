@@ -33,8 +33,6 @@ This makes them easier to inspect and diff.
 
 Clarity example, [Read more](#clarity-representation)
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
 // OLD:
 { type: 1, value: 12n }
 
@@ -44,8 +42,6 @@ Clarity example, [Read more](#clarity-representation)
 
 Private key example, [Read more](/stacks/stacks.js/concepts/private-keys)
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
 signMessageHashRsv({
   // OLD:
   privateKey: createStacksPrivateKey("f5a3...2801"), // { compressed: true, data: [245,163,...] }
@@ -73,19 +69,17 @@ In most cases, developers shouldn't need the `@stacks/network` package anymore.
 The `network` parameter can be used with string literals: `'mainnet'`, `'testnet'`, `'devnet'`, `'mocknet'`.
 
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
 // OLD:
 import { StacksTestnet } from '@stacks/network';
 
 makeSTXTokenTransfer({
-  network: new StacksTestnet(), // [!code highlight]
+  network: new StacksTestnet(),
   // ...
 });
 
 // NEW:
 makeSTXTokenTransfer({
-  network: 'testnet' // [!code highlight]
+  network: 'testnet'
   // ...
 });
 ```
@@ -116,8 +110,6 @@ The `client` property is also part of the network object.
 You can still keep ONE single network object for your whole application.
 
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
 // OLD:
 import { StacksTestnet } from '@stacks/network';
 
@@ -139,7 +131,6 @@ The naming is consistent across the board and uses `A To B` naming.
 For example, if we have a private key and want to get the address, we can use the `privateKeyToAddress` function.
 
 ```ts
-// [!code word:privateKeyToAddress]
 import { privateKeyToAddress } from "@stacks/transactions";
 
 const privateKey = "f5a3...2801";

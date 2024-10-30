@@ -45,7 +45,6 @@ Key data variables include `lotteryPool` for tracking stacked assets, `totalYiel
 Next, define an NFT to represent a ticket and a map to store participant information.
 
 ```clarity
-// [!code word:LotteryTicket]
 (define-map Participants
   { participant: principal }
   { ticketId: uint, amount: uint, cycle: uint, ticketExpirationAtCycle: uint, isWinner: bool }

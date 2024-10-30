@@ -51,18 +51,14 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // [!code word:initSimnet]
-    // @noErrors
+    ```ts
     import { initSimnet } from '@hirosystems/clarinet-sdk';
 
     const simnet = await initSimnet();
     ```
   </TabsContent>
   <TabsContent value="custom">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:'./config/Clarinet.toml']
+    ```ts
     import { initSimnet } from '@hirosystems/clarinet-sdk';
 
     const simnet = await initSimnet('./config/Clarinet.toml');

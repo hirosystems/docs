@@ -45,8 +45,7 @@ Users must authenticate to an app before you request message signing. Users can 
 
 To prompt users to log in, use the `showConnect` function from the `@stacks/connect` package:
 
-```ts twoslash
-// @noErrors
+```ts
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
@@ -71,9 +70,7 @@ function authenticate() {
 
 Call the `openSignatureRequestPopup` function provided by the `@stacks/connect` package to trigger the display of the message signing prompt:
 
-```ts twoslash
-// @noErrors
-// [!code word:openSignatureRequestPopup]
+```ts
 import { openSignatureRequestPopup } from '@stacks/connect';
 import { StacksTestnet } from '@stacks/network';
 
@@ -96,7 +93,6 @@ openSignatureRequestPopup({
 All of the methods included on this page accept a `network` option. By default, Connect uses a `testnet` network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package:
 
 ```ts
-// [!code word:mainnet]
 import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
 const testnet = new StacksTestnet();
@@ -133,9 +129,7 @@ The `openSignatureRequestPopup` method from `@stacks/connect` allows you to spec
 
 You can get the signature of the message via the arguments passed to `onFinish`. Your callback will be fired with a single `data` argument:
 
-```ts twoslash
-// @noErrors
-// [!code word:data]
+```ts
 const onFinish = (data: SignatureData) => {
   const { signature, publicKey } = data;
 
@@ -157,9 +151,7 @@ export interface SignatureData {
 
 When you verify a signature, you're confirming that the message was indeed created by the claimed sender and that it hasn't been altered since it was signed. To do this, use the `verifyMessageSignatureRsv` function from the `@stacks/encryption` package:
 
-```ts twoslash
-// @noErrors
-// [!code word:verifyMessageSignatureRsv]
+```ts
 import type { SignatureData } from '@stacks/connect';
 import { verifyMessageSignatureRsv } from '@stacks/encryption';
 
@@ -176,7 +168,7 @@ openSignatureRequestPopup({
     const { signature, publicKey } = data;
     const verified = verifyMessageSignatureRsv({ message, publicKey, signature });
     if (verified) {
-      /* your logic here */ // [!code highlight]
+      /* your logic here */
     }
   },
 });

@@ -42,8 +42,7 @@ Optional overrides for the request initialization settings.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="get-assets">
-    ```ts twoslash
-    // @noErrors
+    ```ts
     import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
     
     const apiConfig = new Configuration({
@@ -61,7 +60,7 @@ Optional overrides for the request initialization settings.
     <Accordions>
 
     <Accordion title={"Full code sample"}>
-      ```ts twoslash
+      ```ts
       import {
         UserSession,
         makeAuthRequest,
@@ -171,10 +170,7 @@ Decrypts user data for secure storage.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="pending">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:isSignInPending]
-    // [!code word:handlePendingSignIn]
+    ```ts
     const isPending = userSession.isSignInPending();
 
     if (isPending) {
@@ -185,16 +181,12 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='status'>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:isUserSignedIn]
+    ```ts
     const isSignedIn = userSession.isUserSignedIn();
     ```
   </TabsContent>
   <TabsContent value='user-data'>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:loadUserData]
+    ```ts
     const isSignedIn = userSession.isUserSignedIn();
 
     if (isSignedIn) {
@@ -204,27 +196,21 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='sign-out'>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:signUserOut]
+    ```ts
     function logout() {
       userSession.signUserOut();
     }
     ```
   </TabsContent>
   <TabsContent value='encrypt'>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:encryptContent]
+    ```ts
     const message = 'My secret message';
 
     const cipherText = await userSession.encryptContent(message);
     ```
   </TabsContent>
   <TabsContent value='decrypt'>
-    ```ts twoslash
-    // @noErrors
-    // [!code word:decryptContent]
+    ```ts
     const message = 'My secret message';
 
     const cipherText = await userSession.encryptContent(message);
