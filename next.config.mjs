@@ -5,7 +5,6 @@ import {
   remarkInstall,
   rehypeCodeDefaultOptions,
 } from 'fumadocs-core/mdx-plugins';
-import { transformerTwoslash } from 'fumadocs-twoslash';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 import { recmaCodeHike, remarkCodeHike } from "codehike/mdx";
@@ -43,8 +42,7 @@ const chConfig = {
     inlineCode: "DocsKitInlineCode",
   },
   ignoreCode: ({ lang, meta }) =>
-    meta?.startsWith("title") ||
-    meta?.startsWith("twoslash"),
+    meta?.startsWith("title")
 };
 
 const withMDX = createMDX({
@@ -56,25 +54,6 @@ const withMDX = createMDX({
       },
       transformers: [
         ...rehypeCodeDefaultOptions.transformers,
-        transformerTwoslash(),
-        {
-          name: 'fumadocs:remove-escape',
-          code(element) {
-            element.children.forEach((line) => {
-              if (line.type !== 'element') return;
-
-              line.children.forEach((child) => {
-                if (child.type !== 'element') return;
-                const textNode = child.children[0];
-                if (!textNode || textNode.type !== 'text') return;
-
-                textNode.value = textNode.value.replace(/\[\\!code/g, '[!code');
-              });
-            });
-
-            return element;
-          },
-        },
       ],
     },
     lastModifiedTime: 'git',
@@ -82,7 +61,7 @@ const withMDX = createMDX({
       [remarkCodeHike, chConfig],
       remarkMath,
       remarkDynamicContent,
-      [remarkInstall, { Tabs: 'InstallTabs' }],
+      [remarkInstall],
       ...v,
     ],
     rehypePlugins: (v) => [rehypeKatex, ...v],

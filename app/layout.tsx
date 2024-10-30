@@ -1,5 +1,4 @@
 import "./global.css";
-import "fumadocs-ui/twoslash.css";
 import { aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
 import type { Viewport } from "next";
 import { baseUrl, createMetadata } from "@/utils/metadata";
