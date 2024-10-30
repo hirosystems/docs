@@ -57,7 +57,7 @@ function CustomTable({ className, ...props }: TableProps) {
             {headers.map((header, i) => (
               <TableHead
                 key={i}
-                className="text-left text-lg font-semibold text-foreground"
+                className="text-left text-base font-semibold text-foreground"
               >
                 {header}
               </TableHead>
