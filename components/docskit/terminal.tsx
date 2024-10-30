@@ -24,7 +24,7 @@ export async function Terminal(props: {
           <Pre
             code={highlighted}
             handlers={[output, wordWrap, command]}
-            className="bg-ch-background py-3 px-2 m-0 leading-6 font-mono"
+            className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
         ),

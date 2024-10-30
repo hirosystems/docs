@@ -4,14 +4,8 @@ import { Callout } from "@/components/callout";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
-import {
-  CodeBlock,
-  type CodeBlockProps,
-  Pre,
-} from "fumadocs-ui/components/codeblock";
 import type { ReactNode } from "react";
 import { Popup, PopupContent, PopupTrigger } from "fumadocs-ui/twoslash/popup";
-import { cn } from "./utils/cn";
 import { docskit } from "@/components/docskit/components";
 
 const shortcuts: Record<string, string> = {
@@ -25,11 +19,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Popup,
     PopupContent,
     PopupTrigger,
-    pre: ({ title, className, icon, allowCopy, ...props }: CodeBlockProps) => (
-      <CodeBlock title={title} icon={icon} allowCopy={allowCopy}>
-        <Pre className={cn("max-h-[400px]", className)} {...props} />
-      </CodeBlock>
-    ),
     Tabs,
     Tab,
     Callout,
@@ -49,6 +38,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     blockquote: (props) => <Callout>{props.children}</Callout>,
     ...components,
-    ...(docskit as any), // TODO: new @types/react version should fix this
+    ...docskit,
   };
 }

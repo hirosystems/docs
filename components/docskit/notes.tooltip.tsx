@@ -20,7 +20,7 @@ export function NoteTooltip({
     note = { name, type: "prose", children: name };
   }
   const className = {
-    code: "p-0 [&>*]:my-0 border-none overflow-auto rounded-none bg-transparent",
+    code: "p-0 [&>*]:my-0 border-none overflow-auto rounded-none bg-background",
     prose:
       "[&>*]:first-child:mt-0 [&>*]:last-child:mb-0 p-4 prose dark:prose-invert",
     image: "p-0 [&>*]:first:mt-0 [&>*]:last:mb-0 border-none bg-transparent",

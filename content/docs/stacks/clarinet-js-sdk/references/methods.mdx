@@ -67,7 +67,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAccounts(): Map<string, string>
         ```
       </Accordion>
@@ -88,7 +88,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAccounts(): Map<string, string>
         ```
       </Accordion>
@@ -154,7 +154,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -177,7 +177,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -215,7 +215,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -253,7 +253,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -328,7 +328,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getDataVar(contract: string, dataVar: string): ClarityValue
         ```
       </Accordion>
@@ -362,7 +362,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getDataVar(contract: string, dataVar: string): ClarityValue
         ```
       </Accordion>
@@ -450,7 +450,7 @@ The key to access the value in the map.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getMapEntry(
           contract: string,
           mapName: string,
@@ -496,7 +496,7 @@ The key to access the value in the map.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getMapEntry(
           contract: string,
           mapName: string,
@@ -2268,7 +2268,7 @@ The identifier of the contract for which the source code is requested.
         ```
       </Accordion>
       <Accordion title="Response">
-        ```console
+        ```clarity
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 

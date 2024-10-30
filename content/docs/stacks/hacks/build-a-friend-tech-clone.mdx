@@ -17,9 +17,9 @@ Start by setting up your development environment. We've prepared a repository th
 
 To clone the repository, open your terminal and run the following command:
 
-```console
-git clone https://github.com/hirosystems/hiro-hacks-template.git
-cd hiro-hacks-template
+```terminal
+$ git clone https://github.com/hirosystems/hiro-hacks-template.git
+$ cd hiro-hacks-template
 ```
 
 ## Create your contract
@@ -28,8 +28,8 @@ Before you begin, we're assuming that you have `clarinet` installed and a basic 
 
 To create your contract, navigate to your project's directory and run the following command:
 
-```console
-clarinet contract new keys
+```terminal
+$ clarinet contract new keys
 ```
 
 This will create a new contract in the `contracts` directory called `keys.clar`.
@@ -44,7 +44,7 @@ This will create a new contract in the `contracts` directory called `keys.clar`.
 
 Inside your `keys.clar` contract, you need to keep track of the balance of `keys` for each user (or _holder_) and the total supply of `keys` for each subject. You can do this using Clarity's `define-map` function:
 
-```clarity
+```clarity keys.clar
 (define-map keysBalance { subject: principal, holder: principal } uint)
 (define-map keysSupply { subject: principal } uint)
 ```
@@ -55,7 +55,7 @@ The `keysBalance` stores each holder's `key` balance for a given subject and the
 
 The next thing you need to do is define a function that calculates the price of `keys` for a given a `supply` and `amount`. You can do this by defining a `get-price` function:
 
-```clarity
+```clarity keys.clar
 (define-read-only (get-price (supply uint) (amount uint))
   (let (
     (base-price u10) ;; Base price per key in micro-STX
@@ -80,7 +80,7 @@ These functions form the core of the contract's operations, enabling users to ma
 
 Let's first take a look at the `buy-keys` function:
 
-```clarity
+```clarity keys.clar
 (define-public (buy-keys (subject principal) (amount uint))
   (let
     (
@@ -112,7 +112,7 @@ This function allows subjects to create their first `keys`, initiating their sup
 
 Next up, the `sell-keys` function:
 
-```clarity
+```clarity keys.clar
 (define-public (sell-keys (subject principal) (amount uint))
   (let
     (
@@ -146,7 +146,7 @@ This is more or less the same logic as the `buy-keys` function, but instead you 
 
 Now that you have the ability to buy and sell `keys`, you need a way to verify if a user is a keyholder. You can do this by defining an `is-keyholder` read-only function:
 
-```clarity
+```clarity keys.clar
 (define-read-only (is-keyholder (subject principal) (holder principal))
   (>= (default-to u0 (map-get? keysBalance { subject: subject, holder: holder })) u1)
 )
@@ -158,13 +158,13 @@ This function checks if the `keysBalance` for a given `subject` and `holder` is 
 
 Make sure your contract is valid and doesn't have any errors. To do this, run the following command:
 
-```console
-clarinet check
+```terminal
+$ clarinet check
 ```
 
 Next, check some of your contract functionality inside `clarinet console`:
 
-```clarity
+```clarity keys.clar
 ;; Get the price of 100 keys when the supply is 0
 (contract-call? .keys get-price u0 u100) ;; u10010
 
@@ -189,7 +189,7 @@ The following challenges are additional features you can implement to keep learn
 
 **Balance and supply query functions**: Add two new read-only functions: `get-keys-balance` and `get-keys-supply`. These functions will provide valuable information to users about the distribution and availability of `keys`, and can be used in various parts of your application to display this information to users.
 
-```clarity
+```clarity keys.clar
 (define-read-only (get-keys-balance (subject principal) (holder principal))
   ;; Return the keysBalance for the given subject and holder
 )
@@ -205,7 +205,7 @@ The following challenges are additional features you can implement to keep learn
 
 **Price query functions**: Add two new read-only functions: `get-buy-price` and `get-sell-price`. These helper functions will allow users to query the current price for buying or selling a specific amount of `keys` for a given `subject`.
 
-```clarity
+```clarity keys.clar
 (define-read-only (get-buy-price (subject principal) (amount uint))
   ;; Implement buy price logic
 )
@@ -221,7 +221,7 @@ The following challenges are additional features you can implement to keep learn
 
 **Fee management**: When a user buys or sells `keys`, you might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic.
 
-```clarity
+```clarity keys.clar
 ;; Change the fee values as you wish
 (define-data-var protocolFeePercent uint u200) ;; or subjectFeePercent
 (define-data-var protocolFeeDestination principal tx-sender)
@@ -233,7 +233,7 @@ The following challenges are additional features you can implement to keep learn
 
 **Access control**: In a real-world application, you might need to adjust the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values.
 
-```clarity
+```clarity keys.clar
 (define-public (set-protocol-fee-percent (feePercent uint))
   ;; Check if the caller is the contractOwner
   ;; Update the protocolFeePercent value

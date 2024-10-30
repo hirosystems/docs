@@ -35,7 +35,7 @@ function SingleCode({ group }: { group: CodeGroup }) {
   const { pre, style, code, title, icon, options } = tab;
   const hasTitle = title?.trim() !== "";
   return (
-    <div className={CODEBLOCK} style={style}>
+    <div className={cn(CODEBLOCK, !hasTitle && "border-none")} style={style}>
       {hasTitle && (
         <div
           className={cn(
@@ -90,7 +90,10 @@ export async function toCodeGroup(props: {
         pre: (
           <Pre
             code={highlighted}
-            className="overflow-auto px-0 py-2 m-0 rounded-none !bg-ch-background font-mono font-sm"
+            className={cn(
+              !title && "!m-0",
+              "overflow-auto px-0 py-2 m-3 rounded !bg-ch-code font-mono font-sm"
+            )}
             style={highlighted.style}
             handlers={handlers}
           />

@@ -184,24 +184,19 @@ Example:
 )
 ```
 
-```clarity !! two.clar
-;; !mark[/add/mg]
-(define-constant TOO_BIG u10)
-(define-data-var count uint u0)
+```solidity !! two.sol
+// !mark[/add/mg]
+uint256 constant TOO_BIG = 10;
+uint256 count = 0;
 
-(define-public (add (amount uint))
-  (begin
-    (let ((new-count (+ (var-get count) amount)))
-      (if (<= new-count TOO_BIG)
-        (begin
-          (var-set count new-count)
-          (ok (var-get count))
-        )
-        (err u500) ;; !mark
-      )
-    )
-  )
-)
+function add(uint256 amount) public returns (uint256) {
+    uint256 newCount = count + amount;
+    if (newCount <= TOO_BIG) {
+        count = newCount;
+        return count;
+    }
+    revert("Amount too large"); // !mark
+}
 ```
 
 </CodeTabs>

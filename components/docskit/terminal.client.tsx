@@ -34,7 +34,7 @@ export function TerminalClient({
           <div className="ml-auto">
             <ToggleGroup
               type="single"
-              className="rounded-md inline-flex px-1 bg-ch-background"
+              className="rounded-md inline-flex px-1 bg-ch-code"
               variant="outline"
               value={currentName}
               onValueChange={(value) => {

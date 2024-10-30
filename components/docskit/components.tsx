@@ -29,11 +29,9 @@ function DocsKitCode(props: { codeblock: RawCode }) {
   }
 
   if (codeblock.lang == "terminal") {
-    // @ts-expect-error Async Server Component
     return <Terminal codeblocks={[codeblock]} />;
   }
 
-  // @ts-expect-error Async Server Component
   return <Code {...rest} codeblocks={[codeblock]} />;
 }
 
@@ -50,7 +48,6 @@ function CodeTabs(props: unknown) {
 
   const { code, flags, storage } = data;
 
-  // @ts-expect-error Async Server Component
   return <Code codeblocks={code} flags={flags} storage={storage} />;
 }
 
@@ -74,7 +71,6 @@ function DocsKitLink(props: any) {
 
 function PackageInstall({ codeblock }: { codeblock: RawCode }) {
   return (
-    // @ts-expect-error Async Server Component
     <Terminal
       storage="package-install"
       codeblocks={[
@@ -112,6 +108,5 @@ function TerminalPicker(props: unknown) {
   }
 
   const { code, storage } = data;
-  // @ts-expect-error Async Server Component
   return <Terminal codeblocks={code} storage={storage} />;
 }

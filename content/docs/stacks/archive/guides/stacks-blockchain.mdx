@@ -30,9 +30,8 @@ or the most recent upload for a particular version:
 1. Download the archive and shasum for the appropriate network.
 1. [Verify the archive](/stacks/archive/guides/verify-archive-data) with the shasum.
 1. Extract the archive into the desired directory:
-   ```console
-   # Target directory must already exist
-   tar -zxvf <ARCHIVE FILE> -C /target/directory
+   ```terminal
+   $ tar -zxvf <ARCHIVE FILE> -C /target/directory
    ```
 1. [Configure the `working_dir` property](https://docs.stacks.co/docs/nodes-and-miners/stacks-node-configuration#node) in your Stacks blockchain node Config.toml file to match the directory you extracted the archive to.
 1. Launch your Stacks blockchain node. You can use [one of these example configuration files](https://github.com/stacks-network/stacks-blockchain/tree/master/testnet/stacks-node/conf) as a reference.

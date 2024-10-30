@@ -41,6 +41,7 @@ module.exports = {
       code: 'hsl(var(--code) / <alpha-value>)',
       highlight: 'hsl(var(--highlight) / <alpha-value>)',
       content: 'hsl(var(--content) / <alpha-value>)',
+      dark: 'hsl(var(--dark) / <alpha-value>)',
       contrast: 'hsl(var(--contrast) / <alpha-value>)',
     },
     extend: {
@@ -50,7 +51,7 @@ module.exports = {
         "ch-tabs-background": "hsl(var(--card))", // editorGroupHeader.tabsBackground
         "ch-tab-active-foreground": "hsl(var(--card-foreground))", // tab.activeForeground
         "ch-tab-inactive-foreground": "hsl(var(--muted-foreground))", // tab.inactiveForeground
-        "ch-background": "hsl(var(--code))", // editor.background
+        "ch-code": "hsl(var(--code))", // editor.background
         "ch-active-border": "hsl(var(--hiro))", // tab.activeBorderTop
         "ch-line-number": "var(--ch-26)", // editorLineNumber.foreground
       },

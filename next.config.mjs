@@ -24,6 +24,14 @@ const config = {
   images: {
     domains: [],
   },
+  // webpack: (config, { isServer }) => {
+  //   config.optimization.minimize = false;
+    
+  // Add source map for better debugging
+  //   config.devtool = 'source-map';
+    
+  //   return config;
+  // },
 };
 
 /**
@@ -35,8 +43,6 @@ const chConfig = {
     inlineCode: "DocsKitInlineCode",
   },
   ignoreCode: ({ lang, meta }) =>
-    lang === "bash" ||
-    lang === "console" ||
     meta?.startsWith("title") ||
     meta?.startsWith("twoslash"),
 };

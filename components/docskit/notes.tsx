@@ -25,7 +25,6 @@ export function WithNotes({
         return {
           name,
           type: "code",
-          // @ts-expect-error Async Server Component
           children: <Code codeblocks={[block as any]} />,
         };
       } else if (block.hasOwnProperty("url") && block.hasOwnProperty("alt")) {
