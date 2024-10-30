@@ -78,19 +78,25 @@ function PackageInstall({ codeblock }: { codeblock: RawCode }) {
           ...codeblock,
           value: "$ npm install " + codeblock.value,
           meta: "npm",
-          lang: "bash",
+          lang: "terminal",
         },
         {
           ...codeblock,
           value: "$ yarn add " + codeblock.value,
           meta: "yarn",
-          lang: "bash",
+          lang: "terminal",
         },
         {
           ...codeblock,
           value: "$ pnpm add " + codeblock.value,
           meta: "pnpm",
-          lang: "bash",
+          lang: "terminal",
+        },
+        {
+          ...codeblock,
+          value: "$ bun add " + codeblock.value,
+          meta: "bun",
+          lang: "terminal",
         },
       ]}
     />
