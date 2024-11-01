@@ -7,6 +7,7 @@ import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Steps, Step } from 'fumadocs-ui/components/steps';
 import { SmallCard } from '@/components/card';
+import { Scrollycoding } from '@/components/scrollycoding';
 
 In this quickstart guide, you will write a simple counter contract with Clarity. Throughout this tutorial, you'll learn how to generate a new project, create a smart contract, and validate your smart contract code using the Clarinet CLI.
 
@@ -22,17 +23,25 @@ Check out the [create a new project](/stacks/clarinet/guides/create-a-new-projec
 
     ```terminal
     $ clarinet new counter
+    [32mCreate directory[0m [1mcounter[0m
+    [32mCreate directory[0m [1mcontracts[0m
+    [32mCreate directory[0m [1msettings[0m
+    [32mCreate directory[0m [1mtests[0m
+    [32mCreate file[0m [1mClarinet.toml[0m
+    [32mCreate file[0m [1msettings/Mainnet.toml[0m
+    [32mCreate file[0m [1msettings/Testnet.toml[0m
+    [32mCreate file[0m [1msettings/Devnet.toml[0m
+    [32mCreate directory[0m [1m.vscode[0m
+    [32mCreate file[0m [1m.vscode/settings.json[0m
+    [32mCreate file[0m [1m.vscode/tasks.json[0m
+    [32mCreate file[0m [1m.gitignore[0m
+    [32mCreate file[0m [1m.gitattributes[0m
+    [32mCreate file[0m [1mpackage.json[0m
+    [32mCreate file[0m [1mtsconfig.json[0m
+    [32mCreate file[0m [1mvitest.config.js[0m
     ```
 
-    Navigate to the newly created directory:
-
-    ```terminal
-    $ cd counter
-    ```
-
-    You should see the following files and folders:
-
-    <Files className='pointer-events-none'>
+    <Files className="pointer-events-none">
       <Folder name="contracts" />
       <Folder name="settings" defaultOpen>
         <File name="Devnet.toml" />
@@ -46,36 +55,19 @@ Check out the [create a new project](/stacks/clarinet/guides/create-a-new-projec
       <File name="tsconfig.json" />
       <File name="vitest.config.js" />
     </Files>
-
-    <Callout title="Note">
-      The `--stacks` flag is required and allows you to specify the network to scan. Other options include `--bitcoin`.
-    </Callout>
   </Step>
   <Step>
     ## Create a counter contract
   
-    Inside your project, create your first contract. This command will create an empty `counter.clar` file in the **contracts** folder as well as a `counter.test.ts` file in the `tests` folder.
+    Inside your project directory, run _console`clarinet contract new counter`_ to create your contract. This will generate and update the proper files for writing and testing your code.
 
     ```terminal
+    $ cd counter
     $ clarinet contract new counter
+    [32mCreated file[0m [1mcontracts/counter.clar[0m
+    [32mCreated file[0m [1mtests/counter.test.ts[0m
+    [33mUpdated Clarinet.toml[0m [1mwith contract counter[0m
     ```
-
-    <Files className='pointer-events-none'>
-      <Folder name="contracts" defaultOpen>
-        <File name="counter.clar" className='bg-[hsl(var(--highlight))]' />
-      </Folder>
-      <Folder name="settings" />
-      <Folder name="tests" defaultOpen>
-        <File name="counter.test.ts" className='bg-[hsl(var(--highlight))]' />
-      </Folder>
-      <File name=".gitignore" />
-      <File name="Clarinet.toml" />
-      <File name="package.json" />
-      <File name="tsconfig.json" />
-      <File name="vitest.config.js" />
-    </Files>
-
-    It also updates the `Clarinet.toml` file inside your project with the necessary settings.
 
     ```toml Clarinet.toml
     [contracts.counter]
@@ -87,13 +79,13 @@ Check out the [create a new project](/stacks/clarinet/guides/create-a-new-projec
   <Step>
     ## Variables and functions
   
-    In Clarity, you can define variables and functions to store and manipulate data. Inside your `contracts/counter.clar` file:
+    Inside your _txt`contracts/counter.clar`_ file:
 
-    1. Define a map called `Counters` to store the count associated with each user.
-    2. Define a public function called `count-up` that increments the count of the user who calls it.
-    3. Add a read-only function called `get-count` that returns the count of the user who calls it.
+    1. Define a map called _clarity`Counters`_ to store the count associated with each user.
+    2. Define a public function called _clarity`count-up`_ that increments the count of the user who calls it.
+    3. Add a read-only function called _clarity`get-count`_ that returns the count of the user who calls it.
 
-    ```clarity counter.clar
+    ```clarity counter.clar -c
     (define-map Counters principal uint)
 
     (define-public (count-up)
@@ -112,21 +104,25 @@ Check out the [create a new project](/stacks/clarinet/guides/create-a-new-projec
 
     ```terminal
     $ clarinet check
+    [32m✔[0m [1m1 contract checked[0m
     ```
 
-    Once your contract is validated, you can interact with it in a local REPL with the following steps:
+    Once your contract is validated, you can interact with it locally with the _console`clarinet console`_ inside your project directory.
 
-    1. Run `clarinet console` from the terminal inside of your project.
     ```terminal
     $ clarinet console
     ```
-    2. Call your contract by running `(contract-call? .counter count-up)`.
-    ```clarity
-    (contract-call? .counter count-up)
-    ```
-    3. Verify the count of the user has been incremented by calling the `get-count` function with the `tx-sender` as the argument.
-    ```clarity
-    (contract-call? .counter get-count tx-sender)
+
+    Here are some example interactions you can perform with your contract:
+
+    1. Call the _clarity`count-up`_ function on your contract to increment the count.
+    2. Verify the count of the user has been incremented by calling the _clarity`get-count`_ function with the _clarity`tx-sender`_ as the argument.
+    
+    ```terminal
+    $ (contract-call? .counter count-up)
+    [32m(ok true)[0m
+    $ (contract-call? .counter get-count tx-sender)
+    [32mu1[0m
     ```
   </Step>
 </Steps>
