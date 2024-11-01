@@ -2,7 +2,6 @@
 
 import { type HTMLAttributes, useCallback, useEffect, useState } from "react";
 import { Button } from "./button";
-import Link from "next/link";
 import { X } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { cva } from "class-variance-authority";
