@@ -6,6 +6,7 @@ import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
 import { docskit } from "@/components/docskit/components";
 import { CustomTable as Table, TableProps } from "@/components/table";
+import { OrderedList } from "@/components/ordered-list";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -18,6 +19,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Accordions,
     table: (props: TableProps) => <Table {...props} />,
     blockquote: (props) => <Callout>{props.children}</Callout>,
+    ol: OrderedList,
     ...components,
     ...docskit,
   };
