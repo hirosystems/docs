@@ -6,7 +6,7 @@ import type { SharedProps } from "fumadocs-ui/components/dialog/search";
 import SearchDialog from "fumadocs-ui/components/dialog/search-algolia";
 import { useEffect, useState } from "react";
 import { modes } from "@/utils/modes";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { useMode } from "@/app/(docs)/layout.client";
 
 const itemVariants = cva(

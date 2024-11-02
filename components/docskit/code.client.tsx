@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import React from "react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";

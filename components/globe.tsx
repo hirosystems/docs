@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import createGlobe, { COBEOptions } from "cobe";
 import { useCallback, useEffect, useRef } from "react";
 import { useSpring } from "react-spring";

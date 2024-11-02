@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import { MultiCode } from "./code.client";
 import { AnnotationHandler, highlight, Pre, RawCode } from "codehike/code";

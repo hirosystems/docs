@@ -4,7 +4,7 @@ import { TerminalIcon } from "lucide-react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";
 import React from "react";
 import { CODEBLOCK, TITLEBAR } from "./code-group";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 export function TerminalClient({
   tabs,

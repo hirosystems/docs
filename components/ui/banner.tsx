@@ -3,7 +3,7 @@
 import { type HTMLAttributes, useCallback, useEffect, useState } from "react";
 import { Button } from "./button";
 import { X } from "lucide-react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { isWithinInterval, parseISO } from "date-fns";
 

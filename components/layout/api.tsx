@@ -1,6 +1,6 @@
 import React from "react";
 
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 import { API as FumaAPI } from "fumadocs-ui/components/api";
 

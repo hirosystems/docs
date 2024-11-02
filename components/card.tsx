@@ -1,6 +1,6 @@
 import Link, { type LinkProps } from "fumadocs-core/link";
 import type { HTMLAttributes, ReactNode } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
 
