@@ -1,13 +1,26 @@
 ---
-title: Deployment plans
-description: Deployment plans are reproducible deployment steps that publish a collection of on-chain transactions and one or more contracts to a network.
+title: Concepts
+description: Learn about the concepts behind Clarinet.
 ---
+
+## Network types
+
+Clarinet supports different network types to cater to various development and testing needs:
+
+| Network          | Description                                                                      | Use case
+| -------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `simnet`       | Optimized for fast feedback loops, introspection, and portability. | Ideal for initial development and unit-testing. |
+| `devnet`       | Local Stacks and Bitcoin nodes running on Docker for faster feedback loops. | Use for integration tests or local frontend development. |
+| `testnet`      | A pre-production network that offers a realistic environment for testing. | Ideal for final testing before deploying to Mainnet. |
+| `mainnet`      | The production network where real transactions occur. | Use when you're ready to deploy your smart contract to production. |
+
+## Deployment plans
 
 The default deployment plan of every Clarinet project is contained within specifications set inside certain files. In addition to this default deployment plan, the user can manually configure each plan, adding additional transactions or contract calls across multiple Stacks or Bitcoin blocks.
 
 You can commit, audit, and test contracts without including any secrets in the deployment plan, and you can share these contracts without exposing any sensitive information.
 
-## Deployment plan primitives
+### Primitives
 
 | Transaction primitive   | Typical usage                                                                                                                                                                                                               |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
