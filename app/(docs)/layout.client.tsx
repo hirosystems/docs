@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { modes } from "@/utils/modes";
 import { ChevronLeft } from "lucide-react";
 

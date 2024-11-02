@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import { LayoutIcon, LibraryIcon } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
   "flex flex-col rounded-xl border border-primary/10 bg-background bg-gradient-to-br from-transparent to-primary/10 p-6 shadow-inner shadow-primary/10 transition-colors hover:bg-muted"

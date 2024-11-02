@@ -1,4 +1,3 @@
-import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { RollButton } from "fumadocs-ui/components/roll-button";
