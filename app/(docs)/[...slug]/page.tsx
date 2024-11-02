@@ -90,7 +90,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
     >
       <RollButton />
       {page.data.title !== "Home" && (
-        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
+        <h1 className="text-2xl text-foreground sm:text-3xl">
           {prefix} {page.data.title}
         </h1>
       )}
@@ -99,6 +99,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
           {page.data.description}
         </p>
       )}
+      {page.data.title !== "Home" && <hr className="border-t border-border" />}
       <DocsBody>
         {page.data.index ? (
           <Category page={page} />
