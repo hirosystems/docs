@@ -12,17 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: url("/guides"),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: url("/stacks"),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: url("/ordinals"),
+      url: url("/bitcoin"),
       changeFrequency: "monthly",
       priority: 0.8,
     },
