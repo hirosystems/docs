@@ -51,7 +51,7 @@ export function MultiCode({ group }: { group: CodeGroup }) {
         )}
       </TabsList>
       <TabsContent
-        key={current.title}
+        // key={meta}
         value={current.title}
         className="mt-0 bg-background"
       >
