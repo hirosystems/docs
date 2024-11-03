@@ -124,6 +124,81 @@ Debug navigation commands:
 - _console`next`_ or _console`n`_ - Step over
 - _console`continue`_ or _console`c`_ - Continue execution
 
+Let's take the clarity_`counter`_ contract as an example:
+
+```clarity
+(define-map Counters principal uint)
+
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
+
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+```
+
+### Trace
+
+The _console`::trace`_ command expects an expression, so make a _clarity`contract-call?`_ with our _clarity`count-up`_ function and see what happens.
+
+```terminal
+$ ::trace (contract-call? .counter count-up)
+(contract-call? .counter count-up)  [30m<console>[0m
+( get-count tx-sender )  [30mcounter:4:38[0m
+  [31m↳ args:[0m [1mST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM[0m
+    [34mu0[0m
+[34m(ok true)[0m
+```
+
+### Breakpoints
+
+You can also set a breakpoint at a specific line to better understand what's happening in your contract.
+
+With `::debug`, you can add breakpoints at a specific line of a contract or function to better understand what's happening in your contracts.
+
+```clarity
+(define-map Counters principal uint)
+
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
+
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+
+;; !mark(1:3)
+(define-public (count-twice)
+  (double)
+)
+
+;; !mark(1:6)
+(define-private (double)
+  (begin
+    (unwrap-panic (count-up))
+    (count-up)
+  )
+)
+```
+
+```terminal
+$ ::debug (contract-call? .counter count-twice)
+$ break count-up
+```
+
+
+<Callout title="Breakpoint Commands">
+To step through these breakpoints, you can use one of the following commands:
+
+- **Step-in (`step` or `s`)**: Step into the sub-expressions.
+- **Step-out (`finish` or `f`)**: Complete execution of the current expression and return the result to the parent.
+- **Step-over (`next` or `n`)**: Continue to completion of the current expression, stepping over sub-expressions.
+- **Continue (`continue` or `c`)**: Continue execution until hitting a breakpoint or completing execution.
+</Callout>
+
+Using the _console`continue`_ command, the breakpoint you set in the _clarity`double`_ function will trigger twice due to two _clarity`count-up`_ calls, which enables you to do variable and map analysis.
+
 ## Cost Analysis
 Analyze execution costs in the console:
 
