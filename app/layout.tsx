@@ -1,5 +1,5 @@
 import "./global.css";
-import { aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
+import { aeonik, aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
 import type { Viewport } from "next";
 import { baseUrl, createMetadata } from "@/utils/metadata";
 import { Provider } from "./provider";
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
+      className={`${aeonik.variable} ${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <GoogleTagManager gtmId={GTM_ID} />
