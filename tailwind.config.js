@@ -109,7 +109,8 @@ module.exports = {
   		fontFamily: {
   			sans: ['var(--font-geist-sans)'],
   			mono: ["var(--font-aeonikMono)"],
-  			aeonik: ['var(--font-aeonikFono)'],
+  			aeonik: ['var(--font-aeonik)'],
+  			aeonikFono: ['var(--font-aeonikFono)'],
   			inter: ['var(--font-inter)']
   		},
   		backgroundImage: {
