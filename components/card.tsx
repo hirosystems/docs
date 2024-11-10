@@ -34,7 +34,7 @@ export function Card({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border p-px bg-card text-md text-card-foreground transition-colors relative overflow-hidden",
+        "not-prose block rounded-lg border p-px bg-card text-md transition-colors relative overflow-hidden",
         "hover:border hover:bg-gradient-to-r hover:from-border hover:to-[#59564F] dark:hover:to-[#c0bdb4]",
         props.className
       )}
@@ -50,7 +50,7 @@ export function Card({
             {icon}
           </div>
         ) : null}
-        <h3 className="mb-1 font-medium">{title}</h3>
+        <h3 className="mb-1 text-lg">{title}</h3>
         <p className="text-muted-foreground">{description}</p>
       </div>
     </Link>
@@ -75,7 +75,7 @@ export function SecondaryCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80",
+        "not-prose block rounded-lg border bg-card p-4 text-mdtransition-colors hover:bg-accent/80",
         props.className
       )}
     >
@@ -114,7 +114,7 @@ export function SmallCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block text-sm text-card-foreground transition-colors space-y-3",
+        "not-prose block transition-colors space-y-3",
         props.className
       )}
     >
@@ -125,8 +125,10 @@ export function SmallCard({
           </div>
         )}
         <div className="flex flex-col w-full">
-          <h3 className="mb-1 font-medium">{title}</h3>
-          <p className="text-muted-foreground">{description}</p>
+          <h3 className="mb-1 font-inter font-medium text-md text-[#141312] dark:text-[#f6f5f3]">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
       </div>
     </Link>
