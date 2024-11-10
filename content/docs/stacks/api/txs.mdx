@@ -26,10 +26,10 @@ Stacks supports a set of different transaction types:
 
 | **Type**          | **Value**           | **Description** |
 | :----------------- | :------------------- | :--------------- |
-| Coinbase          | `coinbase`          | The first transaction in a new block. |
-| Token transfer    | `token_transfer`    | Asset transfer from a sender to a recipient. |
-| Contract deploy   | `smart_contract`    | Contract instantiation. |
-| Contract call     | `contract_call`     | Contract call for a public, non read-only function. |
+| Coinbase          | _json`"coinbase"`_          | The first transaction in a new block. |
+| Token transfer    | _json`"token_transfer"`_    | Asset transfer from a sender to a recipient. |
+| Contract deploy   | _json`"smart_contract"`_    | Contract instantiation. |
+| Contract call     | _json`"contract_call"`_     | Contract call for a public, non read-only function. |
 
 A sample of each transaction type can be found in the [Stacks Blockchain API response definition for transactions](https://docs.hiro.so/api#operation/get_transaction_by_id).
 
