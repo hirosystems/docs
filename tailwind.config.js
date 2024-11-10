@@ -61,7 +61,7 @@ module.exports = {
 				hiro: 'hsl(var(--hiro) / <alpha-value>)',
 				'card-hover': 'hsl(var(--card-hover) / <alpha-value>)',
 				icon: '(var(--icon)',
-				inverted: 'hsl(var(--inverted) / <alpha-value>)',
+				inverted: 'var(--inverted)',
 				code: 'hsl(var(--code) / <alpha-value>)',
 				highlight: 'hsl(var(--highlight) / <alpha-value>)',
 				content: 'hsl(var(--content) / <alpha-value>)',
