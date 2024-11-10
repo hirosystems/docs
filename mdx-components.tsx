@@ -11,14 +11,21 @@ import { OrderedList, UnorderedList } from "@/components/lists";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
-    Tabs,
-    Tab,
-    Callout,
-    TypeTable,
     Accordion,
     Accordions,
-    table: (props: TableProps) => <Table {...props} />,
     blockquote: (props) => <Callout>{props.children}</Callout>,
+    Callout,
+    code: (props) => (
+      <code
+        {...props}
+        className="bg-accent border border-border p-1 text-primary"
+      />
+    ),
+    hr: (props) => <hr className="border-t border-border/50 mt-0 mb-6" />,
+    Tab,
+    Tabs,
+    table: (props: TableProps) => <Table {...props} />,
+    TypeTable,
     ol: OrderedList,
     ul: UnorderedList,
     ...components,
