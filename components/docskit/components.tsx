@@ -24,11 +24,11 @@ export const docskit = {
 function DocsKitCode(props: { codeblock: RawCode }) {
   const { codeblock, ...rest } = props;
 
-  if (codeblock.lang == "package-install") {
+  if (codeblock.lang === "package-install") {
     return <PackageInstall codeblock={codeblock} />;
   }
 
-  if (codeblock.lang == "terminal") {
+  if (codeblock.lang === "terminal") {
     return <Terminal codeblocks={[codeblock]} />;
   }
 
@@ -53,7 +53,7 @@ function CodeTabs(props: unknown) {
 
 function betterError(error: z.ZodError, componentName: string) {
   const { issues } = error;
-  if (issues.length == 1 && issues[0].path[0] == "code") {
+  if (issues.length === 1 && issues[0].path[0] === "code") {
     return new Error(
       `<${componentName}> should contain at least one codeblock marked with \`!!\``
     );
@@ -63,7 +63,7 @@ function betterError(error: z.ZodError, componentName: string) {
 }
 
 function DocsKitLink(props: any) {
-  if (props.href == "tooltip") {
+  if (props.href === "tooltip") {
     return <NoteTooltip name={props.title}>{props.children}</NoteTooltip>;
   }
   return <Link {...props} />;
