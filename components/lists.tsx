@@ -12,7 +12,7 @@ function OrderedList({ children, items }: ListProps) {
       <ol className="list-none p-0 space-y-4">
         {items.map((item, index) => (
           <li key={index} className="flex items-baseline gap-4">
-            <span className="flex-shrink-0 w-7 h-7 bg-secondary rounded flex items-center justify-center text-gray-600 font-mono">
+            <span className="flex-shrink-0 w-7 h-7 bg-secondary rounded flex items-center justify-center text-primary font-mono">
               {index + 1}
             </span>
             <span className="mt-1">{item}</span>
@@ -34,7 +34,7 @@ function OrderedList({ children, items }: ListProps) {
 
         return (
           <li key={index} className="flex items-baseline gap-4">
-            <span className="flex-shrink-0 w-7 h-7 bg-secondary rounded flex items-center justify-center text-gray-600 font-mono">
+            <span className="flex-shrink-0 w-7 h-7 bg-secondary rounded flex items-center justify-center text-primary font-mono">
               {index + 1}
             </span>
             <span className="mt-1">{child.props.children}</span>
@@ -52,7 +52,7 @@ function UnorderedList({ children, items }: ListProps) {
       <ol className="list-none p-0 space-y-4">
         {items.map((item, index) => (
           <li key={index} className="flex items-baseline gap-4">
-            <span className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center text-gray-600 font-mono">
+            <span className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center text-primary font-mono">
               {index + 1}
             </span>
             <span className="mt-1">{item}</span>
