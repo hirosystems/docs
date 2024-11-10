@@ -35,8 +35,8 @@ export function Card({
       {...props}
       className={cn(
         "not-prose relative block rounded-lg p-[1px] transition-all duration-300",
-        "bg-gradient-to-r from-border to-border", // Default single-color gradient (acts as border)
-        "hover:from-border hover:to-gradient", // Hover gradient
+        "bg-gradient-to-r from-border from-0% to-border to-100%", // Default single-color gradient (acts as border)
+        "hover:from-border hover:from-25% hover:to-gradient hover:to-100%", // Hover gradient
         "hover:shadow-[0_6px_17px_rgba(181,172,161,0.3)] dark:hover:shadow-[0_6px_21px_rgba(0,0.0,0.8)]",
         props.className
       )}
