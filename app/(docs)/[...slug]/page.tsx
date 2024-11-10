@@ -98,7 +98,9 @@ export default function Page({ params }: { params: Param }): JSX.Element {
           {page.data.description}
         </p>
       )}
-      {page.data.title !== "Home" && <hr className="border-t border-border" />}
+      {page.data.title !== "Home" && (
+        <hr className="border-t border-border/50" />
+      )}
       <DocsBody>
         {page.data.index ? (
           <Category page={page} />
