@@ -59,6 +59,11 @@ export const inter = localFont({
       style: "normal",
     },
     {
+      path: "./Inter-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
       path: "./Inter-SemiBold.woff2",
       weight: "600",
       style: "normal",
