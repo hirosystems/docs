@@ -15,7 +15,7 @@ const itemVariants = cva(
   {
     variants: {
       active: {
-        true: "text-accent-foreground",
+        true: "text-accent-foreground pointer-events-none",
       },
       mode: {
         bitcoin: "bg-hiro",
@@ -31,7 +31,7 @@ const itemVariants = cva(
       {
         active: true,
         mode: "stacks",
-        className: "bg-background",
+        className: "bg-inverted text-background",
       },
     ],
   }

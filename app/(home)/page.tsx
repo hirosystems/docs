@@ -5,21 +5,20 @@ import Link from "fumadocs-core/link";
 
 export default function HomePage(): JSX.Element {
   return (
-    <main className="container max-w-7xl mx-auto my-12 space-y-10">
+    <main className="container mx-auto my-12 space-y-10">
       <div className="space-y-1">
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="text-4xl font-bold text-[#141312] dark:text-[#f6f5f3]">
           Welcome to Hiro Docs.
         </h1>
-        <h2 className="text-2xl font-bold text-muted-foreground">
+        <h2 className="text-2xl font-regular text-muted-foreground font-inter">
           Explore our tutorials, guides, API references, and more.
         </h2>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-16">
-        {/* Stacks Docs Card */}
         <Link
           href="/stacks"
-          className="not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80"
+          className="not-prose block rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] p-4 text-md text-card-foreground transition-colors hover:shadow-[0_6px_20px_rgba(89,86,80,0.2)] dark:hover:shadow-[0_6px_40px_#383432]"
         >
           <div className="mb-6">
             <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
@@ -30,53 +29,32 @@ export default function HomePage(): JSX.Element {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               CLARINET
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               CHAINHOOK
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               STACKS.JS
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               HIRO PLATFORM
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               STACKS API
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               TOKEN METADATA API
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               +3 MORE
             </Badge>
           </div>
         </Link>
         <Link
           href="/bitcoin"
-          className="not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80"
+          className="not-prose block rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] p-4 text-md text-card-foreground transition-colors hover:shadow-[0_6px_20px_rgba(89,86,80,0.2)] dark:hover:shadow-[0_6px_40px_#383432]"
         >
           <div className="mb-6">
             <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
@@ -88,22 +66,13 @@ export default function HomePage(): JSX.Element {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               ORDHOOK
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               ORDINALS API
             </Badge>
-            <Badge
-              variant="secondary"
-              className="bg-background/95 text-gray-900"
-            >
+            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               RUNES API
             </Badge>
           </div>
@@ -120,7 +89,7 @@ export default function HomePage(): JSX.Element {
 
         <div className="grid md:grid-cols-4 gap-6">
           <Link href="/stacks/get-started" className="block h-full">
-            <Card className="p-6 border bg-card h-full flex flex-col">
+            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
               <h3 className="text-lg font-semibold mb-2">
                 Get started with Stacks
               </h3>
@@ -131,7 +100,7 @@ export default function HomePage(): JSX.Element {
             </Card>
           </Link>
           <Link href="/stacks/api" className="block h-full">
-            <Card className="p-6 border bg-card h-full flex flex-col">
+            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
               <h3 className="text-lg font-semibold mb-2">
                 Stacks API Overview
               </h3>
@@ -141,7 +110,7 @@ export default function HomePage(): JSX.Element {
             </Card>
           </Link>
           <Link href="/bitcoin/get-started" className="block h-full">
-            <Card className="p-6 border bg-card h-full flex flex-col">
+            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
               <h3 className="text-lg font-semibold mb-2">
                 Get started with Bitcoin
               </h3>
@@ -152,7 +121,7 @@ export default function HomePage(): JSX.Element {
             </Card>
           </Link>
           <Link href="/bitcoin/ordinals/api" className="block h-full">
-            <Card className="p-6 border bg-card h-full flex flex-col">
+            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
               <h3 className="text-lg font-semibold mb-2">
                 Ordinals API Overview
               </h3>

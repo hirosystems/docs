@@ -26,7 +26,7 @@
     --radius: 0.5rem;
     --hiro: 21 100% 67.5%;
     --icon: #383432;
-    --inverted: 30 5.7% 7.5%;
+    --inverted: #141312;
     --code: 0 0% 100%;
     --highlight: 40 13% 91%;
     --content: 32.31 11.93% 78.63%;
@@ -70,7 +70,7 @@
     --hiro: 24 100% 51.4%;
     --card-hover: 15 5% 16%;
     --icon: #ffffff;
-    --inverted: 40 14.3% 95.9%;
+    --inverted: #f2f0ed;
     --code: 0 7.7% 5.1%;
     --highlight: 12 6.2% 15.9%;
     --content: 40 5.33% 33.14%;
@@ -93,12 +93,12 @@
 
   .bitcoin {
     --primary: 20 14.3% 4.1%;
-    --icon: 20 14.3% 4.1%;
+    --icon: #383432;
   }
 
   .dark .bitcoin {
     --primary: 0 0% 100%;
-    --icon: 0 0% 100%;
+    --icon: #ffffff;
   }
 }
 
@@ -199,7 +199,7 @@ a.bg-primary\/10 {
 
 /* This changes the icon colors for active root level sidebar tabs, Stacks */
 a.bg-primary\/10 div:first-child {
-  background: hsl(var(--inverted));
+  background: var(--inverted);
   border: none;
 }
 
@@ -415,12 +415,6 @@ div.prose div.footer.not-prose {
 div.api-example div.max-xl\:hidden > div:nth-child(1) {
   margin-top: 0;
   margin-bottom: 1rem;
-}
-
-/* Sets the background and text for an active tab in reference pages */
-.tab[data-state="active"] > .badge {
-  color: hsl(var(--background));
-  background-color: hsl(var(--inverted));
 }
 
 .prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
