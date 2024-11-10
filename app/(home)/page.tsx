@@ -1,7 +1,7 @@
+import Link from "fumadocs-core/link";
 import { StacksCardIcon, BitcoinCardIcon } from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Link from "fumadocs-core/link";
 
 export default function HomePage(): JSX.Element {
   return (

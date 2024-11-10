@@ -65,7 +65,8 @@ module.exports = {
 				code: 'hsl(var(--code) / <alpha-value>)',
 				highlight: 'hsl(var(--highlight) / <alpha-value>)',
 				content: 'hsl(var(--content) / <alpha-value>)',
-				dark: 'hsl(var(--dark) / <alpha-value>)',
+				dark: 'var(--dark)',
+				gradient: 'var(--gradient)',
 				contrast: 'hsl(var(--contrast) / <alpha-value>)',
   			chart: {
   				'1': 'hsl(var(--chart-1))',
