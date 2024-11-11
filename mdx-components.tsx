@@ -18,7 +18,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     code: (props) => (
       <code
         {...props}
-        className="bg-accent border border-border p-1 text-primary"
+        className="bg-accent border border-border p-1 text-muted-foreground"
       />
     ),
     hr: (props) => <hr className="border-t border-border/50 mt-0 mb-6" />,
