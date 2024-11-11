@@ -7,17 +7,16 @@ description: Go over the multiple ways to make requests to the Token Metadata AP
 
 To make a request to the Stacks API, you can paste the `curl` command below in your terminal.
 
-```console title="Terminal"
-curl -L 'https://api.hiro.so/metadata/v1/' \
--H 'Accept: application/json'
+```terminal
+$ curl -L 'https://api.hiro.so/metadata/v1/' -H 'Accept: application/json'
 ```
 
 If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key.
 
-```console title="Terminal"
-curl -L 'https://api.hiro.so/metadata/v1/' \
--H 'Accept: application/json' \
--H 'X-API-Key: $HIRO_API_KEY' # [!code highlight]
+```terminal
+$ curl -L 'https://api.hiro.so/metadata/v1/' \
+  -H 'Accept: application/json' \
+  -H 'X-API-Key: $HIRO_API_KEY'
 ```
 
 You should get a response back that resembles the following:
@@ -53,8 +52,7 @@ We also maintain a standalone API client that you can use to make requests to th
 
 Example usage:
 
-```ts twoslash
-// @noErrors
+```ts
 import { Configuration, TokensApi } from "@hirosystems/token-metadata-api-client";
 
 const config: Configuration = {}

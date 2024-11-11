@@ -1,6 +1,5 @@
 import "./global.css";
-import "fumadocs-ui/twoslash.css";
-import { aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
+import { aeonik, aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
 import type { Viewport } from "next";
 import { baseUrl, createMetadata } from "@/utils/metadata";
 import { Provider } from "./provider";
@@ -34,20 +33,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
+      className={`${aeonik.variable} ${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <GoogleTagManager gtmId={GTM_ID} />
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="master-of-clarity"
-            cta="Compete and find out"
-            url="https://hirosystems.mmm.page/masterofclarity"
-            startDate="2024-08-21"
-            endDate="2024-08-28"
+            id="stacks-js-v7"
+            cta="Learn more here"
+            url="https://www.hiro.so/blog/announcing-stacks-js-v7"
+            startDate="2024-11-11"
+            endDate="2024-12-15"
           >
-            Are you a Master of Clarity?
+            Announcing Stacks.js v7!
           </Banner>
           {children}
           <Footer />

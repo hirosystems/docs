@@ -21,22 +21,16 @@ Transactions on the Stacks blockchain comes with execution costs that can dictat
 
 To start analyzing execution costs, first run the `clarinet console` command inside your project.
 
-```console title="Terminal"
-clarinet console
+```terminal
+$ clarinet console
 ```
 
 ## Get Costs
 
 The `::get_costs <expr>` command in the Clarinet console will display the cost analysis of the given expression as well as the return value of the given expression. The `::get_costs` command expects an expression, so make a `contract-call?` with our `count-up` function and see what happens.
 
-```console title="Terminal"
-::get_costs (contract-call? .counter count-up)
-```
-
-We should see a chart breaking down the different types of execution costs in the console. Here's the execution cost analysis returned from running the above command:
-
-```console
->> ::get_costs (contract-call? .counter count-up)
+```terminal
+$ ::get_costs (contract-call? .counter count-up)
 +----------------------+-------------+----------------+-----------------+
 |                               | Consumed   | Limit              | Percentage       |
 +----------------------+-------------+----------------+-----------------+
@@ -74,8 +68,8 @@ The percentage column shows what percentage of the execution costs your expressi
 
 You can toggle the cost analysis to always be displayed after every expression execution in the console by toggling this feature on with the command `::toggle_costs`.
 
-```console title="Terminal"
-::toggle_costs
+```terminal
+$ ::toggle_costs
 ```
 
 To turn it off, just run the `::toggle_costs` command again.

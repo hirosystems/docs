@@ -1,4 +1,3 @@
-import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { RollButton } from "fumadocs-ui/components/roll-button";
@@ -90,7 +89,7 @@ export default function Page({ params }: { params: Param }): JSX.Element {
     >
       <RollButton />
       {page.data.title !== "Home" && (
-        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
+        <h1 className="text-2xl text-foreground sm:text-3xl">
           {prefix} {page.data.title}
         </h1>
       )}
@@ -98,6 +97,9 @@ export default function Page({ params }: { params: Param }): JSX.Element {
         <p className="mb-8 text-lg text-muted-foreground">
           {page.data.description}
         </p>
+      )}
+      {page.data.title !== "Home" && (
+        <hr className="border-t border-border/50" />
       )}
       <DocsBody>
         {page.data.index ? (

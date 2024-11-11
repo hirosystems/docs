@@ -44,11 +44,10 @@ The `equals` property is a 32 bytes hex encoded type used to specify the exact t
   </TabsList>
   <TabsContent value="default">
     ```json
-    // [!code word:txid]
     {
       "if_this": {
         "scope": "txid",
-        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f" // [!code highlight]
+        "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
       }
     }
     ```
@@ -114,44 +113,40 @@ The `between` property specifies a range of block heights to match, inclusive of
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "equals": 141200 // [!code highlight]
+      "equals": 141200
     }
   }
   ```
   </TabsContent>
   <TabsContent value="higher_than">
   ```json
-  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "higher_than": 10000 // [!code highlight]
+      "higher_than": 10000
     }
   }
   ```
   </TabsContent>
   <TabsContent value="lower_than">
   ```json
-  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "lower_than": 10000 // [!code highlight]
+      "lower_than": 10000
     }
   }
   ```
   </TabsContent>
   <TabsContent value="between">
   ```json
-  // [!code word:block_height]
   {
     "if_this": {
       "scope": "block_height",
-      "between": [0, 10000] // [!code highlight]
+      "between": [0, 10000]
     }
   }
   ```
@@ -199,24 +194,22 @@ The `actions` property specifies the types of token actions to observe, such as 
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:ft_transfer]
   {
     "if_this": {
       "scope": "ft_transfer",
       "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
-      "actions": ["transfer"] // [!code highlight]
+      "actions": ["transfer"]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="all">
-    // [!code word:ft_transfer]
   ```json
   {
     "if_this": {
       "scope": "ft_transfer",
       "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
-      "actions": ["mint", "transfer", "burn"] // [!code highlight]
+      "actions": ["mint", "transfer", "burn"]
     }
   }
   ```
@@ -264,24 +257,22 @@ The `actions` property specifies the types of NFT actions to observe, such as `m
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:nft_transfer]
   {
     "if_this": {
       "scope": "nft_transfer",
       "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
-      "actions": ["mint"] // [!code highlight]
+      "actions": ["mint"]
     }
   }
   ```
   </TabsContent>
   <TabsContent value="all">
   ```json
-  // [!code word:nft_transfer]
   {
     "if_this": {
       "scope": "nft_transfer",
       "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
-      "actions": ["mint", "transfer", "burn"] // [!code highlight]
+      "actions": ["mint", "transfer", "burn"]
     }
   }
   ```
@@ -323,22 +314,20 @@ The `actions` property specifies the types of STX token actions to observe, such
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:stx_transfer]
   {
     "if_this": {
       "scope": "stx_transfer",
-      "actions": ["transfer"] // [!code highlight]
+      "actions": ["transfer"]
     }
   }
   ```
   </TabsContent>
     <TabsContent value="all">
   ```json
-  // [!code word:stx_transfer]
   {
     "if_this": {
       "scope": "stx_transfer",
-      "actions": ["mint", "transfer", "burn", "lock"] // [!code highlight]
+      "actions": ["mint", "transfer", "burn", "lock"]
     }
   }
   ```
@@ -392,24 +381,22 @@ The `matches_regex` property is used for matching an event that regex matches wi
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:print_event]
   {
     "if_this": {
       "scope": "print_event",
       "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-      "contains": "monkey" // [!code highlight]
+      "contains": "monkey"
     }
   }
   ```
   </TabsContent>
   <TabsContent value="matches_regex">
   ```json
-  // [!code word:print_event]
   {
     "if_this": {
       "scope": "print_event",
       "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
-      "matches_regex": "(?:^|\\W)monkey(?:$|\\W)" // [!code highlight]
+      "matches_regex": "(?:^|\\W)monkey(?:$|\\W)"
     }
   }
   ```
@@ -454,12 +441,11 @@ The `method` property specifies the specific method within the contract to obser
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:contract_call]
   {
     "if_this": {
       "scope": "contract_call",
       "contract_identifier": "SP000000000000000000002Q6VF78.pox",
-      "method": "stack-stx" // [!code highlight]
+      "method": "stack-stx"
     }
   }
   ```
@@ -507,22 +493,20 @@ The `implement_trait` property specifies the contract trait to observe.
   </TabsList>
   <TabsContent value="default">
   ```json
-  // [!code word:contract_deployment]
   {
     "if_this": {
       "scope": "contract_deployment",
-      "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"  // [!code highlight]
+      "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
     }
   }
   ```
   </TabsContent>
   <TabsContent value="trait">
   ```json
-  // [!code word:contract_deployment]
   {
     "if_this": {
       "scope": "contract_deployment",
-      "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol" // [!code highlight]
+      "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol"
     }
   }
   ```

@@ -1,6 +1,6 @@
 import Link, { type LinkProps } from "fumadocs-core/link";
 import type { HTMLAttributes, ReactNode } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -34,24 +34,28 @@ export function Card({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border p-px bg-card text-md text-card-foreground transition-colors relative overflow-hidden",
-        "hover:border hover:bg-gradient-to-r hover:from-border hover:to-[#59564F] dark:hover:to-[#c0bdb4]",
+        "not-prose relative block rounded-lg p-[1px] transition-all duration-300",
+        "bg-gradient-to-r from-border from-0% to-border to-100%", // Default single-color gradient (acts as border)
+        "hover:from-border hover:from-25% hover:to-gradient hover:to-100%", // Hover gradient
+        "hover:shadow-[0_6px_17px_rgba(181,172,161,0.3)] dark:hover:shadow-[0_6px_21px_rgba(0,0.0,0.8)]",
         props.className
       )}
     >
       <div
         className={cn(
-          "group relative z-10 bg-card p-4 rounded-[7px] hover:bg-accent",
+          "space-y-3 group relative z-10 bg-card p-5 rounded-[7px] hover:bg-accent",
           props.innerClassName
         )}
       >
         {icon ? (
-          <div className="mb-2 w-fit rounded-md border group-hover:bg-border p-2 text-muted-foreground [&_svg]:size-4">
+          <div className="w-fit rounded-md border group-hover:bg-border p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
           </div>
         ) : null}
-        <h3 className="mb-1 font-medium">{title}</h3>
-        <p className="text-muted-foreground">{description}</p>
+        <div className="space-y-1">
+          <h3 className="text-lg">{title}</h3>
+          <p className="text-muted-foreground">{description}</p>
+        </div>
       </div>
     </Link>
   );
@@ -75,7 +79,7 @@ export function SecondaryCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border bg-card p-4 text-md text-card-foreground transition-colors hover:bg-accent/80",
+        "not-prose block rounded-lg border bg-card p-4 text-md transition-colors hover:bg-accent/80",
         props.className
       )}
     >
@@ -114,7 +118,7 @@ export function SmallCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block text-sm text-card-foreground transition-colors space-y-3",
+        "not-prose block transition-colors space-y-3",
         props.className
       )}
     >
@@ -125,8 +129,10 @@ export function SmallCard({
           </div>
         )}
         <div className="flex flex-col w-full">
-          <h3 className="mb-1 font-medium">{title}</h3>
-          <p className="text-muted-foreground">{description}</p>
+          <h3 className="mb-1 font-inter font-medium text-md text-[#141312] dark:text-[#f6f5f3]">
+            {title}
+          </h3>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
       </div>
     </Link>

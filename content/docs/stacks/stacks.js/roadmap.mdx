@@ -6,13 +6,11 @@ description: Discover the future of Stacks.js.
 Read about what's new in the latest version of Stacks.js.
 This version comes with a lot of improvements and new features, but it also adds some breaking changes.
 
-<Callout type="Info">
 Want to use these latest features? Install packages using the `latest` tag:
 
 ```package-install
-@stacks/transactions@latest
+@stacks/{common,network,transactions}@latest
 ```
-</Callout>
 
 ### Strings
 _aka, reducing wrapper types and magic numbers_
@@ -33,23 +31,18 @@ This makes them easier to inspect and diff.
 
 Clarity example, [Read more](#clarity-representation)
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
-// OLD:
+// !diff -
 { type: 1, value: 12n }
-
-// NEW:
+// !diff +
 { type: "uint", value: "12" }
 ```
 
 Private key example, [Read more](/stacks/stacks.js/concepts/private-keys)
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
 signMessageHashRsv({
-  // OLD:
+  // !diff -
   privateKey: createStacksPrivateKey("f5a3...2801"), // { compressed: true, data: [245,163,...] }
-  // NEW:
+  // !diff +
   privateKey: "f5a3...2801"
 })
 ```
@@ -73,19 +66,13 @@ In most cases, developers shouldn't need the `@stacks/network` package anymore.
 The `network` parameter can be used with string literals: `'mainnet'`, `'testnet'`, `'devnet'`, `'mocknet'`.
 
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
-// OLD:
 import { StacksTestnet } from '@stacks/network';
 
 makeSTXTokenTransfer({
-  network: new StacksTestnet(), // [!code highlight]
-  // ...
-});
-
-// NEW:
-makeSTXTokenTransfer({
-  network: 'testnet' // [!code highlight]
+  // !diff -
+  network: new StacksTestnet(),
+  // !diff +
+  network: 'testnet'
   // ...
 });
 ```
@@ -103,12 +90,14 @@ The `client` parameter can be any object-like structure containing a `baseUrl` a
 
 The following diffs show examples of how to migrate to the new pattern.
 
-```diff
+```ts
 const transaction = await makeSTXTokenTransfer({
-  // ...
-- network: new StacksTestnet({ url: "mynode-optional.com", fetchFn: myFetch }), // optional options
-+ network: 'testnet', // optional, defaults to 'mainnet'
-+ client: { baseUrl: "mynode-optional.com", fetch: myFetchOptional } // optional, defaults inferred from network
+// !diff -  
+network: new StacksTestnet({ url: "mynode-optional.com", fetchFn: myFetch }),
+// !diff +
+network: 'testnet', // optional, defaults to 'mainnet'
+// !diff +
+client: { baseUrl: "mynode-optional.com", fetch: myFetchOptional } // optional, defaults inferred from network
 });
 ```
 
@@ -116,19 +105,20 @@ The `client` property is also part of the network object.
 You can still keep ONE single network object for your whole application.
 
 ```ts
-// [!code word:OLD]
-// [!code word:NEW]
-// OLD:
+// !diff -
 import { StacksTestnet } from '@stacks/network';
-
-const network = new StacksTestnet({ url: "https://mynode.com", fetchFn: myFetch });
-
-// NEW:
+// !diff +
 import { STACKS_TESTNET } from '@stacks/network';
 
+// !diff -
+const network = new StacksTestnet({ url: "https://mynode.com", fetchFn: myFetch });
+// !diff +
 const network = {
+  // !diff +
   ...STACKS_TESTNET, // extending a static object
+  // !diff +
   client: { baseUrl: "https://mynode.com", fetch: myFetch }
+  // !diff +
 };
 ```
 
@@ -139,7 +129,6 @@ The naming is consistent across the board and uses `A To B` naming.
 For example, if we have a private key and want to get the address, we can use the `privateKeyToAddress` function.
 
 ```ts
-// [!code word:privateKeyToAddress]
 import { privateKeyToAddress } from "@stacks/transactions";
 
 const privateKey = "f5a3...2801";
@@ -173,21 +162,29 @@ The property holding the value of the data type is now called `value` in all cas
 Previously, there was a mix of `value`, `list`, `buffer` etc.
 For `bigint` values, the type of the `value` property is a now `string`, for better serialization compatibility.
 
-```diff
+```ts
 {
--  type: 1,
-+  type: "uint",
--  value: 12n,
-+  value: "12",
+  // !diff -
+  type: 1,
+  // !diff +
+  type: "uint",
+  // !diff -
+  value: 12n,
+  // !diff +
+  value: "12",
 }
 ```
 
-```diff
+```ts
 {
--  type: 11,
-+  type: "list",
--  list: [ ... ],
-+  value: [ ... ],
+  // !diff -
+  type: 11,
+  // !diff +
+  type: "list",
+  // !diff -
+  list: [ ... ],
+  // !diff +
+  value: [ ... ],
 }
 ```
 

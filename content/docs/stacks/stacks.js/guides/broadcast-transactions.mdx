@@ -58,9 +58,7 @@ There are three types of transactions:
   <TabsContent value="transfer">
     To transfer STX, use the `makeSTXTokenTransfer` function provided by the `@stacks/transactions` package:
 
-    ```ts twoslash title="stx-transfer.ts"
-    // @noErrors
-    // [!code word:makeSTXTokenTransfer]
+    ```ts stx-transfer.ts
     import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
     import { StacksDevnet } from "@stacks/network";
 
@@ -82,9 +80,7 @@ There are three types of transactions:
   <TabsContent value="deploy">
     To deploy a contract, use the `makeContractDeploy` function provided by the `@stacks/transactions` package:
 
-    ```ts twoslash title="contract-deploy.ts"
-    // @noErrors
-    // [!code word:makeContractDeploy]
+    ```ts contract-deploy.ts
     import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
     import { StacksTestnet, StacksMainnet } from '@stacks/network';
 
@@ -106,9 +102,7 @@ There are three types of transactions:
   <TabsContent value="execute">
     To execute a contract function, use the `makeContractCall` function provided by the `@stacks/transactions` package:
 
-    ```ts twoslash title="function-call.ts"
-    // @noErrors
-    // [!code word:makeContractCall]
+    ```ts function-call.ts
     import {
       makeContractCall,
       broadcastTransaction,
@@ -155,9 +149,7 @@ After building the transaction, broadcast it to the Stacks blockchain network us
 1. Pass in the transaction object you created in the previous step to the `broadcastTransaction` function.
 2. Handle the response by logging the response object.
 
-```tsx twoslash
-// @noErrors
-// [!code word:broadcastTransaction]
+```tsx
 import { broadcastTransaction } from '@stacks/transactions';
 
 const broadcastResponse = await broadcastTransaction(transaction);
@@ -169,8 +161,7 @@ This code sends the signed transaction to the Stacks blockchain. The `broadcastT
 
 Handle the transaction results by checking the transaction status and responding accordingly.
 
-```ts twoslash
-// @noErrors
+```ts
 if (broadcastResponse.success) {
   console.log('Transaction successful with ID:', broadcastResponse.txid);
 } else {

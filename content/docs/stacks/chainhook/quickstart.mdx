@@ -16,8 +16,8 @@ Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as
   
     To generate a predicate file, use the `predicates new` command. This command generates a template that you can use to help set up your own predicate.
 
-    ```console title="Terminal"
-    chainhook predicates new stx-transfer.json --stacks 
+    ```terminal
+    $ chainhook predicates new stx-transfer.json --stacks 
     ```
 
     <Callout title="Note">
@@ -32,7 +32,6 @@ Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as
     To do this, update your `if_this` construct in your `stx-transfer.json` file.
 
     ```json title="stx-transfer.json"
-    // [!code word:stx_event]
     {
       "if_this": {
         "scope": "stx_event",
@@ -78,8 +77,8 @@ Check out the [run Chainhook as a service](/stacks/chainhook/guides/chainhook-as
   
     With your updated predicate file, you can now use the `predicate scan` command to scan for `stx_event` transactions.
 
-    ```console title="Terminal"
-    chainhook predicates scan /path/to/stx-transfer.json --mainnet
+    ```terminal
+    $ chainhook predicates scan /path/to/stx-transfer.json --mainnet
     ```
 
     <Callout title="Note">

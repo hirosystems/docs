@@ -4,51 +4,31 @@ import { Callout } from "@/components/callout";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
-import {
-  CodeBlock,
-  type CodeBlockProps,
-  Pre,
-} from "fumadocs-ui/components/codeblock";
-import type { ReactNode } from "react";
-import { Popup, PopupContent, PopupTrigger } from "fumadocs-ui/twoslash/popup";
-import { cn } from "./utils/cn";
 import { docskit } from "@/components/docskit/components";
-
-const shortcuts: Record<string, string> = {
-  stacks: "./content/docs/stacks/props.ts",
-  ordinals: "./content/docs/bitcoin/props.ts",
-};
+import { CustomTable as Table, TableProps } from "@/components/table";
+import { OrderedList, UnorderedList } from "@/components/lists";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
-    Popup,
-    PopupContent,
-    PopupTrigger,
-    pre: ({ title, className, icon, allowCopy, ...props }: CodeBlockProps) => (
-      <CodeBlock title={title} icon={icon} allowCopy={allowCopy}>
-        <Pre className={cn("max-h-[400px]", className)} {...props} />
-      </CodeBlock>
-    ),
-    Tabs,
-    Tab,
-    Callout,
-    TypeTable,
     Accordion,
     Accordions,
-    InstallTabs: ({
-      items,
-      children,
-    }: {
-      items: string[];
-      children: ReactNode;
-    }) => (
-      <Tabs items={items} id="package-manager">
-        {children}
-      </Tabs>
-    ),
     blockquote: (props) => <Callout>{props.children}</Callout>,
+    Callout,
+    code: (props) => (
+      <code
+        {...props}
+        className="bg-accent border border-border p-1 text-muted-foreground"
+      />
+    ),
+    hr: (props) => <hr className="border-t border-border/50 mt-0 mb-6" />,
+    Tab,
+    Tabs,
+    table: (props: TableProps) => <Table {...props} />,
+    TypeTable,
+    ol: OrderedList,
+    ul: UnorderedList,
     ...components,
-    ...(docskit as any), // TODO: new @types/react version should fix this
+    ...docskit,
   };
 }

@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-The `contract_call` predicate scope is designed to target direct function calls within a smart contract. When triggered, Chainhook will return a payload with transaction data detailing the on-chain events contained in these functions.
+The _json`contract_call`_ predicate scope is designed to target direct function calls within a smart contract. When triggered, Chainhook will return a payload with transaction data detailing the on-chain events contained in these functions.
 
 In this guide, you will learn how to:
 
@@ -33,8 +33,8 @@ The `predicate` is your main interface for querying the Chainhook data indexer. 
 
 For the Stacks blockchain, run the following command to generate a `predicate` template:
 
-```console
-chainhook predicates new contract-call-chainhook.json --stacks
+```terminal
+$ chainhook predicates new contract-call-chainhook.json --stacks
 ```
 
 <Callout title="Note">
@@ -52,9 +52,7 @@ To begin, you need to configure the `predicate` to target the voting contract:
 - Specify `testnet` in the network object.
 - Set the `start_block` property to <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-dotted border-b border-primary'>21443</span></TooltipTrigger><TooltipContent>This value represents the block height that our voting contract was deployed at.</TooltipContent></Tooltip></TooltipProvider>.
 
-```json title="contract-call-chainhook.json"
-// [!code word:networks]
-// [!code word:start_block]
+```json contract-call-chainhook.json
 {
   "chain": "stacks",
   "uuid": "1",
@@ -75,9 +73,7 @@ Next, define the scope of the `predicate` within the `if_this` specification.
 
 The `contract_call` scope allows Chainhook to observe blockchain data when the specified function is directly called from its contract.
 
-```json title="contract-call-chainhook.json"
-// [!code word:if_this]
-// [!code word:contract_call]
+```json contract-call-chainhook.json
 {
   "if_this": {
     "scope": "contract_call",
@@ -100,8 +96,7 @@ Finally, define how Chainhook delivers the payload when it is triggered by your 
 
 Using `file_append`, specify the path where Chainhook will post the payload data.
 
-```json title="contract-call-chainhook.json"
-// [!code word:file_append]
+```json contract-call-chainhook.json
 {
   "then_that": {
     "file_append": {
@@ -158,8 +153,8 @@ Chainhook will track events where this function is directly invoked and deliver 
 
 To scan the Stacks blockchain using your predicate, run the following command, replacing `/path/to/contract-call-chainhook.json` with the actual path to your `contract-call-chainhook.json` file:
 
-```console
-chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
+```terminal
+$ chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
 ```
 
 <Callout title="Note">
@@ -171,12 +166,11 @@ chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
 
 ## Return contract data with the Clarity function
 
-The `cast-vote` function records a vote by storing the address that calls it. It also logs relevant data using the `print` function, which can be useful for when you want to track additional on-chain events that are not part of the built-in Clarity functions.
+The _clarity`cast-vote`_ function records a vote by storing the address that calls it. It also logs relevant data using the _clarity`print`_ function, which can be useful for when you want to track additional on-chain events that are not part of the built-in Clarity functions.
 
 When you examine the `payload`, this is the data you will look for.
 
-```clarity title="simple-vote-v0.clar"
-// [!code word:cast-vote]
+```clarity simple-vote-v0.clar
 (define-public (cast-vote)
   (begin
     ;; Check if the voter has already voted.
@@ -213,9 +207,7 @@ When triggered by your predicate, the `payload` returned by Chainhook is a stand
 
 Within the `apply` arrays element, the `block_identifer` object gives us the `index` for the observed block height.
 
-```json title="contract-call-payload.json"
-// [!code word:block_identifier]
-// [!code word:index]
+```json contract-call-payload.json
 "block_identifier": {
   "hash": "0x4d88015a6df9ec4f6df875941d87337ce64f8d51608563f80b6e27adeb327e4d",
   "index": 21544
@@ -232,8 +224,7 @@ Within the `apply` arrays element, the `block_identifer` object gives us the `in
 
 We can retrieve the `stacks_block_hash` by navigating to the `apply` arrays object `metadata` element. This hash will match the block hash display in the Stacks Explorer.
 
-```json title="contract-call-payload.json"
-// [!code word:stacks_block_hash]
+```json contract-call-payload.json
 "apply": [
   {
     "metadata": {
@@ -245,7 +236,7 @@ We can retrieve the `stacks_block_hash` by navigating to the `apply` arrays obje
 
 There is also a `timestamp` value returned in the `apply` array. This UNIX time stamp represents the initiation of the Stacks block.
 
-```json title="contract-call-payload.json"
+```json contract-call-payload.json
 "timestamp": 1722208524
 ```
 
@@ -282,7 +273,7 @@ To find this data, we start with the `apply` array element of the `payload` obje
 
 Once the `transaction` object is returned, we can begin examining the important data elements this object contains. The first element, `transaction_identifier`, includes a hash value that uniquely identifies your transaction.
 
-```json title="contract-call-payload.json"
+```json contract-call-payload.json
 "transaction_identifier": {
   "hash": "0x98195af8f888d2f9ca3462c41c1691e7798ea6d9e5e3afe42955c0921f981f2c"
 }
@@ -292,7 +283,7 @@ Next, focus on the `metadata` object within your `contract_call` data. It's cruc
 
 Utilize the `success` object to assess transaction success and extract the `sender` of the transaction and the `result` returned by the contract.
 
-```json title="contract-call-payload.json"
+```json contract-call-payload.json
 "metadata": {
   "success": true,
   "sender": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV",
@@ -308,8 +299,7 @@ Moving forward, examine the `kind` object and its components within your `contra
 
 In this case, the `cast-vote` function accepts no arguments, resulting in an empty `args` array.
 
-```json title="contract-call-payload.json"
-// [!code word:kind]
+```json contract-call-payload.json
 {
   "metadata":
   "kind": {
@@ -326,8 +316,7 @@ In the `metadata` object's `receipt`, the `events` array holds the key data for 
 
 Since the `cast-vote` function uses a `print` statement, the events array will contain `topic` and `value` keys representing the data output.
 
-```json title="contract-call-payload.json"
-// [!code word:receipt]
+```json contract-call-payload.json
 {
   "metadata":
   "receipt": {

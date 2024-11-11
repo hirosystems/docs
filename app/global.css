@@ -15,7 +15,7 @@
     --secondary: 40 13% 91%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 40 14.3% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted-foreground: #595650;
     --accent: 40 13% 91%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
@@ -25,13 +25,27 @@
     --ring: 346.8 77.2% 49.8%;
     --radius: 0.5rem;
     --hiro: 21 100% 67.5%;
-    --icon: 17 6.5% 21%;
-    --inverted: 30 5.7% 7.5%;
+    --icon: #383432;
+    --inverted: #141312;
     --code: 0 0% 100%;
     --highlight: 40 13% 91%;
     --content: 32.31 11.93% 78.63%;
-    --dark: 20 14.3% 4.1%;
+    --dark: 30 5.7% 7.5%;
+    --gradient: #59564F;
     --contrast:0 7.7% 5.1%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -46,7 +60,7 @@
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 30 5.7% 7.5%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted-foreground: #8c877d;
     --accent: 12 6.2% 15.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -56,23 +70,39 @@
     --ring: 346.8 77.2% 49.8%;
     --hiro: 24 100% 51.4%;
     --card-hover: 15 5% 16%;
-    --icon: 0 0% 100%;
-    --inverted: 40 14.3% 95.9%;
+    --icon: #ffffff;
+    --inverted: #f2f0ed;
     --code: 0 7.7% 5.1%;
     --highlight: 12 6.2% 15.9%;
     --content: 40 5.33% 33.14%;
-    --dark: 20 14.3% 4.1%;
+    --dark: 30 5.7% 7.5%;
+    --gradient: #c0bdb4;
     --contrast: 0 0% 100%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .bitcoin {
     --primary: 20 14.3% 4.1%;
-    --icon: 20 14.3% 4.1%;
+    --icon: #383432;
+    --gradient: #ff7733;
   }
 
   .dark .bitcoin {
     --primary: 0 0% 100%;
-    --icon: 0 0% 100%;
+    --icon: #ffffff;
+    --gradient: #ff7733;
   }
 }
 
@@ -173,7 +203,7 @@ a.bg-primary\/10 {
 
 /* This changes the icon colors for active root level sidebar tabs, Stacks */
 a.bg-primary\/10 div:first-child {
-  background: hsl(var(--inverted));
+  background: var(--inverted);
   border: none;
 }
 
@@ -391,12 +421,6 @@ div.api-example div.max-xl\:hidden > div:nth-child(1) {
   margin-bottom: 1rem;
 }
 
-/* Sets the background and text for an active tab in reference pages */
-.tab[data-state="active"] > .badge {
-  color: hsl(var(--background));
-  background-color: hsl(var(--inverted));
-}
-
 .prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   text-decoration-color: var(--secondary) !important;
 }
@@ -443,22 +467,22 @@ div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
 @layer base {
   :root {
     --ch-0: light;
-    --ch-1: #4C4F69;
-    --ch-2: #7C7F93;
-    --ch-3: #9CA0B0;
-    --ch-4: #40A02B;
+    --ch-1: #7A756B;
+    --ch-2: #7C7F93; /* Not used */
+    --ch-3: #B5ACA1;
+    --ch-4: #48944C;
     --ch-5: #EA76CB;
-    --ch-6: #FE640B;
-    --ch-7: #8839EF;
+    --ch-6: #FF5500;
+    --ch-7: #BC812E;
     --ch-8: #179299;
-    --ch-9: #1E66F5;
-    --ch-10: #DF8E1D;
-    --ch-11: #E64553;
-    --ch-12: #D20F39;
+    --ch-9: #3676B7;
+    --ch-10: #BC812E;
+    --ch-11: #7A756B;
+    --ch-12: #BC812E;
     --ch-13: #04A5E5;
     --ch-14: #DD7878;
     --ch-15: #6C6F85;
-    --ch-16: #7287FD;
+    --ch-16: #3676B7; /* highlight */
     --ch-17: #DC8A78;
     --ch-18: #EFF1F5;
     --ch-19: #4C4F6912;
@@ -480,22 +504,22 @@ div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
 
   .dark {
     --ch-0: dark;
-    --ch-1: #CDD6F4;
-    --ch-2: #9399B2;
-    --ch-3: #6C7086;
-    --ch-4: #A6E3A1;
+    --ch-1: #8C877D;
+    --ch-2: #9399B2; /* Not used */
+    --ch-3: #595650;
+    --ch-4: #C2EBC4;
     --ch-5: #F5C2E7;
-    --ch-6: #FAB387;
-    --ch-7: #CBA6F7;
+    --ch-6: #FF5500;
+    --ch-7: #FF9ECF;
     --ch-8: #94E2D5;
-    --ch-9: #89B4FA;
-    --ch-10: #F9E2AF;
-    --ch-11: #EBA0AC;
-    --ch-12: #F38BA8;
+    --ch-9: #B3D9FF;
+    --ch-10: #FF9ECF;
+    --ch-11: #8C877D;
+    --ch-12: #FF9ECF;
     --ch-13: #89DCEB;
     --ch-14: #F2CDCD;
     --ch-15: #A6ADC8;
-    --ch-16: #B4BEFE;
+    --ch-16: #8C877D; /* highlight */
     --ch-17: #F5E0DC;
     --ch-18: #1E1E2E;
     --ch-19: #CDD6F412;

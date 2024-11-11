@@ -36,9 +36,9 @@ or the most recent upload for a particular version:
 1. Download the archive and shasum for the appropriate network.
 1. [Verify the archive](/stacks/archive/guides/verify-archive-data) with the shasum.
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning):
-   ```console
-       export PGPASSWORD=<YOUR POSTGRES PASSWORD>
-       pg_restore --username postgres --verbose --jobs 4 --dbname token_metadata_api /path/to/archive/file
+   ```terminal
+   $ export PGPASSWORD=<YOUR POSTGRES PASSWORD>
+   $ pg_restore --username postgres --verbose --jobs 4 --dbname token_metadata_api /path/to/archive/file
    ```
 1. Launch the Token Metadata API service.
 1. Verify the restoration was successful by viewing the [total number of tokens and contracts tracked in the service.](http://localhost:3000/metadata) If the total number of each property is greater than zero, the restoration was successful.

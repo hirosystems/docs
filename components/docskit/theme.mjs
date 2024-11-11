@@ -16,7 +16,7 @@ export default {
     {
       scope: "punctuation",
       settings: {
-        foreground: "var(--ch-2)",
+        foreground: "var(--ch-1)",
       },
     },
     {
@@ -863,7 +863,7 @@ export default {
         "markup.raw support.asciidoc",
       ],
       settings: {
-        foreground: "var(--ch-2)",
+        foreground: "var(--ch-1)",
       },
     },
     {
@@ -1339,7 +1339,7 @@ export default {
     },
   ],
   colors: {
-    "editor.background": "var(--ch-18)",
+    "editor.background": "var(--bg-background)",
     "editor.foreground": "var(--ch-1)",
     "editor.lineHighlightBackground": "var(--ch-19)",
     "editor.rangeHighlightBackground": "var(--ch-20)",

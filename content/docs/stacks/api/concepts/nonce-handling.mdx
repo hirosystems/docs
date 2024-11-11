@@ -6,10 +6,8 @@ description: Learn how to handle nonces on Stacks.
 In order to prevent "stuck" transactions, you must track the next available nonce for principals issuing transactions. The
 Stacks Blockchain API provides an endpoint to make nonce handling simpler when using the following command:
 
-```bash
-# for mainnet, remove `.testnet`
-# replace <principal> with your STX address
-curl 'https://api.testnet.hiro.so/extended/v1/address/<principal>/nonces'
+```terminal
+$ curl 'https://api.testnet.hiro.so/extended/v1/address/<principal>/nonces'
 ```
 
 ```json

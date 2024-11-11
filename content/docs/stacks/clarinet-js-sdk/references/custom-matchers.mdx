@@ -15,8 +15,8 @@ import { InlineCode } from '@/components/inline-code';
 
 ## Installation
 
-```console
-npx @hirosystems/clarinet-sdk
+```package-install
+@hirosystems/clarinet-sdk
 ```
 
 <Root>
@@ -48,9 +48,7 @@ The Clarity type that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toHaveClarityType]
+    ```ts
     const { result } = simnet.callPublicFn(
       'counter',
       'increment',
@@ -63,14 +61,13 @@ The Clarity type that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="counter.clar"
-      // [!code word:increment]
+      ```clarity counter.clar
       (define-data-var count uint u0)
 
       (define-public (increment)
         (begin
           (var-set count (+ (var-get count) u1))
-          (ok (var-get count)) // [!code highlight]
+          (ok (var-get count))
         )
       )
       ```
@@ -115,9 +112,7 @@ The `ClarityValue` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeOk]
+    ```ts
     const { result } = simnet.callPublicFn(
       'counter',
       'increment',
@@ -130,14 +125,13 @@ The `ClarityValue` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="counter.clar"
-      // [!code word:increment]
+      ```clarity counter.clar
       (define-data-var count uint u0)
 
       (define-public (increment)
         (begin
           (var-set count (+ (var-get count) u1))
-          (ok (var-get count)) // [!code highlight]
+          (ok (var-get count))
         )
       )
       ```
@@ -182,9 +176,7 @@ The `ClarityValue` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeErr]
+    ```ts
     const { result } = simnet.callPublicFn(
       'counter',
       'add',
@@ -197,8 +189,7 @@ The `ClarityValue` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="counter.clar"
-      // [!code word:add]
+      ```clarity counter.clar
       (define-constant TOO_BIG u10)
       (define-data-var count uint u0)
 
@@ -210,7 +201,7 @@ The `ClarityValue` that the expected value should have.
                 (var-set count new-count)
                 (ok (var-get count))
               )
-              (err u500) // [!code highlight]
+              (err u500)
             )
           )
         )
@@ -257,9 +248,7 @@ The `ClarityValue` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeSome]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'pool',
       'get-participant',
@@ -272,8 +261,7 @@ The `ClarityValue` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="pool.clar"
-      // [!code word:get-participant]
+      ```clarity pool.clar
       (define-map Participants principal bool)
       (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -281,8 +269,8 @@ The `ClarityValue` that the expected value should have.
         (map-get? ParticipantStatus who)
       )
 
-      (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true) // [!code highlight]
-      (map-set ParticipantStatus 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 { enrollmentBlock: u1, contributionAmount: u19000000 }) // [!code highlight]
+      (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
+      (map-set ParticipantStatus 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 { enrollmentBlock: u1, contributionAmount: u19000000 })
       ```
       </Accordion>
       <Accordion title="Schema">
@@ -317,9 +305,7 @@ Check that a response is `(none)`.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeNone]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'pool',
       'get-participant',
@@ -332,8 +318,7 @@ Check that a response is `(none)`.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="pool.clar"
-      // [!code word:get-participant]
+      ```clarity pool.clar
       (define-map Participants principal bool)
       (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -382,9 +367,7 @@ The `boolean` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeBool]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'pool',
       'has-contributed',
@@ -397,15 +380,14 @@ The `boolean` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="pool.clar"
-      // [!code word:has-contributed]
+      ```clarity pool.clar
       (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
       (define-read-only (has-contributed (who principal))
         (is-some (get contributionAmount (map-get? ParticipantStatus who)))
       )
 
-      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 }) // [!code highlight]
+      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 })
       ```
       </Accordion>
       <Accordion title="Schema">
@@ -448,9 +430,7 @@ The `integer` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeInt]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'counter',
       'increment',
@@ -463,14 +443,13 @@ The `integer` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="counter.clar"
-      // [!code word:increment]
+      ```clarity counter.clar
       (define-data-var count int 0)
 
       (define-public (increment)
         (begin
           (var-set count (+ (var-get count) 1))
-          (ok (var-get count)) // [!code highlight]
+          (ok (var-get count))
         )
       )
       ```
@@ -515,9 +494,7 @@ The `unsigned integer` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeUint]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'counter',
       'increment',
@@ -530,14 +507,13 @@ The `unsigned integer` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="counter.clar"
-      // [!code word:increment]
+      ```clarity counter.clar
       (define-data-var count uint u0)
 
       (define-public (increment)
         (begin
           (var-set count (+ (var-get count) u1))
-          (ok (var-get count)) // [!code highlight]
+          (ok (var-get count))
         )
       )
       ```
@@ -582,9 +558,7 @@ The `string` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeAscii]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'hello-world',
       'say-hi',
@@ -597,10 +571,9 @@ The `string` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="hello-world.clar"
-      // [!code word:say-hi]
+      ```clarity hello-world.clar
       (define-read-only (say-hi)
-        "Hello World" // [!code highlight]
+        "Hello World"
       )
       ```
       </Accordion>
@@ -644,9 +617,7 @@ The `string` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeUtf8]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'hello-world',
       'say-hi',
@@ -659,10 +630,9 @@ The `string` that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="hello-world.clar"
-      // [!code word:say-hi]
+      ```clarity hello-world.clar
       (define-read-only (say-hi)
-        u"Hello World" // [!code highlight]
+        u"Hello World"
       )
       ```
       </Accordion>
@@ -711,9 +681,7 @@ The `string` that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBePrincipal]
+    ```ts
     const deployer = simnet.deployer;
 
     expect(Cl.standardPrincipal(deployer)).toBePrincipal(deployer);
@@ -728,10 +696,8 @@ The `string` that the expected value should have.
     </Accordions>
   </TabsContent>
   <TabsContent value="options">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBePrincipal]
-    const contract = `${simnet.deployer}.hello-world`; // [!code highlight]
+    ```ts
+    const contract = `${simnet.deployer}.hello-world`;
 
     expect(Cl.contractPrincipal(contract)).toBePrincipal(contract);
     ```
@@ -789,9 +755,7 @@ The `Uint8Array` buffer that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeBuff]
+    ```ts
     const { result } = simnet.callReadOnlyFn(
       'helpers',
       'get-byte-array',
@@ -805,12 +769,11 @@ The `Uint8Array` buffer that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="helpers.clar"
-      // [!code word:get-byte-array]
+      ```clarity helpers.clar
       (define-constant BUFFER 0x01020304)
 
       (define-read-only (get-byte-array)
-        BUFFER // [!code highlight]
+        BUFFER
       )
       ```
       </Accordion>
@@ -822,11 +785,7 @@ The `Uint8Array` buffer that the expected value should have.
     </Accordions>
   </TabsContent>
   <TabsContent value="ascii">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeBuff]
-    // [!code word:bufferFromAscii]
-    // [!code word:bufferFromUtf8]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const { result } = simnet.callReadOnlyFn(
@@ -843,12 +802,11 @@ The `Uint8Array` buffer that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="helpers.clar"
-      // [!code word:get-btc-buffer]
+      ```clarity helpers.clar
       (define-constant ASCII_BTC 0x627463)
 
       (define-read-only (get-btc-buffer)
-        ASCII_BTC // [!code highlight]
+        ASCII_BTC
       )
       ```
       </Accordion>
@@ -860,10 +818,7 @@ The `Uint8Array` buffer that the expected value should have.
     </Accordions>
   </TabsContent>
   <TabsContent value="hex">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeBuff]
-    // [!code word:bufferFromHex]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const { result } = simnet.callReadOnlyFn(
@@ -882,12 +837,11 @@ The `Uint8Array` buffer that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="helpers.clar"
-      // [!code word:get-tx-hash]
+      ```clarity helpers.clar
       (define-constant TX_HASH 0x73e951acd451060f13bdab7bd947136efd80511309a295e876a682ab8a423a7e)
 
       (define-read-only (get-tx-hash)
-        TX_HASH // [!code highlight]
+        TX_HASH
       )
       ```
       </Accordion>
@@ -931,9 +885,7 @@ The `Uint8Array` buffer that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBelist]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const { result } = simnet.callReadOnlyFn(
@@ -954,8 +906,7 @@ The `Uint8Array` buffer that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="helpers.clar"
-      // [!code word:get-addresses]
+      ```clarity helpers.clar
       (define-read-only (get-addresses)
         (list
           'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
@@ -1005,9 +956,7 @@ The `object` of Clarity values that the expected value should have.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:toBeTuple]
+    ```ts
     import { Cl } from '@stacks/transactions';
     
     const { result } = simnet.callReadOnlyFn(
@@ -1025,8 +974,7 @@ The `object` of Clarity values that the expected value should have.
 
     <Accordions>
       <Accordion title="Source code">
-      ```clarity title="pool.clar"
-      // [!code word:get-participant-data]
+      ```clarity pool.clar
       (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
       (define-read-only (get-participant (who principal))
@@ -1040,7 +988,7 @@ The `object` of Clarity values that the expected value should have.
         }
       )
 
-      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 }) // [!code highlight]
+      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 })
       ```
       </Accordion>
       <Accordion title="Schema">

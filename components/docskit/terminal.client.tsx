@@ -4,7 +4,7 @@ import { TerminalIcon } from "lucide-react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";
 import React from "react";
 import { CODEBLOCK, TITLEBAR } from "./code-group";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 export function TerminalClient({
   tabs,
@@ -34,7 +34,7 @@ export function TerminalClient({
           <div className="ml-auto">
             <ToggleGroup
               type="single"
-              className="rounded-md inline-flex px-1 bg-ch-background"
+              className="rounded-md inline-flex px-1 bg-ch-code"
               variant="outline"
               value={currentName}
               onValueChange={(value) => {

@@ -7,7 +7,7 @@ export async function InlineCode({ codeblock }: { codeblock: RawCode }) {
   return (
     <Inline
       code={highlighted}
-      className="selection:bg-ch-selection rounded border border-ch-border px-1 py-0.5 whitespace-nowrap !bg-ch-background"
+      className="selection:bg-ch-selection rounded border border-ch-border px-1 py-0.5 whitespace-nowrap !bg-ch-code text-sm"
       style={highlighted.style}
     />
   );

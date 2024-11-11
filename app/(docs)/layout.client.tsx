@@ -4,7 +4,7 @@ import { cva } from "class-variance-authority";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 import { modes } from "@/utils/modes";
 import { ChevronLeft } from "lucide-react";
 
@@ -15,7 +15,7 @@ const itemVariants = cva(
   {
     variants: {
       active: {
-        true: "text-accent-foreground",
+        true: "text-accent-foreground pointer-events-none",
       },
       mode: {
         bitcoin: "bg-hiro",
@@ -31,7 +31,7 @@ const itemVariants = cva(
       {
         active: true,
         mode: "stacks",
-        className: "bg-background",
+        className: "bg-inverted text-background",
       },
     ],
   }

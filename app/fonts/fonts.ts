@@ -1,5 +1,22 @@
 import localFont from "next/font/local";
 
+export const aeonik = localFont({
+  src: [
+    {
+      path: "./Aeonik-Bold.woff2",
+      weight: "bold",
+      style: "normal",
+    },
+    {
+      path: "./Aeonik-Bold.woff",
+      weight: "bold",
+      style: "normal",
+    },
+  ],
+  display: "optional",
+  variable: "--font-aeonik",
+});
+
 export const aeonikFono = localFont({
   src: [
     {
@@ -39,6 +56,11 @@ export const inter = localFont({
     {
       path: "./Inter-Regular.woff2",
       weight: "normal",
+      style: "normal",
+    },
+    {
+      path: "./Inter-Medium.woff2",
+      weight: "500",
       style: "normal",
     },
     {

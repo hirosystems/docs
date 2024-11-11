@@ -19,21 +19,21 @@ In this guide, you will:
 
 Start by creating a new project with the Clarinet CLI. The command below will create a project structure inside of `defi` with the necessary files and folders, including the Clarinet JS SDK already set up for testing.
 
-```console title="Terminal"
-clarinet new stx-defi
-cd stx-defi
+```terminal
+$ clarinet new stx-defi
+$ cd stx-defi
 ```
 
 After changing into your project directory, run `npm install` to install the package dependencies for testing.
 
-```console title="Terminal"
-npm install
+```terminal
+$ npm install
 ```
 
 Since the smart contract code is out of scope for this guide, we are going to use a pre-existing contract. First, generate a new file using the `clarinet contract new` command in order to set up your project with the necessary configuration and test files.
 
-```console title="Terminal"
-clarinet contract new defi
+```terminal
+$ clarinet contract new defi
 ```
 
 Now, inside your `defi.clar` file, copy and paste the following contract code:
@@ -198,14 +198,14 @@ By following these steps, our test comprehensively verifies that the `deposit` f
 
 To run your tests, use:
 
-```console title="Terminal"
-npm run test
+```terminal
+$ npm run test
 ```
 
 To generate a coverage report, use:
 
-```console title="Terminal"
-npm run coverage
+```terminal
+$ npm run coverage
 ```
 
 This will run your tests and produce a detailed coverage report, helping you identify any untested parts of your contract.

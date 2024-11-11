@@ -19,21 +19,21 @@ In this guide, you will:
 
 Start by creating a new Clarinet project. This command will create a new directory named `defi` and set up a basic Clarinet project inside it.
 
-```console title="Terminal"
-clarinet new stx-defi
-cd stx-defi
+```terminal
+$ clarinet new stx-defi
+$ cd stx-defi
 ```
 
 After changing into your project directory, run `npm install` to install the package dependencies for testing.
 
-```console title="Terminal"
-npm install
+```terminal
+$ npm install
 ```
 
 We are going to use the same `defi` contract that we used in the [unit testing guide](/stacks/clarinet-js-sdk/guides/unit-testing), but with some additional functionality - the ability to `borrow` STX from the contract. If you don't have this project set up already, follow the steps below:
 
-```console title="Terminal"
-clarinet contract new defi
+```terminal
+$ clarinet contract new defi
 ```
 
 Then, inside your `defi.clar` file, copy and paste the following contract code:
@@ -206,14 +206,14 @@ These custom matchers and simnet methods are powerful tools and allow you to sim
 
 To run your tests, use:
 
-```console title="Terminal"
-npm run test
+```terminal
+$ npm run test
 ```
 
 To generate a coverage report, use:
 
-```console title="Terminal"
-npm run coverage
+```terminal
+$ npm run coverage
 ```
 
 This will run your tests and produce a detailed coverage report, helping you identify any untested parts of your contract.

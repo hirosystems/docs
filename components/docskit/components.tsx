@@ -24,16 +24,14 @@ export const docskit = {
 function DocsKitCode(props: { codeblock: RawCode }) {
   const { codeblock, ...rest } = props;
 
-  if (codeblock.lang == "package-install") {
+  if (codeblock.lang === "package-install") {
     return <PackageInstall codeblock={codeblock} />;
   }
 
-  if (codeblock.lang == "terminal") {
-    // @ts-expect-error Async Server Component
+  if (codeblock.lang === "terminal") {
     return <Terminal codeblocks={[codeblock]} />;
   }
 
-  // @ts-expect-error Async Server Component
   return <Code {...rest} codeblocks={[codeblock]} />;
 }
 
@@ -50,13 +48,12 @@ function CodeTabs(props: unknown) {
 
   const { code, flags, storage } = data;
 
-  // @ts-expect-error Async Server Component
   return <Code codeblocks={code} flags={flags} storage={storage} />;
 }
 
 function betterError(error: z.ZodError, componentName: string) {
   const { issues } = error;
-  if (issues.length == 1 && issues[0].path[0] == "code") {
+  if (issues.length === 1 && issues[0].path[0] === "code") {
     return new Error(
       `<${componentName}> should contain at least one codeblock marked with \`!!\``
     );
@@ -66,7 +63,7 @@ function betterError(error: z.ZodError, componentName: string) {
 }
 
 function DocsKitLink(props: any) {
-  if (props.href == "tooltip") {
+  if (props.href === "tooltip") {
     return <NoteTooltip name={props.title}>{props.children}</NoteTooltip>;
   }
   return <Link {...props} />;
@@ -74,7 +71,6 @@ function DocsKitLink(props: any) {
 
 function PackageInstall({ codeblock }: { codeblock: RawCode }) {
   return (
-    // @ts-expect-error Async Server Component
     <Terminal
       storage="package-install"
       codeblocks={[
@@ -82,19 +78,25 @@ function PackageInstall({ codeblock }: { codeblock: RawCode }) {
           ...codeblock,
           value: "$ npm install " + codeblock.value,
           meta: "npm",
-          lang: "bash",
+          lang: "terminal",
         },
         {
           ...codeblock,
           value: "$ yarn add " + codeblock.value,
           meta: "yarn",
-          lang: "bash",
+          lang: "terminal",
         },
         {
           ...codeblock,
           value: "$ pnpm add " + codeblock.value,
           meta: "pnpm",
-          lang: "bash",
+          lang: "terminal",
+        },
+        {
+          ...codeblock,
+          value: "$ bun add " + codeblock.value,
+          meta: "bun",
+          lang: "terminal",
         },
       ]}
     />
@@ -112,6 +114,5 @@ function TerminalPicker(props: unknown) {
   }
 
   const { code, storage } = data;
-  // @ts-expect-error Async Server Component
   return <Terminal codeblocks={code} storage={storage} />;
 }
