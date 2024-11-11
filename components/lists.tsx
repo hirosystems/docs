@@ -75,7 +75,7 @@ function UnorderedList({ children, items }: ListProps) {
         return (
           <li
             key={index}
-            className="relative pl-0 before:content-[''] before:absolute before:left-[-1.5rem] before:top-[0.875rem] before:w-[0.75rem] before:h-[1px] before:border-t before:border-border list-none"
+            className="relative pl-0 text-muted-foreground before:content-[''] before:absolute before:left-[-1.5rem] before:top-[0.875rem] before:w-[0.75rem] before:h-[1px] before:border-t before:border-border list-none"
           >
             {child.props.children}
           </li>

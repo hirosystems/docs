@@ -70,7 +70,7 @@ export function Banner({
       id={id}
       {...props}
       className={cn(
-        "relative flex h-12 flex-row items-center justify-center bg-[#CEEFD0] px-4 text-center text-sm text-[hsl(var(--dark))] font-medium font-aeonik",
+        "relative flex h-12 flex-row items-center justify-center bg-[#CEEFD0] px-4 text-center text-sm text-[#141312] font-medium font-aeonikFono",
         !open && "hidden",
         props.className
       )}
@@ -86,13 +86,13 @@ export function Banner({
           }}
         />
       ) : null}
-      <div className="flex items-center justify-center space-x-4 text-inverted">
+      <div className="flex items-center justify-center space-x-4">
         <div>{props.children}</div>
         {cta && (
           <Button
             size="sm"
             asChild
-            className="bg-[hsl(var(--dark))] text-[#CEEFD0] font-aeonik hover:bg-[hsl(var(--dark))] hover:text-white"
+            className="bg-[hsl(var(--dark))] text-[#CEEFD0] font-aeonikFono hover:bg-[hsl(var(--dark))] hover:text-white"
           >
             <a href={url} target="_blank" rel="noopener noreferrer">
               {cta}
@@ -113,7 +113,7 @@ export function Banner({
             })
           )}
         >
-          <X />
+          <X className="text-[#141312]" />
         </button>
       ) : null}
     </div>
