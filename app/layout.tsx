@@ -40,13 +40,13 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="master-of-clarity"
-            cta="Compete and find out"
-            url="https://hirosystems.mmm.page/masterofclarity"
-            startDate="2024-08-21"
-            endDate="2024-08-28"
+            id="stacks-js-v7"
+            cta="Learn more here"
+            url="https://www.hiro.so/blog/announcing-stacks-js-v7"
+            startDate="2024-11-11"
+            endDate="2024-12-15"
           >
-            Are you a Master of Clarity?
+            Announcing Stacks.js v7!
           </Banner>
           {children}
           <Footer />
