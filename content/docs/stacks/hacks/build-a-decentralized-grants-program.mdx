@@ -3,6 +3,8 @@ title: Build a decentralized grants program
 description: Learn how to build a decentralized grants program with governance, submissions, and voting.
 ---
 
+import { HackBadge } from "@/components/badge";
+
 ## Introduction
 
 Welcome to a world where funding for innovative projects is fluid and controlled by a community of token holders, not just a select few. This is the value proposition of a decentralized grants program. In this guide, you will build such a program using the [ExecutorDAO](https://github.com/MarvinJanssen/executor-dao) protocol on the Stacks blockchain.
@@ -549,27 +551,19 @@ Congratulations! You've successfully created the foundations for a decentralized
 
 The following challenges are additional features you can implement to continue building and sharpening your skills.
 
-<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
-  Starter
-</span>
+<HackBadge variant="starter" />
 
 **Initialize your grants program**: Now that you have your core extension contracts, you can initialize the project. The way you do this is through the `construct` function you wrote inside your `core.clar` contract. Create your first proposal enabling your extensions (`membership-token`, `proposal-submission`, `proposal-voting`) and distribute the initial token allocation to addresses responsible for voting on grants. If you need a little more guidance, check out the example [here](https://github.com/MarvinJanssen/executor-dao/blob/main/contracts/proposals/edp000-bootstrap.clar).
 
-<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
-  Starter
-</span>
+<HackBadge variant="starter" />
 
 **Create grant proposals**: After initializing your grants program, the next step is to create grant proposals. This involves using the `propose` function in the `proposal-submission` contract. This function allows anyone to propose a grant, which will then be voted on by the token holders. The proposal includes details such as the title, description, and the proposal contract. Once a proposal is submitted, it can be voted on during the voting period defined by the `proposal-duration` parameter.
 
-<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
-  Intermediate
-</span>
+<HackBadge variant="intermediate" />
 
 **Implement milestone-based funding**: To implement milestone-based funding, you'll need to create a new extension contract that tracks the progress of each grant proposal. This extension will manage the milestones for each grant, allowing funds to be released as each milestone is achieved. To enable this extension, you'll need to create a proposal using the propose function in the `proposal-submission` contract. Once enabled, the milestone-based funding extension will provide a more structured and accountable way to distribute funds, ensuring that the grant recipients are making progress before they receive their next round of funding.
 
-<span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-  Advanced
-</span>
+<HackBadge variant="advanced" />
 
 **UI integration**: Using the provided starter template, integrate your contracts using Stacks.js. This will allow users to submit proposals, vote on them, and view the status of their proposals directly from the UI.
 

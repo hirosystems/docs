@@ -3,6 +3,8 @@ title: Build a Friend.tech clone
 description: Learn how to build a decentralized social network.
 ---
 
+import { HackBadge } from "@/components/badge";
+
 ## Introduction
 
 What if we could gamify—and reward—being a friend? That's the idea behind Friend.tech, the decentralized social network that took Web3 by storm. In this hack, you'll recreate Friend.tech on the Stacks blockchain.
@@ -183,9 +185,7 @@ Congratulations! You've successfully created your contract. You've laid the grou
 
 The following challenges are additional features you can implement to keep learning and building on Stacks.
 
-<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
-  Starter
-</span>
+<HackBadge variant="starter" />
 
 **Balance and supply query functions**: Add two new read-only functions: `get-keys-balance` and `get-keys-supply`. These functions will provide valuable information to users about the distribution and availability of `keys`, and can be used in various parts of your application to display this information to users.
 
@@ -199,9 +199,7 @@ The following challenges are additional features you can implement to keep learn
 )
 ```
 
-<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
-  Starter
-</span>
+<HackBadge variant="starter" />
 
 **Price query functions**: Add two new read-only functions: `get-buy-price` and `get-sell-price`. These helper functions will allow users to query the current price for buying or selling a specific amount of `keys` for a given `subject`.
 
@@ -215,9 +213,7 @@ The following challenges are additional features you can implement to keep learn
 )
 ```
 
-<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
-  Intermediate
-</span>
+<HackBadge variant="intermediate" />
 
 **Fee management**: When a user buys or sells `keys`, you might want to introduce a fee, either at the protocol or subject level that can be distributed accordingly. Add a `protocolFeePercent` and/or `subjectFeePercent` variable, as well as a destination Stacks principal `protocolFeeDestination` for this new revenue. Now make sure to update the `buy-keys` and `sell-keys` functions to incorporate these fees and `stx-transfer?` into the buying and selling logic.
 
@@ -227,9 +223,7 @@ The following challenges are additional features you can implement to keep learn
 (define-data-var protocolFeeDestination principal tx-sender)
 ```
 
-<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
-  Intermediate
-</span>
+<HackBadge variant="intermediate" />
 
 **Access control**: In a real-world application, you might need to adjust the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values over time. However, you wouldn't want just anyone to be able to make these changes. This is where access control comes in. Specifically, you should add a set-fee function (or functions) that allows only a designated `contractOwner` to change the `protocolFeePercent`, `subjectFeePercent`, or `protocolFeeDestination` values.
 
@@ -242,9 +236,7 @@ The following challenges are additional features you can implement to keep learn
 
 Think about how you can verify whether the caller of the function is indeed the `contractOwner`. Also, consider what kind of feedback the function should give when someone else tries to call it. Test your implementation to ensure it works as expected.
 
-<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
-  Intermediate
-</span>
+<HackBadge variant="intermediate" />
 
 **UI integration**: Using the provided [starter template](#clone-the-starter-template), integrate your contract using [Stacks.js](/stacks/stacks.js). For example, if you were calling the `is-keyholder` function, your code might look something like this:
 
@@ -274,9 +266,7 @@ By using a similar pattern to the code above, you will be able to **show/hide ch
 >
 > If you are planning to experiment with your contract on `devnet`, make sure to run `clarinet devnet start` [to deploy and test your contract locally](/stacks/clarinet/guides/run-a-local-devnet). You can then use the `devnet` network when calling your contract in the [Leather wallet](https://leather.io/install-extension).
 
-<span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-  Advanced
-</span>
+<HackBadge variant="advanced" />
 
 **Message signature**: To further enhance the security and authenticity of your app, try to implemement a _login_ feature using [message signing](/stacks/connect/guides/sign-messages).
 
