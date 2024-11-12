@@ -62,7 +62,7 @@ function Footer(): JSX.Element {
       <div className="container flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row items-center gap-6">
-            <div className="bg-primary w-fit rounded-[4px] p-1.5 text-muted-foreground [&_svg]:size-3">
+            <div className="bg-primary w-fit rounded-[4px] p-1.5 text-muted-foreground [&_svg]:size-4">
               <HiroSVG className="text-card" />
             </div>
             <a
@@ -131,7 +131,7 @@ function Footer(): JSX.Element {
                 <Youtube />
               </a>
             </div>
-            <p className="text-sm text-[#7A756B] font-aeonik">
+            <p className="text-sm text-[#b7ac9f] font-aeonikFono">
               Copyright &copy; {new Date().getFullYear()} Hiro Systems, PBC.
             </p>
           </div>
