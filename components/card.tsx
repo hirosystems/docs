@@ -61,6 +61,35 @@ export function Card({
   );
 }
 
+export type FeatureCardProps = {
+  title: string;
+  description: string;
+  image?: string;
+} & Omit<LinkProps, "title">;
+
+export function FeatureCard({
+  title,
+  description,
+  image,
+  ...props
+}: FeatureCardProps): React.ReactElement {
+  return (
+    <Link
+      {...props}
+      className={cn(
+        "not-prose flex flex-col justify-center rounded-lg border bg-background text-md transition-colors hover:bg-accent/80 pr-0 pl-12 py-0",
+        props.className
+      )}
+    >
+      <div className="flex justify-between">
+        <img src={image} alt="arrow-right" />
+      </div>
+      <h3 className="mb-1 font-medium">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
+    </Link>
+  );
+}
+
 export type SecondaryCardProps = {
   icon?: ReactNode;
   title: string;
