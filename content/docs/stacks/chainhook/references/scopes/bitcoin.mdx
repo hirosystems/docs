@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -22,11 +22,9 @@ Bitcoin scopes are parameters you use to define the `if this` specification logi
 
 <Root>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`txid`</h2>
+# `txid`
 
 The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
 
@@ -37,8 +35,6 @@ The `txid` scope allows you to query transactions based on their transaction ID.
 The `equals` property is a 32 byte hex encoded type used to specify the exact transaction ID to match.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -65,11 +61,9 @@ The `equals` property is a 32 byte hex encoded type used to specify the exact tr
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`outputs`</h2>
+# `outputs`
 
 The `outputs` scope allows you to query blocks based on the payload returned by the specified operation.
 
@@ -80,8 +74,6 @@ The `outputs` scope allows you to query blocks based on the payload returned by 
 The `operation` property is used to identify the Bitcoin operation that will trigger Chainhook as it observes Bitcoin transactions.  The available operations are `op_return`, `p2pkh`, `p2sh`,`p2wpkh` and `p2wsh`.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -277,11 +269,9 @@ The `operation` property is used to identify the Bitcoin operation that will tri
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`stacks_protocol`</h2>
+# `stacks_protocol`
 
 The `stacks_protocol` scope allows you query Bitcoin transactions related to the Stacks Proof of Transfer (PoT) [concensus mechanism](https://www.hiro.so/blog/securing-web3-apps-through-bitcoin-an-overview-of-stacks-consensus-mechanism).
 
@@ -292,8 +282,6 @@ The `stacks_protocol` scope allows you query Bitcoin transactions related to the
 The `operation` property is used to identify the Stacks operation that will trigger Chainhook as it observes Bitcoin transactions.  The available operations are `block_committed`, `leader_registered`, `inscription_feed`, `stx_transferred` and `stx_locked`.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 

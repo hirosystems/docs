@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -16,11 +16,9 @@ Stacks scopes are parameters you use to define the `if this` specification logic
 
 <Root>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`txid`</h2>
+# `txid`
 
 The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
 
@@ -31,8 +29,6 @@ The `txid` scope allows you to query transactions based on their transaction ID.
 The `equals` property is a 32 bytes hex encoded type used to specify the exact transaction ID to match.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -58,11 +54,9 @@ The `equals` property is a 32 bytes hex encoded type used to specify the exact t
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`block_height`</h2>
+# `block_height`
 
 The `block_height` scope allows you to query blocks based on their height. This is useful for identifying specific blocks or ranges of blocks in the blockchain.
 
@@ -91,8 +85,6 @@ The `lower_than` property specifies that the block height should be less than th
 The `between` property specifies a range of block heights to match, inclusive of the provided start and end values.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -157,11 +149,9 @@ The `between` property specifies a range of block heights to match, inclusive of
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`ft_transfer`</h2>
+# `ft_transfer`
 
 The `ft_transfer` scope allows you to query transactions based on fungible token transfers. This is useful for tracking specific token movements or auditing token transfer histories.
 
@@ -178,8 +168,6 @@ The `asset_identifier` property specifies the fully qualified asset identifier t
 The `actions` property specifies the types of token actions to observe, such as `mint`, `transfer`, or `burn`.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -220,11 +208,9 @@ The `actions` property specifies the types of token actions to observe, such as 
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`nft_transfer`</h2>
+# `nft_transfer`
 
 The `nft_transfer` scope allows you to query transactions based on non-fungible token transfers. This is useful for tracking specific NFT movements or auditing NFT transfer histories.
 
@@ -241,8 +227,6 @@ The `asset_identifier` property specifies the fully qualified asset identifier t
 The `actions` property specifies the types of NFT actions to observe, such as `mint`, `transfer`, or `burn`.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -283,11 +267,9 @@ The `actions` property specifies the types of NFT actions to observe, such as `m
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`stx_transfer`</h2>
+# `stx_transfer`
 
 The `stx_transfer` scope allows you to query transactions involving STX token movements. This is crucial for monitoring STX transfers, including minting, burning, and locking actions.
 
@@ -298,8 +280,6 @@ The `stx_transfer` scope allows you to query transactions involving STX token mo
 The `actions` property specifies the types of STX token actions to observe, such as `mint`, `transfer`, `burn`, and `lock`.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -338,11 +318,9 @@ The `actions` property specifies the types of STX token actions to observe, such
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`print_event`</h2>
+# `print_event`
 
 The `print_event` scope allows you to query transactions based on specific print events emitted during contract execution. This is useful for monitoring specific events for auditing or tracking purposes.
 
@@ -365,8 +343,6 @@ The `contains` property is used for matching an event containing the specified s
 The `matches_regex` property is used for matching an event that regex matches with the specified string.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -407,11 +383,9 @@ The `matches_regex` property is used for matching an event that regex matches wi
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`contract_call`</h2>
+# `contract_call`
 
 The `contract_call` scope allows you to query transactions that involve direct calls to specific methods within a smart contract. This is particularly useful for tracking interactions with critical contract functions.
 
@@ -428,8 +402,6 @@ The `contract_identifier` property specifies the fully qualified contract identi
 The `method` property specifies the specific method within the contract to observe.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 
@@ -456,11 +428,9 @@ The `method` property specifies the specific method within the contract to obser
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`contract_deployment`</h2>
+# `contract_deployment`
 
 The `contract_deployment` scope allows you to query transactions involving the deployment of smart contracts. This is crucial for monitoring new contract deployments and ensuring compliance with expected deployments.
 
@@ -477,8 +447,6 @@ The `deployer` property specifies the STX address of the deployer to observe.
 The `implement_trait` property specifies the contract trait to observe.
 
 </Property>
-
-</div>
 
 <APIExample className='w-full'>
 

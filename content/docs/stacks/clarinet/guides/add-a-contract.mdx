@@ -5,15 +5,16 @@ description: Clarinet can handle adding and configuring a new contract to your p
 
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 
-To add a new contract, run the `clarinet contract new` command, along with your contract name, inside your project.
+Add a new contract to your existing project:
 
 ```terminal
 $ clarinet contract new my-contract
+[32mCreated file[0m [1mcontracts/my-contract.clar[0m
+[32mCreated file[0m [1mtests/my-contract.test.ts[0m
+[33mUpdated Clarinet.toml[0m [1mwith contract my-contract[0m
 ```
 
-## Project structure
-
-**Clarinet** will add 2 files to your project: `my-contract.clar` and `my-contract.test.ts`.
+This command updates your project's config files and creates a new contract file and a corresponding test file:
 
 <Files className='pointer-events-none'>
   <Folder name="contracts" defaultOpen>
@@ -29,8 +30,6 @@ $ clarinet contract new my-contract
   <File name="tsconfig.json" />
   <File name="vitest.config.js" />
 </Files>
-
-**Clarinet** will also add the configuration to the `Clarinet.toml` file for your contract.
 
 ```toml
 [contracts.my-contract]

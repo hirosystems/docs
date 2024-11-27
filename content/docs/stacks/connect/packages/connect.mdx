@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -23,11 +23,9 @@ The Stacks authentication process enables secure user sign-in for web apps by ge
 
 {/* <Root>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`AppConfig`</h2>
+# `AppConfig`
 
 Configuration data for the current app.
 
@@ -74,8 +72,6 @@ The URL of Stacks core node to use for this app. If this is not specified, the d
 The URL of a web-based authenticator to use in the event the user doesn't have Stacks installed on their machine. If this is not specified, the current default in this library will be used.
 
 </Property>
-
-</div>
 
 <APIExample>
 
@@ -192,11 +188,9 @@ The URL of a web-based authenticator to use in the event the user doesn't have S
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`UserSession`</h2>
+# `UserSession`
 
 Represents an instance of a signed-in user for a particular app.
 
@@ -237,8 +231,6 @@ Encrypts user data for secure storage.
 Decrypts user data for secure storage.
 
 </Property>
-
-</div>
 
 <APIExample>
 <Tabs defaultValue="pending">
@@ -335,11 +327,9 @@ Decrypts user data for secure storage.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`makeAuthRequest`</h2>
+# `makeAuthRequest`
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
@@ -368,8 +358,6 @@ Set the location of your app manifest file. This file contains information about
 Additional permissions the app is requesting.
 
 </Property>
-
-</div>
 
 <APIExample>
 
@@ -453,11 +441,9 @@ Additional permissions the app is requesting.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`lookupProfile`</h2>
+# `lookupProfile`
 
 Look up a user's profile information by their BNS username.
 
@@ -481,8 +467,6 @@ Defines the network to connect to. Default is 'mainnet'.
 URL to fetch the zone file for the username. This is only needed if the zone file does not reside at the default location on the BNS network.
 
 </Property>
-
-</div>
 
 <APIExample>
 

@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Callout } from "@/components/callout";
+import { Cards, Card, SecondaryCard } from "@/components/card";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
@@ -15,6 +16,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Accordions,
     blockquote: (props) => <Callout>{props.children}</Callout>,
     Callout,
+    Cards,
+    Card,
+    SecondaryCard,
     code: (props) => (
       <code
         {...props}

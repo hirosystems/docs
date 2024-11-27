@@ -1,15 +1,11 @@
-import { Layout } from "fumadocs-ui/layout";
 import type { ReactNode } from "react";
-import { homeLayoutOptions } from "../(docs)/layout";
+import { HomeLayout } from "fumadocs-ui/layouts/home";
+import { baseOptions } from "@/app/layout.config";
 
-export default function HomeLayout({
+export default function Layout({
   children,
 }: {
   children: ReactNode;
-}): JSX.Element {
-  return (
-    <div className="px-10 *:border-none">
-      <Layout {...homeLayoutOptions}>{children}</Layout>
-    </div>
-  );
+}): React.ReactElement {
+  return <HomeLayout {...baseOptions}>{children}</HomeLayout>;
 }

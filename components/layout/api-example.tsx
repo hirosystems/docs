@@ -1,9 +1,9 @@
 import React from "react";
 
-import { APIExample as FumaAPIExample } from "fumadocs-ui/components/api";
+import { APIExample as FumaAPIExample } from "fumadocs-openapi/ui";
 
 const APIExample: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-  return <FumaAPIExample className="api-example">{children}</FumaAPIExample>;
+  return <FumaAPIExample className="flex-1">{children}</FumaAPIExample>;
 };
 
 export { APIExample };

@@ -1,0 +1,21 @@
+---
+title: Validate a contract
+description: Clarinet provides syntax and semantics checkers for the smart contract language Clarity.
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+Validate the syntax and semantics of your contracts:
+
+```terminal
+$ clarinet check
+[32m✔[0m [1m1 contract checked[0m
+$ clarinet check path/to/my-contract.clar
+[32m✔[0m [1m1 contract checked[0m
+```
+
+This command uses the _txt`Clarinet.toml`_ file to locate and analyze all the contracts in the project. If the Clarity code is valid, the command will indicate success with the response below.
+
+<Callout title="Note">
+The _console`clarinet check`_ command may also report warnings indicating the code is valid.
+</Callout>

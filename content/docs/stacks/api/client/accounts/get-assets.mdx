@@ -1,11 +1,11 @@
 ---
 title: Assets
 description: Retrieves a list of all assets events associated with an account or a contract identifier.
-toc: false
+full: true
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -15,9 +15,7 @@ import { Badge } from '@/components/ui/badge';
 
 <API className='api my-3'>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`getAccountAssets`</h2>
+# `getAccountAssets`
 
 This API endpoint retrieves a comprehensive list of asset events associated with a specific account or contract identifier, including asset transfers and mints. It is essential for tracking asset movements and changes in ownership within the Stacks blockchain.
 
@@ -30,8 +28,6 @@ The account address or contract identifier whose asset events are to be retrieve
 <Property required={false} deprecated={false} name={"initOverrides"} type={"RequestInit"}>
 Optional overrides for the request initialization settings.
 </Property>
-
-</div>
 
 <APIExample>
 
@@ -101,9 +97,7 @@ Optional overrides for the request initialization settings.
 
 <API className='api my-3'>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`UserSession`</h2>
+# `UserSession`
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a `UserSession` to manage user data.
 
@@ -144,8 +138,6 @@ Encrypts user data for secure storage.
 Decrypts user data for secure storage.
 
 </Property>
-
-</div>
 
 <APIExample>
 <Tabs defaultValue="pending">

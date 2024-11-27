@@ -92,7 +92,7 @@ export async function toCodeGroup(props: {
             code={highlighted}
             className={cn(
               !title && "!m-0",
-              "overflow-auto px-0 py-2 m-3 rounded !bg-ch-code font-mono font-sm"
+              "overflow-auto px-0 py-2 m-3 rounded !bg-ch-code font-mono"
             )}
             style={highlighted.style}
             handlers={handlers}

@@ -2,7 +2,6 @@
 import "./terminal-command.css";
 import { AnnotationHandler } from "codehike/code";
 import React from "react";
-import { Button } from "@/components/ui/button";
 
 export const CommandBlock: AnnotationHandler["Block"] = ({
   children,

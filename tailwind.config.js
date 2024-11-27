@@ -15,9 +15,9 @@ module.exports = {
     preset: 'default'
   })],
   theme: {
-  	extend: {
-  		colors: {
-  			'ch-border': 'hsl(var(--border))',
+    extend: {
+			colors: {
+				'ch-border': 'hsl(var(--border))',
   			'ch-selection': 'var(--ch-22)',
   			'ch-tabs-background': 'hsl(var(--card))',
   			'ch-tab-active-foreground': 'hsl(var(--card-foreground))',

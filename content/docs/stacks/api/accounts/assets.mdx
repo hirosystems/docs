@@ -1,7 +1,7 @@
 ---
 title: Get account assets
 description: Retrieves a list of all asset events associated with an account or a contract identifier.
-toc: false
+full: true
 ---
 
 import { 
@@ -86,17 +86,17 @@ returned data representing the state at that point in time, rather than the curr
 
 <APIExample>
 
-<Requests items={["cURL","JavaScript"]}>
+<Tabs items={["cURL","JavaScript"]}>
 
-<Request value={"cURL"}>
+<Tab value={"cURL"}>
 
 ```terminal
 $ curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets?limit=20&offset=42000&unanchored=true&until_block=60000"
 ```
 
-</Request>
+</Tab>
 
-<Request value={"JavaScript"}>
+<Tab value={"JavaScript"}>
 
 ```js
 fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets?limit=20&offset=42000&unanchored=true&until_block=60000", {
@@ -104,9 +104,9 @@ fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0
 });
 ```
 
-</Request>
+</Tab>
 
-</Requests>
+</Tabs>
 
 <Responses items={["200"]}>
 

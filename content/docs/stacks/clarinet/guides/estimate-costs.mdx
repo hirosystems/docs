@@ -3,6 +3,7 @@ title: Estimating contract costs
 description: Analyze execution costs pertaining to your contract.
 ---
 
+import { API, Clarinet, Js } from '@/components/ui/icon';
 import { File, Folder, Files } from "fumadocs-ui/components/files"
 
 Transactions on the Stacks blockchain comes with execution costs that can dictate transaction fees for your users. To analyze the execution costs of your contract's functions, let's continue with the simple `counter` contract from the [Clarinet quickstart](/stacks/clarinet/quickstart) as an example.
@@ -77,3 +78,27 @@ To turn it off, just run the `::toggle_costs` command again.
 Check out the Clarity Book section on [runtime cost analysis](https://book.clarity-lang.org/ch12-00-runtime-cost-analysis.html) to read up on cost optimization techniques and recommendations.
 
 To see how you can run automated cost analysis on your unit tests, check out our [quickstart](/stacks/clarinet-js-sdk/quickstart#run-your-tests-with-code-coverage-and-cost-analysis) section for the Clarinet JS SDK.
+
+<Cards>
+  <SecondaryCard
+    icon={<Clarinet />}
+    href="/stacks/clarinet/guides/cli-commands/validate-a-contract"
+    title="Validate a contract"
+    description="Learn how to validate a contract."
+    tag='Clarinet'
+  />
+  <SecondaryCard
+    icon={<API />}
+    href="/stacks/rpc-api/fees/estimate"
+    title="Get fee estimates for a transaction"
+    description="Learn how to fetch transaction costs."
+    tag='API'
+  />
+  <SecondaryCard
+    icon={<Js />}
+    href="/stacks/clarinet-js-sdk/quickstart"
+    title="Write tests for your smart contracts"
+    description="Learn how to write unit tests using the Clarinet JS SDK."
+    tag='Clarinet JS SDK'
+  />
+</Cards>

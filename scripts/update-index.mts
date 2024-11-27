@@ -1,15 +1,14 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import * as fs from "node:fs";
 import env from "@next/env";
 import algosearch from "algoliasearch";
-import { sync } from "fumadocs-core/search-algolia/server";
-import type { SearchIndex } from "fumadocs-mdx";
+import { sync } from "fumadocs-core/search/algolia";
 
 env.loadEnvConfig(process.cwd());
 
-const indexes = JSON.parse(
-  readFileSync(resolve("./.next/server/chunks/fumadocs_search.json")).toString()
-) as SearchIndex[];
+const content = fs.readFileSync(".next/server/chunks/fumadocs_search.json");
+
+/** @type {import('fumadocs-core/search/algolia').DocumentRecord[]} **/
+const indexes = JSON.parse(content.toString());
 
 if (!process.env.NEXT_PUBLIC_ALGOLIA_API_KEY) {
   console.warn("Algolia API Key not found, skip updating search index.");
@@ -19,19 +18,7 @@ if (!process.env.NEXT_PUBLIC_ALGOLIA_API_KEY) {
     process.env.NEXT_PUBLIC_ALGOLIA_API_KEY || ""
   );
 
-  void sync(client, {
-    document: process.env.NEXT_PUBLIC_ALGOLIA_INDEX,
-    documents: indexes.map((docs) => ({
-      _id: docs.id,
-      title: docs.title,
-      url: docs.url,
-      structured: docs.structuredData,
-    })),
-  })
-    .then(() => {
-      console.log("search updated");
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  sync(client, {
+    documents: indexes, // search indexes, may be provided by your content source
+  });
 }
