@@ -3,15 +3,24 @@ title: Debug a contract
 description: Step through and debug your contracts inside the command line.
 ---
 
+import { Clarinet, Js } from '@/components/ui/icon';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
-To debug a contract, let's take the simple `counter` contract from the [Clarinet quickstart](/stacks/clarinet/quickstart) as an example.
+Inside the console, you can use these debugging commands:
+
+```terminal
+$ ::trace (contract-call? .my-contract my-function)
+$ ::debug (contract-call? .my-contract my-function)
+$ break my-function
+```
+
+Debug navigation commands:
+- _console`step`_ or _console`s`_ - Step into
+- _console`finish`_ or _console`f`_ - Step out
+- _console`next`_ or _console`n`_ - Step over
+- _console`continue`_ or _console`c`_ - Continue execution
+
+Let's take the clarity_`counter`_ contract as an example:
 
 ```clarity
 (define-map Counters principal uint)
@@ -25,44 +34,42 @@ To debug a contract, let's take the simple `counter` contract from the [Clarinet
 )
 ```
 
-To initiate a debug session for this contract, first run the `clarinet console` command inside your project.
+### Trace
 
-```terminal
-$ clarinet console
-```
-
-## Trace
-
-The `::trace` command expects an expression, so make a `contract-call?` with our `count-up` function and see what happens.
+The _console`::trace`_ command expects an expression, so make a _clarity`contract-call?`_ with our _clarity`count-up`_ function and see what happens.
 
 ```terminal
 $ ::trace (contract-call? .counter count-up)
-(contract-call? .counter count-up)  <console>
-├── ( get-count tx-sender )  counter:8:38
-│   │ ↳ args: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-│   └ u0
-└ (ok true)
+(contract-call? .counter count-up)  [30m<console>[0m
+( get-count tx-sender )  [30mcounter:4:38[0m
+  [31m↳ args:[0m [1mST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM[0m
+    [34mu0[0m
+[34m(ok true)[0m
 ```
 
-We should see a complete trace of our `get-count` function call, outputting the arguments that were passed in (`tx-sender`) and return value (`u0`).
+### Breakpoints
 
-If we were to run this command again, we should see the return value go from `u0` to `u1`.
+You can also set a breakpoint at a specific line to better understand what's happening in your contract.
 
-## Breakpoints
-
-You also might want to **set a breakpoint** at a specific line to better understand what's happening in your contract.
-
-With `::debug`, you can add **breakpoints** at a specific line of a contract or function to better understand what's happening in your contracts.
-
-To illustrate the power of breakpoints, first add a couple new functions to your contract:
+With `::debug`, you can add breakpoints at a specific line of a contract or function to better understand what's happening in your contracts.
 
 ```clarity
-;; Existing contract code...
+(define-map Counters principal uint)
 
+(define-read-only (get-count (who principal))
+  (default-to u0 (map-get? Counters who))
+)
+
+(define-public (count-up)
+  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+)
+
+;; !mark(1:3)
 (define-public (count-twice)
   (double)
 )
 
+;; !mark(1:6)
 (define-private (double)
   (begin
     (unwrap-panic (count-up))
@@ -71,12 +78,11 @@ To illustrate the power of breakpoints, first add a couple new functions to your
 )
 ```
 
-Now add a <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>break</span></TooltipTrigger><TooltipContent>To add a breakpoint, use the `break` or `b` command.</TooltipContent></Tooltip></TooltipProvider> on the `count-up` function when calling the new `double` function.
-
 ```terminal
 $ ::debug (contract-call? .counter count-twice)
 $ break count-up
 ```
+
 
 <Callout title="Breakpoint Commands">
 To step through these breakpoints, you can use one of the following commands:
@@ -87,4 +93,30 @@ To step through these breakpoints, you can use one of the following commands:
 - **Continue (`continue` or `c`)**: Continue execution until hitting a breakpoint or completing execution.
 </Callout>
 
-Using the `continue` command, the breakpoint you set in the `double` function will trigger twice due to two `count-up` calls, which enables you to do variable and map analysis.
+Using the _console`continue`_ command, the breakpoint you set in the _clarity`double`_ function will trigger twice due to two _clarity`count-up`_ calls, which enables you to do variable and map analysis.
+
+## Next steps
+
+<Cards>
+  <SecondaryCard
+    icon={<Clarinet />}
+    href="/stacks/clarinet/guides/cli-commands/validate-a-contract"
+    title="Validate a contract"
+    description="Learn how to validate a contract."
+    tag='Clarinet'
+  />
+  <SecondaryCard
+    icon={<Js />}
+    href="/stacks/clarinet/guides/estimate-costs"
+    title="Estimate costs for a contract"
+    description="Learn how to estimate costs for a contract."
+    tag='Clarinet'
+  />
+  <SecondaryCard
+    icon={<Js />}
+    href="/stacks/clarinet-js-sdk/quickstart"
+    title="Write tests for your smart contracts"
+    description="Learn how to write unit tests using the Clarinet JS SDK."
+    tag='Clarinet JS SDK'
+  />
+</Cards>

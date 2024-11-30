@@ -4,28 +4,21 @@ description: The Simnet class is the main entry point for the Clarinet JS SDK. I
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Badge } from '@/components/ui/badge';
+import { Root, API, APIExample, Property, Info } from '@/components/layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { InlineCode } from '@/components/inline-code';
+<API>
 
-## Installation
+<Info>
 
-```package-install
-@hirosystems/clarinet-sdk
-```
-
-<Root>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`initSimnet`</h2>
+# `initSimnet`
 
 The `initSimnet` function initializes a simulated network. It will often be the first function you call when using the SDK.
 
@@ -37,45 +30,44 @@ The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
+  <Tabs defaultValue="default">
+    <TabsList className='flex flex-wrap'>
+      <TabsTrigger value="default" className='tab group'>
+        <Badge className='transition-colors'>Creating a new instance of simnet</Badge>
+      </TabsTrigger>
+      <TabsTrigger value="custom" className='tab group'>
+        <Badge className='badge transition-colors'>With a custom config path</Badge>
+      </TabsTrigger>
+    </TabsList>
+    <TabsContent value="default">
+      ```ts
+      import { initSimnet } from '@hirosystems/clarinet-sdk';
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='transition-colors'>Creating a new instance of simnet</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="custom" className='tab group'>
-      <Badge className='badge transition-colors'>With a custom config path</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+      const simnet = await initSimnet();
+      ```
+    </TabsContent>
+    <TabsContent value="custom">
+      ```ts
+      import { initSimnet } from '@hirosystems/clarinet-sdk';
 
-    const simnet = await initSimnet();
-    ```
-  </TabsContent>
-  <TabsContent value="custom">
-    ```ts
-    import { initSimnet } from '@hirosystems/clarinet-sdk';
+      const simnet = await initSimnet('./config/Clarinet.toml');
+      ```
+    </TabsContent>
+  </Tabs>
 
-    const simnet = await initSimnet('./config/Clarinet.toml');
-    ```
-  </TabsContent>
-</Tabs>
-
-<Accordions>
-  <Accordion title="Schema">
-    ```ts
-    initSimnet(manifestPath?: string): Promise<Simnet>
-    ```
+  <Accordion type="single" collapsible className="w-full">
+    <AccordionItem value="schema">
+      <AccordionTrigger>Schema</AccordionTrigger>
+      <AccordionContent>
+        ```ts
+        initSimnet(manifestPath?: string): Promise<Simnet>
+        ```
+      </AccordionContent>
+    </AccordionItem>
   </Accordion>
-</Accordions>
 
-</APIExample>
-
+  </APIExample>
 </API>
-
-</Root>

@@ -4,28 +4,18 @@ description: A set of Vitest matchers that can be used to make assertions on Cla
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-
-import { InlineCode } from '@/components/inline-code';
-
-## Installation
-
-```package-install
-@hirosystems/clarinet-sdk
-```
+import { Root, API, APIExample, Property, Info } from '@/components/layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 <Root>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toHaveClarityType`</h2>
+# `toHaveClarityType`
 
 Check that a value has the right Clarity type, without checking its value.
 
@@ -37,7 +27,7 @@ The Clarity type that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -85,11 +75,11 @@ The Clarity type that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeOk`</h2>
+# `toBeOk`
 
 Check that a response is `(ok <ok-type>)` and has the expected value. Any Clarity value can be passed.
 
@@ -101,7 +91,7 @@ The `ClarityValue` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -149,11 +139,11 @@ The `ClarityValue` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeErr`</h2>
+# `toBeErr`
 
 Check that a response is `(err <error-type>)` and has the expected value. Any Clarity value can be passed.
 
@@ -165,7 +155,7 @@ The `ClarityValue` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -221,11 +211,11 @@ The `ClarityValue` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeSome`</h2>
+# `toBeSome`
 
 Check that a response is `(some <value>)` and has the expected value. Any Clarity value can be passed.
 
@@ -237,7 +227,7 @@ The `ClarityValue` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -286,15 +276,15 @@ The `ClarityValue` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeNone`</h2>
+# `toBeNone`
 
 Check that a response is `(none)`.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -340,11 +330,11 @@ Check that a response is `(none)`.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeBool`</h2>
+# `toBeBool`
 
 Asserts the value of Clarity boolean (`true` or `false`).
 
@@ -356,7 +346,7 @@ The `boolean` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -403,11 +393,10 @@ The `boolean` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
-
-<h2 className='mt-0'>`toBeInt`</h2>
+<Info>
+# `toBeInt`
 
 Asserts the value of a Clarity integer.
 
@@ -419,7 +408,7 @@ The `integer` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -467,11 +456,11 @@ The `integer` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeUint`</h2>
+# `toBeUint`
 
 Asserts the value of a Clarity unsigned integer.
 
@@ -483,7 +472,7 @@ The `unsigned integer` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -531,11 +520,11 @@ The `unsigned integer` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeAscii`</h2>
+# `toBeAscii`
 
 Asserts the value of a Clarity string-ascii.
 
@@ -547,7 +536,7 @@ The `string` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -590,11 +579,11 @@ The `string` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeUtf8`</h2>
+# `toBeUtf8`
 
 Asserts the value of a Clarity string-utf8.
 
@@ -606,7 +595,7 @@ The `string` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -649,11 +638,11 @@ The `string` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBePrincipal`</h2>
+# `toBePrincipal`
 
 Asserts the value of a Clarity principal.
 
@@ -667,7 +656,7 @@ The `string` that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -716,11 +705,11 @@ The `string` that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeBuff`</h2>
+# `toBeBuff`
 
 Asserts the value of a Clarity buffer. It takes an ArrayBuffer as an input.
 
@@ -738,7 +727,7 @@ The `Uint8Array` buffer that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -858,11 +847,11 @@ The `Uint8Array` buffer that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeList`</h2>
+# `toBeList`
 
 Asserts the value of a Clarity list containing an array of Clarity values.
 
@@ -874,7 +863,7 @@ The `Uint8Array` buffer that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -929,11 +918,11 @@ The `Uint8Array` buffer that the expected value should have.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`toBeTuple`</h2>
+# `toBeTuple`
 
 Asserts the value of a Clarity tuple.
 
@@ -945,7 +934,7 @@ The `object` of Clarity values that the expected value should have.
 
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 

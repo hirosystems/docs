@@ -4,32 +4,20 @@ description: The Clarinet JS SDK provides several methods that can be used to in
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Root, API, APIExample, Property, Info } from '@/components/layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { InlineCode } from '@/components/inline-code';
+<API>
 
-## Installation
+<Info>
 
-```package-install
-@hirosystems/clarinet-sdk @stacks/transactions
-```
-
-<Root>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`getAccounts`</h2>
+# `getAccounts`
 
 Retrieve a list of all Stacks addresses configured within the project, including wallets, deployers, and faucets.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -97,15 +85,15 @@ Retrieve a list of all Stacks addresses configured within the project, including
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getAssetsMap`</h2>
+# `getAssetsMap`
 
 Retrieve a list of asset balances associated with Stacks addresses, including fungible and non-fungible tokens.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -114,14 +102,14 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
     <TabsTrigger value="default" className='tab group'>
       <Badge className='badge transition-colors'>Getting STX account balances</Badge>
     </TabsTrigger>
-    <TabsTrigger value="get-deployer-balance" className='tab group'>
-      <Badge className='badge transition-colors'>Filtering for a specific account</Badge>
-    </TabsTrigger>
     <TabsTrigger value="get-ft-balance" className='tab group'>
       <Badge className='badge transition-colors'>Getting ft balances</Badge>
     </TabsTrigger>
     <TabsTrigger value="get-nft-balance" className='tab group'>
       <Badge className='badge transition-colors'>Getting nft balances</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="get-deployer-balance" className='tab group'>
+      <Badge className='badge transition-colors'>Filtering for an account</Badge>
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
@@ -146,28 +134,6 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
           "ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ": 100000000000000n,
           "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6": 100000000000000n,
         }
-        ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        getAssetsMap(): Map<string, Map<string, bigint>>
-        ```
-      </Accordion>
-    </Accordions>
-
-  </TabsContent>
-  <TabsContent value="get-deployer-balance">
-    ```ts
-    const assets = simnet.getAssetsMap();
-    const stxBalances = assets.get('STX')!;
-
-    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!;
-    ```
-
-    <Accordions>
-      <Accordion title="Response">
-        ```ts
-        100000000000000n
         ```
       </Accordion>
       <Accordion title="Schema">
@@ -250,6 +216,28 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
     </Accordions>
 
   </TabsContent>
+  <TabsContent value="get-deployer-balance">
+    ```ts
+    const assets = simnet.getAssetsMap();
+    const stxBalances = assets.get('STX')!;
+
+    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!;
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        100000000000000n
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
+        getAssetsMap(): Map<string, Map<string, bigint>>
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
 </Tabs>
 
 
@@ -257,11 +245,11 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getDataVar`</h2>
+# `getDataVar`
 
 Get the value of a `data-var` defined in a contract.
 
@@ -279,7 +267,7 @@ The name of the `data-var` for the contract.
 <span>Example: `count`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -299,7 +287,7 @@ The name of the `data-var` for the contract.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="counter.clar"
+        ```clarity counter.clar
         (define-data-var count uint u0)
         (define-data-var contractOwner principal tx-sender)
         
@@ -334,7 +322,7 @@ The name of the `data-var` for the contract.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="counter.clar"
+        ```clarity counter.clar
         (define-data-var count uint u0)
         (define-data-var contractOwner principal tx-sender)
         
@@ -360,11 +348,11 @@ The name of the `data-var` for the contract.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getMapEntry`</h2>
+# `getMapEntry`
 
 Get the value of a map entry by its key. Note that this method will always return an optional value `some` or `none`, just like Clarity `map-get?`.
 
@@ -385,10 +373,12 @@ The name of the map within the contract.
 <Property required={true} deprecated={false} name={"mapKey"} type={"ClarityValue"}>
 The key to access the value in the map.
 
-<span>Example: `Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')`</span>
+<span>Example: `Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -417,7 +407,7 @@ The key to access the value in the map.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
+        ```clarity pool.clar
         (define-map Participants principal bool)
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
@@ -463,7 +453,7 @@ The key to access the value in the map.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
+        ```clarity pool.clar
         (define-map Participants principal bool)
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
@@ -495,11 +485,11 @@ The key to access the value in the map.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`callReadOnlyFn`</h2>
+# `callReadOnlyFn`
 
 Call read-only functions exposed by a contract.
 
@@ -522,7 +512,9 @@ The name of the read-only function within the contract.
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
 The arguments to pass to the read-only function. If no arguments are needed, pass an empty array.
 
-<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+<span>Example: `[Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)]`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
@@ -531,7 +523,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -815,11 +807,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`callPublicFn`</h2>
+# `callPublicFn`
 
 Call public functions exposed by a contract.
 
@@ -844,7 +836,9 @@ The name of the public function within the contract.
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
 The arguments to pass to the public function. If no arguments are needed, pass an empty array.
 
-<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+<span>Example: `[Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)]`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
@@ -853,7 +847,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1077,11 +1071,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className="mt-0">`callPrivateFn`</h2>
+# `callPrivateFn`
 
 Call private functions exposed by a contract.
 
@@ -1106,7 +1100,9 @@ The name of the private function within the contract.
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
 The arguments to pass to the private function. If no arguments are needed, pass an empty array.
 
-<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+<span>Example: `[Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)]`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
@@ -1115,7 +1111,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1274,11 +1270,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`transferSTX`</h2>
+# `transferSTX`
 
 Transfer STX from one address to another. The amount transferred is in `uSTX`.
 
@@ -1304,7 +1300,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1470,11 +1466,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`deployContract`</h2>
+# `deployContract`
 
 Deploy a contract to simnet.
 
@@ -1506,7 +1502,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1653,11 +1649,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`mineBlock`</h2>
+# `mineBlock`
 
 The `callPublicFn`, `transferSTX`, and `deployContract` methods all mine one block with only one transaction. It can also be useful to mine a block with multiple transactions.
 
@@ -1682,7 +1678,7 @@ An array of transactions to be included in the block.
 <span>Example: `[tx.transferSTX(100, recipient, sender), ...]`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1778,17 +1774,17 @@ An array of transactions to be included in the block.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`mineEmptyBlock`</h2>
+# `mineEmptyBlock`
 
 Mine one empty block and increase the block height by one.
 
 Returns the new block height.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1825,11 +1821,11 @@ Returns the new block height.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`mineEmptyBlocks`</h2>
+# `mineEmptyBlocks`
 
 Mine multiple empty blocks to reach a certain block height.
 
@@ -1843,7 +1839,7 @@ The number of empty blocks to mine. This parameter is optional.
 <span>Example: `5`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1902,11 +1898,11 @@ The number of empty blocks to mine. This parameter is optional.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`runSnippet`</h2>
+# `runSnippet`
 
 Execute arbitrary Clarity code directly, which allows you to test and interact with smart contract functions without deploying them.
 
@@ -1918,7 +1914,7 @@ The Clarity code snippet to be executed.
 <span>Example: `(define-read-only (get-balance) (ok stx-balance))`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1995,17 +1991,17 @@ The Clarity code snippet to be executed.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getContractsInterfaces`</h2>
+# `getContractsInterfaces`
 
 Returns the interfaces of the project contracts as a Map of Contracts, with the keys being the contract addresses.
 
 These interfaces contain information such as the available `functions`, `data-vars`, `maps`, `NFTs`, and `FTs` defined in the contract.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2140,11 +2136,11 @@ These interfaces contain information such as the available `functions`, `data-va
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getContractSource`</h2>
+# `getContractSource`
 
 Get the source code of a contract as a string.
 
@@ -2156,7 +2152,7 @@ The identifier of the contract for which the source code is requested.
 <span>Example: `pool`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2173,7 +2169,7 @@ The identifier of the contract for which the source code is requested.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -2213,11 +2209,11 @@ The identifier of the contract for which the source code is requested.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getContractAST`</h2>
+# `getContractAST`
 
 Get the full AST (Abstract Syntax Tree) of a Clarity contract.
 
@@ -2231,7 +2227,7 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
 <span>Example: `pool`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2288,5 +2284,3 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
 </APIExample>
 
 </API>
-
-</Root>

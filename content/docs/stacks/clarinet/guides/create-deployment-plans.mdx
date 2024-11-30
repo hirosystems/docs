@@ -1,14 +1,16 @@
 ---
-title: Customize deployment plans
-description: Learn how to customize your deployment plans.
+title: Create deployment plans
+description: Learn how to create deployment plans.
 ---
 
+import { Clarinet, Js } from '@/components/ui/icon';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 
 Deployment plans minimize the inherent complexity of deployments, such as smart contract dependencies and interactions, transaction chaining limits, deployment costs, and more. Deployment plans ensure reproducible deployments, a critical workflow for testing purposes.
 
@@ -229,14 +231,18 @@ This cBTC smart contract application has a [devnet deployment plan](https://gith
 ## Next steps
 
 <Cards>
-  <Card
-    href="/stacks/clarinet/guides/run-a-local-devnet"
+  <SecondaryCard
+    icon={<Clarinet />}
+    href="/stacks/clarinet/guides/cli-commands/run-a-local-devnet"
     title="Run a local devnet"
     description="Learn how to run a local devnet."
+    tag='Clarinet'
   />
-  <Card
+  <SecondaryCard
+    icon={<Js />}
     href="/stacks/clarinet-js-sdk/references/simnet"
     title="Simnet reference"
     description="Learn how to use simnet with the Clarinet JS SDK."
+    tag='Clarinet JS SDK'
   />
 </Cards>
