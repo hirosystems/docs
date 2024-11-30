@@ -1,5 +1,5 @@
 import "./global.css";
-import { aeonik, aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
+import { aeonik, aeonikFono, aeonikMono, inter } from "@/app/fonts";
 import type { Viewport } from "next";
 import { baseUrl, createMetadata } from "@/utils/metadata";
 import { Provider } from "./provider";

@@ -19,9 +19,17 @@ interface NetworkBadgeProps {
 
 const NetworkBadge = ({ network }: NetworkBadgeProps) => (
   <code className="relative rounded bg-muted p-1.5 font-mono text-sm text-left text-muted-foreground">
-    {typeof network === "object" && network !== null
-      ? network.props.children
-      : network}
+    <>
+      {typeof network === "object" && network !== null ? (
+        <code className="relative rounded bg-muted p-1.5 font-mono text-sm text-left text-muted-foreground w-full">
+          {network.props.children}
+        </code>
+      ) : (
+        <span className="text-muted-foreground whitespace-normal break-words text-base">
+          {network}
+        </span>
+      )}
+    </>
   </code>
 );
 

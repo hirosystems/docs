@@ -1,5 +1,5 @@
 export default {
-  name: "catppuccin-from-css",
+  name: "hiro",
   type: "from-css",
   tokenColors: [
     {

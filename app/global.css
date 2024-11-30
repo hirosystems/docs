@@ -31,8 +31,8 @@
     --highlight: 40 13% 91%;
     --content: 32.31 11.93% 78.63%;
     --dark: 30 5.7% 7.5%;
-    --gradient: #59564F;
-    --contrast:0 7.7% 5.1%;
+    --gradient: #59564f;
+    --contrast: 0 7.7% 5.1%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -115,6 +115,15 @@ body {
 
 /* Override CSS */
 
+.container.flex.flex-row.gap-6.xl\:gap-12 {
+  padding: 0;
+  margin-top: 0;
+}
+
+pre {
+  font-size: 0.875rem;
+}
+
 li a {
   text-decoration: none !important;
 }
@@ -149,10 +158,6 @@ a[aria-label="Hiro Platform"] {
   padding: 0;
 }
 
-a[aria-label="Hiro Platform"] div:hover {
-  background-color: hsla(var(--muted-foreground) / 0.1);
-}
-
 h1,
 h2,
 h3,
@@ -177,7 +182,12 @@ option {
 }
 
 /* TODO: div.prose is for targeting the <Callout> title, need to fix this approach */
-a, p, li, table, input, div.prose .w-0 {
+a,
+p,
+li,
+table,
+input,
+div.prose .w-0 {
   font-family: var(--font-inter), sans-serif;
 }
 /* TODO: div.prose .flex-1 span is for targeting the text inside the <Property> component */
@@ -230,6 +240,11 @@ body
   background: hsl(var(--code));
 }
 
+article {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 figure.not-prose div[data-radix-scroll-area-viewport] {
   background: hsl(var(--code));
   width: auto;
@@ -261,15 +276,19 @@ figure.not-prose:not(:has(figcaption)) div[data-radix-scroll-area-viewport] {
   margin: 0;
 }
 
-figure pre {
-  background: hsl(var(--code));
-}
-
 nav.container {
   gap: 2.25rem;
 }
 
-nav.container a, figure, pre, pre a, code, code a, th, code > span, .not-prose div {
+nav.container a,
+figure,
+pre,
+pre a,
+code,
+code a,
+th,
+code > span,
+.not-prose div {
   font-family: var(--font-aeonikFono), sans-serif;
 }
 
@@ -282,12 +301,8 @@ div.flex.flex-row.items-center.gap-2.border-b.bg-muted.px-4.py-1\.5 {
   background: hsl(var(--background));
 }
 
-a[aria-label="Hiro Platform"] div svg {
-  width: 0.75rem;
-  height: 0.75rem;
-}
-
-nav a[href="/guides"] {
+nav a[href="/guides"],
+nav a[href="/cookbook"] {
   text-decoration: underline;
 }
 
@@ -317,25 +332,6 @@ body
   > div.flex.flex-1.flex-row.items-center.justify-end.md\:gap-2
   > button.inline-flex.w-full.max-w-\[240px\].items-center.gap-2.rounded-full.border.bg-secondary\/50.p-1\.5.text-sm.text-muted-foreground.transition-colors.hover\:bg-accent.hover\:text-accent-foreground.max-md\:hidden {
   background-color: hsl(var(--background));
-}
-
-p.first\:mt-0 {
-  font-family: var(--font-aeonikFono), sans-serif;
-  margin-top: 1.5rem !important;
-}
-
-p.first\:mt-0:before {
-  content: "";
-  display: block;
-  height: 1px;
-  margin-bottom: 1rem;
-  border-width: 0.25px;
-  border-color: hsl(var(--accent));
-}
-
-/* Override the .prose-no-margin on callout components */
-.callout p {
-  margin: 0;
 }
 
 div.not-prose,
@@ -411,11 +407,6 @@ div.prose div.footer.not-prose {
   background: hsl(var(--background)) !important;
 }
 
-div.api-example div.max-xl\:hidden > div:nth-child(1) {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
 .prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   text-decoration-color: var(--secondary) !important;
 }
@@ -462,76 +453,76 @@ div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
 @layer base {
   :root {
     --ch-0: light;
-    --ch-1: #7A756B;
-    --ch-2: #7C7F93; /* Not used */
-    --ch-3: #B5ACA1;
-    --ch-4: #48944C;
-    --ch-5: #EA76CB;
-    --ch-6: #FF5500;
-    --ch-7: #BC812E;
+    --ch-1: #7a756b;
+    --ch-2: #7c7f93; /* Not used */
+    --ch-3: #b5aca1;
+    --ch-4: #48944c;
+    --ch-5: #ea76cb;
+    --ch-6: #ff5500;
+    --ch-7: #bc812e;
     --ch-8: #179299;
-    --ch-9: #3676B7;
-    --ch-10: #BC812E;
-    --ch-11: #7A756B;
-    --ch-12: #BC812E;
-    --ch-13: #04A5E5;
-    --ch-14: #DD7878;
-    --ch-15: #6C6F85;
-    --ch-16: #3676B7; /* highlight */
-    --ch-17: #DC8A78;
-    --ch-18: #EFF1F5;
-    --ch-19: #4C4F6912;
-    --ch-20: #04A5E540;
-    --ch-21: #1A85FF;
-    --ch-22: #7C7F934D;
-    --ch-23: #E6E9EF;
-    --ch-24: #ACB0BE;
-    --ch-25: #DCE0E8;
-    --ch-26: #8C8FA1;
-    --ch-27: #CCD0DA;
-    --ch-28: #CCD0DA80;
-    --ch-29: #EFF1F5E6;
-    --ch-30: #BCC0CC;
-    --ch-31: #6C6F85;
-    --ch-32: #5C5F77;
-    --ch-33: #ACB0BE;
+    --ch-9: #3676b7;
+    --ch-10: #bc812e;
+    --ch-11: #7a756b;
+    --ch-12: #bc812e;
+    --ch-13: #04a5e5;
+    --ch-14: #dd7878;
+    --ch-15: #6c6f85;
+    --ch-16: #3676b7; /* highlight */
+    --ch-17: #dc8a78;
+    --ch-18: #eff1f5;
+    --ch-19: #4c4f6912;
+    --ch-20: #04a5e540;
+    --ch-21: #1a85ff;
+    --ch-22: #7c7f934d;
+    --ch-23: #e6e9ef;
+    --ch-24: #acb0be;
+    --ch-25: #dce0e8;
+    --ch-26: #8c8fa1;
+    --ch-27: #ccd0da;
+    --ch-28: #ccd0da80;
+    --ch-29: #eff1f5e6;
+    --ch-30: #bcc0cc;
+    --ch-31: #6c6f85;
+    --ch-32: #5c5f77;
+    --ch-33: #acb0be;
   }
 
   .dark {
     --ch-0: dark;
-    --ch-1: #8C877D;
-    --ch-2: #9399B2; /* Not used */
+    --ch-1: #8c877d;
+    --ch-2: #9399b2; /* Not used */
     --ch-3: #595650;
-    --ch-4: #C2EBC4;
-    --ch-5: #F5C2E7;
-    --ch-6: #FF5500;
-    --ch-7: #FF9ECF;
-    --ch-8: #94E2D5;
-    --ch-9: #B3D9FF;
-    --ch-10: #FF9ECF;
-    --ch-11: #8C877D;
-    --ch-12: #FF9ECF;
-    --ch-13: #89DCEB;
-    --ch-14: #F2CDCD;
-    --ch-15: #A6ADC8;
-    --ch-16: #8C877D; /* highlight */
-    --ch-17: #F5E0DC;
-    --ch-18: #1E1E2E;
-    --ch-19: #CDD6F412;
-    --ch-20: #89DCEB40;
-    --ch-21: #3794FF;
-    --ch-22: #9399B240;
+    --ch-4: #c2ebc4;
+    --ch-5: #f5c2e7;
+    --ch-6: #ff5500;
+    --ch-7: #ff9ecf;
+    --ch-8: #94e2d5;
+    --ch-9: #b3d9ff;
+    --ch-10: #ff9ecf;
+    --ch-11: #8c877d;
+    --ch-12: #ff9ecf;
+    --ch-13: #89dceb;
+    --ch-14: #f2cdcd;
+    --ch-15: #a6adc8;
+    --ch-16: #8c877d; /* highlight */
+    --ch-17: #f5e0dc;
+    --ch-18: #1e1e2e;
+    --ch-19: #cdd6f412;
+    --ch-20: #89dceb40;
+    --ch-21: #3794ff;
+    --ch-22: #9399b240;
     --ch-23: #181825;
-    --ch-24: #585B70;
-    --ch-25: #11111B;
-    --ch-26: #7F849C;
+    --ch-24: #585b70;
+    --ch-25: #11111b;
+    --ch-26: #7f849c;
     --ch-27: #313244;
     --ch-28: #31324480;
-    --ch-29: #1E1E2EE6;
-    --ch-30: #A6ADC8;
-    --ch-31: #585B70;
-    --ch-32: #45475A;
-    --ch-33: #BAC2DE;
+    --ch-29: #1e1e2ee6;
+    --ch-30: #a6adc8;
+    --ch-31: #585b70;
+    --ch-32: #45475a;
+    --ch-33: #bac2de;
   }
 }
 

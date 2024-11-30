@@ -4,6 +4,10 @@ import { ArrowUpRight } from "lucide-react";
 import { utils } from "@/utils/source";
 import { DocsLogo } from "@/components/ui/icon";
 import { Body, NavChildren, SidebarBanner } from "./layout.client";
+import { Statuspage } from "statuspage.io";
+
+const statuspage = new Statuspage("3111l89394q4");
+console.log({ status: await statuspage.api.getStatus() });
 
 export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   tree: utils.pageTree,
@@ -27,7 +31,16 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
       },
     ],
   },
-  links: [],
+  links: [
+    {
+      text: "Guides",
+      url: "/guides",
+    },
+    {
+      text: "Cookbook",
+      url: "/cookbook",
+    },
+  ],
   sidebar: {
     defaultOpenLevel: 0,
     banner: <SidebarBanner />,
@@ -56,7 +69,16 @@ export const homeLayoutOptions: Omit<DocsLayoutProps, "children"> = {
       },
     ],
   },
-  links: [],
+  links: [
+    {
+      text: "Guides",
+      url: "/guides",
+    },
+    {
+      text: "Cookbook",
+      url: "/cookbook",
+    },
+  ],
 };
 
 export default function Layout({
