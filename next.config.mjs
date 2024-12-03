@@ -23,14 +23,23 @@ const config = {
   images: {
     domains: [],
   },
-  // webpack: (config, { isServer }) => {
-  //   config.optimization.minimize = false;
-    
-  // Add source map for better debugging
-  //   config.devtool = 'source-map';
-    
-  //   return config;
-  // },
+  swcMinify: false,
+  webpack: (config) => {
+    config.optimization.minimize = false;
+    return config;
+  },
+  redirects: () => [
+    {
+      source: "/address",
+      destination: "/stacks/stacks.js/concepts/accounts-and-addresses",
+      permanent: true,
+    },
+    {
+      source: "/what-is-a-wallet",
+      destination: "/stacks/stacks.js/concepts/private-keys",
+      permanent: true,
+    },
+  ],
 };
 
 /**
