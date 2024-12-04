@@ -1,52 +1,40 @@
 import type { MDXComponents } from "mdx/types";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { Callout } from "@/components/callout";
+import { Cards, Card, SecondaryCard } from "@/components/card";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultComponents from "fumadocs-ui/mdx";
-import {
-  CodeBlock,
-  type CodeBlockProps,
-  Pre,
-} from "fumadocs-ui/components/codeblock";
-import type { ReactNode } from "react";
-import { Popup, PopupContent, PopupTrigger } from "fumadocs-ui/twoslash/popup";
-import { cn } from "./utils/cn";
-
-const shortcuts: Record<string, string> = {
-  stacks: "./content/docs/stacks/props.ts",
-  ordinals: "./content/docs/bitcoin/props.ts",
-};
+import { docskit } from "@/components/docskit/components";
+import { CustomTable as Table, TableProps } from "@/components/table";
+import { OrderedList, UnorderedList } from "@/components/lists";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
-    Popup,
-    PopupContent,
-    PopupTrigger,
-    pre: ({ title, className, icon, allowCopy, ...props }: CodeBlockProps) => (
-      <CodeBlock title={title} icon={icon} allowCopy={allowCopy}>
-        <Pre className={cn("max-h-[400px]", className)} {...props} />
-      </CodeBlock>
-    ),
-    Tabs,
-    Tab,
-    Callout,
-    TypeTable,
     Accordion,
     Accordions,
-    InstallTabs: ({
-      items,
-      children,
-    }: {
-      items: string[];
-      children: ReactNode;
-    }) => (
-      <Tabs items={items} id="package-manager">
-        {children}
-      </Tabs>
-    ),
     blockquote: (props) => <Callout>{props.children}</Callout>,
+    Callout,
+    Cards,
+    Card,
+    SecondaryCard,
+    code: (props) => (
+      <code
+        {...props}
+        className="border border-border p-1 bg-code text-sm text-muted-foreground"
+      />
+    ),
+    hr: (props) => (
+      <hr {...props} className="border-t border-border/50 mt-0 mb-6" />
+    ),
+    Tab,
+    Tabs,
+    table: (props: TableProps) => <Table {...props} />,
+    TypeTable,
+    ol: OrderedList,
+    ul: UnorderedList,
     ...components,
+    ...docskit,
   };
 }

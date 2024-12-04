@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -55,7 +55,6 @@ console.log(STACKS_MAINNET);
 ## Network usage in transaction building
 
 ```ts
-// [!code word:network\:]
 import { STACKS_MAINNET } from '@stacks/network';
 import { makeSTXTokenTransfer } from '@stacks/transactions';
 

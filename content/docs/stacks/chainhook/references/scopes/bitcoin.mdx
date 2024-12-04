@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -51,11 +51,10 @@ The `equals` property is a 32 byte hex encoded type used to specify the exact tr
   <TabsContent value="default">
 
   ```json
-  // [!code word:txid]
   {
     "if_this": {
       "scope": "txid",
-      "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f" // [!code highlight]
+      "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
     }
   }
   ```
@@ -110,12 +109,11 @@ The `operation` property is used to identify the Bitcoin operation that will tri
   <TabsContent value="op_return">
 
   ```json
-  // [!code word:outputs]
   {
     "if_this": {
       "scope": "outputs",
-      "op_return": { // [!code highlight]
-        "equals": "0xbtc21000042stx016" // [!code highlight]
+      "op_return": {
+        "equals": "0xbtc21000042stx016"
       }
     }
   }
@@ -140,12 +138,11 @@ The `operation` property is used to identify the Bitcoin operation that will tri
   <TabsContent value="p2kph">
 
   ```json
-  // [!code word:outputs]
   {
     "if_this": {
       "scope": "outputs",
-      "p2kph": { // [!code highlight]
-        "equals": "0xbtc21000042stx016" // [!code highlight]
+      "p2kph": {
+        "equals": "0xbtc21000042stx016"
       }
     }
   }
@@ -164,12 +161,11 @@ The `operation` property is used to identify the Bitcoin operation that will tri
   <TabsContent value="p2sh">
 
   ```json
-  // [!code word:outputs]
   {
     "if_this": {
       "scope": "outputs",
-      "p2sh": { // [!code highlight]
-        "equals": "0xbtc21000042stx016" // [!code highlight]
+      "p2sh": {
+        "equals": "0xbtc21000042stx016"
       }
     }
   }
@@ -188,12 +184,11 @@ The `operation` property is used to identify the Bitcoin operation that will tri
   <TabsContent value="p2wpkh">
 
   ```json
-  // [!code word:outputs]
   {
     "if_this": {
       "scope": "outputs",
-      "p2wpkh": { // [!code highlight]
-        "equals": "0xbtc21000042stx016" // [!code highlight]
+      "p2wpkh": {
+        "equals": "0xbtc21000042stx016"
       }
     }
   }
@@ -212,12 +207,11 @@ The `operation` property is used to identify the Bitcoin operation that will tri
   <TabsContent value="p2wsh">
 
   ```json
-  // [!code word:outputs]
   {
     "if_this": {
       "scope": "outputs",
-      "p2wsh": { // [!code highlight]
-        "equals": "0xbtc21000042stx016" // [!code highlight]
+      "p2wsh": {
+        "equals": "0xbtc21000042stx016"
       }
     }
   }
@@ -236,13 +230,12 @@ The `operation` property is used to identify the Bitcoin operation that will tri
   <TabsContent value="descriptor">
 
   ```json
-  // [!code word:outputs]
   {
     "if_this": {
       "scope": "outputs",
       "descriptor": {
-        "expression": "wpkh(tprv8ZgxMBicQKsPePxn6j3TjvB2MBzQkuhGgc6oRh2WZancZQgxktcnjZJ44XdsRiw3jNkbVTK9JW6KFHvnRKgAMtSyuBevMJprSkZ4PTfmTgV/84'/1'/0'/0/*)", // [!code highlight]
-        "range": [0, 3] // [!code highlight]
+        "expression": "wpkh(tprv8ZgxMBicQKsPePxn6j3TjvB2MBzQkuhGgc6oRh2WZancZQgxktcnjZJ44XdsRiw3jNkbVTK9JW6KFHvnRKgAMtSyuBevMJprSkZ4PTfmTgV/84'/1'/0'/0/*)",
+        "range": [0, 3]
       }
     }
   }
@@ -325,11 +318,10 @@ The `operation` property is used to identify the Stacks operation that will trig
   <TabsContent value="block_committed">
 
   ```json
-    // [!code word:stacks_protocol]
     {
       "if_this": {
         "scope": "stacks_protocol",
-        "operation": "block_committed" // [!code highlight]
+        "operation": "block_committed"
       }
     }
   ```
@@ -337,11 +329,10 @@ The `operation` property is used to identify the Stacks operation that will trig
   <TabsContent value="leader_registered">
 
    ```json
-    // [!code word:stacks_protocol]
     {
       "if_this": {
         "scope": "stacks_protocol",
-        "operation": "leader_registered" // [!code highlight]
+        "operation": "leader_registered"
       }
     }
   ```
@@ -349,11 +340,10 @@ The `operation` property is used to identify the Stacks operation that will trig
   <TabsContent value="inscription_feed">
 
    ```json
-    // [!code word:stacks_protocol]
     {
       "if_this": {
         "scope": "stacks_protocol",
-        "operation": "inscription_feed" // [!code highlight]
+        "operation": "inscription_feed"
       }
     }
   ```
@@ -365,11 +355,10 @@ The `operation` property is used to identify the Stacks operation that will trig
   <TabsContent value="stx_transferred">
 
    ```json
-    // [!code word:stacks_protocol]
     {
       "if_this": {
         "scope": "stacks_protocol",
-        "operation": "stx_transferred" // [!code highlight]
+        "operation": "stx_transferred"
       }
     }
   ```
@@ -377,11 +366,10 @@ The `operation` property is used to identify the Stacks operation that will trig
   <TabsContent value="stx_locked">
 
    ```json
-    // [!code word:stacks_protocol]
     {
       "if_this": {
         "scope": "stacks_protocol",
-        "operation": "stx_locked" // [!code highlight]
+        "operation": "stx_locked"
       }
     }
   ```

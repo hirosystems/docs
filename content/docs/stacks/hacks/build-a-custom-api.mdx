@@ -3,6 +3,8 @@ title: Build a custom blockchain API
 description: Learn how to build a custom API with Chainhook.
 ---
 
+import { HackBadge } from "@/components/badge";
+
 ## Introduction
 
 In the previous hacks, you built some pretty complex smart contracts. But building a robust UI/UX around these smart contracts and their on-chain data can be challenging due to the nature of blockchains.
@@ -97,8 +99,8 @@ app.post("/api/events", async (req, res) => {
 
 For the next section, you will need to expose your local server via `https` so that Chainhook can deliver the `payload`. To do that, run the following command:
 
-```console
-npx localtunnel --port <your-port-number>
+```terminal
+$ npx localtunnel --port <your-port-number>
 ```
 
 > _**Note**_
@@ -183,15 +185,11 @@ Congratulations on reaching this point! You now have all the building blocks nee
 
 The following challenges are additional features you can implement to further explore building on Stacks. Feel free to add any other features you want.
 
-<span className="inline-flex items-center rounded-md bg-green-50 dark:bg-green-400/10 px-2 py-1 mb-2 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20">
-  Starter
-</span>
+<HackBadge variant="starter" />
 
 **Create more than 1 chainhook**: Don't stop at just 1! Follow the process above to create more than 1 chainhook for your dApp and parse the data accordingly.
 
-<span className="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 mb-2 text-xs font-medium text-yellow-700 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20">
-  Intermediate
-</span>
+<HackBadge variant="intermediate" />
 
 **Create consumer-facing API endpoints**: Up until now, we've shown you how to capture and process the initial `payload` data sent from a chainhook. However, to provide a robust user experience, you'll want to do more than just output raw data. The challenge here is to create additional API endpoints that present the filtered and extracted data from the initial `/api/events` payload in a consumer-friendly format. This could involve adding a database layer for organizing the data, adding additional context, or transforming the data to match the needs of your application's frontend. For a quick db setup, you can try using something like [Supabase](https://supabase.com/docs/guides/getting-started/quickstarts/reactjs).
 
@@ -220,8 +218,6 @@ app.post("/api/events", async (req, res) => {
 })
 ```
 
-<span className="inline-flex items-center rounded-md bg-orange-50 dark:bg-orange-400/10 px-2 py-1 mb-2 text-xs font-medium text-orange-700 dark:text-orange-400 ring-1 ring-inset ring-orange-600/10 dark:ring-orange-400/20">
-  Advanced
-</span>
+<HackBadge variant="advanced" />
 
 **UI integration**: The final challenge is to integrate your consumer-facing API into your frontend. This involves taking the data you've processed and organized in your API and displaying it in a meaningful and user-friendly way in your application. This could involve creating dynamic components that update in response to new data, adding interactive elements that allow users to explore the data, or incorporating visualizations to help users understand the data.

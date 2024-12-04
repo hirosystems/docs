@@ -27,8 +27,8 @@ In this guide, you will learn how to:
 
 Start by creating a new Expo project using `create-expo-app`.
 
-```console title="Terminal"
-npx create-expo-app@latest
+```terminal
+$ npx create-expo-app@latest
 ```
 
 This will generate a boilerplate Expo project. You can run the project with `npm start` and connect a mobile device for previewing via the shown QR code.
@@ -37,20 +37,20 @@ This will generate a boilerplate Expo project. You can run the project with `npm
 
 Install Stacks.js libraries along with other dependencies needed for polyfilling browser-specific and NodeJS-specific APIs.
 
-```console title="Terminal"
-npm install @stacks/transactions @stacks/wallet-sdk
-npm install --save-dev buffer process react-native-get-random-values text-encoding readable-stream crypto-browserify @peculiar/webcrypto
+```terminal
+$ npm install @stacks/transactions @stacks/wallet-sdk
+$ npm install --save-dev buffer process react-native-get-random-values text-encoding readable-stream crypto-browserify @peculiar/webcrypto
 ```
 
 ## Add NodeJS polyfills
 
 Modify the project's Metro configuration to include polyfills for missing NodeJS modules.
 
-```console title="Terminal"
-npx expo customize metro.config.js
+```terminal
+$ npx expo customize metro.config.js
 ```
 
-```js title="metro.config.js"
+```js metro.config.js
 const { getDefaultConfig } = require("expo/metro-config");
 
 const config = getDefaultConfig(__dirname);
@@ -71,7 +71,7 @@ Update the Expo entry point to include polyfills.
 2. Create `index.js` file
 3. Update the `package.json`
 
-```js title="polyfill.js"
+```js polyfill.js
 import { Buffer } from "buffer/";
 import process from "process";
 import "react-native-get-random-values";
@@ -83,7 +83,7 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 ```
 
-```js title="index.js"
+```js index.js
 import "./polyfill";
 import { Crypto } from "@peculiar/webcrypto";
 
@@ -92,8 +92,8 @@ Object.assign(global.crypto, new Crypto());
 import "expo-router/entry";
 ```
 
-```json title="package.json"
-"main": "index.js", // [!code highlight]
+```json package.json
+"main": "index.js",
 ```
 
 <Callout>
@@ -104,8 +104,7 @@ Ensure that the polyfills live in their own file as specified to avoid any runti
 
 Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities, starting with the imports.
 
-```tsx twoslash title="app/(tabs)/index.tsx"
-// @noErrors
+```tsx app/(tabs)/index.tsx
 import {
   TransactionVersion,
   getAddressFromPrivateKey,
@@ -117,8 +116,7 @@ import { useState } from "react";
 
 Now you can start to manage the state as follows:
 
-```tsx twoslash title="app/(tabs)/index.tsx"
-// @noErrors
+```tsx app/(tabs)/index.tsx
 export default function HomeScreen() {
   const [mnemonic, setMnemonic] = useState("...");
   const [wallet, setWallet] = useState<Wallet | null>(null);
@@ -128,8 +126,7 @@ export default function HomeScreen() {
 
 Next, to generate a wallet and sign a transaction:
 
-```tsx twoslash title="app/(tabs)/index.tsx"
-// @noErrors
+```tsx app/(tabs)/index.tsx
 const generate = async () => {
   const mnemonic = generateSecretKey();
   setMnemonic(mnemonic);
@@ -155,8 +152,7 @@ const generate = async () => {
 
 And lastly, to integrate the UI:
 
-```tsx twoslash title="app/(tabs)/index.tsx"
-// @noErrors
+```tsx app/(tabs)/index.tsx
 <ThemedView>
   <ThemedText type="subtitle">Seed Phrase</ThemedText>
   <ThemedText>{mnemonic}</ThemedText>

@@ -45,7 +45,6 @@ Key data variables include `lotteryPool` for tracking stacked assets, `totalYiel
 Next, define an NFT to represent a ticket and a map to store participant information.
 
 ```clarity
-// [!code word:LotteryTicket]
 (define-map Participants
   { participant: principal }
   { ticketId: uint, amount: uint, cycle: uint, ticketExpirationAtCycle: uint, isWinner: bool }
@@ -178,13 +177,13 @@ This process ensures that participants can claim their rewards and that winners 
 
 To test the contracts, use the following steps inside of `clarinet console`:
 
-```console
-::advance_chain_tip 700000
-::set_tx_sender
-(contract-call? 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.no-loss-lottery-pool roll-the-dice "mia" u500 none)
-::advance_chain_tip 2000
-(contract-call? 'SP8A9HZ3PKST0S42VM9523Z9NV42SZ026V4K39WH.ccd002-treasury-mia-stacking deposit-stx u5000000000)
-(contract-call? 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.no-loss-lottery-pool claim "mia" u17)
+```terminal
+$ ::advance_chain_tip 700000
+$ ::set_tx_sender
+$ (contract-call? 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.no-loss-lottery-pool roll-the-dice "mia" u500 none)
+$ ::advance_chain_tip 2000
+$ (contract-call? 'SP8A9HZ3PKST0S42VM9523Z9NV42SZ026V4K39WH.ccd002-treasury-mia-stacking deposit-stx u5000000000)
+$ (contract-call? 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.no-loss-lottery-pool claim "mia" u17)
 ```
 
 To bootstrap the CityCoins contracts, follow these steps:

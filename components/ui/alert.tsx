@@ -1,6 +1,6 @@
-import { AlertCircleIcon } from 'lucide-react';
-import type { HTMLAttributes } from 'react';
-import { cn } from '@/utils/cn';
+import { AlertCircleIcon } from "lucide-react";
+import type { HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 export function Alert({
   className,
@@ -9,8 +9,8 @@ export function Alert({
   return (
     <div
       className={cn(
-        'flex flex-row items-center gap-2 rounded-full border p-2 text-sm font-medium',
-        className,
+        "flex flex-row items-center gap-2 rounded-full border p-2 text-sm font-medium",
+        className
       )}
       {...props}
     >

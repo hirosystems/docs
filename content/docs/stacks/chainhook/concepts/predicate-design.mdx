@@ -3,10 +3,10 @@ title: Predicate design
 description: Predicates are the building blocks of Chainhook.
 ---
 
-The core design of Chainhook revolves around the concept of predicates. Each individual Chainhook has a customizable predicate that specifies what the Bitcoin or Stacks blockchain data you are scanning for.
+The core design of Chainhook revolves around the concept of predicates. Each individual chainhook has a customizable predicate that specifies what Bitcoin or Stacks blockchain data you are scanning for.
 
 <Callout type="warn" title="Requirements">
-  Commands outlined here will require that you have installed Chainhook [directly](/stacks/chainhook/installation).
+  Commands outlined here will require that you have [installed Chainhook directly](/stacks/chainhook/installation) first.
 </Callout>
 
 ## Predicate design
@@ -14,7 +14,7 @@ Below is the general strucure of the `predicate` JSON with its primary elements.
 
 - Chainhook will evaluate the predicate against the specfied blockchain specified in `chain`.
 - The `uuid` will be returned in the Chainhook payload, providing a record of the predicate that triggers it.
-- Identify your predicate for your DApp using `name` and `version`.
+- Identify your predicate for your app using `name` and `version`.
 
 ```json
   {
@@ -63,8 +63,6 @@ The `networks` element contains an object who's key determines the blockchain ne
 The `predicate` identifies what data you want Chainhook to scan for using the `scope` define within the `if_this` specification.  Additional arguments specific to the `scope` will also be passed here.
 
 ```json
-  // [!code word:if_this]
-  // [!code word:scope]
   {
     "if_this": {
       "scope": "contract_call",
@@ -84,8 +82,6 @@ Chainhook delivers the payload when it is triggered by your `predicate` using th
 When choosing to use file_append, specify the path where Chainhook will post the payload data.
 
 ```json 
-// [!code word:then_that]
-// [!code word:file_append]
 {
   "then_that": {
     "file_append": { 
@@ -98,8 +94,6 @@ When choosing to use file_append, specify the path where Chainhook will post the
 When using `http_post`, specify the endpoint's `url` and `authorization_header`.
 
 ```json
-// [!code word:then_that]
-// [!code word:http_post]
 {
   "then_that": {
     "http_post": {
@@ -119,46 +113,46 @@ When using `http_post`, specify the endpoint's `url` and `authorization_header`.
 <Tabs id="blockchain" items={["Bitcoin predicate", "Stacks predicate"]}>
   <Tab value="Bitcoin predicate">
 
-     ```json
-      {
-        "chain": "bitcoin",
-        "uuid": "1",
-        "name": "Wrap BTC",
-        "version": 1,
-        "networks": {
-          "testnet": {
-            "if_this": {
-              "scope": "ordinals_protocol",
-              "operation": "inscription_feed"
-            },
-            "then_that": {
-              "http_post": {
-                "url": "http://localhost:3000/api/v1/ordinals",
-                "authorization_header": "Bearer cn389ncoiwuencr"
-              }
-            },
-            "start_block": 10200
-            // Additional configurations
+    ```json
+    {
+      "chain": "bitcoin",
+      "uuid": "1",
+      "name": "Wrap BTC",
+      "version": 1,
+      "networks": {
+        "testnet": {
+          "if_this": {
+            "scope": "ordinals_protocol",
+            "operation": "inscription_feed"
           },
-          "mainnet": {
-            "if_this": {
-              "scope": "ordinals_protocol",
-              "operation": "inscription_feed"
-            },
-            "then_that": {
-              "http_post": {
-                "url": "http://my-protocol.xyz/api/v1/ordinals",
-                "authorization_header": "Bearer cn389ncoiwuencr"
-              }
-            },
-            "start_block": 90232
-            // Additional configurations
-          }
+          "then_that": {
+            "http_post": {
+              "url": "http://localhost:3000/api/v1/ordinals",
+              "authorization_header": "Bearer cn389ncoiwuencr"
+            }
+          },
+          "start_block": 10200
+          // Additional configurations
+        },
+        "mainnet": {
+          "if_this": {
+            "scope": "ordinals_protocol",
+            "operation": "inscription_feed"
+          },
+          "then_that": {
+            "http_post": {
+              "url": "http://my-protocol.xyz/api/v1/ordinals",
+              "authorization_header": "Bearer cn389ncoiwuencr"
+            }
+          },
+          "start_block": 90232
+          // Additional configurations
         }
       }
-    ```
+    }
+  ```
 
-     <Accordions>
+    <Accordions>
       <Accordion title="Additional Bitcoin predicate configurations">
         The following additional configurations can be used to improve the performance of Chainhook by preventing a full scan of the blockchain.
 
@@ -332,8 +326,8 @@ When using `http_post`, specify the endpoint's `url` and `authorization_header`.
   />
   <Card
     href="/stacks/platform/guides/create-chainhooks"
-    title="Create a Chainhook"
-    description="Learn how to create a Chainhook using the Hiro Platform."
+    title="Create a chainhook"
+    description="Learn how to create a chainhook using the Hiro Platform."
   />
   <Card
     href="/stacks/chainhook/references/scopes/stacks"

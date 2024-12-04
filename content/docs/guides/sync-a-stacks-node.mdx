@@ -21,17 +21,17 @@ In this guide, you will learn how to:
 
 Clone the Stacks blockchain Docker repository from GitHub:
 
-```console title="Terminal"
-git clone https://github.com/blockstack/stacks-blockchain-docker.git
-cd stacks-blockchain-docker
+```terminal
+$ git clone https://github.com/blockstack/stacks-blockchain-docker.git
+$ cd stacks-blockchain-docker
 ```
 
 ## Start the service
 
 Inside of the `stacks-blockchain-docker` directory, run the following command to start the Stacks node:
 
-```console title="Terminal"
-./manage.sh -n <network> -a start
+```terminal
+$ ./manage.sh -n <network> -a start
 ```
 
 The `<network>` placeholder used below can be replaced with one of:
@@ -44,8 +44,8 @@ The `<network>` placeholder used below can be replaced with one of:
 
 To follow the logs for the Stacks node, run the following command:
 
-```console title="Terminal"
-./manage.sh -n <network> -a logs
+```terminal
+$ ./manage.sh -n <network> -a logs
 ```
 
 For networks other than `mocknet`, downloading the initial headers can take several minutes. Until the headers are downloaded, the `/v2/info` endpoints won't return any data.

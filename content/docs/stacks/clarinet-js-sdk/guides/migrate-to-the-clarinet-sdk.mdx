@@ -18,8 +18,8 @@ This guide is for projects that have been created with Clarinet v1 and do not ha
 
 Inside your Clarinet v1 project, run the following command to initialise NPM and Vitest. It will also create a sample test file.
 
-```console title="Terminal"
-npx @hirosystems/clarinet-sdk@latest
+```terminal
+$ npx @hirosystems/clarinet-sdk@latest
 ```
 
 Follow the prompts to initialise NPM and Vitest, this can take a few seconds.
@@ -33,7 +33,7 @@ It can safely be deleted.
 
 ## Unit test for <code className='text-lg'>counter</code> example
 
-```ts title="tests/counter.test.ts"
+```ts tests/counter.test.ts
 import { Cl } from '@stacks/transactions';
 import { describe, expect, it } from 'vitest';
 
@@ -71,8 +71,8 @@ describe('test `increment` public function', () => {
 
 To run the test, go back to your console and run the `test` command using your preferred package manager. It should display a report telling you that tests succeeded.
 
-```console title="Terminal"
-npm test
+```terminal
+$ npm test
 ```
 
 <Callout title="Note">

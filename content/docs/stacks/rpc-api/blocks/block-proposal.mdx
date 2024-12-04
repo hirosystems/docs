@@ -61,8 +61,8 @@ Used by stackers to validate a proposed Stacks block from a miner.
 
 <Request value={"cURL"}>
 
-```bash
-curl -X POST "http://localhost:20443/v2/block_proposal" \
+```terminal
+$ curl -X POST "http://localhost:20443/v2/block_proposal" \
   -d '{
   "block": "string",
   "chain_id": 0

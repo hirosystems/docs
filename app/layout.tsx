@@ -1,6 +1,5 @@
 import "./global.css";
-import "fumadocs-ui/twoslash.css";
-import { aeonikFono, aeonikMono, inter } from "@/app/fonts/fonts";
+import { aeonik, aeonikFono, aeonikMono, inter } from "@/app/fonts";
 import type { Viewport } from "next";
 import { baseUrl, createMetadata } from "@/utils/metadata";
 import { Provider } from "./provider";
@@ -34,20 +33,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
+      className={`${aeonik.variable} ${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <GoogleTagManager gtmId={GTM_ID} />
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="master-of-clarity"
-            cta="Compete and find out"
-            url="https://hirosystems.mmm.page/masterofclarity"
-            startDate="2024-08-21"
-            endDate="2024-08-28"
+            id="stacks-js-v7"
+            cta="Learn more here"
+            url="https://www.hiro.so/blog/announcing-stacks-js-v7"
+            startDate="2024-11-11"
+            endDate="2024-12-15"
           >
-            Are you a Master of Clarity?
+            Announcing Stacks.js v7!
           </Banner>
           {children}
           <Footer />
@@ -63,7 +62,7 @@ function Footer(): JSX.Element {
       <div className="container flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row items-center gap-6">
-            <div className="bg-primary w-fit rounded-[4px] p-1.5 text-muted-foreground [&_svg]:size-3">
+            <div className="bg-primary w-fit rounded-[4px] p-1.5 text-muted-foreground [&_svg]:size-4">
               <HiroSVG className="text-card" />
             </div>
             <a
@@ -132,7 +131,7 @@ function Footer(): JSX.Element {
                 <Youtube />
               </a>
             </div>
-            <p className="text-sm text-[#7A756B] font-aeonik">
+            <p className="text-sm text-[#b7ac9f] font-aeonikFono">
               Copyright &copy; {new Date().getFullYear()} Hiro Systems, PBC.
             </p>
           </div>

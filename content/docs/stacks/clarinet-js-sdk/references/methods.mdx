@@ -4,32 +4,20 @@ description: The Clarinet JS SDK provides several methods that can be used to in
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Root, API, APIExample, Property, Info } from '@/components/layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { InlineCode } from '@/components/inline-code';
+<API>
 
-## Installation
+<Info>
 
-```package-install
-@hirosystems/clarinet-sdk @stacks/transactions
-```
-
-<Root>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`getAccounts`</h2>
+# `getAccounts`
 
 Retrieve a list of all Stacks addresses configured within the project, including wallets, deployers, and faucets.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -43,9 +31,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
     </TabsTrigger>
   </TabsList>
   <TabsContent value="get-accounts">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getAccounts]
+    ```ts
     const accounts = simnet.getAccounts();
     ```
 
@@ -67,18 +53,17 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAccounts(): Map<string, string>
         ```
       </Accordion>
     </Accordions>
   </TabsContent>
   <TabsContent value="get-account">
-    ```ts twoslash
-    // @noErrors
+    ```ts
     const accounts = simnet.getAccounts();
 
-    const wallet = accounts.get('wallet_1')!; // [!code highlight]
+    const wallet = accounts.get('wallet_1')!;
     ```
 
     <Accordions>
@@ -88,7 +73,7 @@ Retrieve a list of all Stacks addresses configured within the project, including
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAccounts(): Map<string, string>
         ```
       </Accordion>
@@ -100,15 +85,15 @@ Retrieve a list of all Stacks addresses configured within the project, including
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getAssetsMap`</h2>
+# `getAssetsMap`
 
 Retrieve a list of asset balances associated with Stacks addresses, including fungible and non-fungible tokens.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -117,23 +102,21 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
     <TabsTrigger value="default" className='tab group'>
       <Badge className='badge transition-colors'>Getting STX account balances</Badge>
     </TabsTrigger>
-    <TabsTrigger value="get-deployer-balance" className='tab group'>
-      <Badge className='badge transition-colors'>Filtering for a specific account</Badge>
-    </TabsTrigger>
     <TabsTrigger value="get-ft-balance" className='tab group'>
       <Badge className='badge transition-colors'>Getting ft balances</Badge>
     </TabsTrigger>
     <TabsTrigger value="get-nft-balance" className='tab group'>
       <Badge className='badge transition-colors'>Getting nft balances</Badge>
     </TabsTrigger>
+    <TabsTrigger value="get-deployer-balance" className='tab group'>
+      <Badge className='badge transition-colors'>Filtering for an account</Badge>
+    </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getAssetsMap]
+    ```ts
     const assets = simnet.getAssetsMap();
 
-    const stxBalances = assets.get('STX')!; // [!code highlight]
+    const stxBalances = assets.get('STX')!;
     ```
 
     <Accordions>
@@ -154,30 +137,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
-        getAssetsMap(): Map<string, Map<string, bigint>>
-        ```
-      </Accordion>
-    </Accordions>
-
-  </TabsContent>
-  <TabsContent value="get-deployer-balance">
-    ```ts twoslash
-    // @noErrors
-    const assets = simnet.getAssetsMap();
-    const stxBalances = assets.get('STX')!;
-
-    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!; // [!code highlight]
-    ```
-
-    <Accordions>
-      <Accordion title="Response">
         ```ts
-        100000000000000n
-        ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```console
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -185,9 +145,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
   </TabsContent>
   <TabsContent value="get-ft-balance">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:sbtc]
+    ```ts
     const contractName = 'token';
     const sourceCode = `
       (define-fungible-token sbtc)
@@ -203,7 +161,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
     const assets = simnet.getAssetsMap();
 
-    const tokenBalance = assets.get('.token.sbtc')!; // [!code highlight]
+    const tokenBalance = assets.get('.token.sbtc')!;
     ```
 
     <Accordions>
@@ -215,7 +173,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -223,9 +181,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
   </TabsContent>
   <TabsContent value="get-nft-balance">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:ticket]
+    ```ts
     const contractName = 'nft';
     const sourceCode = `
       (define-non-fungible-token ticket uint)
@@ -241,7 +197,7 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
     const assets = simnet.getAssetsMap();
 
-    const nftBalance = assets.get('.nft.ticket')!; // [!code highlight]
+    const nftBalance = assets.get('.nft.ticket')!;
     ```
 
     <Accordions>
@@ -253,7 +209,29 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
+        getAssetsMap(): Map<string, Map<string, bigint>>
+        ```
+      </Accordion>
+    </Accordions>
+
+  </TabsContent>
+  <TabsContent value="get-deployer-balance">
+    ```ts
+    const assets = simnet.getAssetsMap();
+    const stxBalances = assets.get('STX')!;
+
+    const deployerBalance = stxBalances.get('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')!;
+    ```
+
+    <Accordions>
+      <Accordion title="Response">
+        ```ts
+        100000000000000n
+        ```
+      </Accordion>
+      <Accordion title="Schema">
+        ```ts
         getAssetsMap(): Map<string, Map<string, bigint>>
         ```
       </Accordion>
@@ -267,11 +245,11 @@ Retrieve a list of asset balances associated with Stacks addresses, including fu
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getDataVar`</h2>
+# `getDataVar`
 
 Get the value of a `data-var` defined in a contract.
 
@@ -289,7 +267,7 @@ The name of the `data-var` for the contract.
 <span>Example: `count`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -303,19 +281,17 @@ The name of the `data-var` for the contract.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getDataVar]
+    ```ts
     const currentCount = simnet.getDataVar('counter', 'count');
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="counter.clar"
-        (define-data-var count uint u0) // [!code highlight]
+        ```clarity counter.clar
+        (define-data-var count uint u0)
         (define-data-var contractOwner principal tx-sender)
         
-        (var-set count (+ (var-get count) u1)) // [!code highlight]
+        (var-set count (+ (var-get count) u1))
         (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
         ```
       </Accordion>
@@ -328,7 +304,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getDataVar(contract: string, dataVar: string): ClarityValue
         ```
       </Accordion>
@@ -336,24 +312,22 @@ The name of the `data-var` for the contract.
 
   </TabsContent>
   <TabsContent value="clarity-value">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { cvToValue } from '@stacks/transactions';
 
     const contractOwner = simnet.getDataVar("counter", "contractOwner");
 
-    const response = cvToValue(contractOwner); // [!code highlight]
+    const response = cvToValue(contractOwner);
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="counter.clar"
+        ```clarity counter.clar
         (define-data-var count uint u0)
-        (define-data-var contractOwner principal tx-sender) // [!code highlight]
+        (define-data-var contractOwner principal tx-sender)
         
         (var-set count (+ (var-get count) u1))
-        (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5) // [!code highlight]
+        (var-set contractOwner 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5)
         ```
       </Accordion>
       <Accordion title="Response">
@@ -362,7 +336,7 @@ The name of the `data-var` for the contract.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getDataVar(contract: string, dataVar: string): ClarityValue
         ```
       </Accordion>
@@ -374,11 +348,11 @@ The name of the `data-var` for the contract.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getMapEntry`</h2>
+# `getMapEntry`
 
 Get the value of a map entry by its key. Note that this method will always return an optional value `some` or `none`, just like Clarity `map-get?`.
 
@@ -399,10 +373,12 @@ The name of the map within the contract.
 <Property required={true} deprecated={false} name={"mapKey"} type={"ClarityValue"}>
 The key to access the value in the map.
 
-<span>Example: `Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')`</span>
+<span>Example: `Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -416,9 +392,7 @@ The key to access the value in the map.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getMapEntry]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -433,8 +407,8 @@ The key to access the value in the map.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        (define-map Participants principal bool) // [!code highlight]
+        ```clarity pool.clar
+        (define-map Participants principal bool)
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
         ```
@@ -450,7 +424,7 @@ The key to access the value in the map.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getMapEntry(
           contract: string,
           mapName: string,
@@ -462,9 +436,7 @@ The key to access the value in the map.
 
   </TabsContent>
   <TabsContent value="clarity-value">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -476,13 +448,13 @@ The key to access the value in the map.
       Cl.standardPrincipal(wallet)
     );
 
-    const response = cvToValue(hasParticipated); // [!code highlight]
+    const response = cvToValue(hasParticipated);
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        (define-map Participants principal bool) // [!code highlight]
+        ```clarity pool.clar
+        (define-map Participants principal bool)
 
         (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
         ```
@@ -496,7 +468,7 @@ The key to access the value in the map.
         ```
       </Accordion>
       <Accordion title="Schema">
-        ```console
+        ```ts
         getMapEntry(
           contract: string,
           mapName: string,
@@ -513,11 +485,11 @@ The key to access the value in the map.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`callReadOnlyFn`</h2>
+# `callReadOnlyFn`
 
 Call read-only functions exposed by a contract.
 
@@ -540,7 +512,9 @@ The name of the read-only function within the contract.
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
 The arguments to pass to the read-only function. If no arguments are needed, pass an empty array.
 
-<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+<span>Example: `[Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)]`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
@@ -549,7 +523,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -569,9 +543,7 @@ The Stacks address of the sender.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:callReadOnlyFn]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -584,13 +556,12 @@ The Stacks address of the sender.
       wallet
     );  
     
-    const response = getContributionAmount.result // [!code highlight]
+    const response = getContributionAmount.result
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:get-contribution-amount]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -637,9 +608,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="with-no-arguments">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:args]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -648,17 +617,16 @@ The Stacks address of the sender.
     const isActive = simnet.callReadOnlyFn(
       'pool',
       'is-active',
-      [], // [!code highlight]
+      [],
       wallet
     );
     
-    const response = isActive.result // [!code highlight]
+    const response = isActive.result
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:is-active]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -707,28 +675,26 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="deployer">
-    ```ts twoslash
-    // @noErrors
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
     const wallet = accounts.get('deployer')!;
-    const contractAddress = `${wallet}.pool`; // [!code highlight]
+    const contractAddress = `${wallet}.pool`;
 
     const getParticipant = simnet.callReadOnlyFn(
-      contractAddress, // [!code highlight]
+      contractAddress,
       'get-participant',
       [Cl.standardPrincipal(wallet)],
       wallet
     );
 
-    const response = getParticipant.result; // [!code highlight]
+    const response = getParticipant.result;
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:get-participant]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -774,9 +740,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="clarity-value">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -789,13 +753,12 @@ The Stacks address of the sender.
       wallet
     );
 
-    const response = cvToValue(getContributionAmount.result); // [!code highlight]
+    const response = cvToValue(getContributionAmount.result);
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:get-contribution-amount]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -844,11 +807,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`callPublicFn`</h2>
+# `callPublicFn`
 
 Call public functions exposed by a contract.
 
@@ -873,7 +836,9 @@ The name of the public function within the contract.
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
 The arguments to pass to the public function. If no arguments are needed, pass an empty array.
 
-<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+<span>Example: `[Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)]`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
@@ -882,7 +847,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -899,9 +864,7 @@ The Stacks address of the sender.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:callPublicFn]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -914,13 +877,12 @@ The Stacks address of the sender.
       wallet
     );
 
-    const response = registerParticipant.result; // [!code highlight]
+    const response = registerParticipant.result;
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:register-participant]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -966,9 +928,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="clarity-value">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -981,13 +941,12 @@ The Stacks address of the sender.
       wallet
     );
     
-    const response = cvToValue(registerParticipant.result); // [!code highlight]
+    const response = cvToValue(registerParticipant.result);
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:register-participant]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -1031,10 +990,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="events">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
-    // [!code word:ClarityValue]
+    ```ts
     import { Cl, cvToValue, type ClarityValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -1048,14 +1004,13 @@ The Stacks address of the sender.
     );
     
     const eventValues = registerParticipant.events.map((event) =>
-      cvToValue(event.data.value as ClarityValue) // [!code highlight]
+      cvToValue(event.data.value as ClarityValue)
     );
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:register-participant]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -1063,7 +1018,7 @@ The Stacks address of the sender.
           (begin
             (map-set Participants who true)
             (map-set ParticipantStatus who { enrollmentBlock: block-height, contributionAmount: u0 })
-            (print { message: "Registered", who: who, at: block-height }) // [!code highlight]
+            (print { message: "Registered", who: who, at: block-height })
             (ok true)
           )
         )
@@ -1116,11 +1071,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className="mt-0">`callPrivateFn`</h2>
+# `callPrivateFn`
 
 Call private functions exposed by a contract.
 
@@ -1145,7 +1100,9 @@ The name of the private function within the contract.
 <Property required={true} deprecated={false} name={"args"} type={"ClarityValue[]"}>
 The arguments to pass to the private function. If no arguments are needed, pass an empty array.
 
-<span>Example: `[Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')]`</span>
+<span>Example: `[Cl.standardPrincipal(
+  'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'
+)]`</span>
 </Property>
 
 <Property required={true} deprecated={false} name={"sender"} type={"string"}>
@@ -1154,7 +1111,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1168,9 +1125,7 @@ The Stacks address of the sender.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:callPrivateFn]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -1184,13 +1139,12 @@ The Stacks address of the sender.
       wallet
     );
 
-    const response = rewardParticipantPoints.result; // [!code highlight]
+    const response = rewardParticipantPoints.result;
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:reward-participant-points]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
         (define-map ParticipantPoints principal int)
@@ -1240,9 +1194,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="clarity-value">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { Cl, cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -1256,13 +1208,12 @@ The Stacks address of the sender.
       wallet
     );
 
-    const response = cvToValue(registerParticipant.result); // [!code highlight]
+    const response = cvToValue(registerParticipant.result);
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:reward-participant-points]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
         (define-map ParticipantPoints principal int)
@@ -1319,11 +1270,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`transferSTX`</h2>
+# `transferSTX`
 
 Transfer STX from one address to another. The amount transferred is in `uSTX`.
 
@@ -1349,7 +1300,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1366,9 +1317,7 @@ The Stacks address of the sender.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:transferSTX]
+    ```ts
     const accounts = simnet.getAccounts();
     const recipient = accounts.get('wallet_1')!;
 
@@ -1423,9 +1372,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="clarity-value">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { cvToValue } from '@stacks/transactions';
 
     const accounts = simnet.getAccounts();
@@ -1437,7 +1384,7 @@ The Stacks address of the sender.
       simnet.deployer
     );
     
-    const response = cvToValue(transfer.result); // [!code highlight]
+    const response = cvToValue(transfer.result);
     ```
 
     <Accordions>
@@ -1467,8 +1414,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="events">
-    ```ts twoslash
-    // @noErrors
+    ```ts
     const accounts = simnet.getAccounts();
     const recipient = accounts.get('wallet_1')!;
 
@@ -1478,7 +1424,7 @@ The Stacks address of the sender.
       simnet.deployer
     );
 
-    const events = transfer.events.map((event) => event); // [!code highlight]
+    const events = transfer.events.map((event) => event);
     ```
 
     <Accordions>
@@ -1520,11 +1466,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`deployContract`</h2>
+# `deployContract`
 
 Deploy a contract to simnet.
 
@@ -1556,7 +1502,7 @@ The Stacks address of the sender.
 <span>Example: `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1573,10 +1519,7 @@ The Stacks address of the sender.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
-    // [!code word:deployContract]
+    ```ts
     import { cvToValue } from '@stacks/transactions';
 
     const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
@@ -1588,7 +1531,7 @@ The Stacks address of the sender.
       simnet.deployer
     );
 
-    const response = cvToValue(contract.result); // [!code highlight]
+    const response = cvToValue(contract.result);
     ```
 
     <Accordions>
@@ -1616,9 +1559,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="options">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { cvToValue } from '@stacks/transactions';
 
     const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
@@ -1626,11 +1567,11 @@ The Stacks address of the sender.
     const contract = simnet.deployContract(
       'hello-world',
       sourceCode,
-      { clarityVersion: 2 }, // [!code highlight]
+      { clarityVersion: 2 },
       simnet.deployer
     );
 
-    const response = cvToValue(contract.result); // [!code highlight]
+    const response = cvToValue(contract.result);
     ```
 
     <Accordions>
@@ -1658,9 +1599,7 @@ The Stacks address of the sender.
 
   </TabsContent>
   <TabsContent value="interact">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { cvToValue } from '@stacks/transactions';
 
     const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
@@ -1672,7 +1611,7 @@ The Stacks address of the sender.
       simnet.deployer
     );
 
-    const sayHi = simnet.callReadOnlyFn("hello-world", "say-hi", [], simnet.deployer); // [!code highlight]
+    const sayHi = simnet.callReadOnlyFn("hello-world", "say-hi", [], simnet.deployer);
 
     const response = sayHi.result
     ```
@@ -1710,11 +1649,11 @@ The Stacks address of the sender.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`mineBlock`</h2>
+# `mineBlock`
 
 The `callPublicFn`, `transferSTX`, and `deployContract` methods all mine one block with only one transaction. It can also be useful to mine a block with multiple transactions.
 
@@ -1739,7 +1678,7 @@ An array of transactions to be included in the block.
 <span>Example: `[tx.transferSTX(100, recipient, sender), ...]`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1750,10 +1689,7 @@ An array of transactions to be included in the block.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:tx]
-    // [!code word:mineBlock]
+    ```ts
     import { tx } from '@hirosystems/clarinet-sdk';
     import { Cl, cvToValue } from '@stacks/transactions';
 
@@ -1774,9 +1710,7 @@ An array of transactions to be included in the block.
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="counter.clar"
-        // [!code word:increment]
-        // [!code word:add]
+        ```clarity counter.clar
         (define-data-var count uint u0)
 
         (define-public (increment)
@@ -1840,17 +1774,17 @@ An array of transactions to be included in the block.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`mineEmptyBlock`</h2>
+# `mineEmptyBlock`
 
 Mine one empty block and increase the block height by one.
 
 Returns the new block height.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1861,12 +1795,10 @@ Returns the new block height.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:mineEmptyBlock]
+    ```ts
     simnet.mineEmptyBlock();
 
-    const response = simnet.blockHeight; // [!code highlight]
+    const response = simnet.blockHeight;
     ```
 
     <Accordions>
@@ -1889,11 +1821,11 @@ Returns the new block height.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`mineEmptyBlocks`</h2>
+# `mineEmptyBlocks`
 
 Mine multiple empty blocks to reach a certain block height.
 
@@ -1907,7 +1839,7 @@ The number of empty blocks to mine. This parameter is optional.
 <span>Example: `5`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -1921,13 +1853,10 @@ The number of empty blocks to mine. This parameter is optional.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:mineEmptyBlocks]
-    // [!code word:5]
+    ```ts
     simnet.mineEmptyBlocks(5);
 
-    const response = simnet.blockHeight; // [!code highlight]
+    const response = simnet.blockHeight;
     ```
 
     <Accordions>
@@ -1944,12 +1873,10 @@ The number of empty blocks to mine. This parameter is optional.
     </Accordions>
   </TabsContent>
   <TabsContent value="options">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:mineEmptyBlocks]
+    ```ts
     simnet.mineEmptyBlocks();
 
-    const response = simnet.blockHeight; // [!code highlight]
+    const response = simnet.blockHeight;
     ```
 
     <Accordions>
@@ -1971,11 +1898,11 @@ The number of empty blocks to mine. This parameter is optional.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`runSnippet`</h2>
+# `runSnippet`
 
 Execute arbitrary Clarity code directly, which allows you to test and interact with smart contract functions without deploying them.
 
@@ -1987,7 +1914,7 @@ The Clarity code snippet to be executed.
 <span>Example: `(define-read-only (get-balance) (ok stx-balance))`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2001,17 +1928,14 @@ The Clarity code snippet to be executed.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:runSnippet]
-    // [!code word:prettyPrint]
+    ```ts
     import { Cl } from '@stacks/transactions';
 
     const codeSnippet = simnet.runSnippet(
       '(stx-account tx-sender)'
     );
 
-    const response = Cl.prettyPrint(codeSnippet, 2); // [!code highlight]
+    const response = Cl.prettyPrint(codeSnippet, 2);
     ```
 
     <Accordions>
@@ -2032,9 +1956,7 @@ The Clarity code snippet to be executed.
     </Accordions>
   </TabsContent>
   <TabsContent value="transfer">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:cvToValue]
+    ```ts
     import { cvToValue } from "@stacks/transactions";
 
     const accounts = simnet.getAccounts();
@@ -2044,7 +1966,7 @@ The Clarity code snippet to be executed.
       `(stx-transfer? u19000000 tx-sender '${recipient})`
     );
 
-    const response = cvToValue(codeSnippet); // [!code highlight]
+    const response = cvToValue(codeSnippet);
     ```
 
     <Accordions>
@@ -2069,17 +1991,17 @@ The Clarity code snippet to be executed.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getContractsInterfaces`</h2>
+# `getContractsInterfaces`
 
 Returns the interfaces of the project contracts as a Map of Contracts, with the keys being the contract addresses.
 
 These interfaces contain information such as the available `functions`, `data-vars`, `maps`, `NFTs`, and `FTs` defined in the contract.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2093,17 +2015,15 @@ These interfaces contain information such as the available `functions`, `data-va
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getContractsInterfaces]
+    ```ts
     const contractInterfaces = simnet.getContractsInterfaces();
 
-    const response = contractInterfaces.get(`${simnet.deployer}.pool`); // [!code highlight]
+    const response = contractInterfaces.get(`${simnet.deployer}.pool`);
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -2162,18 +2082,15 @@ These interfaces contain information such as the available `functions`, `data-va
     </Accordions>
   </TabsContent>
   <TabsContent value="filter">
-    ```ts twoslash
-    // @noErrors
+    ```ts
     const poolContract = contractInterfaces.get(`${simnet.deployer}.pool`);
 
-    const response = poolContract?.functions; // [!code highlight]
+    const response = poolContract?.functions;
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
-        // [!code word:get-participant]
-        // [!code word:is-active]
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -2219,11 +2136,11 @@ These interfaces contain information such as the available `functions`, `data-va
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getContractSource`</h2>
+# `getContractSource`
 
 Get the source code of a contract as a string.
 
@@ -2235,7 +2152,7 @@ The identifier of the contract for which the source code is requested.
 <span>Example: `pool`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2246,15 +2163,13 @@ The identifier of the contract for which the source code is requested.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getContractSource]
+    ```ts
     const contractSource = simnet.getContractSource('pool');
     ```
 
     <Accordions>
       <Accordion title="Source code">
-        ```clarity title="pool.clar"
+        ```clarity pool.clar
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -2268,7 +2183,7 @@ The identifier of the contract for which the source code is requested.
         ```
       </Accordion>
       <Accordion title="Response">
-        ```console
+        ```clarity
         (define-map Participants principal bool)
         (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
@@ -2294,11 +2209,11 @@ The identifier of the contract for which the source code is requested.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`getContractAST`</h2>
+# `getContractAST`
 
 Get the full AST (Abstract Syntax Tree) of a Clarity contract.
 
@@ -2312,7 +2227,7 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
 <span>Example: `pool`</span>
 </Property>
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -2323,9 +2238,7 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:getContractAST]
+    ```ts
     const contractAST = simnet.getContractAST('pool');
     ```
 
@@ -2371,5 +2284,3 @@ The identifier of the contract for which the AST (Abstract Syntax Tree) is reque
 </APIExample>
 
 </API>
-
-</Root>

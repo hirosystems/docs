@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -42,8 +42,7 @@ Optional overrides for the request initialization settings.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="get-assets">
-    ```tsx twoslash
-    // @noErrors
+    ```tsx
     import { Configuration, AccountsApi } from '@stacks/blockchain-api-client';
     
     const apiConfig = new Configuration({
@@ -61,7 +60,7 @@ Optional overrides for the request initialization settings.
     <Accordions>
 
     <Accordion title={"Full Code Sample"}>
-      ```tsx twoslash
+      ```tsx
       import {
         UserSession,
         makeAuthRequest,
@@ -171,10 +170,7 @@ Decrypts user data for secure storage.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="pending">
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:isSignInPending]
-    // [!code word:handlePendingSignIn]
+    ```tsx
     const isPending = userSession.isSignInPending();
 
     if (isPending) {
@@ -185,16 +181,12 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='status'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:isUserSignedIn]
+    ```tsx
     const isSignedIn = userSession.isUserSignedIn();
     ```
   </TabsContent>
   <TabsContent value='user-data'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:loadUserData]
+    ```tsx
     const isSignedIn = userSession.isUserSignedIn();
 
     if (isSignedIn) {
@@ -204,27 +196,21 @@ Decrypts user data for secure storage.
     ```
   </TabsContent>
   <TabsContent value='sign-out'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:signUserOut]
+    ```tsx
     function logout() {
       userSession.signUserOut();
     }
     ```
   </TabsContent>
   <TabsContent value='encrypt'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:encryptContent]
+    ```tsx
     const message = 'My secret message';
 
     const cipherText = await userSession.encryptContent(message);
     ```
   </TabsContent>
   <TabsContent value='decrypt'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:decryptContent]
+    ```tsx
     const message = 'My secret message';
 
     const cipherText = await userSession.encryptContent(message);

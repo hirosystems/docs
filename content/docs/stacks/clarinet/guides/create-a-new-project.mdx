@@ -4,22 +4,29 @@ description: Once you install Clarinet, you can use Clarinet to create a new pro
 ---
 
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
-To create a new project, run the `clarinet new` command along with your project name.
+Create a new Clarinet project with the basic directory structure and configuration files:
 
-```console title="Terminal"
-clarinet new my-project
+```terminal
+$ clarinet new my-project
+[32mCreate directory[0m [1mmy-project[0m
+[32mCreate directory[0m [1mcontracts[0m
+[32mCreate directory[0m [1msettings[0m
+[32mCreate directory[0m [1mtests[0m
+[32mCreate file[0m [1mClarinet.toml[0m
+[32mCreate file[0m [1msettings/Mainnet.toml[0m
+[32mCreate file[0m [1msettings/Testnet.toml[0m
+[32mCreate file[0m [1msettings/Devnet.toml[0m
+[32mCreate directory[0m [1m.vscode[0m
+[32mCreate file[0m [1m.vscode/settings.json[0m
+[32mCreate file[0m [1m.vscode/tasks.json[0m
+[32mCreate file[0m [1m.gitignore[0m
+[32mCreate file[0m [1m.gitattributes[0m
+[32mCreate file[0m [1mpackage.json[0m
+[32mCreate file[0m [1mtsconfig.json[0m
+[32mCreate file[0m [1mvitest.config.js[0m
 ```
-
-## Project structure
-
-**Clarinet** will create a project directory with the following directory layout:
+This will create a project directory with the following directory layout:
 
 <Files className='pointer-events-none'>
   <Folder name="contracts" />
@@ -36,7 +43,6 @@ clarinet new my-project
   <File name="vitest.config.js" />
 </Files>
 
-The `Clarinet.toml` file contains configuration for the smart contracts in your project. When you create contracts in your project, Clarinet will automatically add them to this file.
+The _txt`Clarinet.toml`_ file contains configuration for the smart contracts in your project. When you create contracts in your project, Clarinet will automatically add them to this file.
 
-The `settings/Devnet.toml` file contains configuration for accounts in the Clarinet console, including the seed phrases and initial balances for a set of out-of-the-box wallets that you can use for testing in the devnet environment. Note: the initial balances for these wallets are in <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>microSTX</span></TooltipTrigger><TooltipContent>`uSTX`, or microSTX, which is the smallest unit representation of STX. 1 STX = 1,000,000,000 `uSTX`.</TooltipContent></Tooltip></TooltipProvider>.
-
+The _txt`settings/Devnet.toml`_ file contains configuration for accounts in the Clarinet console, including the seed phrases and initial balances for a set of out-of-the-box wallets that you can use for testing in the devnet environment.

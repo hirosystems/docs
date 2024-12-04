@@ -4,35 +4,18 @@ description: Clarinet provides syntax and semantics checkers for the smart contr
 ---
 
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
-To verify your contracts, run the `clarinet check` command inside your project.
+Validate the syntax and semantics of your contracts:
 
-```console title="Terminal"
-clarinet check
+```terminal
+$ clarinet check
+[32m✔[0m [1m1 contract checked[0m
+$ clarinet check path/to/my-contract.clar
+[32m✔[0m [1m1 contract checked[0m
 ```
 
-## Configuration
-
-**Clarinet** uses the `Clarinet.toml` file to locate and analyze all the contracts in the project. If the Clarity code is valid, the command will indicate success with the response below.
-
-```console title="Terminal"
-✔ 2 contracts checked
-```
+This command uses the _txt`Clarinet.toml`_ file to locate and analyze all the contracts in the project. If the Clarity code is valid, the command will indicate success with the response below.
 
 <Callout title="Note">
-The `clarinet check` command may also report warnings indicating the code is valid.
+The _console`clarinet check`_ command may also report warnings indicating the code is valid.
 </Callout>
-
-If you want to check the syntax of just a single file in your project, you can use the command below.
-
-```console title="Terminal"
-clarinet check <path/to/file.clar>
-```
-
-With this command, `Clarinet` will report syntactical errors, but it does not perform type-checking or other semantic checks as that would require the <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>full context</span></TooltipTrigger><TooltipContent>Because it only looks at this one contract, Clarinet would need the full context to perform a complete check.</TooltipContent></Tooltip></TooltipProvider> for a comprehensive analysis.

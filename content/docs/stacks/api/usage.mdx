@@ -15,8 +15,8 @@ https://api.mainnet.hiro.so
 
 To make a request to the Stacks API, you can paste the `curl` command below in your terminal.
 
-```bash title="Terminal"
-curl -L 'https://api.hiro.so/extended' \
+```terminal
+$ curl -L 'https://api.hiro.so/extended' \
 -H 'Accept: application/json'
 ```
 
@@ -24,10 +24,10 @@ curl -L 'https://api.hiro.so/extended' \
 
 If you are using an `api-key`, you will need to replace `$HIRO_API_KEY` with your secret API key.
 
-```bash title="Terminal"
-curl -L 'https://api.hiro.so/extended' \
--H 'Accept: application/json' \
--H 'X-API-Key: $HIRO_API_KEY' # [!code highlight]
+```terminal
+$ curl -L 'https://api.hiro.so/extended' \
+  -H 'Accept: application/json' \
+  -H 'X-API-Key: $HIRO_API_KEY'
 ```
 
 ### Response codes

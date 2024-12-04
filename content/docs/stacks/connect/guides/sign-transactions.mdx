@@ -38,7 +38,7 @@ Install the required packages to start building and broadcasting transactions.
 
 Users must authenticate to an app before prompting them to sign and broadcast transactions to the Stacks blockchain with an authenticator such as the [Leather](https://leather.io/install-desktop) wallet.
 
-```ts twoslash
+```ts
 import { AppConfig, UserSession } from '@stacks/connect';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
@@ -66,8 +66,7 @@ There are three types of transactions: **STX transfers**, **contract deployments
   <TabsContent value="transfer">
     To prompt the user to transfer STX, call the `openSTXTransfer` function provided by the `@stacks/connect` package to trigger the display of a transaction signing prompt for transferring STX:
 
-    ```ts twoslash
-    // @noErrors
+    ```ts
     import { openSTXTransfer } from '@stacks/connect';
     import { StacksTestnet } from '@stacks/network';
 
@@ -93,8 +92,7 @@ There are three types of transactions: **STX transfers**, **contract deployments
   <TabsContent value="deploy">
     To prompt the user to deploy a smart contract, call the `openContractDeploy` function provided by the `@stacks/connect` package to trigger the display of a transaction signing prompt for deploying a smart contract:
   
-    ```ts twoslash
-    // @noErrors
+    ```ts
     import { openContractDeploy } from '@stacks/connect';
 
     const codeBody = '(begin (print "hello, world"))';
@@ -132,8 +130,7 @@ There are three types of transactions: **STX transfers**, **contract deployments
 
     To execute this function, invoke the `openContractCall` method.
 
-    ```ts twoslash
-    // @noErrors
+    ```ts
     import { openContractCall } from '@stacks/connect';
     import {
       uintCV,
@@ -201,9 +198,7 @@ All of the methods included on this page accept a `network` option. By default, 
 
 <Accordions>
 <Accordion title="Custom network example">
-  ```ts twoslash
-  // @noErrors
-  // [!code word:mainnet]
+  ```ts
   import { openContractCall } from '@stacks/connect';
   import { StacksMainnet } from '@stacks/network';
 
