@@ -36,10 +36,10 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
       text: "Guides",
       url: "/guides",
     },
-    {
-      text: "Cookbook",
-      url: "/cookbook",
-    },
+    // {
+    //   text: "Cookbook",
+    //   url: "/cookbook",
+    // },
   ],
   sidebar: {
     defaultOpenLevel: 0,
