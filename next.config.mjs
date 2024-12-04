@@ -5,9 +5,9 @@ import {
   remarkInstall,
   rehypeCodeDefaultOptions,
 } from 'fumadocs-core/mdx-plugins';
-import { transformerTwoslash } from 'fumadocs-twoslash';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
+import { recmaCodeHike, remarkCodeHike } from "codehike/mdx";
 
 const withAnalyzer = createBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -23,6 +23,35 @@ const config = {
   images: {
     domains: [],
   },
+  swcMinify: false,
+  webpack: (config) => {
+    config.optimization.minimize = false;
+    return config;
+  },
+  redirects: () => [
+    {
+      source: "/address",
+      destination: "/stacks/stacks.js/concepts/accounts-and-addresses",
+      permanent: true,
+    },
+    {
+      source: "/what-is-a-wallet",
+      destination: "/stacks/stacks.js/concepts/private-keys",
+      permanent: true,
+    },
+  ],
+};
+
+/**
+ * @type {import('codehike/mdx').CodeHikeConfig}
+ */
+const chConfig = {
+  components: {
+    code: "DocsKitCode",
+    inlineCode: "DocsKitInlineCode",
+  },
+  ignoreCode: ({ lang, meta }) =>
+    meta?.startsWith("title")
 };
 
 const withMDX = createMDX({
@@ -34,34 +63,18 @@ const withMDX = createMDX({
       },
       transformers: [
         ...rehypeCodeDefaultOptions.transformers,
-        transformerTwoslash(),
-        {
-          name: 'fumadocs:remove-escape',
-          code(element) {
-            element.children.forEach((line) => {
-              if (line.type !== 'element') return;
-
-              line.children.forEach((child) => {
-                if (child.type !== 'element') return;
-                const textNode = child.children[0];
-                if (!textNode || textNode.type !== 'text') return;
-
-                textNode.value = textNode.value.replace(/\[\\!code/g, '[!code');
-              });
-            });
-
-            return element;
-          },
-        },
       ],
     },
     lastModifiedTime: 'git',
-    remarkPlugins: [
+    remarkPlugins: (v) => [
+      [remarkCodeHike, chConfig],
       remarkMath,
       remarkDynamicContent,
-      [remarkInstall, { Tabs: 'InstallTabs' }],
+      [remarkInstall],
+      ...v,
     ],
     rehypePlugins: (v) => [rehypeKatex, ...v],
+    recmaPlugins: [[recmaCodeHike, chConfig]],
   },
   buildSearchIndex: {},
 });

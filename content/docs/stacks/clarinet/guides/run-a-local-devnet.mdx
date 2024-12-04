@@ -3,22 +3,13 @@ title: Run a local devnet
 description: Integrate your contracts with a local development environment.
 ---
 
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import ClarinetDevnetStart from '@/public/clarinet-devnet-start.png';
+Launch a local development network with all required services:
 
-To run a local devnet, run the `clarinet devnet start` command.
-
-```console title="Terminal"
-clarinet devnet start
+```terminal
+$ clarinet devnet start
 ```
 
-<Callout title="Requirements" type="warn"> This section requires that you have Docker running locally. To install, refer to the [Docker documentation](/guides/installing-docker).</Callout>
-
-## Under the hood
-
-This command spins up several containers for various services such as a Stacks and Bitcoin node, the Stacks API, and more.
-
-These containers work together to provide all the necessary services for running a local development environment, allowing you to test and interact with your smart contracts locally.
+Requires Docker to be running locally. See [installing Docker](/guides/install-docker) guide for more information.
 
 <Callout title="Common errors" type="warn">
   <p>If you are getting `error: clarinet was unable to create network`, make sure you have a container service running locally.</p>

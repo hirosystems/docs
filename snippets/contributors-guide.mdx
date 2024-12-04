@@ -1,4 +1,6 @@
-<Callout title="Info">
+import { Steps, Step } from 'fumadocs-ui/components/steps';
+
+<Callout title="Install the GitHub CLI">
 Some examples use the `gh` CLI package for creating issues and forking. To install that package, [click here](https://github.com/cli/cli).
 </Callout>
 
@@ -8,8 +10,8 @@ If you find content that is obsolete, technically inaccurate, or unclear, start 
 
 This is a great way to give specific feedback and ensure the technical content is up-to-date and technically accurate.
 
-```console title="Terminal"
-gh issue create
+```terminal
+$ gh issue create
 ```
 
 <Callout>
@@ -18,36 +20,43 @@ For creating an issue via the web, go [here](https://github.com/hirosystems/docs
 
 ## Pull requests
 
-To suggest more comprehensive changes or make updates yourself, feel free to make documentation changes by forking the repo and then submitting a pull request.
+<Steps>
+  <Step>
+  To suggest more comprehensive changes or make updates yourself, feel free to make documentation changes by forking the repo and then submitting a pull request.
 
-1. Fork the repo and clone it.
+  Fork the repo and clone it.
 
-```console title="Terminal"
-gh repo fork hirosystems/docs
-```
+  ```terminal
+  $ gh repo fork hirosystems/docs
+  ```
 
-<Callout>
-For forking via the web, go [here](https://github.com/hirosystems/docs/fork).
-</Callout>
+  <Callout>
+  For forking via the web, go [here](https://github.com/hirosystems/docs/fork).
+  </Callout>
+  </Step>
+  <Step>
+  Create a new branch and make your changes.
 
-2. Create a new branch and make your changes.
+  ```terminal
+  $ git checkout -b my-branch
+  ```
+  </Step>
+  <Step>
+  Commit your changes with a message with a brief summary message:
 
-```console title="Terminal"
-git checkout -b my-branch
-```
+  ```terminal
+  $ git commit -m "commit message"
+  ```
+  </Step>
+  <Step>
+  Push up your branch:
 
-3. Commit your changes with a message with a brief summary message:
+  ```terminal
+  $ git push origin my-branch
+  ```
+  </Step>
+</Steps>
 
-```console title="Terminal"
-git commit -m "commit message"
-```
-
-4. Push up your branch:
-
-```console title="Terminal"
-git push origin my-branch
-```
-
-<Callout title="Info">
+<Callout title="Pull Request Guidelines">
 PR titles should be descriptive enough for reviewers to understand *what* is being changed and have a description that explains *why* the change is being made.
 </Callout>

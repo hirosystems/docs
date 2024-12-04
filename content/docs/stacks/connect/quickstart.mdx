@@ -32,9 +32,7 @@ For a deeper dive into the authentication process, check out the [authenticate u
   
     Add a reusable `UserSession` instance to your project. This will allow your app to store authentication state in `localStorage`.
 
-    ```ts twoslash title="session.ts"
-    // @noErrors
-    // [!code word:userSession]
+    ```ts session.ts
     import { AppConfig, UserSession } from '@stacks/connect';
 
     const appConfig = new AppConfig(['store_write', 'publish_data']);
@@ -50,9 +48,7 @@ For a deeper dive into the authentication process, check out the [authenticate u
 
     Using the `showConnect` function, you can prompt the user to select a wallet to connect to your app.
 
-     ```tsx twoslash title="connect.ts"
-    // @noErrors
-    // [!code word:showConnect]
+     ```tsx connect.ts
     import { showConnect } from '@stacks/connect';
     import { userSession } from './session';
 
@@ -82,9 +78,7 @@ For a deeper dive into the authentication process, check out the [authenticate u
 
     To prompt the user for a STX transfer call, use the `openSTXTransfer` function.
 
-    ```tsx twoslash title="transfer.ts"
-    // @noErrors
-    // [!code word:openSTXTransfer]
+    ```tsx transfer.ts
     import { openSTXTransfer } from '@stacks/connect';
     import { StacksTestnet } from '@stacks/network';
     import { userSession } from './session';

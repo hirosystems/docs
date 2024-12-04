@@ -1,4 +1,3 @@
-import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { RollButton } from "fumadocs-ui/components/roll-button";
@@ -18,69 +17,6 @@ export default function Page({ params }: { params: Param }): JSX.Element {
 
   if (!page) notFound();
 
-  // TODO: this is a less than ideal solution for creating different titles between sidebar and page
-  const generatePrefix = (page: any) => {
-    // Mapping of words to their desired capitalization forms
-    const specialCases = {
-      api: "API",
-      sdk: "SDK",
-      connect: "Stacks Connect",
-      platform: "Hiro Platform",
-      hacks: "Hiro Hacks",
-      "clarinet-js-sdk": "Clarinet JS SDK",
-      "platform-api": "Platform API",
-      "rpc-api": "Stacks Node RPC",
-    };
-
-    if (page.file?.name === "index" && page.slugs[1]) {
-      const segment = page.slugs[1];
-      let prefix =
-        specialCases[segment.toLowerCase() as keyof typeof specialCases] ||
-        segment.charAt(0).toUpperCase() + segment.slice(1);
-
-      // Check if there is a second segment and append it
-      if (page.slugs[2] && page.slugs[1].toLowerCase() !== "api") {
-        const secondSegment = page.slugs[2];
-        prefix +=
-          " " +
-          (specialCases[
-            secondSegment.toLowerCase() as keyof typeof specialCases
-          ] || secondSegment.charAt(0).toUpperCase() + secondSegment.slice(1));
-      }
-
-      if (page.slugs[1].toLowerCase() === "platform-api") {
-        prefix = "Platform API";
-      }
-
-      if (page.slugs[1].toLowerCase() === "token-metadata-api") {
-        prefix = "Token Metadata API";
-      }
-
-      if (page.slugs[1].toLowerCase() === "rpc-api") {
-        prefix = "Stacks Node RPC API";
-      }
-
-      return prefix;
-    } else if (["overview", "index"].includes(page.file?.name)) {
-      const pathSegments = page.file.dirname.split("/");
-      if (pathSegments.length >= 2) {
-        const relevantSegments = pathSegments.slice(-2); // Get the last two segments
-
-        return relevantSegments
-          .map(
-            (segment: string) =>
-              specialCases[
-                segment.toLowerCase() as keyof typeof specialCases
-              ] || segment.charAt(0).toUpperCase() + segment.slice(1) // Capitalize the first letter
-          )
-          .join(" "); // Join them with a space
-      }
-    }
-    return "";
-  };
-
-  const prefix = generatePrefix(page);
-
   return (
     <DocsPage
       toc={page.data.exports.toc}
@@ -90,14 +26,17 @@ export default function Page({ params }: { params: Param }): JSX.Element {
     >
       <RollButton />
       {page.data.title !== "Home" && (
-        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
-          {prefix} {page.data.title}
+        <h1 className="text-2xl text-foreground sm:text-3xl">
+          {page.data.title}
         </h1>
       )}
       {page.data.title !== "Home" && (
         <p className="mb-8 text-lg text-muted-foreground">
           {page.data.description}
         </p>
+      )}
+      {page.data.title !== "Home" && (
+        <hr className="border-t border-border/50" />
       )}
       <DocsBody>
         {page.data.index ? (
@@ -165,50 +104,12 @@ const metadata: Metadata = {
   },
 };
 
-function generateCustomTitle(file: {
-  flattenedPath: string;
-  name: string;
-}): string {
-  const segments = file.flattenedPath.split("/");
-  const isRootLevelSegment = segments.length === 3;
-  let relevantSegments: string[] = [];
-
-  if (isRootLevelSegment) {
-    relevantSegments = [segments[1]];
-  }
-
-  return (
-    relevantSegments[0]?.charAt(0)?.toUpperCase() +
-    relevantSegments[0]?.slice(1)
-  );
-}
-
-export function generateMetadata({ params }: { params: Param }): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const params = await props.params;
   const page = utils.getPage(params.slug);
-
   if (!page) notFound();
 
-  const description =
-    page.data.description ??
-    "All the developer docs, guides and resources you need to build on Bitcoin layers.";
-
-  const imageParams = new URLSearchParams();
-  imageParams.set("title", page.data.title);
-  imageParams.set("description", description);
-
-  const customTitle = generateCustomTitle(page.file);
-
-  return createMetadata({
-    ...metadata,
-    title: customTitle.length
-      ? `${customTitle} ${page.data.title}`
-      : page.data.title,
-    description,
-  });
-}
-
-export function generateStaticParams(): Param[] {
-  return utils.getPages().map<Param>((page) => ({
-    slug: page.slugs,
-  }));
+  return metadata;
 }

@@ -21,8 +21,8 @@ In this section, you will configure Chainhook to match the network configuration
 
 Next, you will generate a `Chainhook.toml` file to connect Chainhook with your bitcoind node. Navigate to the directory where you want to generate the `Chainhook.toml` file and use the following command in your terminal:
 
-```console title="Terminal"
-chainhook config generate --mainnet
+```terminal
+$ chainhook config generate --mainnet
 ```
 
 Several network parameters in the generated `Chainhook.toml` configuration file need to match those in the `bitcoin.conf` file created earlier in the [setting up a Bitcoin node](/guides/sync-a-bitcoin-node) section. Update the following parameters accordingly:
@@ -89,14 +89,13 @@ These predicates are where you specify the `if_this / then_that` pattern to trig
 
 To generate a sample JSON file with predicates, execute the following command in your terminal:
 
-```console title="Terminal"
-chainhook predicates new stacking-pool.json --bitcoin
+```terminal
+$ chainhook predicates new stacking-pool.json --bitcoin
 ```
 
 Replace the contents of the `stacking-pool.json` file with the following:
 
 ```json
-// [!code word: file_append]
 {
   "chain": "bitcoin",
   "uuid": "1",
@@ -130,8 +129,8 @@ You can get blockchain height and current block by referring to the [Stacks Expl
 
 Now, use the following command to scan the blocks based on the predicates defined in the `stacking-pool.json` file.
 
-```console title="Terminal"
-chainhook predicates scan stacking-pool.json --config-path=./Chainhook.toml
+```terminal
+$ chainhook predicates scan stacking-pool.json --config-path=./Chainhook.toml
 ```
 
 The output of the above command will be a text file `bitcoin-transactions.txt` generated based on the predicate definition.
@@ -140,14 +139,13 @@ The output of the above command will be a text file `bitcoin-transactions.txt` g
 
 Now you will generate another sample predicate, but this time you will send the payload to an API endpoint:
 
-```console title="Terminal"
-chainhook predicates new stacking-pool-api.json --bitcoin
+```terminal
+$ chainhook predicates new stacking-pool-api.json --bitcoin
 ```
 
 Replace the contents of the `stacking-pool-api.json` file with the following:
 
 ```json
-// [!code word: http_post]
 {
   "chain": "bitcoin",
   "uuid": "2",
@@ -179,8 +177,8 @@ The `start_block` is a required field when using the `http_post` `then_that` pre
 
 Once you are finished setting up your endpoint, use the following command to scan the blocks based on the predicates defined in the `stacking-pool-api.json` file.
 
-```console title="Terminal"
-chainhook predicates scan stacking-pool-api.json --config-path=./Chainhook.toml
+```terminal
+$ chainhook predicates scan stacking-pool-api.json --config-path=./Chainhook.toml
 ```
 
 The above command posts events to the URL `http://localhost:3000/events`, mentioned in the JSON file.
@@ -193,8 +191,8 @@ You can start a Chainhook service with an existing predicate. You can also dynam
 
 Initiate the chainhook service by passing the predicate path to the command as shown below:
 
-```console title="Terminal"
-chainhook service start --predicate-path=stacking-pool-api.json --config-path=Chainhook.toml
+```terminal
+$ chainhook service start --predicate-path=stacking-pool-api.json --config-path=Chainhook.toml
 ```
 
 The above command registers the predicate based on the predicate definition in the `stacking-pool-api.json` file.
@@ -217,103 +215,22 @@ database_uri = "redis://localhost:6379/"
 
 If you have an instance of Redis running locally, you can now start the Chainhook service by running the following command:
 
-```console title="Terminal"
-chainhook service start --config-path=Chainhook.toml
+```terminal
+$ chainhook service start --config-path=Chainhook.toml
 ```
 
 To dynamically register a new predicate, send a POST request to the running predicate registration server at `localhost:20456/v1/chainhooks`.
 
-```console title="Terminal"
-curl -X POST \
+Use the following `curl` command template as an example:
+
+```terminal
+$ curl -X POST \
   -H "Content-Type: application/json" \
-  -d '{
-    "chain": "bitcoin",
-    "uuid": "3",
-    "name": "Ordinals",
-    "version": 1,
-    "networks": {
-      "mainnet": {
-        "start_block": 777534,
-        "if_this": {
-          "scope": "ordinals_protocol",
-          "operation": "inscription_feed"
-        },
-        "then_that": {
-          "http_post": {
-            "url": "http://localhost:3000/events",
-            "authorization_header": "12345"
-          }
-        }
-      }
-    }
-  }' \
+  -d @predicate.json \
   http://localhost:20456/v1/chainhooks
+
+{"result":"<uuid>","status":200}
 ```
-
-The sample response should look like this:
-
-```jsonc
-{
-  "chainhook": {
-    "predicate": {
-      "operation": "inscription_feed",
-      "scope": "ordinals_protocol",
-    },
-    "uuid": "1",
-  },
-  "apply": [
-    {
-      "block_identifier": {
-        "hash": "0x00000000000000000003e3e2ffd3baaff2cddda7d12e84ed0ffe6f7778e988d4",
-        "index": 777534,
-      },
-      "metadata": {},
-      "parent_block_identifier": {
-        "hash": "0x0000000000000000000463a1034c59e6dc94c7e52855582af11882743b86e2a7",
-        "index": 777533,
-      },
-      "timestamp": 1676923039,
-      "transactions": [
-        {
-          "transaction_identifier": {
-            "hash": "0xca20efe5e4d71c16cd9b8dfe4d969efdd225ef0a26136a6a4409cb3afb2e013e",
-          },
-          "metadata": {
-            "ordinal_operations": [
-              {
-                "inscription_revealed": {
-                  "content_bytes": "<INSCRIPTION_BYTES>",
-                  "content_length": 12293,
-                  "content_type": "image/jpeg",
-                  "inscriber_address": "bc1punnjva5ayg84kf5tmvx265uwvp8py3ux24skz43aycj5rzdgzjfq0jxsuc",
-                  "inscription_fee": 64520,
-                  "inscription_id": "ca20efe5e4d71c16cd9b8dfe4d969efdd225ef0a26136a6a4409cb3afb2e013ei0",
-                  "inscription_number": 0,
-                  "inscription_output_value": 10000,
-                  "ordinal_block_height": 543164,
-                  "ordinal_number": 1728956147664701,
-                  "ordinal_offset": 1147664701,
-                  "satpoint_post_inscription": "ca20efe5e4d71c16cd9b8dfe4d969efdd225ef0a26136a6a4409cb3afb2e013e:0:0",
-                  "transfers_pre_inscription": 0,
-                },
-              },
-            ],
-            "proof": null,
-          },
-          "operations": [],
-          // Other transactions
-        },
-      ],
-    },
-  ],
-  "rollback": [],
-}
-```
-
-To better understand the output of the above JSON file, let's break down some of the details:
-
-- The `apply` payload includes the block header and the transactions that triggered the predicate.
-- The `rollback` payload includes the block header and the transactions that triggered the predicate for a past block that is no longer part of the canonical chain and must be reverted. (Note: this is a chief component of Chainhook's reorg-aware functionality. Chainhook maintains rollback data for blocks near the chaintip.)
 
 <Callout title="Note">
 You can also run chainhook service by passing multiple predicates, ie `chainhook service start --predicate-path=predicate_1.json --predicate-path=predicate_2.json --config-path=Chainhook.toml`

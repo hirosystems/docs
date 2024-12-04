@@ -40,9 +40,7 @@ Check out the [reference page](/stacks/stacks.js/packages/transactions) for `@st
       The `senderKey` is the private key of the sender's wallet.
     </Callout>
 
-    ```ts twoslash title="stx-transfer.ts"
-    // @noErrors
-    // [!code word:makeSTXTokenTransfer]
+    ```ts stx-transfer.ts
     import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
     import { StacksDevnet } from "@stacks/network";
 
@@ -80,9 +78,7 @@ Check out the [reference page](/stacks/stacks.js/packages/transactions) for `@st
   
     Once you've constructed a valid transaction, you can broadcast it to the network using the `broadcastTransaction` function.
 
-    ```ts twoslash title="stx-transfer.ts"
-    // @noErrors
-    // [!code word:broadcastTransaction]
+    ```ts stx-transfer.ts
     import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
     import { StacksDevnet } from "@stacks/network";
 

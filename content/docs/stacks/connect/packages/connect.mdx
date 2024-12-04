@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -717,7 +717,7 @@ const myPostCondition = makeStandardSTXPostCondition(
 
 > For more examples on constructing different kinds of post-conditions read the [Post-Conditions Guide of Stacks.js](https://github.com/hirosystems/stacks.js/tree/main/packages/transactions#post-conditions).
 
-##### Post-Condition Modes
+#### Post-Condition Modes
 
 If post-conditions `postConditions: [ ... ]` are specified, they will ALWAYS be checked by blockchain nodes.
 If ANY conditions fails, the transaction will fail.
@@ -743,35 +743,35 @@ openSignatureRequestPopup({ ...opts }, LeatherProvider);
 openStructuredDataSignatureRequestPopup({ ...opts }, LeatherProvider);
 ```
 
-### 🤔 Pitfalls
+### Pitfalls
 
 - Connect can currently not set manual nonces, since this is not supported by wallets.
 - For some projects it might be necessary to also install the `regenerator-runtime` package. `npm install --save-dev regenerator-runtime`. This is a build issue of older versions of `@stacks/connect`.
 
-### 📚 Method Parameters
+### Method Parameters
 
 A glossary of the most common options of `openSTXTransfer` and `openContractCall`
 
-### `openSTXTransfer` _Required_
+#### `openSTXTransfer` *required
 
-|             | Description                           | Type                              | Example                                       |
-| :---------- | :------------------------------------ | :-------------------------------- | :-------------------------------------------- |
+| Option      | Description                           | Type                              | Example                                       |
+| ----------- | ------------------------------------- | --------------------------------- | --------------------------------------------- |
 | `recipient` | The recipient (STX principal) address | `string`                          | `'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK'` |
 | `amount`    | The amount (in micro-STX) to transfer | Integer (e.g. `number`, `bigint`) | `10000`                                       |
 
-### `openContractCall` _Required_
+#### `openContractCall` *required
 
-|                   | Description                                      | Type                    | Example                                       |
-| :---------------- | :----------------------------------------------- | :---------------------- | :-------------------------------------------- |
-| `contractAddress` | The (STX contract) address of the smart contract | `string`                | `'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK'` |
-| `contractName`    | The contract name                                | `string`                | `'example-contract'`                          |
+| Option              | Description                                      | Type                    | Example                                       |
+| ------------------- | ----------------------------------------------- | ---------------------- | --------------------------------------------- |
+| `contractAddress`   | The (STX contract) address of the smart contract | `string`                | `'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK'` |
+| `contractName`      | The contract name                                | `string`                | `'example-contract'`                          |
 | `functionName`    | The contract function name                       | `string`                | `'vote'`                                      |
 | `functionArgs`    | The contract function arguments                  | Array of Clarity Values | `[]`, `[uintCV(100)]`                         |
 
-### _Optional_
+#### _Optional_
 
-|                     | Default             | Description                                                                 | Type                                                                            | Example                   |
-| :------------------ | :------------------ | :-------------------------------------------------------------------------- | :------------------------------------------------------------------------------ | :------------------------ |
+| Option              | Default             | Description                                                                 | Type                                                                            | Example                   |
+| ------------------- | ------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------- |
 | `network`           | Mainnet             | The network to broadcast the transaction to                                 | [StacksNetwork](https://stacks.js.org/classes/network.StacksNetwork.html)       | `new StacksMainnet()`     |
 | `anchorMode`        | Any                 | The type of block the transaction should be mined in                        | [AnchorMode Enum](https://stacks.js.org/enums/transactions.AnchorMode.html)     | `AnchorMode.OnChainOnly`  |
 | `memo`              | _Empty_ `''`        | The memo field (used for additional data)                                   | `string`                                                                        | `'a memo'`                |

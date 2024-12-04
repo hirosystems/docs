@@ -5,7 +5,7 @@ toc: false
 ---
 
 import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
+import { Property } from 'fumadocs-openapi/ui'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -854,24 +854,15 @@ const result = await callReadOnlyFunction(options);
 
 Building transactions that call functions in deployed clarity contracts requires you to construct valid Clarity Values to pass to the function as arguments. The [Clarity type system](https://github.com/stacksgov/sips/blob/master/sip/sip-002-smart-contract-language.md#clarity-type-system) contains the following types:
 
-- `(tuple (key-name-0 key-type-0) (key-name-1 key-type-1) ...)`
-  - a typed tuple with named fields.
-- `(list max-len entry-type)`
-  - a list of maximum length max-len, with entries of type entry-type
-- `(response ok-type err-type)`
-  - object used by public functions to commit their changes or abort. May be returned or used by other functions as well, however, only public functions have the commit/abort behavior.
-- `(optional some-type)`
-  - an option type for objects that can either be (some value) or none
-- `(buff max-len)`
-  - byte buffer or maximum length max-len.
-- `principal`
-  - object representing a principal (whether a contract principal or standard principal).
-- `bool`
-  - boolean value ('true or 'false)
-- `int`
-  - signed 128-bit integer
-- `uint`
-  - unsigned 128-bit integer
+- `(tuple (key-name-0 key-type-0) (key-name-1 key-type-1) ...)` : a typed tuple with named fields.
+- `(list max-len entry-type)` : a list of maximum length max-len, with entries of type entry-type
+- `(response ok-type err-type)` : object used by public functions to commit their changes or abort. May be returned or used by other functions as well, however, only public functions have the commit/abort behavior.
+- `(optional some-type)` : an option type for objects that can either be (some value) or none
+- `(buff max-len)` : byte buffer or maximum length max-len.
+- `principal` : object representing a principal (whether a contract principal or standard principal).
+- `bool` : boolean value (`true` or `false`)
+- `int` : signed 128-bit integer
+- `uint`: unsigned 128-bit integer
 
 This library contains Typescript types and classes that map to the Clarity types, in order to make it easy to construct well-typed Clarity values in Javascript. These types all extend the abstract class `ClarityValue`.
 

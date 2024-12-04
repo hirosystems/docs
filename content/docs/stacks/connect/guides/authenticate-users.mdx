@@ -31,7 +31,7 @@ In this guide, you will learn how to:
 
 After installing the `@stacks/connect` package, initiate a `userSession` with the following permission scopes.
 
-```ts twoslash
+```ts
 import { AppConfig, UserSession } from '@stacks/connect';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
@@ -64,8 +64,7 @@ Create an `authenticate` function that will call `showConnect`, triggering the p
   </div>
 </div>
 
-```ts twoslash
-// @noErrors
+```ts
 function authenticate() {
   showConnect({
     appDetails: {
@@ -95,7 +94,7 @@ After initiating the authentication process, you will most likely need to handle
 1. Check if there is a pending sign-in using the `isSignInPending` method of the `userSession` object.
 2. If there is a pending sign-in, handle it by calling `handlePendingSignIn` which processes the sign-in and then utilizes the `userData` returned in a promise.
 
-```tsx twoslash
+```tsx
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);

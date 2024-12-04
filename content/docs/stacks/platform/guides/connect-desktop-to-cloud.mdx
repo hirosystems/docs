@@ -11,16 +11,16 @@ The Hiro Platform now supports local development, allowing you to use your prefe
 
 First, you need to check if you already have an existing SSH key on your device. This is often located in `~/.ssh/id_ed25519.pub`. You can view your SSH keys by running the following command in your terminal:
 
-```console title="Terminal"
-ls -al ~/.ssh
+```terminal
+$ ls -al ~/.ssh
 ```
 
 Look for the file ending in `.pub`, which contains your public key.
 
 If you don't have an SSH key, you can generate one by running the following command in your terminal:
 
-```console title="Terminal"
-ssh-keygen -t ed25519
+```terminal
+$ ssh-keygen -t ed25519
 ```
 
 You'll then be prompted to enter a passphrase. You can choose to leave that blank. You should now have a `id_ed25519.pub` file, which contains your new public SSH key.
@@ -31,20 +31,20 @@ Next, you need to provide your public key to the Hiro Platform. You can do this 
 
 For Mac, use:
 
-```
-cat ~/.ssh/id_ed25519.pub | pbcopy
+```terminal
+$ cat ~/.ssh/id_ed25519.pub | pbcopy
 ```
 
 For Windows, use:
 
-```
-type %userprofile%\.ssh\id_ed25519.pub | clip
+```terminal
+$ type %userprofile%\.ssh\id_ed25519.pub | clip
 ```
 
 For Linux, use:
 
-```
-cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
+```terminal
+$ cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
 ```
 
 You'll also need to provide a nickname for your connected device, such as 'MacBook Pro'. This will help you identify the device in the future.
@@ -55,7 +55,7 @@ To enable SSH access and Git authentication to your Hiro Platform workspace, you
 
 Here are the lines you need to add:
 
-```console
+```bash
 Host *.ssh.platform.hiro.so
     User hiro
     StrictHostKeyChecking no
@@ -120,8 +120,8 @@ If you prefer using the command line for your development work, you can also con
 
 2. Enter the following command:
 
-```console title="Terminal"
-ssh hiro@<your-workspace-url>
+```terminal
+$ ssh hiro@<your-workspace-url>
 ```
 
 Replace `hiro@<your-workspace-url>` with your actual workspace URL.
@@ -136,8 +136,8 @@ Remember, to ensure a smooth connection, your public SSH key must be registered 
 
 Emacs has built-in support for SSH through the Tramp mode. To open a file over SSH, use the following command:
 
-```console
-C-x C-f /ssh:hiro@<your-workspace-url>:/path/to/project
+```terminal
+$ C-x C-f /ssh:hiro@<your-workspace-url>:/path/to/project
 ```
 
 Replace `hiro@<your-workspace-url>` with your workspace url, and `/path/to/project` with the path to the project you want to open.

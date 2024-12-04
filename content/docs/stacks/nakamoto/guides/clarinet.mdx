@@ -5,31 +5,23 @@ description: Discover Clarinet upgrades related to the Nakamoto release.
 
 ## Setting up a project for Nakamoto
 
-As of [Clarinet 2.9.0](https://github.com/hirosystems/clarinet/releases/tag/v2.9.0), devnet can run
-the latest Stacks blockchain version, enabling Nakamoto and support Clarity 3 contracts.
+As of [version 2.11.0](https://github.com/hirosystems/clarinet/releases/tag/v2.11.0), Clarinet runs
+in epoch 3.0 (Nakamoto) by default.
 
-Once the devnet reaches the right block height, (Bitcoin block #108 by default), it will deploy the
-`pox-4.clar` contract and run in Epoch 2.5. From there, Clarinet will send `stack-stx` and
-`stack-extend` requests to the new PoX contract. In Nakamoto mode, devnet has 2 signers. Eventually,
-you can observe the `vote-for-aggregate-public-key` transactions that they send.
+- Contracts are set to be deployed in epoch 3.0 and support Clarity 3.
+- The Devnet runs the latest Stacks blockchain version by default, enabling Nakamoto and support
+  Clarity 3 contracts.
 
-By default, the Devnet will not get to Epoch 3.0 ("Nakamoto activation" with fast blocks). For that,
-the `epoch_3_0` height as to be set manually in the `Devnet.toml` file. Using one of your Clarinet
-projects, or a new one (with `$ clarinet new <project-name>`), update the `settings/Devnet.toml`
-with the following settings:
+Once the Devnet reaches the right block height, (Bitcoin block #108 by default), it will deploy the
+_`pox-4.clar`_ contract and run in Epoch 2.5. From there, Clarinet will send _`stack-stx`_ and
+_`stack-extend`_ requests to the new PoX contract. Eventually, you can observe the
+_`vote-for-aggregate-public-key`_ transactions that they send.
 
-```toml
-# settings/Devnet.toml
-[devnet]
-epoch_3_0 = 144
+**At Bitcoin block #142, the Devnet will switch the epoch 3.0.**
 
-stacks_node_image_url = "quay.io/hirosystems/stacks-node:devnet2.9.0-epoch3.0"
-stacks_signer_image_url = "quay.io/hirosystems/stacks-signer:devnet2.9.0-epoch3.0"
-```
-
-At the end of the `Devnet.toml` file, you must make sure that the `pox_stacking_orders` are properly
+At the end of the _`Devnet.toml`_ file, you must make sure that the _`pox_stacking_orders`_ are properly
 set. You should have 3 stacking orders from 3 different accounts. All should start at **cycle 1**
-and take at least **2 slots**. You also need to enable the auto-extends property. Becasue Nakamoto
+and take at least **2 slots**. You also need to enable the _`auto-extend`_ property. Because Nakamoto
 relies on the Stackers to sign blocks, these settings ensure that there are engouh stacked STX for
 each cycles. Here is what it looks like by default in new projects:
 
@@ -72,8 +64,8 @@ clarity_version = 3
 epoch = 3.0
 ```
 
-Start devnet with `clarinet devnet start`, you should see epoch 3.0 and fast blocks at Bitcoin
-block 144.
+Start Devnet with `clarinet devnet start`, you should see epoch 3.0 and fast blocks at Bitcoin
+block 142.
 
 <Callout title="New Clarity keywords">
 Clarity 3 introduces two new keywords after the Nakamoto hard fork:
@@ -81,7 +73,7 @@ Clarity 3 introduces two new keywords after the Nakamoto hard fork:
 - `tenure-height`: Returns the number of tenures passed.
 - `stacks-block-height`: Returns the current Stacks block height.
 
-Note: `block-height` is deprecated.
+Note: `block-height` is removed.
 
 For more details on these and other Clarity keywords, see the [Clarity Keywords Reference](https://docs.stacks.co/reference/keywords).
 </Callout>

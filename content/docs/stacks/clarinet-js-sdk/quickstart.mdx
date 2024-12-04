@@ -37,7 +37,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     ```ts title="counter.test.ts"
     import { describe, expect, it } from "vitest";
-    import { Cl } from "@stacks/transactions"; // [!code highlight]
+    import { Cl } from "@stacks/transactions";
     ```
 
     The `Cl` namespace simplifies the process of creating and handling Clarity values. This functionality is particularly useful in testing environments where developers need to simulate contract interactions accurately.
@@ -48,8 +48,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
   
     For most test cases, you'll want to retrieve an account from the network in order to interact with your smart contracts. The following code uses the `getAccounts` method to achieve this.
 
-    ```ts title="counter.test.ts"
-    // [!code word:getAccounts]
+    ```ts counter.test.ts
     import { describe, expect, it } from "vitest";
     import { Cl } from "@stacks/transactions";
 
@@ -72,10 +71,10 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     Now that you understand the key components for writing tests, start by writing a test that ensures the `counter` contract has been deployed.
 
-    ```ts title="counter.test.ts"
+    ```ts counter.test.ts
     describe("counter contract", () => {
       it("ensures the contract is deployed", () => {
-        const contractSource = simnet.getContractSource("counter"); // [!code highlight]
+        const contractSource = simnet.getContractSource("counter");
         expect(contractSource).toBeDefined();
       });
     });
@@ -86,11 +85,11 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
   
     Now it's time to call a public function and assert the result. The <code>count-up</code> function is expected to increment the count of the user's principal by 1. Write a test to ensure this behaves as expected.
 
-    ```ts title="counter.test.ts"
+    ```ts counter.test.ts
     describe("counter contract", () => {
       it("increments the count of the user's principal by 1", () => {
         const countUpCall = simnet.callPublicFn("counter", "count-up", [], wallet);
-        expect(countUpCall.result).toBeOk(Cl.bool(true)); // [!code highlight]
+        expect(countUpCall.result).toBeOk(Cl.bool(true));
         
         const getCountCall = simnet.callReadOnlyFn(
           "counter",
@@ -98,7 +97,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
           [Cl.principal(wallet)],
           wallet
         );
-        expect(getCountCall.result).toBeUint(1); // [!code highlight]
+        expect(getCountCall.result).toBeUint(1);
       });
     });
     ```
@@ -114,9 +113,9 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     Every generated project comes with a <code>package.json</code> file that contains the necessary dependencies and scripts to run your tests.
   
-    ```json title="package.json"
+    ```json package.json
     "scripts": {
-      "test": "vitest run", // [!code highlight]
+      "test": "vitest run",
       "test:report": "vitest run -- --coverage --costs",
       "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
     }
@@ -124,8 +123,8 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     You can now run your tests, with your preferred package manager, by executing the following command:
   
-    ```console
-    npm run test
+    ```terminal
+    $ npm run test
     ```
   </Step>
   <Step>
@@ -133,10 +132,10 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     Clarinet can automatically also produce a code coverage report and cost analysis on the test you ran.
 
-    ```json title="package.json"
+    ```json package.json
     "scripts": {
       "test": "vitest run",
-      "test:report": "vitest run -- --coverage --costs", // [!code highlight]
+      "test:report": "vitest run -- --coverage --costs",
       "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
     }
     ```
@@ -162,7 +161,7 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     The `costs-reports.json` file will output the cost analysis for every function ran in your tests. Since the `count-up` function was used in our test, this is how the cost analysis output would look like for that function:
 
-    ```json title="costs-reports.json"
+    ```json costs-reports.json
       {
         "test_name": "tests/counter.test.ts__counter contract__increments the count of the user's principal by 1",
         "contract_id": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter",
@@ -191,14 +190,14 @@ Check out the [methods](/stacks/clarinet-js-sdk/references/methods) page for the
 
     To access and read the `lcov.info` file in a human-readable format, we can first install the `lcov` [package](https://github.com/linux-test-project/lcov) that helps generate a graphical front-end for coverage testing tools.
 
-    ```console title="Terminal"
-    brew install lcov
+    ```terminal
+    $ brew install lcov
     ```
 
     Then we'll run the `genhtml` command below with the following options. This command and its options will generate the actual html file, add in additional branch coverage, and will automatically store the files in a new folder called `coverage`.
 
-    ```console title="Terminal"
-    genhtml lcov.info --branch-coverage -o coverage
+    ```terminal
+    $ genhtml lcov.info --branch-coverage -o coverage
     ```
 
     You can then navigate into the new `coverage` folder and run the command `open index.html` to view your coverage report. In addition, a summary of the coverage report will be outputted in the terminal.

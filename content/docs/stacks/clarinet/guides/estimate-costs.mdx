@@ -3,6 +3,7 @@ title: Estimating contract costs
 description: Analyze execution costs pertaining to your contract.
 ---
 
+import { API, Clarinet, Js } from '@/components/ui/icon';
 import { File, Folder, Files } from "fumadocs-ui/components/files"
 
 Transactions on the Stacks blockchain comes with execution costs that can dictate transaction fees for your users. To analyze the execution costs of your contract's functions, let's continue with the simple `counter` contract from the [Clarinet quickstart](/stacks/clarinet/quickstart) as an example.
@@ -21,22 +22,16 @@ Transactions on the Stacks blockchain comes with execution costs that can dictat
 
 To start analyzing execution costs, first run the `clarinet console` command inside your project.
 
-```console title="Terminal"
-clarinet console
+```terminal
+$ clarinet console
 ```
 
 ## Get Costs
 
 The `::get_costs <expr>` command in the Clarinet console will display the cost analysis of the given expression as well as the return value of the given expression. The `::get_costs` command expects an expression, so make a `contract-call?` with our `count-up` function and see what happens.
 
-```console title="Terminal"
-::get_costs (contract-call? .counter count-up)
-```
-
-We should see a chart breaking down the different types of execution costs in the console. Here's the execution cost analysis returned from running the above command:
-
-```console
->> ::get_costs (contract-call? .counter count-up)
+```terminal
+$ ::get_costs (contract-call? .counter count-up)
 +----------------------+-------------+----------------+-----------------+
 |                               | Consumed   | Limit              | Percentage       |
 +----------------------+-------------+----------------+-----------------+
@@ -74,8 +69,8 @@ The percentage column shows what percentage of the execution costs your expressi
 
 You can toggle the cost analysis to always be displayed after every expression execution in the console by toggling this feature on with the command `::toggle_costs`.
 
-```console title="Terminal"
-::toggle_costs
+```terminal
+$ ::toggle_costs
 ```
 
 To turn it off, just run the `::toggle_costs` command again.
@@ -83,3 +78,27 @@ To turn it off, just run the `::toggle_costs` command again.
 Check out the Clarity Book section on [runtime cost analysis](https://book.clarity-lang.org/ch12-00-runtime-cost-analysis.html) to read up on cost optimization techniques and recommendations.
 
 To see how you can run automated cost analysis on your unit tests, check out our [quickstart](/stacks/clarinet-js-sdk/quickstart#run-your-tests-with-code-coverage-and-cost-analysis) section for the Clarinet JS SDK.
+
+<Cards>
+  <SecondaryCard
+    icon={<Clarinet />}
+    href="/stacks/clarinet/guides/cli-commands/validate-a-contract"
+    title="Validate a contract"
+    description="Learn how to validate a contract."
+    tag='Clarinet'
+  />
+  <SecondaryCard
+    icon={<API />}
+    href="/stacks/rpc-api/fees/estimate"
+    title="Get fee estimates for a transaction"
+    description="Learn how to fetch transaction costs."
+    tag='API'
+  />
+  <SecondaryCard
+    icon={<Js />}
+    href="/stacks/clarinet-js-sdk/quickstart"
+    title="Write tests for your smart contracts"
+    description="Learn how to write unit tests using the Clarinet JS SDK."
+    tag='Clarinet JS SDK'
+  />
+</Cards>

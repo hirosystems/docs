@@ -4,32 +4,22 @@ description: The Clarinet JS SDK provides properties that can be used to interac
 toc: false
 ---
 
-import { Root, API, APIExample } from '@/components/layout';
-import { Property } from 'fumadocs-ui/components/api'
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-
-import { InlineCode } from '@/components/inline-code';
-
-## Installation
-
-```package-install
-@hirosystems/clarinet-sdk
-```
+import { Root, API, APIExample, Property, Info } from '@/components/layout';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 <Root>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`blockHeight`</h2>
+# `blockHeight`
 
 Returns the current block height of simnet.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -40,9 +30,7 @@ Returns the current block height of simnet.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // [!code word:blockHeight]
-    // @noErrors
+    ```ts
     const currentBlockHeight = simnet.blockHeight;
     ```
   </TabsContent>
@@ -60,15 +48,15 @@ Returns the current block height of simnet.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`deployer`</h2>
+# `deployer`
 
 Returns the default deployer address as defined in the project file.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -82,9 +70,7 @@ Returns the default deployer address as defined in the project file.
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:deployer]
+    ```ts
     const currentDeployerAddress = simnet.deployer;
     ```
 
@@ -97,9 +83,8 @@ Returns the default deployer address as defined in the project file.
     </Accordions>
   </TabsContent>
   <TabsContent value="set-deployer">
-    ```ts twoslash
-    // @noErrors
-    simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'; // [!code highlight]
+    ```ts
+    simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5';
     const newDeployer = simnet.deployer
     ```
 
@@ -117,17 +102,17 @@ Returns the default deployer address as defined in the project file.
 
 </API>
 
-<API className='my-20'>
+<API>
 
-<div className='flex-1'>
+<Info>
 
-<h2 className='mt-0'>`currentEpoch`</h2>
+# `currentEpoch`
 
 Returns the current epoch of simnet.
 
 This represents the Stacks blockchain's progress through discrete time periods, cycles, or upgrades.
 
-</div>
+</Info>
 
 <APIExample>
 
@@ -138,9 +123,7 @@ This represents the Stacks blockchain's progress through discrete time periods, 
     </TabsTrigger>
   </TabsList>
   <TabsContent value="default">
-    ```ts twoslash
-    // @noErrors
-    // [!code word:currentEpoch]
+    ```ts
     const epoch = simnet.currentEpoch;
     ```
   </TabsContent>
