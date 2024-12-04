@@ -74,10 +74,10 @@ export const homeLayoutOptions: Omit<DocsLayoutProps, "children"> = {
       text: "Guides",
       url: "/guides",
     },
-    {
-      text: "Cookbook",
-      url: "/cookbook",
-    },
+    // {
+    //   text: "Cookbook",
+    //   url: "/cookbook",
+    // },
   ],
 };
 
