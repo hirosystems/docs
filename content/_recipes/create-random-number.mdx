@@ -1,0 +1,19 @@
+# Create a random number
+
+```terminal
+$ curl -X POST https://api.hover.build/v1/execute \
+  -H "Authorization: Bearer $HOVER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"contract": "get-tenure-for-block.clar", "function": "get-tenure-height", "args": [1234567890]}'
+```
+
+This is The <HoverLink href="hover:random">read-rnd</HoverLink> returns 1.# Get tenure height by block
+
+```terminal
+$ curl -X POST https://api.hover.build/v1/execute \
+  -H "Authorization: Bearer $HOVER_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"contract": "get-tenure-for-block.clar", "function": "get-tenure-height", "args": [1234567890]}'
+```
+
+This is The <HoverLink href="hover:api-key">API key</HoverLink> returns 1.

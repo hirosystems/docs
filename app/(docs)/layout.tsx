@@ -7,7 +7,7 @@ import { Body, NavChildren, SidebarBanner } from "./layout.client";
 import { Statuspage } from "statuspage.io";
 
 const statuspage = new Statuspage("3111l89394q4");
-console.log({ status: await statuspage.api.getStatus() });
+// console.log({ status: await statuspage.api.getStatus() });
 
 export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   tree: utils.pageTree,

@@ -1,0 +1,101 @@
+import { Code } from "@/components/docskit/code";
+import { recipes } from "@/data/recipes";
+import { ArrowUpRight, Play, TestTube } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { HoverProvider } from "@/context/hover";
+import { HoverLink } from "@/components/docskit/annotations/hover";
+import Link from "next/link";
+import { Terminal } from "@/components/docskit/terminal";
+import { InlineCode } from "@/components/docskit/inline-code";
+import { Github } from "@/components/ui/icon";
+import { WithNotes } from "@/components/docskit/notes";
+import { SnippetResult } from "../components/snippet-result";
+
+interface Param {
+  id: string;
+}
+
+export const dynamicParams = false;
+
+export default async function Page({
+  params,
+}: {
+  params: Param;
+}): Promise<JSX.Element> {
+  const { id } = params;
+  const recipe = recipes.find((r) => r.id === id);
+
+  if (!recipe) {
+    return <div>Recipe not found</div>;
+  }
+
+  // Dynamically import MDX content based on recipe id
+  const Content = await import(`@/content/_recipes/${id}.mdx`).catch(() => {
+    console.error(`Failed to load MDX content for recipe: ${id}`);
+    return { default: () => <div>Content not found</div> };
+  });
+
+  const snippetCodeResult = (result: string) => {
+    <Code
+      codeblocks={[
+        {
+          lang: "bash",
+          value: result,
+          meta: `-nw`,
+        },
+      ]}
+    />;
+  };
+
+  return (
+    <HoverProvider>
+      <div className="min-h-screen">
+        <div className="px-4 py-8">
+          <div className="grid grid-cols-12 gap-12">
+            <div className="col-span-6">
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  {recipe.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary">
+                      {tag.toUpperCase()}
+                    </Badge>
+                  ))}
+                </div>
+                <div className="prose max-w-none">
+                  <Content.default
+                    components={{
+                      HoverLink,
+                      Terminal,
+                      Code,
+                      InlineCode,
+                      WithNotes,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Sticky sidebar */}
+            <div className="col-span-6">
+              <div className="sticky top-20 space-y-4">
+                <div className="recipe group relative w-full bg-card overflow-hidden">
+                  <Code
+                    codeblocks={[
+                      {
+                        lang: recipe.type,
+                        value: recipe.files[0].content,
+                        meta: `${recipe.files[0].name} -cnw`, // filename + flags
+                      },
+                    ]}
+                  />
+                </div>
+                <SnippetResult code={recipe.files[0].content as string} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </HoverProvider>
+  );
+}
