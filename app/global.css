@@ -115,6 +115,16 @@ body {
 
 /* Override CSS */
 
+.sticky.top-24 {
+  font-family: var(--font-aeonikFono), sans-serif;
+  background: transparent;
+  border: none;
+}
+
+.sticky.top-24 button {
+  margin-left: 0; /* Override Tailwind's ms-auto (margin-left: auto) */
+}
+
 .container.flex.flex-row.gap-6.xl\:gap-12 {
   padding: 0;
   margin-top: 0;
