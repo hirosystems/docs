@@ -1,0 +1,46 @@
+# Prepare btc data for Clarity verification
+
+When working with Bitcoin transactions in Clarity smart contracts, we need to prepare the transaction data in a specific way. This process involves gathering several key pieces of information: the transaction hex, merkle proof, and block header.
+
+This is particularly useful when you need to:
+
+- Verify Bitcoin deposits or payments in Stacks smart contracts, enabling BTC-backed lending or trading platforms
+- Create NFTs that are only minted after verifying specific Bitcoin transactions
+- Build payment systems that wait for Bitcoin transaction confirmation before executing Stacks contract logic
+
+The core of this process uses the _typescript`"@mempool/mempool.js"`_ library to fetch Bitcoin transaction data.
+
+1. First, we start by getting the raw transaction hex using <HoverLink href="hover:get-tx-hex" className="text-[var(--ch-9)]">getTxHex</HoverLink>
+2. Then, we fetch its merkle proof with <HoverLink href="hover:get-tx-merkle-proof" className="text-[var(--ch-9)]">getTxMerkleProof</HoverLink>
+3. Finally, we retrieve the block header using <HoverLink href="hover:get-blk-header" className="text-[var(--ch-9)]">getBlkHeader</HoverLink>
+
+An important step is removing witness data from the transaction hex using `removeWitnessData`, as Clarity's Bitcoin verification expects the legacy transaction format.
+
+Once we have all these pieces, we format them into Clarity-compatible types using the _typescript`"@stacks/transactions"`_ library. The transaction data, block header, and merkle proof are converted into buffer CVs (Clarity Values), while the proof information is structured as a tuple containing the transaction index, merkle hashes, and tree depth.
+
+<WithNotes>
+
+Finally, we call the [`was-tx-mined-compact`](tooltip "clarity-bitcoin") function from the [clarity-bitcoin](https://github.com/friedger/clarity-bitcoin/blob/main) library with our prepared data to verify the transaction.
+
+This function takes all this information and confirms whether the transaction was actually mined in the Bitcoin blockchain. This verification is crucial for cross-chain functionality between Bitcoin and Stacks.
+
+## !clarity-bitcoin
+
+This is from v5 of the [clarity-bitcoin](https://github.com/friedger/clarity-bitcoin/blob/main/contracts/clarity-bitcoin-v5.clar) library.
+
+```clarity
+(define-read-only (was-tx-mined-compact (height uint) (tx (buff 4096)) (header (buff 80)) (proof { tx-index: uint, hashes: (list 14 (buff 32)), tree-depth: uint}))
+  (let
+    (
+      (block (unwrap! (parse-block-header header) (err ERR-BAD-HEADER)))
+    )
+    (was-tx-mined-internal height tx header (get merkle-root block) proof)
+  )
+)
+```
+
+</WithNotes>
+
+## References
+
+- [Use `callReadOnlyFunction` to call Clarity functions](/stacks/stacks.js/packages/transactions#smart-contract-function-call-on-chain)
