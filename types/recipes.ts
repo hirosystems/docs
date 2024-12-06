@@ -1,16 +1,22 @@
-export type RecipeType = "typescript" | "curl" | "clarity";
-export type RecipeTag = "api" | "stacks.js" | "clarity" | "clarinet";
+export type RecipeType = "typescript" | "bash" | "clarity";
+export type RecipeTag =
+  | "api"
+  | "bitcoin"
+  | "stacks.js"
+  | "clarity"
+  | "clarinet"
+  | "chainhook";
 
 export interface Recipe {
   id: string;
   title: string;
   description: string;
-  type: RecipeType;
   date: string;
   tags: RecipeTag[];
   files: {
     name: string;
     path: string;
+    type: RecipeType;
     content: string;
     snippet?: string;
     preview?: any;

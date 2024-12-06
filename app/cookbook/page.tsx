@@ -4,8 +4,7 @@ import { Code } from "@/components/docskit/code";
 import { Recipe } from "@/types/recipes";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
+import { CopyButton } from "@/components/docskit/copy-button";
 
 // Server Components for Recipe Display
 function RecipeCard({
@@ -16,9 +15,9 @@ function RecipeCard({
   codeElement: React.ReactNode;
 }) {
   return (
-    <div className="group relative w-full rounded-lg border border-border bg-card overflow-hidden">
+    <div className="relative w-full rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] overflow-hidden [&:has(a:hover)]:shadow-[0_2px_12px_rgba(89,86,80,0.15)] dark:[&:has(a:hover)]:shadow-[0_2px_20px_rgba(56,52,50,0.4)] [&:has(a:hover)]:scale-[1.01] transition-all duration-200">
       <div className="p-4 space-y-2">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <h3 className="text-lg font-medium text-card-foreground">
               {recipe.title}
@@ -27,42 +26,26 @@ function RecipeCard({
               {recipe.description}
             </p>
           </div>
-          <div className="flex gap-2">
-            <Button
-              size="icon"
-              className="bg-code dark:bg-background hover:bg-accent h-8 w-8"
-              aria-label="Copy to clipboard"
-            >
-              <Copy className="h-3.5 w-3.5 text-primary" />
-            </Button>
-          </div>
+          <CopyButton text={recipe.files[0].content} />
         </div>
         <div className="flex flex-wrap gap-2 pt-2">
           {recipe.tags.map((tag) => (
-            <Badge key={tag} variant="secondary">
+            <Badge
+              key={tag}
+              className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]"
+            >
               {tag.toUpperCase()}
             </Badge>
           ))}
         </div>
       </div>
 
-      <div className="relative">
-        <div className="recipe-preview max-h-[200px] overflow-hidden border-t border-border">
+      <Link href={`/cookbook/${recipe.id}`} className="group relative block">
+        <div className="recipe-preview max-h-[200px] overflow-hidden border-t border-border bg-[hsl(var(--code))] relative z-0">
           {codeElement}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-code via-code/100 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[hsl(var(--code))] to-transparent" />
         </div>
-        <Link
-          href={`/cookbook/${recipe.id}`}
-          className="absolute inset-0 flex h-[185px] items-center top-12 justify-center opacity-0 transition-all duration-200 group-hover:opacity-100 hover:bg-background/25"
-        >
-          <Button
-            variant="outline"
-            className="bg-transparent hover:bg-transparent"
-          >
-            View details
-          </Button>
-        </Link>
-      </div>
+      </Link>
     </div>
   );
 }
@@ -74,7 +57,7 @@ export default async function Page() {
       const codeElement = await Code({
         codeblocks: [
           {
-            lang: recipe.type,
+            lang: recipe.files[0].type,
             value: recipe.files[0].content,
             meta: "",
           },

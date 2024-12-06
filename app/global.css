@@ -120,8 +120,23 @@ body {
   height: 185px;
 }
 
+.recipe-preview > div:first-child pre {
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.recipe-preview > div:first-child pre::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 .recipe > div:first-child {
   margin: 0;
+}
+
+.recipe > div:first-child pre {
+  max-height: 425px;
+  height: auto;
 }
 
 .sticky.top-24 {

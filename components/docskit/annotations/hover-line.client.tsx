@@ -13,7 +13,10 @@ export function HoverLineClient({ annotation, ...props }: CustomLineProps) {
       <InnerLine
         merge={props}
         className="transition-opacity duration-200"
-        style={{ opacity: isHovered ? 1 : 0.5 }}
+        style={{
+          opacity: isHovered ? 1 : 0.5,
+          filter: isHovered ? "none" : "blur(0.25px)",
+        }}
         data-line={annotation?.query || ""}
       />
     );

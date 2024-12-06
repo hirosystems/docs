@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { CustomTable } from "@/components/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { LayoutGrid, List } from "lucide-react";
+import { Filter, LayoutGrid, List } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 // Internal components
@@ -48,7 +48,14 @@ function ViewToggle({
   );
 }
 
-const ALL_TAGS: RecipeTag[] = ["api", "stacks.js", "clarity", "clarinet"];
+const ALL_TAGS: RecipeTag[] = [
+  "api",
+  "bitcoin",
+  "clarity",
+  "clarinet",
+  "chainhook",
+  "stacks.js",
+];
 
 function RecipeFilters({
   selectedTags,
@@ -61,7 +68,7 @@ function RecipeFilters({
 }) {
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {ALL_TAGS.map((tag) => (
           <Badge
             key={tag}
@@ -192,28 +199,45 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           ) : (
             <Table>
               <TableBody>
-                {initialRecipes.map((recipe) => (
-                  <TableRow
-                    key={recipe.id}
-                    className="cursor-pointer group"
-                    onClick={() => router.push(`/cookbook/${recipe.id}`)}
-                  >
-                    <TableCell className="py-4 text-primary whitespace-normal break-words text-base">
-                      <span className="group-hover:underline decoration-primary/50">
-                        {recipe.title}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-2">
-                        {recipe.tags.map((tag) => (
-                          <Badge key={tag} variant="outline">
-                            {tag.toUpperCase()}
-                          </Badge>
-                        ))}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {initialRecipes
+                  .filter((recipe) => {
+                    const matchesSearch =
+                      search === "" ||
+                      recipe.title
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      recipe.description
+                        .toLowerCase()
+                        .includes(search.toLowerCase());
+
+                    const matchesTags =
+                      selectedTags.length === 0 ||
+                      selectedTags.some((tag) => recipe.tags.includes(tag));
+
+                    return matchesSearch && matchesTags;
+                  })
+                  .map((recipe) => (
+                    <TableRow
+                      key={recipe.id}
+                      className="cursor-pointer group hover:bg-transparent"
+                      onClick={() => router.push(`/cookbook/${recipe.id}`)}
+                    >
+                      <TableCell className="py-4 text-primary font-aeonikFono whitespace-normal break-words text-base">
+                        <span className="group-hover:underline decoration-primary/50">
+                          {recipe.title}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-2">
+                          {recipe.tags.map((tag) => (
+                            <Badge key={tag} variant="outline">
+                              {tag.toUpperCase()}
+                            </Badge>
+                          ))}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           )}

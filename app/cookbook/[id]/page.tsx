@@ -83,14 +83,17 @@ export default async function Page({
                   <Code
                     codeblocks={[
                       {
-                        lang: recipe.type,
+                        lang: recipe.files[0].type,
                         value: recipe.files[0].content,
-                        meta: `${recipe.files[0].name} -cnw`, // filename + flags
+                        meta: `${recipe.files[0].name} -cn`, // filename + flags
                       },
                     ]}
                   />
                 </div>
-                <SnippetResult code={recipe.files[0].content as string} />
+                <SnippetResult
+                  code={recipe.files[0].content as string}
+                  type={recipe.files[0].type}
+                />
               </div>
             </div>
           </div>

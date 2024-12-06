@@ -12,7 +12,7 @@ export function HoverLinkClient(props: {
 
   return (
     <span
-      className={`cursor-default underline decoration-dotted underline-offset-4 ${props.className}`}
+      className={`cursor-help underline decoration-dotted underline-offset-4 ${props.className}`}
       onMouseEnter={() => setHoveredId(hoverId ?? null)}
       onMouseLeave={() => setHoveredId(null)}
     >
