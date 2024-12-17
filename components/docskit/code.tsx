@@ -15,6 +15,7 @@ import { link } from "./annotations/link";
 import { tokenTransitions } from "./annotations/token-transitions";
 import { tooltip } from "./annotations/tooltip";
 import { callout } from "./annotations/callout";
+import { hover } from "./annotations/hover";
 import { CODEBLOCK, CodeGroup, flagsToOptions, TITLEBAR } from "./code-group";
 
 export async function Code(props: {
@@ -121,6 +122,7 @@ function getHandlers(options: CodeGroup["options"]) {
     ...collapse,
     options.wordWrap && wordWrap,
     callout,
+    hover,
   ].filter(Boolean) as AnnotationHandler[];
 }
 

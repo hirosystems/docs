@@ -99,7 +99,7 @@ export function SidebarBanner(): JSX.Element {
 
   return (
     <Link key={currentMode.param} href={`/${currentMode.param}`}>
-      <div className="group flex flex-row items-center gap-2 rounded-lg px-2 mb-3 transition-colors">
+      <div className="group flex flex-row items-center gap-2 rounded-lg px-2 mb-4 transition-colors">
         <ChevronLeft className="text-muted-foreground size-4 shrink-0 rounded-md group-hover:text-primary" />
         <div>
           <p className="text-muted-foreground group-hover:text-primary">Back</p>

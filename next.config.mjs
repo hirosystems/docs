@@ -8,6 +8,7 @@ import {
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 import { recmaCodeHike, remarkCodeHike } from "codehike/mdx";
+import theme from "./components/docskit/theme.mjs";
 
 const withAnalyzer = createBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
