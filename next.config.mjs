@@ -40,6 +40,46 @@ const config = {
       destination: "/stacks/stacks.js/concepts/private-keys",
       permanent: true,
     },
+    {
+      source: "/intro",
+      destination: "/",
+      permanent: true,
+    },
+    {
+      source: "/chainhooks/overview", 
+      destination: "/stacks/chainhook",
+      permanent: true,
+    },
+    {
+      source: "/roadmap",
+      destination: "/",
+      permanent: true,
+    },
+    {
+      source: "/stacks/api-keys/rate-limiting",
+      destination: "/stacks/rate-limiting",
+      permanent: true,
+    },
+    {
+      source: "/txid",
+      destination: "/stacks/stacks.js/concepts/transactions",
+      permanent: true,
+    },
+    {
+      source: "/smart-contracts/clarinet",
+      destination: "/stacks/clarinet",
+      permanent: true,
+    },
+    {
+      source: "/stacks/platform/guides/deploy-project/build-contracts",
+      destination: "/stacks/platform",
+      permanent: true,
+    },
+    {
+      source: "/stacks/platform/guides/deploy-project/create-project",
+      destination: "/stacks/platform",
+      permanent: true,
+    },
   ],
 };
 
