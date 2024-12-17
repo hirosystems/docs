@@ -1,0 +1,35 @@
+---
+id: fetch-testnet-bitcoin-on-regtest
+title: Fetch tBTC on regtest
+description: How to fetch tBTC on regtest.
+date: 2024.02.28
+categories:
+  - bitcoin
+tags: []
+dependencies:
+  node-fetch: latest
+files:
+  - name: fetch-tbtc-on-regtest.ts
+    path: scripts/fetch-tbtc-on-regtest.ts
+    type: typescript
+  - name: fetch-tbtc-on-regtest.sh
+    path: scripts/fetch-tbtc-on-regtest.sh
+    type: bash
+---
+
+```typescript
+const url = 'https://api.testnet.hiro.so/extended/v1/faucets/btc';
+const fetchTestnetBTC = async (address: string) => {
+  const response = await fetch(`${url}?address=${address}`, {
+    method: 'POST',
+  });
+  const data = await response.json();
+  return data;
+};
+
+// Example usage
+const address = 'bcrt1q728h29ejjttmkupwdkyu2x4zcmkuc3q29gvwaa';
+fetchTestnetBTC(address)
+  .then(console.log)
+  .catch(console.error);
+```

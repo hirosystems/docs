@@ -1,5 +1,5 @@
 import { Code } from "@/components/docskit/code";
-import { recipes } from "@/data/recipes";
+import { loadRecipes } from "@/utils/loader";
 import { ArrowUpRight, Play, TestTube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +24,7 @@ export default async function Page({
   params: Param;
 }): Promise<JSX.Element> {
   const { id } = params;
+  const recipes = await loadRecipes();
   const recipe = recipes.find((r) => r.id === id);
 
   if (!recipe) {
@@ -36,24 +37,12 @@ export default async function Page({
     return { default: () => <div>Content not found</div> };
   });
 
-  const snippetCodeResult = (result: string) => {
-    <Code
-      codeblocks={[
-        {
-          lang: "bash",
-          value: result,
-          meta: `-nw`,
-        },
-      ]}
-    />;
-  };
-
   return (
     <HoverProvider>
       <div className="min-h-screen">
         <div className="px-4 py-8">
-          <div className="grid grid-cols-12 gap-12">
-            <div className="col-span-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+            <div className="hidden lg:block lg:col-span-6">
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
                   {recipe.tags.map((tag) => (
@@ -77,9 +66,9 @@ export default async function Page({
             </div>
 
             {/* Sticky sidebar */}
-            <div className="col-span-6">
-              <div className="sticky top-20 space-y-4">
-                <div className="recipe group relative w-full bg-card overflow-hidden">
+            <div className="col-span-full lg:col-span-6">
+              <div className="lg:sticky lg:top-20 space-y-4">
+                <div className="recipe group relative w-full overflow-hidden">
                   <Code
                     codeblocks={[
                       {
@@ -91,8 +80,10 @@ export default async function Page({
                   />
                 </div>
                 <SnippetResult
+                  recipe={recipe}
                   code={recipe.files[0].content as string}
                   type={recipe.files[0].type}
+                  dependencies={{}}
                 />
               </div>
             </div>
