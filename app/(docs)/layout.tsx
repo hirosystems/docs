@@ -21,10 +21,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
         href: "https://platform.hiro.so/",
         icon: (
           <div className="flex items-center gap-1 bg-secondary p-1.5 rounded-md">
-            <span className="ml-2 font-semibold max-md:hidden">
-              Hiro Platform
-            </span>
-            <ArrowUpRight />
+            <span className="font-semibold max-md:hidden">Hiro Platform</span>
           </div>
         ),
         external: true,
@@ -59,10 +56,7 @@ export const homeLayoutOptions: Omit<DocsLayoutProps, "children"> = {
         href: "https://platform.hiro.so/",
         icon: (
           <div className="flex items-center gap-1 bg-secondary p-1.5 rounded-md">
-            <span className="ml-2 font-semibold max-md:hidden">
-              Hiro Platform
-            </span>
-            <ArrowUpRight />
+            <span className="font-semibold max-md:hidden">Hiro Platform</span>
           </div>
         ),
         external: true,

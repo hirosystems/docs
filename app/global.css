@@ -561,3 +561,24 @@ div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
 }
 
 /* END Docskit theme */
+
+/* Replace the nested selectors with flat ones */
+.light::selection {
+  background-color: #f4d4a3;
+  color: #bc812e;
+}
+
+.light::-moz-selection {
+  background-color: #f4d4a3;
+  color: #bc812e;
+}
+
+.dark::selection {
+  background-color: #ffe6f2;
+  color: #ff9ecf;
+}
+
+.dark::-moz-selection {
+  background-color: #ffe6f2;
+  color: #ff9ecf;
+}

@@ -30,3 +30,43 @@ Once we have our block's hash, we use it with `at-block` to peek back in time an
 You can think of a tenure as a miner's _"shift"_ where they're responsible for producing blocks, and the tenure height helps us keep track of the order of blocks during their shift.
 
 The function wraps everything up nicely with `ok`, following Clarity's pattern of being explicit about successful operations. This makes it clear to anyone using the function whether they got what they asked for or hit an error.
+
+<WithNotes>
+
+```js demo.js
+// !tooltip[/lorem/] install
+import { read, write } from "lorem";
+
+// !tooltip[/data.json/] data
+var data = read("data.json");
+
+// !tooltip[/test-123/] apikey
+write({ x: 1 }, { apiKey: "test-123" });
+```
+
+We can also use tooltips [here](tooltip "install") in [prose](tooltip "data") text.
+
+```json !data data.json
+{
+  "lorem": "ipsum dolor sit amet",
+  "foo": [4, 8, 15, 16]
+}
+```
+
+## !install
+
+This is a **fake library**. You can install it with:
+
+```terminal
+$ npm install lorem
+```
+
+It lets you read and write data.
+
+## !apikey
+
+This is a public sample test mode [API key](https://example.com). Don’t submit any personally information using this key.
+
+Replace this with your secret key found on the [API Keys page](https://example.com) in the dashboard.
+
+</WithNotes>

@@ -17,7 +17,7 @@ files:
 ```clarity
 (define-read-only (pubkeys-to-principal (pubkeys (list 128 (buff 33))) (m uint))
   (unwrap-panic (principal-construct?
-    (if is-in-mainnet 0x14 0x15) ;; address version
+    (if is-in-mainnet 0x16 0x1a) ;; address version
     (pubkeys-to-hash pubkeys m)
   ))
 )
@@ -27,11 +27,13 @@ files:
 )
 
 (define-read-only (pubkeys-to-spend-script (pubkeys (list 128 (buff 33))) (m uint))
-  (concat (uint-to-byte (+ u80 m)) ;; "m" in m-of-n
-  (concat (pubkeys-to-bytes pubkeys) ;; list of pubkeys with length prefix
-  (concat (uint-to-byte (+ u80 (len pubkeys))) ;; "n" in m-of-n
-  0xae ;; CHECKMULTISIG
-  )))
+  (concat 
+    (uint-to-byte (+ u80 m)) ;; "m" in m-of-n
+    (concat 
+      (pubkeys-to-bytes pubkeys) ;; list of pubkeys with length prefix
+      (concat (uint-to-byte (+ u80 (len pubkeys))) 0xae)
+    )
+  )
 )
 
 (define-read-only (uint-to-byte (n uint))

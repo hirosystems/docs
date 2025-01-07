@@ -1,14 +1,10 @@
 import { Code } from "@/components/docskit/code";
 import { loadRecipes } from "@/utils/loader";
-import { ArrowUpRight, Play, TestTube } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HoverProvider } from "@/context/hover";
 import { HoverLink } from "@/components/docskit/annotations/hover";
-import Link from "next/link";
 import { Terminal } from "@/components/docskit/terminal";
 import { InlineCode } from "@/components/docskit/inline-code";
-import { Github } from "@/components/ui/icon";
 import { WithNotes } from "@/components/docskit/notes";
 import { SnippetResult } from "../components/snippet-result";
 
@@ -32,10 +28,12 @@ export default async function Page({
   }
 
   // Dynamically import MDX content based on recipe id
-  const Content = await import(`@/content/_recipes/${id}.mdx`).catch(() => {
-    console.error(`Failed to load MDX content for recipe: ${id}`);
-    return { default: () => <div>Content not found</div> };
-  });
+  const Content = await import(`@/content/_recipes/guides/${id}.mdx`).catch(
+    () => {
+      console.error(`Failed to load MDX content for recipe: ${id}`);
+      return { default: () => <div>Content not found</div> };
+    }
+  );
 
   return (
     <HoverProvider>

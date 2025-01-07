@@ -1,4 +1,3 @@
-// import { recipes } from "@/data/recipes";
 import { loadRecipes } from "@/utils/loader";
 import { CookbookUI } from "./components/cookbook-ui";
 import { Code } from "@/components/docskit/code";
@@ -7,7 +6,6 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CopyButton } from "@/components/docskit/copy-button";
 
-// Server Components for Recipe Display
 function RecipeCard({
   recipe,
   codeElement,
@@ -16,7 +14,7 @@ function RecipeCard({
   codeElement: React.ReactNode;
 }) {
   return (
-    <div className="relative w-full max-h-[300px] rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] overflow-hidden [&:has(a:hover)]:shadow-[0_2px_12px_rgba(89,86,80,0.15)] dark:[&:has(a:hover)]:shadow-[0_2px_20px_rgba(56,52,50,0.4)] [&:has(a:hover)]:scale-[1.01] transition-all duration-200">
+    <div className="relative w-full max-h-[300px] rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] overflow-hidden [&:has(a:hover)]:shadow-[0_2px_12px_rgba(89,86,80,0.15)] dark:[&:has(a:hover)]:shadow-[0_2px_20px_rgba(56,52,50,0.4)] [&:has(a:hover)]:scale-[1.005] transition-all duration-200">
       <div className="p-4 space-y-2">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
