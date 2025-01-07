@@ -4,10 +4,10 @@ import { useState, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Recipe, RecipeSubTag } from "@/types/recipes";
 import { cn } from "@/lib/utils";
-import { CustomTable } from "@/components/table";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Filter, LayoutGrid, List } from "lucide-react";
+import { LayoutGrid, List, Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { ChevronDown } from "lucide-react";
 import {
@@ -16,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { MultiSelect } from "@/components/multi-select";
 
 // Internal components
 function ViewToggle({
@@ -29,18 +30,6 @@ function ViewToggle({
     <div className="flex items-center gap-1 rounded-lg p-1 border border-code bg-code">
       <Button
         size="sm"
-        onClick={() => onChange("grid")}
-        className={cn(
-          "px-2",
-          view === "grid"
-            ? "bg-card hover:bg-card text-primary"
-            : "bg-code text-muted-foreground hover:bg-card"
-        )}
-      >
-        <LayoutGrid className="h-4 w-4" />
-      </Button>
-      <Button
-        size="sm"
         onClick={() => onChange("list")}
         className={cn(
           "px-2",
@@ -51,120 +40,65 @@ function ViewToggle({
       >
         <List className="h-4 w-4" />
       </Button>
+      <Button
+        size="sm"
+        onClick={() => onChange("grid")}
+        className={cn(
+          "px-2",
+          view === "grid"
+            ? "bg-card hover:bg-card text-primary"
+            : "bg-code text-muted-foreground hover:bg-card"
+        )}
+      >
+        <LayoutGrid className="h-4 w-4" />
+      </Button>
     </div>
   );
 }
 
-const TAG_CATEGORIES = {
-  "stacks-js": {
-    label: "Stacks.js",
-    subTags: [
-      "web",
-      "authentication",
-      "transactions",
-      "signing",
-      "smart-contracts",
-      "utils",
-    ],
-  },
-  clarity: {
-    label: "Clarity",
-    subTags: [
-      "hashing",
-      "lists",
-      "arithmetic",
-      "sequences",
-      "iterators",
-      "tokens",
-    ],
-  },
-  bitcoin: {
-    label: "Bitcoin",
-    subTags: ["transactions", "signing"],
-  },
-  chainhook: {
-    label: "Chainhook",
-    subTags: [],
-  },
-  api: {
-    label: "API",
-    subTags: [
-      "token-metadata",
-      "signer-metrics",
-      "rpc",
-      "platform",
-      "ordinals",
-      "runes",
-    ],
-  },
-  clarinet: {
-    label: "Clarinet",
-    subTags: ["testing", "deployment"],
-  },
-} as const;
+const CATEGORIES = [
+  { label: "Stacks.js", value: "stacks-js" },
+  { label: "Clarity", value: "clarity" },
+  { label: "Bitcoin", value: "bitcoin" },
+  { label: "Chainhook", value: "chainhook" },
+  { label: "API", value: "api" },
+  { label: "Clarinet", value: "clarinet" },
+];
 
-// Type for our category keys
-type CategoryKey = keyof typeof TAG_CATEGORIES;
+type CategoryKey = (typeof CATEGORIES)[number]["value"];
 
 function RecipeFilters({
   search,
   onSearchChange,
-  selectedCategory,
-  selectedSubTags,
-  onCategoryChange,
-  onSubTagToggle,
+  selectedCategories,
+  onCategoriesChange,
 }: {
   search: string;
   onSearchChange: (value: string) => void;
-  selectedCategory: CategoryKey | null;
-  selectedSubTags: string[];
-  onCategoryChange: (category: CategoryKey) => void;
-  onSubTagToggle: (tag: string) => void;
+  selectedCategories: string[];
+  onCategoriesChange: (categories: string[]) => void;
 }) {
   return (
-    <div className="flex flex-row gap-2 flex-wrap items-center">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button type="button" className="outline-none">
-            <Badge
-              variant={selectedCategory ? "default" : "outline"}
-              className={cn(
-                "cursor-pointer inline-flex items-center",
-                selectedCategory &&
-                  "hover:bg-[#aea498] dark:hover:bg-[#595650] dark:hover:text-[#dcd1d6]"
-              )}
-            >
-              {selectedCategory
-                ? TAG_CATEGORIES[selectedCategory].label.toUpperCase()
-                : "FILTER"}
-              <ChevronDown className="ml-1.5 h-3.5 w-3.5" />
-            </Badge>
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          {Object.entries(TAG_CATEGORIES).map(([key, category]) => (
-            <DropdownMenuItem
-              key={key}
-              onClick={() => onCategoryChange(key as CategoryKey)}
-            >
-              {category.label}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-      {selectedCategory && <div className="w-px bg-border h-4" />}
-      <div className="contents flex-wrap items-center gap-2">
-        {selectedCategory &&
-          TAG_CATEGORIES[selectedCategory].subTags.map((tag) => (
-            <Badge
-              key={tag}
-              variant={selectedSubTags.includes(tag) ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => onSubTagToggle(tag)}
-            >
-              {tag.toUpperCase()}
-            </Badge>
-          ))}
+    <div className="flex flex-row gap-2 flex-wrap items-start">
+      <div className="relative flex-1 max-w-sm">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="search"
+          placeholder="Search recipes..."
+          className="pl-8"
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+        />
+      </div>
+      <div className="min-w-[315px]">
+        <MultiSelect
+          options={CATEGORIES}
+          placeholder="Filter by product"
+          onValueChange={onCategoriesChange}
+          defaultValue={selectedCategories}
+          className="h-10"
+          maxCount={2}
+        />
       </div>
     </div>
   );
@@ -180,39 +114,24 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   const searchParams = useSearchParams();
   // Initialize state from URL params
   const [view, setView] = useState<"grid" | "list">(() => {
-    return (searchParams.get("view") as "grid" | "list") || "grid";
+    return (searchParams.get("view") as "grid" | "list") || "list";
   });
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<CategoryKey | null>(
-    () => {
-      const category = searchParams.get("category") as CategoryKey | null;
-      return category && TAG_CATEGORIES[category] ? category : "clarity";
-    }
-  );
-
-  const [selectedSubTags, setSelectedSubTags] = useState<string[]>(() => {
-    const tagParam = searchParams.get("tags");
-    return tagParam ? tagParam.split(",") : [];
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
+    const categories = searchParams.get("categories");
+    return categories ? categories.split(",") : [];
   });
 
   // Update URL when filters change
-  const updateURL = (
-    newView?: "grid" | "list",
-    newCategory?: CategoryKey | null,
-    newSubTags?: string[]
-  ) => {
+  const updateURL = (newView?: "grid" | "list", newCategories?: string[]) => {
     const params = new URLSearchParams();
 
     if (newView === "list") {
       params.set("view", newView);
     }
 
-    if (newCategory) {
-      params.set("category", newCategory);
-    }
-
-    if (newSubTags && newSubTags.length > 0) {
-      params.set("tags", newSubTags.join(","));
+    if (newCategories && newCategories.length > 0) {
+      params.set("categories", newCategories.join(","));
     }
 
     const newURL = params.toString()
@@ -222,27 +141,18 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
     router.push(newURL, { scroll: false });
   };
 
-  // Handle view changes
   const handleViewChange = (newView: "grid" | "list") => {
     setView(newView);
-    updateURL(newView, selectedCategory, selectedSubTags);
+    updateURL(newView, selectedCategories);
   };
 
-  // Handle tag changes
-  const handleCategoryChange = (category: CategoryKey) => {
-    setSelectedCategory(category);
-    setSelectedSubTags([]); // Clear sub-tags when category changes
-    updateURL(view, category, []);
+  const handleCategoriesChange = (categories: string[]) => {
+    setSelectedCategories(categories);
+    updateURL(view, categories);
   };
 
-  // Handle sub-tag toggle
-  const handleSubTagToggle = (tag: string) => {
-    const newSubTags = selectedSubTags.includes(tag)
-      ? selectedSubTags.filter((t) => t !== tag)
-      : [...selectedSubTags, tag];
-
-    setSelectedSubTags(newSubTags);
-    updateURL(view, selectedCategory, newSubTags);
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
   };
 
   // Create a map of recipe IDs to their corresponding rendered cards
@@ -264,25 +174,17 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
         recipe.title.toLowerCase().includes(search.toLowerCase()) ||
         recipe.description.toLowerCase().includes(search.toLowerCase());
 
-      const matchesCategory =
-        !selectedCategory || recipe.categories.includes(selectedCategory);
-      const matchesTags =
-        selectedSubTags.length === 0 ||
-        selectedSubTags.some((tag) =>
-          recipe.tags.includes(tag as RecipeSubTag)
+      const matchesCategories =
+        selectedCategories.length === 0 ||
+        recipe.categories.some((category) =>
+          selectedCategories.includes(category)
         );
 
-      return matchesSearch && matchesCategory && matchesTags;
+      return matchesSearch && matchesCategories;
     });
 
     return filteredRecipes.map((recipe) => recipeCardMap[recipe.id]);
-  }, [
-    search,
-    selectedCategory,
-    selectedSubTags,
-    initialRecipes,
-    recipeCardMap,
-  ]);
+  }, [search, selectedCategories, initialRecipes, recipeCardMap]);
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -301,18 +203,12 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
         <div className="space-y-6">
           <RecipeFilters
             search={search}
-            onSearchChange={setSearch}
-            selectedCategory={selectedCategory}
-            selectedSubTags={selectedSubTags}
-            onCategoryChange={handleCategoryChange}
-            onSubTagToggle={handleSubTagToggle}
+            onSearchChange={handleSearchChange}
+            selectedCategories={selectedCategories}
+            onCategoriesChange={handleCategoriesChange}
           />
 
-          {view === "grid" ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredRecipeCards}
-            </div>
-          ) : (
+          {view === "list" ? (
             <Table>
               <TableBody>
                 {initialRecipes
@@ -326,17 +222,13 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
                         .toLowerCase()
                         .includes(search.toLowerCase());
 
-                    const matchesCategory =
-                      !selectedCategory ||
-                      recipe.categories.includes(selectedCategory);
-
-                    const matchesTags =
-                      selectedSubTags.length === 0 ||
-                      selectedSubTags.some((tag) =>
-                        recipe.tags.includes(tag as RecipeSubTag)
+                    const matchesCategories =
+                      selectedCategories.length === 0 ||
+                      recipe.categories.some((category) =>
+                        selectedCategories.includes(category)
                       );
 
-                    return matchesSearch && matchesCategory && matchesTags;
+                    return matchesSearch && matchesCategories;
                   })
                   .map((recipe) => (
                     <TableRow
@@ -362,6 +254,10 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
                   ))}
               </TableBody>
             </Table>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filteredRecipeCards}
+            </div>
           )}
         </div>
       </div>
