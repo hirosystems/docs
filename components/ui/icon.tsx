@@ -3739,6 +3739,32 @@ export function Youtube(props: SVGProps<SVGSVGElement>): JSX.Element {
   );
 }
 
+export function Clarity(props: SVGProps<SVGSVGElement>): JSX.Element {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 91.49 91.49"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M27.47,22.73c2.32-2.25,5.5-3.37,9.57-3.37V23.6q-4.2.11-6.27,2.58c-1.38,1.65-2.08,4.12-2.08,7.42V57.89c0,3.3.7,5.77,2.08,7.42s3.47,2.51,6.27,2.57v4.25c-4.07,0-7.25-1.12-9.57-3.37S24,63,24,58.29V33.2Q24,26.1,27.47,22.73Z"
+        fill="#7e858b"
+      />
+      <path
+        d="M42.69,22.73q3.48-3.37,9.57-3.37V23.6q-4.18.11-6.27,2.58T43.92,33.6V57.89q0,4.95,2.07,7.42t6.27,2.57v4.25q-6.09,0-9.57-3.37T39.22,58.29V33.2Q39.22,26.1,42.69,22.73Z"
+        fill="var(--icon)"
+      />
+      <path
+        d="M57.92,22.73q3.46-3.37,9.57-3.37V23.6q-4.2.11-6.27,2.58T59.14,33.6V57.89q0,4.95,2.08,7.42t6.27,2.57v4.25q-6.1,0-9.57-3.37T54.45,58.29V33.2Q54.45,26.1,57.92,22.73Z"
+        fill="#7e858b"
+      />
+    </svg>
+  );
+}
+
 export function StacksCardIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg

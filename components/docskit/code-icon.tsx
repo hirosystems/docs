@@ -1,4 +1,5 @@
 import { themeIcons } from "seti-icons";
+import { Clarity } from "@/components/ui/icon";
 
 export function CodeIcon({
   title,
@@ -9,6 +10,18 @@ export function CodeIcon({
   lang: string;
   className?: string;
 }) {
+  if (lang === "clarity") {
+    return (
+      <span className={className}>
+        <Clarity
+          height="28"
+          style={{ margin: "-8px" }}
+          color="hsl(var(--muted-foreground))"
+        />
+      </span>
+    );
+  }
+
   let filename = title || "x";
   if (!filename.includes(".")) {
     filename += "." + lang;
