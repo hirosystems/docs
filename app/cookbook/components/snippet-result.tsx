@@ -73,7 +73,7 @@ export function SnippetResult({
 
       try {
         const simnet = await initSimnet();
-        await simnet.initEmtpySession();
+        await simnet.initEmptySession();
         simnet.deployer = "ST000000000000000000002AMW42H";
         const deployer = simnet.deployer;
         console.log("deployer", deployer);
