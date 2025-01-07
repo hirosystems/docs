@@ -25,7 +25,7 @@ function extractCodeAndContent(content: string) {
 }
 
 export async function loadRecipes(): Promise<Recipe[]> {
-  const recipesDir = path.join(process.cwd(), "data/recipes");
+  const recipesDir = path.join(process.cwd(), "content/_recipes/code-blocks");
   const files = await fs.readdir(recipesDir);
 
   const recipes = await Promise.all(
