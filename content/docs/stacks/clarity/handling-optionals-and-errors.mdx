@@ -19,8 +19,11 @@ Clarity's optional value and error handling functions are designed with several 
 ### 1. is-some and is-none
 
 **What**: Check if an optional value contains a value (some) or is empty (none).
+
 **Why**: Essential for safely working with optional values before attempting to use them.
+
 **When**: Use when you need to check if an optional value is present before proceeding.
+
 **How**: 
 ```clarity
 (is-some value)
@@ -47,8 +50,11 @@ Clarity's optional value and error handling functions are designed with several 
 ### 2. unwrap! and unwrap-panic
 
 **What**: Extract the value from an optional or response type.
+
 **Why**: Allows safe extraction of values, with controlled behavior on failure.
+
 **When**: Use when you're certain a value exists or when you want to halt execution if it doesn't.
+
 **How**: 
 ```clarity
 (unwrap! value error-expr)
@@ -72,8 +78,11 @@ Clarity's optional value and error handling functions are designed with several 
 ### 3. try!
 
 **What**: Attempts to unwrap a response, returning early with an error if it fails.
+
 **Why**: Simplifies error handling in functions that return responses.
+
 **When**: Use when you want to propagate errors up the call stack.
+
 **How**: 
 ```clarity
 (try! expression)
@@ -146,4 +155,4 @@ This example demonstrates:
 
 ## Conclusion
 
-Proper handling of optional values and error cases is crucial for writing secure and reliable Clarity smart contracts. By leveraging Clarity's built-in functions like `is-some`, `unwrap!`, and `try!`, developers can create robust contracts that gracefully handle unexpected situations and provide clear feedback when errors occur. Always consider all possible outcomes and use these tools to make your contracts more predictable and maintainable.
+Proper handling of optional values and error cases is crucial for writing secure and reliable Clarity smart contracts. By leveraging Clarity's built-in functions like `is-some`, `unwrap!`, and `try!`, you can create robust contracts that gracefully handle unexpected situations and provide clear feedback when errors occur. Always consider all possible outcomes and use these tools to make your contracts more predictable and maintainable.
