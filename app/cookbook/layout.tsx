@@ -11,7 +11,7 @@ export default function CookbookLayout({
     <div className="px-10 *:border-none">
       <Layout {...homeLayoutOptions}>
         <div className="min-h-screen py-8">
-          <div className="space-y-6">{children}</div>
+          <div className="space-y-4">{children}</div>
         </div>
       </Layout>
     </div>

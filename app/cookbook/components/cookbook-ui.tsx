@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MultiSelect } from "@/components/multi-select";
+import { FilterPopover } from "@/components/filter-popover";
 
 // Internal components
 function ViewToggle({
@@ -56,17 +57,6 @@ function ViewToggle({
   );
 }
 
-const CATEGORIES = [
-  { label: "Stacks.js", value: "stacks-js" },
-  { label: "Clarity", value: "clarity" },
-  { label: "Bitcoin", value: "bitcoin" },
-  { label: "Chainhook", value: "chainhook" },
-  { label: "API", value: "api" },
-  { label: "Clarinet", value: "clarinet" },
-];
-
-type CategoryKey = (typeof CATEGORIES)[number]["value"];
-
 function RecipeFilters({
   search,
   onSearchChange,
@@ -79,27 +69,21 @@ function RecipeFilters({
   onCategoriesChange: (categories: string[]) => void;
 }) {
   return (
-    <div className="flex flex-row gap-2 flex-wrap items-start">
-      <div className="relative flex-1 max-w-sm">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+    <div className="flex flex-row gap-2 flex-wrap items-start justify-between">
+      <div className="relative w-1/3">
+        <Search className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search recipes..."
-          className="pl-8"
+          placeholder="Search by keywords..."
+          className="font-aeonikFono text-md pl-8"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>
-      <div className="min-w-[315px]">
-        <MultiSelect
-          options={CATEGORIES}
-          placeholder="Filter by product"
-          onValueChange={onCategoriesChange}
-          defaultValue={selectedCategories}
-          className="h-10"
-          maxCount={2}
-        />
-      </div>
+      <FilterPopover
+        selectedCategories={selectedCategories}
+        onCategoriesChange={onCategoriesChange}
+      />
     </div>
   );
 }
@@ -169,15 +153,20 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   // Filter recipes and get their corresponding cards
   const filteredRecipeCards = useMemo(() => {
     const filteredRecipes = initialRecipes.filter((recipe) => {
+      const searchText = search.toLowerCase();
       const matchesSearch =
-        search === "" ||
-        recipe.title.toLowerCase().includes(search.toLowerCase()) ||
-        recipe.description.toLowerCase().includes(search.toLowerCase());
-
-      const matchesCategories =
-        selectedCategories.length === 0 ||
+        recipe.title.toLowerCase().includes(searchText) ||
+        recipe.description.toLowerCase().includes(searchText) ||
         recipe.categories.some((category) =>
-          selectedCategories.includes(category)
+          category.toLowerCase().includes(searchText)
+        ) ||
+        recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
+
+      // Add category filtering
+      const matchesCategories =
+        selectedCategories.length === 0 || // Show all if no categories selected
+        recipe.categories.some((category) =>
+          selectedCategories.includes(category.toLowerCase())
         );
 
       return matchesSearch && matchesCategories;
@@ -188,13 +177,13 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="flex flex-col gap-6 space-y-6">
+      <div className="flex flex-col gap-6 space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1">
-            <h1 className="text-3xl font-semibold">Cookbook</h1>
-            <p className="text-lg text-muted-foreground w-2/3">
-              An open-source collection of copy &amp; paste code recipes for
-              building on Stacks and Bitcoin.
+            <h1 className="text-4xl font-semibold">Cookbook</h1>
+            <p className="text-lg text-muted-foreground w-full">
+              Explore ready-to-use code recipes for building applications on
+              Stacks.
             </p>
           </div>
           <ViewToggle view={view} onChange={handleViewChange} />
@@ -213,19 +202,21 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
               <TableBody>
                 {initialRecipes
                   .filter((recipe) => {
+                    const searchText = search.toLowerCase();
                     const matchesSearch =
-                      search === "" ||
-                      recipe.title
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
-                      recipe.description
-                        .toLowerCase()
-                        .includes(search.toLowerCase());
+                      recipe.title.toLowerCase().includes(searchText) ||
+                      recipe.description.toLowerCase().includes(searchText) ||
+                      recipe.categories.some((category) =>
+                        category.toLowerCase().includes(searchText)
+                      ) ||
+                      recipe.tags.some((tag) =>
+                        tag.toLowerCase().includes(searchText)
+                      );
 
                     const matchesCategories =
                       selectedCategories.length === 0 ||
                       recipe.categories.some((category) =>
-                        selectedCategories.includes(category)
+                        selectedCategories.includes(category.toLowerCase())
                       );
 
                     return matchesSearch && matchesCategories;
