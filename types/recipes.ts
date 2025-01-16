@@ -18,14 +18,7 @@ export const CategorySubTags = {
     "utils",
   ] as const,
 
-  clarity: [
-    "hashing",
-    "lists",
-    "arithmetic",
-    "sequences",
-    "iterators",
-    "tokens",
-  ] as const,
+  clarity: [] as const,
 
   bitcoin: ["transactions", "signing"] as const,
 
