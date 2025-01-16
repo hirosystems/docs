@@ -1,12 +1,12 @@
 ---
 id: generate-random-number
-title: Create a random number in Clarity using block-height
+title: Generate a random number with block-height
 description: Create a random number based on a block-height using the buff-to-uint-be function in Clarity.
-date: 2024.02.28
+date: 2025.01.16
 categories:
   - clarity
 tags:
-  - hashing
+  - blocks
 files:
   - name: random.clar
     path: contracts/random.clar
@@ -16,10 +16,9 @@ files:
 ```clarity
 (define-constant ERR_FAIL (err u1000))
 
-;; !hover random
 (define-read-only (read-rnd (block uint))
-  ;; !hover random
+  ;; !hover id-header-hash
+  ;; !mark[/id-header-hash/]
   (ok (buff-to-uint-be (unwrap-panic (as-max-len? (unwrap-panic (slice? (unwrap! (get-stacks-block-info? id-header-hash block) ERR_FAIL) u16 u32)) u16))))
-;; !hover random
 )
 ```
