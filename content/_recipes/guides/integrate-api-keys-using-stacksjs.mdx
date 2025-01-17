@@ -1,0 +1,34 @@
+# Integrate your API keys using Stacks.js
+
+A script that integrates your API key authentication into Stacks.js network calls using <HoverLink href="hover:middleware">middleware</HoverLink>, allowing for authenticated requests to Stacks APIs that require rate limiting or premium access.
+
+This example is showing a simple STX transfer transaction, but the same approach can be used for any Stacks API request that requires authentication - so long as you are passing in your _typescript`customFetchFn`_ to the client within your transaction details.
+
+## Use cases
+
+- Accessing premium API endpoints with higher rate limits
+- Building production applications that require reliable API access
+
+## Example usage
+
+```typescript -nc
+import { AnchorMode } from "@stacks/transactions";
+
+const txOptions = {
+  network: "testnet",
+  recipient: "<recipient-address>",
+  amount: 12345n,
+  senderKey: "<your-private-key>", // KEEP THIS SECRET!
+  memo: "some memo", // optional
+  anchorMode: AnchorMode.Any,
+  // !mark(1:3)
+  client: {
+    fetch: customFetchFn,
+  },
+};
+```
+
+## Resources
+
+- [API keys](/stacks/api-keys)
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)

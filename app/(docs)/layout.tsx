@@ -7,7 +7,7 @@ import { Body, NavChildren, SidebarBanner } from "./layout.client";
 import { Statuspage } from "statuspage.io";
 
 const statuspage = new Statuspage("3111l89394q4");
-console.log({ status: await statuspage.api.getStatus() });
+// console.log({ status: await statuspage.api.getStatus() });
 
 export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
   tree: utils.pageTree,
@@ -21,10 +21,7 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
         href: "https://platform.hiro.so/",
         icon: (
           <div className="flex items-center gap-1 bg-secondary p-1.5 rounded-md">
-            <span className="ml-2 font-semibold max-md:hidden">
-              Hiro Platform
-            </span>
-            <ArrowUpRight />
+            <span className="font-semibold max-md:hidden">Hiro Platform</span>
           </div>
         ),
         external: true,
@@ -36,10 +33,10 @@ export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
       text: "Guides",
       url: "/guides",
     },
-    // {
-    //   text: "Cookbook",
-    //   url: "/cookbook",
-    // },
+    {
+      text: "Cookbook",
+      url: "/cookbook",
+    },
   ],
   sidebar: {
     defaultOpenLevel: 0,
@@ -59,10 +56,7 @@ export const homeLayoutOptions: Omit<DocsLayoutProps, "children"> = {
         href: "https://platform.hiro.so/",
         icon: (
           <div className="flex items-center gap-1 bg-secondary p-1.5 rounded-md">
-            <span className="ml-2 font-semibold max-md:hidden">
-              Hiro Platform
-            </span>
-            <ArrowUpRight />
+            <span className="font-semibold max-md:hidden">Hiro Platform</span>
           </div>
         ),
         external: true,
@@ -74,10 +68,10 @@ export const homeLayoutOptions: Omit<DocsLayoutProps, "children"> = {
       text: "Guides",
       url: "/guides",
     },
-    // {
-    //   text: "Cookbook",
-    //   url: "/cookbook",
-    // },
+    {
+      text: "Cookbook",
+      url: "/cookbook",
+    },
   ],
 };
 

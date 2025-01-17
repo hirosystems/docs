@@ -1,0 +1,34 @@
+---
+id: build-an-unsigned-tx
+title: Build an unsigned transaction
+description: Build an unsigned transaction using Stacks.js.
+date: 2025.01.16
+categories:
+  - stacks.js
+tags:
+  - unsigned transactions
+  - public keys
+files:
+  - name: build-an-unsigned-tx.ts
+    path: scripts/build-an-unsigned-tx.ts
+    type: typescript
+---
+
+```typescript
+import { getPublicKeyFromPrivate } from "@stacks/encryption";
+import { Cl, makeUnsignedSTXTokenTransfer } from "@stacks/transactions";
+
+const privateKey = "<your-private-key>"; // KEEP THIS SECRET!
+
+const publicKey = getPublicKeyFromPrivate(privateKey);
+
+// !mark[/makeUnsignedSTXTokenTransfer/]
+const transaction = await makeUnsignedSTXTokenTransfer({
+  network: "testnet",
+  recipient: Cl.standardPrincipal("<recipient-address>"),
+  amount: 42_000_000n,
+  fee: 500_000n,
+  memo: "<message-here>", // optional
+  publicKey,
+});
+```
