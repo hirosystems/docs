@@ -11,7 +11,7 @@ import { useId } from "react";
 import { ListFilter } from "lucide-react";
 
 const CATEGORIES = [
-  { label: "Stacks.js", value: "stacks-js" },
+  { label: "Stacks.js", value: "stacks.js" },
   { label: "Clarity", value: "clarity" },
   { label: "Bitcoin", value: "bitcoin" },
   // { label: "Chainhook", value: "chainhook" },
@@ -46,14 +46,14 @@ function FilterPopover({
     <div className="flex flex-col gap-4">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" size="icon" aria-label="Filter by product">
+          <Button variant="outline" size="icon" aria-label="Filter by category">
             <ListFilter size={16} strokeWidth={2} aria-hidden="true" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-48 p-3">
           <div className="space-y-3">
-            <div className="text-xs font-medium text-muted-foreground">
-              Filter by product
+            <div className="text-sm font-medium text-muted-foreground">
+              Filter by category
             </div>
             <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
               {CATEGORIES.map((category) => (

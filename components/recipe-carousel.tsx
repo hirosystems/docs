@@ -12,6 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import type { Recipe } from "@/types/recipes";
+import { truncate } from "@/lib/utils";
 
 interface RecipeCarouselProps {
   currentRecipeId: string; // To exclude current recipe from carousel
@@ -44,11 +45,11 @@ function RecipeCarousel({ currentRecipeId, data }: RecipeCarouselProps) {
           {recipes.map((recipe, index) => (
             <CarouselItem key={index} className="pl-4 basis-[75%]">
               <Link href={`/cookbook/${recipe.id}`} className="group">
-                <Card className="bg-code border-0">
+                <Card className="bg-code border-0 h-[150px]">
                   <CardContent className="p-6 flex flex-col h-full">
-                    <div className="space-y-4 flex flex-col flex-grow">
+                    <div className="space-y-4 flex flex-col h-full">
                       <div className="flex items-baseline gap-4 flex-wrap">
-                        <h3 className="text-xl font-mono text-primary group-hover:underline decoration-2 underline-offset-4">
+                        <h3 className="text-xl font-mono text-primary group-hover:underline decoration-2 underline-offset-4 line-clamp-1">
                           {recipe.title}
                         </h3>
                         <div className="flex gap-2 flex-wrap uppercase">
@@ -59,8 +60,8 @@ function RecipeCarousel({ currentRecipeId, data }: RecipeCarouselProps) {
                           ))}
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed flex-grow">
-                        {recipe.description}
+                      <p className="text-md text-muted-foreground leading-relaxed line-clamp-3">
+                        {truncate(recipe.description)}
                       </p>
                     </div>
                   </CardContent>
