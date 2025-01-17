@@ -1,6 +1,6 @@
 ---
 title: unwrap-panic
-description: Unpacking optional and response types and throwing runtime errors in Clarity smart contracts.
+description: Unpack optional and response types and throwing runtime errors in Clarity smart contracts.
 ---
 
 ## Function Signature
@@ -8,21 +8,6 @@ description: Unpacking optional and response types and throwing runtime errors i
 ```clarity
 (unwrap-panic option-input)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - Input: `(optional A) | (response A B)`
 - Output: `A`
@@ -89,4 +74,4 @@ Let's implement a function that retrieves a value from a map and unpacks it usin
 
 ## Conclusion
 
-The `unwrap-panic` function is a fundamental tool for unpacking optional and response types and throwing runtime errors in Clarity smart contracts. It allows developers to implement logic that requires handling optional and response types, ensuring data integrity and simplifying the unpacking process. When used effectively, `unwrap-panic` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle optional and response types and throw runtime errors when necessary.
+The `unwrap-panic` function is a fundamental tool for unpacking optional and response types and throwing runtime errors in Clarity smart contracts. It allows you to implement logic that requires handling optional and response types, ensuring data integrity and simplifying the unpacking process. When used effectively, `unwrap-panic` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle optional and response types and throw runtime errors when necessary.
