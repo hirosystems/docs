@@ -215,8 +215,8 @@ export function SnippetResult({
         style={{ display: "none" }}
         title="code-sandbox"
       />
-      <div className="flex items-center gap-2">
-        <Button
+      <div className="flex items-center justify-end gap-2">
+        {/* <Button
           variant="outline"
           className="gap-2"
           size="sm"
@@ -229,9 +229,9 @@ export function SnippetResult({
             <Play className="w-4 h-4" />
           )}
           {getButtonText()}
-        </Button>
+        </Button> */}
         {type === "clarity" && (
-          <Button className="gap-2" size="sm" asChild>
+          <Button variant="link" className="gap-2 self-end" size="sm" asChild>
             <Link
               href={`https://play.hiro.so/?epoch=3.0&snippet=KGRlZmluZS1yZWFkLW9ubHkgKGdldC10ZW51cmUtaGVpZ2h0IChibG9jayB1aW50KSkKICAob2sKICAgIChhdC1ibG9jawogICAgICAodW53cmFwIQogICAgICAgIChnZXQtc3RhY2tzLWJsb2NrLWluZm8_IGlkLWhlYWRlci1oYXNoIGJsb2NrKQogICAgICAgIChlcnIgdTQwNCkogICAgICApCiAgICAgIHRlbnVyZS1oZWlnaHQKICAgICkKICApCik=`}
               target="_blank"

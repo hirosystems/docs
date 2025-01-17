@@ -1,22 +1,14 @@
 "use client";
 
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Recipe, RecipeSubTag } from "@/types/recipes";
+import { Recipe } from "@/types/recipes";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LayoutGrid, List, Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { ChevronDown } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MultiSelect } from "@/components/multi-select";
 import { FilterPopover } from "@/components/filter-popover";
 
 // Internal components
@@ -96,7 +88,10 @@ interface CookbookProps {
 function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // Initialize state from URL params
+
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, _] = useState(1);
+
   const [view, setView] = useState<"grid" | "list">(() => {
     return (searchParams.get("view") as "grid" | "list") || "list";
   });
@@ -106,7 +101,6 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
     return categories ? categories.split(",") : [];
   });
 
-  // Update URL when filters change
   const updateURL = (newView?: "grid" | "list", newCategories?: string[]) => {
     const params = new URLSearchParams();
 
@@ -150,7 +144,6 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
     );
   }, [initialRecipes, recipeCards]);
 
-  // Filter recipes and get their corresponding cards
   const filteredRecipeCards = useMemo(() => {
     const filteredRecipes = initialRecipes.filter((recipe) => {
       const searchText = search.toLowerCase();
@@ -162,9 +155,8 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
         ) ||
         recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
 
-      // Add category filtering
       const matchesCategories =
-        selectedCategories.length === 0 || // Show all if no categories selected
+        selectedCategories.length === 0 ||
         recipe.categories.some((category) =>
           selectedCategories.includes(category.toLowerCase())
         );
@@ -172,8 +164,67 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
       return matchesSearch && matchesCategories;
     });
 
-    return filteredRecipes.map((recipe) => recipeCardMap[recipe.id]);
-  }, [search, selectedCategories, initialRecipes, recipeCardMap]);
+    const startIndex = 0;
+    const endIndex = currentPage * ITEMS_PER_PAGE;
+
+    return filteredRecipes
+      .slice(startIndex, endIndex)
+      .map((recipe) => recipeCardMap[recipe.id]);
+  }, [search, selectedCategories, initialRecipes, recipeCardMap, currentPage]);
+
+  // Add total pages calculation
+  const totalPages = useMemo(() => {
+    const filteredLength = initialRecipes.filter((recipe) => {
+      const searchText = search.toLowerCase();
+      const matchesSearch =
+        recipe.title.toLowerCase().includes(searchText) ||
+        recipe.description.toLowerCase().includes(searchText) ||
+        recipe.categories.some((category) =>
+          category.toLowerCase().includes(searchText)
+        ) ||
+        recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
+
+      const matchesCategories =
+        selectedCategories.length === 0 ||
+        recipe.categories.some((category) =>
+          selectedCategories.includes(category.toLowerCase())
+        );
+
+      return matchesSearch && matchesCategories;
+    }).length;
+
+    return Math.ceil(filteredLength / ITEMS_PER_PAGE);
+  }, [initialRecipes, search, selectedCategories]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const lastItemRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const lastEntry = entries[0];
+        if (lastEntry.isIntersecting && !isLoading) {
+          // Check if we have more pages to load
+          if (currentPage < totalPages) {
+            setIsLoading(true);
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = lastItemRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [currentPage, totalPages, isLoading]);
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -200,32 +251,16 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           {view === "list" ? (
             <Table>
               <TableBody>
-                {initialRecipes
-                  .filter((recipe) => {
-                    const searchText = search.toLowerCase();
-                    const matchesSearch =
-                      recipe.title.toLowerCase().includes(searchText) ||
-                      recipe.description.toLowerCase().includes(searchText) ||
-                      recipe.categories.some((category) =>
-                        category.toLowerCase().includes(searchText)
-                      ) ||
-                      recipe.tags.some((tag) =>
-                        tag.toLowerCase().includes(searchText)
-                      );
+                {filteredRecipeCards.map((recipeCard, index) => {
+                  const recipe = initialRecipes[index];
+                  const isLastItem = index === filteredRecipeCards.length - 1;
 
-                    const matchesCategories =
-                      selectedCategories.length === 0 ||
-                      recipe.categories.some((category) =>
-                        selectedCategories.includes(category.toLowerCase())
-                      );
-
-                    return matchesSearch && matchesCategories;
-                  })
-                  .map((recipe) => (
+                  return (
                     <TableRow
                       key={recipe.id}
                       className="cursor-pointer group hover:bg-transparent"
                       onClick={() => router.push(`/cookbook/${recipe.id}`)}
+                      ref={isLastItem ? lastItemRef : null}
                     >
                       <TableCell className="py-4 text-primary font-aeonikFono whitespace-normal break-words text-base">
                         <span className="group-hover:underline decoration-primary/70">
@@ -242,16 +277,40 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
                         </div>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  );
+                })}
               </TableBody>
             </Table>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredRecipeCards}
+              {filteredRecipeCards.map((card, index) => (
+                <div
+                  key={index}
+                  ref={
+                    index === filteredRecipeCards.length - 1
+                      ? lastItemRef
+                      : null
+                  }
+                >
+                  {card}
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
+
+      {isLoading && (
+        <div className="w-full text-center py-4">Loading more recipes...</div>
+      )}
+
+      {!isLoading &&
+        currentPage === totalPages &&
+        filteredRecipeCards.length > 0 && (
+          <div className="w-full text-center py-4 text-muted-foreground">
+            No more recipes
+          </div>
+        )}
     </div>
   );
 }
