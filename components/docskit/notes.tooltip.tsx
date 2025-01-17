@@ -30,7 +30,7 @@ export function NoteTooltip({
     <TooltipProvider delayDuration={100}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <span className="underline decoration-dotted underline-offset-4 cursor-help">
+          <span className="underline decoration-dotted underline-offset-4 cursor-default">
             {children}
           </span>
         </TooltipTrigger>
