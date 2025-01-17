@@ -145,7 +145,13 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   }, [initialRecipes, recipeCards]);
 
   const filteredRecipeCards = useMemo(() => {
-    const filteredRecipes = initialRecipes.filter((recipe) => {
+    // First sort by date
+    const sortedRecipes = [...initialRecipes].sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+
+    // Then apply filters
+    const filteredRecipes = sortedRecipes.filter((recipe) => {
       const searchText = search.toLowerCase();
       const matchesSearch =
         recipe.title.toLowerCase().includes(searchText) ||
@@ -301,16 +307,10 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
       </div>
 
       {isLoading && (
-        <div className="w-full text-center py-4">Loading more recipes...</div>
+        <p className="w-full text-center font-aeonikFono py-4">
+          Loading more recipes...
+        </p>
       )}
-
-      {!isLoading &&
-        currentPage === totalPages &&
-        filteredRecipeCards.length > 0 && (
-          <div className="w-full text-center py-4 text-muted-foreground">
-            No more recipes
-          </div>
-        )}
     </div>
   );
 }
