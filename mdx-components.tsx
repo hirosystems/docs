@@ -12,6 +12,20 @@ import { OrderedList, UnorderedList } from "@/components/lists";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...defaultComponents,
+    h1: (props) => {
+      const H1 = defaultComponents.h1 as React.ComponentType<any>;
+
+      const id =
+        typeof props.children === "string"
+          ? props.children
+          : (props.children as React.ReactElement)?.props?.children;
+
+      return (
+        <H1 id={id} {...props}>
+          {props.children}
+        </H1>
+      );
+    },
     Accordion,
     Accordions,
     blockquote: (props) => <Callout>{props.children}</Callout>,
@@ -19,13 +33,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Cards,
     Card,
     SecondaryCard,
-    code: (props) => (
+    code: (props: React.PropsWithChildren) => (
       <code
         {...props}
-        className="border border-border p-1 bg-code text-sm text-muted-foreground"
+        className={`border border-border rounded-md p-1 bg-code text-sm text-muted-foreground [h1_&]:text-xl`}
       />
     ),
-    hr: (props) => (
+    hr: (props: React.PropsWithChildren) => (
       <hr {...props} className="border-t border-border/50 mt-0 mb-6" />
     ),
     Tab,

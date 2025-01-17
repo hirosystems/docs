@@ -22,7 +22,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 32 13.8% 78.6%;
     --input: 240 5.9% 90%;
-    --ring: 346.8 77.2% 49.8%;
+    --ring: 240 5.9% 90%;
     --radius: 0.5rem;
     --hiro: 21 100% 67.5%;
     --icon: #383432;
@@ -67,7 +67,7 @@
     --destructive-foreground: 0 85.7% 97.3%;
     --border: 17 6.5% 21%;
     --input: 240 3.7% 15.9%;
-    --ring: 346.8 77.2% 49.8%;
+    --ring: 17 6.5% 21%;
     --hiro: 24 100% 51.4%;
     --card-hover: 15 5% 16%;
     --icon: #ffffff;
@@ -114,6 +114,30 @@ body {
 }
 
 /* Override CSS */
+
+.recipe-preview > div:first-child {
+  margin: 0;
+  height: 200px;
+}
+
+.recipe-preview > div:first-child pre {
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.recipe-preview > div:first-child pre::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.recipe > div:first-child {
+  margin: 0;
+}
+
+.recipe > div:first-child pre {
+  max-height: 425px;
+  height: auto;
+}
 
 .sticky.top-24 {
   font-family: var(--font-aeonikFono), sans-serif;
@@ -537,3 +561,24 @@ div.divide-y.divide-border.overflow-hidden.rounded-lg.border.bg-card {
 }
 
 /* END Docskit theme */
+
+/* Replace the nested selectors with flat ones */
+.light::selection {
+  background-color: #f4d4a3;
+  color: #bc812e;
+}
+
+.light::-moz-selection {
+  background-color: #f4d4a3;
+  color: #bc812e;
+}
+
+.dark::selection {
+  background-color: #ffe6f2;
+  color: #ff9ecf;
+}
+
+.dark::-moz-selection {
+  background-color: #ffe6f2;
+  color: #ff9ecf;
+}

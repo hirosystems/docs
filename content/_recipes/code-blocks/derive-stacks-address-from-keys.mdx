@@ -1,0 +1,33 @@
+---
+id: derive-stacks-address-from-keys
+title: Derive a Stacks address from private and public keys
+description: Derive a Stacks address from a private key and public key using Stacks.js.
+date: 2025.01.13
+categories:
+  - stacks.js
+tags:
+  - private keys
+  - addresses
+  - public keys
+files:
+  - name: derive-address-from-keys.ts
+    path: scripts/derive-address-from-keys.ts
+    type: typescript
+---
+
+```typescript
+import { getPublicKeyFromPrivate } from "@stacks/encryption";
+import { getAddressFromPrivateKey, getAddressFromPublicKey } from "@stacks/transactions";
+
+// !hover private-keys
+const privateKey = "<your-private-key>"; // KEEP THIS SECRET!
+// !hover private-keys
+const addressFromPrivateKey = getAddressFromPrivateKey(privateKey, "testnet");
+
+// !hover public-keys
+const publicKey = getPublicKeyFromPrivate(privateKey);
+// !hover public-keys
+const addressFromPublicKey = getAddressFromPublicKey(publicKey, "testnet");
+
+console.log(addressFromPrivateKey, addressFromPublicKey);
+```

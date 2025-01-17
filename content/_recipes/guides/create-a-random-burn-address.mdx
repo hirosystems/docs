@@ -1,0 +1,19 @@
+# Create a random burn address
+
+A read-only function that generates a random burn address using <HoverLink href="hover:principal-construct?" className="text-[var(--ch-7)]">principal-construct?</HoverLink> from a hash of user-provided input, using different version bytes for mainnet (0x16) or testnet (0x1a).
+
+## Use cases
+
+- Creating verifiable burn addresses for token burning mechanisms
+- Implementing proof-of-burn protocols
+- Generating unique, unreclaimable addresses for protocol-level operations
+- Setting up permanent token removal systems
+
+## Resources
+
+**Functions**
+
+- [`hash160`](/stacks/clarity/functions/hash160)
+- [`principal-construct?`](/stacks/clarity/functions/principal-construct)
+- [`to-consensus-buff?`](/stacks/clarity/functions/to-consensus-buff)
+- [`unwrap-panic`](/stacks/clarity/functions/unwrap-panic)

@@ -1,0 +1,18 @@
+# Transfer a SIP-10 fungible token using Stacks.js
+
+A script that transfers SIP-010 fungible tokens using Stacks.js, implementing post-conditions to ensure the exact amount is transferred.
+
+The example uses <HoverLink href="hover:Pc" className="text-[var(--ch-11)]">_typescript`Pc.principal(...)`_</HoverLink> builder to create a post-condition for fungible tokens that verifies the token contract will send the exact amount of tokens as expected.
+
+Setting <HoverLink href="hover:deny" className="text-[var(--ch-11)]">_typescript`postConditionMode: PostConditionMode.Deny`_</HoverLink> prevents the transaction from succeeding when the provided post-condition(s) are not met.
+
+## Use cases
+
+- Implementing secure token transfer functionality in dApps
+- Building DEX or token swap interfaces
+- Setting up automated token distribution mechanisms
+
+## Resources
+
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)
+- [Post-conditions](/stacks/stacks.js/guides/post-conditions)
