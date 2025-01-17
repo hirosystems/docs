@@ -1,0 +1,66 @@
+---
+id: transfer-a-sip10-token
+title: Transfer a SIP10 token using Stacks.js
+description: Transfer a SIP10 token with post conditions using Stacks.js.
+date: 2025.01.16
+categories:
+  - stacks.js
+tags:
+  - sip10
+  - tokens
+  - transfer
+  - post conditions
+files:
+  - name: sip10-transfer.ts
+    path: scripts/sip10-transfer.ts
+    type: typescript
+---
+
+```typescript
+import { STACKS_MAINNET } from "@stacks/network";
+import {
+  AnchorMode,
+  broadcastTransaction,
+  Cl,
+  makeContractCall,
+  Pc,
+  PostConditionMode,
+} from "@stacks/transactions";
+
+// Define the sBTC token address and the post condition for your transfer
+const tokenContract = "<token-contract-address>.<token-contract-name>";
+// !hover Pc
+const postConditions = Pc.principal(tokenContract)
+  // !hover Pc
+  .willSendEq(1000)
+  // !hover Pc
+  .ft(tokenContract, "<token-contract-name>");
+
+const txOptions = {
+  contractAddress: "<token-contract-address>",
+  contractName: "<token-contract-name>",
+  functionName: "transfer",
+  functionArgs: [
+    Cl.uint(1000), // amount to transfer
+    Cl.principal("<your-sender-address>"), // sender address
+    Cl.principal("<recipients-address>"), // recipient address
+    Cl.none(), // optional memo - passing none
+  ],
+  senderKey: "<your-private-key>",
+  validateWithAbi: true,
+  network: STACKS_MAINNET,
+  postConditions: [postConditions],
+  // !hover deny
+  postConditionMode: PostConditionMode.Deny,
+  anchorMode: AnchorMode.Any,
+};
+
+const transaction = await makeContractCall(txOptions);
+
+const broadcastResponse = await broadcastTransaction({
+  transaction,
+  network: STACKS_MAINNET,
+});
+const txId = broadcastResponse.txid;
+console.log({ txId });
+```

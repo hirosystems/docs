@@ -1,0 +1,34 @@
+# Build an unsigned transaction
+
+A script that constructs an unsigned STX token transfer transaction using Stacks.js, allowing for transaction preparation without immediate signing. This pattern is particularly useful for multi-party transactions where signatures need to be collected separately.
+
+## Use cases
+
+- Implementing offline signing workflows
+- Creating sponsored transactions to be signed by a third party
+- Setting up transaction proposals for DAO governance
+
+## Signing the transaction
+
+After building your transaction, you can <HoverLink href="hover:sign">sign</HoverLink> and then <HoverLink href="hover:broadcast">broadcast</HoverLink> the newly signed transaction to the network.
+
+```typescript -c
+import {
+  broadcastTransaction,
+  TransactionSigner,
+} from "@stacks/transactions";
+
+const privateKey = "<your-private-key>"; // KEEP THIS SECRET!
+
+// !hover sign
+const signer = new TransactionSigner(privateKey);
+// !hover sign
+const signedTx = await signer.signTransaction(transaction);
+
+// !hover broadcast
+const broadcastedTx = await broadcastTransaction(signedTx);
+```
+
+## Resources
+
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)
