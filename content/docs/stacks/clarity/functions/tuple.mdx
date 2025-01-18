@@ -1,6 +1,6 @@
 ---
 title: tuple
-description: Using tuples to group data values with named fields in Clarity smart contracts.
+description: Use tuples to group data values with named fields in Clarity smart contracts.
 ---
 
 ## Type Definition
@@ -8,28 +8,6 @@ description: Using tuples to group data values with named fields in Clarity smar
 ```clarity
 {label-0: value-type-0, label-1: value-type-1, ...}
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 - Input: `various types`
 - Output: `tuple`
@@ -82,28 +60,6 @@ Let's implement a function that stores and retrieves user information using tupl
 (get-user-info tx-sender) ;; Returns (some { name: "Alice", age: u30 })
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 This example demonstrates:
 1. Using tuples to store user information with named fields.
 2. Implementing functions to set and get user information using tuples.
@@ -124,4 +80,4 @@ This example demonstrates:
 
 ## Conclusion
 
-The `tuple` type is a fundamental tool for grouping related data values with named fields in Clarity smart contracts. It allows developers to implement complex data structures, ensuring data integrity and simplifying data management. When used effectively, `tuple` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle grouped data.
+The `tuple` type is a fundamental tool for grouping related data values with named fields in Clarity smart contracts. It allows you to implement complex data structures, ensuring data integrity and simplifying data management. When used effectively, `tuple` enhances the reliability and maintainability of your smart contract code by providing a clear and concise way to handle grouped data.
