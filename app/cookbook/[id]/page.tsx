@@ -37,12 +37,10 @@ export default async function Page({
     return <div>Recipe not found</div>;
   }
 
-  const Content = await import(`@/content/_recipes/guides/${id}.mdx`).catch(
-    () => {
-      console.error(`Failed to load MDX content for recipe: ${id}`);
-      return { default: () => <div>Content not found</div> };
-    }
-  );
+  const Content = await import(`@/content/_recipes/${id}.mdx`).catch(() => {
+    console.error(`Failed to load MDX content for recipe: ${id}`);
+    return { default: () => <div>Content not found</div> };
+  });
 
   return (
     <>
