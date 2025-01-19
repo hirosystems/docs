@@ -1,5 +1,5 @@
 import { Code } from "@/components/docskit/code";
-import { loadRecipes } from "@/utils/loader";
+import { loadRecipe, loadRecipes } from "@/utils/loader";
 import { Badge } from "@/components/ui/badge";
 import { HoverProvider } from "@/context/hover";
 import { HoverLink } from "@/components/docskit/annotations/hover";
@@ -29,6 +29,7 @@ export default async function Page({
   params: Param;
 }): Promise<JSX.Element> {
   const { id } = params;
+
   const recipes = await loadRecipes();
   const recipe = recipes.find((r) => r.id === id);
 
@@ -36,7 +37,6 @@ export default async function Page({
     return <div>Recipe not found</div>;
   }
 
-  // Dynamically import MDX content based on recipe id
   const Content = await import(`@/content/_recipes/guides/${id}.mdx`).catch(
     () => {
       console.error(`Failed to load MDX content for recipe: ${id}`);
@@ -139,8 +139,8 @@ export default async function Page({
             </div>
           </div>
 
-          <div className="mt-0 md:mt-16">
-            <RecipeCarousel currentRecipeId={id} data={recipes} />
+          <div className="mt-16">
+            <RecipeCarousel currentRecipeId={id} data={recipes.slice(0, 6)} />
           </div>
         </div>
       </HoverProvider>
