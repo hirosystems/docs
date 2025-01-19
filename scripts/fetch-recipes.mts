@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Simple script to fetch code-block recipe files from a separate GitHub repo
+ * Script to fetch code-block recipe files from a separate GitHub repo
  * and store them locally under .cache/recipes for doc usage at build time.
  */
 
@@ -15,8 +15,6 @@ const REPO_NAME = "recipes";
 const BRANCH = "main";
 const BASE_PATH = "recipes/";
 const DEST_FOLDER = ".cache/recipes";
-
-// ... existing code ...
 
 async function getGitHubFileList() {
   const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${BASE_PATH}?ref=${BRANCH}`;
@@ -55,7 +53,6 @@ async function fetchUrl(url: string): Promise<string> {
         return;
       }
 
-      // Check for success status code
       if (res.statusCode !== 200) {
         reject(new Error(`GitHub API returned status ${res.statusCode}`));
         return;
