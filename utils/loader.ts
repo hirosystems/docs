@@ -25,8 +25,16 @@ function extractCodeAndContent(content: string) {
 }
 
 export async function loadRecipes(): Promise<Recipe[]> {
-  const recipesDir = path.join(process.cwd(), "content/_recipes/code-blocks");
-  const files = await fs.readdir(recipesDir);
+  const recipesDir = path.join(process.cwd(), ".cache/recipes");
+  let files: string[] = [];
+  try {
+    files = await fs.readdir(recipesDir);
+  } catch {
+    console.warn(
+      "No recipes found in .cache/recipes. Did you run scripts/fetch-recipes.mjs?"
+    );
+    return [];
+  }
 
   const recipes = await Promise.all(
     files.map(async (filename) => {
@@ -62,7 +70,7 @@ export async function loadRecipes(): Promise<Recipe[]> {
 }
 
 export async function loadRecipe(id: string): Promise<Recipe | null> {
-  const recipesDir = path.join(process.cwd(), "content/_recipes/guides");
+  const recipesDir = path.join(process.cwd(), ".cache/recipes");
   const filePath = path.join(recipesDir, `${id}.mdx`);
 
   try {
