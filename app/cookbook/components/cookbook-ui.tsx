@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LayoutGrid, List, Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import * as timeago from "timeago.js";
 // import { FilterPopover } from "@/components/filter-popover";
 
 function ViewToggle({
@@ -321,6 +322,9 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
                             </Badge>
                           ))}
                         </div>
+                      </TableCell>
+                      <TableCell className="text-muted-foreground font-aeonikFono">
+                        {timeago.format(new Date(recipe.date))}
                       </TableCell>
                     </TableRow>
                   );
