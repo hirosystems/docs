@@ -252,8 +252,8 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           <div className="space-y-1">
             <h1 className="text-4xl font-semibold">Cookbook</h1>
             <p className="text-lg text-muted-foreground w-full">
-              Explore ready-to-use code recipes for building applications on
-              Stacks.
+              Explore common blockchain recipes with ready-to-copy examples for
+              building applications on Stacks and Bitcoin.
             </p>
           </div>
           <ViewToggle view={view} onChange={handleViewChange} />
