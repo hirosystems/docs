@@ -98,7 +98,7 @@ export default async function Page({
                         </Badge>
                       ))}
                     </div>
-                    <div className="prose max-w-none">
+                    <div className="content prose max-w-none">
                       <Content.default
                         components={{
                           HoverLink,

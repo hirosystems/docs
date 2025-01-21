@@ -9,9 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LayoutGrid, List, Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { FilterPopover } from "@/components/filter-popover";
+// import { FilterPopover } from "@/components/filter-popover";
 
-// Internal components
 function ViewToggle({
   view,
   onChange,
@@ -52,8 +51,8 @@ function ViewToggle({
 function RecipeFilters({
   search,
   onSearchChange,
-  selectedCategories,
-  onCategoriesChange,
+  // selectedCategories,
+  // onCategoriesChange,
 }: {
   search: string;
   onSearchChange: (value: string) => void;
@@ -66,16 +65,16 @@ function RecipeFilters({
         <Search className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search by keywords..."
+          placeholder="Search by title, description, or keywords..."
           className="font-aeonikFono text-md pl-8"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>
-      <FilterPopover
+      {/* <FilterPopover
         selectedCategories={selectedCategories}
         onCategoriesChange={onCategoriesChange}
-      />
+      /> */}
     </div>
   );
 }
@@ -89,8 +88,8 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const ITEMS_PER_PAGE = 10;
-  const [currentPage, _] = useState(1);
+  const ITEMS_PER_PAGE = 9;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [view, setView] = useState<"grid" | "list">(() => {
     return (searchParams.get("view") as "grid" | "list") || "list";
@@ -125,15 +124,16 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   };
 
   const handleCategoriesChange = (categories: string[]) => {
+    setCurrentPage(1);
     setSelectedCategories(categories);
     updateURL(view, categories);
   };
 
   const handleSearchChange = (value: string) => {
+    setCurrentPage(1);
     setSearch(value);
   };
 
-  // Create a map of recipe IDs to their corresponding rendered cards
   const recipeCardMap = useMemo(() => {
     return initialRecipes.reduce(
       (map, recipe, index) => {
@@ -145,12 +145,10 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   }, [initialRecipes, recipeCards]);
 
   const filteredRecipeCards = useMemo(() => {
-    // First sort by date
     const sortedRecipes = [...initialRecipes].sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
-    // Then apply filters
     const filteredRecipes = sortedRecipes.filter((recipe) => {
       const searchText = search.toLowerCase();
       const matchesSearch =
@@ -178,7 +176,6 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
       .map((recipe) => recipeCardMap[recipe.id]);
   }, [search, selectedCategories, initialRecipes, recipeCardMap, currentPage]);
 
-  // Add total pages calculation
   const totalPages = useMemo(() => {
     const filteredLength = initialRecipes.filter((recipe) => {
       const searchText = search.toLowerCase();
@@ -206,14 +203,30 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
 
   const lastItemRef = useRef<HTMLTableRowElement>(null);
 
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!hasScrolled) {
+        setHasScrolled(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasScrolled]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const lastEntry = entries[0];
-        if (lastEntry.isIntersecting && !isLoading) {
-          // Check if we have more pages to load
+        if (lastEntry.isIntersecting && !isLoading && hasScrolled) {
           if (currentPage < totalPages) {
             setIsLoading(true);
+            setTimeout(() => {
+              setCurrentPage((prev) => prev + 1);
+              setIsLoading(false);
+            }, 500);
           }
         }
       },
@@ -230,7 +243,7 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
         observer.unobserve(currentRef);
       }
     };
-  }, [currentPage, totalPages, isLoading]);
+  }, [currentPage, totalPages, isLoading, hasScrolled]);
 
   return (
     <div className="max-w-5xl mx-auto">
