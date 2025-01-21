@@ -5,6 +5,8 @@ import React, { createContext, useContext, useState } from "react";
 interface HoverContextType {
   hoveredId: string | null;
   setHoveredId: (id: string | null) => void;
+  wasClicked: boolean;
+  setWasClicked: (clicked: boolean) => void;
 }
 
 const HoverContext = createContext<HoverContextType | undefined>(undefined);
@@ -13,9 +15,12 @@ export const HoverProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [wasClicked, setWasClicked] = useState(false);
 
   return (
-    <HoverContext.Provider value={{ hoveredId, setHoveredId }}>
+    <HoverContext.Provider
+      value={{ hoveredId, setHoveredId, wasClicked, setWasClicked }}
+    >
       {children}
     </HoverContext.Provider>
   );
