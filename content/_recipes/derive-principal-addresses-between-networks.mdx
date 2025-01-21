@@ -1,0 +1,26 @@
+# Derive principal addresses between networks
+
+A read-only function that extracts the hash bytes from an address. These bytes can then be used with the networks version byte to construct and derive an address on the other network.
+
+## Use cases
+
+- Useful for airdrop contracts that want to honor testnet participation by checking testnet address activity and mapping to mainnet addresses
+
+This example extracts the underlying hash bytes from a mainnet address using _clarity`principal-destruct?`_. These bytes remain constant between networks - only the version byte changes.
+
+_For mainnet addresses, the version byte is _clarity`0x16`_._
+
+## Example usage
+
+With the following code, we can now convert a string by calling the <HoverLink href="hover:get-hash-bytes">_clarity`get-hash-bytes`_</HoverLink> function with the appropriate version bytes.
+
+```clarity -cn
+(principal-construct? VERSION_BYTES (get-hash-bytes))
+```
+
+## Resources
+
+**Functions**
+
+- [`principal-destruct?`](/stacks/clarity/functions/principal-destruct)
+- [`unwrap-err-panic`](/stacks/clarity/functions/unwrap-err-panic)
