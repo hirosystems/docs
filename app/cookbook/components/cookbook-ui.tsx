@@ -61,7 +61,7 @@ function RecipeFilters({
 }) {
   return (
     <div className="flex flex-row gap-2 flex-wrap items-start justify-between">
-      <div className="relative w-1/3">
+      <div className="relative w-2/3">
         <Search className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
@@ -149,15 +149,27 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
+    // Filter all recipes without pagination
     const filteredRecipes = sortedRecipes.filter((recipe) => {
-      const searchText = search.toLowerCase();
+      const searchText = search.toLowerCase().trim();
+
+      if (!searchText) {
+        return true;
+      }
+
+      const titleMatch = recipe.title.toLowerCase().includes(searchText);
+      const descriptionMatch = recipe.description
+        .toLowerCase()
+        .includes(searchText);
+      const categoryMatch = recipe.categories.some((category) =>
+        category.toLowerCase().includes(searchText)
+      );
+      const tagMatch = recipe.tags.some((tag) =>
+        tag.toLowerCase().includes(searchText)
+      );
+
       const matchesSearch =
-        recipe.title.toLowerCase().includes(searchText) ||
-        recipe.description.toLowerCase().includes(searchText) ||
-        recipe.categories.some((category) =>
-          category.toLowerCase().includes(searchText)
-        ) ||
-        recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
+        titleMatch || descriptionMatch || categoryMatch || tagMatch;
 
       const matchesCategories =
         selectedCategories.length === 0 ||
@@ -165,27 +177,43 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           selectedCategories.includes(category.toLowerCase())
         );
 
-      return matchesSearch && matchesCategories;
+      const shouldInclude = matchesSearch && matchesCategories;
+
+      return shouldInclude;
     });
 
     const startIndex = 0;
     const endIndex = currentPage * ITEMS_PER_PAGE;
 
-    return filteredRecipes
-      .slice(startIndex, endIndex)
-      .map((recipe) => recipeCardMap[recipe.id]);
+    const displayedRecipes = filteredRecipes.slice(startIndex, endIndex);
+
+    return displayedRecipes.map((recipe) => ({
+      recipe,
+      card: recipeCardMap[recipe.id],
+    }));
   }, [search, selectedCategories, initialRecipes, recipeCardMap, currentPage]);
 
   const totalPages = useMemo(() => {
     const filteredLength = initialRecipes.filter((recipe) => {
-      const searchText = search.toLowerCase();
+      const searchText = search.toLowerCase().trim();
+
+      if (!searchText) {
+        return true;
+      }
+
+      const titleMatch = recipe.title.toLowerCase().includes(searchText);
+      const descriptionMatch = recipe.description
+        .toLowerCase()
+        .includes(searchText);
+      const categoryMatch = recipe.categories.some((category) =>
+        category.toLowerCase().includes(searchText)
+      );
+      const tagMatch = recipe.tags.some((tag) =>
+        tag.toLowerCase().includes(searchText)
+      );
+
       const matchesSearch =
-        recipe.title.toLowerCase().includes(searchText) ||
-        recipe.description.toLowerCase().includes(searchText) ||
-        recipe.categories.some((category) =>
-          category.toLowerCase().includes(searchText)
-        ) ||
-        recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
+        titleMatch || descriptionMatch || categoryMatch || tagMatch;
 
       const matchesCategories =
         selectedCategories.length === 0 ||
@@ -270,8 +298,7 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           {view === "list" ? (
             <Table>
               <TableBody>
-                {filteredRecipeCards.map((recipeCard, index) => {
-                  const recipe = initialRecipes[index];
+                {filteredRecipeCards.map(({ recipe, card }, index) => {
                   const isLastItem = index === filteredRecipeCards.length - 1;
 
                   return (
@@ -302,9 +329,9 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
             </Table>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredRecipeCards.map((card, index) => (
+              {filteredRecipeCards.map(({ recipe, card }, index) => (
                 <div
-                  key={index}
+                  key={recipe.id}
                   ref={
                     index === filteredRecipeCards.length - 1
                       ? lastItemRef
