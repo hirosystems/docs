@@ -1,0 +1,21 @@
+# Check for duplicates
+
+A collection of helper functions to check for duplicates in both strings and lists.
+
+## Use cases
+
+- Verifying input strings have no duplicates
+- Input validation for specific string formats
+- Verifying unique participant addresses in reward distribution
+
+The <HoverLink href="hover:has-duplicate-chars?">first approach uses string manipulation</HoverLink> to check for duplicate characters. It concatenates an _clarity`"|END"`_ marker to the input string and progressively checks each character using `fold` against the remaining substring.
+
+The <HoverLink href="hover:has-duplicates?">second approach</HoverLink> uses the `is-dup` private function to check for duplicates. This function retrieves each element at index `i`, checks if it appears again in the remaining sublist and returns `true` if any duplicates are found.
+
+## Resources
+
+**Clarity functions**
+
+- [`fold`](/stacks/clarity/functions/fold) [`slice?`](/stacks/clarity/functions/slice) [`concat`](/stacks/clarity/functions/concat)
+- [`len`](/stacks/clarity/functions/len) [`index-of?`](/stacks/clarity/functions/index-of) [`unwrap-panic`](/stacks/clarity/functions/unwrap-panic)
+- [`match`](/stacks/clarity/functions/match)

@@ -9,9 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LayoutGrid, List, Search } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { FilterPopover } from "@/components/filter-popover";
+import * as timeago from "timeago.js";
+// import { FilterPopover } from "@/components/filter-popover";
 
-// Internal components
 function ViewToggle({
   view,
   onChange,
@@ -52,8 +52,8 @@ function ViewToggle({
 function RecipeFilters({
   search,
   onSearchChange,
-  selectedCategories,
-  onCategoriesChange,
+  // selectedCategories,
+  // onCategoriesChange,
 }: {
   search: string;
   onSearchChange: (value: string) => void;
@@ -62,20 +62,20 @@ function RecipeFilters({
 }) {
   return (
     <div className="flex flex-row gap-2 flex-wrap items-start justify-between">
-      <div className="relative w-1/3">
+      <div className="relative w-2/3">
         <Search className="absolute left-2 top-3 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
-          placeholder="Search by keywords..."
+          placeholder="Search by title, description, or keywords..."
           className="font-aeonikFono text-md pl-8"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>
-      <FilterPopover
+      {/* <FilterPopover
         selectedCategories={selectedCategories}
         onCategoriesChange={onCategoriesChange}
-      />
+      /> */}
     </div>
   );
 }
@@ -89,8 +89,8 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const ITEMS_PER_PAGE = 10;
-  const [currentPage, _] = useState(1);
+  const ITEMS_PER_PAGE = 9;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [view, setView] = useState<"grid" | "list">(() => {
     return (searchParams.get("view") as "grid" | "list") || "list";
@@ -125,15 +125,16 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   };
 
   const handleCategoriesChange = (categories: string[]) => {
+    setCurrentPage(1);
     setSelectedCategories(categories);
     updateURL(view, categories);
   };
 
   const handleSearchChange = (value: string) => {
+    setCurrentPage(1);
     setSearch(value);
   };
 
-  // Create a map of recipe IDs to their corresponding rendered cards
   const recipeCardMap = useMemo(() => {
     return initialRecipes.reduce(
       (map, recipe, index) => {
@@ -145,21 +146,31 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
   }, [initialRecipes, recipeCards]);
 
   const filteredRecipeCards = useMemo(() => {
-    // First sort by date
     const sortedRecipes = [...initialRecipes].sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
-    // Then apply filters
+    // Filter all recipes without pagination
     const filteredRecipes = sortedRecipes.filter((recipe) => {
-      const searchText = search.toLowerCase();
+      const searchText = search.toLowerCase().trim();
+
+      if (!searchText) {
+        return true;
+      }
+
+      const titleMatch = recipe.title.toLowerCase().includes(searchText);
+      const descriptionMatch = recipe.description
+        .toLowerCase()
+        .includes(searchText);
+      const categoryMatch = recipe.categories.some((category) =>
+        category.toLowerCase().includes(searchText)
+      );
+      const tagMatch = recipe.tags.some((tag) =>
+        tag.toLowerCase().includes(searchText)
+      );
+
       const matchesSearch =
-        recipe.title.toLowerCase().includes(searchText) ||
-        recipe.description.toLowerCase().includes(searchText) ||
-        recipe.categories.some((category) =>
-          category.toLowerCase().includes(searchText)
-        ) ||
-        recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
+        titleMatch || descriptionMatch || categoryMatch || tagMatch;
 
       const matchesCategories =
         selectedCategories.length === 0 ||
@@ -167,28 +178,43 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           selectedCategories.includes(category.toLowerCase())
         );
 
-      return matchesSearch && matchesCategories;
+      const shouldInclude = matchesSearch && matchesCategories;
+
+      return shouldInclude;
     });
 
     const startIndex = 0;
     const endIndex = currentPage * ITEMS_PER_PAGE;
 
-    return filteredRecipes
-      .slice(startIndex, endIndex)
-      .map((recipe) => recipeCardMap[recipe.id]);
+    const displayedRecipes = filteredRecipes.slice(startIndex, endIndex);
+
+    return displayedRecipes.map((recipe) => ({
+      recipe,
+      card: recipeCardMap[recipe.id],
+    }));
   }, [search, selectedCategories, initialRecipes, recipeCardMap, currentPage]);
 
-  // Add total pages calculation
   const totalPages = useMemo(() => {
     const filteredLength = initialRecipes.filter((recipe) => {
-      const searchText = search.toLowerCase();
+      const searchText = search.toLowerCase().trim();
+
+      if (!searchText) {
+        return true;
+      }
+
+      const titleMatch = recipe.title.toLowerCase().includes(searchText);
+      const descriptionMatch = recipe.description
+        .toLowerCase()
+        .includes(searchText);
+      const categoryMatch = recipe.categories.some((category) =>
+        category.toLowerCase().includes(searchText)
+      );
+      const tagMatch = recipe.tags.some((tag) =>
+        tag.toLowerCase().includes(searchText)
+      );
+
       const matchesSearch =
-        recipe.title.toLowerCase().includes(searchText) ||
-        recipe.description.toLowerCase().includes(searchText) ||
-        recipe.categories.some((category) =>
-          category.toLowerCase().includes(searchText)
-        ) ||
-        recipe.tags.some((tag) => tag.toLowerCase().includes(searchText));
+        titleMatch || descriptionMatch || categoryMatch || tagMatch;
 
       const matchesCategories =
         selectedCategories.length === 0 ||
@@ -206,14 +232,30 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
 
   const lastItemRef = useRef<HTMLTableRowElement>(null);
 
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!hasScrolled) {
+        setHasScrolled(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasScrolled]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const lastEntry = entries[0];
-        if (lastEntry.isIntersecting && !isLoading) {
-          // Check if we have more pages to load
+        if (lastEntry.isIntersecting && !isLoading && hasScrolled) {
           if (currentPage < totalPages) {
             setIsLoading(true);
+            setTimeout(() => {
+              setCurrentPage((prev) => prev + 1);
+              setIsLoading(false);
+            }, 500);
           }
         }
       },
@@ -230,7 +272,7 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
         observer.unobserve(currentRef);
       }
     };
-  }, [currentPage, totalPages, isLoading]);
+  }, [currentPage, totalPages, isLoading, hasScrolled]);
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -239,8 +281,8 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           <div className="space-y-1">
             <h1 className="text-4xl font-semibold">Cookbook</h1>
             <p className="text-lg text-muted-foreground w-full">
-              Explore ready-to-use code recipes for building applications on
-              Stacks.
+              Explore common blockchain recipes with ready-to-copy examples for
+              building applications on Stacks and Bitcoin.
             </p>
           </div>
           <ViewToggle view={view} onChange={handleViewChange} />
@@ -257,8 +299,7 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           {view === "list" ? (
             <Table>
               <TableBody>
-                {filteredRecipeCards.map((recipeCard, index) => {
-                  const recipe = initialRecipes[index];
+                {filteredRecipeCards.map(({ recipe, card }, index) => {
                   const isLastItem = index === filteredRecipeCards.length - 1;
 
                   return (
@@ -282,6 +323,9 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
                           ))}
                         </div>
                       </TableCell>
+                      <TableCell className="text-muted-foreground font-aeonikFono">
+                        {timeago.format(new Date(recipe.date))}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -289,9 +333,9 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
             </Table>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredRecipeCards.map((card, index) => (
+              {filteredRecipeCards.map(({ recipe, card }, index) => (
                 <div
-                  key={index}
+                  key={recipe.id}
                   ref={
                     index === filteredRecipeCards.length - 1
                       ? lastItemRef
