@@ -4,7 +4,7 @@ import { RollButton } from "fumadocs-ui/components/roll-button";
 import { DocsPage, DocsBody } from "fumadocs-ui/page";
 import { notFound } from "next/navigation";
 import { utils, type Page } from "@/utils/source";
-import { createMetadata } from "@/utils/metadata";
+import { createMetadata, getRouteMetadata } from "@/utils/metadata";
 
 interface Param {
   slug: string[];
@@ -71,45 +71,15 @@ function Category({ page }: { page: Page }): JSX.Element {
   );
 }
 
-const metadata: Metadata = {
-  metadataBase: new URL(
-    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` || "https://docs.hiro.so"
-  ),
-  title: "Hiro Docs",
-  description:
-    "All the developer docs, guides and resources you need to build on Bitcoin layers.",
-  openGraph: {
-    title: "Hiro Docs",
-    description:
-      "All the developer docs, guides and resources you need to build on Bitcoin layers.",
-    url: "https://docs.hiro.so",
-    siteName: "Hiro Docs",
-    images: [
-      {
-        url: "/og.jpg",
-        width: 800,
-        height: 600,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Hiro Docs",
-    description:
-      "All the developer docs, guides and resources you need to build on Bitcoin layers.",
-    creator: "@hirosystems",
-    images: ["/og.jpg"], // Must be an absolute URL
-  },
-};
-
 export async function generateMetadata(props: {
   params: Promise<{ slug?: string[] }>;
-}) {
+}): Promise<Metadata> {
   const params = await props.params;
   const page = utils.getPage(params.slug);
   if (!page) notFound();
 
-  return metadata;
+  const path = `/${params.slug?.join("/") || ""}`;
+  const routeMetadata = getRouteMetadata(path);
+
+  return createMetadata(routeMetadata);
 }
