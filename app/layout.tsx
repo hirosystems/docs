@@ -41,10 +41,11 @@ export default function RootLayout({
         <Provider>
           <Banner
             id="hiro-hacks"
-            cta="Learn more here"
+            cta="Learn more"
             url="/stacks/hacks"
             startDate="2025-01-19T17:00:00.000Z"
             endDate="2025-06-24T23:59:59.999Z"
+            mobileText="Hiro Hacks is live!"
           >
             Hiro Hacks is live! Get started with this months theme: AI x Stacks
           </Banner>

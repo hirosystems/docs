@@ -32,12 +32,15 @@ export function Banner({
   url = "/",
   startDate,
   endDate,
+  children,
+  mobileText,
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
   cta?: string;
   url?: string;
   startDate?: string;
   endDate?: string;
+  mobileText?: string;
 }): React.ReactElement | null {
   const [open, setOpen] = useState(true);
   const [isWithinDateRange, setIsWithinDateRange] = useState(false);
@@ -88,7 +91,16 @@ export function Banner({
         />
       ) : null}
       <div className="flex items-center justify-center space-x-4">
-        <div>{props.children}</div>
+        <div>
+          {mobileText ? (
+            <>
+              <span className="sm:hidden">{mobileText}</span>
+              <span className="hidden sm:inline">{children}</span>
+            </>
+          ) : (
+            children
+          )}
+        </div>
         {cta && (
           <Button
             size="sm"
