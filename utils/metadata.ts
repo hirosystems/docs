@@ -40,7 +40,7 @@ const hiroHacksMetadata: Partial<Metadata> = {
       "Join Hiro Hacks Season 1 and build on Bitcoin layers with our monthly themed challenges.",
     images: [
       {
-        url: "/images/hiro-hacks-season-one.png",
+        url: "/images/hh-og.png",
         width: 800,
         height: 600,
       },
@@ -50,7 +50,7 @@ const hiroHacksMetadata: Partial<Metadata> = {
     title: "Hiro Hacks - Season 1",
     description:
       "Join Hiro Hacks Season 1 and build on Bitcoin layers with our monthly themed challenges.",
-    images: ["/images/hiro-hacks-season-one.png"],
+    images: ["/images/hh-og.png"],
   },
 };
 
