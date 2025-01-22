@@ -40,13 +40,13 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="stacks-js-v7"
+            id="hiro-hacks"
             cta="Learn more here"
-            url="https://www.hiro.so/blog/announcing-stacks-js-v7"
-            startDate="2024-11-11"
-            endDate="2024-12-15"
+            url="/stacks/hacks"
+            startDate="2025-01-19T17:00:00.000Z"
+            endDate="2025-06-24T23:59:59.999Z"
           >
-            Announcing Stacks.js v7!
+            Hiro Hacks is live! Get started with this months theme: AI x Stacks
           </Banner>
           {children}
           <Footer />
