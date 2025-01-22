@@ -31,13 +31,13 @@ const defaultMetadata: Metadata = {
 };
 
 const hiroHacksMetadata: Partial<Metadata> = {
-  title: "Hiro Hacks - Season 1 (2025 Edition)",
+  title: "Hiro Hacks - Season 1",
   description:
-    "Join Hiro Hacks Season 1 and build on Bitcoin layers with our developer challenges.",
+    "Join Hiro Hacks Season 1 and build on Bitcoin layers with our monthly themed challenges.",
   openGraph: {
-    title: "Hiro Hacks - Season 1 (2025 Edition)",
+    title: "Hiro Hacks - Season 1",
     description:
-      "Join Hiro Hacks Season 1 and build on Bitcoin layers with our developer challenges.",
+      "Join Hiro Hacks Season 1 and build on Bitcoin layers with our monthly themed challenges.",
     images: [
       {
         url: "/images/hiro-hacks-season-one.png",
@@ -47,9 +47,9 @@ const hiroHacksMetadata: Partial<Metadata> = {
     ],
   },
   twitter: {
-    title: "Hiro Hacks - Season 1 (2025 Edition)",
+    title: "Hiro Hacks - Season 1",
     description:
-      "Join Hiro Hacks Season 1 and build on Bitcoin layers with our developer challenges.",
+      "Join Hiro Hacks Season 1 and build on Bitcoin layers with our monthly themed challenges.",
     images: ["/images/hiro-hacks-season-one.png"],
   },
 };
