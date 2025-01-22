@@ -2,13 +2,14 @@
 
 import { type HTMLAttributes, useCallback, useEffect, useState } from "react";
 import { Button } from "./button";
+import Link from "next/link";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { isWithinInterval, parseISO } from "date-fns";
 
 export const buttonVariants = cva(
-  "bg-[#CEEFD0] inline-flex items-center justify-center rounded-md p-2 text-sm text-primary font-medium transition-colors duration-100 disabled:pointer-events-none disabled:opacity-50",
+  "bg-[#ffddcc] hover:bg-[#ffeee5] inline-flex items-center justify-center rounded-md p-2 text-sm text-primary font-medium transition-colors duration-100 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       color: {
@@ -70,7 +71,7 @@ export function Banner({
       id={id}
       {...props}
       className={cn(
-        "relative flex h-12 flex-row items-center justify-center bg-[#CEEFD0] px-4 text-center text-sm text-[#141312] font-medium font-aeonikFono",
+        "relative flex h-12 flex-row items-center justify-center bg-[#ff7733] px-4 text-center text-sm text-[#141312] font-medium font-aeonikFono",
         !open && "hidden",
         props.className
       )}
@@ -92,11 +93,15 @@ export function Banner({
           <Button
             size="sm"
             asChild
-            className="bg-[hsl(var(--dark))] text-[#CEEFD0] font-aeonikFono hover:bg-[hsl(var(--dark))] hover:text-white"
+            className="bg-[hsl(var(--dark))] text-[#ff7733] font-aeonikFono hover:bg-[hsl(var(--dark))] hover:text-[#ffeee5]"
           >
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              {cta}
-            </a>
+            {url.startsWith("/") ? (
+              <Link href={url}>{cta}</Link>
+            ) : (
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {cta}
+              </a>
+            )}
           </Button>
         )}
       </div>

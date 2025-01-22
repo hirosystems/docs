@@ -7,9 +7,42 @@ import { useHover } from "@/context/hover";
 
 export function HoverLineClient({ annotation, ...props }: CustomLineProps) {
   const lineRef = useRef<HTMLDivElement>(null);
+  const originalScrollRef = useRef<number | null>(null);
+
   try {
-    const { hoveredId } = useHover();
+    const { hoveredId, wasClicked, setWasClicked } = useHover();
     const isHovered = !hoveredId || annotation?.query === hoveredId;
+
+    useEffect(() => {
+      const recipeContainer = lineRef.current?.closest(".recipe");
+      if (!recipeContainer) return;
+
+      const scrollableContainers = [
+        ...recipeContainer.querySelectorAll("*"),
+      ].filter((el) => {
+        const style = window.getComputedStyle(el);
+        return (
+          style.overflow === "auto" ||
+          style.overflow === "scroll" ||
+          style.overflowY === "auto" ||
+          style.overflowY === "scroll"
+        );
+      });
+
+      const codeContainer = scrollableContainers[0];
+      if (!codeContainer) return;
+
+      // Add scroll listener to reset clicked state
+      const handleScroll = () => {
+        if (wasClicked) {
+          setWasClicked(false);
+          originalScrollRef.current = null;
+        }
+      };
+
+      codeContainer.addEventListener("scroll", handleScroll);
+      return () => codeContainer.removeEventListener("scroll", handleScroll);
+    }, [wasClicked, setWasClicked]);
 
     useEffect(() => {
       // Add scrollable effect to the line when hovered
@@ -22,7 +55,6 @@ export function HoverLineClient({ annotation, ...props }: CustomLineProps) {
         const recipeContainer = lineRef.current.closest(".recipe");
 
         if (recipeContainer) {
-          // Find the first scrollable child
           const scrollableContainers = [
             ...recipeContainer.querySelectorAll("*"),
           ].filter((el) => {
@@ -38,22 +70,16 @@ export function HoverLineClient({ annotation, ...props }: CustomLineProps) {
           const codeContainer = scrollableContainers[0];
 
           if (codeContainer) {
+            // Only store original position if we haven't clicked
+            if (originalScrollRef.current === null && !wasClicked) {
+              originalScrollRef.current = codeContainer.scrollTop;
+            }
+
             const offset = codeContainer.clientHeight / 3;
             const lineRect = lineRef.current.getBoundingClientRect();
             const containerRect = codeContainer.getBoundingClientRect();
-
-            // Calculate relative position considering current scroll
             const relativeTop =
               lineRect.top - containerRect.top + codeContainer.scrollTop;
-
-            console.log({
-              offset,
-              lineTop: lineRect.top,
-              containerTop: containerRect.top,
-              relativeTop,
-              currentScroll: codeContainer.scrollTop,
-              containerHeight: codeContainer.clientHeight,
-            });
 
             codeContainer.scrollTo({
               top: relativeTop - offset,
@@ -61,8 +87,39 @@ export function HoverLineClient({ annotation, ...props }: CustomLineProps) {
             });
           }
         }
+      } else if (
+        !hoveredId &&
+        originalScrollRef.current !== null &&
+        !wasClicked
+      ) {
+        // Only scroll back if we haven't clicked
+        const recipeContainer = lineRef.current?.closest(".recipe");
+        if (recipeContainer) {
+          const scrollableContainers = [
+            ...recipeContainer.querySelectorAll("*"),
+          ].filter((el) => {
+            const style = window.getComputedStyle(el);
+            return (
+              style.overflow === "auto" ||
+              style.overflow === "scroll" ||
+              style.overflowY === "auto" ||
+              style.overflowY === "scroll"
+            );
+          });
+
+          const codeContainer = scrollableContainers[0];
+
+          if (codeContainer) {
+            codeContainer.scrollTo({
+              top: originalScrollRef.current,
+              behavior: "smooth",
+            });
+            // Reset the stored position
+            originalScrollRef.current = null;
+          }
+        }
       }
-    }, [hoveredId, annotation?.query]);
+    }, [hoveredId, annotation?.query, wasClicked]);
 
     return (
       <div ref={lineRef}>
