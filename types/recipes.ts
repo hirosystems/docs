@@ -51,6 +51,7 @@ export interface RecipeMetadata {
   categories: RecipeCategory[];
   tags: SubTagsForCategory[RecipeCategory][];
   dependencies?: Record<string, string>;
+  external_url?: string;
 }
 
 // Code blocks extracted from markdown content

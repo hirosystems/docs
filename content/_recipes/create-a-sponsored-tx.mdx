@@ -1,0 +1,50 @@
+# Create a sponsored transaction
+
+A script to create sponsored transactions where one party (the sponsor) pays the transaction fees for another party's transaction.
+
+## Use cases
+
+- Building onboarding flows where a service pays user fees
+- Creating DAO operations where treasury pays member fees
+
+## Example usage
+
+```typescript -cn
+import {
+  broadcastTransaction,
+  deserializeTransaction,
+  sponsorTransaction,
+} from "@stacks/transactions";
+// !hover serialized-tx
+import { serializedTx } from "./create-a-sponsored-tx";
+
+const deserializedTx = deserializeTransaction(serializedTx);
+const sponsorOptions = {
+  // !hover tx-options
+  transaction: deserializedTx,
+  // !hover tx-options
+  sponsorPrivateKey: "<sponsor-private-key>",
+  // !hover tx-options
+  fee: 1000n;
+  // !hover tx-options
+  sponsorNonce: 0,
+  // !hover tx-options
+  network: STACKS_TESTNET,
+};
+// !hover sponsor-tx
+const sponsoredTx = await sponsorTransaction(sponsorOptions);
+
+const broadcastResponse = await broadcastTransaction({
+  transaction: sponsoredTx,
+});
+const txId = broadcastResponse.txid;
+```
+
+This example takes the <HoverLink href="hover:serialized-tx">pre-built transaction</HoverLink> and adds the sponsorship details to it. The <HoverLink href="hover:tx-options">sponsorship options</HoverLink> include the transaction itself, the sponsor's credentials, their next valid nonce, and network details.
+
+Once configured, the <HoverLink href="hover:sponsor-tx" className="text-[var(--ch-9)]">sponsorTransaction</HoverLink> function creates the sponsored version, which can then be broadcast to the network.
+
+## Resources
+
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)
+- [Transaction Broadcasting](/stacks/stacks.js/guides/broadcast-transactions)
