@@ -232,10 +232,7 @@ export function SnippetResult({
         </Button> */}
         {type === "clarity" && (
           <Button variant="link" className="gap-2 self-end" size="sm" asChild>
-            <Link
-              href={`https://play.hiro.so/?epoch=3.0&snippet=KGRlZmluZS1yZWFkLW9ubHkgKGdldC10ZW51cmUtaGVpZ2h0IChibG9jayB1aW50KSkKICAob2sKICAgIChhdC1ibG9jawogICAgICAodW53cmFwIQogICAgICAgIChnZXQtc3RhY2tzLWJsb2NrLWluZm8_IGlkLWhlYWRlci1oYXNoIGJsb2NrKQogICAgICAgIChlcnIgdTQwNCkogICAgICApCiAgICAgIHRlbnVyZS1oZWlnaHQKICAgICkKICApCik=`}
-              target="_blank"
-            >
+            <Link href={recipe?.external_url || ""} target="_blank">
               Open in Clarity Playground <ArrowUpRight className="w-4 h-4" />
             </Link>
           </Button>
