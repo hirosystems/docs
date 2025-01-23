@@ -1,0 +1,49 @@
+# Build a STX Post-Condition
+
+A helper function that creates a post-condition for STX token transfers using the `Pc` builder class, ensuring exact amounts are transferred as expected.
+
+## Use cases
+
+- Securing STX token transfers with transfer amount validation
+
+## Example usage
+
+```typescript -cn
+import {
+  AnchorMode,
+  broadcastTransaction,
+  makeSTXTokenTransfer,
+  Pc,
+  PostConditionMode,
+} from "@stacks/transactions";
+
+// !hover post-conditions
+const pc = Pc.principal("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM")
+  // !hover post-conditions
+  .willSendEq(10000000)
+  // !hover post-conditions
+  .ustx();
+
+const txOptions = {
+  recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+  amount: 10000000,
+  senderKey: "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
+  network: STACKS_TESTNET,
+  // !hover post-conditions
+  postConditions: [pc],
+  postConditionMode: PostConditionMode.Deny,
+  anchorMode: AnchorMode.Any,
+};
+
+const transaction = await makeSTXTokenTransfer(txOptions);
+const broadcastResponse = await broadcastTransaction({
+  transaction,
+});
+```
+
+This example passes in our <HoverLink href="hover:post-conditions" className="text-[var(--ch-11)]">post-conditions</HoverLink> as part of the transaction options, ensuring that exactly 10 STX will be transferred from the `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM` principal.
+
+## Resources
+
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)
+- [Post-conditions](/stacks/stacks.js/guides/post-conditions)

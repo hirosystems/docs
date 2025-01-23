@@ -1,0 +1,48 @@
+# Create a Sponsored Transaction
+
+A script to create sponsored transactions where one party (the sponsor) pays the transaction fees for another party's transaction.
+
+## Use cases
+
+- Building onboarding flows where a service pays user fees
+- Creating DAO operations where treasury pays member fees
+
+## Example usage
+
+```typescript -cn
+import {
+  broadcastTransaction,
+  deserializeTransaction,
+  sponsorTransaction,
+} from "@stacks/transactions";
+
+const deserializedTx = deserializeTransaction(serializedTx);
+
+const sponsorKey = "<sponsor-private-key>";
+const fee = 1000n;
+
+const sponsorOptions = {
+  transaction: deserializedTx,
+  sponsorPrivateKey: sponsorKey,
+  fee,
+  sponsorNonce: 0,
+  network: STACKS_TESTNET,
+};
+
+// !hover sponsor-transaction
+const sponsoredTx = await sponsorTransaction(sponsorOptions);
+const broadcastResponse = await broadcastTransaction({
+  transaction: sponsoredTx,
+});
+const txId = broadcastResponse.txid;
+console.log({ txId });
+```
+
+This example takes the pre-built transaction and adds the sponsorship details to it. The sponsorship options include the transaction itself, the sponsor's credentials, their next valid nonce, and network details.
+
+Once configured, the <HoverLink href="hover:sponsor-transaction" className="text-[var(--ch-9)]">sponsorTransaction</HoverLink> function creates the sponsored version, which can then be broadcast to the network.
+
+## Resources
+
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)
+- [Transaction Broadcasting](/stacks/stacks.js/guides/broadcast-transactions)

@@ -1,0 +1,28 @@
+# Deploy a Contract
+
+A script that deploys a Clarity smart contract to the Stacks blockchain using Stacks.js.
+
+## Example usage
+
+```typescript
+import { STACKS_TESTNET } from "@stacks/network";
+import { makeContractDeploy, broadcastTransaction } from "@stacks/transactions";
+import { readFileSync } from 'fs';
+
+const txOptions = {
+  contractName: "super-cool-contract",
+  codeBody: readFileSync("./contract.clar", "utf8"),
+  senderKey: "<your-private-key>",
+  network: STACKS_TESTNET,
+};
+
+const transaction = await makeContractDeploy(txOptions);
+const broadcastResponse = await broadcastTransaction({transaction});
+const txId = broadcastResponse.txid;
+```
+
+This example reads the contract code from a file and uses it to deploy a contract to the Stacks blockchain.
+
+## Resources
+
+- [Stacks.js / Transactions](/stacks/stacks.js/packages/transactions)
