@@ -15,32 +15,34 @@ import {
   deserializeTransaction,
   sponsorTransaction,
 } from "@stacks/transactions";
+// !hover serialized-tx
+import { serializedTx } from "./create-a-sponsored-tx";
 
 const deserializedTx = deserializeTransaction(serializedTx);
-
-const sponsorKey = "<sponsor-private-key>";
-const fee = 1000n;
-
 const sponsorOptions = {
+  // !hover tx-options
   transaction: deserializedTx,
-  sponsorPrivateKey: sponsorKey,
-  fee,
+  // !hover tx-options
+  sponsorPrivateKey: "<sponsor-private-key>",
+  // !hover tx-options
+  fee: 1000n;
+  // !hover tx-options
   sponsorNonce: 0,
+  // !hover tx-options
   network: STACKS_TESTNET,
 };
-
-// !hover sponsor-transaction
+// !hover sponsor-tx
 const sponsoredTx = await sponsorTransaction(sponsorOptions);
+
 const broadcastResponse = await broadcastTransaction({
   transaction: sponsoredTx,
 });
 const txId = broadcastResponse.txid;
-console.log({ txId });
 ```
 
-This example takes the pre-built transaction and adds the sponsorship details to it. The sponsorship options include the transaction itself, the sponsor's credentials, their next valid nonce, and network details.
+This example takes the <HoverLink href="hover:serialized-tx">pre-built transaction</HoverLink> and adds the sponsorship details to it. The <HoverLink href="hover:tx-options">sponsorship options</HoverLink> include the transaction itself, the sponsor's credentials, their next valid nonce, and network details.
 
-Once configured, the <HoverLink href="hover:sponsor-transaction" className="text-[var(--ch-9)]">sponsorTransaction</HoverLink> function creates the sponsored version, which can then be broadcast to the network.
+Once configured, the <HoverLink href="hover:sponsor-tx" className="text-[var(--ch-9)]">sponsorTransaction</HoverLink> function creates the sponsored version, which can then be broadcast to the network.
 
 ## Resources
 
