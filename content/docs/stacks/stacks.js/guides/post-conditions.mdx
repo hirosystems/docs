@@ -201,6 +201,53 @@ Construct a post-condition for sending / not-sending a specific NFT.
   </Tab>
 </Tabs>
 
+## Amount SFT sent / not sent
+
+Construct a post-condition for sending / not-sending a specific SFT (semi-fungible token).
+
+Semi-Fungible-Tokens (SFTs) are an innovative way to bring multiple ownership of a single unique digital item. SFTs are a combination of an NFT portion and an FT portion: where a unique tuple represents the NFT id and the amount units represented as fungible tokens. Therefore, at least two post-conditions are needed to handle the transfer of an SFT. 
+
+Check out the SFT starter contract template on the Hiro Platform.
+
+<Tabs id="post-condition-examples" items={["Pc","Legacy"]}>
+  <Tab value={"Pc"}>
+    ```ts
+    import { Pc } from '@stacks/transactions';
+
+    const postCondition1 = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+    .willSendAsset()
+    .nft(
+      "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.semi-fungible-token::semi-fungible-token-id",
+      Cl.tuple({ "token-id": Cl.uint(1), owner: Cl.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6') })
+    );
+
+    const postCondition2 = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+    .willSendEq(500)
+    .ft("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.semi-fungible-token", "semi-fungible-token");
+
+```
+  </Tab>
+  <Tab value={"Legacy"}>
+    ```ts
+    import { createNonFungiblePostCondition, NonFungibleConditionCode, createSTXPostCondition, FungibleConditionCode } from '@stacks/transactions';
+
+    const postCondition1 = createNonFungiblePostCondition(
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+      NonFungibleConditionCode.DoesSend,
+      "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.semi-fungible-token::semi-fungible-token-id",
+      Cl.tuple({ "token-id": Cl.uint(1), owner: Cl.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6') })
+    );
+
+    const postCondition = createSTXPostCondition(
+      "STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6",
+      FungibleConditionCode.Equal,
+      500,
+      "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.semi-fungible-token::semi-fungible-token"
+    );
+    ```
+  </Tab>
+</Tabs>
+
 <Callout title="Note" type="warn">
 Post-conditions can only ensure the transfer of assets and cannot guarantee the end-state after a transaction. To learn more, read the [post-conditions](/stacks/stacks.js/concepts/post-conditions) guide.
 </Callout>
