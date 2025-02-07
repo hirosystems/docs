@@ -34,23 +34,18 @@ Check out the [reference page](/stacks/stacks.js/packages/transactions) for `@st
   
     To set up a STX token transfer transaction, use the `makeSTXTokenTransfer` function.
 
-    This function requires a `senderKey`, `recipient` address, `amount` to be sent (denominated in uSTX), a `network` instance, and an `anchorMode`.
+    This function requires a private key (`senderKey`), a specified `network`, and the details of the transfer.
 
-    <Callout>
-      The `senderKey` is the private key of the sender's wallet.
-    </Callout>
-
-    ```ts stx-transfer.ts
-    import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
-    import { StacksDevnet } from "@stacks/network";
+    ```ts stx-transfer.ts -cn
+    import { makeSTXTokenTransfer } from "@stacks/transactions";
+    import { STACKS_TESTNET } from "@stacks/network";
 
     const transaction = await makeSTXTokenTransfer({
       recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
       amount: 42000000,
       senderKey:
         "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
-      network: new StacksDevnet(),
-      anchorMode: AnchorMode.Any,
+      network: STACKS_TESTNET,
     });
     ```
 
@@ -78,20 +73,20 @@ Check out the [reference page](/stacks/stacks.js/packages/transactions) for `@st
   
     Once you've constructed a valid transaction, you can broadcast it to the network using the `broadcastTransaction` function.
 
-    ```ts stx-transfer.ts
-    import { AnchorMode, makeSTXTokenTransfer, broadcastTransaction } from "@stacks/transactions";
-    import { StacksDevnet } from "@stacks/network";
+    ```ts stx-transfer.ts -cn
+    // !mark[/broadcastTransaction/mg]
+    import { broadcastTransaction,makeSTXTokenTransfer } from "@stacks/transactions";
+    import { STACKS_TESTNET } from "@stacks/network";
 
     const transaction = await makeSTXTokenTransfer({
-      recipient: "SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159",
-      amount: 12345n,
+      recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+      amount: 42000000,
       senderKey:
         "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
-      network: new StacksDevnet(),
-      anchorMode: AnchorMode.Any,
+      network: STACKS_TESTNET,
     });
 
-    const broadcastResponse = await broadcastTransaction(transaction);
+    const broadcastResponse = await broadcastTransaction({ transaction });
     const txId = broadcastResponse.txid;
     ```
 

@@ -32,7 +32,7 @@ Post-conditions can be added to contract calls and FT/NFT transfers to ensure as
 
 For instance, the following post-condition ensures that the principal initiating the transaction must send exactly 1000 uSTX, or else the transaction will abort.
 
-```ts
+```ts -cn
 import { Pc } from '@stacks/transactions';
 
 const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -72,7 +72,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
 
 When creating a transaction, the mode of the transaction can be set to `Allow` or `Deny` to specify whether unspecified asset transfers are permitted.
 
-```ts
+```ts -n
 import { PostConditionMode } from '@stacks/transactions';
 
 const tx = await makeContractCall({
@@ -92,7 +92,7 @@ Essentially, the `postConditionMode` is what tells the Stacks node whether to re
 
 Construct a post-condition for a certain amount of uSTX to be sent.
 
-```ts
+```ts -cn
 import { Pc } from '@stacks/transactions';
 
 const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -104,7 +104,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
 
 Construct a post-condition for a certain amount of a specific FT to be sent.
 
-```ts
+```ts -cn
 import { Pc } from '@stacks/transactions';
 
 const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.token-ft')
@@ -116,7 +116,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6.tok
 
 Construct a post-condition for sending / not-sending a specific NFT.
 
-```ts
+```ts -cn
 import { Pc } from '@stacks/transactions';
 
 const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
@@ -128,7 +128,7 @@ const postCondition = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
 
 Construct a post-condition for sending / not-sending a specific SFT (Semi-fungible token).
 
-```ts
+```ts -cn
 import { Cl, Pc } from '@stacks/transactions';
 
 const postConditionForNFT = Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
