@@ -7,19 +7,19 @@ description: Learn how to broadcast transactions to the Stacks network.
 
 A finalized transaction can be broadcasted to the network or serialized (to a byte representation) using Stacks.js.
 
-```ts
-import { bytesToHex } from '@stacks/common';
-import {
-  makeSTXTokenTransfer,
-  broadcastTransaction,
-  AnchorMode,
-} from '@stacks/transactions';
+```ts -n
+import { broadcastTransaction, makeSTXTokenTransfer } from "@stacks/transactions";
 
-const broadcastResponse = await broadcastTransaction(transaction);
-const txId = broadcastResponse.txid;
+const transaction = await makeSTXTokenTransfer({
+  recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+  amount: 42000000,
+  senderKey:
+    "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
+  network: "devnet",
+});
 
-const serializedTx = tx.serialize();
-const serializedTxHex = bytesToHex(serializedTx);
+const tx = await broadcastTransaction({ transaction });
+
 ```
 
 <Callout title="Info">For web applications, user wallets can broadcast transactions via [@stacks/connect](/stacks/connect).</Callout>

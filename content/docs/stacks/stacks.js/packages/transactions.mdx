@@ -32,7 +32,7 @@ This library supports the creation of the following Stacks transaction types:
 
 ## Key Generation
 
-```typescript
+```typescript -n
 import { randomPrivateKey, privateKeyToPublicKey } from '@stacks/transactions';
 
 // Random key
@@ -47,7 +47,7 @@ const privateKey = 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b996
 
 Use the [`makeSTXTokenTransfer`](https://stacks.js.org/functions/_stacks_transactions.makeSTXTokenTransfer) (with a sender private key), or the "unsigned" version [`makeUnsignedSTXTokenTransfer`](https://stacks.js.org/functions/_stacks_transactions.makeUnsignedSTXTokenTransfer) (with a sender public key, without yet signing) to create a STX token transfer transaction.
 
-```ts
+```ts -n
 import { makeSTXTokenTransfer, broadcastTransaction } from '@stacks/transactions';
 
 const txOptions = {
@@ -73,7 +73,7 @@ console.log(response.txid);
 
 Use the [`makeContractDeploy`](https://stacks.js.org/functions/_stacks_transactions.makeContractDeploy), or the "unsigned" version [`makeUnsignedContractDeploy`](https://stacks.js.org/functions/_stacks_transactions.makeUnsignedContractDeploy) to create a smart contract deploy transaction.
 
-```ts
+```ts -n
 import { makeContractDeploy, broadcastTransaction } from '@stacks/transactions';
 import { readFileSync } from 'fs';
 
@@ -101,7 +101,7 @@ If you want to call a readonly function, use [`fetchCallReadOnlyFunction`](https
 
 Use the [`makeContractCall`](https://stacks.js.org/functions/_stacks_transactions.makeContractCall) or the "unsigned" version [`makeUnsignedContractCall`](https://stacks.js.org/functions/_stacks_transactions.makeUnsignedContractCall) to create a smart contract function call transaction.
 
-```ts
+```ts -n
 import { makeContractCall, broadcastTransaction, Cl, Pc } from '@stacks/transactions';
 
 // Add an optional post condition
@@ -135,7 +135,7 @@ In this example we construct a `contract-call` transaction with a post condition
 
 To generate a sponsored transaction, first create and sign the transaction as the origin. The `sponsored` property in the options object must be set to true.
 
-```ts
+```ts -n
 import { makeContractCall, Cl } from '@stacks/transactions';
 
 const txOptions = {
@@ -158,7 +158,7 @@ const serializedTx = transaction.serialize();
 
 The serialized transaction can now be passed to the sponsoring party which will sign the sponsor portion of the transaction and set the fee.
 
-```ts
+```ts -n
 import { sponsorTransaction, broadcastTransaction } from '@stacks/transactions';
 
 const deserializedTx = deserializeTransaction(serializedTx);
@@ -184,7 +184,7 @@ console.log(response.txid);
 To generate a multi-sig transaction, first create an unsigned transaction.
 The `numSignatures` and `publicKeys` properties in the options object must be set:
 
-```typescript
+```ts -n
 import {
   makeUnsignedSTXTokenTransfer,
   createStacksPrivateKey,
@@ -231,7 +231,7 @@ This transaction payload can be passed along to other participants to sign. In a
 meeting the numSignatures requirement, the public keys of the parties who did not sign the
 transaction must be appended to the signature.
 
-```typescript
+```ts -n
 // deserialize and sign transaction
 const bytesReader = new BytesReader(serializedTx);
 // Partially signed or unsigned multi-sig tx can be deserialized to add the required signatures
@@ -257,7 +257,7 @@ const serializedSignedTx = deserializedTx.serialize();
 
 Read-only contract functions can be called without generating or broadcasting a transaction. Instead it works via a direct API call to a Stacks node.
 
-```typescript
+```ts -n
 import { bufferCVFromString, callReadOnlyFunction } from '@stacks/transactions';
 import { StacksTestnet } from '@stacks/network';
 
@@ -296,7 +296,7 @@ Building transactions that call functions in deployed clarity contracts requires
 
 This library contains Typescript types and classes that map to the Clarity types, in order to make it easy to construct well-typed Clarity values in Javascript. These types all extend the abstract class `ClarityValue`.
 
-```typescript
+```ts -n
 import {
   trueCV,
   falseCV,
@@ -353,7 +353,7 @@ const l = listCV([trueCV(), falseCV()]);
 
 If you develop in Typescript, the type checker can help prevent you from creating wrongly-typed Clarity values. For example, the following code won't compile since in Clarity lists are homogeneous, meaning they can only contain values of a single type. It is important to include the type variable `BooleanCV` in this example, otherwise the typescript type checker won't know which type the list is of and won't enforce homogeneity.
 
-```typescript
+```ts -n
 const l = listCV<BooleanCV>([trueCV(), intCV(1)]);
 ```
 
@@ -369,7 +369,7 @@ For details see: https://github.com/stacksgov/sips/blob/main/sips/sip-005/sip-00
 
 ## STX post condition
 
-```typescript
+```ts -n
 import {
   FungibleConditionCode,
   makeStandardSTXPostCondition,
@@ -401,7 +401,7 @@ const contractSTXPostCondition = makeContractSTXPostCondition(
 
 ## Fungible token post condition
 
-```typescript
+```ts -n
 import {
   FungibleConditionCode,
   createAssetInfo,
@@ -449,7 +449,7 @@ const contractFungiblePostCondition = makeContractFungiblePostCondition(
 > Post-conditions can NOT verify anything about the recipient of an asset.
 > If you want to verify conditions about asset recipients, you will need to use [Clarity](https://docs.stacks.co/docs/write-smart-contracts/).
 
-```typescript
+```ts -n
 import {
   NonFungibleConditionCode,
   createAssetInfo,
@@ -491,7 +491,7 @@ const contractNonFungiblePostCondition = makeContractNonFungiblePostCondition(
 
 Clarity Values represent values of Clarity contracts. If a JSON format is required the helper function `cvToJSON` can be used.
 
-```typescript
+```ts -n
 import { cvToJSON, hexToCV } from '@stacks/transactions';
 
 cvToJSON(hexToCV(tx.tx_result.hex));

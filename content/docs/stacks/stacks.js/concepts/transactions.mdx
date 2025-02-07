@@ -9,16 +9,14 @@ The following shows how to create a simple transaction (STX transfer) using Stac
 
 ### Using Stacks Connect
 
-```ts
+```ts -n
 import { openSTXTransfer } from '@stacks/connect';
-import { AnchorMode } from '@stacks/transactions';
 
 openSTXTransfer({
   network: 'testnet',
 
   recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK', // which address you are sending to
   amount: 10000, // tokens, denominated in micro-STX
-  anchorMode: AnchorMode.Any,
 
   onFinish: response => console.log(response.txid),
   onCancel: () => console.log('User canceled'),
@@ -30,7 +28,7 @@ openSTXTransfer({
 For full manual transaction signing, you need to provide the sender's private key.
 Treat the private key as a secret and *never* expose it to the public.
 
-```ts
+```ts -n
 import { makeSTXTokenTransfer } from '@stacks/transactions';
 
 const privateKey = randomPrivateKey(); // see "Private Keys & Wallets" page
@@ -38,8 +36,8 @@ const privateKey = randomPrivateKey(); // see "Private Keys & Wallets" page
 const tx = await makeSTXTokenTransfer({
   recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK', // which address you are sending to
   amount: 10000, // tokens, denominated in micro-STX
-  anchorMode: 'any',
   senderKey: privateKey,
+  network: "testnet",
 });
 ```
 
@@ -49,5 +47,3 @@ In Stacks.js, we can create transactions for different purposes:
 - STX token transfers
 - Smart contract calls
 - Smart contract deployments
-
-{/* continue */}
