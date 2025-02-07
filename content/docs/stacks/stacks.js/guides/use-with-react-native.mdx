@@ -50,7 +50,7 @@ Modify the project's Metro configuration to include polyfills for missing NodeJS
 $ npx expo customize metro.config.js
 ```
 
-```js metro.config.js
+```js metro.config.js -cn
 const { getDefaultConfig } = require("expo/metro-config");
 
 const config = getDefaultConfig(__dirname);
@@ -71,7 +71,7 @@ Update the Expo entry point to include polyfills.
 2. Create `index.js` file
 3. Update the `package.json`
 
-```js polyfill.js
+```js polyfill.js -cn
 import { Buffer } from "buffer/";
 import process from "process";
 import "react-native-get-random-values";
@@ -83,7 +83,7 @@ global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 ```
 
-```js index.js
+```js index.js -cn
 import "./polyfill";
 import { Crypto } from "@peculiar/webcrypto";
 
@@ -104,7 +104,7 @@ Ensure that the polyfills live in their own file as specified to avoid any runti
 
 Edit the `app/(tabs)/index.tsx` file to integrate Stacks.js functionalities, starting with the imports.
 
-```tsx app/(tabs)/index.tsx
+```tsx app/(tabs)/index.tsx -cn
 import {
   TransactionVersion,
   getAddressFromPrivateKey,
@@ -116,7 +116,7 @@ import { useState } from "react";
 
 Now you can start to manage the state as follows:
 
-```tsx app/(tabs)/index.tsx
+```tsx app/(tabs)/index.tsx -cn
 export default function HomeScreen() {
   const [mnemonic, setMnemonic] = useState("...");
   const [wallet, setWallet] = useState<Wallet | null>(null);
@@ -126,7 +126,7 @@ export default function HomeScreen() {
 
 Next, to generate a wallet and sign a transaction:
 
-```tsx app/(tabs)/index.tsx
+```tsx app/(tabs)/index.tsx -cn
 const generate = async () => {
   const mnemonic = generateSecretKey();
   setMnemonic(mnemonic);
@@ -152,7 +152,7 @@ const generate = async () => {
 
 And lastly, to integrate the UI:
 
-```tsx app/(tabs)/index.tsx
+```tsx app/(tabs)/index.tsx -cn
 <ThemedView>
   <ThemedText type="subtitle">Seed Phrase</ThemedText>
   <ThemedText>{mnemonic}</ThemedText>
