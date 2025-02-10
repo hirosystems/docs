@@ -1,0 +1,33 @@
+# Create a SHA-256 hash using stacks.js
+
+A scripts in javascript that creates a sha256 hash
+that can be created in Clarity as well.
+
+## Use cases
+
+- validate a secret vote
+
+## Example usage
+
+```typescript
+const hash = createSha256Hash("deadbeef"); //b462657d5547c972e675cfd7ee2e313eb033e6aa74f668ca7bd1d79a056c9fea
+```
+
+```Clarity
+;; vote
+(define-map votes principal (buff 32))
+(map-set votes tx-sender 0xb462657d5547c972e675cfd7ee2e313eb033e6aa74f668ca7bd1d79a056c9fea)
+
+;; validate vote
+
+(define-read-only (validate-vote (vote (buff 8)))
+    (is-eq (map-get? votes tx-sender) (some (create-sha256-hash vote))))
+
+(validate-vote 0xdeadbeef)
+```
+
+## Resources
+
+**Recipes**
+
+- [create-sha256-hash-clarity](/cookbook/create-sha256-hash-clarity)
