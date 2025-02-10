@@ -13,7 +13,7 @@ that can be created in javascript as well.
 const hash = createSha256Hash("deadbeef"); //b462657d5547c972e675cfd7ee2e313eb033e6aa74f668ca7bd1d79a056c9fea
 ```
 
-```Clarity
+```clarity
 ;; vote
 (define-map votes principal (buff 32))
 (map-set votes tx-sender 0xb462657d5547c972e675cfd7ee2e313eb033e6aa74f668ca7bd1d79a056c9fea)
@@ -30,4 +30,4 @@ const hash = createSha256Hash("deadbeef"); //b462657d5547c972e675cfd7ee2e313eb03
 
 **Recipes**
 
-- [create-sha256-hash-stacks-js](/cookbook/create-sha256-hash-stacks-js)
+- [Create a SHA-256 hash using Stacks.js](/cookbook/create-sha256-hash-stacks-js)
