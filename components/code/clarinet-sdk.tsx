@@ -18,7 +18,7 @@ export const ClarinetSDK: React.FC = () => {
 
   async function runCode() {
     const simnet = await initSimnet();
-    await simnet.initEmptySession();
+    await simnet.initEmptySession(false);
     simnet.setEpoch("2.5");
 
     const result = simnet.runSnippet(clarityCode) as any;
