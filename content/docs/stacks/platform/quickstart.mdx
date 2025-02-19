@@ -6,7 +6,7 @@ description: Create and deploy your first contract in the Hiro Platform.
 import { Code, Terminal } from "lucide-react"
 import { SmallCard } from "@/components/card"
 
-In this quickstart guide, you will create a simple `hello-world` contract in the [Hiro Platform](https://platform.hiro.so/). You’ll learn how to create a new project, create a new contract, and deploy that contract to testnet on Stacks.
+In this quickstart guide, you will create a simple fundraising app using one of the app templates available. This app will  featuring a single-page to display a campaign, and functionality to handle contributions, refunds, and withdrawal by the fundraiser.
 
 ## Create your account
 
@@ -19,29 +19,37 @@ Start by creating an account in the Hiro Platform. You can create an account wit
 
 Once signed in, you will see an onboarding screen showing all the Hiro Platform has to offer:
 
-![Platform Welcome Screen](./images/quickstart/welcome.png)
+![Platform Welcome Screen](./images/quickstart/welcome-v2.png)
 
-## Create your smart contract
+## Create your project
 
-Click the “Run `hello-world` in Clarity” tile. This will generate a brand new project in the Hiro Platform, along with a `hello-world` contract.
+If you do not have any existing projects, you will be prompted to create a project on the main page. Click the "Add a project" button to get started.
 
-![create smart contract](./images/quickstart/project-contract.png)
+![create smart contract](./images/quickstart/project-contract-v2.png)
 
-From here, you can edit the contract directly in this code preview or edit the contract in VS Code on the web or on your local device via the “Open Project Files” dropdown.
+<Callout type="info">
+If you already have projects, you can find the "Add a project" button at the top right of the page.
+</Callout>
 
-Learn more about [smart contract development in the Hiro Platform](/stacks/platform/guides/build-contracts).
+From here, you have the option to choose from a set of templates or import an existing project from your GitHub account. For this quickstart, select the "Fundraising App" template, which is a starter project that comes equipped with both a frontend and smart contracts.
 
-## Deploy your contract
+![choose template](./images/quickstart/choose-template-v2.png)
 
-For now, click the “Deploy Project” button to deploy your project to a network. This will open a menu where you can choose to deploy to devnet, testnet, or mainnet. The Hiro Platform will automatically generate a deployment plan for your project that will handle any contract dependencies in your project.
+<Callout type="info">
+To see a list of your repositories and import an existing project, you will first need to authorize with GitHub.
+</Callout>
 
-![deploy contract](./images/quickstart/deploy-contract.png)
+## Clone your project
 
-For this quickstart, let’s deploy to testnet. In order to deploy, you will need testnet STX, which you can request from a testnet faucet in the Hiro Platform.
+Once you have selected your project, you will be presented with the full set of details for the project. From here, you can clone the project to your GitHub account by clicking the "Clone" button.
 
-![platform faucet](./images/quickstart/testnet-faucet.png)
+![clone project](./images/quickstart/clone-project-v2.png)
 
-Once your wallet receives the testnet tokens, you can deploy your contract. Congratulations, you’re now a Stacks developer!
+Once the project is ready and available in your GitHub account, you will see instructions on how to clone the project to your local machine or develop in the browser via Github Codespaces.
+
+![clone details](./images/quickstart/clone-details-v2.png)
+
+You are now ready to start building!
 
 ## Next steps
 
@@ -49,7 +57,7 @@ Once your wallet receives the testnet tokens, you can deploy your contract. Cong
   <Card
     href="/stacks/platform/guides/devnet"
     title="Running Devnet"
-    description="Learn how to use devnet, a private blockchain environment, to test your code."
+    description="Learn how to use devnet, a private blockchain environment, to test and interact with your app."
   />
   <Card
     href="/stacks/platform/guides/create-chainhooks"

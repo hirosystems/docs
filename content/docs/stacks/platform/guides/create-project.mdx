@@ -1,38 +1,62 @@
 ---
 title: Create a project
-description: Create a new project or import a project from GitHub.
+description: Learn how to create or import a project in the Hiro Platform.
 ---
 
-This article walks you through the process of creating a new project or importing a project from GitHub.
+import { Code, Terminal } from "lucide-react"
+import { SmallCard } from "@/components/card"
 
-After you log into the [Hiro Platform](https://platform.hiro.so/), you will automatically land on the projects tab and be prompted to create a project or import from GitHub.
+import { Callout } from "@/components/callout"
+import { Card, Cards } from "@/components/card"
 
-![create or import a project](../images/project/create-or-import.png)
+The Hiro Platform offers multiple ways to create projects, whether you're starting from scratch with a template or importing an existing repository. This guide will walk you through both approaches.
 
-## Create new project
+## Add a project
 
-To create a new project, you can start with a blank project or use one of the examples displayed in the project modal. Those sample projects include a Hello world contract, fungible and non-fungible token contracts, a counter contract, a swap contract, and more. You can also refer to the examples in the [Clarity examples](https://github.com/hirosystems/clarity-examples/tree/main/examples) to view the source code.
+From the main projects page, click the "Add a project" button to begin creating a new project.
 
-![Create new project](../images/project/new-project.png)
+![create project button](../images/create-project/add-project-v2.png)
 
-Once you select a new project from the list, the selected example project will be automatically cloned and displayed on the [projects](https://platform.hiro.so) page. For example, here is a project page with the `counter` project template.
+## Using templates
 
-![Hello world project](../images/project/counter.png)
+The Platform provides 2 types of pre-built templates to help you get started quickly:
 
-From this projects page, you can manage all of your projects, and when you click into an individual project, you can then see all of the contracts in that particular project, edit those contracts, and add new ones.
+1. App templates
+2. Contract-only templates
 
-## Import project from GitHub
+**App templates** are pre-configured with a frontend and smart contracts to help you start building immediately.
 
-When you import a project from GitHub, there will be a modal displayed on the right where you can enter the GitHub URL of your project.
+**Contract-only templates** are pre-configured with a smart contract to help you start building immediately.
 
-![Import from GitHub](../images/project/import-from-github.png)
+Simply select the template you want to get started with to open up a more detailed view of the app.
 
-Once you enter the URL of your project, select _clone_ to clone your project into the Hiro Platform.
+![template selection](../images/create-project/choose-template-v2.png)
 
-<Callout title="Requirements" type="warn">
-  The maximum project size allowed for imports is 50 MB.
-</Callout>
+Once you are ready, click the "Clone" button to copy the template to your GitHub account. From there, you will see instructions on how to clone the repository locally to start development.
 
-You can now find your cloned project on the projects page in the platform, and by clicking into the project, you can see a list of all Clarity contracts ending with `.clar` extension, which will look something like this:
+## Importing existing projects
 
-![Import Clarinet project from GitHub](../images/project/import-from-clarinet.png)
+If you have an existing project on GitHub, you can import it directly into the Hiro Platform:
+
+1. If you haven't already, authorize your GitHub account with the Hiro Platform
+2. You'll see a list of your repositories that can be imported
+3. Select the repository you want by clicking the "Import" button
+
+![import from github](../images/create-project/import-repo-v2.png)
+
+Once your project is ready, you will see instructions on next steps to get started.
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/platform/quickstart"
+    title="Quickstart Guide"
+    description="Follow our quickstart guide to deploy your first smart contract application."
+  />
+  <Card
+    href="/stacks/platform/guides/devnet"
+    title="Running Devnet"
+    description="Learn how to use devnet to test your smart contracts in a local environment."
+  />
+</Cards>
