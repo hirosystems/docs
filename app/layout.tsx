@@ -43,7 +43,7 @@ export default function RootLayout({
             id="hiro-hacks"
             cta="Learn more"
             url="/stacks/hacks/recipes"
-            startDate="2025-02-19T17:00:00.000Z"
+            startDate="2025-02-19"
             endDate="2025-02-25T23:59:59.999Z"
             mobileText="Hiro Hacks is live!"
           >
