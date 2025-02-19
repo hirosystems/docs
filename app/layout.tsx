@@ -42,12 +42,12 @@ export default function RootLayout({
           <Banner
             id="hiro-hacks"
             cta="Learn more"
-            url="/stacks/hacks"
+            url="/stacks/hacks/recipes"
             startDate="2025-02-19T17:00:00.000Z"
             endDate="2025-02-25T23:59:59.999Z"
             mobileText="Hiro Hacks is live!"
           >
-            Get started with this month's Hiro Hacks theme: Developer tools
+            Get started with this month's theme: Hiro Cookbook
           </Banner>
           {children}
           <Footer />
