@@ -1,12 +1,12 @@
 ---
 title: Overview
-description: A developer platform for building, deploying and scaling Bitcoin apps.
+description: A developer platform for building, deploying, and scaling Bitcoin apps.
 ---
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button"
 
-The Hiro Platform is your all-in-one solution for building and scaling Bitcoin applications. It provides essential tools including API key management, customizable data streams, production-ready app templates, and dedicated testing environments - everything developers need to bring their Bitcoin apps to life.
+The Hiro Platform is your all-in-one solution for building and scaling Bitcoin applications. It provides essential tools including API key management, customizable data streams, production-ready app templates, dedicated testing environments, and onchain monitoring and analytics - everything developers need to bring their Bitcoin apps to life.
 
 <Button className="bg-orange-500 hover:bg-orange-600">
   <Link
@@ -41,13 +41,19 @@ The Hiro Platform is your all-in-one solution for building and scaling Bitcoin a
     title="Iterate quickly with devnet"
     description="Leverage devnet, a private instance of the blockchain, for rapid feedback loops and a better debugging experience."
   />
+
+<Card 
+    href="/stacks/platform/guides/contract-monitoring"
+    title="Monitor your contract activity"
+    description="Set up monitoring for your contracts with customizable alerts after deployment."
+  />
 </Cards>
 
 ## Related tools
 
-- **[Clarinet](/stacks/clarinet)**: Prefer to stay local? Build and deploy smart contracts on your device with Clarinet.
+- **[Clarinet](/stacks/clarinet)**: Build and deploy smart contracts locally on your device with Clarinet.
 - **[Chainhook](/stacks/chainhook)**: You don’t need the platform to create event streams. Leverage chainhook independently, so your app can react to on-chain events in real time.
-- **[Stacks.js](/stacks/stacks.js)**: Don’t reinvent the wheel and build faster with a JS library that handles basic functions.
+- **[Stacks.js](/stacks/stacks.js)**: Don’t reinvent the wheel. Build faster with a JS library that handles basic functions.
 
 <br />
 
