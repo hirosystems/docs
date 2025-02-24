@@ -10,168 +10,117 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 
-The ability for a user to sign a cryptographic message to prove ownership of a particular address is a key feature provided by Stacks Connect.
+With Stacks Connect, users can sign a cryptographic message to prove ownership of a particular address. This is helpful for a wide range of use cases. For example, you can use message signing to create token-gated features (a user signs a message to prove they control an address holding the corresponding token requirements) or to prove the user agreed to your terms of service.
 
 In this guide, you will learn how to:
 
-1. [Setup and install necessary packages](#setup-and-installation).
-2. [Prompt users to sign a message](#prompt-users-to-sign-a-message).
-3. [Process and handle the results](#process-the-signed-message).
-4. [Verify the signature](#verify-the-signature).
-
-{/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
+1. [Set up and install necessary packages](#setup-and-installation).
+2. [Connect to a user's wallet](#connect-to-a-users-wallet).
+3. [Sign messages](#sign-messages).
+4. [Verify signatures](#verify-signatures).
 
 ---
 
 ## Setup and installation
 
-Using your preferred package manager, setup and install a new project with the following packages:
-
-- **`@stacks/network`**: Used to interact with the Stacks blockchain network.
-- **`@stacks/encryption`**: Used to sign and verify messages.
-- **`@stacks/connect`**: Used to authenticate users and broadcast the transactions.
+Using your preferred package manager, install the following packages:
 
 ```package-install
-@stacks/network @stacks/encryption @stacks/connect
+@stacks/connect @stacks/encryption
 ```
 
-## Initiate a session
+## Connect to a user's wallet
 
-Users must authenticate to an app before you request message signing. Users can install an authenticator like the [Leather](https://leather.io/install-desktop) wallet.
+Before signing messages, users need to connect their wallet to your application. Use the `connect` function to initiate a wallet connection:
+
+```ts
+import { connect, isConnected } from '@stacks/connect';
+
+async function connectWallet() {
+  if (!isConnected()) {
+    const response = await connect();
+    console.log('Connected with addresses:', response);
+  }
+}
+```
 
 <Callout>
-  If you haven't already, refer to the [authentication guide](/stacks/connect/guides/authenticate-users) before proceeding to integrate the following message signing capabilities.
+  For more details on wallet connection, see the [authentication guide](/stacks/connect/guides/authenticate-users).
 </Callout>
 
-To prompt users to log in, use the `showConnect` function from the `@stacks/connect` package:
+## Sign messages
+
+To request a message signature, use the `request` method with `stx_signMessage`:
 
 ```ts
-import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+import { request } from '@stacks/connect';
 
-const appConfig = new AppConfig(['store_write', 'publish_data']);
-const userSession = new UserSession({ appConfig });
-
-function authenticate() {
-  showConnect({
-    appDetails: {
-      name: 'My App',
-      icon: window.location.origin + '/my-app-logo.svg',
-    },
-    redirectTo: '/',
-    onFinish: () => {
-      let userData = userSession.loadUserData();
-    },
-    userSession: userSession,
+async function signMessage() {
+  const message = 'Hello World';
+  
+  const response = await request('stx_signMessage', {
+    message,
   });
+  
+  console.log('Signature:', response.signature);
+  console.log('Public key:', response.publicKey);
 }
 ```
 
-## Prompt users to sign a message
-
-Call the `openSignatureRequestPopup` function provided by the `@stacks/connect` package to trigger the display of the message signing prompt:
+For structured messages, you can use `stx_signStructuredMessage`:
 
 ```ts
-import { openSignatureRequestPopup } from '@stacks/connect';
-import { StacksTestnet } from '@stacks/network';
+import { request } from '@stacks/connect';
+import { Cl } from '@stacks/transactions';
 
-const message = 'Hello World';
+async function signStructuredMessage() {
+  const message = Cl.tuple({
+    structured: Cl.stringAscii('message'),
+    num: Cl.uint(3)
+  });
+  
+  const domain = Cl.tuple({
+    name: Cl.stringAscii('My App'),
+    version: Cl.stringAscii('1.0.0'),
+    'chain-id': Cl.uint(1)
+  });
 
-openSignatureRequestPopup({
-  message,
-  network: new StacksTestnet(), // for mainnet, `new StacksMainnet()`
-  appDetails: {
-    name: 'My App',
-    icon: window.location.origin + '/my-app-logo.svg',
-  },
-  onFinish(data) {
-    console.log('Signature of the message', data.signature);
-    console.log('Use public key:', data.publicKey);
-  },
-});
-```
-
-All of the methods included on this page accept a `network` option. By default, Connect uses a `testnet` network option. You can import a network configuration from the [`@stacks/network`](/stacks/stacks.js/packages/network) package:
-
-```ts
-import { StacksTestnet, StacksMainnet } from '@stacks/network';
-
-const testnet = new StacksTestnet();
-const mainnet = new StacksMainnet();
-
-// use this in your messe signing method:
-
-openSignatureRequestPopup({
-  network: mainnet,
-  // other relevant options
-});
-```
-
-Several parameters are available for calling `openSignatureRequestPopup`:
-
-```ts
-interface SignatureRequestOptions {
-  message: string;
-  onFinish?: (data: SignatureData) => void;
-  onCancel?: (data: SignatureData) => void;
-  appDetails: {
-    name: string;
-    icon: string;
-  };
-  authOrigin?: string;
-  stxAddress?: string;
-  userSession?: UserSession;
+  const response = await request('stx_signStructuredMessage', {
+    message,
+    domain
+  });
+  
+  console.log('Signature:', response.signature);
+  console.log('Public key:', response.publicKey);
 }
 ```
 
-## Process the signed message
+## Verify signatures
 
-The `openSignatureRequestPopup` method from `@stacks/connect` allows you to specify an `onFinish` callback. This callback will be triggered after the user has successfully signed the message.
-
-You can get the signature of the message via the arguments passed to `onFinish`. Your callback will be fired with a single `data` argument:
+To verify a signature, use the `verifyMessageSignatureRsv` function from the `@stacks/encryption` package:
 
 ```ts
-const onFinish = (data: SignatureData) => {
-  const { signature, publicKey } = data;
-
-  console.log('Signature', signature);
-  console.log('PublicKey', publicKey);
-};
-```
-
-```ts
-export interface SignatureData {
-  /* Hex encoded DER signature */
-  signature: string;
-  /* Hex encoded private string taken from privateKey */
-  publicKey: string;
-}
-```
-
-## Verify the signature
-
-When you verify a signature, you're confirming that the message was indeed created by the claimed sender and that it hasn't been altered since it was signed. To do this, use the `verifyMessageSignatureRsv` function from the `@stacks/encryption` package:
-
-```ts
-import type { SignatureData } from '@stacks/connect';
 import { verifyMessageSignatureRsv } from '@stacks/encryption';
 
-const message = 'Hello World';
-
-openSignatureRequestPopup({
-  message,
-  network: new StacksTestnet(),
-  appDetails: {
-    name: 'My App',
-    icon: window.location.origin + '/my-app-logo.svg',
-  },
-  onFinish(data: SignatureData) {
-    const { signature, publicKey } = data;
-    const verified = verifyMessageSignatureRsv({ message, publicKey, signature });
-    if (verified) {
-      /* your logic here */
-    }
-  },
-});
+async function verifySignature() {
+  const message = 'Hello World';
+  
+  const response = await request('stx_signMessage', {
+    message
+  });
+  
+  const { signature, publicKey } = response;
+  
+  const verified = verifyMessageSignatureRsv({
+    message,
+    signature,
+    publicKey
+  });
+  
+  if (verified) {
+    console.log('Signature verified!');
+  }
+}
 ```
 
 ---
@@ -180,9 +129,9 @@ openSignatureRequestPopup({
 
 <Cards>
   <Card
-    href="/stacks/connect/guides/sign-transactions"
-    title="Sign transactions"
-    description="Learn how to sign transactions using Stacks Connect."
+    href="/stacks/connect/guides/broadcast-transactions"
+    title="Broadcast transactions"
+    description="Learn how to sign and broadcast transactions."
   />
   <Card
     href="/stacks/stacks.js/guides/post-conditions"
