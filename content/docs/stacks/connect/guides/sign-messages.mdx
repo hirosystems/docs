@@ -10,11 +10,11 @@ import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { ChevronRight, Code, Terminal } from 'lucide-react';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 
-The ability for a user to sign a cryptographic message to prove ownership of a particular address is a key feature provided by Stacks Connect.
+With Stacks Connect, users can sign a cryptographic message to prove ownership of a particular address. This is helpful for a wide range of use cases. For example, you can use message signing to create token-gated features (a user signs a message to prove they control an address holding the corresponding token requirements) or to prove the user agreed to your terms of service.
 
 In this guide, you will learn how to:
 
-1. [Setup and install necessary packages](#setup-and-installation).
+1. [Set up and install necessary packages](#setup-and-installation).
 2. [Connect to a user's wallet](#connect-to-a-users-wallet).
 3. [Sign messages](#sign-messages).
 4. [Verify signatures](#verify-signatures).
@@ -50,7 +50,7 @@ async function connectWallet() {
 
 ## Sign messages
 
-To request a message signature, use the `request` method with 'stx_signMessage':
+To request a message signature, use the `request` method with `stx_signMessage`:
 
 ```ts
 import { request } from '@stacks/connect';
@@ -67,7 +67,7 @@ async function signMessage() {
 }
 ```
 
-For structured messages, you can use 'stx_signStructuredMessage':
+For structured messages, you can use `stx_signStructuredMessage`:
 
 ```ts
 import { request } from '@stacks/connect';
