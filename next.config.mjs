@@ -80,6 +80,16 @@ const config = {
       destination: "/stacks/platform",
       permanent: true,
     },
+    {
+      source: "/stacks/platform/guides/deployment-plans",
+      destination: "/stacks/platform",
+      permanent: true,
+    },
+    {
+      source: "/stacks/platform/guides/deploy-project",
+      destination: "/stacks/platform/guides/deploy-contracts",
+      permanent: true,
+    },
   ],
 };
 

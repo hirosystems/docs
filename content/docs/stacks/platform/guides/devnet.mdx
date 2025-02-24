@@ -3,32 +3,36 @@ title: Using devnet
 description: Test and validate your code using devnet's private blockchain environment.
 ---
 
-Devnet is a local blockchain environment that lets you test and validate your contract code before deploying on a public network like testnet or mainnet. In this guide, you'll learn how to interact with devnet in the Hiro Platform to expedite your development.
+Devnet is a personal blockchain environment that lets you test and validate your contract code before deploying on a public network like testnet or mainnet. In this guide, you'll learn how to interact with devnet in the Hiro Platform to expedite your development.
 
 ## What is devnet?
 
-Devnet is a configurable, local blockchain environment, allowing developers to deploy and test smart contracts quickly. Think of it like a personal sandbox: no one else can see your devnet instance. You don't have to worry about breaking it, and you can stop and restart it as many times as you need. It comes with blockchain nodes and miners and will product blocks on your local machine.
+Devnet is a private blockchain environment that lets you test and validate smart contracts quickly. Think of it as your personal sandbox: no one else can see your devnet instance, you don't have to worry about breaking it, and you can stop and restart it as many times as you need.
+
+While developers can run devnet locally using Clarinet, the Hiro Platform provides a hosted version that eliminates the need to manage blockchain nodes and miners on your machine. The Platform-hosted devnet still produces blocks and processes transactions, but offloads the computational overhead to our infrastructure while providing a more intuitive interface for development.
 
 Devnet provides a risk-free testing ground with the convenience of rapid prototyping, cost savings, and privacy.
 
-## Benefits of devnet
+## Benefits of devnet on the Hiro Platform
 
-Devnet facilitates:
+The Platform-hosted devnet offers several advantages:
 
-- **Rapid prototyping**: Quick iterations with immediate feedback.
-- **Cost-efficiency**: No real cryptocurrency expenses for testing.
-- **Customizable testing environment**: Tailor your blockchain parameters as needed.
-- **Isolated development**: A sandbox for confidential and secure testing.
+- **Zero local setup**: No need to configure or maintain blockchain nodes locally
+- **Resource-efficient**: Offloads computational demands to our infrastructure
+- **Rapid prototyping**: Quick iterations with immediate feedback
+- **Cost-efficiency**: No real cryptocurrency expenses for testing
+- **Seamless local integration**: Connect your local development environment to the hosted devnet
+- **Isolated development**: A personal sandbox for confidential and secure testing
 
 ## Using devnet in the Hiro Platform
 
-First, log into the [Hiro Platform](https://platform.hiro.so/). After [setting up your project](/stacks/platform/guides/create-project), navigate to the project page where you'll manage devnet.
+First, log into the [Hiro Platform](https://platform.hiro.so/). After [setting up your project](/stacks/platform/guides/create-project), navigate to the project page where you can select the "Devnet" tab to manage your devnet instance.
 
 ## Starting and managing devnet
 
-In the top right corner of your project page, you'll notice a devnet status indicator. Initially, it should read "Inactive." Click on this indicator to reveal a dropdown menu. From here, select "Start Devnet" to initiate your private devnet instance.
+In your project page, you'll click on the "Devnet" tab to start and manage your devnet instance. Initially, it should read "Inactive." Click on the "Start Devnet" button to start your private devnet instance.
 
-![Start Devnet](../images/devnet/start.png)
+![Dashboard](../images/devnet/dev1.png)
 
 <Callout title="Programmatic API">
   You can also start and stop devnet programmatically via the [Platform API](/stacks/platform-api/devnet).
@@ -42,21 +46,22 @@ Once you start devnet, it will take a few moments to spin up. The status indicat
 
 When devnet is ready, the status will change to 'Active'.
 
-![Devnet Active](../images/devnet/active.png)
-
 If needed, you can restart devnet to refresh the timer. Keep in mind that only one devnet instance can run at a time per user account. If you need to work on a different project, simply start devnet within that project to seamlessly transition your session. There is also a monthly limit of 100 devnet sessions per account, so plan your development schedule accordingly.
 
 ## Exploring the devnet dashboard
 
-With devnet active, clicking on the status pill again will present the option to "View Devnet Details." Selecting this takes you to the devnet dashboard, where you can interact with a block explorer and an "assembly line" of mined blocks. Transactions within each block are accessible here, and a search function is available for efficient block navigation.
+The Platform's devnet dashboard provides a comprehensive interface for monitoring and interacting with your private blockchain. You can:
 
-![Devnet Dashboard](../images/devnet/dashboard.png)
+- Track real-time block production through the visual "assembly line"
+- Inspect block contents and transaction details
+- Search through blocks efficiently
+- Monitor contract deployments and function calls
+- Mint new blocks on demand
+
+![Devnet Dashboard](../images/devnet/dev2.png)
 
 ## Additional devnet features
 
 On the dashboard, you can also click the "Interact with devnet" button to call contract functions, make API requests, view devnet wallets, and more.
 
 For more information on devnet features, [start here](https://www.hiro.so/blog/5-ways-to-interact-with-devnet-in-the-hiro-platform).
-
-![Devnet Interactive](../images/devnet/interact.png)
-![Devnet Interactive Features](../images/devnet/interactive-features.png)
