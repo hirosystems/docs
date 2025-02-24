@@ -91,7 +91,7 @@ const config = {
       permanent: true,
     },
     {
-      source: "/stacks/connect/guides/broadcast-transactions",
+      source: "/stacks/connect/guides/sign-transactions",
       destination: "/stacks/connect/guides/broadcast-transactions",
       permanent: true,
     },
