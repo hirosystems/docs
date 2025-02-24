@@ -1,6 +1,6 @@
 ---
 title: Authenticate users
-description: Connect to user wallets and authenticate your users using Stacks.js.
+description: Connect to user wallets and authenticate your users using @stacks/connect.
 ---
 
 import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
@@ -8,7 +8,7 @@ import { ContentBackground } from '@/components/ui/icon';
 
 Authentication is a fundamental part of many web applications, ensuring that users are who they claim to be and that their data is secure. With the Stacks blockchain, user authentication involves connecting to users' wallets and managing their sessions securely.
 
-The `@stacks/connect` package from Stacks.js provides the tools needed to integrate this functionality seamlessly into your web app.
+The `@stacks/connect` package provides the tools needed to integrate this functionality seamlessly into your web app.
 
 In this guide, you will learn how to:
 
@@ -53,7 +53,7 @@ async function authenticate() {
 
 The `connect` function stores the user's addresses in local storage by default, making it easy to persist the user's session across page reloads and browser sessions.
 
-<Callout>You can customize the connection behavior by passing options to the `connect` function, such as forcing wallet selection or specifying default providers.</Callout>
+<Callout>You can customize the connection behavior by passing options to the `connect` function, such as forcing wallet selection or specifying default providers. See the [advanced usage](/stacks/connect/packages/connect#advanced-usage) section for more details.</Callout>
 
 ## Manage authentication state
 
@@ -106,7 +106,7 @@ const accounts = await request('stx_getAccounts');
 // }
 ```
 
-<Callout title="Note">For a list of all available methods, see the [API reference](/stacks/connect/packages/connect) page.</Callout>
+<Callout title="Note">For a list of all available methods, see the [reference](/stacks/connect/packages/connect) page.</Callout>
 
 ---
 
@@ -114,7 +114,7 @@ const accounts = await request('stx_getAccounts');
 
 <Cards>
   <Card
-    href="/stacks/connect/guides/sign-transactions"
+    href="/stacks/connect/guides/broadcast-transactions"
     title="Sign transactions"
     description="Learn how to interact with your smart contracts using Stacks.js."
   />
