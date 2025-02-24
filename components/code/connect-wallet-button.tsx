@@ -1,43 +1,37 @@
 "use client";
 
 import React from "react";
-import { AppConfig, UserSession, showConnect } from "@stacks/connect";
+import { isConnected, connect, disconnect } from "@stacks/connect";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-const appConfig = new AppConfig(["store_write", "publish_data"]);
-const userSession = new UserSession({ appConfig });
-
 export const ConnectWalletButton: React.FC = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(false);
-  const [session, setSession] = React.useState({}) as any;
 
-  const authenticate = () => {
-    showConnect({
-      appDetails: {
-        name: "My App",
-        icon: window.location.origin + "/my-app-logo.svg",
-      },
-      redirectTo: "/",
-      onFinish: () => {
-        const userData = userSession.loadUserData();
-        setIsSignedIn(true);
-        setSession(userSession);
-        console.log(userData);
-      },
-      userSession: userSession,
-    });
-  };
+  async function authenticate() {
+    try {
+      const response = await connect();
+      setIsSignedIn(true);
+      console.log(response);
+    } catch (error) {
+      console.error("Authentication failed:", error);
+      setIsSignedIn(false);
+    }
+  }
 
-  const logout = () => {
-    session.signUserOut();
-    setIsSignedIn(false);
+  const logout = async () => {
+    try {
+      disconnect();
+      setIsSignedIn(false);
+    } catch (error) {
+      console.error("Disconnect failed:", error);
+    }
   };
 
   return (
     <Button
       className={cn("px-5 py-2 text-sm leading-5 font-semibold z-10 shadow-lg")}
-      onClick={isSignedIn ? logout : authenticate}
+      onClick={isSignedIn ? () => void logout() : authenticate}
     >
       {isSignedIn ? "Log out" : "Connect wallet"}
     </Button>
