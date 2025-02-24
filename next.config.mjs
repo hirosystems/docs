@@ -90,6 +90,11 @@ const config = {
       destination: "/stacks/platform/guides/deploy-contracts",
       permanent: true,
     },
+    {
+      source: "/stacks/connect/guides/broadcast-transactions",
+      destination: "/stacks/connect/guides/broadcast-transactions",
+      permanent: true,
+    },
   ],
 };
 

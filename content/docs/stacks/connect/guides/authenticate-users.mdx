@@ -1,6 +1,6 @@
 ---
 title: Authenticate users
-description: Connect to user wallets and authenticate your users using Stacks.js.
+description: Connect to user wallets and authenticate your users using @stacks/connect.
 ---
 
 import { ConnectWalletButton } from '@/components/code/connect-wallet-button';
@@ -8,14 +8,14 @@ import { ContentBackground } from '@/components/ui/icon';
 
 Authentication is a fundamental part of many web applications, ensuring that users are who they claim to be and that their data is secure. With the Stacks blockchain, user authentication involves connecting to users' wallets and managing their sessions securely.
 
-The `@stacks/connect` package from Stacks.js provides the tools needed to integrate this functionality seamlessly into your web app.
+The `@stacks/connect` package provides the tools needed to integrate this functionality seamlessly into your web app.
 
 In this guide, you will learn how to:
 
 1. [Install the `@stacks/connect` package](#install-the-stacksconnect-package).
-2. [Initiate a `UserSession` with specific permission scopes](#initiate-a-usersession).
-3. [Trigger the authentication flow with the `showConnect` function](#trigger-the-authentication-flow-with-the-showconnect-function).
-4. [Handle pending authentication states and manage user data](#handle-pending-authentication).
+2. [Connect to a user's wallet](#connect-to-a-users-wallet).
+3. [Manage authentication state](#manage-authentication-state).
+4. [Access user data](#access-user-data).
 
 {/* <Callout>To see this guide in action, check out a full example [here](https://github.com/hiro-so/stacks-connect-example).</Callout> */}
 
@@ -27,31 +27,18 @@ In this guide, you will learn how to:
 @stacks/connect
 ```
 
-## Initiate a UserSession
+## Connect to a user's wallet
 
-After installing the `@stacks/connect` package, initiate a `userSession` with the following permission scopes.
+After installing the `@stacks/connect` package, you can use the `connect` function to initiate a wallet connection. This will trigger a popup that allows users to select and connect their wallet.
 
 ```ts
-import { AppConfig, UserSession } from '@stacks/connect';
+import { connect } from '@stacks/connect';
 
-const appConfig = new AppConfig(['store_write', 'publish_data']);
-const userSession = new UserSession({ appConfig });
+async function authenticate() {
+  const response = await connect();
+  // response contains the user's addresses
+}
 ```
-
-<Callout>We recommend you initiate the `userSession` object just once in your app, then reference it using imports where needed.</Callout>
-
-Apps may request any of the following scopes:
-
-| Scope          | Definition                                                                      |
-| -------------- | ------------------------------------------------------------------------------- |
-| `store_write`  | Read and write data to the user's Gaia hub in an app-specific storage bucket.   |
-| `publish_data` | Publish data so other users of the app can discover and interact with the user. |
-
-For more detailed information on these scopes and other API references, visit the [Connect API](/stacks/connect/packages/connect) reference page.
-
-## Trigger the authentication flow with the showConnect function
-
-Create an `authenticate` function that will call `showConnect`, triggering the popup that initiates the authentication process for users. They will authenticate with a [secret key](/stacks/stacks.js/concepts/private-keys) that's used to encrypt their private data.
 
 <div className="not-prose relative overflow-hidden">
   <div className="relative bg-card rounded-lg border border-border/50 overflow-auto p-8 h-auto">
@@ -64,56 +51,62 @@ Create an `authenticate` function that will call `showConnect`, triggering the p
   </div>
 </div>
 
+The `connect` function stores the user's addresses in local storage by default, making it easy to persist the user's session across page reloads and browser sessions.
+
+<Callout>You can customize the connection behavior by passing options to the `connect` function, such as forcing wallet selection or specifying default providers. See the [advanced usage](/stacks/connect/packages/connect#advanced-usage) section for more details.</Callout>
+
+## Manage authentication state
+
+You can manage the user's authentication state using the following functions:
+
 ```ts
-function authenticate() {
-  showConnect({
-    appDetails: {
-      name: 'My App',
-      icon: window.location.origin + '/my-app-logo.svg',
-    },
-    redirectTo: '/',
-    onFinish: () => {
-      let userData = userSession.loadUserData();
-    },
-    userSession,
-  });
-}
+import { connect, disconnect, isConnected } from '@stacks/connect';
+
+// Check if user is connected
+const authenticated = isConnected();
+
+// Connect to wallet
+await connect();
+
+// Disconnect user
+disconnect(); // clears local storage and selected wallet
 ```
 
-The `showConnect` function accepts an object with the following properties:
+## Access user data
 
-- The app's `name` and `icon`: provided as strings comprising the `appDetails` object property.
-- The `redirectTo` string: used to provide a URL to which the user should be redirected upon successful authentication.
-- The `onFinish` callback serves a similar purpose by handling successful authentication within a context of a popup window.
-- The `userSession` object initiated above.
+Once connected, you can access the user's data using the `getLocalStorage` function or make specific requests using the `request` method:
 
-## Handle pending authentication
+```ts
+import { getLocalStorage, request } from '@stacks/connect';
 
-After initiating the authentication process, you will most likely need to handle cases where the user hasn't completed the authentication flow.
+// Get stored user data
+const userData = getLocalStorage();
+// {
+//   "addresses": {
+//     "stx": [
+//       { "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN" },
+//     ],
+//     "btc": [
+//       { "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae" },
+//     ]
+//   }
+// }
 
-1. Check if there is a pending sign-in using the `isSignInPending` method of the `userSession` object.
-2. If there is a pending sign-in, handle it by calling `handlePendingSignIn` which processes the sign-in and then utilizes the `userData` returned in a promise.
-
-```tsx
-import { AppConfig, UserSession, showConnect } from '@stacks/connect';
-
-const appConfig = new AppConfig(['store_write', 'publish_data']);
-const userSession = new UserSession({ appConfig });
-
-window.onload = function () {
-  if (userSession.isSignInPending()) {
-    userSession.handlePendingSignIn().then(userData => {
-      // Save or otherwise utilize userData post-authentication
-    });
-  } else if (userSession.isUserSignedIn()) {
-    // Handle case in which user is already authenticated
-  }
-};
+// Get detailed account information
+const accounts = await request('stx_getAccounts');
+// {
+//   "addresses": [
+//     {
+//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cd...",
+//       "gaiaHubUrl": "https://hub.hiro.so",
+//       "gaiaAppKey": "0488ade4040658015580000000dc81e3a5..."
+//     }
+//   ]
+// }
 ```
 
-For users already signed in, you can directly access their session information and proceed with your app's flow.
-
-<Callout title="Note">Implementing `handlePendingSignIn` is particularly important in mobile app contexts to ensure a smooth user experience across all device types.</Callout>
+<Callout title="Note">For a list of all available methods, see the [reference](/stacks/connect/packages/connect) page.</Callout>
 
 ---
 
@@ -121,7 +114,7 @@ For users already signed in, you can directly access their session information a
 
 <Cards>
   <Card
-    href="/stacks/connect/guides/sign-transactions"
+    href="/stacks/connect/guides/broadcast-transactions"
     title="Sign transactions"
     description="Learn how to interact with your smart contracts using Stacks.js."
   />

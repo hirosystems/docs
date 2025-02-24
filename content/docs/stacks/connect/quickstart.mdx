@@ -11,10 +11,6 @@ In this quickstart guide, you will learn how to set up your project, authenticat
 
 For a deeper dive into the authentication process, check out the [authenticate users](/stacks/connect/guides/authenticate-users) guide.
 
-{/* <Callout>
-  To view the full code for this quickstart, [click here](https://github.com/hiro-so/stacks.js/tree/main/examples/hello-world).
-</Callout> */}
-
 ---
 
 <Steps>
@@ -23,84 +19,56 @@ For a deeper dive into the authentication process, check out the [authenticate u
   
     Add the necessary packages to your project using your preferred package manager.
 
-    ```package-install title="Terminal"
-    @stacks/connect @stacks/transactions @stacks/network
+    ```package-install
+    @stacks/connect
     ```
   </Step>
   <Step>
-    ## Create an AppConfig and UserSession
+    ## Connect to a wallet
   
-    Add a reusable `UserSession` instance to your project. This will allow your app to store authentication state in `localStorage`.
+    The `connect` function stores the user's address in local storage by default, making it easy to persist the user's session across page reloads and browser sessions.
 
-    ```ts session.ts
-    import { AppConfig, UserSession } from '@stacks/connect';
+    ```ts connect.ts
+    import { connect } from '@stacks/connect';
 
-    const appConfig = new AppConfig(['store_write', 'publish_data']);
-    export const userSession = new UserSession({ appConfig });
+    const response = await connect();
     ```
 
-    You can now import the `userSession` instance in the following step to continue with the authentication process.
+    To access the user's addresses, you can use the `getLocalStorage` function.
+
+    ```ts storage.ts
+    import { getLocalStorage } from '@stacks/connect';
+
+    const data = getLocalStorage();
+    ```
+
+    You can manage the connection's state using the following:
+
+    ```ts connect.ts
+    import { connect, disconnect, isConnected } from '@stacks/connect';
+
+    isConnected(); // false
+    await connect(); // similar to the `getAddresses` method
+    isConnected(); // true
+    disconnect(); // clears local storage and selected wallet
+    isConnected(); // false
+    ```
   </Step>
   <Step>
-    ## Interacting with the user's wallet
+    ## Use `request` to trigger a transfer
   
     The process of connecting to a wallet gives the web app information about the wallet account, which enables interactions with the Stacks blockchain, like calling smart contracts.
 
-    Using the `showConnect` function, you can prompt the user to select a wallet to connect to your app.
+    Using the `request` function, you can trigger wallet interactions using the `stx_transferStx` method.
 
-     ```tsx connect.ts
-    import { showConnect } from '@stacks/connect';
-    import { userSession } from './session';
-
-    const appDetails = {
-      name: "My app",
-      icon: "logo.png",
-    }
-
-    showConnect({
-      appDetails,
-      userSession,
-      onFinish: () => {
-        window.location.reload();
-      },
-      onCancel: () => {
-        console.log('oops');
-      },
+     ```tsx connect.tsx
+    const response = await request('stx_transferStx', {
+      amount: '1000', // amount in micro-STX (1 STX = 1,000,000 micro-STX)
+      recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN', // recipient address
+      network: 'mainnet', // optional, defaults to mainnet
+      memo: 'Optional memo', // optional memo field
     });
     ```
-
-    This will configure the `showConnect` function to display a wallet connection pop-up with your app's name and icon, and handle user confirmation or cancellation actions in the `onFinish` and `onCancel` callbacks.
-  </Step>
-  <Step>
-    ## Initiate a STX transfer
-  
-    With a connected wallet, you can now initiate a STX transfer to another account.
-
-    To prompt the user for a STX transfer call, use the `openSTXTransfer` function.
-
-    ```tsx transfer.ts
-    import { openSTXTransfer } from '@stacks/connect';
-    import { StacksTestnet } from '@stacks/network';
-    import { userSession } from './session';
-
-    openSTXTransfer({
-      network: new StacksTestnet(),
-      recipient: 'ST39MJ145BR6S8C315AG2BD61SJ16E208P1FDK3AK',
-      amount: 10000000,
-      onFinish: response => {
-        console.log(response.txid);
-      },
-      onCancel: () => {
-        console.log('User cancelled');
-      },
-    });
-    ```
-
-    This will prompt the user to confirm and sign a transaction, sending 10 STX to the `recipient` address.
-
-    <Callout>
-      The `amount` field is denominated in `microSTX`, which is the smallest fraction of STX. 1,000,000 microSTX = 1 STX.
-    </Callout>
   </Step>
 </Steps>
 
@@ -113,7 +81,7 @@ For a deeper dive into the authentication process, check out the [authenticate u
     description="Learn how to authenticate users using the Connect package in Stacks.js."
   />
   <Card
-    href="/stacks/connect/guides/sign-transactions"
+    href="/stacks/connect/guides/broadcast-transactions"
     title="Sign transactions"
     description="Learn how to sign transactions using Stacks.js."
   />
