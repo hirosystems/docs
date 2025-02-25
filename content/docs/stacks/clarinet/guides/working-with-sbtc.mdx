@@ -1,0 +1,86 @@
+---
+title: Working with sBTC
+description: Clarinet helps with building, testing, and deploying contracts that use sBTC.
+---
+
+Make sure to use Clarinet 2.15.0 or later.
+
+## About sBTC
+
+sBTC is a fungible token on the Stacks blockchain. It follows the
+[SIP-010 standard](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md)
+for fungible tokens.
+
+Even though it's *just* a fungible token. Clarinet has some helpers to make it easier to work with.
+
+## Using sBTC in your contract
+
+To use sBTC in your contract, you need to add the `sbtc-deposit` smart contract to your requirements.
+
+In a Clarinet project, run the following command:
+
+```bash
+clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit
+```
+
+This will add the [`sbtc-deposit`](https://explorer.hiro.so/txid/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit)
+smart contract to your project, along with it's dependencies:
+- [`sbtc-token`](https://explorer.hiro.so/txid/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
+- [`sbtc-registry`](https://explorer.hiro.so/txid/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry)
+
+When Clarinet detects the `sbtc-deposit` contract, it will automatically fund the test wallets with 
+sBTC that you can use to test your contract in the Simnet and Devnet.
+
+## Using sBTC in your contract
+
+As a SIP-010 token, sBTC let you call the `transfer` function to transfer tokens from one address to another.  
+Let's say we have an NFT contract that allows users to buy mint an NFT using sBTC.  
+
+
+```clarinet
+;; this code is for demo purposes
+;; it doesn't implement SIP-009 NFT standard
+(define-non-fungible-token nft-name uint)
+
+;; mint for 100 sats
+(define-data-var sats-sbtc-mint-price uint u100)
+(define-data-var next-id uint u0)
+
+(define-public (mint-one-with-sbtc)
+  (begin
+    ;; call the sbtc-token contract to transfer the sbtcs
+    (try! (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token transfer
+      (var-get sats-sbtc-mint-price)
+      tx-sender
+      (as-contract tx-sender)
+      none
+    ))
+
+    (try! (nft-mint? nft-name (var-get next-id) tx-sender))
+
+    (ok (var-set next-id (+ (var-get next-id) u1)))
+  )
+)
+```
+
+Because Clarinet already took care of funding the test wallets with sBTC, you can call the
+`mint-one-with-sbtc` function with one of the test wallets.
+
+In the Simnet (unit tests or `clarinet console`), the deployer address of the contract will remain
+`SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4`, but in Devnet, like every otehr requirements, it will
+be deployed by the default deployer address. You don't have to care about it, Clarinet always make
+sure that your contracts call the right address.
+
+## Deploying your contract on Testnet
+
+On testnet, the official Hiro sBTC contract is
+[ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token](https://explorer.hiro.so/txid/ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token?chain=testnet).
+This is is contract that is linked to the sBTC faucet.
+{/* TODO: add link and instructions to use the faucet once ready */}
+
+Again, Clarinet will make sure that your contracts call this address when being deployed on mainnet.
+You can see the of the sbtc-contract being re-mapped in the testnet deployment plan.
+
+## Deploying your contract on Mainnet
+
+On mainnet, your contract will remain unchanged and call the one and only sBTC contract.
