@@ -49,8 +49,8 @@ import heroImage from '@/public/bitcoin-hero.svg';
 
 <div className='flex flex-col'>
 
-<h4 id="explore-ordinals" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#explore-ordinals" className="not-prose group text-sm uppercase">Explore Ordinals</a>
+<h4 id="explore-bitcoin" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
+  <a href="#explore-bitcoin" className="not-prose group text-sm uppercase">Explore Bitcoin</a>
 </h4>
 
 ---
@@ -58,9 +58,9 @@ import heroImage from '@/public/bitcoin-hero.svg';
 <Cards>
   <SmallCard
     icon={<Ordinals />}
-    href="/bitcoin/ordinals/api"
-    title="Ordinals API"
-    description="Fetch on-chain data for Ordinals and meta-protocols with our hosted API."
+    href="/bitcoin/indexer"
+    title="Bitcoin Indexer"
+    description="Use the Bitcoin Indexer to index and query Bitcoin blockchain data."
   />
   <SmallCard
     icon={<API />}
@@ -70,23 +70,10 @@ import heroImage from '@/public/bitcoin-hero.svg';
   />
   <SmallCard
     icon={<Play />}
-    href="/ordinals/explorer"
-    title="Explorer"
+    href="https://ordinals.hiro.so/"
+    title="Ordinals Explorer"
     description="View on-chain data for Ordinals and meta-protocols with our explorer."
   />
-</Cards>
-
-</div>
-
-<div className='flex flex-col'>
-
-<h4 id="explore-runes" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#explore-runes" className="not-prose group text-sm uppercase">Explore Runes</a>
-</h4>
-
----
-
-<Cards>
   <SmallCard
     icon={<API />}
     href="/bitcoin/runes/api"

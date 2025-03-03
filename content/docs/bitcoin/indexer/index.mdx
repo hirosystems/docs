@@ -8,27 +8,37 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 The Bitcoin Indexer is a reorg-aware indexer that automatically handles chain forks, so you don't need to waste time or resources reindexing your database yourself.
 
-With a familiar event-driven framework, you can customize what ordinals data you index in order to create lightweight databases for faster query responses and a better user experience.
+You can customize what ordinals data you index in order to create lightweight databases for faster query responses and a better user experience.
 
-## Create event streams
+## Installation
+
+```terminal
+$ git clone https://github.com/hirosystems/bitcoin-indexer.git
+$ cd bitcoin-indexer
+$ cargo bitcoin-indexer-install
+```
+
+Alternatively, you can use Docker images from [Docker Hub](https://hub.docker.com/r/hirosystems/bitcoin-indexer).
+
+## Get started
 
 <Cards>
   <SecondaryCard
-    href="/bitcoin/indexer/guides/scan-ordinals-activity"
-    title="Scan past Ordinals activity"
-    description="Fetch historical ordinals activity, whether for a range of blocks or for a particular inscription."
-  />
-  <SecondaryCard
-    href="/bitcoin/indexer/guides/stream-ordinals-activity"
-    title="Stream Ordinals activity"
-    description="Create webhook-like triggers that target and post ordinal activity to a custom source."
-  />
-  <SecondaryCard
-    href="/bitcoin/indexer/guides/indexer-as-a-service"
-    title="Run Indexer as a Service"
-    description="Interact and manage incoming Ordinals activity with your own service."
+    href="/bitcoin/indexer/quickstart"
+    title="Quickstart"
+    description="Learn how to scan for Bitcoin activity using the Bitcoin Indexer."
   />
 </Cards>
+
+## System Requirements
+
+Before running the indexer, ensure your system meets these requirements:
+
+- **CPU**: Multi-core support for parallel processing
+- **Memory**: Minimum 16GB RAM
+- **Storage**: SSD or NVMe recommended
+- **OS**: Support for 4096+ open file descriptors
+- **Postgres**: Version 17+ recommended
 
 ## Related tools
 
