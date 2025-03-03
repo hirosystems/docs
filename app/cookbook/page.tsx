@@ -5,6 +5,8 @@ import { Recipe } from "@/types/recipes";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CopyButton } from "@/components/docskit/copy-button";
+import { Metadata } from "next/types";
+import { getRouteMetadata, createMetadata } from "@/utils/metadata";
 
 function RecipeCard({
   recipe,
@@ -47,6 +49,11 @@ function RecipeCard({
       </Link>
     </div>
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const routeMetadata = getRouteMetadata("/cookbook");
+  return createMetadata(routeMetadata);
 }
 
 export default async function Page() {

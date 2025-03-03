@@ -16,12 +16,23 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Metadata } from "next/types";
+import { getRouteMetadata, createMetadata } from "@/utils/metadata";
 
 interface Param {
   id: string;
 }
 
 export const dynamicParams = false;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const routeMetadata = getRouteMetadata("/cookbook");
+  return createMetadata(routeMetadata);
+}
 
 export default async function Page({
   params,
