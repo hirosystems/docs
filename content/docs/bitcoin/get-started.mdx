@@ -22,10 +22,10 @@ import { API, Container, Chainhook, BitcoinIcon } from '@/components/ui/icon';
   <SecondaryCard
     className="group"
     icon={<Chainhook className='transition-colors duration-500 ease-in-out group-hover:text-primary' />}
-    href="/bitcoin/ordinals/ordhook/quickstart"
+    href="/bitcoin/indexer"
     title="Stream custom blockchain events"
-    description="Use Ordhook to filter and stream for contract deployments."
-    tag='Ordhook'
+    description="Use the Bitcoin Indexer to filter and stream for contract deployments."
+    tag='Bitcoin Indexer'
   />
   <SecondaryCard
     className="group"
@@ -36,25 +36,6 @@ import { API, Container, Chainhook, BitcoinIcon } from '@/components/ui/icon';
     tag='Runes API'
   />
 </Cards>
-
-<div className='flex flex-col'>
-
-<h4 id="installation-guides" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#installation-guides" className="not-prose group text-sm uppercase">Installation guides</a>
-</h4>
-
----
-
-<Cards>
-  <SmallCard
-    icon={<BitcoinIcon />}
-    href="/guides/sync-a-bitcoin-node"
-    title="Sync a Bitcoin node"
-    description="Set up and run a Bitcoin node to use tools like Ordhook."
-  />
-</Cards>
-
-</div>
 
 <Callout type="tip">
 For more, check out our [guides](/guides) section.

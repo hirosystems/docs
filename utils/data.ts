@@ -21,13 +21,6 @@ export const guides = [
     createdAt: new Date().toLocaleDateString(),
   },
   {
-    title: "Host your own Ordhook Service",
-    description:
-      "Set up and run your own Ordhook service to handle blockchain webhooks with ease.",
-    tags: ["chainhook"],
-    createdAt: new Date().toLocaleDateString(),
-  },
-  {
     title: "Validate off-chain price feeds with Pyth",
     description:
       "Ensure the accuracy of your off-chain price feeds by integrating with the Pyth network.",

@@ -15,7 +15,7 @@ const stacksSubDirs = [
   'explorer', 'nakamoto', 'platform', 'stacks.js', 'token-metadata-api'
 ];
 
-const ordinalsSubDirs = ['api', 'explorer', 'ordhook'];
+const ordinalsSubDirs = ['api', 'explorer', 'indexer'];
 
 function categorizeFiles(dir, category, subDirs = []) {
   if (subDirs.length > 0) {

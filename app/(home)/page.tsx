@@ -67,7 +67,7 @@ export default function HomePage(): JSX.Element {
           </div>
           <div className="flex flex-wrap gap-2">
             <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              ORDHOOK
+              BITCOIN INDEXER
             </Badge>
             <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
               ORDINALS API
