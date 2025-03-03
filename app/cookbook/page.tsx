@@ -53,7 +53,6 @@ function RecipeCard({
 
 export async function generateMetadata(): Promise<Metadata> {
   const routeMetadata = getRouteMetadata("/cookbook");
-  console.log({ routeMetadata });
   return createMetadata(routeMetadata);
 }
 
