@@ -38,7 +38,6 @@
     { "source": "/token-metadata-api/:path*", "destination": "/stacks/token-metadata-api", "permanent": true },
     { "source": "/ordinals/api/:path*", "destination": "/bitcoin/ordinals/api", "permanent": true },
     { "source": "/ordinals/explorer/:path*", "destination": "https://ordinals.hiro.so", "permanent": true },
-    { "source": "/ordinals/:path*", "destination": "/bitcoin", "permanent": true },
     { "source": "/api-keys", "destination": "/guides/api-keys", "permanent": true },
     { "source": "/rate-limiting", "destination": "/guides/rate-limiting", "permanent": true },
     { "source": "/changelog", "destination": "/stacks", "permanent": true },
@@ -53,6 +52,8 @@
     { "source": "/nakamoto-api/:path*", "destination": "/stacks/api", "permanent": true },
     { "source": "/hacks/:path*", "destination": "/stacks/hacks", "permanent": true },
     { "source": "/references/:path*", "destination": "/stacks/stacks.js", "permanent": true },
-    { "source": "/stacksjs-starters", "destination": "/stacks/stacks.js", "permanent": true }
+    { "source": "/stacksjs-starters", "destination": "/stacks/stacks.js", "permanent": true },
+    { "source": "/ordinals/ordhook/:path*", "destination": "/bitcoin/indexer", "permanent": true },
+    { "source": "/ordinals/:path*", "destination": "/bitcoin", "permanent": true }
   ]
 }
