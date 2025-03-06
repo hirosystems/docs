@@ -53,6 +53,7 @@
     { "source": "/nakamoto-api/:path*", "destination": "/stacks/api", "permanent": true },
     { "source": "/hacks/:path*", "destination": "/stacks/hacks", "permanent": true },
     { "source": "/references/:path*", "destination": "/stacks/stacks.js", "permanent": true },
-    { "source": "/stacksjs-starters", "destination": "/stacks/stacks.js", "permanent": true }
+    { "source": "/stacksjs-starters", "destination": "/stacks/stacks.js", "permanent": true },
+    { "source": "/ordinals/ordhook/:path*", "destination": "/bitcoin/indexer", "permanent": true }
   ]
 }
