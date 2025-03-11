@@ -1,0 +1,154 @@
+---
+title: 'Wallet Support'
+description: 'Compatibility information for different wallet providers'
+---
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
+
+This page provides detailed information about which methods and events are supported by different wallet providers in the Stacks ecosystem.
+
+## Method Compatibility
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Method</TableHead>
+      <TableHead>Leather</TableHead>
+      <TableHead>Xverse-like</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell><code>getAddresses</code></TableCell>
+      <TableCell>🟡 No support for experimental purposes</TableCell>
+      <TableCell>🟡 Use <code>wallet_connect</code> instead</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>sendTransfer</code></TableCell>
+      <TableCell>🟡 Expects <code>amount</code> as string</TableCell>
+      <TableCell>🟡 Expects <code>amount</code> as number</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>signPsbt</code></TableCell>
+      <TableCell>🟡 Uses signing index array only</TableCell>
+      <TableCell>🟡 Uses <code>signInputs</code> record instead of array</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_getAddresses</code></TableCell>
+      <TableCell>🟢</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_getAccounts</code></TableCell>
+      <TableCell>🔴</TableCell>
+      <TableCell>🟢</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_getNetworks</code></TableCell>
+      <TableCell>🔴</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_transferStx</code></TableCell>
+      <TableCell>🟢</TableCell>
+      <TableCell>🟢</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_transferSip10Ft</code></TableCell>
+      <TableCell>🟢</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_transferSip9Nft</code></TableCell>
+      <TableCell>🟢</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_callContract</code></TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only, no support for <code>postConditions</code></TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_deployContract</code></TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only, no support for <code>postConditions</code></TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_signTransaction</code></TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_signMessage</code></TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_signStructuredMessage</code></TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+      <TableCell>🟡 Hex-encoded Clarity values only</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_updateProfile</code></TableCell>
+      <TableCell>🔴</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+## Event Compatibility
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Event</TableHead>
+      <TableHead>Leather</TableHead>
+      <TableHead>Xverse</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell><code>stx_accountChange</code></TableCell>
+      <TableCell>🔴</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell><code>stx_networkChange</code></TableCell>
+      <TableCell>🔴</TableCell>
+      <TableCell>🔴</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+**Legend**
+
+- 🔴 No support (yet)
+- 🟡 Partial support
+- 🟢 Supported
+
+## Compatibility Layer
+
+The `request` method in `@stacks/connect` adds a layer of auto-compatibility for different wallet providers. This helps unify the interface where wallet providers may implement methods and results differently.
+
+| Method                      | Status | Notes                                                                                                |
+| --------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
+| `getAddresses`              | 🔵     | Maps to `wallet_connect` for Xverse-like wallets                                                     |
+| `sendTransfer`              | 🔵     | Converts `amount` to number for Xverse, string for Leather                                           |
+| `signPsbt`                  | 🟡     | Transforms PSBT format for Leather (base64 to hex) with lossy restructure of `signInputs`            |
+| `stx_getAddresses`          | 🔵     | Maps to `wallet_connect` for Xverse-like wallets                                                     |
+| `stx_callContract`          | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
+| `stx_deployContract`        | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
+| `stx_signTransaction`       | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
+| `stx_signMessage`           | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
+| `stx_signStructuredMessage` | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
+
+- 🟢 No overrides needed for any wallet
+- 🔵 Has compatibility overrides that maintain functionality
+- 🟡 Has breaking overrides that may lose some information
