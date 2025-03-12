@@ -15,6 +15,10 @@ import { InlineCode } from '@/components/inline-code';
 
 Stacks Connect enables you to authenticate your users and connect your app to their wallet. This reference contains more detailed information on how you can authenticate users, sign and broadcast transactions on their behalf, and enable users to sign messages.
 
+<Callout title="Migration Note">
+Please be patient during the migration to version 8.x.x. There has been a long-running effort together with wallets to modernize the Stacks web ecosystem, culminating in [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) and the new `request` method in Stacks Connect 8.x.x. For the legacy version of `@stacks/connect` using JWT tokens, please use version 7.10.1. See the [Migration Guide](/docs/stacks/connect/guides/migration) for more details.
+</Callout>
+
 ### Installation
 
 ```package-install
@@ -72,7 +76,7 @@ const response = await request({ forceWalletSelect: true }, 'getAddresses');
 ### Available methods
 
 - [getAddresses](#getaddresses)
-- [sendTransfer](#sendtransfer) 
+- [sendTransfer](#sendtransfer)
 - [signPsbt](#signpsbt)
 - [stx_getAddresses](#stx_getaddresses)
 - [stx_getAccounts](#stx_getaccounts)
@@ -259,11 +263,41 @@ const response = await request('stx_signStructuredMessage', {
 // }
 ```
 
+### Error Handling
+
+The `request` method returns a Promise, allowing you to handle errors using standard Promise-based error handling patterns. You can use either `try/catch` with `async/await` or the `.catch()` method with Promise chains.
+
+#### Using try/catch with async/await
+
+```typescript
+import { request } from '@stacks/connect';
+
+try {
+  const response = await request('stx_transferStx', {
+    amount: '1000',
+    recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN',
+  });
+  // SUCCESS
+  console.log('Transaction successful:', response.txid);
+} catch (error) {
+  // ERROR
+  console.error('Wallet returned an error:', error);
+}
+```
+
+### Compatibility
+
+The `request` method by default adds a layer of auto-compatibility for different wallet providers. This is meant to unify the interface where wallet providers may not implement methods and results the same way.
+
+<Callout title="Wallet Support">
+For a complete list of wallet compatibility and support status, see the [Wallet Support](/docs/stacks/connect/support) page.
+</Callout>
+
 ### Advanced Usage
 
 #### request
 
-The request method is called with an optional options object as the first parameter:
+The `request` method is called with an optional options object as the first parameter:
 
 ```typescript
 import { request } from '@stacks/connect';
@@ -272,10 +306,14 @@ import { request } from '@stacks/connect';
 const response = await request(
   {
     provider?: StacksProvider;        // Custom provider to use for the request
-    defaultProviders?: WbipProvider[]; // Default wallets to display in modal
+
     forceWalletSelect?: boolean;      // Force user to select a wallet (default: false)
     persistWalletSelect?: boolean;     // Persist selected wallet (default: true)
     enableOverrides?: boolean;         // Enable provider compatibility (default: true)
+    enableLocalStorage?: boolean;      // Store address in local storage (default: true)
+
+    defaultProviders?: WbipProvider[]; // Default wallets to display in modal
+    approvedProviderIds?: string[];    // List of approved provider IDs to show in modal
   },
   'method',
   params
@@ -285,8 +323,22 @@ const response = await request(
 const response = await request('method', params);
 ```
 
-<Callout type="info">
+<Callout title="Provider Compatibility">
 The `enableOverrides` option enables automatic compatibility fixes for different wallet providers. For example, it handles converting numeric types between string and number formats as needed by different wallets, and remaps certain method names to match wallet-specific implementations. This ensures consistent behavior across different wallet providers without requiring manual adjustments.
+</Callout>
+
+<Callout title="Approved Providers">
+The `approvedProviderIds` option allows you to filter which wallet providers are shown in the connect modal. This is useful when you want to limit the available wallet options to specific providers. For example, you might only want to support Leather wallet:
+
+```typescript
+connect({ approvedProviderIds: ['LeatherProvider'] });
+```
+
+Or multiple specific wallets:
+
+```typescript
+connect({ approvedProviderIds: ['LeatherProvider', 'xverse'] });
+```
 </Callout>
 
 #### requestRaw
@@ -299,6 +351,6 @@ import { requestRaw } from '@stacks/connect';
 const response = await requestRaw(provider, 'method', params);
 ```
 
-<Callout type="info">
-`requestRaw` bypasses the UI wallet selector and other features that come with `request`, such as automatic compatibility across different providers. Use this when you need more manual control over the wallet interaction process.
+<Callout title="Raw Request">
+`requestRaw` bypasses the UI wallet selector, automatic provider compatibility fixes, and other features that come with `request`. Use this when you need more manual control over the wallet interaction process.
 </Callout>
