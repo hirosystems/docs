@@ -40,14 +40,14 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="hiro-hacks"
-            cta="See February's challenge"
-            url="/stacks/hacks/recipes"
-            startDate="2025-02-19"
-            endDate="2025-02-25T23:59:59.999Z"
-            mobileText="Hiro Hacks is live!"
+            id="api-tiers"
+            cta="Learn more"
+            url="https://hiro.so/pricing"
+            startDate="2025-03-19"
+            endDate="2025-04-04"
+            mobileText="Increase your API rate limits"
           >
-            Join Hiro Hacks and compete in monthly coding challenges
+            Take advantage of Hiro's expanded API rate limits
           </Banner>
           {children}
           <Footer />
