@@ -41,13 +41,13 @@ export default function RootLayout({
         <Provider>
           <Banner
             id="api-tiers"
-            cta="Learn more"
+            cta="Meet Hiro’s new account tiers"
             url="https://hiro.so/pricing"
             startDate="2025-03-19"
             endDate="2025-04-04"
             mobileText="Increase your API rate limits"
           >
-            Take advantage of Hiro's expanded API rate limits
+            Increased API rate limits, dedicated support channels.
           </Banner>
           {children}
           <Footer />
