@@ -40,14 +40,14 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="hiro-hacks"
-            cta="See February's challenge"
-            url="/stacks/hacks/recipes"
-            startDate="2025-02-19"
-            endDate="2025-02-25T23:59:59.999Z"
-            mobileText="Hiro Hacks is live!"
+            id="hacks"
+            cta="Start hacking"
+            url="/stacks/hacks/build-with-sbtc"
+            startDate="2025-03-26"
+            endDate="2025-04-01"
+            mobileText="Compete for a scholarship to Bitcoin 2025 in Las Vegas."
           >
-            Join Hiro Hacks and compete in monthly coding challenges
+            Compete for a scholarship to Bitcoin 2025
           </Banner>
           {children}
           <Footer />
