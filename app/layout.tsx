@@ -47,7 +47,7 @@ export default function RootLayout({
             endDate="2025-04-01"
             mobileText="Compete for a scholarship to Bitcoin 2025 in Las Vegas."
           >
-            Compete for a scholarship to Bitcoin 2025
+            Compete for a dev scholarship to Bitcoin 2025.
           </Banner>
           {children}
           <Footer />
