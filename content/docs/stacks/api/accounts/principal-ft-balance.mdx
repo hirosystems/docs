@@ -1,0 +1,147 @@
+---
+title: Get principal FT balance
+description: Retrieves a specific fungible-token balance for a given principal.
+toc: false
+---
+
+import { 
+  API,
+  APIExample,
+  APIInfo,
+  APIPlayground,
+  ExampleResponse,
+  Property,
+  Request,
+  Requests,
+  Response,
+  Responses,
+  ResponseTypes,
+  Root,
+  TypeScriptResponse
+} from 'fumadocs-openapi/ui';
+
+<Root baseUrl="https://api.hiro.so">
+
+<API>
+
+<APIInfo method={"GET"} route={"/extended/v2/addresses/{principal}/balances/ft/{token}"}>
+
+## Get principal FT balance
+
+Retrieves a specific fungible-token balance for a given principal.
+
+### Path Parameters
+
+<Property name={"principal"} type={"Any properties in STX Address, Smart Contract ID"} required={true} deprecated={false}>
+
+</Property>
+
+<Property name={"token"} type={"string"} required={true} deprecated={false}>
+
+fungible token identifier
+
+</Property>
+
+| Status code | Description |
+| ----------- | ----------- |
+| `200` | Default Response |
+| `4XX` | Default Response |
+
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/addresses/{principal}/balances/ft/{token}"} path={[{"name":"principal","type":"switcher","items":{"STX Address":{"type":"ref","isRequired":true,"schema":"0"},"Smart Contract ID":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true},{"name":"token","type":"string","defaultValue":"","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"STX Address"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Smart Contract ID"}}}>
+
+</APIPlayground>
+
+</APIInfo>
+
+<APIExample>
+
+<Requests items={["cURL","JavaScript"]}>
+
+<Request value={"cURL"}>
+
+```bash
+curl -X GET "https://api.hiro.so//extended/v2/addresses/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances/ft/string"
+```
+
+</Request>
+
+<Request value={"JavaScript"}>
+
+```js
+fetch("https://api.hiro.so//extended/v2/addresses/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances/ft/string", {
+  method: "GET"
+});
+```
+
+</Request>
+
+</Requests>
+
+<Responses items={["200","4XX"]}>
+
+<Response value={"200"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "balance": "string"
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+export interface Response {
+  balance: string;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+<Response value={"4XX"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "error": "string",
+  "message": "string"
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+export interface ErrorResponse {
+  error: string;
+  message?: string;
+  [k: string]: unknown;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+</Responses>
+
+</APIExample>
+
+</API>
+
+</Root>

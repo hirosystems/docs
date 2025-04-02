@@ -1,6 +1,6 @@
 ---
-title: Get account STX balance
-description: Retrieves the STX token balance for a specified address or contract identifier.
+title: Get principal STX balance
+description: Retrieves STX account balance information for a given Address or Contract Identifier.
 toc: false
 ---
 
@@ -24,27 +24,19 @@ import {
 
 <API>
 
-<APIInfo method={"GET"} route={"/extended/v1/address/{principal}/stx"}>
+<APIInfo method={"GET"} route={"/extended/v2/addresses/{principal}/balances/stx"}>
 
-## Get account STX balance
+## Get principal STX balance
 
-**NOTE:** This endpoint is deprecated in favor of [Get address STX balance](/api/get-principal-stx-balance).
-
-Retrieves STX token balance for a given Address or Contract Identifier.
+Retrieves STX account balance information for a given Address or Contract Identifier.
 
 ### Query Parameters
 
-<Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
+<Property name={"include_mempool"} type={"boolean"} required={false} deprecated={false}>
 
-Include data from unanchored (i.e. unconfirmed) microblocks
+Include pending mempool transactions in the balance calculation
 
 <span>Default: `false`</span>
-
-</Property>
-
-<Property name={"until_block"} type={"string"} required={false} deprecated={false}>
-
-Block hash or block height. Return data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
 
 </Property>
 
@@ -56,10 +48,10 @@ Block hash or block height. Return data representing the state up until that poi
 
 | Status code | Description |
 | ----------- | ----------- |
-| `200` | GET request that returns address balances |
+| `200` | Default Response |
 | `4XX` | Default Response |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/stx"} path={[{"name":"principal","type":"switcher","items":{"STX Address":{"type":"ref","isRequired":true,"schema":"0"},"Smart Contract ID":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[{"name":"unanchored","type":"boolean","defaultValue":"","isRequired":false},{"name":"until_block","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"STX Address"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Smart Contract ID"}}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v2/addresses/{principal}/balances/stx"} path={[{"name":"principal","type":"switcher","items":{"STX Address":{"type":"ref","isRequired":true,"schema":"0"},"Smart Contract ID":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[{"name":"include_mempool","type":"boolean","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"STX Address"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Smart Contract ID"}}}>
 
 </APIPlayground>
 
@@ -72,7 +64,7 @@ Block hash or block height. Return data representing the state up until that poi
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/stx?unanchored=false&until_block=string"
+curl -X GET "https://api.hiro.so//extended/v2/addresses/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances/stx?include_mempool=false"
 ```
 
 </Request>
@@ -80,7 +72,7 @@ curl -X GET "https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/stx?unanchored=false&until_block=string", {
+fetch("https://api.hiro.so//extended/v2/addresses/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances/stx?include_mempool=false", {
   method: "GET"
 });
 ```
@@ -92,8 +84,6 @@ fetch("https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K
 <Responses items={["200","4XX"]}>
 
 <Response value={"200"}>
-
-GET request that returns address balances
 
 <ResponseTypes>
 
@@ -113,17 +103,7 @@ GET request that returns address balances
   "locked": "string",
   "lock_height": 0,
   "burnchain_lock_height": 0,
-  "burnchain_unlock_height": 0,
-  "token_offering_locked": {
-    "total_locked": "string",
-    "total_unlocked": "string",
-    "unlock_schedule": [
-      {
-        "amount": "string",
-        "block_height": 0
-      }
-    ]
-  }
+  "burnchain_unlock_height": 0
 }
 ```
 
@@ -132,13 +112,6 @@ GET request that returns address balances
 <TypeScriptResponse>
 
 ```ts
-/**
- * GET request that returns address balances
- */
-export type AddressStxBalance = StxBalance & {
-  token_offering_locked?: AddressTokenOfferingLocked;
-};
-
 export interface StxBalance {
   balance: string;
   /**
@@ -177,30 +150,6 @@ export interface StxBalance {
    * The burnchain block height of when the tokens unlock. Zero if no tokens are locked.
    */
   burnchain_unlock_height: number;
-}
-/**
- * Token Offering Locked
- */
-export interface AddressTokenOfferingLocked {
-  /**
-   * Micro-STX amount still locked at current block height.
-   */
-  total_locked: string;
-  /**
-   * Micro-STX amount unlocked at current block height.
-   */
-  total_unlocked: string;
-  unlock_schedule: AddressUnlockSchedule[];
-}
-/**
- * Unlock schedule amount and block height
- */
-export interface AddressUnlockSchedule {
-  /**
-   * Micro-STX amount locked at this block height.
-   */
-  amount: string;
-  block_height: number;
 }
 ```
 

@@ -29,38 +29,34 @@ import {
 ## Get account assets
 
 Retrieves a list of all assets events associated with an account or a Contract Identifier. This includes Transfers, Mints.
-### Path Parameters
 
-<Property name={"principal"} type={"string"} required={true} deprecated={false}>
-
-Stacks address or a Contract identifier
-
-<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
-
-</Property>
 ### Query Parameters
 
-<Property name={"limit"} type={"integer"} required={false} deprecated={false}>
+<Property name={"limit"} type={"Limit"} required={false} deprecated={false}>
 
-max number of account assets to fetch
+Results per page
 
-<span>Example: `20`</span>
+<span>Default: `20`</span>
+
+<span>Minimum: `0`</span>
+
+<span>Maximum: `100`</span>
 
 </Property>
 
-<Property name={"offset"} type={"integer"} required={false} deprecated={false}>
+<Property name={"offset"} type={"Offset"} required={false} deprecated={false}>
 
-index of first account assets to fetch
+Result offset
 
-<span>Example: `42000`</span>
+<span>Default: `0`</span>
+
+<span>Minimum: `0`</span>
 
 </Property>
 
 <Property name={"unanchored"} type={"boolean"} required={false} deprecated={false}>
 
-Include transaction data from unanchored (i.e. unconfirmed) microblocks
-
-<span>Example: `true`</span>
+Include data from unanchored (i.e. unconfirmed) microblocks
 
 <span>Default: `false`</span>
 
@@ -68,17 +64,22 @@ Include transaction data from unanchored (i.e. unconfirmed) microblocks
 
 <Property name={"until_block"} type={"string"} required={false} deprecated={false}>
 
-returned data representing the state at that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
+Block hash or block height. Return data representing the state up until that point in time, rather than the current block. Note - Use either of the query parameters but not both at a time.
 
-<span>Example: `60000`</span>
+</Property>
+
+### Path Parameters
+
+<Property name={"principal"} type={"Any properties in STX Address, Smart Contract ID"} required={true} deprecated={false}>
 
 </Property>
 
 | Status code | Description |
-| :------ | :------ |
-| `200` | Success |
+| ----------- | ----------- |
+| `200` | Default Response |
+| `4XX` | Default Response |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/assets"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":20,"isRequired":false},{"name":"offset","type":"number","defaultValue":42000,"isRequired":false},{"name":"unanchored","type":"boolean","defaultValue":true,"isRequired":false},{"name":"until_block","type":"string","defaultValue":60000,"isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/assets"} path={[{"name":"principal","type":"switcher","items":{"STX Address":{"type":"ref","isRequired":true,"schema":"0"},"Smart Contract ID":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[{"name":"limit","type":"number","defaultValue":"","isRequired":false,"description":"Limit"},{"name":"offset","type":"number","defaultValue":"","isRequired":false,"description":"Offset"},{"name":"unanchored","type":"boolean","defaultValue":"","isRequired":false},{"name":"until_block","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"STX Address"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Smart Contract ID"}}}>
 
 </APIPlayground>
 
@@ -90,8 +91,8 @@ returned data representing the state at that point in time, rather than the curr
 
 <Request value={"cURL"}>
 
-```terminal
-$ curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets?limit=20&offset=42000&unanchored=true&until_block=60000"
+```bash
+curl -X GET "https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/assets?limit=20&offset=0&unanchored=false&until_block=string"
 ```
 
 </Request>
@@ -99,7 +100,7 @@ $ curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11B
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/assets?limit=20&offset=42000&unanchored=true&until_block=60000", {
+fetch("https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/assets?limit=20&offset=0&unanchored=false&until_block=string", {
   method: "GET"
 });
 ```
@@ -108,11 +109,9 @@ fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0
 
 </Requests>
 
-<Responses items={["200"]}>
+<Responses items={["200","4XX"]}>
 
 <Response value={"200"}>
-
-GET request that returns address assets
 
 <ResponseTypes>
 
@@ -120,9 +119,9 @@ GET request that returns address assets
 
 ```json
 {
-  "limit": 30,
+  "limit": 20,
   "offset": 0,
-  "total": 0,
+  "total": 1,
   "results": [
     {
       "event_index": 0,
@@ -146,16 +145,10 @@ GET request that returns address assets
 <TypeScriptResponse>
 
 ```ts
-export type TransactionEvent =
-  | TransactionEventSmartContractLog
-  | TransactionEventStxLock
-  | TransactionEventStxAsset
-  | TransactionEventFungibleAsset
-  | TransactionEventNonFungibleAsset;
 /**
  * Only present in `smart_contract` and `contract_call` tx types.
  */
-export type TransactionEventSmartContractLog = AbstractTransactionEvent & {
+export type SmartContractLogTransactionEvent = AbstractTransactionEvent & {
   event_type: "smart_contract_log";
   tx_id: string;
   contract_log: {
@@ -170,7 +163,7 @@ export type TransactionEventSmartContractLog = AbstractTransactionEvent & {
 /**
  * Only present in `smart_contract` and `contract_call` tx types.
  */
-export type TransactionEventStxLock = AbstractTransactionEvent & {
+export type StxLockTransactionEvent = AbstractTransactionEvent1 & {
   event_type: "stx_lock";
   tx_id: string;
   stx_lock_event: {
@@ -182,28 +175,33 @@ export type TransactionEventStxLock = AbstractTransactionEvent & {
 /**
  * Only present in `smart_contract` and `contract_call` tx types.
  */
-export type TransactionEventStxAsset = AbstractTransactionEvent & {
+export type StxAssetTransactionEvent = AbstractTransactionEvent2 & {
   event_type: "stx_asset";
   tx_id: string;
-  asset: TransactionEventAsset;
+  asset: {
+    asset_event_type: "transfer" | "mint" | "burn";
+    sender: string;
+    recipient: string;
+    amount: string;
+    memo?: string;
+  };
 };
-export type TransactionEventAssetType = "transfer" | "mint" | "burn";
-export type TransactionEventFungibleAsset = AbstractTransactionEvent & {
+export type FungibleTokenAssetTransactionEvent = AbstractTransactionEvent3 & {
   event_type: "fungible_token_asset";
   tx_id: string;
   asset: {
-    asset_event_type: string;
+    asset_event_type: "transfer" | "mint" | "burn";
     asset_id: string;
     sender: string;
     recipient: string;
     amount: string;
   };
 };
-export type TransactionEventNonFungibleAsset = AbstractTransactionEvent & {
+export type NonFungibleTokenAssetTransactionEvent = AbstractTransactionEvent4 & {
   event_type: "non_fungible_token_asset";
   tx_id: string;
   asset: {
-    asset_event_type: string;
+    asset_event_type: "transfer" | "mint" | "burn";
     asset_id: string;
     sender: string;
     recipient: string;
@@ -214,26 +212,63 @@ export type TransactionEventNonFungibleAsset = AbstractTransactionEvent & {
   };
 };
 
-/**
- * GET request that returns address assets
- */
 export interface AddressAssetsListResponse {
   limit: number;
   offset: number;
   total: number;
-  results: TransactionEvent[];
+  results: (
+    | SmartContractLogTransactionEvent
+    | StxLockTransactionEvent
+    | StxAssetTransactionEvent
+    | FungibleTokenAssetTransactionEvent
+    | NonFungibleTokenAssetTransactionEvent
+  )[];
 }
 export interface AbstractTransactionEvent {
   event_index: number;
 }
-export interface TransactionEventAsset {
-  asset_event_type?: TransactionEventAssetType;
-  asset_id?: string;
-  sender?: string;
-  recipient?: string;
-  amount?: string;
-  value?: string;
-  memo?: string;
+export interface AbstractTransactionEvent1 {
+  event_index: number;
+}
+export interface AbstractTransactionEvent2 {
+  event_index: number;
+}
+export interface AbstractTransactionEvent3 {
+  event_index: number;
+}
+export interface AbstractTransactionEvent4 {
+  event_index: number;
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+<Response value={"4XX"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "error": "string",
+  "message": "string"
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+export interface ErrorResponse {
+  error: string;
+  message?: string;
+  [k: string]: unknown;
 }
 ```
 
