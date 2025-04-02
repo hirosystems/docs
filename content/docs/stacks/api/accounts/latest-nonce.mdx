@@ -29,22 +29,14 @@ import {
 ## Get the latest nonce used by an account
 
 Retrieves the latest nonce values used by an account by inspecting the mempool, microblock transactions, and anchored transactions.
-### Path Parameters
 
-<Property name={"principal"} type={"string"} required={true} deprecated={false}>
-
-Stacks address
-
-<span>Example: `"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0"`</span>
-
-</Property>
 ### Query Parameters
 
-<Property name={"block_height"} type={"number"} required={false} deprecated={false}>
+<Property name={"block_height"} type={"integer"} required={false} deprecated={false}>
 
 Optionally get the nonce at a given block height.
 
-<span>Example: `66119`</span>
+<span>Minimum: `1`</span>
 
 </Property>
 
@@ -52,15 +44,20 @@ Optionally get the nonce at a given block height.
 
 Optionally get the nonce at a given block hash. Note - Use either of the query parameters but not both at a time.
 
-<span>Example: `"0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"`</span>
+</Property>
+
+### Path Parameters
+
+<Property name={"principal"} type={"Any properties in STX Address, Smart Contract ID"} required={true} deprecated={false}>
 
 </Property>
 
 | Status code | Description |
-| :------ | :------ |
-| `200` | Success |
+| ----------- | ----------- |
+| `200` | The latest nonce values used by an account by inspecting the mempool, microblock transactions, and anchored transactions |
+| `4XX` | Default Response |
 
-<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/nonces"} path={[{"name":"principal","type":"string","defaultValue":"SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0","isRequired":true}]} query={[{"name":"block_height","type":"number","defaultValue":66119,"isRequired":false},{"name":"block_hash","type":"string","defaultValue":"0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9","isRequired":false}]} header={[]} body={undefined} schemas={{}}>
+<APIPlayground authorization={undefined} method={"GET"} route={"/extended/v1/address/{principal}/nonces"} path={[{"name":"principal","type":"switcher","items":{"STX Address":{"type":"ref","isRequired":true,"schema":"0"},"Smart Contract ID":{"type":"ref","isRequired":true,"schema":"1"}},"isRequired":true}]} query={[{"name":"block_height","type":"number","defaultValue":"","isRequired":false},{"name":"block_hash","type":"string","defaultValue":"","isRequired":false}]} header={[]} body={undefined} schemas={{"0":{"type":"string","defaultValue":"","isRequired":false,"description":"STX Address"},"1":{"type":"string","defaultValue":"","isRequired":false,"description":"Smart Contract ID"}}}>
 
 </APIPlayground>
 
@@ -72,8 +69,8 @@ Optionally get the nonce at a given block hash. Note - Use either of the query p
 
 <Request value={"cURL"}>
 
-```terminal
-$ curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces?block_height=66119&block_hash=0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9"
+```bash
+curl -X GET "https://api.hiro.so/extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/nonces?block_height=1&block_hash=string"
 ```
 
 </Request>
@@ -81,7 +78,7 @@ $ curl -X GET "https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11B
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0ZW97B5P0/nonces?block_height=66119&block_hash=0x72d53f3cba39e149dcd42708e535bdae03d73e60d2fe853aaf61c0b392f521e9", {
+fetch("https://api.hiro.so/extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/nonces?block_height=1&block_hash=string", {
   method: "GET"
 });
 ```
@@ -90,7 +87,7 @@ fetch("https://api.hiro.so/extended/v1/address/SP31DA6FTSJX2WGTZ69SFY11BH51NZMB0
 
 </Requests>
 
-<Responses items={["200"]}>
+<Responses items={["200","4XX"]}>
 
 <Response value={"200"}>
 
@@ -123,14 +120,8 @@ The latest nonce values used by an account by inspecting the mempool, microblock
  * The latest nonce values used by an account by inspecting the mempool, microblock transactions, and anchored transactions
  */
 export interface AddressNonces {
-  /**
-   * The latest nonce found within mempool transactions sent by this address. Will be null if there are no current mempool transactions for this address.
-   */
-  last_mempool_tx_nonce: number;
-  /**
-   * The latest nonce found within transactions sent by this address, including unanchored microblock transactions. Will be null if there are no current transactions for this address.
-   */
-  last_executed_tx_nonce: number;
+  last_mempool_tx_nonce: number | null;
+  last_executed_tx_nonce: number | null;
   /**
    * The likely nonce required for creating the next transaction, based on the last nonces seen by the API. This can be incorrect if the API's mempool or transactions aren't fully synchronized, even by a small amount, or if a previous transaction is still propagating through the Stacks blockchain network when this endpoint is called.
    */
@@ -142,7 +133,38 @@ export interface AddressNonces {
   /**
    * Nonces currently in mempool for this address.
    */
-  detected_mempool_nonces?: number[];
+  detected_mempool_nonces: number[];
+}
+```
+
+</TypeScriptResponse>
+
+</ResponseTypes>
+
+</Response>
+
+<Response value={"4XX"}>
+
+<ResponseTypes>
+
+<ExampleResponse>
+
+```json
+{
+  "error": "string",
+  "message": "string"
+}
+```
+
+</ExampleResponse>
+
+<TypeScriptResponse>
+
+```ts
+export interface ErrorResponse {
+  error: string;
+  message?: string;
+  [k: string]: unknown;
 }
 ```
 
