@@ -28,7 +28,7 @@ import {
 
 ## Get account balances
 
-**NOTE:** This endpoint is deprecated in favor of [Get address FT balances](/api/get-principal-ft-balances).
+**NOTE:** This endpoint is deprecated in favor of [Get address FT balances](/stacks/api/accounts/principal-ft-balances).
         
         Retrieves total account balance information for a given Address or Contract Identifier. This includes the balances of STX Tokens, Fungible Tokens and Non-Fungible Tokens for the account.
 
@@ -72,7 +72,7 @@ Block hash or block height. Return data representing the state up until that poi
 <Request value={"cURL"}>
 
 ```bash
-curl -X GET "https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances?unanchored=false&until_block=string"
+curl -X GET "https://api.hiro.so/extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances?unanchored=false&until_block=string"
 ```
 
 </Request>
@@ -80,7 +80,7 @@ curl -X GET "https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5
 <Request value={"JavaScript"}>
 
 ```js
-fetch("https://api.hiro.so//extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances?unanchored=false&until_block=string", {
+fetch("https://api.hiro.so/extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/balances?unanchored=false&until_block=string", {
   method: "GET"
 });
 ```
