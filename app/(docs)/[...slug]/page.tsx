@@ -81,5 +81,55 @@ export async function generateMetadata(props: {
   const path = `/${params.slug?.join("/") || ""}`;
   const routeMetadata = getRouteMetadata(path);
 
-  return createMetadata(routeMetadata);
+  const pathParts = path.split("/").filter(Boolean);
+
+  const genericTitles = [
+    "Overview",
+    "Installation",
+    "Quickstart",
+    "Concepts",
+    "Getting Started",
+  ];
+
+  let title = page.data.title;
+
+  if (page.file.name === "index" || genericTitles.includes(title)) {
+    let sectionName =
+      page.file.name === "index"
+        ? pathParts[pathParts.length - 1]
+        : pathParts[pathParts.length - 2] || pathParts[pathParts.length - 1];
+
+    if (sectionName === "api" && pathParts.length >= 2) {
+      const parentSection = pathParts[pathParts.length - 2];
+      if (parentSection === "runes" || parentSection === "ordinals") {
+        const capitalizedParent =
+          parentSection.charAt(0).toUpperCase() + parentSection.slice(1);
+        sectionName = `${capitalizedParent} API`;
+      }
+    }
+
+    const sectionTitle = sectionName
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ")
+      .replace("Api", "API")
+      .replace("Js", "JS")
+      .replace("Sdk", "SDK");
+
+    if (page.file.name === "index") {
+      title = `${sectionTitle} Overview`;
+    } else {
+      title = `${sectionTitle} ${title}`;
+    }
+  }
+
+  const pageMetadata: Partial<Metadata> = {
+    title,
+    description: page.data.description,
+  };
+
+  return createMetadata({
+    ...routeMetadata,
+    ...pageMetadata,
+  });
 }
