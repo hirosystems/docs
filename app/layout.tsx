@@ -43,8 +43,8 @@ export default function RootLayout({
             id="api-tiers"
             cta="Meet Hiro’s new account tiers"
             url="https://platform.hiro.so/pricing"
-            startDate="2025-03-19"
-            endDate="2025-04-04"
+            startDate="2025-04-09"
+            endDate="2025-04-16"
             mobileText="Increase your API rate limits"
           >
             Increased API rate limits, dedicated support channels.

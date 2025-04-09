@@ -1,16 +1,16 @@
 ## API rate limits
 
-You can access all of Hiro's API services without an API key, but you are subject to rate limits of 50 RPM, per client IP. To build with higher rate limits, you can generate a free API key in the Hiro Platform that as a default is set to the free "starter" plan, and you can upgrade your account to a [higher tier](https://www.hiro.so/pricing) as needed:
+You can access all of Hiro's API services without an API key, but you are subject to rate limits of 25 RPM, per client IP. To build with higher rate limits, you can generate a free API key in the Hiro Platform that as a default is set to the free "starter" plan, and you can upgrade your account to a [higher tier](https://www.hiro.so/pricing) as needed:
 
 | Tiers          | API RPM | Stacks L2 requests / month | Bitcoin L1 requests / month |
 |:---------------|:--------|:---------------------------|:----------------------------|
-| No API key     | 50      | n/a                        | n/a                         |
+| No API key     | 25      | n/a                        | n/a                         |
 | Free / Starter | 900     | 150K                       | 50K                         |
-| $99 / Build    | 9K      | 15M                        | 500K                        |
-| $599 / Scale   | 18K     | 75M                        | 5M                          |
+| $99 / Build    | 3K      | 15M                        | 500K                        |
+| $599 / Scale   | 7K      | 75M                        | 5M                          |
 | Enterprise     | Custom  | Custom                     | Custom                      |
 
-With a single API key, you gain access to Hiro’s suite of API services that span Bitcoin and Stacks:
+With a single API key, you gain access to Hiro's suite of API services that span Bitcoin and Stacks:
 
 **Bitcoin L1 API services**
 
@@ -23,6 +23,15 @@ With a single API key, you gain access to Hiro’s suite of API services that sp
 - [Token Metadata API](/stacks/token-metadata-api)
 
 These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
+
+Additionally, six endpoints fall outside of the standard API rate limits and will have a fixed 500 RPM across all tiers. Those endpoints are:
+
+- `/extended/v1/tx/mempool/dropped`
+- `/extended/v2/blocks/${blockHash}/transactions`
+- `/extended/v2/blocks/average-times`
+- `/extended/v1/contract/${contractId}/events`
+- `/extended/v1/tokens/nft/holdings?principal=${address}`
+- `/extended/v1/address/${address}/stx_inbound`
 
 <Callout title='Need an API key?'>
 You can create one for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
