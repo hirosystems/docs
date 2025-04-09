@@ -8,7 +8,7 @@ The Clarity formatter is a tool designed to automatically format your Clarity sm
 
 As Clarity is a relatively young language, establishing formatting standards helps reduce friction for both new and experienced developers, but these standards are still evolving! If you have suggestions for how we can improve the formatting rules, ping us on Discord or [add your thoughts here](https://github.com/hirosystems/clarinet/discussions/1689)
 
-## Getting Started
+## Introduction
 
 The Clarity formatter is integrated into two primary development tools:
 
@@ -23,6 +23,55 @@ The formatter applies an opinionated standard with the following default setting
 -   **Indentation**: Uses 2 spaces for indentation.
 
 These defaults are configurable to match your preferences, although the specific configuration method depends on whether you are using VS Code or Clarinet.
+
+## Usage
+
+### In VS Code
+
+The [Clarity VS Code extension](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp) provides several ways to format your code:
+
+-   **Format Document**: Formats the entire active file (Right-click -> Format Document or Shift+Option+F / Shift+Alt+F).
+-   **Format Selection**: Formats only the highlighted code (Right-click -> Format Selection).
+-   **Format On Save**: Automatically formats the file when you save it. This can be enabled in VS Code settings (`editor.formatOnSave`) and is off by default.
+
+### With Clarinet CLI
+
+The Clarinet CLI allows you to format contracts from the command line using `clarinet format` (or the alias `clarinet fmt`). You can format individual files or all contracts defined in your project's `Clarinet.toml` manifest.
+
+**Format all checkable contracts and print the result without saving:**
+
+```terminal
+$ clarinet format --dry-run
+(define-map counters
+  principal
+  uint
+)
+(define-public (count-up)
+  (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
+)
+
+(define-read-only (get-count
+    (who principal)
+  )
+  (default-to u0 (map-get? counters who))
+)
+```
+**Format all checkable contracts (`--in-place`):**
+
+```terminal
+$ clarinet format --in-place
+```
+
+**Format a specific file using tabs and print the result without saving (`--dry-run`):**
+
+```terminal
+$ clarinet format -f contracts/my-contract.clar -t --dry-run
+```
+
+**Format a specific file, overwriting it (`--in-place`) with 4-space indents and 120 max line length:**
+```terminal
+$ clarinet format -f contracts/my-contract.clar -i 4 -l 120 --in-place
+```
 
 ## Formatting Rules
 
@@ -209,55 +258,6 @@ You can prevent the formatter from modifying specific sections of your code by a
 (define-constant something (list
    1     2  3 ;; comment
    4 5 ))
-```
-
-## Usage
-
-### In VS Code
-
-The [Clarity VS Code extension](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp) provides several ways to format your code:
-
--   **Format Document**: Formats the entire active file (Right-click -> Format Document or Shift+Option+F / Shift+Alt+F).
--   **Format Selection**: Formats only the highlighted code (Right-click -> Format Selection).
--   **Format On Save**: Automatically formats the file when you save it. This can be enabled in VS Code settings (`editor.formatOnSave`) and is off by default.
-
-### With Clarinet CLI
-
-The Clarinet CLI allows you to format contracts from the command line using `clarinet format` (or the alias `clarinet fmt`). You can format individual files or all contracts defined in your project's `Clarinet.toml` manifest.
-
-**Format all checkable contracts and print the result without saving:**
-
-```terminal
-$ clarinet format --dry-run
-(define-map counters
-  principal
-  uint
-)
-(define-public (count-up)
-  (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
-)
-
-(define-read-only (get-count
-    (who principal)
-  )
-  (default-to u0 (map-get? counters who))
-)
-```
-**Format all checkable contracts (`--in-place`):**
-
-```terminal
-$ clarinet format --in-place
-```
-
-**Format a specific file using tabs and print the result without saving (`--dry-run`):**
-
-```terminal
-$ clarinet format -f contracts/my-contract.clar -t --dry-run
-```
-
-**Format a specific file, overwriting it (`--in-place`) with 4-space indents and 120 max line length:**
-```terminal
-$ clarinet format -f contracts/my-contract.clar -i 4 -l 120 --in-place
 ```
 
 Refer to the [Clarity formatter readme](https://github.com/hirosystems/clarity-formatter/blob/main/README.md) for the full list of commands and options.
