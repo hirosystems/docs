@@ -40,14 +40,14 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Provider>
           <Banner
-            id="hacks"
-            cta="Start hacking"
-            url="/stacks/hacks/build-with-sbtc"
-            startDate="2025-03-26"
-            endDate="2025-04-01"
-            mobileText="Compete for a scholarship to Bitcoin 2025 in Las Vegas."
+            id="api-tiers"
+            cta="Meet Hiro’s new account tiers"
+            url="https://platform.hiro.so/pricing"
+            startDate="2025-04-09"
+            endDate="2025-04-16"
+            mobileText="Increase your API rate limits"
           >
-            Compete for a dev scholarship to Bitcoin 2025.
+            Increased API rate limits, dedicated support channels.
           </Banner>
           {children}
           <Footer />
