@@ -1,3 +1,4 @@
+import React, { JSX } from "react";
 import { Bug, Newspaper, QuestionIcon, Pulse } from "@/components/ui/icon";
 
 const items = [

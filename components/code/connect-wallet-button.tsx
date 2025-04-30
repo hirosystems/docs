@@ -10,9 +10,8 @@ export const ConnectWalletButton: React.FC = () => {
 
   async function authenticate() {
     try {
-      const response = await connect();
+      await connect();
       setIsSignedIn(true);
-      console.log(response);
     } catch (error) {
       console.error("Authentication failed:", error);
       setIsSignedIn(false);
