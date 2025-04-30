@@ -31,13 +31,11 @@ async function getGitHubFileList() {
 async function fetchUrl(url: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const handleResponse = (res: any) => {
-      // Handle redirects (status codes 301, 302, 307, 308)
       if (
         res.statusCode >= 300 &&
         res.statusCode < 400 &&
         res.headers.location
       ) {
-        console.log(`Following redirect to: ${res.headers.location}`);
         https
           .get(
             res.headers.location,
@@ -81,31 +79,24 @@ async function fetchUrl(url: string): Promise<string> {
 
 async function main() {
   try {
-    console.log("Creating cache directory...");
     await fs.mkdir(DEST_FOLDER, { recursive: true });
 
-    console.log(`Fetching file list from ${REPO_OWNER}/${REPO_NAME}...`);
     const fileList = await getGitHubFileList();
 
     if (!Array.isArray(fileList)) {
       throw new Error("GitHub API did not return an array of files");
     }
 
-    console.log(`Found ${fileList.length} total files`);
     const mdxFiles = fileList.filter((f) => f.name.endsWith(".mdx"));
-    console.log(`Found ${mdxFiles.length} MDX files`);
 
     for (const file of mdxFiles) {
-      console.log(`Fetching ${file.name}...`);
       const fileContent = await fetchUrl(file.download_url);
       const filename = path.join(DEST_FOLDER, file.name);
       await fs.writeFile(filename, fileContent, "utf8");
-      console.log(`Successfully saved: ${file.name}`);
     }
 
     console.log("All recipe code blocks fetched successfully.");
   } catch (error) {
-    console.error("Error fetching code blocks:");
     console.error(error);
     process.exit(1);
   }
