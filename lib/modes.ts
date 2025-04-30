@@ -1,5 +1,3 @@
-/* eslint-disable import/no-relative-packages -- required */
-import { LayoutIcon, LibraryIcon, type LucideIcon } from "lucide-react";
 import { StacksIcon, BitcoinIcon } from "@/components/ui/icon";
 
 export interface Mode {

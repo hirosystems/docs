@@ -1,11 +1,11 @@
 import fs from "fs/promises";
 import matter from "gray-matter";
 import path from "path";
-import { Recipe } from "@/types/recipes";
+import { Recipe } from "@/types";
 
 function extractCodeAndContent(content: string) {
   // Match code blocks with their language
-  const codeBlockRegex = /```(\w+)\n([\s\S]*?)```/;
+  const codeBlockRegex = /```(\w+)\r?\n([\s\S]*?)```/;
   const match = content.match(codeBlockRegex);
 
   if (!match) {
