@@ -1,29 +1,36 @@
 ---
 title: Installation
 description: Chainhook is a CLI tool that allows you to create event streams for your Stacks and Bitcoin nodes.
-toc: false
+full: true
 ---
 
-<Tabs id="os" items={['macOS', 'Linux', 'Windows', 'Using Cargo']} className='border-secondary'>
-  <Tab value="macOS">
+<Tabs defaultValue="macos">
+  <TabsList>
+    <TabsTrigger value="macos">macOS</TabsTrigger>
+    <TabsTrigger value="linux">Linux</TabsTrigger>
+    <TabsTrigger value="windows">Windows</TabsTrigger>
+    <TabsTrigger value="cargo">Using Cargo</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="macos">
     ```terminal
     $ brew install chainhook
     ```
-  </Tab>
-  
-  <Tab value="Linux">
+  </TabsContent>
+
+  <TabsContent value="linux">
     ```terminal
     $ sudo snap install chainhook
     ```
-  </Tab>
+  </TabsContent>
 
-  <Tab value="Windows">
+  <TabsContent value="windows">
     ```terminal
     $ winget install HiroSystems.Chainhook
     ```
-  </Tab>
+  </TabsContent>
 
-  <Tab value="Using Cargo">    
+  <TabsContent value="cargo">
     Clone the [Chainhook Repo](https://github.com/hirosystems/chainhook):
 
     ```terminal
@@ -35,6 +42,5 @@ toc: false
     ```terminal
     $ cd chainhook && cargo chainhook-install
     ```
-
-  </Tab>
+  </TabsContent>
 </Tabs>
