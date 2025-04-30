@@ -2,7 +2,6 @@ import Link from "fumadocs-core/link";
 import { StacksCardIcon, BitcoinCardIcon } from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
 import { Card as LinkCard } from "@/app/(home)/components/card";
-import { Badge } from "@/components/ui/badge";
 
 export default function HomePage() {
   return (

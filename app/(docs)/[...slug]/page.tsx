@@ -35,15 +35,10 @@ export default async function Page(props: {
   const fileContent = await fs.readFile(page.data._file.absolutePath, "utf-8");
   const { content: rawMarkdownContent } = matter(fileContent);
 
-  // Filter out import statements
   const LLMContent = rawMarkdownContent
     .split("\n")
     .filter((line) => !line.trim().startsWith("import"))
     .join("\n");
-
-  // Construct the absolute page URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://docs.hiro.so"; // Default or from env
-  const pagePath = params.slug?.join("/") || "";
 
   const MDX = page.data.body;
 

@@ -46,15 +46,13 @@ export async function GET(
   const sectionPath = path.join(DOCS_CONTENT_PATH, ...sectionSegments);
 
   try {
-    // Check if the directory exists
     try {
       await fs.access(sectionPath);
     } catch (e) {
-      // Directory doesn't exist, return 404
+      console.error(e);
       return new Response("Not Found", { status: 404 });
     }
 
-    // Find MDX files directly within the target directory (not recursive)
     const files = await fg(`${sectionPath}/*.mdx`, {
       cwd: process.cwd(),
       absolute: true,

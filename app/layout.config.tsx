@@ -1,5 +1,4 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { TopNav } from "@/components/top-nav";
 /**
  * Shared layout configurations
  *

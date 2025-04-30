@@ -5,26 +5,17 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   SidebarPageTree,
-  SidebarSeparator,
   SidebarItem,
   SidebarFolder,
   SidebarFolderTrigger,
-  SidebarFolderLink,
   SidebarFolderContent,
 } from "./sidebar";
 import { isActive } from "@/lib/is-active";
 import type { SidebarComponents } from "./shared";
 import { useTreeContext } from "fumadocs-ui/provider";
-import type { PageTree } from "fumadocs-core/server";
 import Link from "next/link";
-import {
-  API,
-  BitcoinIcon,
-  Clarity,
-  Hiro,
-  StacksIcon,
-} from "@/components/ui/icon";
-import { ChevronDown, ChevronRight, ChevronUp, Code, Play } from "lucide-react";
+import { API, BitcoinIcon, Clarity, StacksIcon } from "@/components/ui/icon";
+import { Code, Play } from "lucide-react";
 
 // URLs for both sections to filter out duplicates
 const STACKS_NAV_URLS = [
@@ -195,8 +186,6 @@ export function EnhancedSidebarPageTree(props: {
   }: {
     components?: Partial<SidebarComponents>;
   }) {
-    const { root } = useTreeContext();
-
     // Create custom components object with our filtering logic
     const filteredComponents: Partial<SidebarComponents> = {
       // Custom Item component that filters duplicates

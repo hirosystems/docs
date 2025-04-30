@@ -315,6 +315,7 @@ export function SidebarFolderLink(props: LinkProps) {
   const { open, setOpen } = useFolderContext();
   const { prefetch, level } = useInternalContext();
 
+  console.log({ open });
   const pathname = usePathname();
   const active =
     props.href !== undefined && isActive(props.href, pathname, false);

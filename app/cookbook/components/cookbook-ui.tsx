@@ -299,7 +299,7 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           {view === "list" ? (
             <Table>
               <TableBody>
-                {filteredRecipeCards.map(({ recipe, card }, index) => {
+                {filteredRecipeCards.map(({ recipe }, index) => {
                   const isLastItem = index === filteredRecipeCards.length - 1;
 
                   return (

@@ -31,7 +31,7 @@ export async function loadRecipes(): Promise<Recipe[]> {
     files = await fs.readdir(recipesDir);
   } catch {
     console.warn(
-      "No recipes found in .cache/recipes. Did you run scripts/fetch-recipes.mjs?"
+      "No recipes found in .cache/recipes. Did you run scripts/fetch-recipes.mts?"
     );
     return [];
   }

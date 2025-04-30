@@ -1,13 +1,12 @@
 import React, { JSX } from "react";
 import { Code } from "@/components/docskit/code";
-import { loadRecipe, loadRecipes } from "@/lib/loader";
+import { loadRecipes } from "@/lib/loader";
 import { Badge } from "@/components/ui/badge";
 import { HoverProvider } from "@/context/hover";
 import { docskit } from "@/components/docskit/components";
 import { HoverLink } from "@/components/docskit/annotations/hover";
 import { Terminal } from "@/components/docskit/terminal";
 import { InlineCode } from "@/components/docskit/inline-code";
-import { WithNotes } from "@/components/docskit/notes";
 import { SnippetResult } from "../components/snippet-result";
 import Link from "next/link";
 import { RecipeCarousel } from "@/components/recipe-carousel";

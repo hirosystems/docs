@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { isConnected, connect, disconnect } from "@stacks/connect";
+import { connect, disconnect } from "@stacks/connect";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
