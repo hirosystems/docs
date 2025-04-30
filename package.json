@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
     "lint": "bun run ./lint.ts",
     "build:recipes": "bun run ./scripts/fetch-recipes.mts"
+  },
+  "overrides": {
+    "@shikijs/core": "3.3.0",
+    "@shikijs/engine-javascript": "3.3.0",
+    "shiki": "3.3.0"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.1",
@@ -52,7 +57,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "seti-icons": "^0.0.4",
-    "shiki": "^3.2.1",
+    "shiki": "3.3.0",
     "tailwind-merge": "^3.0.2",
     "timeago.js": "^4.0.2",
     "vaul": "^1.1.2"

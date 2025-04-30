@@ -5,9 +5,9 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  webpack: (config) => {
-    config.optimization.minimize = false;
-    return config;
+  // Remove Webpack customization – not supported in Turbopack
+  turbopack: {
+    // Add any Turbopack-specific options here (currently optional)
   },
 };
 
