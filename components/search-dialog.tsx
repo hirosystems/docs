@@ -331,8 +331,6 @@ export default function SearchDialog() {
     type: "static",
   });
 
-  console.log({ search, currentQuery });
-
   // State to track if we are "waiting" for results after setting search
   // Since the hook doesn't provide explicit loading state
   const [isWaitingForResults, setIsWaitingForResults] = React.useState(false);
