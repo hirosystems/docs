@@ -3,15 +3,15 @@
 import React from "react";
 import Link from "next/link";
 import { Play, Terminal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { Code } from "@/components/docskit/code";
 import { initSimnet, type Simnet } from "@hirosystems/clarinet-sdk-browser";
 import { Cl } from "@stacks/transactions";
-import { loadSandpackClient } from "@codesandbox/sandpack-client";
-import type { SandboxSetup } from "@codesandbox/sandpack-client";
+// import { loadSandpackClient } from "@codesandbox/sandpack-client";
+// import type { SandboxSetup } from "@codesandbox/sandpack-client";
 
-import type { Recipe } from "@/types/recipes";
+import type { Recipe } from "@/types";
 
 interface SnippetResultProps {
   recipe: Recipe;
@@ -76,7 +76,7 @@ export function SnippetResult({
         await simnet.initEmptySession(false);
         simnet.deployer = "ST000000000000000000002AMW42H";
         const deployer = simnet.deployer;
-        console.log("deployer", deployer);
+        // console.log("deployer", deployer);
         simnet.setEpoch("3.0");
 
         // Store the initialized simnet instance
@@ -123,8 +123,8 @@ export function SnippetResult({
         environment: "vanilla",
       };
 
-      const client = await loadSandpackClient(iframeRef.current!, content);
-      console.log(client);
+      // const client = await loadSandpackClient(iframeRef.current!, content);
+      // console.log(client);
     }
   }
 
@@ -231,11 +231,17 @@ export function SnippetResult({
           {getButtonText()}
         </Button> */}
         {type === "clarity" && (
-          <Button variant="link" className="gap-2 self-end" size="sm" asChild>
-            <Link href={recipe?.external_url || ""} target="_blank">
-              Open in Clarity Playground <ArrowUpRight className="w-4 h-4" />
-            </Link>
-          </Button>
+          <Link
+            href={recipe?.external_url || ""}
+            target="_blank"
+            className={buttonVariants({
+              size: "sm",
+              className:
+                "gap-2 self-end text-primary underline-offset-4 hover:underline",
+            })}
+          >
+            Open in Clarity Playground <ArrowUpRight className="w-4 h-4" />
+          </Link>
         )}
       </div>
       {result && type !== "clarity" && (

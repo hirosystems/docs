@@ -1,7 +1,9 @@
+import React, { JSX } from "react";
 import { Code } from "@/components/docskit/code";
-import { loadRecipe, loadRecipes } from "@/utils/loader";
+import { loadRecipe, loadRecipes } from "@/lib/loader";
 import { Badge } from "@/components/ui/badge";
 import { HoverProvider } from "@/context/hover";
+import { docskit } from "@/components/docskit/components";
 import { HoverLink } from "@/components/docskit/annotations/hover";
 import { Terminal } from "@/components/docskit/terminal";
 import { InlineCode } from "@/components/docskit/inline-code";
@@ -16,30 +18,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Metadata } from "next/types";
-import { getRouteMetadata, createMetadata } from "@/utils/metadata";
-
-interface Param {
-  id: string;
-}
+import { createMetadata } from "@/lib/metadata";
+import { source } from "@/lib/source";
+import { getRouteMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
-  const routeMetadata = getRouteMetadata("/cookbook");
-  return createMetadata(routeMetadata);
-}
-
-export default async function Page({
-  params,
-}: {
-  params: Param;
+export default async function Page(props: {
+  params: Promise<{ id: string }>;
 }): Promise<JSX.Element> {
-  const { id } = params;
+  const { id } = await props.params;
 
   const recipes = await loadRecipes();
   const recipe = recipes.find((r) => r.id === id);
@@ -91,7 +79,7 @@ export default async function Page({
                                   Terminal,
                                   Code,
                                   InlineCode,
-                                  WithNotes,
+                                  ...docskit,
                                 }}
                               />
                             </div>
@@ -116,7 +104,7 @@ export default async function Page({
                           Terminal,
                           Code,
                           InlineCode,
-                          WithNotes,
+                          ...docskit,
                         }}
                       />
                     </div>
@@ -155,4 +143,16 @@ export default async function Page({
       </HoverProvider>
     </>
   );
+}
+
+export async function generateStaticParams() {
+  return source.generateParams();
+}
+
+export async function generateMetadata(props: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await props.params;
+  const routeMetadata = getRouteMetadata(`/cookbook/${id}`);
+  return createMetadata(routeMetadata);
 }

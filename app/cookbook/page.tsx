@@ -1,12 +1,12 @@
-import { loadRecipes } from "@/utils/loader";
+import { loadRecipes } from "@/lib/loader";
 import { CookbookUI } from "./components/cookbook-ui";
 import { Code } from "@/components/docskit/code";
-import { Recipe } from "@/types/recipes";
+import { Recipe } from "@/types";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CopyButton } from "@/components/docskit/copy-button";
 import { Metadata } from "next/types";
-import { getRouteMetadata, createMetadata } from "@/utils/metadata";
+import { getRouteMetadata, createMetadata } from "@/lib/metadata";
 
 function RecipeCard({
   recipe,

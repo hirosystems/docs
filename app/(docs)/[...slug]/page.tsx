@@ -1,135 +1,132 @@
-import type { Metadata } from "next";
-import { Card, Cards } from "fumadocs-ui/components/card";
-import { RollButton } from "fumadocs-ui/components/roll-button";
-import { DocsPage, DocsBody } from "fumadocs-ui/page";
+import fs from "fs/promises";
+import matter from "gray-matter";
+import { source } from "@/lib/source";
+import { openapi } from "@/lib/source";
 import { notFound } from "next/navigation";
-import { utils, type Page } from "@/utils/source";
-import { createMetadata, getRouteMetadata } from "@/utils/metadata";
+import { HeadingProps } from "@/types";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import {
+  DocsPage,
+  DocsBody,
+  DocsDescription,
+  DocsTitle,
+} from "@/components/page";
+import { CustomTable as Table, TableProps } from "@/components/table";
+import { OrderedList, UnorderedList } from "@/components/lists";
+import { Callout } from "@/components/callout";
+import { Cards, Card, SecondaryCard } from "@/components/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { docskit } from "@/components/docskit/components";
+import defaultMdxComponents from "fumadocs-ui/mdx";
+import { LLMShare } from "@/components/llm-share";
 
-interface Param {
-  slug: string[];
-}
-
-export const dynamicParams = false;
-
-export default function Page({ params }: { params: Param }): JSX.Element {
-  const page = utils.getPage(params.slug);
-
+export default async function Page(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
   if (!page) notFound();
+
+  const fileContent = await fs.readFile(page.data._file.absolutePath, "utf-8");
+  const { content: rawMarkdownContent } = matter(fileContent);
+
+  // Filter out import statements
+  const LLMContent = rawMarkdownContent
+    .split("\n")
+    .filter((line) => !line.trim().startsWith("import"))
+    .join("\n");
+
+  // Construct the absolute page URL
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://docs.hiro.so"; // Default or from env
+  const pagePath = params.slug?.join("/") || "";
+
+  const MDX = page.data.body;
 
   return (
     <DocsPage
-      toc={page.data.exports.toc}
+      toc={page.data.toc}
+      full={page.data.full}
       tableOfContent={{
-        enabled: page.data.toc,
+        style: "clerk",
       }}
     >
-      <RollButton />
-      {page.data.title !== "Home" && (
-        <h1 className="text-2xl text-foreground sm:text-3xl">
-          {page.data.title}
-        </h1>
-      )}
-      {page.data.title !== "Home" && (
-        <p className="mb-8 text-lg text-muted-foreground">
-          {page.data.description}
-        </p>
-      )}
-      {page.data.title !== "Home" && (
-        <hr className="border-t border-border/50" />
-      )}
+      <div className="mb-4">
+        <div className="flex justify-between items-start gap-4">
+          {(!params.slug?.includes("stacks") || params.slug?.length > 1) &&
+            (!params.slug?.includes("bitcoin") || params.slug?.length > 1) && (
+              <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
+            )}
+          {page.data.llm && <LLMShare content={LLMContent} />}
+        </div>
+        <DocsDescription>{page.data.description}</DocsDescription>
+      </div>
+
       <DocsBody>
-        {page.data.index ? (
-          <Category page={page} />
-        ) : (
-          <page.data.exports.default />
-        )}
+        <MDX
+          components={{
+            ...defaultMdxComponents,
+            Accordion,
+            AccordionItem,
+            AccordionTrigger,
+            AccordionContent,
+            APIPage: openapi.APIPage,
+            h1: ({ children, ...props }: HeadingProps) => {
+              const H1 =
+                defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
+              const id = typeof children === "string" ? children : undefined;
+              return (
+                <H1 id={id} {...props}>
+                  {children}
+                </H1>
+              );
+            },
+            blockquote: (props) => <Callout>{props.children}</Callout>,
+            Callout,
+            Cards,
+            Card,
+            SecondaryCard,
+            code: (props: React.PropsWithChildren) => (
+              <code
+                {...props}
+                className={`border border-border rounded-md p-1 bg-code text-sm text-muted-foreground [h1_&]:text-xl`}
+              />
+            ),
+            hr: (props: React.PropsWithChildren) => (
+              <hr {...props} className="border-t border-border/50 mt-0 mb-6" />
+            ),
+            table: (props: TableProps) => <Table {...props} />,
+            ol: OrderedList,
+            ul: UnorderedList,
+            Tabs,
+            TabsList,
+            TabsTrigger,
+            TabsContent,
+            ...docskit,
+          }}
+        />
       </DocsBody>
     </DocsPage>
   );
 }
 
-function Category({ page }: { page: Page }): JSX.Element {
-  const filtered = utils.files.filter(
-    (docs) =>
-      docs.type === "page" &&
-      docs.file.dirname === page.file.dirname &&
-      docs.file.name !== "index"
-  ) as Page[];
-
-  return (
-    <Cards>
-      {filtered.map((item) => (
-        <Card
-          key={item.url}
-          title={item.data.title}
-          description={item.data.description ?? "No Description"}
-          href={item.url}
-        />
-      ))}
-    </Cards>
-  );
+export async function generateStaticParams() {
+  return source.generateParams();
 }
 
 export async function generateMetadata(props: {
   params: Promise<{ slug?: string[] }>;
-}): Promise<Metadata> {
+}) {
   const params = await props.params;
-  const page = utils.getPage(params.slug);
+  const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const path = `/${params.slug?.join("/") || ""}`;
-  const routeMetadata = getRouteMetadata(path);
-
-  const pathParts = path.split("/").filter(Boolean);
-
-  const genericTitles = [
-    "Overview",
-    "Installation",
-    "Quickstart",
-    "Concepts",
-    "Getting Started",
-  ];
-
-  let title = page.data.title;
-
-  if (page.file.name === "index" || genericTitles.includes(title)) {
-    let sectionName =
-      page.file.name === "index"
-        ? pathParts[pathParts.length - 1]
-        : pathParts[pathParts.length - 2] || pathParts[pathParts.length - 1];
-
-    if (sectionName === "api" && pathParts.length >= 2) {
-      const parentSection = pathParts[pathParts.length - 2];
-      if (parentSection === "runes" || parentSection === "ordinals") {
-        const capitalizedParent =
-          parentSection.charAt(0).toUpperCase() + parentSection.slice(1);
-        sectionName = `${capitalizedParent} API`;
-      }
-    }
-
-    const sectionTitle = sectionName
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
-      .replace("Api", "API")
-      .replace("Js", "JS")
-      .replace("Sdk", "SDK");
-
-    if (page.file.name === "index") {
-      title = `${sectionTitle} Overview`;
-    } else {
-      title = `${sectionTitle} ${title}`;
-    }
-  }
-
-  const pageMetadata: Partial<Metadata> = {
-    title,
+  return {
+    title: page.data.title,
     description: page.data.description,
   };
-
-  return createMetadata({
-    ...routeMetadata,
-    ...pageMetadata,
-  });
 }

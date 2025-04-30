@@ -1,0 +1,15 @@
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { TopNav } from "@/components/top-nav";
+/**
+ * Shared layout configurations
+ *
+ * you can customise layouts individually from:
+ * Home Layout: app/(home)/layout.tsx
+ * Docs Layout: app/docs/layout.tsx
+ */
+export const baseOptions: BaseLayoutProps = {
+  nav: {
+    enabled: false,
+  },
+  links: [],
+};
