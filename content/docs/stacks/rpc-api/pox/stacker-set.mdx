@@ -1,83 +1,11 @@
 ---
 title: Get stacker and signer set information
 description: Retrieves stacker and signer set information for a given cycle.
-toc: false
+full: true
 ---
 
-import { 
-  API,
-  APIExample,
-  APIInfo,
-  APIPlayground,
-  ExampleResponse,
-  Property,
-  Request,
-  Requests,
-  Response,
-  Responses,
-  ResponseTypes,
-  Root,
-  TypeScriptResponse
-} from 'fumadocs-openapi/ui';
-
-<Root baseUrl={"http://localhost:20443"}>
-
-<API>
-
-<APIInfo method={"GET"} route={"/v2/stacker_set/{cycle_number}"}>
-
-## Fetch the stacker and signer set information for a given cycle.
-
-Used to get stacker and signer set information for a given cycle.
-
-This will only return information for cycles started in Epoch-2.5 where PoX-4 was active and subsequent cycles.
-
-
-### Path Parameters
-
-<Property name={"cycle_number"} type={"integer"} required={true} deprecated={false}>
-
-reward cycle number
-
-</Property>
-
-| Status code | Description |
-| ----------- | ----------- |
-| `200` | Information for the given reward cycle |
-| `400` | Could not fetch the given reward set |
-
-<APIPlayground authorization={undefined} method={"GET"} route={"/v2/stacker_set/{cycle_number}"} path={[{"name":"cycle_number","type":"number","defaultValue":"","isRequired":true}]} query={[]} header={[]} body={undefined} schemas={{}}>
-
-</APIPlayground>
-
-</APIInfo>
-
-<APIExample>
-
-<Requests items={["cURL","JavaScript"]}>
-
-<Request value={"cURL"}>
-
-```terminal
-$ curl -X GET "http://localhost:20443/v2/stacker_set/0"
-```
-
-</Request>
-
-<Request value={"JavaScript"}>
-
-```js
-fetch("http://localhost:20443/v2/stacker_set/0", {
-  method: "GET"
-});
-```
-
-</Request>
-
-</Requests>
-
-</APIExample>
-
-</API>
-
-</Root>
+<APIPage
+  document="./openapi/stacks-node-rpc-api.json"
+  operations={[{ path: '/v2/stacker_set/{cycle_number}', method: 'get' }]}
+  hasHead={false}
+/>
