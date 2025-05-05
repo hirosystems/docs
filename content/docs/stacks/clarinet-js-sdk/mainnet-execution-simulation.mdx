@@ -1,0 +1,137 @@
+---
+title: Mainnet execution simulation
+description: Learn how to test your Clarity smart contracts against real-world Mainnet data using the Clarinet JS SDK's Mainnet Execution Simulation (MXS) feature.
+---
+
+Mainnet Execution Simulation (MXS) allows you to test your Clarity smart contracts using actual data and state from the Stacks mainnet. This powerful feature helps ensure your contracts behave as expected in a live environment by enabling you to:
+
+- Test contract interactions against real-world data and dependencies.
+- Simulate any historical or recent mainnet transaction to observe its outcome or evaluate its execution cost.
+
+This guide focuses on using MXS within the context of unit tests using Vitest, which is the primary use case.
+
+In this guide, you will learn:
+
+1. [What Mainnet Execution Simulation (MXS) is and why it's valuable](#what-is-mainnet-execution-simulation).
+2. [How to enable and configure MXS in your Clarinet project](#enable-mxs-in-your-project).
+3. [How to write and run unit tests using MXS](#write-tests-with-mxs).
+4. [Current limitations of the MXS feature](#limitations).
+
+---
+
+## What is Mainnet execution simulation?
+
+When developing smart contracts, testing against realistic conditions is crucial. Simnet provides an isolated testing environment, but it lacks the complexity and historical state of the live Stacks mainnet.
+
+MXS bridges this gap by allowing your unit tests, executed via the Clarinet JS SDK and Vitest, to interact with a simulated environment that mirrors the Stacks mainnet state at a specific block height. This means you can:
+
+- **Validate contract logic against real data:** Call mainnet contracts or check data derived from mainnet state directly within your tests.
+- **(Re)simulate transactions:** Execute specific mainnet transactions to analyze their exact results, trace their execution, or estimate their costs without deploying or spending actual STX.
+
+---
+
+## Enable MXS in your project
+
+To use MXS in your unit tests, you need to enable it in your `Clarinet.toml` file. Add the following section:
+
+```toml -c
+[testing]
+# Enable mainnet execution simulation
+mainnet_simulation = true
+# Specify the Stacks block height to simulate (optional)
+initial_height = 1094766
+```
+
+- `mainnet_simulation = true`: This flag activates the MXS feature for your tests.
+- `initial_height = <block_height>`: This optional setting specifies the Stacks block height at which the simulation should start.
+  - If omitted, Clarinet defaults to the latest finalized Stacks block height at the time of execution.
+  - **Recommendation:** Setting a specific `initial_height` is highly recommended for consistent and reproducible test results, as the mainnet state constantly changes.
+
+<Callout title="Example Project">
+You can explore a project demonstrating MXS usage with a Pyth oracle contract in [this repository](https://github.com/hirosystems/clarinet-pyth-example).
+</Callout>
+
+---
+
+## Write tests with MXS
+
+Once MXS is enabled, your Vitest tests running via the Clarinet JS SDK (`npm run test`) will automatically operate against the specified mainnet state. You don't need to change your test writing approach significantly.
+
+The `simnet` object, typically used for interacting with the simulated environment in tests, will now interact with the mainnet state snapshot defined by `initial_height`.
+
+For example, you could write a test that calls a function on a mainnet contract like `pox-4`:
+
+```ts -cn
+import { describe, it, expect } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!; // Or any other account
+
+describe("pox-4 reward cycle", () => {
+  it("returns pox reward cycle id", () => {
+    // Call the current-pox-reward-cycle function on the mainnet pox-4 contract
+    const call = simnet.callReadOnlyFn(
+      "SP000000000000000000002Q6VF78.pox-4", // Mainnet pox-4 contract principal
+      "current-pox-reward-cycle",
+      [], // No arguments needed for this function
+      deployer // Caller address doesn't impact read-only calls usually
+    );
+
+    // Assert that the call was successful and returns cycle number u109
+    expect(call.result).toBeUint(109);
+
+    // You can further assert other values by tweaking the initial_height in `Clarinet.toml`
+    // For example, if initial_height = 299000, the value might be:
+    // expect(call.result).toBeUint(98);
+    console.log("Current POX reward cycle:", Cl.prettyPrint(call.result));
+  });
+});
+
+```
+
+This test uses `simnet.callReadOnlyFn` just like in standard unit tests, but because MXS is enabled, the call targets the actual `pox-4` contract state at the `initial_height` specified in `Clarinet.toml`.
+
+---
+
+## Test MXS in the playground
+
+You can quickly experiment with MXS without setting up a full project using the Clarinet Playground.
+
+1.  Go to: [https://play.hiro.so/?remote_data=true](https://play.hiro.so/?remote_data=true)
+    -   The `?remote_data=true` query parameter enables MXS.
+2.  In the command input field, call a mainnet contract function. For example, to call `current-pox-reward-cycle` on `pox-4`:
+    ```terminal
+    $ contract-call? 'SP000000000000000000002Q6VF78.pox-4 current-pox-reward-cycle
+    ```
+The playground will execute the call against the latest mainnet state and display the result.
+
+---
+
+## Limitations
+
+Currently, MXS does not support Clarity functions that rely on querying specific information related to burn blocks or miner tenures. The following functions are **not implemented** in the simulation environment:
+
+- `(get-burn-block-info? pox-addrs <burn-block-height>)`
+- `(get-tenure-info? block-reward <stacks-block-height>)`
+- `(get-tenure-info? miner-spend-total <stacks-block-height>)`
+- `(get-tenure-info? miner-spend-winner <stacks-block-height>)`
+
+Calls to these functions within an MXS context will result in runtime errors.
+
+---
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/stacks/clarinet-js-sdk/references/methods"
+    title="SDK Methods" 
+    description="Explore the methods available for interacting with simnet."
+  />
+  <Card
+    href="/stacks/clarinet-js-sdk/guides/unit-testing"
+    title="Unit Testing Guide"
+    description="Review the fundamentals of unit testing Clarity contracts with the Clarinet JS SDK."
+  />
+</Cards>
