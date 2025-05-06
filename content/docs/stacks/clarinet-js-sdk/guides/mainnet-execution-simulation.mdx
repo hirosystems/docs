@@ -108,6 +108,28 @@ The playground will execute the call against the latest mainnet state and displa
 
 ---
 
+## Setting up an API Key for MXS
+
+While you can use Mainnet Execution Simulation (MXS) without an API key, you may run into rate limits that could disrupt your development workflow. We recommend using an API key to ensure reliable and uninterrupted access to MXS functionality.
+
+To use an API key with MXS, set the `HIRO_API_KEY` environment variable in your testing environment.
+
+```terminal
+$ export HIRO_API_KEY="<your-api-key>"
+```
+
+Replace `<your-api-key>` with the actual API key you obtain from the Hiro Platform.
+
+<Callout title='Where can I get an API key?'>
+If you're interested in obtaining an API key, you can generate one for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
+
+All API keys are set by default to the free "starter" account tier, which comes with a 900RPM rate limit. For builders who need access to higher API rate limits, dedicated support channels, and reliability guarantees through SLAs, you can upgrade your account tier through the Hiro Platform.
+</Callout>
+
+Currently, the `HIRO_API_KEY` is specifically utilized by the Mainnet Execution Simulation (MXS) feature within Clarinet. Other Clarinet features do not use this API key at this time.
+
+---
+
 ## Limitations
 
 Currently, MXS does not support Clarity functions that rely on querying specific information related to burn blocks or miner tenures. The following functions are **not implemented** in the simulation environment:
