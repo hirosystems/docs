@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   Table,
   TableBody,
@@ -21,7 +21,8 @@ const NetworkBadge = ({ network }: NetworkBadgeProps) => (
   <>
     {typeof network === "object" && network !== null ? (
       <code className="relative rounded bg-muted p-1.5 font-mono text-sm text-left text-muted-foreground w-full">
-        {network.props.children}
+        {(network as React.ReactElement<{ children?: ReactNode }>).props
+          .children ?? ""}
       </code>
     ) : (
       <span className="text-muted-foreground whitespace-normal break-words text-base">
@@ -42,16 +43,29 @@ function CustomTable({ className, ...props }: TableProps) {
       React.isValidElement(child) && child.type === "tbody"
   );
 
-  const headerRows = thead ? React.Children.toArray(thead.props.children) : [];
-  const bodyRows = tbody ? React.Children.toArray(tbody.props.children) : [];
+  const headerRows = thead
+    ? React.Children.toArray(
+        (thead as React.ReactElement<{ children?: ReactNode }>).props.children
+      )
+    : [];
+  const bodyRows = tbody
+    ? React.Children.toArray(
+        (tbody as React.ReactElement<{ children?: ReactNode }>).props.children
+      )
+    : [];
   const rows = [...headerRows, ...bodyRows].filter(
     (row): row is React.ReactElement => React.isValidElement(row)
   );
 
   if (rows.length === 0) return null;
 
-  const headers = React.Children.toArray(rows[0].props.children).map((cell) =>
-    React.isValidElement(cell) ? cell.props.children : cell
+  const headers = React.Children.toArray(
+    (rows[0] as React.ReactElement<{ children?: ReactNode }>).props.children
+  ).map((cell) =>
+    React.isValidElement(cell)
+      ? ((cell as React.ReactElement<{ children?: ReactNode }>).props
+          .children ?? "")
+      : cell
   );
   const dataRows = rows.slice(1);
 
@@ -72,14 +86,25 @@ function CustomTable({ className, ...props }: TableProps) {
         </TableHeader>
         <TableBody>
           {dataRows.map((row, i) => {
-            const cells = React.Children.toArray(row.props.children).map(
-              (cell) =>
-                React.isValidElement(cell) ? cell.props.children : cell
+            const cells = React.Children.toArray(
+              (row as React.ReactElement<{ children?: ReactNode }>).props
+                .children
+            ).map((cell) =>
+              React.isValidElement(cell)
+                ? ((cell as React.ReactElement<{ children?: ReactNode }>).props
+                    .children ?? "")
+                : cell
             );
             return (
               <TableRow key={i} className="border-t">
                 <TableCell className="py-4">
-                  <NetworkBadge network={cells[0]} />
+                  <NetworkBadge
+                    network={
+                      React.isValidElement(cells[0])
+                        ? cells[0] // Pass element directly
+                        : String(cells[0] ?? "") // Convert others to string
+                    }
+                  />
                 </TableCell>
                 {cells.slice(1).map((cell, j) => (
                   <TableCell

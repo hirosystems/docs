@@ -1,4 +1,4 @@
-import { AlertOctagon, AlertTriangle, Info, Star } from "lucide-react";
+import { AlertTriangle, Info, Star } from "lucide-react";
 import { HiroSVG } from "@/components/ui/icon";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";

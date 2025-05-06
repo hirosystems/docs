@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { isConnected, connect, disconnect } from "@stacks/connect";
+import { connect, disconnect } from "@stacks/connect";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -10,9 +10,8 @@ export const ConnectWalletButton: React.FC = () => {
 
   async function authenticate() {
     try {
-      const response = await connect();
+      await connect();
       setIsSignedIn(true);
-      console.log(response);
     } catch (error) {
       console.error("Authentication failed:", error);
       setIsSignedIn(false);

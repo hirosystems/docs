@@ -46,7 +46,11 @@ function FilterPopover({
     <div className="flex flex-col gap-4">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" size="icon" aria-label="Filter by category">
+          <Button
+            size="icon"
+            aria-label="Filter by category"
+            className="border border-input bg-background hover:bg-accent hover:text-accent-foreground"
+          >
             <ListFilter size={16} strokeWidth={2} aria-hidden="true" />
           </Button>
         </PopoverTrigger>
@@ -82,8 +86,7 @@ function FilterPopover({
                 <Button
                   type="button"
                   size="sm"
-                  variant="outline"
-                  className="h-7 px-2"
+                  className="h-7 px-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground"
                   onClick={handleClear}
                 >
                   Clear
