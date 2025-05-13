@@ -3,27 +3,31 @@ title: Anatomy of a Clarinet Project
 description: Learn about how a Clarinet project is structured.
 ---
 
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
 This document provides a detailed overview of the files that need to be present in a Clarinet
-project. And how to configure the differents tools being used. Including Clarinet but also other
+project. And how to configure the different tools being used. Including Clarinet but also other
 tools like Vitest, TypeScript, etc.
 
 ## Project Structure
 
-```
-.
-├── Clarinet.toml
-├── contracts
-│   └── my-contract.clar
-├── package.json
-├── settings
-│   ├── Devnet.toml
-│   ├── Mainnet.toml
-│   └── Testnet.toml
-├── tests
-│   └── my-contract.test.ts
-├── tsconfig.json
-└── vitest.config.js
-```
+<Files className='pointer-events-none'>
+  <File name="Clarinet.toml" />
+  <Folder name="contracts" defaultOpen>
+    <File name="my-contract.clar" />
+  </Folder>
+  <File name="package.json" />
+  <Folder name="settings" defaultOpen>
+    <File name="Devnet.toml" />
+    <File name="Mainnet.toml" />
+    <File name="Testnet.toml" />
+  </Folder>
+  <Folder name="tests" defaultOpen>
+    <File name="my-contract.test.ts" />
+  </Folder>
+  <File name="tsconfig.json" />
+  <File name="vitest.config.js" />
+</Files>
 
 ## Clarinet.toml
 
@@ -45,7 +49,7 @@ epoch = 3.1
 ## package.json
 
 Because Clarinet relies on Node.js and NPM to write unit tests for your project, there is a
-package.json file that will list the dependencies of the project. By defualt, Clarinet comes with
+package.json file that will list the dependencies of the project. By default, Clarinet comes with
 the following dependencies:
 
 - `@hirosystems/clarinet-sdk`: The Clarinet JS SDK is a version of the Clarinet that is compiled to
@@ -59,7 +63,7 @@ the following dependencies:
   environment. For example, it will initialize the Simnet and makes sure it available globally in
   the testing environment.
 
-As of May 2025, Clarinet 3.0 support the latest version of these dependencies, especially:
+As of May 2025, Clarinet 3.0 supports the latest version of these dependencies, especially:
 
 - `vitest` 3.x
 - `@stacks/transactions` 7.x
@@ -69,7 +73,7 @@ We recommend to always use the latest version of `@hirosystems/clarinet-sdk` and
 
 ## vitest.config.js
 
-This is the configuration file for Vitest. Here, we specify some inmportant settings for the testing
+This is the configuration file for Vitest. Here, we specify some important settings for the testing
 framework to work with Clarinet. This is what the default configuration looks like:
 
 ```js
@@ -99,10 +103,10 @@ export default defineConfig({
 });
 ```
 
-It export a configuration object with `export default defineConfig({ test: {}})` where we specify
+It exports a configuration object with `export default defineConfig({ test: {}})` where we specify
 the following options:
 
-- `environment: "clarinet"`: Tell vitest to use the `vitest-environment-clarinet` environment.
+- `environment: "clarinet"`: Tells vitest to use the `vitest-environment-clarinet` environment.
 - `pool: "forks"`, now the default value in Vitest 3.x. Tells Vitest to run process in
   `child_process`, learn more in [Vitest docs](https://vitest.dev/config/#pool).
 - `poolOptions: { forks: { singleFork: true } }`, run all tests in the same process. Thus allowing
@@ -114,8 +118,8 @@ the following options:
 This is a regular TypeScript configuration file. The `compilerOptions` are customizable to suit your
 needs and preferences.
 
-It's impotant to properly set the `include` property, by default it points to the helpers files
-defined the clarinet-sdk package, and to the tests directory. In a monorepo setup with multiple
+It's important to properly set the `include` property, by default it points to the helpers files
+defined in the clarinet-sdk package, and to the tests directory. In a monorepo setup with multiple
 package, you might need to adjust the path to node_modules.
 
 ```json
