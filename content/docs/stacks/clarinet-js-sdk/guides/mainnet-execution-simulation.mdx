@@ -35,17 +35,20 @@ MXS bridges this gap by allowing your unit tests, executed via the Clarinet JS S
 To use MXS in your unit tests, you need to enable it in your `Clarinet.toml` file. Add the following section:
 
 ```toml -c
-[testing]
+[repl.remote_data]
 # Enable mainnet execution simulation
-mainnet_simulation = true
-# Specify the Stacks block height to simulate (optional)
-initial_height = 1094766
+enabled = true
+# Specify the Stacks block height to fork from (optional, default to latest)
+initial_height = 522000
+# Specify the API URL to use (optional, default to https://api.hiro.so)
+api_url = 'https://api.hiro.so'
 ```
 
-- `mainnet_simulation = true`: This flag activates the MXS feature for your tests.
+- `enabled = true`: This flag activates the MXS feature for your tests.
 - `initial_height = <block_height>`: This optional setting specifies the Stacks block height at which the simulation should start.
   - If omitted, Clarinet defaults to the latest finalized Stacks block height at the time of execution.
   - **Recommendation:** Setting a specific `initial_height` is highly recommended for consistent and reproducible test results, as the mainnet state constantly changes.
+- `api_url = 'https://api.hiro.so'`: This optional setting specifies the API URL to use.
 
 <Callout title="Example Project">
 You can explore a project demonstrating MXS usage with a Pyth oracle contract in [this repository](https://github.com/hirosystems/clarinet-pyth-example).
