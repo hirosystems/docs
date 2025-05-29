@@ -18,12 +18,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SearchProvider>
             <RootProvider
               search={{
-                enabled: false,
+                enabled: true,
               }}
             >
               {children}
             </RootProvider>
-            <SearchDialog />
+            {/* <SearchDialog /> TODO: this is new new dialog */}
           </SearchProvider>
         </KeyboardShortcutsProvider>
       </body>

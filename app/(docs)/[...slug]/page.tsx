@@ -4,6 +4,7 @@ import { source } from "@/lib/source";
 import { openapi } from "@/lib/source";
 import { notFound } from "next/navigation";
 import { HeadingProps } from "@/types";
+import { APIPage } from "fumadocs-openapi/ui";
 import {
   Accordion,
   AccordionItem,
@@ -69,7 +70,7 @@ export default async function Page(props: {
             AccordionItem,
             AccordionTrigger,
             AccordionContent,
-            APIPage: openapi.APIPage,
+            APIPage: (props) => <APIPage {...openapi.getAPIPageProps(props)} />,
             h1: ({ children, ...props }: HeadingProps) => {
               const H1 =
                 defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;

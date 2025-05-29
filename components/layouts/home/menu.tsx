@@ -1,15 +1,15 @@
 "use client";
 import { BaseLinkItem, type LinkItemType } from "../links";
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/cn";
 import {
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+} from "../../ui/navigation-menu";
 import Link from "fumadocs-core/link";
 import { cva } from "class-variance-authority";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "../../ui/button";
 import type { ComponentPropsWithoutRef } from "react";
 
 const menuItemVariants = cva("", {
@@ -99,13 +99,6 @@ export function MenuTrigger({
     <NavigationMenuTrigger
       {...props}
       onPointerMove={enableHover ? undefined : (e) => e.preventDefault()}
-      className={cn(
-        buttonVariants({
-          size: "icon",
-          variant: "ghost",
-        }),
-        props.className
-      )}
     >
       {props.children}
     </NavigationMenuTrigger>
