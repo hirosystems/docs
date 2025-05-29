@@ -1,6 +1,6 @@
 "use client";
 import { BaseLinkItem, type LinkItemType } from "../links";
-import { cn } from "../../../lib/cn";
+import { cn } from "@/lib/utils";
 import {
   NavigationMenuContent,
   NavigationMenuItem,

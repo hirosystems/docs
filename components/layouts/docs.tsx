@@ -2,7 +2,7 @@
 import React from "react";
 import type { PageTree } from "fumadocs-core/server";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
 import Link from "fumadocs-core/link";
 import { useSearchContext } from "fumadocs-ui/contexts/search";

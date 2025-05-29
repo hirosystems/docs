@@ -1,6 +1,6 @@
 import { Fragment, type HTMLAttributes, useMemo } from "react";
 import { type NavOptions, slot, slots } from "./shared";
-import { cn } from "../../lib/cn";
+import { cn } from "@/lib/utils";
 import { type BaseLayoutProps, getLinks } from "./shared";
 import { NavProvider } from "fumadocs-ui/contexts/layout";
 import {

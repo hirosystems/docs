@@ -2,7 +2,7 @@
 import { type ComponentProps, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import Link, { type LinkProps } from "fumadocs-core/link";
-import { cn } from "../../../lib/cn";
+import { cn } from "@/lib/utils";
 import { BaseLinkItem } from "../links";
 import {
   NavigationMenu,
