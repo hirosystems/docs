@@ -26,12 +26,10 @@ export function Card({
     <div
       className={cn(
         "relative rounded-[0.6rem] p-[1.5px] overflow-hidden transition-colors hover:shadow-[0_6px_20px_rgba(89,86,80,0.2)] dark:hover:shadow-[0_6px_40px_#383432]",
-        {
-          "bg-gradient-to-br from-border via-border to-neutral-300 dark:to-neutral-200":
-            variant === "default",
-          "bg-gradient-to-br from-border via-border to-orange-500 dark:to-orange-700":
-            variant === "secondary",
-        }
+        variant === "default" &&
+          "bg-gradient-to-br from-border via-border to-neutral-300 dark:to-neutral-200",
+        variant === "secondary" &&
+          "bg-gradient-to-br from-border via-border to-orange-500 dark:to-orange-700"
       )}
     >
       <Link
