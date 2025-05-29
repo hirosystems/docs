@@ -4,65 +4,44 @@ description: A set of Vitest matchers that can be used to make assertions on Cla
 full: true
 ---
 
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-
-
 # `toHaveClarityType`
 
 Check that a value has the right Clarity type, without checking its value.
 
 ## Parameters
 
-
 The Clarity type that the expected value should have.
 
+## Examples
 
+**Checking for an ok response:**
+```ts
+const { result } = simnet.callPublicFn(
+  'counter',
+  'increment',
+  [],
+  simnet.deployer
+);
 
+expect(result).toHaveClarityType(ClarityType.ResponseOk);
+```
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an ok response</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callPublicFn(
-      'counter',
-      'increment',
-      [],
-      simnet.deployer
-    );
+**Source code:**
+```clarity
+(define-data-var count uint u0)
 
-    expect(result).toHaveClarityType(ClarityType.ResponseOk);
-    ```
+(define-public (increment)
+  (begin
+    (var-set count (+ (var-get count) u1))
+    (ok (var-get count))
+  )
+)
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity counter.clar
-      (define-data-var count uint u0)
-
-      (define-public (increment)
-        (begin
-          (var-set count (+ (var-get count) u1))
-          (ok (var-get count))
-        )
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toHaveClarityType(expectedType: ClarityType)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
-
+**Schema:**
+```ts
+toHaveClarityType(expectedType: ClarityType)
+```
 
 # `toBeOk`
 
@@ -70,52 +49,38 @@ Check that a response is `(ok <ok-type>)` and has the expected value. Any Clarit
 
 ## Parameters
 
-
 The `ClarityValue` that the expected value should have.
 
+## Examples
 
+**Checking for an ok response with a specific value:**
+```ts
+const { result } = simnet.callPublicFn(
+  'counter',
+  'increment',
+  [],
+  simnet.deployer
+);
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an ok response with a specific value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callPublicFn(
-      'counter',
-      'increment',
-      [],
-      simnet.deployer
-    );
+expect(result).toBeOk(Cl.uint(1));
+```
 
-    expect(result).toBeOk(Cl.uint(1));
-    ```
+**Source code:**
+```clarity
+(define-data-var count uint u0)
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity counter.clar
-      (define-data-var count uint u0)
+(define-public (increment)
+  (begin
+    (var-set count (+ (var-get count) u1))
+    (ok (var-get count))
+  )
+)
+```
 
-      (define-public (increment)
-        (begin
-          (var-set count (+ (var-get count) u1))
-          (ok (var-get count))
-        )
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeOk(expected: ClarityValue)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
-
+**Schema:**
+```ts
+toBeOk(expected: ClarityValue)
+```
 
 # `toBeErr`
 
@@ -123,58 +88,46 @@ Check that a response is `(err <error-type>)` and has the expected value. Any Cl
 
 ## Parameters
 
-
 The `ClarityValue` that the expected value should have.
 
+## Examples
 
+**Checking for an err response with a specific value:**
+```ts
+const { result } = simnet.callPublicFn(
+  'counter',
+  'add',
+  [Cl.uint(19)],
+  simnet.deployer
+);
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an err response with a specific value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callPublicFn(
-      'counter',
-      'add',
-      [Cl.uint(19)],
-      simnet.deployer
-    );
+expect(result).toBeErr(Cl.uint(500));
+```
 
-    expect(result).toBeErr(Cl.uint(500));
-    ```
+**Source code:**
+```clarity
+(define-constant TOO_BIG u10)
+(define-data-var count uint u0)
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity counter.clar
-      (define-constant TOO_BIG u10)
-      (define-data-var count uint u0)
-
-      (define-public (add (amount uint))
+(define-public (add (amount uint))
+  (begin
+    (let ((new-count (+ (var-get count) amount)))
+      (if (<= new-count TOO_BIG)
         (begin
-          (let ((new-count (+ (var-get count) amount)))
-            (if (<= new-count TOO_BIG)
-              (begin
-                (var-set count new-count)
-                (ok (var-get count))
-              )
-              (err u500)
-            )
-          )
+          (var-set count new-count)
+          (ok (var-get count))
         )
+        (err u500)
       )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeErr(expected: ClarityValue)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+    )
+  )
+)
+```
+
+**Schema:**
+```ts
+toBeErr(expected: ClarityValue)
+```
 
 # `toBeSome`
 
@@ -182,96 +135,72 @@ Check that a response is `(some <value>)` and has the expected value. Any Clarit
 
 ## Parameters
 
-
 The `ClarityValue` that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an optional value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'pool',
-      'get-participant',
-      [Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')],
-      simnet.deployer
-    );
+**Checking for an optional value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'pool',
+  'get-participant',
+  [Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')],
+  simnet.deployer
+);
 
-    expect(result).toBeSome(Cl.bool(true));
-    ```
+expect(result).toBeSome(Cl.bool(true));
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity pool.clar
-      (define-map Participants principal bool)
-      (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+**Source code:**
+```clarity
+(define-map Participants principal bool)
+(define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
-      (define-read-only (get-participant (who principal))
-        (map-get? ParticipantStatus who)
-      )
+(define-read-only (get-participant (who principal))
+  (map-get? ParticipantStatus who)
+)
 
-      (map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
-      (map-set ParticipantStatus 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 { enrollmentBlock: u1, contributionAmount: u19000000 })
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeSome(expected: ClarityValue)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+(map-set Participants 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 true)
+(map-set ParticipantStatus 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 { enrollmentBlock: u1, contributionAmount: u19000000 })
+```
 
+**Schema:**
+```ts
+toBeSome(expected: ClarityValue)
+```
 
 # `toBeNone`
 
 Check that a response is `(none)`.
 
+## Examples
 
+**Checking for a none value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'pool',
+  'get-participant',
+  [Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')],
+  simnet.deployer
+);
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a none value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'pool',
-      'get-participant',
-      [Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')],
-      simnet.deployer
-    );
+expect(result).toBeNone();
+```
 
-    expect(result).toBeNone();
-    ```
+**Source code:**
+```clarity
+(define-map Participants principal bool)
+(define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity pool.clar
-      (define-map Participants principal bool)
-      (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+(define-read-only (get-participant (who principal))
+  (map-get? ParticipantStatus who)
+)
+```
 
-      (define-read-only (get-participant (who principal))
-        (map-get? ParticipantStatus who)
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeNone()
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
+**Schema:**
+```ts
+toBeNone()
+```
 
 # `toBeBool`
 
@@ -279,50 +208,37 @@ Asserts the value of Clarity boolean (`true` or `false`).
 
 ## Parameters
 
-
 The `boolean` that the expected value should have.
 
+## Examples
 
+**Checking for a boolean value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'pool',
+  'has-contributed',
+  [Cl.standardPrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')],
+  simnet.deployer
+);
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a boolean value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'pool',
-      'has-contributed',
-      [Cl.standardPrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')],
-      simnet.deployer
-    );
+expect(result).toBeBool(true);
+```
 
-    expect(result).toBeBool(true);
-    ```
+**Source code:**
+```clarity
+(define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity pool.clar
-      (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+(define-read-only (has-contributed (who principal))
+  (is-some (get contributionAmount (map-get? ParticipantStatus who)))
+)
 
-      (define-read-only (has-contributed (who principal))
-        (is-some (get contributionAmount (map-get? ParticipantStatus who)))
-      )
+(map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 })
+```
 
-      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 })
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeBool(expected: boolean)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
+**Schema:**
+```ts
+toBeBool(expected: boolean)
+```
 
 # `toBeInt`
 
@@ -330,51 +246,38 @@ Asserts the value of a Clarity integer.
 
 ## Parameters
 
-
 The `integer` that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an integer value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'counter',
-      'increment',
-      [],
-      simnet.deployer
-    );
+**Checking for an integer value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'counter',
+  'increment',
+  [],
+  simnet.deployer
+);
 
-    expect(result).toBeInt(1); // or `1n`
-    ```
+expect(result).toBeInt(1); // or `1n`
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity counter.clar
-      (define-data-var count int 0)
+**Source code:**
+```clarity
+(define-data-var count int 0)
 
-      (define-public (increment)
-        (begin
-          (var-set count (+ (var-get count) 1))
-          (ok (var-get count))
-        )
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeInt(expected: number | bigint)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+(define-public (increment)
+  (begin
+    (var-set count (+ (var-get count) 1))
+    (ok (var-get count))
+  )
+)
+```
 
-
+**Schema:**
+```ts
+toBeInt(expected: number | bigint)
+```
 
 # `toBeUint`
 
@@ -382,51 +285,38 @@ Asserts the value of a Clarity unsigned integer.
 
 ## Parameters
 
-
 The `unsigned integer` that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an unsigned integer value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'counter',
-      'increment',
-      [],
-      simnet.deployer
-    );
+**Checking for an unsigned integer value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'counter',
+  'increment',
+  [],
+  simnet.deployer
+);
 
-    expect(result).toBeUint(1); // or `1n`
-    ```
+expect(result).toBeUint(1); // or `1n`
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity counter.clar
-      (define-data-var count uint u0)
+**Source code:**
+```clarity
+(define-data-var count uint u0)
 
-      (define-public (increment)
-        (begin
-          (var-set count (+ (var-get count) u1))
-          (ok (var-get count))
-        )
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeUint(expected: number | bigint)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+(define-public (increment)
+  (begin
+    (var-set count (+ (var-get count) u1))
+    (ok (var-get count))
+  )
+)
+```
 
-
+**Schema:**
+```ts
+toBeUint(expected: number | bigint)
+```
 
 # `toBeAscii`
 
@@ -434,46 +324,33 @@ Asserts the value of a Clarity string-ascii.
 
 ## Parameters
 
-
 The `string` that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a string-ascii value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'hello-world',
-      'say-hi',
-      [],
-      simnet.deployer
-    );
+**Checking for a string-ascii value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'hello-world',
+  'say-hi',
+  [],
+  simnet.deployer
+);
 
-    expect(result).toBeAscii('Hello World');
-    ```
+expect(result).toBeAscii('Hello World');
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity hello-world.clar
-      (define-read-only (say-hi)
-        "Hello World"
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeAscii(expected: string)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+**Source code:**
+```clarity
+(define-read-only (say-hi)
+  "Hello World"
+)
+```
 
-
+**Schema:**
+```ts
+toBeAscii(expected: string)
+```
 
 # `toBeUtf8`
 
@@ -481,46 +358,33 @@ Asserts the value of a Clarity string-utf8.
 
 ## Parameters
 
-
 The `string` that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a string-utf8 value</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'hello-world',
-      'say-hi',
-      [],
-      simnet.deployer
-    );
+**Checking for a string-utf8 value:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'hello-world',
+  'say-hi',
+  [],
+  simnet.deployer
+);
 
-    expect(result).toBeUtf8('Hello World');
-    ```
+expect(result).toBeUtf8('Hello World');
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity hello-world.clar
-      (define-read-only (say-hi)
-        u"Hello World"
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeUtf8(expected: string)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+**Source code:**
+```clarity
+(define-read-only (say-hi)
+  u"Hello World"
+)
+```
 
-
+**Schema:**
+```ts
+toBeUtf8(expected: string)
+```
 
 # `toBePrincipal`
 
@@ -530,52 +394,33 @@ The principal can be a standard or a contract principal.
 
 ## Parameters
 
-
 The `string` that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a standard principal</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="options" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a contract principal</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const deployer = simnet.deployer;
+**Checking for a standard principal:**
+```ts
+const deployer = simnet.deployer;
 
-    expect(Cl.standardPrincipal(deployer)).toBePrincipal(deployer);
-    ```
+expect(Cl.standardPrincipal(deployer)).toBePrincipal(deployer);
+```
 
-    <Accordions>
-      <Accordion title="Schema">
-        ```ts
-        toBePrincipal(expected: string) 
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-  <TabsContent value="options">
-    ```ts
-    const contract = `${simnet.deployer}.hello-world`;
+**Schema:**
+```ts
+toBePrincipal(expected: string) 
+```
 
-    expect(Cl.contractPrincipal(contract)).toBePrincipal(contract);
-    ```
+**Checking for a contract principal:**
+```ts
+const contract = `${simnet.deployer}.hello-world`;
 
-    <Accordions>
-      <Accordion title="Schema">
-        ```ts
-        toBePrincipal(expected: string)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+expect(Cl.contractPrincipal(contract)).toBePrincipal(contract);
+```
 
-
+**Schema:**
+```ts
+toBePrincipal(expected: string)
+```
 
 # `toBeBuff`
 
@@ -589,123 +434,88 @@ For building a buffer, `@stacks/transactions` provides some helper functions:
 
 ## Parameters
 
-
 The `Uint8Array` buffer that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a Uint8Array buffer</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="ascii" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for an ASCII string buffer</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="hex" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a hex string buffer</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const { result } = simnet.callReadOnlyFn(
-      'helpers',
-      'get-byte-array',
-      [],
-      simnet.deployer
-    );
+**Checking for a Uint8Array buffer:**
+```ts
+const { result } = simnet.callReadOnlyFn(
+  'helpers',
+  'get-byte-array',
+  [],
+  simnet.deployer
+);
 
-    const buffer = Uint8Array.from([1, 2, 3, 4]);
-    expect(result).toBeBuff(buffer);
-    ```
+const buffer = Uint8Array.from([1, 2, 3, 4]);
+expect(result).toBeBuff(buffer);
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity helpers.clar
-      (define-constant BUFFER 0x01020304)
+**Source code:**
+```clarity
+(define-constant BUFFER 0x01020304)
 
-      (define-read-only (get-byte-array)
-        BUFFER
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeBuff(expected: Uint8Array)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-  <TabsContent value="ascii">
-    ```ts
-    import { Cl } from '@stacks/transactions';
+(define-read-only (get-byte-array)
+  BUFFER
+)
+```
 
-    const { result } = simnet.callReadOnlyFn(
-      'helpers',
-      'get-btc-buffer',
-      [],
-      simnet.deployer
-    );
+**Schema:**
+```ts
+toBeBuff(expected: Uint8Array)
+```
 
-    const btc = Cl.bufferFromAscii('btc'); // or Cl.bufferFromUtf8('btc')
+**Checking for an ASCII string buffer:**
+```ts
+import { Cl } from '@stacks/transactions';
 
-    expect(result).toBeBuff(btc.buffer);
-    ```
+const { result } = simnet.callReadOnlyFn(
+  'helpers',
+  'get-btc-buffer',
+  [],
+  simnet.deployer
+);
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity helpers.clar
-      (define-constant ASCII_BTC 0x627463)
+const btc = Cl.bufferFromAscii('btc'); // or Cl.bufferFromUtf8('btc')
 
-      (define-read-only (get-btc-buffer)
-        ASCII_BTC
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeBuff(expected: Uint8Array)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-  <TabsContent value="hex">
-    ```ts
-    import { Cl } from '@stacks/transactions';
+expect(result).toBeBuff(btc.buffer);
+```
 
-    const { result } = simnet.callReadOnlyFn(
-      "helpers",
-      "get-tx-hash",
-      [],
-      simnet.deployer
-    );
+**Source code:**
+```clarity
+(define-constant ASCII_BTC 0x627463)
 
-    const tx = Cl.bufferFromHex(
-      "73e951acd451060f13bdab7bd947136efd80511309a295e876a682ab8a423a7e"
-    );
+(define-read-only (get-btc-buffer)
+  ASCII_BTC
+)
+```
 
-    expect(result).toBeBuff(tx.buffer);
-    ```
+**Checking for a hex string buffer:**
+```ts
+import { Cl } from '@stacks/transactions';
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity helpers.clar
-      (define-constant TX_HASH 0x73e951acd451060f13bdab7bd947136efd80511309a295e876a682ab8a423a7e)
+const { result } = simnet.callReadOnlyFn(
+  "helpers",
+  "get-tx-hash",
+  [],
+  simnet.deployer
+);
 
-      (define-read-only (get-tx-hash)
-        TX_HASH
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeBuff(expected: Uint8Array)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+const tx = Cl.bufferFromHex(
+  "73e951acd451060f13bdab7bd947136efd80511309a295e876a682ab8a423a7e"
+);
 
+expect(result).toBeBuff(tx.buffer);
+```
 
+**Source code:**
+```clarity
+(define-constant TX_HASH 0x73e951acd451060f13bdab7bd947136efd80511309a295e876a682ab8a423a7e)
+
+(define-read-only (get-tx-hash)
+  TX_HASH
+)
+```
 
 # `toBeList`
 
@@ -713,58 +523,45 @@ Asserts the value of a Clarity list containing an array of Clarity values.
 
 ## Parameters
 
-
 The `Uint8Array` buffer that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a list of Clarity values</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    import { Cl } from '@stacks/transactions';
+**Checking for a list of Clarity values:**
+```ts
+import { Cl } from '@stacks/transactions';
 
-    const { result } = simnet.callReadOnlyFn(
-      'helpers',
-      'get-addresses',
-      [],
-      simnet.deployer
-    );
+const { result } = simnet.callReadOnlyFn(
+  'helpers',
+  'get-addresses',
+  [],
+  simnet.deployer
+);
 
-    expect(result).toBeList(
-      [
-        Cl.standardPrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
-        Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'),
-        Cl.standardPrincipal('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG')
-      ]
-    );
-    ```
+expect(result).toBeList(
+  [
+    Cl.standardPrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+    Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5'),
+    Cl.standardPrincipal('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG')
+  ]
+);
+```
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity helpers.clar
-      (define-read-only (get-addresses)
-        (list
-          'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-          'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
-          'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG
-        )
-      )
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeList(expected: ClarityValue[])
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+**Source code:**
+```clarity
+(define-read-only (get-addresses)
+  (list
+    'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+    'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG
+  )
+)
+```
 
-
+**Schema:**
+```ts
+toBeList(expected: ClarityValue[])
+```
 
 # `toBeTuple`
 
@@ -772,57 +569,46 @@ Asserts the value of a Clarity tuple.
 
 ## Parameters
 
-
 The `object` of Clarity values that the expected value should have.
 
+## Examples
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Checking for a tuple</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    import { Cl } from '@stacks/transactions';
-    
-    const { result } = simnet.callReadOnlyFn(
-      'pool',
-      'get-participant-data',
-      [Cl.standardPrincipal(simnet.deployer)],
-      simnet.deployer
-    );
+**Checking for a tuple:**
+```ts
+import { Cl } from '@stacks/transactions';
 
-    expect(result).toBeTuple({
-      enrollmentBlock: Cl.some(Cl.uint(1)),
-      contributionAmount: Cl.some(Cl.uint(19000000)),
-    });
-    ```
+const { result } = simnet.callReadOnlyFn(
+  'pool',
+  'get-participant-data',
+  [Cl.standardPrincipal(simnet.deployer)],
+  simnet.deployer
+);
 
-    <Accordions>
-      <Accordion title="Source code">
-      ```clarity pool.clar
-      (define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
+expect(result).toBeTuple({
+  enrollmentBlock: Cl.some(Cl.uint(1)),
+  contributionAmount: Cl.some(Cl.uint(19000000)),
+});
+```
 
-      (define-read-only (get-participant (who principal))
-        (map-get? ParticipantStatus who)
-      )
+**Source code:**
+```clarity
+(define-map ParticipantStatus principal { enrollmentBlock: uint, contributionAmount: uint })
 
-      (define-read-only (get-participant-data (who principal))
-        {
-          enrollmentBlock: (get enrollmentBlock (map-get? ParticipantStatus who)),
-          contributionAmount: (get contributionAmount (map-get? ParticipantStatus who))
-        }
-      )
+(define-read-only (get-participant (who principal))
+  (map-get? ParticipantStatus who)
+)
 
-      (map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 })
-      ```
-      </Accordion>
-      <Accordion title="Schema">
-        ```ts
-        toBeTuple(expected: Record<string, ClarityValue>)
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
+(define-read-only (get-participant-data (who principal))
+  {
+    enrollmentBlock: (get enrollmentBlock (map-get? ParticipantStatus who)),
+    contributionAmount: (get contributionAmount (map-get? ParticipantStatus who))
+  }
+)
+
+(map-set ParticipantStatus tx-sender { enrollmentBlock: u1, contributionAmount: u19000000 })
+```
+
+**Schema:**
+```ts
+toBeTuple(expected: Record<string, ClarityValue>)
+```

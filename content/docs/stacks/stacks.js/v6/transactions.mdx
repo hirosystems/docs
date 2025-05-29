@@ -4,15 +4,6 @@ description: Construct, decode transactions and work with Clarity smart contract
 full: true
 ---
 
-import { Root, API, APIExample } from 'fumadocs-openapi/ui';
-import { Property } from 'fumadocs-openapi/ui'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-
-import { InlineCode } from '@/components/inline-code';
-
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
 ## Installation
@@ -21,552 +12,239 @@ The Stacks authentication process enables secure user sign-in for web apps by ge
 @stacks/transactions
 ```
 
-{/* <Root>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`AppConfig`</h2>
+## AppConfig
 
 Configuration data for the current app.
 
 On browser platforms, creating an instance of this class without any arguments will use `window.location.origin` as the app domain. On non-browser platforms, you need to specify an app domain as the second argument.
 
-## Parameters
+### Parameters
 
-<Property required={true} deprecated={false} name={"scopes"} type={"string[]"}>
+**scopes** (string[], required): An array of strings representing permissions requested by the app.
+- Default: `['store_write']`
 
-An array of strings representing permissions requested by the app.
+**appDomain** (string, optional): Stacks apps are uniquely identified by their app domain.
 
-<span>Default: `['store_write']`</span>
+**redirectPath** (string, optional): Path on app domain to redirect users to after authentication. The authentication response token will be postpended in a query.
 
-</Property>
+**manifestPath** (string, optional): Path relative to app domain of app's manifest file.
+- Default: `"/manifest.json"`
 
-<Property required={false} deprecated={false} name={"appDomain"} type={"string"}>
+**coreNode** (string, optional): The URL of Stacks core node to use for this app. If this is not specified, the default core node will be used.
 
-Stacks apps are uniquely identified by their app domain.
+**authenticatorURL** (string, optional): The URL of a web-based authenticator to use in the event the user doesn't have Stacks installed on their machine. If this is not specified, the current default in this library will be used.
 
-</Property>
+### Examples
 
-<Property required={false} deprecated={false} name={"redirectPath"} type={"string"}>
+**Setting basic app permissions:**
+```tsx
+import { AppConfig } from '@stacks/auth';
 
-Path on app domain to redirect users to after authentication. The authentication response token will be postpended in a query.
+const appDomain = 'https://www.myapp.com';
+const appConfig = new AppConfig(
+  ['store_write'],
+  appDomain
+);
+```
 
-</Property>
+**With advanced scopes:**
+```tsx
+import { AppConfig } from '@stacks/auth';
 
-<Property required={false} deprecated={false} name={"manifestPath"} type={"string"}>
+const appDomain = 'https://www.myapp.com';
+const appConfig = new AppConfig(
+  ['store_write', 'publish_data', 'email'],
+  appDomain
+);
+```
 
-Path relative to app domain of app's manifest file.
+**Full Code Sample:**
+```tsx
+import {
+  UserSession,
+  makeAuthRequest,
+  AppConfig
+} from '@stacks/auth';
 
-<span>Default: `"/manifest.json"`</span>
+const appDomain = 'https://www.myapp.com';
 
-</Property>
+const appConfig = new AppConfig(['store_write'], appDomain);
+const userSession = new UserSession({ appConfig });
 
-<Property required={false} deprecated={false} name={"coreNode"} type={"string"}>
+// The authentication payloads are encrypted during transit, the encryption key generated below provides this
+const transitKey = userSession.generateAndStoreTransitKey();
 
-The URL of Stacks core node to use for this app. If this is not specified, the default core node will be used.
+// The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+const redirectUri = 'https://www.myapp.com/auth';
 
-</Property>
+// Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+const manifestUri = 'https://www.myapp.com/manifest.json';
 
-<Property required={false} deprecated={false} name={"authenticatorURL"} type={"string"}>
+// Generate the authentication request payload
+const authRequest = userSession.makeAuthRequest(
+  transitKey,
+  redirectUri,
+  manifestUri
+);
+```
 
-The URL of a web-based authenticator to use in the event the user doesn't have Stacks installed on their machine. If this is not specified, the current default in this library will be used.
-
-</Property>
-
-</div>
-
-<APIExample>
-
-<Tabs defaultValue="config">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="config" className='tab group'>
-      <Badge className='badge transition-colors'>Setting basic app permissions</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="options" className='tab group'>
-      <Badge className='badge transition-colors'>With advanced scopes</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="config">
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:AppConfig]
-    import { AppConfig } from '@stacks/auth';
-
-    const appDomain = 'https://www.myapp.com';
-    const appConfig = new AppConfig(
-      ['store_write'],
-      appDomain
-    );
-    ```
-
-    <Accordions>
-
-    <Accordion title={"Full Code Sample"}>
-      ```tsx twoslash
-      import {
-        UserSession,
-        makeAuthRequest,
-        AppConfig
-      } from '@stacks/auth';
-
-      const appDomain = 'https://www.myapp.com';
-
-      const appConfig = new AppConfig(['store_write'], appDomain);
-      const userSession = new UserSession({ appConfig });
-
-      // The authentication payloads are encrypted during transit, the encryption key generated below provides this
-      const transitKey = userSession.generateAndStoreTransitKey();
-      
-      // The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
-      const redirectUri = 'https://www.myapp.com/auth';
-
-      // Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
-      const manifestUri = 'https://www.myapp.com/manifest.json';
-
-      // Generate the authentication request payload
-      const authRequest = userSession.makeAuthRequest(
-        transitKey,
-        redirectUri,
-        manifestUri
-      );
-      
-      ```
-    </Accordion>
-
-    </Accordions>
-  </TabsContent>
-  <TabsContent value="options">
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:publish_data]
-    // [!code word:email]
-    import { AppConfig } from '@stacks/auth';
-
-    const appDomain = 'https://www.myapp.com';
-    const appConfig = new AppConfig(
-      ['store_write', 'publish_data', 'email'],
-      appDomain
-    );
-    ```
-    <Accordions>
-
-    <Accordion title={"Full Code Sample"}>
-      ```tsx twoslash
-      import {
-        UserSession,
-        makeAuthRequest,
-        AppConfig
-      } from '@stacks/auth';
-
-      const appDomain = 'https://www.myapp.com';
-
-      const appConfig = new AppConfig(['store_write'], appDomain);
-      const userSession = new UserSession({ appConfig });
-
-      // The authentication payloads are encrypted during transit, the encryption key generated below provides this
-      const transitKey = userSession.generateAndStoreTransitKey();
-      
-      // The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
-      const redirectUri = 'https://www.myapp.com/auth';
-
-      // Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
-      const manifestUri = 'https://www.myapp.com/manifest.json';
-
-      // Generate the authentication request payload
-      const authRequest = userSession.makeAuthRequest(
-        transitKey,
-        redirectUri,
-        manifestUri
-      );
-      
-      ```
-    </Accordion>
-
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
-</APIExample>
-
-</API>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`UserSession`</h2>
+## UserSession
 
 Represents an instance of a signed in user for a particular app.
 
-## Functions
+### Functions
 
-<Property required={false} deprecated={false} name={"isSignInPending"} type={"function"}>
+**isSignInPending** (function): Determines if there is an incoming authentication response.
 
-Determines if there is an incoming authentication response.
+**handlePendingSignIn** (function): Processes the response and provides a `userData` object containing the user's identity, BNS username and profile information.
 
-</Property>
+**isUserSignedIn** (function): Checks if the user is already authenticated.
 
-<Property required={false} deprecated={false} name={"handlePendingSignIn"} type={"function"}>
+**loadUserData** (function): Retrieves the user's profile data if the user is already authenticated.
 
-Processes the response and provides a `userData` object containing the user's identity, BNS username and profile information.
+**encryptContent** (function): Encrypts user data for secure storage.
 
-</Property>
+**decryptContent** (function): Decrypts user data for secure storage.
 
-<Property required={false} deprecated={false} name={"isUserSignedIn"} type={"function"}>
+### Examples
 
-Checks if the user is already authenticated.
+**Handling pending auth:**
+```tsx
+const isPending = userSession.isSignInPending();
 
-</Property>
+if (isPending) {
+  userSession.handlePendingSignIn().then(userData => {
+    // Do something with userData
+  });
+}
+```
 
-<Property required={false} deprecated={false} name={"loadUserData"} type={"function"}>
+**Checking if user is signed in:**
+```tsx
+const isSignedIn = userSession.isUserSignedIn();
+```
 
-Retrieves the user's profile data if the user is already authenticated.
+**Loading data for signed in user:**
+```tsx
+const isSignedIn = userSession.isUserSignedIn();
 
-</Property>
+if (isSignedIn) {
+  // Do something with the signed in user
+  const userData = userSession.loadUserData();
+}
+```
 
-<Property required={false} deprecated={false} name={"encryptContent"} type={"function"}>
+**Signing out a user:**
+```tsx
+userSession.signUserOut();
+```
 
-Encrypts user data for secure storage.
+**Encrypting user data:**
+```tsx
+const message = 'My secret message';
 
-</Property>
+const cipherText = await userSession.encryptContent(message);
+```
 
-<Property required={false} deprecated={false} name={"decryptContent"} type={"function"}>
+**Decrypting user data:**
+```tsx
+const message = 'My secret message';
 
-Decrypts user data for secure storage.
+const cipherText = await userSession.encryptContent(message);
+const plainText = await userSession.decryptContent(cipherText);
+```
 
-</Property>
+> **Note:** Encryption here uses the user's private key associated with your app only. If you need to share this data with another app or other users, you should use the equivalent methods from `@stacks/encryption` and provide a custom private key.
 
-</div>
-
-<APIExample>
-<Tabs defaultValue="pending">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="pending" className='tab group'>
-      <Badge className='badge transition-colors'>Handling pending auth</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="status" className='tab group'>
-      <Badge className='badge transition-colors'>Checking if user is signed in</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="user-data" className='tab group'>
-      <Badge className='badge transition-colors'>Loading data for signed in user</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="sign-out" className='tab group'>
-      <Badge className='badge transition-colors'>Signing out a user</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="encrypt" className='tab group'>
-      <Badge className='badge transition-colors'>Encrypting user data</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="decrypt" className='tab group'>
-      <Badge className='badge transition-colors'>Decrypting user data</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="pending">
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:isSignInPending]
-    // [!code word:handlePendingSignIn]
-    const isPending = userSession.isSignInPending();
-
-    if (isPending) {
-      userSession.handlePendingSignIn().then(userData => {
-        // Do something with userData
-      });
-    }
-    ```
-  </TabsContent>
-  <TabsContent value='status'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:isUserSignedIn]
-    const isSignedIn = userSession.isUserSignedIn();
-    ```
-  </TabsContent>
-  <TabsContent value='user-data'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:loadUserData]
-    const isSignedIn = userSession.isUserSignedIn();
-
-    if (isSignedIn) {
-      // Do something with the signed in user
-      const userData = userSession.loadUserData();
-    }
-    ```
-  </TabsContent>
-  <TabsContent value='sign-out'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:signUserOut]
-    userSession.signUserOut();
-    ```
-  </TabsContent>
-  <TabsContent value='encrypt'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:encryptContent]
-    const message = 'My secret message';
-
-    const cipherText = await userSession.encryptContent(message);
-    ```
-  </TabsContent>
-  <TabsContent value='decrypt'>
-    ```tsx twoslash
-    // @noErrors
-    // [!code word:decryptContent]
-    const message = 'My secret message';
-
-    const cipherText = await userSession.encryptContent(message);
-    const plainText = await userSession.decryptContent(cipherText);
-    ```
-  </TabsContent>
-</Tabs>
-
-<Accordions>
-
-<Accordion title={"Notes"}>
-  Note that encryption here uses the user's private key associated with your app only. If you need to share this data with another app or other users, you should use the equivalent methods from `@stacks/encryption` and provide a custom private key.
-</Accordion>
-
-</Accordions>
-
-</APIExample>
-
-</API>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`makeAuthRequest`</h2>
+## makeAuthRequest
 
 The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
 
-## Parameters
+### Parameters
 
-<Property required={true} deprecated={false} name={"transitKey"} type={"string"}>
+**transitKey** (string, required): The authentication payloads are encrypted during transit, the encryption key generated below provides this.
 
-The authentication payloads are encrypted during transit, the encryption key generated below provides this
+**redirectURI** (string, required): A URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
 
-</Property>
+**manifestUri** (string, required): Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
 
-<Property required={true} deprecated={false} name={"redirectURI"} type={"string"}>
+**scopes** (string[], optional): Additional permissions the app is requesting.
 
-A URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+### Examples
 
-</Property>
+**Generate an authentication request:**
+```tsx
+import {
+  UserSession,
+  makeAuthRequest,
+  AppConfig
+} from '@stacks/auth';
 
-<Property required={true} deprecated={false} name={"manifestUri"} type={"string"}>
+const appDomain = 'https://www.myapp.com';
 
-Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+const appConfig = new AppConfig(['store_write'], appDomain);
+const userSession = new UserSession({ appConfig });
 
-</Property>
+// The authentication payloads are encrypted during transit, the encryption key generated below provides this
+const transitKey = userSession.generateAndStoreTransitKey();
 
-<Property required={false} deprecated={false} name={"scopes"} type={"string[]"}>
+// The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+const redirectUri = 'https://www.myapp.com/auth';
 
-Additional permissions the app is requesting
+// Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+const manifestUri = 'https://www.myapp.com/manifest.json';
 
-</Property>
+// Generate the authentication request payload
+const authRequest = userSession.makeAuthRequest(
+  transitKey,
+  redirectUri,
+  manifestUri
+);
+```
 
-</div>
-
-<APIExample>
-
-<Tabs defaultValue="auth-request">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="auth-request" className='tab group'>
-      <Badge className='badge transition-colors'>Generate an authentication request</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="auth-request">
-    ```tsx twoslash
-    // @noErrors
-    import {
-      UserSession,
-      makeAuthRequest,
-      AppConfig
-    } from '@stacks/auth';
-
-    const appDomain = 'https://www.myapp.com';
-
-    const appConfig = new AppConfig(['store_write'], appDomain);
-    const userSession = new UserSession({ appConfig });
-
-    // The authentication payloads are encrypted during transit, the encryption key generated below provides this
-    const transitKey = userSession.generateAndStoreTransitKey();
-    
-    // The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
-    const redirectUri = 'https://www.myapp.com/auth';
-
-    // Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
-    const manifestUri = 'https://www.myapp.com/manifest.json';
-
-    // ---cut---
-    const authRequest = userSession.makeAuthRequest(
-      //                            ^^^^^^^^^^^^^^^
-      transitKey,
-      redirectUri,
-      manifestUri
-    );
-    ```
-
-    <Accordions>
-
-    <Accordion title={"Full Code Sample"}>
-      ```tsx twoslash
-      import {
-        UserSession,
-        makeAuthRequest,
-        AppConfig
-      } from '@stacks/auth';
-
-      const appDomain = 'https://www.myapp.com';
-
-      const appConfig = new AppConfig(['store_write'], appDomain);
-      const userSession = new UserSession({ appConfig });
-
-      // The authentication payloads are encrypted during transit, the encryption key generated below provides this
-      const transitKey = userSession.generateAndStoreTransitKey();
-      
-      // The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
-      const redirectUri = 'https://www.myapp.com/auth';
-
-      // Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
-      const manifestUri = 'https://www.myapp.com/manifest.json';
-
-      // Generate the authentication request payload
-      const authRequest = userSession.makeAuthRequest(
-        transitKey,
-        redirectUri,
-        manifestUri
-      );
-      
-      ```
-    </Accordion>
-
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
-</APIExample>
-
-</API>
-
-<API className='my-20'>
-
-<div className='flex-1'>
-
-<h2 className='mt-0'>`lookupProfile`</h2>
+## lookupProfile
 
 Look up a user's profile information by their BNS username.
 
-## Parameters
+### Parameters
 
-<Property required={true} deprecated={false} name={"username"} type={"string"}>
+**username** (string, required): The BNS username of the user.
 
-The BNS username of the user.
+**network** ('mainnet' | 'testnet' | 'devnet' | 'mocknet' | StacksNetwork, optional): Defines the network to connect to. Default is 'mainnet'.
 
-</Property>
+**zoneFileLookupURL** (string, optional): URL to fetch the zone file for the username. This is only needed if the zone file does not reside at the default location on the BNS network.
 
-<Property required={false} deprecated={false} name={"network"} type={"'mainnet' | 'testnet' | 'devnet' | 'mocknet' | StacksNetwork"}>
+### Examples
 
-Defines the network to connect to. Default is 'mainnet'.
+**Generate an authentication request:**
+```tsx
+import {
+  UserSession,
+  makeAuthRequest,
+  AppConfig
+} from '@stacks/auth';
 
-</Property>
+const appDomain = 'https://www.myapp.com';
 
+const appConfig = new AppConfig(['store_write'], appDomain);
+const userSession = new UserSession({ appConfig });
 
-<Property required={false} deprecated={false} name={"zoneFileLookupURL"} type={"string"}>
+// The authentication payloads are encrypted during transit, the encryption key generated below provides this
+const transitKey = userSession.generateAndStoreTransitKey();
 
-URL to fetch the zone file for the username. This is only needed if the zone file does not reside at the default location on the BNS network.
+// The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+const redirectUri = 'https://www.myapp.com/auth';
 
-</Property>
+// Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+const manifestUri = 'https://www.myapp.com/manifest.json';
 
-</div>
-
-<APIExample>
-
-<Tabs defaultValue="lookup">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="lookup" className='tab group'>
-      <Badge className='badge transition-colors'>Generate an authentication request</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="lookup">
-    ```tsx twoslash
-    // @noErrors
-    import {
-      UserSession,
-      makeAuthRequest,
-      AppConfig
-    } from '@stacks/auth';
-
-    const appDomain = 'https://www.myapp.com';
-
-    const appConfig = new AppConfig(['store_write'], appDomain);
-    const userSession = new UserSession({ appConfig });
-
-    // The authentication payloads are encrypted during transit, the encryption key generated below provides this
-    const transitKey = userSession.generateAndStoreTransitKey();
-    
-    // The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
-    const redirectUri = 'https://www.myapp.com/auth';
-
-    // Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
-    const manifestUri = 'https://www.myapp.com/manifest.json';
-
-    // ---cut---
-    const authRequest = userSession.makeAuthRequest(
-      //                            ^^^^^^^^^^^^^^^
-      transitKey,
-      redirectUri,
-      manifestUri
-    );
-    ```
-
-    <Accordions>
-
-    <Accordion title={"Full Code Sample"}>
-      ```tsx twoslash
-      import {
-        UserSession,
-        makeAuthRequest,
-        AppConfig
-      } from '@stacks/auth';
-
-      const appDomain = 'https://www.myapp.com';
-
-      const appConfig = new AppConfig(['store_write'], appDomain);
-      const userSession = new UserSession({ appConfig });
-
-      // The authentication payloads are encrypted during transit, the encryption key generated below provides this
-      const transitKey = userSession.generateAndStoreTransitKey();
-      
-      // The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
-      const redirectUri = 'https://www.myapp.com/auth';
-
-      // Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
-      const manifestUri = 'https://www.myapp.com/manifest.json';
-
-      // Generate the authentication request payload
-      const authRequest = userSession.makeAuthRequest(
-        transitKey,
-        redirectUri,
-        manifestUri
-      );
-      
-      ```
-    </Accordion>
-
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
-</APIExample>
-
-</API>
-
-</Root> */}
+// Generate the authentication request payload
+const authRequest = userSession.makeAuthRequest(
+  transitKey,
+  redirectUri,
+  manifestUri
+);
+```
 
 This library supports the creation of the following Stacks transaction types:
 

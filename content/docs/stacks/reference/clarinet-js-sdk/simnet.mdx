@@ -4,15 +4,6 @@ description: The Simnet class is the main entry point for the Clarinet JS SDK. I
 full: true
 ---
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
 # `initSimnet`
 
 The `initSimnet` function initializes a simulated network. It will often be the first function you call when using the SDK.
@@ -21,38 +12,24 @@ The `initSimnet` function initializes a simulated network. It will often be the 
 
 The `manifestPath` is the path to the `Clarinet.toml` manifest file.
 
-  <Tabs defaultValue="default">
-    <TabsList className='flex flex-wrap'>
-      <TabsTrigger value="default" className='tab group'>
-        <Badge className='transition-colors'>Creating a new instance of simnet</Badge>
-      </TabsTrigger>
-      <TabsTrigger value="custom" className='tab group'>
-        <Badge className='badge transition-colors'>With a custom config path</Badge>
-      </TabsTrigger>
-    </TabsList>
-    <TabsContent value="default">
-      ```ts
-      import { initSimnet } from '@hirosystems/clarinet-sdk';
+### Examples
 
-      const simnet = await initSimnet();
-      ```
-    </TabsContent>
-    <TabsContent value="custom">
-      ```ts
-      import { initSimnet } from '@hirosystems/clarinet-sdk';
+**Creating a new instance of simnet:**
+```ts
+import { initSimnet } from '@hirosystems/clarinet-sdk';
 
-      const simnet = await initSimnet('./config/Clarinet.toml');
-      ```
-    </TabsContent>
-  </Tabs>
+const simnet = await initSimnet();
+```
 
-  <Accordion type="single" collapsible className="w-full">
-    <AccordionItem value="schema">
-      <AccordionTrigger>Schema</AccordionTrigger>
-      <AccordionContent>
-        ```ts
-        initSimnet(manifestPath?: string): Promise<Simnet>
-        ```
-      </AccordionContent>
-    </AccordionItem>
-  </Accordion>
+**With a custom config path:**
+```ts
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+const simnet = await initSimnet('./config/Clarinet.toml');
+```
+
+### Schema
+
+```ts
+initSimnet(manifestPath?: string): Promise<Simnet>
+```

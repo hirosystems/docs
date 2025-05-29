@@ -4,29 +4,19 @@ description: Network and API library for working with Stacks blockchain nodes.
 full: true
 ---
 
-import { Root, API, APIExample } from 'fumadocs-openapi/ui';
-import { Property } from 'fumadocs-openapi/ui'
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-
-import { InlineCode } from '@/components/inline-code';
-import { Callout } from "@/components/callout";
-
-<Callout type="info">
-This reference refers to the `7.x.x` release of Stacks.js—it's the recommended version to use, but not needed for the Stacks Nakamoto release.
-Read the [migration guide](https://github.com/hirosystems/stacks.js/blob/main/.github/MIGRATION.md#stacksjs-5xx--7xx) to learn how to update to the latest version.
-</Callout>
+> **Info**
+> 
+> This reference refers to the `7.x.x` release of Stacks.js—it's the recommended version to use, but not needed for the Stacks Nakamoto release.
+> Read the [migration guide](https://github.com/hirosystems/stacks.js/blob/main/.github/MIGRATION.md#stacksjs-5xx--7xx) to learn how to update to the latest version.
 
 The `@stacks/network` package contains default network configurations for Stacks.
 
 ## Installation
 
-<Callout type="tip">
-Before you install: most of the time you don't need to use or even install this library directly.
-For example, instead of `STACKS_MAINNET`, simply use the string `"mainnet"` as the network parameter.
-</Callout>
+> **Tip**
+> 
+> Before you install: most of the time you don't need to use or even install this library directly.
+> For example, instead of `STACKS_MAINNET`, simply use the string `"mainnet"` as the network parameter.
 
 ```package-install
 @stacks/network@latest

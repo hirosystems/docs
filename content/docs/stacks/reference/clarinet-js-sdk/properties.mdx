@@ -4,83 +4,48 @@ description: The Clarinet JS SDK provides properties that can be used to interac
 full: true
 ---
 
-import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-
-
 # `blockHeight`
 
 Returns the current block height of simnet.
 
+## Example
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Getting the current block height</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const currentBlockHeight = simnet.blockHeight;
-    ```
-  </TabsContent>
-</Tabs>
+**Getting the current block height:**
+```ts
+const currentBlockHeight = simnet.blockHeight;
+```
 
-<Accordions>
-  <Accordion title="Response">
-    ```ts
-    1
-    ```
-  </Accordion>
-</Accordions>
-
+**Response:**
+```ts
+1
+```
 
 # `deployer`
 
 Returns the default deployer address as defined in the project file.
 
+## Examples
 
+**Getting the deployer address:**
+```ts
+const currentDeployerAddress = simnet.deployer;
+```
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Getting the deployer address</Badge>
-    </TabsTrigger>
-    <TabsTrigger value="set-deployer" className='tab group'>
-      <Badge className='badge transition-colors'>Setting the deployer to a new address</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const currentDeployerAddress = simnet.deployer;
-    ```
+**Response:**
+```ts
+ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+```
 
-    <Accordions>
-      <Accordion title="Response">
-        ```ts
-        ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-  <TabsContent value="set-deployer">
-    ```ts
-    simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5';
-    const newDeployer = simnet.deployer
-    ```
+**Setting the deployer to a new address:**
+```ts
+simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5';
+const newDeployer = simnet.deployer
+```
 
-    <Accordions>
-      <Accordion title="Response">
-        ```ts
-        ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
-        ```
-      </Accordion>
-    </Accordions>
-  </TabsContent>
-</Tabs>
-
+**Response:**
+```ts
+ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+```
 
 # `currentEpoch`
 
@@ -88,26 +53,15 @@ Returns the current epoch of simnet.
 
 This represents the Stacks blockchain's progress through discrete time periods, cycles, or upgrades.
 
+## Example
 
+**Getting the current epoch of simnet:**
+```ts
+const epoch = simnet.currentEpoch;
+```
 
-<Tabs defaultValue="default">
-  <TabsList className='flex flex-wrap'>
-    <TabsTrigger value="default" className='tab group'>
-      <Badge className='badge transition-colors'>Getting the current epoch of simnet</Badge>
-    </TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    ```ts
-    const epoch = simnet.currentEpoch;
-    ```
-  </TabsContent>
-</Tabs>
-
-<Accordions>
-  <Accordion title="Response">
-    ```ts
-    2.5
-    ```
-  </Accordion>
-</Accordions>
+**Response:**
+```ts
+2.5
+```
 
