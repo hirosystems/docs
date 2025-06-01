@@ -11,7 +11,7 @@ import {
 } from "./docs/sidebar";
 import { TreeContextProvider } from "fumadocs-ui/provider";
 import { NavProvider, Title } from "./layout/nav";
-import { LargeSearchToggle, SearchToggle } from "./layout/search-toggle";
+import { SearchToggle } from "./layout/search-toggle";
 import { cn } from "../lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
@@ -248,8 +248,7 @@ function DocsNavbar({
           />
         </div>
 
-        <LargeSearchToggle
-          hideIfDisabled
+        <SearchToggle
           className={cn(
             "w-full my-auto rounded-xl max-md:hidden",
             navMode === "top" ? "max-w-sm px-2" : "max-w-[240px]"
@@ -269,7 +268,7 @@ function DocsNavbar({
               ))}
           </div>
           {nav.children}
-          <SearchToggle hideIfDisabled className="md:hidden" />
+          <SearchToggle className="md:hidden" />
           <NavbarSidebarTrigger className="md:hidden" />
           {links
             .filter((item) => item.type === "icon")
