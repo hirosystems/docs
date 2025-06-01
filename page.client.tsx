@@ -96,7 +96,7 @@ export function PageArticle(props: HTMLAttributes<HTMLElement>) {
     <article
       {...props}
       className={cn(
-        "flex w-full flex-1 flex-col gap-2 px-4 pt-8 md:px-6 md:pt-12 xl:px-12 xl:mx-auto",
+        "flex w-full flex-1 flex-col gap-2 px-4 pt-8 md:px-6 md:pt-12 xl:px-8 xl:mx-auto",
         article,
         props.className
       )}

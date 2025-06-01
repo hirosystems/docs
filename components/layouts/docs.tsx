@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import type { PageTree } from "fumadocs-core/server";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,7 @@ import { usePathname } from "fumadocs-core/framework";
 import { Button, buttonVariants } from "../ui/button";
 import { ThemeToggle } from "../layout/theme-toggle";
 import { Kbd } from "../ui/kbd";
-import { SearchIcon, SidebarIcon } from "lucide-react";
+import { SidebarIcon } from "lucide-react";
 
 import { useKeyboardShortcuts } from "@/lib/hooks/use-keyboard-shortcuts";
 import { DocsLogo } from "../ui/icon";
@@ -218,7 +218,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
         )}
       >
         <nav className="flex flex-row items-center gap-2 size-full px-4">
-          {/* <NavbarSidebarTrigger /> */}
+          <SidebarCollapseTrigger />
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <DocsLogo className="hidden sm:block" />
           </Link>
@@ -447,7 +447,7 @@ function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed flex flex-col shrink-0 p-4 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)] md:w-[300px]",
+        "fixed flex flex-col shrink-0 p-4 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)] md:w-[275px]",
         "max-md:inset-x-0 max-md:bottom-0 max-md:bg-fd-background",
         !open && "max-md:invisible"
       )}
@@ -468,6 +468,26 @@ const linkVariants = cva(
     },
   }
 );
+
+export function SidebarCollapseTrigger(
+  props: ButtonHTMLAttributes<HTMLButtonElement>
+) {
+  const { collapsed, setCollapsed } = useSidebar();
+
+  return (
+    <button
+      type="button"
+      aria-label="Collapse Sidebar"
+      data-collapsed={collapsed}
+      {...props}
+      onClick={() => {
+        setCollapsed((prev) => !prev);
+      }}
+    >
+      {props.children ?? <SidebarIcon />}
+    </button>
+  );
+}
 
 function SidebarItem({
   item,

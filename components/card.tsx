@@ -22,33 +22,41 @@ export type CardProps = {
   title: string;
   description: string;
   innerClassName?: string;
+  variant?: "default" | "secondary";
 } & Omit<LinkProps, "title">;
 
 export function Card({
   icon,
   title,
   description,
+  variant = "default",
   ...props
 }: CardProps): React.ReactElement {
   return (
     <Link
       {...props}
       className={cn(
-        "not-prose relative block rounded-lg p-[1px] transition-all duration-300",
-        "bg-gradient-to-r from-border from-0% to-border to-100%", // Default single-color gradient (acts as border)
-        "hover:from-border hover:from-25% hover:to-gradient hover:to-100%", // Hover gradient
-        "hover:shadow-[0_6px_17px_rgba(181,172,161,0.3)] dark:hover:shadow-[0_6px_21px_rgba(0,0.0,0.8)]",
+        "not-prose relative block rounded-lg p-[1.5px] transition-all duration-500 ease-linear",
+        // Default border (non-hover state)
+        "bg-border",
+        // Variant-specific hover gradients with bottom-right direction
+        variant === "default" &&
+          "hover:bg-gradient-to-br hover:from-border hover:to-muted-foreground",
+        variant === "secondary" &&
+          "hover:bg-gradient-to-br hover:from-border hover:to-muted-foreground",
+        // Hover shadow
+        "hover:shadow-[0_6px_17px_muted-foreground]",
         props.className
       )}
     >
       <div
         className={cn(
-          "space-y-3 group relative z-10 bg-card p-5 rounded-[7px] hover:bg-accent",
+          "space-y-3 group relative z-10 bg-card p-5 rounded-[calc(0.5rem-1.5px)] h-full transition-all duration-500 ease-linear",
           props.innerClassName
         )}
       >
         {icon ? (
-          <div className="w-fit rounded-md border group-hover:bg-border p-2 text-muted-foreground [&_svg]:size-4">
+          <div className="w-fit rounded-md border group-hover:bg-border p-2 text-muted-foreground transition-all duration-100 ease-linear [&_svg]:size-4">
             {icon}
           </div>
         ) : null}
@@ -77,7 +85,7 @@ export function FeatureCard({
     <Link
       {...props}
       className={cn(
-        "not-prose flex flex-col justify-center rounded-lg border bg-background text-md transition-colors hover:bg-accent/80 pr-0 pl-12 py-0",
+        "not-prose flex flex-col justify-center rounded-lg border bg-background text-md transition-all duration-100 ease-linear hover:bg-accent/80 pr-0 pl-12 py-0",
         props.className
       )}
     >
@@ -108,7 +116,7 @@ export function SecondaryCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border bg-card p-4 text-md transition-colors hover:bg-accent/80",
+        "not-prose block rounded-lg border bg-card p-4 text-md transition-all duration-100 ease-linear hover:bg-accent/80",
         props.className
       )}
     >
@@ -147,13 +155,13 @@ export function SmallCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block transition-colors space-y-3",
+        "not-prose block transition-all duration-100 ease-linear space-y-3",
         props.className
       )}
     >
-      <div className="group flex space-x-4 px-3 py-4 rounded-lg hover:bg-accent">
+      <div className="group flex space-x-4 px-3 py-4 rounded-lg hover:bg-accent transition-all duration-100 ease-linear">
         {icon && (
-          <div className="h-fit w-fit rounded-md border bg-card group-hover:bg-background group-hover:text-primary transition-colors duration-500 ease-in-out p-2 text-muted-foreground [&_svg]:size-4">
+          <div className="h-fit w-fit rounded-md border bg-card group-hover:bg-background group-hover:text-primary transition-all duration-100 ease-linear p-2 text-muted-foreground [&_svg]:size-4">
             {icon}
           </div>
         )}
