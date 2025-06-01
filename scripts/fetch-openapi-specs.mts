@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from "fs/promises";
 import path from "path";
 import yaml from "js-yaml";

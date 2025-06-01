@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "bun run generate && next build --turbopack",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
     "lint": "bun run ./lint.ts",
-    "build:recipes": "bun run ./scripts/fetch-recipes.mts"
+    "generate-openapi": "bun run ./scripts/fetch-openapi-specs.mts",
+    "build:recipes": "bun run ./scripts/fetch-recipes.mts",
+    "generate": "bun run generate-openapi && bun run build:recipes"
   },
   "overrides": {
     "@shikijs/core": "3.3.0",
