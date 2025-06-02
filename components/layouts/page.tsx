@@ -12,29 +12,38 @@ import { Link, usePathname } from "fumadocs-core/framework";
 
 export interface DocsPageProps {
   toc?: TableOfContents;
-
+  full?: boolean;
   children: ReactNode;
 }
 
-export function DocsPage({ toc = [], ...props }: DocsPageProps) {
+export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
   return (
     <AnchorProvider toc={toc}>
-      <main className="flex w-full min-w-0 flex-col">
-        <article className="flex flex-1 flex-col w-full max-w-[860px] gap-6 px-4 py-8 md:px-6 md:mx-auto">
-          {props.children}
-          <Footer />
-        </article>
-      </main>
-      {toc.length > 0 && (
-        <div className="sticky top-(--fd-nav-height) w-[286px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 overflow-auto max-xl:hidden">
-          <p className="text-sm text-fd-muted-foreground mb-2">On this page</p>
-          <div className="flex flex-col">
-            {toc.map((item) => (
-              <TocItem key={item.url} item={item} />
-            ))}
+      <div className="flex w-full min-w-0">
+        <main className="flex flex-1 flex-col">
+          <article
+            className={cn(
+              "flex flex-1 flex-col w-full gap-6 px-4 py-8 md:px-6 md:mx-auto",
+              full ? "max-w-[1120px]" : "max-w-[860px]"
+            )}
+          >
+            {props.children}
+            <Footer />
+          </article>
+        </main>
+        {toc.length > 0 && !full && (
+          <div className="sticky top-(--fd-nav-height) w-[225px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 overflow-auto max-xl:hidden">
+            <p className="text-sm text-fd-muted-foreground mb-2">
+              On this page
+            </p>
+            <div className="flex flex-col">
+              {toc.map((item) => (
+                <TocItem key={item.url} item={item} />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </AnchorProvider>
   );
 }

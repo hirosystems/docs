@@ -166,7 +166,7 @@ export function SmallCard({
           </div>
         )}
         <div className="flex flex-col w-full">
-          <h3 className="mb-1 font-inter font-medium text-md text-[#141312] dark:text-[#f6f5f3]">
+          <h3 className="mb-1 font-inter font-medium text-md text-primary dark:text-[#f6f5f3]">
             {title}
           </h3>
           <p className="text-sm text-muted-foreground">{description}</p>

@@ -12,7 +12,7 @@ export function SearchToggle(props: ComponentProps<"button">) {
 
   return (
     <div
-      className="w-full max-w-[221px] h-8 bg-white dark:bg-neutral-950 rounded-md flex items-center px-2 cursor-pointer group"
+      className="w-full max-w-[221px] h-9 bg-white dark:bg-neutral-950 rounded-md flex items-center px-2 cursor-pointer group"
       onClick={() => setOpenSearch(true)}
     >
       <div className="flex items-center flex-1 gap-2">

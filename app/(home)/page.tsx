@@ -7,8 +7,8 @@ import heroImage from "@/public/stacks-hero.svg";
 
 export default function HomePage() {
   return (
-    <main className="my-6 space-y-10">
-      <div className="px-4 md:pl-[var(--nav-offset)] md:pr-4">
+    <main className="my-2 space-y-10">
+      <div className="px-4 md:px-[var(--nav-offset)]">
         <div className="space-y-10">
           <div className="space-y-1">
             <div className="flex space-x-6 items-end">
@@ -19,8 +19,8 @@ export default function HomePage() {
                 priority
               />
 
-              <div className="flex flex-col [&_h2]:mt-0 [&_h2]:mb-2 [&_p]:mb-6">
-                <h2>Welcome to Hiro Docs</h2>
+              <div className="flex flex-col [&_p]:mb-6 space-y-3">
+                <h3 className="text-3xl">Welcome to Hiro Docs</h3>
                 <p>
                   Find all the guides and resources you need to build on Stacks.
                 </p>

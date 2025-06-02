@@ -16,7 +16,7 @@ import {
   DocsBody,
   DocsDescription,
   DocsTitle,
-} from "@/components/page";
+} from "@/components/layouts/page";
 import { CustomTable as Table, TableProps } from "@/components/table";
 import { OrderedList, UnorderedList } from "@/components/lists";
 import { Callout } from "@/components/callout";
@@ -44,23 +44,14 @@ export default async function Page(props: {
   const MDX = page.data.body;
 
   return (
-    <DocsPage
-      toc={page.data.toc}
-      full={page.data.full}
-      tableOfContent={{
-        style: "clerk",
-      }}
-    >
-      <div className="mb-4">
-        <div className="flex justify-between items-start gap-4">
-          {(!params.slug?.includes("stacks") || params.slug?.length > 1) &&
-            (!params.slug?.includes("bitcoin") || params.slug?.length > 1) && (
-              <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
-            )}
-          {page.data.llm && <LLMShare content={LLMContent} />}
-        </div>
-        <DocsDescription>{page.data.description}</DocsDescription>
+    <DocsPage toc={page.data.toc} full={page.data.full}>
+      <div className="flex justify-between items-start gap-4">
+        {(!params.slug?.includes("start") || params.slug?.length > 1) && (
+          <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
+        )}
+        {page.data.llm && <LLMShare content={LLMContent} />}
       </div>
+      <DocsDescription>{page.data.description}</DocsDescription>
 
       <DocsBody>
         <MDX

@@ -157,7 +157,7 @@ export function TopNav({ className }: TopNavProps) {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-3">
           <div
-            className="w-full max-w-[221px] h-8 bg-white dark:bg-neutral-950 rounded-md flex items-center px-2 cursor-pointer group"
+            className="w-full max-w-[221px] h-9 bg-neutral-100 dark:bg-neutral-950 rounded-md flex items-center px-2 cursor-pointer group"
             onClick={() => setOpen(true)}
           >
             <div className="flex items-center flex-1 gap-2">
@@ -175,9 +175,9 @@ export function TopNav({ className }: TopNavProps) {
               </Kbd>
             </div>
           </div>
-          <Button className="cursor-pointer bg-neutral-150 dark:bg-neutral-700 flex items-center gap-2 px-2.5 py-1.5 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-800">
+          <Button className="bg-orange-500 text-white hover:bg-orange-600 flex items-center gap-2 px-2.5 py-1.5 transition-colors duration-200">
             Hiro Platform
-            <Kbd className="flex items-center justify-center rounded text-sm border border-border bg-neutral-100 dark:bg-neutral-500">
+            <Kbd className="flex items-center justify-center rounded text-sm border border-orange-400 bg-orange-400 text-white">
               P
             </Kbd>
           </Button>

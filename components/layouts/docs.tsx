@@ -1,7 +1,7 @@
 "use client";
 import React, { ButtonHTMLAttributes } from "react";
 import type { PageTree } from "fumadocs-core/server";
-import { type ComponentProps, type ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
 import Link from "fumadocs-core/link";
@@ -9,10 +9,10 @@ import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { useSidebar } from "fumadocs-ui/contexts/sidebar";
 import { cva } from "class-variance-authority";
 import { usePathname } from "fumadocs-core/framework";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { ThemeToggle } from "../layout/theme-toggle";
 import { Kbd } from "../ui/kbd";
-import { SidebarIcon } from "lucide-react";
+import { ArrowUpRight, SidebarIcon } from "lucide-react";
 
 import { useKeyboardShortcuts } from "@/lib/hooks/use-keyboard-shortcuts";
 import { DocsLogo } from "../ui/icon";
@@ -140,12 +140,12 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#f6f5f3] hover:text-[#141312] focus:bg-[#f6f5f3] focus:text-[#141312]",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted-foreground hover:text-primary focus:bg-[#f6f5f3] focus:text-primary",
             className
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none text-[#141312]">
+          <div className="text-sm font-medium leading-none text-primary">
             {title}
           </div>
           <p className="line-clamp-2 text-sm leading-snug text-[#8c877d]">
@@ -161,7 +161,7 @@ ListItem.displayName = "ListItem";
 export function DocsLayout({ tree, children }: DocsLayoutProps) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { registerShortcut } = useKeyboardShortcuts();
-  const { open } = useSidebar();
+  const { open, collapsed } = useSidebar();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -218,10 +218,12 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
         )}
       >
         <nav className="flex flex-row items-center gap-2 size-full px-4">
-          <SidebarCollapseTrigger />
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <DocsLogo className="hidden sm:block" />
-          </Link>
+          <div className="flex flex-row items-center gap-4">
+            <NavbarSidebarTrigger />
+            <Link href="/" className="mr-6 flex items-center space-x-2">
+              <DocsLogo className="hidden sm:block" />
+            </Link>
+          </div>
 
           <div className="hidden md:block">
             <NavigationMenu>
@@ -229,28 +231,26 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     href="/get-started"
-                    className={cn(
-                      "font-fono text-sm px-4 py-2 text-[#595650] hover:text-[#141312] hover:bg-[#f6f5f3] bg-transparent rounded-md"
-                    )}
+                    className={cn("font-fono text-sm px-4 py-2 rounded-md")}
                   >
                     Get Started
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 text-[#595650] hover:text-[#141312] hover:bg-[#f6f5f3] bg-transparent rounded-md">
+                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
                     Tools
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-white">
+                  <NavigationMenuContent className="mt-12 bg-background border">
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#f6f5f3] to-[#ebe9e6] p-6 no-underline outline-none focus:shadow-md hover:from-[#ebe9e6] hover:to-[#cfc9c2]"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
                             href="/tools"
                           >
                             <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-[#141312]">
+                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
                               Developer Tools
                             </div>
                             <p className="text-sm leading-tight text-[#8c877d]">
@@ -273,19 +273,19 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 text-[#595650] hover:text-[#141312] hover:bg-[#f6f5f3] bg-transparent rounded-md">
+                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
                     APIs
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-white">
+                  <NavigationMenuContent className="mt-12 bg-background border">
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#f6f5f3] to-[#ebe9e6] p-6 no-underline outline-none focus:shadow-md hover:from-[#ebe9e6] hover:to-[#cfc9c2]"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
                             href="/apis"
                           >
                             <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-[#141312]">
+                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
                               APIs
                             </div>
                             <p className="text-sm leading-tight text-[#8c877d]">
@@ -308,19 +308,19 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 text-[#595650] hover:text-[#141312] hover:bg-[#f6f5f3] bg-transparent rounded-md">
+                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
                     Libraries & SDKs
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-white">
+                  <NavigationMenuContent className="mt-12 bg-background border">
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#f6f5f3] to-[#ebe9e6] p-6 no-underline outline-none focus:shadow-md hover:from-[#ebe9e6] hover:to-[#cfc9c2]"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
                             href="/libraries"
                           >
                             <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-[#141312]">
+                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
                               Libraries & SDKs
                             </div>
                             <p className="text-sm leading-tight text-[#8c877d]">
@@ -344,19 +344,19 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 text-[#595650] hover:text-[#141312] hover:bg-[#f6f5f3] bg-transparent rounded-md">
+                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
                     Resources
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-white">
+                  <NavigationMenuContent className="mt-12 bg-background border">
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#f6f5f3] to-[#ebe9e6] p-6 no-underline outline-none focus:shadow-md hover:from-[#ebe9e6] hover:to-[#cfc9c2]"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
                             href="/resources"
                           >
                             <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-[#141312]">
+                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
                               Resources
                             </div>
                             <p className="text-sm leading-tight text-[#8c877d]">
@@ -383,54 +383,31 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
 
           <div className="flex flex-1 items-center justify-end space-x-3">
             <SearchToggle />
-            <Button className="cursor-pointer bg-neutral-150 dark:bg-neutral-700 flex items-center gap-2 px-2.5 py-1.5 text-primary hover:bg-neutral-200 dark:hover:bg-neutral-800">
-              Hiro Platform
-              <Kbd className="flex items-center justify-center rounded text-sm border border-border bg-neutral-100 dark:bg-neutral-500">
-                P
-              </Kbd>
-            </Button>
             <ThemeToggle />
+            <Button className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group">
+              Sign in
+              <ArrowUpRight className="w-3.5 h-3.5 translate-y-0.5 group-hover:translate-y-0 transition-transform duration-200" />
+            </Button>
           </div>
         </nav>
       </header>
       <main
         id="nd-docs-layout"
-        className="flex flex-1 flex-row pe-(--fd-layout-offset) [--fd-tocnav-height:36px] md:[--fd-sidebar-width:268px] lg:[--fd-sidebar-width:286px] xl:[--fd-toc-width:286px] xl:[--fd-tocnav-height:0px] [--fd-nav-height:56px] md:[--fd-nav-height:0px]"
+        className={cn(
+          "flex flex-1 flex-row transition-all duration-100",
+          collapsed && "md:pl-[calc(var(--nav-offset)-115px)]"
+        )}
       >
         <Sidebar />
-        {children}
+        <div className="flex-1 min-w-0">{children}</div>
       </main>
     </TreeContextProvider>
   );
 }
 
-function NavbarSidebarTrigger({
-  className,
-  ...props
-}: ComponentProps<"button">) {
-  const { setOpen, open } = useSidebar();
-  console.log(open);
-
-  return (
-    <button
-      {...props}
-      className={cn(
-        buttonVariants({
-          variant: "ghost",
-          size: "icon-sm",
-          className,
-        })
-      )}
-      onClick={() => setOpen((prev) => !prev)}
-    >
-      <SidebarIcon />
-    </button>
-  );
-}
-
 function Sidebar() {
   const { root } = useTreeContext();
-  const { open } = useSidebar();
+  const { open, collapsed } = useSidebar();
 
   const children = useMemo(() => {
     function renderItems(items: PageTree.Node[]) {
@@ -446,10 +423,13 @@ function Sidebar() {
 
   return (
     <aside
+      data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 p-4 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)] md:w-[275px]",
+        "fixed flex flex-col shrink-0 py-4 px-2 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
         "max-md:inset-x-0 max-md:bottom-0 max-md:bg-fd-background",
-        !open && "max-md:invisible"
+        !open && "max-md:invisible",
+        "md:w-[250px] md:transition-all md:duration-100 ease-linear",
+        collapsed && "md:w-0 md:p-0 md:overflow-hidden md:invisible"
       )}
     >
       {children}
@@ -458,18 +438,18 @@ function Sidebar() {
 }
 
 const linkVariants = cva(
-  "flex items-center gap-2 w-full py-1.5 rounded-lg text-fd-foreground/80 [&_svg]:size-4",
+  "flex items-center gap-2 w-full py-1.5 px-2 rounded-lg text-muted-foreground [&_svg]:size-4",
   {
     variants: {
       active: {
-        true: "text-fd-primary font-medium",
-        false: "hover:text-fd-accent-foreground",
+        true: "text-primary bg-neutral-150 dark:bg-neutral-700",
+        false: "hover:text-fd-accent-foreground hover:bg-card",
       },
     },
   }
 );
 
-export function SidebarCollapseTrigger(
+export function NavbarSidebarTrigger(
   props: ButtonHTMLAttributes<HTMLButtonElement>
 ) {
   const { collapsed, setCollapsed } = useSidebar();
@@ -480,11 +460,16 @@ export function SidebarCollapseTrigger(
       aria-label="Collapse Sidebar"
       data-collapsed={collapsed}
       {...props}
+      className={cn(
+        "flex items-center justify-center w-8 h-8 rounded-md border border-border hover:bg-neutral-200 dark:bg-neutral-700 transition-colors cursor-pointer",
+        "hidden md:flex",
+        props.className
+      )}
       onClick={() => {
         setCollapsed((prev) => !prev);
       }}
     >
-      {props.children ?? <SidebarIcon />}
+      <SidebarIcon className="w-4 h-4" />
     </button>
   );
 }
@@ -514,7 +499,7 @@ function SidebarItem({
 
   if (item.type === "separator") {
     return (
-      <p className="text-fd-muted-foreground mt-6 mb-2 first:mt-0">
+      <p className="text-primary font-fono mt-6 mb-2 first:mt-0 px-2">
         {item.icon}
         {item.name}
       </p>
