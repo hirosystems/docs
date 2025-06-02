@@ -1,170 +1,38 @@
 "use client";
 import React, { ButtonHTMLAttributes } from "react";
 import type { PageTree } from "fumadocs-core/server";
-import { type ReactNode, useMemo, useState, useEffect } from "react";
+import { type ReactNode, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
 import Link from "fumadocs-core/link";
-import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { useSidebar } from "fumadocs-ui/contexts/sidebar";
 import { cva } from "class-variance-authority";
 import { usePathname } from "fumadocs-core/framework";
 import { Button } from "../ui/button";
 import { ThemeToggle } from "../layout/theme-toggle";
-import { Kbd } from "../ui/kbd";
-import {
-  ArrowUpRight,
-  SidebarIcon,
-  ChevronRight,
-  ChevronDown,
-} from "lucide-react";
+import { ArrowUpRight, SidebarIcon, ChevronRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-
 import { useKeyboardShortcuts } from "@/lib/hooks/use-keyboard-shortcuts";
 import { DocsLogo } from "../ui/icon";
 import { SearchToggle } from "../layout/search-toggle";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-  NavigationMenuLink,
-} from "../ui/navigation-menu";
+import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
+import { renderNavItem } from "./links";
+import { baseOptions } from "@/app/layout.config";
 
 export interface DocsLayoutProps {
   tree: PageTree.Root;
   children: ReactNode;
 }
 
-const toolsItems = [
-  {
-    title: "Clarinet",
-    href: "/tools/clarinet",
-    description:
-      "Development environment and testing framework for Clarity smart contracts.",
-  },
-  {
-    title: "Chainhook",
-    href: "/tools/chainhook",
-    description: "Monitor and analyze Clarity smart contract activity.",
-  },
-  {
-    title: "Bitcoin indexer",
-    href: "/tools/bitcoin-indexer",
-    description: "Indexer for Bitcoin blockchain data.",
-  },
-];
-
-const apisItems = [
-  {
-    title: "Stacks API",
-    href: "/apis/stacks-blockchain",
-    description:
-      "RESTful API for accessing Stacks blockchain data and functionality.",
-  },
-  {
-    title: "Token Metadata API",
-    href: "/apis/token-metadata",
-    description: "API for retrieving NFT and fungible token metadata.",
-  },
-  {
-    title: "Ordinals API",
-    href: "/apis/ordinals",
-    description: "API for Bitcoin Ordinals and inscriptions data.",
-  },
-  {
-    title: "Runes API",
-    href: "/apis/runes",
-    description: "API for Bitcoin Runes data.",
-  },
-];
-
-const librariesItems = [
-  {
-    title: "Stacks.js",
-    href: "/libraries/stacks-js",
-    description:
-      "JavaScript/TypeScript library for building Stacks applications.",
-  },
-  {
-    title: "Clarity SDK",
-    href: "/libraries/clarity-sdk",
-    description:
-      "Software development kit for Clarity smart contract development.",
-  },
-  {
-    title: "Connect",
-    href: "/libraries/connect",
-    description: "Library for connecting web applications to Stacks wallets.",
-  },
-  {
-    title: "Auth",
-    href: "/libraries/auth",
-    description: "Authentication library for Stacks-based applications.",
-  },
-];
-
-const resourcesItems = [
-  {
-    title: "Tutorials",
-    href: "/resources/tutorials",
-    description: "Step-by-step guides for building on Stacks.",
-  },
-  {
-    title: "Examples",
-    href: "/resources/examples",
-    description: "Sample applications and code snippets.",
-  },
-  {
-    title: "Community",
-    href: "/resources/community",
-    description: "Join the Stacks developer community.",
-  },
-  {
-    title: "Support",
-    href: "/resources/support",
-    description: "Get help and support for your development needs.",
-  },
-];
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <Link
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted-foreground hover:text-primary focus:bg-[#f6f5f3] focus:text-primary",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none text-primary">
-            {title}
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-[#8c877d]">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
-
 export function DocsLayout({ tree, children }: DocsLayoutProps) {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { registerShortcut } = useKeyboardShortcuts();
-  const { open, collapsed } = useSidebar();
+  const { collapsed } = useSidebar();
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -172,7 +40,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check initial scroll position
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -222,7 +90,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       >
         <nav className="flex flex-row items-center gap-2 size-full px-4">
           <div className="flex flex-row items-center gap-4">
-            <NavbarSidebarTrigger />
+            {/* <NavbarSidebarTrigger /> */}
             <Link href="/" className="mr-6 flex items-center space-x-2">
               <DocsLogo className="hidden sm:block" />
             </Link>
@@ -230,156 +98,8 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
 
           <div className="hidden md:block">
             <NavigationMenu>
-              <NavigationMenuList className="flex flex-row items-center gap-1">
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/start"
-                    className={cn("font-fono text-sm px-4 py-2 rounded-md")}
-                  >
-                    Get Started
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
-                    Tools
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-background border">
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
-                            href="/tools"
-                          >
-                            <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
-                              Developer Tools
-                            </div>
-                            <p className="text-sm leading-tight text-[#8c877d]">
-                              Essential tools for building on Stacks blockchain.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      {toolsItems.map((item) => (
-                        <ListItem
-                          key={item.title}
-                          href={item.href}
-                          title={item.title}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
-                    APIs
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-background border">
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
-                            href="/apis"
-                          >
-                            <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
-                              APIs
-                            </div>
-                            <p className="text-sm leading-tight text-[#8c877d]">
-                              RESTful APIs for accessing Stacks blockchain data.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      {apisItems.map((item) => (
-                        <ListItem
-                          key={item.title}
-                          href={item.href}
-                          title={item.title}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
-                    Libraries & SDKs
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-background border">
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
-                            href="/libraries"
-                          >
-                            <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
-                              Libraries & SDKs
-                            </div>
-                            <p className="text-sm leading-tight text-[#8c877d]">
-                              Software development kits and libraries for
-                              Stacks.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      {librariesItems.map((item) => (
-                        <ListItem
-                          key={item.title}
-                          href={item.href}
-                          title={item.title}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md">
-                    Resources
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="mt-12 bg-background border">
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-neutral-100 dark:bg-neutral-950 p-6 no-underline outline-none focus:shadow-md hover:muted-foreground"
-                            href="/resources"
-                          >
-                            <div className="w-6 h-6 bg-[#ff5500] rounded-sm mb-2" />
-                            <div className="mb-2 mt-4 text-lg font-medium text-primary">
-                              Resources
-                            </div>
-                            <p className="text-sm leading-tight text-[#8c877d]">
-                              Tutorials, examples, and community resources.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      {resourcesItems.map((item) => (
-                        <ListItem
-                          key={item.title}
-                          href={item.href}
-                          title={item.title}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+              <NavigationMenuList className="flex flex-row items-center">
+                {baseOptions.links?.map((link) => renderNavItem(link))}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
