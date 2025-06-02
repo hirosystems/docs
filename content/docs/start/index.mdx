@@ -1,0 +1,107 @@
+---
+title: Overview
+full: true
+---
+
+import { Card as MainCard, SmallCard } from '@/components/card';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { PageFooter } from '@/components/footer';
+import { MessageCircle, Braces, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet } from 'lucide-react';
+import { API, Backend, BugIcon, Clarinet, Cloud, Chainhook, Frontend, Hiro, Js, Newspaper, Pulse, QuestionIcon } from '@/components/ui/icon';
+import heroImage from '@/public/stacks-hero.svg';
+
+<div className='flex flex-col space-y-10 pt-0'>
+<div className='flex flex-col'>
+
+#### Explore by category
+
+---
+
+<Cards>
+  <SmallCard
+    icon={<Cloud />}
+    href="/stacks/platform"
+    title="Quickstart App Templates"
+    description="Full-stack starter-kits, including front-end, back-end, and smart contract components."
+  />
+  <SmallCard
+    icon={<Code />}
+    href="/stacks/clarinet"
+    title="Smart Contract Development"
+    description="Kickstart your smart contract journey with Clarinet and the Clarinet JS SDK."
+  />
+  <SmallCard
+    icon={<Database />}
+    href="/stacks/chainhook"
+    title="Data Streaming &amp; Events"
+    description="Create custom event streams for real-time data with Chainhook."
+  />
+  <SmallCard
+    icon={<Frontend />}
+    href="/stacks/stacks.js"
+    title="Frontend Web Development"
+    description="Interact with smart contracts on the web with the Stacks.js library."
+  />
+  <SmallCard
+    icon={<Backend />}
+    href="/stacks/api"
+    title="Backend Development"
+    description="Explore our hosted APIs offering a familiar REST interface."
+  />
+  <SmallCard
+    icon={<Braces />}
+    href="/stacks/token-metadata-api"
+    title="Token Management"
+    description="Explore our hosted API for fetching token metadata on Stacks."
+  />
+</Cards>
+
+</div>
+
+
+<div className='flex flex-col'>
+
+<h4 id="explore-by-tool" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
+  <a href="#explore-by-tool" className="not-prose group text-sm uppercase">Explore by tool</a>
+</h4>
+
+---
+
+<Cards>
+  <SmallCard
+    icon={<Hiro />}
+    href="/stacks/platform"
+    title="Hiro Platform"
+    description="A developer platform for building, deploying and scaling Bitcoin apps."
+  />
+  <SmallCard
+    icon={<Clarinet />}
+    href="/stacks/clarinet"
+    title="Clarinet"
+    description="Create, test, and deploy smart contracts on the Stacks blockchain."
+  />
+  <SmallCard
+    icon={<API />}
+    href="/stacks/api"
+    title="Stacks Blockchain API"
+    description="Interact with the Stacks blockchain from your backend via our hosted API."
+  />
+  <SmallCard
+    icon={<Js />}
+    href="/stacks/stacks.js"
+    title="Stacks.js"
+    description="A collection of JavaScript libraries to build web applications on Stacks."
+  />
+  <SmallCard
+    icon={<Chainhook />}
+    href="/stacks/chainhook"
+    title="Chainhook"
+    description="Create customizable, lightweight databases for on-chain events for Bitcoin and Stacks."
+  />
+</Cards>
+
+</div>
+
+</div>
+
+<PageFooter />

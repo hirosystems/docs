@@ -1,3 +1,4 @@
+import React, { JSX } from "react";
 import { AlertCircleIcon } from "lucide-react";
 import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";

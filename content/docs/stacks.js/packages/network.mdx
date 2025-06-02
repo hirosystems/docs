@@ -1,0 +1,61 @@
+---
+title: '@stacks/network'
+description: Network and API library for working with Stacks blockchain nodes.
+full: true
+---
+
+> **Info**
+> 
+> This reference refers to the `7.x.x` release of Stacks.js—it's the recommended version to use, but not needed for the Stacks Nakamoto release.
+> Read the [migration guide](https://github.com/hirosystems/stacks.js/blob/main/.github/MIGRATION.md#stacksjs-5xx--7xx) to learn how to update to the latest version.
+
+The `@stacks/network` package contains default network configurations for Stacks.
+
+## Installation
+
+> **Tip**
+> 
+> Before you install: most of the time you don't need to use or even install this library directly.
+> For example, instead of `STACKS_MAINNET`, simply use the string `"mainnet"` as the network parameter.
+
+```package-install
+@stacks/network@latest
+```
+
+## Usage
+
+## The network object
+
+A network in Stacks.js is an object defining several properties.
+
+```ts
+import { STACKS_MAINNET, STACKS_TESTNET, STACKS_DEVNET } from '@stacks/network';
+
+console.log(STACKS_MAINNET);
+// {
+//   chainId: 1,
+//   transactionVersion: 0,
+//   peerNetworkId: 385875968,
+//   magicBytes: 'X2',
+//   bootAddress: 'SP000000000000000000002Q6VF78',
+//   addressVersion: { singleSig: 22, multiSig: 20 }
+// }
+```
+
+## Network usage in transaction building
+
+```ts
+import { STACKS_MAINNET } from '@stacks/network';
+import { makeSTXTokenTransfer } from '@stacks/transactions';
+
+const txOptions = {
+  recipient: 'SP2BS6HD7TN34V8Z5BNF8Q2AW3K8K2DPV4264CF26',
+  amount: 100,
+  // ...
+  network: 'mainnet', // 'mainnet', 'testnet', or 'devnet', (defaults to mainnet)
+  // OR
+  network: STACKS_MAINNET, // any compatible network object
+};
+
+const transaction = await makeSTXTokenTransfer(txOptions);
+```

@@ -1,0 +1,272 @@
+---
+title: Stacks Scopes
+description: Reference guide for available scopes for Stacks.
+full: true
+---
+
+Stacks scopes are parameters you use to define the `if this` specification logic of your Chainhook on the Stacks blockchain. In other words, scopes specify what on-chain events you are looking to monitor and track. For more information on Chainhook design, please view [predicate design](/stacks/chainhook/concepts/predicate-design).
+
+## `txid`
+
+The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
+
+### Parameters
+
+**equals** (string, required): The `equals` property is a 32 bytes hex encoded type used to specify the exact transaction ID to match.
+
+### Example
+
+**By transaction ID:**
+```json
+{
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
+}
+```
+
+## `block_height`
+
+The `block_height` scope allows you to query blocks based on their height. This is useful for identifying specific blocks or ranges of blocks in the blockchain.
+
+### Parameters
+
+**equals** (integer, required): The `equals` property specifies the exact height of the block to match.
+
+**higher_than** (integer, required): The `higher_than` property specifies that the block height should be greater than the provided value.
+
+**lower_than** (integer, required): The `lower_than` property specifies that the block height should be less than the provided value.
+
+**between** (array of integers, required): The `between` property specifies a range of block heights to match, inclusive of the provided start and end values.
+
+### Examples
+
+**By block height:**
+```json
+{
+  "if_this": {
+    "scope": "block_height",
+    "equals": 141200
+  }
+}
+```
+
+**Using higher_than:**
+```json
+{
+  "if_this": {
+    "scope": "block_height",
+    "higher_than": 10000
+  }
+}
+```
+
+**Using lower_than:**
+```json
+{
+  "if_this": {
+    "scope": "block_height",
+    "lower_than": 10000
+  }
+}
+```
+
+**Between two block heights:**
+```json
+{
+  "if_this": {
+    "scope": "block_height",
+    "between": [0, 10000]
+  }
+}
+```
+
+## `ft_transfer`
+
+The `ft_transfer` scope allows you to query transactions based on fungible token transfers. This is useful for tracking specific token movements or auditing token transfer histories.
+
+### Parameters
+
+**asset_identifier** (string, required): The `asset_identifier` property specifies the fully qualified asset identifier to observe.
+
+**actions** (string[], required): The `actions` property specifies the types of token actions to observe, such as `mint`, `transfer`, or `burn`.
+
+### Examples
+
+**By a single action:**
+```json
+{
+  "if_this": {
+    "scope": "ft_transfer",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
+    "actions": ["transfer"]
+  }
+}
+```
+
+**Passing all ft actions:**
+```json
+{
+  "if_this": {
+    "scope": "ft_transfer",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
+    "actions": ["mint", "transfer", "burn"]
+  }
+}
+```
+
+## `nft_transfer`
+
+The `nft_transfer` scope allows you to query transactions based on non-fungible token transfers. This is useful for tracking specific NFT movements or auditing NFT transfer histories.
+
+### Parameters
+
+**asset_identifier** (string, required): The `asset_identifier` property specifies the fully qualified asset identifier to observe.
+
+**actions** (array of strings, required): The `actions` property specifies the types of NFT actions to observe, such as `mint`, `transfer`, or `burn`.
+
+### Examples
+
+**By non-fungible token mint:**
+```json
+{
+  "if_this": {
+    "scope": "nft_transfer",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
+    "actions": ["mint"]
+  }
+}
+```
+
+**Passing all nft actions:**
+```json
+{
+  "if_this": {
+    "scope": "nft_transfer",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
+    "actions": ["mint", "transfer", "burn"]
+  }
+}
+```
+
+## `stx_transfer`
+
+The `stx_transfer` scope allows you to query transactions involving STX token movements. This is crucial for monitoring STX transfers, including minting, burning, and locking actions.
+
+### Parameters
+
+**actions** (array of strings, required): The `actions` property specifies the types of STX token actions to observe, such as `mint`, `transfer`, `burn`, and `lock`.
+
+### Examples
+
+**By STX token transfer:**
+```json
+{
+  "if_this": {
+    "scope": "stx_transfer",
+    "actions": ["transfer"]
+  }
+}
+```
+
+**Passing all actions:**
+```json
+{
+  "if_this": {
+    "scope": "stx_transfer",
+    "actions": ["mint", "transfer", "burn", "lock"]
+  }
+}
+```
+
+## `print_event`
+
+The `print_event` scope allows you to query transactions based on specific print events emitted during contract execution. This is useful for monitoring specific events for auditing or tracking purposes.
+
+### Parameters
+
+**contract_identifier** (string, required): The `contract_identifier` property specifies the fully qualified contract identifier to observe.
+
+**contains** (string, required): The `contains` property is used for matching an event containing the specified string.
+
+**matches_regex** (string, required): The `matches_regex` property is used for matching an event that regex matches with the specified string.
+
+### Examples
+
+**Using contains:**
+```json
+{
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+    "contains": "monkey"
+  }
+}
+```
+
+**Using matches_regex:**
+```json
+{
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+    "matches_regex": "(?:^|\\W)monkey(?:$|\\W)"
+  }
+}
+```
+
+## `contract_call`
+
+The `contract_call` scope allows you to query transactions that involve direct calls to specific methods within a smart contract. This is particularly useful for tracking interactions with critical contract functions.
+
+### Parameters
+
+**contract_identifier** (string, required): The `contract_identifier` property specifies the fully qualified contract identifier to observe.
+
+**method** (string, required): The `method` property specifies the specific method within the contract to observe.
+
+### Example
+
+**Scoping by contract method call:**
+```json
+{
+  "if_this": {
+    "scope": "contract_call",
+    "contract_identifier": "SP000000000000000000002Q6VF78.pox",
+    "method": "stack-stx"
+  }
+}
+```
+
+## `contract_deployment`
+
+The `contract_deployment` scope allows you to query transactions involving the deployment of smart contracts. This is crucial for monitoring new contract deployments and ensuring compliance with expected deployments.
+
+### Parameters
+
+**deployer** (string, required): The `deployer` property specifies the STX address of the deployer to observe.
+
+**implement_trait** (string, required): The `implement_trait` property specifies the contract trait to observe.
+
+### Examples
+
+**By deployer:**
+```json
+{
+  "if_this": {
+    "scope": "contract_deployment",
+    "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+  }
+}
+```
+
+**By contract trait:**
+```json
+{
+  "if_this": {
+    "scope": "contract_deployment",
+    "implement_trait": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sip09-protocol"
+  }
+}
+```

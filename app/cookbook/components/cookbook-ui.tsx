@@ -2,7 +2,7 @@
 
 import { useState, useMemo, Suspense, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Recipe } from "@/types/recipes";
+import { Recipe } from "@/types";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -299,7 +299,7 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
           {view === "list" ? (
             <Table>
               <TableBody>
-                {filteredRecipeCards.map(({ recipe, card }, index) => {
+                {filteredRecipeCards.map(({ recipe }, index) => {
                   const isLastItem = index === filteredRecipeCards.length - 1;
 
                   return (

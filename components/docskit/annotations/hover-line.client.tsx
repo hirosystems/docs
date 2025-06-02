@@ -2,10 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { InnerLine } from "codehike/code";
-import { CustomLineProps } from "codehike/code/types";
 import { useHover } from "@/context/hover";
 
-export function HoverLineClient({ annotation, ...props }: CustomLineProps) {
+export function HoverLineClient({ annotation, ...props }: any) {
   const lineRef = useRef<HTMLDivElement>(null);
   const originalScrollRef = useRef<number | null>(null);
 

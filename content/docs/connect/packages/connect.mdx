@@ -1,0 +1,347 @@
+---
+title: '@stacks/connect'
+description: Connect is a JavaScript library for building web applications connected to Stacks.
+full: true
+---
+
+Stacks Connect enables you to authenticate your users and connect your app to their wallet. This reference contains more detailed information on how you can authenticate users, sign and broadcast transactions on their behalf, and enable users to sign messages.
+
+> **Migration Note**
+> 
+> Please be patient during the migration to version 8.x.x. There has been a long-running effort together with wallets to modernize the Stacks web ecosystem, culminating in [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) and the new `request` method in Stacks Connect 8.x.x. For the legacy version of `@stacks/connect` using JWT tokens, please use version 7.10.1. See the [Migration Guide](/docs/stacks/connect/guides/migration) for more details.
+
+### Installation
+
+```package-install
+@stacks/connect
+```
+
+### Connect to a wallet
+
+Initiate a wallet connection and request addresses:
+
+```typescript
+import { connect } from '@stacks/connect';
+
+const response = await connect(); // stores users address in local storage by default
+```
+
+Get the local storage data (stored by a connect call):
+
+```typescript
+import { getLocalStorage } from '@stacks/connect';
+
+const data = getLocalStorage();
+// {
+//   "addresses": {
+//     "stx": [
+//       { "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN" },
+//     ],
+//     "btc": [
+//       { "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae" },
+//     ]
+//   }
+```
+
+Managing the connection state:
+
+```typescript
+import { connect, disconnect, isConnected } from '@stacks/connect';
+
+isConnected(); // false
+await connect(); // similar to the `getAddresses` method
+isConnected(); // true
+disconnect(); // clears local storage and selected wallet
+isConnected(); // false
+```
+
+### Use request to trigger wallet interactions
+
+```typescript
+import { request } from '@stacks/connect';
+
+// CONNECT
+const response = await request({ forceWalletSelect: true }, 'getAddresses');
+```
+
+### Available methods
+
+- [getAddresses](#getaddresses)
+- [sendTransfer](#sendtransfer)
+- [signPsbt](#signpsbt)
+- [stx_getAddresses](#stx_getaddresses)
+- [stx_getAccounts](#stx_getaccounts)
+- [stx_transferStx](#stx_transferstx)
+- [stx_callContract](#stx_callcontract)
+- [stx_deployContract](#stx_deploycontract)
+- [stx_signMessage](#stx_signmessage)
+- [stx_signStructuredMessage](#stx_signstructuredmessage)
+
+#### getAddresses
+
+```typescript
+const response = await request('getAddresses');
+// {
+//   "addresses": [
+//     {
+//       "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae",
+//       "publicKey": "062bd2c825300d74f4f9feb6b2fec2590beac02b8938f0fc042a34254581ee69",
+//     },
+//     {
+//       "address": "bc1qtmqe7hg4etkq4t384nzg0mrmwf2sam9fjsz0mr",
+//       "publicKey": "025b65a0ec0e00699794847f2af1b5d8a53db02a2f48e09417598bef09cfea1114",
+//     },
+//     {
+//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304",
+//     }
+//   ]
+// }
+```
+
+#### sendTransfer
+
+```typescript
+const response = await request('sendTransfer', {
+  recipients: [
+    {
+      address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4', // recipient address
+      amount: '1000', // amount in sats
+    },
+    // You can specify multiple recipients
+    {
+      address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+      amount: '2000',
+    },
+  ],
+});
+// {
+//   "txid": "0x1234...", // The transaction ID
+// }
+```
+
+#### signPsbt
+
+```typescript
+const response = await request('signPsbt', {
+  psbt: 'cHNidP...', // base64 encoded PSBT string
+  signInputs: [{ index: 0, address }], // indices of inputs to sign (optional)
+  broadcast: false, // whether to broadcast the transaction after signing (optional)
+});
+// {
+//   "txid": "0x1234...", // The transaction ID (if broadcast is true)
+//   "psbt": "cHNidP..." // The signed PSBT in base64 format
+// }
+```
+
+#### stx_getAddresses
+
+```typescript
+const response = await request('stx_getAddresses');
+// {
+//   "addresses": [
+//     {
+//       "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae",
+//       "publicKey": "062bd2c825300d74f4f9feb6b2fec2590beac02b8938f0fc042a34254581ee69",
+//     },
+//     {
+//       "address": "bc1qtmqe7hg4etkq4t384nzg0mrmwf2sam9fjsz0mr",
+//       "publicKey": "025b65a0ec0e00699794847f2af1b5d8a53db02a2f48e09417598bef09cfea1114",
+//     },
+//     {
+//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304",
+//     }
+//   ]
+// }
+```
+
+#### stx_getAccounts
+
+```typescript
+const response = await request('stx_getAccounts');
+// {
+//   "addresses": [
+//     {
+//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cd...",
+//       "gaiaHubUrl": "https://hub.hiro.so",
+//       "gaiaAppKey": "0488ade4040658015580000000dc81e3a5..."
+//     }
+//   ]
+// }
+```
+
+#### stx_transferStx
+
+```typescript
+const response = await request('stx_transferStx', {
+  amount: '1000', // amount in micro-STX (1 STX = 1,000,000 micro-STX)
+  recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN', // recipient address
+  network: 'mainnet', // optional, defaults to mainnet
+  memo: 'Optional memo', // optional memo field
+});
+// {
+//   "txid": "0x1234...", // The transaction ID
+// }
+```
+
+#### stx_callContract
+
+```typescript
+const response = await request('stx_callContract', {
+  contract: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN.counters', // contract in format: address.contract-name
+  functionName: 'count', // name of the function to call
+  functionArgs: [Cl.int(3)], // array of Clarity values as arguments
+  network: 'mainnet', // optional, defaults to mainnet
+});
+// {
+//   "txid": "0x1234...", // The transaction ID
+// }
+```
+
+#### stx_deployContract
+
+```typescript
+const response = await request('stx_deployContract', {
+  name: 'counters', // name of the contract
+  clarityCode: `(define-map counters principal int)
+
+(define-public (count (change int))
+  (ok (map-set counters tx-sender (+ (get-count tx-sender) change)))
+)
+
+(define-read-only (get-count (who principal))
+  (default-to 0 (map-get? counters who))
+)`, // Clarity code as string
+  clarityVersion: '2', // optional, defaults to latest version
+  network: 'mainnet', // optional, defaults to mainnet
+});
+// {
+//   "txid": "0x1234...", // The transaction ID
+// }
+```
+
+#### stx_signMessage
+
+```typescript
+const response = await request('stx_signMessage', {
+  message: 'Hello, World!', // message to sign
+});
+// {
+//   "signature": "0x1234...", // The signature of the message
+//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304" // The public key that signed the message
+// }
+```
+
+#### stx_signStructuredMessage
+
+```typescript
+const clarityMessage = Cl.parse('{ structured: "message", num: u3 }');
+const clarityDomain = Cl.tuple({
+  domain: Cl.stringAscii('example.com'),
+  version: Cl.stringAscii('1.0.0'),
+  'chain-id': Cl.uint(1),
+});
+
+const response = await request('stx_signStructuredMessage', {
+  message: clarityMessage, // Clarity value representing the structured message
+  domain: clarityDomain, // domain object for SIP-018 style signing
+});
+// {
+//   "signature": "0x1234...", // The signature of the structured message
+//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304" // The public key that signed the message
+// }
+```
+
+### Error Handling
+
+The `request` method returns a Promise, allowing you to handle errors using standard Promise-based error handling patterns. You can use either `try/catch` with `async/await` or the `.catch()` method with Promise chains.
+
+#### Using try/catch with async/await
+
+```typescript
+import { request } from '@stacks/connect';
+
+try {
+  const response = await request('stx_transferStx', {
+    amount: '1000',
+    recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN',
+  });
+  // SUCCESS
+  console.log('Transaction successful:', response.txid);
+} catch (error) {
+  // ERROR
+  console.error('Wallet returned an error:', error);
+}
+```
+
+### Compatibility
+
+The `request` method by default adds a layer of auto-compatibility for different wallet providers. This is meant to unify the interface where wallet providers may not implement methods and results the same way.
+
+> **Wallet Support**
+> 
+> For a complete list of wallet compatibility and support status, see the [Wallet Support](/docs/stacks/connect/support) page.
+
+### Advanced Usage
+
+#### request
+
+The `request` method is called with an optional options object as the first parameter:
+
+```typescript
+import { request } from '@stacks/connect';
+
+// WITH options
+const response = await request(
+  {
+    provider?: StacksProvider;        // Custom provider to use for the request
+
+    forceWalletSelect?: boolean;      // Force user to select a wallet (default: false)
+    persistWalletSelect?: boolean;     // Persist selected wallet (default: true)
+    enableOverrides?: boolean;         // Enable provider compatibility (default: true)
+    enableLocalStorage?: boolean;      // Store address in local storage (default: true)
+
+    defaultProviders?: WbipProvider[]; // Default wallets to display in modal
+    approvedProviderIds?: string[];    // List of approved provider IDs to show in modal
+  },
+  'method',
+  params
+);
+
+// WITHOUT options
+const response = await request('method', params);
+```
+
+> **Provider Compatibility**
+> 
+> The `enableOverrides` option enables automatic compatibility fixes for different wallet providers. For example, it handles converting numeric types between string and number formats as needed by different wallets, and remaps certain method names to match wallet-specific implementations. This ensures consistent behavior across different wallet providers without requiring manual adjustments.
+
+> **Approved Providers**
+> 
+> The `approvedProviderIds` option allows you to filter which wallet providers are shown in the connect modal. This is useful when you want to limit the available wallet options to specific providers. For example, you might only want to support Leather wallet:
+> 
+> ```typescript
+> connect({ approvedProviderIds: ['LeatherProvider'] });
+> ```
+> 
+> Or multiple specific wallets:
+> 
+> ```typescript
+> connect({ approvedProviderIds: ['LeatherProvider', 'xverse'] });
+> ```
+
+#### requestRaw
+
+The `requestRaw` method provides direct access to wallet providers without the additional features of `request`:
+
+```typescript
+import { requestRaw } from '@stacks/connect';
+
+const response = await requestRaw(provider, 'method', params);
+```
+
+> **Raw Request**
+> 
+> `requestRaw` bypasses the UI wallet selector, automatic provider compatibility fixes, and other features that come with `request`. Use this when you need more manual control over the wallet interaction process.

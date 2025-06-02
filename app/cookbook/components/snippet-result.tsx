@@ -2,16 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
-import { Play, Terminal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
-import { Code } from "@/components/docskit/code";
-import { initSimnet, type Simnet } from "@hirosystems/clarinet-sdk-browser";
+// import { Code } from "@/components/docskit/code";
+import type { Simnet } from "@hirosystems/clarinet-sdk-browser";
+// import { initSimnet } from "@hirosystems/clarinet-sdk-browser";
 import { Cl } from "@stacks/transactions";
-import { loadSandpackClient } from "@codesandbox/sandpack-client";
-import type { SandboxSetup } from "@codesandbox/sandpack-client";
+// import { loadSandpackClient } from "@codesandbox/sandpack-client";
+// import type { SandboxSetup } from "@codesandbox/sandpack-client";
 
-import type { Recipe } from "@/types/recipes";
+import type { Recipe } from "@/types";
 
 interface SnippetResultProps {
   recipe: Recipe;
@@ -62,71 +62,71 @@ export function SnippetResult({
     }
   }, [isConsoleOpen]);
 
-  async function runCode() {
-    if (type === "clarity") {
-      if (isConsoleOpen) {
-        setIsConsoleOpen(false);
-        return;
-      }
-      setIsLoading(true);
-      setResult(null);
+  // async function runCode() {
+  //   if (type === "clarity") {
+  //     if (isConsoleOpen) {
+  //       setIsConsoleOpen(false);
+  //       return;
+  //     }
+  //     setIsLoading(true);
+  //     setResult(null);
 
-      try {
-        const simnet = await initSimnet();
-        await simnet.initEmptySession(false);
-        simnet.deployer = "ST000000000000000000002AMW42H";
-        const deployer = simnet.deployer;
-        console.log("deployer", deployer);
-        simnet.setEpoch("3.0");
+  //     try {
+  //       const simnet = await initSimnet();
+  //       await simnet.initEmptySession(false);
+  //       simnet.deployer = "ST000000000000000000002AMW42H";
+  //       const deployer = simnet.deployer;
+  //       // console.log("deployer", deployer);
+  //       simnet.setEpoch("3.0");
 
-        // Store the initialized simnet instance
-        setSimnetInstance(simnet);
-        // Store the initial code in history
-        setCodeHistory(code);
+  //       // Store the initialized simnet instance
+  //       setSimnetInstance(simnet);
+  //       // Store the initial code in history
+  //       setCodeHistory(code);
 
-        const contract = simnet.deployContract(
-          recipe.files[0].name.split(".")[0],
-          code,
-          { clarityVersion: 3 },
-          deployer
-        );
-        const result = contract.result;
-        const prettyResult = Cl.prettyPrint(result, 2);
-        // console.log("before :", simnet.execute("stacks-block-height"));
-        // simnet.executeCommand("::advance_chain_tip 2");
-        // console.log("after: ", simnet.execute("stacks-block-height"));
+  //       const contract = simnet.deployContract(
+  //         recipe.files[0].name.split(".")[0],
+  //         code,
+  //         { clarityVersion: 3 },
+  //         deployer
+  //       );
+  //       const result = contract.result;
+  //       const prettyResult = Cl.prettyPrint(result, 2);
+  //       // console.log("before :", simnet.execute("stacks-block-height"));
+  //       // simnet.executeCommand("::advance_chain_tip 2");
+  //       // console.log("after: ", simnet.execute("stacks-block-height"));
 
-        // Add a 1-second delay before updating the result
-        // await new Promise((resolve) => setTimeout(resolve, 1000));
+  //       // Add a 1-second delay before updating the result
+  //       // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        setResult(prettyResult);
-        setIsConsoleOpen(true);
-      } catch (error) {
-        console.error("Error running code snippet:", error);
-        setResult("An error occurred while running the code snippet.");
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      const content = {
-        files: {
-          "/package.json": {
-            code: JSON.stringify({
-              main: "index.js",
-              dependencies: dependencies || {},
-            }),
-          },
-          "/index.js": {
-            code: code, // This is the content from your recipe file
-          },
-        },
-        environment: "vanilla",
-      };
+  //       setResult(prettyResult);
+  //       setIsConsoleOpen(true);
+  //     } catch (error) {
+  //       console.error("Error running code snippet:", error);
+  //       setResult("An error occurred while running the code snippet.");
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   } else {
+  //     const content = {
+  //       files: {
+  //         "/package.json": {
+  //           code: JSON.stringify({
+  //             main: "index.js",
+  //             dependencies: dependencies || {},
+  //           }),
+  //         },
+  //         "/index.js": {
+  //           code: code, // This is the content from your recipe file
+  //         },
+  //       },
+  //       environment: "vanilla",
+  //     };
 
-      const client = await loadSandpackClient(iframeRef.current!, content);
-      console.log(client);
-    }
-  }
+  //     // const client = await loadSandpackClient(iframeRef.current!, content);
+  //     // console.log(client);
+  //   }
+  // }
 
   // Add this function to handle keyboard events
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -199,14 +199,14 @@ export function SnippetResult({
     }
   }
 
-  const getButtonText = () => {
-    if (type === "clarity") {
-      if (isLoading) return "Loading...";
-      if (isConsoleOpen) return "Close terminal";
-      return "Open in terminal";
-    }
-    return "Run code snippet";
-  };
+  // const getButtonText = () => {
+  //   if (type === "clarity") {
+  //     if (isLoading) return "Loading...";
+  //     if (isConsoleOpen) return "Close terminal";
+  //     return "Open in terminal";
+  //   }
+  //   return "Run code snippet";
+  // };
 
   return (
     <div className="space-y-4">
@@ -231,11 +231,17 @@ export function SnippetResult({
           {getButtonText()}
         </Button> */}
         {type === "clarity" && (
-          <Button variant="link" className="gap-2 self-end" size="sm" asChild>
-            <Link href={recipe?.external_url || ""} target="_blank">
-              Open in Clarity Playground <ArrowUpRight className="w-4 h-4" />
-            </Link>
-          </Button>
+          <Link
+            href={recipe?.external_url || ""}
+            target="_blank"
+            className={buttonVariants({
+              size: "sm",
+              className:
+                "gap-2 self-end text-primary underline-offset-4 hover:underline",
+            })}
+          >
+            Open in Clarity Playground <ArrowUpRight className="w-4 h-4" />
+          </Link>
         )}
       </div>
       {result && type !== "clarity" && (

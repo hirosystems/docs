@@ -1,0 +1,35 @@
+---
+title: Simnet
+description: The Simnet class is the main entry point for the Clarinet JS SDK. It provides properties and methods for interacting with the Clarinet network.
+full: true
+---
+
+# `initSimnet`
+
+The `initSimnet` function initializes a simulated network. It will often be the first function you call when using the SDK.
+
+## Parameters
+
+The `manifestPath` is the path to the `Clarinet.toml` manifest file.
+
+### Examples
+
+**Creating a new instance of simnet:**
+```ts
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+const simnet = await initSimnet();
+```
+
+**With a custom config path:**
+```ts
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+const simnet = await initSimnet('./config/Clarinet.toml');
+```
+
+### Schema
+
+```ts
+initSimnet(manifestPath?: string): Promise<Simnet>
+```
