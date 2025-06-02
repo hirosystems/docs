@@ -400,10 +400,40 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
 function Sidebar() {
   const { root } = useTreeContext();
   const { open, collapsed } = useSidebar();
+  const pathname = usePathname();
 
   const children = useMemo(() => {
+    const filterCriteria = ["tools", "apis", "reference", "resources"];
+
+    const shouldFilterItem = (item: PageTree.Node): boolean => {
+      const isCurrentSection = filterCriteria.some(
+        (criteria) =>
+          pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`
+      );
+
+      if (isCurrentSection) {
+        const currentSectionFilter = filterCriteria.find(
+          (criteria) =>
+            pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`
+        );
+        return (
+          !item.$id?.includes(currentSectionFilter ?? "") &&
+          filterCriteria.some(
+            (criteria) => item.$id?.includes(criteria) ?? false
+          )
+        );
+      }
+
+      // If not in a sub section, filter out all the specified sections
+      return filterCriteria.some(
+        (criteria) => item.$id?.includes(criteria) ?? false
+      );
+    };
+
     function renderItems(items: PageTree.Node[]) {
-      return items.map((item) => (
+      const filteredItems = items.filter((item) => !shouldFilterItem(item));
+
+      return filteredItems.map((item) => (
         <SidebarItem key={item.$id} item={item}>
           {item.type === "folder" ? renderItems(item.children) : null}
         </SidebarItem>
@@ -411,7 +441,7 @@ function Sidebar() {
     }
 
     return renderItems(root.children);
-  }, [root]);
+  }, [root, pathname]);
 
   return (
     <aside
