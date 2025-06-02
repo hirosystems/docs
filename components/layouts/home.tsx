@@ -244,11 +244,13 @@ export function Header({
           <NavigationMenu>
             <NavigationMenuList className="flex flex-row items-center gap-1">
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  href="/get-started"
-                  className={cn("font-fono text-sm px-4 py-2 rounded-md")}
-                >
-                  Get Started
+                <NavigationMenuLink asChild>
+                  <Link
+                    href="/start"
+                    className={cn("font-fono text-sm px-4 py-2 rounded-md")}
+                  >
+                    Get Started
+                  </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 

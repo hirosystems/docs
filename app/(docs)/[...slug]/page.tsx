@@ -46,9 +46,7 @@ export default async function Page(props: {
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <div className="flex justify-between items-start gap-4">
-        {(!params.slug?.includes("start") || params.slug?.length > 1) && (
-          <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
-        )}
+        <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
         {page.data.llm && <LLMShare content={LLMContent} />}
       </div>
       <DocsDescription>{page.data.description}</DocsDescription>

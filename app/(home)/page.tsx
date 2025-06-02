@@ -34,7 +34,7 @@ export default function HomePage() {
               icon={
                 <Play className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
               }
-              href="/stacks/get-started"
+              href="/start"
               title="Get Started"
               description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
             />
@@ -43,7 +43,7 @@ export default function HomePage() {
               icon={
                 <API className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
               }
-              href="/stacks/api"
+              href="/apis/stacks-blockchain"
               title="Stacks API Reference"
               description="Explore API endpoints for interacting with the Stacks Blockchain."
             />

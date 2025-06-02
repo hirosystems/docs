@@ -33,28 +33,20 @@ export interface DocsLayoutProps {
 
 const toolsItems = [
   {
-    title: "Stacks CLI",
-    href: "/tools/stacks-cli",
-    description:
-      "Command-line interface for interacting with the Stacks blockchain.",
-  },
-  {
     title: "Clarinet",
     href: "/tools/clarinet",
     description:
       "Development environment and testing framework for Clarity smart contracts.",
   },
   {
-    title: "Stacks Explorer",
-    href: "/tools/explorer",
-    description:
-      "Block explorer for viewing transactions and blocks on Stacks.",
+    title: "Chainhook",
+    href: "/tools/chainhook",
+    description: "Monitor and analyze Clarity smart contract activity.",
   },
   {
-    title: "Hiro Wallet",
-    href: "/tools/wallet",
-    description:
-      "Web wallet for managing STX tokens and interacting with dApps.",
+    title: "Bitcoin indexer",
+    href: "/tools/bitcoin-indexer",
+    description: "Indexer for Bitcoin blockchain data.",
   },
 ];
 
@@ -230,7 +222,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
               <NavigationMenuList className="flex flex-row items-center gap-1">
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    href="/get-started"
+                    href="/start"
                     className={cn("font-fono text-sm px-4 py-2 rounded-md")}
                   >
                     Get Started
@@ -425,7 +417,7 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 py-4 px-2 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
+        "fixed flex flex-col shrink-0 py-10 px-2 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
         "max-md:inset-x-0 max-md:bottom-0 max-md:bg-fd-background",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
@@ -499,7 +491,7 @@ function SidebarItem({
 
   if (item.type === "separator") {
     return (
-      <p className="text-primary font-fono mt-6 mb-2 first:mt-0 px-2">
+      <p className="text-primary font-fono uppercase mt-6 mb-2 first:mt-0 px-2">
         {item.icon}
         {item.name}
       </p>
