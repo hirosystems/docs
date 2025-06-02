@@ -1,7 +1,7 @@
 "use client";
 import React, { ButtonHTMLAttributes } from "react";
 import type { PageTree } from "fumadocs-core/server";
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
 import Link from "fumadocs-core/link";
@@ -12,7 +12,18 @@ import { usePathname } from "fumadocs-core/framework";
 import { Button } from "../ui/button";
 import { ThemeToggle } from "../layout/theme-toggle";
 import { Kbd } from "../ui/kbd";
-import { ArrowUpRight, SidebarIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  SidebarIcon,
+  ChevronRight,
+  ChevronDown,
+} from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 
 import { useKeyboardShortcuts } from "@/lib/hooks/use-keyboard-shortcuts";
 import { DocsLogo } from "../ui/icon";
@@ -53,7 +64,7 @@ const toolsItems = [
 const apisItems = [
   {
     title: "Stacks API",
-    href: "/apis/stacks-api",
+    href: "/apis/stacks-blockchain",
     description:
       "RESTful API for accessing Stacks blockchain data and functionality.",
   },
@@ -63,14 +74,14 @@ const apisItems = [
     description: "API for retrieving NFT and fungible token metadata.",
   },
   {
-    title: "BNS API",
-    href: "/apis/bns",
-    description: "Bitcoin Name System API for domain name resolution.",
-  },
-  {
     title: "Ordinals API",
     href: "/apis/ordinals",
     description: "API for Bitcoin Ordinals and inscriptions data.",
+  },
+  {
+    title: "Runes API",
+    href: "/apis/runes",
+    description: "API for Bitcoin Runes data.",
   },
 ];
 
@@ -129,7 +140,7 @@ const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
+        <Link
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted-foreground hover:text-primary focus:bg-[#f6f5f3] focus:text-primary",
@@ -143,7 +154,7 @@ const ListItem = React.forwardRef<
           <p className="line-clamp-2 text-sm leading-snug text-[#8c877d]">
             {children}
           </p>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   );
@@ -505,6 +516,36 @@ function SidebarItem({
 }) {
   const pathname = usePathname();
 
+  // Helper function to check if the current pathname is within this folder's children
+  const isPathInFolder = (
+    folderItem: PageTree.Node,
+    currentPath: string
+  ): boolean => {
+    if (folderItem.type !== "folder") return false;
+
+    // Check if current path matches folder index page
+    if (folderItem.index?.url === currentPath) return true;
+
+    // Recursively check children
+    const checkChildren = (children: PageTree.Node[]): boolean => {
+      return children.some((child) => {
+        if (child.type === "page" && child.url === currentPath) return true;
+        if (child.type === "folder") {
+          if (child.index?.url === currentPath) return true;
+          return checkChildren(child.children);
+        }
+        return false;
+      });
+    };
+
+    return checkChildren(folderItem.children);
+  };
+
+  // Determine if folder should be expanded
+  const shouldExpand =
+    item.type === "folder" &&
+    (isPathInFolder(item, pathname) || (item as any).defaultOpen === true);
+
   if (item.type === "page") {
     return (
       <Link
@@ -528,25 +569,59 @@ function SidebarItem({
     );
   }
 
+  // Folder type with minimal accordion styling
+  const getStringValue = (value: any): string => {
+    if (typeof value === "string") return value;
+    if (typeof value === "number") return value.toString();
+    return "folder";
+  };
+
+  const accordionValue =
+    getStringValue(item.$id) || getStringValue(item.name) || "folder";
+
   return (
     <div>
-      {item.index ? (
-        <Link
-          className={linkVariants({
-            active: pathname === item.index.url,
-          })}
-          href={item.index.url}
-        >
-          {item.index.icon}
-          {item.index.name}
-        </Link>
-      ) : (
-        <p className={cn(linkVariants(), "text-start")}>
-          {item.icon}
-          {item.name}
-        </p>
-      )}
-      <div className="pl-4 border-l flex flex-col">{children}</div>
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue={shouldExpand ? accordionValue : undefined}
+        className="space-y-0 bg-transparent border-none"
+      >
+        <AccordionItem value={accordionValue} className="border-0">
+          <AccordionTrigger className="p-0 hover:no-underline [&>svg]:hidden h-auto">
+            <div
+              className={cn(
+                linkVariants({
+                  active: item.index ? pathname === item.index.url : false,
+                }),
+                "justify-between w-full"
+              )}
+            >
+              <div className="flex items-center gap-2 flex-1">
+                {item.index ? (
+                  <Link
+                    href={item.index.url}
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-2 hover:underline"
+                  >
+                    {item.index.icon}
+                    {item.index.name}
+                  </Link>
+                ) : (
+                  <>
+                    {item.icon}
+                    {item.name}
+                  </>
+                )}
+              </div>
+              <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-90" />
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-0 pt-0">
+            <div className="pl-4 border-l flex flex-col">{children}</div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }

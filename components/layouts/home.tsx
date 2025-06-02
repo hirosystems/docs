@@ -71,7 +71,7 @@ const toolsItems = [
 const apisItems = [
   {
     title: "Stacks API",
-    href: "/apis/stacks-api",
+    href: "/apis/stacks-blockchain",
     description:
       "RESTful API for accessing Stacks blockchain data and functionality.",
   },
@@ -81,14 +81,14 @@ const apisItems = [
     description: "API for retrieving NFT and fungible token metadata.",
   },
   {
-    title: "BNS API",
-    href: "/apis/bns",
-    description: "Bitcoin Name System API for domain name resolution.",
-  },
-  {
     title: "Ordinals API",
     href: "/apis/ordinals",
     description: "API for Bitcoin Ordinals and inscriptions data.",
+  },
+  {
+    title: "Runes API",
+    href: "/apis/runes",
+    description: "API for Bitcoin Runes data.",
   },
 ];
 
@@ -147,7 +147,7 @@ const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
+        <Link
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-muted-foreground hover:text-primary focus:bg-[#f6f5f3] focus:text-primary",
@@ -161,7 +161,7 @@ const ListItem = React.forwardRef<
           <p className="line-clamp-2 text-sm leading-snug text-[#8c877d]">
             {children}
           </p>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   );

@@ -1,96 +1,38 @@
 ---
-title: APIs
-description: The following guides cover ways to use Hiro tools to build apps on Stacks.
-icon: API
-full: true
+title: Overview
+description: The Stacks API provides you with fast, reliable data for the Stacks blockchain via an easy-to-use REST interface.
 ---
 
-import { Database, Ticket } from 'lucide-react';
-import { Blockchain, BitcoinIcon, Clarinet, Container, DAO, Js, Plant, Shapes, StacksIcon } from '@/components/ui/icon';
-import { SecondaryCard, SmallCard } from '@/components/card';
+The Stacks API is a service that helps you with the complete ingestion of Stacks blockchain data. Using our endpoints, you can retrieve transaction data, smart contract information, account balances, block details, and more.
 
-<div className='flex flex-col space-y-10'>
+The Stacks API uses REST endpoints and cached responses in order to optimize performance and reduce unnecessary requests. Reliable, consistent blockchain data, one request away.
+
+## Popular endpoints
 
 <Cards>
-  <SecondaryCard
-    icon={<Database />}
-    href="/stacks/chainhook/quickstart"
-    title="Stream custom blockchain events"
-    description="Use Chainhook to filter & stream for contract deployments."
-    tag='Chainhook'
+  <Card
+    href="/stacks/api/accounts"
+    title="Fetch Account Data"
+    description="Retrieves account balances and transaction history."
+  />
+  <Card
+    href="/stacks/api/transactions"
+    title="Track Transactions"
+    description="Retrieves transaction details and status."
+  />
+  <Card
+    href="/stacks/api/smart-contracts"
+    title="Query Smart Contracts"
+    description="Retrieves smart contract data and function calls."
   />
 </Cards>
 
-<div className='flex flex-col'>
+## Related tools
 
-<h4 id="learn-by-example" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#learn-by-example" className="not-prose group text-sm uppercase">Learn by example</a>
-</h4>
-
----
-
-<Cards>
-  <SmallCard
-    icon={<Shapes />}
-    href="/guides/build-an-nft-marketplace"
-    title="Build an NFT Marketplace"
-    description="Learn how to create and deploy your own NFT marketplace."
-  />
-  {/* <SmallCard
-    icon={<DAO />}
-    href="/stacks/clarinet"
-    title="Launch a Decentralized Autonomous Organization (DAO)"
-    description="Discover the steps to creating your own DAO."
-  /> */}
-  <SmallCard
-    icon={<Ticket />}
-    href="/guides/no-loss-lottery"
-    title="Create a no-loss lottery pool"
-    description="Build a no-loss lottery pool that leverages stacking yield."
-  />
-  <SmallCard
-    icon={<Plant />}
-    href="/guides/build-a-decentralized-kickstarter"
-    title="Build a decentralized Kickstarter"
-    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
-  />
-</Cards>
-
-</div>
-
-<div className='flex flex-col'>
-
-<h4 id="installation-guides" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#installation-guides" className="not-prose group text-sm uppercase">Installation guides</a>
-</h4>
+- **[Chainhook](/stacks/chainhook)**: Want to stream custom blockchain events? Set up Chainhook to filter and stream contract deployments and other blockchain events.
+- **[Clarinet](/stacks/clarinet)**: Looking to develop and test smart contracts? Clarinet provides a local development environment for Stacks.
+- **[Stacks Explorer](https://explorer.hiro.so/)**: The Stacks API powers Hiro's Stacks Explorer, which lets you rapidly discover transactions and verify on-chain activity.
 
 ---
 
-<Cards>
-  <SmallCard
-    icon={<BitcoinIcon />}
-    href="/guides/sync-a-bitcoin-node"
-    title="Sync a Bitcoin node"
-    description="Set up and run a Bitcoin node to run tools like Chainhook as a service."
-  />
-  <SmallCard
-    icon={<StacksIcon />}
-    href="/guides/sync-a-stacks-node"
-    title="Sync a Stacks node"
-    description="Set up and run a Stacks node to use tools like Chainhook or spin up your own API."
-  />
-  <SmallCard
-    icon={<Container />}
-    href="/guides/installing-docker"
-    title="Install and run Docker on your machine"
-    description="Essential for running a local development with Clarinet"
-  />
-</Cards>
-
-</div>
-
-<Callout type="tip">
-For more, check out our [guides](/guides) section.
-</Callout>
-
-</div>
+Need help building with Stacks API? Reach out to us on the `#stacks` channel on Discord. Or join us at our weekly office hours on Discord every Monday at 11am ET.
