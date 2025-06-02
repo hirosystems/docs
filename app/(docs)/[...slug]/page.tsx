@@ -100,7 +100,11 @@ export default async function Page(props: {
 }
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  return source.generateParams().filter(
+    (params) =>
+      // Filter out empty slug arrays (root path)
+      params.slug && params.slug.length > 0
+  );
 }
 
 export async function generateMetadata(props: {
