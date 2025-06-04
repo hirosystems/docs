@@ -282,7 +282,7 @@ function SidebarItem({
 
   if (item.type === "separator") {
     return (
-      <p className="text-primary font-fono uppercase mt-6 mb-2 first:mt-0 px-2">
+      <p className="text-primary font-fono mt-6 mb-2 first:mt-0 px-2">
         {item.icon}
         {item.name}
       </p>
