@@ -1,0 +1,22 @@
+---
+title: NFT minting
+description: Mint an NFT.
+---
+
+import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
+import { Blocks, Braces, CircleUserRound } from 'lucide-react';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+The `@stacks/blockchain-api-client` library provides a robust interface for interacting with the Stacks Blockchain API by offering type-safe methods to access REST and WebSocket endpoints.
+
+The client includes automatically generated HTTP API methods, comprehensive Schemas for Clarity smart contract values, and a WebSocket client for real-time data streaming.
+
+```ts
+import { AccountsApi } from '@stacks/blockchain-api-client';
+
+const accounts = new AccountsApi(apiConfig);
+
+await accounts.getAccountTransactions({
+  principal: 'ST000000000000000000002AMW42H',
+});
+```

@@ -1,0 +1,117 @@
+---
+title: Quickstarts
+description: The following guides cover ways to use Hiro tools to build apps on Stacks.
+icon: Play
+full: true
+---
+
+import { Database, Ticket } from 'lucide-react';
+import { Blockchain, BitcoinIcon, Clarinet, Container, DAO, Js, Plant, Shapes, StacksIcon } from '@/components/ui/icon';
+import { SecondaryCard, SmallCard } from '@/components/card';
+
+<div className='flex flex-col space-y-10'>
+
+<Cards>
+  <SecondaryCard
+    icon={<Clarinet />}
+    href="/stacks/clarinet/quickstart"
+    title="Create your first smart contract"
+    description="Build a simple counter contract using Clarinet."
+    tag='Clarinet'
+  />
+  <SecondaryCard
+    icon={<Blockchain />}
+    href="/stacks/clarinet-js-sdk/quickstart"
+    title="Write unit tests for your smart contracts"
+    description="Learn how run unit tests with Clarinet JS SDK."
+    tag='Clarinet JS SDK'
+  />
+  <SecondaryCard
+    icon={<Js />}
+    href="/stacks/stacks.js/quickstart"
+    title="Make a contract call with Stacks.js"
+    description="Learn how to integrate smart contracts into your app."
+    tag='Stacks.js'
+  />
+  <SecondaryCard
+    icon={<Database />}
+    href="/stacks/chainhook/quickstart"
+    title="Stream custom blockchain events"
+    description="Use Chainhook to filter & stream for contract deployments."
+    tag='Chainhook'
+  />
+</Cards>
+
+<div className='flex flex-col'>
+
+<h4 id="learn-by-example" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
+  <a href="#learn-by-example" className="not-prose group text-sm uppercase">Learn by example</a>
+</h4>
+
+---
+
+<Cards>
+  <SmallCard
+    icon={<Shapes />}
+    href="/guides/build-an-nft-marketplace"
+    title="Build an NFT Marketplace"
+    description="Learn how to create and deploy your own NFT marketplace."
+  />
+  {/* <SmallCard
+    icon={<DAO />}
+    href="/stacks/clarinet"
+    title="Launch a Decentralized Autonomous Organization (DAO)"
+    description="Discover the steps to creating your own DAO."
+  /> */}
+  <SmallCard
+    icon={<Ticket />}
+    href="/guides/no-loss-lottery"
+    title="Create a no-loss lottery pool"
+    description="Build a no-loss lottery pool that leverages stacking yield."
+  />
+  <SmallCard
+    icon={<Plant />}
+    href="/guides/build-a-decentralized-kickstarter"
+    title="Build a decentralized Kickstarter"
+    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
+  />
+</Cards>
+
+</div>
+
+<div className='flex flex-col'>
+
+<h4 id="installation-guides" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
+  <a href="#installation-guides" className="not-prose group text-sm uppercase">Installation guides</a>
+</h4>
+
+---
+
+<Cards>
+  <SmallCard
+    icon={<BitcoinIcon />}
+    href="/guides/sync-a-bitcoin-node"
+    title="Sync a Bitcoin node"
+    description="Set up and run a Bitcoin node to run tools like Chainhook as a service."
+  />
+  <SmallCard
+    icon={<StacksIcon />}
+    href="/guides/sync-a-stacks-node"
+    title="Sync a Stacks node"
+    description="Set up and run a Stacks node to use tools like Chainhook or spin up your own API."
+  />
+  <SmallCard
+    icon={<Container />}
+    href="/guides/installing-docker"
+    title="Install and run Docker on your machine"
+    description="Essential for running a local development with Clarinet"
+  />
+</Cards>
+
+</div>
+
+<Callout type="tip">
+For more, check out our [guides](/guides) section.
+</Callout>
+
+</div>

@@ -32,12 +32,14 @@ function OrderedList({ children, items }: ListProps) {
       {validChildren.map((child, index) => {
         if (!React.isValidElement(child)) return null;
 
+        const element = child as React.ReactElement<{ children?: ReactNode }>;
+
         return (
           <li key={index} className="flex items-baseline gap-4">
             <span className="flex-shrink-0 w-7 h-7 bg-secondary rounded flex items-center justify-center text-primary font-mono">
               {index + 1}
             </span>
-            <span className="mt-1">{child.props.children}</span>
+            <span className="mt-1">{element.props.children}</span>
           </li>
         );
       })}
@@ -72,12 +74,15 @@ function UnorderedList({ children, items }: ListProps) {
       {validChildren.map((child, index) => {
         if (!React.isValidElement(child)) return null;
 
+        // Cast child to access props
+        const element = child as React.ReactElement<{ children?: ReactNode }>;
+
         return (
           <li
             key={index}
             className="relative pl-0 text-muted-foreground before:content-[''] before:absolute before:left-[-1.5rem] before:top-[0.875rem] before:w-[0.75rem] before:h-[1px] before:border-t before:border-border list-none"
           >
-            {child.props.children}
+            {element.props.children}
           </li>
         );
       })}

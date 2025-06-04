@@ -1,0 +1,33 @@
+import {
+  defineConfig,
+  defineDocs,
+  frontmatterSchema,
+} from "fumadocs-mdx/config";
+import { remarkCodeHike, recmaCodeHike, CodeHikeConfig } from "codehike/mdx";
+import { z } from "zod";
+
+export const docs = defineDocs({
+  dir: "content/docs",
+  docs: {
+    schema: frontmatterSchema.extend({
+      llm: z.boolean().optional(),
+    }),
+  },
+  meta: {
+    // options for `meta` collection
+  },
+});
+
+const chConfig: CodeHikeConfig = {
+  components: {
+    code: "DocsKitCode",
+    inlineCode: "DocsKitInlineCode",
+  },
+};
+
+export default defineConfig({
+  mdxOptions: {
+    remarkPlugins: (v) => [[remarkCodeHike, chConfig], ...v],
+    recmaPlugins: [[recmaCodeHike, chConfig]],
+  },
+});

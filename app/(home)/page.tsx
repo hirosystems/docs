@@ -1,137 +1,107 @@
 import Link from "fumadocs-core/link";
-import { StacksCardIcon, BitcoinCardIcon } from "@/components/ui/icon";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Cards, Card, SmallCard } from "@/components/card";
+import { Play, Code, Database, Braces, Cloud } from "lucide-react";
+import { API, Backend, Frontend } from "@/components/ui/icon";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+import heroImage from "@/public/stacks-hero.svg";
 
-export default function HomePage(): JSX.Element {
+export default function HomePage() {
   return (
-    <main className="container mx-auto my-12 space-y-10">
-      <div className="space-y-1">
-        <h1 className="text-4xl font-bold text-[#141312] dark:text-[#f6f5f3]">
-          Welcome to Hiro Docs.
-        </h1>
-        <h2 className="text-2xl font-regular text-muted-foreground font-inter">
-          Explore our tutorials, guides, API references, and more.
-        </h2>
-      </div>
+    <main className="my-2 space-y-10">
+      <div className="px-4 md:px-[var(--nav-offset)]">
+        <div className="space-y-10">
+          <div className="space-y-1">
+            <div className="flex space-x-6 items-end">
+              <ImageZoom
+                alt="banner"
+                src={heroImage}
+                className="mt-0 mb-6 first-line:rounded-xl bg-background"
+                priority
+              />
 
-      <div className="grid md:grid-cols-2 gap-6 mb-16">
-        <Link
-          href="/stacks"
-          className="not-prose block rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] p-4 text-md text-card-foreground transition-colors hover:shadow-[0_6px_20px_rgba(89,86,80,0.2)] dark:hover:shadow-[0_6px_40px_#383432]"
-        >
-          <div className="mb-6">
-            <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
-              <StacksCardIcon />
+              <div className="flex flex-col [&_p]:mb-6 space-y-3">
+                <h3 className="text-3xl">Welcome to Hiro Docs</h3>
+                <p>
+                  Find all the guides and resources you need to build on Stacks.
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Stacks Docs</h3>
-            <p className="text-muted-foreground">Start building on Stacks.</p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              CLARINET
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              CHAINHOOK
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              STACKS.JS
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              HIRO PLATFORM
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              STACKS API
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              TOKEN METADATA API
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              +3 MORE
-            </Badge>
+          <Cards>
+            <Card
+              className="group space-y-1"
+              icon={
+                <Play className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
+              }
+              href="/start"
+              title="Get Started"
+              description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
+            />
+            <Card
+              className="group space-y-1"
+              icon={
+                <API className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
+              }
+              href="/apis/stacks-blockchain"
+              title="Stacks API Reference"
+              description="Explore API endpoints for interacting with the Stacks Blockchain."
+            />
+          </Cards>
+
+          <div className="flex flex-col">
+            <h4
+              id="explore-by-category"
+              className="text-[#595650] dark:text-[#8c877d] scroll-m-20"
+            >
+              <a
+                href="#explore-by-category"
+                className="not-prose group text-sm uppercase"
+              >
+                Tools
+              </a>
+            </h4>
+            <Cards>
+              <SmallCard
+                icon={<Cloud />}
+                href="/stacks/platform"
+                title="Quickstart App Templates"
+                description="Full-stack starter-kits, including front-end, back-end, and smart contract components."
+              />
+              <SmallCard
+                icon={<Code />}
+                href="/stacks/clarinet"
+                title="Smart Contract Development"
+                description="Kickstart your smart contract journey with Clarinet and the Clarinet JS SDK."
+              />
+              <SmallCard
+                icon={<Database />}
+                href="/stacks/chainhook"
+                title="Data Streaming &amp; Events"
+                description="Create custom event streams for real-time data with Chainhook."
+              />
+              <SmallCard
+                icon={<Frontend />}
+                href="/stacks/stacks.js"
+                title="Frontend Web Development"
+                description="Interact with smart contracts on the web with the Stacks.js library."
+              />
+              <SmallCard
+                icon={<Backend />}
+                href="/stacks/api"
+                title="Backend Development"
+                description="Explore our hosted APIs offering a familiar REST interface."
+              />
+              <SmallCard
+                icon={<Braces />}
+                href="/stacks/token-metadata-api"
+                title="Token Management"
+                description="Explore our hosted API for fetching token metadata on Stacks."
+              />
+            </Cards>
           </div>
-        </Link>
-        <Link
-          href="/bitcoin"
-          className="not-prose block rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] p-4 text-md text-card-foreground transition-colors hover:shadow-[0_6px_20px_rgba(89,86,80,0.2)] dark:hover:shadow-[0_6px_40px_#383432]"
-        >
-          <div className="mb-6">
-            <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4">
-              <BitcoinCardIcon />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Bitcoin Docs</h3>
-            <p className="text-muted-foreground">
-              Start building on Ordinals and Runes.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              BITCOIN INDEXER
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              ORDINALS API
-            </Badge>
-            <Badge className="bg-[#f6f5f3] dark:bg-[#181717] text-primary dark:text-[#8c877d]">
-              RUNES API
-            </Badge>
-          </div>
-        </Link>
+        </div>
       </div>
-
-      <main className="space-y-6">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-bold">Need help getting started?</h2>
-          <p className="text-xl text-muted-foreground">
-            Check out these resources.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-4 gap-6">
-          <Link href="/stacks/get-started" className="block h-full">
-            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
-              <h3 className="text-lg font-semibold mb-2">
-                Get started with Stacks
-              </h3>
-              <p className="text-muted-foreground text-sm flex-grow">
-                Build on Stacks with some of our most popular guides and
-                tutorials.
-              </p>
-            </Card>
-          </Link>
-          <Link href="/stacks/api" className="block h-full">
-            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
-              <h3 className="text-lg font-semibold mb-2">
-                Stacks API Overview
-              </h3>
-              <p className="text-muted-foreground text-sm flex-grow">
-                View the API reference for the Stacks API.
-              </p>
-            </Card>
-          </Link>
-          <Link href="/bitcoin/get-started" className="block h-full">
-            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
-              <h3 className="text-lg font-semibold mb-2">
-                Get started with Bitcoin
-              </h3>
-              <p className="text-muted-foreground text-sm flex-grow">
-                Build on Bitcoin with some of our most popular guides and
-                tutorials.
-              </p>
-            </Card>
-          </Link>
-          <Link href="/bitcoin/ordinals/api" className="block h-full">
-            <Card className="p-6 border bg-[#f2f0ed] dark:bg-[#1e1c1b] h-full flex flex-col">
-              <h3 className="text-lg font-semibold mb-2">
-                Ordinals API Overview
-              </h3>
-              <p className="text-muted-foreground text-sm flex-grow">
-                View the API reference for our Ordinals API.
-              </p>
-            </Card>
-          </Link>
-        </div>
-      </main>
     </main>
   );
 }
