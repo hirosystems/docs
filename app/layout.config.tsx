@@ -12,7 +12,7 @@ export const baseOptions: BaseLayoutProps = {
   },
   links: [
     {
-      text: "Start",
+      text: "Get started",
       url: "/start",
       active: "nested-url",
     },
@@ -103,7 +103,7 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       type: "menu",
-      text: "Reference",
+      text: "Libraries & SDKs",
       url: "/reference",
       items: [
         {
