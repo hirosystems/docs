@@ -28,208 +28,361 @@ export function icon(iconName: string) {
   }
 }
 
-// Create the Sequoia Monochrome theme
-const sequoiaMonochromeTheme: ThemeRegistrationResolved = {
-  name: "sequoia-monochrome",
-  displayName: "Sequoia Monochrome",
+// Extract OpenAPI operations from MDX content
+function extractOperationsFromContent(
+  content: string
+): Array<{ path: string; method: string }> {
+  const operations: Array<{ path: string; method: string }> = [];
+
+  // Regex to match APIPage components with operations (handle multi-line)
+  const apiPageRegex = /<APIPage[^>]*operations=\{(\[[^\]]+\])\}[^>]*\/>/gs;
+
+  let match;
+  while ((match = apiPageRegex.exec(content)) !== null) {
+    try {
+      // Extract the operations array string
+      const operationsStr = match[1];
+
+      // Updated regex to handle the actual format: { path: '/path', method: 'method' }
+      const pathMethodRegex =
+        /\{\s*path:\s*['"`]([^'"`]+)['"`]\s*,\s*method:\s*['"`]([^'"`]+)['"`]\s*\}/g;
+
+      let opMatch;
+      while ((opMatch = pathMethodRegex.exec(operationsStr)) !== null) {
+        operations.push({
+          path: opMatch[1],
+          method: opMatch[2].toUpperCase(),
+        });
+      }
+    } catch (error) {
+      console.warn("Failed to parse operations from APIPage component:", error);
+    }
+  }
+
+  return operations;
+}
+
+// Create dark theme matching global.css --ch-* variables
+const hiroThemeDark: ThemeRegistrationResolved = {
+  name: "hiro-dark",
+  displayName: "Hiro Dark",
   type: "dark",
-  fg: "#868690",
-  bg: "#0F1014",
+  fg: "#8c877d", // --ch-1
+  bg: "#1e1e2e", // --ch-18
   settings: [
     {
       settings: {
-        foreground: "#868690",
-        background: "#0F1014",
+        foreground: "#8c877d", // --ch-1
+        background: "#1e1e2e", // --ch-18
       },
     },
     {
-      scope: ["comment"],
+      scope: ["comment", "punctuation.definition.comment"],
       settings: {
-        foreground: "#43444D",
+        foreground: "#595650", // --ch-3
         fontStyle: "italic",
       },
     },
     {
-      scope: ["constant"],
+      scope: ["string", "punctuation.definition.string"],
       settings: {
-        foreground: "#626983",
+        foreground: "#c2ebc4", // --ch-4
+      },
+    },
+    {
+      scope: ["constant.character.escape"],
+      settings: {
+        foreground: "#f5c2e7", // --ch-5
       },
     },
     {
       scope: [
         "constant.numeric",
-        "constant.language",
-        "constant.charcter.escape",
+        "variable.other.constant",
+        "entity.name.constant",
+        "constant.language.boolean",
+        "constant.language.false",
+        "constant.language.true",
       ],
       settings: {
-        foreground: "#B6BAC8",
-      },
-    },
-    {
-      scope: ["entity.name"],
-      settings: {
-        foreground: "#B6BAC8",
+        foreground: "#ff5500", // --ch-6
       },
     },
     {
       scope: [
-        "entity.name.section",
-        "entity.name.tag",
-        "entity.name.namespace",
-        "entity.name.type",
+        "keyword",
+        "keyword.operator.word",
+        "keyword.operator.new",
+        "variable.language.super",
+        "support.type.primitive",
+        "storage.type",
+        "storage.modifier",
+        "punctuation.definition.keyword",
       ],
       settings: {
-        foreground: "#7C829D",
+        foreground: "#ff9ecf", // --ch-7
       },
     },
     {
-      scope: ["entity.other.attribute-name", "entity.other.inherited-class"],
+      scope: [
+        "keyword.operator",
+        "punctuation.accessor",
+        "punctuation.definition.generic",
+        "punctuation.definition.tag",
+        "punctuation.separator.key-value",
+      ],
       settings: {
-        foreground: "#E2E4ED",
-        fontStyle: "italic",
+        foreground: "#94e2d5", // --ch-8
+      },
+    },
+    {
+      scope: [
+        "entity.name.function",
+        "meta.function-call.method",
+        "support.function",
+        "support.function.misc",
+        "variable.function",
+      ],
+      settings: {
+        foreground: "#b3d9ff", // --ch-9
+      },
+    },
+    {
+      scope: [
+        "entity.name.class",
+        "entity.other.inherited-class",
+        "support.class",
+        "meta.function-call.constructor",
+        "entity.name.struct",
+        "entity.name.type",
+        "support.type",
+      ],
+      settings: {
+        foreground: "#ff9ecf", // --ch-10
+      },
+    },
+    {
+      scope: ["variable.parameter", "meta.function.parameters"],
+      settings: {
+        foreground: "#8c877d", // --ch-11
+      },
+    },
+    {
+      scope: ["constant.language", "support.function.builtin"],
+      settings: {
+        foreground: "#ff9ecf", // --ch-12
+      },
+    },
+    {
+      scope: [
+        "support.type.property-name",
+        "entity.name.tag",
+        "entity.other.attribute-name",
+      ],
+      settings: {
+        foreground: "#b3d9ff", // --ch-9
+      },
+    },
+    {
+      scope: ["variable", "variable.other.readwrite"],
+      settings: {
+        foreground: "#f2cdcd", // --ch-14
+      },
+    },
+    {
+      scope: ["punctuation", "meta.brace"],
+      settings: {
+        foreground: "#a6adc8", // --ch-15
       },
     },
     {
       scope: ["invalid"],
       settings: {
-        foreground: "#999EB2",
+        foreground: "#f2cdcd", // --ch-14
       },
     },
     {
       scope: ["invalid.deprecated"],
       settings: {
-        foreground: "#575861",
+        foreground: "#585b70", // --ch-24
+      },
+    },
+  ],
+  colors: {
+    "editor.background": "#1e1e2e", // --ch-18
+    "editor.foreground": "#8c877d", // --ch-1
+    "editorCursor.foreground": "#b3d9ff", // --ch-9
+    "editorIndentGuide.background": "#585b70", // --ch-24
+    "editorIndentGuide.activeBackground": "#7f849c", // --ch-26
+    "editor.lineHighlightBackground": "#cdd6f412", // --ch-19
+    "editor.selectionBackground": "#9399b240", // --ch-22
+    "editorBracketMatch.border": "#585b70", // --ch-24
+    "editorError.foreground": "#f2cdcd", // --ch-14
+    "editorWarning.foreground": "#b3d9ff", // --ch-9
+    "editorInfo.foreground": "#b3d9ff", // --ch-9
+    "editorHint.foreground": "#a6adc8", // --ch-15
+  },
+};
+
+// Create light theme matching global.css --ch-* variables
+const hiroThemeLight: ThemeRegistrationResolved = {
+  name: "hiro-light",
+  displayName: "Hiro Light",
+  type: "light",
+  fg: "#7a756b", // --ch-1
+  bg: "#eff1f5", // --ch-18
+  settings: [
+    {
+      settings: {
+        foreground: "#7a756b", // --ch-1
+        background: "#eff1f5", // --ch-18
       },
     },
     {
-      scope: ["keyword"],
+      scope: ["comment", "punctuation.definition.comment"],
       settings: {
-        foreground: "#626983",
-      },
-    },
-    {
-      scope: ["meta.tag", "meta.brace"],
-      settings: {
-        foreground: "#868690",
-      },
-    },
-    {
-      scope: ["meta.import", "meta.export"],
-      settings: {
-        foreground: "#626983",
-      },
-    },
-    {
-      scope: ["punctuation"],
-      settings: {
-        foreground: "#575861",
-      },
-    },
-    {
-      scope: ["punctuation.accessor"],
-      settings: {
-        foreground: "#626983",
-      },
-    },
-    {
-      scope: ["punctuation.definition.string"],
-      settings: {
-        foreground: "#D3D5DE",
-      },
-    },
-    {
-      scope: ["storage.type", "storage.modifier"],
-      settings: {
-        foreground: "#626983",
-      },
-    },
-    {
-      scope: ["string"],
-      settings: {
-        foreground: "#D3D5DE",
-      },
-    },
-    {
-      scope: ["support"],
-      settings: {
-        foreground: "#7C829D",
-      },
-    },
-    {
-      scope: ["support.constant"],
-      settings: {
-        foreground: "#D3D5DE",
-      },
-    },
-    {
-      scope: ["support.function"],
-      settings: {
-        foreground: "#999EB2",
+        foreground: "#b5aca1", // --ch-3
         fontStyle: "italic",
       },
     },
     {
-      scope: ["variable"],
+      scope: ["string", "punctuation.definition.string"],
       settings: {
-        foreground: "#B6BAC8",
-        fontStyle: "italic",
+        foreground: "#48944c", // --ch-4
+      },
+    },
+    {
+      scope: ["constant.character.escape"],
+      settings: {
+        foreground: "#ea76cb", // --ch-5
       },
     },
     {
       scope: [
-        "variable.other",
-        "variable.language",
-        "variable.function",
-        "variable.argument",
+        "constant.numeric",
+        "variable.other.constant",
+        "entity.name.constant",
+        "constant.language.boolean",
+        "constant.language.false",
+        "constant.language.true",
       ],
       settings: {
-        foreground: "#868690",
+        foreground: "#ff5500", // --ch-6
       },
     },
     {
-      scope: ["variable.parameter"],
+      scope: [
+        "keyword",
+        "keyword.operator.word",
+        "keyword.operator.new",
+        "variable.language.super",
+        "support.type.primitive",
+        "storage.type",
+        "storage.modifier",
+        "punctuation.definition.keyword",
+      ],
       settings: {
-        foreground: "#E2E4ED",
+        foreground: "#bc812e", // --ch-7
+      },
+    },
+    {
+      scope: [
+        "keyword.operator",
+        "punctuation.accessor",
+        "punctuation.definition.generic",
+        "punctuation.definition.tag",
+        "punctuation.separator.key-value",
+      ],
+      settings: {
+        foreground: "#179299", // --ch-8
+      },
+    },
+    {
+      scope: [
+        "entity.name.function",
+        "meta.function-call.method",
+        "support.function",
+        "support.function.misc",
+        "variable.function",
+      ],
+      settings: {
+        foreground: "#3676b7", // --ch-9
+      },
+    },
+    {
+      scope: [
+        "entity.name.class",
+        "entity.other.inherited-class",
+        "support.class",
+        "meta.function-call.constructor",
+        "entity.name.struct",
+        "entity.name.type",
+        "support.type",
+      ],
+      settings: {
+        foreground: "#bc812e", // --ch-10
+      },
+    },
+    {
+      scope: ["variable.parameter", "meta.function.parameters"],
+      settings: {
+        foreground: "#7a756b", // --ch-11
+      },
+    },
+    {
+      scope: ["constant.language", "support.function.builtin"],
+      settings: {
+        foreground: "#bc812e", // --ch-12
+      },
+    },
+    {
+      scope: [
+        "support.type.property-name",
+        "entity.name.tag",
+        "entity.other.attribute-name",
+      ],
+      settings: {
+        foreground: "#3676b7", // --ch-9
+      },
+    },
+    {
+      scope: ["variable", "variable.other.readwrite"],
+      settings: {
+        foreground: "#dd7878", // --ch-14
+      },
+    },
+    {
+      scope: ["punctuation", "meta.brace"],
+      settings: {
+        foreground: "#6c6f85", // --ch-15
+      },
+    },
+    {
+      scope: ["invalid"],
+      settings: {
+        foreground: "#dd7878", // --ch-14
+      },
+    },
+    {
+      scope: ["invalid.deprecated"],
+      settings: {
+        foreground: "#acb0be", // --ch-24 equivalent
       },
     },
   ],
   colors: {
-    "editor.background": "#0F1014",
-    "editor.foreground": "#868690",
-    "editorCursor.foreground": "#7C829D",
-    "editorIndentGuide.background": "#817c9c4d",
-    "editorIndentGuide.activeBackground": "#43444D",
-    "editor.lineHighlightBackground": "#817c9c14",
-    "editor.selectionBackground": "#817c9c26",
-    "editorBracketMatch.border": "#575861",
-    "editorError.foreground": "#999EB2",
-    "editorWarning.foreground": "#D3D5DE",
-    "editorInfo.foreground": "#7C829D",
-    "editorHint.foreground": "#575861",
-  },
-};
-
-// Create a light version of the theme
-const sequoiaMonochromeThemeLight: ThemeRegistrationResolved = {
-  ...sequoiaMonochromeTheme,
-  name: "sequoia-monochrome-light",
-  displayName: "Sequoia Monochrome Light",
-  type: "light",
-  fg: "#333333",
-  bg: "#FFFFFF",
-  settings: [
-    {
-      settings: {
-        foreground: "#333333",
-        background: "#FFFFFF",
-      },
-    },
-    ...sequoiaMonochromeTheme.settings.slice(1),
-  ],
-  colors: {
-    ...sequoiaMonochromeTheme.colors,
-    "editor.background": "#FFFFFF",
-    "editor.foreground": "#333333",
+    "editor.background": "#eff1f5", // --ch-18
+    "editor.foreground": "#7a756b", // --ch-1
+    "editorCursor.foreground": "#3676b7", // --ch-9
+    "editorIndentGuide.background": "#acb0be", // --ch-24 equivalent
+    "editorIndentGuide.activeBackground": "#8c8fa1", // --ch-26
+    "editor.lineHighlightBackground": "#4c4f6912", // --ch-19
+    "editor.selectionBackground": "#7c7f934d", // --ch-22
+    "editorBracketMatch.border": "#acb0be", // --ch-24 equivalent
+    "editorError.foreground": "#dd7878", // --ch-14
+    "editorWarning.foreground": "#3676b7", // --ch-9
+    "editorInfo.foreground": "#3676b7", // --ch-9
+    "editorHint.foreground": "#6c6f85", // --ch-15
   },
 };
 
@@ -237,7 +390,36 @@ const sequoiaMonochromeThemeLight: ThemeRegistrationResolved = {
 // See https://fumadocs.vercel.app/docs/headless/source-api for more info
 export const source = loader({
   pageTree: {
-    attachFile,
+    attachFile: (node, file) => {
+      // Call the original attachFile first (in case it does something else useful)
+      let processedNode = attachFile(node, file);
+
+      // If it's an API page, extract OpenAPI operations ourselves
+      if (node.type === "page" && node.url?.includes("/apis/")) {
+        const fileData = (file as any)?.data?.data;
+        if (fileData?.content) {
+          const content = fileData.content;
+
+          // Extract operations from APIPage components
+          const operations = extractOperationsFromContent(content);
+
+          if (operations.length > 0) {
+            // Attach the operations to the node
+            processedNode = {
+              ...processedNode,
+              data: {
+                ...(processedNode as any).data,
+                openapi: {
+                  operations,
+                },
+              },
+            } as any;
+          }
+        }
+      }
+
+      return processedNode;
+    },
   },
   baseUrl: "/",
   source: docs.toFumadocsSource(),
@@ -251,8 +433,8 @@ export const openapi = createOpenAPI({
   // proxyUrl: "https://api.hiro.so",
   shikiOptions: {
     themes: {
-      dark: sequoiaMonochromeTheme,
-      light: sequoiaMonochromeThemeLight,
+      dark: hiroThemeDark,
+      light: hiroThemeLight,
     },
   },
 });

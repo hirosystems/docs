@@ -190,7 +190,7 @@ function Sidebar() {
 }
 
 const linkVariants = cva(
-  "flex items-center gap-2 w-full py-1.5 px-2 rounded-lg text-muted-foreground [&_svg]:size-4",
+  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground [&_svg]:size-4",
   {
     variants: {
       active: {
@@ -244,7 +244,6 @@ function SidebarItem({
 
     // Check if current path matches folder index page
     if (folderItem.index?.url === currentPath) return true;
-    console.log({ item });
     // Recursively check children
     const checkChildren = (children: PageTree.Node[]): boolean => {
       return children.some((child) => {
@@ -357,65 +356,33 @@ function PageBadges({ item }: { item: PageTree.Node }) {
 
   const badges: React.ReactNode[] = [];
 
-  // For demonstration, let's add badges based on URL patterns
-  // This can be replaced with actual badge data from a server-side source
-  if (item.url === "/test-page") {
+  // Get OpenAPI operations from the attached data
+  const openapi = (item as any).data?.openapi;
+  const operations = openapi?.operations || [];
+
+  // Create badges for each HTTP method found in operations
+  const methods = new Set(operations.map((op: any) => op.method.toUpperCase()));
+
+  Array.from(methods).forEach((method) => {
+    const colors = {
+      GET: "bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]",
+      POST: "bg-[#e7f0ff] text-[#4B5F8A] border-[#c2d9ff] dark:bg-background dark:text-[#c2d9ff] dark:border-[#c2d9ff]",
+      PUT: "bg-[#fff4e7] text-[#8A6B4B] border-[#ffd9c2] dark:bg-background dark:text-[#ffd9c2] dark:border-[#ffd9c2]",
+      PATCH:
+        "bg-[#fffce7] text-[#8A864B] border-[#fff9c2] dark:bg-background dark:text-[#fff9c2] dark:border-[#fff9c2]",
+      DELETE:
+        "bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]",
+    };
+
     badges.push(
       <span
-        key="new"
-        className="px-1.5 py-0.5 text-xs font-medium rounded bg-blue-500 text-white"
+        key={String(method)}
+        className={`font-mono font-medium text-xs px-1.5 py-0.5 rounded border ${colors[String(method) as keyof typeof colors] || "bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]"}`}
       >
-        NEW
+        {String(method)}
       </span>
     );
-  }
-
-  // Add HTTP method badges for API pages based on URL patterns
-  if (item.url.includes("/apis/")) {
-    // Demo badges for different API endpoints
-    if (item.url.includes("/create")) {
-      badges.push(
-        <span
-          key="POST"
-          className="px-1.5 py-0.5 text-xs font-medium rounded bg-blue-500 text-white"
-        >
-          POST
-        </span>
-      );
-    } else if (item.url.includes("/delete")) {
-      badges.push(
-        <span
-          key="DELETE"
-          className="px-1.5 py-0.5 text-xs font-medium rounded bg-red-500 text-white"
-        >
-          DELETE
-        </span>
-      );
-    } else if (item.url.includes("/update")) {
-      badges.push(
-        <span
-          key="PUT"
-          className="px-1.5 py-0.5 text-xs font-medium rounded bg-orange-500 text-white"
-        >
-          PUT
-        </span>
-      );
-    } else if (
-      item.url.includes("/get") ||
-      item.url.includes("/status") ||
-      item.url.includes("/list") ||
-      item.url.includes("/info")
-    ) {
-      badges.push(
-        <span
-          key="GET"
-          className="px-1.5 py-0.5 text-xs font-medium rounded bg-green-500 text-white"
-        >
-          GET
-        </span>
-      );
-    }
-  }
+  });
 
   if (badges.length === 0) return null;
 
