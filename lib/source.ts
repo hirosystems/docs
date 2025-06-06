@@ -11,6 +11,9 @@ import {
   Hiro,
   StacksIcon,
 } from "@/components/ui/icon";
+import { execSync } from "child_process";
+import { existsSync } from "fs";
+import { join } from "path";
 
 const customIcons = {
   API,
@@ -22,28 +25,184 @@ const customIcons = {
 
 const icons = { ...lucideIcons, ...customIcons } as any;
 
+const NEW_BADGE_DURATION = 10 * 24 * 60 * 60 * 1000;
+
+// FIXME: feature flag to enable/disable git-based "new" badge detection
+const ENABLE_GIT_NEW_DETECTION = false; // Set to true when ready to use
+
+const gitMetadataCache = new Map<
+  string,
+  { date: Date | null; timestamp: number }
+>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache TTL
+
+function canUseGit(): boolean {
+  try {
+    return (
+      existsSync(join(process.cwd(), ".git")) &&
+      process.env.NODE_ENV !== "production"
+    ); // Avoid git commands in production runtime
+  } catch {
+    return false;
+  }
+}
+
+function isValidFilePath(path: string): boolean {
+  if (!path) return false;
+
+  if (path.startsWith("/")) return false;
+
+  if (!path.includes(".") && path.includes("/")) return false;
+
+  return path.length > 0 && !path.startsWith("http");
+}
+
+function isFileNewInBranch(filePath: string): boolean {
+  if (!canUseGit() || !isValidFilePath(filePath)) return false;
+
+  try {
+    const currentBranch = execSync("git branch --show-current", {
+      encoding: "utf8",
+      cwd: process.cwd(),
+      timeout: 5000,
+    }).trim();
+
+    if (!currentBranch || currentBranch === "main") return false;
+
+    const gitFilePath = filePath.startsWith("content/docs/")
+      ? filePath
+      : `content/docs/${filePath}`;
+
+    const diffResult = execSync(
+      `git diff --name-status main...${currentBranch} -- "${gitFilePath}"`,
+      { encoding: "utf8", cwd: process.cwd(), timeout: 5000 }
+    ).trim();
+
+    const isNewInBranch =
+      diffResult.startsWith("A") || diffResult.startsWith("M");
+
+    return isNewInBranch;
+  } catch (error) {
+    return false;
+  }
+}
+
+function getFileGitDate(filePath: string): Date | null {
+  if (!canUseGit() || !isValidFilePath(filePath)) return null;
+
+  const cacheKey = filePath;
+  const cached = gitMetadataCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.date;
+  }
+
+  let gitDate: Date | null = null;
+
+  try {
+    const gitFilePath = filePath.startsWith("content/docs/")
+      ? filePath
+      : `content/docs/${filePath}`;
+
+    const modDateResult = execSync(
+      `git log -1 --format=%aI -- "${gitFilePath}"`,
+      {
+        encoding: "utf8",
+        cwd: process.cwd(),
+        timeout: 5000,
+      }
+    );
+
+    if (modDateResult.trim()) {
+      gitDate = new Date(modDateResult.trim());
+    }
+  } catch (error) {
+    if (isValidFilePath(filePath)) {
+      console.warn(`Failed to get git date for ${filePath}:`, error);
+    }
+  }
+
+  gitMetadataCache.set(cacheKey, {
+    date: gitDate,
+    timestamp: Date.now(),
+  });
+
+  return gitDate;
+}
+
+function isPageNew(filePath: string, frontmatter?: any): boolean {
+  if (frontmatter?.publishedAt) {
+    try {
+      const publishDate = new Date(frontmatter.publishedAt);
+      const isNewByDate =
+        Date.now() - publishDate.getTime() < NEW_BADGE_DURATION;
+      console.log("Using publishedAt date, result:", isNewByDate);
+      return isNewByDate;
+    } catch {
+      console.log("Invalid publishedAt date, falling through");
+    }
+  }
+
+  if (frontmatter?.isNew === true) {
+    return true;
+  }
+
+  if (frontmatter?.isNew === false) {
+    return false;
+  }
+
+  if (!ENABLE_GIT_NEW_DETECTION) {
+    return false;
+  }
+
+  const isNewInBranch = isFileNewInBranch(filePath);
+  if (!isNewInBranch) {
+    return false;
+  }
+
+  // only auto-detect "NEW" for specific directories to avoid overwhelming UI
+  // const allowedDirs = ["(quickstarts)", "quickstarts"];
+  // const isInAllowedDir = allowedDirs.some((dir) => filePath.includes(dir));
+  // if (!isInAllowedDir) {
+  //   return false;
+  // }
+
+  // if it's new in branch, check if it's within the time window
+  const gitDate = getFileGitDate(filePath);
+  if (gitDate && isValidDate(gitDate)) {
+    const isWithinTimeWindow =
+      Date.now() - gitDate.getTime() < NEW_BADGE_DURATION;
+    console.log(
+      `File modified ${Math.floor((Date.now() - gitDate.getTime()) / (24 * 60 * 60 * 1000))} days ago, within window: ${isWithinTimeWindow}`
+    );
+    return isWithinTimeWindow;
+  }
+
+  console.log("Could not determine git date");
+  return false;
+}
+
+function isValidDate(date: Date): boolean {
+  return date instanceof Date && !isNaN(date.getTime());
+}
+
 export function icon(iconName: string) {
   if (iconName in icons) {
     return create({ icon: icons[iconName as keyof typeof icons] });
   }
 }
 
-// Extract OpenAPI operations from MDX content
 function extractOperationsFromContent(
   content: string
 ): Array<{ path: string; method: string }> {
   const operations: Array<{ path: string; method: string }> = [];
 
-  // Regex to match APIPage components with operations (handle multi-line)
   const apiPageRegex = /<APIPage[^>]*operations=\{(\[[^\]]+\])\}[^>]*\/>/gs;
 
   let match;
   while ((match = apiPageRegex.exec(content)) !== null) {
     try {
-      // Extract the operations array string
       const operationsStr = match[1];
 
-      // Updated regex to handle the actual format: { path: '/path', method: 'method' }
       const pathMethodRegex =
         /\{\s*path:\s*['"`]([^'"`]+)['"`]\s*,\s*method:\s*['"`]([^'"`]+)['"`]\s*\}/g;
 
@@ -62,7 +221,6 @@ function extractOperationsFromContent(
   return operations;
 }
 
-// Create dark theme matching global.css --ch-* variables
 const hiroThemeDark: ThemeRegistrationResolved = {
   name: "hiro-dark",
   displayName: "Hiro Dark",
@@ -224,7 +382,6 @@ const hiroThemeDark: ThemeRegistrationResolved = {
   },
 };
 
-// Create light theme matching global.css --ch-* variables
 const hiroThemeLight: ThemeRegistrationResolved = {
   name: "hiro-light",
   displayName: "Hiro Light",
@@ -391,20 +548,37 @@ const hiroThemeLight: ThemeRegistrationResolved = {
 export const source = loader({
   pageTree: {
     attachFile: (node, file) => {
-      // Call the original attachFile first (in case it does something else useful)
       let processedNode = attachFile(node, file);
 
-      // If it's an API page, extract OpenAPI operations ourselves
-      if (node.type === "page" && node.url?.includes("/apis/")) {
+      // process all pages for "new" badge logic
+      if (node.type === "page") {
         const fileData = (file as any)?.data?.data;
-        if (fileData?.content) {
+        const frontmatter = fileData;
+        const filePath = (file as any)?.file?.path;
+
+        const shouldShowNewBadge = filePath
+          ? isPageNew(filePath, frontmatter)
+          : false;
+
+        if (shouldShowNewBadge) {
+          processedNode = {
+            ...processedNode,
+            data: {
+              ...(processedNode as any).data,
+              isNew: true,
+            },
+          } as any;
+          console.log("Applied new badge to node");
+        }
+
+        // if it's an API page, extract OpenAPI operations ourselves
+        if (node.url?.includes("/apis/") && fileData?.content) {
           const content = fileData.content;
 
           // Extract operations from APIPage components
           const operations = extractOperationsFromContent(content);
 
           if (operations.length > 0) {
-            // Attach the operations to the node
             processedNode = {
               ...processedNode,
               data: {
