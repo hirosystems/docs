@@ -45,7 +45,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
   }, []);
 
   React.useEffect(() => {
-    // Register 'p' shortcut for platform navigation
+    // register 'p' shortcut for platform navigation
     const platformShortcut = registerShortcut({
       key: "p",
       callback: () => {
@@ -58,7 +58,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       preventDefault: true,
     });
 
-    // Register 't' shortcut for calendar scheduling
+    // register 't' shortcut for calendar scheduling
     const calendarShortcut = registerShortcut({
       key: "t",
       callback: () => {
@@ -71,7 +71,6 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       preventDefault: true,
     });
 
-    // Clean up both shortcuts
     return () => {
       platformShortcut();
       calendarShortcut();
@@ -154,7 +153,6 @@ function Sidebar() {
         );
       }
 
-      // If not in a sub section, filter out all the specified sections
       return filterCriteria.some(
         (criteria) => item.$id?.includes(criteria) ?? false
       );
@@ -235,16 +233,13 @@ function SidebarItem({
 }) {
   const pathname = usePathname();
 
-  // Helper function to check if the current pathname is within this folder's children
   const isPathInFolder = (
     folderItem: PageTree.Node,
     currentPath: string
   ): boolean => {
     if (folderItem.type !== "folder") return false;
 
-    // Check if current path matches folder index page
     if (folderItem.index?.url === currentPath) return true;
-    // Recursively check children
     const checkChildren = (children: PageTree.Node[]): boolean => {
       return children.some((child) => {
         if (child.type === "page" && child.url === currentPath) return true;
@@ -259,7 +254,6 @@ function SidebarItem({
     return checkChildren(folderItem.children);
   };
 
-  // Determine if folder should be expanded
   const shouldExpand =
     item.type === "folder" &&
     (isPathInFolder(item, pathname) || (item as any).defaultOpen === true);
@@ -290,7 +284,6 @@ function SidebarItem({
     );
   }
 
-  // Folder type with minimal accordion styling
   const getStringValue = (value: any): string => {
     if (typeof value === "string") return value;
     if (typeof value === "number") return value.toString();
@@ -350,17 +343,27 @@ function SidebarItem({
   );
 }
 
-// Badge component for HTTP methods and custom tags
 function PageBadges({ item }: { item: PageTree.Node }) {
   if (item.type !== "page") return null;
 
   const badges: React.ReactNode[] = [];
 
-  // Get OpenAPI operations from the attached data
+  const isNew = (item as any).data?.isNew;
+
+  if (isNew) {
+    badges.push(
+      <span
+        key="new"
+        className="font-medium text-xs px-1.5 py-0.5 rounded border uppercase bg-brand-orange text-orange-100 border-brand-orange dark:bg-brand-orange dark:text-orange-100 dark:border-brand-orange"
+      >
+        New
+      </span>
+    );
+  }
+
   const openapi = (item as any).data?.openapi;
   const operations = openapi?.operations || [];
 
-  // Create badges for each HTTP method found in operations
   const methods = new Set(operations.map((op: any) => op.method.toUpperCase()));
 
   Array.from(methods).forEach((method) => {
