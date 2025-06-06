@@ -4,6 +4,8 @@ import {
   frontmatterSchema,
 } from "fumadocs-mdx/config";
 import { remarkCodeHike, recmaCodeHike, CodeHikeConfig } from "codehike/mdx";
+import remarkDirective from "remark-directive";
+import { remarkCustomDirectives } from "./lib/remark-custom-directives";
 import { z } from "zod";
 
 export const docs = defineDocs({
@@ -27,7 +29,12 @@ const chConfig: CodeHikeConfig = {
 
 export default defineConfig({
   mdxOptions: {
-    remarkPlugins: (v) => [[remarkCodeHike, chConfig], ...v],
+    remarkPlugins: (v) => [
+      [remarkCodeHike, chConfig],
+      remarkDirective,
+      remarkCustomDirectives,
+      ...v,
+    ],
     recmaPlugins: [[recmaCodeHike, chConfig]],
   },
 });

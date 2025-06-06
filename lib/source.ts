@@ -1,6 +1,6 @@
 import { docs } from "@/.source";
 import { loader } from "fumadocs-core/source";
-import { createOpenAPI } from "fumadocs-openapi/server";
+import { attachFile, createOpenAPI } from "fumadocs-openapi/server";
 import type { ThemeRegistrationResolved } from "shiki";
 import { icons as lucideIcons } from "lucide-react";
 import {
@@ -236,6 +236,9 @@ const sequoiaMonochromeThemeLight: ThemeRegistrationResolved = {
 // `loader()` also assign a URL to your pages
 // See https://fumadocs.vercel.app/docs/headless/source-api for more info
 export const source = loader({
+  pageTree: {
+    attachFile,
+  },
   baseUrl: "/",
   source: docs.toFumadocsSource(),
   icon(icon) {
