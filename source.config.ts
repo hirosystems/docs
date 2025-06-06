@@ -13,6 +13,8 @@ export const docs = defineDocs({
   docs: {
     schema: frontmatterSchema.extend({
       llm: z.boolean().optional(),
+      isNew: z.boolean().optional(),
+      publishedAt: z.string().optional(),
     }),
   },
   meta: {
