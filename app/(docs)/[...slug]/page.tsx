@@ -4,6 +4,7 @@ import { source } from "@/lib/source";
 import { openapi } from "@/lib/source";
 import { notFound } from "next/navigation";
 import { HeadingProps } from "@/types";
+import { API } from "@/components/reference/api-page";
 import { APIPage } from "fumadocs-openapi/ui";
 import {
   Accordion,
@@ -59,6 +60,7 @@ export default async function Page(props: {
             AccordionItem,
             AccordionTrigger,
             AccordionContent,
+            API: (props) => <API {...props} />,
             APIPage: (props) => <APIPage {...openapi.getAPIPageProps(props)} />,
             h1: ({ children, ...props }: HeadingProps) => {
               const H1 =

@@ -8,6 +8,12 @@ import { Block, CodeBlock } from "codehike/blocks";
 import { Terminal } from "./terminal";
 import Link from "fumadocs-core/link";
 
+// Export RawCode type for external use
+export type { RawCode };
+
+// Export PackageInstall for external use
+export { PackageInstall };
+
 export const docskit = {
   // components that code hike will use for codeblocks and inline code
   // as defined in the code hike config:

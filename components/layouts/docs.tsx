@@ -23,7 +23,6 @@ import { SearchToggle } from "../layout/search-toggle";
 import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
 import { renderNavItem } from "./links";
 import { baseOptions } from "@/app/layout.config";
-
 export interface DocsLayoutProps {
   tree: PageTree.Root;
   children: ReactNode;
@@ -245,7 +244,7 @@ function SidebarItem({
 
     // Check if current path matches folder index page
     if (folderItem.index?.url === currentPath) return true;
-
+    console.log({ item });
     // Recursively check children
     const checkChildren = (children: PageTree.Node[]): boolean => {
       return children.some((child) => {
@@ -274,8 +273,11 @@ function SidebarItem({
           active: pathname === item.url,
         })}
       >
-        {item.icon}
-        {item.name}
+        <div className="flex items-center gap-2 flex-1">
+          {item.icon}
+          {item.name}
+        </div>
+        <PageBadges item={item} />
       </Link>
     );
   }
@@ -334,7 +336,10 @@ function SidebarItem({
                   </>
                 )}
               </div>
-              <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-90" />
+              <div className="flex items-center gap-2">
+                {item.index && <PageBadges item={item.index} />}
+                <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-90" />
+              </div>
             </div>
           </AccordionTrigger>
           <AccordionContent className="pb-0 pt-0">
@@ -344,4 +349,75 @@ function SidebarItem({
       </Accordion>
     </div>
   );
+}
+
+// Badge component for HTTP methods and custom tags
+function PageBadges({ item }: { item: PageTree.Node }) {
+  if (item.type !== "page") return null;
+
+  const badges: React.ReactNode[] = [];
+
+  // For demonstration, let's add badges based on URL patterns
+  // This can be replaced with actual badge data from a server-side source
+  if (item.url === "/test-page") {
+    badges.push(
+      <span
+        key="new"
+        className="px-1.5 py-0.5 text-xs font-medium rounded bg-blue-500 text-white"
+      >
+        NEW
+      </span>
+    );
+  }
+
+  // Add HTTP method badges for API pages based on URL patterns
+  if (item.url.includes("/apis/")) {
+    // Demo badges for different API endpoints
+    if (item.url.includes("/create")) {
+      badges.push(
+        <span
+          key="POST"
+          className="px-1.5 py-0.5 text-xs font-medium rounded bg-blue-500 text-white"
+        >
+          POST
+        </span>
+      );
+    } else if (item.url.includes("/delete")) {
+      badges.push(
+        <span
+          key="DELETE"
+          className="px-1.5 py-0.5 text-xs font-medium rounded bg-red-500 text-white"
+        >
+          DELETE
+        </span>
+      );
+    } else if (item.url.includes("/update")) {
+      badges.push(
+        <span
+          key="PUT"
+          className="px-1.5 py-0.5 text-xs font-medium rounded bg-orange-500 text-white"
+        >
+          PUT
+        </span>
+      );
+    } else if (
+      item.url.includes("/get") ||
+      item.url.includes("/status") ||
+      item.url.includes("/list") ||
+      item.url.includes("/info")
+    ) {
+      badges.push(
+        <span
+          key="GET"
+          className="px-1.5 py-0.5 text-xs font-medium rounded bg-green-500 text-white"
+        >
+          GET
+        </span>
+      );
+    }
+  }
+
+  if (badges.length === 0) return null;
+
+  return <div className="flex items-center gap-1 ml-auto">{badges}</div>;
 }
