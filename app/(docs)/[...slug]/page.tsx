@@ -12,6 +12,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import {
   DocsPage,
   DocsBody,
@@ -72,6 +73,7 @@ export default async function Page(props: {
                 </H1>
               );
             },
+            Badge,
             blockquote: (props) => <Callout>{props.children}</Callout>,
             Callout,
             Cards,

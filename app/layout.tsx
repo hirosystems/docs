@@ -3,7 +3,7 @@ import { RootProvider } from "fumadocs-ui/provider";
 import type { ReactNode } from "react";
 import { aeonik, aeonikFono, aeonikMono, inter } from "@/fonts";
 import { SearchProvider } from "@/lib/hooks/use-search";
-import SearchDialog from "@/components/search-dialog";
+// import SearchDialog from "@/components/search-dialog";
 import { KeyboardShortcutsProvider } from "@/lib/hooks/use-keyboard-shortcuts";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
