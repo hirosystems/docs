@@ -4,11 +4,19 @@ import {
   type TableOfContents,
   type TOCItemType,
 } from "fumadocs-core/server";
-import { type ComponentProps, type ReactNode, useMemo } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useMemo,
+  useRef,
+  useEffect,
+} from "react";
 import { AnchorProvider, useActiveAnchors } from "fumadocs-core/toc";
+import * as Primitive from "fumadocs-core/toc";
 import { cn } from "@/lib/utils";
 import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { Link, usePathname } from "fumadocs-core/framework";
+import { TocThumb } from "@/components/layout/toc-thumb";
 
 export interface DocsPageProps {
   toc?: TableOfContents;
@@ -17,13 +25,15 @@ export interface DocsPageProps {
 }
 
 export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <AnchorProvider toc={toc}>
       <div className="flex w-full min-w-0">
         <main className="flex flex-1 flex-col">
           <article
             className={cn(
-              "flex flex-1 flex-col w-full gap-6 px-4 py-8 md:px-6 md:mx-auto",
+              "flex flex-1 flex-col w-full gap-6 px-4 py-6 md:px-6 md:mx-auto",
               full ? "max-w-[1120px]" : "max-w-[860px]"
             )}
           >
@@ -32,14 +42,23 @@ export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
           </article>
         </main>
         {toc.length > 0 && !full && (
-          <div className="sticky top-(--fd-nav-height) w-[225px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 overflow-auto max-xl:hidden">
-            <p className="text-sm text-fd-muted-foreground mb-2">
+          <div className="sticky top-(--fd-nav-height) w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 max-xl:hidden overflow-auto">
+            <p className="text-xs font-fono uppercase text-muted-foreground mb-4 ps-3">
               On this page
             </p>
-            <div className="flex flex-col">
-              {toc.map((item) => (
-                <TocItem key={item.url} item={item} />
-              ))}
+            <div className="relative">
+              <TocThumb
+                containerRef={containerRef}
+                className="absolute left-0 mt-(--fd-top) h-(--fd-height) w-px bg-primary transition-all"
+              />
+              <div
+                ref={containerRef}
+                className="flex flex-col border-l border-border/25 pl-px"
+              >
+                {toc.map((item) => (
+                  <TocItem key={item.url} item={item} />
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -79,21 +98,18 @@ export function DocsTitle(props: ComponentProps<"h1">) {
 }
 
 function TocItem({ item }: { item: TOCItemType }) {
-  const isActive = useActiveAnchors().includes(item.url.slice(1));
-
   return (
-    <a
+    <Primitive.TOCItem
       href={item.url}
       className={cn(
-        "text-sm text-fd-foreground/80 py-1",
-        isActive && "text-fd-primary"
+        "prose py-1.5 text-xs text-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-fd-primary",
+        item.depth <= 2 && "ps-3",
+        item.depth === 3 && "ps-6",
+        item.depth >= 4 && "ps-8"
       )}
-      style={{
-        paddingLeft: Math.max(0, item.depth - 2) * 16,
-      }}
     >
       {item.title}
-    </a>
+    </Primitive.TOCItem>
   );
 }
 

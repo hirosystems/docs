@@ -163,20 +163,59 @@ export const BaseLinkItem = forwardRef<
 
 BaseLinkItem.displayName = "BaseLinkItem";
 
+// Helper function to determine if a navigation item should be active
+function isNavItemActive(item: LinkItemType, pathname: string): boolean {
+  if (!("url" in item) || !item.url) return false;
+
+  // Check if item has active property (only certain types have it)
+  // For menu items, default to "nested-url" behavior since they should match child routes
+  const activeType =
+    "active" in item
+      ? (item.active ?? "url")
+      : item.type === "menu"
+        ? "nested-url"
+        : "url";
+  if (activeType === "none") return false;
+
+  // Special handling for "Get started" link
+  if (item.url === "/start") {
+    // Define the main sections that should override "Get started"
+    const mainSections = ["/tools", "/apis", "/reference", "/resources"];
+
+    // Check if current path is in any main section
+    const isInMainSection = mainSections.some(
+      (section) => pathname === section || pathname.startsWith(`${section}/`)
+    );
+
+    // "Get started" is active if:
+    // 1. We're exactly on the start page, OR
+    // 2. We're on any path that's not root ("/") AND not in the main sections
+    return pathname === "/start" || (pathname !== "/" && !isInMainSection);
+  }
+
+  // For other items, use the standard isActive logic
+  return isActive(item.url, pathname, activeType === "nested-url");
+}
+
 export function renderNavItem(item: LinkItemType): ReactNode {
   const itemType = item.type ?? "main";
+  const pathname = usePathname();
 
   switch (itemType) {
     case "main":
-      // Phase 1: Basic text link rendering
       if (!("url" in item)) return null;
+
+      const isActive = isNavItemActive(item, pathname);
 
       return (
         <NavigationMenuItem key={item.url}>
           <NavigationMenuLink asChild>
             <Link
               href={item.url}
-              className="font-fono text-sm px-4 py-2 rounded-md hover:bg-fd-accent/50 transition-colors"
+              className={cn(
+                "font-fono text-sm px-4 py-2 rounded-md hover:bg-fd-accent/50 transition-colors",
+                isActive && "underline underline-offset-4 text-primary"
+              )}
             >
               {item.text}
             </Link>
@@ -185,7 +224,6 @@ export function renderNavItem(item: LinkItemType): ReactNode {
       );
 
     case "menu":
-      // Phase 2: Menu link rendering with NavigationMenu
       if (!("items" in item)) return null;
 
       return (
@@ -251,7 +289,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             */}
 
             {/* Simple two-column layout */}
-            <div className="grid grid-cols-1 gap-x-5 px-5 py-2.5 w-max">
+            <div className="grid grid-cols-1 gap-x-5 px-2 py-1 w-max">
               {item.items.map((menuItem, index) => {
                 if (menuItem.type === "custom") {
                   return <div key={index}>{menuItem.children}</div>;
@@ -259,11 +297,17 @@ export function renderNavItem(item: LinkItemType): ReactNode {
 
                 if (!("url" in menuItem)) return null;
 
+                const isMenuItemActive = isNavItemActive(menuItem, pathname);
+
                 return (
                   <NavigationMenuLink key={menuItem.url} asChild>
                     <Link
                       href={menuItem.url}
-                      className="block py-2 text-sm font-fono text-muted-foreground hover:text-primary transition-colors"
+                      className={cn(
+                        "block py-2 text-sm font-fono text-muted-foreground hover:text-primary transition-colors",
+                        isMenuItemActive &&
+                          "underline underline-offset-4 text-primary"
+                      )}
                     >
                       {menuItem.text}
                     </Link>
@@ -276,7 +320,6 @@ export function renderNavItem(item: LinkItemType): ReactNode {
       );
 
     case "dropdown":
-      // Phase 3: Dropdown link rendering with hover behavior
       if (!("items" in item)) return null;
       return (
         <DropdownNavItem

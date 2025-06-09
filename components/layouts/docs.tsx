@@ -147,15 +147,29 @@ function Sidebar() {
         );
         return (
           !item.$id?.includes(currentSectionFilter ?? "") &&
-          filterCriteria.some(
-            (criteria) => item.$id?.includes(criteria) ?? false
-          )
+          filterCriteria.some((criteria) => {
+            // Check if item.$id matches the exact criteria as a path segment
+            const itemPath = item.$id || "";
+            return (
+              itemPath === criteria ||
+              itemPath.startsWith(`${criteria}/`) ||
+              itemPath.includes(`/${criteria}/`) ||
+              itemPath.endsWith(`/${criteria}`)
+            );
+          })
         );
       }
 
-      return filterCriteria.some(
-        (criteria) => item.$id?.includes(criteria) ?? false
-      );
+      return filterCriteria.some((criteria) => {
+        // Check if item.$id matches the exact criteria as a path segment
+        const itemPath = item.$id || "";
+        return (
+          itemPath === criteria ||
+          itemPath.startsWith(`${criteria}/`) ||
+          itemPath.includes(`/${criteria}/`) ||
+          itemPath.endsWith(`/${criteria}`)
+        );
+      });
     };
 
     function renderItems(items: PageTree.Node[]) {
@@ -175,7 +189,7 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 py-10 px-2 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
+        "fixed flex flex-col shrink-0 py-6 px-2 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
         "max-md:inset-x-0 max-md:bottom-0 max-md:bg-fd-background",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
@@ -259,16 +273,29 @@ function SidebarItem({
     (isPathInFolder(item, pathname) || (item as any).defaultOpen === true);
 
   if (item.type === "page") {
+    const sidebarTitle = (item as any).data?.sidebarTitle;
+    const displayName = sidebarTitle || item.name;
+    const isRootPage = (item as any).data?.root === true;
+
     return (
       <Link
         href={item.url}
-        className={linkVariants({
-          active: pathname === item.url,
-        })}
+        className={cn(
+          linkVariants({
+            active: pathname === item.url,
+          }),
+          // Special styling for root pages - applies on top of linkVariants
+          isRootPage && ["font-fono font-semibold text-base mb-1"],
+          // Style the icon when root page is active
+          isRootPage &&
+            pathname === item.url && [
+              "[&_.icons]:bg-primary [&_.icons]:border-primary [&_.icons]:text-white dark:[&_.icons]:text-neutral-950",
+            ]
+        )}
       >
         <div className="flex items-center gap-2 flex-1">
           {item.icon}
-          {item.name}
+          {displayName}
         </div>
         <PageBadges item={item} />
       </Link>
