@@ -5,7 +5,9 @@ import type { ThemeRegistrationResolved } from "shiki";
 import { icons as lucideIcons } from "lucide-react";
 import {
   API,
-  BitcoinIcon,
+  Bitcoin,
+  Chainhook,
+  Clarinet,
   Clarity,
   create,
   Hiro,
@@ -17,7 +19,9 @@ import { join } from "path";
 
 const customIcons = {
   API,
-  BitcoinIcon,
+  Bitcoin,
+  Chainhook,
+  Clarinet,
   Clarity,
   StacksIcon,
   Hiro,
@@ -550,7 +554,6 @@ export const source = loader({
     attachFile: (node, file) => {
       let processedNode = attachFile(node, file);
 
-      // process all pages for "new" badge logic
       if (node.type === "page") {
         const fileData = (file as any)?.data?.data;
         const frontmatter = fileData;
@@ -560,35 +563,43 @@ export const source = loader({
           ? isPageNew(filePath, frontmatter)
           : false;
 
+        const dataToAdd: any = {};
+
         if (shouldShowNewBadge) {
-          processedNode = {
-            ...processedNode,
-            data: {
-              ...(processedNode as any).data,
-              isNew: true,
-            },
-          } as any;
+          dataToAdd.isNew = true;
           console.log("Applied new badge to node");
+        }
+
+        // Add frontmatter fields to node data
+        if (frontmatter?.sidebarTitle) {
+          dataToAdd.sidebarTitle = frontmatter.sidebarTitle;
+        }
+
+        if (frontmatter?.root) {
+          dataToAdd.root = frontmatter.root;
         }
 
         // if it's an API page, extract OpenAPI operations ourselves
         if (node.url?.includes("/apis/") && fileData?.content) {
           const content = fileData.content;
 
-          // Extract operations from APIPage components
           const operations = extractOperationsFromContent(content);
 
           if (operations.length > 0) {
-            processedNode = {
-              ...processedNode,
-              data: {
-                ...(processedNode as any).data,
-                openapi: {
-                  operations,
-                },
-              },
-            } as any;
+            dataToAdd.openapi = {
+              operations,
+            };
           }
+        }
+
+        if (Object.keys(dataToAdd).length > 0) {
+          processedNode = {
+            ...processedNode,
+            data: {
+              ...(processedNode as any).data,
+              ...dataToAdd,
+            },
+          } as any;
         }
       }
 

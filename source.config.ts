@@ -15,6 +15,8 @@ export const docs = defineDocs({
       llm: z.boolean().optional(),
       isNew: z.boolean().optional(),
       publishedAt: z.string().optional(),
+      sidebarTitle: z.string().optional(),
+      root: z.boolean().optional(),
     }),
   },
   meta: {
