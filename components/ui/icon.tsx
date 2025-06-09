@@ -126,7 +126,7 @@ export function Ordinals(): JSX.Element {
   );
 }
 
-export function BitcoinIcon(props: any) {
+export function Bitcoin(props: any) {
   return (
     <svg
       {...props}
