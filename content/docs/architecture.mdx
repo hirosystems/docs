@@ -1,0 +1,177 @@
+---
+title: Our tools & architecture
+description: Overview of how our tools and services interact and their roles in the workflow
+---
+
+Understanding how our tools work together helps you build better Bitcoin applications.
+
+## Concepts
+
+Before diving into specific tools, let's understand the architecture that makes Bitcoin development possible.
+
+## The mental model
+
+Think of Bitcoin development as building with layers. Each layer has different capabilities and trade-offs. Our tools help you navigate these layers effectively.
+
+You're not just building on a blockchain—you're building on the most secure financial network in the world. That requires the right mental model and the right tools.
+
+## Bitcoin's architecture layers
+
+### Layer 1: Bitcoin Core
+The foundation. This is where ultimate security lives.
+
+- **What it does**: Processes transactions, mines blocks, enforces consensus
+- **What you can build**: Simple transfers, time-locks, multi-sig wallets
+- **Limitations**: No complex logic, ~10 minute blocks, limited data storage
+- **New capabilities**: Ordinals and Runes extend L1 with creative data encoding
+
+### Layer 2: Stacks
+The programmability layer. This is where smart contracts live.
+
+- **What it does**: Runs complex programs that settle to Bitcoin
+- **What you can build**: DeFi, NFTs, DAOs, anything requiring complex logic
+- **How it connects**: Uses Bitcoin as the settlement layer for finality
+- **Key innovation**: Can read Bitcoin state directly from smart contracts
+
+### Your Application
+Where users interact with the blockchain.
+
+- **Frontend**: Web or mobile apps using our JavaScript libraries
+- **Backend**: Optional server components for enhanced features
+- **Data layer**: APIs and indexers for efficient data access
+- **Real-time layer**: Event streams for reactive features
+
+## The development lifecycle
+
+Every Bitcoin app follows a similar journey. We've built specific tools for each stage.
+
+### 1. Design & Prototype
+**Question**: What are you building?  
+**Tools**: Clarinet for experimenting with contract ideas  
+**Output**: Contract architecture and initial implementations
+
+### 2. Build & Test
+**Question**: Does it work correctly?  
+**Tools**: Clarinet + Clarinet JS SDK for comprehensive testing  
+**Output**: Tested contracts with known behavior and costs
+
+### 3. Connect & Integrate  
+**Question**: How do users interact with it?  
+**Tools**: Stacks.js for wallet connections and transactions  
+**Output**: Working frontend that talks to your contracts
+
+### 4. Deploy & Scale
+**Question**: How do you go to production?  
+**Tools**: Platform for deployment, APIs for data access  
+**Output**: Live application serving real users
+
+### 5. Monitor & Iterate
+**Question**: What's happening on-chain?  
+**Tools**: Chainhook for events, monitoring for analytics  
+**Output**: Insights that drive improvements
+
+## How tools connect
+
+Our tools form a connected ecosystem. Here's how data flows between them:
+
+```
+Your Code → Clarinet → Local Blockchain → Tests Pass → Deploy
+                ↓                                         ↓
+            Stacks.js ← APIs ← Live Blockchain ← Your Contract
+                ↓                     ↑
+            Your Users → Transactions ↑
+```
+
+### Key integration points
+
+**Clarinet ↔ Stacks.js**  
+Test frontend code against your local Clarinet environment before deploying.
+
+**Stacks.js ↔ APIs**  
+Stacks.js uses our APIs under the hood for blockchain data.
+
+**Chainhook ↔ Your Backend**  
+Stream blockchain events directly to your servers for processing.
+
+**Platform ↔ Everything**  
+The platform provides hosted versions of tools plus deployment automation.
+
+## Architectural patterns
+
+### Pattern 1: Simple DApp
+**Stack**: Clarinet + Stacks.js + Stacks API  
+**Use case**: Most web3 applications  
+**Example**: NFT marketplace, simple DeFi protocol
+
+### Pattern 2: Event-Driven System  
+**Stack**: Previous + Chainhook + Database  
+**Use case**: Apps needing real-time updates  
+**Example**: DEX with live price feeds, gaming leaderboards
+
+### Pattern 3: Bitcoin Meta-Protocol
+**Stack**: Bitcoin Indexer + Ordinals/Runes API  
+**Use case**: Building on Bitcoin L1 directly  
+**Example**: Ordinals marketplace, Runes wallet
+
+### Pattern 4: Enterprise Application
+**Stack**: Everything + Platform + Monitoring  
+**Use case**: High-scale production systems  
+**Example**: Major DeFi protocol, institutional trading
+
+## Design principles in action
+
+### Progressive enhancement
+Start with core functionality, add features as needed. A basic smart contract doesn't need real-time events on day one.
+
+### Separation of concerns
+Contracts handle logic, APIs handle data, frontends handle UX. Each tool focuses on what it does best.
+
+### Fail gracefully
+Design for blockchain reorgs, network issues, and wallet disconnections. Our tools handle many edge cases automatically.
+
+## Common questions
+
+**Do I need all these tools?**  
+No. Start with Clarinet for contracts. Add tools as your needs grow.
+
+**Can I use tools separately?**  
+Yes. Each tool works standalone, though they're more powerful together.
+
+**What about vendor lock-in?**  
+Everything is open source. You can self-host any tool.
+
+**How do I choose the right pattern?**  
+Start simple. Most apps need just Clarinet + Stacks.js + APIs.
+
+## Architecture decision flowchart
+
+```
+Need smart contracts? → Yes → Start with Clarinet
+         ↓
+         No → Building on Bitcoin L1? → Yes → Use Bitcoin Indexer
+                        ↓
+                        No → Just need data? → Use our APIs
+
+Have a frontend? → Yes → Add Stacks.js
+        ↓
+        No → Building a backend service? → Consider Chainhook
+
+Need real-time updates? → Yes → Integrate Chainhook
+            ↓
+            No → APIs are sufficient
+
+Going to production? → Yes → Consider Platform for hosting
+           ↓
+           No → Local tools are perfect
+```
+
+## Next steps
+
+Now that you understand the architecture, let's set up your development environment.
+
+[Continue to Environment Setup →](/environment-setup/installing-clarinet)
+
+Or explore specific architectural patterns:
+- [Building DeFi on Bitcoin →](/guides/defi-architecture)
+- [NFT Platform Architecture →](/guides/nft-architecture)
+- [Event-Driven Systems →](/guides/event-architecture)
