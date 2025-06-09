@@ -7,6 +7,9 @@ import { RawCode } from "codehike/code";
 import { Block, CodeBlock } from "codehike/blocks";
 import { Terminal } from "./terminal";
 import Link from "fumadocs-core/link";
+import ScrollyCoding from "./scrollycoding";
+import Spotlight from "./spotlight";
+import Slideshow from "./slideshow";
 
 // Export RawCode type for external use
 export type { RawCode };
@@ -25,6 +28,9 @@ export const docskit = {
   TerminalPicker,
   // overriding the link component so we can use it for tooltips
   a: DocsKitLink,
+  ScrollyCoding,
+  Spotlight,
+  Slideshow,
 };
 
 function DocsKitCode(props: { codeblock: RawCode }) {
