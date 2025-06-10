@@ -27,6 +27,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { docskit } from "@/components/docskit/components";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { LLMShare } from "@/components/llm-share";
+import { CheckIcon } from "lucide-react";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -52,7 +53,7 @@ export default async function Page(props: {
         {page.data.llm && <LLMShare content={LLMContent} />}
       </div>
       <DocsDescription>{page.data.description}</DocsDescription>
-
+      <hr className="border-t border-border/50 mb-6" />
       <DocsBody>
         <MDX
           components={{
@@ -88,6 +89,25 @@ export default async function Page(props: {
             hr: (props: React.PropsWithChildren) => (
               <hr {...props} className="border-t border-border/50 mt-0 mb-6" />
             ),
+            input: (props: React.InputHTMLAttributes<HTMLInputElement>) => {
+              if (props.type === "checkbox") {
+                return (
+                  <div className="relative inline-flex items-center mr-2">
+                    <input {...props} className="sr-only" />
+                    <div
+                      className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center ${
+                        props.checked
+                          ? "bg-brand-orange border-brand-orange text-white"
+                          : "border-border bg-background"
+                      }`}
+                    >
+                      {props.checked && <CheckIcon className="w-3 h-3" />}
+                    </div>
+                  </div>
+                );
+              }
+              return <input {...props} />;
+            },
             table: (props: TableProps) => <Table {...props} />,
             ol: OrderedList,
             ul: UnorderedList,
