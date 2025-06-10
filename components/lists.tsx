@@ -24,7 +24,10 @@ function OrderedList({ children, items }: ListProps) {
 
   // For MDX usage, filter and process children
   const validChildren = React.Children.toArray(children).filter(
-    (child) => React.isValidElement(child) && child.type === "li"
+    (child) =>
+      React.isValidElement(child) &&
+      typeof child.type === "string" &&
+      child.type === "li"
   );
 
   return (
@@ -66,7 +69,10 @@ function UnorderedList({ children, items }: ListProps) {
 
   // For MDX usage, filter and process children
   const validChildren = React.Children.toArray(children).filter(
-    (child) => React.isValidElement(child) && child.type === "li"
+    (child) =>
+      React.isValidElement(child) &&
+      typeof child.type === "string" &&
+      child.type === "li"
   );
 
   // Helper function to recursively check for checkboxes in React elements
@@ -75,13 +81,15 @@ function UnorderedList({ children, items }: ListProps) {
 
     if (React.isValidElement(element)) {
       // Check if this element is an input with type checkbox
-      if (element.type === "input" && element.props?.type === "checkbox") {
+      if ((element.props as any)?.type === "checkbox") {
         return true;
       }
 
       // Recursively check children
-      if (element.props?.children) {
-        const children = React.Children.toArray(element.props.children);
+      if ((element.props as any)?.children) {
+        const children = React.Children.toArray(
+          (element.props as any).children
+        );
         return children.some(hasCheckboxInElement);
       }
     }
@@ -95,10 +103,20 @@ function UnorderedList({ children, items }: ListProps) {
     if (typeof element === "number") return element.toString();
     if (!element) return "";
 
+    // Handle arrays directly
+    if (Array.isArray(element)) {
+      return element.map(getTextContent).join("");
+    }
+
     if (React.isValidElement(element)) {
-      if (element.props?.children) {
-        const children = React.Children.toArray(element.props.children);
-        return children.map(getTextContent).join("");
+      if ((element.props as any)?.children) {
+        const children = (element.props as any).children;
+        // Handle both arrays and single children
+        if (Array.isArray(children)) {
+          return children.map(getTextContent).join("");
+        } else {
+          return getTextContent(children);
+        }
       }
     }
 
@@ -117,11 +135,7 @@ function UnorderedList({ children, items }: ListProps) {
     const element = child as React.ReactElement<{ children?: ReactNode }>;
     const childText = getTextContent(element.props.children);
     // Only look for specific special characters, not a broad range
-    return (
-      childText.includes("✓") ||
-      childText.includes("✗") ||
-      childText.includes("→")
-    );
+    return childText.includes("✓") || childText.includes("✗");
   });
 
   const shouldRemoveDashes = hasCheckboxes || hasSpecialPrefixes;
@@ -145,9 +159,7 @@ function UnorderedList({ children, items }: ListProps) {
           >
             <span
               className={
-                hasSpecialPrefixes
-                  ? "[&>*]:first-letter:text-brand-orange [&>*>strong]:first-letter:text-brand-orange"
-                  : ""
+                hasSpecialPrefixes ? "first-letter:text-brand-orange" : ""
               }
             >
               {element.props.children}
