@@ -1,0 +1,105 @@
+---
+title: Setting up a web wallet
+description: Quick setup guide for Leather wallet and devnet configuration for local development
+---
+
+You need a Bitcoin and Stacks wallet to interact with smart contracts during development. Leather is the most popular choice for developers—it supports both Bitcoin and Stacks, works with all major browsers, and makes switching between networks simple.
+
+This guide gets you set up with Leather and configured for local development in under 5 minutes.
+
+## What You'll Learn
+
+- Install Leather browser extension
+- Create or restore a wallet
+- Add devnet network for local development
+- Alternative wallet options
+
+## What You'll Need
+
+- Chrome, Brave, Edge, or Opera browser
+- 5 minutes for setup
+
+## Step 1: Install Leather
+
+**For Chrome, Brave, Edge, or Opera:**
+
+1. Visit the [Chrome Web Store Leather page](https://chrome.google.com/webstore/detail/leather/ldinpeekobnhjjdofggfgjlcehhmanlj)
+2. Click "Add to Chrome" (or "Get" depending on your browser)
+3. Allow the extension when prompted
+
+The extension icon appears in your browser toolbar. Click it to open Leather.
+
+**Alternative installation:**
+You can also [install from source](https://leather.io/guides/install-leather) for developer builds or testing.
+
+## Step 2: Create Your Wallet
+
+**For new users:**
+
+1. Click "Create new wallet"
+2. Write down your 12-word secret recovery phrase offline
+3. Confirm your phrase by selecting words in order
+4. Set a password for the wallet
+
+**For existing users:**
+Click "Restore wallet" and enter your existing seed phrase.
+
+Your secret recovery phrase is the only way to restore your wallet. Store it securely offline—preferably written down or engraved on metal.
+
+## Step 3: Add Devnet Network
+
+This is the key step for local development. Devnet lets you test with Clarinet's local blockchain.
+
+1. Click the overflow menu (3 dots) at top-right of Leather
+2. Select "Change network"
+3. Click "Add network"
+4. Enter these devnet details:
+
+```
+Name: Devnet
+Stacks API URL: http://localhost:3999
+Bitcoin API URL: http://localhost:18443/wallet/{wallet_id}
+```
+
+5. Click "Add network"
+6. Select "Devnet" from the network dropdown
+
+You're now connected to your local development environment. When you start Clarinet devnet, Leather will interact with your local blockchain.
+
+## Step 4: Verify Setup
+
+Test your setup:
+
+1. Switch to Devnet network in Leather
+2. You should see "Devnet" in the top-left corner
+3. Your STX balance will show 0 (normal—you'll get test tokens later)
+
+If you see any connection errors, make sure you've started `clarinet devnet` before switching to the devnet network.
+
+## Alternative Wallets
+
+**Xverse**: Another popular Bitcoin/Stacks wallet with mobile support. Follow their [complete setup guide](https://www.xverse.app/blog/how-to-set-up-an-xverse-wallet) if you prefer Xverse over Leather.
+
+**For production apps**: Support multiple wallets to give users choice. Both Leather and Xverse work with the same Stacks.js integration code.
+
+## Troubleshooting
+
+**Extension not appearing?**
+- Check if it's hidden in your browser's extensions menu
+- Pin it to your toolbar for easy access
+
+**Can't add devnet network?**
+- Double-check the URLs exactly as shown above
+- Make sure you're using `http://` not `https://`
+
+**Connection errors on devnet?**
+- Start Clarinet devnet first: `clarinet devnet`
+- Wait for all of the services to be running before verifying the setup
+
+## Next Steps
+
+Perfect! Your wallet is ready for development. 
+
+[Create your first Clarinet project](/docs/smart-contracts/creating-clarinet-project) to start building smart contracts. You'll use this wallet to deploy and interact with your contracts on the local devnet.
+
+For deeper wallet features like hardware wallet integration, token management, or production network setup, check out [Leather's complete guides](https://leather.io/guides).

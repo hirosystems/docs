@@ -1,177 +1,195 @@
 ---
-title: Our tools & architecture
-description: Overview of how our tools and services interact and their roles in the workflow
+title: Tool architecture & workflows
+description: How Hiro's tools work together to create powerful Bitcoin development workflows
 ---
 
-Understanding how our tools work together helps you build better Bitcoin applications.
+Understanding how our tools fit together helps you choose the right combination for your project and use them effectively.
 
-## Concepts
+Think of Hiro's tools as specialized components that connect to form complete development workflows. Each tool has a specific job, but they're designed to work seamlessly together.
 
-Before diving into specific tools, let's understand the architecture that makes Bitcoin development possible.
+## The Hiro toolchain
 
-## The mental model
+Our tools fall into five main categories that mirror your development journey:
 
-Think of Bitcoin development as building with layers. Each layer has different capabilities and trade-offs. Our tools help you navigate these layers effectively.
+### 1. Development Tools
+**Build and test locally**
+- **[Clarinet](/tools/clarinet)**: Local blockchain environment for smart contracts
+- **[Clarinet JS SDK](/tools/clarinet-js-sdk)**: JavaScript testing framework
+- **[VS Code Extension](/features#vs-code-extension)**: IDE support with syntax highlighting and debugging
 
-You're not just building on a blockchain—you're building on the most secure financial network in the world. That requires the right mental model and the right tools.
+### 2. Integration Libraries  
+**Connect your app to the blockchain**
+- **[Stacks.js](/reference/stacks-js)**: Local account integration and transaction broadcasting and building
+- **[Stacks Connect](/reference/stacks-connect)**: Frontend wallet integration
 
-## Bitcoin's architecture layers
+### 3. Data Infrastructure
+**Process and stream blockchain data**
+- **[Chainhook](/tools/chainhook)**: Real-time event streaming from blockchain
+- **[Bitcoin Indexer](/bitcoin/indexer)**: Custom blockchain data indexing
 
-### Layer 1: Bitcoin Core
-The foundation. This is where ultimate security lives.
+### 4. Data APIs
+**Access blockchain data efficiently**  
+- **[Stacks API](/apis/stacks-blockchain-api)**: Complete blockchain data (accounts, transactions, contracts)
+- **[Ordinals API](/apis/ordinals-api)**: Bitcoin inscription data
+- **[Runes API](/apis/runes-api)**: Bitcoin fungible token data
+- **[Token Metadata API](/apis/token-metadata-api)**: NFT and token metadata
 
-- **What it does**: Processes transactions, mines blocks, enforces consensus
-- **What you can build**: Simple transfers, time-locks, multi-sig wallets
-- **Limitations**: No complex logic, ~10 minute blocks, limited data storage
-- **New capabilities**: Ordinals and Runes extend L1 with creative data encoding
+### 5. Platform Services
+**Hosted services**
+- **[Chainhook](/tools/chainhook)**: Real-time event streaming from blockchain
+- **[Contract Monitoring](/tools/contract-monitoring)**: Track contract execution and set up alerts
 
-### Layer 2: Stacks
-The programmability layer. This is where smart contracts live.
 
-- **What it does**: Runs complex programs that settle to Bitcoin
-- **What you can build**: DeFi, NFTs, DAOs, anything requiring complex logic
-- **How it connects**: Uses Bitcoin as the settlement layer for finality
-- **Key innovation**: Can read Bitcoin state directly from smart contracts
+## Mental models for tool combinations
 
-### Your Application
-Where users interact with the blockchain.
+Different types of applications need different tool combinations. Here are the most common patterns:
 
-- **Frontend**: Web or mobile apps using our JavaScript libraries
-- **Backend**: Optional server components for enhanced features
-- **Data layer**: APIs and indexers for efficient data access
-- **Real-time layer**: Event streams for reactive features
+### Smart Contract DApp
+**Goal**: Users interact with your contracts through a web interface
 
-## The development lifecycle
+**Tools you'll use**:
+- Clarinet → develop and test contracts locally
+- Clarinet JS SDK → write comprehensive unit tests  
+- Stacks Connect / Stacks.js → connect wallet and build transactions
+- Stacks API → display account balances and transaction history
 
-Every Bitcoin app follows a similar journey. We've built specific tools for each stage.
+**Data flow**: Clarinet (development) → Stacks Connect / Stacks.js (frontend) → Stacks API (data)
 
-### 1. Design & Prototype
-**Question**: What are you building?  
-**Tools**: Clarinet for experimenting with contract ideas  
-**Output**: Contract architecture and initial implementations
+### Event-Driven Application
+**Goal**: Your backend reacts to blockchain events in real-time
 
-### 2. Build & Test
-**Question**: Does it work correctly?  
-**Tools**: Clarinet + Clarinet JS SDK for comprehensive testing  
-**Output**: Tested contracts with known behavior and costs
+**Tools you'll use**:
+- Previous stack + Chainhook → stream events to your backend
+- Database → store processed event data
+- Your API → serve computed data to frontend
 
-### 3. Connect & Integrate  
-**Question**: How do users interact with it?  
-**Tools**: Stacks.js for wallet connections and transactions  
-**Output**: Working frontend that talks to your contracts
+**Data flow**: Blockchain → Chainhook → Your Backend → Your API → Frontend
 
-### 4. Deploy & Scale
-**Question**: How do you go to production?  
-**Tools**: Platform for deployment, APIs for data access  
-**Output**: Live application serving real users
+### Bitcoin Meta-Protocol App  
+**Goal**: Build on Bitcoin L1 (Ordinals, Runes, custom protocols)
 
-### 5. Monitor & Iterate
-**Question**: What's happening on-chain?  
-**Tools**: Chainhook for events, monitoring for analytics  
-**Output**: Insights that drive improvements
+**Tools you'll use**:
+- Bitcoin Indexer → create custom indexes for your protocol
+- Ordinals/Runes APIs → access existing Bitcoin data
 
-## How tools connect
+**Data flow**: Bitcoin Indexer → Your API → Frontend
 
-Our tools form a connected ecosystem. Here's how data flows between them:
+### Production Platform
+**Goal**: Enterprise-scale application with monitoring and automation
 
+**Tools you'll use**:
+- All previous tools
+- Contract Monitoring → track on-chain activity
+- Hosted Devnets → team development and CI/CD
+
+**Data flow**: Integrated development, deployment, and monitoring pipeline
+
+## Tool interaction patterns
+
+Understanding how tools connect helps you architect better applications:
+
+{/* This is not true yet, but perhaps soon with TS client. */}
+
+{/* ### Clarinet ↔ Stacks.js
+Develop contracts in Clarinet, then use the same contract interfaces in Stacks.js. Your frontend tests run against the same local environment.
+
+```typescript
+// Same contract calls work in both environments
+const result = await makeContractCall({
+  contractAddress: 'ST123...',
+  contractName: 'my-contract',
+  functionName: 'transfer-tokens'
+});
+``` */}
+
+### APIs ↔ Everything
+All our APIs share consistent data formats. Learn one, use them all.
+
+```javascript
+// Same patterns across all APIs
+const stxData = await fetch('/v1/address/ST123.../stx');
+const ordinalsData = await fetch('/ordinals/v1/address/ST123...');
+const runesData = await fetch('/runes/v1/address/ST123...');
 ```
-Your Code → Clarinet → Local Blockchain → Tests Pass → Deploy
-                ↓                                         ↓
-            Stacks.js ← APIs ← Live Blockchain ← Your Contract
-                ↓                     ↑
-            Your Users → Transactions ↑
+
+### Chainhook ↔ APIs
+Chainhook streams the same data our APIs serve, just in real-time. Use APIs for queries, Chainhook for reactions or more complex data processing needs.
+
+```json
+// Chainhook event matches API transaction format
+{
+  "transaction": {
+    "tx_id": "0x123...",
+    "contract_call": {
+      "contract_id": "ST123...my-contract",
+      "function_name": "transfer"
+    }
+  }
+}
 ```
 
-### Key integration points
+### Platform ↔ Local Tools
+The platform hosts the same tools you run locally. Deploy your Clarinet project directly to hosted devnets.
 
-**Clarinet ↔ Stacks.js**  
-Test frontend code against your local Clarinet environment before deploying.
+## Tool selection guide
 
-**Stacks.js ↔ APIs**  
-Stacks.js uses our APIs under the hood for blockchain data.
+**Starting a new project?**
+1. Begin with Clarinet for contracts
+2. Add Clarinet JS SDK for testing  
+3. Use Stacks.js when you build a frontend
+4. Consider Chainhook if you need real-time features
 
-**Chainhook ↔ Your Backend**  
-Stream blockchain events directly to your servers for processing.
+**Need blockchain data?**
+- **Account info**: Stacks API
+- **Bitcoin inscriptions**: Ordinals API  
+- **Bitcoin tokens**: Runes API
+- **Custom data**: Build with Bitcoin Indexer
 
-**Platform ↔ Everything**  
-The platform provides hosted versions of tools plus deployment automation.
+**Going to production?**
+- **Self-hosted**: Use our open source tools
+- **Managed hosting**: Hiro Platform handles infrastructure
+- **Hybrid**: Hosted APIs + self-hosted application logic
 
-## Architectural patterns
+**Building on Bitcoin L1?**
+- **Existing protocols**: Use Ordinals/Runes APIs
+- **New protocols**: Start with Bitcoin Indexer
 
-### Pattern 1: Simple DApp
-**Stack**: Clarinet + Stacks.js + Stacks API  
-**Use case**: Most web3 applications  
-**Example**: NFT marketplace, simple DeFi protocol
+## Quick decision trees
 
-### Pattern 2: Event-Driven System  
-**Stack**: Previous + Chainhook + Database  
-**Use case**: Apps needing real-time updates  
-**Example**: DEX with live price feeds, gaming leaderboards
+Use these to choose the right tools for your project:
 
-### Pattern 3: Bitcoin Meta-Protocol
-**Stack**: Bitcoin Indexer + Ordinals/Runes API  
-**Use case**: Building on Bitcoin L1 directly  
-**Example**: Ordinals marketplace, Runes wallet
+### What type of app are you building?
 
-### Pattern 4: Enterprise Application
-**Stack**: Everything + Platform + Monitoring  
-**Use case**: High-scale production systems  
-**Example**: Major DeFi protocol, institutional trading
+**Smart contract DApp** → Clarinet + Stacks.js + Stacks API  
+**Bitcoin L1 app** → Bitcoin Indexer + Ordinals/Runes APIs  
+**Data analytics** → APIs + Chainhook + your database  
+**Enterprise platform** → Full stack + Hiro Platform
 
-## Design principles in action
+### What's your deployment strategy?
 
-### Progressive enhancement
-Start with core functionality, add features as needed. A basic smart contract doesn't need real-time events on day one.
+**Local development** → All tools run on your machine  
+**Team collaboration** → Hosted devnets for shared environments  
+**Production scale** → Hiro Platform for infrastructure  
+**Custom hosting** → Self-host our open source tools
 
-### Separation of concerns
-Contracts handle logic, APIs handle data, frontends handle UX. Each tool focuses on what it does best.
+### How much data do you need?
 
-### Fail gracefully
-Design for blockchain reorgs, network issues, and wallet disconnections. Our tools handle many edge cases automatically.
-
-## Common questions
-
-**Do I need all these tools?**  
-No. Start with Clarinet for contracts. Add tools as your needs grow.
-
-**Can I use tools separately?**  
-Yes. Each tool works standalone, though they're more powerful together.
-
-**What about vendor lock-in?**  
-Everything is open source. You can self-host any tool.
-
-**How do I choose the right pattern?**  
-Start simple. Most apps need just Clarinet + Stacks.js + APIs.
-
-## Architecture decision flowchart
-
-```
-Need smart contracts? → Yes → Start with Clarinet
-         ↓
-         No → Building on Bitcoin L1? → Yes → Use Bitcoin Indexer
-                        ↓
-                        No → Just need data? → Use our APIs
-
-Have a frontend? → Yes → Add Stacks.js
-        ↓
-        No → Building a backend service? → Consider Chainhook
-
-Need real-time updates? → Yes → Integrate Chainhook
-            ↓
-            No → APIs are sufficient
-
-Going to production? → Yes → Consider Platform for hosting
-           ↓
-           No → Local tools are perfect
-```
+**Basic queries** → Use our APIs directly  
+**Real-time updates** → Add Chainhook for event streaming  
+**Custom indexing** → Bitcoin Indexer for specialized data  
+**High volume** → Consider caching and custom infrastructure
 
 ## Next steps
 
-Now that you understand the architecture, let's set up your development environment.
+Ready to start building? Here's your path forward:
 
-[Continue to Environment Setup →](/environment-setup/installing-clarinet)
+**New to Hiro tools?** → [Set up your environment](/docs/setting-up-your-environment/installing-prerequisites) to get everything installed.
 
-Or explore specific architectural patterns:
-- [Building DeFi on Bitcoin →](/guides/defi-architecture)
-- [NFT Platform Architecture →](/guides/nft-architecture)
-- [Event-Driven Systems →](/guides/event-architecture)
+**Building smart contracts?** → [Create your first Clarinet project](/docs/local-development/creating-clarinet-project) to start coding.
+
+**Need to see all our tools?** → [Browse the complete feature list](/docs/features) for detailed capability overviews.
+
+**Ready for advanced patterns?** → Explore specialized guides:
+- [Event-driven architecture with Chainhook](/docs/event-driven-architecture/creating-predicates)
+- [API integration patterns](/docs/working-with-apis/api-fundamentals) 
+- [Frontend wallet integration](/docs/frontend-applications/wallet-integration)

@@ -1,0 +1,188 @@
+---
+title: Configuring Clarity VSCode extension
+description: Essential features and setup for the Clarity VS Code extension to streamline smart contract development
+---
+
+The Clarity VS Code extension transforms your editor into a powerful smart contract development environment. You'll get syntax highlighting, auto-completion, debugging, and real-time error checking—all the tools you need to write safe Clarity code.
+
+Think of it as your coding copilot. The extension catches errors before you deploy, suggests functions as you type, and shows documentation without leaving your editor.
+
+> **Need to install the extension?** Check our [Prerequisites guide](/docs/setting-up-your-environment/installing-prerequisites#set-up-vs-code-for-clarity) for installation instructions.
+
+## Core Features
+
+### Smart Auto-Completion
+
+Start typing any Clarity function and get instant suggestions with documentation. The extension adds parentheses and creates placeholders for function arguments.
+
+```clarity
+;; Type "stx-tr" and get:
+(stx-transfer? amount sender recipient)
+;;             ^      ^      ^
+;;             Placeholders for easy navigation
+```
+
+Use `Tab` to jump between placeholders. Use `Escape` to exit placeholder mode.
+
+### Documentation on Hover
+
+Hover over any Clarity function or keyword to see its documentation. No need to switch tabs or search external docs.
+
+```clarity
+;; Hover over 'map-set' to see:
+;; - Function signature
+;; - Parameter descriptions  
+;; - Return type
+;; - Usage examples
+(map-set my-map {key: "value"} "data")
+```
+
+### Go-to Definition
+
+Jump to function, constant, or variable definitions instantly:
+
+- `F12` or `Ctrl+Click` to go to definition
+- `Alt+F12` to peek definition without leaving current file
+- Works across contract files and contract calls
+
+### Real-Time Error Checking
+
+The extension validates your code on every save. You'll see:
+
+- **Red squiggles**: Syntax errors, unknown keywords
+- **Yellow squiggles**: Warnings for potentially unsafe code
+- **Error list**: All issues in the Problems panel (`Ctrl+Shift+M`)
+
+Common errors caught:
+- Undefined variables or functions
+- Type mismatches
+- Missing trait implementations
+- Invalid function signatures
+
+### Local Contract Resolution
+
+Auto-completion works across your entire project. Reference functions from other contracts in your workspace:
+
+```clarity
+;; Auto-complete local contract calls
+(contract-call? .my-token transfer amount sender recipient)
+;;               ^
+;;               Suggests contracts in your project
+```
+
+### Trait Support
+
+When implementing traits (like SIP-009 NFTs or SIP-010 tokens), the extension verifies:
+
+- All required functions are implemented
+- Function signatures match trait definitions
+- Return types are correct
+
+```clarity
+;; Extension warns if missing required trait functions
+(impl-trait .sip-010-trait.sip-010-trait)
+
+;; ⚠️ Warning: Missing required function 'get-balance'
+```
+
+## Debugging Support
+
+The extension includes a visual debugger for step-by-step code execution.
+
+**Requirements:**
+- VS Code Desktop (doesn't work in web version)
+- [Clarinet installed locally](https://github.com/hirosystems/clarinet#installation)
+
+**How to debug:**
+
+1. Set breakpoints by clicking line numbers
+2. Press `F5` or use Run → Start Debugging
+3. Step through code line-by-line
+4. Inspect variables and stack state
+
+The debugger shows you exactly how Clarity executes your functions, making it easier to understand complex logic and catch bugs.
+
+## Configuration Options
+
+### File Associations
+
+The extension automatically recognizes `.clar` files. For custom extensions:
+
+```json
+// settings.json
+{
+  "files.associations": {
+    "*.clarity": "clarity"
+  }
+}
+```
+
+### Formatting
+
+Enable format-on-save for consistent code style:
+
+```json
+// settings.json
+{
+  "editor.formatOnSave": true,
+  "[clarity]": {
+    "editor.defaultFormatter": "HiroSystems.clarity-lsp"
+  }
+}
+```
+
+### Error Checking Frequency
+
+Adjust how often the extension checks for errors:
+
+```json
+// settings.json
+{
+  "clarity.checkOnSave": true,
+  "clarity.checkOnType": false
+}
+```
+
+## Best Practices
+
+**Organize your workspace**
+- Keep all contract files in your Clarinet project root
+- Use descriptive filenames that match contract names
+- Group related contracts in subdirectories
+
+**Use the extension's power**
+- Hover before assuming—check function documentation
+- Let auto-completion guide you to valid function names
+- Pay attention to error squiggles; they catch real issues
+
+**Debugging workflow**
+- Start with simple functions before debugging complex ones
+- Use breakpoints strategically at decision points
+- Check variable values at each step
+
+**Performance tips**
+- Close unused Clarity files to improve responsiveness
+- For large projects, consider workspace-specific settings
+- Restart the extension (`Ctrl+Shift+P` → "Restart Extension Host") if it becomes slow
+
+## Troubleshooting
+
+**Extension not recognizing files?**
+- Ensure files have `.clar` extension
+- Check if you're in a Clarinet project directory
+- Restart VS Code
+
+**Auto-completion not working?**
+- Verify the language server is running (check status bar)
+- Try reloading the window (`Ctrl+Shift+P` → "Reload Window")
+
+**Debugger won't start?**
+- Confirm Clarinet is installed: `clarinet --version`
+- Make sure you're using VS Code Desktop, not web
+- Check that your project has a valid `Clarinet.toml`
+
+## Next Steps
+
+With your editor configured, you're ready to start building. [Create your first Clarinet project](/docs/smart-contracts/creating-clarinet-project) to begin writing smart contracts with full IDE support.
+
+The extension works seamlessly with other Hiro tools—use it alongside the [Clarinet CLI](/docs/clarinet) for testing and [Stacks.js](/docs/stacks.js) for frontend integration.
