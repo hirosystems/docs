@@ -189,8 +189,8 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 py-6 px-2 top-14 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
-        "max-md:inset-x-0 max-md:bottom-0 max-md:bg-fd-background",
+        "fixed flex flex-col shrink-0 pt-6 px-2 pb-10 top-16 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
+        "max-md:inset-x-0 max-md:bottom-0 max-md:bg-background",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
         collapsed && "md:w-0 md:p-0 md:overflow-hidden md:invisible"

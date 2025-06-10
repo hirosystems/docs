@@ -82,7 +82,7 @@ export function DocsDescription(props: ComponentProps<"p">) {
   return (
     <p
       {...props}
-      className={cn("mb-8 text-lg text-fd-muted-foreground", props.className)}
+      className={cn("text-lg text-muted-foreground", props.className)}
     >
       {props.children}
     </p>
