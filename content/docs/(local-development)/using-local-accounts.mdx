@@ -1,6 +1,370 @@
 ---
 title: Using Local Accounts
-description: Creating and managing local accounts
+description: Create, manage, and use local Stacks accounts with private keys for development and testing
 ---
 
-LFG!
+Local accounts let you work with Stacks blockchain directly using private keys. This approach is perfect for server-side applications, testing environments, and development workflows where you need full control over account operations.
+
+You'll use private keys to sign transactions, call contracts, and manage STX tokens without wallet extensions or user interaction.
+
+## What are local accounts?
+
+A local account is an account whose signing keys are stored and managed directly in your application code. It performs signing of transactions and messages with a private key **before** broadcasting them to the Stacks network.
+
+This is different from wallet-connected accounts (like those using Leather or Xverse), where:
+- **Local accounts**: Private keys live in your code, signing happens locally
+- **Wallet accounts**: Private keys stay in the user's wallet, signing requires user approval
+
+Local accounts are ideal for:
+- **Server-side applications** that need to sign transactions automatically
+- **Development and testing** where you want predictable, fast signing
+- **Automated scripts** for blockchain interactions
+- **Backend services** managing STX transfers or contract calls
+
+There are two ways to create local accounts in Stacks.js:
+- **Private key accounts**: Direct hex private key usage
+- **Seed phrase accounts**: Generate from 24-word mnemonic phrases  
+
+## Feature overview
+
+Working with local accounts involves these core operations:
+
+**Account creation**: Generate new accounts with private keys and addresses
+**Account restoration**: Load existing accounts from private keys or seed phrases  
+**Balance checking**: Query STX balances and nonces for transaction planning
+**Read-only calls**: Execute contract functions without spending STX
+**Transaction broadcasting**: Send STX transfers and contract calls to the network
+
+## Core packages required
+
+Stacks.js v7 simplifies account management with these packages:
+
+```bash
+npm install @stacks/wallet-sdk @stacks/transactions @stacks/common@latest
+```
+
+The `@stacks/network` package is optional - you can use string literals like `'testnet'` or `'mainnet'` instead.
+
+## Creating new accounts
+
+### Generate a random account
+
+Create a completely new account with a random private key:
+
+```typescript
+import { generateWallet, randomSeedPhrase, getStxAddress } from '@stacks/wallet-sdk';
+
+// Generate new 24-word seed phrase
+const seedPhrase = randomSeedPhrase();
+
+// Create wallet from seed phrase
+const wallet = await generateWallet({
+  secretKey: seedPhrase,
+  password: 'your-secure-password'
+});
+
+// Access the first account
+const account = wallet.accounts[0];
+const privateKey = account.stxPrivateKey;
+const address = getStxAddress(account, 'testnet');
+
+console.log('Address:', address);
+console.log('Private Key:', privateKey);
+console.log('Seed Phrase:', seedPhrase);
+```
+
+### Generate additional accounts
+
+Add more accounts to an existing wallet:
+
+```typescript
+import { generateNewAccount } from '@stacks/wallet-sdk';
+
+// Add second account to wallet
+const walletWithTwoAccounts = generateNewAccount(wallet);
+const secondAccount = walletWithTwoAccounts.accounts[1];
+const secondAddress = getStxAddress(secondAccount, 'testnet');
+```
+
+## Loading existing accounts
+
+### From private key
+
+Use an existing private key directly:
+
+```typescript
+import { privateKeyToAddress } from '@stacks/transactions';
+
+const privateKey = 'your-64-character-hex-private-key';
+const address = privateKeyToAddress(privateKey, 'testnet');
+```
+
+### From seed phrase
+
+Restore a wallet from a 24-word seed phrase:
+
+```typescript
+import { generateWallet } from '@stacks/wallet-sdk';
+
+const existingSeedPhrase = 'abandon ability able about above absent...';
+const restoredWallet = await generateWallet({
+  secretKey: existingSeedPhrase,
+  password: 'your-password'
+});
+
+const restoredAccount = restoredWallet.accounts[0];
+```
+
+## Getting account information
+
+### Check STX balance
+
+Query account balance and nonce from the Stacks API:
+
+```typescript
+async function getAccountInfo(address: string, network = 'testnet') {
+  const baseUrl = network === 'mainnet' 
+    ? 'https://api.hiro.so' 
+    : 'https://api.testnet.hiro.so';
+    
+  const response = await fetch(`${baseUrl}/v2/accounts/${address}?proof=0`);
+  const data = await response.json();
+  
+  return {
+    balance: data.balance,
+    locked: data.locked,
+    nonce: data.nonce,
+    unlockHeight: data.unlock_height
+  };
+}
+
+// Usage
+const accountInfo = await getAccountInfo('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
+console.log(`Balance: ${accountInfo.balance} microSTX`);
+console.log(`Next nonce: ${accountInfo.nonce}`);
+```
+
+### Get account nonce
+
+Use the built-in function for cleaner nonce fetching:
+
+```typescript
+import { fetchNonce } from '@stacks/transactions';
+
+const nonce = await fetchNonce({
+  address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  network: 'testnet'
+});
+```
+
+## Calling read-only functions
+
+Execute contract functions that don't modify state:
+
+```typescript
+import { fetchCallReadOnlyFunction, Cl } from '@stacks/transactions';
+
+const result = await fetchCallReadOnlyFunction({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'hello-world',
+  functionName: 'get-counter',
+  functionArgs: [], // No arguments needed
+  network: 'testnet',
+  senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
+});
+
+console.log('Contract result:', result);
+```
+
+### With function arguments
+
+Pass Clarity values as function arguments:
+
+```typescript
+const result = await fetchCallReadOnlyFunction({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'my-contract',
+  functionName: 'get-user-balance',
+  functionArgs: [
+    Cl.standardPrincipal('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG')
+  ],
+  network: 'testnet',
+  senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
+});
+```
+
+## Broadcasting transactions
+
+### STX token transfer
+
+Send STX tokens between accounts:
+
+```typescript
+import { makeSTXTokenTransfer, broadcastTransaction } from '@stacks/transactions';
+
+const transaction = await makeSTXTokenTransfer({
+  recipient: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+  amount: '1000000', // 1 STX in microSTX
+  senderKey: privateKey,
+  network: 'testnet',
+  memo: 'Test transfer',
+  // nonce and fee are optional - will be fetched/estimated automatically
+});
+
+const broadcastResponse = await broadcastTransaction({ 
+  transaction, 
+  network: 'testnet' 
+});
+
+console.log('Transaction ID:', broadcastResponse.txid);
+```
+
+### Contract function call
+
+Call a contract function that modifies state:
+
+```typescript
+import { makeContractCall, Cl } from '@stacks/transactions';
+
+const transaction = await makeContractCall({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'hello-world',
+  functionName: 'increment-counter',
+  functionArgs: [Cl.uint(5)],
+  senderKey: privateKey,
+  network: 'testnet',
+  validateWithAbi: true // Validates function exists and arguments match
+});
+
+const broadcastResponse = await broadcastTransaction({ 
+  transaction, 
+  network: 'testnet' 
+});
+```
+
+## Configuration options
+
+### Custom network endpoints
+
+Connect to custom Stacks nodes:
+
+```typescript
+const transaction = await makeSTXTokenTransfer({
+  recipient: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+  amount: '1000000',
+  senderKey: privateKey,
+  network: 'testnet',
+  client: { baseUrl: 'http://localhost:3999' } // Custom devnet
+});
+```
+
+### Transaction options
+
+Customize transaction behavior:
+
+```typescript
+const transaction = await makeContractCall({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'my-contract',
+  functionName: 'my-function',
+  functionArgs: [],
+  senderKey: privateKey,
+  network: 'testnet',
+  nonce: 42, // Explicit nonce
+  fee: '1000', // Explicit fee in microSTX
+  postConditions: [], // Add safety conditions
+  anchorMode: 'any' // Transaction timing preference
+});
+```
+
+### Fee estimation
+
+Get fee estimates before broadcasting:
+
+```typescript
+import { fetchFeeEstimate } from '@stacks/transactions';
+
+const feeEstimate = await fetchFeeEstimate({
+  transaction,
+  network: 'testnet'
+});
+
+console.log('Estimated fee:', feeEstimate);
+```
+
+## Best practices
+
+### Private key security
+
+Never expose private keys in client-side code or logs:
+
+```typescript
+// ✅ Good - Environment variables
+const privateKey = process.env.PRIVATE_KEY;
+
+// ❌ Bad - Hardcoded keys
+const privateKey = 'edf9aee84d9b7abc145504dde6726c64f369d37ee34ded868fabd876c26570bc';
+```
+
+### Error handling
+
+Always handle network and transaction errors:
+
+```typescript
+try {
+  const transaction = await makeSTXTokenTransfer({
+    recipient: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+    amount: '1000000',
+    senderKey: privateKey,
+    network: 'testnet'
+  });
+  
+  const result = await broadcastTransaction({ transaction, network: 'testnet' });
+  
+  if (result.error) {
+    console.error('Transaction failed:', result.reason);
+  } else {
+    console.log('Success:', result.txid);
+  }
+} catch (error) {
+  console.error('Network error:', error);
+}
+```
+
+### Nonce management
+
+For multiple transactions, increment nonces manually:
+
+```typescript
+let currentNonce = await fetchNonce({ address, network: 'testnet' });
+
+// Send multiple transactions
+for (const recipient of recipients) {
+  const transaction = await makeSTXTokenTransfer({
+    recipient,
+    amount: '1000000',
+    senderKey: privateKey,
+    network: 'testnet',
+    nonce: currentNonce++
+  });
+  
+  await broadcastTransaction({ transaction, network: 'testnet' });
+}
+```
+
+### Testing on devnet
+
+Use local devnet for faster development:
+
+```typescript
+// Works with clarinet devnet
+const transaction = await makeSTXTokenTransfer({
+  recipient: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+  amount: '1000000',
+  senderKey: privateKey,
+  network: 'devnet',
+  client: { baseUrl: 'http://localhost:3999' }
+});
+```
+
+This approach gives you complete control over Stacks accounts for development, testing, and server-side applications. You can sign transactions, interact with contracts, and manage STX tokens without relying on wallet extensions or user interaction.
