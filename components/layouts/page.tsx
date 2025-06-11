@@ -144,9 +144,29 @@ function Footer() {
   }, [flatten, pathname]);
 
   return (
-    <div className="flex flex-row justify-between gap-2 items-center font-medium">
-      {previous ? <Link href={previous.url}>{previous.name}</Link> : null}
-      {next ? <Link href={next.url}>{next.name}</Link> : null}
+    <div className="flex flex-row justify-between gap-4 items-stretch">
+      {previous ? (
+        <Link
+          href={previous.url}
+          className="flex flex-col gap-1 px-4 py-3 border border-border rounded-lg hover:bg-muted/50 transition-colors flex-1 max-w-sm"
+        >
+          <span className="text-sm text-muted-foreground">← Previous</span>
+          <span className="font-medium">{previous.name}</span>
+        </Link>
+      ) : (
+        <div />
+      )}
+      {next ? (
+        <Link
+          href={next.url}
+          className="flex flex-col gap-1 px-4 py-3 border border-border rounded-lg hover:bg-muted/50 transition-colors flex-1 max-w-sm text-right"
+        >
+          <span className="text-sm text-muted-foreground">Next →</span>
+          <span className="font-medium">{next.name}</span>
+        </Link>
+      ) : (
+        <div />
+      )}
     </div>
   );
 }

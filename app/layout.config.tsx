@@ -129,7 +129,7 @@ export const baseOptions: BaseLayoutProps = {
       url: "/resources",
       items: [
         {
-          text: "Clarity reference",
+          text: "Clarity lang",
           description: "Clarity language reference.",
           url: "/resources/clarity",
         },
@@ -143,31 +143,31 @@ export const baseOptions: BaseLayoutProps = {
           description: "Project templates for building on Stacks.",
           url: "/resources/templates",
         },
-        {
-          text: "Snippets",
-          description: "Code snippets for building on Stacks.",
-          url: "/resources/snippets",
-        },
-        {
-          text: "Clarity VSCode extension",
-          description: "VSCode extension for Clarity.",
-          url: "/resources/clarity-vscode",
-        },
+        // {
+        //   text: "Snippets",
+        //   description: "Code snippets for building on Stacks.",
+        //   url: "/resources/snippets",
+        // },
+        // {
+        //   text: "Clarity VSCode extension",
+        //   description: "VSCode extension for Clarity.",
+        //   url: "/resources/clarity-vscode",
+        // },
         {
           text: "Hiro Archive",
           description: "Archive of blockchain data.",
           url: "/resources/archive",
         },
-        {
-          text: "Faucets",
-          description: "Faucets for getting testnet tokens.",
-          url: "/resources/faucets",
-        },
-        {
-          text: "Contributors guide",
-          description: "Guide for contributing to Hiro.",
-          url: "/resources/contributors",
-        },
+        // {
+        //   text: "Faucets",
+        //   description: "Faucets for getting testnet tokens.",
+        //   url: "/resources/faucets",
+        // },
+        // {
+        //   text: "Contributors guide",
+        //   description: "Guide for contributing to Hiro.",
+        //   url: "/resources/contributors",
+        // },
       ],
     },
   ],

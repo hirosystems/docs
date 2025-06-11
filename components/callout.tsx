@@ -44,7 +44,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
             ),
             help: (
-              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                 <HiroSVG />
               </div>
             ),
@@ -70,7 +70,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                       <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
                     ),
                     help: (
-                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                         <HiroSVG />
                       </div>
                     ),

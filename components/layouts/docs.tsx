@@ -17,7 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { useKeyboardShortcuts } from "@/lib/hooks/use-keyboard-shortcuts";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { DocsLogo } from "../ui/icon";
 import { SearchToggle } from "../layout/search-toggle";
 import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";

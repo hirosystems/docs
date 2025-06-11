@@ -1,104 +1,55 @@
-import { Cards, Card, SmallCard } from "@/components/card";
-import { Play, Code, Database, Braces, Cloud } from "lucide-react";
-import { API, Backend, Frontend } from "@/components/ui/icon";
-import { ImageZoom } from "fumadocs-ui/components/image-zoom";
-import heroImage from "@/public/stacks-hero.svg";
+import { Cards, IndexCard } from "@/components/card";
+import { API } from "@/components/ui/icon";
 
 export default function APIsPage() {
   return (
-    <main className="my-2 space-y-10">
+    <main className="my-6 space-y-10">
       <div className="px-4 md:px-[var(--nav-offset)]">
         <div className="space-y-10">
           <div className="space-y-1">
-            <div className="flex space-x-6 items-end">
-              <ImageZoom
-                alt="banner"
-                src={heroImage}
-                className="mt-0 mb-6 first-line:rounded-xl bg-background"
-                priority
-              />
-
-              <div className="flex flex-col [&_p]:mb-6 space-y-3">
-                <h3 className="text-3xl">APIs</h3>
-                <p>
-                  Find all the guides and resources you need to build on Stacks.
-                </p>
-              </div>
-            </div>
+            <h3 className="text-3xl">APIs</h3>
+            <hr className="border-t border-border mt-8" />
           </div>
-
           <Cards>
-            <Card
-              className="group space-y-1"
-              icon={
-                <Play className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
-              }
-              href="/start"
-              title="Get Started"
-              description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
-            />
-            <Card
-              className="group space-y-1"
-              icon={
-                <API className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
-              }
+            <IndexCard
+              icon={<API />}
               href="/apis/stacks-blockchain"
-              title="Stacks API Reference"
-              description="Explore API endpoints for interacting with the Stacks Blockchain."
+              title="Stacks Blockchain API"
+              description="Comprehensive REST API for interacting with the Stacks blockchain and network data."
+            />
+            <IndexCard
+              icon={<API />}
+              href="/apis/token-metadata"
+              title="Token Metadata API"
+              description="Fast, reliable metadata for fungible and non-fungible tokens on Stacks."
+            />
+            <IndexCard
+              icon={<API />}
+              href="/apis/platform"
+              title="Platform API"
+              description="Programmatically manage devnets and chainhooks via REST interface."
+            />
+            <IndexCard
+              icon={<API />}
+              href="/apis/ordinals"
+              title="Ordinals API"
+              tag="Bitcoin L1"
+              description="Complete Bitcoin ordinals and BRC-20 token data with caching optimization."
+            />
+            <IndexCard
+              icon={<API />}
+              href="/apis/runes"
+              title="Runes API"
+              tag="Bitcoin L1"
+              description="Fast, reliable data for Bitcoin Runes via an easy-to-use REST interface."
+            />
+            <IndexCard
+              icon={<API />}
+              href="/apis/signer-metrics"
+              title="Signer Metrics API"
+              description="Monitor and analyze signer behavior and performance on the Stacks network."
             />
           </Cards>
-
-          <div className="flex flex-col">
-            <h4
-              id="explore-by-category"
-              className="text-[#595650] dark:text-[#8c877d] scroll-m-20"
-            >
-              <a
-                href="#explore-by-category"
-                className="not-prose group text-sm uppercase"
-              >
-                Tools
-              </a>
-            </h4>
-            <Cards>
-              <SmallCard
-                icon={<Cloud />}
-                href="/stacks/platform"
-                title="Quickstart App Templates"
-                description="Full-stack starter-kits, including front-end, back-end, and smart contract components."
-              />
-              <SmallCard
-                icon={<Code />}
-                href="/stacks/clarinet"
-                title="Smart Contract Development"
-                description="Kickstart your smart contract journey with Clarinet and the Clarinet JS SDK."
-              />
-              <SmallCard
-                icon={<Database />}
-                href="/stacks/chainhook"
-                title="Data Streaming &amp; Events"
-                description="Create custom event streams for real-time data with Chainhook."
-              />
-              <SmallCard
-                icon={<Frontend />}
-                href="/stacks/stacks.js"
-                title="Frontend Web Development"
-                description="Interact with smart contracts on the web with the Stacks.js library."
-              />
-              <SmallCard
-                icon={<Backend />}
-                href="/stacks/api"
-                title="Backend Development"
-                description="Explore our hosted APIs offering a familiar REST interface."
-              />
-              <SmallCard
-                icon={<Braces />}
-                href="/stacks/token-metadata-api"
-                title="Token Management"
-                description="Explore our hosted API for fetching token metadata on Stacks."
-              />
-            </Cards>
-          </div>
         </div>
       </div>
     </main>

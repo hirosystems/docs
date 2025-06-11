@@ -25,7 +25,7 @@ import {
   Eye,
   ExternalLink,
 } from "lucide-react";
-import { useSearch } from "@/lib/hooks/use-search";
+import { useSearch } from "@/hooks/use-search";
 import { useRouter } from "next/navigation";
 
 // List of common English stop words to ignore in search queries
@@ -268,27 +268,27 @@ const navigateItems = [
     id: "clarinet",
     title: "Clarinet",
     icon: Terminal,
-    href: "/stacks/clarinet",
+    href: "/tools/clarinet",
   }, // Example href
   {
     id: "stacks.js",
     title: "Stacks.js",
     icon: Code,
-    href: "/stacks/stacks.js",
+    href: "/reference/stacks.js",
   },
   {
     id: "chainhook",
     title: "Chainhook",
     icon: Webhook,
-    href: "/stacks/chainhook",
+    href: "/tools/chainhook",
   },
   {
     id: "apis",
     title: "APIs",
     icon: Layers,
-    href: "/stacks/api",
+    href: "/tools/api",
   },
-  { id: "sdks", title: "SDKs", icon: Package, href: "/stacks/reference" },
+  { id: "sdks", title: "SDKs", icon: Package, href: "/reference" },
 ];
 
 // AI Section Items

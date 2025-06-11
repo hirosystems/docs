@@ -28,6 +28,8 @@ import { docskit } from "@/components/docskit/components";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { LLMShare } from "@/components/llm-share";
 import { CheckIcon } from "lucide-react";
+import { TagFilterSystem } from "@/components/ui/tag-filter-system";
+import { getAllFilterablePages } from "@/lib/source";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -46,6 +48,12 @@ export default async function Page(props: {
 
   const MDX = page.data.body;
 
+  // Get all filterable pages for tag filtering
+  const allFilterablePages = getAllFilterablePages();
+
+  // Extract section from current page URL for scoped filtering
+  const currentSection = page.url.split("/").filter(Boolean)[1] || "general";
+
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <div className="flex justify-between items-start gap-4">
@@ -53,7 +61,17 @@ export default async function Page(props: {
         {page.data.llm && <LLMShare content={LLMContent} />}
       </div>
       <DocsDescription>{page.data.description}</DocsDescription>
-      <hr className="border-t border-border/50 mb-6" />
+
+      {/* Render TagFilterSystem if tags are present in frontmatter */}
+      {page.data.tags && page.data.tags.length > 0 && (
+        <TagFilterSystem
+          tags={page.data.tags}
+          pages={allFilterablePages}
+          section={currentSection}
+        />
+      )}
+
+      <hr className="border-t border-border/50" />
       <DocsBody>
         <MDX
           components={{
@@ -64,6 +82,7 @@ export default async function Page(props: {
             AccordionContent,
             API: (props) => <API {...props} />,
             APIPage: (props) => <APIPage {...openapi.getAPIPageProps(props)} />,
+
             h1: ({ children, ...props }: HeadingProps) => {
               const H1 =
                 defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
@@ -87,7 +106,7 @@ export default async function Page(props: {
               />
             ),
             hr: (props: React.PropsWithChildren) => (
-              <hr {...props} className="border-t border-border/50 mt-0 mb-6" />
+              <hr {...props} className="border-t border-border/50 mt-0" />
             ),
             input: (props: React.InputHTMLAttributes<HTMLInputElement>) => {
               if (props.type === "checkbox") {
