@@ -10,7 +10,7 @@ full: true
 import { Card as MainCard, SecondaryCard, SmallCard } from '@/components/card';
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { PageFooter } from '@/components/footer';
-import { MessageCircle, Braces, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet } from 'lucide-react';
+import { MessageCircle, Braces, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet, NotebookIcon } from 'lucide-react';
 import { API, Backend, BugIcon, Clarinet, Clarity, Cloud, Chainhook, Frontend, Hiro, Js, Newspaper, Pulse, QuestionIcon } from '@/components/ui/icon';
 import heroImage from '@/public/stacks-hero.svg';
 
@@ -18,25 +18,32 @@ import heroImage from '@/public/stacks-hero.svg';
 
 <Cards>
 <SecondaryCard
-  href="/stacks/platform"
+  href="/features"
+  title="Intro to Hiro tooling"
+  icon={<Hiro />}
+  tag="Hiro"
+  description="Learn more about the features our tools provide."
+/>
+<SecondaryCard
+  href="/creating-a-clarinet-project"
   title="Start building smart contracts"
   icon={<Clarinet />}
   tag="Clarinet"
   description="Learn how to build smart contracts on the Stacks blockchain."
 />
 <SecondaryCard
-  href="/stacks/platform"
+  href="/creating-predicates"
   title="Trigger events with Chainhook"
   icon={<Chainhook />}
   tag="Chainhook"
-  description="Learn how to trigger events with Chainhook."
+  description="Learn how to trigger events using Chainhook predicates."
 />
 <SecondaryCard
-  href="/stacks/platform"
-  title="Intro to Hiro tooling"
-  icon={<Hiro />}
-  tag="Hiro"
-  description="Learn more about Hiro tooling and how to use them."
+  href="/recommended-resources"
+  title="Recommended resources"
+  icon={<NotebookIcon />}
+  tag="Resources"
+  description="Get started with a collection of curated resources across the Stacks ecosystem."
 />
 </Cards>
 

@@ -1,23 +1,30 @@
 ---
 root: true
-title: Overview
+title: Clarinet
 icon: Clarinet
 sidebarTitle: Clarinet
-description: Clarinet is a local development environment that offers everything you need to create, test, and deploy smart contracts on Stacks.
+description: It's everything you need to write, test, and deploy Clarity smart contracts on Stacks.
+tags: ["LOCAL DEVELOPMENT", "SMART CONTRACTS", "UNIT TESTING", "DEPLOYMENT PLANS"]
+type: overview
 ---
 
-import { ArrowUpRight } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { SecondaryCard } from "@/components/card";
+import { Cards, NextCard } from "@/components/card";
 
-Using a simple command line interface, Clarinet enables you to build and iterate on your contracts locally before moving into production on the `mainnet` network.
+## Overview
 
-You can code with <TooltipProvider inline><Tooltip><TooltipTrigger asChild><span className='cursor-default border-b border-dotted border-primary'>Clarity syntax support</span></TooltipTrigger><TooltipContent>Using the [Clarity VSCode extension](https://marketplace.visualstudio.com/items?itemName=HiroSystems.clarity-lsp#:~:text=This%20VS%20Code%20extension%20brings,safety%20checks%2C%20debugger%20and%20more)</TooltipContent></Tooltip></TooltipProvider>, run tests, debug your code line by line, and deploy your contracts to a local Stacks blockchain environment to rapidly iterate on your code.
+Clarinet is the fastest way to build, test, and deploy smart contracts on the Stacks blockchain. It gives you a local devnet, REPL, testing framework, and debugging tools to ship high-quality Clarity code with confidence.
+
+![Clarinet](./images/overview.png)
+
+## Key features
+
+- ✓ **Leverage a powerful CLI** - Create new projects, manage your smart contracts and their dependencies using clarinet requirements, and interact with your code through the built-in REPL.
+
+- ✓ **Write unit tests with the SDK** - Use the Clarinet SDK to write unit tests in a familiar JS environment and validate contract behavior.
+
+- ✓ **Run a private blockchain environment** - Spin up a local devnet with nodes, miners, and APIs so you can test and integrate your code.
+
+- ✓ **VSCode extension** - Linter, step by step debugger, helps writing smart contracts (autocompletion, documentation etc).
 
 ## Installation
 
@@ -44,48 +51,20 @@ $ mv ./clarinet /usr/local/bin
 
 </TerminalPicker>
 
-## Set up shell completions
-
-Clarinet already has many different commands built in. Therefore, enabling tab completion in your shell may be useful. Using the command below, you can use `clarinet` to generate the shell completion scripts for many common shells.
-
-```terminal
-$ clarinet completions (bash|elvish|fish|powershell|zsh)
-```
-
-After generating the file, you can refer to the documentation for your shell to determine where this file should be moved to and what other steps may be necessary to enable tab completion for `clarinet`.
-
-## Guides
+## Next steps
 
 <Cards>
-  <SecondaryCard
-    href="/stacks/clarinet/guides/create-a-new-project"
-    title="Create a new contract"
-    description="Add new contracts to your project and have them automatically configured in your project file."
+  <NextCard 
+    href="/tools/clarinet/quickstart"
+    title="Quickstart"
+    description="Get started with Clarinet."
   />
-  <SecondaryCard
-    href="/stacks/clarinet-js-sdk/guides/unit-testing"
-    title="Write unit tests"
-    description="Leverage the Clarinet JS SDK to write comprehensive unit tests, ensuring your contract performs as expected."
-  />
-  <SecondaryCard
-    href="/stacks/clarinet/guides/create-deployment-plans"
-    title="Create deployment plans"
-    description="Employ customizable deployment plans to streamline your contract deployments."
-  />
-  <SecondaryCard
-    href="/stacks/clarinet/guides/run-a-local-devnet"
-    title="Run a local development environment"
-    description="Set up a local devnet environment for developing and testing in a controlled environment before deployment."
+  <NextCard 
+    href="/tools/clarinet/writing-clarity-contracts"
+    title="Writing Clarity contracts"
+    description="Learn how to write Clarity contracts."
   />
 </Cards>
-
-## Related tools
-
-- **[Clarinet JS SDK](/stacks/clarinet-js-sdk)**: Simplify your testing with the Clarinet JS SDK.
-- **[Hiro Platform](/stacks/platform)**: A developer platform for building, deploying and scaling Bitcoin apps.
-- **[Stacks.js](/stacks/stacks.js)**: Leverage a JavaScript library that handles basic functions, such as user authentication and transaction signing.
-
-<br />
 
 <Callout title="Need help building with Clarinet?" type="help">
 Reach out to us on the <span className="font-bold">#clarinet</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
