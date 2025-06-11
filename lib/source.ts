@@ -11,11 +11,14 @@ import {
   Clarity,
   create,
   Hiro,
+  Js,
   StacksIcon,
 } from "@/components/ui/icon";
 import { execSync } from "child_process";
 import { existsSync } from "fs";
 import { join } from "path";
+import { extractTagsAndLabels } from "./utils/frontmatter-parser";
+import type { FilterablePage } from "./utils/tag-filtering";
 
 const customIcons = {
   API,
@@ -23,8 +26,9 @@ const customIcons = {
   Chainhook,
   Clarinet,
   Clarity,
-  StacksIcon,
   Hiro,
+  Js,
+  StacksIcon,
 };
 
 const icons = { ...lucideIcons, ...customIcons } as any;
@@ -39,6 +43,9 @@ const gitMetadataCache = new Map<
   { date: Date | null; timestamp: number }
 >();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache TTL
+
+// Global storage for collecting filterable pages during build
+const filterablePages: FilterablePage[] = [];
 
 function canUseGit(): boolean {
   try {
@@ -187,6 +194,29 @@ function isPageNew(filePath: string, frontmatter?: any): boolean {
 
 function isValidDate(date: Date): boolean {
   return date instanceof Date && !isNaN(date.getTime());
+}
+
+/**
+ * Extract section identifier from URL path
+ * @param url - The page URL
+ * @returns Section identifier
+ */
+function extractSectionFromUrl(url: string): string {
+  // Remove leading slash and split by slash
+  const pathParts = url.replace(/^\//, "").split("/");
+
+  // For URLs like "/stacks/clarinet/guides/..." return "clarinet"
+  // For URLs like "/tools/clarinet" return "clarinet"
+  if (pathParts.length >= 2) {
+    return pathParts[1];
+  }
+
+  // For single level paths like "/clarinet", return that
+  if (pathParts.length === 1 && pathParts[0]) {
+    return pathParts[0];
+  }
+
+  return "general";
 }
 
 export function icon(iconName: string) {
@@ -570,6 +600,43 @@ export const source = loader({
           console.log("Applied new badge to node");
         }
 
+        // Extract and process tags and labels
+        const { tags, labels } = extractTagsAndLabels(frontmatter || {});
+
+        // Add tags and labels to node data
+        if (tags.length > 0) {
+          dataToAdd.tags = tags;
+        }
+        if (labels.length > 0) {
+          dataToAdd.labels = labels;
+        }
+
+        // If this page has labels, add it to the filterable pages collection
+        if (labels.length > 0 && node.url) {
+          // Extract section from URL (e.g., "/stacks/clarinet" -> "clarinet")
+          const section = extractSectionFromUrl(node.url);
+
+          const filterablePage: FilterablePage = {
+            id: node.url,
+            title: frontmatter?.title || node.name || "Untitled",
+            description: frontmatter?.description,
+            url: node.url,
+            labels,
+            section,
+            type: frontmatter?.type,
+          };
+
+          // Avoid duplicates
+          const existingIndex = filterablePages.findIndex(
+            (p) => p.id === filterablePage.id
+          );
+          if (existingIndex >= 0) {
+            filterablePages[existingIndex] = filterablePage;
+          } else {
+            filterablePages.push(filterablePage);
+          }
+        }
+
         // Add frontmatter fields to node data
         if (frontmatter?.sidebarTitle) {
           dataToAdd.sidebarTitle = frontmatter.sidebarTitle;
@@ -623,3 +690,28 @@ export const openapi = createOpenAPI({
     },
   },
 });
+
+/**
+ * Get all filterable pages collected during build
+ * @returns Array of FilterablePage objects
+ */
+export function getAllFilterablePages(): FilterablePage[] {
+  return [...filterablePages];
+}
+
+/**
+ * Get pages with matching labels for a given tag
+ * @param tag - The tag to search for
+ * @param section - Optional section to limit search scope
+ * @returns Array of matching FilterablePage objects
+ */
+export function getPagesWithMatchingLabels(
+  tag: string,
+  section?: string
+): FilterablePage[] {
+  return filterablePages.filter((page) => {
+    const sectionMatches = !section || page.section === section;
+    const tagMatches = page.labels.includes(tag);
+    return sectionMatches && tagMatches;
+  });
+}

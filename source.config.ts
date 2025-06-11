@@ -17,6 +17,9 @@ export const docs = defineDocs({
       publishedAt: z.string().optional(),
       sidebarTitle: z.string().optional(),
       root: z.boolean().optional(),
+      tags: z.array(z.string()).optional(),
+      labels: z.array(z.string()).optional(),
+      type: z.string().optional(),
     }),
   },
   meta: {
