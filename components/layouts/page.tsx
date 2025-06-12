@@ -69,7 +69,13 @@ export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
 
 export function DocsBody(props: ComponentProps<"div">) {
   return (
-    <div {...props} className={cn("prose", props.className)}>
+    <div
+      {...props}
+      className={cn(
+        "prose text-neutral-400 dark:text-neutral-300",
+        props.className
+      )}
+    >
       {props.children}
     </div>
   );
@@ -80,10 +86,7 @@ export function DocsDescription(props: ComponentProps<"p">) {
   if (props.children === undefined) return null;
 
   return (
-    <p
-      {...props}
-      className={cn("text-lg text-muted-foreground", props.className)}
-    >
+    <p {...props} className={cn("text-md", props.className)}>
       {props.children}
     </p>
   );

@@ -202,12 +202,12 @@ function Sidebar() {
 }
 
 const linkVariants = cva(
-  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground [&_svg]:size-4",
+  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground font-regular [&_svg]:size-4",
   {
     variants: {
       active: {
-        true: "text-primary bg-neutral-150 dark:bg-neutral-700",
-        false: "hover:text-fd-accent-foreground hover:bg-card",
+        true: "text-primary bg-neutral-150 dark:bg-neutral-700 font-medium",
+        false: "hover:text-muted-foreground hover:bg-card",
       },
     },
   }
