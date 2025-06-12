@@ -1,4 +1,4 @@
-import { AlertOctagon, AlertTriangle, Info, Star } from "lucide-react";
+import { AlertTriangle, Info, Star } from "lucide-react";
 import { HiroSVG } from "@/components/ui/icon";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -44,17 +44,17 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
             ),
             help: (
-              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                 <HiroSVG />
               </div>
             ),
           }[type]}
         <div className="w-0 flex-1">
           <div
-            className={cn("flex flex-row items-center gap-2", {
-              "mb-2": title,
-              "mb-0": !title,
-            })}
+            className={cn(
+              "flex flex-row items-center gap-2",
+              title ? "mb-2" : "mb-0"
+            )}
           >
             {title ? (
               <>
@@ -70,7 +70,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                       <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
                     ),
                     help: (
-                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                         <HiroSVG />
                       </div>
                     ),
@@ -92,9 +92,10 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
             ) : null}
           </div>
           <div
-            className={cn("callout", {
-              "text-muted-foreground": type === "help",
-            })}
+            className={cn(
+              "callout",
+              type === "help" && "text-muted-foreground"
+            )}
           >
             {children}
           </div>

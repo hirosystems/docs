@@ -1,0 +1,343 @@
+---
+title: '@stacks/network'
+description: Network and API library for working with Stacks blockchain nodes.
+full: true
+---
+
+The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
+
+## Installation
+
+```package-install
+@stacks/network
+```
+
+## AppConfig
+
+Configuration data for the current app.
+
+On browser platforms, creating an instance of this class without any arguments will use `window.location.origin` as the app domain. On non-browser platforms, you need to specify an app domain as the second argument.
+
+### Parameters
+
+**scopes** (string[], required): An array of strings representing permissions requested by the app.
+- Default: `['store_write']`
+
+**appDomain** (string, optional): Stacks apps are uniquely identified by their app domain.
+
+**redirectPath** (string, optional): Path on app domain to redirect users to after authentication. The authentication response token will be postpended in a query.
+
+**manifestPath** (string, optional): Path relative to app domain of app's manifest file.
+- Default: `"/manifest.json"`
+
+**coreNode** (string, optional): The URL of Stacks core node to use for this app. If this is not specified, the default core node will be used.
+
+**authenticatorURL** (string, optional): The URL of a web-based authenticator to use in the event the user doesn't have Stacks installed on their machine. If this is not specified, the current default in this library will be used.
+
+### Examples
+
+**Setting basic app permissions:**
+```tsx
+import { AppConfig } from '@stacks/auth';
+
+const appDomain = 'https://www.myapp.com';
+const appConfig = new AppConfig(
+  ['store_write'],
+  appDomain
+);
+```
+
+**With advanced scopes:**
+```tsx
+import { AppConfig } from '@stacks/auth';
+
+const appDomain = 'https://www.myapp.com';
+const appConfig = new AppConfig(
+  ['store_write', 'publish_data', 'email'],
+  appDomain
+);
+```
+
+**Full Code Sample:**
+```tsx
+import {
+  UserSession,
+  makeAuthRequest,
+  AppConfig
+} from '@stacks/auth';
+
+const appDomain = 'https://www.myapp.com';
+
+const appConfig = new AppConfig(['store_write'], appDomain);
+const userSession = new UserSession({ appConfig });
+
+// The authentication payloads are encrypted during transit, the encryption key generated below provides this
+const transitKey = userSession.generateAndStoreTransitKey();
+
+// The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+const redirectUri = 'https://www.myapp.com/auth';
+
+// Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+const manifestUri = 'https://www.myapp.com/manifest.json';
+
+// Generate the authentication request payload
+const authRequest = userSession.makeAuthRequest(
+  transitKey,
+  redirectUri,
+  manifestUri
+);
+```
+
+## UserSession
+
+Represents an instance of a signed in user for a particular app.
+
+### Functions
+
+**isSignInPending** (function): Determines if there is an incoming authentication response.
+
+**handlePendingSignIn** (function): Processes the response and provides a `userData` object containing the user's identity, BNS username and profile information.
+
+**isUserSignedIn** (function): Checks if the user is already authenticated.
+
+**loadUserData** (function): Retrieves the user's profile data if the user is already authenticated.
+
+**encryptContent** (function): Encrypts user data for secure storage.
+
+**decryptContent** (function): Decrypts user data for secure storage.
+
+### Examples
+
+**Handling pending auth:**
+```tsx
+const isPending = userSession.isSignInPending();
+
+if (isPending) {
+  userSession.handlePendingSignIn().then(userData => {
+    // Do something with userData
+  });
+}
+```
+
+**Checking if user is signed in:**
+```tsx
+const isSignedIn = userSession.isUserSignedIn();
+```
+
+**Loading data for signed in user:**
+```tsx
+const isSignedIn = userSession.isUserSignedIn();
+
+if (isSignedIn) {
+  // Do something with the signed in user
+  const userData = userSession.loadUserData();
+}
+```
+
+**Signing out a user:**
+```tsx
+userSession.signUserOut();
+```
+
+**Encrypting user data:**
+```tsx
+const message = 'My secret message';
+
+const cipherText = await userSession.encryptContent(message);
+```
+
+**Decrypting user data:**
+```tsx
+const message = 'My secret message';
+
+const cipherText = await userSession.encryptContent(message);
+const plainText = await userSession.decryptContent(cipherText);
+```
+
+> **Note:** Encryption here uses the user's private key associated with your app only. If you need to share this data with another app or other users, you should use the equivalent methods from `@stacks/encryption` and provide a custom private key.
+
+## makeAuthRequest
+
+The Stacks authentication process enables secure user sign-in for web apps by generating and handling encrypted authentication requests. It involves setting up an app domain, configuring permissions, and creating a UserSession to manage user data.
+
+### Parameters
+
+**transitKey** (string, required): The authentication payloads are encrypted during transit, the encryption key generated below provides this.
+
+**redirectURI** (string, required): A URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+
+**manifestUri** (string, required): Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+
+**scopes** (string[], optional): Additional permissions the app is requesting.
+
+### Examples
+
+**Generate an authentication request:**
+```tsx
+import {
+  UserSession,
+  makeAuthRequest,
+  AppConfig
+} from '@stacks/auth';
+
+const appDomain = 'https://www.myapp.com';
+
+const appConfig = new AppConfig(['store_write'], appDomain);
+const userSession = new UserSession({ appConfig });
+
+// The authentication payloads are encrypted during transit, the encryption key generated below provides this
+const transitKey = userSession.generateAndStoreTransitKey();
+
+// The Stacks auth process will open a compatible Stacks authenticator or browser extension to perform the authentication. So you will need to provide a redirect URL which the authenticator or extension can redirect to with the authentication payload. This page should process the authentication payload.
+const redirectUri = 'https://www.myapp.com/auth';
+
+// Set the location of your app manifest file. This file contains information about your app that is shown to the user during authentication.
+const manifestUri = 'https://www.myapp.com/manifest.json';
+
+const authRequest = userSession.makeAuthRequest(
+  transitKey,
+  redirectUri,
+  manifestUri
+);
+```
+
+## lookupProfile
+
+Look up a user's profile information by their BNS username.
+
+### Parameters
+
+**username** (string, required): The BNS username of the user.
+
+**network** ('mainnet' | 'testnet' | 'devnet' | 'mocknet' | StacksNetwork, optional): Defines the network to connect to. Default is 'mainnet'.
+
+**zoneFileLookupURL** (string, optional): URL to fetch the zone file for the username. This is only needed if the zone file does not reside at the default location on the BNS network.
+
+### Examples
+
+**Looking up a profile:**
+```tsx
+import { lookupProfile } from '@stacks/auth';
+
+const username = 'example.btc';
+const profile = await lookupProfile(username);
+```
+
+## Usage
+
+## Create a Stacks mainnet, testnet or mocknet network
+
+```typescript
+import { StacksMainnet, StacksTestnet, StacksMocknet } from '@stacks/network';
+
+const network = new StacksMainnet();
+
+const testnet = new StacksTestnet();
+
+const mocknet = new StacksMocknet();
+```
+
+## Set a custom node URL
+
+```typescript
+const network = new StacksMainnet({ url: 'https://www.mystacksnode.com/' });
+```
+
+## Check if network is mainnet
+
+```typescript
+const isMainnet = network.isMainnet();
+```
+
+## Network usage in transaction building
+
+```typescript
+import { makeSTXTokenTransfer } from '@stacks/transactions';
+
+const txOptions = {
+  network,
+  recipient: 'SP2BS6HD7TN34V8Z5BNF8Q2AW3K8K2DPV4264CF26',
+  amount: new BigNum(12345),
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+};
+
+const transaction = await makeSTXTokenTransfer(txOptions);
+```
+
+## Use the built-in API key middleware
+
+Some Stacks APIs make use API keys to provide less rate-limited plans.
+
+```typescript
+import { createApiKeyMiddleware, createFetchFn, StacksMainnet } from '@stacks/network';
+import { broadcastTransaction, getNonce, makeSTXTokenTransfer } from '@stacks/transactions';
+
+const myApiMiddleware = createApiKeyMiddleware('example_e8e044a3_41d8b0fe_3dd3988ef302');
+const myFetchFn = createFetchFn(myApiMiddleware); // middlewares can be used to create a new fetch function
+const myMainnet = new StacksMainnet({ fetchFn: myFetchFn }); // the fetchFn options can be passed to a StacksNetwork to override the default fetch function
+
+const txOptions = {
+  recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
+  amount: 12345n,
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+  memo: 'some memo',
+  anchorMode: AnchorMode.Any,
+  network: myMainnet, // make sure to pass in the custom network object
+};
+const transaction = await makeSTXTokenTransfer(txOptions); // fee-estimation will use the custom fetchFn
+
+const response = await broadcastTransaction(transaction, myMainnet); // make sure to broadcast via the custom network object
+
+// stacks.js functions, which take a StacksNetwork object will use the custom fetchFn
+const nonce = await getNonce('SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159', myMainnet);
+```
+
+## Use custom middleware
+
+Middleware can be used to hook into network calls before sending a request or after receiving a response.
+
+```typescript
+import { createFetchFn, RequestContext, ResponseContext, StacksTestnet } from '@stacks/network';
+import { broadcastTransaction, getNonce, makeSTXTokenTransfer } from '@stacks/transactions';
+
+const preMiddleware = (ctx: RequestContext) => {
+  ctx.init.headers = new Headers();
+  ctx.init.headers.set('x-foo', 'bar'); // override headers and set new `x-foo` header
+};
+const postMiddleware = (ctx: ResponseContext) => {
+  console.log(await ctx.response.json()); // log response body as json
+};
+
+const fetchFn = createFetchFn({ pre: preMiddleware, post: preMiddleware }); // a middleware can contain `pre`, `post`, or both
+const network = new StacksTestnet({ fetchFn });
+
+// stacks.js functions, which take a StacksNetwork object will use the custom fetchFn
+const nonce = await getNonce('SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159', network);
+```
+
+## Get various API URLs
+
+```typescript
+const txBroadcastUrl = network.getBroadcastApiUrl();
+
+const feeEstimateUrl = network.getTransferFeeEstimateApiUrl();
+
+const address = 'SP2BS6HD7TN34V8Z5BNF8Q2AW3K8K2DPV4264CF26';
+const accountInfoUrl = network.getAccountApiUrl(address);
+
+const contractName = 'hello_world';
+const abiUrl = network.getAbiApiUrl(address, contractName);
+
+const functionName = 'hello';
+const readOnlyFunctionCallUrl = network.getReadOnlyFunctionCallApiUrl(
+  address,
+  contractName,
+  functionName
+);
+
+const nodeInfoUrl = network.getInfoUrl();
+
+const blockTimeUrl = network.getBlockTimeInfoUrl();
+
+const poxInfoUrl = network.getPoxInfoUrl();
+```

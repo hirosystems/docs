@@ -1,6 +1,7 @@
+import React, { JSX } from "react";
 import type { SVGProps } from "react";
 
-export function HiroPlatformSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
+export function HiroPlatformSVG(props: SVGProps<SVGSVGElement>) {
   return (
     <svg width="474" height="40" viewBox="0 0 474 40" fill="none" {...props}>
       <path

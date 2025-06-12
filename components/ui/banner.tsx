@@ -74,7 +74,7 @@ export function Banner({
       id={id}
       {...props}
       className={cn(
-        "relative flex h-12 flex-row items-center justify-center bg-[#ff7733] px-4 text-center text-sm text-[#141312] font-medium font-aeonikFono",
+        "relative flex h-12 flex-row items-center justify-center bg-[#ff7733] px-4 text-center text-sm text-primary font-medium font-aeonik-fono",
         !open && "hidden",
         props.className
       )}
@@ -105,7 +105,7 @@ export function Banner({
           <Button
             size="sm"
             asChild
-            className="bg-[hsl(var(--dark))] text-[#ff7733] font-aeonikFono hover:bg-[hsl(var(--dark))] hover:text-[#ffeee5]"
+            className="bg-[hsl(var(--dark))] text-[#ff7733] font-aeonik-fono hover:bg-[hsl(var(--dark))] hover:text-[#ffeee5]"
           >
             {url.startsWith("/") ? (
               <Link href={url}>{cta}</Link>
@@ -130,7 +130,7 @@ export function Banner({
             })
           )}
         >
-          <X className="text-[#141312]" />
+          <X className="text-primary" />
         </button>
       ) : null}
     </div>

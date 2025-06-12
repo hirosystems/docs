@@ -1,0 +1,230 @@
+---
+title: Bitcoin Scopes
+description: Reference guide for available scopes for Bitcoin.
+full: true
+---
+
+Bitcoin scopes are parameters you use to define the `if this` specification logic of your Chainhook on the Bitcoin blockchain. In other words, scopes specify what on-chain events you are looking to monitor and track. For more information on Chainhook design, please view [predicate design](/stacks/chainhook/concepts/predicate-design).
+
+## `txid`
+
+The `txid` scope allows you to query transactions based on their transaction ID. This is particularly useful for tracking specific transactions or auditing transaction histories.
+
+### Parameters
+
+**equals** (string, required): The `equals` property is a 32 byte hex encoded type used to specify the exact transaction ID to match.
+
+### Example
+
+**By transaction ID:**
+```json
+{
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
+}
+```
+
+## `outputs`
+
+The `outputs` scope allows you to query blocks based on the payload returned by the specified operation.
+
+### Parameters
+
+**operation** (object, required): The `operation` property is used to identify the Bitcoin operation that will trigger Chainhook as it observes Bitcoin transactions. The available operations are `op_return`, `p2pkh`, `p2sh`, `p2wpkh` and `p2wsh`.
+
+### Examples
+
+#### Using op_return
+
+```json
+{
+  "if_this": {
+    "scope": "outputs",
+    "op_return": {
+      "equals": "0xbtc21000042stx016"
+    }
+  }
+}
+```
+
+**Parameters:**
+- **equals** (string/32-byte encoded hex, required): The `equals` property specifies the exact characters of the string or 32 byte encoded hex to match.
+- **starts_with** (string/32-byte encoded hex, required): The `starts_with` property specifies the starting characters of the string or 32 byte encoded hex to match.
+- **ends_with** (string/32-byte encoded hex, required): The `ends_with` property specifies the ending characters of the string or 32 byte encoded hex to match.
+
+> **Note:** The `op_return` operation allows for `equals`, `starts_with` and `ends_with` for matching against the desired input.
+
+#### Using p2pkh
+
+```json
+{
+  "if_this": {
+    "scope": "outputs",
+    "p2kph": {
+      "equals": "0xbtc21000042stx016"
+    }
+  }
+}
+```
+
+**Parameters:**
+- **equals** (string/32-byte encoded hex, required): The `equals` property specifies the exact characters of the string or 32 byte encoded hex to match.
+
+> **Note:** `p2pkh`(Pay-to-Public-Key-Hash) is a Bitcoin transaction output script type that allows users to send funds to a recipient's hashed public key, providing security and privacy by concealing the actual public key.
+
+#### Using p2sh
+
+```json
+{
+  "if_this": {
+    "scope": "outputs",
+    "p2sh": {
+      "equals": "0xbtc21000042stx016"
+    }
+  }
+}
+```
+
+**Parameters:**
+- **equals** (string/32-byte encoded hex, required): The `equals` property specifies the exact characters of the string or 32 byte encoded hex to match.
+
+> **Note:** `p2sh`(Pay-to-Script-Hash) is a Bitcoin transaction output script type that enables users to send funds to a script instead of a public key, allowing for more complex transaction conditions and multi-signature addresses.
+
+#### Using p2wpkh
+
+```json
+{
+  "if_this": {
+    "scope": "outputs",
+    "p2wpkh": {
+      "equals": "0xbtc21000042stx016"
+    }
+  }
+}
+```
+
+**Parameters:**
+- **equals** (string, required): The `equals` property specifies the exact characters of the string to match.
+
+> **Note:** `p2wpkh`(Pay-to-Witness-Public-Key-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that allows for more efficient and secure transactions by separating the witness data from the transaction data and storing it in a separate block.
+
+#### Using p2wsh
+
+```json
+{
+  "if_this": {
+    "scope": "outputs",
+    "p2wsh": {
+      "equals": "0xbtc21000042stx016"
+    }
+  }
+}
+```
+
+**Parameters:**
+- **equals** (string, required): The `equals` property specifies the exact characters of the string to match.
+
+> **Note:** `p2wsh` (Pay-to-Witness-Script-Hash) is a Bitcoin transaction output script type used in Segregated Witness (SegWit) that enables users to send funds to a hashed script, allowing for more complex transaction conditions and greater scalability by separating the script from the transaction data.
+
+#### Using descriptor
+
+```json
+{
+  "if_this": {
+    "scope": "outputs",
+    "descriptor": {
+      "expression": "wpkh(tprv8ZgxMBicQKsPePxn6j3TjvB2MBzQkuhGgc6oRh2WZancZQgxktcnjZJ44XdsRiw3jNkbVTK9JW6KFHvnRKgAMtSyuBevMJprSkZ4PTfmTgV/84'/1'/0'/0/*)",
+      "range": [0, 3]
+    }
+  }
+}
+```
+
+**Parameters:**
+- **expression** (string, required): The `expression` property specifies the exact characters of the string to match.
+- **range** (integer[], required): The `range` property specifies and array of integers representing the desired indexes.
+
+> **Note:** Wallet descriptors provide a compact and semi-standardized method for describing how scripts and addresses within a wallet are generated. Chainhook users that want to track addresses derived from an extended pubkey or a multisig-wallet can now rely on this feature instead of defining one predicate per address.
+> 
+> For example, let's say we wanted to track the first 3 addresses generated by the following descriptor:
+> 
+> ```
+> wpkh(tprv8ZgxMBicQKsPePxn6j3TjvB2MBzQkuhGgc6oRh2WZancZQgxktcnjZJ44XdsRiw3jNkbVTK9JW6KFHvnRKgAMtSyuBevMJprSkZ4PTfmTgV/84'/1'/0'/0/*)
+> ```
+> 
+> This descriptor reads: describe a P2WPKH output with the specified extended public key, and it produces these BIP84 addresses:
+> 
+> ```
+> bcrt1qzy2rdyvu8c57qd8exyyp0mw7dk5drsu9ewzdsu
+> bcrt1qsfsjnagr29m8h3a3vdand2s85cg4cefkcwk2fy
+> bcrt1qauewfytqe5mtr0xwp786r6fl39kmum2lr65kmj
+> ```
+
+## `stacks_protocol`
+
+The `stacks_protocol` scope allows you query Bitcoin transactions related to the Stacks Proof of Transfer (PoT) [consensus mechanism](https://www.hiro.so/blog/securing-web3-apps-through-bitcoin-an-overview-of-stacks-consensus-mechanism).
+
+### Parameters
+
+**operation** (string, required): The `operation` property is used to identify the Stacks operation that will trigger Chainhook as it observes Bitcoin transactions. The available operations are `block_committed`, `leader_registered`, `inscription_feed`, `stx_transferred` and `stx_locked`.
+
+### Examples
+
+#### Using block_committed
+
+```json
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "block_committed"
+  }
+}
+```
+
+#### Using leader_registered
+
+```json
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "leader_registered"
+  }
+}
+```
+
+#### Using inscription_feed
+
+```json
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "inscription_feed"
+  }
+}
+```
+
+> **Note:** `inscription_feed` observes the reveal and transfer of an Ordinal inscription.
+
+#### Using stx_transferred
+
+```json
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "stx_transferred"
+  }
+}
+```
+
+#### Using stx_locked
+
+```json
+{
+  "if_this": {
+    "scope": "stacks_protocol",
+    "operation": "stx_locked"
+  }
+}
+```

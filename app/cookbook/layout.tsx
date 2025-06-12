@@ -1,6 +1,5 @@
-import { Layout } from "fumadocs-ui/layout";
+import React, { JSX } from "react";
 import type { ReactNode } from "react";
-import { homeLayoutOptions } from "../(docs)/layout";
 
 export default function CookbookLayout({
   children,
@@ -9,11 +8,9 @@ export default function CookbookLayout({
 }): JSX.Element {
   return (
     <div className="px-10 *:border-none">
-      <Layout {...homeLayoutOptions}>
-        <div className="min-h-screen py-8">
-          <div className="space-y-4">{children}</div>
-        </div>
-      </Layout>
+      <div className="min-h-screen py-8">
+        <div className="space-y-4">{children}</div>
+      </div>
     </div>
   );
 }
