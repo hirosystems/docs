@@ -10,7 +10,8 @@
     "lint": "bun run ./lint.ts",
     "generate-openapi": "bun run ./scripts/fetch-openapi-specs.mts",
     "build:recipes": "bun run ./scripts/fetch-recipes.mts",
-    "generate": "bun run generate-openapi && bun run build:recipes"
+    "generate:llms": "bun run ./scripts/generate-llms-txt.ts",
+    "generate": "bun run generate-openapi && bun run build:recipes && bun run generate:llms"
   },
   "overrides": {
     "@shikijs/core": "3.3.0",
@@ -40,6 +41,7 @@
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@stacks/connect": "^8.1.6",
+    "@tanstack/react-query": "^5.80.7",
     "@types/js-yaml": "^4.0.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -70,6 +72,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.12",
+    "@tanstack/react-query-devtools": "^5.80.7",
     "@types/mdast": "^4.0.4",
     "@types/mdx": "^2.0.13",
     "@types/node": "22.13.10",

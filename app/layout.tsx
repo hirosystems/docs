@@ -5,6 +5,7 @@ import { aeonik, aeonikFono, aeonikMono, inter } from "@/fonts";
 import { SearchProvider } from "@/hooks/use-search";
 // import SearchDialog from "@/components/search-dialog";
 import { KeyboardShortcutsProvider } from "@/hooks/use-keyboard-shortcuts";
+import { QueryProvider } from "@/providers/query-provider";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -14,18 +15,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="flex flex-col min-h-screen">
-        <KeyboardShortcutsProvider>
-          <SearchProvider>
-            <RootProvider
-              search={{
-                enabled: true,
-              }}
-            >
-              {children}
-            </RootProvider>
-            {/* <SearchDialog /> TODO: this is new new dialog */}
-          </SearchProvider>
-        </KeyboardShortcutsProvider>
+        <QueryProvider>
+          <KeyboardShortcutsProvider>
+            <SearchProvider>
+              <RootProvider
+                search={{
+                  enabled: true,
+                }}
+              >
+                {children}
+              </RootProvider>
+              {/* <SearchDialog /> TODO: this is new new dialog */}
+            </SearchProvider>
+          </KeyboardShortcutsProvider>
+        </QueryProvider>
       </body>
     </html>
   );

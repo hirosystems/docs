@@ -3,7 +3,7 @@ import matter from "gray-matter";
 import { source } from "@/lib/source";
 import { openapi } from "@/lib/source";
 import { notFound } from "next/navigation";
-import { HeadingProps } from "@/types";
+import type { HeadingProps } from "@/types";
 import { API } from "@/components/reference/api-page";
 import { APIPage } from "fumadocs-openapi/ui";
 import {
@@ -19,7 +19,7 @@ import {
   DocsDescription,
   DocsTitle,
 } from "@/components/layouts/page";
-import { CustomTable as Table, TableProps } from "@/components/table";
+import { CustomTable as Table, type TableProps } from "@/components/table";
 import { OrderedList, UnorderedList } from "@/components/lists";
 import { Callout } from "@/components/callout";
 import { Cards, Card, SecondaryCard } from "@/components/card";
@@ -44,7 +44,8 @@ export default async function Page(props: {
   const LLMContent = rawMarkdownContent
     .split("\n")
     .filter((line) => !line.trim().startsWith("import"))
-    .join("\n");
+    .join("\n")
+    .trim();
 
   const MDX = page.data.body;
 

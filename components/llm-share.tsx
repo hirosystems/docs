@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +12,8 @@ import {
 } from "./ui/dropdown-menu";
 import { Copy, ExternalLink, Check, FileText } from "lucide-react";
 import { OpenAIIcon, ClaudeIcon } from "@/components/ui/icon";
+import { useLLMsTxt, useCurrentPageMarkdown } from "@/hooks/use-llms-txt";
+import { processMarkdownLinks } from "@/utils/process-markdown-links";
 
 interface LLMShareProps {
   content: string;
@@ -35,6 +37,8 @@ const LLM_PROVIDERS = [
 export function LLMShare({ content }: LLMShareProps) {
   const [isCopied, setIsCopied] = useState(false);
   const pathname = usePathname();
+  const markdownUrl = useCurrentPageMarkdown();
+  const { data: llmsTxtContent, refetch } = useLLMsTxt();
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -48,100 +52,46 @@ export function LLMShare({ content }: LLMShareProps) {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(content);
+      // Process the markdown to convert relative links to absolute URLs
+      const processedContent = processMarkdownLinks(content);
+      await navigator.clipboard.writeText(processedContent);
       setIsCopied(true);
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }
   };
 
-  // Function to open the raw markdown view (browser-compatible)
   const handleViewRawMarkdown = () => {
     if (!pathname) return;
 
-    // Assuming paths start like /docs/...
-    let basePath = pathname;
-    if (basePath.startsWith("/docs")) {
-      basePath = basePath.substring(5); // Remove '/docs' prefix
+    // Construct the markdown path
+    let mdPath = pathname;
+    if (mdPath.startsWith("/docs")) {
+      mdPath = mdPath.substring(5);
     }
 
-    // Construct the /raw path
-    let rawPath =
-      "/raw" + (basePath.startsWith("/") ? basePath : "/" + basePath);
-
-    // Append .mdx or /index.mdx
-    if (rawPath === "/raw" || rawPath.endsWith("/")) {
-      // Handle root case (e.g. /docs/ -> /raw/index.mdx) or trailing slash (/docs/section/ -> /raw/section/index.mdx)
-      rawPath = rawPath.endsWith("/")
-        ? rawPath + "index.mdx"
-        : "/raw/index.mdx";
-    } else {
-      // Append .mdx to non-index paths
-      rawPath += ".mdx";
+    if (!mdPath || mdPath === "/") {
+      mdPath = "/index";
     }
 
-    // Clean up potential double slashes
-    rawPath = rawPath.replace(/\/+/g, "/");
-
-    window.open(rawPath, "_blank");
+    // Open the .md version
+    window.open(`${mdPath}.md`, "_blank");
   };
 
-  const handleShare = async (
-    provider: Omit<(typeof LLM_PROVIDERS)[number], "prepend">
-  ) => {
-    let llmsApiPath = "/api/llms/llms.txt"; // Default to root
-
-    if (pathname) {
-      const pathSegments = pathname.split("/").filter(Boolean); // e.g., ['docs', 'stacks', 'clarinet', 'quickstart']
-
-      // Check if it's a docs path and has section/page info
-      if (pathSegments[0] === "docs" && pathSegments.length > 1) {
-        // Get path segments *after* 'docs'
-        const pagePathSegments = pathSegments.slice(1);
-
-        // Get segments for the parent directory (all except the last one)
-        const parentDirSegments = pagePathSegments.slice(0, -1);
-
-        if (parentDirSegments.length > 0) {
-          // If there are parent directory segments, construct the section path
-          llmsApiPath = `/api/llms/${parentDirSegments.join("/")}/llms.txt`;
-        } else {
-          // If only one segment after 'docs' (e.g., /docs/intro), it belongs to the root context
-          llmsApiPath = "/api/llms/llms.txt";
-        }
-      }
-      // else: If path is just '/docs' or doesn't start with '/docs', the default root path is used
-
-      // Clean up potential double slashes
-      llmsApiPath = llmsApiPath.replace(/\/+/g, "/");
-    }
-
-    const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    const llmsTxtUrl = `${baseUrl}${llmsApiPath}`;
-
+  const handleShare = async (provider: (typeof LLM_PROVIDERS)[number]) => {
     try {
-      const response = await fetch(llmsTxtUrl);
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch LLM context (${response.status}) from ${llmsTxtUrl}`
-        );
-      }
-      const llmsTxtContent = await response.text();
+      // Create simple instruction with just the current page
+      const instruction = `Read from ${markdownUrl} so I can ask questions about it.`;
 
-      const instruction = `Please use the following documentation context (list of relevant pages) to answer my questions:\n\n${llmsTxtContent}\n\nBe ready to answer my questions about it.`;
       const encodedInstruction = encodeURIComponent(instruction);
-      let shareUrl = `${provider.url}`;
-      if (provider.name === "ChatGPT") {
-        shareUrl += `?q=${encodedInstruction}`;
-      } else if (provider.name === "Claude") {
-        shareUrl += `?q=${encodedInstruction}`;
-      } else {
-        shareUrl += `?q=${encodedInstruction}`;
-      }
+      const shareUrl = `${provider.url}?q=${encodedInstruction}`;
 
       window.open(shareUrl, "_blank");
+
+      // Optionally prefetch the section-specific llms.txt for next time
+      refetch();
     } catch (error) {
-      console.error("[LLMShare] Failed to fetch or share LLM context:", error);
+      console.error("[LLMShare] Failed to share:", error);
     }
   };
 
@@ -194,7 +144,6 @@ export function LLMShare({ content }: LLMShareProps) {
               </span>
             </div>
           </DropdownMenuItem>
-          {/* View as Markdown item - Uncommented and logic added */}
           <DropdownMenuItem
             onSelect={handleViewRawMarkdown}
             className="cursor-pointer"

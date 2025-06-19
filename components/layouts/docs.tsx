@@ -202,7 +202,7 @@ function Sidebar() {
 }
 
 const linkVariants = cva(
-  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground font-regular [&_svg]:size-4",
+  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground font-regular [&_svg]:size-3",
   {
     variants: {
       active: {
@@ -285,7 +285,7 @@ function SidebarItem({
             active: pathname === item.url,
           }),
           // Special styling for root pages - applies on top of linkVariants
-          isRootPage && ["font-fono font-semibold text-base mb-1"],
+          isRootPage && ["font-regular text-sm"],
           // Style the icon when root page is active
           isRootPage &&
             pathname === item.url && [

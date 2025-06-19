@@ -93,7 +93,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
           </div>
           <div
             className={cn(
-              "callout",
+              "callout [&_p]:m-0",
               type === "help" && "text-muted-foreground"
             )}
           >
