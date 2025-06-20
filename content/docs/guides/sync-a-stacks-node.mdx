@@ -22,7 +22,7 @@ In this guide, you will learn how to:
 Clone the Stacks blockchain Docker repository from GitHub:
 
 ```terminal
-$ git clone https://github.com/blockstack/stacks-blockchain-docker.git
+$ git clone git@github.com:hirosystems/stacks-blockchain-docker.git
 $ cd stacks-blockchain-docker
 ```
 
@@ -31,6 +31,7 @@ $ cd stacks-blockchain-docker
 Inside of the `stacks-blockchain-docker` directory, run the following command to start the Stacks node:
 
 ```terminal
+$ chmod +x manage.sh
 $ ./manage.sh -n <network> -a start
 ```
 
