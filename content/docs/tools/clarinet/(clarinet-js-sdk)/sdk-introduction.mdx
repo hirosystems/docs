@@ -1,0 +1,163 @@
+---
+title: SDK Introduction
+description: Get started with the Clarinet JavaScript SDK for testing and contract interaction
+---
+
+## What is the Clarinet JS SDK?
+
+The Clarinet JavaScript SDK provides a powerful testing framework and programmatic interface for interacting with your Clarity smart contracts. It enables you to:
+
+- Write comprehensive unit and integration tests
+- Simulate blockchain interactions
+- Test complex contract scenarios
+- Generate code coverage reports
+- Build automation scripts
+
+## Key Features
+
+### Simnet - Simulated Network
+A fast, in-memory blockchain simulator that provides:
+- Instant block mining
+- Deterministic behavior
+- Complete state control
+- Zero external dependencies
+
+### Testing Framework
+Built on Vitest, offering:
+- Modern async/await syntax
+- Parallel test execution
+- Rich assertion library
+- Code coverage analysis
+
+### Contract Interaction
+Type-safe contract calls with:
+- Automatic ABI parsing
+- Response type inference
+- Transaction chaining
+- Error handling
+
+## Installation
+
+The SDK is included when you create a new Clarinet project. For existing projects:
+
+```bash
+npm install @hirosystems/clarinet-sdk --save-dev
+```
+
+Or with yarn:
+```bash
+yarn add -D @hirosystems/clarinet-sdk
+```
+
+## Basic Setup
+
+### Test Structure
+
+Tests are typically placed in the `tests` directory:
+
+```
+my-project/
+├── contracts/
+│   └── counter.clar
+├── tests/
+│   └── counter.test.ts
+└── Clarinet.toml
+```
+
+### Your First Test
+
+```typescript
+import { describe, expect, it } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!;
+
+describe("counter contract", () => {
+  it("increments the counter", () => {
+    // Call the increment function
+    const { result } = simnet.callPublicFn(
+      "counter",
+      "increment",
+      [],
+      deployer
+    );
+    
+    // Check the result
+    expect(result).toBeOk(Cl.uint(1));
+  });
+});
+```
+
+## Core Concepts
+
+### Simnet Instance
+The global `simnet` object provides access to:
+- Contract calls
+- Block mining
+- Account management
+- Chain state
+
+### Clarity Values
+The SDK uses Clarity value types from `@stacks/transactions`:
+```typescript
+import { Cl } from "@stacks/transactions";
+
+// Create Clarity values
+Cl.uint(123)           // Unsigned integer
+Cl.int(-456)           // Signed integer  
+Cl.bool(true)          // Boolean
+Cl.stringAscii("hello") // ASCII string
+Cl.stringUtf8("Hello 👋") // UTF-8 string
+Cl.principal("ST1ABC...") // Principal
+```
+
+### Test Helpers
+Built-in assertions for common patterns:
+```typescript
+expect(result).toBeOk(value);
+expect(result).toBeErr(value);
+expect(result).toBeSome(value);
+expect(result).toBeNone();
+```
+
+## Development Workflow
+
+1. **Write contracts** in `contracts/` directory
+2. **Create tests** in `tests/` directory
+3. **Run tests** with `clarinet test`
+4. **Check coverage** with `clarinet test --coverage`
+5. **Debug failures** using detailed error messages
+
+## Integration with Clarinet CLI
+
+The SDK seamlessly integrates with Clarinet CLI commands:
+
+```bash
+# Run all tests
+clarinet test
+
+# Run specific test file
+clarinet test tests/counter.test.ts
+
+# Run with coverage
+clarinet test --coverage
+
+# Watch mode for development
+clarinet test --watch
+```
+
+## Advanced Features
+
+- **Transaction chaining**: Test multi-step workflows
+- **Block manipulation**: Control block height and timestamps
+- **State assertions**: Verify contract state changes
+- **Event testing**: Capture and assert on events
+- **Custom matchers**: Extend test assertions
+
+## Next Steps
+
+- Learn to [Set Up Tests](/tools/clarinet/clarinet-js-sdk/setting-up-tests)
+- Explore the [Simnet API](/tools/clarinet/clarinet-js-sdk/simnet-api)
+- Write your first [Unit Tests](/tools/clarinet/clarinet-js-sdk/writing-unit-tests)
+- See the complete [SDK API Reference](/tools/clarinet/clarinet-js-sdk/sdk-api-reference)

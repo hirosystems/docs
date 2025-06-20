@@ -1,0 +1,183 @@
+---
+title: Local Devnet Overview
+description: Understanding Clarinet's local development network
+---
+
+## What is Devnet?
+
+Devnet is Clarinet's local development network that provides a complete blockchain environment on your machine. It includes:
+
+- **Stacks blockchain node**: Full node running in regtest mode
+- **Bitcoin regtest node**: Local Bitcoin network for testing
+- **API services**: Stacks Blockchain API for querying data
+- **Explorer**: Web interface for browsing transactions
+- **Automatic mining**: Configurable block production
+
+## Why Use Devnet?
+
+### Fast Development Cycle
+- Instant block mining
+- No waiting for confirmations
+- Complete control over blockchain state
+
+### Cost-Free Testing
+- No STX or BTC required
+- Unlimited transactions
+- Test edge cases freely
+
+### Realistic Environment
+- Same APIs as mainnet/testnet
+- Accurate gas calculations
+- Real transaction formats
+
+### Debugging Tools
+- Transaction traces
+- State inspection
+- Error details
+
+## Architecture
+
+```
+┌─────────────────┐     ┌──────────────────┐
+│                 │     │                  │
+│  Stacks Node    │◄────┤  Bitcoin Node    │
+│                 │     │   (regtest)      │
+└────────┬────────┘     └──────────────────┘
+         │
+         │
+┌────────▼────────┐     ┌──────────────────┐
+│                 │     │                  │
+│  Stacks API     │◄────┤  Postgres DB     │
+│                 │     │                  │
+└────────┬────────┘     └──────────────────┘
+         │
+         │
+┌────────▼────────┐
+│                 │
+│  Explorer UI    │
+│ localhost:3020  │
+└─────────────────┘
+```
+
+## Key Components
+
+### Stacks Node
+- Processes transactions
+- Mines blocks
+- Maintains chain state
+- Provides RPC interface
+
+### Bitcoin Node
+- Regtest mode
+- Anchors Stacks blocks
+- Provides mining control
+
+### API Service
+- REST API endpoints
+- WebSocket subscriptions
+- Transaction broadcasting
+- Chain data queries
+
+### Database
+- Indexes blockchain data
+- Enables fast queries
+- Stores event data
+
+## Default Configuration
+
+| Service | Default Port | Purpose |
+|---------|-------------|---------|
+| Stacks RPC | 20443 | Node RPC interface |
+| Stacks API | 3999 | REST API |
+| Bitcoin RPC | 18443 | Bitcoin node RPC |
+| Explorer | 3020 | Web UI |
+| Postgres | 5432 | Database |
+
+## Accounts
+
+Devnet comes with pre-funded accounts:
+
+### Deployer Account
+- Has 1,000,000 STX
+- Used for contract deployment
+- Default transaction sender
+
+### Test Wallets
+- Multiple wallets with STX
+- Different balances for testing
+- Configurable in settings
+
+## Network Behavior
+
+### Block Production
+- Manual mining with `clarinet devnet mine-block`
+- Auto-mining mode available
+- Configurable intervals
+
+### Transaction Processing
+- Instant inclusion in next block
+- No mempool delays
+- Deterministic ordering
+
+### State Management
+- Persistent between runs
+- Can be reset on demand
+- Snapshot/restore capability
+
+## Resource Usage
+
+### System Requirements
+- **CPU**: Minimal (1-2 cores)
+- **RAM**: 2-4GB typical
+- **Disk**: 500MB-2GB
+- **Network**: Local only
+
+### Performance
+- Sub-second block times
+- Thousands of tx/second
+- No network latency
+
+## Integration Points
+
+### For Testing
+- Clarinet test framework
+- Integration test suites
+- CI/CD pipelines
+
+### For Development
+- Hot contract reloading
+- State inspection
+- Transaction debugging
+
+### For Frontend
+- Same APIs as production
+- WebSocket events
+- Explorer UI
+
+## Common Use Cases
+
+1. **Contract Development**
+   - Deploy and test contracts
+   - Iterate quickly
+   - Debug issues
+
+2. **Integration Testing**
+   - Test multi-contract flows
+   - Simulate user interactions
+   - Verify state changes
+
+3. **Frontend Development**
+   - Build against real APIs
+   - Test wallet integration
+   - Handle events
+
+4. **Demo Environment**
+   - Showcase applications
+   - Training sessions
+   - Hackathons
+
+## Next Steps
+
+- Learn to [Run Devnet](/tools/clarinet/development-environment/running-devnet)
+- Configure [Network Settings](/tools/clarinet/development-environment/network-configuration)
+- Connect to [APIs](/tools/clarinet/development-environment/connecting-to-apis)

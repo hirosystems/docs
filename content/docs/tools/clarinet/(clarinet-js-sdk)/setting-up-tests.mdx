@@ -1,0 +1,314 @@
+---
+title: Setting Up Tests
+description: Configure your Clarinet project for testing with the JavaScript SDK
+---
+
+## Project Structure
+
+A typical Clarinet project with tests follows this structure:
+
+```
+my-project/
+├── Clarinet.toml
+├── contracts/
+│   ├── my-contract.clar
+│   └── helper-contract.clar
+├── tests/
+│   ├── my-contract.test.ts
+│   └── integration.test.ts
+├── package.json
+├── tsconfig.json
+└── vitest.config.js
+```
+
+## Initial Setup
+
+### 1. Create a New Project
+
+If starting fresh:
+
+```bash
+clarinet new my-project
+cd my-project
+```
+
+### 2. Initialize Node Package
+
+```bash
+npm init -y
+# or
+yarn init -y
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install --save-dev @hirosystems/clarinet-sdk vitest @stacks/transactions
+# or
+yarn add -D @hirosystems/clarinet-sdk vitest @stacks/transactions
+```
+
+### 4. Configure TypeScript
+
+Create `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/globals"]
+  },
+  "include": ["tests/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+### 5. Configure Vitest
+
+Create `vitest.config.js`:
+
+```javascript
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    environment: "node",
+    globals: true,
+    setupFiles: ["./tests/setup.ts"], // optional setup file
+  },
+});
+```
+
+### 6. Update package.json
+
+Add test scripts:
+
+```json
+{
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  }
+}
+```
+
+## Test File Setup
+
+### Basic Test Structure
+
+Create `tests/my-contract.test.ts`:
+
+```typescript
+import { describe, expect, it, beforeEach } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+// Accounts are automatically available
+const accounts = simnet.getAccounts();
+const address1 = accounts.get("wallet_1")!;
+const address2 = accounts.get("wallet_2")!;
+
+describe("My Contract Tests", () => {
+  // Reset contract state before each test
+  beforeEach(() => {
+    // Optional: Reset specific contract state
+  });
+
+  it("should initialize correctly", () => {
+    // Your test here
+  });
+});
+```
+
+### Global Setup (Optional)
+
+Create `tests/setup.ts` for shared setup:
+
+```typescript
+import { beforeAll, afterAll } from "vitest";
+
+beforeAll(() => {
+  console.log("Starting test suite...");
+  // Global setup code
+});
+
+afterAll(() => {
+  console.log("Test suite completed");
+  // Global cleanup code
+});
+```
+
+## Simnet Configuration
+
+The SDK automatically provides a global `simnet` instance configured from your `Clarinet.toml`.
+
+### Available Accounts
+
+Default accounts provided:
+
+```typescript
+const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!;
+const wallet1 = accounts.get("wallet_1")!;
+const wallet2 = accounts.get("wallet_2")!;
+// ... up to wallet_9
+```
+
+### Account Balances
+
+Each test account starts with:
+- 1,000,000 STX balance
+- Unique address
+
+## Environment Variables
+
+Configure test behavior with environment variables:
+
+```bash
+# Run tests with verbose output
+DEBUG=clarinet:* npm test
+
+# Set custom timeout
+VITEST_TIMEOUT=10000 npm test
+```
+
+## VS Code Integration
+
+### Recommended Extensions
+
+1. **Vitest Extension**: Run and debug tests from VS Code
+2. **Clarity Extension**: Syntax highlighting and IntelliSense
+
+### Debug Configuration
+
+Add to `.vscode/launch.json`:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Tests",
+      "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${file}"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
+```
+
+## Test Organization
+
+### By Feature
+
+```
+tests/
+├── auth/
+│   ├── login.test.ts
+│   └── permissions.test.ts
+├── tokens/
+│   ├── transfer.test.ts
+│   └── mint.test.ts
+└── integration/
+    └── full-flow.test.ts
+```
+
+### By Contract
+
+```
+tests/
+├── token-contract.test.ts
+├── dao-contract.test.ts
+├── vault-contract.test.ts
+└── integration.test.ts
+```
+
+## Common Patterns
+
+### Test Helpers
+
+Create reusable test utilities:
+
+```typescript
+// tests/helpers.ts
+export function createToken(name: string, symbol: string, decimals: number) {
+  return simnet.callPublicFn(
+    "token",
+    "create-token",
+    [Cl.stringAscii(name), Cl.stringAscii(symbol), Cl.uint(decimals)],
+    deployer
+  );
+}
+
+// Use in tests
+import { createToken } from "./helpers";
+
+it("creates a token", () => {
+  const result = createToken("My Token", "MTK", 6);
+  expect(result).toBeOk();
+});
+```
+
+### Shared State
+
+Use `beforeEach` for consistent test state:
+
+```typescript
+describe("Token Tests", () => {
+  let tokenId: number;
+
+  beforeEach(() => {
+    // Create a fresh token for each test
+    const { result } = createToken("Test Token", "TST", 6);
+    tokenId = parseInt(result.expectOk().expectUint());
+  });
+
+  it("should transfer tokens", () => {
+    // Use tokenId from beforeEach
+  });
+});
+```
+
+## Running Tests
+
+### All Tests
+```bash
+npm test
+# or
+clarinet test
+```
+
+### Specific File
+```bash
+npm test tests/my-contract.test.ts
+# or
+clarinet test tests/my-contract.test.ts
+```
+
+### Watch Mode
+```bash
+npm run test:watch
+```
+
+### With Coverage
+```bash
+npm run test:coverage
+# or
+clarinet test --coverage
+```
+
+## Next Steps
+
+- Write your first [Unit Tests](/tools/clarinet/writing-unit-tests)
+- Learn about the [Simnet API](/tools/clarinet/simnet-api)
+- Explore [Test Coverage](/tools/clarinet/test-coverage)
+- See [Integration Testing](/tools/clarinet/integration-testing) patterns

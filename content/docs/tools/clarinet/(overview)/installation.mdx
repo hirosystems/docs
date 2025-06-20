@@ -1,0 +1,155 @@
+---
+title: Installation & Setup
+description: Install Clarinet and set up your development environment
+---
+
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
+## System Requirements
+
+Before installing Clarinet, ensure your system meets these requirements:
+
+- **Operating System**: macOS, Linux, or Windows
+- **Memory**: 4GB RAM minimum (8GB recommended)
+- **Disk Space**: 2GB free space
+- **Dependencies**: Git
+
+## Installation Methods
+
+<Tabs defaultValue="homebrew">
+  <TabsList>
+    <TabsTrigger value="homebrew">Homebrew (macOS/Linux)</TabsTrigger>
+    <TabsTrigger value="winget">Winget (Windows)</TabsTrigger>
+    <TabsTrigger value="binary">Binary Installation</TabsTrigger>
+    <TabsTrigger value="source">Build from Source</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="homebrew">
+    ### Install with Homebrew
+
+    The easiest way to install Clarinet on macOS or Linux:
+
+    ```bash
+    brew install clarinet
+    ```
+
+    To upgrade to the latest version:
+
+    ```bash
+    brew upgrade clarinet
+    ```
+  </TabsContent>
+
+  <TabsContent value="winget">
+    ### Install with Winget
+
+    For Windows users with winget installed:
+
+    ```bash
+    winget install clarinet
+    ```
+  </TabsContent>
+
+  <TabsContent value="binary">
+    ### Binary Installation
+
+    1. Download the latest release from the [Clarinet releases page](https://github.com/hirosystems/clarinet/releases)
+    2. Extract the archive
+    3. Add the binary to your PATH
+
+    #### macOS/Linux
+    ```bash
+    # Download and extract (replace VERSION with actual version)
+    curl -L https://github.com/hirosystems/clarinet/releases/download/vVERSION/clarinet-VERSION-linux-x64.tar.gz | tar xz
+    
+    # Move to a directory in your PATH
+    sudo mv clarinet /usr/local/bin/
+    ```
+
+    #### Windows
+    1. Download the Windows release (.msi or .exe)
+    2. Run the installer
+    3. Add the installation directory to your PATH environment variable
+  </TabsContent>
+
+  <TabsContent value="source">
+    ### Build from Source
+
+    For developers who want the latest features:
+
+    ```bash
+    # Clone the repository
+    git clone https://github.com/hirosystems/clarinet.git
+    cd clarinet
+
+    # Build with Cargo
+    cargo build --release
+
+    # The binary will be in target/release/clarinet
+    ```
+
+    **Prerequisites for building from source:**
+    - Rust toolchain (install from [rustup.rs](https://rustup.rs/))
+    - C compiler (gcc, clang, or MSVC)
+  </TabsContent>
+</Tabs>
+
+## Verify Installation
+
+After installation, verify Clarinet is properly installed:
+
+```bash
+clarinet --version
+```
+
+You should see output like:
+```
+clarinet 2.0.0
+```
+
+## Shell Completions
+
+Clarinet can generate shell completions for enhanced CLI experience:
+
+<Tabs defaultValue="bash">
+  <TabsList>
+    <TabsTrigger value="bash">Bash</TabsTrigger>
+    <TabsTrigger value="zsh">Zsh</TabsTrigger>
+    <TabsTrigger value="fish">Fish</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="bash">
+    ```bash
+    clarinet completions bash > /etc/bash_completion.d/clarinet
+    ```
+  </TabsContent>
+
+  <TabsContent value="zsh">
+    ```bash
+    clarinet completions zsh > ~/.zsh/completions/_clarinet
+    ```
+  </TabsContent>
+
+  <TabsContent value="fish">
+    ```bash
+    clarinet completions fish > ~/.config/fish/completions/clarinet.fish
+    ```
+  </TabsContent>
+</Tabs>
+
+## VS Code Extension
+
+For the best development experience, install the Clarity VS Code extension:
+
+1. Open VS Code
+2. Go to Extensions (Cmd+Shift+X on macOS, Ctrl+Shift+X on Windows/Linux)
+3. Search for "Clarity"
+4. Install the official Clarity extension by Hiro
+
+## Next Steps
+
+Now that you have Clarinet installed:
+
+- Follow the [Quickstart Guide](/tools/clarinet/quickstart) to create your first project
+- Learn about [Clarinet concepts](/tools/clarinet#core-concepts)
+- Explore the [CLI commands](/tools/clarinet/cli-fundamentals)
