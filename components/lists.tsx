@@ -54,7 +54,7 @@ function UnorderedList({ children, items }: ListProps) {
   // If items prop is provided, use it directly
   if (items) {
     return (
-      <ol className="list-none p-0 space-y-4">
+      <ol className="list-none p-0 space-y-4 [&_a]:underline [&_a]:underline-offset-1 [&_a]:decoration-border [&_a]:decoration-1 [&a_]:underline-t [&_a:hover]:decoration-primary [&_a]:transition-colors">
         {items.map((item, index) => (
           <li key={index} className="flex items-baseline gap-4">
             <span className="flex-shrink-0 w-7 h-7 rounded flex items-center justify-center text-primary font-mono">
@@ -141,7 +141,9 @@ function UnorderedList({ children, items }: ListProps) {
   const shouldRemoveDashes = hasCheckboxes || hasSpecialPrefixes;
 
   return (
-    <ul className={`relative my-4 ${shouldRemoveDashes ? "pl-0" : "pl-6"}`}>
+    <ul
+      className={`relative my-4 ${shouldRemoveDashes ? "pl-0" : "pl-6"} [&_a]:underline [&_a]:underline-offset-1 [&_a]:decoration-border [&_a]:decoration-1 [&a_]:underline-t [&_a:hover]:decoration-primary [&_a]:transition-colors`}
+    >
       {validChildren.map((child, index) => {
         if (!React.isValidElement(child)) return null;
 
