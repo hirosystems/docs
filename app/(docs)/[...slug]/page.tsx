@@ -103,7 +103,7 @@ export default async function Page(props: {
             code: (props: React.PropsWithChildren) => (
               <code
                 {...props}
-                className={`border border-border rounded-md p-1 bg-code text-sm text-muted-foreground [h1_&]:text-xl`}
+                className="border border-border rounded-md p-1 bg-code text-sm text-muted-foreground [h1_&]:text-xl [&_code]:text-sm"
               />
             ),
             hr: (props: React.PropsWithChildren) => (
