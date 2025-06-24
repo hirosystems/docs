@@ -53,12 +53,12 @@ export const baseOptions: BaseLayoutProps = {
         {
           text: "API keys",
           description: "API keys for accessing Hiro APIs.",
-          url: "/apis/api-keys",
+          url: "/resources/guides/api-keys",
         },
         {
           text: "Rate limits",
           description: "Rate limits for accessing Hiro APIs.",
-          url: "/apis/rate-limits",
+          url: "/resources/guides/rate-limits",
         },
         {
           text: "Stacks API",
@@ -76,12 +76,6 @@ export const baseOptions: BaseLayoutProps = {
           description:
             "API for accessing Hiro Platform data and functionality.",
           url: "/apis/platform",
-        },
-        {
-          text: "Stacks Node RPC",
-          description:
-            "RPC API for accessing Stacks blockchain data and functionality.",
-          url: "/apis/stacks-node-rpc",
         },
         {
           text: "Ordinals API",
@@ -162,11 +156,6 @@ export const baseOptions: BaseLayoutProps = {
         //   text: "Faucets",
         //   description: "Faucets for getting testnet tokens.",
         //   url: "/resources/faucets",
-        // },
-        // {
-        //   text: "Contributors guide",
-        //   description: "Guide for contributing to Hiro.",
-        //   url: "/resources/contributors",
         // },
       ],
     },
