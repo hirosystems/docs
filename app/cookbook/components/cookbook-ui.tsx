@@ -323,9 +323,6 @@ function CookbookContent({ initialRecipes, recipeCards }: CookbookProps) {
                           ))}
                         </div>
                       </TableCell>
-                      <TableCell className="text-muted-foreground font-aeonikFono">
-                        {timeago.format(new Date(recipe.date))}
-                      </TableCell>
                     </TableRow>
                   );
                 })}
