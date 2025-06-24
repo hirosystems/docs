@@ -9,9 +9,8 @@
     "postinstall": "fumadocs-mdx",
     "lint": "bun run ./lint.ts",
     "generate-openapi": "bun run ./scripts/fetch-openapi-specs.mts",
-    "build:recipes": "bun run ./scripts/fetch-recipes.mts",
     "generate:llms": "bun run ./scripts/generate-llms-txt.ts",
-    "generate": "bun run generate-openapi && bun run build:recipes && bun run generate:llms"
+    "generate": "bun run generate-openapi && bun run generate:llms"
   },
   "overrides": {
     "@shikijs/core": "3.3.0",
@@ -57,6 +56,7 @@
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
     "lucide-react": "^0.482.0",
+    "mermaid": "^11.7.0",
     "next": "15.3.1",
     "next-themes": "^0.4.4",
     "next-validate-link": "^1.5.1",
