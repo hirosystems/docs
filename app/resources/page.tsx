@@ -1,6 +1,6 @@
 import { Cards, IndexCard } from "@/components/card";
 import { Clarity } from "@/components/ui/icon";
-import { Database } from "lucide-react";
+import { Braces, Code, Database, Terminal } from "lucide-react";
 
 export default function ResourcesPage() {
   return (
@@ -17,6 +17,24 @@ export default function ResourcesPage() {
               href="/resources/clarity"
               title="Clarity lang"
               description="Comprehensive guides and function reference for the Clarity smart contract language."
+            />
+            <IndexCard
+              icon={<Terminal />}
+              href="/resources/guides"
+              title="Guides"
+              description="Guides for building on Stacks and Bitcoin."
+            />
+            <IndexCard
+              icon={<Braces />}
+              href="/resources/templates"
+              title="Project templates"
+              description="Project templates for building on Stacks and Bitcoin."
+            />
+            <IndexCard
+              icon={<Code />}
+              href="/resources/snippets"
+              title="Snippets"
+              description="Code snippets for building on Stacks and Bitcoin."
             />
             <IndexCard
               icon={<Database />}

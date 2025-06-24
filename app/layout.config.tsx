@@ -114,7 +114,12 @@ export const baseOptions: BaseLayoutProps = {
         {
           text: "Clarinet JS SDK",
           description: "JavaScript SDK for Clarinet.",
-          url: "/reference/clarinet-js-sdk",
+          url: "/tools/clarinet/sdk-reference",
+        },
+        {
+          text: "Clarinet JS SDK Browser",
+          description: "JavaScript SDK for Clarinet.",
+          url: "/tools/clarinet/sdk-browser-reference",
         },
         {
           text: "Stacks Blockchain API Client",
@@ -143,16 +148,11 @@ export const baseOptions: BaseLayoutProps = {
           description: "Project templates for building on Stacks.",
           url: "/resources/templates",
         },
-        // {
-        //   text: "Snippets",
-        //   description: "Code snippets for building on Stacks.",
-        //   url: "/resources/snippets",
-        // },
-        // {
-        //   text: "Clarity VSCode extension",
-        //   description: "VSCode extension for Clarity.",
-        //   url: "/resources/clarity-vscode",
-        // },
+        {
+          text: "Snippets",
+          description: "Code snippets for building on Stacks and Bitcoin.",
+          url: "/resources/snippets",
+        },
         {
           text: "Hiro Archive",
           description: "Archive of blockchain data.",
