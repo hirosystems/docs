@@ -54,15 +54,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               <>
                 {icon ??
                   {
-                    tip: (
-                      <Star className="size-4 stroke-foreground dark:stroke-[#CEEFD0] text-card" />
-                    ),
-                    info: (
-                      <Info className="size-4 stroke-foreground dark:stroke-[#D1E8FF] text-card" />
-                    ),
-                    warn: (
-                      <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
-                    ),
+                    tip: null,
+                    info: null,
+                    warn: null,
                     help: (
                       <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                         <HiroSVG />

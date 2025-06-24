@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { InteractiveBadge } from "@/app/(home)/components/interactive-badge";
 import { ChevronRight } from "lucide-react";
+import { CopyButton } from "@/components/docskit/copy-button";
 
 export function Cards(
   props: HTMLAttributes<HTMLDivElement>
@@ -94,7 +95,7 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        "relative rounded-[0.6rem] p-[1.5px] overflow-hidden transition-colors hover:shadow-[0_6px_20px_rgba(89,86,80,0.2)] dark:hover:shadow-[0_6px_40px_#383432]",
+        "relative rounded-[0.6rem] p-[1.5px] overflow-hidden transition-colors",
         variant === "default" &&
           "bg-gradient-to-br from-border via-border to-neutral-300 dark:to-neutral-200",
         variant === "secondary" &&
@@ -306,7 +307,7 @@ export function ToolCard({
           </div>
         </div>
       </div>
-      <div className="absolute transition-all ease-in -z-10 -inset-3 rounded-2xl bg-surface-100 opacity-0 peer-hover:opacity-100"></div>
+      <div className="absolute transition-all ease-in -z-10 -inset-3 rounded-2xl bg-surface-100 opacity-0 peer-hover:opacity-100" />
     </div>
   );
 
@@ -347,5 +348,36 @@ export function NextCard({
       </h3>
       <p className="text-muted-foreground text-sm">{description}</p>
     </Link>
+  );
+}
+
+export type SnippetCardProps = {
+  title: string;
+  badges?: string[];
+  children: ReactNode;
+} & Omit<LinkProps, "title">;
+
+export function SnippetCard({
+  title,
+  badges = [],
+  children,
+  ...props
+}: SnippetCardProps): React.ReactElement {
+  return (
+    <div className="relative w-full max-h-[300px] rounded-lg border bg-[#EBE9E6] dark:bg-[#2a2726] overflow-hidden transition-all duration-200">
+      <div className="p-4 space-y-2">
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-2">
+            <h3 className="text-lg font-regular text-primary !m-0">{title}</h3>
+          </div>
+        </div>
+      </div>
+      <Link href={props.href} className="group relative block !no-underline">
+        <div className="max-h-[200px] overflow-hidden border-t border-border bg-[hsl(var(--code))] relative z-0 !m-0 [&>div:first-child]:!m-0">
+          {children}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[hsl(var(--code))] to-transparent" />
+        </div>
+      </Link>
+    </div>
   );
 }

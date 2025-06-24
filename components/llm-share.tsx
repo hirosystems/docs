@@ -8,12 +8,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from "./ui/dropdown-menu";
-import { Copy, ExternalLink, Check, FileText } from "lucide-react";
+import { Copy, ExternalLink, Check, Text, ChevronDown } from "lucide-react";
 import { OpenAIIcon, ClaudeIcon } from "@/components/ui/icon";
 import { useLLMsTxt, useCurrentPageMarkdown } from "@/hooks/use-llms-txt";
 import { processMarkdownLinks } from "@/utils/process-markdown-links";
+import { cn } from "@/lib/utils";
 
 interface LLMShareProps {
   content: string;
@@ -40,22 +40,13 @@ export function LLMShare({ content }: LLMShareProps) {
   const markdownUrl = useCurrentPageMarkdown();
   const { data: llmsTxtContent, refetch } = useLLMsTxt();
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    if (isCopied) {
-      timeoutId = setTimeout(() => {
-        setIsCopied(false);
-      }, 2000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [isCopied]);
-
   const handleCopy = async () => {
     try {
       // Process the markdown to convert relative links to absolute URLs
       const processedContent = processMarkdownLinks(content);
       await navigator.clipboard.writeText(processedContent);
       setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 1200);
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }
@@ -97,18 +88,26 @@ export function LLMShare({ content }: LLMShareProps) {
 
   return (
     <div className="inline-flex rounded-md border border-border">
-      <Button
-        variant="outline"
+      <button
         onClick={handleCopy}
-        className="relative inline-flex items-center gap-2 rounded-l-md rounded-r-none px-3 py-1.5 text-sm font-medium focus:z-10 border-0 shadow-none transition-all duration-150"
+        type="button"
+        className="cursor-pointer relative inline-flex items-center gap-2 rounded-l-md rounded-r-none px-2 py-1.5 text-sm font-fono focus:z-10 border-0 shadow-none transition-all duration-150 hover:bg-accent"
+        aria-label="Copy markdown to clipboard"
       >
-        {isCopied ? (
-          <Check className="h-4 w-4 text-green-500" />
-        ) : (
-          <Copy className="h-4 w-4" />
-        )}
-        {isCopied ? "Copied!" : "Copy page"}
-      </Button>
+        <span
+          className={cn(
+            "inline-flex items-center justify-center rounded p-0.5 transition-all duration-150",
+            isCopied && "!text-brand-orange"
+          )}
+        >
+          {isCopied ? (
+            <Check className="h-3 w-3" />
+          ) : (
+            <Copy className="h-3 w-3" />
+          )}
+        </span>
+        Copy markdown
+      </button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -117,49 +116,22 @@ export function LLMShare({ content }: LLMShareProps) {
             className="relative inline-flex items-center rounded-r-md rounded-l-none p-1.5 focus:z-10 border-0 border-l border-border shadow-none"
           >
             <span className="sr-only">Open options</span>
-            <svg
-              className="h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.29a.75.75 0 01.02-1.06z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ChevronDown className="h-3 w-3" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-64">
-          <DropdownMenuItem onSelect={handleCopy} className="cursor-pointer">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <Copy className="h-4 w-4 text-muted-foreground" />
-                <span className="font-medium">Copy page</span>
-              </div>
-              <span className="text-xs text-muted-foreground ml-6">
-                Copy this page as Markdown for LLMs
-              </span>
-            </div>
-          </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={handleViewRawMarkdown}
             className="cursor-pointer"
           >
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-muted-foreground" />
-                <span className="font-medium">View as Markdown</span>
+                <Text className="h-3 w-3 text-muted-foreground" />
+                <span className="font-medium font-fono">View as Markdown</span>
               </div>
-              <span className="text-xs text-muted-foreground ml-6">
-                View this page as plain text
-              </span>
             </div>
-            <ExternalLink className="ml-auto h-4 w-4 text-muted-foreground" />
+            <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
           {LLM_PROVIDERS.map((provider) => (
             <DropdownMenuItem
               key={provider.name}
@@ -168,14 +140,13 @@ export function LLMShare({ content }: LLMShareProps) {
             >
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <provider.icon className="h-4 w-4 text-muted-foreground" />
-                  <span className="font-medium">Open in {provider.name}</span>
+                  <provider.icon className="h-3 w-3 text-muted-foreground" />
+                  <span className="font-medium font-fono">
+                    Open in {provider.name}
+                  </span>
                 </div>
-                <span className="text-xs text-muted-foreground ml-6">
-                  {provider.description}
-                </span>
               </div>
-              <ExternalLink className="ml-auto h-4 w-4 text-muted-foreground" />
+              <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>

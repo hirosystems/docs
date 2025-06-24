@@ -20,7 +20,7 @@ interface NetworkBadgeProps {
 const NetworkBadge = ({ network }: NetworkBadgeProps) => (
   <>
     {typeof network === "object" && network !== null ? (
-      <code className="relative rounded bg-muted p-1.5 font-mono text-sm text-left text-muted-foreground w-full">
+      <code className="relative rounded bg-neutral-150 dark:bg-neutral-600 p-1.5 font-mono text-sm text-left text-muted-foreground whitespace-nowrap">
         {(network as React.ReactElement<{ children?: ReactNode }>).props
           .children ?? ""}
       </code>
@@ -70,14 +70,19 @@ function CustomTable({ className, ...props }: TableProps) {
   const dataRows = rows.slice(1);
 
   return (
-    <div className="my-6 w-full overflow-y-auto">
-      <Table className={cn("w-full", className)}>
+    <div className="my-6 w-full overflow-x-auto">
+      <Table
+        className={cn(
+          "w-full border-0 border-b border-border/50 rounded-none",
+          className
+        )}
+      >
         <TableHeader>
-          <TableRow>
+          <TableRow className="border-0 border-b border-border">
             {headers.map((header, i) => (
               <TableHead
                 key={i}
-                className="text-left text-base font-semibold text-foreground"
+                className="text-left text-base font-semibold text-foreground font-fono h-auto px-4 py-3 bg-background border-0 border-b border-border/50 [&_code]:whitespace-nowrap"
               >
                 {header}
               </TableHead>
@@ -96,8 +101,11 @@ function CustomTable({ className, ...props }: TableProps) {
                 : cell
             );
             return (
-              <TableRow key={i} className="border-t">
-                <TableCell className="py-4">
+              <TableRow
+                key={i}
+                className="bg-background border-0 border-t border-b"
+              >
+                <TableCell className="py-4 px-4">
                   <NetworkBadge
                     network={
                       React.isValidElement(cells[0])
@@ -109,7 +117,7 @@ function CustomTable({ className, ...props }: TableProps) {
                 {cells.slice(1).map((cell, j) => (
                   <TableCell
                     key={j}
-                    className="py-4 text-muted-foreground whitespace-normal break-words text-base"
+                    className="py-4 px-4 text-muted-foreground whitespace-normal break-words text-base [&_code]:whitespace-nowrap [&_code]:break-keep"
                   >
                     {cell}
                   </TableCell>

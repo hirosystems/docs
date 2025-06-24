@@ -71,7 +71,7 @@ export function TocItemsEmpty() {
   const { text } = useI18n();
 
   return (
-    <div className="rounded-lg border bg-fd-card p-3 text-xs text-fd-muted-foreground">
+    <div className="rounded-lg border bg-card p-3 text-xs text-fd-muted-foreground">
       {text.tocNoHeadings}
     </div>
   );

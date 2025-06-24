@@ -82,8 +82,8 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       <header
         className={cn(
           "sticky top-0 z-50 h-16 transition-all duration-200",
-          "bg-background/50 backdrop-blur-md",
-          isScrolled ? "border-b border-border" : "border-b border-transparent"
+          "bg-background backdrop-blur-md",
+          "border-b border-border/50"
         )}
       >
         <nav className="flex flex-row items-center gap-2 size-full px-4">
@@ -189,8 +189,8 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 pt-6 px-2 pb-10 top-16 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-56px)]",
-        "max-md:inset-x-0 max-md:bottom-0 max-md:bg-background",
+        "fixed flex flex-col shrink-0 pt-4 px-2 pb-10 top-16 z-20 text-sm overflow-auto border-r border-border/50 md:sticky md:h-[calc(100dvh-56px)]",
+        "max-md:inset-x-0 max-md:bottom-0",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
         collapsed && "md:w-0 md:p-0 md:overflow-hidden md:invisible"
@@ -202,7 +202,7 @@ function Sidebar() {
 }
 
 const linkVariants = cva(
-  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground font-regular [&_svg]:size-3",
+  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground !font-normal !font-sans [&_svg]:size-3",
   {
     variants: {
       active: {
@@ -285,7 +285,7 @@ function SidebarItem({
             active: pathname === item.url,
           }),
           // Special styling for root pages - applies on top of linkVariants
-          isRootPage && ["font-regular text-sm"],
+          isRootPage && ["font-normal font-sans text-sm"],
           // Style the icon when root page is active
           isRootPage &&
             pathname === item.url && [
@@ -381,7 +381,7 @@ function PageBadges({ item }: { item: PageTree.Node }) {
     badges.push(
       <span
         key="new"
-        className="font-medium text-xs px-1.5 py-0.5 rounded border uppercase bg-brand-orange text-orange-100 border-brand-orange dark:bg-brand-orange dark:text-orange-100 dark:border-brand-orange"
+        className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none"
       >
         New
       </span>
@@ -393,7 +393,7 @@ function PageBadges({ item }: { item: PageTree.Node }) {
 
   const methods = new Set(operations.map((op: any) => op.method.toUpperCase()));
 
-  Array.from(methods).forEach((method) => {
+  for (const method of methods) {
     const colors = {
       GET: "bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]",
       POST: "bg-[#e7f0ff] text-[#4B5F8A] border-[#c2d9ff] dark:bg-background dark:text-[#c2d9ff] dark:border-[#c2d9ff]",
@@ -412,7 +412,7 @@ function PageBadges({ item }: { item: PageTree.Node }) {
         {String(method)}
       </span>
     );
-  });
+  }
 
   if (badges.length === 0) return null;
 

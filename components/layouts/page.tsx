@@ -38,7 +38,6 @@ export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
             )}
           >
             {props.children}
-            <Footer />
           </article>
         </main>
         {toc.length > 0 && !full && (

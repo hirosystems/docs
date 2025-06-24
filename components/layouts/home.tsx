@@ -75,7 +75,7 @@ export function Header({
     <header
       className={cn(
         "sticky top-0 z-50 h-16 transition-all duration-200",
-        "bg-background/50 backdrop-blur-md",
+        "bg-background backdrop-blur-md",
         "border-b border-transparent"
       )}
     >
