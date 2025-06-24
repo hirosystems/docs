@@ -30,6 +30,7 @@ import { LLMShare } from "@/components/llm-share";
 import { CheckIcon } from "lucide-react";
 import { TagFilterSystem } from "@/components/ui/tag-filter-system";
 import { getAllFilterablePages } from "@/lib/source";
+import { Mermaid } from "@/components/mdx/mermaid";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -128,6 +129,7 @@ export default async function Page(props: {
               }
               return <input {...props} />;
             },
+            Mermaid,
             table: (props: TableProps) => <Table {...props} />,
             ol: OrderedList,
             ul: UnorderedList,
