@@ -1,0 +1,119 @@
+---
+title: Filter items from a list
+description: Remove specific items from lists using fold in Clarity
+---
+
+```clarity
+(define-read-only (filter-item (l (list 100 uint)) (remove uint))
+  (get newList (fold remove-value l { compareTo: remove, newList: (list) }))
+)
+
+(define-private (remove-value (listValue uint) (trackerTuple { compareTo: uint, newList: (list 100 uint) }))
+  (merge trackerTuple {newList:
+    (if (is-eq listValue (get compareTo trackerTuple))
+      (get newList trackerTuple)
+      (unwrap-panic (as-max-len? (append (get newList trackerTuple) listValue) u100))
+    )
+  })
+)
+
+;; Example usage
+(filter-item (list u1 u2 u3 u2 u4) u2) ;; Returns (u1 u3 u4)
+```
+
+## Use cases
+
+- Removing blacklisted addresses from access lists
+- Filtering out completed tasks from todo lists
+- Excluding specific tokens from portfolios
+- Data cleanup in smart contracts
+
+## Key concepts
+
+This pattern uses `fold` to iterate through a list and build a new list:
+
+- **Accumulator**: Tracks the value to remove and builds the new list
+- **Conditional append**: Only adds items that don't match the filter
+- **Type safety**: Maintains list type and maximum length
+
+### Filter multiple values
+
+```clarity
+(define-read-only (filter-multiple (l (list 100 uint)) (removeList (list 10 uint)))
+  (fold filter-item removeList l)
+)
+
+;; Example: Remove multiple values
+(filter-multiple (list u1 u2 u3 u4 u5) (list u2 u4))
+;; Returns (u1 u3 u5)
+```
+
+### Filter with predicate function
+
+```clarity
+(define-read-only (filter-greater-than (l (list 100 uint)) (threshold uint))
+  (get newList 
+    (fold filter-by-threshold l { threshold: threshold, newList: (list) })
+  )
+)
+
+(define-private (filter-by-threshold (value uint) (tracker { threshold: uint, newList: (list 100 uint) }))
+  (merge tracker {
+    newList: (if (> value (get threshold tracker))
+      (unwrap-panic (as-max-len? (append (get newList tracker) value) u100))
+      (get newList tracker)
+    )
+  })
+)
+
+;; Keep only values greater than 10
+(filter-greater-than (list u5 u15 u8 u20 u3) u10)
+;; Returns (u15 u20)
+```
+
+## Advanced filtering patterns
+
+```clarity
+;; Filter principals from a list
+(define-read-only (filter-principal 
+  (principals (list 100 principal)) 
+  (remove principal))
+  (get newList 
+    (fold remove-principal principals { 
+      compareTo: remove, 
+      newList: (list as principal) 
+    })
+  )
+)
+
+;; Filter with custom comparison
+(define-read-only (filter-custom 
+  (items (list 100 { id: uint, active: bool })) )
+  (get newList 
+    (fold filter-inactive items { newList: (list) })
+  )
+)
+
+(define-private (filter-inactive 
+  (item { id: uint, active: bool }) 
+  (tracker { newList: (list 100 { id: uint, active: bool }) }))
+  (merge tracker {
+    newList: (if (get active item)
+      (unwrap-panic (as-max-len? (append (get newList tracker) item) u100))
+      (get newList tracker)
+    )
+  })
+)
+```
+
+
+
+<Callout title="Performance note" type="info">
+Filtering creates a new list, so be mindful of gas costs with large lists. Consider storing data in maps if you need frequent filtering operations.
+</Callout>
+
+## Related snippets
+
+- [Check for duplicates](/resources/snippets/check-for-duplicates)
+- [Return an entry from a map](/resources/snippets/return-an-entry-from-a-map)
+- [Generate random number](/resources/snippets/generate-random-number)

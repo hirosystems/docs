@@ -1,0 +1,220 @@
+---
+title: Managing your projects
+sidebarTitle: Project development
+description: Clarinet streamlines the entire lifecycle of Clarity smart contract development. From project initialization to contract management and code formatting, you'll have all the tools needed for professional development.
+---
+
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+## Creating a new project
+
+The `clarinet new` command creates a complete project structure with all necessary configuration files:
+
+```terminal
+$ clarinet new my-defi-app
+[32mCreate directory[0m [1mmy-defi-app[0m
+[32mCreate directory[0m [1mcontracts[0m
+[32mCreate directory[0m [1msettings[0m
+[32mCreate directory[0m [1mtests[0m
+[32mCreate file[0m [1mClarinet.toml[0m
+[32mCreate file[0m [1msettings/Mainnet.toml[0m
+[32mCreate file[0m [1msettings/Testnet.toml[0m
+[32mCreate file[0m [1msettings/Devnet.toml[0m
+[32mCreate directory[0m [1m.vscode[0m
+[32mCreate file[0m [1m.vscode/settings.json[0m
+[32mCreate file[0m [1m.vscode/tasks.json[0m
+[32mCreate file[0m [1m.gitignore[0m
+[32mCreate file[0m [1m.gitattributes[0m
+[32mCreate file[0m [1mpackage.json[0m
+[32mCreate file[0m [1mtsconfig.json[0m
+[32mCreate file[0m [1mvitest.config.js[0m
+```
+
+| Option | Description | Example |
+|--------|-------------|---------|
+| `--disable-telemetry` | Opt out of telemetry collection | `clarinet new my-app --disable-telemetry` |
+| `--no-vscode` | Skip VS Code configuration files | `clarinet new my-app --no-vscode` |
+| `--clarity-version` | Set default Clarity version | `clarinet new my-app --clarity-version 3` |
+
+For a more in-depth look at the project structure generated, see the [project structure](/tools/clarinet/project-structure) guide.
+
+## Managing contracts
+
+### Creating new contracts
+
+The `clarinet contract new` command generates both a contract file and its corresponding test file:
+
+```terminal
+$ clarinet contract new token
+[32mCreated file[0m [1mcontracts/token.clar[0m
+[32mCreated file[0m [1mtests/token.test.ts[0m
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+The generated contract includes a minimal template:
+
+```clarity contracts/token.clar
+;; token
+;; <add a description here>
+
+;; constants
+;;
+
+;; data vars
+;;
+
+;; data maps
+;;
+
+;; public functions
+;;
+
+;; read only functions
+;;
+
+;; private functions
+;;
+```
+
+### Removing contracts
+
+Clean up unused contracts with the `rm` command:
+
+```terminal
+$ clarinet contract rm old-token
+[33mRemoved file[0m [1mcontracts/old-token.clar[0m
+[33mRemoved file[0m [1mtests/old-token.test.ts[0m
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+## Code formatting
+
+Clarinet includes a powerful code formatter to maintain consistent style across your project:
+
+```terminal
+$ clarinet format contracts/messy-contract.clar
+[32mFormatted[0m [1mcontracts/messy-contract.clar[0m
+```
+
+### Formatting options
+
+Customize formatting to match your team's style guide:
+
+| Option | Description | Example |
+|--------|-------------|---------|
+| `--dry-run` | Preview changes without modifying files | `clarinet format --dry-run` |
+| `--in-place` | Replace file contents (required for actual formatting) | `clarinet format --in-place` |
+| `--max-line-length` | Set maximum line length | `clarinet format --max-line-length 100` |
+| `--indent` | Set indentation size | `clarinet format --indent 2` |
+| `--tabs` | Use tabs instead of spaces | `clarinet format --tabs` |
+
+### Batch formatting
+
+Format all contracts in your project at once:
+
+```terminal
+$ clarinet format --all
+[32mFormatted[0m [1m5 contracts[0m
+```
+
+Format specific contracts using glob patterns:
+
+```terminal
+$ clarinet format contracts/token*.clar
+[32mFormatted[0m [1mcontracts/token-trait.clar[0m
+[32mFormatted[0m [1mcontracts/token-impl.clar[0m
+```
+
+## Project configuration
+
+### Working with requirements
+
+Add mainnet contracts as dependencies:
+
+```terminal
+$ clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[32mAdded requirement[0m SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+This updates your configuration:
+
+```toml Clarinet.toml
+[project]
+requirements = [
+  { contract_id = "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait" }
+]
+```
+
+Now you can implement traits from mainnet contracts:
+
+```clarity contracts/my-nft.clar
+(impl-trait 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait.nft-trait)
+
+(define-non-fungible-token my-nft uint)
+;; ... implement required functions
+```
+
+### Multi-contract projects
+
+Organize larger projects with multiple related contracts:
+
+```toml Clarinet.toml
+[contracts.token]
+path = "contracts/token.clar"
+
+[contracts.treasury]
+path = "contracts/treasury.clar"
+depends_on = ["token"]
+
+[contracts.staking]
+path = "contracts/staking.clar"
+depends_on = ["token", "treasury"]
+```
+
+Clarinet automatically handles deployment order based on dependencies.
+
+### Environment settings
+
+Configure different deployment accounts per network:
+
+```toml settings/Testnet.toml
+[accounts.deployer]
+mnemonic = "${TESTNET_MNEMONIC}"
+balance = 1_000_000_000_000
+
+[accounts.treasury]
+mnemonic = "${TESTNET_TREASURY_MNEMONIC}"
+balance = 500_000_000_000
+```
+
+<Callout type="warn" title="Security notice">
+Never commit mainnet private keys or mnemonics to version control. Use environment variables for production deployments.
+</Callout>
+
+## Checking project configuration
+
+Validate your entire project setup:
+
+```terminal
+$ clarinet check --all
+[32m✔[0m [1m5 contracts checked[0m
+[32m✔[0m [1mNo dependency cycles detected[0m
+[32m✔[0m [1mAll requirements resolved[0m
+```
+
+Check specific contracts:
+
+```terminal
+$ clarinet check contracts/token.clar
+[32m✔[0m [1mContract 'token' is valid[0m
+```
+
+## Next steps
+
+Now that you've mastered project management:
+
+- Learn to [interact with your contracts](/tools/clarinet/contract-interaction) using the console
+- Write [comprehensive tests](/tools/clarinet/testing-validation) for your contracts
+- Prepare for [deployment](/tools/clarinet/deployment) to testnet and mainnet

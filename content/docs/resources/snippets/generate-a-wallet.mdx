@@ -1,0 +1,119 @@
+---
+title: Generate a wallet
+description: Create a new wallet with mnemonic phrase or restore from existing seed
+---
+
+```typescript
+import { generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
+
+// Generate a new wallet with a new 24-word seed phrase
+const secretKey = generateSecretKey(256); // 256 bits = 24 words
+const wallet = await generateWallet({
+  secretKey,
+  password: 'your-secure-password',
+});
+
+// Access the first account
+const account = wallet.accounts[0];
+console.log('Address:', account.stxAddress);
+console.log('Mnemonic:', secretKey);
+```
+
+## Use cases
+
+- Creating new wallets for users
+- Restoring wallets from seed phrases
+- Generating deterministic wallet addresses
+- Building wallet applications
+
+## Key concepts
+
+The wallet SDK generates hierarchical deterministic (HD) wallets following BIP32/BIP39 standards:
+
+- **Secret key**: Can be a mnemonic phrase or private key
+- **Password**: Encrypts the wallet (different from mnemonic passphrase)
+- **Accounts**: Multiple accounts can be derived from one seed
+
+### Restore from existing seed
+
+```typescript
+import { generateWallet } from '@stacks/wallet-sdk';
+
+// Restore wallet from 24-word mnemonic
+const existingSeed = "your twenty four word mnemonic phrase goes here...";
+const wallet = await generateWallet({
+  secretKey: existingSeed,
+  password: 'your-secure-password',
+});
+```
+
+### Generate additional accounts
+
+```typescript
+import { generateNewAccount } from '@stacks/wallet-sdk';
+
+// Create a second account from the same seed
+const secondAccount = generateNewAccount(wallet);
+console.log('Second address:', secondAccount.stxAddress);
+
+// Accounts are derived using BIP44 paths
+// m/44'/5757'/0'/0/0 - First account
+// m/44'/5757'/1'/0/0 - Second account
+```
+
+## Complete example
+
+```typescript
+import { 
+  generateWallet, 
+  generateSecretKey,
+  generateNewAccount 
+} from '@stacks/wallet-sdk';
+
+async function createNewWallet() {
+  // Generate new 24-word seed phrase
+  const mnemonic = generateSecretKey(256);
+  
+  // Create wallet
+  const wallet = await generateWallet({
+    secretKey: mnemonic,
+    password: 'supersecret123',
+  });
+  
+  // Get wallet details
+  const firstAccount = wallet.accounts[0];
+  
+  return {
+    mnemonic,
+    address: firstAccount.stxAddress,
+    publicKey: firstAccount.stxPublicKey,
+    privateKey: firstAccount.stxPrivateKey,
+  };
+}
+
+// Create wallet and display info
+const walletInfo = await createNewWallet();
+console.log('New Wallet Created!');
+console.log('Mnemonic (save this!):', walletInfo.mnemonic);
+console.log('Address:', walletInfo.address);
+```
+
+## Security considerations
+
+
+
+<Callout title="Security warning" type="warn">
+Never expose seed phrases or private keys in production code. Store them securely and never commit them to version control.
+</Callout>
+
+## Package installation
+
+```package-install
+@stacks/wallet-sdk
+```
+
+## Related snippets
+
+- [Generate a secret key](/resources/snippets/generate-a-secret-key)
+- [Get account details from wallet](/resources/snippets/get-account-details-from-wallet)
+- [Derive Stacks address from keys](/resources/snippets/derive-stacks-address-from-keys)

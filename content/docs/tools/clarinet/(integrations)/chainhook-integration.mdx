@@ -1,8 +1,191 @@
 ---
-title: Chainhook integration
-description: Using Chainhook with Clarinet for event monitoring
+title: Register Chainhooks on devnet
+sidebarTitle: Chainhook integration
+description: Learn how to register Chainhooks on devnet to monitor and react to smart contract events during local development.
 ---
 
-# Chainhook Integration
 
-Content coming soon... 
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Steps, Step } from '@/components/steps';
+import { ArrowRight, Check } from 'lucide-react';
+
+## What you'll learn
+
+In this guide, you'll learn how to register Chainhooks on devnet to monitor and react to smart contract events during local development.
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Creating Chainhook predicate files for event monitoring</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Registering Chainhooks with Clarinet devnet</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Monitoring contract calls and blockchain events</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Setting up webhooks for real-time notifications</span>
+  </div>
+</div>
+
+## Prerequisites
+
+To follow this guide, you'll need:
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
+      <Check className="h-3 w-3 text-white" />
+    </div>
+    <span>Clarinet version 2.1.0 or higher required. Check with `clarinet --version`.</span>
+  </div>
+</div>
+
+## Quickstart
+
+<Steps>
+  <Step>
+    ### Create your Chainhook predicates
+    
+    Create Chainhook predicate files in your project root or a dedicated folder:
+
+    <Files className='font-fono pointer-events-none bg-background'>
+      <Folder name="contracts" defaultOpen>
+        <File name="counter.clar" />
+      </Folder>
+      <Folder name="chainhooks" defaultOpen className='bg-border/50 rounded-md'>
+        <File name="increment.json" />
+        <File name="decrement.json" />
+      </Folder>
+      <Folder name="tests">
+        <File name="counter.test.ts" />
+      </Folder>
+      <File name="Clarinet.toml" />
+    </Files>
+
+    Example predicate for monitoring increment events:
+
+    ```json chainhooks/increment.json
+    {
+      "chain": "stacks",
+      "uuid": "increment-hook",
+      "name": "Increment Counter Hook",
+      "version": 1,
+      "networks": {
+        "devnet": {
+          "if_this": {
+            "scope": "contract_call",
+            "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter",
+            "method": "increment"
+          },
+          "then_that": {
+            "http_post": {
+              "url": "http://localhost:3000/api/increment",
+              "authorization_header": "Bearer my-secret"
+            }
+          }
+        }
+      }
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Start devnet with Chainhooks
+    
+    Start devnet from your project root. Clarinet automatically registers all Chainhook files:
+
+    ```terminal
+    $ clarinet devnet start
+    ```
+
+    Look for the registration confirmation:
+
+    ```terminal
+    $ clarinet devnet start
+    # ...
+    INFO Feb  5 15:20:07.233382 2 chainhooks registered
+    ```
+  </Step>
+
+  <Step>
+    ### Monitor Chainhook activity
+    
+    When contract actions occur, you'll see Chainhook triggers in the terminal:
+
+    ```terminal
+    $ clarinet devnet start
+    # ...
+    INFO Feb  5 15:21:07.233382 1 hooks triggered
+    ```
+
+    Verify the payload based on your `then_that` configuration:
+    - **`http_post`** - Check your endpoint received the POST request
+    - **`file_append`** - Verify the file was created/updated
+  </Step>
+</Steps>
+
+## Common patterns
+
+### Contract deployment hook
+
+Monitor when specific contracts are deployed:
+
+```json chainhooks/deploy-monitor.json
+{
+  "chain": "stacks",
+  "uuid": "deploy-hook",
+  "name": "Contract Deploy Monitor",
+  "version": 1,
+  "networks": {
+    "devnet": {
+      "if_this": {
+        "scope": "contract_deployment",
+        "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+      },
+      "then_that": {
+        "file_append": {
+          "path": "./deployments.log"
+        }
+      }
+    }
+  }
+}
+```
+
+### STX transfer monitoring
+
+Track STX transfers above a certain threshold:
+
+```json chainhooks/stx-transfers.json
+{
+  "chain": "stacks",
+  "uuid": "stx-transfer-hook",
+  "name": "Large STX Transfer Monitor",
+  "version": 1,
+  "networks": {
+    "devnet": {
+      "if_this": {
+        "scope": "stx_event",
+        "actions": ["transfer"],
+        "amount_upper_bound": "1000000000000"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "http://localhost:3000/api/large-transfer"
+        }
+      }
+    }
+  }
+}
+```
+
+## Next steps
+
+- Learn about [Chainhook scopes and predicates](/stacks/chainhook/references/scopes/stacks)
+- Set up [Stacks.js integration](/tools/clarinet/integrations/stacks-js-integration) for frontend interaction
+- Explore [CI/CD workflows](/tools/clarinet/integrations/ci-cd-github-workflows) for automated testing 

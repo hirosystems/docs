@@ -1,0 +1,186 @@
+---
+title: Derive principal addresses between networks
+description: Convert addresses between mainnet and testnet by extracting and reconstructing with different version bytes
+---
+
+```clarity
+;; Extract hash bytes from an address
+(define-read-only (get-address-hash-bytes (address principal))
+  (get hash-bytes (unwrap-panic (principal-destruct? address)))
+)
+
+;; Convert testnet address to mainnet
+(define-read-only (testnet-to-mainnet (testnet-address principal))
+  (let (
+    ;; Extract the hash bytes from testnet address
+    (hash-bytes (get-address-hash-bytes testnet-address))
+    ;; Mainnet version byte
+    (mainnet-version 0x16)
+  )
+    ;; Reconstruct with mainnet version
+    (principal-construct? mainnet-version hash-bytes)
+  )
+)
+
+;; Convert mainnet address to testnet
+(define-read-only (mainnet-to-testnet (mainnet-address principal))
+  (let (
+    ;; Extract the hash bytes from mainnet address
+    (hash-bytes (get-address-hash-bytes mainnet-address))
+    ;; Testnet version byte
+    (testnet-version 0x1a)
+  )
+    ;; Reconstruct with testnet version
+    (principal-construct? testnet-version hash-bytes)
+  )
+)
+
+;; Example usage
+(testnet-to-mainnet 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)
+;; Returns: (ok SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R)
+```
+
+## Use cases
+
+- Cross-network address verification
+- Building multi-network dApps
+- Address validation tools
+- Network migration utilities
+
+## Key concepts
+
+Stacks addresses consist of:
+
+- **Version byte**: Indicates network and address type
+- **Hash bytes**: 20-byte hash of the public key
+- **Checksum**: Built into the c32 encoding
+
+### Version bytes reference
+
+| Version | Network | Type | Prefix |
+|---------|---------|------|--------|
+| 0x16 | Mainnet | Standard | SP |
+| 0x17 | Mainnet | Contract | SM |
+| 0x1a | Testnet | Standard | ST |
+| 0x1b | Testnet | Contract | SN |
+
+## Complete network converter
+
+```clarity
+(define-constant MAINNET_P2PKH 0x16)  ;; SP addresses
+(define-constant MAINNET_P2SH 0x17)   ;; SM addresses  
+(define-constant TESTNET_P2PKH 0x1a)  ;; ST addresses
+(define-constant TESTNET_P2SH 0x1b)   ;; SN addresses
+
+;; Get address type and network
+(define-read-only (analyze-address (address principal))
+  (let (
+    (destruct-result (principal-destruct? address))
+  )
+    (match destruct-result
+      success (ok {
+        version: (get version success),
+        hash-bytes: (get hash-bytes success),
+        network: (if (or (is-eq (get version success) MAINNET_P2PKH)
+                        (is-eq (get version success) MAINNET_P2SH))
+                    "mainnet"
+                    "testnet"),
+        type: (if (or (is-eq (get version success) MAINNET_P2PKH)
+                     (is-eq (get version success) TESTNET_P2PKH))
+                 "standard"
+                 "contract")
+      })
+      error (err u1)
+    )
+  )
+)
+
+;; Universal network converter
+(define-read-only (convert-network (address principal) (to-mainnet bool))
+  (let (
+    (destruct-result (unwrap! (principal-destruct? address) (err u1)))
+    (current-version (get version destruct-result))
+    (hash-bytes (get hash-bytes destruct-result))
+    (new-version (if to-mainnet
+                    (if (is-eq current-version TESTNET_P2PKH)
+                        MAINNET_P2PKH
+                        MAINNET_P2SH)
+                    (if (is-eq current-version MAINNET_P2PKH)
+                        TESTNET_P2PKH
+                        TESTNET_P2SH)))
+  )
+    (principal-construct? new-version hash-bytes)
+  )
+)
+```
+
+## Batch address conversion
+
+```clarity
+;; Convert list of addresses
+(define-read-only (batch-convert-to-mainnet (addresses (list 10 principal)))
+  (map testnet-to-mainnet addresses)
+)
+
+;; Filter and convert only testnet addresses
+(define-read-only (convert-testnet-only (addresses (list 10 principal)))
+  (fold check-and-convert addresses (list))
+)
+
+(define-private (check-and-convert (address principal) (result (list 10 principal)))
+  (let (
+    (analysis (analyze-address address))
+  )
+    (match analysis
+      success (if (is-eq (get network success) "testnet")
+                 (unwrap-panic (as-max-len? 
+                   (append result (unwrap-panic (testnet-to-mainnet address)))
+                   u10))
+                 result)
+      error result
+    )
+  )
+)
+```
+
+
+
+<Callout title="Same key pair" type="info">
+The same private key generates different addresses on mainnet vs testnet due to the version byte. The underlying key pair remains the same.
+</Callout>
+
+## Contract address handling
+
+```clarity
+;; Check if address has a contract
+(define-read-only (has-contract? (address principal))
+  (match (principal-destruct? address)
+    success (is-some (get name success))
+    error false
+  )
+)
+
+;; Convert contract principal between networks
+(define-read-only (convert-contract-principal 
+  (contract principal) 
+  (to-mainnet bool))
+  (let (
+    (destruct-result (unwrap! (principal-destruct? contract) (err u1)))
+    (hash-bytes (get hash-bytes destruct-result))
+    (contract-name (unwrap! (get name destruct-result) (err u2)))
+    (new-version (if to-mainnet MAINNET_P2PKH TESTNET_P2PKH))
+  )
+    (principal-construct? new-version hash-bytes contract-name)
+  )
+)
+
+;; Example
+(convert-contract-principal 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.my-token true)
+;; Returns: (ok SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R.my-token)
+```
+
+## Related snippets
+
+- [Convert string to principal](/resources/snippets/convert-string-to-principal)
+- [Convert BTC to STX address](/resources/snippets/convert-btc-to-stx-address)
+- [Derive Stacks address from keys](/resources/snippets/derive-stacks-address-from-keys)

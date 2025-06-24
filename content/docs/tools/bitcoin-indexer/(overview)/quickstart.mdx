@@ -1,0 +1,244 @@
+---
+title: Quickstart
+description: Get the Bitcoin Indexer running with pre-indexed archives in 30 minutes.
+---
+
+import { Steps, Step } from '@/components/steps';
+
+This quickstart uses Hiro's pre-indexed archives to get you running in minutes instead of days. You'll set up a Bitcoin node, restore from archives, and start serving metaprotocol APIs.
+
+## Prerequisites
+
+- Ubuntu 20.04+ or macOS
+- 32GB RAM minimum
+- 2TB fast storage (NVMe recommended)
+- Basic command line knowledge
+
+<Steps>
+  <Step>
+    ### Install dependencies
+    
+    Install required system packages:
+    
+    ```terminal
+    $ sudo apt update
+    $ sudo apt install -y build-essential git curl postgresql-17
+    ```
+  </Step>
+
+  <Step>
+    ### Quick Bitcoin node setup
+    
+    Download and configure Bitcoin Core with indexer settings:
+    
+    ```terminal
+    $ mkdir -p ~/bitcoin-indexer/bitcoin && cd ~/bitcoin-indexer/bitcoin
+    $ curl -O https://bitcoincore.org/bin/bitcoin-core-25.1/bitcoin-25.1-x86_64-linux-gnu.tar.gz
+    $ tar -xzf bitcoin-25.1-x86_64-linux-gnu.tar.gz
+    $ sudo ln -s ~/bitcoin-indexer/bitcoin/bitcoin-25.1/bin/bitcoind /usr/local/bin/bitcoind
+    ```
+    
+    Create minimal config:
+    
+    ```terminal
+    $ cat > bitcoin.conf << EOF
+    datadir=$HOME/bitcoin-indexer/bitcoin/chainstate
+    txindex=1
+    rpcuser=user
+    rpcpassword=password
+    zmqpubrawblock=tcp://0.0.0.0:18543
+    EOF
+    ```
+    
+    Start syncing (continues in background):
+    
+    ```terminal
+    $ bitcoind -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf -daemon
+    ```
+  </Step>
+
+  <Step>
+    ### Set up PostgreSQL
+    
+    Create databases for metaprotocol data:
+    
+    ```terminal
+    $ sudo -u postgres createdb ordinals
+    $ sudo -u postgres createdb brc20
+    $ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+    ```
+  </Step>
+
+  <Step>
+    ### Download pre-indexed archives
+    
+    Skip weeks of indexing by using Hiro archives:
+    
+    ```terminal
+    $ mkdir -p ~/bitcoin-indexer/archives && cd ~/bitcoin-indexer/archives
+    
+    $ # Download archives (this takes 2-4 hours)
+    $ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+    $ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-rocksdb-latest.tar.gz
+    ```
+  </Step>
+
+  <Step>
+    ### Restore from archives
+    
+    Extract and import the archived data:
+    
+    ```terminal
+    $ # Extract archives
+    $ tar -xzf mainnet-bitcoin-indexer-rocksdb-latest.tar.gz
+    $ tar -xf mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+    
+    $ # Move RocksDB data
+    $ mv rocksdb ~/bitcoin-indexer/rocksdb-chainstate
+    
+    $ # Restore PostgreSQL
+    $ sudo chown postgres:postgres ordinals.dump
+    $ sudo -u postgres pg_restore --jobs=4 -d ordinals ordinals.dump
+    ```
+  </Step>
+
+  <Step>
+    ### Build and configure indexer
+    
+    Clone and build the Bitcoin Indexer:
+    
+    ```terminal
+    $ cd ~/bitcoin-indexer
+    $ git clone https://github.com/hirosystems/bitcoin-indexer.git
+    $ cd bitcoin-indexer
+    $ cargo build --release
+    ```
+    
+    Create configuration:
+    
+    ```terminal
+    $ cat > bitcoin-indexer-config.toml << 'EOF'
+    [storage]
+    working_dir = "/home/$USER/bitcoin-indexer/rocksdb-chainstate"
+    
+    [ordinals.db]
+    database = "ordinals"
+    host = "localhost"
+    port = 5432
+    username = "postgres"
+    password = "postgres"
+    
+    [bitcoind]
+    network = "mainnet"
+    rpc_url = "http://127.0.0.1:8332"
+    rpc_username = "user"
+    rpc_password = "password"
+    zmq_url = "tcp://0.0.0.0:18543"
+    
+    [resources]
+    cpu_core_available = 4
+    memory_available = 8
+    EOF
+    ```
+  </Step>
+
+  <Step>
+    ### Start indexing
+    
+    Wait for Bitcoin node to sync (check progress):
+    
+    ```terminal
+    $ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getblockchaininfo | jq .verificationprogress
+    0.9523  # When this reaches ~0.9999, you're ready
+    ```
+    
+    Start the Ordinals indexer:
+    
+    ```terminal
+    $ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
+    [32m✓[0m Loaded archive state from block 819,542
+    [32m✓[0m Catching up to chain tip...
+    ```
+  </Step>
+
+  <Step>
+    ### Verify it's working
+    
+    Test the API endpoints:
+    
+    ```terminal
+    $ # Check indexer status
+    $ curl http://localhost:3000/ordinals/v1/status
+    
+    $ # Get first inscription
+    $ curl http://localhost:3000/ordinals/v1/inscriptions/0
+    {
+      "id": "6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0",
+      "number": 0,
+      "address": "bc1pxaneaf3w4d27hl2y93fuft2xk6m4u3wc4rafevc6slgd7f5tq2dqynekta"
+    }
+    ```
+  </Step>
+</Steps>
+
+## What's next?
+
+Your indexer is now running and serving API requests! Here's what you can do:
+
+<Cards>
+  <Card
+    href="/tools/bitcoin-indexer/metaprotocol-apis/ordinals-api"
+    title="Explore the API"
+    description="Learn about all available endpoints"
+  />
+  <Card
+    href="/tools/bitcoin-indexer/run-indexer/configuration"
+    title="Advanced configuration"
+    description="Optimize performance and add features"
+  />
+  <Card
+    href="/tools/bitcoin-indexer/integrations/monitoring"
+    title="Set up monitoring"
+    description="Track indexer health and performance"
+  />
+</Cards>
+
+## Troubleshooting
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="slow-download">
+    <AccordionTrigger>Archive download is slow</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Use a download manager with resume support:
+        
+        ```terminal
+        $ aria2c -x 16 -s 16 https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+  
+  <AccordionItem value="bitcoin-sync">
+    <AccordionTrigger>Bitcoin node sync is taking too long</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        You can start indexing before full sync completes. The indexer will catch up once your node reaches the archive height (~819,542).
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+  
+  <AccordionItem value="pg-restore-fails">
+    <AccordionTrigger>PostgreSQL restore fails</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Ensure PostgreSQL 14+ is installed and the postgres user has proper permissions:
+        
+        ```terminal
+        $ sudo -u postgres psql --version
+        $ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/*.dump
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>

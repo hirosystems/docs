@@ -1,23 +1,15 @@
 ---
-title: Installing prerequisites
-description: Get your development environment ready for building
+title: Installing development tools
+sidebarTitle: Prerequisites
+description: Set up Clarinet and VS Code for Stacks development.
 ---
 
-Clarinet and the Clarity VS Code extensions are essential for developing smart contracts. They streamline the process of writing, testing, and deploying Clarity code, enhancing your productivity and ensuring a smooth development experience.
 
-Let's get you set up with Clarinet and configure your IDE for the best development experience.
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-## What you'll need
-
-Before installing Clarinet, make sure you have:
-
-- [x] A terminal you're comfortable with
-- [x] A preferred IDE of choice (VS Code, Cursor, etc.)
-- [x] 5 minutes of your time
+Get your development environment ready with Clarinet and the VS Code extension. These tools provide everything you need to write, test, and deploy smart contracts.
 
 ## Install Clarinet
-
-Choose your operating system and follow the installation steps.
 
 <TerminalPicker storage="macOs">
 
@@ -42,128 +34,84 @@ $ mv ./clarinet /usr/local/bin
 
 </TerminalPicker>
 
-### Verify installation
-
-After installation completes, verify Clarinet is working:
+Verify installation:
 
 ```terminal
 $ clarinet --version
+[32mclarinet-cli 2.10.0[0m
 ```
 
-See a version number? You're good to go. 
-
-Having issues? Check our [troubleshooting guide](/tools/clarinet).
-
-## Set up VS Code for Clarity
-
-Writing Clarity code? You'll want syntax highlighting and auto-completion. Our VS Code extension transforms your editor into a smart contract development powerhouse.
-
-### Install the Clarity extension
-
-**From VS Code:**
-
-1. Open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`)
-2. Search for "Clarity"
-3. Click Install on the Hiro Systems extension
-
-**From Command Palette:**
-
-1. Open Quick Open (`Ctrl+P` or `Cmd+P`)
-2. Paste: `ext install HiroSystems.clarity-lsp`
-3. Press Enter
-
-**From terminal:**
+## Install VS Code extension
 
 ```terminal
 $ code --install-extension hirosystems.clarity-lsp
 ```
 
-The extension works in VS Code Desktop and VS Code for Web ([vscode.dev](https://vscode.dev/), [github.dev](https://github.dev/)).
+Or install from VS Code: Extensions panel → Search "Clarity" → Install
 
-### What you get
+## Configuration options
 
-With the extension installed, you'll have:
+| Setting | Command | Description |
+|---------|---------|-------------|
+| Shell completions | `clarinet completions <shell>` | Enable tab completion for commands |
+| Update Clarinet | `brew upgrade clarinet` | Get the latest version (macOS) |
+| Extension settings | VS Code Settings → Clarity | Configure formatter, linting |
 
-- ✓ **Smart auto-completion** - Function suggestions with placeholders
-- ✓ **Documentation on hover** - Learn functions without leaving your editor
-- ✓ **Go-to definition** - Navigate code across files and contract calls
-- ✓ **Real-time error checking** - Catch syntax errors and warnings as you type
-- ✓ **Local contract resolution** - Auto-complete across your entire project
-- ✓ **Trait support** - Validates SIP-009/010 implementations
-- ✓ **Visual debugger** - Step through code line-by-line (requires Clarinet)
+## Test your environment
 
-Want to learn all the features? Check out our [complete VS Code extension guide](/using-clarity-vscode-extension).
-
-## Configure your shell (optional)
-
-Make your life easier with tab completion for Clarinet commands.
-
-<TerminalPicker storage="shell-completion">
-
-```terminal !! Bash
-$ clarinet completions bash > /etc/bash_completion.d/clarinet
-$ source /etc/bash_completion.d/clarinet
-```
-
-```terminal !! Zsh
-$ clarinet completions zsh > ~/.zsh/completions/_clarinet
-$ source ~/.zshrc
-```
-
-```terminal !! Fish
-$ clarinet completions fish > ~/.config/fish/completions/clarinet.fish
-$ source ~/.config/fish/config.fish
-```
-
-</TerminalPicker>
-
-Now you can type `clarinet ` and hit tab to see available commands.
-
-## Troubleshooting
-
-### Command not found
-
-If you see `command not found: clarinet`, your PATH might need updating:
-
-<TerminalPicker storage="path-fix">
-
-```terminal !! macOS/Linux
-$ echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
-$ source ~/.bashrc
-```
-
-```terminal !! Windows
-$ Run PowerShell as Administrator
-$ [Environment]::SetEnvironmentVariable("Path", "$env:Path;C:\Program Files\clarinet", "User")
-$ Restart your terminal
-```
-
-</TerminalPicker>
-
-### Permission denied
-
-On Linux/macOS, you might need to make Clarinet executable:
+Verify your setup is working correctly:
 
 ```terminal
-$ chmod +x /usr/local/bin/clarinet
+$ clarinet new my-test && cd my-test
+[32mCreated directory[0m [1mmy-test[0m
+[32mCreated file[0m [1mClarinet.toml[0m
+
+$ clarinet contract new counter
+[32mCreated file[0m [1mcontracts/counter.clar[0m
+[32mCreated file[0m [1mtests/counter.test.ts[0m
+
+$ npm run test
+[32m✔[0m [1m0 passed[0m | 0 failed
 ```
 
-### VS Code extension not working
+## Common issues
 
-1. Make sure you have the latest VS Code version
-2. Reload the window: ⇧⌘P (Mac) or Ctrl+Shift+P (Windows/Linux), then "Developer: Reload Window"
-3. Check the extension is enabled for your workspace
+<Accordion type="single" collapsible>
+  <AccordionItem value="command-not-found">
+    <AccordionTrigger>`command not found`</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        <strong>Check:</strong> Is Clarinet in PATH?<br />
+        <strong>Fix:</strong> Add to PATH or reinstall
+      </div>
+    </AccordionContent>
+  </AccordionItem>
 
-Still stuck? [Ask for help on Discord](https://discord.gg/stacks) in the #clarinet channel.
+  <AccordionItem value="vscode-not-highlighting">
+    <AccordionTrigger>VS Code not highlighting</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        <strong>Check:</strong> Extension installed?<br />
+        <strong>Fix:</strong> Reload window after install
+      </div>
+    </AccordionContent>
+  </AccordionItem>
 
-## Next steps
+  <AccordionItem value="no-auto-completion">
+    <AccordionTrigger>No auto-completion</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        <strong>Check:</strong> In Clarinet project?<br />
+        <strong>Fix:</strong> Open folder with Clarinet.toml
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
 
-Great job! Your development environment is ready. Here's what to do next:
+For detailed VS Code features, see the [extension guide](/tools/clarinet/integrations/vscode-extension).
 
-- **[Create your first project →](/environment-setup/creating-first-project)** - Build something real
-- **[Learn Clarity basics →](/smart-contracts/clarity-basics)** - Understand the language
-- **[Explore example contracts →](https://github.com/hirosystems/clarinet/tree/main/examples)** - See what's possible
+## Related guides
 
----
-
-**Pro tip**: Join our [Discord community](https://discord.gg/stacks) to connect with other developers building on Stacks. The #clarinet channel is perfect for questions as you get started.
+- [Create your first project](/tools/clarinet/quickstart)
+- [VS Code extension features](/tools/clarinet/integrations/vscode-extension)
+- [Clarinet configuration](/tools/clarinet/clarinet-toml)

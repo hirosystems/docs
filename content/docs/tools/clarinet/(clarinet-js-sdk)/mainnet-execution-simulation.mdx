@@ -1,0 +1,138 @@
+---
+title: Testing against mainnet data
+sidebarTitle: Mainnet execution simulation
+description: Mainnet Execution Simulation (MXS) allows you to test your Clarity smart contracts using actual data and state from the Stacks mainnet. This powerful feature helps ensure your contracts behave as expected in a live environment.
+---
+
+import { ArrowRight, Check } from 'lucide-react';
+
+## What you'll learn
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Setting up MXS in your Clarinet project</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Writing tests that interact with mainnet contracts</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Simulating historical transactions</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Understanding MXS limitations</span>
+  </div>
+</div>
+
+## What is Mainnet execution simulation?
+
+Testing smart contracts in realistic conditions is essential. Simnet offers an isolated environment but lacks the live Stacks mainnet's complexity and history.
+
+MXS fills this gap by enabling unit tests with the Clarinet JS SDK and Vitest to simulate the Stacks mainnet state at a specific block height. This allows you to:
+
+- **Validate contract logic with real data:** Directly test mainnet contracts or data within your tests.
+- **(Re)simulate transactions:** Analyze mainnet transactions' results, execution, or costs without deploying or using actual STX.
+
+## Enable MXS in your project
+
+Add the following configuration to your `Clarinet.toml` file:
+
+```toml Clarinet.toml
+[repl.remote_data]
+# Enable mainnet execution simulation
+enabled = true
+# Specify the Stacks block height to fork from
+initial_height = 522000
+# API URL (optional, defaults to https://api.hiro.so)
+api_url = 'https://api.hiro.so'
+```
+
+<Callout type="tip" title="Pro tip">
+Setting a specific `initial_height` ensures consistent and reproducible test results.
+</Callout>
+
+## Configure API access
+
+While MXS works without an API key, you may encounter rate limits. Set up an API key for reliable access:
+
+```terminal
+$ export HIRO_API_KEY="<your-api-key>"
+```
+
+## Write tests with mainnet data
+
+Once MXS is enabled, your tests automatically operate against the mainnet state snapshot. Here's an example testing against the mainnet `pox-4` contract:
+
+```ts tests/pox-4.test.ts
+import { describe, it, expect } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!;
+
+describe("pox-4 mainnet interaction", () => {
+  it("reads current reward cycle from mainnet", () => {
+    // Call the mainnet pox-4 contract
+    const call = simnet.callReadOnlyFn(
+      "SP000000000000000000002Q6VF78.pox-4", // Mainnet contract
+      "current-pox-reward-cycle",
+      [],
+      deployer
+    );
+    
+    // Assert the result (adjust based on your initial_height)
+    expect(call.result).toBeUint(109);
+    
+    console.log("Current POX reward cycle:", Cl.prettyPrint(call.result));
+  });
+});
+```
+
+The test uses `simnet.callReadOnlyFn` just like in standard unit tests, but because MXS is enabled, it targets the actual `pox-4` contract state at the specified block height.
+
+## Try it out
+
+Run your test to see MXS in action:
+
+```terminal
+$ npm run test
+```
+
+## Common issues
+
+| Issue | Solution |
+|-------|----------|
+| Rate limit errors | Set up `HIRO_API_KEY` environment variable |
+| Inconsistent results | Fix `initial_height` in configuration |
+| Function not found | Check the contract exists at your block height |
+
+## Next steps
+
+### Testing in the playground
+
+Quickly experiment with MXS without setting up a project:
+
+1. Visit [https://play.hiro.so/?remote_data=true](https://play.hiro.so/?remote_data=true)
+2. Run mainnet contract calls:
+
+```terminal
+$ contract-call? 'SP000000000000000000002Q6VF78.pox-4 current-pox-reward-cycle
+```
+
+### Advanced usage
+
+- Test contract interactions with existing mainnet contracts
+- Validate your contract logic against real-world data
+- Simulate specific mainnet transactions for debugging
+
+### Current limitations
+
+MXS does not support functions that query burn block or miner tenure information:
+
+- `get-burn-block-info?`
+- `get-tenure-info?`
+
+Calls to these functions will result in runtime errors.

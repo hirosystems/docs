@@ -3,17 +3,50 @@ title: Quickstart
 description: Build your first Clarity smart contract in under 5 minutes
 ---
 
-import { Callout } from '@/components/callout';
+
 import { Cards, SecondaryCard } from '@/components/card';
 import { Clarinet, Js } from '@/components/ui/icon';
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Steps, Step } from 'fumadocs-ui/components/steps';
+import { ArrowRight, Check } from 'lucide-react';
 
-In this quickstart, you'll build a simple counter smart contract to learn the fundamentals of Clarity development. We'll walk through creating a new project, writing contract code, and testing it in a local environment—all in under 5 minutes.
+## What you'll learn
 
-<Callout type="tip" title="Prerequisites">
-Make sure you have Clarinet installed on your system. If not, follow the [installation instructions](/tools/clarinet#installation) to get set up.
-</Callout>
+In this guide, you'll build a simple counter smart contract and interact with it in a local environment. By the end, you'll understand:
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>How to create and structure a Clarity smart contract project</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>The basics of writing Clarity code with maps and public functions</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>How to validate and test your contracts using Clarinet's console</span>
+  </div>
+</div>
+
+## Prerequisites
+
+To follow this guide, you'll need:
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
+      <Check className="h-3 w-3 text-white" />
+    </div>
+    <span>Clarinet installed on your machine. Follow the [installation guide](/tools/clarinet#installation) if needed.</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
+      <Check className="h-3 w-3 text-white" />
+    </div>
+    <span>A code editor like VS Code for editing Clarity files.</span>
+  </div>
+</div>
 
 <Steps>
   <Step>
@@ -23,18 +56,18 @@ Make sure you have Clarinet installed on your system. If not, follow the [instal
     
     ```terminal
     $ clarinet new counter
-    [32mCreate directory[0m [1mcounter[0m
-    [32mCreate directory[0m [1mcontracts[0m
-    [32mCreate directory[0m [1msettings[0m
-    [32mCreate directory[0m [1mtests[0m
-    [32mCreate file[0m [1mClarinet.toml[0m
-    [32mCreate file[0m [1mpackage.json[0m
-    [32mCreate file[0m [1mvitest.config.js[0m
+    [32mCreate directory[0m [1mcounter[0m
+    [32mCreate directory[0m [1mcontracts[0m
+    [32mCreate directory[0m [1msettings[0m
+    [32mCreate directory[0m [1mtests[0m
+    [32mCreate file[0m [1mClarinet.toml[0m
+    [32mCreate file[0m [1mpackage.json[0m
+    [32mCreate file[0m [1mvitest.config.js[0m
     ```
 
     Clarinet creates a complete project structure for you. Each folder serves a specific purpose in your development workflow:
     
-    <Files className="pointer-events-none">
+    <Files className="font-fono pointer-events-none bg-background">
       <Folder name="counter" defaultOpen>
         <Folder name="contracts" />
         <Folder name="settings">
@@ -58,9 +91,9 @@ Make sure you have Clarinet installed on your system. If not, follow the [instal
     ```terminal
     $ cd counter
     $ clarinet contract new counter
-    [32mCreated file[0m [1mcontracts/counter.clar[0m
-    [32mCreated file[0m [1mtests/counter.test.ts[0m
-    [33mUpdated Clarinet.toml[0m [1mwith contract counter[0m
+    [32mCreated file[0m [1mcontracts/counter.clar[0m
+    [32mCreated file[0m [1mtests/counter.test.ts[0m
+    [33mUpdated Clarinet.toml[0m [1mwith contract counter[0m
     ```
 
     Clarinet automatically creates both your contract file and a corresponding test file. This follows the best practice of writing tests alongside your contract code:
@@ -109,7 +142,7 @@ Make sure you have Clarinet installed on your system. If not, follow the [instal
     
     ```terminal
     $ clarinet check
-    [32m✔[0m [1m1 contract checked[0m
+    [32m✔[0m [1m1 contract checked[0m
     ```
 
     If you see errors instead, here are the most common issues and how to fix them:

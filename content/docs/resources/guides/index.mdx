@@ -1,28 +1,28 @@
 ---
-root: true
 title: Guides
+sidebarTitle: Overview
 description: Guides for building on Stacks.
-icon: Code
 full: true
+llm: false
 ---
 
-import Link from "fumadocs-core/link";
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import { SecondaryCard } from "@/components/card"
-import guidesImage from '@/public/guides.svg';
-import data from '@/lib/all-guides.json';
+To explore Guides with AI, copy and paste [llms.txt](/resources/llms.txt) into your LLM of choice.
 
-<div className='flex flex-col space-y-10'>
-  <Cards>
-    {data.guides.map(guide => {
-      return (
-        <SecondaryCard
-          key={guide.title}
-          href={guide.href}
-          title={guide.title}
-          description={guide.description}
-        />
-      )
-    })}
-  </Cards>
-</div>
+## Building Projects
+
+- [Build an NFT Marketplace](/resources/build-an-nft-marketplace) - Guide to building a decentralized NFT marketplace on Stacks.
+- [Build a Decentralized Kickstarter](/resources/build-a-decentralized-kickstarter) - Guide to creating a decentralized crowdfunding platform.
+
+## Stacks.js
+
+- [Using Clarity Values](/resources/using-clarity-values) - Learn how to use Clarity values in your applications.
+
+## Applications
+
+- [No-Loss Lottery](/resources/no-loss-lottery) - Guide to building a no-loss lottery application.
+
+## Infrastructure
+
+- [Installing Docker](/resources/installing-docker) - Instructions for setting up Docker for development.
+- [Sync a Bitcoin Node](/resources/sync-a-bitcoin-node) - Guide to synchronizing a Bitcoin node.
+- [Sync a Stacks Node](/resources/sync-a-stacks-node) - Guide to synchronizing a Stacks node.

@@ -1,0 +1,129 @@
+---
+title: Check for duplicates
+description: Detect duplicate characters in strings and duplicate items in lists using Clarity
+---
+
+```clarity
+;; Check for duplicate characters in a string
+(define-read-only (has-duplicate-chars? (input (string-ascii 200)))
+  (is-none (fold dup input (slice? (concat input "|END") u1 (+ (len input) u4))))
+)
+
+(define-private (dup (ch (string-ascii 1)) (out (optional (string-ascii 204))))
+  (match out out_some 
+    (match (index-of? (unwrap-panic (slice? out_some u0 (- (len out_some) u4))) ch) 
+      found none 
+      (slice? out_some u1 (len out_some))
+    )
+    out
+  )
+)
+
+;; Example usage
+(has-duplicate-chars? "hello") ;; Returns true (duplicate 'l')
+(has-duplicate-chars? "world") ;; Returns false (no duplicates)
+```
+
+## Use cases
+
+- Validating usernames for uniqueness of characters
+- Checking NFT trait uniqueness in collections
+- Preventing duplicate entries in voting systems
+- Ensuring unique identifiers in lists
+
+## Key concepts
+
+The duplicate detection uses different strategies:
+
+- **Strings**: Uses `fold` with `index-of?` to find repeated characters
+- **Lists**: Checks if elements appear again in the remaining list
+- **Optimization**: Early exit on first duplicate found
+
+### Check duplicates in lists
+
+```clarity
+;; Check for duplicates in a list of numbers
+(define-read-only (has-duplicates? (input (list 10 uint)))
+  (or 
+    (is-dup input u0) (is-dup input u1) (is-dup input u2) (is-dup input u3) (is-dup input u4) 
+    (is-dup input u5) (is-dup input u6) (is-dup input u7) (is-dup input u8) (is-dup input u9)
+  )
+)
+
+(define-private (is-dup (input (list 10 uint)) (i uint))
+  (is-some (index-of? 
+    (unwrap! (slice? input (+ i u1) (len input)) false) 
+    (unwrap! (element-at? input i) false)
+  ))
+)
+
+;; Examples
+(has-duplicates? (list u1 u2 u3 u2 u4)) ;; Returns true
+(has-duplicates? (list u1 u2 u3 u4 u5)) ;; Returns false
+```
+
+## Advanced duplicate detection
+
+```clarity
+;; Find all duplicates in a list
+(define-read-only (find-duplicates (items (list 20 uint)))
+  (fold check-duplicate items { seen: (list), duplicates: (list) })
+)
+
+(define-private (check-duplicate 
+  (item uint) 
+  (state { seen: (list 20 uint), duplicates: (list 20 uint) }))
+  (if (is-some (index-of? (get seen state) item))
+    ;; Item is duplicate
+    (merge state { 
+      duplicates: (unwrap-panic (as-max-len? 
+        (append (get duplicates state) item) u20))
+    })
+    ;; First occurrence
+    (merge state { 
+      seen: (unwrap-panic (as-max-len? 
+        (append (get seen state) item) u20))
+    })
+  )
+)
+
+;; Count occurrences
+(define-read-only (count-occurrences (items (list 20 uint)) (target uint))
+  (fold count-if-match items u0)
+)
+
+(define-private (count-if-match (item uint) (count uint))
+  (if (is-eq item target) (+ count u1) count)
+)
+```
+
+## Principal duplicate detection
+
+```clarity
+;; Check for duplicate principals (addresses)
+(define-read-only (has-duplicate-principals? (addresses (list 10 principal)))
+  (< (len addresses) 
+     (len (fold add-unique addresses (list))))
+)
+
+(define-private (add-unique 
+  (address principal) 
+  (unique-list (list 10 principal)))
+  (if (is-some (index-of? unique-list address))
+    unique-list
+    (unwrap-panic (as-max-len? (append unique-list address) u10))
+  )
+)
+```
+
+
+
+<Callout title="Performance tip" type="info">
+For large lists, consider using maps to track seen items instead of repeated `index-of?` calls, as maps provide O(1) lookup time.
+</Callout>
+
+## Related snippets
+
+- [Filter items from a list](/resources/snippets/filter-items-from-a-list)
+- [Return an entry from a map](/resources/snippets/return-an-entry-from-a-map)
+- [Helper function to restrict contract calls](/resources/snippets/helper-function-to-restrict-contract-calls)

@@ -1,0 +1,128 @@
+---
+title: Concepts
+description: Contract monitoring builds on familiar blockchain concepts while abstracting away the complexity of running your own infrastructure.
+---
+
+## Monitors
+
+A monitor is a configuration that watches a specific smart contract for activity. Each monitor consists of:
+
+```json
+{
+  "contract_id": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-dao",
+  "webhook_url": "https://api.example.com/webhooks/stacks",
+  "event_filters": ["contract-call", "stx-transfer"],
+  "active": true
+}
+```
+
+### Monitor lifecycle
+
+Monitors operate in three states:
+
+| State | Description |
+|-------|-------------|
+| `active` | Processing events and sending webhooks |
+| `paused` | Temporarily stopped, retains configuration |
+| `deleted` | Permanently removed, stops all notifications |
+
+## Event types
+
+Contract monitoring tracks different types of blockchain events:
+
+### Contract calls
+
+Function invocations on your smart contract:
+- Public function calls
+- Read-only function calls (off-chain)
+- Internal contract calls
+
+### Token events
+
+STX and token movements involving your contract:
+- STX transfers to/from contract
+- Fungible token operations (SIP-010)
+- Non-fungible token operations (SIP-009)
+
+### Print events
+
+Custom events emitted by your contract:
+```clarity
+(print { event: "loan-created", amount: u1000000 })
+```
+
+## Webhook delivery
+
+Webhooks are HTTP POST requests sent to your configured endpoint when matching events occur.
+
+### Webhook payload structure
+
+```json
+{
+  "monitor_id": "mon_abc123",
+  "contract_id": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-dao",
+  "transaction": {
+    "tx_id": "0x123...",
+    "block_height": 98765,
+    "timestamp": 1704067200
+  },
+  "event": {
+    "type": "contract_call",
+    "function": "stake",
+    "args": {
+      "amount": "1000000"
+    },
+    "result": "(ok true)"
+  }
+}
+```
+
+## Event filtering
+
+Filters let you receive only the events you care about, reducing noise and processing overhead.
+
+### Filter types
+
+**Function filters**
+```json
+{
+  "type": "contract_call",
+  "function_name": "transfer"
+}
+```
+
+**Event type filters**
+```json
+{
+  "type": "stx_transfer",
+  "direction": "inbound"
+}
+```
+
+**Amount filters**
+```json
+{
+  "type": "stx_transfer",
+  "min_amount": "1000000"
+}
+```
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/tools/contract-monitoring/monitoring-setup/create-monitor"
+    title="Create your first monitor"
+    description="Step-by-step guide to monitor setup"
+  />
+  <Card
+    href="/tools/contract-monitoring/event-processing/webhook-payloads"
+    title="Understanding payloads"
+    description="Deep dive into webhook data structure"
+  />
+  <Card
+    href="/tools/contract-monitoring/platform-features/analytics-dashboard"
+    title="Analytics dashboard"
+    description="Visualize contract activity and trends"
+  />
+</Cards>

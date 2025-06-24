@@ -1,0 +1,176 @@
+---
+title: Derive Stacks address from keys
+description: Generate Stacks addresses from private or public keys using multiple methods
+---
+
+```typescript
+import { getPublicKeyFromPrivate } from "@stacks/encryption";
+import { 
+  getAddressFromPrivateKey, 
+  getAddressFromPublicKey 
+} from "@stacks/transactions";
+
+// Derive address from private key
+const privateKey = process.env.PRIVATE_KEY; // Keep this secret!
+const addressFromPrivate = getAddressFromPrivateKey(privateKey, "testnet");
+
+// Derive public key and address
+const publicKey = getPublicKeyFromPrivate(privateKey);
+const addressFromPublic = getAddressFromPublicKey(publicKey, "testnet");
+
+console.log("Address:", addressFromPrivate);
+console.log("Public key:", publicKey);
+console.log("Same address:", addressFromPrivate === addressFromPublic); // true
+```
+
+## Use cases
+
+- Wallet address generation
+- Key pair validation
+- Address recovery from backup keys
+- Multi-signature wallet setup
+
+## Key concepts
+
+Stacks addresses are derived through:
+
+- **Private key**: 32-byte random number (keep secret!)
+- **Public key**: Derived from private key using ECDSA
+- **Address**: Base58check-encoded hash of public key
+- **Network**: Different prefixes for mainnet (SP/SM) vs testnet (ST/SN)
+
+### Generate new key pair
+
+```typescript
+import { randomPrivateKey } from "@stacks/transactions";
+import { getPublicKeyFromPrivate } from "@stacks/encryption";
+
+// Generate random private key
+const privateKey = randomPrivateKey();
+const publicKey = getPublicKeyFromPrivate(privateKey);
+
+// Derive addresses for both networks
+const mainnetAddress = getAddressFromPrivateKey(privateKey, "mainnet");
+const testnetAddress = getAddressFromPrivateKey(privateKey, "testnet");
+
+console.log({
+  privateKey,
+  publicKey,
+  mainnetAddress, // SP...
+  testnetAddress  // ST...
+});
+```
+
+## Compressed vs uncompressed keys
+
+```typescript
+import { 
+  publicKeyToAddress,
+  AddressVersion 
+} from "@stacks/transactions";
+
+// Public key formats
+const compressedPubKey = "03ef788b3830c00abe8f64f62dc32fc863bc0b2cafeb073b6c8e1c7657d9c2c3ab";
+const uncompressedPubKey = "04ef788b3830c00abe8f64f62dc32fc863bc0b2cafeb073b6c8e1c7657d9c2c3ab5c392bbf70494b84fd7388e6a89811c8f2bc2aca41d3c5a9f7d95f8ed8f8e1a1";
+
+// Both generate same address
+const address1 = publicKeyToAddress(
+  AddressVersion.TestnetSingleSig,
+  compressedPubKey
+);
+
+const address2 = publicKeyToAddress(
+  AddressVersion.TestnetSingleSig, 
+  uncompressedPubKey
+);
+
+console.log(address1 === address2); // true
+```
+
+## Address validation
+
+```typescript
+import { validateStacksAddress } from "@stacks/transactions";
+
+function isValidAddress(address: string, network: "mainnet" | "testnet"): boolean {
+  try {
+    return validateStacksAddress(address, network);
+  } catch {
+    return false;
+  }
+}
+
+// Examples
+console.log(isValidAddress("SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159", "mainnet")); // true
+console.log(isValidAddress("ST3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159", "testnet")); // true
+console.log(isValidAddress("SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159", "testnet")); // false
+```
+
+
+
+<Callout title="Security warning" type="warn">
+Never expose private keys in code or logs. Use environment variables and secure key management systems. Consider hardware wallets for production use.
+</Callout>
+
+## Batch address generation
+
+```typescript
+import { randomPrivateKey, getAddressFromPrivateKey } from "@stacks/transactions";
+
+interface KeyPair {
+  index: number;
+  privateKey: string;
+  address: string;
+}
+
+// Generate multiple addresses
+function generateKeyPairs(count: number, network: "mainnet" | "testnet"): KeyPair[] {
+  return Array.from({ length: count }, (_, index) => {
+    const privateKey = randomPrivateKey();
+    const address = getAddressFromPrivateKey(privateKey, network);
+    
+    return { index, privateKey, address };
+  });
+}
+
+// Generate 5 testnet addresses
+const keyPairs = generateKeyPairs(5, "testnet");
+keyPairs.forEach(({ index, address }) => {
+  console.log(`Address ${index}: ${address}`);
+});
+```
+
+## HD wallet derivation
+
+```typescript
+import { deriveStxAddressChain } from "@stacks/wallet-sdk";
+import { generateMnemonic } from "@stacks/encryption";
+
+// Generate or use existing mnemonic
+const mnemonic = generateMnemonic();
+
+// Derive addresses from seed phrase
+const { address, privateKey, publicKey } = deriveStxAddressChain(
+  mnemonic,
+  0, // account index
+  0  // address index
+);
+
+console.log({
+  address,    // Stacks address
+  publicKey,  // Compressed public key
+  privateKey  // Private key for this address
+});
+
+// Derive multiple addresses from same seed
+const addresses = Array.from({ length: 5 }, (_, i) => 
+  deriveStxAddressChain(mnemonic, 0, i).address
+);
+```
+
+## Related snippets
+
+- [Generate a wallet](/resources/snippets/generate-a-wallet)
+- [Generate a secret key](/resources/snippets/generate-a-secret-key)
+- [Convert BTC to STX address](/resources/snippets/convert-btc-to-stx-address)
+- [Derive principal addresses between networks](/resources/snippets/derive-principal-addresses-between-networks)

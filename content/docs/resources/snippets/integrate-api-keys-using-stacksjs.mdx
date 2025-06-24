@@ -1,0 +1,253 @@
+---
+title: Integrate API keys using Stacks.js
+description: Configure Stacks.js to use API keys for enhanced rate limits and monitoring
+---
+
+```typescript
+import { createApiKeyMiddleware, createFetchFn } from "@stacks/common";
+import { StacksMainnet, StacksTestnet } from "@stacks/network";
+
+// Create middleware with your API key
+const apiMiddleware = createApiKeyMiddleware({
+  apiKey: process.env.HIRO_API_KEY
+});
+
+// Create custom fetch function
+const customFetch = createFetchFn(apiMiddleware);
+
+// Configure network with API key
+const network = new StacksMainnet({
+  fetchFn: customFetch
+});
+```
+
+## Use cases
+
+- Increased API rate limits for production applications
+- API usage monitoring and analytics
+- Priority access during high traffic periods
+- Custom enterprise support features
+
+## Key concepts
+
+API key benefits:
+
+- **Higher rate limits**: 500 requests/minute vs 50 for anonymous
+- **Usage tracking**: Monitor your API consumption
+- **Priority queue**: Better performance during peak times
+- **Support**: Access to dedicated support channels
+
+### Complete configuration example
+
+```typescript
+import { 
+  makeSTXTokenTransfer,
+  broadcastTransaction,
+  AnchorMode
+} from "@stacks/transactions";
+import { StacksMainnet } from "@stacks/network";
+import { createApiKeyMiddleware, createFetchFn } from "@stacks/common";
+
+// Setup API key middleware
+const middleware = createApiKeyMiddleware({
+  apiKey: process.env.HIRO_API_KEY,
+  // Optional: Add custom headers
+  headers: {
+    "X-Custom-Header": "my-app-v1"
+  }
+});
+
+// Create network with custom fetch
+const network = new StacksMainnet({
+  fetchFn: createFetchFn(middleware),
+  // Optional: Use custom API URL
+  coreApiUrl: "https://api.mainnet.hiro.so"
+});
+
+// Use network for transactions
+async function transferSTX() {
+  const txOptions = {
+    recipient: "SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159",
+    amount: "1000000", // 1 STX in microSTX
+    senderKey: process.env.SENDER_KEY,
+    network,
+    anchorMode: AnchorMode.Any,
+  };
+
+  const transaction = await makeSTXTokenTransfer(txOptions);
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  
+  return broadcastResponse;
+}
+```
+
+## Environment-based configuration
+
+```typescript
+import { StacksNetwork, StacksMainnet, StacksTestnet } from "@stacks/network";
+
+function createNetworkWithApiKey(env: "mainnet" | "testnet"): StacksNetwork {
+  const apiKey = process.env[`HIRO_${env.toUpperCase()}_API_KEY`];
+  
+  if (!apiKey) {
+    console.warn(`No API key found for ${env}, using default rate limits`);
+  }
+  
+  const middleware = apiKey 
+    ? createApiKeyMiddleware({ apiKey })
+    : undefined;
+  
+  const fetchFn = middleware 
+    ? createFetchFn(middleware)
+    : undefined;
+  
+  return env === "mainnet"
+    ? new StacksMainnet({ fetchFn })
+    : new StacksTestnet({ fetchFn });
+}
+
+// Usage
+const network = createNetworkWithApiKey(
+  process.env.NODE_ENV === "production" ? "mainnet" : "testnet"
+);
+```
+
+
+
+<Callout title="Get your API key" type="info">
+Sign up for a free Hiro API key at [platform.hiro.so](https://platform.hiro.so) to get higher rate limits and access to additional features.
+</Callout>
+
+## Multiple API keys for different services
+
+```typescript
+// Different keys for different purposes
+const readApiKey = process.env.HIRO_READ_API_KEY;
+const writeApiKey = process.env.HIRO_WRITE_API_KEY;
+
+// Read-only operations (higher rate limit)
+const readNetwork = new StacksMainnet({
+  fetchFn: createFetchFn(
+    createApiKeyMiddleware({ apiKey: readApiKey })
+  )
+});
+
+// Write operations (transaction broadcasts)
+const writeNetwork = new StacksMainnet({
+  fetchFn: createFetchFn(
+    createApiKeyMiddleware({ apiKey: writeApiKey })
+  )
+});
+
+// Use appropriate network for each operation
+async function getAccountInfo(address: string) {
+  return fetch(
+    `${readNetwork.coreApiUrl}/extended/v1/address/${address}/balances`,
+    { fetchFn: readNetwork.fetchFn }
+  );
+}
+
+async function broadcastTx(signedTx: string) {
+  return broadcastTransaction(signedTx, writeNetwork);
+}
+```
+
+## Error handling and fallbacks
+
+```typescript
+class ResilientStacksClient {
+  private networks: StacksNetwork[];
+  
+  constructor(apiKeys: string[]) {
+    // Create multiple networks with different API keys
+    this.networks = apiKeys.map(apiKey => 
+      new StacksMainnet({
+        fetchFn: createFetchFn(
+          createApiKeyMiddleware({ apiKey })
+        )
+      })
+    );
+    
+    // Add fallback network without API key
+    this.networks.push(new StacksMainnet());
+  }
+  
+  async executeWithFallback<T>(
+    operation: (network: StacksNetwork) => Promise<T>
+  ): Promise<T> {
+    for (const network of this.networks) {
+      try {
+        return await operation(network);
+      } catch (error: any) {
+        if (error.status === 429) {
+          console.log("Rate limited, trying next network...");
+          continue;
+        }
+        throw error;
+      }
+    }
+    throw new Error("All networks failed");
+  }
+}
+
+// Usage
+const client = new ResilientStacksClient([
+  process.env.PRIMARY_API_KEY!,
+  process.env.BACKUP_API_KEY!
+]);
+
+const balance = await client.executeWithFallback(
+  async (network) => {
+    const response = await fetch(
+      `${network.coreApiUrl}/extended/v1/address/${address}/stx`,
+      { fetchFn: network.fetchFn }
+    );
+    return response.json();
+  }
+);
+```
+
+## Monitoring API usage
+
+```typescript
+// Track API calls
+let apiCallCount = 0;
+let apiCallLog: Array<{ timestamp: Date; endpoint: string }> = [];
+
+const monitoringMiddleware = createApiKeyMiddleware({
+  apiKey: process.env.HIRO_API_KEY!,
+  // Intercept requests for monitoring
+  onRequest: (url: string) => {
+    apiCallCount++;
+    apiCallLog.push({
+      timestamp: new Date(),
+      endpoint: new URL(url).pathname
+    });
+  }
+});
+
+// Get usage stats
+function getApiUsageStats() {
+  const now = new Date();
+  const oneMinuteAgo = new Date(now.getTime() - 60 * 1000);
+  
+  const recentCalls = apiCallLog.filter(
+    call => call.timestamp > oneMinuteAgo
+  );
+  
+  return {
+    totalCalls: apiCallCount,
+    callsLastMinute: recentCalls.length,
+    endpointBreakdown: recentCalls.reduce((acc, call) => {
+      acc[call.endpoint] = (acc[call.endpoint] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>)
+  };
+}
+```
+
+## Related snippets
+
+- [Get account details from wallet](/resources/snippets/get-account-details-from-wallet)
+- [Transfer STX](/resources/snippets/transfer-stx)
+- [Deploy a contract](/resources/snippets/deploy-a-contract)

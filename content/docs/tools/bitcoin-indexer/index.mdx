@@ -1,53 +1,76 @@
 ---
-title: Overview
-description: The Bitcoin Indexer enables you to build ordinals event streams, so you can create accurate, lightweight databases that gracefully handle Bitcoin forks and reorgs.
-llm: false
+title: Bitcoin Indexer
+sidebarTitle: Overview
+description: Run your own Bitcoin metaprotocol indexer with built-in support for Ordinals, Runes, and BRC-20 tokens.
 ---
 
-import { SecondaryCard } from '@/components/card';
-import { Step, Steps } from 'fumadocs-ui/components/steps';
+## Overview
 
-The Bitcoin Indexer is a reorg-aware indexer that automatically handles chain forks, so you don't need to waste time or resources reindexing your database yourself.
+The Bitcoin Indexer is a high-performance, reorg-aware indexing engine that tracks Bitcoin metaprotocols and serves API endpoints for Ordinals, Runes, and BRC-20 tokens. Unlike basic indexers, it automatically handles blockchain reorganizations, ensuring your data stays accurate without manual intervention.
 
-You can customize what ordinals data you index in order to create lightweight databases for faster query responses and a better user experience.
+<Mermaid
+  chart="
+graph LR
+    A[Bitcoin Node] -->|Block Data| B[Bitcoin Indexer]
+    B --> C[RocksDB Storage]
+    B --> D[PostgreSQL]
+    D --> E[Ordinals API]
+    D --> F[Runes API]
+    D --> G[BRC-20 API]
+    
+    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style B fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style C fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style E fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style F fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style G fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
+/>
+
+The indexer connects to your Bitcoin node, processes blocks in real-time, stores metaprotocol data in PostgreSQL, and serves REST APIs for each protocol.
+
+## Key features
+
+- ✓ **Metaprotocol indexing** - Built-in support for Ordinals, Runes, and BRC-20 with extensible architecture
+- ✓ **Reorg-aware processing** - Automatically handles chain forks and reorganizations
+- ✓ **REST API endpoints** - Production-ready APIs for Ordinals and Runes
+- ✓ **Archive bootstrapping** - Quick sync from Hiro archives instead of full indexing
 
 ## Installation
 
 ```terminal
 $ git clone https://github.com/hirosystems/bitcoin-indexer.git
 $ cd bitcoin-indexer
-$ cargo bitcoin-indexer-install
+$ cargo build --release
+[32m✓[0m [1mBuilt bitcoin-indexer[0m
 ```
 
-Alternatively, you can use Docker images from [Docker Hub](https://hub.docker.com/r/hirosystems/bitcoin-indexer).
+Docker images are also available:
 
-## Get started
+```terminal
+$ docker pull hirosystems/bitcoin-indexer:latest
+```
+
+## Next steps
 
 <Cards>
-  <SecondaryCard
-    href="/bitcoin/indexer/quickstart"
+  <Card
+    href="/tools/bitcoin-indexer/overview/quickstart"
     title="Quickstart"
-    description="Learn how to scan for Bitcoin activity using the Bitcoin Indexer."
+    description="Set up your indexer using Hiro archives in 30 minutes"
+  />
+  <Card
+    href="/tools/bitcoin-indexer/overview/concepts"
+    title="Core concepts"
+    description="Understand metaprotocols, reorgs, and indexing architecture"
+  />
+  <Card
+    href="/tools/bitcoin-indexer/run-indexer/system-requirements"
+    title="Detailed setup"
+    description="Complete guide to production deployment"
   />
 </Cards>
 
-## System Requirements
-
-Before running the indexer, ensure your system meets these requirements:
-
-- **CPU**: Multi-core support for parallel processing
-- **Memory**: Minimum 16GB RAM
-- **Storage**: SSD or NVMe recommended
-- **OS**: Support for 4096+ open file descriptors
-- **Postgres**: Version 17+ recommended
-
-## Related tools
-
-- **[Ordinals API](/bitcoin/ordinals/api)**: Skip the infrastructure setup and get the ordinals data you need from our Ordinals API, which is powered by the Bitcoin Indexer.
-- **[Ordinals Explorer](https://ordinals.hiro.so/)**: Explore ordinals inscriptions and BRC-20 tokens rapidly in our Ordinals Explorer.
-
-<br />
-
-<Callout title="Need help building with the Bitcoin Indexer?" type="help">
-Reach out to us on the <span className="font-bold">#indexer</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+<Callout title="Need help with the Bitcoin Indexer?" type="help">
+Reach out to us on the <span className="font-bold">#ordinals</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
 </Callout>

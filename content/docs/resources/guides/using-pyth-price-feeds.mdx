@@ -1,0 +1,434 @@
+---
+title: Using Pyth price feeds
+description: Complete guide to integrating real-time market price data from Pyth Network into your Stacks applications.
+---
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Steps, Step } from '@/components/steps';
+import { ArrowRight, Check } from 'lucide-react';
+
+## Overview
+
+This comprehensive guide walks you through integrating [Pyth Network](https://pyth.network)'s decentralized oracle for real-time price data in your Stacks applications. We'll build a complete example: an NFT that can only be minted by paying exactly $100 worth of sBTC.
+
+<Callout type="info">
+The Pyth protocol integration is available as a Beta on both testnet and mainnet networks. It's maintained by Trust Machines and provides access to real-time price feeds for BTC, STX, ETH, and USDC.
+</Callout>
+
+## Architecture overview
+
+Pyth Network uses a unique **pull-based** oracle design:
+
+<Mermaid
+  chart="
+graph LR
+    A[Pyth Network] -->|Price Data| B[Wormhole]
+    B -->|VAA Messages| C[Hermes API]
+    C -->|Fetch VAA| D[Your Frontend]
+    D -->|Submit VAA + TX| E[Stacks Chain]
+    E -->|Verify & Update| F[Pyth Oracle Contract]
+    F -->|Fresh Price| G[Your Contract]
+    
+    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style C fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style E fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style F fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style G fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
+/>
+
+Unlike push-based oracles that continuously update on-chain prices, Pyth allows users to fetch and submit price updates only when needed, making it more gas-efficient.
+
+## What we're building
+
+We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth of sBTC to mint. This demonstrates:
+
+- Reading real-time BTC/USD prices from Pyth
+- Converting between USD and crypto amounts
+- Handling fixed-point arithmetic
+- Building a complete frontend integration
+- Testing oracle-dependent contracts
+
+<Files className='font-mono pointer-events-none bg-background'>
+  <Folder name="benjamin-club" defaultOpen>
+    <Folder name="contracts" defaultOpen>
+      <File name="benjamin-club.clar" />
+      <File name="sbtc-token.clar" />
+    </Folder>
+    <Folder name="frontend" defaultOpen>
+      <File name="MintButton.tsx" />
+      <File name="pyth-service.ts" />
+    </Folder>
+    <Folder name="tests" defaultOpen>
+      <File name="benjamin-club.test.ts" />
+      <File name="mock-pyth-oracle.clar" />
+    </Folder>
+    <File name="Clarinet.toml" />
+  </Folder>
+</Files>
+
+## Implementation steps
+
+<Steps>
+  <Step>
+    ### Write the smart contract
+    
+    First, implement the Clarity contract that reads Pyth price data:
+
+    ```clarity contracts/benjamin-club.clar
+    ;; Benjamin Club - $100 NFT minting contract
+    (define-constant CONTRACT-OWNER tx-sender)
+    (define-constant BENJAMIN-COST u100) ;; $100 USD
+    (define-constant ERR-INSUFFICIENT-FUNDS (err u100))
+    (define-constant ERR-PRICE-UPDATE-FAILED (err u101))
+    (define-constant ERR-STALE-PRICE (err u102))
+
+    ;; Pyth oracle contracts
+    (define-constant PYTH-ORACLE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3)
+    (define-constant PYTH-STORAGE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3)
+    (define-constant PYTH-DECODER 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v2)
+    (define-constant WORMHOLE-CORE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3)
+
+    ;; BTC price feed ID
+    (define-constant BTC-USD-FEED-ID 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43)
+
+    ;; NFT definition
+    (define-non-fungible-token benjamin-nft uint)
+    (define-data-var last-token-id uint u0)
+
+    (define-public (mint-for-hundred-dollars (price-feed-bytes (buff 8192)))
+      (let (
+        ;; Update price feed with fresh VAA data
+        (update-result (try! (contract-call? PYTH-ORACLE
+          verify-and-update-price-feeds price-feed-bytes {
+            pyth-storage-contract: PYTH-STORAGE,
+            pyth-decoder-contract: PYTH-DECODER,
+            wormhole-core-contract: WORMHOLE-CORE
+          })))
+        
+        ;; Get the updated BTC price
+        (price-data (try! (contract-call? PYTH-ORACLE
+          get-price BTC-USD-FEED-ID PYTH-STORAGE)))
+        
+        ;; Process the price data
+        (btc-price (process-price-data price-data))
+        
+        ;; Calculate required sBTC amount for $100
+        (required-sbtc (calculate-sbtc-amount btc-price))
+        
+        ;; Get user's sBTC balance
+        (user-balance (unwrap! 
+          (contract-call? .sbtc-token get-balance tx-sender)
+          ERR-INSUFFICIENT-FUNDS))
+      )
+        ;; Verify price is fresh (less than 5 minutes old)
+        (try! (verify-price-freshness price-data))
+        
+        ;; Verify user has enough sBTC
+        (asserts! (>= user-balance required-sbtc) ERR-INSUFFICIENT-FUNDS)
+        
+        ;; Transfer sBTC from user
+        (try! (contract-call? .sbtc-token transfer 
+          required-sbtc tx-sender (as-contract tx-sender) none))
+        
+        ;; Mint the NFT
+        (let ((token-id (+ (var-get last-token-id) u1)))
+          (try! (nft-mint? benjamin-nft token-id tx-sender))
+          (var-set last-token-id token-id)
+          (ok { token-id: token-id, price-paid: required-sbtc }))
+      )
+    )
+
+    (define-private (process-price-data (price-data {
+      price-identifier: (buff 32),
+      price: int,
+      conf: uint,
+      expo: int,
+      ema-price: int,
+      ema-conf: uint,
+      publish-time: uint,
+      prev-publish-time: uint
+    }))
+      (let (
+        ;; Convert fixed-point to regular number
+        ;; For expo = -8, divide by 10^8
+        (denominator (pow u10 (to-uint (* (get expo price-data) -1))))
+        (price-uint (to-uint (get price price-data)))
+      )
+        (/ price-uint denominator)
+      )
+    )
+
+    (define-private (calculate-sbtc-amount (btc-price-usd uint))
+      ;; $100 in sats = (100 * 10^8) / btc-price-usd
+      (/ (* BENJAMIN-COST u100000000) btc-price-usd)
+    )
+
+    (define-private (verify-price-freshness (price-data (tuple)))
+      (let (
+        (current-time (unwrap-panic (get-block-info? time block-height)))
+        (publish-time (get publish-time price-data))
+        (max-age u300) ;; 5 minutes
+      )
+        (if (<= (- current-time publish-time) max-age)
+          (ok true)
+          ERR-STALE-PRICE)
+      )
+    )
+    ```
+
+    For a detailed explanation of the contract components, see our [Clarity integration guide](/resources/clarity/integrations/external-data).
+  </Step>
+
+  <Step>
+    ### Build the frontend integration
+    
+    Create a service to fetch price data from Pyth:
+
+    ```typescript frontend/pyth-service.ts
+    import { PriceServiceConnection } from '@pythnetwork/price-service-client';
+    import { Buffer } from 'buffer';
+
+    const PRICE_FEEDS = {
+      BTC_USD: '0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43'
+    };
+
+    export async function fetchBTCPriceVAA(): Promise<string> {
+      const pythClient = new PriceServiceConnection(
+        'https://hermes.pyth.network',
+        { priceFeedRequestConfig: { binary: true } }
+      );
+
+      const vaas = await pythClient.getLatestVaas([PRICE_FEEDS.BTC_USD]);
+      const messageBuffer = Buffer.from(vaas[0], 'base64');
+      
+      return `0x${messageBuffer.toString('hex')}`;
+    }
+    ```
+
+    Then create a React component for minting:
+
+    ```typescript frontend/MintButton.tsx
+    import { request } from '@stacks/connect';
+    import { Cl, Pc } from '@stacks/transactions';
+    import { fetchBTCPriceVAA } from './pyth-service';
+    import { useState } from 'react';
+
+    export function MintBenjaminNFT() {
+      const [loading, setLoading] = useState(false);
+
+      const handleMint = async () => {
+        setLoading(true);
+        try {
+          // Fetch fresh price data
+          const priceVAA = await fetchBTCPriceVAA();
+          
+          // Create post-conditions for safety
+          const postConditions = [
+            // Oracle fee (1 uSTX max)
+            Pc.principal('SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R').willSendLte(1).ustx()
+          ];
+
+          // Call contract using request
+          const response = await request('stx_callContract', {
+            contract: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R.benjamin-club',
+            functionName: 'mint-for-hundred-dollars',
+            functionArgs: [Cl.bufferFromHex(priceVAA.slice(2))],
+            postConditions,
+            postConditionMode: 'deny',
+            network: 'mainnet'
+          });
+
+          alert(`NFT minted! Transaction ID: ${response.txid}`);
+        } catch (error) {
+          console.error('Minting failed:', error);
+          alert('Failed to mint NFT');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <button 
+          onClick={handleMint} 
+          disabled={loading}
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg"
+        >
+          {loading ? 'Fetching price...' : 'Mint Benjamin NFT ($100)'}
+        </button>
+      );
+    }
+    ```
+
+    For complete frontend integration details, see our [Stacks.js integration guide](/reference/stacks.js/integrations/pyth-oracle-integration).
+  </Step>
+
+  <Step>
+    ### Test your implementation
+    
+    Write comprehensive tests using Clarinet:
+
+    ```typescript tests/benjamin-club.test.ts
+    import { describe, expect, it } from "vitest";
+    import { Cl } from '@stacks/transactions';
+
+    describe("Benjamin Club Tests", () => {
+      it("should calculate correct sBTC amount", () => {
+        // Set mock BTC price to $100,000
+        simnet.callPublicFn(
+          "mock-pyth-oracle",
+          "set-mock-price",
+          [
+            Cl.bufferFromHex(BTC_FEED_ID),
+            Cl.int(10000000000000), // $100,000 with 8 decimals
+            Cl.int(-8)
+          ],
+          deployer
+        );
+
+        // Test price calculation
+        const response = simnet.callReadOnlyFn(
+          "benjamin-club",
+          "get-required-sbtc-amount",
+          [],
+          wallet1
+        );
+
+        // $100 at $100k/BTC = 0.001 BTC = 100,000 sats
+        expect(response.result).toBeOk(Cl.uint(100000));
+      });
+    });
+    ```
+
+    For advanced testing strategies including mainnet simulation, see our [Clarinet testing guide](/tools/clarinet/integrations/pyth-oracle-integration).
+  </Step>
+</Steps>
+
+## Best practices
+
+### Price freshness
+
+Always verify price data is recent enough for your use case:
+
+```clarity
+(define-constant MAX-PRICE-AGE u300) ;; 5 minutes
+
+(define-private (verify-price-freshness (price-data (tuple)))
+  (let ((age (- block-height (get publish-time price-data))))
+    (asserts! (<= age MAX-PRICE-AGE) ERR-STALE-PRICE)
+    (ok true)))
+```
+
+### Error handling
+
+Implement comprehensive error handling for oracle failures:
+
+```typescript
+try {
+  const vaa = await fetchBTCPriceVAA();
+  // Process VAA...
+} catch (error) {
+  if (error.message.includes('Network')) {
+    // Retry with exponential backoff
+    await retryWithBackoff(() => fetchBTCPriceVAA());
+  } else {
+    // Handle other errors
+    throw error;
+  }
+}
+```
+
+### Gas optimization
+
+Batch multiple price updates when possible:
+
+```clarity
+(define-public (update-multiple-prices 
+  (btc-vaa (buff 8192))
+  (eth-vaa (buff 8192))
+  (stx-vaa (buff 8192)))
+  (let ((all-vaas (concat btc-vaa (concat eth-vaa stx-vaa))))
+    (contract-call? PYTH-ORACLE verify-and-update-price-feeds all-vaas params)))
+```
+
+## Troubleshooting
+
+### Common issues
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="vaa-errors">
+    <AccordionTrigger>VAA verification fails</AccordionTrigger>
+    <AccordionContent>
+      Ensure you're fetching VAA data with `binary: true` option and converting from base64 to hex correctly. The VAA must be recent (typically within 5 minutes).
+    </AccordionContent>
+  </AccordionItem>
+  
+  <AccordionItem value="price-conversion">
+    <AccordionTrigger>Price calculations are incorrect</AccordionTrigger>
+    <AccordionContent>
+      Check that you're handling the exponent correctly. Pyth uses fixed-point representation where the actual price = raw_price * 10^exponent. For negative exponents, divide by 10^(-exponent).
+    </AccordionContent>
+  </AccordionItem>
+  
+  <AccordionItem value="gas-issues">
+    <AccordionTrigger>Transaction runs out of gas</AccordionTrigger>
+    <AccordionContent>
+      Oracle updates can be gas-intensive. Ensure your gas limits account for both the oracle update and your contract logic. Consider caching prices when multiple operations need the same price.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Security considerations
+
+1. **Price manipulation**: Always use confidence intervals and implement sanity checks
+2. **Front-running**: Consider using commit-reveal schemes for price-sensitive operations
+3. **Oracle fees**: Set appropriate post-conditions to limit fee exposure
+4. **Staleness**: Reject prices older than your security threshold
+
+## Quick reference
+
+### Contract addresses
+
+| Network | Contract | Address |
+|---------|----------|---------|
+| Mainnet | pyth-oracle-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
+| Mainnet | pyth-storage-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3` |
+| Testnet | pyth-oracle-v3 | `ST3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
+
+### Price feed IDs
+
+| Asset | Feed ID |
+|-------|---------|
+| BTC/USD | `0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43` |
+| STX/USD | `0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17` |
+| ETH/USD | `0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace` |
+| USDC/USD | `0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a` |
+
+## Additional resources
+
+- [Pyth Network documentation](https://docs.pyth.network)
+- [Trust Machines Pyth integration](https://github.com/Trust-Machines/stacks-pyth-bridge)
+- [Example repository](https://github.com/your-org/benjamin-club-example)
+- [Wormhole VAA specification](https://wormhole.com/docs/protocol/infrastructure/vaas/)
+
+## Next steps
+
+Now that you understand Pyth oracle integration:
+
+<Cards>
+  <Card
+    href="/resources/clarity/integrations/external-data"
+    title="Deep dive: Clarity"
+    description="Advanced oracle patterns and optimizations"
+  />
+  <Card
+    href="/reference/stacks.js/integrations/pyth-oracle-integration"
+    title="Deep dive: Frontend"
+    description="Building production-ready oracle UIs"
+  />
+  <Card
+    href="/tools/clarinet/integrations/pyth-oracle-integration"
+    title="Deep dive: Testing"
+    description="Comprehensive testing strategies"
+  />
+</Cards>

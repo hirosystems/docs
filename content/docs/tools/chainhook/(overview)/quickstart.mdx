@@ -1,0 +1,138 @@
+---
+title: Scanning for events
+sidebarTitle: Quickstart
+description: Create your first Chainhook predicate to scan blockchain events.
+---
+
+import { Steps, Step } from '@/components/steps';
+import { ArrowRight, Check } from 'lucide-react';
+
+## What you'll learn
+
+In this quickstart, you'll create a Chainhook predicate to track STX transfers on the Stacks blockchain and scan historical data to see it in action.
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>How to create a Chainhook predicate for tracking STX transfers</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>How to scan historical blockchain data using Chainhook</span>
+  </div>
+</div>
+
+## Prerequisites
+
+To follow this guide, you'll need:
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
+      <Check className="h-3 w-3 text-white" />
+    </div>
+    <span>For installation instructions, visit the [Chainhook installation guide](/tools/chainhook/index#installation).</span>
+  </div>
+</div>
+
+## Quickstart
+
+<Steps>
+  <Step>
+    ### Generate a predicate file
+    
+    Chainhook uses predicates to define what blockchain events to track. Generate a template predicate file:
+
+    ```terminal
+    $ chainhook predicates new stx-transfer.json --stacks
+    [32mCreated predicate template[0m [1mstx-transfer.json[0m
+    ```
+
+    This creates a boilerplate JSON file with the basic predicate structure. The `--stacks` flag specifies you're tracking Stacks events (use `--bitcoin` for Bitcoin).
+  </Step>
+
+  <Step>
+    ### Configure event tracking
+    
+    Open `stx-transfer.json` and update the `if_this` section to track STX transfer events:
+
+    ```json stx-transfer.json
+    {
+      "chain": "stacks",
+      "uuid": "87ac9bff-1052-4d02-9c79-3768a6f08a09",
+      "name": "STX Transfer",
+      "version": 1,
+      "networks": {
+        "mainnet": {
+          "start_block": 154670,
+          "if_this": {
+            "scope": "stx_event",
+            "actions": ["transfer"]
+          },
+          "then_that": {
+            "file_append": {
+              "path": "stx-transfers.txt"
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    This predicate will:
+    - Track all STX transfer events (`scope: "stx_event"`, `actions: ["transfer"]`)
+    - Start scanning from block 154670
+    - Append matching events to `stx-transfers.txt`
+  </Step>
+
+  <Step>
+    ### Scan for events
+    
+    Run the scan command to search historical blockchain data:
+
+    ```terminal
+    $ chainhook predicates scan stx-transfer.json --mainnet
+    [33mDownloading Stacks chainstate archive...[0m
+    [32mScanning blocks 154670 to 155000[0m
+    [32mFound 1,234 matching events[0m
+    [32mResults written to stx-transfers.txt[0m
+    ```
+
+    <Callout type="info" title="First-time setup">
+      The first scan downloads a chainstate archive from Hiro Archive. Subsequent scans use the cached data for faster performance.
+    </Callout>
+  </Step>
+
+  <Step>
+    ### View results
+    
+    Check the output file to see the transfer events:
+
+    ```terminal
+    $ head -5 stx-transfers.txt
+    {"apply":[{"block_identifier":{"hash":"0x123...","index":154670},"transactions":[{"transaction_identifier":{"hash":"0xabc..."},"operations":[{"operation_identifier":{"index":0},"type":"stx_transfer","status":"success","account":{"address":"SP123..."},"amount":{"value":"1000000","currency":{"symbol":"STX","decimals":6}}}]}]}]}
+    ```
+
+    Each line contains a JSON payload with transfer details including sender, recipient, amount, and block information.
+  </Step>
+</Steps>
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/tools/chainhook/predicate-design/predicate-basics"
+    title="Design custom predicates"
+    description="Learn to create predicates for contract calls, NFT transfers, and more"
+  />
+  <Card
+    href="/tools/chainhook/chainhook-registration/local-registration"
+    title="Run Chainhook as a service"
+    description="Set up continuous blockchain monitoring with webhook delivery"
+  />
+  <Card
+    href="/tools/chainhook/predicate-design/stacks-predicates"
+    title="Explore Stacks predicates"
+    description="See all available event types and filtering options"
+  />
+</Cards>

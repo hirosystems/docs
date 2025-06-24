@@ -1,0 +1,222 @@
+---
+title: Writing unit tests
+sidebarTitle: Unit testing
+description: Unit testing is the process of testing individual components or functions of smart contracts to ensure they work as expected. The Clarinet JS SDK provides a testing framework that allows you to write these tests using the Vitest testing framework, helping you catch bugs and errors early in the development process.
+---
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+import { ArrowRight, Check } from 'lucide-react';
+
+## What you'll learn
+
+<div className="space-y-3 my-6">
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>How to set up a Clarinet project for unit testing</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Writing tests for public and read-only functions</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Testing error conditions and edge cases</span>
+  </div>
+  <div className="flex items-start gap-3">
+    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
+    <span>Running tests and generating coverage reports</span>
+  </div>
+</div>
+
+## Set up your project
+
+Start by creating a new project with the Clarinet CLI. This command creates a project structure with the necessary files and folders, including the Clarinet JS SDK already set up for testing:
+
+```terminal
+$ clarinet new stx-defi
+$ cd stx-defi
+```
+
+After changing into your project directory, install the package dependencies:
+
+```terminal
+$ npm install
+```
+
+## Create the contract
+
+Generate a new contract file using the Clarinet CLI:
+
+```terminal
+$ clarinet contract new defi
+```
+
+Replace the contents of `contracts/defi.clar` with this DeFi contract:
+
+```clarity contracts/defi.clar
+;; Holds the total amount of deposits in the contract
+(define-data-var total-deposits uint u0)
+
+;; Maps a user's principal address to their deposited amount
+(define-map deposits { owner: principal } { amount: uint })
+
+;; Public function for users to deposit STX into the contract
+(define-public (deposit (amount uint))
+  (let
+    (
+      ;; Fetch the current balance or default to 0 if none exists
+      (current-balance (default-to u0 (get amount (map-get? deposits { owner: tx-sender }))))
+    )
+    ;; Transfer the STX from sender to contract
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    ;; Update the user's deposit amount in the map
+    (map-set deposits { owner: tx-sender } { amount: (+ current-balance amount) })
+    ;; Update the total deposits variable
+    (var-set total-deposits (+ (var-get total-deposits) amount))
+    ;; Return success
+    (ok true)
+  )
+)
+
+;; Read-only function to get the balance by tx-sender
+(define-read-only (get-balance-by-sender)
+  (ok (map-get? deposits { owner: tx-sender }))
+)
+```
+
+Run `clarinet check` to ensure your contract is valid:
+
+```terminal
+$ clarinet check
+[32m✔ 1 contract checked[0m
+```
+
+## Write your unit test
+
+The key tests we want to cover are that the deposit is successful and that the user's balance, as well as the contract's total deposits, are updated correctly.
+
+Replace the contents of `tests/defi.test.ts`:
+
+```typescript tests/defi.test.ts
+import { describe, it, expect } from 'vitest';
+import { Cl } from '@stacks/transactions';
+
+const accounts = simnet.getAccounts();
+const wallet1 = accounts.get('wallet_1')!;
+
+describe('stx-defi', () => {
+  it('allows users to deposit STX', () => {
+    // Define the amount to deposit
+    const amount = 1000;
+    
+    // Call the deposit function
+    const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(amount)], wallet1);
+    
+    // Assert the deposit was successful
+    expect(deposit.result).toBeOk(Cl.bool(true));
+    
+    // Verify the contract's total deposits
+    const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
+    expect(totalDeposits).toBeUint(amount);
+    
+    // Check the user's balance
+    const balance = simnet.callReadOnlyFn('defi', 'get-balance-by-sender', [], wallet1);
+    expect(balance.result).toBeOk(
+      Cl.some(
+        Cl.tuple({
+          amount: Cl.uint(amount),
+        })
+      )
+    );
+  });
+});
+```
+
+Let's break down the key parts of this test:
+
+- **`simnet.callPublicFn`** - Calls a public function in your contract
+- **`expect().toBeOk()`** - Custom matcher that checks for Clarity `ok` response
+- **`simnet.getDataVar`** - Retrieves the value of a data variable
+- **`Cl` helpers** - Create Clarity values in JavaScript
+
+## Try it out
+
+Run your test to see it in action:
+
+```terminal
+$ npm run test
+ PASS  tests/defi.test.ts
+  stx-defi
+    ✓ allows users to deposit STX (5 ms)
+
+Test Files  1 passed (1)
+     Tests  1 passed (1)
+```
+
+## Common issues
+
+| Issue | Solution |
+|-------|----------|
+| `toBeOk is not a function` | Ensure you're using the custom matchers from the SDK |
+| `Contract not found` | Run `clarinet check` to validate your contract |
+| `Type errors` | Use the `Cl` helpers to create proper Clarity values |
+
+## Next steps
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="coverage">
+    <AccordionTrigger>Generate coverage reports</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Run tests with coverage to identify untested code:
+
+        ```terminal
+        $ npm run test:report
+        ```
+
+        This generates:
+        - `lcov.info` - Code coverage data
+        - `costs-reports.json` - Gas cost analysis
+
+        To view the coverage report:
+
+        ```terminal
+        $ brew install lcov
+        $ genhtml lcov.info --branch-coverage -o coverage
+        $ open coverage/index.html
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="advanced">
+    <AccordionTrigger>Advanced testing patterns</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Test error conditions:
+
+        ```typescript
+        it('fails when depositing zero', () => {
+          const deposit = simnet.callPublicFn('defi', 'deposit', [Cl.uint(0)], wallet1);
+          expect(deposit.result).toBeErr(Cl.uint(100)); // err-invalid-amount
+        });
+        ```
+
+        Test with multiple accounts:
+
+        ```typescript
+        const wallet2 = accounts.get('wallet_2')!;
+        
+        it('tracks deposits from multiple users', () => {
+          simnet.callPublicFn('defi', 'deposit', [Cl.uint(1000)], wallet1);
+          simnet.callPublicFn('defi', 'deposit', [Cl.uint(2000)], wallet2);
+          
+          const total = simnet.getDataVar('defi', 'total-deposits');
+          expect(total).toBeUint(3000);
+        });
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>

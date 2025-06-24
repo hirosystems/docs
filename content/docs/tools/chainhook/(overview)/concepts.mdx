@@ -1,0 +1,211 @@
+---
+title: Concepts
+description: Chainhook's power comes from its predicate-based architecture and automatic handling of blockchain reorganizations. Understanding these concepts helps you build reliable blockchain indexers.
+---
+
+## Predicate file
+
+Predicates are JSON specifications that tell Chainhook what blockchain events to monitor. They follow an **if-this-then-that** pattern:
+
+```json
+{
+  "chain": "stacks",
+  "uuid": "1",
+  "name": "STX_Transfer_Predicate",
+  "version": 1,
+  "networks": {
+    "mainnet": {
+      "if_this": {
+        "scope": "stx_event",
+        "actions": ["transfer"]
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://api.example.com/webhook",
+          "authorization_header": "Bearer xyz"
+        }
+      }
+    }
+  }
+}
+```
+
+### Predicate structure
+
+| Element | Description |
+|---------|-------------|
+| `chain` | Target blockchain (`bitcoin` or `stacks`) |
+| `uuid` | Unique identifier for tracking |
+| `name` | Human-readable predicate name |
+| `version` | Predicate version number |
+| `networks` | Network-specific configurations |
+
+### if_this specification
+
+The `if_this` section defines what events to monitor. Each blockchain has different scopes:
+
+**Stacks scopes**
+- `stx_event` - STX transfers, mints, burns
+- `contract_call` - Smart contract function calls
+- `contract_deployment` - New contract deployments
+- `print_event` - Contract print statements
+- `ft_event` - Fungible token operations
+- `nft_event` - Non-fungible token operations
+
+**Bitcoin scopes**
+- `p2pkh` - Pay to public key hash
+- `p2sh` - Pay to script hash
+- `p2wpkh` - Native segwit outputs
+- `ordinals_protocol` - Ordinal inscriptions
+- `file_append` - Append to file inscriptions
+
+### then_that specification
+
+The `then_that` section defines the action when events match:
+
+```json
+// File output
+{
+  "then_that": {
+    "file_append": { 
+      "path": "/tmp/events.json"
+    }
+  }
+}
+
+// Webhook delivery
+{
+  "then_that": {
+    "http_post": {
+      "url": "https://webhook.site/abc123",
+      "authorization_header": "Bearer token"
+    }
+  }
+}
+```
+
+## Blockchain reorganizations
+
+Blockchain reorganizations (reorgs) occur when competing chains exist and nodes switch to a longer valid chain. This invalidates previously confirmed blocks.
+
+### How Chainhook handles reorgs
+
+Chainhook maintains internal state to detect reorganizations:
+
+1. **Detection** - Monitors block parent hashes to identify chain switches
+2. **Rollback** - Reverts events from orphaned blocks
+3. **Replay** - Re-evaluates predicates on the new canonical chain
+4. **Notification** - Sends rollback/apply events to maintain consistency
+
+### Reorg event structure
+
+```json
+{
+  "apply": [
+    {
+      "block_identifier": { 
+        "index": 12345,
+        "hash": "0xabc..."
+      },
+      "transactions": [...]
+    }
+  ],
+  "rollback": [
+    {
+      "block_identifier": {
+        "index": 12344,
+        "hash": "0xdef..."
+      },
+      "transactions": [...]
+    }
+  ]
+}
+```
+
+## Event streaming modes
+
+Chainhook operates in two primary modes:
+
+### Scanning mode
+
+Historical blockchain analysis:
+- Downloads chain archives from Hiro Archive
+- Evaluates predicates against past blocks
+- Useful for backfilling data or testing
+
+```terminal
+$ chainhook predicates scan predicate.json --mainnet
+```
+
+### Service mode
+
+Real-time event streaming:
+- Connects to Bitcoin/Stacks nodes
+- Monitors new blocks as they arrive
+- Maintains persistent connections
+- Handles reorgs automatically
+
+```terminal
+$ chainhook service start --config-path=config.toml
+```
+
+## Network configurations
+
+Predicates support multiple networks with different settings:
+
+```json
+"networks": {
+  "mainnet": {
+    "if_this": { ... },
+    "then_that": { ... },
+    "start_block": 100000,
+    "end_block": 200000,
+    "expire_after_occurrence": 100
+  },
+  "testnet": {
+    "if_this": { ... },
+    "then_that": { ... },
+    "include_proof": false,
+    "decode_clarity_values": true
+  }
+}
+```
+
+### Configuration options
+
+| Option | Description |
+|--------|-------------|
+| `start_block` | Begin scanning from this block |
+| `end_block` | Stop scanning at this block |
+| `expire_after_occurrence` | Stop after N matches |
+| `include_proof` | Include merkle proofs |
+| `decode_clarity_values` | Decode Clarity data types |
+| `include_contract_abi` | Include contract interfaces |
+
+## Best practices
+
+1. **Use specific scopes** - Narrow predicates scan faster
+2. **Set block ranges** - Avoid scanning entire chain history
+3. **Test locally first** - Use scanning mode before service mode
+4. **Handle rollbacks** - Design systems to handle reorg events
+5. **Validate predicates** - Use `chainhook predicate check` command
+
+## Learn more
+
+<Cards>
+  <Card
+    href="/tools/chainhook/chainhook-cli/predicate-management"
+    title="Manage predicates"
+    description="Create, validate, and deploy predicates with the CLI"
+  />
+  <Card
+    href="/tools/chainhook/webhook-server/webhook-setup"
+    title="Configure webhooks"
+    description="Set up endpoints to receive blockchain events"
+  />
+  <Card
+    href="/tools/chainhook/references/scopes/stacks"
+    title="Stacks scopes reference"
+    description="Complete list of Stacks blockchain event scopes"
+  />
+</Cards>

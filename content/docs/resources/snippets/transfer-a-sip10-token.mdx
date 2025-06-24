@@ -1,0 +1,138 @@
+---
+title: Transfer a SIP-10 token
+description: Transfer fungible tokens using the SIP-10 standard with post-conditions
+---
+
+```typescript
+import { STACKS_MAINNET } from "@stacks/network";
+import {
+  AnchorMode,
+  broadcastTransaction,
+  Cl,
+  makeContractCall,
+  Pc,
+  PostConditionMode,
+} from "@stacks/transactions";
+
+// Token contract details
+const tokenAddress = "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9";
+const tokenName = "wrapped-bitcoin";
+const contractIdentifier = `${tokenAddress}.${tokenName}`;
+
+// Create post-condition to ensure exact amount is transferred
+const postConditions = [
+  Pc.principal("SP2C20XGZBAYFZ1NYNHT1J6MGBGVX9X7X3P7LAX7K")
+    .willSendEq(100000000) // 1 wBTC (8 decimals)
+    .ft(contractIdentifier, tokenName)
+];
+
+const txOptions = {
+  contractAddress: tokenAddress,
+  contractName: tokenName,
+  functionName: "transfer",
+  functionArgs: [
+    Cl.uint(100000000), // amount (with decimals)
+    Cl.principal("SP2C20XGZBAYFZ1NYNHT1J6MGBGVX9X7X3P7LAX7K"), // sender
+    Cl.principal("SP31DA84DWTF6510EW6DCTC3GB3XH1EEBGP7MYT2"), // recipient
+    Cl.none(), // optional memo
+  ],
+  senderKey: "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
+  validateWithAbi: true,
+  network: STACKS_MAINNET,
+  postConditions,
+  postConditionMode: PostConditionMode.Deny,
+  anchorMode: AnchorMode.Any,
+};
+
+const transaction = await makeContractCall(txOptions);
+const broadcastResponse = await broadcastTransaction({ 
+  transaction,
+  network: STACKS_MAINNET,
+});
+
+console.log("Transaction ID:", broadcastResponse.txid);
+```
+
+## Use cases
+
+- Transferring fungible tokens between wallets
+- Integrating token transfers in dApps
+- Building DEX or swap functionality
+- Implementing payment systems with custom tokens
+
+## Key concepts
+
+SIP-10 is the fungible token standard on Stacks, similar to ERC-20:
+
+- **Standard interface**: All SIP-10 tokens implement `transfer`, `get-balance`, etc.
+- **Post-conditions**: Protect users by ensuring exact amounts are transferred
+- **Memos**: Optional field for including transfer notes
+
+### Transfer with memo
+
+```typescript
+// Include a memo with the transfer
+const functionArgs = [
+  Cl.uint(1000000),
+  Cl.principal(sender),
+  Cl.principal(recipient),
+  Cl.some(Cl.bufferFromUtf8("Payment for invoice #123"))
+];
+```
+
+### Check token balance
+
+```typescript
+import { callReadOnlyFunction, cvToValue } from "@stacks/transactions";
+
+const balanceResponse = await callReadOnlyFunction({
+  contractAddress: tokenAddress,
+  contractName: tokenName,
+  functionName: "get-balance",
+  functionArgs: [Cl.principal(address)],
+  network: STACKS_MAINNET,
+  senderAddress: address,
+});
+
+const balance = cvToValue(balanceResponse);
+console.log("Token balance:", balance);
+```
+
+## Common SIP-10 tokens
+
+| Token | Contract Address | Name |
+|-------|-----------------|------|
+| wBTC | SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9 | wrapped-bitcoin |
+| USDA | SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR | usda-token |
+| STX City | SP1H1733V5MZ3SZ9XRW9FKYGEZT0JDGEB8Y634C7R | miamicoin-token-v2 |
+
+## Error handling
+
+```typescript
+try {
+  const transaction = await makeContractCall(txOptions);
+  const result = await broadcastTransaction({ transaction });
+  
+  if (result.error) {
+    if (result.reason === "ContractAlreadyExists") {
+      console.error("Contract already deployed");
+    } else if (result.reason === "TransferFailed") {
+      console.error("Insufficient balance");
+    }
+  }
+} catch (error) {
+  console.error("Transfer failed:", error);
+}
+```
+
+## Package installation
+
+```package-install
+@stacks/network @stacks/transactions
+```
+
+## Related snippets
+
+- [Build an FT post-condition](/resources/snippets/build-an-ft-pc)
+- [Transfer STX](/resources/snippets/transfer-stx)
+- [Create a sponsored transaction](/resources/snippets/create-a-sponsored-tx)

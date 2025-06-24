@@ -1,0 +1,210 @@
+---
+title: Types reference
+sidebarTitle: Types
+description: Clarity's type system ensures program correctness through static type checking
+---
+
+Clarity uses a strong static type system. Function arguments and database schemas require specified types, and all types are known at publish time.
+
+## Primitive types
+
+### int
+
+Signed 128-bit integer. Ranges from -2^127 to 2^127 - 1.
+
+```clarity
+(define-constant my-int -10)
+(define-constant max-int 170141183460469231731687303715884105727)
+```
+
+### uint
+
+Unsigned 128-bit integer. Ranges from 0 to 2^128 - 1.
+
+```clarity
+(define-constant my-uint u10)
+(define-constant max-uint u340282366920938463463374607431768211455)
+```
+
+### bool
+
+Boolean value representing true or false.
+
+```clarity
+(define-constant is-active true)
+(define-constant is-disabled false)
+```
+
+### principal
+
+Represents an object that can have a token balance. Can be a standard principal (user address) or contract principal.
+
+```clarity
+;; Standard principal
+'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+
+;; Contract principal
+'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.contract-name
+```
+
+## Sequence types
+
+### (buff max-len)
+
+Byte buffer with a maximum length. Used for arbitrary binary data.
+
+```clarity
+(define-constant my-buff 0x68656c6c6f) ;; "hello" in hex
+(define-data-var message (buff 20) 0x00)
+```
+
+### (string-ascii max-len)
+
+ASCII string with maximum length. Only supports ASCII characters.
+
+```clarity
+(define-constant name (string-ascii 50) "Clarity")
+(define-data-var user-name (string-ascii 100) "")
+```
+
+### (string-utf8 max-len)
+
+UTF-8 string with maximum length. Supports Unicode characters.
+
+```clarity
+(define-constant greeting (string-utf8 50) u"Hello L! =�")
+(define-data-var status-message (string-utf8 280) u"")
+```
+
+### (list max-len entry-type)
+
+Homogeneous list with specified maximum length and entry type.
+
+```clarity
+(define-constant numbers (list 5 uint) (list u1 u2 u3 u4 u5))
+(define-data-var prices (list 100 uint) (list))
+```
+
+## Composite types
+
+### Tuple
+
+Record with named fields. Each field has a specified type.
+
+```clarity
+{
+  name: (string-ascii 50),
+  age: uint,
+  active: bool
+}
+
+;; Example usage
+(define-constant user {
+  name: "Alice",
+  age: u30,
+  active: true
+})
+```
+
+Tuples are commonly used for:
+- Returning multiple values from functions
+- Structuring complex data
+- Map keys and values
+
+## Special types
+
+### (optional type)
+
+Represents a value that might not exist. Can be `(some value)` or `none`.
+
+```clarity
+(define-data-var winner (optional principal) none)
+
+;; Set value
+(var-set winner (some 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM))
+
+;; Check value
+(match (var-get winner)
+  user (print user)
+  (print "No winner yet")
+)
+```
+
+### (response ok-type err-type)
+
+Used by public functions to indicate success or failure. Successful responses commit state changes, while error responses abort all changes.
+
+```clarity
+(define-public (divide (a uint) (b uint))
+  (if (is-eq b u0)
+    (err u1) ;; Division by zero error
+    (ok (/ a b))
+  )
+)
+```
+
+Response types enable:
+- Atomic transaction semantics
+- Composable error handling
+- Clear success/failure paths
+
+## Type signatures
+
+Functions must specify complete type signatures:
+
+```clarity
+;; Read-only function
+(define-read-only (get-balance (user principal))
+  (response uint uint)
+  ;; Function body
+)
+
+;; Public function
+(define-public (transfer (amount uint) (recipient principal))
+  (response bool uint)
+  ;; Function body
+)
+
+;; Private function
+(define-private (validate-amount (amount uint))
+  bool
+  ;; Function body
+)
+```
+
+## Type inference
+
+While Clarity requires explicit type annotations for function signatures and data declarations, it can infer types within function bodies:
+
+```clarity
+(define-read-only (calculate)
+  (let ((x 10)        ;; Inferred as int
+        (y u20)       ;; Inferred as uint
+        (name "Test")) ;; Inferred as string-ascii
+    (ok x))
+)
+```
+
+
+
+<Callout type="info" title="Type safety">
+Clarity's type system prevents many common programming errors at publish time, before any code is executed. This includes type mismatches, null pointer exceptions, and buffer overflows.
+</Callout>
+
+## Type casting
+
+Clarity provides functions for safe type conversions:
+
+```clarity
+;; Convert between integers
+(to-int u100)    ;; uint to int
+(to-uint 100)    ;; int to uint
+
+;; String conversions
+(int-to-ascii 123)       ;; Returns "123"
+(string-to-int? "123")   ;; Returns (some 123)
+
+;; Buffer conversions
+(buff-to-uint-be 0x0100)   ;; Big-endian: 256
+(buff-to-uint-le 0x0100)   ;; Little-endian: 1
+```

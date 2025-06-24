@@ -1,0 +1,107 @@
+---
+title: Create SHA256 hash in Clarity
+description: Generate SHA-256 hashes from buffer data in Clarity smart contracts
+---
+
+```clarity
+(define-read-only (create-sha256-hash (data (buff 4096)))
+  (sha256 (unwrap-panic (to-consensus-buff? data)))
+)
+
+;; Example usage
+(define-read-only (hash-message (message (string-utf8 200)))
+  (create-sha256-hash (unwrap-panic (to-consensus-buff? message)))
+)
+
+;; Hash a simple string
+(print (hash-message u"Hello World"))
+```
+
+## Use cases
+
+- Creating unique identifiers from data
+- Verifying data integrity in contracts
+- Implementing commit-reveal schemes
+- Building merkle trees for proofs
+
+## Key concepts
+
+The SHA-256 implementation in Clarity:
+
+- Takes a buffer as input (max 1MB)
+- Returns a 32-byte buffer hash
+- Uses `to-consensus-buff?` to ensure consistent encoding
+- Produces the same hash as off-chain implementations
+
+### Hashing different data types
+
+```clarity
+;; Hash a principal
+(define-read-only (hash-principal (user principal))
+  (sha256 (unwrap-panic (to-consensus-buff? user)))
+)
+
+;; Hash a number
+(define-read-only (hash-uint (number uint))
+  (sha256 (unwrap-panic (to-consensus-buff? number)))
+)
+
+;; Hash multiple values together
+(define-read-only (hash-tuple (val1 uint) (val2 (string-utf8 50)))
+  (sha256 (unwrap-panic (to-consensus-buff? {
+    value1: val1,
+    value2: val2
+  })))
+)
+```
+
+## Practical example: Commit-reveal pattern
+
+```clarity
+(define-map commitments principal (buff 32))
+
+(define-public (commit (commitment (buff 32)))
+  (begin
+    (map-set commitments tx-sender commitment)
+    (ok true)
+  )
+)
+
+(define-public (reveal (secret (string-utf8 100)) (nonce uint))
+  (let (
+    (commitment (unwrap! (map-get? commitments tx-sender) (err u1)))
+    (calculated-hash (sha256 (unwrap-panic (to-consensus-buff? {
+      secret: secret,
+      nonce: nonce
+    }))))
+  )
+    (asserts! (is-eq commitment calculated-hash) (err u2))
+    ;; Process the revealed secret
+    (ok secret)
+  )
+)
+```
+
+## Compatibility with Stacks.js
+
+```clarity
+;; This Clarity function produces the same hash as:
+;; sha256(serializeCV(stringUtf8CV("Hello World")))
+;; in Stacks.js
+
+(define-read-only (compatible-hash (text (string-utf8 200)))
+  (sha256 (unwrap-panic (to-consensus-buff? text)))
+)
+```
+
+
+
+<Callout title="Encoding note" type="info">
+The `to-consensus-buff?` function ensures data is encoded in the same format used by Stacks.js `serializeCV`, making hashes compatible between on-chain and off-chain code.
+</Callout>
+
+## Related snippets
+
+- [Create SHA256 hash (Stacks.js)](/resources/snippets/create-sha256-hash-stacks-js)
+- [Generate random number](/resources/snippets/generate-random-number)
+- [Return an entry from a map](/resources/snippets/return-an-entry-from-a-map)

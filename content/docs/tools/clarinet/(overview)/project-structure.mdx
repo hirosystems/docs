@@ -1,0 +1,317 @@
+---
+title: Anatomy of a Clarinet project
+sidebarTitle: Project structure
+description: Understand the complete structure and configuration of a Clarinet project
+type: concept
+---
+
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+A Clarinet project follows a carefully designed structure that separates contracts, tests, and configuration. Understanding this structure helps you organize code effectively and configure tools for optimal development workflow.
+
+## Core project layout
+
+Every Clarinet project contains these essential directories and files:
+
+<Files className='font-fono pointer-events-none bg-background'>
+  <Folder name="my-project" defaultOpen>
+    <Folder name=".vscode" />
+    <Folder name="contracts" defaultOpen>
+      <File name="main.clar" />
+      <File name="traits.clar" />
+    </Folder>
+    <Folder name="deployments" />
+    <Folder name="settings" defaultOpen>
+      <File name="Devnet.toml" />
+      <File name="Mainnet.toml" />
+      <File name="Testnet.toml" />
+    </Folder>
+    <Folder name="tests" defaultOpen>
+      <File name="main.test.ts" />
+    </Folder>
+    <File name=".gitignore" />
+    <File name="Clarinet.toml" />
+    <File name="package.json" />
+    <File name="tsconfig.json" />
+    <File name="vitest.config.js" />
+  </Folder>
+</Files>
+
+Each component serves a specific purpose in your development workflow. Let's explore how they work together to create a complete development environment.
+
+## The project manifest
+
+### Clarinet.toml
+
+The **Clarinet.toml** file is the heart of your project. It defines project metadata and tracks all contracts:
+
+```toml Clarinet.toml
+[project]
+name = "defi-protocol"
+description = "Decentralized finance protocol for Stacks"
+authors = ["alice@example.com"]
+telemetry = true
+requirements = []
+boot_contracts = ["traits", "token", "pool"]
+
+[contracts.traits]
+path = "contracts/traits.clar"
+clarity_version = 3
+epoch = 3.1
+
+[contracts.token]
+path = "contracts/token.clar"
+clarity_version = 3
+epoch = 3.1
+depends_on = ["traits"]
+
+[contracts.pool]
+path = "contracts/pool.clar"
+clarity_version = 3
+epoch = 3.1
+depends_on = ["traits", "token"]
+```
+
+The manifest handles several critical functions:
+
+- **Contract registration**: Every contract must be listed here
+- **Dependency management**: Defines deployment order through `depends_on`
+- **Version control**: Specifies Clarity version and epoch for each contract
+- **Boot sequence**: Lists contracts to deploy on `clarinet devnet start`
+
+## Testing infrastructure
+
+### Package configuration
+
+The **package.json** defines your testing environment and dependencies:
+
+```json package.json
+{
+  "name": "my-clarinet-project",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:report": "vitest run --reporter=verbose"
+  },
+  "devDependencies": {
+    "@hirosystems/clarinet-sdk": "^2.9.0",
+    "@stacks/transactions": "^7.0.0",
+    "@types/node": "^22.10.2",
+    "chokidar-cli": "^3.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vitest": "^3.0.1",
+    "vitest-environment-clarinet": "^2.2.0"
+  },
+  "type": "module"
+}
+```
+
+| Package | Purpose |
+|---------|---------|
+| `@hirosystems/clarinet-sdk` | WebAssembly-compiled Clarinet for Node.js |
+| `@stacks/transactions` | Clarity value manipulation in TypeScript |
+| `vitest` | Modern testing framework with native TypeScript support |
+| `vitest-environment-clarinet` | Simnet bootstrapping for tests |
+
+### Vitest configuration
+
+The **vitest.config.js** configures the testing framework:
+
+```js vitest.config.js
+/// <reference types="vitest" />
+import { defineConfig } from "vite";
+import { vitestSetupFilePath, getClarinetVitestsArgv } from "@hirosystems/clarinet-sdk/vitest";
+
+export default defineConfig({
+  test: {
+    environment: "clarinet",
+    pool: "forks",
+    poolOptions: {
+      forks: { singleFork: true }
+    },
+    setupFiles: [
+      vitestSetupFilePath,
+      "./tests/setup.ts" // Custom setup
+    ],
+    environmentOptions: {
+      clarinet: {
+        ...getClarinetVitestsArgv(),
+        manifest: "./Clarinet.toml",
+        coverageReports: ["lcov", "html"]
+      }
+    }
+  }
+});
+```
+
+This configuration enables:
+
+- **Clarinet environment**: Automatic `simnet` setup for each test
+- **Single fork mode**: Efficient test execution with proper isolation
+- **Coverage tracking**: Generate reports in multiple formats
+- **Custom setup**: Add project-specific test utilities
+
+### TypeScript configuration
+
+The **tsconfig.json** provides TypeScript support:
+
+```json tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": ["node", "vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./tests/*"],
+      "@contracts/*": ["./contracts/*"]
+    }
+  },
+  "include": [
+    "node_modules/@hirosystems/clarinet-sdk/vitest-helpers/src",
+    "tests/**/*",
+    "contracts/**/*.ts"
+  ]
+}
+```
+
+Path aliases simplify imports in tests:
+
+```typescript tests/token.test.ts
+import { accounts } from "@/helpers";
+import { TokenErrors } from "@contracts/token-types";
+```
+
+## Network configurations
+
+### Environment settings
+
+Each network has its own configuration file in the **settings** directory:
+
+```toml settings/Devnet.toml
+[network]
+name = "devnet"
+deployment_fee_rate = 10
+chain_id = 2147483648
+orchestrator_port = 20445
+bitcoin_node_p2p_port = 18444
+bitcoin_node_rpc_port = 18443
+stacks_node_p2p_port = 20444
+stacks_node_rpc_port = 20443
+stacks_api_port = 3999
+stacks_api_events_port = 3700
+bitcoin_explorer_port = 8001
+stacks_explorer_port = 8000
+postgres_port = 5432
+postgres_username = "postgres"
+postgres_password = "postgres"
+postgres_database = "postgres"
+bitcoin_node_username = "devnet"
+bitcoin_node_password = "devnet"
+miner_mnemonic = "twice kind fence tip hidden..."
+miner_derivation_path = "m/44'/5757'/0'/0/0"
+faucet_mnemonic = "shadow private easily thought..."
+faucet_derivation_path = "m/44'/5757'/0'/0/0"
+
+[accounts.deployer]
+mnemonic = "twice kind fence tip hidden..."
+balance = 100_000_000_000_000
+
+[accounts.wallet_1]
+mnemonic = "sell invite acquire kitten..."
+balance = 10_000_000_000_000
+```
+
+These settings control:
+
+- **Network ports**: API, RPC, and explorer endpoints
+- **Account configuration**: Test wallets with STX balances
+- **Chain parameters**: Network-specific blockchain settings
+
+<Callout type="warn" title="Security Notice">
+Never commit mainnet private keys or mnemonics. Use environment variables for production credentials.
+</Callout>
+
+## Common issues
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="module-resolution">
+    <AccordionTrigger>Imports failing in tests</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        If you're encountering import errors in your tests, update your TypeScript configuration to use Vite's bundler resolution:
+
+        ```json tsconfig.json
+        {
+          "compilerOptions": {
+            "moduleResolution": "bundler", // Use bundler for Vite
+            "allowImportingTsExtensions": true
+          }
+        }
+        ```
+
+        This configuration ensures TypeScript understands Vite's module resolution strategy and allows importing `.ts` files directly.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="clarity-version">
+    <AccordionTrigger>Mismatched versions</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        All contracts in your project should use the same Clarity version and epoch to avoid compatibility issues:
+
+        ```toml Clarinet.toml
+        # ✅ Good - all contracts use same version
+        [contracts.token]
+        clarity_version = 3
+        epoch = 3.1
+
+        [contracts.pool]
+        clarity_version = 3
+        epoch = 3.1
+        ```
+
+        Mismatched versions can cause deployment failures and unexpected behavior. Always upgrade all contracts together when moving to a new Clarity version.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="test-isolation">
+    <AccordionTrigger>Tests interfering with each other</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        If tests are affecting each other's state, ensure proper isolation in your Vitest configuration:
+
+        ```js vitest.config.js
+        poolOptions: {
+          forks: { 
+            singleFork: true,  // Reuse process for efficiency
+            isolate: true      // Reset state between tests
+          }
+        }
+        ```
+
+        This configuration maintains test performance while ensuring each test starts with a clean state.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Next steps
+
+Now that you understand project structure:
+
+- Create your first project with the [quickstart guide](/tools/clarinet/quickstart)
+- Learn about [contract development](/tools/clarinet/project-development)
+- Explore [testing strategies](/tools/clarinet/testing-validation)

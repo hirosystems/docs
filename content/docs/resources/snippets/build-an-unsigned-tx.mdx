@@ -1,0 +1,144 @@
+---
+title: Build an unsigned transaction
+description: Create unsigned transactions for hardware wallets or multi-signature scenarios
+---
+
+```typescript
+import { getPublicKeyFromPrivate } from "@stacks/encryption";
+import { 
+  makeUnsignedSTXTokenTransfer,
+  makeUnsignedContractCall,
+  Cl,
+  AnchorMode,
+  PostConditionMode
+} from "@stacks/transactions";
+import { STACKS_TESTNET } from "@stacks/network";
+
+// Get public key from private key
+const privateKey = "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601";
+const publicKey = getPublicKeyFromPrivate(privateKey);
+
+// Build unsigned STX transfer
+const unsignedTx = await makeUnsignedSTXTokenTransfer({
+  recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+  amount: 1000000n, // 1 STX in micro-STX
+  fee: 200n,
+  nonce: 0n,
+  network: STACKS_TESTNET,
+  memo: "Test transfer",
+  publicKey,
+  anchorMode: AnchorMode.Any,
+  postConditionMode: PostConditionMode.Deny,
+});
+
+// Transaction is ready for external signing
+console.log("Unsigned transaction created:", unsignedTx.txid());
+```
+
+## Use cases
+
+- Hardware wallet integration (Ledger, Trezor)
+- Multi-signature wallet transactions
+- Offline transaction signing
+- Secure key management systems
+
+## Key concepts
+
+Unsigned transactions separate transaction creation from signing:
+
+- **Public key only**: No private key needed for creation
+- **External signing**: Sign with hardware wallet or secure enclave
+- **Serialization**: Can be transported and signed elsewhere
+
+### Unsigned contract call
+
+```typescript
+import { makeUnsignedContractCall } from "@stacks/transactions";
+
+const unsignedContractCall = await makeUnsignedContractCall({
+  contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+  contractName: "my-contract",
+  functionName: "transfer",
+  functionArgs: [
+    Cl.uint(100),
+    Cl.principal("ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5")
+  ],
+  fee: 1000n,
+  nonce: 1n,
+  network: STACKS_TESTNET,
+  publicKey,
+  anchorMode: AnchorMode.Any,
+});
+```
+
+## Signing unsigned transactions
+
+```typescript
+import { TransactionSigner, deserializeTransaction } from "@stacks/transactions";
+
+// Later, sign the transaction
+const serializedTx = unsignedTx.serialize();
+
+// Deserialize and sign
+const txToSign = deserializeTransaction(serializedTx);
+const signer = new TransactionSigner(txToSign);
+
+// Sign with private key (in practice, this would be done by hardware wallet)
+signer.signOrigin(privateKey);
+
+// Get the signed transaction
+const signedTx = signer.transaction;
+
+// Broadcast the signed transaction
+const broadcastResponse = await broadcastTransaction({
+  transaction: signedTx,
+  network: STACKS_TESTNET,
+});
+```
+
+## Hardware wallet example flow
+
+```typescript
+// 1. Create unsigned transaction
+const unsignedTx = await makeUnsignedSTXTokenTransfer({
+  recipient: recipientAddress,
+  amount: amount,
+  fee: fee,
+  network: STACKS_TESTNET,
+  publicKey: hardwareWalletPublicKey,
+});
+
+// 2. Serialize for transport
+const serialized = unsignedTx.serialize().toString('hex');
+
+// 3. Send to hardware wallet for signing
+// (Implementation depends on wallet SDK)
+
+// 4. Receive signed transaction back
+const signedTxHex = await hardwareWallet.signTransaction(serialized);
+
+// 5. Deserialize and broadcast
+const signedTx = deserializeTransaction(Buffer.from(signedTxHex, 'hex'));
+const result = await broadcastTransaction({ 
+  transaction: signedTx,
+  network: STACKS_TESTNET,
+});
+```
+
+
+
+<Callout title="Security note" type="info">
+Unsigned transactions are ideal for scenarios where private keys should never touch your application code, such as with hardware wallets or HSMs.
+</Callout>
+
+## Package installation
+
+```package-install
+@stacks/encryption @stacks/transactions @stacks/network
+```
+
+## Related snippets
+
+- [Transfer STX](/resources/snippets/transfer-stx)
+- [Create a sponsored transaction](/resources/snippets/create-a-sponsored-tx)
+- [Generate a secret key](/resources/snippets/generate-a-secret-key)

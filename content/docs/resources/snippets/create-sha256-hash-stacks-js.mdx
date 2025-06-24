@@ -1,0 +1,155 @@
+---
+title: Create SHA256 hash in Stacks.js
+description: Generate SHA-256 hashes that match Clarity's hashing output
+---
+
+```typescript
+import { sha256 } from "@noble/hashes/sha256";
+import { bytesToHex, hexToBytes, utf8ToBytes } from "@stacks/common";
+import { bufferCV, stringUtf8CV, serializeCV } from "@stacks/transactions";
+
+// Hash a string (matching Clarity's sha256 output)
+function hashString(text: string) {
+  const clarityValue = stringUtf8CV(text);
+  const serialized = serializeCV(clarityValue);
+  return bytesToHex(sha256(serialized));
+}
+
+// Hash hex data (matching Clarity's sha256 output)  
+function hashHexData(hexData: string) {
+  const clarityValue = bufferCV(hexToBytes(hexData));
+  const serialized = serializeCV(clarityValue);
+  return bytesToHex(sha256(serialized));
+}
+
+// Example usage
+const hash1 = hashString("Hello World");
+console.log("String hash:", hash1);
+
+const hash2 = hashHexData("0x1234567890abcdef");
+console.log("Hex hash:", hash2);
+```
+
+## Use cases
+
+- Creating deterministic identifiers
+- Verifying data integrity between on-chain and off-chain
+- Implementing commit-reveal schemes off-chain
+- Building merkle trees compatible with Clarity
+
+## Key concepts
+
+To match Clarity's SHA-256 output:
+
+1. **Convert to Clarity value**: Use appropriate CV type (`stringUtf8CV`, `bufferCV`, etc.)
+2. **Serialize**: Use `serializeCV` to match Clarity's encoding
+3. **Hash**: Apply SHA-256 to the serialized bytes
+
+### Hash different data types
+
+```typescript
+import { 
+  uintCV, 
+  principalCV, 
+  tupleCV,
+  listCV,
+  serializeCV 
+} from "@stacks/transactions";
+
+// Hash a number (matches Clarity)
+function hashNumber(num: number) {
+  const cv = uintCV(num);
+  return bytesToHex(sha256(serializeCV(cv)));
+}
+
+// Hash a principal address
+function hashPrincipal(address: string) {
+  const cv = principalCV(address);
+  return bytesToHex(sha256(serializeCV(cv)));
+}
+
+// Hash a tuple (matches Clarity)
+function hashTuple(data: Record<string, any>) {
+  const cv = tupleCV({
+    name: stringUtf8CV(data.name),
+    value: uintCV(data.value),
+  });
+  return bytesToHex(sha256(serializeCV(cv)));
+}
+
+// Examples
+console.log(hashNumber(42));
+console.log(hashPrincipal("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"));
+console.log(hashTuple({ name: "test", value: 100 }));
+```
+
+## Commit-reveal implementation
+
+```typescript
+// Off-chain: Create commitment
+function createCommitment(secret: string, nonce: number) {
+  const data = tupleCV({
+    secret: stringUtf8CV(secret),
+    nonce: uintCV(nonce),
+  });
+  return bytesToHex(sha256(serializeCV(data)));
+}
+
+// Generate commitment
+const secret = "my-secret-value";
+const nonce = Math.floor(Math.random() * 1000000);
+const commitment = createCommitment(secret, nonce);
+
+console.log("Commit this hash:", commitment);
+console.log("Save for reveal:", { secret, nonce });
+
+// Later: Verify commitment matches
+function verifyCommitment(
+  commitment: string, 
+  secret: string, 
+  nonce: number
+): boolean {
+  const calculated = createCommitment(secret, nonce);
+  return calculated === commitment;
+}
+```
+
+## Raw hashing (without Clarity encoding)
+
+```typescript
+// For non-Clarity compatible hashing
+function rawSha256(data: string | Uint8Array) {
+  const bytes = typeof data === 'string' 
+    ? utf8ToBytes(data) 
+    : data;
+  return bytesToHex(sha256(bytes));
+}
+
+// Direct hash - NOT compatible with Clarity
+const directHash = rawSha256("Hello World");
+
+// Clarity-compatible hash
+const clarityHash = hashString("Hello World");
+
+console.log("Direct SHA256:", directHash);
+console.log("Clarity SHA256:", clarityHash);
+// These will be different!
+```
+
+
+
+<Callout title="Compatibility note" type="info">
+Always use `serializeCV` when you need hashes to match between Stacks.js and Clarity. Direct hashing without serialization will produce different results.
+</Callout>
+
+## Package installation
+
+```package-install
+@noble/hashes @stacks/common @stacks/transactions
+```
+
+## Related snippets
+
+- [Create SHA256 hash (Clarity)](/resources/snippets/create-sha256-hash-clarity)
+- [Generate random number](/resources/snippets/generate-random-number)
+- [Convert string to principal](/resources/snippets/convert-string-to-principal)

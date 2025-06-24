@@ -1,0 +1,175 @@
+---
+title: Create a sponsored transaction
+description: Build transactions where a sponsor pays the fees on behalf of users
+---
+
+```typescript
+import { STACKS_TESTNET } from "@stacks/network";
+import { bytesToHex } from "@stacks/common";
+import {
+  broadcastTransaction,
+  deserializeTransaction,
+  makeContractCall,
+  sponsorTransaction,
+  BufferReader,
+  AnchorMode,
+  Cl,
+} from "@stacks/transactions";
+
+// Step 1: User creates the transaction with sponsored flag
+const userTxOptions = {
+  contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+  contractName: "my-contract",
+  functionName: "my-function",
+  functionArgs: [Cl.uint(123)],
+  fee: 0, // User doesn't pay fees
+  senderKey: "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+  network: STACKS_TESTNET,
+  sponsored: true, // Mark as sponsored
+  anchorMode: AnchorMode.Any,
+};
+
+const transaction = await makeContractCall(userTxOptions);
+const serializedTx = bytesToHex(transaction.serialize());
+
+// Step 2: Send serialized transaction to sponsor
+// (In practice, this would be sent to a sponsorship service)
+
+// Step 3: Sponsor signs and pays fees
+const sponsorKey = "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601";
+const deserializedTx = deserializeTransaction(serializedTx);
+const sponsoredTx = await sponsorTransaction({
+  transaction: deserializedTx,
+  sponsorPrivateKey: sponsorKey,
+  fee: 1000, // Sponsor pays the fee
+  sponsorNonce: 0,
+});
+
+// Step 4: Broadcast the sponsored transaction
+const broadcastResponse = await broadcastTransaction({
+  transaction: sponsoredTx,
+  network: STACKS_TESTNET,
+});
+
+console.log("Sponsored transaction ID:", broadcastResponse.txid);
+```
+
+## Use cases
+
+- Onboarding new users without STX for fees
+- Subsidizing transaction costs for dApp users
+- Enterprise applications paying for user transactions
+- Gaming applications with seamless user experience
+
+## Key concepts
+
+Sponsored transactions have two parties:
+
+- **User**: Creates and signs the transaction with `sponsored: true`
+- **Sponsor**: Pays the fees and broadcasts the transaction
+
+### Building a sponsorship service
+
+```typescript
+// Sponsorship service endpoint
+async function sponsorUserTransaction(serializedTx: string) {
+  // Deserialize user transaction
+  const userTx = deserializeTransaction(serializedTx);
+  
+  // Validate transaction (check whitelist, limits, etc.)
+  if (!isValidForSponsorship(userTx)) {
+    throw new Error("Transaction not eligible for sponsorship");
+  }
+  
+  // Get sponsor nonce
+  const sponsorAddress = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
+  const sponsorNonce = await getNonce(sponsorAddress);
+  
+  // Sponsor the transaction
+  const sponsoredTx = await sponsorTransaction({
+    transaction: userTx,
+    sponsorPrivateKey: process.env.SPONSOR_KEY,
+    fee: calculateDynamicFee(userTx),
+    sponsorNonce,
+  });
+  
+  // Broadcast
+  return broadcastTransaction({
+    transaction: sponsoredTx,
+    network: STACKS_TESTNET,
+  });
+}
+```
+
+### STX transfer with sponsorship
+
+```typescript
+import { makeUnsignedSTXTokenTransfer } from "@stacks/transactions";
+
+// User creates unsigned STX transfer
+const unsignedTransfer = await makeUnsignedSTXTokenTransfer({
+  recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+  amount: 1000000n,
+  fee: 0,
+  nonce: 0n,
+  network: STACKS_TESTNET,
+  sponsored: true,
+  publicKey: userPublicKey,
+});
+
+// User signs
+const userSignedTx = await signTransaction(unsignedTransfer, userPrivateKey);
+
+// Sponsor signs and pays
+const sponsoredTx = await sponsorTransaction({
+  transaction: userSignedTx,
+  sponsorPrivateKey: sponsorKey,
+  fee: 500,
+  sponsorNonce: 10,
+});
+```
+
+## Sponsorship patterns
+
+### Conditional sponsorship
+
+```typescript
+function shouldSponsor(tx: StacksTransaction): boolean {
+  // Only sponsor specific contracts
+  const allowedContracts = ["my-dapp", "my-token"];
+  if (!allowedContracts.includes(tx.contractName)) {
+    return false;
+  }
+  
+  // Limit sponsorship per user
+  const userTxCount = getUserTransactionCount(tx.senderAddress);
+  if (userTxCount > 10) {
+    return false;
+  }
+  
+  // Check transaction type
+  if (tx.functionName === "expensive-function") {
+    return false;
+  }
+  
+  return true;
+}
+```
+
+
+
+<Callout title="Security consideration" type="warn">
+Always validate sponsored transactions to prevent abuse. Implement rate limiting, whitelisting, and spending caps in production sponsorship services.
+</Callout>
+
+## Package installation
+
+```package-install
+@stacks/network @stacks/common @stacks/transactions
+```
+
+## Related snippets
+
+- [Build an unsigned transaction](/resources/snippets/build-an-unsigned-tx)
+- [Transfer STX](/resources/snippets/transfer-stx)
+- [Deploy a contract](/resources/snippets/deploy-a-contract)

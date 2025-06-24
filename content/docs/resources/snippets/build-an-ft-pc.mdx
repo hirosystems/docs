@@ -1,0 +1,91 @@
+---
+title: Build an FT post-condition
+description: Create post-conditions for fungible token transfers to ensure exact amounts are transferred as expected
+---
+
+```typescript
+import { Pc } from '@stacks/transactions';
+
+// Create a post-condition for fungible token transfers
+const postCondition = Pc.principal("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM")
+  .willSendGte(500) // Amount in token's smallest unit
+  .ft("ST1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE.token-ft", "my-token");
+
+// Use in transaction options
+const txOptions = {
+  // ... other transaction options
+  postConditions: [postCondition],
+  postConditionMode: PostConditionMode.Deny,
+};
+```
+
+## Use cases
+
+- Securing fungible token transfers with amount validation
+- Protecting users from unexpected token transfers in DeFi protocols
+- Ensuring token swaps happen with expected amounts
+
+## Key concepts
+
+The `Pc` builder for fungible tokens accepts:
+
+- `.ft()` - Takes two parameters:
+  - Contract address with asset name (e.g., `"contract.asset-name"`)
+  - Token name as defined in the contract
+
+### Post-condition comparison types
+
+```typescript
+// Greater than or equal
+const gtePC = Pc.principal(address).willSendGte(500).ft(contract, token);
+
+// Less than or equal
+const ltePC = Pc.principal(address).willSendLte(1000).ft(contract, token);
+
+// Exact amount
+const exactPC = Pc.principal(address).willSendEq(750).ft(contract, token);
+
+// Greater than
+const gtPC = Pc.principal(address).willSendGt(100).ft(contract, token);
+
+// Less than
+const ltPC = Pc.principal(address).willSendLt(2000).ft(contract, token);
+```
+
+## Complete example
+
+```typescript
+import {
+  AnchorMode,
+  FungibleConditionCode,
+  makeContractFungiblePostCondition,
+  makeStandardFungiblePostCondition,
+  Pc,
+  PostConditionMode,
+} from '@stacks/transactions';
+
+// Using the Pc builder
+const ftPostCondition = Pc.principal(senderAddress)
+  .willSendEq(1000)
+  .ft(contractAddress + '.sip010-token', 'wrapped-btc');
+
+// Alternative: Using the standard function
+const altPostCondition = makeStandardFungiblePostCondition(
+  senderAddress,
+  FungibleConditionCode.Equal,
+  1000n,
+  createAssetInfo(contractAddress, 'sip010-token', 'wrapped-btc')
+);
+```
+
+## Package installation
+
+```package-install
+@stacks/transactions
+```
+
+## Related snippets
+
+- [Transfer a SIP-10 token](/resources/snippets/transfer-a-sip10-token)
+- [Build a STX post-condition](/resources/snippets/build-a-stx-pc)
+- [Build an NFT post-condition](/resources/snippets/build-an-nft-pc)
