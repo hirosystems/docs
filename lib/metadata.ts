@@ -279,23 +279,6 @@ const stacksJsMetadata: Partial<Metadata> = {
   },
 };
 
-const stacksNodeRpcMetadata: Partial<Metadata> = {
-  title: "Stacks Node RPC API",
-  description: "Interact directly with Stacks nodes using the RPC API.",
-  openGraph: {
-    title: "Stacks Node RPC API",
-    description: "Interact directly with Stacks nodes using the RPC API.",
-    images: [
-      { url: "/images/stacks-node-rpc-og.jpg", width: 800, height: 600 },
-    ],
-  },
-  twitter: {
-    title: "Stacks Node RPC API",
-    description: "Interact directly with Stacks nodes using the RPC API.",
-    images: ["/images/stacks-node-rpc-og.jpg"],
-  },
-};
-
 const tokenMetadataApiMetadata: Partial<Metadata> = {
   title: "Token Metadata API",
   description: "Access and manage token metadata on the Stacks blockchain.",
@@ -361,26 +344,19 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
     return apiKeysMetadata;
   }
   if (path.startsWith("/stacks/hacks")) return hiroHacksMetadata;
-  if (path.startsWith("/stacks/chainhook")) return chainhookMetadata;
-  if (
-    path.startsWith("/stacks/clarinet") &&
-    !path.startsWith("/stacks/clarinet-js-sdk")
-  )
-    return clarinetMetadata;
-  if (path.startsWith("/stacks/clarinet-js-sdk")) return clarinetJsSdkMetadata;
-  if (path.startsWith("/cookbook")) return cookbookMetadata;
-  if (path.startsWith("/guides")) return guidesMetadata;
-  if (path.startsWith("/bitcoin/ordinals/api")) return ordinalsApiMetadata;
-  if (path.startsWith("/stacks/platform-api")) return platformApiMetadata;
-  if (path.startsWith("/bitcoin/runes/api")) return runesApiMetadata;
-  if (path.startsWith("/stacks/signer-metrics-api"))
-    return signerMetricsApiMetadata;
-  if (path.startsWith("/stacks/api")) return stacksApiMetadata;
-  if (path.startsWith("/stacks/connect")) return stacksConnectMetadata;
-  if (path.startsWith("/stacks/stacks.js")) return stacksJsMetadata;
-  if (path.startsWith("/stacks/rpc-api")) return stacksNodeRpcMetadata;
-  if (path.startsWith("/stacks/token-metadata-api"))
-    return tokenMetadataApiMetadata;
-  if (path.startsWith("/bitcoin/indexer")) return bitcoinIndexerMetadata;
+  if (path.startsWith("/tools/chainhook")) return chainhookMetadata;
+  if (path.startsWith("/tools/clarinet")) return clarinetMetadata;
+  if (path.startsWith("/tools/clarinet")) return clarinetJsSdkMetadata;
+  if (path.startsWith("/resources/snippets")) return cookbookMetadata;
+  if (path.startsWith("/resources/guides")) return guidesMetadata;
+  if (path.startsWith("/apis/ordinals")) return ordinalsApiMetadata;
+  if (path.startsWith("/apis/platform")) return platformApiMetadata;
+  if (path.startsWith("/apis/runes")) return runesApiMetadata;
+  if (path.startsWith("/apis/signer-metrics")) return signerMetricsApiMetadata;
+  if (path.startsWith("/apis/stacks-blockchain")) return stacksApiMetadata;
+  if (path.startsWith("/reference/stacks.js")) return stacksJsMetadata;
+  if (path.startsWith("/reference/stacks.js")) return stacksConnectMetadata;
+  if (path.startsWith("/apis/token-metadata")) return tokenMetadataApiMetadata;
+  if (path.startsWith("/tools/bitcoin-indexer")) return bitcoinIndexerMetadata;
   return {};
 }
