@@ -1,36 +1,87 @@
-import * as fs from "node:fs/promises";
-import path from "node:path";
-import { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { readFile, readdir } from "fs/promises";
+import { join } from "path";
+import { existsSync } from "fs";
 
-// Base directory for documentation content (same as in the llms API route)
-const DOCS_CONTENT_PATH = path.join(process.cwd(), "content/docs");
+async function findFileWithParentheses(
+  basePath: string,
+  segments: string[]
+): Promise<string | null> {
+  if (segments.length === 0) return null;
+
+  const [current, ...rest] = segments;
+  const currentPath = join(basePath, current);
+
+  if (rest.length === 0) {
+    if (existsSync(currentPath)) {
+      return currentPath;
+    }
+  } else if (existsSync(currentPath)) {
+    const found = await findFileWithParentheses(currentPath, rest);
+    if (found) return found;
+  }
+
+  try {
+    const entries = await readdir(basePath, { withFileTypes: true });
+    for (const entry of entries) {
+      if (
+        entry.isDirectory() &&
+        entry.name.startsWith("(") &&
+        entry.name.endsWith(")")
+      ) {
+        const parenthesesPath = join(basePath, entry.name);
+
+        if (rest.length === 0) {
+          const filePath = join(parenthesesPath, current);
+          if (existsSync(filePath)) {
+            return filePath;
+          }
+        } else {
+          const found = await findFileWithParentheses(parenthesesPath, [
+            current,
+            ...rest,
+          ]);
+          if (found) return found;
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return null;
+}
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string[] }> }
 ) {
-  const { slug } = await params;
-
-  if (slug.length === 0) {
-    return new Response("Not Found", { status: 404 });
-  }
-
-  const filePath = path.join(DOCS_CONTENT_PATH, ...slug);
-
   try {
-    await fs.access(filePath);
+    const { slug = [] } = await params;
+    const basePath = join(process.cwd(), "content/docs");
 
-    const fileContent = await fs.readFile(filePath, "utf-8");
-
-    return new Response(fileContent, {
-      status: 200,
-      headers: { "Content-Type": "text/markdown; charset=utf-8" },
-    });
-  } catch (error: any) {
-    if (error.code === "ENOENT") {
-      return new Response("Not Found", { status: 404 });
-    } else {
-      return new Response("Internal Server Error", { status: 500 });
+    const directPath = join(basePath, ...slug);
+    if (existsSync(directPath)) {
+      const content = await readFile(directPath, "utf-8");
+      return new NextResponse(content, {
+        headers: {
+          "Content-Type": "text/markdown; charset=utf-8",
+        },
+      });
     }
+
+    const foundPath = await findFileWithParentheses(basePath, slug);
+    if (foundPath) {
+      const content = await readFile(foundPath, "utf-8");
+      return new NextResponse(content, {
+        headers: {
+          "Content-Type": "text/markdown; charset=utf-8",
+        },
+      });
+    }
+
+    return new NextResponse("File not found", { status: 404 });
+  } catch (error) {
+    return new NextResponse("File not found", { status: 404 });
   }
 }
