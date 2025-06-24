@@ -3,7 +3,11 @@ import {
   defineDocs,
   frontmatterSchema,
 } from "fumadocs-mdx/config";
-import { remarkCodeHike, recmaCodeHike, CodeHikeConfig } from "codehike/mdx";
+import {
+  remarkCodeHike,
+  recmaCodeHike,
+  type CodeHikeConfig,
+} from "codehike/mdx";
 import remarkDirective from "remark-directive";
 import { remarkCustomDirectives } from "./lib/remark-custom-directives";
 import { z } from "zod";
@@ -20,6 +24,7 @@ export const docs = defineDocs({
       tags: z.array(z.string()).optional(),
       labels: z.array(z.string()).optional(),
       type: z.string().optional(),
+      isRpc: z.boolean().optional(),
     }),
   },
   meta: {

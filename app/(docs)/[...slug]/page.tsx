@@ -59,7 +59,17 @@ export default async function Page(props: {
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
       <div className="flex justify-between items-start gap-4">
-        <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
+        <div className="flex items-center gap-3">
+          <DocsTitle className="mt-0">{page.data.title}</DocsTitle>
+          {page.data.isRpc && (
+            <Badge
+              variant="outline"
+              className="cursor-pointer font-normal text-xs uppercase bg-orange-500 text-neutral-950 dark:bg-brand-orange border-none"
+            >
+              RPC node
+            </Badge>
+          )}
+        </div>
         {page.data.llm !== false && <LLMShare content={LLMContent} />}
       </div>
       <DocsDescription>{page.data.description}</DocsDescription>
