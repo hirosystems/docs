@@ -1,9 +1,14 @@
 "use client";
-import { AnnotationHandler } from "codehike/code";
+import type { AnnotationHandler } from "codehike/code";
 import React from "react";
 
-export const OutputBlock: AnnotationHandler["Block"] = ({ children }) => {
-  const [hidden, setHidden] = React.useState(true);
+export const OutputBlock: AnnotationHandler["Block"] = ({
+  children,
+  annotation,
+  ...props
+}) => {
+  const hideOutput = (props as any).hideOutput;
+  const [hidden, setHidden] = React.useState(hideOutput ?? false);
   return hidden ? (
     <div className="px-1">
       <button

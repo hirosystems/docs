@@ -11,7 +11,7 @@ export const CommandBlock: AnnotationHandler["Block"] = ({
   return (
     <div className="px-1 flex ch-terminal-line" data-active={active}>
       <span className="select-none text-ch-line-number shrink-0">$ </span>
-      <span className="ch-terminal-content break-all">{children}</span>
+      <span className="ch-terminal-content whitespace-pre">{children}</span>
       <button
         aria-label="Copy command"
         className="ch-terminal-button select-none self-start"
