@@ -10,7 +10,7 @@ import { cva } from "class-variance-authority";
 import { usePathname } from "fumadocs-core/framework";
 import { Button } from "../ui/button";
 import { ThemeToggle } from "../layout/theme-toggle";
-import { ArrowUpRight, SidebarIcon, ChevronRight } from "lucide-react";
+import { ArrowUpRight, SidebarIcon, ChevronRight, ChevronDown } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -271,6 +271,8 @@ function SidebarItem({
   const shouldExpand =
     item.type === "folder" &&
     (isPathInFolder(item, pathname) || (item as any).defaultOpen === true);
+  
+  const [isOpen, setIsOpen] = React.useState(shouldExpand);
 
   if (item.type === "page") {
     const sidebarTitle = (item as any).data?.sidebarTitle;
@@ -327,6 +329,7 @@ function SidebarItem({
         collapsible
         defaultValue={shouldExpand ? accordionValue : undefined}
         className="space-y-0 bg-transparent border-none"
+        onValueChange={(value) => setIsOpen(value === accordionValue)}
       >
         <AccordionItem value={accordionValue} className="border-0">
           <AccordionTrigger className="p-0 hover:no-underline [&>svg]:hidden h-auto">
@@ -357,7 +360,11 @@ function SidebarItem({
               </div>
               <div className="flex items-center gap-2">
                 {item.index && <PageBadges item={item.index} />}
-                <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-90" />
+                {isOpen ? (
+                  <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+                ) : (
+                  <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+                )}
               </div>
             </div>
           </AccordionTrigger>
