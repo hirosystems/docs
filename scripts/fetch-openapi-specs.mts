@@ -61,10 +61,10 @@ async function generatePlatformApiSpec(): Promise<void> {
     // Check if file already exists (skip if it does)
     try {
       await fs.access(platformApiPath);
-      console.log("✅ platform-api.json already exists, skipping generation");
       return;
     } catch {
       // File doesn't exist, generate it
+      console.log("Generating platform-api.json...");
     }
 
     // Hardcoded Platform API spec - copied from existing platform-api.json
@@ -974,7 +974,6 @@ async function generatePlatformApiSpec(): Promise<void> {
       platformApiPath,
       JSON.stringify(platformApiSpec, null, 2)
     );
-    console.log("✅ Successfully generated platform-api.json");
   } catch (error) {
     console.error("❌ Failed to generate platform-api.json:", error);
   }
@@ -982,8 +981,6 @@ async function generatePlatformApiSpec(): Promise<void> {
 
 async function fetchApiSpec(spec: ApiSpec): Promise<void> {
   try {
-    console.log(`Fetching ${spec.name} from ${spec.url}...`);
-
     const response = await fetch(spec.url);
 
     if (!response.ok) {
@@ -1009,8 +1006,6 @@ async function fetchApiSpec(spec: ApiSpec): Promise<void> {
     const filepath = path.join(openApiDir, filename);
 
     await fs.writeFile(filepath, JSON.stringify(jsonData, null, 2));
-
-    console.log(`✅ Successfully saved ${filename}`);
   } catch (error) {
     console.error(`❌ Failed to fetch ${spec.name}:`, error);
   }
@@ -1018,12 +1013,9 @@ async function fetchApiSpec(spec: ApiSpec): Promise<void> {
 
 async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
   try {
-    console.log(`Fetching ${spec.name} from GitHub repo ${spec.repo}...`);
-
     // Construct the raw GitHub URL
     const rawUrl = `https://raw.githubusercontent.com/${spec.repo}/${spec.branch}/${spec.filePath}`;
 
-    console.log(`  → Downloading YAML from: ${rawUrl}`);
     const response = await fetch(rawUrl);
 
     if (!response.ok) {
@@ -1039,8 +1031,6 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
     } catch (parseError) {
       throw new Error(`Invalid YAML from ${rawUrl}: ${parseError}`);
     }
-
-    console.log(`  → Bundling and resolving $ref dependencies...`);
 
     // Use swagger-parser to dereference and bundle the spec
     // Pass the raw URL as the base URL so $ref resolution works correctly
@@ -1058,15 +1048,13 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
     const filepath = path.join(openApiDir, filename);
 
     await fs.writeFile(filepath, JSON.stringify(bundledSpec, null, 2));
-
-    console.log(`✅ Successfully saved ${filename} (bundled from YAML)`);
   } catch (error) {
     console.error(`❌ Failed to fetch ${spec.name}:`, error);
   }
 }
 
 async function fetchAllSpecs(): Promise<void> {
-  console.log("Starting to fetch OpenAPI specifications...\n");
+  console.log("Fetching OpenAPI specs...");
 
   // Generate platform API spec and fetch other specs concurrently
   const allPromises = [
@@ -1077,7 +1065,7 @@ async function fetchAllSpecs(): Promise<void> {
 
   await Promise.all(allPromises);
 
-  console.log("\n🎉 Finished fetching all OpenAPI specifications!");
+  console.log("✔️ Generated OpenAPI specs");
 }
 
 // Run the script if this file is executed directly
