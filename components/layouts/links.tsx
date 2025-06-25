@@ -230,16 +230,23 @@ export function renderNavItem(item: LinkItemType): ReactNode {
         <NavigationMenuItem
           key={"text" in item ? String(item.text) : undefined}
         >
-          <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1">
-            {item.url ? (
-              <Link href={item.url} className="flex items-center gap-1">
-                {item.text}
-              </Link>
-            ) : (
-              item.text
-            )}
-            <ChevronDown className="relative h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </NavigationMenuTrigger>
+          {item.url ? (
+            // When item has URL, use asChild to avoid button>a nesting
+            <NavigationMenuTrigger asChild>
+              <div className="font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer">
+                <Link href={item.url} className="flex items-center gap-1">
+                  {item.text}
+                </Link>
+                <ChevronDown className="relative h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </div>
+            </NavigationMenuTrigger>
+          ) : (
+            // When no URL, use default button behavior
+            <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1">
+              {item.text}
+              <ChevronDown className="relative h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+            </NavigationMenuTrigger>
+          )}
           <NavigationMenuContent className="mt-12 bg-background border rounded-lg shadow-lg w-auto left-auto right-auto">
             {/* DEMO: Grid layout with banner
             <ul className="grid gap-3 p-4 lg:grid-cols-[.5fr_1fr] w-max">
