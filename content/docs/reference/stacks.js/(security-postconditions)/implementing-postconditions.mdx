@@ -1,0 +1,568 @@
+---
+title: Implementing post-conditions
+description: Add post-conditions to protect your transactions
+---
+
+## Overview
+
+Implementing post-conditions requires understanding your transaction's expected behavior and translating that into constraints. This guide walks through practical implementation patterns for different scenarios, from simple transfers to complex DeFi operations.
+
+## Basic implementation
+
+Start with a simple STX transfer with post-conditions:
+
+```typescript
+import { 
+  makeSTXTokenTransfer,
+  makeStandardSTXPostCondition,
+  FungibleConditionCode,
+  AnchorMode 
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+
+async function safeSTXTransfer() {
+  const amount = 1000000; // 1 STX
+  const sender = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+  const recipient = 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG';
+  
+  // Create post-condition: sender sends exactly 1 STX
+  const postConditions = [
+    makeStandardSTXPostCondition(
+      sender,
+      FungibleConditionCode.Equal,
+      amount
+    ),
+  ];
+  
+  const txOptions = {
+    recipient,
+    amount,
+    senderKey: privateKey,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+    postConditions, // Add post-conditions
+    memo: 'Safe transfer with post-conditions',
+  };
+  
+  const transaction = await makeSTXTokenTransfer(txOptions);
+  return broadcastTransaction(transaction, network);
+}
+```
+
+## Token transfer protection
+
+Implement post-conditions for fungible token transfers:
+
+```typescript
+import { 
+  makeContractCall,
+  makeStandardFungiblePostCondition,
+  createAssetInfo,
+  standardPrincipalCV,
+  uintCV 
+} from '@stacks/transactions';
+
+async function safeTokenTransfer() {
+  const tokenContract = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+  const tokenName = 'usdc-token';
+  const tokenId = 'usdc';
+  const amount = 100000000; // 100 USDC (6 decimals)
+  
+  // Define the token asset
+  const assetInfo = createAssetInfo(
+    tokenContract,
+    tokenName,
+    tokenId
+  );
+  
+  // Create post-conditions
+  const postConditions = [
+    // Sender sends exactly 100 USDC
+    makeStandardFungiblePostCondition(
+      senderAddress,
+      FungibleConditionCode.Equal,
+      amount,
+      assetInfo
+    ),
+    // Optional: Ensure recipient receives
+    makeStandardFungiblePostCondition(
+      recipientAddress,
+      FungibleConditionCode.Equal,
+      -amount, // Negative for receiving
+      assetInfo
+    ),
+  ];
+  
+  const txOptions = {
+    contractAddress: tokenContract,
+    contractName: tokenName,
+    functionName: 'transfer',
+    functionArgs: [
+      standardPrincipalCV(recipientAddress),
+      uintCV(amount),
+    ],
+    postConditions,
+    senderKey: privateKey,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  return makeContractCall(txOptions);
+}
+```
+
+## NFT transfer constraints
+
+Protect NFT transfers with specific conditions:
+
+```typescript
+import { 
+  makeContractCall,
+  makeStandardNonFungiblePostCondition,
+  NonFungibleConditionCode,
+  bufferCV,
+  standardPrincipalCV 
+} from '@stacks/transactions';
+
+async function safeNFTTransfer(nftId: string) {
+  const nftContract = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+  const nftName = 'cool-nfts';
+  const nftAssetName = 'nft';
+  
+  const nftAsset = createAssetInfo(
+    nftContract,
+    nftName,
+    nftAssetName
+  );
+  
+  // Create post-conditions for NFT
+  const postConditions = [
+    // Sender must send this specific NFT
+    makeStandardNonFungiblePostCondition(
+      senderAddress,
+      NonFungibleConditionCode.Sends,
+      nftAsset,
+      bufferCV(Buffer.from(nftId))
+    ),
+    // Ensure sender doesn't send other NFTs
+    makeStandardNonFungiblePostCondition(
+      senderAddress,
+      NonFungibleConditionCode.DoesNotSend,
+      nftAsset,
+      bufferCV(Buffer.from('rare-nft-001'))
+    ),
+  ];
+  
+  const txOptions = {
+    contractAddress: nftContract,
+    contractName: nftName,
+    functionName: 'transfer',
+    functionArgs: [
+      uintCV(parseInt(nftId)),
+      standardPrincipalCV(senderAddress),
+      standardPrincipalCV(recipientAddress),
+    ],
+    postConditions,
+    senderKey: privateKey,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  return makeContractCall(txOptions);
+}
+```
+
+## Complex DeFi operations
+
+Implement post-conditions for multi-asset swaps:
+
+```typescript
+interface SwapParams {
+  tokenIn: { contract: string; name: string; id: string };
+  tokenOut: { contract: string; name: string; id: string };
+  amountIn: number;
+  minAmountOut: number;
+}
+
+async function safeTokenSwap(params: SwapParams) {
+  const { tokenIn, tokenOut, amountIn, minAmountOut } = params;
+  
+  // Create asset info for both tokens
+  const tokenInAsset = createAssetInfo(
+    tokenIn.contract,
+    tokenIn.name,
+    tokenIn.id
+  );
+  
+  const tokenOutAsset = createAssetInfo(
+    tokenOut.contract,
+    tokenOut.name,
+    tokenOut.id
+  );
+  
+  // Build comprehensive post-conditions
+  const postConditions = [
+    // User sends exactly amountIn of tokenIn
+    makeStandardFungiblePostCondition(
+      userAddress,
+      FungibleConditionCode.Equal,
+      amountIn,
+      tokenInAsset
+    ),
+    // DEX contract receives tokenIn
+    makeContractFungiblePostCondition(
+      dexContract,
+      'dex-v1',
+      FungibleConditionCode.Equal,
+      -amountIn,
+      tokenInAsset
+    ),
+    // DEX sends at least minAmountOut of tokenOut
+    makeContractFungiblePostCondition(
+      dexContract,
+      'dex-v1',
+      FungibleConditionCode.GreaterEqual,
+      minAmountOut,
+      tokenOutAsset
+    ),
+    // User receives at least minAmountOut
+    makeStandardFungiblePostCondition(
+      userAddress,
+      FungibleConditionCode.GreaterEqual,
+      -minAmountOut,
+      tokenOutAsset
+    ),
+  ];
+  
+  const txOptions = {
+    contractAddress: dexContract,
+    contractName: 'dex-v1',
+    functionName: 'swap-tokens',
+    functionArgs: [
+      contractPrincipalCV(tokenIn.contract, tokenIn.name),
+      contractPrincipalCV(tokenOut.contract, tokenOut.name),
+      uintCV(amountIn),
+      uintCV(minAmountOut),
+    ],
+    postConditions,
+    postConditionMode: PostConditionMode.Deny, // Strict mode
+    senderKey: privateKey,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  return makeContractCall(txOptions);
+}
+```
+
+## Dynamic post-conditions
+
+Build post-conditions based on runtime values:
+
+```typescript
+async function buildDynamicPostConditions(
+  operation: 'buy' | 'sell',
+  amount: number
+) {
+  const postConditions = [];
+  
+  if (operation === 'buy') {
+    // Buying with STX
+    const price = await getTokenPrice();
+    const stxAmount = amount * price;
+    
+    postConditions.push(
+      makeStandardSTXPostCondition(
+        userAddress,
+        FungibleConditionCode.Equal,
+        stxAmount
+      )
+    );
+    
+    postConditions.push(
+      makeStandardFungiblePostCondition(
+        userAddress,
+        FungibleConditionCode.Equal,
+        -amount, // Receiving tokens
+        tokenAsset
+      )
+    );
+  } else {
+    // Selling for STX
+    const price = await getTokenPrice();
+    const stxAmount = amount * price;
+    
+    postConditions.push(
+      makeStandardFungiblePostCondition(
+        userAddress,
+        FungibleConditionCode.Equal,
+        amount, // Sending tokens
+        tokenAsset
+      )
+    );
+    
+    postConditions.push(
+      makeStandardSTXPostCondition(
+        userAddress,
+        FungibleConditionCode.GreaterEqual,
+        -stxAmount, // Receiving STX
+      )
+    );
+  }
+  
+  return postConditions;
+}
+```
+
+## Conditional post-conditions
+
+Add post-conditions based on contract state:
+
+```typescript
+async function conditionalPostConditions() {
+  // Check contract state first
+  const isUpgraded = await callReadOnlyFunction({
+    contractAddress,
+    contractName,
+    functionName: 'is-upgraded',
+    functionArgs: [],
+    senderAddress,
+  });
+  
+  const postConditions = [];
+  
+  if (cvToValue(isUpgraded)) {
+    // New contract has different fee structure
+    postConditions.push(
+      makeContractSTXPostCondition(
+        contractAddress,
+        contractName,
+        FungibleConditionCode.LessEqual,
+        10000 // Max 0.01 STX fee
+      )
+    );
+  } else {
+    // Old contract has no fees
+    postConditions.push(
+      makeContractSTXPostCondition(
+        contractAddress,
+        contractName,
+        FungibleConditionCode.Equal,
+        0 // No fees
+      )
+    );
+  }
+  
+  return postConditions;
+}
+```
+
+## Post-condition builder pattern
+
+Create reusable post-condition builders:
+
+```typescript
+class PostConditionBuilder {
+  private conditions: PostCondition[] = [];
+  
+  addSTXTransfer(
+    from: string,
+    amount: number,
+    code: FungibleConditionCode = FungibleConditionCode.Equal
+  ): this {
+    this.conditions.push(
+      makeStandardSTXPostCondition(from, code, amount)
+    );
+    return this;
+  }
+  
+  addTokenTransfer(
+    from: string,
+    amount: number,
+    asset: AssetInfo,
+    code: FungibleConditionCode = FungibleConditionCode.Equal
+  ): this {
+    this.conditions.push(
+      makeStandardFungiblePostCondition(from, code, amount, asset)
+    );
+    return this;
+  }
+  
+  addNFTTransfer(
+    from: string,
+    nftId: BufferCV,
+    asset: AssetInfo,
+    mustSend: boolean = true
+  ): this {
+    this.conditions.push(
+      makeStandardNonFungiblePostCondition(
+        from,
+        mustSend ? NonFungibleConditionCode.Sends : NonFungibleConditionCode.DoesNotSend,
+        asset,
+        nftId
+      )
+    );
+    return this;
+  }
+  
+  addContractCondition(
+    contract: string,
+    contractName: string,
+    conditionFn: (contract: string, name: string) => PostCondition
+  ): this {
+    this.conditions.push(conditionFn(contract, contractName));
+    return this;
+  }
+  
+  build(): PostCondition[] {
+    return this.conditions;
+  }
+}
+
+// Usage
+const conditions = new PostConditionBuilder()
+  .addSTXTransfer(sender, 1000000)
+  .addTokenTransfer(sender, 100, tokenAsset)
+  .addNFTTransfer(sender, nftId, nftAsset)
+  .build();
+```
+
+## Testing post-conditions
+
+Write tests to verify post-conditions work correctly:
+
+```typescript
+import { describe, it, expect } from 'vitest';
+
+describe('Post-conditions', () => {
+  it('should create correct STX post-condition', () => {
+    const amount = 1000000;
+    const condition = makeStandardSTXPostCondition(
+      senderAddress,
+      FungibleConditionCode.Equal,
+      amount
+    );
+    
+    expect(condition.conditionType).toBe(ConditionType.STX);
+    expect(condition.conditionCode).toBe(FungibleConditionCode.Equal);
+    expect(condition.amount.toString()).toBe(amount.toString());
+  });
+  
+  it('should protect token swap', async () => {
+    const postConditions = createSwapPostConditions(
+      userAddress,
+      tokenA,
+      tokenB,
+      1000,
+      900 // 10% slippage
+    );
+    
+    // Verify correct number of conditions
+    expect(postConditions).toHaveLength(2);
+    
+    // Verify token A send condition
+    expect(postConditions[0].conditionCode).toBe(FungibleConditionCode.Equal);
+    expect(postConditions[0].amount.toString()).toBe('1000');
+    
+    // Verify token B receive condition
+    expect(postConditions[1].conditionCode).toBe(FungibleConditionCode.GreaterEqual);
+    expect(postConditions[1].amount.toString()).toBe('900');
+  });
+});
+```
+
+## Error recovery
+
+Handle post-condition failures gracefully:
+
+```typescript
+async function executeWithFallback(
+  primaryConditions: PostCondition[],
+  fallbackConditions: PostCondition[]
+) {
+  try {
+    // Try with strict conditions first
+    const tx = await makeContractCall({
+      // ... transaction options
+      postConditions: primaryConditions,
+      postConditionMode: PostConditionMode.Deny,
+    });
+    
+    return await broadcastTransaction(tx, network);
+  } catch (error: any) {
+    if (error.message.includes('PostConditionFailed')) {
+      console.log('Primary conditions failed, trying fallback...');
+      
+      // Try with relaxed conditions
+      const fallbackTx = await makeContractCall({
+        // ... same transaction options
+        postConditions: fallbackConditions,
+        postConditionMode: PostConditionMode.Allow,
+      });
+      
+      return await broadcastTransaction(fallbackTx, network);
+    }
+    throw error;
+  }
+}
+```
+
+## Best practices
+
+- **Test in strict mode first**: Use `PostConditionMode.Deny` during development
+- **Be precise**: Use `Equal` when amounts are known exactly
+- **Consider all parties**: Add conditions for sender, recipient, and contracts
+- **Handle edge cases**: Account for fees, minimum amounts, and slippage
+- **Document conditions**: Explain why each condition exists
+
+## Common implementation mistakes
+
+**Forgetting contract conditions**
+
+```typescript
+// Bad: Only user conditions
+const conditions = [
+  makeStandardSTXPostCondition(user, FungibleConditionCode.Equal, 1000000),
+];
+
+// Good: Include contract behavior
+const conditions = [
+  makeStandardSTXPostCondition(user, FungibleConditionCode.Equal, 1000000),
+  makeContractSTXPostCondition(
+    contractAddress,
+    contractName,
+    FungibleConditionCode.Equal,
+    -1000000 // Contract receives
+  ),
+];
+```
+
+**Wrong condition direction**
+
+```typescript
+// Bad: Positive amount for receiving
+makeStandardSTXPostCondition(recipient, FungibleConditionCode.Equal, 1000000);
+
+// Good: Negative amount for receiving
+makeStandardSTXPostCondition(recipient, FungibleConditionCode.Equal, -1000000);
+```
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/security-postconditions/security-best-practices"
+    title="Security best practices"
+    description="Learn security patterns for Stacks apps"
+  />
+  <Card
+    href="/reference/stacks.js/security-postconditions/common-patterns"
+    title="Common patterns"
+    description="Reusable post-condition patterns"
+  />
+  <Card
+    href="/reference/stacks.js/transactions-contracts/contract-calls"
+    title="Contract calls"
+    description="Apply post-conditions to contract calls"
+  />
+</Cards>

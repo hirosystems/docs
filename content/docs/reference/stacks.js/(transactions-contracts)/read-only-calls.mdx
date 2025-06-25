@@ -1,0 +1,437 @@
+---
+title: Read-only calls
+description: Query smart contract state without creating transactions
+---
+
+## Overview
+
+Read-only function calls allow you to query data from smart contracts without creating a transaction. These calls are free, instant, and don't require wallet interaction. They're perfect for fetching contract state, checking balances, or validating conditions before transactions.
+
+## Basic read-only call
+
+Call a read-only function to get contract data:
+
+```typescript
+import { callReadOnlyFunction, cvToValue } from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+
+async function getContractData() {
+  const network = new StacksTestnet();
+  
+  const result = await callReadOnlyFunction({
+    network,
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'my-contract',
+    functionName: 'get-balance',
+    functionArgs: [],
+    senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  });
+  
+  // Convert Clarity value to JavaScript
+  const balance = cvToValue(result);
+  console.log('Balance:', balance);
+}
+```
+
+## Passing function arguments
+
+Most read-only functions require arguments. Use Clarity value builders:
+
+```typescript
+import { 
+  callReadOnlyFunction,
+  standardPrincipalCV,
+  uintCV,
+  stringUtf8CV,
+  bufferCV
+} from '@stacks/transactions';
+
+async function checkUserPermission() {
+  const functionArgs = [
+    standardPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+    stringUtf8CV('admin'),
+  ];
+  
+  const result = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+    contractName: 'access-control',
+    functionName: 'has-role',
+    functionArgs,
+    senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  });
+  
+  const hasRole = cvToValue(result); // boolean
+  console.log('Has admin role:', hasRole);
+}
+```
+
+## Handling complex return types
+
+Read-only functions can return complex Clarity types:
+
+```typescript
+import { 
+  callReadOnlyFunction,
+  cvToJSON,
+  ResponseCV,
+  TupleCV
+} from '@stacks/transactions';
+
+async function getTokenInfo() {
+  const result = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'sip-010-token',
+    functionName: 'get-token-info',
+    functionArgs: [],
+    senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  });
+  
+  // Handle response types (ok/err)
+  if (result.type === 'response-ok') {
+    const tokenInfo = cvToJSON(result.value);
+    console.log('Token info:', tokenInfo);
+    // {
+    //   name: "My Token",
+    //   symbol: "MTK",
+    //   decimals: 6,
+    //   totalSupply: "1000000000000"
+    // }
+  } else {
+    console.error('Error:', cvToValue(result.value));
+  }
+}
+```
+
+## Type-safe read-only calls
+
+Create type-safe wrappers for your contract calls:
+
+```typescript
+interface TokenInfo {
+  name: string;
+  symbol: string;
+  decimals: number;
+  totalSupply: bigint;
+}
+
+async function getTypedTokenInfo(): Promise<TokenInfo> {
+  const result = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'token',
+    functionName: 'get-token-info',
+    functionArgs: [],
+    senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  });
+  
+  if (result.type !== 'response-ok') {
+    throw new Error('Failed to get token info');
+  }
+  
+  const data = result.value as TupleCV;
+  
+  return {
+    name: cvToValue(data.data.name),
+    symbol: cvToValue(data.data.symbol),
+    decimals: cvToValue(data.data.decimals),
+    totalSupply: BigInt(cvToValue(data.data['total-supply'])),
+  };
+}
+```
+
+## Batch read-only calls
+
+Efficiently fetch multiple values:
+
+```typescript
+async function batchReadCalls() {
+  const addresses = [
+    'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+    'ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC',
+  ];
+  
+  // Parallel calls for better performance
+  const balancePromises = addresses.map(address => 
+    callReadOnlyFunction({
+      network: new StacksTestnet(),
+      contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+      contractName: 'token',
+      functionName: 'get-balance',
+      functionArgs: [standardPrincipalCV(address)],
+      senderAddress: address,
+    })
+  );
+  
+  const results = await Promise.all(balancePromises);
+  
+  return addresses.map((address, i) => ({
+    address,
+    balance: cvToValue(results[i]),
+  }));
+}
+```
+
+## Error handling
+
+Handle various error scenarios:
+
+```typescript
+async function safeReadOnlyCall() {
+  try {
+    const result = await callReadOnlyFunction({
+      network: new StacksTestnet(),
+      contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+      contractName: 'my-contract',
+      functionName: 'get-data',
+      functionArgs: [],
+      senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    });
+    
+    // Check for runtime errors
+    if (result.type === 'response-err') {
+      const errorCode = cvToValue(result.value);
+      throw new Error(`Contract error: ${errorCode}`);
+    }
+    
+    return cvToValue(result);
+  } catch (error: any) {
+    if (error.message.includes('Contract not found')) {
+      console.error('Contract does not exist');
+    } else if (error.message.includes('Function not found')) {
+      console.error('Function does not exist in contract');
+    } else if (error.message.includes('Argument count mismatch')) {
+      console.error('Wrong number of arguments');
+    }
+    throw error;
+  }
+}
+```
+
+## Map and list operations
+
+Query map entries and list elements:
+
+```typescript
+// Query map entry
+async function getMapEntry() {
+  const key = tupleCV({
+    sender: standardPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+    recipient: standardPrincipalCV('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'),
+  });
+  
+  const result = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'allowances',
+    functionName: 'get-allowance',
+    functionArgs: [key],
+    senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  });
+  
+  const allowance = cvToValue(result);
+  console.log('Allowance:', allowance);
+}
+
+// Query list length
+async function getListLength() {
+  const result = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'registry',
+    functionName: 'get-registered-count',
+    functionArgs: [],
+    senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  });
+  
+  return cvToValue(result);
+}
+```
+
+## Contract state validation
+
+Use read-only calls to validate state before transactions:
+
+```typescript
+async function validateTransfer(
+  sender: string,
+  recipient: string,
+  amount: number
+) {
+  // Check sender balance
+  const balanceResult = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'token',
+    functionName: 'get-balance',
+    functionArgs: [standardPrincipalCV(sender)],
+    senderAddress: sender,
+  });
+  
+  const balance = cvToValue(balanceResult);
+  
+  if (balance < amount) {
+    throw new Error('Insufficient balance');
+  }
+  
+  // Check if recipient can receive
+  const canReceiveResult = await callReadOnlyFunction({
+    network: new StacksTestnet(),
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'token',
+    functionName: 'can-receive',
+    functionArgs: [standardPrincipalCV(recipient)],
+    senderAddress: sender,
+  });
+  
+  if (!cvToValue(canReceiveResult)) {
+    throw new Error('Recipient cannot receive tokens');
+  }
+  
+  return true;
+}
+```
+
+## React hook for read-only calls
+
+Create a reusable hook for contract queries:
+
+```typescript
+import { useState, useEffect } from 'react';
+import { ClarityValue } from '@stacks/transactions';
+
+export function useReadOnlyCall<T = any>(
+  contractAddress: string,
+  contractName: string,
+  functionName: string,
+  functionArgs: ClarityValue[] = []
+) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const result = await callReadOnlyFunction({
+          network: new StacksTestnet(),
+          contractAddress,
+          contractName,
+          functionName,
+          functionArgs,
+          senderAddress: contractAddress, // Use contract as sender
+        });
+        
+        setData(cvToValue(result) as T);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, [contractAddress, contractName, functionName]);
+  
+  return { data, loading, error };
+}
+
+// Usage
+function TokenBalance({ address }: { address: string }) {
+  const { data: balance, loading, error } = useReadOnlyCall<number>(
+    'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    'token',
+    'get-balance',
+    [standardPrincipalCV(address)]
+  );
+  
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return <div>Balance: {balance} tokens</div>;
+}
+```
+
+## Caching strategies
+
+Implement caching for frequently accessed data:
+
+```typescript
+class ContractCache {
+  private cache = new Map<string, { data: any; timestamp: number }>();
+  private ttl = 60000; // 1 minute
+  
+  private getCacheKey(
+    contractAddress: string,
+    contractName: string,
+    functionName: string,
+    args: any[]
+  ): string {
+    return `${contractAddress}.${contractName}.${functionName}:${JSON.stringify(args)}`;
+  }
+  
+  async readOnlyCall(options: any) {
+    const key = this.getCacheKey(
+      options.contractAddress,
+      options.contractName,
+      options.functionName,
+      options.functionArgs
+    );
+    
+    // Check cache
+    const cached = this.cache.get(key);
+    if (cached && Date.now() - cached.timestamp < this.ttl) {
+      return cached.data;
+    }
+    
+    // Fetch fresh data
+    const result = await callReadOnlyFunction(options);
+    const data = cvToValue(result);
+    
+    // Update cache
+    this.cache.set(key, { data, timestamp: Date.now() });
+    
+    return data;
+  }
+  
+  invalidate(contractAddress: string, contractName: string) {
+    // Clear cache for specific contract
+    for (const key of this.cache.keys()) {
+      if (key.startsWith(`${contractAddress}.${contractName}`)) {
+        this.cache.delete(key);
+      }
+    }
+  }
+}
+```
+
+## Best practices
+
+- **Always validate inputs**: Check argument types match contract expectations
+- **Handle all response types**: Functions can return ok, err, or other types
+- **Use sender address wisely**: Some contracts check sender permissions
+- **Cache when appropriate**: Reduce API calls for static data
+- **Batch related calls**: Improve performance with parallel requests
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/transactions-contracts/contract-calls"
+    title="Contract calls"
+    description="Execute state-changing contract functions"
+  />
+  <Card
+    href="/reference/stacks.js/common-utilities/encoding-decoding"
+    title="Clarity encoding"
+    description="Work with Clarity values and types"
+  />
+  <Card
+    href="/reference/stacks.js/transactions-contracts/contract-deployment"
+    title="Deploy contracts"
+    description="Deploy smart contracts to the network"
+  />
+</Cards>

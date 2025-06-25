@@ -1,0 +1,459 @@
+---
+title: Contract calls
+description: Execute smart contract functions with transactions
+---
+
+## Overview
+
+Contract calls allow you to execute state-changing functions in smart contracts. Unlike read-only calls, these create transactions that must be signed and broadcast to the network. Contract calls can transfer tokens, update storage, and trigger complex on-chain logic.
+
+## Basic contract call
+
+Execute a simple contract function:
+
+```typescript
+import { 
+  makeContractCall,
+  broadcastTransaction,
+  AnchorMode,
+  FungibleConditionCode,
+  makeStandardSTXPostCondition
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+
+async function callContract() {
+  const network = new StacksTestnet();
+  
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'my-contract',
+    functionName: 'transfer',
+    functionArgs: [],
+    senderKey: 'your-private-key',
+    network,
+    anchorMode: AnchorMode.Any,
+  };
+  
+  const transaction = await makeContractCall(txOptions);
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  
+  console.log('Transaction ID:', broadcastResponse.txid);
+}
+```
+
+## Passing function arguments
+
+Most contract functions require arguments. Use Clarity value constructors:
+
+```typescript
+import { 
+  makeContractCall,
+  uintCV,
+  standardPrincipalCV,
+  bufferCV,
+  stringAsciiCV,
+  tupleCV,
+  listCV,
+  boolCV
+} from '@stacks/transactions';
+
+async function transferTokens() {
+  const functionArgs = [
+    standardPrincipalCV('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'), // recipient
+    uintCV(1000000), // amount
+    bufferCV(Buffer.from('Transfer memo', 'utf-8')), // memo
+  ];
+  
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'sip-010-token',
+    functionName: 'transfer',
+    functionArgs,
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+}
+```
+
+## Complex argument types
+
+Handle tuples, lists, and optional values:
+
+```typescript
+// Tuple arguments
+const userInfo = tupleCV({
+  name: stringAsciiCV('Alice'),
+  age: uintCV(30),
+  active: boolCV(true),
+});
+
+// List arguments
+const addresses = listCV([
+  standardPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+  standardPrincipalCV('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'),
+]);
+
+// Optional values
+import { someCV, noneCV } from '@stacks/transactions';
+
+const optionalValue = someCV(uintCV(42)); // (some 42)
+const noValue = noneCV(); // none
+
+// Response values
+import { responseOkCV, responseErrorCV } from '@stacks/transactions';
+
+const successResponse = responseOkCV(uintCV(100));
+const errorResponse = responseErrorCV(uintCV(404));
+```
+
+## Post-conditions for safety
+
+Add post-conditions to ensure transaction safety:
+
+```typescript
+import { 
+  makeContractCall,
+  makeStandardSTXPostCondition,
+  makeStandardFungiblePostCondition,
+  FungibleConditionCode,
+  createAssetInfo
+} from '@stacks/transactions';
+
+async function safeTokenTransfer() {
+  const sender = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+  const recipient = 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG';
+  const amount = 1000000;
+  
+  // Ensure sender sends exactly the specified amount
+  const postConditions = [
+    makeStandardFungiblePostCondition(
+      sender,
+      FungibleConditionCode.Equal,
+      amount,
+      createAssetInfo(
+        'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+        'sip-010-token',
+        'token'
+      )
+    ),
+  ];
+  
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'sip-010-token',
+    functionName: 'transfer',
+    functionArgs: [
+      standardPrincipalCV(recipient),
+      uintCV(amount),
+    ],
+    postConditions,
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+}
+```
+
+## Contract call with STX transfer
+
+Some contracts require STX to be sent with the call:
+
+```typescript
+async function mintNFT() {
+  const mintPrice = 1000000; // 1 STX
+  
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'nft-collection',
+    functionName: 'mint',
+    functionArgs: [],
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+    // Attach STX to the contract call
+    amount: mintPrice,
+  };
+  
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+}
+```
+
+## Handling contract responses
+
+Process transaction results and contract responses:
+
+```typescript
+async function executeAndMonitor() {
+  // Execute contract call
+  const transaction = await makeContractCall({
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'my-contract',
+    functionName: 'process',
+    functionArgs: [uintCV(100)],
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  });
+  
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  const txId = broadcastResponse.txid;
+  
+  // Wait for confirmation
+  const txInfo = await waitForConfirmation(txId, network);
+  
+  // Check transaction result
+  if (txInfo.tx_status === 'success') {
+    console.log('Contract returned:', txInfo.tx_result);
+    // Parse the result based on expected return type
+  } else {
+    console.error('Transaction failed:', txInfo.tx_result);
+  }
+}
+
+async function waitForConfirmation(txId: string, network: StacksNetwork) {
+  let attempts = 0;
+  const maxAttempts = 30;
+  
+  while (attempts < maxAttempts) {
+    const response = await fetch(
+      `${network.coreApiUrl}/extended/v1/tx/${txId}`
+    );
+    const txInfo = await response.json();
+    
+    if (txInfo.tx_status === 'success' || txInfo.tx_status === 'abort_by_response') {
+      return txInfo;
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 10000));
+    attempts++;
+  }
+  
+  throw new Error('Transaction confirmation timeout');
+}
+```
+
+## Multi-step contract interactions
+
+Chain multiple contract calls:
+
+```typescript
+async function complexWorkflow() {
+  // Step 1: Approve spending
+  const approveTx = await makeContractCall({
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'token',
+    functionName: 'approve',
+    functionArgs: [
+      standardPrincipalCV('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'),
+      uintCV(1000000),
+    ],
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  });
+  
+  const approveResult = await broadcastTransaction(approveTx, network);
+  await waitForConfirmation(approveResult.txid, network);
+  
+  // Step 2: Execute swap after approval
+  const swapTx = await makeContractCall({
+    contractAddress: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+    contractName: 'dex',
+    functionName: 'swap-tokens',
+    functionArgs: [
+      standardPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+      uintCV(1000000),
+    ],
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  });
+  
+  return broadcastTransaction(swapTx, network);
+}
+```
+
+## Type-safe contract calls
+
+Create type-safe wrappers for your contracts:
+
+```typescript
+interface TokenContract {
+  transfer(recipient: string, amount: number): Promise<string>;
+  approve(spender: string, amount: number): Promise<string>;
+  mint(recipient: string, amount: number): Promise<string>;
+}
+
+class TokenContractWrapper implements TokenContract {
+  constructor(
+    private contractAddress: string,
+    private contractName: string,
+    private senderKey: string,
+    private network: StacksNetwork
+  ) {}
+  
+  async transfer(recipient: string, amount: number): Promise<string> {
+    const tx = await makeContractCall({
+      contractAddress: this.contractAddress,
+      contractName: this.contractName,
+      functionName: 'transfer',
+      functionArgs: [
+        standardPrincipalCV(recipient),
+        uintCV(amount),
+      ],
+      senderKey: this.senderKey,
+      network: this.network,
+      anchorMode: AnchorMode.Any,
+    });
+    
+    const result = await broadcastTransaction(tx, this.network);
+    return result.txid;
+  }
+  
+  async approve(spender: string, amount: number): Promise<string> {
+    // Similar implementation
+  }
+  
+  async mint(recipient: string, amount: number): Promise<string> {
+    // Similar implementation
+  }
+}
+
+// Usage
+const token = new TokenContractWrapper(
+  'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  'my-token',
+  privateKey,
+  network
+);
+
+const txId = await token.transfer(recipientAddress, 1000000);
+```
+
+## Error handling patterns
+
+Implement comprehensive error handling:
+
+```typescript
+async function safeContractCall(txOptions: any) {
+  try {
+    // Validate inputs before transaction
+    if (!txOptions.functionArgs || txOptions.functionArgs.length === 0) {
+      throw new Error('Function arguments required');
+    }
+    
+    // Create and broadcast transaction
+    const transaction = await makeContractCall(txOptions);
+    const broadcastResponse = await broadcastTransaction(
+      transaction, 
+      txOptions.network
+    );
+    
+    if (broadcastResponse.error) {
+      throw new Error(`Broadcast failed: ${broadcastResponse.reason}`);
+    }
+    
+    // Monitor transaction
+    const txInfo = await waitForConfirmation(
+      broadcastResponse.txid, 
+      txOptions.network
+    );
+    
+    if (txInfo.tx_status === 'abort_by_response') {
+      const error = parseContractError(txInfo.tx_result);
+      throw new Error(`Contract error: ${error}`);
+    }
+    
+    return txInfo;
+  } catch (error: any) {
+    console.error('Contract call failed:', error);
+    
+    // Handle specific errors
+    if (error.message.includes('Insufficient balance')) {
+      // Show user-friendly message
+    } else if (error.message.includes('Contract error: 401')) {
+      // Handle unauthorized
+    }
+    
+    throw error;
+  }
+}
+
+function parseContractError(txResult: any): string {
+  // Parse the error code from contract response
+  if (txResult.repr.includes('err u')) {
+    const errorCode = txResult.repr.match(/err u(\d+)/)?.[1];
+    return `Error code ${errorCode}`;
+  }
+  return 'Unknown error';
+}
+```
+
+## Gas optimization
+
+Optimize contract calls for lower fees:
+
+```typescript
+async function optimizedContractCall() {
+  // Batch operations when possible
+  const batchArgs = listCV([
+    tupleCV({
+      to: standardPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+      amount: uintCV(1000000),
+    }),
+    tupleCV({
+      to: standardPrincipalCV('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG'),
+      amount: uintCV(2000000),
+    }),
+  ]);
+  
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'batch-transfer',
+    functionName: 'transfer-many',
+    functionArgs: [batchArgs],
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+    fee: 1000, // Set reasonable fee
+  };
+  
+  return makeContractCall(txOptions);
+}
+```
+
+## Best practices
+
+- **Always include post-conditions**: Protect users from unexpected outcomes
+- **Validate inputs thoroughly**: Check all parameters before creating transactions
+- **Handle all error cases**: Provide clear feedback for failures
+- **Monitor transaction status**: Don't assume success after broadcast
+- **Batch when possible**: Reduce fees by combining operations
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/transactions-contracts/contract-deployment"
+    title="Deploy contracts"
+    description="Deploy smart contracts to the blockchain"
+  />
+  <Card
+    href="/reference/stacks.js/security-postconditions/implementing-postconditions"
+    title="Post-conditions"
+    description="Add security constraints to transactions"
+  />
+  <Card
+    href="/reference/stacks.js/transactions-contracts/transaction-types"
+    title="Transaction types"
+    description="Explore all transaction types"
+  />
+</Cards>

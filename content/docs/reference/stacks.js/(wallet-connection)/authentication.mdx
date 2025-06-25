@@ -1,0 +1,339 @@
+---
+title: Authentication
+description: Understand user authentication and profile management in Stacks apps
+---
+
+## Overview
+
+Stacks authentication provides decentralized identity management, allowing users to control their data and authenticate without passwords. When users connect their wallet, they're actually creating an authenticated session with your app using their decentralized identifier (DID).
+
+## Authentication flow
+
+<Mermaid
+  chart="
+sequenceDiagram
+    participant User
+    participant App
+    participant Wallet
+    participant Gaia
+    
+    User->>App: Click Connect
+    App->>Wallet: Request authentication
+    Wallet->>User: Show permission request
+    User->>Wallet: Approve permissions
+    Wallet->>App: Return auth response
+    App->>Gaia: Verify user data
+    App->>User: Show authenticated state
+    
+    style User fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style App fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style Wallet fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style Gaia fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
+/>
+
+## User session management
+
+The `UserSession` object manages the authentication state throughout your app's lifecycle:
+
+```typescript
+import { UserSession, AppConfig } from '@stacks/connect';
+
+// Initialize with required permissions
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
+
+// Check authentication status
+if (userSession.isUserSignedIn()) {
+  // User is authenticated
+  const userData = userSession.loadUserData();
+} else if (userSession.isSignInPending()) {
+  // Authentication in progress
+  userSession.handlePendingSignIn().then(userData => {
+    // Handle successful sign in
+  });
+}
+```
+
+## User data structure
+
+When authenticated, you can access comprehensive user data:
+
+```typescript
+interface UserData {
+  username?: string;              // BNS username if available
+  email?: string;                 // Email if permission granted
+  profile: {
+    stxAddress: {
+      mainnet: string;          // Mainnet STX address
+      testnet: string;          // Testnet STX address
+    };
+  };
+  decentralizedID: string;        // User's DID
+  identityAddress: string;        // Bitcoin address for identity
+  appPrivateKey: string;          // App-specific private key
+  hubUrl: string;                 // Gaia hub URL
+  associationToken: string;       // Gaia association token
+}
+```
+
+Access user data after authentication:
+
+```typescript
+const userData = userSession.loadUserData();
+
+console.log('Username:', userData.username);
+console.log('Mainnet address:', userData.profile.stxAddress.mainnet);
+console.log('Testnet address:', userData.profile.stxAddress.testnet);
+console.log('DID:', userData.decentralizedID);
+```
+
+## Handling authentication states
+
+Implement proper state management for authentication:
+
+```typescript
+import { useState, useEffect } from 'react';
+
+function useAuth() {
+  const [authState, setAuthState] = useState<
+    'loading' | 'authenticated' | 'unauthenticated'
+  >('loading');
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    if (userSession.isSignInPending()) {
+      userSession.handlePendingSignIn().then(userData => {
+        setUserData(userData);
+        setAuthState('authenticated');
+      });
+    } else if (userSession.isUserSignedIn()) {
+      setUserData(userSession.loadUserData());
+      setAuthState('authenticated');
+    } else {
+      setAuthState('unauthenticated');
+    }
+  }, []);
+
+  return { authState, userData };
+}
+```
+
+## Authentication redirect flow
+
+For apps that use redirect-based authentication:
+
+```typescript
+// In your auth handler component
+useEffect(() => {
+  if (userSession.isSignInPending()) {
+    userSession.handlePendingSignIn()
+      .then(userData => {
+        // Clear URL parameters after handling
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Update app state
+        setUser(userData);
+      })
+      .catch(error => {
+        console.error('Sign in failed:', error);
+      });
+  }
+}, []);
+```
+
+## Profile updates
+
+Users can update their profile data, which is stored in Gaia:
+
+```typescript
+async function updateProfile(updates: any) {
+  const userData = userSession.loadUserData();
+  
+  // Update profile data
+  const newProfile = {
+    ...userData.profile,
+    ...updates
+  };
+  
+  // Save to Gaia storage
+  await userSession.putFile(
+    'profile.json',
+    JSON.stringify(newProfile),
+    { encrypt: false } // Public profile data
+  );
+}
+```
+
+## Multi-account handling
+
+Some wallets support multiple accounts. Handle account switches:
+
+```typescript
+// Listen for account changes
+window.addEventListener('accountsChanged', (event: any) => {
+  const newAddress = event.detail.addresses[0];
+  
+  if (newAddress !== currentAddress) {
+    // Handle account switch
+    console.log('Account switched to:', newAddress);
+    
+    // Re-authenticate or update UI
+    handleAccountSwitch(newAddress);
+  }
+});
+```
+
+## Session persistence
+
+User sessions persist across page reloads. Configure session behavior:
+
+```typescript
+const appConfig = new AppConfig(
+  ['store_write', 'publish_data'],
+  'https://myapp.com' // App domain for session management
+);
+
+const userSession = new UserSession({
+  appConfig,
+  sessionOptions: {
+    // Custom session storage (default: localStorage)
+    sessionStore: new LocalStorageStore(),
+  }
+});
+```
+
+## Sign out implementation
+
+Properly handle user sign out:
+
+```typescript
+function signOut() {
+  // Clear user session
+  userSession.signUserOut();
+  
+  // Clear any app-specific data
+  localStorage.removeItem('appData');
+  sessionStorage.clear();
+  
+  // Redirect to home or login page
+  window.location.href = '/';
+}
+```
+
+## Authentication guards
+
+Protect routes or components that require authentication:
+
+```typescript
+function AuthGuard({ children }: { children: React.ReactNode }) {
+  const { authState } = useAuth();
+  
+  if (authState === 'loading') {
+    return <LoadingSpinner />;
+  }
+  
+  if (authState === 'unauthenticated') {
+    return <Navigate to="/login" />;
+  }
+  
+  return <>{children}</>;
+}
+
+// Usage
+<AuthGuard>
+  <ProtectedComponent />
+</AuthGuard>
+```
+
+## Advanced authentication options
+
+Customize the authentication experience:
+
+```typescript
+import { showConnect, AuthOptions } from '@stacks/connect';
+
+const authOptions: AuthOptions = {
+  appDetails: {
+    name: 'My App',
+    icon: '/logo.png',
+  },
+  redirectTo: '/',                    // Redirect after auth
+  manifestPath: '/manifest.json',     // App manifest location
+  sendToSignIn: false,               // Skip wallet selection
+  userSession,
+  onFinish: ({ userSession }) => {
+    // Access the authenticated session
+    const userData = userSession.loadUserData();
+    console.log('Authenticated:', userData);
+  },
+  onCancel: () => {
+    console.log('Authentication cancelled');
+  },
+};
+
+showConnect(authOptions);
+```
+
+## Security considerations
+
+- **Never expose private keys**: The `appPrivateKey` should only be used for Gaia operations
+- **Validate addresses**: Always validate user addresses before transactions
+- **HTTPS only**: Authentication requires HTTPS in production
+- **Session timeouts**: Consider implementing session timeouts for sensitive apps
+
+## Common patterns
+
+**Remember me functionality**
+
+```typescript
+// Store preference
+localStorage.setItem('autoConnect', 'true');
+
+// Check on app load
+useEffect(() => {
+  const shouldAutoConnect = localStorage.getItem('autoConnect') === 'true';
+  
+  if (shouldAutoConnect && !userSession.isUserSignedIn()) {
+    // Attempt to restore session
+    attemptSilentAuth();
+  }
+}, []);
+```
+
+**Guest mode with optional auth**
+
+```typescript
+function App() {
+  const { authState, userData } = useAuth();
+  
+  return (
+    <div>
+      {authState === 'authenticated' ? (
+        <AuthenticatedApp user={userData} />
+      ) : (
+        <GuestApp onConnect={connectWallet} />
+      )}
+    </div>
+  );
+}
+```
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/wallet-connection/transaction-signing"
+    title="Transaction signing"
+    description="Request signatures for transactions"
+  />
+  <Card
+    href="/reference/stacks.js/wallet-connection/message-signing"
+    title="Message signing"
+    description="Sign and verify messages"
+  />
+  <Card
+    href="/reference/stacks.js/common-utilities/storage"
+    title="Gaia storage"
+    description="Store user data with Gaia"
+  />
+</Cards>

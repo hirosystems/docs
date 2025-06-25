@@ -1,0 +1,383 @@
+---
+title: Transaction signing
+description: Request transaction signatures from connected wallets
+---
+
+## Overview
+
+Transaction signing is how users authorize blockchain operations through their wallet. When your app needs to send STX, call a smart contract, or perform any on-chain action, you'll create a transaction and request the user's signature through their connected wallet.
+
+## Basic transaction flow
+
+Here's how to create and sign a simple STX transfer:
+
+```typescript
+import { showConnect } from '@stacks/connect';
+import { 
+  makeSTXTokenTransfer,
+  AnchorMode,
+  FungibleConditionCode,
+  makeStandardSTXPostCondition
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+
+async function sendSTX() {
+  const network = new StacksTestnet();
+  
+  // Create the transaction
+  const txOptions = {
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000, // 1 STX in microSTX
+    memo: 'Payment for services',
+    network,
+    anchorMode: AnchorMode.Any,
+  };
+  
+  // Request signature through wallet
+  showConnect({
+    pstxAddress: txOptions.recipient,
+    transaction: txOptions,
+    network,
+    onFinish: (data) => {
+      console.log('Transaction ID:', data.txId);
+      console.log('Raw transaction:', data.txRaw);
+    },
+    onCancel: () => {
+      console.log('User cancelled transaction');
+    },
+  });
+}
+```
+
+## Contract call transactions
+
+For smart contract interactions, create contract call transactions:
+
+```typescript
+import { 
+  makeContractCall,
+  BufferCV,
+  bufferCV,
+  standardPrincipalCV,
+  uintCV
+} from '@stacks/transactions';
+
+async function callContract() {
+  const functionArgs = [
+    standardPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+    uintCV(1000000),
+  ];
+  
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'my-contract',
+    functionName: 'transfer',
+    functionArgs,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  showConnect({
+    transaction: txOptions,
+    network: new StacksTestnet(),
+    onFinish: (data) => {
+      console.log('Contract call sent:', data.txId);
+    },
+  });
+}
+```
+
+## Transaction with post-conditions
+
+Add security constraints to ensure transactions behave as expected:
+
+```typescript
+import {
+  makeStandardSTXPostCondition,
+  makeStandardFungiblePostCondition,
+  FungibleConditionCode,
+  createAssetInfo
+} from '@stacks/transactions';
+
+async function safeTransfer() {
+  const postConditions = [
+    // Ensure sender sends exactly 1 STX
+    makeStandardSTXPostCondition(
+      'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+      FungibleConditionCode.Equal,
+      1000000
+    ),
+    // Ensure recipient receives at least 100 tokens
+    makeStandardFungiblePostCondition(
+      'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+      FungibleConditionCode.GreaterEqual,
+      100,
+      createAssetInfo(
+        'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+        'my-token',
+        'my-token'
+      )
+    ),
+  ];
+
+  const txOptions = {
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'token-swap',
+    functionName: 'swap',
+    functionArgs: [uintCV(1000000)],
+    postConditions,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+
+  showConnect({
+    transaction: txOptions,
+    network: new StacksTestnet(),
+    onFinish: (data) => {
+      console.log('Swap executed:', data.txId);
+    },
+  });
+}
+```
+
+## Multi-signature transactions
+
+For transactions requiring multiple signatures:
+
+```typescript
+async function createMultisigTx() {
+  // First signer creates the transaction
+  const unsignedTx = await makeSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    memo: 'Multisig transfer',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+    fee: 200,
+  });
+
+  // Request first signature
+  showConnect({
+    transaction: unsignedTx,
+    network: new StacksTestnet(),
+    onFinish: async (data) => {
+      // Get partially signed transaction
+      const partiallySignedTx = data.txRaw;
+      
+      // Pass to second signer
+      // Second signer would then sign with their wallet
+      requestSecondSignature(partiallySignedTx);
+    },
+  });
+}
+```
+
+## Advanced transaction options
+
+Configure transactions with advanced options:
+
+```typescript
+const txOptions = {
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'my-contract',
+  functionName: 'transfer',
+  functionArgs: [uintCV(1000)],
+  
+  // Advanced options
+  fee: 2000,                        // Set custom fee
+  nonce: 5,                         // Set specific nonce
+  anchorMode: AnchorMode.OnChainOnly, // Anchor mode options
+  postConditionMode: 'deny',        // Strict post-condition checking
+  
+  // Sponsored transactions
+  sponsored: true,
+  sponsorAddress: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+  
+  network: new StacksTestnet(),
+};
+```
+
+## Transaction status monitoring
+
+Track transaction confirmation status:
+
+```typescript
+async function monitorTransaction(txId: string) {
+  const network = new StacksTestnet();
+  
+  // Initial check
+  let txStatus = await fetchTransactionStatus(txId, network);
+  console.log('Initial status:', txStatus);
+  
+  // Poll for confirmation
+  const interval = setInterval(async () => {
+    txStatus = await fetchTransactionStatus(txId, network);
+    
+    if (txStatus.tx_status === 'success') {
+      console.log('Transaction confirmed!');
+      clearInterval(interval);
+      // Handle success
+    } else if (txStatus.tx_status === 'abort_by_response') {
+      console.log('Transaction failed');
+      clearInterval(interval);
+      // Handle failure
+    }
+  }, 10000); // Check every 10 seconds
+}
+
+async function fetchTransactionStatus(txId: string, network: StacksNetwork) {
+  const url = `${network.getCoreApiUrl()}/extended/v1/tx/${txId}`;
+  const response = await fetch(url);
+  return response.json();
+}
+```
+
+## Error handling
+
+Implement comprehensive error handling:
+
+```typescript
+async function safeTransaction() {
+  try {
+    const txOptions = {
+      recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+      amount: 1000000,
+      network: new StacksTestnet(),
+      anchorMode: AnchorMode.Any,
+    };
+    
+    showConnect({
+      transaction: txOptions,
+      network: new StacksTestnet(),
+      onFinish: (data) => {
+        console.log('Success:', data.txId);
+        // Start monitoring
+        monitorTransaction(data.txId);
+      },
+      onCancel: () => {
+        console.log('User cancelled');
+        // Update UI accordingly
+      },
+    });
+  } catch (error) {
+    console.error('Transaction failed:', error);
+    
+    if (error.message.includes('Insufficient balance')) {
+      alert('You do not have enough STX for this transaction');
+    } else if (error.message.includes('Nonce')) {
+      alert('Transaction nonce error. Please try again.');
+    } else {
+      alert('Transaction failed. Please try again later.');
+    }
+  }
+}
+```
+
+## React transaction hook
+
+Create a reusable hook for transaction management:
+
+```typescript
+import { useState } from 'react';
+import { showConnect } from '@stacks/connect';
+import { StacksNetwork } from '@stacks/network';
+
+interface TransactionResult {
+  txId: string;
+  txRaw: string;
+}
+
+export function useTransaction() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<TransactionResult | null>(null);
+
+  const sendTransaction = async (
+    txOptions: any,
+    network: StacksNetwork
+  ) => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      await showConnect({
+        transaction: txOptions,
+        network,
+        onFinish: (data) => {
+          setResult(data);
+          setIsLoading(false);
+        },
+        onCancel: () => {
+          setError('Transaction cancelled');
+          setIsLoading(false);
+        },
+      });
+    } catch (err: any) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
+
+  return {
+    sendTransaction,
+    isLoading,
+    error,
+    result,
+  };
+}
+```
+
+## Gas estimation
+
+Estimate transaction fees before sending:
+
+```typescript
+import { estimateTransactionFee } from '@stacks/transactions';
+
+async function estimateFee() {
+  const transaction = await makeSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  });
+  
+  const feeEstimate = await estimateTransactionFee(transaction);
+  console.log('Estimated fee:', feeEstimate);
+  
+  // Show to user before confirming
+  const confirmed = confirm(`Transaction fee: ${feeEstimate} microSTX. Continue?`);
+  
+  if (confirmed) {
+    // Proceed with transaction
+  }
+}
+```
+
+## Best practices
+
+- **Always validate inputs**: Check addresses and amounts before creating transactions
+- **Use post-conditions**: Protect users from unexpected outcomes
+- **Show clear feedback**: Display transaction status and confirmations
+- **Handle all states**: Loading, success, error, and cancelled states
+- **Estimate fees**: Show users the cost before they sign
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/wallet-connection/message-signing"
+    title="Message signing"
+    description="Sign and verify arbitrary messages"
+  />
+  <Card
+    href="/reference/stacks.js/security-postconditions/implementing-postconditions"
+    title="Post-conditions guide"
+    description="Implement transaction security constraints"
+  />
+  <Card
+    href="/reference/stacks.js/transactions-contracts/contract-calls"
+    title="Contract interactions"
+    description="Deep dive into smart contract calls"
+  />
+</Cards>

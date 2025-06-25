@@ -1,0 +1,473 @@
+---
+title: Contract deployment
+description: Deploy smart contracts to the Stacks blockchain
+---
+
+## Overview
+
+Contract deployment creates new smart contracts on the blockchain. Stacks.js provides tools to compile, deploy, and verify Clarity contracts programmatically. Deployments can be simple single contracts or complex multi-contract systems with dependencies.
+
+## Basic contract deployment
+
+Deploy a simple smart contract:
+
+```typescript
+import { 
+  makeContractDeploy,
+  broadcastTransaction,
+  AnchorMode 
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+import { readFileSync } from 'fs';
+
+async function deployContract() {
+  const network = new StacksTestnet();
+  
+  // Read contract source code
+  const contractSource = readFileSync('./contracts/my-contract.clar', 'utf-8');
+  
+  const txOptions = {
+    contractName: 'my-contract',
+    codeBody: contractSource,
+    senderKey: 'your-private-key',
+    network,
+    anchorMode: AnchorMode.Any,
+    fee: 10000, // Higher fee for deployment
+  };
+  
+  const transaction = await makeContractDeploy(txOptions);
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  
+  console.log('Contract deployed!');
+  console.log('Transaction ID:', broadcastResponse.txid);
+  console.log('Contract address:', `${senderAddress}.${txOptions.contractName}`);
+}
+```
+
+## Deploying with initialization
+
+Deploy contracts that require initialization:
+
+```typescript
+// Contract with configurable constants
+const contractWithConfig = `
+(define-constant contract-owner tx-sender)
+(define-data-var token-name (string-ascii 32) "${tokenName}")
+(define-data-var token-symbol (string-ascii 10) "${tokenSymbol}")
+(define-data-var token-decimals uint u${decimals})
+
+(define-public (get-name)
+  (ok (var-get token-name)))
+`;
+
+async function deployConfigurableContract(
+  tokenName: string,
+  tokenSymbol: string,
+  decimals: number
+) {
+  // Inject configuration into contract
+  const contractSource = contractWithConfig
+    .replace('${tokenName}', tokenName)
+    .replace('${tokenSymbol}', tokenSymbol)
+    .replace('${decimals}', decimals.toString());
+  
+  const txOptions = {
+    contractName: `${tokenSymbol.toLowerCase()}-token`,
+    codeBody: contractSource,
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  };
+  
+  const transaction = await makeContractDeploy(txOptions);
+  return broadcastTransaction(transaction, network);
+}
+```
+
+## Multi-contract deployment
+
+Deploy multiple related contracts:
+
+```typescript
+async function deployContractSystem() {
+  const network = new StacksTestnet();
+  const deployerKey = 'your-private-key';
+  
+  // Step 1: Deploy core contract
+  const coreContract = readFileSync('./contracts/core.clar', 'utf-8');
+  const coreTx = await makeContractDeploy({
+    contractName: 'core',
+    codeBody: coreContract,
+    senderKey: deployerKey,
+    network,
+    anchorMode: AnchorMode.Any,
+  });
+  
+  const coreResult = await broadcastTransaction(coreTx, network);
+  await waitForConfirmation(coreResult.txid, network);
+  
+  // Step 2: Deploy token contract that depends on core
+  const tokenContract = readFileSync('./contracts/token.clar', 'utf-8');
+  const tokenTx = await makeContractDeploy({
+    contractName: 'token',
+    codeBody: tokenContract,
+    senderKey: deployerKey,
+    network,
+    anchorMode: AnchorMode.Any,
+    nonce: 1, // Increment nonce for sequential deployment
+  });
+  
+  const tokenResult = await broadcastTransaction(tokenTx, network);
+  await waitForConfirmation(tokenResult.txid, network);
+  
+  // Step 3: Deploy governance contract
+  const govContract = readFileSync('./contracts/governance.clar', 'utf-8');
+  const govTx = await makeContractDeploy({
+    contractName: 'governance',
+    codeBody: govContract,
+    senderKey: deployerKey,
+    network,
+    anchorMode: AnchorMode.Any,
+    nonce: 2,
+  });
+  
+  const govResult = await broadcastTransaction(govTx, network);
+  
+  return {
+    core: coreResult.txid,
+    token: tokenResult.txid,
+    governance: govResult.txid,
+  };
+}
+```
+
+## Contract verification
+
+Verify deployed contract matches source:
+
+```typescript
+import { cvToJSON, deserializeCV } from '@stacks/transactions';
+
+async function verifyDeployedContract(
+  contractAddress: string,
+  contractName: string,
+  expectedSource: string,
+  network: StacksNetwork
+) {
+  // Fetch deployed contract info
+  const response = await fetch(
+    `${network.coreApiUrl}/v2/contracts/source/${contractAddress}/${contractName}`
+  );
+  
+  const contractInfo = await response.json();
+  
+  // Compare source code
+  if (contractInfo.source !== expectedSource) {
+    throw new Error('Contract source mismatch!');
+  }
+  
+  // Verify contract interface
+  const interfaceResponse = await fetch(
+    `${network.coreApiUrl}/v2/contracts/interface/${contractAddress}/${contractName}`
+  );
+  
+  const contractInterface = await interfaceResponse.json();
+  
+  return {
+    verified: true,
+    source: contractInfo.source,
+    interface: contractInterface,
+    deploymentTx: contractInfo.tx_id,
+  };
+}
+```
+
+## Deployment with post-conditions
+
+Add safety constraints to deployment:
+
+```typescript
+import { 
+  makeContractDeploy,
+  makeStandardSTXPostCondition,
+  FungibleConditionCode 
+} from '@stacks/transactions';
+
+async function deployWithConstraints() {
+  const deploymentCost = 50000; // Estimated deployment cost
+  
+  // Ensure deployment doesn't exceed expected cost
+  const postConditions = [
+    makeStandardSTXPostCondition(
+      senderAddress,
+      FungibleConditionCode.LessEqual,
+      deploymentCost
+    ),
+  ];
+  
+  const txOptions = {
+    contractName: 'expensive-contract',
+    codeBody: contractSource,
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    postConditions,
+    anchorMode: AnchorMode.Any,
+    fee: deploymentCost,
+  };
+  
+  const transaction = await makeContractDeploy(txOptions);
+  return broadcastTransaction(transaction, network);
+}
+```
+
+## Deployment patterns
+
+Common deployment patterns and utilities:
+
+```typescript
+class ContractDeployer {
+  constructor(
+    private network: StacksNetwork,
+    private deployerKey: string
+  ) {}
+  
+  async deployFromFile(
+    contractPath: string,
+    contractName: string,
+    options: Partial<DeployOptions> = {}
+  ) {
+    const contractSource = readFileSync(contractPath, 'utf-8');
+    
+    // Validate contract syntax
+    await this.validateContract(contractSource);
+    
+    // Estimate deployment cost
+    const estimatedFee = await this.estimateDeploymentFee(contractSource);
+    
+    const txOptions = {
+      contractName,
+      codeBody: contractSource,
+      senderKey: this.deployerKey,
+      network: this.network,
+      fee: estimatedFee,
+      anchorMode: AnchorMode.Any,
+      ...options,
+    };
+    
+    const transaction = await makeContractDeploy(txOptions);
+    const result = await broadcastTransaction(transaction, this.network);
+    
+    // Wait for confirmation
+    await this.waitForDeployment(result.txid);
+    
+    return {
+      txId: result.txid,
+      contractId: `${this.getDeployerAddress()}.${contractName}`,
+    };
+  }
+  
+  private async validateContract(source: string) {
+    // Basic validation - check for common issues
+    if (!source.includes('define-')) {
+      throw new Error('Invalid contract: No definitions found');
+    }
+    
+    // Check parentheses balance
+    const openParens = (source.match(/\(/g) || []).length;
+    const closeParens = (source.match(/\)/g) || []).length;
+    
+    if (openParens !== closeParens) {
+      throw new Error('Invalid contract: Unbalanced parentheses');
+    }
+  }
+  
+  private async estimateDeploymentFee(source: string): Promise<number> {
+    // Rough estimation based on contract size
+    const baseRate = 100; // microSTX per byte
+    const contractSize = new TextEncoder().encode(source).length;
+    const estimatedFee = contractSize * baseRate;
+    
+    // Add buffer for safety
+    return Math.ceil(estimatedFee * 1.2);
+  }
+  
+  private getDeployerAddress(): string {
+    // Derive address from private key
+    // Implementation depends on your key management
+    return 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+  }
+  
+  private async waitForDeployment(txId: string) {
+    // Implementation similar to waitForConfirmation
+  }
+}
+```
+
+## Upgradeable contracts
+
+Deploy contracts with upgrade mechanisms:
+
+```typescript
+// Version 1 contract
+const v1Contract = `
+(define-data-var contract-version uint u1)
+(define-data-var migration-contract (optional principal) none)
+
+(define-public (set-migration-contract (new-contract principal))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) (err u401))
+    (var-set migration-contract (some new-contract))
+    (ok true)))
+
+(define-read-only (get-migration-contract)
+  (var-get migration-contract))
+`;
+
+// Deploy V2 and migrate
+async function deployUpgrade() {
+  // Deploy V2 contract
+  const v2Result = await deployContract('contract-v2', v2Source);
+  
+  // Set migration in V1
+  const migrationTx = await makeContractCall({
+    contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    contractName: 'contract-v1',
+    functionName: 'set-migration-contract',
+    functionArgs: [
+      contractPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM', 'contract-v2')
+    ],
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  });
+  
+  return broadcastTransaction(migrationTx, network);
+}
+```
+
+## Testing deployments
+
+Test contracts before mainnet deployment:
+
+```typescript
+async function testDeployment() {
+  const testnet = new StacksTestnet();
+  const mocknet = new StacksMocknet();
+  
+  // Test on local mocknet first
+  try {
+    const mockResult = await deployContract('test-contract', source, mocknet);
+    console.log('Mocknet deployment successful:', mockResult.txId);
+    
+    // Run integration tests
+    await runContractTests(mockResult.contractId, mocknet);
+    
+    // If tests pass, deploy to testnet
+    const testnetResult = await deployContract('test-contract', source, testnet);
+    console.log('Testnet deployment successful:', testnetResult.txId);
+    
+  } catch (error) {
+    console.error('Deployment test failed:', error);
+    throw error;
+  }
+}
+```
+
+## Deployment checklist
+
+Pre-deployment verification steps:
+
+```typescript
+interface DeploymentChecklist {
+  syntaxValid: boolean;
+  testsPass: boolean;
+  gasEstimated: boolean;
+  securityAudited: boolean;
+  postConditionsSet: boolean;
+}
+
+async function preDeploymentCheck(
+  contractSource: string
+): Promise<DeploymentChecklist> {
+  const checklist: DeploymentChecklist = {
+    syntaxValid: false,
+    testsPass: false,
+    gasEstimated: false,
+    securityAudited: false,
+    postConditionsSet: false,
+  };
+  
+  // Validate syntax
+  try {
+    await validateContract(contractSource);
+    checklist.syntaxValid = true;
+  } catch (error) {
+    console.error('Syntax validation failed:', error);
+  }
+  
+  // Run tests
+  try {
+    await runContractTests(contractSource);
+    checklist.testsPass = true;
+  } catch (error) {
+    console.error('Tests failed:', error);
+  }
+  
+  // Estimate gas
+  const gasEstimate = await estimateDeploymentFee(contractSource);
+  checklist.gasEstimated = gasEstimate > 0;
+  
+  // Manual checks
+  checklist.securityAudited = await promptUser('Has the contract been audited?');
+  checklist.postConditionsSet = contractSource.includes('post-condition');
+  
+  return checklist;
+}
+```
+
+## Best practices
+
+- **Test thoroughly**: Deploy to testnet before mainnet
+- **Estimate fees accurately**: Deployment is more expensive than regular transactions
+- **Use clear naming**: Contract names are permanent and global
+- **Include documentation**: Add comments explaining contract functionality
+- **Plan for upgrades**: Consider upgrade patterns from the start
+
+## Common issues
+
+**Deployment failures**
+
+```typescript
+// Handle common deployment errors
+try {
+  const result = await broadcastTransaction(deployTx, network);
+} catch (error: any) {
+  if (error.message.includes('ContractAlreadyExists')) {
+    console.error('Contract name already taken');
+  } else if (error.message.includes('CodeTooLarge')) {
+    console.error('Contract exceeds size limit');
+  } else if (error.message.includes('BadContractSyntax')) {
+    console.error('Contract has syntax errors');
+  }
+}
+```
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/transactions-contracts/transaction-types"
+    title="Transaction types"
+    description="Explore all transaction types available"
+  />
+  <Card
+    href="/reference/stacks.js/common-utilities/encoding-decoding"
+    title="Contract encoding"
+    description="Work with contract data encoding"
+  />
+  <Card
+    href="/tools/clarinet/quickstart"
+    title="Clarinet"
+    description="Test contracts locally before deployment"
+  />
+</Cards>

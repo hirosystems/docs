@@ -1,0 +1,418 @@
+---
+title: Transaction building
+description: Create and structure Stacks transactions for any use case
+---
+
+## Overview
+
+Transactions are the fundamental way to interact with the Stacks blockchain. Every action—from transferring STX to calling smart contracts—requires building and broadcasting a transaction. Stacks.js provides a comprehensive transaction builder API that handles encoding, signing, and fee estimation.
+
+## Transaction anatomy
+
+Every Stacks transaction contains these core components:
+
+```typescript
+interface StacksTransaction {
+  version: TransactionVersion;      // Mainnet or testnet
+  chainId: ChainID;                // Network chain ID
+  auth: Authorization;             // Signature(s)
+  anchorMode: AnchorMode;          // Block anchoring strategy
+  postConditionMode: PostConditionMode;  // Strict or allow
+  postConditions: PostCondition[]; // Security constraints
+  payload: TransactionPayload;     // The actual operation
+}
+```
+
+## Building your first transaction
+
+Create a simple STX transfer transaction:
+
+```typescript
+import { 
+  makeSTXTokenTransfer,
+  broadcastTransaction,
+  AnchorMode,
+  FungibleConditionCode,
+  makeStandardSTXPostCondition
+} from '@stacks/transactions';
+import { StacksTestnet } from '@stacks/network';
+
+async function buildAndSendTransaction() {
+  const network = new StacksTestnet();
+  
+  // Build the transaction
+  const txOptions = {
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000, // 1 STX in microSTX
+    senderKey: 'your-private-key-here', // Only for programmatic signing
+    network,
+    memo: 'First transaction!',
+    fee: 200, // or estimate dynamically
+    nonce: 0, // or fetch from API
+    anchorMode: AnchorMode.Any,
+  };
+  
+  const transaction = await makeSTXTokenTransfer(txOptions);
+  
+  // Broadcast to network
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  console.log('Transaction ID:', broadcastResponse.txid);
+}
+```
+
+## Transaction options
+
+Common options available for all transaction types:
+
+```typescript
+interface BaseTxOptions {
+  network: StacksNetwork;          // Target network
+  anchorMode: AnchorMode;          // Block anchoring mode
+  fee?: number;                    // Transaction fee in microSTX
+  nonce?: number;                  // Account nonce
+  postConditions?: PostCondition[]; // Security constraints
+  postConditionMode?: PostConditionMode; // Strict or allow
+  sponsored?: boolean;             // Is transaction sponsored
+}
+```
+
+### Anchor modes
+
+Choose how your transaction is anchored to Bitcoin blocks:
+
+```typescript
+enum AnchorMode {
+  OnChainOnly = 0x01,  // Must be included in anchored block
+  OffChainOnly = 0x02, // Can be included in microblocks
+  Any = 0x03,          // Either anchored or microblocks
+}
+```
+
+Most transactions should use `AnchorMode.Any` for flexibility.
+
+## Fee estimation
+
+Estimate appropriate fees for your transaction:
+
+```typescript
+import { estimateTransactionFee } from '@stacks/transactions';
+
+async function estimateFees() {
+  // Build transaction without broadcasting
+  const transaction = await makeSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    senderKey: 'temp-key-for-estimation',
+    network: new StacksTestnet(),
+    anchorMode: AnchorMode.Any,
+  });
+  
+  // Estimate fee
+  const feeEstimate = await estimateTransactionFee(transaction);
+  console.log(`Estimated fee: ${feeEstimate} microSTX`);
+  
+  // Rebuild with estimated fee
+  const finalTx = await makeSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    senderKey: 'your-private-key',
+    network: new StacksTestnet(),
+    fee: Math.ceil(feeEstimate * 1.1), // Add 10% buffer
+    anchorMode: AnchorMode.Any,
+  });
+}
+```
+
+## Nonce management
+
+Handle nonces correctly to avoid transaction conflicts:
+
+```typescript
+import { getNonce } from '@stacks/transactions';
+
+async function getNextNonce(address: string, network: StacksNetwork) {
+  try {
+    // Get current nonce from API
+    const nonceInfo = await getNonce(address, network);
+    return nonceInfo.possible_next_nonce;
+  } catch (error) {
+    console.error('Failed to fetch nonce:', error);
+    // Start from 0 if account has no transactions
+    return 0;
+  }
+}
+
+// Use in transaction
+const nonce = await getNextNonce(senderAddress, network);
+const tx = await makeSTXTokenTransfer({
+  // ... other options
+  nonce,
+});
+```
+
+## Sponsored transactions
+
+Create transactions that will be paid for by a sponsor:
+
+```typescript
+import { sponsorTransaction } from '@stacks/transactions';
+
+async function createSponsoredTx() {
+  // User creates the transaction (without paying fees)
+  const unsignedTx = await makeSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    senderKey: userPrivateKey,
+    network,
+    fee: 0, // User doesn't pay
+    sponsored: true,
+    anchorMode: AnchorMode.Any,
+  });
+  
+  // Sponsor signs and sets fee
+  const sponsoredTx = await sponsorTransaction({
+    transaction: unsignedTx,
+    sponsorPrivateKey: sponsorKey,
+    fee: 1000,
+  });
+  
+  // Broadcast sponsored transaction
+  const result = await broadcastTransaction(sponsoredTx, network);
+}
+```
+
+## Multi-signature transactions
+
+Build transactions requiring multiple signatures:
+
+```typescript
+import { 
+  makeUnsignedSTXTokenTransfer,
+  createMultiSigSpendingCondition,
+  pubKeyfromPrivKey,
+  publicKeyToAddress,
+  AddressVersion
+} from '@stacks/transactions';
+
+async function createMultiSigTransaction() {
+  // Define signers
+  const privKeyA = 'private-key-a';
+  const privKeyB = 'private-key-b';
+  const privKeyC = 'private-key-c';
+  
+  const pubKeyA = pubKeyfromPrivKey(privKeyA);
+  const pubKeyB = pubKeyfromPrivKey(privKeyB);
+  const pubKeyC = pubKeyfromPrivKey(privKeyC);
+  
+  // Create 2-of-3 multisig
+  const spending = createMultiSigSpendingCondition(
+    2, // signatures required
+    [pubKeyA, pubKeyB, pubKeyC] // all public keys
+  );
+  
+  // Derive multisig address
+  const multisigAddress = publicKeyToAddress(
+    AddressVersion.TestnetMultiSig,
+    spending.signer
+  );
+  
+  // Create unsigned transaction
+  const unsignedTx = await makeUnsignedSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    network,
+    anchorMode: AnchorMode.Any,
+    publicKey: multisigAddress, // Use multisig address
+  });
+  
+  // Sign with required number of keys
+  // Implementation depends on your signing flow
+}
+```
+
+## Transaction serialization
+
+Serialize and deserialize transactions for storage or transmission:
+
+```typescript
+import { 
+  serializeTransaction,
+  deserializeTransaction,
+  BufferReader
+} from '@stacks/transactions';
+
+// Serialize for storage
+const serializedTx = serializeTransaction(transaction);
+const txHex = serializedTx.toString('hex');
+
+// Store or transmit txHex...
+
+// Deserialize later
+const txBuffer = Buffer.from(txHex, 'hex');
+const bufferReader = new BufferReader(txBuffer);
+const deserializedTx = deserializeTransaction(bufferReader);
+```
+
+## Advanced transaction building
+
+Create custom transactions with fine-grained control:
+
+```typescript
+import {
+  makeUnsignedSTXTokenTransfer,
+  createSingleSigSpendingCondition,
+  createTransactionAuth,
+  pubKeyfromPrivKey,
+  TransactionSigner
+} from '@stacks/transactions';
+
+async function buildCustomTransaction() {
+  const privateKey = 'your-private-key';
+  const publicKey = pubKeyfromPrivKey(privateKey);
+  
+  // Create custom auth
+  const spendingCondition = createSingleSigSpendingCondition(
+    0, // nonce
+    200, // fee
+    publicKey
+  );
+  
+  const auth = createTransactionAuth(spendingCondition);
+  
+  // Build unsigned transaction
+  const unsignedTx = await makeUnsignedSTXTokenTransfer({
+    recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    amount: 1000000,
+    network: new StacksTestnet(),
+    auth,
+    anchorMode: AnchorMode.Any,
+  });
+  
+  // Sign transaction
+  const signer = new TransactionSigner(unsignedTx);
+  signer.signOrigin(privateKey);
+  
+  const signedTx = signer.transaction;
+}
+```
+
+## Error handling
+
+Implement robust error handling for transactions:
+
+```typescript
+async function safeTransactionBroadcast(transaction: StacksTransaction) {
+  try {
+    const result = await broadcastTransaction(transaction, network);
+    
+    if (result.error) {
+      if (result.reason === 'ConflictingNonceInMempool') {
+        console.error('Nonce conflict - transaction already pending');
+        // Retry with higher nonce
+      } else if (result.reason === 'BadNonce') {
+        console.error('Invalid nonce - refresh and retry');
+        // Fetch fresh nonce
+      } else if (result.reason === 'NotEnoughFunds') {
+        console.error('Insufficient balance');
+        // Check balance before retry
+      }
+      throw new Error(result.reason);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('Broadcast failed:', error);
+    throw error;
+  }
+}
+```
+
+## Transaction monitoring
+
+Track transaction confirmation status:
+
+```typescript
+async function waitForConfirmation(txId: string, network: StacksNetwork) {
+  const pollingInterval = 10000; // 10 seconds
+  const maxAttempts = 30; // 5 minutes timeout
+  
+  for (let i = 0; i < maxAttempts; i++) {
+    const response = await fetch(
+      `${network.coreApiUrl}/extended/v1/tx/${txId}`
+    );
+    const txInfo = await response.json();
+    
+    if (txInfo.tx_status === 'success') {
+      console.log('Transaction confirmed!');
+      return txInfo;
+    } else if (txInfo.tx_status === 'abort_by_response') {
+      throw new Error('Transaction failed: ' + txInfo.tx_result);
+    }
+    
+    // Wait before next check
+    await new Promise(resolve => setTimeout(resolve, pollingInterval));
+  }
+  
+  throw new Error('Transaction confirmation timeout');
+}
+```
+
+## Best practices
+
+- **Always estimate fees**: Use dynamic fee estimation for better inclusion rates
+- **Handle nonces carefully**: Fetch current nonce to avoid conflicts
+- **Include post-conditions**: Add security constraints when appropriate
+- **Monitor confirmations**: Track transaction status after broadcasting
+- **Implement retry logic**: Handle temporary failures gracefully
+
+## Common patterns
+
+**Batch transaction builder**
+
+```typescript
+class TransactionBatch {
+  private transactions: StacksTransaction[] = [];
+  
+  async addSTXTransfer(recipient: string, amount: number) {
+    const tx = await makeSTXTokenTransfer({
+      recipient,
+      amount,
+      // ... other options
+    });
+    this.transactions.push(tx);
+  }
+  
+  async broadcastAll() {
+    const results = [];
+    for (const tx of this.transactions) {
+      try {
+        const result = await broadcastTransaction(tx, network);
+        results.push({ success: true, result });
+      } catch (error) {
+        results.push({ success: false, error });
+      }
+    }
+    return results;
+  }
+}
+```
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/transactions-contracts/read-only-calls"
+    title="Read-only calls"
+    description="Query smart contract state without transactions"
+  />
+  <Card
+    href="/reference/stacks.js/transactions-contracts/contract-calls"
+    title="Contract calls"
+    description="Execute smart contract functions"
+  />
+  <Card
+    href="/reference/stacks.js/transactions-contracts/transaction-types"
+    title="Transaction types"
+    description="Reference for all transaction types"
+  />
+</Cards>

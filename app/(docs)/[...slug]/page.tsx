@@ -64,7 +64,7 @@ export default async function Page(props: {
           {page.data.isRpc && (
             <Badge
               variant="outline"
-              className="cursor-pointer font-normal text-xs uppercase bg-orange-500 text-neutral-950 dark:bg-brand-orange border-none"
+              className="cursor-pointer font-normal text-[10px] px-1 py-0.5 uppercase bg-orange-500 text-neutral-950 dark:bg-brand-orange border-none"
             >
               RPC node
             </Badge>

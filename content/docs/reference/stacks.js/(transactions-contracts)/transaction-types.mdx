@@ -1,0 +1,383 @@
+---
+title: Transaction types
+description: Reference for all Stacks transaction types and their uses
+---
+
+## Overview
+
+Stacks supports several transaction types, each designed for specific blockchain operations. Understanding when and how to use each type is crucial for building effective applications. This reference covers all transaction types with practical examples.
+
+## STX token transfer
+
+Transfer STX between addresses - the most basic transaction type:
+
+```typescript
+import { 
+  makeSTXTokenTransfer,
+  AnchorMode 
+} from '@stacks/transactions';
+import { StacksMainnet } from '@stacks/network';
+
+const txOptions = {
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000, // 1 STX in microSTX
+  senderKey: privateKey,
+  network: new StacksMainnet(),
+  memo: 'Payment for services', // Optional memo (max 34 bytes)
+  anchorMode: AnchorMode.Any,
+  fee: 200, // Transaction fee in microSTX
+};
+
+const transaction = await makeSTXTokenTransfer(txOptions);
+```
+
+Key parameters:
+- `amount`: In microSTX (1 STX = 1,000,000 microSTX)
+- `memo`: Optional message (max 34 bytes)
+- `fee`: Required network fee
+
+## Contract call
+
+Execute smart contract functions:
+
+```typescript
+import { 
+  makeContractCall,
+  uintCV,
+  stringAsciiCV 
+} from '@stacks/transactions';
+
+const txOptions = {
+  contractAddress: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  contractName: 'marketplace',
+  functionName: 'list-item',
+  functionArgs: [
+    uintCV(1000000), // price
+    stringAsciiCV('Rare NFT'), // description
+  ],
+  senderKey: privateKey,
+  network: new StacksMainnet(),
+  anchorMode: AnchorMode.Any,
+  postConditions: [], // Optional security constraints
+};
+
+const transaction = await makeContractCall(txOptions);
+```
+
+Supports:
+- Any public contract function
+- Complex argument types
+- Post-conditions for safety
+- STX attachment for payable functions
+
+## Contract deployment
+
+Deploy new smart contracts:
+
+```typescript
+import { makeContractDeploy } from '@stacks/transactions';
+
+const contractSource = `
+(define-public (say-hello)
+  (ok "Hello, World!"))
+`;
+
+const txOptions = {
+  contractName: 'hello-world',
+  codeBody: contractSource,
+  senderKey: privateKey,
+  network: new StacksMainnet(),
+  anchorMode: AnchorMode.Any,
+  fee: 10000, // Higher fee for deployment
+};
+
+const transaction = await makeContractDeploy(txOptions);
+```
+
+Considerations:
+- Contract names are globally unique
+- Deployment costs more than regular transactions
+- Contracts are immutable once deployed
+
+## Sponsored transactions
+
+Create transactions where fees are paid by a sponsor:
+
+```typescript
+import { 
+  makeSTXTokenTransfer,
+  sponsorTransaction 
+} from '@stacks/transactions';
+
+// Step 1: User creates transaction without fee
+const unsignedTx = await makeSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000,
+  senderKey: userPrivateKey,
+  network: new StacksMainnet(),
+  fee: 0, // User pays no fee
+  sponsored: true, // Mark as sponsored
+  anchorMode: AnchorMode.Any,
+});
+
+// Step 2: Sponsor signs and pays fee
+const sponsoredTx = await sponsorTransaction({
+  transaction: unsignedTx,
+  sponsorPrivateKey: sponsorKey,
+  fee: 1000, // Sponsor pays the fee
+});
+```
+
+Use cases:
+- Onboarding new users without STX
+- Subsidizing user transactions
+- Enterprise applications
+
+## Multi-signature transactions
+
+Transactions requiring multiple signatures:
+
+```typescript
+import {
+  makeUnsignedSTXTokenTransfer,
+  createMultiSigSpendingCondition,
+  pubKeyfromPrivKey,
+} from '@stacks/transactions';
+
+// Create 2-of-3 multisig
+const pubKeys = [
+  pubKeyfromPrivKey(privateKey1),
+  pubKeyfromPrivKey(privateKey2),
+  pubKeyfromPrivKey(privateKey3),
+];
+
+const spendingCondition = createMultiSigSpendingCondition(
+  2, // Required signatures
+  pubKeys // All public keys
+);
+
+// Create unsigned transaction
+const unsignedTx = await makeUnsignedSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000,
+  network: new StacksMainnet(),
+  anchorMode: AnchorMode.Any,
+  publicKey: multisigAddress,
+});
+
+// Sign with required number of keys
+// Implementation depends on key management
+```
+
+Applications:
+- Treasury management
+- Escrow services
+- Shared wallets
+
+## Versioned smart contracts
+
+Deploy versioned contracts using Clarity 2:
+
+```typescript
+const clarityTwoContract = `
+;; Clarity 2 contract
+(define-public (get-version)
+  (ok u2))
+
+(define-public (new-feature)
+  ;; Uses Clarity 2 features
+  (ok true))
+`;
+
+const txOptions = {
+  contractName: 'advanced-contract',
+  codeBody: clarityTwoContract,
+  clarityVersion: 2, // Specify Clarity version
+  senderKey: privateKey,
+  network: new StacksMainnet(),
+  anchorMode: AnchorMode.Any,
+};
+
+const transaction = await makeContractDeploy(txOptions);
+```
+
+## Transaction builders comparison
+
+| Transaction Type | Use Case | Key Parameters | Fee Range |
+|-----------------|----------|----------------|-----------|
+| STX Transfer | Send STX | recipient, amount, memo | 180-500 µSTX |
+| Contract Call | Execute functions | contract, function, args | 200-2000 µSTX |
+| Contract Deploy | Create contracts | name, source code | 5000-50000 µSTX |
+| Sponsored | Fee delegation | sponsor key, user tx | Varies |
+| Multi-sig | Shared control | signers, threshold | 500-1000 µSTX |
+
+## Advanced transaction options
+
+Common options available across transaction types:
+
+```typescript
+interface TransactionOptions {
+  // Network configuration
+  network: StacksNetwork;
+  
+  // Signature and authorization
+  senderKey?: string; // For single signature
+  publicKey?: string; // For multi-sig
+  
+  // Transaction parameters
+  fee?: number; // Custom fee (auto-estimated if not set)
+  nonce?: number; // Custom nonce (auto-fetched if not set)
+  anchorMode: AnchorMode; // Block anchoring strategy
+  
+  // Security
+  postConditions?: PostCondition[]; // Transaction constraints
+  postConditionMode?: PostConditionMode; // Strict or allow
+  
+  // Sponsored transactions
+  sponsored?: boolean; // Is transaction sponsored
+  sponsorAddress?: string; // Sponsor's address
+}
+```
+
+## Raw transaction construction
+
+For advanced use cases, build transactions manually:
+
+```typescript
+import {
+  TransactionVersion,
+  createTransaction,
+  createSTXPostCondition,
+  createTransactionPayload,
+  createSingleSigSpendingCondition,
+  createTransactionAuth,
+  PayloadType,
+} from '@stacks/transactions';
+
+// Create payload
+const payload = createTransactionPayload(
+  PayloadType.TokenTransfer,
+  {
+    recipient: recipientAddress,
+    amount: 1000000,
+    memo: 'Custom transaction',
+  }
+);
+
+// Create auth
+const auth = createTransactionAuth(
+  createSingleSigSpendingCondition(
+    0, // nonce
+    200, // fee
+    publicKey
+  )
+);
+
+// Build transaction
+const transaction = createTransaction(
+  TransactionVersion.Mainnet,
+  auth,
+  payload,
+  postConditions,
+  anchorMode
+);
+```
+
+## Transaction lifecycle
+
+Understanding transaction states:
+
+```typescript
+async function trackTransactionLifecycle(txId: string) {
+  const states = {
+    pending: 'Transaction in mempool',
+    success: 'Transaction confirmed',
+    abort_by_response: 'Transaction failed',
+    abort_by_post_condition: 'Post-condition failed',
+  };
+  
+  // Monitor transaction
+  let currentState = 'pending';
+  
+  while (currentState === 'pending') {
+    const txInfo = await fetchTransaction(txId);
+    currentState = txInfo.tx_status;
+    
+    console.log(`Status: ${states[currentState]}`);
+    
+    if (currentState === 'pending') {
+      await sleep(10000); // Wait 10 seconds
+    }
+  }
+  
+  return currentState;
+}
+```
+
+## Fee estimation strategies
+
+Different approaches for fee calculation:
+
+```typescript
+// Strategy 1: Fixed fee
+const fixedFee = 200;
+
+// Strategy 2: Dynamic estimation
+const estimatedFee = await estimateTransactionFee(transaction);
+
+// Strategy 3: Priority-based
+function calculatePriorityFee(priority: 'low' | 'medium' | 'high') {
+  const baseFee = 180;
+  const multipliers = { low: 1, medium: 1.5, high: 2 };
+  return Math.ceil(baseFee * multipliers[priority]);
+}
+
+// Strategy 4: Size-based
+function calculateSizeBasedFee(transaction: StacksTransaction) {
+  const txSize = transaction.serialize().length;
+  const feePerByte = 1;
+  return Math.max(180, txSize * feePerByte);
+}
+```
+
+## Best practices by type
+
+**STX Transfers**
+- Always verify recipient address format
+- Include meaningful memos for tracking
+- Consider post-conditions for large amounts
+
+**Contract Calls**
+- Validate function arguments match ABI
+- Use post-conditions to prevent unexpected behavior
+- Test on testnet first
+
+**Contract Deployments**
+- Choose unique, descriptive names
+- Estimate deployment costs accurately
+- Include comprehensive error handling
+
+**Sponsored Transactions**
+- Implement sponsor approval logic
+- Set reasonable fee limits
+- Monitor sponsor balance
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/security-postconditions/understanding-postconditions"
+    title="Post-conditions"
+    description="Add security constraints to any transaction"
+  />
+  <Card
+    href="/reference/stacks.js/common-utilities/encoding-decoding"
+    title="Clarity encoding"
+    description="Encode arguments for transactions"
+  />
+  <Card
+    href="/reference/stacks.js/wallet-connection/transaction-signing"
+    title="Wallet signing"
+    description="Request signatures through wallets"
+  />
+</Cards>

@@ -1,0 +1,406 @@
+---
+title: Message signing
+description: Sign and verify messages using wallet signatures
+---
+
+## Overview
+
+Message signing allows users to cryptographically sign arbitrary messages with their wallet, proving ownership of an address without making an on-chain transaction. This is useful for authentication, authorization, and creating verifiable statements.
+
+## Basic message signing
+
+Request a signature for a simple message:
+
+```typescript
+import { showSignMessage } from '@stacks/connect';
+
+function signMessage() {
+  const message = 'Hello from my Stacks app!';
+  
+  showSignMessage({
+    message,
+    onFinish: (data) => {
+      console.log('Signature:', data.signature);
+      console.log('Public key:', data.publicKey);
+      
+      // Store or verify the signature
+      verifySignature(message, data.signature, data.publicKey);
+    },
+  });
+}
+```
+
+## Structured message signing
+
+Sign structured data using the Structured Data Signing (SIP-018) standard:
+
+```typescript
+import { showSignStructuredMessage } from '@stacks/connect';
+import { ClarityValue, tupleCV, stringUtf8CV, uintCV } from '@stacks/transactions';
+
+function signStructuredData() {
+  const domain = tupleCV({
+    name: stringUtf8CV('My App'),
+    version: stringUtf8CV('1.0.0'),
+    'chain-id': uintCV(1), // mainnet
+  });
+  
+  const message = tupleCV({
+    from: stringUtf8CV('user@example.com'),
+    to: stringUtf8CV('recipient@example.com'),
+    amount: uintCV(1000000),
+    memo: stringUtf8CV('Payment for services'),
+  });
+  
+  showSignStructuredMessage({
+    domain,
+    message,
+    onFinish: (data) => {
+      console.log('Structured signature:', data.signature);
+      // The signature can be verified on-chain or off-chain
+    },
+  });
+}
+```
+
+## Message verification
+
+Verify signatures to ensure authenticity:
+
+```typescript
+import { verifyMessageSignature } from '@stacks/encryption';
+
+async function verifySignature(
+  message: string,
+  signature: string,
+  publicKey: string
+) {
+  try {
+    const isValid = verifyMessageSignature({
+      message,
+      signature,
+      publicKey,
+    });
+    
+    console.log('Signature is valid:', isValid);
+    return isValid;
+  } catch (error) {
+    console.error('Verification failed:', error);
+    return false;
+  }
+}
+```
+
+## Authentication with signatures
+
+Implement passwordless authentication using message signatures:
+
+```typescript
+// Server-side: Generate challenge
+function generateAuthChallenge(): string {
+  const nonce = crypto.randomBytes(32).toString('hex');
+  const timestamp = Date.now();
+  const challenge = `Sign this message to authenticate:\n\nNonce: ${nonce}\nTimestamp: ${timestamp}`;
+  
+  // Store challenge temporarily
+  storeChallenge(nonce, timestamp);
+  
+  return challenge;
+}
+
+// Client-side: Sign challenge
+async function authenticate() {
+  // Request challenge from server
+  const challenge = await fetch('/api/auth/challenge').then(r => r.text());
+  
+  showSignMessage({
+    message: challenge,
+    onFinish: async (data) => {
+      // Send signature to server
+      const response = await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: challenge,
+          signature: data.signature,
+          publicKey: data.publicKey,
+        }),
+      });
+      
+      if (response.ok) {
+        const { token } = await response.json();
+        // Store auth token
+        localStorage.setItem('authToken', token);
+      }
+    },
+  });
+}
+```
+
+## Time-bound signatures
+
+Create signatures that expire after a certain time:
+
+```typescript
+interface TimeBoundMessage {
+  action: string;
+  validUntil: number;
+  nonce: string;
+}
+
+function signTimeBoundMessage(action: string, validityMinutes: number = 5) {
+  const validUntil = Date.now() + (validityMinutes * 60 * 1000);
+  const nonce = crypto.randomBytes(16).toString('hex');
+  
+  const message: TimeBoundMessage = {
+    action,
+    validUntil,
+    nonce,
+  };
+  
+  const messageString = JSON.stringify(message);
+  
+  showSignMessage({
+    message: messageString,
+    onFinish: (data) => {
+      // Use the time-bound signature
+      executeAction({
+        message: messageString,
+        signature: data.signature,
+        publicKey: data.publicKey,
+      });
+    },
+  });
+}
+
+// Verify time-bound signature
+function verifyTimeBoundSignature(
+  messageString: string,
+  signature: string,
+  publicKey: string
+): boolean {
+  // First verify the signature
+  if (!verifyMessageSignature({ message: messageString, signature, publicKey })) {
+    return false;
+  }
+  
+  // Then check if it's still valid
+  const message: TimeBoundMessage = JSON.parse(messageString);
+  return Date.now() < message.validUntil;
+}
+```
+
+## Multi-purpose signature hook
+
+Create a reusable React hook for message signing:
+
+```typescript
+import { useState, useCallback } from 'react';
+import { showSignMessage } from '@stacks/connect';
+
+interface SignatureResult {
+  signature: string;
+  publicKey: string;
+}
+
+export function useMessageSigning() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<SignatureResult | null>(null);
+  
+  const signMessage = useCallback((message: string) => {
+    setIsLoading(true);
+    setError(null);
+    
+    return new Promise<SignatureResult>((resolve, reject) => {
+      showSignMessage({
+        message,
+        onFinish: (data) => {
+          setResult(data);
+          setIsLoading(false);
+          resolve(data);
+        },
+        onCancel: () => {
+          const error = 'User cancelled signing';
+          setError(error);
+          setIsLoading(false);
+          reject(new Error(error));
+        },
+      });
+    });
+  }, []);
+  
+  const reset = useCallback(() => {
+    setResult(null);
+    setError(null);
+  }, []);
+  
+  return {
+    signMessage,
+    isLoading,
+    error,
+    result,
+    reset,
+  };
+}
+```
+
+## Delegated authorization
+
+Use signatures for delegated actions:
+
+```typescript
+interface DelegatedAction {
+  delegate: string;      // Address that can perform action
+  action: string;        // What action is allowed
+  target: string;        // Target contract/address
+  expiry: number;        // When authorization expires
+}
+
+async function createDelegatedAuth(params: DelegatedAction) {
+  const message = tupleCV({
+    delegate: standardPrincipalCV(params.delegate),
+    action: stringUtf8CV(params.action),
+    target: standardPrincipalCV(params.target),
+    expiry: uintCV(params.expiry),
+  });
+  
+  showSignStructuredMessage({
+    message,
+    domain: tupleCV({
+      name: stringUtf8CV('Delegated Auth'),
+      version: stringUtf8CV('1.0.0'),
+    }),
+    onFinish: (data) => {
+      // Store authorization on-chain or off-chain
+      storeDelegatedAuth({
+        ...params,
+        signature: data.signature,
+        publicKey: data.publicKey,
+      });
+    },
+  });
+}
+```
+
+## Signature formats
+
+Understand different signature formats:
+
+```typescript
+// Standard message signature format
+interface MessageSignature {
+  signature: string;     // Hex-encoded signature
+  publicKey: string;     // Hex-encoded public key
+}
+
+// Structured message signature (SIP-018)
+interface StructuredSignature {
+  signature: string;     // Hex-encoded signature
+  publicKey: string;     // Hex-encoded public key
+  domain: ClarityValue;  // Domain separator
+  message: ClarityValue; // Structured message
+}
+
+// Convert signature for different uses
+function formatSignature(signature: string, format: 'hex' | 'base64') {
+  if (format === 'base64') {
+    return Buffer.from(signature, 'hex').toString('base64');
+  }
+  return signature;
+}
+```
+
+## Security best practices
+
+**Include context in messages**
+
+```typescript
+// Good - includes context
+const message = `Approve login to MyApp
+Account: ${userAddress}
+Timestamp: ${new Date().toISOString()}
+Nonce: ${generateNonce()}`;
+
+// Bad - generic message
+const message = 'Approve';
+```
+
+**Validate signatures properly**
+
+```typescript
+async function secureVerification(data: any) {
+  // Verify all components
+  if (!data.signature || !data.publicKey || !data.message) {
+    throw new Error('Missing signature data');
+  }
+  
+  // Verify signature
+  const isValid = verifyMessageSignature(data);
+  
+  // Derive and verify address
+  const derivedAddress = getAddressFromPublicKey(data.publicKey);
+  const expectedAddress = getUserAddress();
+  
+  if (derivedAddress !== expectedAddress) {
+    throw new Error('Address mismatch');
+  }
+  
+  return isValid;
+}
+```
+
+## Common use cases
+
+**Terms of service acceptance**
+
+```typescript
+function acceptTerms(version: string) {
+  const message = `I accept the Terms of Service version ${version}
+Date: ${new Date().toISOString()}
+Account: ${userAddress}`;
+  
+  showSignMessage({
+    message,
+    onFinish: async (data) => {
+      await saveAcceptance({
+        version,
+        signature: data.signature,
+        publicKey: data.publicKey,
+        timestamp: Date.now(),
+      });
+    },
+  });
+}
+```
+
+**Proof of ownership**
+
+```typescript
+function proveOwnership(assetId: string) {
+  const message = `I own asset ${assetId}
+Timestamp: ${Date.now()}`;
+  
+  return signMessage(message);
+}
+```
+
+## Next steps
+
+<Cards>
+  <Card
+    href="/reference/stacks.js/wallet-connection/network-switching"
+    title="Network switching"
+    description="Handle mainnet/testnet network changes"
+  />
+  <Card
+    href="/reference/stacks.js/common-utilities/encryption"
+    title="Encryption utilities"
+    description="Encrypt and decrypt data with keys"
+  />
+  <Card
+    href="/reference/stacks.js/security-postconditions/understanding-postconditions"
+    title="Security patterns"
+    description="Learn about Stacks security features"
+  />
+</Cards>
