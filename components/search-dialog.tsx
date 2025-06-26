@@ -314,11 +314,6 @@ export default function SearchDialog() {
   const [inputValue, setInputValue] = React.useState("");
   const [isSearchingDocs, setIsSearchingDocs] = React.useState(false);
 
-  // Remove Orama state
-  // const [oramaDB, setOramaDB] = React.useState<Orama<any> | null>(null);
-  // const [isLoadingDocs, setIsLoadingDocs] = React.useState(true);
-  // const [fetchError, setFetchError] = React.useState<string | null>(null);
-
   const rootInputRef = React.useRef<HTMLInputElement>(null);
   const docsInputRef = React.useRef<HTMLInputElement>(null);
 
