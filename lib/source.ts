@@ -255,7 +255,7 @@ function extractOperationsFromContent(
   return operations;
 }
 
-const hiroThemeDark: ThemeRegistrationResolved = {
+export const hiroThemeDark: ThemeRegistrationResolved = {
   name: "hiro-dark",
   displayName: "Hiro Dark",
   type: "dark",
@@ -416,7 +416,7 @@ const hiroThemeDark: ThemeRegistrationResolved = {
   },
 };
 
-const hiroThemeLight: ThemeRegistrationResolved = {
+export const hiroThemeLight: ThemeRegistrationResolved = {
   name: "hiro-light",
   displayName: "Hiro Light",
   type: "light",
