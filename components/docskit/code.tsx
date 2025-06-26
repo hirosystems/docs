@@ -1,7 +1,12 @@
 import { cn } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import { MultiCode } from "./code.client";
-import { AnnotationHandler, highlight, Pre, RawCode } from "codehike/code";
+import {
+  type AnnotationHandler,
+  highlight,
+  Pre,
+  type RawCode,
+} from "codehike/code";
 import { CodeIcon } from "./code-icon";
 import theme from "./theme.mjs";
 import React from "react";
@@ -16,33 +21,90 @@ import { tokenTransitions } from "./annotations/token-transitions";
 import { tooltip } from "./annotations/tooltip";
 import { callout } from "./annotations/callout";
 import { hover } from "./annotations/hover";
-import { CODEBLOCK, CodeGroup, flagsToOptions, TITLEBAR } from "./code-group";
+import {
+  CODEBLOCK,
+  type CodeGroup,
+  flagsToOptions,
+  TITLEBAR,
+} from "./code-group";
 
 export async function Code(props: {
   codeblocks: RawCode[];
   flags?: string;
   storage?: string;
+  className?: string;
+  preClassName?: string;
 }) {
-  const group = await toCodeGroup(props);
+  const group = await toCodeGroup({
+    ...props,
+    preClassName: props.preClassName,
+  });
+  return <CodeClient group={group} className={props.className} />;
+}
+
+// Client-side sync version
+export function CodeSync(props: {
+  codeblocks: RawCode[];
+  flags?: string;
+  storage?: string;
+  className?: string;
+  preClassName?: string;
+  onLoad?: () => void;
+}) {
+  const [group, setGroup] = React.useState<CodeGroup | null>(null);
+
+  React.useEffect(() => {
+    toCodeGroup({ ...props, preClassName: props.preClassName }).then((g) => {
+      setGroup(g);
+      props.onLoad?.();
+    });
+  }, [props.codeblocks, props.flags, props.storage, props.preClassName]);
+
+  if (!group) {
+    return <div className={cn(CODEBLOCK, props.className)} />;
+  }
+
+  return <CodeClient group={group} className={props.className} />;
+}
+
+// Shared client component
+function CodeClient({
+  group,
+  className,
+}: {
+  group: CodeGroup;
+  className?: string;
+}) {
   return group.tabs.length === 1 ? (
-    <SingleCode group={group} />
+    <SingleCode group={group} className={className} />
   ) : (
-    <MultiCode group={group} key={group.storage} />
+    <MultiCode group={group} key={group.storage} className={className} />
   );
 }
 
-function SingleCode({ group }: { group: CodeGroup }) {
+function SingleCode({
+  group,
+  className,
+}: {
+  group: CodeGroup;
+  className?: string;
+}) {
   const tab = group.tabs[0];
+  if (!tab) return null;
+
   const { pre, style, code, title, icon, options } = tab;
   const hasTitle = title?.trim() !== "";
   return (
-    <div className={cn(CODEBLOCK, !hasTitle && "border-none")} style={style}>
+    <div
+      className={cn(CODEBLOCK, !hasTitle && "border-none", className)}
+      style={style}
+    >
       {hasTitle && (
         <div
           className={cn(
             TITLEBAR,
             "flex items-center gap-2",
-            "text-ch-tab-active-foreground text-sm font-mono"
+            "text-muted-foreground text-sm font-mono"
           )}
         >
           <span className="pl-2 pr-1">{icon}</span>
@@ -60,7 +122,7 @@ function SingleCode({ group }: { group: CodeGroup }) {
       {options.copyButton && !hasTitle && (
         <CopyButton
           text={code}
-          className="absolute right-4 my-0 top-2 text-ch-tab-inactive-foreground"
+          className="absolute right-4 my-0 top-2 text-ch-tab-inactive-foreground z-10"
         />
       )}
       {pre}
@@ -72,6 +134,7 @@ export async function toCodeGroup(props: {
   codeblocks: RawCode[];
   flags?: string;
   storage?: string;
+  preClassName?: string;
 }): Promise<CodeGroup> {
   const groupOptions = flagsToOptions(props.flags);
 
@@ -93,7 +156,8 @@ export async function toCodeGroup(props: {
             code={highlighted}
             className={cn(
               !title && "!m-0",
-              "overflow-auto px-0 py-2 m-3 rounded !bg-ch-code"
+              "overflow-auto px-0 py-2 m-3 rounded !bg-ch-code",
+              props.preClassName
             )}
             style={highlighted.style}
             handlers={handlers}

@@ -25,7 +25,7 @@ export function TerminalClient({
         className={cn(
           TITLEBAR,
           "flex items-center gap-2",
-          "text-ch-tab-active-foreground text-sm font-mono"
+          "text-muted-foreground text-sm font-mono"
         )}
       >
         <TerminalIcon size={16} className="ml-2 mr-1" />
@@ -46,7 +46,7 @@ export function TerminalClient({
                   key={index}
                   value={tab.name}
                   aria-label={`Toggle ${tab.name}`}
-                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-ch-tab-active-foreground"
+                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-muted-foreground"
                 >
                   {tab.name}
                 </ToggleGroupItem>

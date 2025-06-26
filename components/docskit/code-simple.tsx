@@ -32,7 +32,7 @@ export function SimpleCode({
           className={cn(
             TITLEBAR,
             "flex items-center gap-2",
-            "text-ch-tab-active-foreground text-sm font-mono"
+            "text-muted-foreground text-sm font-mono"
           )}
         >
           <span className="pl-2 pr-1">
