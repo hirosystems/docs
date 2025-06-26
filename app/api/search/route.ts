@@ -1,8 +1,7 @@
 import { source } from "@/lib/source";
 import { createFromSource } from "fumadocs-core/search/server";
 
-// Cache forever for static export
-export const revalidate = 0; // Use 0 instead of false for Next.js 15+
+// Cache the search API responses at runtime for optimal performance
+export const revalidate = false;
 
-// Export the static GET handler
-export const { staticGET: GET } = createFromSource(source);
+export const { GET } = createFromSource(source);
