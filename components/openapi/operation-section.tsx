@@ -37,8 +37,8 @@ export async function OperationSection({
 
   return (
     <section className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-        <div className="space-y-6 lg:col-span-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-6">
           {enablePlayground && (
             <APIPlayground
               operation={operation}
@@ -64,7 +64,7 @@ export async function OperationSection({
           <ResponseTable responses={operation.responses || {}} />
         </div>
 
-        <div className="space-y-6 lg:col-span-2">
+        <div className="space-y-6">
           <CodeExamplesSection operation={operation} baseUrl={baseUrl} />
           <ResponseTabs responses={operation.responses || {}} />
         </div>
