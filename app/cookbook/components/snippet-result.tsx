@@ -181,7 +181,7 @@ export function SnippetResult({
           setCodeHistory(fullCode);
           const codeExecution = simnetInstance.execute(fullCode);
           const result = codeExecution.result;
-          const prettyResult = Cl.prettyPrint(result, 2);
+          const prettyResult = Cl.stringify(result as any, 2);
 
           setOutput((prev) => [
             ...prev,
