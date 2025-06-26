@@ -284,9 +284,13 @@
   }
 
   /* override weird padding in OpenAPI  */
-
   .flex.flex-row.items-center.gap-2.text-sm.p-3 {
     padding-bottom: 15px !important;
+  }
+
+  /* kill the vertical guide on every block rendered by Code Hike */
+  pre[data-ch="true"] .flex {
+    border-left: none !important;   /* overrides the inline border-left-* rules */
   }
 
 }
