@@ -1,11 +1,10 @@
 import fs from "fs/promises";
 import matter from "gray-matter";
 import { source } from "@/lib/source";
-import { openapi } from "@/lib/source";
 import { notFound } from "next/navigation";
 import type { HeadingProps } from "@/types";
 import { API } from "@/components/reference/api-page";
-import { APIPage } from "fumadocs-openapi/ui";
+import { APIPage } from "@/components/openapi/api-page";
 import {
   Accordion,
   AccordionItem,
@@ -93,7 +92,14 @@ export default async function Page(props: {
             AccordionTrigger,
             AccordionContent,
             API: (props) => <API {...props} />,
-            APIPage: (props) => <APIPage {...openapi.getAPIPageProps(props)} />,
+            APIPage: (props) => (
+              <APIPage
+                baseUrl="https://api.hiro.so"
+                enablePlayground={true}
+                clarityConversion={true}
+                {...props}
+              />
+            ),
 
             h1: ({ children, ...props }: HeadingProps) => {
               const H1 =
