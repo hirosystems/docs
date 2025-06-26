@@ -1,4 +1,5 @@
 "use client";
+
 import React, { ButtonHTMLAttributes } from "react";
 import type { PageTree } from "fumadocs-core/server";
 import { type ReactNode, useMemo } from "react";
@@ -10,7 +11,12 @@ import { cva } from "class-variance-authority";
 import { usePathname } from "fumadocs-core/framework";
 import { Button } from "../ui/button";
 import { ThemeToggle } from "../layout/theme-toggle";
-import { ArrowUpRight, SidebarIcon, ChevronRight, ChevronDown } from "lucide-react";
+import {
+  ArrowUpRight,
+  SidebarIcon,
+  ChevronRight,
+  ChevronDown,
+} from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -131,6 +137,16 @@ function Sidebar() {
   const { open, collapsed } = useSidebar();
   const pathname = usePathname();
 
+  const currentSection = React.useMemo(() => {
+    const filterCriteria = ["tools", "apis", "reference", "resources"];
+    for (const criteria of filterCriteria) {
+      if (pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`) {
+        return criteria;
+      }
+    }
+    return "none";
+  }, [pathname]);
+
   const children = useMemo(() => {
     const filterCriteria = ["tools", "apis", "reference", "resources"];
 
@@ -189,7 +205,7 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 pt-4 px-2 pb-10 top-16 z-20 text-sm overflow-auto border-r border-border/50 md:sticky md:h-[calc(100dvh-56px)]",
+        "fixed flex flex-col shrink-0 pt-4 px-2 pb-10 top-16 z-20 text-sm overflow-auto border-r border-border/50 md:sticky md:h-[calc(100dvh-64px)]",
         "max-md:inset-x-0 max-md:bottom-0",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
@@ -271,7 +287,7 @@ function SidebarItem({
   const shouldExpand =
     item.type === "folder" &&
     (isPathInFolder(item, pathname) || (item as any).defaultOpen === true);
-  
+
   const [isOpen, setIsOpen] = React.useState(shouldExpand);
 
   if (item.type === "page") {
