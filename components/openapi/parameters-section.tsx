@@ -82,7 +82,7 @@ function ParameterItem({ parameter }: { parameter: OpenAPIParameter }) {
   return (
     <div className="space-y-1">
       <div className="flex items-center gap-2">
-        <span className="font-mono text-base text-neutral-800 dark:text-neutral-300">
+        <span className="font-mono text-sm text-neutral-800 dark:text-neutral-300">
           {parameter.name}
         </span>
         {parameter.required && (
@@ -147,7 +147,7 @@ function RequestBodySection({
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-base text-neutral-800 dark:text-neutral-300">
+                      <span className="font-mono text-sm text-neutral-800 dark:text-neutral-300">
                         {name}
                       </span>
                       {schema.required?.includes(name) && (
