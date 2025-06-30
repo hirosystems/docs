@@ -3,14 +3,9 @@ import matter from "gray-matter";
 import { source } from "@/lib/source";
 import { notFound } from "next/navigation";
 import type { HeadingProps } from "@/types";
+import { getMDXComponents } from "@/components/mdx";
 import { API } from "@/components/reference/api-page";
 import { APIPage } from "@/components/openapi/api-page";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import {
   DocsPage,
@@ -18,18 +13,13 @@ import {
   DocsDescription,
   DocsTitle,
 } from "@/components/layouts/page";
-import { CustomTable as Table, type TableProps } from "@/components/table";
-import { OrderedList, UnorderedList } from "@/components/lists";
-import { Callout } from "@/components/callout";
-import { Cards, Card, SecondaryCard } from "@/components/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { docskit } from "@/components/docskit/components";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { LLMShare } from "@/components/llm-share";
 import { CheckIcon } from "lucide-react";
 import { TagFilterSystem } from "@/components/ui/tag-filter-system";
 import { getAllFilterablePages } from "@/lib/source";
 import { Mermaid } from "@/components/mdx/mermaid";
+import { Callout } from "@/components/callout";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -85,12 +75,8 @@ export default async function Page(props: {
       <hr className="border-t border-border/50" />
       <DocsBody>
         <MDX
-          components={{
-            ...defaultMdxComponents,
-            Accordion,
-            AccordionItem,
-            AccordionTrigger,
-            AccordionContent,
+          components={getMDXComponents({
+            // Custom overrides that need special handling
             API: (props) => <API {...props} />,
             APIPage: (props) => (
               <APIPage
@@ -100,7 +86,6 @@ export default async function Page(props: {
                 {...props}
               />
             ),
-
             h1: ({ children, ...props }: HeadingProps) => {
               const H1 =
                 defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
@@ -111,12 +96,7 @@ export default async function Page(props: {
                 </H1>
               );
             },
-            Badge,
             blockquote: (props) => <Callout>{props.children}</Callout>,
-            Callout,
-            Cards,
-            Card,
-            SecondaryCard,
             code: (props: React.PropsWithChildren) => (
               <code
                 {...props}
@@ -146,15 +126,7 @@ export default async function Page(props: {
               return <input {...props} />;
             },
             Mermaid,
-            table: (props: TableProps) => <Table {...props} />,
-            ol: OrderedList,
-            ul: UnorderedList,
-            Tabs,
-            TabsList,
-            TabsTrigger,
-            TabsContent,
-            ...docskit,
-          }}
+          })}
         />
       </DocsBody>
     </DocsPage>
