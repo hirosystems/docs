@@ -9,6 +9,15 @@ const config = {
   turbopack: {
     // Add any Turbopack-specific options here (currently optional)
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/start",
+        destination: "/",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withMDX(config);
