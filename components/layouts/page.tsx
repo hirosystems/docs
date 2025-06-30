@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { Link, usePathname } from "fumadocs-core/framework";
 import { TocThumb } from "@/components/layout/toc-thumb";
+import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 
 export interface DocsPageProps {
   toc?: TableOfContents;
@@ -37,6 +38,7 @@ export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
               full ? "max-w-[1120px]" : "max-w-[860px]"
             )}
           >
+            <BreadcrumbNav />
             {props.children}
           </article>
         </main>
