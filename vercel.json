@@ -22,7 +22,7 @@
     { "source": "/platform/:path*", "destination": "/stacks/platform", "permanent": true },
     { "source": "/stacks.js/:path*", "destination": "/stacks/stacks.js", "permanent": true },
     { "source": "/stacks-blockchain-api/:path*", "destination": "/stacks/api", "permanent": true },
-    { "source": "/api/:path*", "destination": "/stacks/api", "permanent": true },
+    { "source": "/api/:path((?!search).*)", "destination": "/stacks/api", "permanent": true },
     { "source": "/stacks/api/fees/estimate", "destination": "/stacks/rpc-api/fees/estimate", "permanent": true },
     { "source": "/stacks/api/fees/transfer-estimate", "destination": "/stacks/rpc-api/fees/transfer-estimate", "permanent": true },
     { "source": "/stacks/api/info/core-api", "destination": "/stacks/rpc-api/info/core-api", "permanent": true },
