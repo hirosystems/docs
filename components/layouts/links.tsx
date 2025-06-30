@@ -231,7 +231,6 @@ export function renderNavItem(item: LinkItemType): ReactNode {
           key={"text" in item ? String(item.text) : undefined}
         >
           {item.url ? (
-            // When item has URL, use asChild to avoid button>a nesting
             <NavigationMenuTrigger asChild>
               <div className="font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer">
                 <Link href={item.url} className="flex items-center gap-1">
