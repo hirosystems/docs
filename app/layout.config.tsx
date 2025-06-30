@@ -11,16 +11,15 @@ export const baseOptions: BaseLayoutProps = {
     title: "Hiro Docs",
   },
   links: [
-    {
-      text: "Get started",
-      url: "/start",
-      active: "nested-url",
-    },
+    // {
+    //   text: "Get started",
+    //   url: "/start",
+    //   active: "nested-url",
+    // },
     // Menu type - uses NavigationMenu component
     {
       type: "menu",
       text: "Tools",
-      url: "/tools",
       items: [
         {
           text: "Clarinet",
@@ -48,7 +47,6 @@ export const baseOptions: BaseLayoutProps = {
     {
       type: "menu",
       text: "APIs",
-      url: "/apis",
       items: [
         {
           text: "API keys",
@@ -98,7 +96,6 @@ export const baseOptions: BaseLayoutProps = {
     {
       type: "menu",
       text: "Libraries & SDKs",
-      url: "/reference",
       items: [
         {
           text: "Stacks.js",
@@ -125,7 +122,6 @@ export const baseOptions: BaseLayoutProps = {
     {
       type: "menu",
       text: "Resources",
-      url: "/resources",
       items: [
         {
           text: "Clarity lang",
