@@ -34,26 +34,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <Cards>
-            <Card
-              className="group space-y-1"
-              icon={
-                <Play className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
-              }
-              href="/start"
-              title="Get Started"
-              description="Get started with our end-to-end tutorials and quickstart guides across all Hiro tools."
-            />
-            <Card
-              className="group space-y-1"
-              icon={
-                <API className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
-              }
-              href="/apis/stacks-blockchain"
-              title="Stacks API Reference"
-              description="Explore API endpoints for interacting with the Stacks Blockchain."
-            />
-          </Cards>
           <div className="flex flex-col">
             <h4 id="explore-by-category" className="scroll-m-20">
               <a
