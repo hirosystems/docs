@@ -1,13 +1,17 @@
 import Link from "fumadocs-core/link";
 import { Cards, Card, SmallCard } from "@/components/card";
-import { Play, Code, Database, Braces, Brackets, Cloud } from "lucide-react";
+import { Play, Database, Braces } from "lucide-react";
 import {
   API,
   Backend,
   Clarity,
-  Js,
   Chainhook,
   Clarinet,
+  Hiro,
+  Js,
+  Ordinals,
+  Runes,
+  StacksIcon,
 } from "@/components/ui/icon";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import heroImage from "@/public/stacks-hero.svg";
@@ -78,7 +82,7 @@ export default function HomePage() {
                 description="Create custom event streams and triggers for real-time blockchain data processing."
               />
               <SmallCard
-                icon={<Brackets />}
+                icon={<Braces />}
                 href="/tools/contract-monitoring"
                 title="Contract Monitoring"
                 description="Monitor and track smart contract activity and performance metrics."
@@ -106,7 +110,7 @@ export default function HomePage() {
             <hr className="border-t border-border my-2" />
             <Cards>
               <SmallCard
-                icon={<API />}
+                icon={<StacksIcon />}
                 href="/apis/stacks-blockchain"
                 title="Stacks Blockchain API"
                 description="Comprehensive REST API for interacting with the Stacks blockchain and network data."
@@ -118,19 +122,19 @@ export default function HomePage() {
                 description="Fast, reliable metadata for fungible and non-fungible tokens on Stacks."
               />
               <SmallCard
-                icon={<API />}
+                icon={<Hiro />}
                 href="/apis/platform"
                 title="Platform API"
                 description="Programmatically manage devnets and chainhooks via REST interface."
               />
               <SmallCard
-                icon={<API />}
+                icon={<Ordinals />}
                 href="/apis/ordinals"
                 title="Ordinals API"
                 description="Complete Bitcoin ordinals and BRC-20 token data with caching optimization."
               />
               <SmallCard
-                icon={<API />}
+                icon={<Runes />}
                 href="/apis/runes"
                 title="Runes API"
                 description="Fast, reliable data for Bitcoin Runes via an easy-to-use REST interface."
@@ -170,7 +174,7 @@ export default function HomePage() {
                 description="JavaScript SDK for testing and interacting with Clarity smart contracts in simulated environments."
               />
               <SmallCard
-                icon={<API />}
+                icon={<StacksIcon />}
                 href="/reference/stacks-blockchain-api"
                 title="Stacks Blockchain API Client"
                 description="Type-safe JavaScript client library for interacting with the Stacks Blockchain API."
