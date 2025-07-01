@@ -283,6 +283,11 @@
     padding-bottom: 15px !important;
   }
 
+  /* remove margin left on fuma ui steps */
+  .fd-steps {
+    margin-left: 0 !important;
+  }
+
   /* kill the vertical guide on every block rendered by Code Hike */
   pre[data-ch="true"] .flex {
     border-left: none !important;   /* overrides the inline border-left-* rules */
