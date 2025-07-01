@@ -133,11 +133,11 @@ export const baseOptions: BaseLayoutProps = {
           description: "Guides for building on Stacks.",
           url: "/resources/guides",
         },
-        {
-          text: "Project templates",
-          description: "Project templates for building on Stacks.",
-          url: "/resources/templates",
-        },
+        // {
+        //   text: "Project templates",
+        //   description: "Project templates for building on Stacks.",
+        //   url: "/resources/templates",
+        // },
         {
           text: "Snippets",
           description: "Code snippets for building on Stacks and Bitcoin.",
