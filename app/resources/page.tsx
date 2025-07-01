@@ -24,12 +24,12 @@ export default function ResourcesPage() {
               title="Guides"
               description="Guides for building on Stacks and Bitcoin."
             />
-            <IndexCard
+            {/* <IndexCard
               icon={<Braces />}
               href="/resources/templates"
               title="Project templates"
               description="Project templates for building on Stacks and Bitcoin."
-            />
+            /> */}
             <IndexCard
               icon={<Code />}
               href="/resources/snippets"
