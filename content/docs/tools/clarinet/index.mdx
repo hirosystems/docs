@@ -6,29 +6,11 @@ type: overview
 llm: false
 ---
 
-import { Cards, NextCard } from "@/components/card";
-
 ## Overview
 
 Clarinet is the fastest way to build, test, and deploy smart contracts on the Stacks blockchain. It gives you a local devnet, REPL, testing framework, and debugging tools to ship high-quality Clarity code with confidence.
 
-<Mermaid
-  chart="
-graph LR
-    A[Write Clarity Contracts] --> B[Clarinet CLI]
-    B --> C[Unit Tests with SDK]
-    C --> D{Tests Pass?}
-    D -->|Yes| E[Local Devnet]
-    D -->|No| A
-    E --> F[Deploy to Network]
-    
-    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style B fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style C fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style E fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style F fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
-/>
+![Clarinet overview](/images/tools/clarinet/overview.svg)
 
 To explore Clarinet features with AI, copy and paste [llms.txt](/tools/clarinet/llms.txt) into your LLM of choice.
 

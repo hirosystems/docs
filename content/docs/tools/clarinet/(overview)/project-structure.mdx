@@ -282,32 +282,19 @@ Never commit mainnet private keys or mnemonics. Use environment variables for pr
       </div>
     </AccordionContent>
   </AccordionItem>
-
-  <AccordionItem value="test-isolation">
-    <AccordionTrigger>Tests interfering with each other</AccordionTrigger>
-    <AccordionContent>
-      <div className="pb-4 pt-2">
-        If tests are affecting each other's state, ensure proper isolation in your Vitest configuration:
-
-        ```js vitest.config.js
-        poolOptions: {
-          forks: { 
-            singleFork: true,  // Reuse process for efficiency
-            isolate: true      // Reset state between tests
-          }
-        }
-        ```
-
-        This configuration maintains test performance while ensuring each test starts with a clean state.
-      </div>
-    </AccordionContent>
-  </AccordionItem>
 </Accordion>
 
 ## Next steps
 
-Now that you understand project structure:
-
-- Create your first project with the [quickstart guide](/tools/clarinet/quickstart)
-- Learn about [contract development](/tools/clarinet/project-development)
-- Explore [testing strategies](/tools/clarinet/testing-validation)
+<Cards>
+<NextCard 
+    href="/tools/clarinet/project-development"
+    title="Project development"
+    description="Learn how to develop a Clarinet project."
+  />
+  <NextCard 
+    href="/tools/clarinet/testing-validation"
+    title="Testing and validation"
+    description="Learn how to test and validate your Clarinet project."
+  />
+</Cards>

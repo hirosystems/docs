@@ -230,7 +230,7 @@ While Clarinet 2.15.0+ automatically funds wallets with sBTC in devnet, you may 
 
 The sBTC token contract allows the deployer (multisig) address to mint tokens. Use this approach in your tests:
 
-```typescript tests/manual-sbtc-mint.test.ts
+```typescript tests/manual-sbtc-mint.test.ts -c
 import { describe, expect, it } from "vitest";
 import { Cl } from "@stacks/transactions";
 
@@ -270,8 +270,7 @@ describe("Manual sBTC minting", () => {
 
 When using mainnet execution simulation, you can mint sBTC using the actual mainnet multisig:
 
-```typescript
-// Enable mainnet simulation in Clarinet.toml
+```typescript -c
 const mainnetMultisig = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
 const mainnetWallet = "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR";
 
@@ -289,9 +288,3 @@ This approach is useful for:
 - Simulating different wallet balances
 - Testing edge cases with precise token amounts
 - Integration testing with mainnet contracts
-
-## Next steps
-
-- Learn about [SIP-010 fungible token standard](https://github.com/stacksgov/sips/blob/main/sips/sip-010/sip-010-fungible-token-standard.md)
-- Explore [Stacks.js integration](/tools/clarinet/integrations/stacks-js-integration) for sBTC transactions
-- Set up [Chainhook monitoring](/tools/clarinet/integrations/chainhook-integration) for sBTC events

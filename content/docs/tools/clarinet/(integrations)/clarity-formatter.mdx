@@ -36,14 +36,6 @@ The formatter is available in two primary development tools:
 - **Pre-commit hooks** - Ensure all code is formatted before commits
 - **Team adoption** - Use consistent settings across your team
 
-## Common misconceptions
-
-<Callout type="warn" title="Common misconception">
-The formatter changes code behavior or logic.
-
-**Reality**: The formatter only changes whitespace and layout. It never alters the functionality of your code.
-</Callout>
-
 ## Further reading
 
 ### Formatting rules in detail
@@ -150,17 +142,13 @@ Format with custom settings:
 $ clarinet format -i 4 -l 120 --in-place
 ```
 
-### Ignoring sections
+### Ignoring blocks of code
 
 Prevent formatting of specific code blocks:
 
 ```clarity
 ;; @format-ignore
 (define-constant something (list
-   1     2  3  ;; Preserves custom spacing
-   4 5 ))
+  1     2  3  ;; Preserves custom spacing
+  4 5 ))
 ```
-
-- [Full formatter documentation](https://github.com/hirosystems/clarity-formatter)
-- [VS Code extension guide](/tools/clarinet/integrations/vscode-extension)
-- [Clarinet CLI reference](/tools/clarinet/clarinet-cli/cli-reference)
