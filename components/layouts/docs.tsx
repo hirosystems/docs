@@ -218,7 +218,7 @@ function Sidebar() {
 }
 
 const linkVariants = cva(
-  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground !font-normal !font-sans [&_svg]:size-3",
+  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground !font-sans [&_svg]:size-3",
   {
     variants: {
       active: {
