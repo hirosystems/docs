@@ -109,9 +109,7 @@ $ npm run test
 | Inconsistent results | Fix `initial_height` in configuration |
 | Function not found | Check the contract exists at your block height |
 
-## Next steps
-
-### Testing in the playground
+## Testing in the playground
 
 Quickly experiment with MXS without setting up a project:
 
@@ -121,21 +119,6 @@ Quickly experiment with MXS without setting up a project:
 ```terminal
 $ contract-call? 'SP000000000000000000002Q6VF78.pox-4 current-pox-reward-cycle
 ```
-
-### Advanced usage
-
-- Test contract interactions with existing mainnet contracts
-- Validate your contract logic against real-world data
-- Simulate specific mainnet transactions for debugging
-
-### Current limitations
-
-MXS does not support functions that query burn block or miner tenure information:
-
-- `get-burn-block-info?`
-- `get-tenure-info?`
-
-Calls to these functions will result in runtime errors.
 
 ## Next steps
 
