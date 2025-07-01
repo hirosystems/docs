@@ -5,6 +5,7 @@ import * as icons from "lucide-react";
 import * as customIcons from "@/components/ui/icon";
 import * as FilesComponents from "fumadocs-ui/components/files";
 import * as StepsComponents from "fumadocs-ui/components/steps";
+import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 
 import {
   Accordion,
@@ -35,6 +36,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...FilesComponents,
     ...StepsComponents,
     ...TabsComponents,
+    img: (props) => <ImageZoom {...(props as any)} />,
     table: Table as unknown as typeof Table,
     ol: OrderedList,
     ul: UnorderedList,

@@ -338,13 +338,15 @@ export function NextCard({
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border bg-neutral-100/50 dark:bg-neutral-800/20 p-6 transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/40 hover:border-neutral-300 dark:hover:border-neutral-700",
+        "group not-prose block rounded-lg border border-border bg-neutral-100/50 dark:bg-neutral-800/20 p-6 transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/40",
         props.className
       )}
     >
       <h3 className="flex items-center gap-2 text-lg font-medium mb-2">
         {title}
-        <span className="text-muted-foreground">→</span>
+        <span className="text-muted-foreground group-hover:text-primary transition-all duration-200">
+          →
+        </span>
       </h3>
       <p className="text-muted-foreground text-sm">{description}</p>
     </Link>

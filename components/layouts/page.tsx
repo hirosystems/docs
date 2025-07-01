@@ -18,6 +18,7 @@ import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { Link, usePathname } from "fumadocs-core/framework";
 import { TocThumb } from "@/components/layout/toc-thumb";
 import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
+import { AlignLeft } from "lucide-react";
 
 export interface DocsPageProps {
   toc?: TableOfContents;
@@ -31,10 +32,10 @@ export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
   return (
     <AnchorProvider toc={toc}>
       <div className="flex w-full min-w-0">
-        <main className="flex flex-1 flex-col">
+        <main className="flex flex-1 flex-col pb-16">
           <article
             className={cn(
-              "flex flex-1 flex-col w-full gap-6 px-4 py-6 md:px-6 md:mx-auto",
+              "flex flex-1 flex-col w-full gap-6 px-4 py-4 md:px-6 md:mx-auto",
               full ? "max-w-[1120px]" : "max-w-[860px]"
             )}
           >
@@ -44,9 +45,12 @@ export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
         </main>
         {toc.length > 0 && !full && (
           <div className="sticky top-(--fd-nav-height) w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 max-xl:hidden overflow-auto">
-            <p className="text-xs font-fono uppercase text-muted-foreground mb-4 ps-3">
-              On this page
-            </p>
+            <div className="flex items-center mb-4">
+              <AlignLeft className="w-4 h-4 mr-2 text-muted-foreground" />
+              <p className="text-sm font-fono text-muted-foreground">
+                Contents
+              </p>
+            </div>
             <div className="relative">
               <TocThumb
                 containerRef={containerRef}
@@ -72,10 +76,7 @@ export function DocsBody(props: ComponentProps<"div">) {
   return (
     <div
       {...props}
-      className={cn(
-        "prose text-neutral-400 dark:text-neutral-300",
-        props.className
-      )}
+      className={cn("prose text-muted-foreground", props.className)}
     >
       {props.children}
     </div>
@@ -106,7 +107,7 @@ function TocItem({ item }: { item: TOCItemType }) {
     <Primitive.TOCItem
       href={item.url}
       className={cn(
-        "prose py-1.5 text-xs text-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-fd-primary",
+        "font-fono prose py-1.5 text-sm text-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-primary",
         item.depth <= 2 && "ps-3",
         item.depth === 3 && "ps-6",
         item.depth >= 4 && "ps-8"
