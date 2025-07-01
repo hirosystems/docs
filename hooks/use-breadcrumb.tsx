@@ -10,37 +10,33 @@ interface BreadcrumbItem {
  * Format breadcrumb names for display
  */
 function formatBreadcrumbName(name: string): string {
-  // Special cases for known terms
   const specialCases: Record<string, string> = {
-    "api": "API",
-    "apis": "APIs",
-    "cli": "CLI",
-    "rpc": "RPC",
-    "http": "HTTP",
-    "sdk": "SDK",
-    "sip": "SIP",
-    "bns": "BNS",
-    "stx": "STX",
-    "nft": "NFT",
-    "btc": "BTC",
-    "auth": "Auth",
+    api: "API",
+    apis: "APIs",
+    cli: "CLI",
+    rpc: "RPC",
+    http: "HTTP",
+    sdk: "SDK",
+    sip: "SIP",
+    bns: "BNS",
+    stx: "STX",
+    nft: "NFT",
+    btc: "BTC",
+    auth: "Auth",
   };
 
-  // Check if it's a special case (case-insensitive)
   const lowerName = name.toLowerCase();
   if (specialCases[lowerName]) {
     return specialCases[lowerName];
   }
 
-  // For multi-word paths separated by hyphens, convert to title case
   if (name.includes("-")) {
     return name
       .split("-")
-      .map(word => formatBreadcrumbName(word))
+      .map((word) => formatBreadcrumbName(word))
       .join(" ");
   }
 
-  // Default: capitalize first letter
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
@@ -50,19 +46,31 @@ function formatBreadcrumbName(name: string): string {
 export function useBreadcrumb(): BreadcrumbItem[] {
   const pathname = usePathname();
 
-  // Split the pathname into segments
-  const segments = pathname.split('/').filter(Boolean);
-  
-  // Build breadcrumb items from URL segments
+  const segments = pathname.split("/").filter(Boolean);
+
   const items: BreadcrumbItem[] = [];
-  let currentPath = '';
+  let currentPath = "";
+  let skipNext = false;
 
   segments.forEach((segment, index) => {
     currentPath += `/${segment}`;
-    
-    // Format the segment name
+
+    // FIXME: Check if we're in an API section and this is a non-navigable segment
+    const isApiSection = segments[0] === "apis";
+    const isReferenceSegment = segment === "reference";
+
+    if (isApiSection && isReferenceSegment) {
+      skipNext = true;
+      return;
+    }
+
+    if (skipNext) {
+      skipNext = false;
+      return;
+    }
+
     const name = formatBreadcrumbName(segment);
-    
+
     // For the last segment, don't include URL (current page)
     if (index === segments.length - 1) {
       items.push({ name });
