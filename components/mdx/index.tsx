@@ -36,7 +36,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...FilesComponents,
     ...StepsComponents,
     ...TabsComponents,
-    img: (props) => <ImageZoom {...(props as any)} />,
+    img: (props) => <ImageZoom className="h-[350px]" {...(props as any)} />,
     table: Table as unknown as typeof Table,
     ol: OrderedList,
     ul: UnorderedList,
