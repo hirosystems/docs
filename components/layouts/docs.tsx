@@ -357,7 +357,7 @@ function SidebarItem({
                 "justify-between w-full"
               )}
             >
-              <div className="flex items-center gap-2 flex-1">
+              <div className="!font-normal flex items-center gap-2 flex-1">
                 {item.index ? (
                   <Link
                     href={item.index.url}
