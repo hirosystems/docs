@@ -202,7 +202,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
   const pathname = usePathname();
 
   switch (itemType) {
-    case "main":
+    case "main": {
       if (!("url" in item)) return null;
 
       const isActive = isNavItemActive(item, pathname);
@@ -222,9 +222,46 @@ export function renderNavItem(item: LinkItemType): ReactNode {
           </NavigationMenuLink>
         </NavigationMenuItem>
       );
+    }
 
-    case "menu":
+    case "menu": {
       if (!("items" in item)) return null;
+
+      // FIXME: Handle edge cases where navigation items live under different URL structures
+      // Currently, API keys (/resources/guides/api-keys), rate limits (/resources/guides/rate-limits), and Clarinet SDKs
+      // are discoverable under specific menus but live under different routes. This causes both
+      // navigation sections to appear active.
+
+      const isResourcesMenu = item.text === "Resources";
+      const isToolsMenu = item.text === "Tools";
+      const relatedPaths = [
+        "/resources/guides/api-keys",
+        "/resources/guides/rate-limits",
+        "/tools/clarinet/sdk-reference",
+        "/tools/clarinet/browser-sdk-reference",
+      ];
+
+      const isAnyChildActive = item.items.some((menuItem) => {
+        if (menuItem.type === "custom" || !("url" in menuItem)) return false;
+
+        // Exclude paths that are shown under other menus
+        if (
+          (isResourcesMenu &&
+            relatedPaths.some(
+              (path) => pathname === path || pathname.startsWith(`${path}/`)
+            )) ||
+          (isToolsMenu &&
+            relatedPaths.some(
+              (path) => pathname === path || pathname.startsWith(`${path}/`)
+            ))
+        ) {
+          return false;
+        }
+
+        return (
+          pathname === menuItem.url || pathname.startsWith(`${menuItem.url}/`)
+        );
+      });
 
       return (
         <NavigationMenuItem
@@ -232,7 +269,13 @@ export function renderNavItem(item: LinkItemType): ReactNode {
         >
           {item.url ? (
             <NavigationMenuTrigger asChild>
-              <div className="font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer">
+              <div
+                className={cn(
+                  "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer",
+                  isAnyChildActive &&
+                    "underline underline-offset-4 text-primary"
+                )}
+              >
                 <Link href={item.url} className="flex items-center gap-1">
                   {item.text}
                 </Link>
@@ -241,7 +284,12 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             </NavigationMenuTrigger>
           ) : (
             // When no URL, use default button behavior
-            <NavigationMenuTrigger className="font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1">
+            <NavigationMenuTrigger
+              className={cn(
+                "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1",
+                isAnyChildActive && "underline underline-offset-4 text-primary"
+              )}
+            >
               {item.text}
               <ChevronDown className="relative h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </NavigationMenuTrigger>
@@ -298,7 +346,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             <div className="grid grid-cols-1 gap-x-5 px-2 py-1 w-max">
               {item.items.map((menuItem, index) => {
                 if (menuItem.type === "custom") {
-                  return <div key={index}>{menuItem.children}</div>;
+                  return <div key={`custom-${index}`}>{menuItem.children}</div>;
                 }
 
                 if (!("url" in menuItem)) return null;
@@ -324,6 +372,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
           </NavigationMenuContent>
         </NavigationMenuItem>
       );
+    }
 
     case "dropdown":
       if (!("items" in item)) return null;
@@ -351,7 +400,10 @@ function DropdownNavItem({ item }: { item: DropdownItemType }) {
     <NavigationMenuItem>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="font-fono text-sm px-4 py-2 rounded-md hover:bg-accent data-[state=open]:bg-accent transition-colors flex items-center gap-1">
+          <button
+            type="button"
+            className="font-fono text-sm px-4 py-2 rounded-md hover:bg-accent data-[state=open]:bg-accent transition-colors flex items-center gap-1"
+          >
             {item.text}
             <ChevronDown className="relative h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-180" />
           </button>
@@ -360,7 +412,7 @@ function DropdownNavItem({ item }: { item: DropdownItemType }) {
           {item.items.map((dropdownItem, index) => {
             if (dropdownItem.type === "custom") {
               return (
-                <div key={index} className="p-2">
+                <div key={`dropdown-custom-${index}`} className="p-2">
                   {dropdownItem.children}
                 </div>
               );

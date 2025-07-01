@@ -1,8 +1,8 @@
 "use client";
-import {
-  type PageTree,
-  type TableOfContents,
-  type TOCItemType,
+import type {
+  PageTree,
+  TableOfContents,
+  TOCItemType,
 } from "fumadocs-core/server";
 import {
   type ComponentProps,
