@@ -84,7 +84,6 @@ export function DocsBody(props: ComponentProps<"div">) {
 }
 
 export function DocsDescription(props: ComponentProps<"p">) {
-  // don't render if no description provided
   if (props.children === undefined) return null;
 
   return (
