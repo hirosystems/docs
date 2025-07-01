@@ -23,9 +23,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         className={cn(
           "my-6 flex flex-row items-center gap-2 rounded-lg p-4 text-sm text-foreground",
           {
-            tip: "bg-[#CEEFD0] dark:bg-background dark:border dark:border-[#CEEFD0]",
-            info: "bg-[#B3D9FF] dark:bg-background dark:border dark:border-[#B3D9FF]",
-            warn: "bg-[#FF9966] dark:bg-background dark:border dark:border-[#FF9966]",
+            tip: "bg-[#CEEFD0] dark:bg-background dark:border dark:border-[#C2EBC4]",
+            info: "bg-[#D1E8FF] dark:bg-background dark:border dark:border-[#B3D9FF]",
+            warn: "bg-[#FDC] dark:bg-background dark:border dark:border-[#F96]",
             help: "bg-[#EBE9E6] dark:bg-background dark:border",
           }[type],
           className
@@ -34,9 +34,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
       >
         {(!title && icon) ??
           {
-            tip: null,
-            info: null,
-            warn: null,
+            tip: <Star className="w-4 h-4 dark:text-[#C2EBC4]" />,
+            info: <Info className="w-4 h-4 dark:text-[#B3D9FF]" />,
+            warn: <AlertTriangle className="w-4 h-4 dark:text-[#F96]" />,
             help: (
               <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                 <HiroSVG />
@@ -54,9 +54,11 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               <>
                 {icon ??
                   {
-                    tip: null,
-                    info: null,
-                    warn: null,
+                    tip: <Star className="w-4 h-4 dark:text-[#C2EBC4]" />,
+                    info: <Info className="w-4 h-4 dark:text-[#B3D9FF]" />,
+                    warn: (
+                      <AlertTriangle className="w-4 h-4 dark:text-[#F96]" />
+                    ),
                     help: (
                       <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                         <HiroSVG />
@@ -67,9 +69,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                   className={cn(
                     "font-medium",
                     {
-                      tip: "text-foreground dark:text-[#CEEFD0]",
-                      info: "text-foreground dark:text-[#D1E8FF]",
-                      warn: "text-foreground dark:text-[#FF9966]",
+                      tip: "text-foreground dark:text-[#C2EBC4]",
+                      info: "text-foreground dark:text-[#B3D9FF]",
+                      warn: "text-foreground dark:text-[#F96]",
                       help: "font-bold text-foreground dark:text-[#EBE9E6]",
                     }[type]
                   )}
