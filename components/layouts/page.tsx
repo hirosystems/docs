@@ -1,103 +1,155 @@
 "use client";
-import type {
-  PageTree,
-  TableOfContents,
-  TOCItemType,
-} from "fumadocs-core/server";
-import {
-  type ComponentProps,
+
+import React, {
+  createContext,
+  useContext,
   type ReactNode,
-  useMemo,
+  type ComponentProps,
   useRef,
-  useEffect,
 } from "react";
-import { AnchorProvider, useActiveAnchors } from "fumadocs-core/toc";
+import type { TableOfContents, TOCItemType } from "fumadocs-core/server";
+import { AnchorProvider } from "fumadocs-core/toc";
 import * as Primitive from "fumadocs-core/toc";
 import { cn } from "@/lib/utils";
-import { useTreeContext } from "fumadocs-ui/contexts/tree";
-import { Link, usePathname } from "fumadocs-core/framework";
-import { TocThumb } from "@/components/layout/toc-thumb";
-import { BreadcrumbNav } from "@/components/ui/breadcrumb-nav";
 import { AlignLeft } from "lucide-react";
+import { TocThumb } from "@/components/layout/toc-thumb";
+import { BreadcrumbNav as OriginalBreadcrumb } from "@/components/ui/breadcrumb-nav";
 
-export interface DocsPageProps {
+export interface PageData {
   toc?: TableOfContents;
   full?: boolean;
+  interactive?: boolean;
+  title?: string;
+  description?: string;
+  interactiveFeatures?: string[];
+  interactiveLinks?: Array<{
+    title: string;
+    href: string;
+    icon?: ReactNode;
+  }>;
+}
+
+export const PageContext = createContext<PageData>({});
+
+export function usePageData() {
+  const context = useContext(PageContext);
+  if (!context) {
+    throw new Error("usePageData must be used within a Page component");
+  }
+  return context;
+}
+
+interface DocsPageProps {
+  data: PageData;
   children: ReactNode;
 }
 
-export function DocsPage({ toc = [], full, ...props }: DocsPageProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
+export function DocsPage({ data, children }: DocsPageProps) {
   return (
-    <AnchorProvider toc={toc}>
-      <div className="flex w-full min-w-0">
-        <main className="flex flex-1 flex-col pb-16">
-          <article
-            className={cn(
-              "flex flex-1 flex-col w-full gap-6 px-4 py-4 md:px-6 md:mx-auto",
-              full ? "max-w-[1120px]" : "max-w-[860px]"
-            )}
-          >
-            <BreadcrumbNav />
-            {props.children}
-          </article>
-        </main>
-        {toc.length > 0 && !full && (
-          <div className="sticky top-(--fd-nav-height) w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 max-xl:hidden overflow-auto">
-            <div className="flex items-center mb-4">
-              <AlignLeft className="w-4 h-4 mr-2 text-muted-foreground" />
-              <p className="text-sm font-fono text-muted-foreground">
-                Contents
-              </p>
-            </div>
-            <div className="relative">
-              <TocThumb
-                containerRef={containerRef}
-                className="absolute left-0 mt-(--fd-top) h-(--fd-height) w-px bg-primary transition-all"
-              />
-              <div
-                ref={containerRef}
-                className="flex flex-col border-l border-border/25 pl-px"
-              >
-                {toc.map((item) => (
-                  <TocItem key={item.url} item={item} />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </AnchorProvider>
+    <PageContext.Provider value={data}>
+      <AnchorProvider toc={data.toc || []}>{children}</AnchorProvider>
+    </PageContext.Provider>
   );
 }
 
-export function DocsBody(props: ComponentProps<"div">) {
+type LayoutVariant = "standard" | "interactive" | "hero" | "minimal";
+
+interface PageLayoutProps {
+  children: ReactNode;
+  variant?: LayoutVariant;
+  className?: string;
+}
+
+function PageLayout({
+  children,
+  variant = "standard",
+  className,
+}: PageLayoutProps) {
   return (
-    <div
-      {...props}
-      className={cn("prose text-muted-foreground", props.className)}
-    >
-      {props.children}
+    <div className="flex-1 min-w-0">
+      <div
+        className={cn(
+          "flex flex-col w-full",
+          variant === "interactive" && "min-h-screen",
+          className
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }
 
-export function DocsDescription(props: ComponentProps<"p">) {
-  if (props.children === undefined) return null;
+// Internal wrapper component for content + TOC
+interface ContentWrapperProps {
+  children: ReactNode;
+  className?: string;
+}
 
-  return (
-    <p {...props} className={cn("text-md", props.className)}>
-      {props.children}
-    </p>
+function ContentWrapper({ children, className }: ContentWrapperProps) {
+  const { toc = [], full } = usePageData();
+  const shouldShowTOC = toc.length > 0 && !full;
+
+  return shouldShowTOC ? (
+    <div className={cn("flex w-full min-w-0", className)}>
+      {children}
+      <PageTOC />
+    </div>
+  ) : (
+    <>{children}</>
   );
 }
 
-export function DocsTitle(props: ComponentProps<"h1">) {
+interface PageHeaderProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function PageHeader({ children, className }: PageHeaderProps) {
+  const { interactive } = usePageData();
+
   return (
-    <h1 {...props} className={cn("text-3xl font-semibold", props.className)}>
-      {props.children}
-    </h1>
+    <div
+      className={cn(
+        "w-full",
+        interactive &&
+          "bg-neutral-100 dark:bg-neutral-800 border-b border-border/50",
+        className
+      )}
+    >
+      <div
+        className={cn(
+          "w-full px-4 py-4 md:px-6",
+          interactive ? "max-w-[1135px] mx-auto" : "max-w-[860px] mx-auto"
+        )}
+      >
+        <div className={cn(interactive && "space-y-6")}>{children}</div>
+      </div>
+    </div>
+  );
+}
+
+interface PageContentProps extends ComponentProps<"div"> {
+  children: ReactNode;
+  className?: string;
+}
+
+function PageContent({ children, className, ...props }: PageContentProps) {
+  const { full, interactive } = usePageData();
+
+  return (
+    <main className="flex flex-1 flex-col pb-16">
+      <article
+        className={cn(
+          "flex flex-1 flex-col w-full gap-6 px-4 md:px-6 md:mx-auto",
+          interactive ? "pt-8" : "py-4",
+          full ? "max-w-[1120px]" : "max-w-[860px]"
+        )}
+        {...props}
+      >
+        {children}
+      </article>
+    </main>
   );
 }
 
@@ -117,60 +169,99 @@ function TocItem({ item }: { item: TOCItemType }) {
   );
 }
 
-function Footer() {
-  const { root } = useTreeContext();
-  const pathname = usePathname();
-  const flatten = useMemo(() => {
-    const result: PageTree.Item[] = [];
+function PageTOC() {
+  const { toc = [], full } = usePageData();
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    function scan(items: PageTree.Node[]) {
-      for (const item of items) {
-        if (item.type === "page") result.push(item);
-        else if (item.type === "folder") {
-          if (item.index) result.push(item.index);
-          scan(item.children);
-        }
-      }
-    }
-
-    scan(root.children);
-    return result;
-  }, [root]);
-
-  const { previous, next } = useMemo(() => {
-    const idx = flatten.findIndex((item) => item.url === pathname);
-
-    if (idx === -1) return {};
-    return {
-      previous: flatten[idx - 1],
-      next: flatten[idx + 1],
-    };
-  }, [flatten, pathname]);
+  if (toc.length === 0 || full) return null;
 
   return (
-    <div className="flex flex-row justify-between gap-4 items-stretch">
-      {previous ? (
-        <Link
-          href={previous.url}
-          className="flex flex-col gap-1 px-4 py-3 border border-border rounded-lg hover:bg-muted/50 transition-colors flex-1 max-w-sm"
+    <div className="sticky top-[var(--fd-nav-height)] w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 max-xl:hidden overflow-auto">
+      <div className="flex items-center mb-4">
+        <AlignLeft className="w-4 h-4 mr-2 text-muted-foreground" />
+        <p className="text-sm font-fono text-muted-foreground">Contents</p>
+      </div>
+      <div className="relative">
+        <TocThumb
+          containerRef={containerRef}
+          className="absolute left-0 mt-[var(--fd-top)] h-[var(--fd-height)] w-px bg-primary transition-all"
+        />
+        <div
+          ref={containerRef}
+          className="flex flex-col border-l border-border/25 pl-px"
         >
-          <span className="text-sm text-muted-foreground">← Previous</span>
-          <span className="font-medium">{previous.name}</span>
-        </Link>
-      ) : (
-        <div />
-      )}
-      {next ? (
-        <Link
-          href={next.url}
-          className="flex flex-col gap-1 px-4 py-3 border border-border rounded-lg hover:bg-muted/50 transition-colors flex-1 max-w-sm text-right"
-        >
-          <span className="text-sm text-muted-foreground">Next →</span>
-          <span className="font-medium">{next.name}</span>
-        </Link>
-      ) : (
-        <div />
-      )}
+          {toc.map((item) => (
+            <TocItem key={item.url} item={item} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
+
+function PageBreadcrumb() {
+  return <OriginalBreadcrumb />;
+}
+
+function PageTitle(props: ComponentProps<"h1">) {
+  const { title } = usePageData();
+  if (!title && !props.children) return null;
+
+  return (
+    <h1 {...props} className={cn("text-3xl font-semibold", props.className)}>
+      {props.children || title}
+    </h1>
+  );
+}
+
+function PageDescription(props: ComponentProps<"p">) {
+  const { description } = usePageData();
+  if (!description && !props.children) return null;
+
+  return (
+    <p {...props} className={cn("text-md", props.className)}>
+      {props.children || description}
+    </p>
+  );
+}
+
+interface PageProseProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function PageProse({ children, className }: PageProseProps) {
+  return (
+    <div className={cn("prose text-muted-foreground", className)}>
+      {children}
+    </div>
+  );
+}
+
+export {
+  PageLayout as DocsPageLayout,
+  PageHeader as DocsPageHeader,
+  PageContent as DocsPageContent,
+  ContentWrapper as DocsPageContentWrapper,
+  PageTOC as DocsPageTOC,
+  PageBreadcrumb as DocsPageBreadcrumb,
+  PageTitle as DocsPageTitle,
+  PageDescription as DocsPageDescription,
+  PageProse as DocsPageProse,
+};
+
+export {
+  PageTitle as DocsTitle,
+  PageDescription as DocsDescription,
+  PageProse as DocsBody,
+};
+
+// DocsPage.Layout = PageLayout;
+// DocsPage.Header = PageHeader;
+// DocsPage.Content = PageContent;
+// DocsPage.ContentWrapper = ContentWrapper;
+// DocsPage.TOC = PageTOC;
+// DocsPage.Breadcrumb = PageBreadcrumb;
+// DocsPage.Title = PageTitle;
+// DocsPage.Description = PageDescription;
+// DocsPage.Prose = PageProse;
