@@ -25,9 +25,9 @@ export default function ReferencePage() {
             />
             <IndexCard
               icon={<Js />}
-              href="/tools/clarinet/sdk-browser-reference"
-              title="Clarinet JS SDK Browser"
-              description="JavaScript SDK for interacting with the simnet from web browsers using the Clarinet SDK."
+              href="/tools/clarinet/browser-sdk-reference"
+              title="Clarinet JS Browser SDK"
+              description="JavaScript SDK for interacting with the simnet in web browsers."
             />
             <IndexCard
               icon={<API />}

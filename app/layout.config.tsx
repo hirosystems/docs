@@ -108,8 +108,8 @@ export const baseOptions: BaseLayoutProps = {
           url: "/tools/clarinet/sdk-reference",
         },
         {
-          text: "Clarinet JS SDK Browser",
-          description: "JavaScript SDK for Clarinet.",
+          text: "Clarinet JS Browser SDK",
+          description: "JavaScript SDK for Clarinet in the browser.",
           url: "/tools/clarinet/browser-sdk-reference",
         },
         {
