@@ -25,6 +25,18 @@ export const docs = defineDocs({
       labels: z.array(z.string()).optional(),
       type: z.string().optional(),
       isRpc: z.boolean().optional(),
+      // Interactive layout fields
+      interactive: z.boolean().optional(),
+      interactiveFeatures: z.array(z.string()).optional(),
+      interactiveLinks: z
+        .array(
+          z.object({
+            title: z.string(),
+            href: z.string(),
+            icon: z.string().optional(),
+          })
+        )
+        .optional(),
     }),
   },
   meta: {
