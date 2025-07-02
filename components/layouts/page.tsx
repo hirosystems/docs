@@ -219,7 +219,10 @@ function PageDescription(props: ComponentProps<"p">) {
   if (!description && !props.children) return null;
 
   return (
-    <p {...props} className={cn("text-md", props.className)}>
+    <p
+      {...props}
+      className={cn("text-md text-muted-foreground", props.className)}
+    >
       {props.children || description}
     </p>
   );
