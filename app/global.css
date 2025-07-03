@@ -268,6 +268,7 @@
   h1, h2, h3, h4, h5, h6, code, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, option {
     font-family: var(--font-fono), sans-serif;
     @apply text-primary;
+    @apply font-normal;
   }
 
   span {
@@ -276,6 +277,10 @@
 
   pre span {
     font-family: var(--font-mono), sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
   }
   
   /* override weird padding in OpenAPI  */
