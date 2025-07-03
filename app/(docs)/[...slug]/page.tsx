@@ -121,6 +121,7 @@ export default async function Page(props: {
             <InteractiveHeader>
               <InteractiveLayout />
             </InteractiveHeader>
+            <div className="border-b border-border/50" />
           </DocsPageHeader>
           <DocsPageContentWrapper>
             <DocsPageContent>
@@ -221,7 +222,7 @@ export default async function Page(props: {
                 />
               )}
 
-              <hr className="border-t border-border/50" />
+              <div className="border-b border-border/50" />
               <DocsPageProse>
                 <MDX
                   components={getMDXComponents({
