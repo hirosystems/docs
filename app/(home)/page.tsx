@@ -44,7 +44,7 @@ export default function HomePage() {
               icon={
                 <API className="transition-colors duration-500 ease-in-out group-hover:text-primary" />
               }
-              href="/apis/stacks-blockchain"
+              href="/apis/stacks-blockchain-api"
               title="Stacks API Reference"
               description="Explore API endpoints for interacting with the Stacks Blockchain."
             />
@@ -111,7 +111,7 @@ export default function HomePage() {
             <Cards>
               <SmallCard
                 icon={<StacksIcon />}
-                href="/apis/stacks-blockchain"
+                href="/apis/stacks-blockchain-api"
                 title="Stacks Blockchain API"
                 description="Comprehensive REST API for interacting with the Stacks blockchain and network data."
               />

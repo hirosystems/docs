@@ -13,7 +13,7 @@ export default function APIsPage() {
           <Cards>
             <IndexCard
               icon={<StacksIcon />}
-              href="/apis/stacks-blockchain"
+              href="/apis/stacks-blockchain-api"
               title="Stacks Blockchain API"
               description="Comprehensive REST API for interacting with the Stacks blockchain and network data."
             />

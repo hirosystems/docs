@@ -62,34 +62,34 @@ export const baseOptions: BaseLayoutProps = {
           text: "Stacks API",
           description:
             "RESTful API for accessing Stacks blockchain data and functionality.",
-          url: "/apis/stacks-blockchain",
+          url: "/apis/stacks-blockchain-api",
         },
         {
           text: "Token Metadata API",
           description: "API for retrieving NFT and fungible token metadata.",
-          url: "/apis/token-metadata",
+          url: "/apis/token-metadata-api",
         },
         {
           text: "Platform API",
           description:
             "API for accessing Hiro Platform data and functionality.",
-          url: "/apis/platform",
+          url: "/apis/platform-api",
         },
         {
           text: "Ordinals API",
           description: "API for Bitcoin Ordinals and inscriptions data.",
-          url: "/apis/ordinals",
+          url: "/apis/ordinals-api",
         },
         {
           text: "Runes API",
           description: "API for Bitcoin Runes data.",
-          url: "/apis/runes",
+          url: "/apis/runes-api",
         },
         {
           text: "Signer Metrics API",
           description:
             "API for accessing Signer metrics data and functionality.",
-          url: "/apis/signer-metrics",
+          url: "/apis/signer-metrics-api",
         },
       ],
     },
