@@ -1,117 +1,49 @@
 ---
-title: "Stacks.js"
+title: Stacks.js
 sidebarTitle: Overview
-description: The following guides cover ways to use Hiro tools to build apps on Stacks.
-full: true
+description: A collection of JavaScript libraries to build web applications on Stacks.
 ---
 
-import { Database, Ticket } from 'lucide-react';
-import { Blockchain, Bitcoin, Clarinet, Container, DAO, Js, Plant, Shapes, StacksIcon } from '@/components/ui/icon';
-import { SecondaryCard, SmallCard } from '@/components/card';
+## Overview
 
-<div className='flex flex-col space-y-10'>
+Stacks.js is a JavaScript/TypeScript SDK for building on the Stacks blockchain. It's a collection of various JavaScript libraries that allow you to broadcast a transaction with the Stacks blockchain, construct post-conditions, and more. Some of the most important building blocks, all in one place.
+
+Stacks.js is separated into many smaller packages, which can be installed individually. Most packages are published to npm under the `@stacks` scope.
+
+For more details, check out out our [installation guide](/reference/stacks.js/installation).
+
+<SecondaryCard
+  icon={<Globe/>}
+  href="/stacks/connect"
+  title="Build a Stacks web app"
+  description="Integrate Stacks.js into your web apps with Stacks Connect."
+  tag="Stacks Connect"
+/>
+
+## Guides
 
 <Cards>
   <SecondaryCard
-    icon={<Clarinet />}
-    href="/stacks/clarinet/quickstart"
-    title="Create your first smart contract"
-    description="Build a simple counter contract using Clarinet."
-    tag='Clarinet'
+    href="/stacks/stacks.js/guides/broadcast-transactions"
+    title="Broadcast transactions"
+    description="Create and broadcast transactions using Stacks.js builder and helper functions."
   />
   <SecondaryCard
-    icon={<Blockchain />}
-    href="/stacks/clarinet-js-sdk/quickstart"
-    title="Write unit tests for your smart contracts"
-    description="Learn how run unit tests with Clarinet JS SDK."
-    tag='Clarinet JS SDK'
-  />
-  <SecondaryCard
-    icon={<Js />}
-    href="/stacks/stacks.js/quickstart"
-    title="Make a contract call with Stacks.js"
-    description="Learn how to integrate smart contracts into your app."
-    tag='Stacks.js'
-  />
-  <SecondaryCard
-    icon={<Database />}
-    href="/stacks/chainhook/quickstart"
-    title="Stream custom blockchain events"
-    description="Use Chainhook to filter & stream for contract deployments."
-    tag='Chainhook'
+    href="/stacks/stacks.js/guides/post-conditions"
+    title="Constructing post-conditions"
+    description="Build post-conditions into your smart contracts and safe-guard your users."
   />
 </Cards>
 
-<div className='flex flex-col'>
+## Related tools
 
-<h4 id="learn-by-example" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#learn-by-example" className="not-prose group text-sm uppercase">Learn by example</a>
-</h4>
+- **[Clarinet](/tools/clarinet)**: Build your app in a local environment on Stacks.
+- **[Stacks Connect](/reference/stacks.js/connect-wallet)**: Interact with the Stacks blockchain with your wallet extension.
+- **[Hiro Platform](https://platform.hiro.so/)**: A developer platform for building, deploying and scaling Bitcoin apps.
+- **[Stacks Blockchain API](/apis/stacks-blockchain-api)**: Fetch data and broadcast transactions with the Stacks Blockchain API.
 
----
+<br />
 
-<Cards>
-  <SmallCard
-    icon={<Shapes />}
-    href="/guides/build-an-nft-marketplace"
-    title="Build an NFT Marketplace"
-    description="Learn how to create and deploy your own NFT marketplace."
-  />
-  {/* <SmallCard
-    icon={<DAO />}
-    href="/stacks/clarinet"
-    title="Launch a Decentralized Autonomous Organization (DAO)"
-    description="Discover the steps to creating your own DAO."
-  /> */}
-  <SmallCard
-    icon={<Ticket />}
-    href="/guides/no-loss-lottery"
-    title="Create a no-loss lottery pool"
-    description="Build a no-loss lottery pool that leverages stacking yield."
-  />
-  <SmallCard
-    icon={<Plant />}
-    href="/guides/build-a-decentralized-kickstarter"
-    title="Build a decentralized Kickstarter"
-    description="Learn how to create a crowdfunding app, enabling creators to fund their projects without a third party."
-  />
-</Cards>
-
-</div>
-
-<div className='flex flex-col'>
-
-<h4 id="installation-guides" className="text-[#595650] dark:text-[#8c877d] scroll-m-20">
-  <a href="#installation-guides" className="not-prose group text-sm uppercase">Installation guides</a>
-</h4>
-
----
-
-<Cards>
-  <SmallCard
-    icon={<Bitcoin />}
-    href="/guides/sync-a-bitcoin-node"
-    title="Sync a Bitcoin node"
-    description="Set up and run a Bitcoin node to run tools like Chainhook as a service."
-  />
-  <SmallCard
-    icon={<StacksIcon />}
-    href="/guides/sync-a-stacks-node"
-    title="Sync a Stacks node"
-    description="Set up and run a Stacks node to use tools like Chainhook or spin up your own API."
-  />
-  <SmallCard
-    icon={<Container />}
-    href="/guides/installing-docker"
-    title="Install and run Docker on your machine"
-    description="Essential for running a local development with Clarinet"
-  />
-</Cards>
-
-</div>
-
-<Callout type="tip">
-For more, check out our [guides](/guides) section.
+<Callout title="Need help building with Stacks.js?" type="help">
+Reach out to us on the <span className="font-bold">#stacks-js</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
 </Callout>
-
-</div>
