@@ -105,18 +105,18 @@ export const baseOptions: BaseLayoutProps = {
         {
           text: "Clarinet JS SDK",
           description: "JavaScript SDK for Clarinet.",
-          url: "/tools/clarinet/sdk-reference",
+          url: "/tools/clarinet/sdk-introduction",
         },
         {
           text: "Clarinet JS Browser SDK",
           description: "JavaScript SDK for Clarinet in the browser.",
           url: "/tools/clarinet/browser-sdk-reference",
         },
-        {
-          text: "Stacks Blockchain API Client",
-          description: "Client SDK for the Stacks blockchain API.",
-          url: "/reference/stacks-blockchain-api-client",
-        },
+        // {
+        //   text: "Stacks Blockchain API Client",
+        //   description: "Client SDK for the Stacks blockchain API.",
+        //   url: "/reference/stacks-blockchain-api-client",
+        // },
       ],
     },
     {

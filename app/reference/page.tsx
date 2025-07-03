@@ -19,7 +19,7 @@ export default function ReferencePage() {
             />
             <IndexCard
               icon={<Js />}
-              href="/tools/clarinet/sdk-reference"
+              href="/tools/clarinet/sdk-introduction"
               title="Clarinet JS SDK"
               description="JavaScript SDK for testing and interacting with Clarity smart contracts in simulated environments."
             />
