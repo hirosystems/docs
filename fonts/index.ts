@@ -29,6 +29,16 @@ export const aeonikFono = localFont({
       weight: "normal",
       style: "normal",
     },
+    {
+      path: "./aeonikfono-medium.woff",
+      weight: "bold",
+      style: "normal",
+    },
+    {
+      path: "./aeonikfono-medium.woff2",
+      weight: "bold",
+      style: "normal",
+    },
   ],
   display: "optional",
   variable: "--font-fono",
