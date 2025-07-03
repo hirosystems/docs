@@ -110,7 +110,7 @@ export function FeatureCard({
           <div className="w-20 h-20 rounded-lg flex items-center justify-center mb-4 [&_svg]:size-12">
             {icon}
           </div>
-          <h3 className="text-2xl font-semibold mb-2">{title}</h3>
+          <h3 className="text-2xl font-normal mb-2">{title}</h3>
           <p className="text-muted-foreground">{description}</p>
         </div>
 
@@ -213,7 +213,7 @@ export function IndexCard({
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-card-foreground mb-2 leading-tight">
+          <h3 className="font-normal text-card-foreground mb-2 leading-tight">
             {title}
           </h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
