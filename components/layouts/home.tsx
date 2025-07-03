@@ -79,7 +79,7 @@ export function Header({
         "border-b border-transparent"
       )}
     >
-      <nav className="flex flex-row items-center gap-2 size-full px-4">
+      <nav className="flex flex-row items-center gap-4 size-full px-4">
         {/* <NavbarSidebarTrigger /> */}
         <Link href="/" className="mr-6 flex items-center space-x-2">
           <DocsLogo className="hidden sm:block" />

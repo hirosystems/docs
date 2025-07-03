@@ -11,9 +11,10 @@ export function SearchToggle(props: ComponentProps<"button">) {
   if (!enabled) return;
 
   return (
-    <div
+    <button
       className="w-full max-w-[221px] h-9 bg-white dark:bg-neutral-950 rounded-md flex items-center px-2 cursor-pointer group"
       onClick={() => setOpenSearch(true)}
+      {...props}
     >
       <div className="flex items-center flex-1 gap-2">
         <SearchIcon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -22,13 +23,13 @@ export function SearchToggle(props: ComponentProps<"button">) {
         </span>
       </div>
       <div className="flex items-center gap-1 group">
-        <Kbd className="flex items-center justify-center rounded text-md bg-card text-muted-foreground group-hover:text-primary transition-colors">
+        <Kbd className="flex items-center justify-center rounded text-md group-hover:text-primary transition-colors">
           ⌘
         </Kbd>
-        <Kbd className="flex items-center justify-center rounded text-sm bg-card text-muted-foreground group-hover:text-primary transition-colors">
+        <Kbd className="flex items-center justify-center rounded text-sm group-hover:text-primary transition-colors">
           K
         </Kbd>
       </div>
-    </div>
+    </button>
   );
 }

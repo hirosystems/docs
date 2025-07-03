@@ -92,7 +92,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
           "border-b border-border/50"
         )}
       >
-        <nav className="flex flex-row items-center gap-2 size-full px-4">
+        <nav className="flex flex-row items-center gap-4 size-full px-4">
           <div className="flex flex-row items-center gap-4">
             {/* <NavbarSidebarTrigger /> */}
             <Link href="/" className="mr-6 flex items-center space-x-2">
@@ -311,7 +311,7 @@ function SidebarItem({
             ]
         )}
       >
-        <div className="flex items-center gap-2 flex-1">
+        <div className="!font-normal flex items-center gap-2 flex-1">
           {item.icon}
           {displayName}
           <PageBadges item={item} />
@@ -355,10 +355,10 @@ function SidebarItem({
                   active: item.index ? pathname === item.index.url : false,
                 }),
                 "justify-between w-full",
-                "!font-normal" // Override font-medium from linkVariants
+                "!font-normal"
               )}
             >
-              <div className="flex items-center gap-2 flex-1">
+              <div className="!font-normal flex items-center gap-2 flex-1">
                 {item.index ? (
                   <Link
                     href={item.index.url}
@@ -366,7 +366,7 @@ function SidebarItem({
                     className={cn(
                       "flex items-center gap-2 font-sans hover:no-underline",
                       pathname === item.index.url
-                        ? "font-medium text-primary"
+                        ? "font-normal text-primary"
                         : "font-normal text-muted-foreground"
                     )}
                   >
@@ -436,7 +436,7 @@ function PageBadges({ item }: { item: PageTree.Node }) {
     badges.push(
       <span
         key={String(method)}
-        className={`font-mono font-medium text-[10px] p-0.5 rounded border ${colors[String(method) as keyof typeof colors] || "bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]"}`}
+        className={`font-mono font-medium text-[10px] py-0.25 px-0.75 rounded border ${colors[String(method) as keyof typeof colors] || "bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]"}`}
       >
         {String(method)}
       </span>

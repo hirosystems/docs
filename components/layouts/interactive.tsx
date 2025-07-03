@@ -13,11 +13,7 @@ interface InteractiveHeaderProps {
 }
 
 function InteractiveHeader({ children, className }: InteractiveHeaderProps) {
-  return (
-    <div className={cn(className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn(className)}>{children}</div>;
 }
 
 // Interactive Title component
@@ -28,11 +24,9 @@ interface InteractiveTitleProps {
 function InteractiveTitle({ className }: InteractiveTitleProps) {
   const { title } = usePageData();
   if (!title) return null;
-  
+
   return (
-    <h1 className={cn("text-4xl font-normal mb-6", className)}>
-      {title}
-    </h1>
+    <h1 className={cn("text-4xl font-normal mb-6", className)}>{title}</h1>
   );
 }
 
@@ -44,7 +38,7 @@ interface InteractiveDescriptionProps {
 function InteractiveDescription({ className }: InteractiveDescriptionProps) {
   const { description } = usePageData();
   if (!description) return null;
-  
+
   return (
     <p className={cn("text-lg tracking-3 text-muted-foreground", className)}>
       {description}
@@ -60,7 +54,7 @@ interface InteractiveFeaturesProps {
 function InteractiveFeatures({ className }: InteractiveFeaturesProps) {
   const { interactiveFeatures = [] } = usePageData();
   if (interactiveFeatures.length === 0) return null;
-  
+
   return (
     <ul className={cn("flex flex-col gap-3", className)}>
       {interactiveFeatures.map((feature, index) => (
@@ -85,12 +79,14 @@ interface InteractiveLinksProps {
 function InteractiveLinks({ className }: InteractiveLinksProps) {
   const { interactiveLinks = [] } = usePageData();
   if (interactiveLinks.length === 0) return null;
-  
+
   return (
-    <ul className={cn(
-      "flex flex-wrap shrink-0 text-base tracking-2 font-mono lg:col-start-2 flex-row lg:flex-col gap-6 lg:gap-4",
-      className
-    )}>
+    <ul
+      className={cn(
+        "flex flex-wrap shrink-0 text-base tracking-2 font-mono lg:col-start-2 flex-row lg:flex-col gap-6 lg:gap-4",
+        className
+      )}
+    >
       {interactiveLinks.map((link, index) => (
         <li key={index}>
           <Link

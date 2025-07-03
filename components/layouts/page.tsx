@@ -107,17 +107,10 @@ function PageHeader({ children, className }: PageHeaderProps) {
   const { interactive } = usePageData();
 
   return (
-    <div
-      className={cn(
-        "w-full",
-        interactive &&
-          "bg-neutral-100 dark:bg-neutral-800 border-b border-border/50",
-        className
-      )}
-    >
+    <div className={cn("w-full", className)}>
       <div
         className={cn(
-          "w-full px-4 py-4 md:px-6",
+          "w-full px-4 py-4 md:px-10",
           interactive ? "max-w-[1135px] mx-auto" : "max-w-[860px] mx-auto"
         )}
       >
@@ -139,7 +132,7 @@ function PageContent({ children, className, ...props }: PageContentProps) {
     <main className="flex flex-1 flex-col pb-16">
       <article
         className={cn(
-          "flex flex-1 flex-col w-full gap-6 md:px-2 md:mx-auto",
+          "flex flex-1 flex-col w-full gap-6 md:px-10 md:mx-auto",
           interactive ? "pt-8" : "py-4",
           full ? "max-w-[1120px]" : "max-w-[860px]"
         )}

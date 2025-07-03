@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { type DialogProps } from "@radix-ui/react-dialog";
+import type { DialogProps } from "@radix-ui/react-dialog";
 import { Circle, File, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { docsConfig } from "@/app/config/docs";
+// import { docsConfig } from "@/app/config/docs";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -68,7 +68,7 @@ export function CommandMenu({ ...props }: DialogProps) {
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
+        {/* <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Links">
             {docsConfig.mainNav
@@ -119,7 +119,7 @@ export function CommandMenu({ ...props }: DialogProps) {
               System
             </CommandItem>
           </CommandGroup>
-        </CommandList>
+        </CommandList> */}
       </CommandDialog>
     </>
   );

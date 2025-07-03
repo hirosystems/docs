@@ -9,8 +9,8 @@ import { cn } from "../../lib/utils";
 const itemVariants = cva("rounded p-1.5 text-fd-muted-foreground", {
   variants: {
     active: {
-      true: "bg-white dark:dark:bg-neutral-950 text-primary",
-      false: "text-muted-foreground cursor-pointer",
+      true: "bg-white dark:bg-neutral-900 text-primary",
+      false: "text-muted-foreground dark:text-neutral-300 cursor-pointer",
     },
   },
 });
