@@ -227,42 +227,6 @@ export function renderNavItem(item: LinkItemType): ReactNode {
     case "menu": {
       if (!("items" in item)) return null;
 
-      // FIXME: Handle edge cases where navigation items live under different URL structures
-      // Currently, API keys (/resources/guides/api-keys), rate limits (/resources/guides/rate-limits), and Clarinet SDKs
-      // are discoverable under specific menus but live under different routes. This causes both
-      // navigation sections to appear active.
-
-      const isResourcesMenu = item.text === "Resources";
-      const isToolsMenu = item.text === "Tools";
-      const relatedPaths = [
-        "/resources/guides/api-keys",
-        "/resources/guides/rate-limits",
-        "/tools/clarinet/sdk-reference",
-        "/tools/clarinet/browser-sdk-reference",
-      ];
-
-      const isAnyChildActive = item.items.some((menuItem) => {
-        if (menuItem.type === "custom" || !("url" in menuItem)) return false;
-
-        // Exclude paths that are shown under other menus
-        if (
-          (isResourcesMenu &&
-            relatedPaths.some(
-              (path) => pathname === path || pathname.startsWith(`${path}/`)
-            )) ||
-          (isToolsMenu &&
-            relatedPaths.some(
-              (path) => pathname === path || pathname.startsWith(`${path}/`)
-            ))
-        ) {
-          return false;
-        }
-
-        return (
-          pathname === menuItem.url || pathname.startsWith(`${menuItem.url}/`)
-        );
-      });
-
       return (
         <NavigationMenuItem
           key={"text" in item ? String(item.text) : undefined}
@@ -271,9 +235,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             <NavigationMenuTrigger asChild>
               <div
                 className={cn(
-                  "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer",
-                  isAnyChildActive &&
-                    "underline underline-offset-4 text-primary"
+                  "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer"
                 )}
               >
                 <Link href={item.url} className="flex items-center gap-1">
@@ -286,8 +248,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             // When no URL, use default button behavior
             <NavigationMenuTrigger
               className={cn(
-                "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1",
-                isAnyChildActive && "underline underline-offset-4 text-primary"
+                "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1"
               )}
             >
               {item.text}
