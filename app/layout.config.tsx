@@ -103,6 +103,11 @@ export const baseOptions: BaseLayoutProps = {
           url: "/reference/stacks.js",
         },
         {
+          text: "Stacks Connect",
+          description: "JavaScript library for connecting to Stacks wallets.",
+          url: "/reference/stacks.js/connect-wallet",
+        },
+        {
           text: "Clarinet JS SDK",
           description: "JavaScript SDK for Clarinet.",
           url: "/tools/clarinet/sdk-introduction",
