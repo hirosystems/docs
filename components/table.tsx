@@ -82,7 +82,7 @@ function CustomTable({ className, ...props }: TableProps) {
             {headers.map((header, i) => (
               <TableHead
                 key={i}
-                className="text-left text-base font-semibold text-foreground font-fono h-auto px-4 py-3 bg-background border-0 border-b border-border/50 [&_code]:whitespace-nowrap"
+                className="text-left text-base font-normal text-foreground font-fono h-auto px-4 py-3 bg-background border-0 border-b border-border/50 [&_code]:whitespace-nowrap"
               >
                 {header}
               </TableHead>

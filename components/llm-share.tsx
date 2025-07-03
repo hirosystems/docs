@@ -91,7 +91,7 @@ export function LLMShare({ content }: LLMShareProps) {
       <button
         onClick={handleCopy}
         type="button"
-        className="cursor-pointer relative inline-flex items-center gap-2 rounded-l-md rounded-r-none px-2 py-1.5 text-sm font-fono focus:z-10 border-0 shadow-none transition-all duration-150 hover:bg-accent"
+        className="cursor-pointer relative inline-flex items-center gap-2 rounded-l-md rounded-r-none px-2 py-1.5 text-sm font-fono focus:z-10 border-0 shadow-none transition-all duration-150 hover:bg-neutral-150 dark:hover:bg-neutral-700"
         aria-label="Copy markdown to clipboard"
       >
         <span

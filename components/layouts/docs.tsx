@@ -126,7 +126,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
         )}
       >
         <Sidebar />
-        <div className="flex-1 min-w-0">{children}</div>
+        {children}
       </main>
     </TreeContextProvider>
   );
@@ -205,7 +205,7 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-sm overflow-auto border-r border-border/50 md:sticky md:h-[calc(100dvh-64px)]",
+        "fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-64px)]",
         "max-md:inset-x-0 max-md:bottom-0",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
@@ -314,15 +314,15 @@ function SidebarItem({
         <div className="flex items-center gap-2 flex-1">
           {item.icon}
           {displayName}
+          <PageBadges item={item} />
         </div>
-        <PageBadges item={item} />
       </Link>
     );
   }
 
   if (item.type === "separator") {
     return (
-      <p className="text-primary font-fono mt-6 mb-2 first:mt-0 px-2">
+      <p className="text-primary font-fono font-semibold mt-6 mb-2 first:mt-0 px-2">
         {item.icon}
         {item.name}
       </p>
@@ -354,15 +354,21 @@ function SidebarItem({
                 linkVariants({
                   active: item.index ? pathname === item.index.url : false,
                 }),
-                "justify-between w-full"
+                "justify-between w-full",
+                "!font-normal" // Override font-medium from linkVariants
               )}
             >
-              <div className="!font-normal flex items-center gap-2 flex-1">
+              <div className="flex items-center gap-2 flex-1">
                 {item.index ? (
                   <Link
                     href={item.index.url}
                     onClick={(e) => e.stopPropagation()}
-                    className="flex items-center gap-2 hover:underline"
+                    className={cn(
+                      "flex items-center gap-2 font-sans hover:no-underline",
+                      pathname === item.index.url
+                        ? "font-medium text-primary"
+                        : "font-normal text-muted-foreground"
+                    )}
                   >
                     {item.index.icon}
                     {item.index.name}
@@ -430,7 +436,7 @@ function PageBadges({ item }: { item: PageTree.Node }) {
     badges.push(
       <span
         key={String(method)}
-        className={`font-mono font-medium text-xs px-1.5 py-0.5 rounded border ${colors[String(method) as keyof typeof colors] || "bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]"}`}
+        className={`font-mono font-medium text-[10px] p-0.5 rounded border ${colors[String(method) as keyof typeof colors] || "bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]"}`}
       >
         {String(method)}
       </span>

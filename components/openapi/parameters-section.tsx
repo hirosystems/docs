@@ -19,7 +19,7 @@ export function ParametersSection({
   const hasAnyParams = parameters.length > 0 || requestBody;
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-primary">Parameters</h2>
+      <h2 className="text-xl font-normal text-primary">Parameters</h2>
 
       {!hasAnyParams ? (
         <p className="text-muted-foreground">No parameters.</p>
@@ -57,7 +57,7 @@ function ParameterGroup({
 }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-neutral-800 dark:text-neutral-200">
+      <h3 className="text-lg font-normal text-neutral-800 dark:text-neutral-200">
         {title} Parameters
       </h3>
       <div className="space-y-3">
@@ -115,7 +115,7 @@ function RequestBodySection({
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold text-neutral-800 dark:text-neutral-200 !m-0">
+        <h3 className="text-lg font-normal text-neutral-800 dark:text-neutral-200 !m-0">
           Body
         </h3>
         <span className="text-sm text-muted-foreground font-fono">

@@ -23,7 +23,7 @@ export async function APISection({
 }: APISectionProps) {
   const renderParameters = (parameters: APIParameter[]) => (
     <div className="space-y-6">
-      <h3 className="text-lg font-semibold text-foreground">Parameters</h3>
+      <h3 className="text-lg font-normal text-foreground">Parameters</h3>
       <div className="space-y-4">
         {parameters.map((param, index) => (
           <div
@@ -96,7 +96,7 @@ export async function APISection({
       <div className="sticky top-[var(--header-height,4rem)] z-10 flex items-center justify-between py-4 bg-gradient-to-b from-background from-85% to-transparent to-100%">
         <div className="flex items-center gap-4">
           <Badge className="px-1.5 py-0.5 bg-neutral-100 border-border dark:bg-neutral-800 font-medium">
-            <h2 className="text-lg font-medium text-foreground font-fono !m-0">
+            <h2 className="text-lg font-normal text-foreground font-fono !m-0">
               {apiExport.name}
             </h2>
           </Badge>
@@ -146,7 +146,7 @@ export async function APISection({
           {/* Returns */}
           {primarySignature?.returns && (
             <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-foreground">Returns</h3>
+              <h3 className="text-lg font-normal text-foreground">Returns</h3>
               <div className="space-y-2">
                 <div className="text-sm text-muted-foreground font-mono">
                   {primarySignature.returns.type}

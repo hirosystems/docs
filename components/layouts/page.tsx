@@ -66,16 +66,14 @@ function PageLayout({
   className,
 }: PageLayoutProps) {
   return (
-    <div className="flex-1 min-w-0">
-      <div
-        className={cn(
-          "flex flex-col w-full",
-          variant === "interactive" && "min-h-screen",
-          className
-        )}
-      >
-        {children}
-      </div>
+    <div
+      className={cn(
+        "flex flex-col w-full",
+        variant === "interactive" && "min-h-screen",
+        className
+      )}
+    >
+      {children}
     </div>
   );
 }
@@ -141,7 +139,7 @@ function PageContent({ children, className, ...props }: PageContentProps) {
     <main className="flex flex-1 flex-col pb-16">
       <article
         className={cn(
-          "flex flex-1 flex-col w-full gap-6 px-4 md:px-6 md:mx-auto",
+          "flex flex-1 flex-col w-full gap-6 md:px-2 md:mx-auto",
           interactive ? "pt-8" : "py-4",
           full ? "max-w-[1120px]" : "max-w-[860px]"
         )}
@@ -158,7 +156,7 @@ function TocItem({ item }: { item: TOCItemType }) {
     <Primitive.TOCItem
       href={item.url}
       className={cn(
-        "font-fono prose py-1.5 text-sm text-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-primary",
+        "prose py-1.5 text-sm text-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-primary",
         item.depth <= 2 && "ps-3",
         item.depth === 3 && "ps-6",
         item.depth >= 4 && "ps-8"
@@ -176,7 +174,7 @@ function PageTOC() {
   if (toc.length === 0 || full) return null;
 
   return (
-    <div className="sticky top-[var(--fd-nav-height)] w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] p-4 max-xl:hidden overflow-auto">
+    <div className="sticky top-[var(--fd-nav-height)] w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] px-4 py-3 max-xl:hidden overflow-auto">
       <div className="flex items-center mb-4">
         <AlignLeft className="w-4 h-4 mr-2 text-muted-foreground" />
         <p className="text-sm font-fono text-muted-foreground">Contents</p>
@@ -208,7 +206,7 @@ function PageTitle(props: ComponentProps<"h1">) {
   if (!title && !props.children) return null;
 
   return (
-    <h1 {...props} className={cn("text-3xl font-semibold", props.className)}>
+    <h1 {...props} className={cn("text-3xl font-regular", props.className)}>
       {props.children || title}
     </h1>
   );
@@ -219,10 +217,7 @@ function PageDescription(props: ComponentProps<"p">) {
   if (!description && !props.children) return null;
 
   return (
-    <p
-      {...props}
-      className={cn("text-md text-muted-foreground", props.className)}
-    >
+    <p {...props} className={cn("text-md text-primary", props.className)}>
       {props.children || description}
     </p>
   );
