@@ -1,0 +1,12 @@
+---
+title: Get block by height
+sidebarTitle: Block by height
+description: Retrieves block details of a specific block for a given chain height.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v1/block/by_height/{height}', method: 'get' }]}
+  hasHead={false}
+/>
