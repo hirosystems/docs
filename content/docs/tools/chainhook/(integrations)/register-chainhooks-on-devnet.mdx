@@ -83,7 +83,7 @@ In this quickstart, you'll learn how to automatically register Chainhooks on dev
 
     Look for the registration confirmation in your terminal output:
 
-    ```terminal
+    ```console
     Computing deployment plan
     ✔ Deployment plan completed
     
@@ -99,14 +99,13 @@ In this quickstart, you'll learn how to automatically register Chainhooks on dev
     Interact with your contracts to trigger the registered Chainhooks. Monitor the devnet terminal for execution confirmations.
 
     ```terminal
-    # In another terminal, call your contract
     $ clarinet console
     >> (contract-call? .counter increment)
     ```
 
     Watch the devnet terminal for triggered hooks:
 
-    ```terminal
+    ```console
     INFO Feb  5 15:21:07.233382 1 hooks triggered
     ```
 
