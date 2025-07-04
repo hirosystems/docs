@@ -51,9 +51,10 @@ To start the indexer, you'll need:
   </div>
 </div>
 
-<Callout type="info" title="Archive bootstrap recommended">
+:::callout
+### Archive bootstrap recommended
 If you haven't already, consider [bootstrapping from archives](/tools/bitcoin-indexer/run-indexer/archive-bootstrap) to save days of indexing time.
-</Callout>
+:::
 
 ## Start indexing services
 
@@ -86,9 +87,11 @@ $ ./target/release/bitcoin-indexer runes service start --config-path=bitcoin-ind
 [1mProcessing block 840001...[0m
 ```
 
-<Callout type="warn" title="Resource usage">
+:::callout
+type: warn
+### Resource usage
 Each service uses the CPU cores and memory specified in your configuration. Ensure your system has enough resources to run multiple services simultaneously.
-</Callout>
+:::
 
 ## Monitor indexing progress
 
@@ -296,17 +299,7 @@ ERROR: connection pool timeout
 2. Reduce bitcoind_rpc_threads in config
 3. Check for long-running queries
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/bitcoin-indexer/metaprotocol-apis/ordinals-api"
-    title="Use the Ordinals API"
-    description="Query inscriptions and digital artifacts"
-  />
-  <NextCard
-    href="/tools/bitcoin-indexer/metaprotocol-apis/runes-api"
-    title="Use the Runes API"
-    description="Access Runes token data"
-  />
-</Cards>
+:::next-steps
+- [Use the Ordinals API](/tools/bitcoin-indexer/metaprotocol-apis/ordinals-api): Query inscriptions and digital artifacts
+- [Use the Runes API](/tools/bitcoin-indexer/metaprotocol-apis/runes-api): Access Runes token data
+:::

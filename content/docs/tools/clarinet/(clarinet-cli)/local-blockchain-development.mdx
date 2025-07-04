@@ -21,9 +21,10 @@ $ clarinet devnet start
 | `--use-computed-deployment-plan` | Compute and overwrite deployment plan |
 | `--package <path>` | Use pre-packaged devnet configuration |
 
-<Callout type="info" title="Prerequisites">
+:::callout
+### Prerequisites
 Devnet requires Docker to be running. If you see "clarinet was unable to create network", ensure Docker Desktop is running or the Docker daemon is started.
-</Callout>
+:::
 
 By default, devnet starts with an interactive dashboard showing:
 
@@ -464,17 +465,7 @@ $ clarinet devnet start --package demo-env.json
   </AccordionItem>
 </Accordion>
 
-## Next steps
-
-<Cards>
-  <NextCard 
-    href="/tools/clarinet/contract-interaction"
-    title="Contract interaction"
-    description="Learn how to interact with your contracts."
-  />
-  <NextCard 
-    href="/tools/clarinet/deployment"
-    title="Deployment"
-    description="Learn how to deploy your Clarinet project."
-  />
-</Cards>
+:::next-steps
+- [Contract interaction](/tools/clarinet/contract-interaction): Learn how to interact with your contracts.
+- [Deployment](/tools/clarinet/deployment): Learn how to deploy your Clarinet project.
+:::

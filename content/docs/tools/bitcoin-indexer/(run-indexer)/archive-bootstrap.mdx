@@ -38,9 +38,10 @@ $ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bit
 $ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-runes-pg-latest.tar
 ```
 
-<Callout type="info" title="Download time">
+:::callout
+### Download time
 Archives are large (100-800GB). Use `-C -` flag to enable resume on interruption. Download times vary from 2-8 hours depending on connection speed.
-</Callout>
+:::
 
 ### Extract archives
 
@@ -84,9 +85,10 @@ $ # Restore Runes database (if downloaded)
 $ sudo -u postgres pg_restore --verbose --jobs=6 -d runes -c --if-exists ~/bitcoin-indexer/archives/runes.dump
 ```
 
-<Callout type="info" title="Restore time">
+:::callout
+### Restore time
 Database restoration takes 1-4 hours depending on archive size and disk speed. The `--jobs=6` flag uses parallel processing to speed up the restore.
-</Callout>
+:::
 
 ### Verify restoration
 
@@ -170,17 +172,7 @@ Use a download manager with resume support:
 $ aria2c -x 16 -s 16 https://archive.hiro.so/bitcoin-indexer/mainnet/bitcoin-indexer-full-latest.tar.gz
 ```
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/configuration"
-    title="Configure the indexer"
-    description="Fine-tune settings for your use case"
-  />
-  <NextCard
-    href="/tools/bitcoin-indexer/metaprotocol-apis/ordinals-api"
-    title="Start using APIs"
-    description="Query your indexed data"
-  />
-</Cards>
+:::next-steps
+- [Configure the indexer](/tools/bitcoin-indexer/run-indexer/configuration): Fine-tune settings for your use case
+- [Start using APIs](/tools/bitcoin-indexer/metaprotocol-apis/ordinals-api): Query your indexed data
+:::

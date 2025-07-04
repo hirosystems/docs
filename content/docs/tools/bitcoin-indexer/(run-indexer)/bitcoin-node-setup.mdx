@@ -100,9 +100,11 @@ maxconnections=125
 deprecatedrpc=warnings
 ```
 
-<Callout type="warn" title="Security note">
+:::callout
+type: warn
+### Security note
 Always use a strong, unique password for RPC access. The indexer will use these credentials to communicate with your node.
-</Callout>
+:::
 
 ## Storage setup
 
@@ -124,9 +126,10 @@ Start Bitcoin Core with your configuration:
 $ bitcoind -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf
 ```
 
-<Callout type="info" title="Initial sync time">
+:::callout
+### Initial sync time
 Initial blockchain sync takes 1-3 days depending on hardware and network speed. The node will download ~600GB of data.
-</Callout>
+:::
 
 Monitor sync progress in another terminal:
 
@@ -279,17 +282,7 @@ Normal during initial sync. Bitcoin Core will use up to dbcache + 1GB for operat
 2. Check RPC credentials match bitcoin.conf
 3. Ensure firewall allows localhost connections
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/configuration"
-    title="Configure the indexer"
-    description="Set up the Bitcoin Indexer to connect to your node"
-  />
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/archive-bootstrap"
-    title="Bootstrap from archive"
-    description="Skip the wait with pre-synced archives"
-  />
-</Cards>
+:::next-steps
+- [Configure the indexer](/tools/bitcoin-indexer/run-indexer/configuration): Set up the Bitcoin Indexer to connect to your node
+- [Bootstrap from archive](/tools/bitcoin-indexer/run-indexer/archive-bootstrap): Skip the wait with pre-synced archives
+:::

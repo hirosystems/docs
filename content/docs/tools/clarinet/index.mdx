@@ -27,43 +27,33 @@ To explore Clarinet features with AI, copy and paste [llms.txt](/tools/clarinet/
 ## Installation
 
 <TerminalPicker storage="macOs">
+  ```terminal !! macOS
+  $ brew install clarinet
+  ```
 
-```terminal !! macOS
-$ brew install clarinet
-```
+  ```terminal !! Windows
+  $ winget install clarinet
+  ```
 
-```terminal !! Windows
-$ winget install clarinet
-```
+  ```terminal !! Cargo
+  $ sudo apt install build-essential pkg-config libssl-dev
+  ```
 
-```terminal !! Cargo
-$ sudo apt install build-essential pkg-config libssl-dev
-```
-
-```terminal !! Pre-built binary
-$ wget -nv https://github.com/hirosystems/clarinet/releases/download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
-$ tar -xf clarinet-linux-x64.tar.gz
-$ chmod +x ./clarinet
-$ mv ./clarinet /usr/local/bin
-```
-
+  ```terminal !! Pre-built binary
+  $ wget -nv https://github.com/hirosystems/clarinet/releases/download/v0.27.0/clarinet-linux-x64-glibc.tar.gz -O clarinet-linux-x64.tar.gz
+  $ tar -xf clarinet-linux-x64.tar.gz
+  $ chmod +x ./clarinet
+  $ mv ./clarinet /usr/local/bin
+  ```
 </TerminalPicker>
 
-## Next steps
+:::next-steps
+- [Quickstart](/tools/clarinet/quickstart): Get started with Clarinet.
+- [Writing Clarity contracts](/tools/clarinet/writing-clarity-contracts): Learn how to write Clarity contracts.
+:::
 
-<Cards>
-  <NextCard 
-    href="/tools/clarinet/quickstart"
-    title="Quickstart"
-    description="Get started with Clarinet."
-  />
-  <NextCard 
-    href="/tools/clarinet/writing-clarity-contracts"
-    title="Writing Clarity contracts"
-    description="Learn how to write Clarity contracts."
-  />
-</Cards>
-
-<Callout title="Need help building with Clarinet?" type="help">
-Reach out to us on the <span className="font-bold">#clarinet</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
-</Callout>
+:::callout
+type: help
+### Need help building with Clarinet?
+Reach out to us on the **#clarinet** channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

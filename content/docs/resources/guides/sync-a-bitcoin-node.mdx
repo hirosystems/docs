@@ -15,9 +15,11 @@ In this guide, you will learn how to:
 3. Start syncing your node
 4. Properly shutdown and restart your node
 
-<Callout title="Requirements" type="warn">
-To get started, we first need to download `bitcoind`. In our example, we'll be using version 25.0. You can select a software version compatible with your device [from this list](https://bitcoincore.org/bin/bitcoin-core-25.0). 
-</Callout>
+:::callout
+type: warn
+### Requirements
+To get started, we first need to download `bitcoind`. In our example, we'll be using version 25.0. You can select a software version compatible with your device [from this list](https://bitcoincore.org/bin/bitcoin-core-25.0).
+:::
 
 ---
 
@@ -25,9 +27,10 @@ To get started, we first need to download `bitcoind`. In our example, we'll be u
 
 Once your download is complete, make note of your path to the `bitcoind` executable.
 
-<Callout title="Note">
+:::callout
+### Note
 When you sync your node, we'll be running the program at `/bitcoin-25.0/bin/bitcoin`, which is where the `bitcoind` executable is located.
-</Callout>
+:::
 
 Next up is a couple configuration steps.
 
@@ -36,11 +39,12 @@ Next up is a couple configuration steps.
 
 The Bitcoin chainstate is pretty large, and you need a place to store it. In this example, we are going to set up a directory called `bitcoin-data` on an external hard drive that we have mounted at `/Volumes/SSD`.
 
-<Callout title="Note">
-  This folder, `bitcoin-data`, can be named whatever you like, and can exist locally or in an external hard drive.
+:::callout
+### Note
+This folder, `bitcoin-data`, can be named whatever you like, and can exist locally or in an external hard drive.
   
   The most important thing is that it should exist in a place that has enough storage to hold all the Bitcoin data we will be receiving once it starts to sync.
-</Callout>
+:::
 
 Now navigate to your `bitcoin.conf` file, which is located in your `/path/to/bitcoin` directory and update the `datadir` field with your directory. 
 
@@ -83,9 +87,10 @@ zmqpubhashblock=tcp://0.0.0.0:18543
 
 If you plan to use your node to receive transactions, you will need to make note of the `username` and `password` fields for your node.
 
-<Callout title="Note">
+:::callout
+### Note
 In the example `bitcoin.conf` above, `devnet` is listed as the default `username` and `password`.
-</Callout>
+:::
 
 ## Run the node
 
@@ -99,9 +104,10 @@ $ /Volumes/SSD/bitcoin-25.0/bin/bitcoind -conf=/Volumes/SSD/bitcoin-25.0/bitcoin
 
 After running this command, you will see `zmq_url` entries in your console's stdout, displaying ZeroMQ logs from your Bitcoin node. Congrats! You're now syncing!
 
-<Callout title="Note">
+:::callout
+### Note
 It might take anywhere from a few hours to a few days to run and fully sync, depending on if it's your first time syncing a node.
-</Callout>
+:::
 
 ## Proper shutdown and restart procedure
 
@@ -119,8 +125,9 @@ $ /path/to/bitcoin-cli \
 
 To start your node back up, all you need to do is refer to the previous steps from above by running `path/to/bitcoind -conf=path/to/bitcoin.conf`.
 
-<Callout title="How to eject an external hard drive">
-  <Tabs items={["macOS","Windows"]}>
+:::callout
+### How to eject an external hard drive
+<Tabs items={["macOS","Windows"]}>
     <Tab value={"macOS"}>
       1. Go to the Finder, then the sidebar, and select the disk you want to eject under “Devices”. Click on the eject icon next to the name.
       2. Wait for a confirmation message saying it's safe to eject the device before you unplug the drive.
@@ -131,21 +138,11 @@ To start your node back up, all you need to do is refer to the previous steps fr
       2. Wait for a confirmation message saying it's safe to eject the device before you unplug the drive.
     </Tab>
   </Tabs>
-</Callout>
+:::
 
 ---
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/stacks/chainhook/guides/chainhook-as-a-service"
-    title="Run Chainhook as a service"
-    description="Learn how to use Chainhook to build your own custom API."
-  />
-  <NextCard
-    href="/guides/sync-a-stacks-node"
-    title="Sync a Stacks node"
-    description="Learn how to sync a Stacks node for running a local devnet."
-  />
-</Cards>
+:::next-steps
+- [Run Chainhook as a service](/stacks/chainhook/guides/chainhook-as-a-service): Learn how to use Chainhook to build your own custom API.
+- [Sync a Stacks node](/guides/sync-a-stacks-node): Learn how to sync a Stacks node for running a local devnet.
+:::

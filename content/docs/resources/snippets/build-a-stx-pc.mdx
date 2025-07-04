@@ -60,9 +60,10 @@ const gtePC = Pc.principal(address).willSendGte(1000000).ustx();
 const ltePC = Pc.principal(address).willSendLte(1000000).ustx();
 ```
 
-<Callout title="Post-condition modes" type="info">
+:::callout
+### Post-condition modes
 Always use `PostConditionMode.Deny` to ensure transactions fail if post-conditions aren't met. This protects users from unexpected token transfers.
-</Callout>
+:::
 
 ## Related snippets
 

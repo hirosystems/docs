@@ -42,9 +42,10 @@ Storage needs grow over time as the blockchain and metaprotocol activity increas
 | PostgreSQL + overhead | ~200 GB | Varies |
 | **Total** | **~1.5 TB** | **~300 GB/year** |
 
-<Callout type="info" title="Storage planning">
+:::callout
+### Storage planning
 Plan for 2-3x current requirements to accommodate growth and temporary files during reindexing.
-</Callout>
+:::
 
 ## Software dependencies
 
@@ -100,9 +101,11 @@ maxconnections=125
 maxuploadtarget=5000
 ```
 
-<Callout type="warn" title="txindex requirement">
+:::callout
+type: warn
+### txindex requirement
 The `txindex=1` setting is mandatory. If your node doesn't have a transaction index, you'll need to reindex with `bitcoind -reindex`.
-</Callout>
+:::
 
 ## PostgreSQL configuration
 
@@ -202,17 +205,7 @@ For high API traffic:
 3. **Caching layer** - Redis for hot API responses
 4. **CDN** - Cache static inscription content
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/full-sync"
-    title="Full sync"
-    description="Start indexing from genesis block"
-  />
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/archive-bootstrap"
-    title="Archive bootstrap"
-    description="Quick start using Hiro archives"
-  />
-</Cards>
+:::next-steps
+- [Full sync](/tools/bitcoin-indexer/run-indexer/full-sync): Start indexing from genesis block
+- [Archive bootstrap](/tools/bitcoin-indexer/run-indexer/archive-bootstrap): Quick start using Hiro archives
+:::

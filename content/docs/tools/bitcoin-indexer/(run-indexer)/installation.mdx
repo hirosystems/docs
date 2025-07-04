@@ -85,9 +85,11 @@ $ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
 [32mALTER ROLE[0m
 ```
 
-<Callout type="warn" title="Security note">
+:::callout
+type: warn
+### Security note
 Use a strong password in production. The default 'postgres' password is for development only.
-</Callout>
+:::
 
 ## Install Rust
 
@@ -120,9 +122,10 @@ $ cargo build --release
 
 The compiled binary will be at `target/release/bitcoin-indexer`.
 
-<Callout type="info" title="Build time">
+:::callout
+### Build time
 Initial compilation takes 5-10 minutes. Subsequent builds are much faster due to caching.
-</Callout>
+:::
 
 ### Create symlink for global access
 
@@ -209,17 +212,7 @@ $ bitcoin-indexer --help
 Bitcoin Indexer - High-performance metaprotocol indexing engine
 ```
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/configuration"
-    title="Configure the indexer"
-    description="Set up bitcoin-indexer-config.toml"
-  />
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/archive-bootstrap"
-    title="Bootstrap from archives"
-    description="Speed up initial sync with pre-indexed data"
-  />
-</Cards>
+:::next-steps
+- [Configure the indexer](/tools/bitcoin-indexer/run-indexer/configuration): Set up bitcoin-indexer-config.toml
+- [Bootstrap from archives](/tools/bitcoin-indexer/run-indexer/archive-bootstrap): Speed up initial sync with pre-indexed data
+:::

@@ -59,9 +59,11 @@ $ clarinet console --enable-remote-data
 
 The API key is sent as the `x-api-key` header in all requests to Hiro's APIs. You can obtain a free API key from the [Hiro Platform](https://platform.hiro.so).
 
-<Callout type="tip" title="API rate limits">
+:::callout
+type: tip
+### API rate limits
 Without an API key, you're limited to 50 requests per minute. With a free Hiro API key, this increases to 500 requests per minute. For intensive development work, consider using `--remote-data-api-url` to point to your own Stacks API node.
-</Callout>
+:::
 
 ### Working with contracts
 
@@ -131,9 +133,10 @@ $ ::get_block_height
 [1mCurrent block height: u110[0m
 ```
 
-<Callout type="info" title="Console commands">
+:::callout
+### Console commands
 For a complete list of available console commands and their usage, view the [CLI reference](/tools/clarinet/cli-reference#clarinet-console).
-</Callout>
+:::
 
 ## Common issues
 
@@ -203,17 +206,7 @@ For a complete list of available console commands and their usage, view the [CLI
   </AccordionItem>
 </Accordion>
 
-## Next steps
-
-<Cards>
-  <NextCard 
-    href="/tools/clarinet/testing-validation"
-    title="Testing and validation"
-    description="Learn how to test and validate your Clarinet project."
-  />
-  <NextCard 
-    href="/tools/clarinet/deployment"
-    title="Deployment"
-    description="Learn how to deploy your Clarinet project."
-  />
-</Cards>
+:::next-steps
+- [Testing and validation](/tools/clarinet/testing-validation): Learn how to test and validate your Clarinet project.
+- [Deployment](/tools/clarinet/deployment): Learn how to deploy your Clarinet project.
+:::

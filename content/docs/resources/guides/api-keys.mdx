@@ -5,11 +5,11 @@ description: For developers who need API requests beyond the standard rate limit
 
 Developers have open access to Hiro's APIs without the use of an API key, but are subject to [Hiro's rate limit policy](./rate-limiting). For developers who need access beyond these rate limits, we provide API keys.
 
-<Callout title='Where can I get an API key?'>
+:::callout
 If you're interested in obtaining an API key, you can generate one for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
 
 If your app needs more than 500 RPM, please [contact us](mailto:platform@hiro.so).
-</Callout>
+:::
 
 ## Usage with cURL
 
@@ -35,8 +35,10 @@ async function makeApiRequest(apiKey: string) {
 }
 ```
 
-<Callout title="Caution" type="warn">
+:::callout
+type: warn
+### Caution
 The API key is passed in the header of your HTTP API request and is used only for private use, like in server-side applications.
 
 If you use the API key in your client-side application, attackers can capture it using the client tools (E.g., browser console) and abuse your API key.
-</Callout>
+:::

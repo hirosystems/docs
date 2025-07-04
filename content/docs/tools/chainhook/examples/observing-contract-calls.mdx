@@ -20,9 +20,11 @@ In this guide, you will learn how to:
 3. [Use a Clarity function to return specific contract data](#return-contract-data-with-the-clarity-function).
 4. [Find data related to the contract call within the Chainhook payload](#chainhook-payload).
 
-<Callout type="warn" title="Requirements">
-  To follow this guide, make sure you have installed Chainhook [directly](/stacks/chainhook/installation).
-</Callout>
+:::callout
+type: warn
+### Requirements
+To follow this guide, make sure you have installed Chainhook [directly](/stacks/chainhook/installation).
+:::
 
 <Steps>
 <Step>
@@ -37,9 +39,10 @@ For the Stacks blockchain, run the following command to generate a `predicate` t
 $ chainhook predicates new contract-call-chainhook.json --stacks
 ```
 
-<Callout title="Note">
-  Alternatively, [Hiro Platform](https://platform.hiro.so/) has an excellent UI to help you to create a `predicate` using a form builder or upload a json file containing your `predicate`.
-</Callout>
+:::callout
+### Note
+Alternatively, [Hiro Platform](https://platform.hiro.so/) has an excellent UI to help you to create a `predicate` using a form builder or upload a json file containing your `predicate`.
+:::
 
 There are 3 main components to your `predicate` that you need to address:
 
@@ -83,14 +86,16 @@ The `contract_call` scope allows Chainhook to observe blockchain data when the s
 }
 ```
 
-<Callout type="warn" title="Warning">
-  The function defined in the `method` property of your `predicate` must be directly called in order for Chainhook to observe events. Calling the function from another contract or from within a different function on the same contract will not generate a `payload`. Below is an example of a `cast-vote` function that would not trigger an event.
+:::callout
+type: warn
+### Warning
+The function defined in the `method` property of your `predicate` must be directly called in order for Chainhook to observe events. Calling the function from another contract or from within a different function on the same contract will not generate a `payload`. Below is an example of a `cast-vote` function that would not trigger an event.
   ```clarity
   (define-public (call-cast-vote)
     (cast-vote)
   )
   ```
-</Callout>
+:::
 
 Finally, define how Chainhook delivers the payload when it is triggered by your `predicate` using the `then_that` specification. 
 
@@ -139,11 +144,10 @@ Using `file_append`, specify the path where Chainhook will post the payload data
   </AccordionItem>
 </Accordion>
 
-<Callout title="Note">
-
-  For more details on optional configurations, other predicate elements and scopes, check out the [Predicate Design](/stacks/chainhook/concepts/predicate-design) and [Stacks scopes](/stacks/chainhook/references/scopes/stacks) pages.
-
-</Callout>
+:::callout
+### Note
+For more details on optional configurations, other predicate elements and scopes, check out the [Predicate Design](/stacks/chainhook/concepts/predicate-design) and [Stacks scopes](/stacks/chainhook/references/scopes/stacks) pages.
+:::
 
 </Step>
 <Step>
@@ -160,9 +164,10 @@ To scan the Stacks blockchain using your predicate, run the following command, r
 $ chainhook predicates scan /path/to/contract-call-chainhook.json --testnet
 ```
 
-<Callout title="Note">
-  If you are using Platform, creating your Chainhook will automatically begin the scan for you.
-</Callout>
+:::callout
+### Note
+If you are using Platform, creating your Chainhook will automatically begin the scan for you.
+:::
 
 </Step>
 <Step>
@@ -197,9 +202,10 @@ When you examine the `payload`, this is the data you will look for.
 )
 ```
 
-<Callout title="Note">
-  This contract has been deployed to the Stacks [testnet network](https://explorer.hiro.so/txid/0x312a3c559af0f75381a9eb4540912c310d74682ed3036207ec890ad8cd1aebe6?chain=testnet) under the name `STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0`.
-</Callout>
+:::callout
+### Note
+This contract has been deployed to the Stacks [testnet network](https://explorer.hiro.so/txid/0x312a3c559af0f75381a9eb4540912c310d74682ed3036207ec890ad8cd1aebe6?chain=testnet) under the name `STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0`.
+:::
 
 </Step>
 <Step>
@@ -217,13 +223,15 @@ Within the `apply` arrays element, the `block_identifer` object gives us the `in
 }
 ```
 
-<Callout type="warn" title="Warning">
-  The hash returned in the `block_identifer` object is not that block hash you
+:::callout
+type: warn
+### Warning
+The hash returned in the `block_identifer` object is not that block hash you
   would see in [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
   `index_block_hash` returned from the Stacks API's [get
   block](/stacks/api/blocks/get-block) endpoint. You can use the `apply` array's
   metadata object to get the `stacks_block_hash`.
-</Callout>
+:::
 
 We can retrieve the `stacks_block_hash` by navigating to the `apply` arrays object `metadata` element. This hash will match the block hash display in the Stacks Explorer.
 
@@ -243,12 +251,14 @@ There is also a `timestamp` value returned in the `apply` array. This UNIX time 
 "timestamp": 1722208524
 ```
 
-<Callout type="warn" title="Warning">
-  The timestamp returned in this object is not the finalized block time you
+:::callout
+type: warn
+### Warning
+The timestamp returned in this object is not the finalized block time you
   would see in the [Stacks Explorer](https://explorer.hiro.so/?chain=testnet), but
   `block_time` returned from the Stacks API's [get
   block](/stacks/api/blocks/get-block) endpoint.
-</Callout>
+:::
 
 ### Transaction object
 
@@ -352,9 +362,9 @@ Since the `cast-vote` function uses a `print` statement, the events array will c
 }
 ```
 
-<Callout type="info">
-  You can view the full [contract-call-payload.json](/contract-call-payload.json) here.
-</Callout>
+:::callout
+You can view the full [contract-call-payload.json](/contract-call-payload.json) here.
+:::
 
 </Step>
 </Steps>
@@ -369,17 +379,7 @@ The following is an example of how you might store your information in a databas
 | ------------ | ---------- | ------------------------------------------------------------------ | ------- | ---------------------------------------- | ----------------------------- | ---- | ------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 21544        | 1722208524 | 0x98195af8f888d2f9ca3462c41c1691e7798ea6d9e5e3afe42955c0921f981f2c | True    | STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV | (ok "Vote cast successfully") | []   | STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV.simple-vote-v0 | cast-vote | \{"notification": "cast-vote", "payload": \{"status": "Has voted set to true", "totalVotes": 1, "voter": "STJ81C2WPQHFB6XTG518JKPABWM639R2X37VFKJV"\}\} |
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/stacks/platform/guides/create-chainhooks"
-    title="Create a Chainhook"
-    description="Learn how to create a Chainhook using the Hiro Platform."
-  />
-  <NextCard
-    href="/stacks/chainhook/references/scopes/stacks"
-    title="Stacks scopes"
-    description="Learn how to use additional scopes to scan for specific Stacks blockchain events."
-  />
-</Cards>
+:::next-steps
+- [Create a Chainhook](/stacks/platform/guides/create-chainhooks): Learn how to create a Chainhook using the Hiro Platform.
+- [Stacks scopes](/stacks/chainhook/references/scopes/stacks): Learn how to use additional scopes to scan for specific Stacks blockchain events.
+:::

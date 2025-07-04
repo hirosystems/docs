@@ -11,9 +11,10 @@ More precisely, adding post-conditions to a transaction can ensure that:
 - STX tokens were transferred from an address
 - FTs/NFTs were transferred from an address
 
-<Callout title="Info">
+:::callout
+### Info
 Post-conditions aren't perfect. They can't say anything about the end-state after a transaction. In other words, they can't guarantee the receipt of FTs/NFTs, since they only check for sending.
-</Callout>
+:::
 
 Here's an example of a post-condition using the `Pc` helper, where the `principal` must send 1000 uSTX, or else the transaction will abort:
 

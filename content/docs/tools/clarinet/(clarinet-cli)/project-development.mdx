@@ -186,9 +186,11 @@ mnemonic = "${TESTNET_TREASURY_MNEMONIC}"
 balance = 500_000_000_000
 ```
 
-<Callout type="warn" title="Security notice">
+:::callout
+type: warn
+### Security notice
 Never commit mainnet private keys or mnemonics to version control. Use environment variables for production deployments.
-</Callout>
+:::
 
 ## Checking project configuration
 
@@ -208,17 +210,7 @@ $ clarinet check contracts/token.clar
 [32m✔[0m [1mContract 'token' is valid[0m
 ```
 
-## Next steps
-
-<Cards>
-  <NextCard 
-    href="/tools/clarinet/contract-interaction"
-    title="Contract interaction"
-    description="Learn how to interact with your contracts."
-  />
-  <NextCard 
-    href="/tools/clarinet/testing-validation"
-    title="Testing and validation"
-    description="Learn how to test and validate your Clarinet project."
-  />
-</Cards>
+:::next-steps
+- [Contract interaction](/tools/clarinet/contract-interaction): Learn how to interact with your contracts.
+- [Testing and validation](/tools/clarinet/testing-validation): Learn how to test and validate your Clarinet project.
+:::

@@ -9,7 +9,8 @@ import { Steps, Step } from 'fumadocs-ui/components/steps'
 For a while now, the Stacks community has been working on a new standard for wallet-to-dapp communication.
 Stacks Connect and related projects now use standards like [WBIPs](https://wbips.netlify.app/) and [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) to allow wallets to communicate with dapps in a more simplified and flexible way.
 
-<Callout title="Migration Status">
+:::callout
+### Migration Status
 Please be patient during this latest migration.
 There has been a long-running effort together with wallets to modernize and move forward the Stacks web ecosystem.
 It is now culminating in [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) and the new `request` method in Stacks Connect `8.x.x`.
@@ -24,8 +25,7 @@ For the legacy version of `@stacks/connect` using JWT tokens, you can use:
 ```sh
 npm install @stacks/connect@7.10.1
 ```
-
-</Callout>
+:::
 
 ## Deprecations
 
@@ -42,10 +42,11 @@ The following classes, methods, and types are deprecated in favor of the new `re
 - `InstanceDataStore` class
 - `LocalStorageStore` class
 
-<Callout title="Backwards Compatibility">
+:::callout
+### Backwards Compatibility
 To make migrating easier, the familiar `UserSession` & `AppConfig` class still exists and is semi-backwards compatible for the `8.x.x` release.
 It will "cache" the user's address in local storage and allow access to it via the `loadUserData` method (as previously done).
-</Callout>
+:::
 
 ## Migration Steps
 
@@ -98,6 +99,7 @@ Now, the `request` method is used to directly interact with the wallet, giving d
 This manual approach makes the wallet interaction more transparent and customizable.
 Developers can manually manage the currently connected user's address in e.g. local storage, jotai, etc. or use the `connect()`/`request()` method to cache the address in local storage.
 
-<Callout title="Security Note">
+:::callout
+### Security Note
 For security reasons, the `8.x.x` release only returns the current network's address (where previously both mainnet and testnet addresses were returned).
-</Callout>
+:::

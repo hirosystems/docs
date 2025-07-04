@@ -68,9 +68,11 @@ Each option in the transaction configuration serves a specific purpose:
 | `postConditionMode` | How to handle post-conditions (Deny or Allow) |
 | `anchorMode` | How the transaction is anchored to Bitcoin |
 
-<Callout title="Security tip" type="warn">
+:::callout
+type: warn
+### Security tip
 Never expose private keys in production code. Use environment variables or secure key management systems.
-</Callout>
+:::
 
 ## Checking transaction status
 
@@ -112,9 +114,11 @@ const txOptions = {
 };
 ```
 
-<Callout title="Best practice" type="tip">
+:::callout
+type: tip
+### Best practice
 Always use post-conditions when transferring tokens to protect users from unexpected transfers, especially when interacting with smart contracts.
-</Callout>
+:::
 
 ## Related snippets
 

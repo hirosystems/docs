@@ -155,12 +155,13 @@ When deploying, Clarinet automatically:
   </TabsContent>
 
   <TabsContent value="testnet" className="mt-4">
-    <Callout type="info" title="Prerequisites">
-      Before deploying to testnet:
+    :::callout
+### Prerequisites
+Before deploying to testnet:
       - Get testnet STX from the [faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
       - Configure your account in `settings/Testnet.toml`
       - Validate contracts with `clarinet check`
-    </Callout>
+:::
     
     **Generate deployment plan with cost estimation**:
     
@@ -176,14 +177,16 @@ When deploying, Clarinet automatically:
   </TabsContent>
 
   <TabsContent value="mainnet" className="mt-4">
-    <Callout type="warn" title="Mainnet checklist">
-      Before deploying to mainnet:
+    :::callout
+type: warn
+### Mainnet checklist
+Before deploying to mainnet:
       1. Complete thorough testing on testnet
       2. Audit your contracts for security vulnerabilities
       3. Ensure you have sufficient STX for deployment fees
       4. Back up your deployment keys securely
       5. Consider using a hardware wallet for deployment
-    </Callout>
+:::
     
     **Generate mainnet deployment plan**:
     
@@ -307,9 +310,10 @@ Deployment plans support various transaction types:
 
 You can manually edit deployment plans for complex scenarios:
 
-<Callout type="info" title="Manual edits">
+:::callout
+### Manual edits
 When deploying, Clarinet prompts to overwrite manual changes. Type `no` to keep your customizations.
-</Callout>
+:::
 
 **Contract initialization example**:
 ```yaml
@@ -417,17 +421,7 @@ When deploying, Clarinet prompts to overwrite manual changes. Type `no` to keep 
   </AccordionItem>
 </Accordion>
 
-## Next steps
-
-<Cards>
-  <NextCard 
-    href="/tools/chainhook"
-    title="Chainhook"
-    description="Learn how to monitor your contracts with Chainhook."
-  />
-  <NextCard 
-    href="/tools/contract-monitoring"
-    title="Contract monitoring"
-    description="Learn how to monitor your contracts with Chainhook."
-  />
-</Cards>
+:::next-steps
+- [Chainhook](/tools/chainhook): Learn how to monitor your contracts with Chainhook.
+- [Contract monitoring](/tools/contract-monitoring): Learn how to monitor your contracts with Chainhook.
+:::

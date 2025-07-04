@@ -87,9 +87,10 @@ rocksdb_max_open_files = 10000
 rocksdb_cache_size = "8GB"
 ```
 
-<Callout type="info" title="Storage performance">
+:::callout
+### Storage performance
 Use fast NVMe storage for the working directory. The indexer performs many random reads/writes during operation.
-</Callout>
+:::
 
 ### Database connections
 
@@ -284,17 +285,7 @@ $ bitcoin-indexer validate --config-path=~/bitcoin-indexer/bitcoin-indexer/bitco
 [32m✓[0m Storage directory writable
 ```
 
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/archive-bootstrap"
-    title="Bootstrap from archives"
-    description="Speed up initial sync with pre-indexed data"
-  />
-  <NextCard
-    href="/tools/bitcoin-indexer/run-indexer/full-sync"
-    title="Start indexing"
-    description="Begin processing blockchain data"
-  />
-</Cards>
+:::next-steps
+- [Bootstrap from archives](/tools/bitcoin-indexer/run-indexer/archive-bootstrap): Speed up initial sync with pre-indexed data
+- [Start indexing](/tools/bitcoin-indexer/run-indexer/full-sync): Begin processing blockchain data
+:::

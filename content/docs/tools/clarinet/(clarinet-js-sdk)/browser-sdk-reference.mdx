@@ -46,9 +46,10 @@ await simnet.initSession("/project", "Clarinet.toml");
 const count = simnet.getDataVar('counter', 'count');
 ```
 
-<Callout type="info" title="Virtual file system">
+:::callout
+### Virtual file system
 Using a Clarinet project in the browser requires setting up a virtual file system. Documentation and examples for this advanced use case are coming soon.
-</Callout>
+:::
 
 ## Common use cases
 
@@ -113,13 +114,3 @@ Tested browsers include:
 - Chrome/Edge 90+
 - Firefox 89+
 - Safari 15+
-
-## Next steps
-
-<Cards>
-  <NextCard
-    href="/tools/clarinet/sdk-reference"
-    title="Clarinet SDK reference"
-    description="View the complete API documentation for all available methods"
-  />
-</Cards>
