@@ -62,7 +62,7 @@ function InteractiveFeatures({ className }: InteractiveFeaturesProps) {
           <span className="mr-2 p-1 shrink-0 bg-secondary border border-border text-muted-foreground rounded-full">
             <Check className="w-4 h-4" />
           </span>
-          <p className="text-base tracking-3 font-normal text-pretty m-0 my-0.5 text-foreground">
+          <p className="text-base tracking-3 font-normal text-normal m-0 my-0.5 text-foreground">
             {feature}
           </p>
         </li>

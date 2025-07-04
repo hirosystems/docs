@@ -23,10 +23,10 @@ export function SearchToggle(props: ComponentProps<"button">) {
         </span>
       </div>
       <div className="flex items-center gap-1 group">
-        <Kbd className="flex items-center justify-center rounded text-md group-hover:text-primary transition-colors">
+        <Kbd className="flex items-center justify-center rounded text-md transition-colors">
           ⌘
         </Kbd>
-        <Kbd className="flex items-center justify-center rounded text-sm group-hover:text-primary transition-colors">
+        <Kbd className="flex items-center justify-center rounded text-sm transition-colors">
           K
         </Kbd>
       </div>
