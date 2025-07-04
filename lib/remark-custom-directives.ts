@@ -8,6 +8,8 @@ import type { Root } from "mdast";
  * Currently supports:
  * - :::next-steps directive for creating Next steps sections
  * - :::callout directive for creating Callout components
+ * - :::objectives directive for creating What you'll learn sections
+ * - :::prerequisites directive for creating Prerequisites sections
  */
 export const remarkCustomDirectives: Plugin<[], Root> = () => {
   return (tree: Root, file) => {
@@ -20,6 +22,12 @@ export const remarkCustomDirectives: Plugin<[], Root> = () => {
             break;
           case "callout":
             transformCalloutDirective(node, index, parent, file);
+            break;
+          case "objectives":
+            transformObjectivesDirective(node, index, parent, file);
+            break;
+          case "prerequisites":
+            transformPrerequisitesDirective(node, index, parent, file);
             break;
           default:
             // For unknown directives, transform to mdxJsxFlowElement with empty attributes
@@ -287,5 +295,208 @@ function transformCalloutDirective(
   }
   
   // Children remain as-is to preserve markdown content
+}
+
+/**
+ * Transform :::objectives directive into What you'll learn section
+ * Expected format:
+ * :::objectives
+ * - Learning objective 1
+ * - Learning objective 2
+ * :::
+ */
+function transformObjectivesDirective(
+  node: any,
+  index: number | undefined,
+  parent: any,
+  file: any
+) {
+  // Validate list exists
+  const listNode = node.children?.find((child: any) => child.type === "list");
+  
+  if (!listNode) {
+    file.fail("objectives directive must contain a list", node.position);
+    return;
+  }
+
+  // Validate item count
+  const itemCount = listNode.children?.length || 0;
+  if (itemCount < 2) {
+    file.warn(
+      "objectives directive should contain at least 2 items",
+      node.position
+    );
+  }
+  if (itemCount > 6) {
+    file.warn(
+      "objectives directive should contain at most 6 items",
+      node.position
+    );
+  }
+
+  // Parse list items
+  const objectives: string[] = [];
+  for (const item of listNode.children) {
+    const text = extractTextFromListItem(item);
+    if (text) {
+      objectives.push(text);
+    }
+  }
+
+  // Create transformed nodes
+  const transformedNodes = [
+    // ## What you'll learn
+    {
+      type: "heading",
+      depth: 2,
+      children: [{ type: "text", value: "What you'll learn" }],
+    },
+    // Container div with objectives
+    {
+      type: "mdxJsxFlowElement",
+      name: "div",
+      attributes: [
+        {
+          type: "mdxJsxAttribute",
+          name: "className",
+          value: "space-y-3 my-6",
+        },
+      ],
+      children: objectives.map((text) => ({
+        type: "mdxJsxFlowElement",
+        name: "div",
+        attributes: [
+          {
+            type: "mdxJsxAttribute",
+            name: "className",
+            value: "flex items-start gap-3",
+          },
+        ],
+        children: [
+          // ArrowRight icon
+          {
+            type: "mdxJsxFlowElement",
+            name: "ArrowRight",
+            attributes: [
+              {
+                type: "mdxJsxAttribute",
+                name: "className",
+                value: "h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0",
+              },
+            ],
+            children: [],
+          },
+          // Text span
+          {
+            type: "mdxJsxFlowElement",
+            name: "span",
+            attributes: [],
+            children: [{ type: "text", value: text }],
+          },
+        ],
+      })),
+    },
+  ];
+
+  // Replace directive with transformed nodes
+  if (parent && index !== undefined) {
+    parent.children.splice(index, 1, ...transformedNodes);
+  }
+}
+
+/**
+ * Transform :::prerequisites directive into Prerequisites section
+ * Expected format:
+ * :::prerequisites
+ * - Prerequisite item 1
+ * - Prerequisite item 2
+ * - Prerequisite item 3
+ * :::
+ */
+function transformPrerequisitesDirective(
+  node: any,
+  index: number | undefined,
+  parent: any,
+  file: any
+) {
+  // Validate list exists
+  const listNode = node.children?.find((child: any) => child.type === "list");
+  
+  if (!listNode) {
+    file.fail("prerequisites directive must contain a list", node.position);
+    return;
+  }
+
+  // Validate item count
+  const itemCount = listNode.children?.length || 0;
+  if (itemCount < 1) {
+    file.warn(
+      "prerequisites directive should contain at least 1 item",
+      node.position
+    );
+  }
+  if (itemCount > 6) {
+    file.warn(
+      "prerequisites directive should contain at most 6 items",
+      node.position
+    );
+  }
+
+  // Create transformed nodes
+  const transformedNodes = [
+    // ## Prerequisites
+    {
+      type: "heading",
+      depth: 2,
+      children: [{ type: "text", value: "Prerequisites" }],
+    },
+    // Container div with the original list inside
+    {
+      type: "mdxJsxFlowElement",
+      name: "div",
+      attributes: [
+        {
+          type: "mdxJsxAttribute",
+          name: "className",
+          value: "my-6",
+        },
+      ],
+      children: node.children, // Keep all original children including the list
+    },
+  ];
+
+  // Replace directive with transformed nodes
+  if (parent && index !== undefined) {
+    parent.children.splice(index, 1, ...transformedNodes);
+  }
+}
+
+/**
+ * Extract text content from a list item node
+ */
+function extractTextFromListItem(item: any): string {
+  // List item should have children
+  if (!item.children || item.children.length === 0) {
+    return "";
+  }
+
+  let text = "";
+
+  // Process children to extract text
+  for (const child of item.children) {
+    if (child.type === "paragraph" && child.children) {
+      // Extract text from paragraph children
+      for (const paragraphChild of child.children) {
+        if (paragraphChild.type === "text") {
+          text += paragraphChild.value;
+        }
+      }
+    } else if (child.type === "text") {
+      // Direct text node
+      text += child.value;
+    }
+  }
+
+  return text.trim();
 }
 
