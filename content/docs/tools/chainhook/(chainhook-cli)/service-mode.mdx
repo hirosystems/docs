@@ -1,151 +1,272 @@
 ---
-title: Service deployment
-sidebarTitle: Service deployment
-description: Deploy Chainhook for real-time blockchain event streaming.
+title: Run Chainhook as a service
+sidebarTitle: Service mode
+description: Deploy Chainhook as a service for real-time blockchain event streaming with Bitcoin and Stacks nodes.
 ---
 
-Service mode runs Chainhook continuously, monitoring blockchain nodes and delivering events to your configured endpoints in real-time.
+This guide shows you how to run Chainhook as a service for continuous monitoring of blockchain events. You'll learn how to configure Chainhook with both Bitcoin and Stacks nodes, manage predicates dynamically, and optimize for production deployments.
 
-## Start the service
+## Basic service setup
 
-Launch Chainhook with a configuration file:
+Start Chainhook as a service using a configuration file:
 
 ```terminal
 $ chainhook service start --config-path=./Chainhook.toml
-[32mStarting Chainhook service[0m
-[32m✓ Connected to Stacks node at localhost:20443[0m
-[32m✓ Connected to Bitcoin node at localhost:8332[0m
-[33mListening for new blocks...[0m
 ```
 
-## Configuration file
+The service connects to your blockchain nodes and begins monitoring for events that match your registered predicates.
 
-Create a `Chainhook.toml` configuration:
+### Minimal configuration
 
 ```toml Chainhook.toml
 [storage]
 working_dir = "/var/chainhook"
 
-[http_api]
-http_port = 9000
-database_uri = "redis://localhost:6379"
-
 [network]
 mode = "mainnet"
 
-[stacks_node]
-rpc_url = "http://localhost:20443"
-auth_token = "your-auth-token"
-
-[bitcoin_node]
-rpc_url = "http://localhost:8332"
-rpc_username = "bitcoin"
-rpc_password = "password"
-
 [limits]
-max_predicate_per_block = 50
-ingestion_port = 9001
+max_number_of_bitcoin_predicates = 100
+max_number_of_stacks_predicates = 10
 ```
 
-### Configuration options
+## Bitcoin node configuration
 
-| Section | Key | Description |
-|---------|-----|-------------|
-| `storage` | `working_dir` | Directory for Chainhook data |
-| `http_api` | `http_port` | Port for management API |
-| `http_api` | `database_uri` | Redis connection for state |
-| `network` | `mode` | Network mode (mainnet/testnet/devnet) |
-| `stacks_node` | `rpc_url` | Stacks node RPC endpoint |
-| `bitcoin_node` | `rpc_url` | Bitcoin node RPC endpoint |
-| `limits` | `max_predicate_per_block` | Processing limit per block |
+Configure Chainhook to work with a Bitcoin node for monitoring Bitcoin events:
 
-## Register predicates
+```toml Chainhook.toml
+[network]
+mode = "mainnet"
+bitcoind_rpc_url = "http://localhost:8332"
+bitcoind_rpc_username = "devnet"
+bitcoind_rpc_password = "devnet"
 
-Add predicates to a running service:
+# Option 1: Receive events via ZeroMQ (recommended for Bitcoin-only)
+bitcoind_zmq_url = "tcp://0.0.0.0:18543"
 
-```terminal
-$ chainhook predicates register my-predicate.json
-[32mPredicate registered successfully[0m
-UUID: abc-123-def-456
-Status: Active
+# Option 2: Receive events via Stacks node (if running both chains)
+# stacks_node_rpc_url = "http://localhost:20443"
 ```
 
-### Dynamic registration via API
+### Bitcoin configuration mapping
 
-Register predicates programmatically:
+| bitcoin.conf | Chainhook.toml |
+|--------------|----------------|
+| rpcuser | bitcoind_rpc_username |
+| rpcpassword | bitcoind_rpc_password |
+| rpcport | bitcoind_rpc_url |
+| zmqpubhashblock | bitcoind_zmq_url |
+
+## Stacks node configuration
+
+For monitoring Stacks events, configure both the Stacks node and Chainhook:
+
+### Stacks node setup
+
+```toml Stacks.toml
+[node]
+working_dir = "/stacks-blockchain"
+rpc_bind = "0.0.0.0:20443"
+p2p_bind = "0.0.0.0:20444"
+
+[burnchain]
+chain = "bitcoin"
+mode = "mainnet"
+peer_host = "localhost"
+username = "devnet"      # Must match bitcoin.conf rpcuser
+password = "devnet"      # Must match bitcoin.conf rpcpassword
+rpc_port = 8332          # Must match bitcoin.conf rpcport
+
+[[events_observer]]
+endpoint = "localhost:20455"
+retry_count = 255
+events_keys = ["*"]
+```
+
+### Chainhook configuration for Stacks
+
+```toml Chainhook.toml
+[network]
+mode = "mainnet"
+bitcoind_rpc_url = "http://localhost:8332"
+bitcoind_rpc_username = "devnet"
+bitcoind_rpc_password = "devnet"
+stacks_node_rpc_url = "http://localhost:20443"
+stacks_events_ingestion_port = 20455
+```
+
+## Predicate management
+
+Register predicates with the service to start monitoring for specific events.
+
+### Start with predicates
 
 ```terminal
-$ curl -X POST http://localhost:9000/v1/chainhooks \
+$ chainhook service start --predicate-path=my-predicate.json --config-path=Chainhook.toml
+```
+
+### Register multiple predicates
+
+```terminal
+$ chainhook service start \
+    --predicate-path=bitcoin-predicate.json \
+    --predicate-path=stacks-predicate.json \
+    --config-path=Chainhook.toml
+```
+
+### Dynamic registration
+
+Enable the HTTP API to register predicates while the service is running:
+
+```toml Chainhook.toml
+[http_api]
+http_port = 20456
+database_uri = "redis://localhost:6379/"
+```
+
+Register a new predicate via API:
+
+```terminal
+$ curl -X POST http://localhost:20456/v1/chainhooks \
     -H "Content-Type: application/json" \
-    -d @my-predicate.json
+    -d @predicate.json
+
+{"result":"f8d43129-dba1-4a6c-b368-21426de0f3cd","status":200}
 ```
 
-## Service management
+## Service monitoring
 
-### Check service status
+Monitor the health and status of your Chainhook service.
+
+### Health check
+
+```terminal
+$ curl http://localhost:20456/health
+```
+
+```json
+{
+  "status": "healthy",
+  "stacks_node": "connected",
+  "bitcoin_node": "connected",
+  "database": "connected",
+  "predicates_active": 3
+}
+```
+
+### Service status
 
 ```terminal
 $ chainhook service status
-[1mChainhook Service Status[0m
-Status: Running
-Uptime: 2d 14h 32m
-Stacks tip: 150234
-Bitcoin tip: 812456
-Active predicates: 3
 ```
 
 ### View logs
 
 ```terminal
 $ chainhook service logs --tail 50
-2024-01-15 10:32:15 [INFO] New Stacks block: 150234
-2024-01-15 10:32:16 [INFO] Evaluating 3 predicates
-2024-01-15 10:32:16 [INFO] Predicate abc-123 matched 2 events
-2024-01-15 10:32:17 [INFO] Webhook delivered to https://api.example.com
 ```
 
-### Stop service
+## Predicate examples
 
-```terminal
-$ chainhook service stop
-[33mStopping Chainhook service...[0m
-[32m✓ Service stopped gracefully[0m
-```
+Create predicates to monitor specific blockchain events.
 
-## Monitoring health
+### Bitcoin predicate
 
-### Health check endpoint
-
-```terminal
-$ curl http://localhost:9000/health
+```json bitcoin-transfers.json
 {
-  "status": "healthy",
-  "stacks_node": "connected",
-  "bitcoin_node": "connected", 
-  "database": "connected",
-  "predicates_active": 3
+  "chain": "bitcoin",
+  "uuid": "1",
+  "name": "Bitcoin P2WPKH Monitor",
+  "version": 1,
+  "networks": {
+    "mainnet": {
+      "start_block": 800000,
+      "if_this": {
+        "scope": "outputs",
+        "p2wpkh": {
+          "equals": "bc1qexampleaddress"
+        }
+      },
+      "then_that": {
+        "http_post": {
+          "url": "http://localhost:3000/api/bitcoin-events",
+          "authorization_header": "Bearer secret-token"
+        }
+      }
+    }
+  }
 }
 ```
 
-### Metrics endpoint
+### Stacks predicate
 
-```terminal
-$ curl http://localhost:9000/metrics
-# HELP chainhook_blocks_processed Total blocks processed
-# TYPE chainhook_blocks_processed counter
-chainhook_blocks_processed{chain="stacks"} 150234
-chainhook_blocks_processed{chain="bitcoin"} 812456
-
-# HELP chainhook_events_matched Total events matched
-# TYPE chainhook_events_matched counter  
-chainhook_events_matched{predicate="abc-123"} 1523
+```json stacks-events.json
+{
+  "chain": "stacks",
+  "uuid": "2",
+  "name": "Contract Event Monitor",
+  "version": 1,
+  "networks": {
+    "mainnet": {
+      "start_block": 100000,
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-dao",
+        "contains": "liquidation"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "http://localhost:3000/api/stacks-events",
+          "authorization_header": "Bearer secret-token"
+        }
+      }
+    }
+  }
+}
 ```
 
-## High availability setup
+## Production configuration
 
-Run multiple Chainhook instances for reliability:
+Optimize Chainhook for production deployments with enhanced performance and reliability settings.
 
-### 1. Shared Redis backend
+### Performance tuning
+
+```toml Chainhook-production.toml
+[storage]
+working_dir = "/var/chainhook"
+
+[http_api]
+http_port = 20456
+database_uri = "redis://redis-cluster:6379/"
+
+[network]
+mode = "mainnet"
+bitcoind_rpc_url = "http://bitcoin-node:8332"
+bitcoind_rpc_username = "${BITCOIN_RPC_USER}"
+bitcoind_rpc_password = "${BITCOIN_RPC_PASS}"
+stacks_node_rpc_url = "http://stacks-node:20443"
+
+[limits]
+max_number_of_bitcoin_predicates = 100
+max_number_of_concurrent_bitcoin_scans = 100
+max_number_of_stacks_predicates = 50
+max_number_of_concurrent_stacks_scans = 50
+max_number_of_processing_threads = 16
+max_number_of_networking_threads = 16
+max_caching_memory_size_mb = 32000
+
+[cache]
+block_cache_size = 1000
+transaction_cache_size = 10000
+
+[http_api]
+webhook_timeout = 10
+retry_count = 3
+```
+
+### High availability setup
+
+Run multiple instances with shared state:
 
 ```toml Chainhook-ha.toml
 [http_api]
@@ -156,77 +277,24 @@ instance_id = "chainhook-1"
 lock_timeout = 30
 ```
 
-### 2. Load balancer configuration
+Deploy behind a load balancer for redundancy:
 
-```nginx
+```nginx nginx.conf
 upstream chainhook_backend {
-    server chainhook-1:9000;
-    server chainhook-2:9000;
-    server chainhook-3:9000;
+    server chainhook-1:20456;
+    server chainhook-2:20456;
+    server chainhook-3:20456;
+}
+
+server {
+    location /v1/chainhooks {
+        proxy_pass http://chainhook_backend;
+    }
 }
 ```
 
-### 3. Predicate distribution
+## Further reading
 
-Chainhook automatically distributes predicates across instances:
-
-```terminal
-$ chainhook cluster status
-[1mCluster Status[0m
-Instance chainhook-1: 5 predicates
-Instance chainhook-2: 4 predicates  
-Instance chainhook-3: 5 predicates
-```
-
-## Performance tuning
-
-### Optimize for throughput
-
-```toml
-[limits]
-max_predicate_per_block = 100
-parallel_processing = true
-worker_threads = 8
-
-[cache]
-block_cache_size = 1000
-transaction_cache_size = 10000
-```
-
-### Optimize for latency
-
-```toml
-[limits]
-max_predicate_per_block = 10
-parallel_processing = false
-
-[http_api]
-webhook_timeout = 5
-retry_count = 3
-```
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| `Cannot connect to node` | Verify node URLs and authentication |
-| `Webhook delivery failed` | Check endpoint availability and logs |
-| `High memory usage` | Reduce cache sizes in configuration |
-| `Missed blocks` | Check node sync status and network |
-
-## Production checklist
-
-Before deploying to production:
-
-- [ ] Configure monitoring and alerting
-- [ ] Set up log rotation
-- [ ] Enable webhook authentication
-- [ ] Configure retry policies
-- [ ] Test failover scenarios
-- [ ] Set resource limits
-- [ ] Enable metrics collection
-
-:::next-steps
-- [Configure webhooks](/tools/chainhook/webhook-server/webhook-setup): Set up secure webhook endpoints
-- [Deploy to production](/tools/chainhook/integrations/deployment): Best practices for production deployments
-:::
+- [Predicate design](/tools/chainhook/guides/predicate-design)
+- [Bitcoin event scopes](/tools/chainhook/references/scopes/bitcoin)
+- [Stacks event scopes](/tools/chainhook/references/scopes/stacks)

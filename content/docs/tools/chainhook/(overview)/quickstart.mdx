@@ -1,39 +1,19 @@
 ---
-title: Scanning for events
+title: Quickstart
 sidebarTitle: Quickstart
-description: Create your first Chainhook predicate to scan blockchain events.
+description: Create a Chainhook predicate to track STX transfers on the Stacks blockchain and scan historical data to see it in action.
 ---
 
-import { Steps, Step } from '@/components/steps';
-import { ArrowRight, Check } from 'lucide-react';
+In this quickstart, you'll create your first Chainhook predicate to monitor STX transfers on the Stacks blockchain. You'll learn how to define event tracking rules and scan historical blockchain data to find matching transactions.
 
-## What you'll learn
+:::objectives
+- How to create a Chainhook predicate for tracking STX transfers
+- How to scan historical blockchain data using Chainhook
+:::
 
-In this quickstart, you'll create a Chainhook predicate to track STX transfers on the Stacks blockchain and scan historical data to see it in action.
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>How to create a Chainhook predicate for tracking STX transfers</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>How to scan historical blockchain data using Chainhook</span>
-  </div>
-</div>
-
-## Prerequisites
-
-To follow this guide, you'll need:
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>For installation instructions, visit the [Chainhook installation guide](/tools/chainhook/index#installation).</span>
-  </div>
-</div>
+:::prerequisites
+- For installation instructions, visit the [Chainhook installation guide](/tools/chainhook/index#installation).
+:::
 
 ## Quickstart
 
@@ -45,7 +25,6 @@ To follow this guide, you'll need:
 
     ```terminal
     $ chainhook predicates new stx-transfer.json --stacks
-    [32mCreated predicate template[0m [1mstx-transfer.json[0m
     ```
 
     This creates a boilerplate JSON file with the basic predicate structure. The `--stacks` flag specifies you're tracking Stacks events (use `--bitcoin` for Bitcoin).
@@ -92,16 +71,11 @@ To follow this guide, you'll need:
 
     ```terminal
     $ chainhook predicates scan stx-transfer.json --mainnet
-    [33mDownloading Stacks chainstate archive...[0m
-    [32mScanning blocks 154670 to 155000[0m
-    [32mFound 1,234 matching events[0m
-    [32mResults written to stx-transfers.txt[0m
     ```
 
     :::callout
-### First-time setup
-The first scan downloads a chainstate archive from Hiro Archive. Subsequent scans use the cached data for faster performance.
-:::
+    The first `scan` downloads a chainstate archive from Hiro Archive. Subsequent scans use the cached data for faster performance.
+    :::
   </Step>
 
   <Step>
@@ -111,7 +85,6 @@ The first scan downloads a chainstate archive from Hiro Archive. Subsequent scan
 
     ```terminal
     $ head -5 stx-transfers.txt
-    {"apply":[{"block_identifier":{"hash":"0x123...","index":154670},"transactions":[{"transaction_identifier":{"hash":"0xabc..."},"operations":[{"operation_identifier":{"index":0},"type":"stx_transfer","status":"success","account":{"address":"SP123..."},"amount":{"value":"1000000","currency":{"symbol":"STX","decimals":6}}}]}]}]}
     ```
 
     Each line contains a JSON payload with transfer details including sender, recipient, amount, and block information.

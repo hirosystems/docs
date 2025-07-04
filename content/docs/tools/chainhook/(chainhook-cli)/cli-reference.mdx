@@ -1,8 +1,209 @@
 ---
 title: CLI reference
 sidebarTitle: CLI reference
-description: Complete reference for Chainhook CLI commands.
-isNew: true
+description: Complete reference for all Chainhook CLI commands and options.
 ---
 
-Placeholder content - to be migrated from existing references/chainhook-cli-reference.mdx
+The Chainhook CLI provides tools for creating, testing, and deploying blockchain event observers. From predicate creation to service management, Chainhook streamlines your blockchain monitoring workflow.
+
+- Generate configuration: [`chainhook config new`](#chainhook-config)
+- Create predicates: [`chainhook predicates new`](#chainhook-predicates)
+- Test predicates: [`chainhook predicates scan`](#chainhook-predicates)
+- Run as a service: [`chainhook service start`](#chainhook-service)
+- Manage Stacks database: [`chainhook stacks db`](#chainhook-stacks)
+
+## Configuration management [#configuration-management]
+
+### chainhook config
+
+`chainhook config` generates configuration files.
+
+| Command | Description |
+|---------|-------------|
+| `new` | Generate new config |
+
+**Usage with `new`**
+
+```console
+chainhook config new [OPTIONS]
+```
+
+```terminal
+$ chainhook config new --mainnet
+```
+
+| Option | Description |
+|--------|-------------|
+| `--mainnet` | Target Mainnet network |
+| `--testnet` | Target Testnet network |
+| `--devnet` | Target Devnet network |
+
+## Predicate management [#predicate-management]
+
+### chainhook predicates
+
+`chainhook predicates` generates and tests predicates.
+
+| Command | Description |
+|---------|-------------|
+| `new` | Generate new predicate |
+| `check` | Check given predicate |
+| `scan` | Scan blocks (one-off) from specified network and apply provided predicate |
+
+**Usage with `new`**
+
+```console
+chainhook predicates new [OPTIONS] <NAME>
+```
+
+```terminal
+$ chainhook predicates new my-predicate --stacks
+$ chainhook predicates new bitcoin-transfers --bitcoin
+```
+
+| Option | Description |
+|--------|-------------|
+| `--stacks` | Generate a Stacks predicate |
+| `--bitcoin` | Generate a Bitcoin predicate |
+
+**Usage with `scan`**
+
+```console
+chainhook predicates scan [OPTIONS] <PREDICATE_PATH>
+```
+
+```terminal
+$ chainhook predicates scan my-predicate.json --mainnet
+$ chainhook predicates scan transfers.json --testnet --config-path ./Chainhook.toml
+```
+
+| Option | Description |
+|--------|-------------|
+| `--mainnet` | Target Mainnet network |
+| `--testnet` | Target Testnet network |
+| `--config-path <path>` | Load config file path |
+
+**Usage with `check`**
+
+```console
+chainhook predicates check [OPTIONS] <PREDICATE_PATH>
+```
+
+```terminal
+$ chainhook predicates check my-predicate.json --mainnet
+```
+
+| Option | Description |
+|--------|-------------|
+| `--config-path <path>` | Load config file path |
+| `--mainnet` | Target Mainnet network |
+| `--testnet` | Target Testnet network |
+
+## Service management [#service-management]
+
+### chainhook service
+
+`chainhook service` runs a service streaming blocks and evaluating registered predicates.
+
+| Command | Description |
+|---------|-------------|
+| `start` | Start chainhook-cli |
+
+**Usage with `start`**
+
+```console
+chainhook service start [OPTIONS]
+```
+
+```terminal
+$ chainhook service start --config-path=./Chainhook.toml
+$ chainhook service start --predicate-path=./my-predicate.json --mainnet
+```
+
+| Option | Description |
+|--------|-------------|
+| `--config-path <path>` | Load config file path |
+| `--predicate-path <path>` | Specify relative path of the chainhooks (yaml format) to evaluate |
+| `--start-http-api` | Start REST API for managing predicates |
+| `--prometheus-port <port>` | If provided, serves Prometheus metrics at localhost:{port}/metrics |
+| `--mainnet` | Target Mainnet network |
+| `--testnet` | Target Testnet network |
+| `--devnet` | Target Devnet network |
+
+## Stacks integration [#stacks-integration]
+
+### chainhook stacks
+
+`chainhook stacks` provides Stacks-specific commands.
+
+| Command | Description |
+|---------|-------------|
+| `db` | Db maintenance related commands |
+
+**Usage with `db`**
+
+```console
+chainhook stacks db <SUBCOMMAND>
+```
+
+```terminal
+$ chainhook stacks db check
+$ chainhook stacks db update --config-path ./Chainhook.toml
+```
+
+| Subcommand | Description |
+|------------|-------------|
+| `check` | Check integrity |
+| `drop` | Update blocks from database |
+| `get` | Retrieve a block from the Stacks db |
+| `get-latest` | Get latest blocks from the unconfirmed and confirmed block db |
+| `unconfirm` | Deletes a block from the confirmed block db and moves it to the unconfirmed block db |
+| `update` | Update database using latest Stacks archive file |
+
+| Option | Description |
+|--------|-------------|
+| `--config-path <path>` | Load config file path |
+
+## Utilities [#utilities]
+
+### chainhook docs
+
+`chainhook docs` generates documentation.
+
+| Command | Description |
+|---------|-------------|
+| `api` | Generate new documentation for the predicate registration API |
+
+**Usage with `api`**
+
+```console
+chainhook docs api
+```
+
+```terminal
+$ chainhook docs api
+```
+
+### chainhook help
+
+`chainhook help` prints help information.
+
+**Usage**
+
+```console
+chainhook help [SUBCOMMAND]
+```
+
+```terminal
+$ chainhook help
+$ chainhook help predicates
+```
+
+## Global options [#global-options]
+
+These options can be used with the main command:
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| `--help` | `-h` | Print help information |
+| `--version` | `-V` | Print version information |
