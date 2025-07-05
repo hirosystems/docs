@@ -51,6 +51,7 @@ export interface MainItemType extends BaseLinkType {
   icon?: ReactNode;
   text: ReactNode;
   description?: ReactNode;
+  isNew?: boolean;
 }
 
 export interface IconItemType extends BaseLinkType {
@@ -316,16 +317,26 @@ export function renderNavItem(item: LinkItemType): ReactNode {
 
                 return (
                   <NavigationMenuLink key={menuItem.url} asChild>
-                    <Link
-                      href={menuItem.url}
-                      className={cn(
-                        "block py-2 text-sm font-fono text-muted-foreground hover:text-primary transition-colors",
-                        isMenuItemActive &&
-                          "underline underline-offset-4 text-primary"
+                    <div className="!font-normal flex items-center gap-2 flex-1">
+                      <Link
+                        href={menuItem.url}
+                        className={cn(
+                          "block py-2 text-sm font-fono text-muted-foreground hover:text-primary transition-colors",
+                          isMenuItemActive &&
+                            "underline underline-offset-4 text-primary"
+                        )}
+                      >
+                        {menuItem.text}
+                      </Link>
+                      {menuItem.isNew && (
+                        <span
+                          key="new"
+                          className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none"
+                        >
+                          New
+                        </span>
                       )}
-                    >
-                      {menuItem.text}
-                    </Link>
+                    </div>
                   </NavigationMenuLink>
                 );
               })}

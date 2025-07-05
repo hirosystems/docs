@@ -41,6 +41,7 @@ export const baseOptions: BaseLayoutProps = {
           text: "Bitcoin indexer",
           description: "Indexer for Bitcoin blockchain data.",
           url: "/tools/bitcoin-indexer",
+          isNew: true,
         },
       ],
     },
