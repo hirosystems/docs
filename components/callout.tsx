@@ -22,6 +22,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         ref={ref}
         className={cn(
           "my-6 flex flex-row items-center gap-2 rounded-lg p-4 text-sm text-foreground",
+          !title && "items-start",
           {
             tip: "bg-[#CEEFD0] dark:bg-background dark:border dark:border-[#C2EBC4]",
             info: "bg-[#D1E8FF] dark:bg-background dark:border dark:border-[#B3D9FF]",

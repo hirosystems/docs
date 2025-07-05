@@ -161,7 +161,9 @@ function UnorderedList({ children, items }: ListProps) {
           >
             <span
               className={
-                hasSpecialPrefixes ? "first-letter:text-brand-orange" : ""
+                hasSpecialPrefixes
+                  ? "first-letter:text-orange-500 first-letter:dark:text-brand-orange"
+                  : ""
               }
             >
               {element.props.children}
