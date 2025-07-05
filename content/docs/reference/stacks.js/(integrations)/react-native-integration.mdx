@@ -1,0 +1,283 @@
+---
+title: Using Stacks.js with React Native
+sidebarTitle: React Native integration
+description: Learn how to integrate Stacks blockchain functionality into React Native mobile applications
+---
+
+Stacks.js can be integrated into React Native applications to bring blockchain functionality to mobile devices. This tutorial walks you through setting up a React Native project with Expo and configuring it to work with Stacks.js libraries.
+
+:::objectives
+- Set up an Expo project configured for Stacks.js
+- Install and configure necessary polyfills for React Native
+- Generate wallets and sign transactions in a mobile app
+- Handle React Native's JavaScript environment limitations
+- Build a working Stacks mobile application
+:::
+
+:::prerequisites
+- Node.js and npm installed on your development machine
+- Basic knowledge of React Native and Expo
+- Familiarity with Stacks.js concepts
+- iOS or Android device/simulator for testing
+:::
+
+## Set up the Expo project
+
+Start by creating a new Expo project. The latest version of Expo provides the best compatibility with Stacks.js polyfills.
+
+```terminal
+$ npx create-expo-app@latest my-stacks-app
+$ cd my-stacks-app
+```
+
+The boilerplate project includes everything needed to start building. Test the initial setup by running the development server.
+
+```terminal
+$ npm start
+```
+
+Connect your mobile device using the Expo Go app and scan the QR code to verify the base project works correctly.
+
+## Install necessary dependencies
+
+React Native's JavaScript environment lacks certain Node.js and browser APIs that Stacks.js requires. Install the core Stacks libraries along with necessary polyfills.
+
+```terminal
+$ npm install @stacks/transactions @stacks/wallet-sdk
+```
+
+Install the polyfill dependencies as dev dependencies to handle missing APIs.
+
+```terminal
+$ npm install --save-dev buffer process react-native-get-random-values \
+  text-encoding readable-stream crypto-browserify @peculiar/webcrypto
+```
+
+These polyfills provide:
+- `buffer` and `process` - Node.js globals
+- `react-native-get-random-values` - Crypto random values
+- `text-encoding` - TextEncoder/TextDecoder APIs
+- `crypto-browserify` and `@peculiar/webcrypto` - Cryptographic functions
+
+## Configure Metro bundler
+
+Metro bundler needs configuration to properly resolve Node.js modules. Create a custom Metro configuration file.
+
+```terminal
+$ npx expo customize metro.config.js
+```
+
+Update the configuration to map Node.js modules to their React Native-compatible versions.
+
+```js metro.config.js
+const { getDefaultConfig } = require("expo/metro-config");
+
+const config = getDefaultConfig(__dirname);
+
+config.resolver.extraNodeModules = {
+  stream: require.resolve("readable-stream"),
+  crypto: require.resolve("crypto-browserify"),
+};
+
+module.exports = config;
+```
+
+This configuration ensures that when Stacks.js requests Node.js modules, Metro provides the appropriate polyfills.
+
+## Set up global polyfills
+
+Create a polyfill system to make browser and Node.js APIs available in React Native. This requires modifying the app's entry point.
+
+### Create the polyfill file
+
+Create a new file to initialize all required global objects.
+
+```js polyfill.js
+import { Buffer } from "buffer/";
+import process from "process";
+import "react-native-get-random-values";
+import { TextDecoder, TextEncoder } from "text-encoding";
+
+global.process = process;
+global.Buffer = Buffer;
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+```
+
+### Create custom entry point
+
+Create a new entry point that loads polyfills before the app starts.
+
+```js index.js
+import "./polyfill";
+import { Crypto } from "@peculiar/webcrypto";
+
+Object.assign(global.crypto, new Crypto());
+
+import "expo-router/entry";
+```
+
+### Update package.json
+
+Point the app to use the new entry point.
+
+```json package.json
+{
+  "main": "index.js",
+  // ... other configuration
+}
+```
+
+:::callout
+type: warn
+Polyfills must be loaded in separate files as shown. Loading them in the same file can cause runtime initialization errors.
+:::
+
+## Implement Stacks functionality
+
+With the environment configured, you can now use Stacks.js in your React Native components. Update the main screen to demonstrate wallet generation and transaction signing.
+
+### Import Stacks.js modules
+
+Edit the main screen component to import necessary Stacks.js functions.
+
+```tsx app/(tabs)/index.tsx
+import {
+  TransactionVersion,
+  getAddressFromPrivateKey,
+  makeSTXTokenTransfer,
+} from "@stacks/transactions";
+import { Wallet, generateSecretKey, generateWallet } from "@stacks/wallet-sdk";
+import { useState } from "react";
+import { Button } from "react-native";
+```
+
+### Set up component state
+
+Create state variables to manage wallet data and user feedback.
+
+```tsx app/(tabs)/index.tsx
+export default function HomeScreen() {
+  const [mnemonic, setMnemonic] = useState("Press button to generate");
+  const [wallet, setWallet] = useState<Wallet | null>(null);
+  const [log, setLog] = useState("");
+  
+  // Component implementation continues...
+}
+```
+
+### Generate wallet and sign transaction
+
+Implement the core functionality to create a wallet and sign a transaction.
+
+```tsx app/(tabs)/index.tsx
+const generate = async () => {
+  try {
+    // Generate a new seed phrase
+    const mnemonic = generateSecretKey();
+    setMnemonic(mnemonic);
+
+    // Create wallet from seed phrase
+    const wallet = await generateWallet({
+      secretKey: mnemonic,
+      password: "",
+    });
+    setWallet(wallet);
+
+    // Create and sign a transaction
+    const txOptions = {
+      amount: 1000,
+      anchorMode: "any" as const,
+      recipient: "SP3W993D3BRDYB284CY3SBFDEGTC5XEDJPDEA21CN",
+      senderKey: wallet.accounts[0].stxPrivateKey,
+      fee: 300,
+      network: "testnet" as const,
+      nonce: 0,
+    };
+    
+    const transaction = await makeSTXTokenTransfer(txOptions);
+    setLog("Transaction signed successfully ✓");
+  } catch (error) {
+    setLog(`Error: ${error.message}`);
+  }
+};
+```
+
+### Build the user interface
+
+Create a simple UI to display wallet information and trigger wallet generation.
+
+```tsx app/(tabs)/index.tsx
+return (
+  <ThemedView style={{ padding: 20 }}>
+    <ThemedText type="title">Stacks Wallet Demo</ThemedText>
+    
+    <ThemedView style={{ marginVertical: 20 }}>
+      <ThemedText type="subtitle">Seed Phrase</ThemedText>
+      <ThemedText style={{ marginBottom: 10 }}>{mnemonic}</ThemedText>
+      <Button title="Generate New Wallet" onPress={generate} />
+    </ThemedView>
+    
+    {wallet && (
+      <ThemedView style={{ marginVertical: 20 }}>
+        <ThemedText type="subtitle">Wallet Address</ThemedText>
+        <ThemedText>
+          {getAddressFromPrivateKey(
+            wallet.accounts[0].stxPrivateKey,
+            TransactionVersion.Testnet
+          )}
+        </ThemedText>
+      </ThemedView>
+    )}
+    
+    {log && (
+      <ThemedView style={{ marginTop: 20 }}>
+        <ThemedText type="subtitle">Status</ThemedText>
+        <ThemedText>{log}</ThemedText>
+      </ThemedView>
+    )}
+  </ThemedView>
+);
+```
+
+## Test your implementation
+
+Run your app to verify everything works correctly.
+
+```terminal
+$ npm start
+```
+
+When you press "Generate New Wallet":
+1. A new seed phrase appears
+2. The wallet address displays below
+3. A transaction is signed (not broadcast)
+4. Success message confirms signing
+
+:::callout
+type: tip
+For production apps, never display seed phrases directly. Implement secure storage using libraries like `react-native-keychain` or `expo-secure-store`.
+:::
+
+## Try it out
+
+Extend the basic implementation with additional features.
+
+```tsx
+// Challenge: Add a function to check STX balance
+const checkBalance = async (address: string) => {
+  // Implement balance checking
+  // Hint: You'll need to use @stacks/blockchain-api-client
+};
+
+// Challenge: Implement transaction broadcasting
+const broadcastTransaction = async (transaction: StacksTransaction) => {
+  // Implement broadcasting logic
+  // Remember to handle network selection
+};
+```
+
+:::next-steps
+- [Transactions package](/reference/stacks.js/packages/transactions): Deep dive into transaction construction and signing
+- [Wallet SDK](/reference/stacks.js/packages/wallet-sdk): Advanced wallet management features
+:::

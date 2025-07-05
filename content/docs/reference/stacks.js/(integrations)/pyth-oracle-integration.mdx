@@ -1,7 +1,7 @@
 ---
 title: Pyth oracle integration
-sidebarTitle: Pyth oracle
-description: Learn how to fetch price data and interact with Pyth oracle contracts using Stacks.js.
+sidebarTitle: Pyth oracle integration
+description: In this guide, you'll learn how to integrate Pyth Network price feeds into your frontend application using Stacks.js.
 isNew: true
 ---
 
@@ -9,47 +9,17 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Steps, Step } from '@/components/steps';
 import { ArrowRight, Check } from 'lucide-react';
 
-## What you'll learn
+:::objectives
+- Install and configure the Pyth SDK
+- Fetch VAA messages from Hermes API
+- Build transactions with oracle data
+- Handle post-conditions for oracle fees
+:::
 
-In this guide, you'll learn how to integrate Pyth Network price feeds into your frontend application using Stacks.js.
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Installing and configuring the Pyth SDK</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Fetching VAA messages from Hermes API</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Building transactions with oracle data</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Handling post-conditions for oracle fees</span>
-  </div>
-</div>
-
-## Prerequisites
-
-To follow this guide, you'll need:
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>A React or Node.js application with Stacks.js installed</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>Understanding of [Pyth oracle contracts](/resources/clarity/integrations/external-data)</span>
-  </div>
-</div>
+:::prerequisites
+- A React or Node.js application with Stacks.js installed
+- Understanding of [Pyth oracle contracts](/resources/clarity/integrations/external-data)
+:::
 
 ## Quickstart
 
