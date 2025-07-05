@@ -238,13 +238,13 @@ function transformCalloutDirective(
   // Transform the directive node to mdxJsxFlowElement
   node.type = "mdxJsxFlowElement";
   node.name = "Callout";
-  
+
   // Initialize attributes array
   node.attributes = [];
-  
+
   let calloutType = "info"; // default
   let titleText = "";
-  
+
   // Check if first child is a paragraph with "type: X" pattern
   if (node.children && node.children.length > 0) {
     const firstChild = node.children[0];
@@ -253,7 +253,7 @@ function transformCalloutDirective(
         .filter((child: any) => child.type === "text")
         .map((child: any) => child.value)
         .join("");
-      
+
       // Check for type: pattern
       const typeMatch = textContent.match(/^type:\s*(tip|info|warn|help)\s*$/);
       if (typeMatch) {
@@ -263,14 +263,14 @@ function transformCalloutDirective(
       }
     }
   }
-  
+
   // Add type attribute
   node.attributes.push({
     type: "mdxJsxAttribute",
     name: "type",
-    value: calloutType
+    value: calloutType,
   });
-  
+
   // Check if next child is a heading for title
   if (node.children && node.children.length > 0) {
     const firstChild = node.children[0];
@@ -280,20 +280,20 @@ function transformCalloutDirective(
         ?.filter((child: any) => child.type === "text")
         .map((child: any) => child.value)
         .join("");
-      
+
       if (titleText) {
         node.attributes.push({
           type: "mdxJsxAttribute",
           name: "title",
-          value: titleText
+          value: titleText,
         });
-        
+
         // Remove the heading from children
         node.children.shift();
       }
     }
   }
-  
+
   // Children remain as-is to preserve markdown content
 }
 
@@ -313,7 +313,7 @@ function transformObjectivesDirective(
 ) {
   // Validate list exists
   const listNode = node.children?.find((child: any) => child.type === "list");
-  
+
   if (!listNode) {
     file.fail("objectives directive must contain a list", node.position);
     return;
@@ -381,7 +381,8 @@ function transformObjectivesDirective(
               {
                 type: "mdxJsxAttribute",
                 name: "className",
-                value: "h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0",
+                value:
+                  "h-4 w-4 text-brand-orange dark:text-brand-orange mt-1.5 flex-shrink-0",
               },
             ],
             children: [],
@@ -421,7 +422,7 @@ function transformPrerequisitesDirective(
 ) {
   // Validate list exists
   const listNode = node.children?.find((child: any) => child.type === "list");
-  
+
   if (!listNode) {
     file.fail("prerequisites directive must contain a list", node.position);
     return;
@@ -499,4 +500,3 @@ function extractTextFromListItem(item: any): string {
 
   return text.trim();
 }
-
