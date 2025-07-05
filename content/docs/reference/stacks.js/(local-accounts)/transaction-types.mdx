@@ -1,0 +1,389 @@
+---
+title: Transaction types
+description: Reference for all Stacks transaction types and their uses.
+---
+
+Stacks supports five primary transaction types for interacting with the blockchain. Each type serves a specific purpose and has unique parameters.
+
+## STX token transfer [#stx-transfer]
+
+`makeSTXTokenTransfer` creates a transaction to transfer STX tokens between addresses.
+
+### Signature
+
+```typescript
+function makeSTXTokenTransfer(options: STXTokenTransferOptions): Promise<StacksTransaction>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `recipient` | string | Yes | Recipient's STX address |
+| `amount` | bigint | Yes | Amount in microSTX (1 STX = 1,000,000 µSTX) |
+| `senderKey` | string | Yes | Sender's private key |
+| `network` | StacksNetwork \| string | No | Network configuration (defaults to mainnet) |
+| `memo` | string | No | Optional memo (max 34 bytes) |
+| `fee` | bigint | No | Transaction fee in microSTX |
+| `nonce` | bigint | No | Custom nonce (auto-fetched if not set) |
+| `anchorMode` | AnchorMode | No | Block anchoring strategy |
+
+### Examples
+
+#### Basic transfer
+
+```typescript
+import { makeSTXTokenTransfer, AnchorMode } from '@stacks/transactions';
+
+const transaction = await makeSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000n, // 1 STX
+  senderKey: 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+  network: 'mainnet'
+});
+```
+
+#### Transfer with memo
+
+```typescript
+const transaction = await makeSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 500000n, // 0.5 STX
+  senderKey: privateKey,
+  memo: 'Invoice #12345',
+  fee: 200n,
+  anchorMode: AnchorMode.OnChainOnly
+});
+```
+
+## Contract call [#contract-call]
+
+`makeContractCall` creates a transaction to execute a smart contract function.
+
+### Signature
+
+```typescript
+function makeContractCall(options: ContractCallOptions): Promise<StacksTransaction>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `contractAddress` | string | Yes | Contract deployer address |
+| `contractName` | string | Yes | Name of the contract |
+| `functionName` | string | Yes | Function to call |
+| `functionArgs` | ClarityValue[] | Yes | Function arguments |
+| `senderKey` | string | Yes | Sender's private key |
+| `network` | StacksNetwork \| string | No | Network configuration |
+| `postConditions` | PostCondition[] | No | Security constraints |
+| `postConditionMode` | PostConditionMode | No | Strict or allow mode |
+
+### Examples
+
+#### Simple function call
+
+```typescript
+import { makeContractCall, uintCV } from '@stacks/transactions';
+
+const transaction = await makeContractCall({
+  contractAddress: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  contractName: 'counter',
+  functionName: 'increment',
+  functionArgs: [uintCV(1)],
+  senderKey: privateKey,
+  network: 'testnet'
+});
+```
+
+#### Complex arguments with post-conditions
+
+```typescript
+import { makeContractCall, uintCV, stringAsciiCV, Pc, PostConditionMode } from '@stacks/transactions';
+
+const postCondition = Pc.principal(senderAddress)
+  .willSendLte(500000n)
+  .ustx();
+
+const transaction = await makeContractCall({
+  contractAddress: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  contractName: 'marketplace',
+  functionName: 'list-item',
+  functionArgs: [
+    uintCV(1000000),
+    stringAsciiCV('Digital Art #42')
+  ],
+  senderKey: privateKey,
+  postConditions: [postCondition],
+  postConditionMode: PostConditionMode.Deny
+});
+```
+
+## Contract deployment [#contract-deploy]
+
+`makeContractDeploy` creates a transaction to deploy a new smart contract.
+
+### Signature
+
+```typescript
+function makeContractDeploy(options: ContractDeployOptions): Promise<StacksTransaction>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `contractName` | string | Yes | Unique contract name |
+| `codeBody` | string | Yes | Clarity source code |
+| `senderKey` | string | Yes | Deployer's private key |
+| `clarityVersion` | ClarityVersion | No | Clarity version (1, 2, or 3) |
+| `network` | StacksNetwork \| string | No | Network configuration |
+| `fee` | bigint | No | Transaction fee (higher for deployments) |
+
+### Examples
+
+#### Basic contract deployment
+
+```typescript
+import { makeContractDeploy } from '@stacks/transactions';
+
+const contractCode = `
+(define-public (get-message)
+  (ok "Hello, Stacks!"))
+`;
+
+const transaction = await makeContractDeploy({
+  contractName: 'hello-world',
+  codeBody: contractCode,
+  senderKey: privateKey,
+  network: 'mainnet'
+});
+```
+
+#### Deploy with Clarity version
+
+```typescript
+import { makeContractDeploy, ClarityVersion } from '@stacks/transactions';
+
+const clarityV2Contract = `
+;; Using Clarity 2 features
+(define-public (get-block-info)
+  (ok block-height))
+`;
+
+const transaction = await makeContractDeploy({
+  contractName: 'advanced-contract',
+  codeBody: clarityV2Contract,
+  clarityVersion: ClarityVersion.Clarity2,
+  senderKey: privateKey,
+  fee: 50000n // Higher fee for complex contracts
+});
+```
+
+## Sponsored transactions [#sponsored-transactions]
+
+`sponsorTransaction` allows a third party to pay transaction fees on behalf of users.
+
+### Signature
+
+```typescript
+function sponsorTransaction(options: SponsorOptions): StacksTransaction
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `transaction` | StacksTransaction | Yes | Unsigned sponsored transaction |
+| `sponsorPrivateKey` | string | Yes | Sponsor's private key |
+| `fee` | bigint | No | Fee amount sponsor will pay |
+| `sponsorNonce` | bigint | No | Sponsor's nonce |
+
+### Examples
+
+#### Basic sponsored transfer
+
+```typescript
+import { makeSTXTokenTransfer, sponsorTransaction } from '@stacks/transactions';
+
+// User creates transaction with sponsored flag
+const userTx = await makeSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000n,
+  senderKey: userPrivateKey,
+  sponsored: true,
+  fee: 0n
+});
+
+// Sponsor signs and pays
+const sponsoredTx = sponsorTransaction({
+  transaction: userTx,
+  sponsorPrivateKey: sponsorKey,
+  fee: 1000n
+});
+```
+
+#### Sponsored contract call
+
+```typescript
+const userTx = await makeContractCall({
+  contractAddress: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  contractName: 'nft-marketplace',
+  functionName: 'list-item',
+  functionArgs: [uintCV(tokenId)],
+  senderKey: userPrivateKey,
+  sponsored: true
+});
+
+const sponsoredTx = sponsorTransaction({
+  transaction: userTx,
+  sponsorPrivateKey: platformSponsorKey
+});
+```
+
+## Multi-signature transactions [#multi-sig]
+
+`makeUnsignedSTXTokenTransfer` with multi-sig creates transactions requiring multiple signatures.
+
+### Signature
+
+```typescript
+function makeUnsignedSTXTokenTransfer(options: UnsignedSTXOptions): Promise<StacksTransaction>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `recipient` | string | Yes | Recipient address |
+| `amount` | bigint | Yes | Amount in microSTX |
+| `publicKey` | string | Yes | Multi-sig address public key |
+| `network` | StacksNetwork \| string | No | Network configuration |
+
+### Example
+
+```typescript
+import {
+  makeUnsignedSTXTokenTransfer,
+  createMultiSigSpendingCondition,
+  pubKeyfromPrivKey,
+  nextSignature,
+  TransactionSigner
+} from '@stacks/transactions';
+
+// Setup 2-of-3 multisig
+const pubKeys = [
+  pubKeyfromPrivKey(privateKey1),
+  pubKeyfromPrivKey(privateKey2),
+  pubKeyfromPrivKey(privateKey3)
+];
+
+const address = createMultiSigSpendingCondition(2, pubKeys);
+
+// Create unsigned transaction
+const unsignedTx = await makeUnsignedSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000n,
+  publicKey: address.address,
+  network: 'mainnet'
+});
+
+// Sign with first key
+const signer = new TransactionSigner(unsignedTx);
+signer.signOrigin(privateKey1);
+
+// Sign with second key
+nextSignature(privateKey2).signOrigin(signer);
+
+const signedTx = signer.transaction;
+```
+
+
+## Transaction comparison
+
+| Type | Function | Primary Use | Typical Fee |
+|------|----------|-------------|-------------|
+| STX Transfer | `makeSTXTokenTransfer` | Send STX tokens | 180-500 µSTX |
+| Contract Call | `makeContractCall` | Execute contract functions | 200-2000 µSTX |
+| Contract Deploy | `makeContractDeploy` | Deploy new contracts | 5000-50000 µSTX |
+| Sponsored | `sponsorTransaction` | Third-party fee payment | Varies |
+| Multi-sig | `makeUnsignedSTXTokenTransfer` | Shared control | 500-1000 µSTX |
+
+## Transaction best practices
+
+### Fee estimation
+
+Fees vary based on network congestion and transaction complexity:
+
+```typescript
+import { estimateTransactionFee } from '@stacks/transactions';
+
+// Build transaction first
+const transaction = await makeContractCall({...});
+
+// Estimate fee
+const fee = await estimateTransactionFee(transaction);
+console.log('Estimated fee:', fee);
+
+// Apply estimated fee
+transaction.setFee(fee);
+```
+
+### Handling nonces
+
+Nonces prevent transaction replay. They're usually handled automatically, but you can set them manually:
+
+```typescript
+import { getNonce } from '@stacks/transactions';
+
+// Get current nonce
+const nonce = await getNonce(senderAddress, network);
+
+// Use in transaction
+const transaction = await makeSTXTokenTransfer({
+  recipient: 'SP2J6Y09JMFWWZCT4VJX0BA5W7A9HZP5EX96Y6VZY',
+  amount: 1000000n,
+  senderKey: privateKey,
+  nonce: nonce + 1n // Next nonce
+});
+```
+
+### Monitoring transaction status
+
+After broadcasting, monitor your transaction:
+
+```typescript
+import { broadcastTransaction } from '@stacks/transactions';
+
+async function sendAndMonitor(transaction: StacksTransaction) {
+  // Broadcast
+  const result = await broadcastTransaction(transaction);
+  console.log('Broadcast successful:', result.txid);
+  
+  // Poll for confirmation
+  const txId = result.txid;
+  let confirmed = false;
+  
+  while (!confirmed) {
+    const response = await fetch(
+      `https://api.mainnet.hiro.so/extended/v1/tx/${txId}`
+    );
+    const txInfo = await response.json();
+    
+    if (txInfo.tx_status === 'success') {
+      console.log('Transaction confirmed!');
+      confirmed = true;
+    } else if (txInfo.tx_status.startsWith('abort')) {
+      throw new Error(`Transaction failed: ${txInfo.tx_status}`);
+    }
+    
+    // Wait before next check
+    await new Promise(resolve => setTimeout(resolve, 10000));
+  }
+}
+
+## Further reading
+
+- [Transaction building](/reference/stacks.js/local-accounts/transaction-building)
+- [Contract calls](/reference/stacks.js/local-accounts/contract-calls)
+- [Post-conditions](/reference/stacks.js/security-postconditions/understanding-postconditions)

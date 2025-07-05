@@ -1,35 +1,24 @@
 ---
 title: '@stacks/network'
-description: Network and API library for working with Stacks blockchain nodes.
-full: true
+description: Network configuration constants and utilities for Stacks.
 ---
 
-> **Info**
-> 
-> This reference refers to the `7.x.x` release of Stacks.js—it's the recommended version to use, but not needed for the Stacks Nakamoto release.
-> Read the [migration guide](https://github.com/hirosystems/stacks.js/blob/main/.github/MIGRATION.md#stacksjs-5xx--7xx) to learn how to update to the latest version.
-
-The `@stacks/network` package contains default network configurations for Stacks.
+The `@stacks/network` package exports network configurations and helper functions for working with different Stacks networks.
 
 ## Installation
 
-> **Tip**
-> 
-> Before you install: most of the time you don't need to use or even install this library directly.
-> For example, instead of `STACKS_MAINNET`, simply use the string `"mainnet"` as the network parameter.
-
 ```package-install
-@stacks/network@latest
+@stacks/network
 ```
 
-## Usage
+## Network constants
 
-## The network object
+### STACKS_MAINNET
 
-A network in Stacks.js is an object defining several properties.
+`STACKS_MAINNET` provides the mainnet network configuration.
 
-```ts
-import { STACKS_MAINNET, STACKS_TESTNET, STACKS_DEVNET } from '@stacks/network';
+```typescript
+import { STACKS_MAINNET } from '@stacks/network';
 
 console.log(STACKS_MAINNET);
 // {
@@ -37,25 +26,136 @@ console.log(STACKS_MAINNET);
 //   transactionVersion: 0,
 //   peerNetworkId: 385875968,
 //   magicBytes: 'X2',
-//   bootAddress: 'SP000000000000000000002Q6VF78',
-//   addressVersion: { singleSig: 22, multiSig: 20 }
+//   bootAddress: 'SP000000000000000000002Q6VF78'
 // }
 ```
 
-## Network usage in transaction building
+### STACKS_TESTNET
 
-```ts
-import { STACKS_MAINNET } from '@stacks/network';
+`STACKS_TESTNET` provides the testnet network configuration.
+
+```typescript
+import { STACKS_TESTNET } from '@stacks/network';
+
+console.log(STACKS_TESTNET.chainId); // 2147483648
+```
+
+### STACKS_DEVNET / STACKS_MOCKNET
+
+`STACKS_DEVNET` provides the devnet network configuration.
+
+```typescript
+import { STACKS_DEVNET, STACKS_MOCKNET } from '@stacks/network';
+
+// Use in transactions
 import { makeSTXTokenTransfer } from '@stacks/transactions';
 
-const txOptions = {
-  recipient: 'SP2BS6HD7TN34V8Z5BNF8Q2AW3K8K2DPV4264CF26',
-  amount: 100,
-  // ...
-  network: 'mainnet', // 'mainnet', 'testnet', or 'devnet', (defaults to mainnet)
-  // OR
-  network: STACKS_MAINNET, // any compatible network object
-};
-
-const transaction = await makeSTXTokenTransfer(txOptions);
+const tx = await makeSTXTokenTransfer({
+  network: STACKS_DEVNET, // or STACKS_MOCKNET
+  // ... other options
+});
 ```
+
+## networkFromName [#networkFromName]
+
+`networkFromName` returns a network configuration for a given name string.
+
+### Signature
+
+```typescript
+function networkFromName(name: 'mainnet' | 'testnet' | 'devnet' | 'mocknet'): StacksNetwork
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `name` | `'mainnet' \| 'testnet' \| 'devnet' \| 'mocknet'` | Yes | Network name |
+
+### Examples
+
+```typescript
+import { networkFromName } from '@stacks/network';
+
+const mainnet = networkFromName('mainnet'); // Same as STACKS_MAINNET
+const testnet = networkFromName('testnet'); // Same as STACKS_TESTNET
+const devnet = networkFromName('devnet');   // Same as STACKS_DEVNET
+const mocknet = networkFromName('mocknet'); // Same as STACKS_MOCKNET
+```
+
+### Using with transactions
+
+```typescript
+import { networkFromName } from '@stacks/network';
+import { makeContractCall } from '@stacks/transactions';
+
+const network = networkFromName('testnet');
+
+const tx = await makeContractCall({
+  network,
+  contractAddress: 'ST2ZRX0K27GW0SP3GJCEMHD95TQGJMKB7G9Y0X1MH',
+  contractName: 'hello-world',
+  functionName: 'say-hi',
+  functionArgs: [],
+  senderKey: privateKey
+});
+```
+
+## clientFromNetwork [#clientFromNetwork]
+
+`clientFromNetwork` extracts the API client configuration from a network.
+
+### Signature
+
+```typescript
+function clientFromNetwork(network: StacksNetwork): Required<ClientOpts>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `network` | `StacksNetwork` | Yes | Network configuration object |
+
+### Example
+
+```typescript
+import { clientFromNetwork, STACKS_MAINNET } from '@stacks/network';
+
+const client = clientFromNetwork(STACKS_MAINNET);
+console.log(client.baseUrl); // 'https://api.mainnet.hiro.so'
+
+// Use with custom fetch
+const customClient = {
+  ...client,
+  fetch: customFetchFunction
+};
+```
+
+## Network configuration properties
+
+All network constants share these properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `chainId` | number | Unique identifier for the network |
+| `transactionVersion` | number | Transaction serialization version |
+| `peerNetworkId` | number | P2P network identifier |
+| `magicBytes` | string | Network magic bytes for serialization |
+| `bootAddress` | string | Boot contract address |
+
+## Default values
+
+The package also exports default configuration values:
+
+```typescript
+import { DEFAULT_CHAIN_ID, DEFAULT_TRANSACTION_VERSION } from '@stacks/network';
+
+console.log(DEFAULT_CHAIN_ID); // 1 (mainnet)
+console.log(DEFAULT_TRANSACTION_VERSION); // 0
+```
+
+## Further reading
+
+- [Transaction types](/reference/stacks.js/local-accounts/transaction-types)
+- [Common usage patterns](/reference/stacks.js/common-usage-patterns)

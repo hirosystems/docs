@@ -1,51 +1,88 @@
 ---
 title: Stacks.js
 sidebarTitle: Overview
-description: A collection of JavaScript libraries to build web applications on Stacks.
+description: A JavaScript/TypeScript SDK for building applications on the Stacks blockchain.
 ---
 
 ## Overview
 
-Stacks.js is a JavaScript/TypeScript SDK for building on the Stacks blockchain. It's a collection of various JavaScript libraries that allow you to broadcast a transaction with the Stacks blockchain, construct post-conditions, and more. Some of the most important building blocks, all in one place.
+Stacks.js is a collection of JavaScript libraries that enable you to build web applications on the Stacks blockchain. From wallet authentication to smart contract interactions, Stacks.js provides the essential building blocks for creating decentralized applications.
 
-Stacks.js is separated into many smaller packages, which can be installed individually. Most packages are published to npm under the `@stacks` scope.
+## Key features
 
-For more details, check out out our [installation guide](/reference/stacks.js/installation).
+- ✓ **Wallet integration** - Connect to Leather, Xverse, and other Stacks wallets seamlessly
+- ✓ **Transaction construction** - Build and broadcast all transaction types with type-safe APIs
+- ✓ **Smart contract interaction** - Deploy contracts and call functions with automatic encoding
+- ✓ **Post-condition safety** - Protect users with built-in asset transfer validations
+- ✓ **Network flexibility** - Switch between mainnet, testnet, and local development
+- ✓ **TypeScript support** - Full type definitions for enhanced developer experience
 
-<SecondaryCard
-  icon={<Globe/>}
-  href="/stacks/connect"
-  title="Build a Stacks web app"
-  description="Integrate Stacks.js into your web apps with Stacks Connect."
-  tag="Stacks Connect"
-/>
+## Installation
 
-## Guides
+Stacks.js is separated into focused packages published under the `@stacks` scope. Install only what you need:
 
-<Cards>
-  <SecondaryCard
-    href="/stacks/stacks.js/guides/broadcast-transactions"
-    title="Broadcast transactions"
-    description="Create and broadcast transactions using Stacks.js builder and helper functions."
-  />
-  <SecondaryCard
-    href="/stacks/stacks.js/guides/post-conditions"
-    title="Constructing post-conditions"
-    description="Build post-conditions into your smart contracts and safe-guard your users."
-  />
-</Cards>
+<Tabs defaultValue="connect">
+  <TabsList className='flex flex-wrap md:w-max'>
+    <TabsTrigger value="connect" className='tab group'>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/connect</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="common" className='tab group'>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/common</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="network" className='tab group'>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/network</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="transactions" className='tab group'>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/transactions</Badge>
+    </TabsTrigger>
+    <TabsTrigger value="client" className='tab group'>
+      <Badge className='badge transition-colors group-data-[state=active]:bg-contrast group-data-[state=active]:text-background group-hover:bg-accent group-hover:text-muted-foreground'>@stacks/blockchain-api-client</Badge>
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="connect">
+    Build Stacks-ready web apps and connect to user wallets.
 
-## Related tools
+    ```package-install
+    @stacks/connect
+    ```
+  </TabsContent>
+  <TabsContent value="common">
+    Common utilities used by Stacks.js packages.
 
-- **[Clarinet](/tools/clarinet)**: Build your app in a local environment on Stacks.
-- **[Stacks Connect](/reference/stacks.js/connect-wallet)**: Interact with the Stacks blockchain with your wallet extension.
-- **[Hiro Platform](https://platform.hiro.so/)**: A developer platform for building, deploying and scaling Bitcoin apps.
-- **[Stacks Blockchain API](/apis/stacks-blockchain-api)**: Fetch data and broadcast transactions with the Stacks Blockchain API.
+    ```package-install
+    @stacks/common
+    ```
+  </TabsContent>
+  <TabsContent value="network">
+    Network library for working with Stacks network objects.
 
-<br />
+    ```package-install
+    @stacks/network
+    ```
+  </TabsContent>
+  <TabsContent value="transactions">
+    Construct and decode transactions, and work with Clarity smart contracts on the Stacks blockchain.
+
+    ```package-install
+    @stacks/transactions
+    ```
+  </TabsContent>
+  <TabsContent value="client">
+    API client library for all Stacks Blockchain API endpoints.
+
+    ```package-install
+    @stacks/blockchain-api-client
+    ```
+  </TabsContent>
+</Tabs>
+
+:::next-steps
+- [Common usage patterns](/reference/stacks.js/common-usage-patterns): Essential code examples
+- [Connect wallet](/reference/stacks.js/stacks-connect/connect-wallet): Add wallet authentication
+:::
 
 :::callout
 type: help
 ### Need help building with Stacks.js?
-Reach out to us on the <span className="font-bold">#stacks-js</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+Reach out to us on the **#stacks-js** channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
 :::
