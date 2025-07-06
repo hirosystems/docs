@@ -1,0 +1,131 @@
+---
+title: Connect wallet
+description: Learn how to connect to Stacks wallets and authenticate users.
+---
+
+Learn how to integrate wallet connections into your Stacks application. Connecting a wallet authenticates users and enables blockchain interactions like transfers and contract calls.
+
+:::objectives
+- Install the `@stacks/connect` package
+- Connect to a wallet and authenticate users
+- Manage authentication state
+- Access user account data
+:::
+
+:::prerequisites
+- Node.js installed on your machine
+- A web application setup (React, Vue, or vanilla JS)
+- Basic understanding of async/await
+:::
+
+## Quickstart
+
+<Steps>
+  <Step>
+    ### Install package
+
+    Add the Stacks Connect package to your project.
+
+    ```package-install
+    @stacks/connect
+    ```
+
+    This package provides all the functions needed for wallet connections and user authentication.
+
+  </Step>
+  <Step>
+    ### Connect and authenticate
+
+    The `connect` function initiates wallet connection and stores user data in local storage for session persistence.
+
+    ```ts
+    import { connect, isConnected } from '@stacks/connect';
+
+    async function connectWallet() {
+      // Check if already connected
+      if (isConnected()) {
+        console.log('Already authenticated');
+        return;
+      }
+
+      // Connect to wallet
+      const response = await connect();
+      console.log('Connected:', response.addresses);
+    }
+    ```
+
+    Manage the authentication state throughout your app.
+
+    ```ts
+    import { disconnect, isConnected } from '@stacks/connect';
+
+    // Check authentication status
+    const authenticated = isConnected();
+
+    // Logout function
+    function logout() {
+      disconnect(); // Clears storage and wallet selection
+      console.log('User disconnected');
+    }
+    ```
+
+  </Step>
+  <Step>
+    ### Access user data
+
+    Retrieve stored addresses and request detailed account information.
+
+    ```ts
+    import { getLocalStorage, request } from '@stacks/connect';
+
+    // Get stored addresses from local storage
+    const userData = getLocalStorage();
+    if (userData?.addresses) {
+      const stxAddress = userData.addresses.stx[0].address;
+      const btcAddress = userData.addresses.btc[0].address;
+      console.log('STX:', stxAddress);
+      console.log('BTC:', btcAddress);
+    }
+    ```
+
+    Get detailed account information including public keys.
+
+    ```ts
+    // Request full account details
+    const accounts = await request('stx_getAccounts');
+    const account = accounts.addresses[0];
+
+    console.log('Address:', account.address);
+    console.log('Public key:', account.publicKey);
+    console.log('Gaia URL:', account.gaiaHubUrl);
+    ```
+
+  </Step>
+  <Step>
+    ### Make your first transaction
+
+    Use the authenticated connection to send STX tokens.
+
+    ```ts
+    import { request } from '@stacks/connect';
+
+    async function sendTransaction() {
+      const response = await request('stx_transferStx', {
+        amount: '1000000', // 1 STX in micro-STX
+        recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN',
+        memo: 'First transfer', // optional
+      });
+      
+      console.log('Transaction ID:', response.txid);
+    }
+    ```
+
+    The wallet will prompt the user to approve the transaction before broadcasting.
+
+  </Step>
+</Steps>
+
+:::next-steps
+- [Sign messages](/reference/stacks.js/(connect)/message-signing): Prove address ownership
+- [Broadcast transactions](/reference/stacks.js/(connect)/broadcast-transactions): Learn about different transaction types
+:::

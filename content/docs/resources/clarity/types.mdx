@@ -191,21 +191,3 @@ While Clarity requires explicit type annotations for function signatures and dat
 ### Type safety
 Clarity's type system prevents many common programming errors at publish time, before any code is executed. This includes type mismatches, null pointer exceptions, and buffer overflows.
 :::
-
-## Type casting
-
-Clarity provides functions for safe type conversions:
-
-```clarity
-;; Convert between integers
-(to-int u100)    ;; uint to int
-(to-uint 100)    ;; int to uint
-
-;; String conversions
-(int-to-ascii 123)       ;; Returns "123"
-(string-to-int? "123")   ;; Returns (some 123)
-
-;; Buffer conversions
-(buff-to-uint-be 0x0100)   ;; Big-endian: 256
-(buff-to-uint-le 0x0100)   ;; Little-endian: 1
-```

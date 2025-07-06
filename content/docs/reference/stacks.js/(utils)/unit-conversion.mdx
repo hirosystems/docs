@@ -3,105 +3,68 @@ title: Unit conversion
 description: Convert between STX, microSTX, and other units
 ---
 
-## Overview
+Learn how to convert between different unit denominations in Stacks. The blockchain uses microSTX as its base unit, where 1 STX = 1,000,000 microSTX. Proper unit conversion is essential for displaying amounts to users and processing transactions.
 
-Stacks uses microSTX as its base unit, where 1 STX = 1,000,000 microSTX. Similar to Bitcoin's satoshis or Ethereum's wei, proper unit conversion is essential for displaying amounts to users and processing transactions. This guide covers conversion utilities and best practices for handling units.
+## Basic conversions
 
-## Basic STX conversions
-
-Convert between STX and microSTX:
+Convert between STX and microSTX using simple conversion functions.
 
 ```typescript
-// Simple conversion functions
+// Convert STX to microSTX
 function stxToMicroStx(stx: number | string): bigint {
   const stxAmount = typeof stx === 'string' ? parseFloat(stx) : stx;
   return BigInt(Math.floor(stxAmount * 1_000_000));
 }
 
+// Convert microSTX to STX
 function microStxToStx(microStx: number | bigint | string): string {
   const amount = BigInt(microStx);
   const stx = Number(amount) / 1_000_000;
   return stx.toFixed(6).replace(/\.?0+$/, '');
 }
 
-// Usage
+// Usage examples
 const microStx = stxToMicroStx(1.5);      // 1500000n
 const stx = microStxToStx(1500000);       // "1.5"
-const formatted = microStxToStx(1234567); // "1.234567"
 ```
 
-## Precision-safe conversions
+## Precision-safe handling
 
-Handle large numbers without precision loss:
+Handle large numbers without precision loss using BigInt operations.
 
 ```typescript
 class StxConverter {
   static readonly MICROSTX_PER_STX = 1_000_000n;
   
   static toMicroStx(amount: string | number, decimals = 6): bigint {
-    // Convert to string to avoid precision issues
     const amountStr = amount.toString();
-    
-    // Split into whole and decimal parts
     const [whole, decimal = ''] = amountStr.split('.');
-    
-    // Pad or trim decimal part
     const paddedDecimal = decimal.padEnd(decimals, '0').slice(0, decimals);
-    
-    // Combine and convert to BigInt
-    const combined = whole + paddedDecimal;
-    return BigInt(combined);
+    return BigInt(whole + paddedDecimal);
   }
   
   static toStx(microStx: bigint | string | number): string {
     const amount = BigInt(microStx);
-    
-    // Handle negative amounts
     const isNegative = amount < 0n;
     const absoluteAmount = isNegative ? -amount : amount;
     
-    // Convert to string with proper decimal placement
     const str = absoluteAmount.toString().padStart(7, '0');
     const whole = str.slice(0, -6) || '0';
     const decimal = str.slice(-6);
     
-    // Format with decimal point
     let result = `${whole}.${decimal}`.replace(/\.?0+$/, '');
-    
-    // Add negative sign if needed
     return isNegative ? `-${result}` : result;
-  }
-  
-  static format(microStx: bigint, options?: {
-    decimals?: number;
-    locale?: string;
-    symbol?: boolean;
-  }): string {
-    const stx = this.toStx(microStx);
-    const number = parseFloat(stx);
-    
-    // Format with locale
-    const formatted = new Intl.NumberFormat(options?.locale || 'en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: options?.decimals ?? 6,
-    }).format(number);
-    
-    return options?.symbol ? `${formatted} STX` : formatted;
   }
 }
 
-// Usage
-const amount1 = StxConverter.toMicroStx('123.456789'); // 123456789n
-const amount2 = StxConverter.toStx(123456789n);        // "123.456789"
-const formatted = StxConverter.format(123456789n, {    // "123.46 STX"
-  decimals: 2,
-  symbol: true
-});
+// Precise conversion examples
+const precise1 = StxConverter.toMicroStx('123.456789'); // 123456789n
+const precise2 = StxConverter.toStx(123456789n);        // "123.456789"
 ```
 
-## Token unit handling
+## Token conversions
 
-Handle tokens with different decimal places:
+Handle tokens with different decimal places using a flexible converter class.
 
 ```typescript
 interface TokenInfo {
@@ -114,34 +77,26 @@ class TokenConverter {
   constructor(private tokenInfo: TokenInfo) {}
   
   toSmallestUnit(amount: string | number): bigint {
-    const multiplier = 10n ** BigInt(this.tokenInfo.decimals);
-    
-    // Handle string input to preserve precision
     if (typeof amount === 'string') {
       const [whole, decimal = ''] = amount.split('.');
       const paddedDecimal = decimal
         .padEnd(this.tokenInfo.decimals, '0')
         .slice(0, this.tokenInfo.decimals);
-      
       return BigInt(whole + paddedDecimal);
     }
     
-    // Handle number input (may lose precision for large values)
+    const multiplier = 10n ** BigInt(this.tokenInfo.decimals);
     return BigInt(Math.floor(amount * Number(multiplier)));
   }
   
   fromSmallestUnit(amount: bigint | string): string {
     const value = BigInt(amount);
     const divisor = 10n ** BigInt(this.tokenInfo.decimals);
-    
     const whole = value / divisor;
     const remainder = value % divisor;
     
-    if (remainder === 0n) {
-      return whole.toString();
-    }
+    if (remainder === 0n) return whole.toString();
     
-    // Format decimal part
     const decimal = remainder
       .toString()
       .padStart(this.tokenInfo.decimals, '0')
@@ -149,86 +104,87 @@ class TokenConverter {
     
     return `${whole}.${decimal}`;
   }
-  
-  format(amount: bigint, options?: {
-    decimals?: number;
-    locale?: string;
-    includeSymbol?: boolean;
-  }): string {
-    const value = this.fromSmallestUnit(amount);
-    const number = parseFloat(value);
-    
-    const formatted = new Intl.NumberFormat(options?.locale || 'en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: options?.decimals ?? this.tokenInfo.decimals,
-    }).format(number);
-    
-    return options?.includeSymbol 
-      ? `${formatted} ${this.tokenInfo.symbol}`
-      : formatted;
-  }
 }
 
-// Usage with different tokens
+// Different token examples
 const usdc = new TokenConverter({ decimals: 6, symbol: 'USDC', name: 'USD Coin' });
 const btc = new TokenConverter({ decimals: 8, symbol: 'BTC', name: 'Bitcoin' });
 
 const usdcAmount = usdc.toSmallestUnit('100.50');     // 100500000n
 const btcAmount = btc.toSmallestUnit('0.00123456');   // 123456n
-
-const usdcFormatted = usdc.format(100500000n, {       // "100.50 USDC"
-  includeSymbol: true
-});
 ```
 
-## Input handling and validation
+## Display formatting
 
-Create robust input handlers for amounts:
+Format amounts for user interfaces with localization support.
+
+```typescript
+class StxFormatter {
+  static format(microStx: bigint, options?: {
+    decimals?: number;
+    locale?: string;
+    symbol?: boolean;
+  }): string {
+    const stx = StxConverter.toStx(microStx);
+    const number = parseFloat(stx);
+    
+    const formatted = new Intl.NumberFormat(options?.locale || 'en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: options?.decimals ?? 6,
+    }).format(number);
+    
+    return options?.symbol ? `${formatted} STX` : formatted;
+  }
+  
+  static compact(microStx: bigint): string {
+    const stx = Number(StxConverter.toStx(microStx));
+    
+    if (stx >= 1_000_000) {
+      return `${(stx / 1_000_000).toFixed(2)}M STX`;
+    } else if (stx >= 1_000) {
+      return `${(stx / 1_000).toFixed(2)}K STX`;
+    }
+    
+    return this.format(microStx, { decimals: 6, symbol: true });
+  }
+}
+
+// Formatting examples
+const formatted = StxFormatter.format(123456789n, {
+  decimals: 2,
+  symbol: true
+}); // "123.46 STX"
+
+const compact = StxFormatter.compact(1234567890000n); // "1.23K STX"
+```
+
+## Input validation
+
+Validate and sanitize user input for amount fields.
 
 ```typescript
 class AmountInput {
-  static validate(
-    input: string,
-    options?: {
-      decimals?: number;
-      min?: string;
-      max?: string;
-      allowNegative?: boolean;
-    }
-  ): { valid: boolean; error?: string } {
-    // Check basic format
-    const regex = options?.allowNegative
-      ? /^-?\d*\.?\d*$/
-      : /^\d*\.?\d*$/;
-      
-    if (!regex.test(input)) {
+  static validate(input: string, options?: {
+    decimals?: number;
+    min?: string;
+    max?: string;
+  }): { valid: boolean; error?: string } {
+    // Check format
+    if (!/^\d*\.?\d*$/.test(input)) {
       return { valid: false, error: 'Invalid number format' };
     }
     
     // Check decimal places
     const parts = input.split('.');
-    if (parts.length > 2) {
-      return { valid: false, error: 'Multiple decimal points' };
-    }
-    
     if (parts[1] && parts[1].length > (options?.decimals || 6)) {
       return { valid: false, error: `Maximum ${options?.decimals || 6} decimal places` };
     }
     
     // Check range
-    if (options?.min !== undefined) {
+    if (options?.min) {
       const value = parseFloat(input);
-      const min = parseFloat(options.min);
-      if (value < min) {
+      if (value < parseFloat(options.min)) {
         return { valid: false, error: `Minimum amount is ${options.min}` };
-      }
-    }
-    
-    if (options?.max !== undefined) {
-      const value = parseFloat(input);
-      const max = parseFloat(options.max);
-      if (value > max) {
-        return { valid: false, error: `Maximum amount is ${options.max}` };
       }
     }
     
@@ -236,299 +192,34 @@ class AmountInput {
   }
   
   static sanitize(input: string, decimals = 6): string {
-    // Remove invalid characters
-    let sanitized = input.replace(/[^\d.-]/g, '');
-    
-    // Handle multiple decimal points
+    let sanitized = input.replace(/[^\d.]/g, '');
     const parts = sanitized.split('.');
+    
     if (parts.length > 2) {
       sanitized = parts[0] + '.' + parts.slice(1).join('');
     }
     
-    // Limit decimal places
     if (parts[1] && parts[1].length > decimals) {
       sanitized = parts[0] + '.' + parts[1].slice(0, decimals);
     }
     
     return sanitized;
   }
-  
-  static format(input: string, decimals = 6): string {
-    const sanitized = this.sanitize(input, decimals);
-    const number = parseFloat(sanitized);
-    
-    if (isNaN(number)) return '0';
-    
-    return new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: decimals,
-    }).format(number);
-  }
-}
-```
-
-## React hooks for amount inputs
-
-Handle amount inputs in React:
-
-```typescript
-import { useState, useCallback, useMemo } from 'react';
-
-interface UseAmountInputOptions {
-  decimals?: number;
-  min?: string;
-  max?: string;
-  token?: TokenInfo;
 }
 
-function useAmountInput(options: UseAmountInputOptions = {}) {
-  const [value, setValue] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  
-  const converter = useMemo(() => {
-    if (options.token) {
-      return new TokenConverter(options.token);
-    }
-    return null;
-  }, [options.token]);
-  
-  const validate = useCallback((input: string) => {
-    const result = AmountInput.validate(input, {
-      decimals: options.decimals || options.token?.decimals || 6,
-      min: options.min,
-      max: options.max,
-    });
-    
-    setError(result.error || null);
-    return result.valid;
-  }, [options]);
-  
-  const handleChange = useCallback((input: string) => {
-    const sanitized = AmountInput.sanitize(
-      input,
-      options.decimals || options.token?.decimals || 6
-    );
-    setValue(sanitized);
-    validate(sanitized);
-  }, [validate, options]);
-  
-  const getSmallestUnit = useCallback((): bigint | null => {
-    if (!value || error) return null;
-    
-    try {
-      if (converter) {
-        return converter.toSmallestUnit(value);
-      }
-      return StxConverter.toMicroStx(value);
-    } catch {
-      return null;
-    }
-  }, [value, error, converter]);
-  
-  const getFormatted = useCallback((): string => {
-    if (!value) return '';
-    
-    try {
-      const smallest = getSmallestUnit();
-      if (!smallest) return value;
-      
-      if (converter) {
-        return converter.format(smallest, { includeSymbol: true });
-      }
-      return StxConverter.format(smallest, { symbol: true });
-    } catch {
-      return value;
-    }
-  }, [value, getSmallestUnit, converter]);
-  
-  return {
-    value,
-    error,
-    isValid: !error && value !== '',
-    setValue: handleChange,
-    getSmallestUnit,
-    getFormatted,
-    validate,
-  };
-}
+// Validation examples
+const result1 = AmountInput.validate('123.456', { 
+  decimals: 6, 
+  min: '0.000001' 
+}); // { valid: true }
 
-// Usage in component
-function AmountField() {
-  const amount = useAmountInput({
-    min: '0.000001',
-    max: '1000000',
-    token: { decimals: 6, symbol: 'STX', name: 'Stacks' }
-  });
-  
-  return (
-    <div>
-      <input
-        type="text"
-        value={amount.value}
-        onChange={(e) => amount.setValue(e.target.value)}
-        placeholder="0.00"
-      />
-      {amount.error && <span className="error">{amount.error}</span>}
-      {amount.isValid && (
-        <span className="preview">{amount.getFormatted()}</span>
-      )}
-    </div>
-  );
-}
+const result2 = AmountInput.validate('123.4567890', { 
+  decimals: 6 
+}); // { valid: false, error: 'Maximum 6 decimal places' }
 ```
 
-## Display formatting
+## Further reading
 
-Format amounts for user interfaces:
-
-```typescript
-class AmountDisplay {
-  static compact(
-    microStx: bigint,
-    options?: {
-      decimals?: number;
-      threshold?: number;
-    }
-  ): string {
-    const stx = Number(StxConverter.toStx(microStx));
-    const threshold = options?.threshold || 1000;
-    
-    if (stx >= threshold * 1000000) {
-      return `${(stx / 1000000).toFixed(options?.decimals || 2)}M STX`;
-    } else if (stx >= threshold * 1000) {
-      return `${(stx / 1000).toFixed(options?.decimals || 2)}K STX`;
-    }
-    
-    return StxConverter.format(microStx, {
-      decimals: options?.decimals || 6,
-      symbol: true,
-    });
-  }
-  
-  static range(
-    min: bigint,
-    max: bigint,
-    options?: { compact?: boolean }
-  ): string {
-    if (options?.compact) {
-      return `${this.compact(min)} - ${this.compact(max)}`;
-    }
-    
-    const minStr = StxConverter.format(min, { symbol: false });
-    const maxStr = StxConverter.format(max, { symbol: false });
-    return `${minStr} - ${maxStr} STX`;
-  }
-  
-  static withUSD(
-    microStx: bigint,
-    stxPrice: number,
-    options?: {
-      locale?: string;
-      showStx?: boolean;
-    }
-  ): string {
-    const stx = Number(StxConverter.toStx(microStx));
-    const usdValue = stx * stxPrice;
-    
-    const usdFormatted = new Intl.NumberFormat(options?.locale || 'en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(usdValue);
-    
-    if (options?.showStx) {
-      const stxFormatted = StxConverter.format(microStx, { symbol: true });
-      return `${stxFormatted} (${usdFormatted})`;
-    }
-    
-    return usdFormatted;
-  }
-}
-
-// Usage
-const compact = AmountDisplay.compact(1234567890000n); // "1.23K STX"
-const range = AmountDisplay.range(1000000n, 5000000n); // "1 - 5 STX"
-const withUSD = AmountDisplay.withUSD(1000000n, 0.75, { showStx: true }); 
-// "1 STX ($0.75)"
-```
-
-## Calculation utilities
-
-Perform calculations with proper precision:
-
-```typescript
-class StxCalculator {
-  static add(...amounts: bigint[]): bigint {
-    return amounts.reduce((sum, amount) => sum + amount, 0n);
-  }
-  
-  static subtract(minuend: bigint, ...subtrahends: bigint[]): bigint {
-    return subtrahends.reduce((result, sub) => result - sub, minuend);
-  }
-  
-  static multiply(amount: bigint, factor: number): bigint {
-    // Convert factor to basis points for precision
-    const basisPoints = Math.round(factor * 10000);
-    return (amount * BigInt(basisPoints)) / 10000n;
-  }
-  
-  static percentage(amount: bigint, percentage: number): bigint {
-    return this.multiply(amount, percentage / 100);
-  }
-  
-  static divide(amount: bigint, divisor: number): bigint {
-    // Use BigInt division with rounding
-    const factor = 10000n;
-    const scaled = amount * factor;
-    const divided = scaled / BigInt(Math.round(divisor * 10000));
-    return divided;
-  }
-  
-  static average(...amounts: bigint[]): bigint {
-    if (amounts.length === 0) return 0n;
-    const sum = this.add(...amounts);
-    return sum / BigInt(amounts.length);
-  }
-}
-
-// Usage
-const total = StxCalculator.add(1000000n, 2000000n, 3000000n); // 6000000n
-const fee = StxCalculator.percentage(1000000n, 2.5); // 25000n (2.5%)
-const perPerson = StxCalculator.divide(6000000n, 3); // 2000000n
-```
-
-## Best practices
-
-- **Always use BigInt**: Avoid JavaScript number type for amounts
-- **Preserve precision**: Use string inputs when possible
-- **Validate user input**: Check format and ranges
-- **Format for display**: Use proper localization
-- **Handle edge cases**: Zero, negative, very large numbers
-
-## Common mistakes
-
-**Using Number type for calculations**
-
-```typescript
-// Bad: Precision loss with large numbers
-const microStx = 1234567890123456; // Precision lost!
-const stx = microStx / 1000000;
-
-// Good: Use BigInt
-const microStx = 1234567890123456n;
-const stx = StxConverter.toStx(microStx);
-```
-
-**Direct string to number conversion**
-
-```typescript
-// Bad: parseFloat loses precision
-const amount = parseFloat('123.456789012345');
-
-// Good: Preserve precision
-const amount = StxConverter.toMicroStx('123.456789012345');
-```
-
-:::next-steps
-- [Build transactions](/reference/stacks.js/transactions-contracts/transaction-building): Learn how to build transactions in Stacks.
-- [Encode amounts](/reference/stacks.js/common-utilities/encoding-decoding): Learn how to encode amounts in Stacks.
-:::
+- [Transaction building](/reference/stacks.js/(local-accounts)/transaction-building)
+- [Encoding and decoding](/reference/stacks.js/(utils)/encoding-decoding)
+- [Network configuration](/reference/stacks.js/(utils)/network-configuration)

@@ -1,13 +1,14 @@
 ---
-title: Introduction
+title: Getting started with post-conditions
+sidebarTitle: Introduction
 description: Learn how post-conditions protect users from unexpected transaction outcomes
 ---
 
-Post-conditions are security features in Stacks that protect users by ensuring transactions execute exactly as expected. They act as safeguards that abort transactions if specified conditions aren't met.
+Post-conditions are security features in Stacks that protect users by ensuring transactions execute exactly as expected. They verify that specific asset transfers occur during a transaction, and if the conditions aren't satisfied, the entire transaction fails with no state changes.
 
 ## What are post-conditions?
 
-Post-conditions verify that specific asset transfers occur during a transaction. If the conditions aren't satisfied, the entire transaction fails and no state changes occur.
+Post-conditions act as safeguards that verify asset transfers match your expectations. They can check STX transfers, fungible tokens, and non-fungible token ownership changes.
 
 ```ts
 import { Pc } from '@stacks/transactions';
@@ -20,18 +21,11 @@ const tx = await makeContractCall({
 });
 ```
 
-Post-conditions can verify:
-- STX token transfers from specific addresses
-- Fungible token (FT) transfers with exact amounts
-- Non-fungible token (NFT) ownership changes
-
-:::callout
 Post-conditions only verify that assets are sent, not received. They cannot guarantee the final recipient of tokens.
-:::
 
-### Using the Pc helper
+## Using the Pc helper
 
-The `Pc` helper provides a fluent API for creating post-conditions. This approach offers better type safety and readability.
+The `Pc` helper provides a fluent API for creating post-conditions with better type safety and readability.
 
 ```ts
 import { Pc } from '@stacks/transactions';
@@ -55,9 +49,9 @@ const nftCondition = Pc
   .nft('SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-nft::my-asset', Cl.uint(1));
 ```
 
-## Manual post-condition creation
+## Manual creation
 
-For more control, you can create post-conditions manually using type definitions. This approach is useful when building conditions dynamically.
+Create post-conditions manually using type definitions when building conditions dynamically.
 
 ```ts
 import { 
@@ -75,14 +69,14 @@ const stxPostCondition: StxPostCondition = {
 };
 ```
 
-Condition types available:
+Available condition types:
 - `eq`: Exactly equal to amount
 - `gt`: Greater than amount
 - `gte`: Greater than or equal to amount
 - `lt`: Less than amount
 - `lte`: Less than or equal to amount
 
-### Fungible token conditions
+### Fungible tokens
 
 ```ts
 const ftPostCondition: FungiblePostCondition = {
@@ -94,7 +88,7 @@ const ftPostCondition: FungiblePostCondition = {
 };
 ```
 
-### Non-fungible token conditions
+### Non-fungible tokens
 
 ```ts
 const nftPostCondition: NonFungiblePostCondition = {
@@ -108,7 +102,7 @@ const nftPostCondition: NonFungiblePostCondition = {
 
 ## Post-condition mode
 
-Transactions have a post-condition mode that controls how unspecified asset transfers are handled. This provides an additional layer of protection.
+Control how unspecified asset transfers are handled with post-condition mode.
 
 ```ts
 import { PostConditionMode } from '@stacks/transactions';
@@ -122,18 +116,13 @@ const tx = await makeContractCall({
 });
 ```
 
-Available modes:
-- **Deny** (default): Transaction fails if any unspecified asset transfers occur
-- **Allow**: Transaction permits asset transfers not covered by post-conditions
-
 :::callout
 type: warn
-### Allow mode
-Using `PostConditionMode.Allow` mode reduces security. Only use it when you explicitly want to permit additional asset transfers beyond your post-conditions.
+Using `PostConditionMode.Allow` reduces security by permitting unspecified asset transfers. Only use when explicitly needed.
 :::
 
 ## Further reading
 
-- [Implementing post-conditions](/reference/stacks.js/post-conditions/implementing-postconditions)
-- [Common patterns](/reference/stacks.js/post-conditions/common-patterns)
-- [Security best practices](/reference/stacks.js/post-conditions/security-best-practices)
+- [Implementing post-conditions](/reference/stacks.js/(post-conditions)/implementing-post-conditions)
+- [Transaction building](/reference/stacks.js/(local-accounts)/transaction-building)
+- [Contract calls](/reference/stacks.js/(local-accounts)/contract-calls)
