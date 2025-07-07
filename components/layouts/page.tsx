@@ -13,7 +13,7 @@ import * as Primitive from "fumadocs-core/toc";
 import { cn } from "@/lib/utils";
 import { AlignLeft } from "lucide-react";
 import { TocThumb } from "@/components/layout/toc-thumb";
-import { BreadcrumbNav as OriginalBreadcrumb } from "@/components/ui/breadcrumb-nav";
+import { BreadcrumbNav as OriginalBreadcrumb } from "@/components/breadcrumb-nav";
 
 export interface PageData {
   toc?: TableOfContents;
@@ -132,7 +132,7 @@ function PageContent({ children, className, ...props }: PageContentProps) {
     <main className="flex flex-1 flex-col pb-16">
       <article
         className={cn(
-          "flex flex-1 flex-col w-full gap-6 md:px-10 md:mx-auto",
+          "flex flex-1 flex-col w-full gap-6 px-4 md:px-10 md:mx-auto",
           interactive ? "pt-8" : "py-4",
           full ? "max-w-[1120px]" : "max-w-[860px]"
         )}
@@ -199,7 +199,10 @@ function PageTitle(props: ComponentProps<"h1">) {
   if (!title && !props.children) return null;
 
   return (
-    <h1 {...props} className={cn("text-3xl font-regular", props.className)}>
+    <h1
+      {...props}
+      className={cn("text-2xl md:text-3xl font-regular", props.className)}
+    >
       {props.children || title}
     </h1>
   );

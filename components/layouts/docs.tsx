@@ -29,6 +29,9 @@ import { SearchToggle } from "../layout/search-toggle";
 import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
 import { renderNavItem } from "./links";
 import { baseOptions } from "@/app/layout.config";
+import { MobileMenuButton } from "../layout/mobile-menu-button";
+import { MobileMenuProvider } from "@/contexts/mobile-menu";
+
 export interface DocsLayoutProps {
   tree: PageTree.Root;
   children: ReactNode;
@@ -84,68 +87,73 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
   }, [registerShortcut]);
 
   return (
-    <TreeContextProvider tree={tree}>
-      <header
-        className={cn(
-          "sticky top-0 z-50 h-16 transition-all duration-200",
-          "bg-background backdrop-blur-md",
-          "border-b border-border/50"
-        )}
-      >
-        <nav className="flex flex-row items-center gap-4 size-full px-4">
-          <div className="flex flex-row items-center gap-4">
-            {/* <NavbarSidebarTrigger /> */}
-            <Link href="/" className="mr-6 flex items-center space-x-2">
-              <DocsLogo className="hidden sm:block" />
-            </Link>
-          </div>
+    <MobileMenuProvider>
+      <TreeContextProvider tree={tree}>
+        <header
+          className={cn(
+            "sticky top-0 z-50 h-16 transition-all duration-200",
+            "bg-background backdrop-blur-md",
+            "border-b border-border/50"
+          )}
+        >
+          <nav className="flex flex-row items-center gap-4 size-full px-4">
+            {/* Mobile layout */}
+            <div className="flex md:hidden items-center justify-between w-full">
+              <MobileMenuButton tree={tree} />
+              <Link
+                href="/"
+                className="absolute left-1/2 transform -translate-x-1/2"
+              >
+                <DocsLogo />
+              </Link>
+              <SearchToggle />
+            </div>
 
-          <div className="hidden md:block">
-            <NavigationMenu>
-              <NavigationMenuList className="flex flex-row items-center">
-                {baseOptions.links?.map((link) => renderNavItem(link))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
+            {/* Desktop layout */}
+            <div className="hidden md:flex flex-row items-center gap-4 w-full">
+              <div className="flex flex-row items-center gap-4">
+                {/* <NavbarSidebarTrigger /> */}
+                <Link href="/" className="mr-6 flex items-center space-x-2">
+                  <DocsLogo />
+                </Link>
+              </div>
 
-          <div className="flex flex-1 items-center justify-end space-x-3">
-            <SearchToggle />
-            <ThemeToggle />
-            <Button className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group">
-              Sign in
-              <ArrowUpRight className="w-3.5 h-3.5 translate-y-0.5 group-hover:translate-y-0 transition-transform duration-200" />
-            </Button>
-          </div>
-        </nav>
-      </header>
-      <main
-        id="nd-docs-layout"
-        className={cn(
-          "flex flex-1 flex-row transition-all duration-100",
-          collapsed && "md:pl-[calc(var(--nav-offset)-115px)]"
-        )}
-      >
-        <Sidebar />
-        {children}
-      </main>
-    </TreeContextProvider>
+              <NavigationMenu>
+                <NavigationMenuList className="flex flex-row items-center">
+                  {baseOptions.links?.map((link) => renderNavItem(link))}
+                </NavigationMenuList>
+              </NavigationMenu>
+
+              <div className="flex flex-1 items-center justify-end space-x-3">
+                <SearchToggle />
+                <ThemeToggle />
+                <Button className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group">
+                  Sign in
+                  <ArrowUpRight className="w-3.5 h-3.5 translate-y-0.5 group-hover:translate-y-0 transition-transform duration-200" />
+                </Button>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main
+          id="nd-docs-layout"
+          className={cn(
+            "flex flex-1 flex-row transition-all duration-100",
+            collapsed && "md:pl-[calc(var(--nav-offset)-115px)]"
+          )}
+        >
+          <Sidebar />
+          {children}
+        </main>
+      </TreeContextProvider>
+    </MobileMenuProvider>
   );
 }
 
-function Sidebar() {
+export function Sidebar() {
   const { root } = useTreeContext();
   const { open, collapsed } = useSidebar();
   const pathname = usePathname();
-
-  const currentSection = React.useMemo(() => {
-    const filterCriteria = ["tools", "apis", "reference", "resources"];
-    for (const criteria of filterCriteria) {
-      if (pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`) {
-        return criteria;
-      }
-    }
-    return "none";
-  }, [pathname]);
 
   const children = useMemo(() => {
     const filterCriteria = ["tools", "apis", "reference", "resources"];
@@ -205,7 +213,7 @@ function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-sm overflow-auto md:sticky md:h-[calc(100dvh-64px)]",
+        "fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-base md:text-sm overflow-auto md:sticky md:h-[calc(100dvh-64px)]",
         "max-md:inset-x-0 max-md:bottom-0",
         !open && "max-md:invisible",
         "md:w-[250px] md:transition-all md:duration-100 ease-linear",
@@ -217,7 +225,7 @@ function Sidebar() {
   );
 }
 
-const linkVariants = cva(
+export const linkVariants = cva(
   "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground !font-sans [&_svg]:size-3",
   {
     variants: {
@@ -254,7 +262,7 @@ export function NavbarSidebarTrigger(
   );
 }
 
-function SidebarItem({
+export function SidebarItem({
   item,
   children,
 }: {
@@ -398,7 +406,7 @@ function SidebarItem({
   );
 }
 
-function PageBadges({ item }: { item: PageTree.Node }) {
+export function PageBadges({ item }: { item: PageTree.Node }) {
   if (item.type !== "page") return null;
 
   const badges: React.ReactNode[] = [];

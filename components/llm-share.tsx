@@ -87,7 +87,7 @@ export function LLMShare({ content }: LLMShareProps) {
   };
 
   return (
-    <div className="inline-flex rounded-md border border-border">
+    <div className="hidden md:inline-flex rounded-md border border-border">
       <button
         onClick={handleCopy}
         type="button"

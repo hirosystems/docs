@@ -11,25 +11,38 @@ export function SearchToggle(props: ComponentProps<"button">) {
   if (!enabled) return;
 
   return (
-    <button
-      className="w-full max-w-[221px] h-9 bg-white dark:bg-neutral-950 rounded-md flex items-center px-2 cursor-pointer group"
-      onClick={() => setOpenSearch(true)}
-      {...props}
-    >
-      <div className="flex items-center flex-1 gap-2">
-        <SearchIcon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
-        <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
-          Search
-        </span>
-      </div>
-      <div className="flex items-center gap-1 group">
-        <Kbd className="flex items-center justify-center rounded text-md transition-colors">
-          ⌘
-        </Kbd>
-        <Kbd className="flex items-center justify-center rounded text-sm transition-colors">
-          K
-        </Kbd>
-      </div>
-    </button>
+    <>
+      {/* For mobile, show the search icon */}
+      <button
+        className="md:hidden h-8 w-8 flex items-center justify-center rounded-md hover:bg-accent transition-colors"
+        onClick={() => setOpenSearch(true)}
+        aria-label="Search"
+        {...props}
+      >
+        <SearchIcon className="h-4 w-4 text-muted-foreground" />
+      </button>
+
+      {/* For desktop, show the search bar */}
+      <button
+        className="hidden md:flex w-full max-w-[221px] h-9 bg-white dark:bg-neutral-950 rounded-md items-center px-2 cursor-pointer group"
+        onClick={() => setOpenSearch(true)}
+        {...props}
+      >
+        <div className="flex items-center flex-1 gap-2">
+          <SearchIcon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
+          <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
+            Search
+          </span>
+        </div>
+        <div className="flex items-center gap-1 group">
+          <Kbd className="flex items-center justify-center rounded text-md transition-colors">
+            ⌘
+          </Kbd>
+          <Kbd className="flex items-center justify-center rounded text-sm transition-colors">
+            K
+          </Kbd>
+        </div>
+      </button>
+    </>
   );
 }
