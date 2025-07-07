@@ -33,12 +33,12 @@ export const baseOptions: BaseLayoutProps = {
           url: "/tools/chainhook",
         },
         {
-          text: "Contract monitoring",
+          text: "Contract Monitoring",
           description: "Monitor and analyze Clarity smart contract activity.",
           url: "/tools/contract-monitoring",
         },
         {
-          text: "Bitcoin indexer",
+          text: "Bitcoin Indexer",
           description: "Indexer for Bitcoin blockchain data.",
           url: "/tools/bitcoin-indexer",
           isNew: true,
