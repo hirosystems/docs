@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import React from "react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";
-import { CODEBLOCK, CodeGroup, TITLEBAR } from "./code-group";
+import { CODEBLOCK, type CodeGroup, TITLEBAR } from "./code-group";
 
 export function MultiCode({
   group,

@@ -96,7 +96,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
             "border-b border-border/50"
           )}
         >
-          <nav className="flex flex-row items-center gap-4 size-full px-4">
+          <nav className="flex flex-row items-center gap-4 size-full px-2 md:px-4">
             {/* Mobile layout */}
             <div className="flex md:hidden items-center justify-between w-full">
               <MobileMenuButton tree={tree} />
@@ -330,7 +330,7 @@ export function SidebarItem({
 
   if (item.type === "separator") {
     return (
-      <p className="text-primary font-fono font-semibold mt-6 mb-2 first:mt-0 px-2">
+      <p className="text-primary font-fono font-semibold mt-6 mb-2 first:mt-0 px-2 sm:px-4">
         {item.name}
       </p>
     );

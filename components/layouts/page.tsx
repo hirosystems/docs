@@ -132,9 +132,9 @@ function PageContent({ children, className, ...props }: PageContentProps) {
     <main className="flex flex-1 flex-col pb-16">
       <article
         className={cn(
-          "flex flex-1 flex-col w-full gap-6 px-4 md:px-10 md:mx-auto",
+          "flex flex-1 flex-col w-full gap-6 px-4 md:px-10 mx-auto",
           interactive ? "pt-8" : "py-4",
-          full ? "max-w-[1120px]" : "max-w-[860px]"
+          full ? "md:max-w-[1120px]" : "md:max-w-[860px]"
         )}
         {...props}
       >
@@ -226,7 +226,14 @@ interface PageProseProps {
 
 function PageProse({ children, className }: PageProseProps) {
   return (
-    <div className={cn("prose text-muted-foreground", className)}>
+    <div className={cn(
+      "prose prose-sm md:prose-base text-muted-foreground",
+      "max-w-none",
+      "prose-pre:overflow-x-auto prose-pre:max-w-full",
+      "prose-img:max-w-full prose-img:h-auto",
+      "prose-table:overflow-x-auto prose-table:block prose-table:max-w-full",
+      className
+    )}>
       {children}
     </div>
   );

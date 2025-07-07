@@ -70,7 +70,7 @@ function CustomTable({ className, ...props }: TableProps) {
   const dataRows = rows.slice(1);
 
   return (
-    <div className="my-6 w-full overflow-x-auto">
+    <div className="my-6 w-full overflow-x-auto md:block grid">
       <Table
         className={cn(
           "w-full border-0 border-b border-border/50 rounded-none",
@@ -105,7 +105,7 @@ function CustomTable({ className, ...props }: TableProps) {
                 key={i}
                 className="bg-background border-0 border-t border-b"
               >
-                <TableCell className="py-4 px-4">
+                <TableCell className="py-4 px-4 min-w-[150px] md:min-w-0">
                   <NetworkBadge
                     network={
                       React.isValidElement(cells[0])
@@ -117,7 +117,7 @@ function CustomTable({ className, ...props }: TableProps) {
                 {cells.slice(1).map((cell, j) => (
                   <TableCell
                     key={j}
-                    className="py-4 px-4 text-muted-foreground whitespace-normal break-words text-base [&_code]:whitespace-nowrap [&_code]:break-keep"
+                    className="py-4 px-4 text-muted-foreground whitespace-normal break-words text-base [&_code]:whitespace-nowrap [&_code]:break-keep min-w-[200px] md:min-w-0"
                   >
                     {cell}
                   </TableCell>

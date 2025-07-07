@@ -30,7 +30,7 @@ export async function Terminal(props: {
               ...(props.enableWrap ? [wordWrap] : []),
               command,
             ]}
-            className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono overflow-x-auto"
+            className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono overflow-x-auto max-w-full"
             style={{ color: highlighted.style.color }}
           />
         ),

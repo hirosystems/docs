@@ -25,16 +25,17 @@ export function TerminalClient({
         className={cn(
           TITLEBAR,
           "flex items-center gap-2",
-          "text-muted-foreground text-sm font-mono"
+          "text-muted-foreground text-sm font-mono",
+          "overflow-hidden"
         )}
       >
         <TerminalIcon size={16} className="ml-2 mr-1" />
         <div>Terminal</div>
         {tabs.length > 1 && (
-          <div className="ml-auto">
+          <div className="ml-auto overflow-x-auto max-w-[50%] md:max-w-none">
             <ToggleGroup
               type="single"
-              className="rounded-md inline-flex px-1 bg-ch-code"
+              className="rounded-md inline-flex px-1 bg-ch-code min-w-fit"
               variant="outline"
               value={currentName}
               onValueChange={(value) => {
@@ -46,7 +47,7 @@ export function TerminalClient({
                   key={index}
                   value={tab.name}
                   aria-label={`Toggle ${tab.name}`}
-                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-muted-foreground"
+                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-muted-foreground whitespace-nowrap text-xs md:text-sm"
                 >
                   {tab.name}
                 </ToggleGroupItem>

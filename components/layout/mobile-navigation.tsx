@@ -239,7 +239,7 @@ export function MobileNavigation({
           <SearchToggle />
         </div>
 
-        <nav className="overflow-y-auto h-[calc(100vh-64px)] bg-background">
+        <nav className="overflow-y-auto h-[calc(100vh-64px)] bg-background px-3">
           <div className="py-2">
             {activeSubmenu ? (
               <>
@@ -262,7 +262,7 @@ export function MobileNavigation({
                       href={subItem.url}
                       onClick={handleClose}
                       className={cn(
-                        "flex items-center justify-between px-4 py-3 text-lg hover:bg-accent transition-colors",
+                        "flex items-center justify-between px-2 py-3 text-lg hover:bg-accent transition-colors",
                         subItem.isNew && "gap-3 justify-start"
                       )}
                     >
