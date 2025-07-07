@@ -21,7 +21,7 @@ export function BreadcrumbNav() {
   }
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="hidden md:block">
       <BreadcrumbList>
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
