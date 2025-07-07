@@ -3,25 +3,20 @@ title: How to sync a Stacks node
 description: Learn how to sync a Stacks node for running a local devnet or mainnet.
 ---
 
-import { Code, Terminal } from 'lucide-react';
-import { SmallCard } from '@/components/card';
-
 Running a Stacks node is crucial for developers aiming to interact directly with the Stacks blockchain. It allows for the verification of transactions, ensures decentralized operations, and enhances blockchain security.
 
-In this guide, you will learn how to:
-
-1. [Clone the Stacks blockchain Docker repository](#clone-the-stacks-blockchain-docker-repository).
-2. [Start the service](#start-the-service).
-3. [Monitor the node's synchronization process](#monitor-the-nodes-synchronization-process).
-
----
+:::objectives
+- Clone the Stacks blockchain Docker repository
+- Start the service
+- Monitor the node's synchronization process
+:::
 
 ## Clone the Stacks blockchain Docker repository
 
 Clone the Stacks blockchain Docker repository from GitHub:
 
 ```terminal
-$ git clone https://github.com/blockstack/stacks-blockchain-docker.git
+$ git clone git@github.com:hirosystems/stacks-blockchain-docker.git
 $ cd stacks-blockchain-docker
 ```
 
@@ -30,6 +25,7 @@ $ cd stacks-blockchain-docker
 Inside of the `stacks-blockchain-docker` directory, run the following command to start the Stacks node:
 
 ```terminal
+$ chmod +x manage.sh
 $ ./manage.sh -n <network> -a start
 ```
 
@@ -48,8 +44,6 @@ $ ./manage.sh -n <network> -a logs
 ```
 
 For networks other than `mocknet`, downloading the initial headers can take several minutes. Until the headers are downloaded, the `/v2/info` endpoints won't return any data.
-
----
 
 :::next-steps
 - [Run Chainhook as a service](/stacks/chainhook/guides/chainhook-as-a-service): Learn how to use Chainhook to build your own custom API.
