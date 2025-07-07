@@ -89,7 +89,7 @@ function ContentWrapper({ children, className }: ContentWrapperProps) {
   const shouldShowTOC = toc.length > 0 && !full;
 
   return shouldShowTOC ? (
-    <div className={cn("flex w-full min-w-0", className)}>
+    <div className={cn("sm:flex w-full min-w-0", className)}>
       {children}
       <PageTOC />
     </div>
@@ -226,14 +226,16 @@ interface PageProseProps {
 
 function PageProse({ children, className }: PageProseProps) {
   return (
-    <div className={cn(
-      "prose prose-sm md:prose-base text-muted-foreground",
-      "max-w-none",
-      "prose-pre:overflow-x-auto prose-pre:max-w-full",
-      "prose-img:max-w-full prose-img:h-auto",
-      "prose-table:overflow-x-auto prose-table:block prose-table:max-w-full",
-      className
-    )}>
+    <div
+      className={cn(
+        "prose prose-sm md:prose-base text-muted-foreground",
+        "max-w-none",
+        "prose-pre:overflow-x-auto prose-pre:max-w-full",
+        "prose-img:max-w-full prose-img:h-auto",
+        "prose-table:overflow-x-auto prose-table:block prose-table:max-w-full",
+        className
+      )}
+    >
       {children}
     </div>
   );

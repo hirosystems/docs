@@ -124,12 +124,17 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
                 </NavigationMenuList>
               </NavigationMenu>
 
-              <div className="flex flex-1 items-center justify-end space-x-3">
+              <div className="flex flex-1 items-center justify-end space-x-2 lg:space-x-3">
                 <SearchToggle />
                 <ThemeToggle />
-                <Button className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group">
-                  Sign in
-                  <ArrowUpRight className="w-3.5 h-3.5 translate-y-0.5 group-hover:translate-y-0 transition-transform duration-200" />
+                <Button
+                  asChild
+                  className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group hidden lg:flex"
+                >
+                  <Link href="https://platform.hiro.so" target="_blank">
+                    Sign in
+                    <ArrowUpRight className="w-3.5 h-3.5 translate-y-0.5 group-hover:translate-y-0 transition-transform duration-200" />
+                  </Link>
                 </Button>
               </div>
             </div>

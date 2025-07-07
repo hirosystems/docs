@@ -71,12 +71,7 @@ function CustomTable({ className, ...props }: TableProps) {
 
   return (
     <div className="my-6 w-full overflow-x-auto md:block grid">
-      <Table
-        className={cn(
-          "w-full border-0 border-b border-border/50 rounded-none",
-          className
-        )}
-      >
+      <Table className={cn("w-full border-0 rounded-none", className)}>
         <TableHeader>
           <TableRow className="border-0 border-b border-border">
             {headers.map((header, i) => (

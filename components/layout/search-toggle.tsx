@@ -24,13 +24,13 @@ export function SearchToggle(props: ComponentProps<"button">) {
 
       {/* For desktop, show the search bar */}
       <button
-        className="hidden md:flex w-full max-w-[221px] h-9 bg-white dark:bg-neutral-950 rounded-md items-center px-2 cursor-pointer group"
+        className="hidden md:flex w-full max-w-[160px] lg:max-w-[200px] h-9 bg-white dark:bg-neutral-950 rounded-md items-center px-2 cursor-pointer group"
         onClick={() => setOpenSearch(true)}
         {...props}
       >
         <div className="flex items-center flex-1 gap-2">
           <SearchIcon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
-          <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
+          <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors md:inline hidden">
             Search
           </span>
         </div>
