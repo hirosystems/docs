@@ -580,112 +580,99 @@ export const hiroThemeLight: ThemeRegistrationResolved = {
 // `loader()` also assign a URL to your pages
 // See https://fumadocs.vercel.app/docs/headless/source-api for more info
 export const source = loader({
-  pageTree: {
-    attachFile: (node, file) => {
-      let processedNode;
-      try {
-        processedNode = attachFile(node, file);
-      } catch (error: any) {
-        // Handle ENOENT errors gracefully
-        if (error.code === 'ENOENT') {
-          console.warn(`File not found: ${error.path}`);
-          // Return the node as-is without file attachment
-          processedNode = node;
-        } else {
-          // Re-throw other errors
-          throw error;
-        }
-      }
+  // pageTree: {
+  //   attachFile: (node, file) => {
+  //     let processedNode = attachFile(node, file);
 
-      if (node.type === "page") {
-        const fileData = (file as any)?.data?.data;
-        const frontmatter = fileData;
-        const filePath = (file as any)?.file?.path;
+  //     if (node.type === "page") {
+  //       const fileData = (file as any)?.data?.data;
+  //       const frontmatter = fileData;
+  //       const filePath = (file as any)?.file?.path;
 
-        const shouldShowNewBadge = filePath
-          ? isPageNew(filePath, frontmatter)
-          : false;
+  //       const shouldShowNewBadge = filePath
+  //         ? isPageNew(filePath, frontmatter)
+  //         : false;
 
-        const dataToAdd: any = {};
+  //       const dataToAdd: any = {};
 
-        if (shouldShowNewBadge) {
-          dataToAdd.isNew = true;
-          console.log("Applied new badge to node");
-        }
+  //       if (shouldShowNewBadge) {
+  //         dataToAdd.isNew = true;
+  //         console.log("Applied new badge to node");
+  //       }
 
-        // Extract and process tags and labels
-        const { tags, labels } = extractTagsAndLabels(frontmatter || {});
+  //       // Extract and process tags and labels
+  //       const { tags, labels } = extractTagsAndLabels(frontmatter || {});
 
-        // Add tags and labels to node data
-        if (tags.length > 0) {
-          dataToAdd.tags = tags;
-        }
-        if (labels.length > 0) {
-          dataToAdd.labels = labels;
-        }
+  //       // Add tags and labels to node data
+  //       if (tags.length > 0) {
+  //         dataToAdd.tags = tags;
+  //       }
+  //       if (labels.length > 0) {
+  //         dataToAdd.labels = labels;
+  //       }
 
-        // If this page has labels, add it to the filterable pages collection
-        if (labels.length > 0 && node.url) {
-          // Extract section from URL (e.g., "/stacks/clarinet" -> "clarinet")
-          const section = extractSectionFromUrl(node.url);
+  //       // If this page has labels, add it to the filterable pages collection
+  //       if (labels.length > 0 && node.url) {
+  //         // Extract section from URL (e.g., "/stacks/clarinet" -> "clarinet")
+  //         const section = extractSectionFromUrl(node.url);
 
-          const filterablePage: FilterablePage = {
-            id: node.url,
-            title: frontmatter?.title || node.name || "Untitled",
-            description: frontmatter?.description,
-            url: node.url,
-            labels,
-            section,
-            type: frontmatter?.type,
-          };
+  //         const filterablePage: FilterablePage = {
+  //           id: node.url,
+  //           title: frontmatter?.title || node.name || "Untitled",
+  //           description: frontmatter?.description,
+  //           url: node.url,
+  //           labels,
+  //           section,
+  //           type: frontmatter?.type,
+  //         };
 
-          // Avoid duplicates
-          const existingIndex = filterablePages.findIndex(
-            (p) => p.id === filterablePage.id
-          );
-          if (existingIndex >= 0) {
-            filterablePages[existingIndex] = filterablePage;
-          } else {
-            filterablePages.push(filterablePage);
-          }
-        }
+  //         // Avoid duplicates
+  //         const existingIndex = filterablePages.findIndex(
+  //           (p) => p.id === filterablePage.id
+  //         );
+  //         if (existingIndex >= 0) {
+  //           filterablePages[existingIndex] = filterablePage;
+  //         } else {
+  //           filterablePages.push(filterablePage);
+  //         }
+  //       }
 
-        // Add frontmatter fields to node data
-        if (frontmatter?.sidebarTitle) {
-          dataToAdd.sidebarTitle = frontmatter.sidebarTitle;
-        }
+  //       // Add frontmatter fields to node data
+  //       if (frontmatter?.sidebarTitle) {
+  //         dataToAdd.sidebarTitle = frontmatter.sidebarTitle;
+  //       }
 
-        if (frontmatter?.root) {
-          dataToAdd.root = frontmatter.root;
-        }
+  //       if (frontmatter?.root) {
+  //         dataToAdd.root = frontmatter.root;
+  //       }
 
-        // if it's an API page, extract OpenAPI operations ourselves
-        if (node.url?.includes("/apis/") && fileData?.content) {
-          const content = fileData.content;
+  //       // if it's an API page, extract OpenAPI operations ourselves
+  //       if (node.url?.includes("/apis/") && fileData?.content) {
+  //         const content = fileData.content;
 
-          const operations = extractOperationsFromContent(content);
+  //         const operations = extractOperationsFromContent(content);
 
-          if (operations.length > 0) {
-            dataToAdd.openapi = {
-              operations,
-            };
-          }
-        }
+  //         if (operations.length > 0) {
+  //           dataToAdd.openapi = {
+  //             operations,
+  //           };
+  //         }
+  //       }
 
-        if (Object.keys(dataToAdd).length > 0) {
-          processedNode = {
-            ...processedNode,
-            data: {
-              ...(processedNode as any).data,
-              ...dataToAdd,
-            },
-          } as any;
-        }
-      }
+  //       if (Object.keys(dataToAdd).length > 0) {
+  //         processedNode = {
+  //           ...processedNode,
+  //           data: {
+  //             ...(processedNode as any).data,
+  //             ...dataToAdd,
+  //           },
+  //         } as any;
+  //       }
+  //     }
 
-      return processedNode;
-    },
-  },
+  //     return processedNode;
+  //   },
+  // },
   baseUrl: "/",
   source: docs.toFumadocsSource(),
   icon(icon) {
