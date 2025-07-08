@@ -582,7 +582,20 @@ export const hiroThemeLight: ThemeRegistrationResolved = {
 export const source = loader({
   pageTree: {
     attachFile: (node, file) => {
-      let processedNode = attachFile(node, file);
+      let processedNode;
+      try {
+        processedNode = attachFile(node, file);
+      } catch (error: any) {
+        // Handle ENOENT errors gracefully
+        if (error.code === 'ENOENT') {
+          console.warn(`File not found: ${error.path}`);
+          // Return the node as-is without file attachment
+          processedNode = node;
+        } else {
+          // Re-throw other errors
+          throw error;
+        }
+      }
 
       if (node.type === "page") {
         const fileData = (file as any)?.data?.data;
