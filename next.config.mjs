@@ -16,6 +16,11 @@ const config = {
         destination: "/",
         permanent: false,
       },
+      {
+        source: "/.well-known/llms.txt",
+        destination: "/llms.txt",
+        permanent: true, // 301 redirect - tells crawlers this is the canonical location
+      },
     ];
   },
 };
