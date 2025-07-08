@@ -6,7 +6,27 @@ import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "content/docs");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
-const BASE_URL = process.env.LLMS_BASE_URL || "https://docs.hiro.so";
+
+// Configuration for generation
+interface GenerationConfig {
+  githubRepo: string;
+  branch: string;
+  productionUrl: string;
+  generateRawUrls: boolean;
+  generateRobotsTxt: boolean;
+}
+
+// Environment variables (optional):
+// GITHUB_REPO - GitHub repository in format "owner/repo" (default: "hirosystems/docs")
+// GITHUB_BRANCH - Branch name for raw URLs (default: "develop")
+// PRODUCTION_URL - Production URL for robots.txt (default: "https://docs.hiro.so")
+const config: GenerationConfig = {
+  githubRepo: process.env.GITHUB_REPO || "hirosystems/docs",
+  branch: process.env.GITHUB_BRANCH || "develop",
+  productionUrl: process.env.PRODUCTION_URL || "https://docs.hiro.so",
+  generateRawUrls: true,
+  generateRobotsTxt: true,
+};
 
 interface PageMetadata {
   title: string;
@@ -49,7 +69,7 @@ async function getAllPages(): Promise<PageMetadata[]> {
       pages.push({
         title: data.title || path.basename(file, ".mdx"),
         description: data.description || "",
-        path: file,
+        path: relativePath, // Store relative path for GitHub URLs
         url: urlPath ? `/${urlPath}` : "/",
         section: pathParts.slice(0, -1),
       });
@@ -65,7 +85,8 @@ async function getAllPages(): Promise<PageMetadata[]> {
 function generateLLMsContent(
   pages: PageMetadata[],
   title: string,
-  currentSection: string[] = []
+  currentSection: string[] = [],
+  useRawUrls: boolean = false
 ): string {
   const lines = [`# ${title}`, "", "## Pages", ""];
 
@@ -115,7 +136,9 @@ function generateLLMsContent(
     if (section === "_overview") {
       // These are overview pages at the current level
       for (const page of sectionPages) {
-        const mdUrl = `${BASE_URL}${page.url}.md`;
+        const mdUrl = useRawUrls
+          ? `https://raw.githubusercontent.com/${config.githubRepo}/${config.branch}/content/docs/${page.path}`
+          : `${config.productionUrl}${page.url}.md`;
         lines.push(
           `- [${page.title}](${mdUrl})${page.description ? `: ${page.description}` : ""}`
         );
@@ -136,7 +159,9 @@ function generateLLMsContent(
       }
 
       for (const page of sectionPages) {
-        const mdUrl = `${BASE_URL}${page.url}.md`;
+        const mdUrl = useRawUrls
+          ? `https://raw.githubusercontent.com/${config.githubRepo}/${config.branch}/content/docs/${page.path}`
+          : `${config.productionUrl}${page.url}.md`;
         lines.push(
           `- [${page.title}](${mdUrl})${page.description ? `: ${page.description}` : ""}`
         );
@@ -145,7 +170,9 @@ function generateLLMsContent(
     } else {
       // Root level pages
       for (const page of sectionPages) {
-        const mdUrl = `${BASE_URL}${page.url}.md`;
+        const mdUrl = useRawUrls
+          ? `https://raw.githubusercontent.com/${config.githubRepo}/${config.branch}/content/docs/${page.path}`
+          : `${config.productionUrl}${page.url}.md`;
         lines.push(
           `- [${page.title}](${mdUrl})${page.description ? `: ${page.description}` : ""}`
         );
@@ -166,16 +193,50 @@ async function ensureDir(dir: string) {
   }
 }
 
+// Generate robots.txt file
+async function generateRobotsTxt(config: GenerationConfig) {
+  const content = `User-agent: *
+Allow: /
+
+# LLM-specific crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+Host: ${config.productionUrl}
+`;
+
+  await fs.writeFile(path.join(PUBLIC_DIR, "robots.txt"), content.trim());
+  console.log("📄 Generated robots.txt");
+}
+
 // Main generation function
 async function generateAllLLMsTxt() {
-  console.log("🤖 Generating llms.txt files...");
+  console.log("🚀 Starting documentation generation...");
 
   const allPages = await getAllPages();
   console.log(`📄 Found ${allPages.length} pages`);
 
-  // Generate root llms.txt with empty currentSection array to trigger better formatting
-  const rootContent = generateLLMsContent(allPages, "Hiro Documentation", []);
+  // Generate root llms.txt with raw GitHub URLs
+  const rootContent = generateLLMsContent(
+    allPages,
+    "Hiro Documentation",
+    [],
+    true
+  );
   await fs.writeFile(path.join(PUBLIC_DIR, "llms.txt"), rootContent);
+  console.log("✔️  Generated root llms.txt");
 
   // Generate section-level llms.txt files
   const sections = new Map<string, PageMetadata[]>();
@@ -200,15 +261,22 @@ async function generateAllLLMsTxt() {
     const sectionContent = generateLLMsContent(
       sectionPages,
       sectionTitle,
-      sectionParts
+      sectionParts,
+      true // Use raw GitHub URLs for all llms.txt files
     );
     const outputPath = path.join(PUBLIC_DIR, sectionPath);
 
     await ensureDir(outputPath);
     await fs.writeFile(path.join(outputPath, "llms.txt"), sectionContent);
   }
+  console.log("✔️  Generated section llms.txt files");
 
-  console.log("✔️ Generated llms.txt files");
+  // Generate robots.txt
+  if (config.generateRobotsTxt) {
+    await generateRobotsTxt(config);
+  }
+
+  console.log("✅ All files generated successfully!");
 }
 
 // Run the generation
