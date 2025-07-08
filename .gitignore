@@ -1,6 +1,6 @@
 bun.lockb
 node_modules
-openapi
+/openapi
 .DS_Store
 **/.DS_Store
 .env
@@ -11,8 +11,10 @@ openapi
 .source/
 tmp
 .cursor/
-/tasks
 
-# Generated llms.txt files
+# Local workflow files
+/tasks/**
+*.local.*
+
+# Generated files
 public/**/*.txt
-!public/robots.txt
