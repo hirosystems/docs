@@ -23,5 +23,10 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Generate llms.txt files
+        run: bun run generate-llms
+        env:
+          LLMS_BASE_URL: https://docs.hiro.so
+
       - name: Run link validation
         run: bun run lint
