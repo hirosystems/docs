@@ -7,13 +7,10 @@ import {
 import { getSlugs, parseFilePath } from "fumadocs-core/source";
 import { getTableOfContents } from "fumadocs-core/server";
 import path from "node:path";
+import fs from "node:fs";
 
 async function checkLinks() {
-  // we read them all at once to avoid repeated file read
   const docsFiles = await readFiles("content/docs/**/*.{md,mdx}");
-
-  // other collections too!
-  // const blogFiles = await readFiles("content/blog/**/*.{md,mdx}");
 
   const scanned = await scanURLs({
     populate: {
@@ -43,7 +40,25 @@ async function checkLinks() {
   printErrors(
     await validateFiles([...docsFiles], {
       scanned,
-      whitelist: (url) => url.startsWith("#!") || url === "tooltip",
+      whitelist: (url) => {
+        // Existing whitelist conditions
+        if (url.startsWith("#!") || url === "tooltip") {
+          return true;
+        }
+
+        // Check if it's an llms.txt route
+        if (url.endsWith("/llms.txt")) {
+          const publicPath = path.join(process.cwd(), "public", url);
+
+          if (fs.existsSync(publicPath)) {
+            return true;
+          }
+          console.warn(`Warning: llms.txt file not found at ${publicPath}`);
+          return false;
+        }
+
+        return false;
+      },
     }),
     true
   );
