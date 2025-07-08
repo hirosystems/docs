@@ -42,7 +42,23 @@ export function LLMShare({ content }: LLMShareProps) {
 
   const handleCopy = async () => {
     try {
-      const processedContent = processMarkdownLinks(content);
+      let contentToCopy = content;
+      
+      // Check if this is an API reference page
+      if (pathname && pathname.match(/^\/apis\/[^\/]+\/reference\//)) {
+        try {
+          // Fetch the generated markdown
+          const response = await fetch(`${pathname}.md`);
+          if (response.ok) {
+            contentToCopy = await response.text();
+          }
+        } catch (error) {
+          console.error("Failed to fetch generated markdown:", error);
+          // Fall back to original content
+        }
+      }
+      
+      const processedContent = processMarkdownLinks(contentToCopy);
       await navigator.clipboard.writeText(processedContent);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 1200);
