@@ -38,11 +38,10 @@ export function LLMShare({ content }: LLMShareProps) {
   const [isCopied, setIsCopied] = useState(false);
   const pathname = usePathname();
   const markdownUrl = useCurrentPageMarkdown();
-  const { data: llmsTxtContent, refetch } = useLLMsTxt();
+  const { refetch } = useLLMsTxt();
 
   const handleCopy = async () => {
     try {
-      // Process the markdown to convert relative links to absolute URLs
       const processedContent = processMarkdownLinks(content);
       await navigator.clipboard.writeText(processedContent);
       setIsCopied(true);
@@ -55,7 +54,6 @@ export function LLMShare({ content }: LLMShareProps) {
   const handleViewRawMarkdown = () => {
     if (!pathname) return;
 
-    // Construct the markdown path
     let mdPath = pathname;
     if (mdPath.startsWith("/docs")) {
       mdPath = mdPath.substring(5);
@@ -65,21 +63,23 @@ export function LLMShare({ content }: LLMShareProps) {
       mdPath = "/index";
     }
 
-    // Open the .md version
     window.open(`${mdPath}.md`, "_blank");
   };
 
   const handleShare = async (provider: (typeof LLM_PROVIDERS)[number]) => {
     try {
-      // Create simple instruction with just the current page
       const instruction = `Read from ${markdownUrl} so I can ask questions about it.`;
 
       const encodedInstruction = encodeURIComponent(instruction);
-      const shareUrl = `${provider.url}?q=${encodedInstruction}`;
+
+      const shareUrl =
+        provider.name === "Claude"
+          ? `https://claude.ai/new?q=${encodedInstruction}`
+          : `${provider.url}?q=${encodedInstruction}`;
 
       window.open(shareUrl, "_blank");
 
-      // Optionally prefetch the section-specific llms.txt for next time
+      // prefetch the section-specific llms.txt for next time
       refetch();
     } catch (error) {
       console.error("[LLMShare] Failed to share:", error);

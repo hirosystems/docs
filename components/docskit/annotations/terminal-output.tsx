@@ -12,6 +12,7 @@ export const OutputBlock: AnnotationHandler["Block"] = ({
   return hidden ? (
     <div className="px-1">
       <button
+        type="button"
         aria-label="Show command output"
         className="opacity-70 cursor-pointer hover:opacity-90 select-none transition-opacity"
         onClick={() => setHidden(false)}
