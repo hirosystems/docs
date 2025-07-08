@@ -3,19 +3,6 @@ title: Transfer STX
 description: Send STX tokens between addresses with post-conditions for secure transfers
 ---
 
-
-
-Learn how to create and broadcast STX token transfers using Stacks.js, including setting up post-conditions to ensure secure transfers.
-
-## Use cases
-
-- Sending STX tokens between addresses
-- Building payment functionality in dApps
-- Creating secure token transfers with amount validation
-- Implementing wallet features
-
-## Implementation
-
 ```typescript
 import { STACKS_TESTNET } from "@stacks/network";
 import {
@@ -53,76 +40,11 @@ const broadcastResponse = await broadcastTransaction({ transaction });
 console.log("Transaction ID:", broadcastResponse.txid);
 ```
 
-## Transaction options explained
+## Use cases
 
-Each option in the transaction configuration serves a specific purpose:
+- Transferring STX tokens securely between addresses
+- Validating transaction amounts for secure transfers
 
-| Option | Description |
-|--------|-------------|
-| `recipient` | The STX address that will receive the tokens |
-| `amount` | Amount to transfer in micro-STX (1 STX = 1,000,000 micro-STX) |
-| `senderKey` | Private key of the sender account |
-| `network` | Network to broadcast to (mainnet, testnet, or devnet) |
-| `memo` | Optional message attached to the transaction |
-| `postConditions` | Array of conditions that must be met |
-| `postConditionMode` | How to handle post-conditions (Deny or Allow) |
-| `anchorMode` | How the transaction is anchored to Bitcoin |
+## Key concepts
 
-:::callout
-type: warn
-### Security tip
-Never expose private keys in production code. Use environment variables or secure key management systems.
-:::
-
-## Checking transaction status
-
-After broadcasting, you can check the transaction status:
-
-```typescript
-// Using the Stacks Blockchain API
-const txStatus = await fetch(
-  `https://api.testnet.hiro.so/extended/v1/tx/${broadcastResponse.txid}`
-);
-const statusData = await txStatus.json();
-console.log("Transaction status:", statusData.tx_status);
-```
-
-## Package installation
-
-```package-install
-@stacks/network @stacks/transactions
-```
-
-## Common patterns
-
-### Transfer with memo
-
-```typescript
-const txOptions = {
-  // ... other options
-  memo: "Payment for invoice #12345",
-};
-```
-
-### Transfer without post-conditions
-
-```typescript
-const txOptions = {
-  // ... other options
-  postConditions: [],
-  postConditionMode: PostConditionMode.Allow,
-};
-```
-
-:::callout
-type: tip
-### Best practice
-Always use post-conditions when transferring tokens to protect users from unexpected transfers, especially when interacting with smart contracts.
-:::
-
-## Related snippets
-
-- [Build a STX post-condition](/resources/snippets/build-a-stx-pc)
-- [Transfer a SIP-10 token](/resources/snippets/transfer-a-sip10-token)
-- [Create a sponsored transaction](/resources/snippets/create-a-sponsored-tx)
-- [Build an unsigned transaction](/resources/snippets/build-an-unsigned-tx)
+- **Post-conditions**: Ensure the exact amount of STX is transferred
