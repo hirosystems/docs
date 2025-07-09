@@ -1,54 +1,20 @@
 ---
 title: Using Pyth oracle data
 sidebarTitle: Oracle integration
-description: Learn how to integrate real-time market price data from Pyth Network into your Clarity smart contracts.
+description: In this guide, you'll learn how to read real-time price data from Pyth Network's decentralized oracle in your Clarity contracts.
 ---
 
-import { File, Folder, Files } from 'fumadocs-ui/components/files';
-import { Steps, Step } from '@/components/steps';
-import { ArrowRight, Check } from 'lucide-react';
+:::objectives
+- Understand Pyth's pull-based oracle model
+- Read and process price feed data
+- Work with fixed-point price representation
+- Build USD-denominated smart contracts
+:::
 
-## What you'll learn
-
-In this guide, you'll learn how to read real-time price data from Pyth Network's decentralized oracle in your Clarity contracts.
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Understanding Pyth's pull-based oracle model</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Reading and processing price feed data</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Working with fixed-point price representation</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Building USD-denominated smart contracts</span>
-  </div>
-</div>
-
-## Prerequisites
-
-To follow this guide, you'll need:
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>Basic understanding of Clarity smart contracts</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>A Clarinet project set up for local development</span>
-  </div>
-</div>
+:::prerequisites
+- Basic understanding of Clarity smart contracts
+- A Clarinet project set up for local development
+:::
 
 ## Understanding Pyth oracles
 
