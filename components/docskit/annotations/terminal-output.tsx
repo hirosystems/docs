@@ -2,8 +2,23 @@
 import type { AnnotationHandler } from "codehike/code";
 import React from "react";
 
-export const OutputBlock: AnnotationHandler["Block"] = ({ children }) => {
-  const [hidden, setHidden] = React.useState(true);
+interface OutputBlockProps {
+  children: React.ReactNode;
+  hideOutput?: boolean;
+}
+
+export const OutputBlock: AnnotationHandler["Block"] = ({
+  children,
+  hideOutput = false,
+}: OutputBlockProps) => {
+  const [hidden, setHidden] = React.useState(hideOutput);
+
+  // If hideOutput is false, just render the output directly
+  if (!hideOutput) {
+    return <div className="px-1 pt-1 pb-0">{children}</div>;
+  }
+
+  // Otherwise, render the collapsible output
   return hidden ? (
     <div className="px-1">
       <button
@@ -16,6 +31,6 @@ export const OutputBlock: AnnotationHandler["Block"] = ({ children }) => {
       </button>
     </div>
   ) : (
-    <div className="px-1 pt-1 pb-2">{children}</div>
+    <div className="px-1 pt-1 pb-0">{children}</div>
   );
 };

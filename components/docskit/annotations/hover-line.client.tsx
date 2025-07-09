@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { InnerLine } from "codehike/code";
-import { useHover } from "@/context/hover";
+import { useHover } from "@/components/docskit/context/hover";
 
 export function HoverLineClient({ annotation, ...props }: any) {
   const lineRef = useRef<HTMLDivElement>(null);

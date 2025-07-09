@@ -14,6 +14,7 @@ import { OutputBlock } from "./annotations/terminal-output";
 export async function Terminal(props: {
   codeblocks: RawCode[];
   storage?: string;
+  hideOutput?: boolean;
 }) {
   const tabs = await Promise.all(
     props.codeblocks.map(async (codeblock) => {
@@ -23,7 +24,7 @@ export async function Terminal(props: {
         pre: (
           <Pre
             code={highlighted}
-            handlers={[output, wordWrap, command]}
+            handlers={[createOutputHandler(props.hideOutput), wordWrap, command]}
             className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
@@ -41,10 +42,13 @@ export async function Terminal(props: {
   );
 }
 
-const output: AnnotationHandler = {
+const createOutputHandler = (hideOutput?: boolean): AnnotationHandler => ({
   name: "output",
-  Block: OutputBlock,
-};
+  Block: (props) => {
+    const Component = OutputBlock as any;
+    return <Component {...props} hideOutput={hideOutput} />;
+  },
+});
 
 const command: AnnotationHandler = {
   name: "command",

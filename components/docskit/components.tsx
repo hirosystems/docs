@@ -41,10 +41,9 @@ function DocsKitCode(props: { codeblock: RawCode }) {
   }
 
   if (codeblock.lang === "terminal") {
-    // Parse flags from meta string (e.g., "terminal -o" -> hideOutput: true, "terminal -w" -> enableWrap: true)
+    // Parse flags from meta string (e.g., "terminal -o" -> hideOutput: true)
     const hideOutput = codeblock.meta?.includes("-o") || false;
-    const enableWrap = codeblock.meta?.includes("-w") || false;
-    return <Terminal codeblocks={[codeblock]} hideOutput={hideOutput} enableWrap={enableWrap} />;
+    return <Terminal codeblocks={[codeblock]} hideOutput={hideOutput} />;
   }
 
   return <Code {...rest} codeblocks={[codeblock]} />;
@@ -88,7 +87,6 @@ function PackageInstall({ codeblock }: { codeblock: RawCode }) {
   return (
     <Terminal
       storage="package-install"
-      enableWrap={false}
       codeblocks={[
         {
           ...codeblock,
@@ -132,6 +130,5 @@ function TerminalPicker(props: unknown) {
 
   const { code, storage, flags } = data;
   const hideOutput = flags?.includes("-o") || false;
-  const enableWrap = flags?.includes("-w") || false;
-  return <Terminal codeblocks={code} storage={storage} hideOutput={hideOutput} enableWrap={enableWrap} />;
+  return <Terminal codeblocks={code} storage={storage} hideOutput={hideOutput} />;
 }
