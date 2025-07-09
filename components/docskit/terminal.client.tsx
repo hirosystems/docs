@@ -2,7 +2,7 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { TerminalIcon } from "lucide-react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";
-import React from "react";
+import type { ReactNode } from "react";
 import { CODEBLOCK, TITLEBAR } from "./code-group";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +11,7 @@ export function TerminalClient({
   storeKey,
 }: {
   storeKey?: string;
-  tabs: { name: string; pre: React.ReactNode }[];
+  tabs: { name: string; pre: ReactNode }[];
 }) {
   const [currentName, setCurrentName] = useStateOrLocalStorage(
     storeKey && "terminal-picker-" + storeKey,
@@ -25,17 +25,16 @@ export function TerminalClient({
         className={cn(
           TITLEBAR,
           "flex items-center gap-2",
-          "text-muted-foreground text-sm font-mono",
-          "overflow-hidden"
+          "text-ch-tab-active-foreground text-sm font-mono"
         )}
       >
         <TerminalIcon size={16} className="ml-2 mr-1" />
         <div>Terminal</div>
         {tabs.length > 1 && (
-          <div className="ml-auto overflow-x-auto max-w-[50%] md:max-w-none">
+          <div className="ml-auto">
             <ToggleGroup
               type="single"
-              className="rounded-md inline-flex px-1 bg-ch-code min-w-fit"
+              className="rounded-md inline-flex px-1 bg-ch-code"
               variant="outline"
               value={currentName}
               onValueChange={(value) => {
@@ -47,7 +46,7 @@ export function TerminalClient({
                   key={index}
                   value={tab.name}
                   aria-label={`Toggle ${tab.name}`}
-                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-muted-foreground whitespace-nowrap text-xs md:text-sm"
+                  className="py-0 px-0.5 h-6 !bg-transparent border-none text-ch-tab-inactive-foreground data-[state=on]:text-ch-tab-active-foreground"
                 >
                   {tab.name}
                 </ToggleGroupItem>

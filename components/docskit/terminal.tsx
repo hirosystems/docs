@@ -14,8 +14,6 @@ import { OutputBlock } from "./annotations/terminal-output";
 export async function Terminal(props: {
   codeblocks: RawCode[];
   storage?: string;
-  hideOutput?: boolean;
-  enableWrap?: boolean;
 }) {
   const tabs = await Promise.all(
     props.codeblocks.map(async (codeblock) => {
@@ -25,12 +23,8 @@ export async function Terminal(props: {
         pre: (
           <Pre
             code={highlighted}
-            handlers={[
-              createOutputHandler(props.hideOutput),
-              ...(props.enableWrap ? [wordWrap] : []),
-              command,
-            ]}
-            className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono overflow-x-auto max-w-full"
+            handlers={[output, wordWrap, command]}
+            className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
         ),
@@ -47,13 +41,10 @@ export async function Terminal(props: {
   );
 }
 
-const createOutputHandler = (hideOutput?: boolean): AnnotationHandler => ({
+const output: AnnotationHandler = {
   name: "output",
-  Block: (props) => {
-    const Component = OutputBlock as any;
-    return <Component {...props} hideOutput={hideOutput} />;
-  },
-});
+  Block: OutputBlock,
+};
 
 const command: AnnotationHandler = {
   name: "command",
@@ -82,7 +73,7 @@ function extractAnnotations(code: string) {
         toLineNumber: index + 1,
       });
     } else {
-      const last = annotations[annotations.length - 1];
+      let last = annotations[annotations.length - 1];
       if (last.name === "command" && last.query.endsWith("\\")) {
         last.query = last.query + "\n" + line;
         last.toLineNumber = index + 1;
