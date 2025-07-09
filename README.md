@@ -147,6 +147,7 @@ $ command         # Renders with prompt
 ### Page Templates
 
 #### Overview Page
+
 ```mdx
 ---
 title: Tool Name
@@ -155,19 +156,23 @@ description: Brief tool description
 ---
 
 ## Overview
+
 Expand on what the tool does and its value. Include llms.txt link if available.
 
 ## Key features
-- ✓ **Feature** - User benefit description
-- ✓ **Feature** - Technical capability explained simply
+
+- **Feature** - User benefit description
+- **Feature** - Technical capability explained simply
 
 ## Installation
+
 <TerminalPicker>...</TerminalPicker>
 
 :::next-steps
+
 - [Quickstart](/path): Get started in minutes
-:::
-````
+  :::
+```
 
 #### Quickstart Page
 
@@ -180,21 +185,24 @@ description: Learn how to [task] with [tool]
 Brief intro paragraph about what you'll build.
 
 :::objectives
+
 - Learning objective 1
 - Learning objective 2
-:::
+  :::
 
 :::prerequisites
+
 - Prerequisites
-:::
+  :::
 
 ## Quickstart
 
 <Steps>[3-5 focused steps]</Steps>
 
 :::next-steps
+
 - [Next Guide](/path): Description
-:::
+  :::
 ```
 
 ### File Structure
