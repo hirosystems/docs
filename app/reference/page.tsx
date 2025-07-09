@@ -29,12 +29,12 @@ export default function ReferencePage() {
               title="Clarinet JS Browser SDK"
               description="JavaScript SDK for interacting with the simnet in web browsers."
             />
-            <IndexCard
+            {/* <IndexCard
               icon={<API />}
               href="/reference/stacks-blockchain-api"
               title="Stacks Blockchain API Client"
               description="Type-safe JavaScript client library for interacting with the Stacks Blockchain API."
-            />
+            /> */}
           </Cards>
         </div>
       </div>

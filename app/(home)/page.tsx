@@ -169,16 +169,16 @@ export default function HomePage() {
               />
               <SmallCard
                 icon={<Js />}
-                href="/reference/clarinet-js-sdk"
+                href="/tools/clarinet/sdk-introduction"
                 title="Clarinet JS SDK"
                 description="JavaScript SDK for testing and interacting with Clarity smart contracts in simulated environments."
               />
-              <SmallCard
+              {/* <SmallCard
                 icon={<StacksIcon />}
                 href="/reference/stacks-blockchain-api"
                 title="Stacks Blockchain API Client"
                 description="Type-safe JavaScript client library for interacting with the Stacks Blockchain API."
-              />
+              /> */}
             </Cards>
           </div>
           <div className="flex flex-col">
