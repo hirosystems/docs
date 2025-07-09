@@ -117,31 +117,31 @@ export default function HomePage() {
               />
               <SmallCard
                 icon={<API />}
-                href="/apis/token-metadata"
+                href="/apis/token-metadata-api"
                 title="Token Metadata API"
                 description="Fast, reliable metadata for fungible and non-fungible tokens on Stacks."
               />
               <SmallCard
                 icon={<Hiro />}
-                href="/apis/platform"
+                href="/apis/platform-api"
                 title="Platform API"
                 description="Programmatically manage devnets and chainhooks via REST interface."
               />
               <SmallCard
                 icon={<Ordinals />}
-                href="/apis/ordinals"
+                href="/apis/ordinals-api"
                 title="Ordinals API"
                 description="Complete Bitcoin ordinals and BRC-20 token data with caching optimization."
               />
               <SmallCard
                 icon={<Runes />}
-                href="/apis/runes"
+                href="/apis/runes-api"
                 title="Runes API"
                 description="Fast, reliable data for Bitcoin Runes via an easy-to-use REST interface."
               />
               <SmallCard
                 icon={<API />}
-                href="/apis/signer-metrics"
+                href="/apis/signer-metrics-api"
                 title="Signer Metrics API"
                 description="Monitor and analyze signer behavior and performance on the Stacks network."
               />

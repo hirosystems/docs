@@ -19,33 +19,33 @@ export default function APIsPage() {
             />
             <IndexCard
               icon={<API />}
-              href="/apis/token-metadata"
+              href="/apis/token-metadata-api"
               title="Token Metadata API"
               description="Fast, reliable metadata for fungible and non-fungible tokens on Stacks."
             />
             <IndexCard
               icon={<Hiro />}
-              href="/apis/platform"
+              href="/apis/platform-api"
               title="Platform API"
               description="Programmatically manage devnets and chainhooks via REST interface."
             />
             <IndexCard
               icon={<Ordinals />}
-              href="/apis/ordinals"
+              href="/apis/ordinals-api"
               title="Ordinals API"
               tag="Bitcoin L1"
               description="Complete Bitcoin ordinals and BRC-20 token data with caching optimization."
             />
             <IndexCard
               icon={<Runes />}
-              href="/apis/runes"
+              href="/apis/runes-api"
               title="Runes API"
               tag="Bitcoin L1"
               description="Fast, reliable data for Bitcoin Runes via an easy-to-use REST interface."
             />
             <IndexCard
               icon={<API />}
-              href="/apis/signer-metrics"
+              href="/apis/signer-metrics-api"
               title="Signer Metrics API"
               description="Monitor and analyze signer behavior and performance on the Stacks network."
             />
