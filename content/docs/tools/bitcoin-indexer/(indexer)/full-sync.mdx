@@ -7,49 +7,17 @@ isNew: true
 
 import { ArrowRight, Check } from 'lucide-react';
 
-## What You'll Learn
+::objectives
+- Set up and configure the Bitcoin Indexer
+- Run the indexer from scratch
+- Monitor indexing progress effectively
+::
 
-In this guide, you'll learn how to:
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Set up and configure the Bitcoin Indexer</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Run the indexer from scratch</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Monitor indexing progress effectively</span>
-  </div>
-</div>
-
-## Prerequisites
-
-To start the indexer, you'll need:
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>Bitcoin Core fully synced with `txindex=1`</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>PostgreSQL running with databases created</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>Sufficient storage space</span>
-  </div>
-</div>
+:::prerequisites
+- Bitcoin Core node running with `txindex=1`
+- PostgreSQL running with databases created
+- Sufficient storage space
+:::
 
 :::callout
 ### Archive bootstrap recommended
@@ -68,11 +36,6 @@ $ cd ~/bitcoin-indexer/bitcoin-indexer
 
 ```terminal
 $ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
-[32m✓[0m Loading configuration from bitcoin-indexer-config.toml
-[32m✓[0m Connected to Bitcoin node at 127.0.0.1:8332
-[32m✓[0m Connected to PostgreSQL databases
-[32m✓[0m Starting Ordinals indexer from block 819542
-[1mProcessing block 819543...[0m
 ```
 
 ### Index Runes
@@ -81,10 +44,6 @@ In a separate terminal:
 
 ```terminal
 $ ./target/release/bitcoin-indexer runes service start --config-path=bitcoin-indexer-config.toml
-[32m✓[0m Loading configuration from bitcoin-indexer-config.toml
-[32m✓[0m Connected to Bitcoin node at 127.0.0.1:8332
-[32m✓[0m Starting Runes indexer from block 840000
-[1mProcessing block 840001...[0m
 ```
 
 :::callout
@@ -101,10 +60,6 @@ The indexer outputs detailed progress information:
 
 ```terminal
 $ tail -f ~/bitcoin-indexer/bitcoin-indexer/ordinals.log
-2024-12-15 10:30:45 [INFO] Processing block 819600
-2024-12-15 10:30:46 [INFO] Found 23 new inscriptions
-2024-12-15 10:30:46 [INFO] Updated 45 transfers
-2024-12-15 10:30:47 [INFO] Block 819600 processed in 1.2s
 ```
 
 ### Query indexer status via API
@@ -122,29 +77,12 @@ $ curl http://localhost:3000/ordinals/v1/status
 }
 ```
 
-### Monitor system resources
-
-Use `htop` to monitor resource usage:
-
-```terminal
-$ htop
-# Look for:
-# - bitcoin-indexer processes using 60-80% CPU
-# - Memory usage within limits
-# - Disk I/O activity
-```
-
 ## Service management
 
 ### Stop services gracefully
 
 ```terminal
 $ ps aux | grep bitcoin-indexer
-user  12345  75.2  8.3  bitcoin-indexer ordinals service
-user  12346  68.1  6.2  bitcoin-indexer runes service
-
-$ # Stop with SIGTERM for clean shutdown
-$ kill -TERM 12345 12346
 ```
 
 ### Restart after interruption
@@ -153,8 +91,6 @@ The indexer automatically resumes from the last processed block:
 
 ```terminal
 $ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
-[32m✓[0m Detected previous state at block 819600
-[32m✓[0m Resuming indexing from block 819601
 ```
 
 ## Systemd service setup
@@ -206,9 +142,6 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl enable bitcoin-indexer-ordinals bitcoin-indexer-runes
 $ sudo systemctl start bitcoin-indexer-ordinals bitcoin-indexer-runes
 $ sudo systemctl status bitcoin-indexer-ordinals
-[32m●[0m bitcoin-indexer-ordinals.service - Bitcoin Indexer - Ordinals Service
-     Loaded: loaded (/etc/systemd/system/bitcoin-indexer-ordinals.service; enabled)
-     Active: [32mactive (running)[0m since Mon 2024-12-15 10:30:00 UTC
 ```
 
 ## Performance optimization
@@ -243,61 +176,7 @@ Test that APIs are returning data:
 
 ```terminal -o
 $ curl http://localhost:3000/ordinals/v1/inscriptions/0
-{
-  "id": "6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0",
-  "number": 0,
-  "address": "bc1pxaneaf3w4d27hl2y93fuft2xk6m4u3wc4rafevc6slgd7f5tq2dqynekta"
-}
-$ curl http://localhost:3000/runes/v1/runes
-{
-  "results": [...],
-  "total": 18234
-}
 ```
-
-### Monitor metrics
-
-If Prometheus metrics are enabled:
-
-```terminal
-$ curl http://localhost:9153/metrics | grep bitcoin_indexer
-bitcoin_indexer_blocks_processed_total{protocol="ordinals"} 52600
-bitcoin_indexer_inscriptions_total 52342567
-bitcoin_indexer_api_requests_total{endpoint="/ordinals/v1/inscriptions"} 1523
-```
-
-## Troubleshooting
-
-### Service won't start
-
-```console
-ERROR: Failed to connect to Bitcoin node
-```
-
-**Solutions:**
-1. Verify Bitcoin node is running: `bitcoin-cli getblockcount`
-2. Check RPC credentials match configuration
-3. Ensure ZMQ ports are not blocked
-
-### Slow indexing speed
-
-If processing less than 1 block/second:
-
-1. Check Bitcoin node performance
-2. Verify PostgreSQL isn't bottlenecked
-3. Monitor disk I/O with `iotop`
-4. Consider archive bootstrap if starting from scratch
-
-### Database connection pool exhausted
-
-```console
-ERROR: connection pool timeout
-```
-
-**Solutions:**
-1. Increase max_connections in PostgreSQL
-2. Reduce bitcoind_rpc_threads in config
-3. Check for long-running queries
 
 :::next-steps
 - [Hiro Archives](/tools/bitcoin-indexer/archive-bootstrap): Skip weeks of indexing by bootstrapping from Hiro's pre-indexed archives.
