@@ -24,7 +24,11 @@ export async function Terminal(props: {
         pre: (
           <Pre
             code={highlighted}
-            handlers={[createOutputHandler(props.hideOutput), wordWrap, command]}
+            handlers={[
+              createOutputHandler(props.hideOutput),
+              wordWrap,
+              command,
+            ]}
             className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
@@ -77,9 +81,9 @@ function extractAnnotations(code: string) {
         toLineNumber: index + 1,
       });
     } else {
-      let last = annotations[annotations.length - 1];
+      const last = annotations[annotations.length - 1];
       if (last.name === "command" && last.query.endsWith("\\")) {
-        last.query = last.query + "\n" + line;
+        last.query = `${last.query}\n${line}`;
         last.toLineNumber = index + 1;
       } else if (!last || last.name !== "output") {
         annotations.push({
