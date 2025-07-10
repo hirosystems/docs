@@ -47,9 +47,9 @@ $ ./target/release/bitcoin-indexer runes service start --config-path=bitcoin-ind
 ```
 
 :::callout
-type: warn
-### Resource usage
-Each service uses the CPU cores and memory specified in your configuration. Ensure your system has enough resources to run multiple services simultaneously.
+type: info
+### Building from source
+If you are downloading a release from our end, run `cargo build --release` after navigating to the folder to compile the project. This step is necessary to use `/target/release/bitcoin-indexer` for starting services.
 :::
 
 ## Monitor indexing progress

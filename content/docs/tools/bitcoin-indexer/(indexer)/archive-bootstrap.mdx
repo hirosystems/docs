@@ -74,12 +74,6 @@ Restore the PostgreSQL archives to your databases:
 
 ```terminal
 $ sudo -u postgres pg_restore --verbose --jobs=6 -d ordinals -c --if-exists ~/bitcoin-indexer/archives/ordinals.dump
-[32mrestoring data for table "inscriptions"[0m
-[32mrestoring data for table "transfers"[0m
-[32mprocessing...[0m
-$ sudo -u postgres pg_restore --verbose --jobs=6 -d brc20 -c --if-exists ~/bitcoin-indexer/archives/brc20.dump
-[32mrestoring data for table "tokens"[0m
-[32mrestoring data for table "balances"[0m
 
 $ # Restore Runes database (if downloaded)
 $ sudo -u postgres pg_restore --verbose --jobs=6 -d runes -c --if-exists ~/bitcoin-indexer/archives/runes.dump
@@ -123,11 +117,8 @@ working_dir = "/home/bitcoin-indexer/bitcoin-indexer/rocksdb-chainstate"
 With the archive in place, start the indexer:
 
 ```terminal
-$ bitcoin-indexer start --config bitcoin-indexer.toml
-[32m✓[0m Loaded archive data from block 819,542
-[32m✓[0m Connected to Bitcoin node
-[32m✓[0m Catching up from block 819,542 to 820,123
-[32m✓[0m Processing block 819,543...
+bitcoin-indexer runes service start --config-path=bitcoin-indexer.toml
+bitcoin-indexer ordinals service start --config-path=bitcoin-indexer.toml
 ```
 
 The indexer will:
