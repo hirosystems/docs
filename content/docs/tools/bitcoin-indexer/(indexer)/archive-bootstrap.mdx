@@ -117,8 +117,8 @@ working_dir = "/home/bitcoin-indexer/bitcoin-indexer/rocksdb-chainstate"
 With the archive in place, start the indexer:
 
 ```terminal
-bitcoin-indexer runes service start --config-path=bitcoin-indexer.toml
-bitcoin-indexer ordinals service start --config-path=bitcoin-indexer.toml
+$ bitcoin-indexer runes service start --config-path=bitcoin-indexer.toml
+$ bitcoin-indexer ordinals service start --config-path=bitcoin-indexer.toml
 ```
 
 The indexer will:
@@ -136,10 +136,6 @@ $ bitcoin-indexer export \
   --data-dir /data/bitcoin-indexer \
   --output /backups/indexer-backup.tar.gz \
   --compress
-  
-[32m✓[0m Exported blocks 0 to 820,000
-[32m✓[0m Archive size: 823 GB
-[32m✓[0m Compression saved 18%
 ```
 
 ## Troubleshooting
@@ -152,7 +148,6 @@ Ensure sufficient disk space - archives extract to 2x their compressed size temp
 
 ```terminal
 $ tar -tzf bitcoin-indexer-full-latest.tar.gz | wc -l
-[1m2,847,291 files[0m
 ```
 
 ### Slow download speeds
