@@ -29,7 +29,7 @@ $ clarinet check
 
 When validation fails, Clarinet provides detailed diagnostics:
 
-```terminal -o
+```terminal
 $ clarinet check
 [31m✖[0m [1m1 error detected[0m
 [31mError in contracts/token.clar:15:10[0m
@@ -58,14 +58,14 @@ Validate individual contracts during focused development:
 
 ```terminal
 $ clarinet check contracts/nft.clar
-[32m✔[0m [1mcontracts/nft.clar syntax checks passed[0m
+[32m✔[0m [1mcontracts/nft.clar Syntax of contract successfully checked[0m
 ```
 
 **Integration with CI/CD**
 
 Automate validation in your continuous integration pipeline:
 
-```yaml .github/workflows/validate.yml
+```yaml .github/workflows/validate.yml -c
 name: Contract Validation
 on: [push, pull_request]
 
@@ -84,16 +84,16 @@ jobs:
 
 The Clarinet console provides powerful runtime analysis tools that let you inspect contract behavior during execution.
 
-**Cost analysis with `::toggle_costs`**
+### **Cost analysis with `::toggle_costs`**
 
 Enable automatic cost display after every expression:
 
-```terminal -o
+```terminal
 $ clarinet console
 $ ::toggle_costs
-[30mAlways show costs: true[0m
+[1mAlways show costs: true[0m
 $ (contract-call? .counter count-up)
-[30m+----------------------+----------+------------+------------+
+[1m+----------------------+----------+------------+------------+
 |                      | Consumed | Limit      | Percentage |
 |----------------------+----------+------------+------------|
 | Runtime              | 4775     | 5000000000 | 0.00 %     |
@@ -109,26 +109,26 @@ $ (contract-call? .counter count-up)
 [1m(ok true)[0m
 ```
 
-**Execution tracing with `::trace`**
+### **Execution tracing with `::trace`**
 
 Trace function calls to understand execution flow:
 
-```terminal -o
+```terminal
 $ ::trace (contract-call? .defi-pool swap u100 'token-a 'token-b)
-(contract-call? .defi-pool swap u100 'token-a 'token-b) [30m<console>[0m
-( get-pool-balance 'token-a ) [30mdefi-pool:15:8[0m
+(contract-call? .defi-pool swap u100 'token-a 'token-b) [1m<console>[0m
+( get-pool-balance 'token-a ) [1mdefi-pool:15:8[0m
   [31m↳ args:[0m [1m'token-a[0m
-    [34mu50000[0m
-( get-pool-balance 'token-b ) [30mdefi-pool:16:8[0m
+    [1mu50000[0m
+( get-pool-balance 'token-b ) [1mdefi-pool:16:8[0m
   [31m↳ args:[0m [1m'token-b[0m
-    [34mu75000[0m
-( calculate-output u100 u50000 u75000 ) [30mdefi-pool:18:12[0m
+    [1mu75000[0m
+( calculate-output u100 u50000 u75000 ) [1mdefi-pool:18:12[0m
   [31m↳ args:[0m [1mu100, u50000, u75000[0m
-    [34mu149[0m
-[34m(ok u149)[0m
+    [1mu149[0m
+[1m(ok u149)[0m
 ```
 
-**Interactive debugging with `::debug`**
+### **Interactive debugging with `::debug`**
 
 Set breakpoints and step through execution:
 
@@ -146,27 +146,11 @@ Debug navigation commands:
 - `next` or `n` - Step over sub-expressions  
 - `continue` or `c` - Continue to next breakpoint
 
-## Cost optimization strategies
+### **Using `::get_costs` for analyzing specific function costs**
 
-Understanding execution costs helps you write efficient contracts that minimize transaction fees for users.
-
-**Understanding cost metrics**
-
-Clarinet tracks five cost categories, each with block-level limits:
-
-| Category | What It Measures | Optimization Focus |
-|----------|-----------------|--------------------|
-| **Runtime** | Code complexity and contract size | Simplify logic, reduce contract size |
-| **Read count** | Memory/state access frequency | Minimize repeated reads |
-| **Read length** | Data volume read | Use efficient data structures |
-| **Write count** | State modification frequency | Batch updates when possible |
-| **Write length** | Data volume written | Store only essential data |
-
-**Using `::get_costs` for analyzing specific function costs:**
-
-```terminal -o
+```terminal
 $ ::get_costs (contract-call? .defi-pool add-liquidity u1000 u1000)
-[30m+----------------------+----------+------------+------------+
+[1m+----------------------+----------+------------+------------+
 |                      | Consumed | Limit      | Percentage |
 |----------------------+----------+------------+------------|
 | Runtime              | 12250    | 5000000000 | 0.00 %     |
@@ -182,7 +166,7 @@ $ ::get_costs (contract-call? .defi-pool add-liquidity u1000 u1000)
 [1m(ok {lp-tokens: u1000})[0m
 ```
 
-**Identifying and optimizing costly operations using `::trace`:**
+### **Identifying and optimizing costly operations using `::trace`**
 
 ```terminal
 $ ::trace (contract-call? .complex-algo process-large-dataset)
@@ -200,119 +184,53 @@ Master interactive debugging to quickly identify issues by starting a debugging 
 
 ```terminal
 $ clarinet console
-$ ::debug (contract-call? .auction place-bid u1000)
+$ ::debug (contract-call? .counter count-up)
+[1mST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter[0m[1m:9:3[0m
+   6      
+   7      ;; Increment the count for the caller
+   8      (define-public (count-up)
+-> 9        (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+            ^
+   10     )
+   11     
+   12     ;; Get the current count for a user
+(debug) 
 $ continue
 ```
 
-At each breakpoint:
-- Inspect variable values
-- Check contract state
-- Evaluate expressions
-- Modify execution flow
+### **Analyzing failed transactions using `::trace`**
 
-**Analyzing failed transactions using `::trace`:**
-
-```terminal -o
+```terminal
 $ ::trace (contract-call? .marketplace purchase u999)
-(contract-call? .marketplace purchase u999) [30m<console>[0m
-( get-listing u999 ) [30mmarketplace:45:12[0m
+(contract-call? .marketplace purchase u999) [1m<console>[0m
+( get-listing u999 ) [1mmarketplace:45:12[0m
   [31m↳ args:[0m [1mu999[0m
-    [34mnone[0m
-[31m(err u404)[0m  [30m# Listing not found[0m
+    [1mnone[0m
+[31m(err u404)[0m  [1m# Listing not found[0m
 ```
 
-**Using `::encode` and `::decode` for data inspection**
+### **Using `::encode` and `::decode` for data inspection**
 
 Debug complex data structures:
 
 ```terminal
-$ ::decode 0x0c00000002046e616d65020000000543686f636f62616c616e6365010000000000000000000000000000000064
-[1m{balance: u100, name: "Choco"}[0m
-$ ::encode (list {id: u1, active: true} {id: u2, active: false})
-[30m0x0b000000020c00000002026964010000000000000000000000000000000001066163746976650301...[0m
+$ ::encode { id: u1, active: true }
+[32m0c0000000206616374697665030269640100000000000000000000000000000001[0m
+$ ::decode 0d0000000b48656c6c6f20776f726c64
+[32m"Hello world"[0m
 ```
 
-**Testing time-dependent logic using `::get_block_height` and `::advance_chain_tip`:**
+### **Testing time-dependent logic**
 
-```terminal -o
+```terminal
 $ ::get_block_height
-[1mCurrent block height: u10[0m
+[1mCurrent block height: 4[0m
 $ ::advance_chain_tip 100
-[32m✔ Advanced chain tip by 100 blocks[0m
+[32mnew burn height: 3[0m
+[32mnew stacks height: 104[0m
 $ (contract-call? .vesting claim)
 [32m(ok {claimed: u2500, remaining: u7500})[0m
 ```
-
-## Common issues
-
-<Accordion type="single" collapsible>
-  <AccordionItem value="validation-errors">
-    <AccordionTrigger>Type errors during validation</AccordionTrigger>
-    <AccordionContent>
-      <div className="pb-4 pt-2">
-        Common type validation errors and solutions:
-
-        **Response type mismatch:**
-        ```clarity
-        ;; Error: branches return different types
-        (if condition
-            (ok u1)
-            (err "failed"))  ;; string vs uint
-        
-        ;; Fix: ensure consistent types
-        (if condition
-            (ok u1)
-            (err u1))
-        ```
-
-        **Trait implementation errors:**
-        ```clarity
-        ;; Implement all required functions with exact signatures
-        (impl-trait .token-trait.token)
-        ```
-      </div>
-    </AccordionContent>
-  </AccordionItem>
-
-  <AccordionItem value="high-costs">
-    <AccordionTrigger>Unexpectedly high execution costs</AccordionTrigger>
-    <AccordionContent>
-      <div className="pb-4 pt-2">
-        Common causes of high costs:
-
-        1. **Unbounded loops**: Use `fold` with fixed-size lists
-        2. **Repeated reads**: Cache values in `let` bindings
-        3. **Large contract size**: Split into multiple contracts
-        4. **Complex expressions**: Simplify nested operations
-
-        Use `::toggle_costs` to identify expensive operations during development.
-      </div>
-    </AccordionContent>
-  </AccordionItem>
-
-  <AccordionItem value="debugging-tips">
-    <AccordionTrigger>Debugging complex contract interactions</AccordionTrigger>
-    <AccordionContent>
-      <div className="pb-4 pt-2">
-        **Debugging strategy:**
-
-        1. Start with `::trace` to see execution flow
-        2. Add breakpoints at critical functions
-        3. Use `::get_costs` to find performance issues
-        4. Check state with read-only calls between steps
-        5. Verify assumptions with `::encode`/`::decode`
-
-        **Pro tip**: Create helper functions for common debugging tasks:
-        ```clarity
-        (define-read-only (debug-state)
-          {balance: (var-get total-balance),
-           users: (var-get user-count),
-           paused: (var-get is-paused)})
-        ```
-      </div>
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
 
 :::next-steps
 - [Deployment](/tools/clarinet/deployment): Learn how to deploy your Clarinet project.

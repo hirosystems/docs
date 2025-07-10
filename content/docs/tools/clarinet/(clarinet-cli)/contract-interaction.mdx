@@ -1,5 +1,5 @@
 ---
-title: Interacting with your contracts locally
+title: Contract interaction
 sidebarTitle: Contract interaction
 description: Clarinet provides powerful tools for interacting with your contracts during development. The console gives you an interactive REPL environment where you can call functions, check state, and debug issues in real-time.
 ---
@@ -11,8 +11,8 @@ The `clarinet console` command launches an interactive session with all your con
 ```terminal
 $ clarinet console
 [32mclarity-repl v2.16.0[0m
-[30mEnter ".help" for usage hints.[0m
-[30mConnected to a transient in-memory database.[0m
+[1mEnter ".help" for usage hints.[0m
+[1mConnected to a transient in-memory database.[0m
 ```
 
 Once in the console, you have access to a Clarity REPL with your project's contracts already deployed and ready to interact with. The console supports several powerful options for different development scenarios:
@@ -48,6 +48,12 @@ This is invaluable for:
 - Verifying contract behavior against mainnet state
 - Developing contracts that depend on mainnet contracts
 
+:::callout
+type: warn
+### Remote data requirements
+Before using remote data, make sure you add the remote contract to your `Clarinet.toml` file with `clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`.
+:::
+
 ### Using the Hiro API key
 
 To avoid rate limits when using remote data, set the `HIRO_API_KEY` environment variable. Clarinet automatically includes this key in all API requests:
@@ -59,26 +65,18 @@ $ clarinet console --enable-remote-data
 
 The API key is sent as the `x-api-key` header in all requests to Hiro's APIs. You can obtain a free API key from the [Hiro Platform](https://platform.hiro.so).
 
-:::callout
-type: tip
-### API rate limits
-Without an API key, you're limited to 50 requests per minute. With a free Hiro API key, this increases to 500 requests per minute. For intensive development work, consider using `--remote-data-api-url` to point to your own Stacks API node.
-:::
-
 ### Working with contracts
 
-Let's explore your deployed contracts. The `::get_contracts` command lists all available contracts:
+The `::get_contracts` command lists all available contracts:
 
 ```terminal -o
 $ ::get_contracts
-[30m+---------------------------------------------------------+-----------------------------+
-| Contract identifier                                     | Public functions            |
-|---------------------------------------------------------+-----------------------------|
-| ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter       | (count-up)                  |
-|                                                         | (get-count (who principal)) |
-|---------------------------------------------------------+-----------------------------|
-| ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.create-random | (read-rnd (block uint))     |
-+---------------------------------------------------------+-----------------------------+[0m
+[1m+---------------------------------------------------------+----------------+
+| Contract identifier                               | Public functions           |
+|---------------------------------------------------------+----------------------|
+| ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter | (count-up)                 |
+|                                                   | (get-count (who principal))|
++---------------------------------------------------------+----------------------+[0m
 $ (contract-call? .counter count-up)
 [32m(ok true)[0m
 $ (contract-call? .counter get-count tx-sender)
@@ -91,7 +89,7 @@ The console provides several test wallets you can use. Switch between them to te
 
 ```terminal -o
 $ ::get_assets_maps
-[30m+-------------------------------------------+-----------------+
+[1m+-------------------------------------------+-----------------+
 | Address                                   | uSTX            |
 |-------------------------------------------+-----------------|
 | ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM | 100000000000000 |
@@ -115,7 +113,7 @@ $ ::get_assets_maps
 | STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6  | 100000000000000 |
 +-------------------------------------------+-----------------+[0m
 $ ::set_tx_sender ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
-[30mtx-sender switched to ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5[0m
+[1mtx-sender switched to ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5[0m
 ```
 
 ### Working with block heights
@@ -124,13 +122,12 @@ Test "time-dependent" logic by advancing the chain:
 
 ```terminal -o
 $ ::get_block_height
-[1mCurrent block height: u10[0m
-
+[1mCurrent block height: 4[0m
 $ ::advance_chain_tip 100
-[32m✔ Advanced chain tip by 100 blocks[0m
-
+[32mnew burn height: 3[0m
+[32mnew stacks height: 104[0m
 $ ::get_block_height
-[1mCurrent block height: u110[0m
+[1mCurrent block height: 104[0m
 ```
 
 :::callout
@@ -141,30 +138,6 @@ For a complete list of available console commands and their usage, view the [CLI
 ## Common issues
 
 <Accordion type="single" collapsible>
-  <AccordionItem value="session-variables">
-    <AccordionTrigger>Variables defined in console don't persist</AccordionTrigger>
-    <AccordionContent>
-      <div className="pb-4 pt-2">
-        The console doesn't allow defining data variables or functions outside of deployed contracts. If you try:
-
-        ```terminal
-        $ (define-data-var test-counter uint u0)
-        none
-        $ (var-set test-counter u10)
-        [31merror: use of unresolved persisted variable 'test-counter'[0m
-        ```
-
-        **Solution**: Deploy a contract with your variables and functions, then interact with them:
-
-        ```terminal
-        $ (contract-call? .my-contract set-counter u10)
-        [32mTransaction executed and committed.[0m
-        Returned: [1m(ok true)[0m
-        ```
-      </div>
-    </AccordionContent>
-  </AccordionItem>
-
   <AccordionItem value="contract-not-found">
     <AccordionTrigger>Contract not found errors</AccordionTrigger>
     <AccordionContent>
@@ -207,6 +180,6 @@ For a complete list of available console commands and their usage, view the [CLI
 </Accordion>
 
 :::next-steps
-- [Testing and validation](/tools/clarinet/validation-and-analysis): Learn how to test and validate your Clarinet project.
+- [Validation and analysis](/tools/clarinet/validation-and-analysis): Learn how to test and validate your Clarinet project.
 - [Deployment](/tools/clarinet/deployment): Learn how to deploy your Clarinet project.
 :::

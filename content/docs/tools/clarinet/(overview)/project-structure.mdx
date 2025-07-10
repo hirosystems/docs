@@ -45,12 +45,12 @@ The **Clarinet.toml** file is the heart of your project. It defines project meta
 
 ```toml Clarinet.toml
 [project]
-name = "defi-protocol"
-description = "Decentralized finance protocol for Stacks"
-authors = ["alice@example.com"]
-telemetry = true
-requirements = []
-boot_contracts = ["traits", "token", "pool"]
+[contracts.counter]
+path = 'contracts/counter.clar'
+clarity_version = 3
+epoch = 3.1
+[repl.analysis]
+passes = ['check_checker']
 
 [contracts.traits]
 path = "contracts/traits.clar"
@@ -62,12 +62,6 @@ path = "contracts/token.clar"
 clarity_version = 3
 epoch = 3.1
 depends_on = ["traits"]
-
-[contracts.pool]
-path = "contracts/pool.clar"
-clarity_version = 3
-epoch = 3.1
-depends_on = ["traits", "token"]
 ```
 
 The manifest handles several critical functions:
@@ -85,25 +79,27 @@ The **package.json** defines your testing environment and dependencies:
 
 ```json package.json
 {
-  "name": "my-clarinet-project",
+  "name": "counter-tests",
   "version": "1.0.0",
+  "description": "Run unit tests on this project.",
+  "type": "module",
+  "private": true,
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "test:report": "vitest run --reporter=verbose"
+    "test:report": "vitest run -- --coverage --costs",
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
   },
-  "devDependencies": {
-    "@hirosystems/clarinet-sdk": "^2.9.0",
-    "@stacks/transactions": "^7.0.0",
-    "@types/node": "^22.10.2",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hirosystems/clarinet-sdk": "^2.14.0",
+    "@stacks/transactions": "^6.12.0",
     "chokidar-cli": "^3.0.0",
-    "typescript": "^5.7.2",
-    "vite": "^6.0.3",
-    "vitest": "^3.0.1",
-    "vitest-environment-clarinet": "^2.2.0"
-  },
-  "type": "module"
+    "typescript": "^5.6.0",
+    "vite": "^6.1.0",
+    "vitest": "^3.0.0",
+    "vitest-environment-clarinet": "^2.3.0"
+  }
 }
 ```
 
@@ -125,23 +121,23 @@ import { vitestSetupFilePath, getClarinetVitestsArgv } from "@hirosystems/clarin
 
 export default defineConfig({
   test: {
-    environment: "clarinet",
+    environment: "clarinet", // use vitest-environment-clarinet
     pool: "forks",
     poolOptions: {
-      forks: { singleFork: true }
+      threads: { singleThread: true },
+      forks: { singleFork: true },
     },
     setupFiles: [
       vitestSetupFilePath,
-      "./tests/setup.ts" // Custom setup
+      // custom setup files can be added here
     ],
     environmentOptions: {
       clarinet: {
         ...getClarinetVitestsArgv(),
-        manifest: "./Clarinet.toml",
-        coverageReports: ["lcov", "html"]
-      }
-    }
-  }
+        // add or override options
+      },
+    },
+  },
 });
 ```
 
@@ -157,36 +153,36 @@ This configuration enables:
 The **tsconfig.json** provides TypeScript support:
 
 ```json tsconfig.json
+
 {
   "compilerOptions": {
     "target": "ESNext",
+    "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
+    "lib": ["ESNext"],
     "skipLibCheck": true,
+
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "types": ["node", "vitest/globals"],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./tests/*"],
-      "@contracts/*": ["./contracts/*"]
-    }
+    "isolatedModules": true,
+    "noEmit": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
+  // !mark(1:4)
   "include": [
     "node_modules/@hirosystems/clarinet-sdk/vitest-helpers/src",
-    "tests/**/*",
-    "contracts/**/*.ts"
+    "tests"
   ]
 }
 ```
 
-Path aliases simplify imports in tests:
-
-```typescript tests/token.test.ts
-import { accounts } from "@/helpers";
-import { TokenErrors } from "@contracts/token-types";
-```
+It's important to properly set the include property, by default it points to the helpers files defined in the clarinet-sdk package, and to the tests directory.
 
 ## Network configurations
 
@@ -198,26 +194,6 @@ Each network has its own configuration file in the **settings** directory:
 [network]
 name = "devnet"
 deployment_fee_rate = 10
-chain_id = 2147483648
-orchestrator_port = 20445
-bitcoin_node_p2p_port = 18444
-bitcoin_node_rpc_port = 18443
-stacks_node_p2p_port = 20444
-stacks_node_rpc_port = 20443
-stacks_api_port = 3999
-stacks_api_events_port = 3700
-bitcoin_explorer_port = 8001
-stacks_explorer_port = 8000
-postgres_port = 5432
-postgres_username = "postgres"
-postgres_password = "postgres"
-postgres_database = "postgres"
-bitcoin_node_username = "devnet"
-bitcoin_node_password = "devnet"
-miner_mnemonic = "twice kind fence tip hidden..."
-miner_derivation_path = "m/44'/5757'/0'/0/0"
-faucet_mnemonic = "shadow private easily thought..."
-faucet_derivation_path = "m/44'/5757'/0'/0/0"
 
 [accounts.deployer]
 mnemonic = "twice kind fence tip hidden..."
@@ -252,7 +228,7 @@ Never commit mainnet private keys or mnemonics. Use environment variables for pr
         ```json tsconfig.json
         {
           "compilerOptions": {
-            "moduleResolution": "bundler", // Use bundler for Vite
+            "moduleResolution": "bundler", // !mark
             "allowImportingTsExtensions": true
           }
         }
@@ -270,14 +246,13 @@ Never commit mainnet private keys or mnemonics. Use environment variables for pr
         All contracts in your project should use the same Clarity version and epoch to avoid compatibility issues:
 
         ```toml Clarinet.toml
-        # ✅ Good - all contracts use same version
         [contracts.token]
         clarity_version = 3
-        epoch = 3.1
+        epoch = 3.1 # !mark
 
         [contracts.pool]
         clarity_version = 3
-        epoch = 3.1
+        epoch = 3.1 # !mark
         ```
 
         Mismatched versions can cause deployment failures and unexpected behavior. Always upgrade all contracts together when moving to a new Clarity version.
