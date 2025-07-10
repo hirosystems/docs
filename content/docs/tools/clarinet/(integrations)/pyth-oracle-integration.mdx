@@ -4,47 +4,18 @@ sidebarTitle: Pyth oracle integration
 description: Learn how to test smart contracts that depend on Pyth oracle price feeds using Clarinet.
 ---
 
-## What you'll learn
+:::objectives
+- Set up mainnet contract dependencies
+- Use mainnet transaction execution (MXS) for oracle testing
+- Create mock price feeds for unit tests
+- Write integration tests with real oracle data
+:::
 
-In this guide, you'll learn how to test Clarity contracts that integrate with Pyth oracle price feeds.
+:::prerequisites
 
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Setting up mainnet contract dependencies</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Using mainnet transaction execution (MXS) for oracle testing</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Creating mock price feeds for unit tests</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Writing integration tests with real oracle data</span>
-  </div>
-</div>
-
-## Prerequisites
-
-To follow this guide, you'll need:
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>Clarinet version 2.1.0 or higher with MXS support</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <div className="h-4 w-4 mt-1.5 flex-shrink-0 rounded border-2 border-brand-orange bg-brand-orange flex items-center justify-center">
-      <Check className="h-3 w-3 text-white" />
-    </div>
-    <span>Understanding of [Pyth oracle contracts](/resources/clarity/integrations/external-data)</span>
-  </div>
-</div>
+- Clarinet version 2.1.0 or higher with MXS support
+- Understanding of [Pyth oracle contracts](/resources/clarity/external-data)
+:::
 
 ## Quickstart
 

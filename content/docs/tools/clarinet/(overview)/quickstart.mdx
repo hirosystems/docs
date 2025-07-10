@@ -72,14 +72,14 @@ description: In this guide, you'll build a simple counter smart contract and int
     | `tests/counter.test.ts` | Test file for your contract |
 
     :::callout
-Notice that Clarinet also updated your `Clarinet.toml` file. This configuration file tracks all contracts in your project and their deployment settings.
-:::
+    Notice that Clarinet also updated your `Clarinet.toml` file. This configuration file tracks all contracts in your project and their deployment settings.
+    :::
   </Step>
   
   <Step>
     ### Write your contract code
     
-    Time to write our smart contract! Open `contracts/counter.clar` and replace its contents with our counter implementation. This contract will maintain a separate count for each user who interacts with it:
+    Open `contracts/counter.clar` and replace its contents with our counter implementation. This contract will maintain a separate count for each user who interacts with it:
     
     ```clarity contracts/counter.clar -c
     ;; Define a map to store counts for each user
@@ -97,10 +97,10 @@ Notice that Clarinet also updated your `Clarinet.toml` file. This configuration 
     ```
 
     Let's understand what each part does:
-    - `define-map` creates a persistent storage map that associates each user (principal) with their count
-    - `tx-sender` is a built-in variable that contains the address of whoever calls the function
-    - `define-public` declares functions that can modify contract state
-    - `define-read-only` declares functions that only read data without modifying it
+    - [`define-map`](/resources/clarity/reference/functions#define-map) creates a persistent storage map that associates each user (principal) with their count
+    - [`tx-sender`](/resources/clarity/reference/keywords#tx-sender) is a built-in variable that contains the address of whoever calls the function
+    - [`define-public`](/resources/clarity/reference/functions#define-public) declares functions that can modify contract state
+    - [`define-read-only`](/resources/clarity/reference/functions#define-read-only) declares functions that only read data without modifying it
   </Step>
   
   <Step>
@@ -119,7 +119,7 @@ Notice that Clarinet also updated your `Clarinet.toml` file. This configuration 
     |-------|-----|
     | `Unknown keyword` | Check spelling of Clarity functions |
     | `Type mismatch` | Ensure you're using correct types (uint, principal, etc.) |
-    | `Unresolved contract` | Verify contract name matches filename |
+    | `Unresolved contract` | Verify contract name in `Clarinet.toml` matches the contract name in the file |
   </Step>
   
   <Step>
@@ -135,13 +135,13 @@ Notice that Clarinet also updated your `Clarinet.toml` file. This configuration 
     
     ```terminal
     $ (contract-call? .counter count-up)
-    (ok true)
+    [32m(ok true)[0m
     $ (contract-call? .counter get-count tx-sender)
-    u1
+    [32mu1[0m
     $ (contract-call? .counter count-up)
-    (ok true)
+    [32m(ok true)[0m
     $ (contract-call? .counter get-count tx-sender)
-    u2
+    [32mu2[0m
     ```
   </Step>
 </Steps>
