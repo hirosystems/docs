@@ -170,23 +170,28 @@ export function Sidebar() {
       );
 
       if (isCurrentSection) {
-        const currentSectionFilter = filterCriteria.find(
+        const matchingCriteria = filterCriteria.filter(
           (criteria) =>
             pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`
         );
-        return (
-          !item.$id?.includes(currentSectionFilter ?? "") &&
-          filterCriteria.some((criteria) => {
-            // Check if item.$id matches the exact criteria as a path segment
-            const itemPath = item.$id || "";
-            return (
-              itemPath === criteria ||
-              itemPath.startsWith(`${criteria}/`) ||
-              itemPath.includes(`/${criteria}/`) ||
-              itemPath.endsWith(`/${criteria}`)
-            );
-          })
+
+        const belongsToCurrentSection = matchingCriteria.some((criteria) =>
+          item.$id?.includes(criteria)
         );
+
+        if (belongsToCurrentSection) {
+          return false; // Don't filter out items that belong to current section
+        }
+
+        return filterCriteria.some((criteria) => {
+          const itemPath = item.$id || "";
+          return (
+            itemPath === criteria ||
+            itemPath.startsWith(`${criteria}/`) ||
+            itemPath.includes(`/${criteria}/`) ||
+            itemPath.endsWith(`/${criteria}`)
+          );
+        });
       }
 
       return filterCriteria.some((criteria) => {
