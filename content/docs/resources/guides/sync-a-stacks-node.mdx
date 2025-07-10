@@ -1,0 +1,46 @@
+---
+title: How to sync a Stacks node
+description: Learn how to sync a Stacks node for running a local devnet or mainnet.
+---
+
+Running a Stacks node is crucial for developers aiming to interact directly with the Stacks blockchain. It allows for the verification of transactions, ensures decentralized operations, and enhances blockchain security.
+
+:::objectives
+- Clone the Stacks blockchain Docker repository
+- Start the service
+- Monitor the node's synchronization process
+:::
+
+## Clone the Stacks blockchain Docker repository
+
+Clone the Stacks blockchain Docker repository from GitHub:
+
+```terminal
+$ git clone git@github.com:hirosystems/stacks-blockchain-docker.git
+$ cd stacks-blockchain-docker
+```
+
+## Start the service
+
+Inside of the `stacks-blockchain-docker` directory, run the following command to start the Stacks node:
+
+```terminal
+$ chmod +x manage.sh
+$ ./manage.sh -n <network> -a start
+```
+
+The `<network>` placeholder used below can be replaced with one of:
+
+- `mainnet`
+- `testnet`
+- `mocknet`
+
+## Monitor the node's synchronization process
+
+To follow the logs for the Stacks node, run the following command:
+
+```terminal
+$ ./manage.sh -n <network> -a logs
+```
+
+For networks other than `mocknet`, downloading the initial headers can take several minutes. Until the headers are downloaded, the `/v2/info` endpoints won't return any data.

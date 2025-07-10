@@ -1,0 +1,72 @@
+---
+title: Chainhook
+sidebarTitle: Overview
+description: Chainhook is a reorg-aware indexer that serves reliable blockchain data for Bitcoin and Stacks.
+llm: false
+---
+
+## Overview
+
+Chainhook is a reorg-aware indexer that lets you build custom event streams from Bitcoin and Stacks blockchains. Unlike traditional indexers, Chainhook automatically handles blockchain reorganizations, ensuring your data stays accurate without manual reindexing.
+
+To explore Chainhook features with AI, copy and paste [llms.txt](/tools/chainhook/llms.txt) into your LLM of choice.
+
+<Mermaid
+  chart="
+graph LR
+    A[Blockchain Node] -->|Blocks| B[Chainhook]
+    B --> C[Predicate Engine]
+    C --> D{Match?}
+    D -->|Yes| E[Action Handler]
+    D -->|No| F[Skip]
+    E --> G[Webhook/File]
+    
+    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style B fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style C fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style E fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style F fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
+    style G fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
+/>
+
+## Key features
+
+- **Reorg-aware indexing** - Automatically handles blockchain forks and reorganizations
+- **If-this-then-that predicates** - Define custom logic to trigger actions on specific blockchain events
+- **Multi-chain support** - Works with both Bitcoin and Stacks blockchains
+- **Local development** - Test predicates against historical blockchain data
+
+## Installation
+
+<TerminalPicker storage="macOs">
+
+```terminal !! macOS
+$ brew install chainhook
+```
+
+```terminal !! Linux
+$ sudo snap install chainhook
+```
+
+```terminal !! Windows
+$ winget install HiroSystems.Chainhook
+```
+
+```terminal !! Cargo
+$ git clone https://github.com/hirosystems/chainhook.git
+$ cd chainhook && cargo chainhook-install
+```
+
+</TerminalPicker>
+
+:::next-steps
+- [Quickstart](/tools/chainhook/quickstart): Get started with Chainhook.
+- [Register chainhooks locally](/tools/chainhook/register-chainhooks-on-devnet): Register chainhooks on your local blockchain.
+:::
+
+:::callout
+type: help
+### Need help building with Chainhook?
+Reach out to us on the **#chainhook** channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/oL21905919) call every Thursday at 11am ET.
+:::

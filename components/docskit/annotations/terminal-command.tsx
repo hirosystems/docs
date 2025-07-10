@@ -1,6 +1,6 @@
 "use client";
 import "./terminal-command.css";
-import { AnnotationHandler } from "codehike/code";
+import type { AnnotationHandler } from "codehike/code";
 import React from "react";
 
 export const CommandBlock: AnnotationHandler["Block"] = ({
@@ -13,6 +13,7 @@ export const CommandBlock: AnnotationHandler["Block"] = ({
       <span className="select-none text-ch-line-number shrink-0">$ </span>
       <span className="ch-terminal-content break-all">{children}</span>
       <button
+        type="button"
         aria-label="Copy command"
         className="ch-terminal-button select-none self-start"
         onClick={() => {

@@ -1,4 +1,4 @@
-import { AlertOctagon, AlertTriangle, Info, Star } from "lucide-react";
+import { AlertTriangle, Info, Star } from "lucide-react";
 import { HiroSVG } from "@/components/ui/icon";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -22,10 +22,11 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         ref={ref}
         className={cn(
           "my-6 flex flex-row items-center gap-2 rounded-lg p-4 text-sm text-foreground",
+          !title && "items-start",
           {
-            tip: "bg-[#CEEFD0] dark:bg-background dark:border dark:border-[#CEEFD0]",
-            info: "bg-[#B3D9FF] dark:bg-background dark:border dark:border-[#B3D9FF]",
-            warn: "bg-[#FF9966] dark:bg-background dark:border dark:border-[#FF9966]",
+            tip: "bg-[#CEEFD0] dark:bg-background dark:border dark:border-[#C2EBC4]",
+            info: "bg-[#D1E8FF] dark:bg-background dark:border dark:border-[#B3D9FF]",
+            warn: "bg-[#FDC] dark:bg-background dark:border dark:border-[#F96]",
             help: "bg-[#EBE9E6] dark:bg-background dark:border",
           }[type],
           className
@@ -34,43 +35,33 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
       >
         {(!title && icon) ??
           {
-            tip: (
-              <Star className="size-4 stroke-foreground dark:stroke-[#CEEFD0] text-card" />
-            ),
-            info: (
-              <Info className="size-4 stroke-foreground dark:stroke-[#D1E8FF] text-card" />
-            ),
-            warn: (
-              <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
-            ),
+            tip: <Star className="w-4 h-4 dark:text-[#C2EBC4]" />,
+            info: <Info className="w-4 h-4 dark:text-[#B3D9FF]" />,
+            warn: <AlertTriangle className="w-4 h-4 dark:text-[#F96]" />,
             help: (
-              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+              <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                 <HiroSVG />
               </div>
             ),
           }[type]}
         <div className="w-0 flex-1">
           <div
-            className={cn("flex flex-row items-center gap-2", {
-              "mb-2": title,
-              "mb-0": !title,
-            })}
+            className={cn(
+              "flex flex-row items-center gap-2",
+              title ? "mb-2" : "mb-0"
+            )}
           >
             {title ? (
               <>
                 {icon ??
                   {
-                    tip: (
-                      <Star className="size-4 stroke-foreground dark:stroke-[#CEEFD0] text-card" />
-                    ),
-                    info: (
-                      <Info className="size-4 stroke-foreground dark:stroke-[#D1E8FF] text-card" />
-                    ),
+                    tip: <Star className="w-4 h-4 dark:text-[#C2EBC4]" />,
+                    info: <Info className="w-4 h-4 dark:text-[#B3D9FF]" />,
                     warn: (
-                      <AlertTriangle className="size-4 stroke-foreground dark:stroke-[#FF9966] text-card" />
+                      <AlertTriangle className="w-4 h-4 dark:text-[#F96]" />
                     ),
                     help: (
-                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-muted-foreground [&_svg]:size-2">
+                      <div className="bg-primary w-fit rounded-[4px] p-[0.275rem] text-white dark:text-neutral-950 [&_svg]:size-2">
                         <HiroSVG />
                       </div>
                     ),
@@ -79,9 +70,9 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
                   className={cn(
                     "font-medium",
                     {
-                      tip: "text-foreground dark:text-[#CEEFD0]",
-                      info: "text-foreground dark:text-[#D1E8FF]",
-                      warn: "text-foreground dark:text-[#FF9966]",
+                      tip: "text-foreground dark:text-[#C2EBC4]",
+                      info: "text-foreground dark:text-[#B3D9FF]",
+                      warn: "text-foreground dark:text-[#F96]",
                       help: "font-bold text-foreground dark:text-[#EBE9E6]",
                     }[type]
                   )}
@@ -92,9 +83,10 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
             ) : null}
           </div>
           <div
-            className={cn("callout", {
-              "text-muted-foreground": type === "help",
-            })}
+            className={cn(
+              "callout [&_p]:m-0 [&_p]:leading-[1.5rem] [&_p_code]:bg-transparent [&_p_code]:border-0 [&_p_code]:p-0",
+              type === "help" && "text-muted-foreground"
+            )}
           >
             {children}
           </div>

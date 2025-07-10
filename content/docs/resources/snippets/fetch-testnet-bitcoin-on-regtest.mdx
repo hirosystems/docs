@@ -1,0 +1,46 @@
+---
+title: Fetch testnet Bitcoin on regtest
+description: Request testnet BTC from the Hiro faucet for local development and testing
+---
+
+```typescript
+const TESTNET_ADDRESS = 'bcrt1q728h29ejjttmkupwdkyu2x4zcmkuc3q29gvwaa';
+
+try {
+  const response = await fetch(
+    `https://api.testnet.hiro.so/extended/v1/faucets/btc?address=${TESTNET_ADDRESS}`, 
+    {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  
+  const result = await response.json();
+  console.log("Faucet response:", result);
+  
+  if (result.success) {
+    console.log(`Transaction ID: ${result.txid}`);
+    console.log(`Amount sent: ${result.amount} sats`);
+  }
+} catch (error) {
+  console.error("Faucet request failed:", error);
+}
+```
+
+## Use cases
+
+- Local development with Bitcoin transactions
+- Testing sBTC operations
+- Integration testing for cross-chain applications
+- Developing Bitcoin-aware smart contracts
+
+## Key concepts
+
+The Hiro testnet faucet:
+
+- **Rate limited**: One request per address per hour
+- **Amount**: Sends 0.5 testnet BTC per request
+- **Network**: Works with Bitcoin testnet/regtest addresses
+- **Format**: Supports legacy, segwit, and taproot addresses

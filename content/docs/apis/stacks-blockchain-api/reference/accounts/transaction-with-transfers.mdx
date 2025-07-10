@@ -1,0 +1,12 @@
+---
+title: Get account transaction details with transfers
+sidebarTitle: Transaction details with transfers
+description: Retrieves transaction details for a specific transaction including STX transfers for each transaction.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v1/address/{principal}/{tx_id}/with_transfers', method: 'get' }]}
+  hasHead={false}
+/>

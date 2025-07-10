@@ -1,0 +1,154 @@
+---
+title: Clarity formatter
+sidebarTitle: Clarity formatter
+description: The Clarity formatter is a tool designed to automatically format your Clarity smart contract code according to standardized style rules. Using consistent formatting improves code readability and maintainability, making it easier for developers to understand, collaborate on, and learn from existing Clarity projects.
+---
+
+## Formatting philosophy
+
+The formatter applies an opinionated standard designed to make Clarity code more readable:
+
+- **Line length** - Lines wrap at 80 characters by default
+- **Indentation** - Uses 2 spaces for consistency
+- **Structure** - Enforces consistent patterns for functions, let bindings, and control flow
+
+These defaults are configurable to match your preferences.
+
+### Integration points
+
+The formatter is available in two primary development tools:
+
+1. **Clarity VS Code Extension** - Format directly within your editor
+2. **Clarinet CLI** - Format via command line, including entire projects
+
+## Comparison table
+
+| Aspect | Manual Formatting | Clarity Formatter |
+|--------|------------------|-------------------|
+| Consistency | Varies by developer | Uniform across codebase |
+| Speed | Time-consuming | Instant |
+| Error-prone | Yes | No |
+| Team coordination | Requires style guide | Automatic enforcement |
+
+## Best practices
+
+- **Format on save** - Enable automatic formatting in VS Code
+- **Pre-commit hooks** - Ensure all code is formatted before commits
+- **Team adoption** - Use consistent settings across your team
+
+## Further reading
+
+### Formatting rules in detail
+
+The formatter handles many Clarity constructs with specific rules:
+
+<Accordion type="single" collapsible className="w-full">
+  <AccordionItem value="function-definitions">
+    <AccordionTrigger>Function definitions</AccordionTrigger>
+    <AccordionContent>
+      Functions always span multiple lines with consistent indentation:
+
+      ```clarity
+      (define-public (my-func
+          (amount uint)
+          (sender principal)
+        )
+        (ok true)
+      )
+      ```
+
+      Single arguments may stay on the first line:
+
+      ```clarity
+      (define-read-only (get-balance (who principal))
+        (ok u0)
+      )
+      ```
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="let-expressions">
+    <AccordionTrigger>Let expressions</AccordionTrigger>
+    <AccordionContent>
+      Bindings are placed on separate lines with consistent indentation:
+
+      ```clarity
+      (let (
+        (a u1)
+        (b u2)
+      )
+        (body-expression)
+      )
+      ```
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="control-flow">
+    <AccordionTrigger>Control flow (if, match)</AccordionTrigger>
+    <AccordionContent>
+      Each branch gets its own line:
+
+      ```clarity
+      (if condition
+        (then-expression)
+        (else-expression)
+      )
+
+      (match optional-value
+        value (handle-some value)
+        (handle-none)
+      )
+      ```
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="tuples-maps">
+    <AccordionTrigger>Tuples and maps</AccordionTrigger>
+    <AccordionContent>
+      Automatically converts to sugared syntax with proper formatting:
+
+      ```clarity
+      ;; Input: (tuple (n1 u1) (n2 u2))
+      ;; Output:
+      {
+        n1: u1,
+        n2: u2,
+      }
+      ```
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+### Usage examples
+
+#### VS Code integration
+
+```json
+// settings.json
+"[clarity]": {
+  "editor.formatOnSave": true,
+},
+```
+
+#### CLI usage
+
+```terminal
+$ clarinet format --in-place
+```
+
+Format with custom settings:
+
+```terminal
+$ clarinet format -i 4 -l 120 --in-place
+```
+
+### Ignoring blocks of code
+
+Prevent formatting of specific code blocks:
+
+```clarity
+;; @format-ignore
+(define-constant something (list
+  1     2  3  ;; Preserves custom spacing
+  4 5 ))
+```

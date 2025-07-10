@@ -5,9 +5,15 @@ import { cn } from "@/lib/utils";
 import { CopyButton } from "./copy-button";
 import React from "react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";
-import { CODEBLOCK, CodeGroup, TITLEBAR } from "./code-group";
+import { CODEBLOCK, type CodeGroup, TITLEBAR } from "./code-group";
 
-export function MultiCode({ group }: { group: CodeGroup }) {
+export function MultiCode({
+  group,
+  className,
+}: {
+  group: CodeGroup;
+  className?: string;
+}) {
   const [currentTitle, setCurrentTitle] = useStateOrLocalStorage(
     group.storage,
     group.tabs[0].title
@@ -21,7 +27,7 @@ export function MultiCode({ group }: { group: CodeGroup }) {
     <Tabs
       value={currentTitle}
       onValueChange={setCurrentTitle}
-      className={CODEBLOCK}
+      className={cn(CODEBLOCK, className)}
       style={style}
     >
       <TabsList
@@ -36,7 +42,7 @@ export function MultiCode({ group }: { group: CodeGroup }) {
             value={title}
             className={cn(
               "rounded-none relative transition-colors duration-200 gap-2 px-3 font-mono",
-              "text-ch-tab-inactive-foreground data-[state=active]:text-ch-tab-active-foreground hover:text-ch-tab-active-foreground" // text
+              "text-ch-tab-inactive-foreground data-[state=active]:text-muted-foreground hover:text-muted-foreground" // text
             )}
           >
             {icon}

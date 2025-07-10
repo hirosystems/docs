@@ -7,6 +7,15 @@ import { RawCode } from "codehike/code";
 import { Block, CodeBlock } from "codehike/blocks";
 import { Terminal } from "./terminal";
 import Link from "fumadocs-core/link";
+import ScrollyCoding from "./scrollycoding";
+import Spotlight from "./spotlight";
+import Slideshow from "./slideshow";
+
+// Export RawCode type for external use
+export type { RawCode };
+
+// Export PackageInstall for external use
+export { PackageInstall };
 
 export const docskit = {
   // components that code hike will use for codeblocks and inline code
@@ -19,6 +28,9 @@ export const docskit = {
   TerminalPicker,
   // overriding the link component so we can use it for tooltips
   a: DocsKitLink,
+  ScrollyCoding,
+  Spotlight,
+  Slideshow,
 };
 
 function DocsKitCode(props: { codeblock: RawCode }) {
@@ -29,7 +41,9 @@ function DocsKitCode(props: { codeblock: RawCode }) {
   }
 
   if (codeblock.lang === "terminal") {
-    return <Terminal codeblocks={[codeblock]} />;
+    // Parse flags from meta string (e.g., "terminal -o" -> hideOutput: true)
+    const hideOutput = codeblock.meta?.includes("-o") || false;
+    return <Terminal codeblocks={[codeblock]} hideOutput={hideOutput} />;
   }
 
   return <Code {...rest} codeblocks={[codeblock]} />;
@@ -107,12 +121,14 @@ function TerminalPicker(props: unknown) {
   const { data, error } = Block.extend({
     code: z.array(CodeBlock),
     storage: z.string().optional(),
+    flags: z.string().optional(),
   }).safeParse(props);
 
   if (error) {
     throw betterError(error, "TerminalPicker");
   }
 
-  const { code, storage } = data;
-  return <Terminal codeblocks={code} storage={storage} />;
+  const { code, storage, flags } = data;
+  const hideOutput = flags?.includes("-o") || false;
+  return <Terminal codeblocks={code} storage={storage} hideOutput={hideOutput} />;
 }

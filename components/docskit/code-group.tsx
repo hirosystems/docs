@@ -1,6 +1,6 @@
 export const TITLEBAR = "px-2 py-1 w-full h-10 font-inter";
 export const CODEBLOCK =
-  "border rounded selection:bg-ch-selection border-ch-border overflow-hidden my-4 relative";
+  "border rounded selection:bg-ch-selection border-ch-border overflow-x-auto my-4 relative grid";
 
 type CodeOptions = {
   copyButton?: boolean;

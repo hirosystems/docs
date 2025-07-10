@@ -1,0 +1,383 @@
+---
+title: Wallet integration
+description: Connect your web app to Stacks wallets and enable users to authenticate, sign transactions, and interact with smart contracts
+---
+
+Wallet integration transforms your web app from a static interface into a fully interactive blockchain application. Users can authenticate with their Stacks wallets, sign transactions, and interact with smart contracts directly from your app.
+
+Stacks Connect makes this integration straightforward with a single library that works with all major Stacks wallets including Leather, Xverse, and Asigna.
+
+## What you'll learn
+
+You'll learn how to:
+- Connect and disconnect Stacks wallets
+- Authenticate users and manage connection state
+- Read user account information and balances
+- Enable contract function calls from your frontend
+- Deploy contracts through wallet interactions
+- Sign messages for authentication and verification
+
+## Prerequisites
+
+Before starting, make sure you have:
+- A web application (React, vanilla JS, or any framework)
+- Basic knowledge of JavaScript and async/await
+- [Node.js and npm](https://nodejs.org/) installed
+- A Stacks wallet extension for testing (we recommend [Leather](https://leather.io/))
+
+## Step 1: Install Stacks Connect
+
+Install the latest version of Stacks Connect in your project:
+
+```bash
+npm install @stacks/connect@latest
+```
+
+> **Note:** This guide uses Stacks Connect v8.x.x which introduces the new `request` method pattern. If you're migrating from v7.x.x, the old `showConnect`, `openContractCall` methods are deprecated in favor of the unified `request` approach.
+
+Stacks Connect works with any JavaScript framework or vanilla JS applications.
+
+## Step 2: Set up wallet connection
+
+Create connection functions using the new `connect`, `disconnect`, and `isConnected` methods:
+
+```typescript
+import { connect, disconnect, isConnected, getLocalStorage } from '@stacks/connect';
+
+// Connect wallet function
+async function connectWallet() {
+  try {
+    const response = await connect({
+      forceWalletSelect: true, // Always show wallet selection modal
+    });
+    
+    console.log('Connected successfully:', response);
+    updateUserInterface();
+  } catch (error) {
+    console.error('Connection failed:', error);
+  }
+}
+
+// Check if user is connected
+function isUserConnected() {
+  return isConnected();
+}
+
+// Disconnect wallet function
+function disconnectWallet() {
+  disconnect();
+  updateUserInterface();
+}
+
+// Get stored user data from local storage
+function getUserData() {
+  if (!isConnected()) return null;
+  
+  const data = getLocalStorage();
+  return data?.addresses?.stx?.[0]?.address || null;
+}
+```
+
+Add connect/disconnect buttons to your UI:
+
+```html
+<div id="wallet-section">
+  <button id="connect-wallet" onclick="connectWallet()">
+    Connect Wallet
+  </button>
+  <button id="disconnect-wallet" onclick="disconnectWallet()" style="display: none;">
+    Disconnect
+  </button>
+  <div id="user-info" style="display: none;"></div>
+</div>
+```
+
+## Step 3: Read user account data
+
+Once connected, access user information and display it:
+
+```typescript
+// Get STX balance
+async function getStxBalance(address, network = 'mainnet') {
+  const baseUrl = network === 'mainnet' 
+    ? 'https://api.hiro.so'
+    : 'https://api.testnet.hiro.so';
+    
+  try {
+    const response = await fetch(`${baseUrl}/v2/accounts/${address}?proof=0`);
+    const data = await response.json();
+    
+    return {
+      balance: parseInt(data.balance) / 1000000, // Convert to STX
+      locked: parseInt(data.locked) / 1000000,
+      nonce: data.nonce,
+    };
+  } catch (error) {
+    console.error('Failed to fetch balance:', error);
+    return { balance: 0, locked: 0, nonce: 0 };
+  }
+}
+
+// Update UI with user data
+async function updateUserInterface() {
+  const userAddress = getUserData();
+  const userInfoDiv = document.getElementById('user-info');
+  const connectBtn = document.getElementById('connect-wallet');
+  const disconnectBtn = document.getElementById('disconnect-wallet');
+  
+  if (userAddress) {
+    const balance = await getStxBalance(userAddress);
+    
+    userInfoDiv.innerHTML = `
+      <p><strong>Address:</strong> ${userAddress}</p>
+      <p><strong>Balance:</strong> ${balance.balance} STX</p>
+    `;
+    userInfoDiv.style.display = 'block';
+    connectBtn.style.display = 'none';
+    disconnectBtn.style.display = 'block';
+    enableWalletFeatures();
+  } else {
+    userInfoDiv.style.display = 'none';
+    connectBtn.style.display = 'block';
+    disconnectBtn.style.display = 'none';
+    disableWalletFeatures();
+  }
+}
+```
+
+## Step 4: Make contract calls
+
+Enable users to interact with smart contracts using the new `request` method:
+
+```typescript
+import { request } from '@stacks/connect';
+import { Cl } from '@stacks/transactions';
+
+// Call a contract function
+async function callContract() {
+  try {
+    const response = await request('stx_callContract', {
+      contract: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.hello-world',
+      functionName: 'set-value',
+      functionArgs: [
+        Cl.uint(42),
+        Cl.stringUtf8('Hello from frontend!')
+      ],
+      network: 'testnet', // or 'mainnet'
+    });
+    
+    console.log('Transaction ID:', response.txid);
+    alert(`Transaction submitted! ID: ${response.txid}`);
+  } catch (error) {
+    console.error('Contract call failed:', error);
+    alert('Transaction failed: ' + error.message);
+  }
+}
+```
+
+Add a button to trigger contract calls:
+
+```html
+<button onclick="callContract()" id="contract-call-btn" disabled>
+  Call Contract
+</button>
+```
+
+## Step 5: Deploy contracts
+
+Let users deploy contracts directly from your interface:
+
+```typescript
+// Deploy a contract
+async function deployContract() {
+  const contractCode = `
+    ;; A simple counter contract
+    (define-data-var counter uint u0)
+    
+    (define-read-only (get-counter)
+      (var-get counter))
+    
+    (define-public (increment)
+      (begin
+        (var-set counter (+ (var-get counter) u1))
+        (ok (var-get counter))))
+  `;
+
+  try {
+    const response = await request('stx_deployContract', {
+      name: 'my-counter-contract',
+      clarityCode: contractCode,
+      clarityVersion: '2',
+      network: 'testnet',
+    });
+    
+    console.log('Contract deployed! Transaction ID:', response.txid);
+    alert(`Contract deployed! Transaction ID: ${response.txid}`);
+  } catch (error) {
+    console.error('Contract deployment failed:', error);
+    alert('Deployment failed: ' + error.message);
+  }
+}
+```
+
+Add deployment button:
+
+```html
+<button onclick="deployContract()" id="deploy-contract-btn" disabled>
+  Deploy Contract
+</button>
+```
+
+## Step 6: Sign messages
+
+Implement message signing for authentication and verification:
+
+```typescript
+// Sign a simple message
+async function signMessage() {
+  const message = 'Please sign this message to verify your identity';
+  
+  try {
+    const response = await request('stx_signMessage', {
+      message,
+    });
+    
+    console.log('Message signed:', response.signature);
+    console.log('Public key:', response.publicKey);
+    
+    // Store signature for verification
+    localStorage.setItem('userSignature', JSON.stringify(response));
+    alert('Message signed successfully!');
+  } catch (error) {
+    console.error('Message signing failed:', error);
+    alert('Signing failed: ' + error.message);
+  }
+}
+
+// Sign a structured message
+async function signStructuredMessage() {
+  try {
+    // Create structured message using Clarity values
+    const clarityMessage = Cl.tuple({
+      proposal: Cl.stringAscii('Increase block reward'),
+      choice: Cl.stringAscii('Yes'),
+      voter: Cl.stringAscii(getUserData() || ''),
+    });
+    
+    const clarityDomain = Cl.tuple({
+      name: Cl.stringAscii('My dApp'),
+      version: Cl.stringAscii('1.0.0'),
+      'chain-id': Cl.uint(1),
+    });
+
+    const response = await request('stx_signStructuredMessage', {
+      message: clarityMessage,
+      domain: clarityDomain,
+    });
+    
+    console.log('Structured message signed:', response);
+    alert('Structured message signed successfully!');
+  } catch (error) {
+    console.error('Structured message signing failed:', error);
+    alert('Structured signing failed: ' + error.message);
+  }
+}
+```
+
+Add signing buttons:
+
+```html
+<button onclick="signMessage()" id="sign-message-btn" disabled>
+  Sign Message
+</button>
+<button onclick="signStructuredMessage()" id="sign-structured-btn" disabled>
+  Sign Structured Message
+</button>
+```
+
+## Step 7: Persist user session
+
+Store wallet connection state across browser sessions:
+
+```typescript
+// Check connection status on page load
+function initializeApp() {
+  updateUserInterface();
+}
+
+// Enable wallet-dependent features
+function enableWalletFeatures() {
+  document.getElementById('contract-call-btn').disabled = false;
+  document.getElementById('deploy-contract-btn').disabled = false;
+  document.getElementById('sign-message-btn').disabled = false;
+  document.getElementById('sign-structured-btn').disabled = false;
+}
+
+// Disable wallet features when disconnected
+function disableWalletFeatures() {
+  document.getElementById('contract-call-btn').disabled = true;
+  document.getElementById('deploy-contract-btn').disabled = true;
+  document.getElementById('sign-message-btn').disabled = true;
+  document.getElementById('sign-structured-btn').disabled = true;
+}
+
+// Store additional user preferences
+function storeUserPreferences(preferences) {
+  localStorage.setItem('userPreferences', JSON.stringify(preferences));
+}
+
+function getUserPreferences() {
+  const stored = localStorage.getItem('userPreferences');
+  return stored ? JSON.parse(stored) : {};
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', initializeApp);
+```
+
+## Verify it's working
+
+Test your wallet integration:
+
+1. **Open your app** in a browser with a Stacks wallet installed
+2. **Click "Connect Wallet"** and select your preferred wallet
+3. **Verify user info displays** including address and balance
+4. **Test contract calls** - transactions should open in the wallet
+5. **Try message signing** - wallet should prompt for signature
+6. **Refresh the page** - connection should persist
+
+Connected successfully? Your wallet integration is working!
+
+## Troubleshooting
+
+**Wallet not detected**
+- Ensure you have a Stacks wallet extension installed
+- Try refreshing the page after installing the wallet
+- Check browser console for any JavaScript errors
+
+**Connection popup doesn't appear**
+- Check if popup blockers are disabled for your site
+- Verify you're using the latest version of `@stacks/connect`
+- Make sure you're serving over HTTPS in production
+
+**Transactions fail**
+- Verify contract addresses and function names are correct
+- Check that the user has sufficient STX for fees
+- Ensure you're using the correct network ('testnet' vs 'mainnet')
+- Check that Clarity values are properly constructed with `Cl` helpers
+
+**User session not persisting**
+- Check localStorage is enabled in the browser
+- Verify `isConnected()` is called after page load
+- Make sure `connect()` completed successfully
+
+**Balance not updating**
+- API calls may be cached - add timestamp parameters
+- Check network configuration matches the user's wallet
+- Verify the Stacks API endpoints are accessible
+
+**Migration from older versions**
+- Replace `showConnect()` with `connect()`
+- Replace `openContractCall()` with `request('stx_callContract', {})`
+- Replace `UserSession` usage with `isConnected()` and `getLocalStorage()`
+- Update error handling from `onFinish/onCancel` to `try/catch`

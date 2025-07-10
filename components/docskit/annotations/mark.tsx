@@ -1,4 +1,4 @@
-import { AnnotationHandler, BlockAnnotation, InnerLine } from "codehike/code";
+import { type AnnotationHandler, InnerLine } from "codehike/code";
 
 export const mark: AnnotationHandler = {
   name: "mark",
@@ -8,8 +8,8 @@ export const mark: AnnotationHandler = {
       <div
         style={{
           borderLeft: "solid 2px transparent",
-          borderLeftColor: annotation && color,
-          backgroundColor: annotation && `rgb(from ${color} r g b / 0.13)`,
+          borderLeftColor: annotation && `rgb(from ${color} r g b / 0.9)`,
+          backgroundColor: annotation && `rgb(from ${color} r g b / 0.1)`,
         }}
         className="flex"
       >
@@ -38,4 +38,4 @@ function getColor(annotation?: { query?: string }) {
   return colors[n] || annotation?.query;
 }
 
-const colors = ["var(--ch-16)", "var(--ch-7)", "var(--ch-8)"];
+const colors = ["var(--ch-9)", "var(--ch-7)", "var(--ch-8)"];

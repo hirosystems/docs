@@ -13,7 +13,7 @@ const Accordion = React.forwardRef<
   <AccordionPrimitive.Root
     ref={ref}
     className={cn(
-      "divide-y divide-fd-border overflow-hidden rounded-lg border bg-fd-card",
+      "divide-y divide-border overflow-hidden rounded-lg border bg-background",
       className
     )}
     {...props}
@@ -37,7 +37,7 @@ const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="not-prose flex flex-row items-center font-medium text-fd-foreground">
+  <AccordionPrimitive.Header className="not-prose flex flex-row items-center font-medium text-foreground">
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
