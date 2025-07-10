@@ -170,22 +170,6 @@ path = "contracts/staking.clar"
 depends_on = ["token", "treasury"]
 ```
 
-Clarinet automatically handles deployment order based on dependencies.
-
-### Environment settings
-
-Configure different deployment accounts per network:
-
-```toml settings/Testnet.toml
-[accounts.deployer]
-mnemonic = "${TESTNET_MNEMONIC}"
-balance = 1_000_000_000_000
-
-[accounts.treasury]
-mnemonic = "${TESTNET_TREASURY_MNEMONIC}"
-balance = 500_000_000_000
-```
-
 :::callout
 type: warn
 ### Security notice
@@ -197,17 +181,15 @@ Never commit mainnet private keys or mnemonics to version control. Use environme
 Validate your entire project setup:
 
 ```terminal
-$ clarinet check --all
-[32m✔[0m [1m5 contracts checked[0m
-[32m✔[0m [1mNo dependency cycles detected[0m
-[32m✔[0m [1mAll requirements resolved[0m
+$ clarinet check
+[32m✔[0m [1m3 contracts checked[0m
 ```
 
 Check specific contracts:
 
 ```terminal
 $ clarinet check contracts/token.clar
-[32m✔[0m [1mContract 'token' is valid[0m
+[32m✔[0m [1mcontracts/token.clar Syntax of contract successfully checked[0m
 ```
 
 :::next-steps
