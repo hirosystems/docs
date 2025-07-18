@@ -1,32 +1,79 @@
 ---
 title: '@stacks/connect'
-description: Connect is a JavaScript library for building web applications connected to Stacks.
-full: true
+description: Authenticate users and interact with Stacks wallets in web applications.
 ---
 
-Stacks Connect enables you to authenticate your users and connect your app to their wallet. This reference contains more detailed information on how you can authenticate users, sign and broadcast transactions on their behalf, and enable users to sign messages.
+The `@stacks/connect` package provides a simple interface for connecting web applications to Stacks wallets, enabling user authentication, transaction signing, and message signing capabilities.
 
-> **Migration Note**
-> 
-> Please be patient during the migration to version 8.x.x. There has been a long-running effort together with wallets to modernize the Stacks web ecosystem, culminating in [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) and the new `request` method in Stacks Connect 8.x.x. For the legacy version of `@stacks/connect` using JWT tokens, please use version 7.10.1.
-
-### Installation
+## Installation
 
 ```package-install
 @stacks/connect
 ```
 
-### Connect to a wallet
+## Connection functions
 
-Initiate a wallet connection and request addresses:
+### connect [#connect]
+
+`connect` initiates a wallet connection and stores user addresses in local storage.
+
+### Signature
+
+```typescript
+function connect(options?: ConnectOptions): Promise<ConnectResponse>
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `options` | `ConnectOptions` | No | Configuration options for connection |
+
+### Examples
+
+#### Basic connection
 
 ```typescript
 import { connect } from '@stacks/connect';
 
-const response = await connect(); // stores users address in local storage by default
+const response = await connect();
+// Response contains user addresses stored in local storage
 ```
 
-Get the local storage data (stored by a connect call):
+#### Connection with options
+
+```typescript
+const response = await connect({
+  forceWalletSelect: true,
+  approvedProviderIds: ['LeatherProvider', 'xverse']
+});
+```
+
+### isConnected [#isConnected]
+
+`isConnected` checks if a wallet is currently connected.
+
+```typescript
+import { isConnected } from '@stacks/connect';
+
+if (isConnected()) {
+  console.log('Wallet is connected');
+}
+```
+
+### disconnect [#disconnect]
+
+`disconnect` clears the connection state and local storage.
+
+```typescript
+import { disconnect } from '@stacks/connect';
+
+disconnect(); // Clears wallet connection
+```
+
+### getLocalStorage [#getLocalStorage]
+
+`getLocalStorage` retrieves stored connection data.
 
 ```typescript
 import { getLocalStorage } from '@stacks/connect';
@@ -34,50 +81,75 @@ import { getLocalStorage } from '@stacks/connect';
 const data = getLocalStorage();
 // {
 //   "addresses": {
-//     "stx": [
-//       { "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN" },
-//     ],
-//     "btc": [
-//       { "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae" },
-//     ]
+//     "stx": [{ "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN" }],
+//     "btc": [{ "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae" }]
 //   }
+// }
 ```
 
-Managing the connection state:
+## Request method
+
+### request [#request]
+
+`request` is the primary method for interacting with connected wallets.
+
+### Signature
 
 ```typescript
-import { connect, disconnect, isConnected } from '@stacks/connect';
-
-isConnected(); // false
-await connect(); // similar to the `getAddresses` method
-isConnected(); // true
-disconnect(); // clears local storage and selected wallet
-isConnected(); // false
+function request<T extends StacksMethod>(
+  options: RequestOptions | undefined,
+  method: T,
+  params?: MethodParams[T]
+): Promise<MethodResult[T]>
 ```
 
-### Use request to trigger wallet interactions
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `options` | `RequestOptions` | No | Request configuration options |
+| `method` | `StacksMethod` | Yes | Method to call on the wallet |
+| `params` | `MethodParams[T]` | Depends on method | Parameters for the method |
+
+### Request options
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `provider` | `StacksProvider` | Auto-detect | Custom provider instance |
+| `forceWalletSelect` | `boolean` | `false` | Force wallet selection modal |
+| `persistWalletSelect` | `boolean` | `true` | Persist wallet selection |
+| `enableOverrides` | `boolean` | `true` | Enable compatibility fixes |
+| `enableLocalStorage` | `boolean` | `true` | Store addresses locally |
+| `approvedProviderIds` | `string[]` | All providers | Filter available wallets |
+
+### Examples
+
+#### Basic request
 
 ```typescript
 import { request } from '@stacks/connect';
 
-// CONNECT
-const response = await request({ forceWalletSelect: true }, 'getAddresses');
+const addresses = await request('getAddresses');
 ```
 
-### Available methods
+#### Request with options
 
-- [getAddresses](#getaddresses)
-- [sendTransfer](#sendtransfer)
-- [signPsbt](#signpsbt)
-- [stx_getAddresses](#stx_getaddresses)
-- [stx_getAccounts](#stx_getaccounts)
-- [stx_transferStx](#stx_transferstx)
-- [stx_callContract](#stx_callcontract)
-- [stx_deployContract](#stx_deploycontract)
-- [stx_signMessage](#stx_signmessage)
-- [stx_signStructuredMessage](#stx_signstructuredmessage)
+```typescript
+const response = await request(
+  { forceWalletSelect: true },
+  'stx_transferStx',
+  {
+    amount: '1000000', // 1 STX in microSTX
+    recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159'
+  }
+);
+```
 
-#### getAddresses
+## Wallet methods
+
+### getAddresses [#getAddresses]
+
+`getAddresses` retrieves Bitcoin and Stacks addresses from the wallet.
 
 ```typescript
 const response = await request('getAddresses');
@@ -85,263 +157,199 @@ const response = await request('getAddresses');
 //   "addresses": [
 //     {
 //       "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae",
-//       "publicKey": "062bd2c825300d74f4f9feb6b2fec2590beac02b8938f0fc042a34254581ee69",
-//     },
-//     {
-//       "address": "bc1qtmqe7hg4etkq4t384nzg0mrmwf2sam9fjsz0mr",
-//       "publicKey": "025b65a0ec0e00699794847f2af1b5d8a53db02a2f48e09417598bef09cfea1114",
+//       "publicKey": "062bd2c825300d74f4f9feb6b2fec2590beac02b8938f0fc042a34254581ee69"
 //     },
 //     {
 //       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
-//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304",
+//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304"
 //     }
 //   ]
 // }
 ```
 
-#### sendTransfer
+### sendTransfer [#sendTransfer]
+
+`sendTransfer` sends Bitcoin to one or more recipients.
 
 ```typescript
 const response = await request('sendTransfer', {
   recipients: [
     {
-      address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4', // recipient address
-      amount: '1000', // amount in sats
+      address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
+      amount: '1000' // Amount in satoshis
     },
-    // You can specify multiple recipients
     {
       address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
-      amount: '2000',
-    },
-  ],
+      amount: '2000'
+    }
+  ]
 });
-// {
-//   "txid": "0x1234...", // The transaction ID
-// }
+// { "txid": "0x1234..." }
 ```
 
-#### signPsbt
+### signPsbt [#signPsbt]
+
+`signPsbt` signs a partially signed Bitcoin transaction.
 
 ```typescript
 const response = await request('signPsbt', {
-  psbt: 'cHNidP...', // base64 encoded PSBT string
-  signInputs: [{ index: 0, address }], // indices of inputs to sign (optional)
-  broadcast: false, // whether to broadcast the transaction after signing (optional)
+  psbt: 'cHNidP...', // Base64 encoded PSBT
+  signInputs: [{ index: 0, address }], // Optional: specify inputs to sign
+  broadcast: false // Optional: broadcast after signing
 });
 // {
-//   "txid": "0x1234...", // The transaction ID (if broadcast is true)
-//   "psbt": "cHNidP..." // The signed PSBT in base64 format
+//   "psbt": "cHNidP...", // Signed PSBT
+//   "txid": "0x1234..." // If broadcast is true
 // }
 ```
 
-#### stx_getAddresses
+## Stacks-specific methods
+
+### stx_transferStx [#stx_transferStx]
+
+`stx_transferStx` transfers STX tokens between addresses.
 
 ```typescript
-const response = await request('stx_getAddresses');
+const response = await request('stx_transferStx', {
+  amount: '1000000', // Amount in microSTX (1 STX = 1,000,000 microSTX)
+  recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
+  memo: 'Payment for services', // Optional
+  network: 'mainnet' // Optional, defaults to mainnet
+});
+// { "txid": "0x1234..." }
+```
+
+### stx_callContract [#stx_callContract]
+
+`stx_callContract` calls a public function on a smart contract.
+
+```typescript
+import { Cl } from '@stacks/transactions';
+
+const response = await request('stx_callContract', {
+  contract: 'SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.hello-world',
+  functionName: 'say-hi',
+  functionArgs: [Cl.stringUtf8('Hello!')],
+  network: 'mainnet'
+});
+// { "txid": "0x1234..." }
+```
+
+### stx_deployContract [#stx_deployContract]
+
+`stx_deployContract` deploys a new smart contract.
+
+```typescript
+const response = await request('stx_deployContract', {
+  name: 'my-contract',
+  clarityCode: `(define-public (say-hi (name (string-utf8 50)))
+    (ok (concat "Hello, " name "!"))
+  )`,
+  clarityVersion: '2', // Optional
+  network: 'testnet'
+});
+// { "txid": "0x1234..." }
+```
+
+### stx_signMessage [#stx_signMessage]
+
+`stx_signMessage` signs a plain text message.
+
+```typescript
+const response = await request('stx_signMessage', {
+  message: 'Hello, World!'
+});
 // {
-//   "addresses": [
-//     {
-//       "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae",
-//       "publicKey": "062bd2c825300d74f4f9feb6b2fec2590beac02b8938f0fc042a34254581ee69",
-//     },
-//     {
-//       "address": "bc1qtmqe7hg4etkq4t384nzg0mrmwf2sam9fjsz0mr",
-//       "publicKey": "025b65a0ec0e00699794847f2af1b5d8a53db02a2f48e09417598bef09cfea1114",
-//     },
-//     {
-//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
-//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304",
-//     }
-//   ]
+//   "signature": "0x1234...",
+//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304"
 // }
 ```
 
-#### stx_getAccounts
+### stx_signStructuredMessage [#stx_signStructuredMessage]
+
+`stx_signStructuredMessage` signs a structured Clarity message following SIP-018.
+
+```typescript
+import { Cl } from '@stacks/transactions';
+
+const message = Cl.tuple({
+  action: Cl.stringAscii('transfer'),
+  amount: Cl.uint(1000000n)
+});
+
+const domain = Cl.tuple({
+  name: Cl.stringAscii('MyApp'),
+  version: Cl.stringAscii('1.0.0'),
+  'chain-id': Cl.uint(1) // mainnet
+});
+
+const response = await request('stx_signStructuredMessage', {
+  message,
+  domain
+});
+// {
+//   "signature": "0x1234...",
+//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304"
+// }
+```
+
+### stx_getAccounts [#stx_getAccounts]
+
+`stx_getAccounts` retrieves detailed account information including Gaia configuration.
 
 ```typescript
 const response = await request('stx_getAccounts');
 // {
-//   "addresses": [
-//     {
-//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
-//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cd...",
-//       "gaiaHubUrl": "https://hub.hiro.so",
-//       "gaiaAppKey": "0488ade4040658015580000000dc81e3a5..."
-//     }
-//   ]
+//   "addresses": [{
+//     "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//     "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cd...",
+//     "gaiaHubUrl": "https://hub.hiro.so",
+//     "gaiaAppKey": "0488ade4040658015580000000dc81e3a5..."
+//   }]
 // }
 ```
 
-#### stx_transferStx
+## Error handling
+
+Handle wallet errors using standard Promise error handling patterns.
 
 ```typescript
-const response = await request('stx_transferStx', {
-  amount: '1000', // amount in micro-STX (1 STX = 1,000,000 micro-STX)
-  recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN', // recipient address
-  network: 'mainnet', // optional, defaults to mainnet
-  memo: 'Optional memo', // optional memo field
-});
-// {
-//   "txid": "0x1234...", // The transaction ID
-// }
-```
-
-#### stx_callContract
-
-```typescript
-const response = await request('stx_callContract', {
-  contract: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN.counters', // contract in format: address.contract-name
-  functionName: 'count', // name of the function to call
-  functionArgs: [Cl.int(3)], // array of Clarity values as arguments
-  network: 'mainnet', // optional, defaults to mainnet
-});
-// {
-//   "txid": "0x1234...", // The transaction ID
-// }
-```
-
-#### stx_deployContract
-
-```typescript
-const response = await request('stx_deployContract', {
-  name: 'counters', // name of the contract
-  clarityCode: `(define-map counters principal int)
-
-(define-public (count (change int))
-  (ok (map-set counters tx-sender (+ (get-count tx-sender) change)))
-)
-
-(define-read-only (get-count (who principal))
-  (default-to 0 (map-get? counters who))
-)`, // Clarity code as string
-  clarityVersion: '2', // optional, defaults to latest version
-  network: 'mainnet', // optional, defaults to mainnet
-});
-// {
-//   "txid": "0x1234...", // The transaction ID
-// }
-```
-
-#### stx_signMessage
-
-```typescript
-const response = await request('stx_signMessage', {
-  message: 'Hello, World!', // message to sign
-});
-// {
-//   "signature": "0x1234...", // The signature of the message
-//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304" // The public key that signed the message
-// }
-```
-
-#### stx_signStructuredMessage
-
-```typescript
-const clarityMessage = Cl.parse('{ structured: "message", num: u3 }');
-const clarityDomain = Cl.tuple({
-  domain: Cl.stringAscii('example.com'),
-  version: Cl.stringAscii('1.0.0'),
-  'chain-id': Cl.uint(1),
-});
-
-const response = await request('stx_signStructuredMessage', {
-  message: clarityMessage, // Clarity value representing the structured message
-  domain: clarityDomain, // domain object for SIP-018 style signing
-});
-// {
-//   "signature": "0x1234...", // The signature of the structured message
-//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304" // The public key that signed the message
-// }
-```
-
-### Error Handling
-
-The `request` method returns a Promise, allowing you to handle errors using standard Promise-based error handling patterns. You can use either `try/catch` with `async/await` or the `.catch()` method with Promise chains.
-
-#### Using try/catch with async/await
-
-```typescript
-import { request } from '@stacks/connect';
-
 try {
   const response = await request('stx_transferStx', {
-    amount: '1000',
-    recipient: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN',
+    amount: '1000000',
+    recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159'
   });
-  // SUCCESS
   console.log('Transaction successful:', response.txid);
 } catch (error) {
-  // ERROR
-  console.error('Wallet returned an error:', error);
+  console.error('Transaction failed:', error);
 }
 ```
 
-### Compatibility
+## Advanced usage
 
-The `request` method by default adds a layer of auto-compatibility for different wallet providers. This is meant to unify the interface where wallet providers may not implement methods and results the same way.
+### requestRaw [#requestRaw]
 
-> **Wallet Support**
-> 
-> For a complete list of wallet compatibility and support status, see the [Wallet Support](/reference/stacks.js/wallet-support) page.
+`requestRaw` provides direct access to wallet providers without compatibility features.
 
-### Advanced Usage
-
-#### request
-
-The `request` method is called with an optional options object as the first parameter:
+### Signature
 
 ```typescript
-import { request } from '@stacks/connect';
-
-// WITH options
-const response = await request(
-  {
-    provider?: StacksProvider;        // Custom provider to use for the request
-
-    forceWalletSelect?: boolean;      // Force user to select a wallet (default: false)
-    persistWalletSelect?: boolean;     // Persist selected wallet (default: true)
-    enableOverrides?: boolean;         // Enable provider compatibility (default: true)
-    enableLocalStorage?: boolean;      // Store address in local storage (default: true)
-
-    defaultProviders?: WbipProvider[]; // Default wallets to display in modal
-    approvedProviderIds?: string[];    // List of approved provider IDs to show in modal
-  },
-  'method',
-  params
-);
-
-// WITHOUT options
-const response = await request('method', params);
+function requestRaw<T extends StacksMethod>(
+  provider: StacksProvider,
+  method: T,
+  params?: MethodParams[T]
+): Promise<MethodResult[T]>
 ```
 
-> **Provider Compatibility**
-> 
-> The `enableOverrides` option enables automatic compatibility fixes for different wallet providers. For example, it handles converting numeric types between string and number formats as needed by different wallets, and remaps certain method names to match wallet-specific implementations. This ensures consistent behavior across different wallet providers without requiring manual adjustments.
-
-> **Approved Providers**
-> 
-> The `approvedProviderIds` option allows you to filter which wallet providers are shown in the connect modal. This is useful when you want to limit the available wallet options to specific providers. For example, you might only want to support Leather wallet:
-> 
-> ```typescript
-> connect({ approvedProviderIds: ['LeatherProvider'] });
-> ```
-> 
-> Or multiple specific wallets:
-> 
-> ```typescript
-> connect({ approvedProviderIds: ['LeatherProvider', 'xverse'] });
-> ```
-
-#### requestRaw
-
-The `requestRaw` method provides direct access to wallet providers without the additional features of `request`:
+### Example
 
 ```typescript
 import { requestRaw } from '@stacks/connect';
 
-const response = await requestRaw(provider, 'method', params);
+const provider = window.StacksProvider;
+const response = await requestRaw(provider, 'getAddresses');
 ```
 
-> **Raw Request**
-> 
-> `requestRaw` bypasses the UI wallet selector, automatic provider compatibility fixes, and other features that come with `request`. Use this when you need more manual control over the wallet interaction process.
+## Migration notes
+
+Version 8.x.x implements [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) wallet standards. For legacy JWT-based authentication, use version 7.10.1.

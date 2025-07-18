@@ -54,10 +54,10 @@ const nftCondition = Pc
 Create post-conditions manually using type definitions when building conditions dynamically.
 
 ```ts
-import { 
-  StxPostCondition, 
-  FungiblePostCondition, 
-  NonFungiblePostCondition 
+import {
+  StxPostCondition,
+  FungiblePostCondition,
+  NonFungiblePostCondition
 } from '@stacks/transactions';
 
 // STX post-condition
@@ -118,7 +118,8 @@ const tx = await makeContractCall({
 
 :::callout
 type: warn
-Using `PostConditionMode.Allow` reduces security by permitting unspecified asset transfers. Only use when explicitly needed.
+### Post-condition mode
+Always use `Deny` mode unless you have a specific reason to allow additional transfers. This provides maximum security for users.
 :::
 
 ## Further reading

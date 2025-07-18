@@ -7,26 +7,12 @@ description: Integration testing is a crucial step in smart contract development
 
 import { ArrowRight, Check } from 'lucide-react';
 
-## What you'll learn
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Setting up integration tests for multi-step workflows</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Testing contract interactions and dependencies</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Simulating real-world scenarios</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Verifying system-wide state changes</span>
-  </div>
-</div>
+:::objectives
+- Set up integration tests for multi-step workflows
+- Testing contract interactions and dependencies
+- Simulate real-world scenarios
+- Verify system-wide state changes
+:::
 
 ## Set up your project
 
@@ -83,10 +69,10 @@ Replace `contracts/defi.clar` with this enhanced version:
     (
       (user-deposit (default-to u0 (get amount (map-get? deposits { owner: tx-sender }))))
       (allowed-borrow (/ user-deposit u2))
-      (current-loan-details (default-to { amount: u0, last-interaction-block: u0 } 
+      (current-loan-details (default-to { amount: u0, last-interaction-block: u0 }
                             (map-get? loans tx-sender)))
-      (accrued-interest (calculate-accrued-interest 
-                         (get amount current-loan-details) 
+      (accrued-interest (calculate-accrued-interest
+                         (get amount current-loan-details)
                          (get last-interaction-block current-loan-details)))
       (total-due (+ (get amount current-loan-details) (unwrap-panic accrued-interest)))
       (new-loan (+ amount))
@@ -107,10 +93,10 @@ Replace `contracts/defi.clar` with this enhanced version:
 (define-read-only (get-amount-owed)
   (let
     (
-      (current-loan-details (default-to { amount: u0, last-interaction-block: u0 } 
+      (current-loan-details (default-to { amount: u0, last-interaction-block: u0 }
                             (map-get? loans tx-sender)))
-      (accrued-interest (calculate-accrued-interest 
-                         (get amount current-loan-details) 
+      (accrued-interest (calculate-accrued-interest
+                         (get amount current-loan-details)
                          (get last-interaction-block current-loan-details)))
       (total-due (+ (get amount current-loan-details) (unwrap-panic accrued-interest)))
     )
@@ -153,31 +139,31 @@ describe('stx-defi integration', () => {
   it('allows deposit and borrow workflow', () => {
     // Step 1: User deposits STX
     const depositResult = simnet.callPublicFn(
-      'defi', 
-      'deposit', 
-      [Cl.uint(1000)], 
+      'defi',
+      'deposit',
+      [Cl.uint(1000)],
       wallet1
     );
     expect(depositResult.result).toBeOk(Cl.bool(true));
-    
+
     // Verify deposit was recorded
     const totalDeposits = simnet.getDataVar('defi', 'total-deposits');
     expect(totalDeposits).toBeUint(1000);
-    
+
     // Step 2: User borrows against deposit
     const borrowResult = simnet.callPublicFn(
-      'defi', 
-      'borrow', 
+      'defi',
+      'borrow',
       [Cl.uint(400)], // Borrowing 40% of deposit
       wallet1
     );
     expect(borrowResult.result).toBeOk(Cl.bool(true));
-    
+
     // Step 3: Check amount owed
     const { result } = simnet.callReadOnlyFn(
-      'defi', 
-      'get-amount-owed', 
-      [], 
+      'defi',
+      'get-amount-owed',
+      [],
       wallet1
     );
     expect(result).toBeOk(Cl.uint(400)); // No interest yet at same block
@@ -186,15 +172,15 @@ describe('stx-defi integration', () => {
   it('prevents over-borrowing', () => {
     // Setup: deposit first
     simnet.callPublicFn('defi', 'deposit', [Cl.uint(1000)], wallet1);
-    
+
     // Attempt to borrow more than allowed (>50%)
     const borrowResult = simnet.callPublicFn(
-      'defi', 
-      'borrow', 
-      [Cl.uint(600)], 
+      'defi',
+      'borrow',
+      [Cl.uint(600)],
       wallet1
     );
-    
+
     // Should fail with err-overborrow
     expect(borrowResult.result).toBeErr(Cl.uint(300));
   });
@@ -204,7 +190,7 @@ describe('stx-defi integration', () => {
 In this integration test, we're simulating a scenario where a user deposits STX into the DeFi contract and then borrows against that deposit. Let's break down the key aspects:
 
 - **`callPublicFn`** - Simulates calling public functions just as on the actual blockchain
-- **`getDataVar`** - Retrieves the value of contract data variables  
+- **`getDataVar`** - Retrieves the value of contract data variables
 - **`callReadOnlyFn`** - Calls read-only functions without modifying state
 - **Custom matchers** - `toBeOk()` and `toBeErr()` validate Clarity response types
 

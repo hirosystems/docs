@@ -11,12 +11,6 @@ Stacks Connect and related projects now use standards like [WBIPs](https://wbips
 
 :::callout
 ### Migration Status
-Please be patient during this latest migration.
-There has been a long-running effort together with wallets to modernize and move forward the Stacks web ecosystem.
-It is now culminating in [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) and the new `request` method in Stacks Connect `8.x.x`.
-Bear with us during this migration.
-Wallets are still working through some bugs, details, and improvements.
-
 **Feel free to continue using Stacks Connect `7.x.x` while things stabilize.**
 The `7.x.x` version may still be more well supported by some wallets.
 
@@ -100,6 +94,7 @@ This manual approach makes the wallet interaction more transparent and customiza
 Developers can manually manage the currently connected user's address in e.g. local storage, jotai, etc. or use the `connect()`/`request()` method to cache the address in local storage.
 
 :::callout
+type: warn
 ### Security Note
 For security reasons, the `8.x.x` release only returns the current network's address (where previously both mainnet and testnet addresses were returned).
 :::

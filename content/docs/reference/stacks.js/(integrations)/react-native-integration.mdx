@@ -130,6 +130,7 @@ Point the app to use the new entry point.
 
 :::callout
 type: warn
+### Runtime initialization errors
 Polyfills must be loaded in separate files as shown. Loading them in the same file can cause runtime initialization errors.
 :::
 
@@ -161,7 +162,7 @@ export default function HomeScreen() {
   const [mnemonic, setMnemonic] = useState("Press button to generate");
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [log, setLog] = useState("");
-  
+
   // Component implementation continues...
 }
 ```
@@ -194,7 +195,7 @@ const generate = async () => {
       network: "testnet" as const,
       nonce: 0,
     };
-    
+
     const transaction = await makeSTXTokenTransfer(txOptions);
     setLog("Transaction signed successfully ✓");
   } catch (error) {
@@ -211,13 +212,13 @@ Create a simple UI to display wallet information and trigger wallet generation.
 return (
   <ThemedView style={{ padding: 20 }}>
     <ThemedText type="title">Stacks Wallet Demo</ThemedText>
-    
+
     <ThemedView style={{ marginVertical: 20 }}>
       <ThemedText type="subtitle">Seed Phrase</ThemedText>
       <ThemedText style={{ marginBottom: 10 }}>{mnemonic}</ThemedText>
       <Button title="Generate New Wallet" onPress={generate} />
     </ThemedView>
-    
+
     {wallet && (
       <ThemedView style={{ marginVertical: 20 }}>
         <ThemedText type="subtitle">Wallet Address</ThemedText>
@@ -229,7 +230,7 @@ return (
         </ThemedText>
       </ThemedView>
     )}
-    
+
     {log && (
       <ThemedView style={{ marginTop: 20 }}>
         <ThemedText type="subtitle">Status</ThemedText>
@@ -256,6 +257,7 @@ When you press "Generate New Wallet":
 
 :::callout
 type: tip
+### Secure storage
 For production apps, never display seed phrases directly. Implement secure storage using libraries like `react-native-keychain` or `expo-secure-store`.
 :::
 

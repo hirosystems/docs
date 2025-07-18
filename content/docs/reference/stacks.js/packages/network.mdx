@@ -25,8 +25,15 @@ console.log(STACKS_MAINNET);
 //   chainId: 1,
 //   transactionVersion: 0,
 //   peerNetworkId: 385875968,
-//   magicBytes: 'X2',
-//   bootAddress: 'SP000000000000000000002Q6VF78'
+//   magicBytes: "X2",
+//   bootAddress: "SP000000000000000000002Q6VF78",
+//   addressVersion: {
+//     singleSig: 22,
+//     multiSig: 20,
+//   },
+//   client: {
+//     baseUrl: "https://api.mainnet.hiro.so",
+//   },
 // }
 ```
 
@@ -151,6 +158,6 @@ The package also exports default configuration values:
 ```typescript
 import { DEFAULT_CHAIN_ID, DEFAULT_TRANSACTION_VERSION } from '@stacks/network';
 
-console.log(DEFAULT_CHAIN_ID); // 1 (mainnet)
+console.log(DEFAULT_CHAIN_ID); // 1
 console.log(DEFAULT_TRANSACTION_VERSION); // 0
 ```

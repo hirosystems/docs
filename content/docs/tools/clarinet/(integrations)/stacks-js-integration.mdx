@@ -1,38 +1,22 @@
 ---
 title: Stacks.js integration with devnet
 sidebarTitle: Stacks.js integration
-description: Build a frontend that interacts with your smart contracts on devnet using the Stacks.js libraries.
+description: In this guide, you'll learn how to interacts with your smart contracts on devnet using the Stacks.js libraries.
 ---
 
-## What you'll learn
-
-In this guide, you'll learn how to interacts with your smart contracts on devnet using the Stacks.js libraries.
-
-<div className="space-y-3 my-6">
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Configure Stacks.js for local devnet connection</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Make STX transfers between devnet accounts</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Call smart contract functions from JavaScript</span>
-  </div>
-  <div className="flex items-start gap-3">
-    <ArrowRight className="h-4 w-4 text-brand-orange mt-1.5 flex-shrink-0" />
-    <span>Deploy contracts programmatically</span>
-  </div>
-</div>
+:::objectives
+- Configure Stacks.js for local devnet connection
+- Make STX transfers between devnet accounts
+- Call smart contract functions from JavaScript
+- Deploy contracts programmatically
+:::
 
 ## Quickstart
 
 <Steps>
   <Step>
     ### Install Stacks.js packages
-    
+
     Add the required Stacks.js packages to your frontend project:
 
     ```package-install
@@ -42,7 +26,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
   <Step>
     ### Configure for devnet
-    
+
     Set up a devnet network configuration:
 
     ```ts devnet-config.ts
@@ -69,7 +53,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
   <Step>
     ### Test STX transfers
-    
+
     Create a simple STX transfer between devnet accounts:
 
     ```ts stx-transfer.ts
@@ -87,7 +71,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
       const result = await broadcastTransaction(tx, devnet);
       console.log('Transaction ID:', result.txid);
-      
+
       // Transaction will be mined in next devnet block
       return result.txid;
     }
@@ -105,7 +89,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
   <Step>
     ### Call smart contracts
-    
+
     Interact with contracts deployed on devnet:
 
     ```ts contract-call.ts
@@ -125,7 +109,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
       const result = await broadcastTransaction(tx, devnet);
       console.log('Contract call ID:', result.txid);
-      
+
       return result.txid;
     }
 
@@ -155,7 +139,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
   <Step>
     ### Deploy contracts from frontend
-    
+
     Deploy new contracts to devnet programmatically:
 
     ```ts deploy-contract.ts
@@ -165,11 +149,11 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
     async function deployContract() {
       const contractCode = `
         (define-data-var count uint u0)
-        
+
         (define-public (increment)
           (ok (var-set count (+ (var-get count) u1)))
         )
-        
+
         (define-read-only (get-count)
           (var-get count)
         )
@@ -185,7 +169,7 @@ In this guide, you'll learn how to interacts with your smart contracts on devnet
 
       const result = await broadcastTransaction(tx, devnet);
       console.log('Contract deployed:', result.txid);
-      
+
       return result.txid;
     }
 
@@ -204,28 +188,28 @@ Monitor when transactions are confirmed on devnet:
 async function waitForTransaction(txid: string) {
   let attempts = 0;
   const maxAttempts = 10;
-  
+
   while (attempts < maxAttempts) {
     const response = await fetch(
       `${devnet.coreApiUrl}/extended/v1/tx/${txid}`
     );
-    
+
     const tx = await response.json();
-    
+
     if (tx.tx_status === 'success') {
       console.log('Transaction confirmed!');
       return tx;
     }
-    
+
     if (tx.tx_status === 'abort_by_response') {
       throw new Error(`Transaction failed: ${tx.tx_result.repr}`);
     }
-    
+
     // Wait for next block
     await new Promise(resolve => setTimeout(resolve, 5000));
     attempts++;
   }
-  
+
   throw new Error('Transaction timeout');
 }
 ```
@@ -242,7 +226,7 @@ const postConditions = [
   Pc.principal(accounts.wallet1.address)
     .willSendEq(1000000n)
     .ustx(),
-    
+
   // Ensure recipient receives the amount
   Pc.principal(accounts.deployer.address)
     .willReceiveEq(1000000n)

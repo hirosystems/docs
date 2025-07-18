@@ -7,6 +7,10 @@ This page provides detailed information about which methods and events are suppo
 
 ## Method Compatibility
 
+- 🔴 No support (yet)
+- 🟡 Partial support
+- 🟢 Supported
+
 | Method                      | Leather                                      | Xverse-like                                                   |
 |-----------------------------|----------------------------------------------|---------------------------------------------------------------|
 | `getAddresses`              | 🟡 No support for experimental purposes      | 🟡 Use `wallet_connect` instead                               |
@@ -32,15 +36,13 @@ This page provides detailed information about which methods and events are suppo
 | `stx_accountChange` | 🔴      | 🔴     |
 | `stx_networkChange` | 🔴      | 🔴     |
 
-**Legend**
-
-- 🔴 No support (yet)
-- 🟡 Partial support
-- 🟢 Supported
-
 ## Compatibility Layer
 
 The `request` method in `@stacks/connect` adds a layer of auto-compatibility for different wallet providers. This helps unify the interface where wallet providers may implement methods and results differently.
+
+- 🟢 No overrides needed for any wallet
+- 🔵 Has compatibility overrides that maintain functionality
+- 🟡 Has breaking overrides that may lose some information
 
 | Method                      | Status | Notes                                                                                                |
 | --------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
@@ -53,7 +55,3 @@ The `request` method in `@stacks/connect` adds a layer of auto-compatibility for
 | `stx_signTransaction`       | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
 | `stx_signMessage`           | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
 | `stx_signStructuredMessage` | 🔵     | Transforms Clarity values to hex-encoded format for compatibility                                     |
-
-- 🟢 No overrides needed for any wallet
-- 🔵 Has compatibility overrides that maintain functionality
-- 🟡 Has breaking overrides that may lose some information

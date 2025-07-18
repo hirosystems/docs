@@ -103,11 +103,6 @@ Mode options:
 - **`PostConditionMode.Deny`** (default): Transaction fails if any unspecified transfers occur
 - **`PostConditionMode.Allow`**: Transaction allows transfers beyond specified post-conditions
 
-:::callout
-type: warn
-Always use `Deny` mode unless you have a specific reason to allow additional transfers. This provides maximum security for users.
-:::
-
 ## Common implementation patterns
 
 ### STX transfer post-conditions
@@ -194,9 +189,9 @@ const sftNftCondition = Pc
   .willSendAsset()
   .nft(
     'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.sft-contract::sft-id',
-    Cl.tuple({ 
-      'token-id': Cl.uint(1), 
-      owner: Cl.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6') 
+    Cl.tuple({
+      'token-id': Cl.uint(1),
+      owner: Cl.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
     })
   );
 
@@ -217,11 +212,11 @@ const tx = await makeContractCall({
   postConditions: [
     // Sender must send exactly 1000 uSTX
     Pc.principal(senderAddress).willSendEq(1000).ustx(),
-    
+
     // Contract must send at least 100 tokens to user
     Pc.principal(contractAddress).willSendGte(100)
       .ft(contractAddress + '.my-token', 'my-token'),
-    
+
     // User must not lose their NFT
     Pc.principal(senderAddress).willNotSendAsset()
       .nft(nftContract + '::my-nft', Cl.uint(1)),

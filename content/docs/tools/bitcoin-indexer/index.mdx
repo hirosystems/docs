@@ -9,24 +9,7 @@ llm: false
 
 The Bitcoin Indexer is a high-performance, reorg-aware indexing engine that tracks Bitcoin metaprotocols and serves API endpoints for Ordinals, Runes, and BRC-20 tokens. Unlike basic indexers, it automatically handles blockchain reorganizations, ensuring your data stays accurate without manual intervention.
 
-<Mermaid
-  chart="
-graph LR
-    A[Bitcoin Node] -->|Block Data| B[Bitcoin Indexer]
-    B --> C[RocksDB Storage]
-    B --> D[PostgreSQL]
-    D --> E[Ordinals API]
-    D --> F[Runes API]
-    D --> G[BRC-20 API]
-    
-    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style B fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style C fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style E fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style F fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style G fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
-/>
+![Bitcoin Indexer overview](/images/tools/bitcoin-indexer/overview.svg)
 
 The indexer connects to your Bitcoin node, processes blocks in real-time, stores metaprotocol data in PostgreSQL, and serves REST APIs for each protocol.
 
