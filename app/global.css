@@ -1,16 +1,14 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
-@import './theme.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "./theme.css";
 
 @custom-variant dark (&:is(.dark *));
-
 
 @source '.';
 @source '../components/**/*.{ts,tsx}';
 @source '../lib/**/*.{ts,tsx}';
 @source '../node_modules/fumadocs-ui/dist/**/*.js';
-
 
 :root {
   /* Override Fumadocs navbar */
@@ -132,7 +130,7 @@
   --secondary: 240 3.7% 15.9%;
   --secondary-foreground: 0 0% 98%;
   --muted: var(--color-neutral-300);
-  --muted-foreground: var(--color-neutral-300);
+  --muted-foreground: var(--color-neutral-250);
   --accent: 12 6.2% 15.9%;
   --accent-foreground: 0 0% 98%;
   --destructive: 0 62.8% 30.6%;
@@ -266,7 +264,20 @@
     @apply text-sm;
   }
 
-  h1, h2, h3, h4, h5, h6, code, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, option {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  code,
+  h1 a,
+  h2 a,
+  h3 a,
+  h4 a,
+  h5 a,
+  h6 a,
+  option {
     font-family: var(--font-fono), sans-serif;
     @apply text-primary;
     @apply font-normal;
@@ -283,7 +294,7 @@
   ::-webkit-scrollbar {
     width: 0px;
   }
-  
+
   /* override weird padding in OpenAPI  */
   .flex.flex-row.items-center.gap-2.text-sm.p-3 {
     padding-bottom: 15px !important;
@@ -298,5 +309,4 @@
   /* pre[data-ch="true"] .flex {
     border-left: none !important;
   } */
-
 }
