@@ -1,12 +1,48 @@
 ---
-title: Usage
+title: Basic usage
 sidebarTitle: Usage
-description: Create your first project in less than 2 minutes
+description: Learn the basics of using the Ordinals API.
 ---
 
-The Usage section should focus on practical, hands-on instructions for getting started with the API. This includes:
-Authentication: How to authenticate with the API (e.g., API keys, OAuth tokens).
-Making Requests: Basic examples of making requests to the API, including request format, essential headers, and parameters.
-Handling Responses: Information on response structure, understanding status codes, and error handling.
-Rate Limits: If applicable, explain any rate limits and best practices for avoiding them.
-The goal of the "Usage" section is to equip developers with the knowledge to make successful API calls and handle responses effectively.
+## Usage
+
+The Ordinals API is built on REST principles, enforcing HTTPS for all requests to ensure data security, integrity, and privacy.
+
+### Base URL
+
+```console -c
+https://api.hiro.so
+```
+
+### Making requests
+
+To make a request to the Ordinals API, you can paste the curl command below in your terminal.
+
+```terminal
+$ curl -L 'https://api.hiro.so/ordinals/v1/inscriptions' \
+  -H 'Accept: application/json'
+```
+
+### Authentication
+
+If you are using an api-key, replace `$HIRO_API_KEY` with your secret API key.
+
+```terminal
+$ curl -L 'https://api.hiro.so/ordinals/v1/inscriptions' \
+  -H 'Accept: application/json' \
+  -H 'X-API-Key: $HIRO_API_KEY'
+```
+
+## Response codes
+
+The Ordinals API uses standard HTTP response codes to indicate request success or failure.
+
+| Code | Description |
+|------|-------------|
+| `200` | Successful request |
+| `400` | Check that the parameters were correct |
+| `401` | Missing API key |
+| `403` | Invalid API key |
+| `404` | Resource not found |
+| `429` | Rate limit exceeded |
+| `5xx` | Server errors |

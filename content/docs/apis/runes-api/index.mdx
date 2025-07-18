@@ -1,39 +1,29 @@
 ---
 title: Runes API
 sidebarTitle: Overview
-description: The Runes API provides you with fast, reliable data for Bitcoin Runes via an easy-to-use REST interface.
-llm: false
+description: Fast, reliable data for Bitcoin Runes via REST.
 ---
 
-The Runes API is a service that helps you with the complete ingestion of Bitcoin Runes data. Using our endpoints, you can retrieve metadata for a particular rune, trading activity, all runes held by a particular address, and more.
+## Overview
 
-The Runes API uses REST endpoints and cached responses in order to optimize performance and reduce unnecessary requests. Reliable, consistent runes data, one request away.
+The Runes API provides comprehensive data for Bitcoin Runes through a high-performance REST interface. Built with cached responses and optimized indexing, it delivers rune metadata, trading activity, holder information, and etching details with minimal latency.
 
-## Popular endpoints
+## Key features
 
-<Cards>
-  <Card
-    href="/bitcoin/runes/api/etchings/get-etchings"
-    title="Fetch Runes"
-    description="Retrieves a list of etchings."
-  />
-  <Card
-    href="/bitcoin/runes/api/balances/holders"
-    title="Showcase user portfolios"
-    description="Retrieves a list of Rune holders."
-  />
-  <Card
-    href="/bitcoin/runes/api/activities/activity"
-    title="Track your favorite Runes"
-    description="Retrieves all activity for a Rune."
-  />
-</Cards>
+- **Complete runes coverage** - Metadata for all etchings and rune activity
+- **Holder tracking** - Balances and ownership data for rune holders
+- **Activity monitoring** - Real-time tracking of rune transfers and operations
 
-### Related tools
+## Usage
 
-- **[Ordinals API](/apis/ordinals-api)**: Looking for on-chain ordinals data without the front end? Leverage the Ordinals API.
-- **[Ordinals Explorer](https://ordinals.hiro.so/)**: The Ordinals API powers Hiro’s Ordinals Explorer, which lets you rapidly discover inscriptions and verify on-chain activity.
+```terminal
+$ curl -L 'https://api.hiro.so/runes/v1/etchings' -H 'Accept: application/json'
+```
 
----
+For more usage examples, click [here](/apis/runes-api/usage).
 
-Need help building with Runes API? Reach out to us on the `#ordinals` channel on Discord. Or join us at our weekly office hours on Discord every Monday at 11am ET.
+:::callout
+type: help
+### Need help building with the Runes API?
+Reach out to us on the <span className="font-bold">#ordinals</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

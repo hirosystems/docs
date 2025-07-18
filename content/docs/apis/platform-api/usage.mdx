@@ -1,0 +1,48 @@
+---
+title: Basic usage
+sidebarTitle: Usage
+description: Learn the basics of using the Platform API.
+---
+
+## Usage
+
+The Platform API is built on REST principles, enforcing HTTPS for all requests to ensure data security, integrity, and privacy.
+
+### Base URL
+
+```console -c
+https://api.platform.hiro.so
+```
+
+### Making requests
+
+To make a request to the Platform API, you can paste the curl command below in your terminal.
+
+```terminal
+$ curl -L 'https://api.platform.hiro.so/v1/ext/{apiKey}/chainhooks' \
+  -H 'Accept: application/json'
+```
+
+### Authentication
+
+The Platform API uses path-based authentication. Replace `{apiKey}` in the URL path with your Platform API key.
+
+```terminal
+$ curl -L 'https://api.platform.hiro.so/v1/ext/{apiKey}/chainhooks' \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json'
+```
+
+## Response codes
+
+The Platform API uses standard HTTP response codes to indicate request success or failure.
+
+| Code | Description |
+|------|-------------|
+| `200` | Successful request |
+| `400` | Check that the parameters were correct |
+| `401` | Missing API key |
+| `403` | Invalid API key |
+| `404` | Resource not found |
+| `429` | Rate limit exceeded |
+| `5xx` | Server errors |

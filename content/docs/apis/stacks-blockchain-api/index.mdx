@@ -1,40 +1,29 @@
 ---
 title: Stacks Blockchain API
 sidebarTitle: Overview
-description: The Stacks API provides fast, reliable data for the Stacks blockchain via an easy-to-use REST interface.
-llm: false
+description: Fast, reliable blockchain data for the Stacks ecosystem via REST.
 ---
 
-The Stacks API is a service that helps you with the complete ingestion of Stacks blockchain data. Using our endpoints, you can retrieve transaction data, smart contract information, account balances, block details, and more.
+## Overview
 
-The Stacks API uses REST endpoints and cached responses in order to optimize performance and reduce unnecessary requests. Reliable, consistent blockchain data, one request away.
+The Stacks API provides comprehensive access to Stacks blockchain data through a high-performance REST interface. Built on cached responses and optimized indexing, it delivers transaction data, smart contract information, account balances, and block details with minimal latency.
 
-## Popular endpoints
+## Key features
 
-<Cards>
-  <Card
-    href="/stacks/api/accounts"
-    title="Fetch Account Data"
-    description="Retrieves account balances and transaction history."
-  />
-  <Card
-    href="/stacks/api/transactions"
-    title="Track Transactions"
-    description="Retrieves transaction details and status."
-  />
-  <Card
-    href="/stacks/api/smart-contracts"
-    title="Query Smart Contracts"
-    description="Retrieves smart contract data and function calls."
-  />
-</Cards>
+- **Real-time data ingestion** - Continuously indexes blockchain activity as it happens
+- **Cached responses** - Optimized performance through intelligent caching strategies
+- **Complete data access** - Transaction history, smart contracts, accounts, and blocks
 
-## Related tools
+## Usage
 
-- **[Chainhook](/tools/chainhook)**: Want to stream custom blockchain events? Set up Chainhook to filter and stream contract deployments and other blockchain events.
-- **[Clarinet](/tools/clarinet)**: Looking to develop and test smart contracts? Clarinet provides a local development environment for Stacks.
-- **[Stacks Explorer](https://explorer.hiro.so/)**: The Stacks API powers Hiro's Stacks Explorer, which lets you rapidly discover transactions and verify on-chain activity.
+```terminal
+$ curl -L 'https://api.hiro.so/extended' -H 'Accept: application/json'
+```
 
----
+For more usage examples, click [here](/apis/stacks-blockchain-api/usage).
 
-Need help building with Stacks API? Reach out to us on the `#stacks` channel on Discord. Or join us at our weekly office hours on Discord every Monday at 11am ET.
+:::callout
+type: help
+### Need help building with the Stacks Blockchain API?
+Reach out to us on the <span className="font-bold">#api</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

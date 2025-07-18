@@ -1,42 +1,29 @@
 ---
 title: Signer Metrics API
 sidebarTitle: Overview
-description: Monitor and analyze signer behavior on the Stacks network.
-llm: false
+description: Monitor and analyze signer behavior on the Stacks network via REST.
 ---
 
-import { SecondaryCard } from '@/components/card';
+## Overview
 
-The Signer Metrics API enables you to monitor signers on the Stacks network. With a familiar REST interface, you can easily fetch information about the signer network, such as lists of active signers in a particular PoX cycle and signer information for a particular block. 
+The Signer Metrics API provides comprehensive monitoring capabilities for signers on the Stacks network through a REST interface. Built for network analysis and performance tracking, it delivers detailed information about active signers, block acceptance rates, and timing metrics across PoX cycles.
 
-This API also lets you analyze and evaluate the behavior of individual signers, such as their block acceptance rate, their average block push time, and more.
+## Key features
 
-## Popular endpoints
+- **Signer monitoring** - Track active signers and their performance metrics
+- **Block analysis** - Aggregated signer information for block validation
+- **PoX cycle tracking** - Monitor signer participation across cycles
 
-<Cards>
-  <SecondaryCard
-    href="/stacks/signer-metrics-api/signers/pox-cycle-signers"
-    title="Get a list of signers"
-    description="Fetches a list of signers in a given PoX cycle."
-  />
-  <SecondaryCard
-    href="/stacks/signer-metrics-api/blocks/aggregated-signer-information-for-a-block"
-    title="Get signer information for a block"
-    description="Fetches aggregated signer information for a specific block."
-  />
-</Cards>
+## Usage
 
-## Related tools
+```terminal
+$ curl -L 'https://api.hiro.so/signer-metrics/v1/cycles/95/signers' -H 'Accept: application/json'
+```
 
-- **[Stacks Blockchain API](/apis/stacks-blockchain-api)**: Fetch richer data from Hiro's Stacks Blockchain API.
-- **[Token Metadata API](/apis/token-metadata-api)**: Fetch fungible and non-fungible token data on the Stacks blockchain.
-
-<br />
+For more usage examples, click [here](/apis/signer-metrics-api/usage).
 
 :::callout
 type: help
-### Need help building with the Stacks Blockchain API?
+### Need help building with the Signer Metrics API?
 Reach out to us on the <span className="font-bold">#api</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
 :::
-
-

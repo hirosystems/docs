@@ -1,12 +1,12 @@
 ---
 title: Basic usage
 sidebarTitle: Usage
-description: Learn the basics of using the Runes API.
+description: Learn the basics of using the Signer Metrics API.
 ---
 
 ## Usage
 
-The Runes API is built on REST principles, enforcing HTTPS for all requests to ensure data security, integrity, and privacy.
+The Signer Metrics API is built on REST principles, enforcing HTTPS for all requests to ensure data security, integrity, and privacy.
 
 ### Base URL
 
@@ -16,10 +16,10 @@ https://api.hiro.so
 
 ### Making requests
 
-To make a request to the Runes API, you can paste the curl command below in your terminal.
+To make a request to the Signer Metrics API, you can paste the curl command below in your terminal.
 
 ```terminal
-$ curl -L 'https://api.hiro.so/runes/v1/etchings' \
+$ curl -L 'https://api.hiro.so/signer-metrics/v1/cycles/95/signers' \
   -H 'Accept: application/json'
 ```
 
@@ -28,14 +28,14 @@ $ curl -L 'https://api.hiro.so/runes/v1/etchings' \
 If you are using an api-key, replace `$HIRO_API_KEY` with your secret API key.
 
 ```terminal
-$ curl -L 'https://api.hiro.so/runes/v1/etchings' \
+$ curl -L 'https://api.hiro.so/signer-metrics/v1/cycles/95/signers' \
   -H 'Accept: application/json' \
   -H 'X-API-Key: $HIRO_API_KEY'
 ```
 
 ## Response codes
 
-The Runes API uses standard HTTP response codes to indicate request success or failure.
+The Signer Metrics API uses standard HTTP response codes to indicate request success or failure.
 
 | Code | Description |
 |------|-------------|

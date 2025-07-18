@@ -1,40 +1,29 @@
 ---
 title: Token Metadata API
 sidebarTitle: Overview
-description: The Token Metadata API provides you with fast, reliable metadata for Stacks tokens via an easy-to-use REST interface.
-llm: false
+description: Fast, reliable metadata for Stacks tokens via REST.
 ---
 
-The Token Metadata API is a service that helps you with the complete ingestion of token metadata on the Stacks blockchain. Using our endpoints, you can retrieve metadata for fungible tokens, non-fungible tokens, token properties, and more.
+## Overview
 
-The Token Metadata API uses REST endpoints and cached responses in order to optimize performance and reduce unnecessary requests. Reliable, consistent token metadata, one request away.
+The Token Metadata API provides comprehensive metadata for tokens on the Stacks blockchain through a high-performance REST interface. Built with cached responses and optimized indexing, it delivers fungible token information, NFT properties, and collection data with minimal latency.
 
-## Popular endpoints
+## Key features
 
-<Cards>
-  <Card
-    href="/stacks/token-metadata/api/tokens"
-    title="Fetch Token Metadata"
-    description="Retrieves metadata for fungible and non-fungible tokens."
-  />
-  <Card
-    href="/stacks/token-metadata/api/nfts"
-    title="Get NFT Properties"
-    description="Retrieves detailed NFT properties and attributes."
-  />
-  <Card
-    href="/stacks/token-metadata/api/collections"
-    title="Browse Collections"
-    description="Retrieves token collection information and statistics."
-  />
-</Cards>
+- **Complete token coverage** - Metadata for fungible, non-fungible, and semi-fungible tokens
+- **Cached responses** - Optimized performance through intelligent caching strategies
+- **Rich metadata** - Token properties, attributes, and collection information
 
-## Related tools
+## Usage
 
-- **[Chainhook](/tools/chainhook)**: Want to stream custom blockchain events? Set up Chainhook to filter and stream contract deployments and other blockchain events.
-- **[Stacks API](/apis/stacks-blockchain-api)**: Looking for comprehensive blockchain data? The Stacks API provides transaction data, smart contract information, and account balances.
-- **[Stacks Explorer](https://explorer.hiro.so/)**: The Token Metadata API powers Hiro's Stacks Explorer, which lets you rapidly discover tokens and verify metadata.
+```terminal
+$ curl -L 'https://api.hiro.so/metadata/v1/ft' -H 'Accept: application/json'
+```
 
----
+For more usage examples, click [here](/apis/token-metadata-api/usage).
 
-Need help building with Token Metadata API? Reach out to us on the `#stacks` channel on Discord. Or join us at our weekly office hours on Discord every Monday at 11am ET.
+:::callout
+type: help
+### Need help building with the Token Metadata API?
+Reach out to us on the <span className="font-bold">#api</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

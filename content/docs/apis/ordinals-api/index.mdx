@@ -1,52 +1,26 @@
 ---
 title: Ordinals API
 sidebarTitle: Overview
-description: The Ordinals API provides you with fast, reliable data for Bitcoin ordinals and BRC-20 tokens via an easy-to-use REST interface.
-llm: false
+description: Fast, reliable data for Bitcoin ordinals and BRC-20 tokens via REST.
 ---
 
-import { SecondaryCard } from '@/components/card';
+## Overview
 
-The Ordinals API is a service that helps you with the complete ingestion of ordinals inscription data. Using our endpoints, you can retrieve metadata for a particular inscription, trading activity, all inscriptions held by a particular address, and more.
+The Ordinals API provides comprehensive inscription data for Bitcoin ordinals through a high-performance REST interface. Built with cached responses and optimized indexing, it delivers inscription metadata, trading activity, BRC-20 token information, and satoshi-level data with minimal latency.
 
-The Ordinals API uses REST endpoints and cached responses in order to optimize performance and reduce unnecessary requests. Start integrating ordinals and BRC-20 tokens into your app with one of the most reliable APIs on the market today.
+## Key features
 
-## Popular endpoints
+- **Complete inscription data** - Metadata, content, and ownership for all ordinals
+- **BRC-20 token support** - Full token metadata, balances, and holder information
+- **Satoshi-level tracking** - Inscription data tied to specific satoshis
 
-<Cards>
-  <SecondaryCard
-    href="/bitcoin/ordinals/api/inscriptions/get-inscription-content"
-    title="Fetch Ordinals content"
-    description="Retrieve all metadata related to individual inscriptions."
-  />
-  <SecondaryCard
-    href="/bitcoin/ordinals/api/brc20/get-brc20-tokens"
-    title="Integrate BRC-20 tokens"
-    description="Retrieve all metadata related to BRC-20 tokens."
-  />
-  <SecondaryCard
-    href="/bitcoin/ordinals/api/inscriptions/get-inscriptions"
-    title="Showcase user portfolios"
-    description="Get all inscriptions held by particular addresses."
-  />
-  <SecondaryCard
-    href="/bitcoin/ordinals/api/satoshis/get-satoshi"
-    title="Retrieve data for a specific satoshi"
-    description="Get all inscription data related to a particular satoshi."
-  />
-  <SecondaryCard
-    href="/bitcoin/ordinals/api/inscriptions/get-transfers-per-block"
-    title="Graph marketplace activity"
-    description="Pull all transfers from a specific block."
-  />
-</Cards>
+## Usage
 
-## Related tools
+```terminal
+$ curl -L 'https://api.hiro.so/ordinals/v1/inscriptions' -H 'Accept: application/json'
+```
 
-- **[Bitcoin Indexer](/tools/bitcoin-indexer)**: Want to run your own infra? [Set up your own Bitcoin Indexer](/tools/bitcoin-indexer), the indexer that powers the Ordinals API.
-- **[Ordinals Explorer](https://ordinals.hiro.so/)**: The Ordinals API powers Hiro’s Ordinals Explorer, which lets you rapidly discover inscriptions and verify on-chain activity.
-
-<br />
+For more usage examples, click [here](/apis/ordinals-api/usage).
 
 :::callout
 type: help
