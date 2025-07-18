@@ -83,16 +83,16 @@ description: In this guide, you'll build a simple counter smart contract and int
     
     ```clarity contracts/counter.clar -c
     ;; Define a map to store counts for each user
-    (define-map Counters principal uint)
+    (define-map counters principal uint)
 
     ;; Increment the count for the caller
     (define-public (count-up)
-      (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+      (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
     )
 
     ;; Get the current count for a user
     (define-read-only (get-count (who principal))
-      (default-to u0 (map-get? Counters who))
+      (default-to u0 (map-get? counters who))
     )
     ```
 

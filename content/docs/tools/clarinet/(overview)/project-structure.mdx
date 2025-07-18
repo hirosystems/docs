@@ -16,7 +16,7 @@ Every Clarinet project contains these essential directories and files:
     <Folder name=".vscode" />
     <Folder name="contracts" defaultOpen>
       <File name="main.clar" />
-      <File name="traits.clar" />
+      <File name="trait.clar" />
     </Folder>
     <Folder name="deployments" />
     <Folder name="settings" defaultOpen>
@@ -45,30 +45,24 @@ The **Clarinet.toml** file is the heart of your project. It defines project meta
 
 ```toml Clarinet.toml
 [project]
-[contracts.counter]
-path = 'contracts/counter.clar'
-clarity_version = 3
-epoch = 3.1
-[repl.analysis]
-passes = ['check_checker']
+name = "counter"
+description = "A counter smart contract"
 
 [contracts.traits]
 path = "contracts/traits.clar"
 clarity_version = 3
 epoch = 3.1
 
-[contracts.token]
-path = "contracts/token.clar"
+[contracts.counter]
+path = 'contracts/counter.clar'
 clarity_version = 3
 epoch = 3.1
-depends_on = ["traits"]
 ```
 
 The manifest handles several critical functions:
 
 - **Contract registration**: Every contract must be listed here
-- **Dependency management**: Defines deployment order through `depends_on`
-- **Version control**: Specifies Clarity version and epoch for each contract
+- **Stacks Epoch and Clarity version**: Specifies Clarity version and epoch for each contract
 - **Boot sequence**: Lists contracts to deploy on `clarinet devnet start`
 
 ## Testing infrastructure
@@ -92,12 +86,11 @@ The **package.json** defines your testing environment and dependencies:
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hirosystems/clarinet-sdk": "^2.14.0",
-    "@stacks/transactions": "^6.12.0",
+    "@hirosystems/clarinet-sdk": "^3.0.2",
+    "@stacks/transactions": "^7.0.6",
+    "@types/node": "^24.0.14",
     "chokidar-cli": "^3.0.0",
-    "typescript": "^5.6.0",
-    "vite": "^6.1.0",
-    "vitest": "^3.0.0",
+    "vitest": "^3.1.3",
     "vitest-environment-clarinet": "^2.3.0"
   }
 }

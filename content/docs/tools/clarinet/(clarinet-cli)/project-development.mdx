@@ -31,8 +31,6 @@ $ clarinet new my-defi-app
 | Option | Description | Example |
 |--------|-------------|---------|
 | `--disable-telemetry` | Opt out of telemetry collection | `clarinet new my-app --disable-telemetry` |
-| `--no-vscode` | Skip VS Code configuration files | `clarinet new my-app --no-vscode` |
-| `--clarity-version` | Set default Clarity version | `clarinet new my-app --clarity-version 3` |
 
 For a more in-depth look at the project structure generated, see the [project structure](/tools/clarinet/project-structure) guide.
 
@@ -85,14 +83,33 @@ $ clarinet contract rm old-token
 [33mUpdated[0m [1mClarinet.toml[0m
 ```
 
+## Checking project contracts syntax
+
+Validate your entire project setup:
+
+```terminal
+$ clarinet check
+[32m✔[0m [1m3 contracts checked[0m
+```
+
+Check specific contracts:
+
+```terminal
+$ clarinet check contracts/token.clar
+[32m✔[0m [1mcontracts/token.clar Syntax of contract successfully checked[0m
+```
+
 ## Code formatting
 
 Clarinet includes a powerful code formatter to maintain consistent style across your project:
 
+Format all contracts in your project:
+
 ```terminal
-$ clarinet format contracts/messy-contract.clar
-[32mFormatted[0m [1mcontracts/messy-contract.clar[0m
+$ clarinet format --in-place
+[32mFormatted[0m [1m5 contracts[0m
 ```
+
 
 ### Formatting options
 
@@ -106,19 +123,18 @@ Customize formatting to match your team's style guide:
 | `--indent` | Set indentation size | `clarinet format --indent 2` |
 | `--tabs` | Use tabs instead of spaces | `clarinet format --tabs` |
 
-### Batch formatting
 
-Format all contracts in your project at once:
+### Format single files
 
 ```terminal
-$ clarinet format --all
-[32mFormatted[0m [1m5 contracts[0m
+$ clarinet format contracts/messy-contract.clar --in-place
+[32mFormatted[0m [1mcontracts/messy-contract.clar[0m
 ```
 
 Format specific contracts using glob patterns:
 
 ```terminal
-$ clarinet format contracts/token*.clar
+$ clarinet format contracts/token*.clar --in-place
 [32mFormatted[0m [1mcontracts/token-trait.clar[0m
 [32mFormatted[0m [1mcontracts/token-impl.clar[0m
 ```
@@ -153,44 +169,6 @@ Now you can implement traits from mainnet contracts:
 ;; ... implement required functions
 ```
 
-### Multi-contract projects
-
-Organize larger projects with multiple related contracts:
-
-```toml Clarinet.toml
-[contracts.token]
-path = "contracts/token.clar"
-
-[contracts.treasury]
-path = "contracts/treasury.clar"
-depends_on = ["token"]
-
-[contracts.staking]
-path = "contracts/staking.clar"
-depends_on = ["token", "treasury"]
-```
-
-:::callout
-type: warn
-### Security notice
-Never commit mainnet private keys or mnemonics to version control. Use environment variables for production deployments.
-:::
-
-## Checking project configuration
-
-Validate your entire project setup:
-
-```terminal
-$ clarinet check
-[32m✔[0m [1m3 contracts checked[0m
-```
-
-Check specific contracts:
-
-```terminal
-$ clarinet check contracts/token.clar
-[32m✔[0m [1mcontracts/token.clar Syntax of contract successfully checked[0m
-```
 
 :::next-steps
 - [Contract interaction](/tools/clarinet/contract-interaction): Learn how to interact with your contracts.

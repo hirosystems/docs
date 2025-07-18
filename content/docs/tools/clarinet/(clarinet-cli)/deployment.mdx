@@ -246,7 +246,6 @@ plan:
         - contract-publish:
             contract-name: token
             path: contracts/token.clar
-            depends_on: ["trait-definitions"]
         - contract-publish:
             contract-name: oracle
             path: contracts/oracle.clar
@@ -255,7 +254,6 @@ plan:
         - contract-publish:
             contract-name: defi-pool
             path: contracts/defi-pool.clar
-            depends_on: ["token", "oracle"]
 ```
 
 Batches ensure:
