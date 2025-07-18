@@ -58,17 +58,17 @@ You can use it for one line (`!mark`), a range of lines (`!mark(1:3)`), a range 
 You can provide any valid CSS color, for example: `!mark(1:3) red` or `!mark(1:3) hsl(var(--hiro))`.
 
 ```clarity
-;; !mark[/Counters/mg]
-(define-map Counters principal uint)
+;; !mark[/counters/mg]
+(define-map counters principal uint)
 
 ;; !mark(1:3)
 (define-public (count-up)
-  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+  (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
 )
 
 ;; !mark hsl(var(--hiro))
 (define-read-only (get-count (who principal))
-  (default-to u0 (map-get? Counters who))
+  (default-to u0 (map-get? counters who))
 )
 ```
 

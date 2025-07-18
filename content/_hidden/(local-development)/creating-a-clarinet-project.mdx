@@ -82,21 +82,21 @@ Open `contracts/counter.clar` and add this code:
 
 ```clarity
 ;; Define a map to store counters for each user
-(define-map Counters principal uint)
+(define-map counters principal uint)
 
 ;; Public function to increment a user's counter
 (define-public (count-up)
-  (ok (map-set Counters tx-sender (+ (get-count tx-sender) u1)))
+  (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
 )
 
 ;; Read-only function to get a user's current count
 (define-read-only (get-count (who principal))
-  (default-to u0 (map-get? Counters who))
+  (default-to u0 (map-get? counters who))
 )
 ```
 
 **What this contract does:**
-- **Counters map**: Stores a number for each user (principal)
+- **counters map**: Stores a number for each user (principal)
 - **count-up function**: Increases the caller's count by 1
 - **get-count function**: Returns anyone's current count
 
