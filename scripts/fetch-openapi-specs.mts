@@ -4,9 +4,13 @@ import fs from "fs/promises";
 import path from "path";
 import yaml from "js-yaml";
 import SwaggerParser from "@apidevtools/swagger-parser";
+import stringify from "json-stringify-safe";
 import { OpenAPIMarkdownGenerator } from "./openapi-to-markdown.mts";
 import type { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-import { buildEndpointMappings, saveMappings } from "./utils/api-endpoint-mapping.mts";
+import {
+  buildEndpointMappings,
+  saveMappings,
+} from "./utils/api-endpoint-mapping.mts";
 
 interface ApiSpec {
   name: string;
@@ -975,7 +979,7 @@ async function generatePlatformApiSpec(): Promise<void> {
 
     await fs.writeFile(
       platformApiPath,
-      JSON.stringify(platformApiSpec, null, 2)
+      JSON.stringify(platformApiSpec, null, 2),
     );
   } catch (error) {
     console.error("❌ Failed to generate platform-api.json:", error);
@@ -1039,7 +1043,7 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
     // Pass the raw URL as the base URL so $ref resolution works correctly
     const bundledSpec = await SwaggerParser.dereference(
       rawUrl,
-      yamlData as any
+      yamlData as any,
     );
 
     // Ensure openapi directory exists
@@ -1050,61 +1054,70 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
     const filename = `${spec.name}-api.json`;
     const filepath = path.join(openApiDir, filename);
 
-    await fs.writeFile(filepath, JSON.stringify(bundledSpec, null, 2));
+    await fs.writeFile(filepath, stringify(bundledSpec, null, 2));
   } catch (error) {
     console.error(`❌ Failed to fetch ${spec.name}:`, error);
   }
 }
 
-async function generateMarkdownForSpec(specPath: string, specName: string): Promise<void> {
+async function generateMarkdownForSpec(
+  specPath: string,
+  specName: string,
+): Promise<void> {
   try {
     console.log(`📝 Generating markdown for ${specName}...`);
-    
+
     // Read the OpenAPI spec
     const specContent = await fs.readFile(specPath, "utf-8");
-    const spec = JSON.parse(specContent) as OpenAPIV3.Document | OpenAPIV3_1.Document;
-    
+    const spec = JSON.parse(specContent) as
+      | OpenAPIV3.Document
+      | OpenAPIV3_1.Document;
+
     // Create markdown generator
     const generator = new OpenAPIMarkdownGenerator(spec);
-    
+
     // Generate markdown for all endpoints
     const markdownMap = await generator.generateAllEndpoints();
-    
+
     // Create output directory
     const outputDir = path.join(process.cwd(), "generated", "apis", specName);
     await fs.mkdir(outputDir, { recursive: true });
-    
+
     // Create mapping for URL to file lookup
-    const urlMapping: Record<string, { method: string; path: string; file: string }> = {};
-    
+    const urlMapping: Record<
+      string,
+      { method: string; path: string; file: string }
+    > = {};
+
     // Save each endpoint's markdown
     let count = 0;
     for (const [key, markdown] of markdownMap) {
       // Create a filename from the endpoint key
       // e.g., "GET /v1/users/{id}" -> "get-v1-users-id.md"
-      const filename = key
-        .toLowerCase()
-        .replace(/[{}]/g, "")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-|-$/g, "") + ".md";
-      
+      const filename =
+        key
+          .toLowerCase()
+          .replace(/[{}]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "") + ".md";
+
       const filePath = path.join(outputDir, filename);
       await fs.writeFile(filePath, markdown.content);
-      
+
       // Add to mapping
       urlMapping[key] = {
         method: markdown.method,
         path: markdown.endpoint,
-        file: filename
+        file: filename,
       };
-      
+
       count++;
     }
-    
+
     // Save the mapping file
     const mappingPath = path.join(outputDir, "_mapping.json");
     await fs.writeFile(mappingPath, JSON.stringify(urlMapping, null, 2));
-    
+
     console.log(`✔️ Generated ${count} markdown files for ${specName}`);
   } catch (error) {
     console.error(`❌ Failed to generate markdown for ${specName}:`, error);
@@ -1113,27 +1126,27 @@ async function generateMarkdownForSpec(specPath: string, specName: string): Prom
 
 async function generateAllMarkdown(): Promise<void> {
   console.log("\n📚 Generating markdown documentation...\n");
-  
+
   const openApiDir = path.join(process.cwd(), "openapi");
-  
+
   // Get all OpenAPI spec files
   const specFiles = await fs.readdir(openApiDir);
-  const jsonFiles = specFiles.filter(file => file.endsWith(".json"));
-  
+  const jsonFiles = specFiles.filter((file) => file.endsWith(".json"));
+
   // Generate markdown for each spec
-  const markdownPromises = jsonFiles.map(file => {
+  const markdownPromises = jsonFiles.map((file) => {
     const specPath = path.join(openApiDir, file);
     const specName = file.replace("-api.json", "");
     return generateMarkdownForSpec(specPath, specName);
   });
-  
+
   await Promise.all(markdownPromises);
-  
+
   // Build and save endpoint mappings
   console.log("\n📍 Building endpoint mappings...");
   const mappings = await buildEndpointMappings();
   await saveMappings(mappings);
-  
+
   console.log("\n✔️ Markdown generation complete!");
 }
 
@@ -1150,7 +1163,7 @@ async function fetchAllSpecs(): Promise<void> {
   await Promise.all(allPromises);
 
   console.log("✔️ Generated OpenAPI specs");
-  
+
   // Generate markdown for all specs
   await generateAllMarkdown();
 }
