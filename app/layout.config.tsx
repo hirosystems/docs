@@ -38,6 +38,11 @@ export const baseOptions: BaseLayoutProps = {
           url: "/tools/contract-monitoring",
         },
         {
+          text: "Clarity VSCode Extension",
+          description: "Monitor and analyze Clarity smart contract activity.",
+          url: "/tools/clarinet/vscode-extension",
+        },
+        {
           text: "Bitcoin Indexer",
           description: "Indexer for Bitcoin blockchain data.",
           url: "/tools/bitcoin-indexer",
