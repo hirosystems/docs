@@ -135,7 +135,7 @@ export const baseOptions: BaseLayoutProps = {
       text: "Resources",
       items: [
         {
-          text: "Clarity lang",
+          text: "Clarity Reference",
           description: "Clarity language reference.",
           url: "/resources/clarity",
         },

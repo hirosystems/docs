@@ -198,7 +198,7 @@ export default function HomePage() {
               <SmallCard
                 icon={<Clarity />}
                 href="/resources/clarity"
-                title="Clarity lang"
+                title="Clarity Reference"
                 description="Comprehensive guides and function reference for the Clarity smart contract language."
               />
               <SmallCard

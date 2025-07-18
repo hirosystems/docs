@@ -15,7 +15,7 @@ export default function ResourcesPage() {
             <IndexCard
               icon={<Clarity />}
               href="/resources/clarity"
-              title="Clarity lang"
+              title="Clarity Reference"
               description="Comprehensive guides and function reference for the Clarity smart contract language."
             />
             <IndexCard
