@@ -27,7 +27,7 @@ function OrderedList({ children, items }: ListProps) {
     (child) =>
       React.isValidElement(child) &&
       typeof child.type === "string" &&
-      child.type === "li"
+      child.type === "li",
   );
 
   return (
@@ -72,7 +72,7 @@ function UnorderedList({ children, items }: ListProps) {
     (child) =>
       React.isValidElement(child) &&
       typeof child.type === "string" &&
-      child.type === "li"
+      child.type === "li",
   );
 
   // Helper function to recursively check for checkboxes in React elements
@@ -88,7 +88,7 @@ function UnorderedList({ children, items }: ListProps) {
       // Recursively check children
       if ((element.props as any)?.children) {
         const children = React.Children.toArray(
-          (element.props as any).children
+          (element.props as any).children,
         );
         return children.some(hasCheckboxInElement);
       }
@@ -142,7 +142,12 @@ function UnorderedList({ children, items }: ListProps) {
 
   return (
     <ul
-      className={`relative my-4 ${shouldRemoveDashes ? "pl-0" : "pl-6"} [&_a]:underline [&_a]:underline-offset-1 [&_a]:decoration-border [&_a]:decoration-1 [&a_]:underline-t [&_a:hover]:decoration-primary [&_a]:transition-colors`}
+      className={`relative my-4 ${shouldRemoveDashes ? "pl-0" : "pl-6"}  [&_a]:underline
+       [&_a]:underline-offset-4
+       [&_a]:decoration-border
+       [&_a]:decoration-2
+       [&_a]:transition-colors
+       [&_a:hover]:decoration-primary`}
     >
       {validChildren.map((child, index) => {
         if (!React.isValidElement(child)) return null;
