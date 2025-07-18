@@ -1,10 +1,10 @@
 import theme from "./theme.mjs";
 import {
-  AnnotationHandler,
-  BlockAnnotation,
+  type AnnotationHandler,
+  type BlockAnnotation,
   highlight,
   Pre,
-  RawCode,
+  type RawCode,
 } from "codehike/code";
 import { TerminalClient } from "./terminal.client";
 import { wordWrap } from "./annotations/word-wrap";
@@ -14,6 +14,7 @@ import { OutputBlock } from "./annotations/terminal-output";
 export async function Terminal(props: {
   codeblocks: RawCode[];
   storage?: string;
+  hideOutput?: boolean;
 }) {
   const tabs = await Promise.all(
     props.codeblocks.map(async (codeblock) => {
@@ -23,7 +24,11 @@ export async function Terminal(props: {
         pre: (
           <Pre
             code={highlighted}
-            handlers={[output, wordWrap, command]}
+            handlers={[
+              createOutputHandler(props.hideOutput),
+              wordWrap,
+              command,
+            ]}
             className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
@@ -41,10 +46,13 @@ export async function Terminal(props: {
   );
 }
 
-const output: AnnotationHandler = {
+const createOutputHandler = (hideOutput?: boolean): AnnotationHandler => ({
   name: "output",
-  Block: OutputBlock,
-};
+  Block: (props) => {
+    const Component = OutputBlock as any;
+    return <Component {...props} hideOutput={hideOutput} />;
+  },
+});
 
 const command: AnnotationHandler = {
   name: "command",
@@ -73,9 +81,9 @@ function extractAnnotations(code: string) {
         toLineNumber: index + 1,
       });
     } else {
-      let last = annotations[annotations.length - 1];
+      const last = annotations[annotations.length - 1];
       if (last.name === "command" && last.query.endsWith("\\")) {
-        last.query = last.query + "\n" + line;
+        last.query = `${last.query}\n${line}`;
         last.toLineNumber = index + 1;
       } else if (!last || last.name !== "output") {
         annotations.push({

@@ -1,0 +1,29 @@
+---
+title: Platform API
+sidebarTitle: Overview
+description: Programmatic access to devnet and chainhook management via REST.
+---
+
+## Overview
+
+The Platform API provides programmatic control over Hiro Platform services through a REST interface. Built for automation and CI/CD integration, it enables you to create and manage chainhooks, control platform-hosted devnets, and interact with blockchain services directly from your application code.
+
+## Key features
+
+- **Chainhook automation** - Create, update, and delete chainhooks programmatically
+- **Devnet control** - Start, stop, and interact with platform-hosted development networks
+- **CI/CD integration** - Automate blockchain workflows in your development pipeline
+
+## Usage
+
+```terminal
+$ curl -L 'https://api.platform.hiro.so/v1/ext/{apiKey}/chainhooks' -H 'Accept: application/json'
+```
+
+For more usage examples, click [here](/apis/platform-api/usage).
+
+:::callout
+type: help
+### Need help building with the Platform API?
+Reach out to us on the <span className="font-bold">#hiro-platform</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

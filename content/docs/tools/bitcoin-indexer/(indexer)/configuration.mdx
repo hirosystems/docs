@@ -1,0 +1,286 @@
+---
+title: Configuration
+description: Configure the Bitcoin Indexer for optimal performance and customize metaprotocol settings.
+---
+
+## Configuration file
+
+The Bitcoin Indexer uses a TOML configuration file to control all aspects of operation. Create the configuration file:
+
+```terminal
+$ nano ~/bitcoin-indexer/bitcoin-indexer/bitcoin-indexer-config.toml
+```
+
+## Full configuration example
+
+```toml title="bitcoin-indexer-config.toml"
+[storage]
+# Path to RocksDB data directory
+working_dir = "/home/bitcoin-indexer/bitcoin-indexer/rocksdb-chainstate"
+
+[metrics]
+# Enable Prometheus metrics
+enabled = true
+prometheus_port = 9153
+
+[ordinals.db]
+# PostgreSQL connection for Ordinals data
+database = "ordinals"
+host = "localhost"
+port = 5432
+username = "postgres"
+password = "postgres"
+
+[ordinals.meta_protocols.brc20]
+# Enable BRC-20 indexing within Ordinals
+enabled = true
+lru_cache_size = 10000
+
+[ordinals.meta_protocols.brc20.db]
+# Separate database for BRC-20 data
+database = "brc20"
+host = "localhost"
+port = 5432
+username = "postgres"
+password = "postgres"
+
+[runes]
+# LRU cache for Runes performance
+lru_cache_size = 10000
+
+[runes.db]
+# PostgreSQL connection for Runes data
+database = "runes"
+host = "localhost"
+port = 5432
+username = "postgres"
+password = "postgres"
+
+[bitcoind]
+# Bitcoin Core connection settings
+network = "mainnet"
+rpc_url = "http://127.0.0.1:8332"
+rpc_username = "user"
+rpc_password = "password"
+zmq_url = "tcp://0.0.0.0:18543"
+
+[resources]
+# Resource allocation
+ulimit = 2048
+cpu_core_available = 6
+memory_available = 16
+bitcoind_rpc_threads = 6
+bitcoind_rpc_timeout = 15
+```
+
+## Configuration sections
+
+### Storage configuration
+
+Controls where the indexer stores blockchain state:
+
+```toml
+[storage]
+working_dir = "/path/to/rocksdb-chainstate"
+# Optional: Set RocksDB specific options
+rocksdb_max_open_files = 10000
+rocksdb_cache_size = "8GB"
+```
+
+:::callout
+### Storage performance
+Use fast NVMe storage for the working directory. The indexer performs many random reads/writes during operation.
+:::
+
+### Database connections
+
+Each metaprotocol can use a separate database for isolation:
+
+```toml
+[ordinals.db]
+database = "ordinals"
+host = "localhost"
+port = 5432
+username = "postgres"
+password = "postgres"
+# Optional connection pool settings
+max_connections = 50
+min_connections = 10
+connection_timeout = 30
+```
+
+### Bitcoin node connection
+
+Configure how the indexer connects to your Bitcoin node:
+
+```toml
+[bitcoind]
+network = "mainnet"  # or "testnet", "regtest"
+rpc_url = "http://127.0.0.1:8332"
+rpc_username = "user"
+rpc_password = "password"
+zmq_url = "tcp://0.0.0.0:18543"
+# Optional: Custom RPC timeout
+rpc_timeout = 30
+```
+
+### Resource allocation
+
+Optimize performance based on your hardware:
+
+```toml
+[resources]
+# File descriptor limit
+ulimit = 2048
+
+# CPU cores to use for indexing
+cpu_core_available = 6
+
+# Memory in GB
+memory_available = 16
+
+# Bitcoin RPC connection pool
+bitcoind_rpc_threads = 6
+bitcoind_rpc_timeout = 15
+```
+
+### Metaprotocol-specific settings
+
+#### Ordinals configuration
+
+```toml
+[ordinals]
+# Start indexing from specific height (optional)
+start_block = 767430
+
+# Enable inscription number calculation
+track_numbers = true
+
+# Cursed inscription handling
+index_cursed = true
+
+[ordinals.meta_protocols.brc20]
+enabled = true
+# Cache size for BRC-20 balance calculations
+lru_cache_size = 10000
+# Track all operations or just valid ones
+index_invalid_operations = false
+```
+
+#### Runes configuration
+
+```toml
+[runes]
+# LRU cache for rune entries
+lru_cache_size = 10000
+
+# Start block for runes (mainnet activation)
+start_block = 840000
+
+# Index unspendable runes
+index_unspendable = true
+```
+
+### API configuration
+
+Configure the REST API server:
+
+```toml
+[api]
+# API server settings
+enabled = true
+port = 3000
+host = "0.0.0.0"
+
+# CORS settings
+cors_enabled = true
+cors_origins = ["*"]
+
+# Rate limiting
+rate_limit_enabled = true
+rate_limit_requests_per_minute = 60
+
+# API key authentication
+require_auth = false
+api_keys = ["your-api-key-here"]
+```
+
+### Monitoring configuration
+
+Enable metrics and monitoring:
+
+```toml
+[metrics]
+enabled = true
+prometheus_port = 9153
+
+# Log settings
+[logging]
+level = "info"  # debug, info, warn, error
+format = "json"  # json or pretty
+directory = "/home/bitcoin-indexer/bitcoin-indexer/logs"
+max_size = "100MB"
+max_backups = 10
+```
+
+## Performance tuning
+
+### For high-throughput indexing
+
+```toml
+[resources]
+cpu_core_available = 16
+memory_available = 32
+bitcoind_rpc_threads = 16
+
+[storage]
+rocksdb_cache_size = "16GB"
+rocksdb_max_open_files = 20000
+
+[ordinals.db]
+max_connections = 100
+```
+
+### For limited resources
+
+```toml
+[resources]
+cpu_core_available = 4
+memory_available = 8
+bitcoind_rpc_threads = 4
+
+[storage]
+rocksdb_cache_size = "2GB"
+rocksdb_max_open_files = 5000
+
+[ordinals.db]
+max_connections = 20
+```
+
+## Environment variables
+
+Configuration values can be overridden with environment variables:
+
+```bash
+# Override database password
+export BITCOIN_INDEXER_ORDINALS_DB_PASSWORD="secure_password"
+
+# Override RPC credentials
+export BITCOIN_INDEXER_BITCOIND_RPC_USERNAME="myuser"
+export BITCOIN_INDEXER_BITCOIND_RPC_PASSWORD="mypass"
+
+# Override API port
+export BITCOIN_INDEXER_API_PORT="8080"
+```
+
+## Validate configuration
+
+Test your configuration before starting:
+
+```terminal
+$ bitcoin-indexer validate --config-path=~/bitcoin-indexer/bitcoin-indexer/bitcoin-indexer-config.toml
+[32m✓[0m Configuration valid
+[32m✓[0m Bitcoin node reachable
+[32m✓[0m PostgreSQL databases accessible
+[32m✓[0m Storage directory writable
+```

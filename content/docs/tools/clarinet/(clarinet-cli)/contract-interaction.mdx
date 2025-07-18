@@ -1,0 +1,184 @@
+---
+title: Contract interaction
+sidebarTitle: Contract interaction
+description: Clarinet provides powerful tools for interacting with your contracts during development. The console gives you an interactive REPL environment where you can call functions, check state, and debug issues in real-time.
+---
+
+## Starting the console
+
+The `clarinet console` command launches an interactive session with all your contracts deployed to a local simulated blockchain:
+
+```terminal
+$ clarinet console
+[32mclarity-repl v3.3.0[0m
+[1mEnter "::help" for usage hints.[0m
+[1mConnected to a transient in-memory database.[0m
+```
+
+Once in the console, you have access to a Clarity REPL with your project's contracts already deployed and ready to interact with. The console supports several powerful options for different development scenarios:
+
+| Option | Description |
+|--------|-------------|
+| `--enable-remote-data` | Connect to mainnet/testnet to query real contracts |
+| `--deployment-plan-path <PATH>` | Use specific deployment plan |
+| `--manifest-path <PATH>` | Use alternate Clarinet.toml location |
+| `--remote-data-api-url <URL>` | Use custom Stacks API endpoint |
+| `--remote-data-initial-height <N>` | Set starting block height for remote data |
+
+## Working with remote data
+
+One of the most powerful features is the ability to interact with real mainnet or testnet contracts from your local console. This lets you test against actual deployed contracts:
+
+```terminal
+$ clarinet console --enable-remote-data
+```
+
+Now you can interact with mainnet contracts directly:
+
+```terminal -o
+$ (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token get-decimals)
+[32m(ok u8)[0m
+$ (contract-call? 'SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token get-name)
+[32m(ok "Arkadiko Token")[0m
+```
+
+This is invaluable for:
+- Testing integrations with existing protocols
+- Verifying contract behavior against mainnet state
+- Developing contracts that depend on mainnet contracts
+
+:::callout
+type: warn
+### Remote data requirements
+Before using remote data, make sure you add the remote contract to your `Clarinet.toml` file with `clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`.
+:::
+
+### Using the Hiro API key
+
+To avoid rate limits when using remote data, set the `HIRO_API_KEY` environment variable. Clarinet automatically includes this key in all API requests:
+
+```terminal
+$ export HIRO_API_KEY=your_api_key_here
+$ clarinet console --enable-remote-data
+```
+
+The API key is sent as the `x-api-key` header in all requests to Hiro's APIs. You can obtain a free API key from the [Hiro Platform](https://platform.hiro.so).
+
+### Working with contracts
+
+The `::get_contracts` command lists all available contracts:
+
+```terminal -o
+$ ::get_contracts
+[1m+---------------------------------------------------------+----------------+
+| Contract identifier                               | Public functions           |
+|---------------------------------------------------------+----------------------|
+| ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter | (count-up)                 |
+|                                                   | (get-count (who principal))|
++---------------------------------------------------------+----------------------+[0m
+$ (contract-call? .counter count-up)
+[32m(ok true)[0m
+$ (contract-call? .counter get-count tx-sender)
+[32mu1[0m
+```
+
+### Working with different principals
+
+The console provides several test wallets you can use. Switch between them to test multi-user scenarios:
+
+```terminal -o
+$ ::get_assets_maps
+[1m+-------------------------------------------+-----------------+
+| Address                                   | uSTX            |
+|-------------------------------------------+-----------------|
+| ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND  | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0 | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP | 100000000000000 |
+|-------------------------------------------+-----------------|
+| ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ | 100000000000000 |
+|-------------------------------------------+-----------------|
+| STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6  | 100000000000000 |
++-------------------------------------------+-----------------+[0m
+$ ::set_tx_sender ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+[1mtx-sender switched to ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5[0m
+```
+
+### Working with block heights
+
+Test "time-dependent" logic by advancing the chain:
+
+```terminal -o
+$ ::get_block_height
+[1mCurrent block height: 4[0m
+$ ::advance_chain_tip 100
+[32mnew burn height: 3[0m
+[32mnew stacks height: 104[0m
+$ ::get_block_height
+[1mCurrent block height: 104[0m
+```
+
+:::callout
+### Console commands
+For a complete list of available console commands and their usage, view the [CLI reference](/tools/clarinet/cli-reference#clarinet-console).
+:::
+
+## Common issues
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="contract-not-found">
+    <AccordionTrigger>Contract not found errors</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        If you see "use of unresolved contract" errors:
+
+        ```terminal
+        $ (contract-call? .missing-contract get-value)
+        [31merror: use of unresolved contract[0m
+        ```
+
+        **Common causes:**
+        - Contract name typo
+        - Contract not deployed in the session
+        - Using wrong contract prefix (`.` for local contracts)
+
+        **Solution**: Check deployed contracts with `::get_contracts` and use the correct name.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="remote-data-errors">
+    <AccordionTrigger>Remote data connection issues</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        When using `--enable-remote-data`, you might encounter rate limits or connection errors:
+
+        ```terminal
+        $ (contract-call? 'SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token get-name)
+        [31merror: API rate limit exceeded[0m
+        ```
+
+        **Solutions:**
+        1. Set your Hiro API key: `export HIRO_API_KEY=your_key_here`
+        2. Use a custom API endpoint: `--remote-data-api-url https://your-node.com`
+        3. Wait for rate limit to reset (usually 1 minute)
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+:::next-steps
+- [Validation and analysis](/tools/clarinet/validation-and-analysis): Learn how to test and validate your Clarinet project.
+- [Deployment](/tools/clarinet/deployment): Learn how to deploy your Clarinet project.
+:::

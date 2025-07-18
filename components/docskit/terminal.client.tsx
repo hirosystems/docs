@@ -2,7 +2,7 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { TerminalIcon } from "lucide-react";
 import { useStateOrLocalStorage } from "./hooks/local-storage";
-import React from "react";
+import type { ReactNode } from "react";
 import { CODEBLOCK, TITLEBAR } from "./code-group";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +11,7 @@ export function TerminalClient({
   storeKey,
 }: {
   storeKey?: string;
-  tabs: { name: string; pre: React.ReactNode }[];
+  tabs: { name: string; pre: ReactNode }[];
 }) {
   const [currentName, setCurrentName] = useStateOrLocalStorage(
     storeKey && "terminal-picker-" + storeKey,

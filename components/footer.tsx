@@ -1,3 +1,4 @@
+import React, { JSX } from "react";
 import { Bug, Newspaper, QuestionIcon, Pulse } from "@/components/ui/icon";
 
 const items = [
@@ -78,7 +79,7 @@ const items = [
 
 export function PageFooter(): JSX.Element {
   return (
-    <div className="footer relative mt-24 mb-8 bg-accent rounded-lg p-8 not-prose text-card-foreground transition-colors">
+    <div className="footer relative mt-24 mb-8 bg-neutral-150 dark:bg-neutral-700 rounded-lg p-8 not-prose text-card-foreground transition-colors">
       <div className="flex flex-col space-y-3">
         {items.map(({ id, Icon, preText, body }) => (
           <div key={id} className="flex items-center space-x-3 w-full">

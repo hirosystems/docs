@@ -1,0 +1,351 @@
+---
+title: Stacks scopes
+sidebarTitle: Stacks scopes
+description: Reference for all available Stacks event scopes in Chainhook predicates.
+---
+
+Stacks scopes define the `if_this` conditions in your Chainhook predicates. Each scope type monitors specific on-chain events on the Stacks blockchain.
+
+## txid [#txid]
+
+`txid` matches transactions by their transaction ID.
+
+### Signature
+
+```json
+{
+  "scope": "txid",
+  "equals": string
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `equals` | string | Yes | 32-byte hex encoded transaction ID to match |
+
+### Example
+
+```json
+{
+  "if_this": {
+    "scope": "txid",
+    "equals": "0xfaaac1833dc4883e7ec28f61e35b41f896c395f8d288b1a177155de2abd6052f"
+  }
+}
+```
+
+## block_height [#block_height]
+
+`block_height` matches blocks by their height.
+
+### Signature
+
+```json
+{
+  "scope": "block_height",
+  "equals" | "higher_than" | "lower_than" | "between": value
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `equals` | integer | No* | Match exact block height |
+| `higher_than` | integer | No* | Match blocks above height |
+| `lower_than` | integer | No* | Match blocks below height |
+| `between` | [integer, integer] | No* | Match blocks in range [start, end] |
+
+*One of these parameters is required
+
+### Examples
+
+#### Match exact height
+
+```json
+{
+  "if_this": {
+    "scope": "block_height",
+    "equals": 141200
+  }
+}
+```
+
+#### Match range of blocks
+
+```json
+{
+  "if_this": {
+    "scope": "block_height",
+    "between": [100000, 110000]
+  }
+}
+```
+
+## ft_transfer [#ft_transfer]
+
+`ft_transfer` matches fungible token events.
+
+### Signature
+
+```json
+{
+  "scope": "ft_transfer",
+  "asset_identifier": string,
+  "actions": string[]
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `asset_identifier` | string | Yes | Fully qualified token identifier |
+| `actions` | string[] | Yes | Token actions: `mint`, `transfer`, `burn` |
+
+### Examples
+
+#### Monitor token transfers
+
+```json
+{
+  "if_this": {
+    "scope": "ft_transfer",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.cbtc-token::cbtc",
+    "actions": ["transfer"]
+  }
+}
+```
+
+#### Track all token activities
+
+```json
+{
+  "if_this": {
+    "scope": "ft_transfer",
+    "asset_identifier": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-10-token::token",
+    "actions": ["mint", "transfer", "burn"]
+  }
+}
+```
+
+## nft_transfer [#nft_transfer]
+
+`nft_transfer` matches non-fungible token events.
+
+### Signature
+
+```json
+{
+  "scope": "nft_transfer",
+  "asset_identifier": string,
+  "actions": string[]
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `asset_identifier` | string | Yes | Fully qualified NFT identifier |
+| `actions` | string[] | Yes | NFT actions: `mint`, `transfer`, `burn` |
+
+### Examples
+
+#### Monitor NFT mints
+
+```json
+{
+  "if_this": {
+    "scope": "nft_transfer",
+    "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09::monkeys",
+    "actions": ["mint"]
+  }
+}
+```
+
+#### Track all NFT activities
+
+```json
+{
+  "if_this": {
+    "scope": "nft_transfer",
+    "asset_identifier": "SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.megapont-ape-club::apes",
+    "actions": ["mint", "transfer", "burn"]
+  }
+}
+```
+
+## stx_transfer [#stx_transfer]
+
+`stx_transfer` matches STX token events.
+
+### Signature
+
+```json
+{
+  "scope": "stx_transfer",
+  "actions": string[]
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `actions` | string[] | Yes | STX actions: `mint`, `transfer`, `burn`, `lock` |
+
+### Examples
+
+#### Monitor STX transfers
+
+```json
+{
+  "if_this": {
+    "scope": "stx_transfer",
+    "actions": ["transfer"]
+  }
+}
+```
+
+#### Track all STX activities
+
+```json
+{
+  "if_this": {
+    "scope": "stx_transfer",
+    "actions": ["mint", "transfer", "burn", "lock"]
+  }
+}
+```
+
+## print_event [#print_event]
+
+`print_event` matches contract print events.
+
+### Signature
+
+```json
+{
+  "scope": "print_event",
+  "contract_identifier": string,
+  "contains" | "matches_regex": string
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `contract_identifier` | string | Yes | Fully qualified contract identifier |
+| `contains` | string | No* | Match events containing string |
+| `matches_regex` | string | No* | Match events by regex pattern |
+
+*One of these parameters is required
+
+### Examples
+
+#### Match by substring
+
+```json
+{
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.monkey-sip09",
+    "contains": "monkey"
+  }
+}
+```
+
+#### Match by regex pattern
+
+```json
+{
+  "if_this": {
+    "scope": "print_event",
+    "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-dao",
+    "matches_regex": "vault-liquidated-.*"
+  }
+}
+```
+
+## contract_call [#contract_call]
+
+`contract_call` matches specific contract function calls.
+
+### Signature
+
+```json
+{
+  "scope": "contract_call",
+  "contract_identifier": string,
+  "method": string
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `contract_identifier` | string | Yes | Fully qualified contract identifier |
+| `method` | string | Yes | Contract method name |
+
+### Example
+
+```json
+{
+  "if_this": {
+    "scope": "contract_call",
+    "contract_identifier": "SP000000000000000000002Q6VF78.pox",
+    "method": "stack-stx"
+  }
+}
+```
+
+## contract_deployment [#contract_deployment]
+
+`contract_deployment` matches contract deployments.
+
+### Signature
+
+```json
+{
+  "scope": "contract_deployment",
+  "deployer" | "implement_trait": string
+}
+```
+
+### Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `deployer` | string | No* | STX address of deployer |
+| `implement_trait` | string | No* | Trait the contract must implement |
+
+*One of these parameters is required
+
+### Examples
+
+#### Monitor deployments by address
+
+```json
+{
+  "if_this": {
+    "scope": "contract_deployment",
+    "deployer": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+  }
+}
+```
+
+#### Monitor trait implementations
+
+```json
+{
+  "if_this": {
+    "scope": "contract_deployment",
+    "implement_trait": "SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-09-trait"
+  }
+}
+```

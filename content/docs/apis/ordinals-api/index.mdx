@@ -1,0 +1,29 @@
+---
+title: Ordinals API
+sidebarTitle: Overview
+description: Fast, reliable data for Bitcoin ordinals and BRC-20 tokens via REST.
+---
+
+## Overview
+
+The Ordinals API provides comprehensive inscription data for Bitcoin ordinals through a high-performance REST interface. Built with cached responses and optimized indexing, it delivers inscription metadata, trading activity, BRC-20 token information, and satoshi-level data with minimal latency.
+
+## Key features
+
+- **Complete inscription data** - Metadata, content, and ownership for all ordinals
+- **BRC-20 token support** - Full token metadata, balances, and holder information
+- **Satoshi-level tracking** - Inscription data tied to specific satoshis
+
+## Usage
+
+```terminal
+$ curl -L 'https://api.hiro.so/ordinals/v1/inscriptions' -H 'Accept: application/json'
+```
+
+For more usage examples, click [here](/apis/ordinals-api/usage).
+
+:::callout
+type: help
+### Need help building with the Ordinals API?
+Reach out to us on the <span className="font-bold">#ordinals</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

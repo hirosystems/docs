@@ -1,0 +1,94 @@
+---
+title: Quickstart
+description: In this guide, you'll create your first Chainhook predicate to monitor STX transfers on the Stacks blockchain.
+---
+
+:::objectives
+- How to create a Chainhook predicate for tracking STX transfers
+- How to scan historical blockchain data using Chainhook
+:::
+
+:::prerequisites
+- For installation instructions, visit the [Chainhook installation guide](/tools/chainhook#installation).
+:::
+
+## Quickstart
+
+<Steps>
+  <Step>
+    ### Generate a predicate file
+    
+    Chainhook uses predicates to define what blockchain events to track. Generate a template predicate file:
+
+    ```terminal
+    $ chainhook predicates new stx-transfer.json --stacks
+    ```
+
+    This creates a boilerplate JSON file with the basic predicate structure. The `--stacks` flag specifies you're tracking Stacks events (use `--bitcoin` for Bitcoin).
+  </Step>
+
+  <Step>
+    ### Configure event tracking
+    
+    Open `stx-transfer.json` and update the `if_this` section to track STX transfer events:
+
+    ```json stx-transfer.json
+    {
+      "chain": "stacks",
+      "uuid": "87ac9bff-1052-4d02-9c79-3768a6f08a09",
+      "name": "STX Transfer",
+      "version": 1,
+      "networks": {
+        "mainnet": {
+          "start_block": 154670,
+          "if_this": {
+            "scope": "stx_event",
+            "actions": ["transfer"]
+          },
+          "then_that": {
+            "file_append": {
+              "path": "stx-transfers.txt"
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    This predicate will:
+    - Track all STX transfer events (`scope: "stx_event"`, `actions: ["transfer"]`)
+    - Start scanning from block 154670
+    - Append matching events to `stx-transfers.txt`
+  </Step>
+
+  <Step>
+    ### Scan for events
+    
+    Run the scan command to search historical blockchain data:
+
+    ```terminal
+    $ chainhook predicates scan stx-transfer.json --mainnet
+    ```
+
+    :::callout
+    The first `scan` downloads a chainstate archive from Hiro Archive. Subsequent scans use the cached data for faster performance.
+    :::
+  </Step>
+
+  <Step>
+    ### View results
+    
+    Check the output file to see the transfer events:
+
+    ```terminal
+    $ head -5 stx-transfers.txt
+    ```
+
+    Each line contains a JSON payload with transfer details including sender, recipient, amount, and block information.
+  </Step>
+</Steps>
+
+:::next-steps
+- [Design custom predicates](/tools/chainhook/usage): Learn to create predicates for contract calls, NFT transfers, and more
+- [Run Chainhook as a service](/tools/chainhook/service-mode): Set up continuous blockchain monitoring with webhook delivery
+:::

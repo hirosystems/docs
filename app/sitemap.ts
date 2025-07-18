@@ -1,33 +1,13 @@
 import type { MetadataRoute } from "next";
-import { baseUrl } from "@/utils/metadata";
-import { utils } from "@/utils/source";
+import { source } from "@/lib/source"; // Your MDX source
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const url = (path: string): string => new URL(path, baseUrl).toString();
+  const pages = source.getPages();
 
-  return [
-    {
-      url: url("/"),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: url("/stacks"),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: url("/bitcoin"),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    ...utils.getPages().map<MetadataRoute.Sitemap[number]>((page) => ({
-      url: url(page.url),
-      lastModified: page.data.exports.lastModified
-        ? new Date(page.data.exports.lastModified)
-        : undefined,
-      changeFrequency: "weekly",
-      priority: 0.5,
-    })),
-  ];
+  return pages.map((page) => ({
+    url: `https://docs.hiro.so${page.url}`,
+    lastModified: new Date(),
+    changeFreq: "weekly",
+    priority: page.url === "/" ? 1 : 0.8,
+  }));
 }

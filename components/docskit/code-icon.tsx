@@ -1,5 +1,6 @@
 import { themeIcons } from "seti-icons";
 import { Clarity } from "@/components/ui/icon";
+import { Braces, Terminal } from "lucide-react";
 
 export function CodeIcon({
   title,
@@ -16,7 +17,31 @@ export function CodeIcon({
         <Clarity
           height="28"
           style={{ margin: "-8px" }}
-          color="hsl(var(--muted-foreground))"
+          color="var(--muted-foreground)"
+        />
+      </span>
+    );
+  }
+
+  if (lang === "bash") {
+    return (
+      <span className={className}>
+        <Terminal
+          height="18"
+          style={{ margin: "-8px" }}
+          color="var(--muted-foreground)"
+        />
+      </span>
+    );
+  }
+
+  if (lang === "json") {
+    return (
+      <span className={className}>
+        <Braces
+          height="18"
+          style={{ margin: "-8px" }}
+          color="var(--muted-foreground)"
         />
       </span>
     );

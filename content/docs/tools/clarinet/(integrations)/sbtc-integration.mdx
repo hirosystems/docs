@@ -1,0 +1,265 @@
+---
+title: sBTC integration with Clarinet
+sidebarTitle: sBTC integration
+description: In this guide, you'll learn how to interact with the mainnet sBTC contract in your Clarinet project.
+---
+
+:::objectives
+- Add sBTC smart contracts to your Clarinet project
+- Test contracts with automatic sBTC funding in devnet
+- Work with sBTC as a SIP-010 fungible token
+- Deploy sBTC contracts to testnet and mainnet
+:::
+
+:::prerequisites
+- Clarinet 2.15.0 or later required for automatic sBTC integration.
+:::
+
+## Quickstart
+
+<Steps>
+  <Step>
+    ### Add sBTC to your project
+
+    Add the sBTC smart contracts to your Clarinet project requirements:
+
+    ```terminal
+    $ clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit
+    ```
+
+    This command adds three essential contracts:
+    - **`sbtc-token`** - The core SIP-010 token contract
+    - **`sbtc-registry`** - Registry for managing sBTC configuration
+    - **`sbtc-deposit`** - Handles deposit and withdrawal operations
+
+    When Clarinet detects these contracts, it automatically funds your test wallets with sBTC for testing.
+  </Step>
+
+  <Step>
+    ### Create an sBTC-enabled contract
+
+    Build a simple NFT marketplace that accepts sBTC payments:
+
+    ```clarity contracts/nft-marketplace.clar
+    ;; Define NFT
+    (define-non-fungible-token marketplace-nft uint)
+
+    ;; Price in sats (smallest sBTC unit)
+    (define-data-var mint-price uint u100)
+    (define-data-var next-id uint u0)
+
+    ;; Mint NFT with sBTC payment
+    (define-public (mint-with-sbtc)
+      (begin
+        ;; Transfer sBTC from buyer to contract
+        (try! (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token transfer
+          (var-get mint-price)
+          tx-sender
+          (as-contract tx-sender)
+          none
+        ))
+
+        ;; Mint the NFT
+        (try! (nft-mint? marketplace-nft (var-get next-id) tx-sender))
+
+        ;; Increment ID for next mint
+        (ok (var-set next-id (+ (var-get next-id) u1)))
+      )
+    )
+
+    ;; Check sBTC balance
+    (define-read-only (get-sbtc-balance (owner principal))
+      (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token get-balance owner)
+    )
+    ```
+  </Step>
+
+  <Step>
+    ### Test in Clarinet console
+
+    Clarinet automatically funds test wallets with sBTC. Test your contract:
+
+    ```terminal
+    $ clarinet console
+    ```
+
+    Check wallet balances and mint an NFT:
+
+    ```clarity
+    ;; Check deployer's sBTC balance (auto-funded)
+    (contract-call? .nft-marketplace get-sbtc-balance tx-sender)
+
+    ;; Mint NFT with wallet_1 (also auto-funded)
+    (contract-call? .nft-marketplace mint-with-sbtc)
+
+    ;; Verify NFT ownership
+    (nft-get-owner? .nft-marketplace marketplace-nft u0)
+    ```
+  </Step>
+
+  <Step>
+    ### Write unit tests
+
+    Test sBTC functionality in your TypeScript tests:
+
+    ```ts tests/nft-marketplace.test.ts
+    import { describe, expect, it } from "vitest";
+    import { Cl } from "@stacks/transactions";
+
+    describe("NFT Marketplace", () => {
+      it("mints NFT with sBTC payment", () => {
+        const mintPrice = 100;
+
+        // Get initial sBTC balance
+        const initialBalance = simnet.callReadOnlyFn(
+          "nft-marketplace",
+          "get-sbtc-balance",
+          [Cl.standardPrincipal(accounts.get("wallet_1")!.address)],
+          accounts.get("wallet_1")!.address
+        );
+
+        // Mint NFT
+        const mintResult = simnet.callPublicFn(
+          "nft-marketplace",
+          "mint-with-sbtc",
+          [],
+          accounts.get("wallet_1")!.address
+        );
+
+        expect(mintResult.result).toBeOk();
+
+        // Verify sBTC was transferred
+        const finalBalance = simnet.callReadOnlyFn(
+          "nft-marketplace",
+          "get-sbtc-balance",
+          [Cl.standardPrincipal(accounts.get("wallet_1")!.address)],
+          accounts.get("wallet_1")!.address
+        );
+
+        expect(Number(Cl.parse(finalBalance.result))).toBeLessThan(
+          Number(Cl.parse(initialBalance.result))
+        );
+      });
+    });
+    ```
+  </Step>
+
+  <Step>
+    ### Deploy to testnet
+
+    On testnet, Clarinet automatically remaps to the official Hiro sBTC contracts:
+
+    ```terminal
+    $ clarinet deployments generate --testnet
+    ```
+
+    Your deployment plan shows the remapped addresses:
+
+    ```yaml deployments/default.testnet-plan.yaml
+    ---
+    id: 0
+    name: Testnet deployment
+    network: testnet
+    stacks-node: "https://api.testnet.hiro.so"
+    bitcoin-node: "http://blockstream.info"
+    plan:
+      batches:
+        - id: 0
+          transactions:
+            - requirement-publish:
+                contract-id: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token
+                remap-sender: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4
+                remap-principals:
+                  SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+                cost: 50000
+                path: "./.cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token.clar"
+    ```
+
+    Deploy to testnet:
+
+    ```terminal
+    $ clarinet deployments apply -p deployments/default.testnet-plan.yaml
+    ```
+  </Step>
+</Steps>
+
+## Common patterns
+
+## Working with sBTC addresses
+
+Clarinet handles sBTC contract address mapping across networks:
+
+| Network | sBTC Contract Address |
+|---------|---------------------|
+| Simnet/Devnet | `SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token` |
+| Testnet | `ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token` |
+| Mainnet | Contract address remains unchanged |
+
+Your contract code always references the simnet address. Clarinet automatically remaps during deployment.
+
+## Manual sBTC minting in unit tests
+
+While Clarinet 2.15.0+ automatically funds wallets with sBTC in devnet, you may need to manually mint sBTC in unit tests for specific scenarios:
+
+### Minting sBTC using the deployer address
+
+The sBTC token contract allows the deployer (multisig) address to mint tokens. Use this approach in your tests:
+
+```typescript tests/manual-sbtc-mint.test.ts -c
+import { describe, expect, it } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+describe("Manual sBTC minting", () => {
+  it("mints sBTC to custom addresses", () => {
+    // The sBTC multisig address that can mint
+    const sbtcDeployer = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
+    const customWallet = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
+
+    // Mint 1000 sats to custom wallet
+    const mintResult = simnet.callPublicFn(
+      "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
+      "mint",
+      [
+        Cl.uint(1000),              // amount in sats
+        Cl.principal(customWallet)   // recipient
+      ],
+      sbtcDeployer                   // sender must be deployer
+    );
+
+    expect(mintResult.result).toBeOk(Cl.bool(true));
+
+    // Verify balance
+    const balance = simnet.callReadOnlyFn(
+      "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
+      "get-balance",
+      [Cl.principal(customWallet)],
+      customWallet
+    );
+
+    expect(balance.result).toBeOk(Cl.uint(1000));
+  });
+});
+```
+
+### Testing with mainnet execution simulation
+
+When using mainnet execution simulation, you can mint sBTC using the actual mainnet multisig:
+
+```typescript -c
+const mainnetMultisig = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
+const mainnetWallet = "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR";
+
+// Mint sBTC to any mainnet address
+simnet.callPublicFn(
+  "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
+  "mint",
+  [Cl.uint(100000), Cl.principal(mainnetWallet)],
+  mainnetMultisig
+);
+```
+
+This approach is useful for:
+- Testing specific sBTC amounts
+- Simulating different wallet balances
+- Testing edge cases with precise token amounts
+- Integration testing with mainnet contracts

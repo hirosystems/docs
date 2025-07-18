@@ -1,0 +1,289 @@
+---
+title: Clarinet JS SDK
+sidebarTitle: Introduction
+description: Practical guide to testing smart contracts with the Clarinet JS SDK
+type: concept
+---
+
+
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+The Clarinet JS SDK provides a powerful testing framework for Clarity smart contracts. It integrates seamlessly with Vitest to enable comprehensive testing of your contract logic in a simulated environment.
+
+## Initial setup
+
+Start by creating a new Node.js project or using an existing one:
+
+```package-install
+$ init -y
+```
+
+Install the Clarinet JS SDK and required dependencies:
+
+```package-install
+@hirosystems/clarinet-sdk vitest @stacks/transactions
+```
+
+## Project structure
+
+Create the following structure for your smart contract tests:
+
+<Files className='font-fono pointer-events-none bg-background'>
+  <Folder name="my-project" defaultOpen>
+    <Folder name="contracts" defaultOpen>
+      <File name="counter.clar" />
+    </Folder>
+    <Folder name="tests" defaultOpen>
+      <File name="counter.test.ts" />
+    </Folder>
+    <File name="Clarinet.toml" />
+    <File name="package.json" />
+    <File name="tsconfig.json" />
+    <File name="vitest.config.js" />
+  </Folder>
+</Files>
+
+## Simple test
+
+Create a simple test file to verify your contract works:
+
+```ts tests/counter.test.ts
+import { describe, expect, it } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+const accounts = simnet.getAccounts();
+const wallet = accounts.get("wallet_1")!;
+
+describe("counter contract", () => {
+  it("increments the count", () => {
+    const countUpCall = simnet.callPublicFn("counter", "count-up", [], wallet);
+    expect(countUpCall.result).toBeOk(Cl.bool(true));
+  });
+});
+```
+
+The `simnet` object is automatically available in your tests and provides a simulated Stacks blockchain environment.
+
+## Configuration options
+
+### Clarinet configuration
+
+Create a `Clarinet.toml` file to define your contracts:
+
+```toml Clarinet.toml
+[project]
+name = "my-project"
+
+[contracts.counter]
+path = "contracts/counter.clar"
+```
+
+### TypeScript setup
+
+Configure TypeScript for the SDK:
+
+```json tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["vitest/globals"]
+  },
+  "include": ["tests/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+### Vitest configuration
+
+Set up Vitest to work with the SDK:
+
+```js vitest.config.js
+import { defineConfig } from "vitest/config";
+import { vitestSetupFilePath } from "@hirosystems/clarinet-sdk/vitest";
+
+export default defineConfig({
+  test: {
+    environment: "node",
+    globals: true,
+    setupFiles: [vitestSetupFilePath],
+  },
+});
+```
+
+:::callout
+type: warn
+### Important
+The `vitestSetupFilePath` must be included in your `setupFiles` array for the SDK to work properly.
+:::
+
+### Package scripts
+
+Add test scripts to your `package.json`:
+
+```json package.json
+"scripts": {
+  "test": "vitest run",
+  "test:watch": "vitest",
+  "test:coverage": "vitest run --coverage"
+}
+```
+
+## Common patterns
+
+### Testing read-only functions
+
+When testing functions that don't modify state, use `callReadOnlyFn`:
+
+```ts
+const getCountCall = simnet.callReadOnlyFn(
+  "counter",
+  "get-count",
+  [Cl.principal(wallet)],
+  wallet
+);
+expect(getCountCall.result).toBeUint(1);
+```
+
+### Testing public functions with parameters
+
+Pass parameters using the appropriate Clarity type helpers:
+
+```ts
+const depositCall = simnet.callPublicFn(
+  "defi",
+  "deposit",
+  [Cl.uint(1000)], // Convert JS number to Clarity uint
+  wallet
+);
+expect(depositCall.result).toBeOk(Cl.bool(true));
+```
+
+### Accessing contract state
+
+Check data variables and maps directly:
+
+```ts
+// Get a data variable
+const totalDeposits = simnet.getDataVar("defi", "total-deposits");
+expect(totalDeposits).toBeUint(1000);
+
+// Get a map entry
+const balance = simnet.getMapEntry("defi", "balances", Cl.principal(wallet));
+expect(balance).toBeUint(1000);
+```
+
+## Examples
+
+### Testing contract deployment
+
+Ensure your contract is properly deployed before testing its functions:
+
+```ts
+it("ensures the contract is deployed", () => {
+  const contractSource = simnet.getContractSource("counter");
+  expect(contractSource).toBeDefined();
+});
+```
+
+### Testing error conditions
+
+Verify your contract handles errors correctly:
+
+```ts
+it("fails when borrowing too much", () => {
+  const borrowCall = simnet.callPublicFn(
+    "defi",
+    "borrow",
+    [Cl.uint(10000)], // Amount exceeds allowed
+    wallet
+  );
+  expect(borrowCall.result).toBeErr(Cl.uint(300)); // err-overborrow
+});
+```
+
+### Testing with multiple accounts
+
+Simulate interactions between different users:
+
+```ts
+const wallet1 = accounts.get("wallet_1")!;
+const wallet2 = accounts.get("wallet_2")!;
+
+// Wallet 1 deposits
+simnet.callPublicFn("defi", "deposit", [Cl.uint(1000)], wallet1);
+
+// Wallet 2 tries to withdraw wallet 1's funds (should fail)
+const withdrawCall = simnet.callPublicFn(
+  "defi",
+  "withdraw",
+  [Cl.uint(1000)],
+  wallet2
+);
+expect(withdrawCall.result).toBeErr(Cl.uint(401)); // err-unauthorized
+```
+
+## Running tests
+
+Execute your test suite:
+
+```terminal
+$ npm test
+```
+
+Generate coverage reports:
+
+```terminal
+$ npm run test:coverage
+```
+
+This creates detailed coverage and cost analysis for your contract functions.
+
+## Advanced usage
+
+### Using SDK in existing projects
+
+If you have an existing JavaScript/TypeScript project with custom structure, you can still use the SDK:
+
+<Files className='font-fono pointer-events-none bg-background'>
+  <Folder name="my-app" defaultOpen>
+    <Folder name="blockchain" defaultOpen>
+      <Folder name="contracts">
+        <File name="token.clar" />
+      </Folder>
+      <Folder name="tests">
+        <File name="token.test.ts" />
+      </Folder>
+      <File name="Clarinet.toml" />
+    </Folder>
+    <Folder name="frontend">
+      <File name="App.tsx" />
+    </Folder>
+    <File name="package.json" />
+    <File name="vitest.config.js" />
+  </Folder>
+</Files>
+
+Specify the Clarinet.toml location in your Vitest config:
+
+```js vitest.config.js
+export default defineConfig({
+  test: {
+    environment: "node",
+    globals: true,
+    setupFiles: [vitestSetupFilePath],
+    env: {
+      CLARINET_MANIFEST_PATH: "./blockchain/Clarinet.toml"
+    }
+  },
+});
+```
+
+:::next-steps
+- [Unit testing](/tools/clarinet/unit-testing): Learn how to test your contract with unit testing.
+- [SDK reference](/tools/clarinet/sdk-reference): Learn more about the Clarinet JS SDK.
+:::

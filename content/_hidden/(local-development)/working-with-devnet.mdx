@@ -1,0 +1,128 @@
+---
+title: Working with devnet
+description: Set up and use Clarinet's local development network for testing smart contracts
+---
+
+Clarinet's devnet gives you a complete local blockchain environment. You'll run Bitcoin and Stacks nodes, APIs, and explorers right on your machine using Docker containers.
+
+This lets you test contracts, debug transactions, and develop frontends without spending real money or waiting for network confirmations.
+
+## What you'll learn
+
+You'll learn how to:
+- [x] Start and configure a local devnet
+- [x] Deploy contracts to your local network  
+- [x] Use devnet accounts for testing
+- [x] Monitor transactions and contract calls
+- [x] Troubleshoot common devnet issues
+
+## Prerequisites
+
+Before starting, make sure you have:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+- A Clarinet project (see [Creating a Clarinet Project](/creating-a-clarinet-project))
+- Basic familiarity with terminal commands
+
+## Step 1: Start your devnet
+
+Navigate to your Clarinet project directory and start the devnet:
+
+```bash
+clarinet devnet start
+```
+
+You'll see Docker containers spinning up. This creates a full blockchain stack:
+- Bitcoin node (local bitcoind)
+- Stacks node (local stacks-blockchain)  
+- Stacks API (for querying blockchain data)
+- Stacks Explorer (web interface)
+- Bitcoin Explorer
+- PostgreSQL database
+
+The command opens an interactive dashboard by default. You can view logs instead with `--no-dashboard`.
+
+## Step 2: Access your local blockchain
+
+Once devnet starts, you can access these services:
+
+- **Stacks Explorer**: http://localhost:8000 - View blocks, transactions, and contracts
+- **Bitcoin Explorer**: http://localhost:8001 - Monitor Bitcoin transactions  
+- **Stacks API**: http://localhost:3999 - Query blockchain data programmatically
+
+Your contracts from `contracts/` are automatically deployed when devnet starts.
+
+## Step 3: Use devnet accounts
+
+Devnet provides pre-funded accounts for testing. You can find account details in:
+- The devnet dashboard (default view)
+- `settings/Devnet.toml` configuration file
+
+Each account has:
+- STX tokens for transaction fees
+- Bitcoin for stacking/mining operations
+- Private keys for signing transactions
+
+## Step 4: Test contract interactions
+
+With devnet running, you can interact with your contracts through:
+
+**Clarinet console** (in a new terminal):
+```bash
+clarinet console
+```
+
+**Frontend applications** pointing to `http://localhost:3999`
+
+**Direct API calls**:
+```bash
+curl http://localhost:3999/v2/info
+```
+
+## Verify it's working
+
+Check that devnet is running properly:
+
+1. **Visit the explorer**: Go to http://localhost:8000 and verify you see recent blocks
+2. **Check API health**: Run `curl http://localhost:3999/v2/info` and confirm you get network info
+3. **View your contracts**: Look for your deployed contracts in the explorer's contract section
+
+See recent transactions and your contract deployments? You're good to go.
+
+## Deploy and try it out
+
+Your contracts are automatically deployed when devnet starts. To test them:
+
+1. **Use the console**: Run `clarinet console` and call contract functions
+2. **Check deployment status**: View deployments in the explorer or dashboard
+3. **Test with a frontend**: Point your dapp to the local API endpoint
+
+## Troubleshooting
+
+**Error: clarinet was unable to create network**
+- Make sure Docker Desktop is running
+- Check that ports 3999, 8000, 8001 aren't in use by other applications
+
+**Containers won't start**
+- Stop any running devnet: `clarinet devnet stop`
+- Clear Docker containers: `docker system prune`
+- Restart devnet
+
+**Contracts not deploying**
+- Check `Clarinet.toml` for syntax errors
+- Verify contract files are in the `contracts/` directory
+- Review deployment logs in the dashboard
+
+## Configuration options
+
+Customize devnet behavior with these flags:
+
+- `--manifest-path`: Use a different Clarinet.toml file
+- `--deployment-plan-path`: Specify custom deployment plan
+- `--no-dashboard`: Show logs instead of interactive dashboard  
+- `--use-on-disk-deployment-plan`: Use existing deployment plan without updates
+
+Modify `settings/Devnet.toml` to change:
+- Network ports
+- Docker images
+- Mining configuration  
+- Epoch settings

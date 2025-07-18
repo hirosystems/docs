@@ -1,0 +1,186 @@
+---
+title: Frequently asked questions
+sidebarTitle: FAQ
+description: Common questions and solutions for Clarinet development
+---
+
+This page addresses common questions and issues encountered when developing with Clarinet, based on community feedback and support interactions.
+
+## Testing and development
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="sbtc-testing">
+    <AccordionTrigger>How do I test with sBTC tokens in my development environment?</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        To test with sBTC tokens, add the mainnet sBTC contract as a requirement and mint tokens using the deployer address:
+
+        **Step 1: Add sBTC as a requirement**
+        ```terminal
+        $ clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
+        ```
+
+        **Step 2: Mint sBTC in your tests**
+        ```typescript
+        // The sBTC multisig address that can mint
+        const sbtcDeployer = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
+        
+        // Mint sBTC to your test wallet
+        const mintTx = simnet.callPublicFn(
+          "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
+          "mint",
+          [Cl.uint(1000000), Cl.principal(wallet1)],
+          sbtcDeployer
+        );
+        ```
+
+        This approach allows you to work with sBTC in unit tests without complex Bitcoin transaction simulation.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="mainnet-simulation-addresses">
+    <AccordionTrigger>Why does is-standard fail with mainnet addresses during mainnet simulation?</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        When using mainnet execution simulation, the `is-standard` function expects mainnet addresses, not testnet addresses. Here's how to handle this:
+
+        **Use mainnet addresses instead of default testnet addresses:**
+        ```typescript
+        // Instead of using simnet.getAccounts()
+        const mainnetAddress = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY";
+        
+        // Mint STX to any mainnet address
+        simnet.mintSTX(mainnetAddress, 1000000n);
+        
+        // Call functions with mainnet address
+        const result = simnet.callReadOnlyFn(
+          "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3",
+          "get-price",
+          [priceFeed],
+          mainnetAddress
+        );
+        ```
+
+        The simnet is permissive and accepts any valid Stacks address when mainnet simulation is enabled.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="testing-helpers-migration">
+    <AccordionTrigger>How do I migrate from expectSTXTransferEvent to the new SDK?</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        The Clarinet v2 SDK uses standard Vitest matchers instead of custom event helpers. Here's how to migrate:
+
+        **Old approach (Clarinet v1):**
+        ```typescript
+        block.receipts[0].events.expectSTXTransferEvent(
+          amount,
+          sender,
+          recipient
+        );
+        ```
+
+        **New approach (Clarinet v2):**
+        ```typescript
+        // Check for exact event match
+        expect(events).toContainEqual({
+          event: "stx_transfer_event",
+          data: {
+            amount: "1000000",
+            memo: "",
+            recipient: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+            sender: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+          },
+        });
+
+        // Or check only specific properties
+        expect(events).toContainEqual({
+          event: "stx_transfer_event",
+          data: expect.objectContaining({
+            sender: address1,
+            recipient: contractAddress,
+          }),
+        });
+        ```
+
+        For Clarity value assertions, use the built-in matchers:
+        ```typescript
+        expect(result).toBeOk(Cl.bool(true));
+        expect(result).toBeErr(Cl.uint(500));
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Configuration and setup
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="mnemonic-24-words">
+    <AccordionTrigger>Why am I getting "bip39 error" when generating deployment plans?</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Starting with Clarinet 2.15.0, deployment configurations require 24-word mnemonics. 12-word mnemonics are no longer supported.
+
+        **Update your configuration:**
+        ```toml settings/Mainnet.toml
+        [accounts.deployer]
+        # Use a 24-word mnemonic
+        mnemonic = "twice kind fence tip hidden tilt action fragile skin nothing glory cousin green tomorrow spring wrist shed math olympic multiply hip blue scout claw"
+        ```
+
+        Generate a new 24-word mnemonic using a BIP39 generator if needed. This change improves security for production deployments.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Known limitations
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="bitcoin-testing-limitations">
+    <AccordionTrigger>Can I test Bitcoin transaction verification in Clarinet?</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Testing contracts that use clarity-bitcoin-lib for Bitcoin transaction verification has limitations in simnet and devnet:
+
+        **Current limitations:**
+        - No real Bitcoin blocks or transactions in simnet
+        - Mock blocks don't contain verifiable Bitcoin transactions
+        - `get-burn-block-info?` returns mock data unsuitable for verification
+
+        **Workarounds:**
+        - Test Bitcoin verification logic on mainnet or with mainnet execution simulation
+        - Create unit tests that mock expected behavior without actual verification
+        - Consider separating Bitcoin verification logic for easier testing
+
+        The Clarinet team is exploring solutions for better Bitcoin testing support.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="epoch-transition">
+    <AccordionTrigger>Why does my devnet freeze at epoch 3.0 transition?</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        The epoch 3.0 transition in devnet can be unstable, with success rates varying between 50-80% depending on your setup.
+
+        **Current workarounds:**
+        - Restart devnet if it freezes around blocks 139-140
+        - Try Clarinet 2.14.0 which some users report as more stable
+        - Wait for the upcoming feature to start devnet directly in epoch 3.0
+
+        **Monitoring the transition:**
+        ```console
+        # Watch for the transition around these blocks
+        Block 139: Epoch 2.5
+        Block 140: Should transition to 3.0
+        ```
+
+        The Clarinet team is working on improving epoch transition stability and plans to allow starting devnet directly in epoch 3.0.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useHover } from "@/context/hover";
+import { useHover } from "@/components/docskit/context/hover";
 
 export function HoverLinkClient(props: {
   href?: string;

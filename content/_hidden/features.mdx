@@ -1,0 +1,149 @@
+---
+title: Introduction to Hiro tools
+sidebarTitle: Introduction to Hiro tools
+description: Learn more about our tools and how to use them together.
+isNew: true
+---
+
+
+
+## Overview
+
+Core tools for building and testing smart contracts:
+
+- [**Clarinet**](/tools/clarinet) - Local blockchain development environment
+- [**Clarinet JS SDK**](/tools/clarinet/sdk-introduction) - JavaScript testing framework
+- [**Stacks.js**](/reference/stacks.js) - Frontend integration library
+- [**Chainhook**](/tools/chainhook) - Event-driven blockchain applications
+
+## API services
+
+Query blockchain data without running infrastructure:
+
+- [**Stacks Blockchain API**](/apis/stacks-blockchain-api) - RESTful blockchain queries
+- [**Token Metadata API**](/apis/token-metadata-api) - NFT and token metadata
+- [**Ordinals API**](/apis/ordinals-api) - Bitcoin inscriptions data
+- [**Runes API**](/apis/runes-api) - Bitcoin fungible tokens
+
+## Platform services
+
+Cloud-based tools for teams and production:
+
+- [**Hiro Platform**](https://platform.hiro.so) - Cloud development environment
+- [**Contract Monitoring**](/tools/contract-monitoring) - Real-time alerts and metrics
+- **Hosted Devnets** - Isolated test environments
+
+## Integrations
+
+How our tools connect and complement each other:
+
+| Tool       | Integrates With | How They Work Together                        |
+|------------|-----------------|-----------------------------------------------|
+| Clarinet   | Stacks.js       | Deploy contracts locally, connect frontend    |
+| Clarinet   | Chainhook       | Test event handling in development            |
+| Stacks.js  | Stacks API      | Submit transactions, query results            |
+
+## Development workflows
+
+### Smart contract DApp
+
+Building user-facing applications with smart contracts:
+
+```terminal
+$ clarinet new my-project && cd my-project
+$ clarinet contract new token
+$ clarinet test
+
+$ clarinet devnet start
+$ clarinet deployments apply --devnet
+```
+
+```typescript
+import { request } from '@stacks/connect';
+
+const response = await request('stx_callContract', {
+  contract: 'SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN.counters',
+  functionName: 'count',
+  functionArgs: [Cl.int(3)],
+  network: 'mainnet',
+});
+
+const balance = await fetch(
+  'https://api.hiro.so/v2/accounts/ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
+);
+```
+
+**Tool flow**: Clarinet → Stacks.js → Stacks API
+
+### Event-driven backend
+
+React to blockchain events in real-time:
+
+```json
+// 1. Create Chainhook predicate
+{
+  "chain": "stacks",
+  "uuid": "my-hook",
+  "networks": {
+    "mainnet": {
+      "if_this": {
+        "scope": "contract_call",
+        "method": "transfer"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://my-api.com/webhook"
+        }
+      }
+    }
+  }
+}
+```
+
+```javascript
+// 2. Handle webhook in your backend
+app.post('/webhook', (req, res) => {
+  const { apply } = req.body;
+  const transactions = apply[0].transactions;
+  // Process event, update database
+  db.save(transactions);
+});
+```
+
+**Tool flow**: Chainhook → Your backend
+
+### Bitcoin applications
+
+Build on Bitcoin L1 protocols:
+
+```bash
+# 1. Query existing data
+curl https://api.hiro.so/ordinals/v1/inscriptions
+
+# 2. Or create custom indexes
+bitcoin-indexer --config my-protocol.json
+```
+
+```typescript
+// 3. Display in frontend
+const inscriptions = await fetch(
+  'https://api.hiro.so/ordinals/v1/inscriptions'
+);
+```
+
+**Tool flow**: Ordinals / Runes APIs / Bitcoin Indexer → Your backend
+
+## Decision matrix
+
+| If You're Building     | Use These Tools                          | Why                               |
+|------------------------|------------------------------------------|-----------------------------------|
+| Smart contract app     | Clarinet + Stacks.js + API               | Complete dev-to-production flow   |
+| NFT marketplace        | Clarinet + Stacks.js + API + Token Metadata API | Automatic metadata handling       |
+| Bitcoin explorer       | Ordinals/Runes APIs                      | Pre-indexed Bitcoin data          |
+| Analytics dashboard    | APIs + Chainhook                         | Historical + real-time data       |
+| Custom protocol        | Chainhook + Bitcoin Indexer              | Build your own indexes            |
+
+:::next-steps
+- [Install Clarinet](/tools/clarinet/getting-started/installing-clarinet): Learn how to install Clarinet.
+- [Explore API references](/apis): Explore our API references.
+:::

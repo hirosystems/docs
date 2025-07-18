@@ -1,0 +1,152 @@
+---
+title: Quickstart
+description: In this guide, you'll build a simple counter smart contract and interact with it in a local environment.
+---
+
+:::objectives
+- Create a Clarity smart contract project
+- Write Clarity code with maps and public functions
+- Test and validate your contracts using Clarinet's console
+:::
+
+:::prerequisites
+- Clarinet installed on your machine. Follow the [installation guide](/tools/clarinet#installation) if needed.
+- A code editor like VS Code for editing Clarity files.
+:::
+
+## Quickstart
+
+<Steps>
+  <Step>
+    ### Create your project
+    
+    Let's start by creating a new Clarinet project. The `clarinet new` command sets up everything you need for smart contract development, including a testing framework, deployment configurations, and a local development environment:
+    
+    ```terminal
+    $ clarinet new counter
+    [32mCreate directory[0m [1mcounter[0m
+    [32mCreate directory[0m [1mcontracts[0m
+    [32mCreate directory[0m [1msettings[0m
+    [32mCreate directory[0m [1mtests[0m
+    [32mCreate file[0m [1mClarinet.toml[0m
+    [32mCreate file[0m [1mpackage.json[0m
+    [32mCreate file[0m [1mvitest.config.js[0m
+    ```
+
+    Clarinet creates a complete project structure for you. Each folder serves a specific purpose in your development workflow:
+    
+    <Files className="font-fono pointer-events-none bg-background">
+      <Folder name="counter" defaultOpen>
+        <Folder name="contracts" />
+        <Folder name="settings">
+          <File name="Devnet.toml" />
+          <File name="Mainnet.toml" />
+          <File name="Testnet.toml" />
+        </Folder>
+        <Folder name="tests" />
+        <File name="Clarinet.toml" />
+        <File name="package.json" />
+        <File name="vitest.config.js" />
+      </Folder>
+    </Files>
+  </Step>
+  
+  <Step>
+    ### Generate your contract
+    
+    Now that we have our project structure, let's create a smart contract. Navigate into your project directory and use Clarinet's contract generator:
+    
+    ```terminal
+    $ cd counter
+    $ clarinet contract new counter
+    [32mCreated file[0m [1mcontracts/counter.clar[0m
+    [32mCreated file[0m [1mtests/counter.test.ts[0m
+    [33mUpdated Clarinet.toml[0m [1mwith contract counter[0m
+    ```
+
+    Clarinet automatically creates both your contract file and a corresponding test file. This follows the best practice of writing tests alongside your contract code:
+    
+    | File | Purpose |
+    |------|---------|
+    | `contracts/counter.clar` | Your smart contract code |
+    | `tests/counter.test.ts` | Test file for your contract |
+
+    :::callout
+    Notice that Clarinet also updated your `Clarinet.toml` file. This configuration file tracks all contracts in your project and their deployment settings.
+    :::
+  </Step>
+  
+  <Step>
+    ### Write your contract code
+    
+    Open `contracts/counter.clar` and replace its contents with our counter implementation. This contract will maintain a separate count for each user who interacts with it:
+    
+    ```clarity contracts/counter.clar -c
+    ;; Define a map to store counts for each user
+    (define-map counters principal uint)
+
+    ;; Increment the count for the caller
+    (define-public (count-up)
+      (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
+    )
+
+    ;; Get the current count for a user
+    (define-read-only (get-count (who principal))
+      (default-to u0 (map-get? counters who))
+    )
+    ```
+
+    Let's understand what each part does:
+    - [`define-map`](/resources/clarity/reference/functions#define-map) creates a persistent storage map that associates each user (principal) with their count
+    - [`tx-sender`](/resources/clarity/reference/keywords#tx-sender) is a built-in variable that contains the address of whoever calls the function
+    - [`define-public`](/resources/clarity/reference/functions#define-public) declares functions that can modify contract state
+    - [`define-read-only`](/resources/clarity/reference/functions#define-read-only) declares functions that only read data without modifying it
+  </Step>
+  
+  <Step>
+    ### Validate your contract
+    
+    Before we can test our contract, let's make sure it's syntactically correct and type-safe. Clarinet's check command analyzes your contract without deploying it:
+    
+    ```terminal
+    $ clarinet check
+    [32m✔[0m [1m1 contract checked[0m
+    ```
+
+    If you see errors instead, here are the most common issues and how to fix them:
+
+    | Error | Fix |
+    |-------|-----|
+    | `Unknown keyword` | Check spelling of Clarity functions |
+    | `Type mismatch` | Ensure you're using correct types (uint, principal, etc.) |
+    | `Unresolved contract` | Verify contract name in `Clarinet.toml` matches the contract name in the file |
+  </Step>
+  
+  <Step>
+    ### Test in the console
+    
+    Now for the exciting part—let's interact with our contract! Clarinet provides an interactive console where you can call functions and see results immediately. Start the console with:
+    
+    ```terminal
+    $ clarinet console
+    ```
+
+    Once the console loads, you can call your contract functions directly. Here are a few examples you can try:
+    
+    ```terminal
+    $ (contract-call? .counter count-up)
+    [32m(ok true)[0m
+    $ (contract-call? .counter get-count tx-sender)
+    [32mu1[0m
+    $ (contract-call? .counter count-up)
+    [32m(ok true)[0m
+    $ (contract-call? .counter get-count tx-sender)
+    [32mu2[0m
+    ```
+  </Step>
+</Steps>
+
+:::next-steps
+- [Project structure](/tools/clarinet/project-structure): Learn about the project structure and how to manage your contracts.
+- [Local blockchain development](/tools/clarinet/local-blockchain-development): Spin up a local blockchain to test your contracts.
+:::
