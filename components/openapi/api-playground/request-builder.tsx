@@ -280,6 +280,8 @@ export const RequestBuilder = forwardRef<HTMLFormElement, RequestBuilderProps>(
               hasError && "border-red-500",
               "font-fono"
             )}
+            disabled={false}
+            type="text"
           />
 
           {hasError && (
