@@ -1,34 +1,13 @@
 ---
 title: Contract monitoring
 sidebarTitle: Overview
-description: Contract monitoring is fully managed—no infrastructure setup, no node maintenance, just instant notifications delivered to your endpoints.
+description: Contract monitoring lets you track smart contract events in real-time and receive webhook notifications when specific activities occur.
 llm: false
 ---
 
 ## Overview
 
-Contract monitoring in the Hiro Platform lets you track smart contract events in real-time and receive webhook notifications when specific activities occur.
-
 To explore Contract monitoring features with AI, copy and paste [llms.txt](/tools/contract-monitoring/llms.txt) into your LLM of choice.
-
-<Mermaid
-  chart="
-graph LR
-    A[Smart Contract] -->|Transactions| B[Stacks API]
-    B --> C[Event Detection]
-    C --> D{Filter Rules}
-    D -->|Matches| E[Webhook Delivery]
-    D -->|No Match| F[Ignored]
-    E --> G[Your Application]
-    
-    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style B fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style C fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style E fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style F fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style G fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
-/>
 
 ## Key features
 
