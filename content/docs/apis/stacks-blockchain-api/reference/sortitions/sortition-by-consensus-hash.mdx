@@ -1,0 +1,13 @@
+---
+title: Sortition by consensus hash
+sidebarTitle: Sortition by consensus hash
+description: Retrieves information about a sortition by its consensus hash.
+full: true
+isRpc: true
+---
+
+<APIPage
+  document="./openapi/stacks-node-rpc-api.json"
+  operations={[{ path: '/v3/sortitions/consensus/{consensus_hash}', method: 'get' }]}
+  hasHead={false}
+/>

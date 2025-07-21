@@ -1,0 +1,13 @@
+---
+title: Sortition by burn height
+sidebarTitle: Sortition by burn height
+description: Retrieves information about a sortition by its burn block height.
+full: true
+isRpc: true
+---
+
+<APIPage
+  document="./openapi/stacks-node-rpc-api.json"
+  operations={[{ path: '/v3/sortitions/burn_height/{height}', method: 'get' }]}
+  hasHead={false}
+/>
