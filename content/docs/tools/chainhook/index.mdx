@@ -11,24 +11,7 @@ Chainhook is a reorg-aware indexer that lets you build custom event streams from
 
 To explore Chainhook features with AI, copy and paste [llms.txt](/tools/chainhook/llms.txt) into your LLM of choice.
 
-<Mermaid
-  chart="
-graph LR
-    A[Blockchain Node] -->|Blocks| B[Chainhook]
-    B --> C[Predicate Engine]
-    C --> D{Match?}
-    D -->|Yes| E[Action Handler]
-    D -->|No| F[Skip]
-    E --> G[Webhook/File]
-    
-    style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style B fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style C fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style E fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style F fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
-    style G fill:#C2EBC4,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c"
-/>
+![Chainhook overview](/images/tools/chainhook/overview.svg)
 
 ## Key features
 
