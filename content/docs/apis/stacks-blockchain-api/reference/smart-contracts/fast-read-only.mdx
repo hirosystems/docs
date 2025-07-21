@@ -1,0 +1,13 @@
+---
+title: Fast call read-only function
+sidebarTitle: Fast call read-only
+description: Call a read-only function on a smart contract without cost and memory tracking for faster execution.
+full: true
+isRpc: true
+---
+
+<APIPage
+  document="./openapi/stacks-node-rpc-api.json"
+  operations={[{ path: '/v3/contracts/fast-call-read/{contract_address}/{contract_name}/{function_name}', method: 'post' }]}
+  hasHead={false}
+/>
