@@ -51,7 +51,7 @@ export async function executeRequest(
     operation.parameters?.filter((p) => p.in === "query") || [];
   for (const param of queryParameters) {
     const value = formData[param.name];
-    if (!value) continue;
+    if (!value || value.trim() === "") continue;
 
     if (clarityConversion && param.schema?.["x-clarity-type"]) {
       try {

@@ -47,11 +47,43 @@ export function APIPlayground({
 }: APIPlaygroundProps) {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<APIResponse | null>(null);
-  const [formData, setFormData] = useState<Record<string, any>>({});
+
+  const getInitialFormData = () => {
+    const initialData: Record<string, any> = {};
+
+    // Add example values for parameters
+    if (operation.parameters) {
+      for (const param of operation.parameters) {
+        if (param.example !== undefined) {
+          initialData[param.name] = param.example.toString();
+        }
+      }
+    }
+
+    // Add example values for request body
+    if (operation.requestBody) {
+      const bodySchema =
+        operation.requestBody.content?.["application/json"]?.schema;
+      if (bodySchema?.type === "object" && bodySchema.properties) {
+        const exampleBody =
+          operation.requestBody.content?.["application/json"]?.example;
+        if (exampleBody && typeof exampleBody === "object") {
+          for (const [key, value] of Object.entries(exampleBody)) {
+            initialData[`body.${key}`] =
+              typeof value === "string" ? value : JSON.stringify(value);
+          }
+        }
+      }
+    }
+
+    return initialData;
+  };
+
+  const [formData, setFormData] =
+    useState<Record<string, any>>(getInitialFormData());
   const [openSections, setOpenSections] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Group parameters by type
   const pathParams = operation.parameters?.filter((p) => p.in === "path") || [];
   const queryParams =
     operation.parameters?.filter((p) => p.in === "query") || [];
@@ -59,10 +91,9 @@ export function APIPlayground({
     operation.parameters?.filter((p) => p.in === "header") || [];
   const hasRequestBody = !!operation.requestBody;
 
-  // Build display URL (without base URL)
   const buildDisplayUrl = () => {
     let path = operation.path;
-    // Replace path parameters
+
     if (operation.parameters) {
       for (const param of operation.parameters) {
         if (param.in === "path" && formData[param.name]) {
@@ -71,9 +102,9 @@ export function APIPlayground({
       }
     }
 
-    // Add query parameters
     const queryParams = operation.parameters?.filter(
-      (p) => p.in === "query" && formData[p.name]
+      (p) =>
+        p.in === "query" && formData[p.name] && formData[p.name].trim() !== "",
     );
     const queryString =
       queryParams && queryParams.length > 0
@@ -85,7 +116,6 @@ export function APIPlayground({
     return `${path}${queryString}`;
   };
 
-  // Build full URL (with base URL for requests)
   const buildUrl = () => {
     const displayUrl = buildDisplayUrl();
     return `${baseUrl || "https://api.hiro.so"}${displayUrl}`;
@@ -99,34 +129,30 @@ export function APIPlayground({
     headerParams.length > 0 ||
     hasRequestBody;
 
-  // Check if all required fields are filled
   const isFormValid = () => {
     // Check required path parameters
     if (pathParams.some((p) => p.required && !formData[p.name])) {
       return false;
     }
 
-    // Check required query parameters
     if (queryParams.some((p) => p.required && !formData[p.name])) {
       return false;
     }
 
-    // Check required header parameters
     if (headerParams.some((p) => p.required && !formData[p.name])) {
       return false;
     }
 
-    // Check required body fields
     if (operation.requestBody?.required) {
       const bodySchema =
         operation.requestBody.content?.["application/json"]?.schema;
       if (bodySchema?.type === "object" && bodySchema.properties) {
         const hasRequiredBodyFields = Object.entries(
-          bodySchema.properties
+          bodySchema.properties,
         ).some(
           ([propName, propSchema]: [string, any]) =>
             bodySchema.required?.includes(propName) &&
-            !formData[`body.${propName}`]
+            !formData[`body.${propName}`],
         );
         if (hasRequiredBodyFields) {
           return false;
@@ -146,17 +172,16 @@ export function APIPlayground({
     if (headerParams.some((p) => p.required && !formData[p.name]))
       requiredSections.push("header");
 
-    // Check for required body fields
     if (operation.requestBody?.required) {
       const bodySchema =
         operation.requestBody.content?.["application/json"]?.schema;
       if (bodySchema?.type === "object" && bodySchema.properties) {
         const hasRequiredBodyFields = Object.entries(
-          bodySchema.properties
+          bodySchema.properties,
         ).some(
           ([propName, propSchema]: [string, any]) =>
             bodySchema.required?.includes(propName) &&
-            !formData[`body.${propName}`]
+            !formData[`body.${propName}`],
         );
         if (hasRequiredBodyFields) {
           requiredSections.push("body");
@@ -169,7 +194,6 @@ export function APIPlayground({
       return;
     }
 
-    // Build request body from individual fields if needed
     let finalFormData = { ...formData };
     if (operation.requestBody) {
       const bodySchema =
@@ -178,7 +202,7 @@ export function APIPlayground({
         const bodyObject: Record<string, any> = {};
 
         for (const [propName, propSchema] of Object.entries(
-          bodySchema.properties
+          bodySchema.properties,
         ) as [string, any][]) {
           const fieldValue = formData[`body.${propName}`];
           if (fieldValue !== undefined && fieldValue !== "") {
@@ -265,7 +289,6 @@ export function APIPlayground({
       }
     }
 
-    // Submit the request
     handleSubmit(finalFormData);
   };
 
@@ -280,7 +303,7 @@ export function APIPlayground({
         {
           proxyUrl: playgroundOptions?.proxyUrl,
           auth: playgroundOptions?.defaultAuth,
-        }
+        },
       );
       setResponse(result);
     } catch (error) {
@@ -298,7 +321,7 @@ export function APIPlayground({
       <div
         className={cn(
           "px-3 py-2 bg-card border-b border-border",
-          !hasParameters && "border-b-0"
+          !hasParameters && "border-b-0",
         )}
       >
         <div className="flex items-center gap-2">
@@ -338,7 +361,7 @@ export function APIPlayground({
               open={openSections.includes("path")}
               onOpenChange={(open) => {
                 setOpenSections((prev) =>
-                  open ? [...prev, "path"] : prev.filter((s) => s !== "path")
+                  open ? [...prev, "path"] : prev.filter((s) => s !== "path"),
                 );
               }}
             >
@@ -370,7 +393,7 @@ export function APIPlayground({
               open={openSections.includes("query")}
               onOpenChange={(open) => {
                 setOpenSections((prev) =>
-                  open ? [...prev, "query"] : prev.filter((s) => s !== "query")
+                  open ? [...prev, "query"] : prev.filter((s) => s !== "query"),
                 );
               }}
             >
@@ -404,7 +427,7 @@ export function APIPlayground({
                 setOpenSections((prev) =>
                   open
                     ? [...prev, "header"]
-                    : prev.filter((s) => s !== "header")
+                    : prev.filter((s) => s !== "header"),
                 );
               }}
             >
@@ -434,7 +457,7 @@ export function APIPlayground({
               open={openSections.includes("body")}
               onOpenChange={(open) => {
                 setOpenSections((prev) =>
-                  open ? [...prev, "body"] : prev.filter((s) => s !== "body")
+                  open ? [...prev, "body"] : prev.filter((s) => s !== "body"),
                 );
               }}
             >
@@ -469,7 +492,7 @@ export function APIPlayground({
                     "inline-flex items-center rounded border transition-colors font-fono text-xs px-1.5 py-0 h-5",
                     response.status >= 200 && response.status < 300
                       ? "bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]"
-                      : "bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]"
+                      : "bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]",
                   )}
                 >
                   {response.status} {response.statusText || ""}
@@ -576,7 +599,7 @@ function MethodBadge({ method }: { method: string }) {
     <span
       className={cn(
         "inline-flex items-center justify-center rounded px-2 py-1 text-xs font-semibold border",
-        getMethodClasses()
+        getMethodClasses(),
       )}
     >
       {upperMethod}
