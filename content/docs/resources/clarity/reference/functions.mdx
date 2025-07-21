@@ -1610,6 +1610,119 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (unwrap-err-panic (always-fails)))
 ```
 
+## Data helpers [#data-helpers]
+
+### default-to [#default-to]
+
+`default-to` returns a default value for none.
+
+**Signature**
+
+```clarity
+(default-to default optional)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `default` | any | Default value |
+| `optional` | optional | Optional value |
+
+```clarity
+(default-to u0 (some u42)) ;; Returns u42
+(default-to u0 none) ;; Returns u0
+
+;; Safe defaults
+(define-read-only (get-balance-safe (user principal))
+  (default-to u0 (map-get? balances user)))
+```
+
+### merge [#merge]
+
+`merge` combines two tuples, with the second overriding the first.
+
+**Signature**
+
+```clarity
+(merge tuple1 tuple2)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `tuple1` | tuple | Base tuple |
+| `tuple2` | tuple | Override tuple |
+
+```clarity
+(merge { a: u1, b: u2 } { b: u3, c: u4 })
+;; Returns { a: u1, b: u3, c: u4 }
+
+;; Update record
+(define-public (update-profile (updates { name: (optional (string-ascii 50)), age: (optional uint) }))
+  (let ((current (default-to { name: "", age: u0 } (map-get? profiles tx-sender))))
+    (map-set profiles tx-sender (merge current updates))
+    (ok true)))
+```
+
+### get [#get]
+
+`get` extracts a value from a tuple by key.
+
+**Signature**
+
+```clarity
+(get key tuple)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `key` | symbol | Key to extract |
+| `tuple` | tuple | Tuple to access |
+
+```clarity
+(get balance { balance: u100, locked: u50 }) ;; Returns u100
+
+;; Access nested data
+(define-read-only (get-user-balance (user principal))
+  (match (map-get? accounts user)
+    account (get balance account)
+    u0))
+```
+
+### as-max-len? [#as-max-len]
+
+`as-max-len?` checks if a sequence fits within a maximum length.
+
+**Signature**
+
+```clarity
+(as-max-len? sequence max-length)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `sequence` | sequence | Sequence to check |
+| `max-length` | uint | Maximum allowed length |
+
+```clarity
+(as-max-len? (list 1 2 3) u5) ;; Returns (some (1 2 3))
+(as-max-len? "Hello" u3) ;; Returns none
+
+;; Safe append
+(define-public (add-to-list (item uint))
+  (match (as-max-len? (append (var-get items) item) u100)
+    new-list (begin
+      (var-set items new-list)
+      (ok true))
+    (err u1)))
+```
+
 ## Control flow [#control-flow]
 
 ### if [#if]
@@ -1878,32 +1991,6 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 ;; Check absence
 (define-read-only (is-available (name (string-ascii 50)))
   (is-none (map-get? reserved-names name)))
-```
-
-### default-to [#default-to]
-
-`default-to` returns a default value for none.
-
-**Signature**
-
-```clarity
-(default-to default optional)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `default` | any | Default value |
-| `optional` | optional | Optional value |
-
-```clarity
-(default-to u0 (some u42)) ;; Returns u42
-(default-to u0 none) ;; Returns u0
-
-;; Safe defaults
-(define-read-only (get-balance-safe (user principal))
-  (default-to u0 (map-get? balances user)))
 ```
 
 ## Fungible tokens [#fungible-tokens]
@@ -3242,87 +3329,3 @@ Key points:
     (ok true)))
 ```
 
-### as-max-len? [#as-max-len]
-
-`as-max-len?` checks if a sequence fits within a maximum length.
-
-**Signature**
-
-```clarity
-(as-max-len? sequence max-length)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to check |
-| `max-length` | uint | Maximum allowed length |
-
-```clarity
-(as-max-len? (list 1 2 3) u5) ;; Returns (some (1 2 3))
-(as-max-len? "Hello" u3) ;; Returns none
-
-;; Safe append
-(define-public (add-to-list (item uint))
-  (match (as-max-len? (append (var-get items) item) u100)
-    new-list (begin
-      (var-set items new-list)
-      (ok true))
-    (err u1)))
-```
-
-### merge [#merge]
-
-`merge` combines two tuples, with the second overriding the first.
-
-**Signature**
-
-```clarity
-(merge tuple1 tuple2)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `tuple1` | tuple | Base tuple |
-| `tuple2` | tuple | Override tuple |
-
-```clarity
-(merge { a: u1, b: u2 } { b: u3, c: u4 })
-;; Returns { a: u1, b: u3, c: u4 }
-
-;; Update record
-(define-public (update-profile (updates { name: (optional (string-ascii 50)), age: (optional uint) }))
-  (let ((current (default-to { name: "", age: u0 } (map-get? profiles tx-sender))))
-    (map-set profiles tx-sender (merge current updates))
-    (ok true)))
-```
-
-### get [#get]
-
-`get` extracts a value from a tuple by key.
-
-**Signature**
-
-```clarity
-(get key tuple)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `key` | symbol | Key to extract |
-| `tuple` | tuple | Tuple to access |
-
-```clarity
-(get balance { balance: u100, locked: u50 }) ;; Returns u100
-
-;; Access nested data
-(define-read-only (get-user-balance (user principal))
-  (match (map-get? accounts user)
-    account (get balance account)
-    u0))
-```
