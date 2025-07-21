@@ -698,90 +698,6 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (err u404)))
 ```
 
-### map [#map]
-
-`map` applies a function to each element of a list.
-
-**Signature**
-
-```clarity
-(map func list1 list2...)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `func` | function | Function to apply |
-| `list1`, `list2`, ... | `list` | Lists to map over |
-
-```clarity
-(map + (list 1 2 3) (list 10 20 30)) ;; Returns (11 22 33)
-
-;; Double all values
-(define-private (double (x uint))
-  (* x u2))
-
-(define-read-only (double-all (numbers (list 10 uint)))
-  (map double numbers))
-```
-
-### filter [#filter]
-
-`filter` returns elements that satisfy a predicate.
-
-**Signature**
-
-```clarity
-(filter func list)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `func` | function | Predicate function |
-| `list` | `list` | List to filter |
-
-```clarity
-(define-private (is-even (x uint))
-  (is-eq (mod x u2) u0))
-
-(filter is-even (list u1 u2 u3 u4)) ;; Returns (u2 u4)
-
-;; Filter active users
-(define-read-only (get-active-users)
-  (filter is-active (var-get all-users)))
-```
-
-### fold [#fold]
-
-`fold` reduces a list to a single value.
-
-**Signature**
-
-```clarity
-(fold func list initial-value)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `func` | function | Reducer function |
-| `list` | `list` | List to reduce |
-| `initial-value` | any | Starting value |
-
-```clarity
-(fold + (list u1 u2 u3 u4) u0) ;; Returns u10
-
-;; Sum balances
-(define-private (add-balance (user principal) (total uint))
-  (+ total (default-to u0 (map-get? balances user))))
-
-(define-read-only (get-total-balance)
-  (fold add-balance (var-get users) u0))
-```
 
 ### int-to-ascii [#int-to-ascii]
 
@@ -986,6 +902,93 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 ;; Parse file data
 (define-read-only (parse-file-size (data (buff 4)))
   (buff-to-uint-le data))
+```
+
+## Iterators [#iterators]
+
+### map [#map]
+
+`map` applies a function to each element of a list.
+
+**Signature**
+
+```clarity
+(map func list1 list2...)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `func` | function | Function to apply |
+| `list1`, `list2`, ... | `list` | Lists to map over |
+
+```clarity
+(map + (list 1 2 3) (list 10 20 30)) ;; Returns (11 22 33)
+
+;; Double all values
+(define-private (double (x uint))
+  (* x u2))
+
+(define-read-only (double-all (numbers (list 10 uint)))
+  (map double numbers))
+```
+
+### filter [#filter]
+
+`filter` returns elements that satisfy a predicate.
+
+**Signature**
+
+```clarity
+(filter func list)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `func` | function | Predicate function |
+| `list` | `list` | List to filter |
+
+```clarity
+(define-private (is-even (x uint))
+  (is-eq (mod x u2) u0))
+
+(filter is-even (list u1 u2 u3 u4)) ;; Returns (u2 u4)
+
+;; Filter active users
+(define-read-only (get-active-users)
+  (filter is-active (var-get all-users)))
+```
+
+### fold [#fold]
+
+`fold` reduces a list to a single value.
+
+**Signature**
+
+```clarity
+(fold func list initial-value)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `func` | function | Reducer function |
+| `list` | `list` | List to reduce |
+| `initial-value` | any | Starting value |
+
+```clarity
+(fold + (list u1 u2 u3 u4) u0) ;; Returns u10
+
+;; Sum balances
+(define-private (add-balance (user principal) (total uint))
+  (+ total (default-to u0 (map-get? balances user))))
+
+(define-read-only (get-total-balance)
+  (fold add-balance (var-get users) u0))
 ```
 
 ## Data storage & variables [#data-storage-variables]
@@ -1380,6 +1383,233 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   })
 ```
 
+## Error handling [#error-handling]
+
+### ok [#ok]
+
+`ok` constructs a successful response value.
+
+**Signature**
+
+```clarity
+(ok value)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `value` | any | Success value |
+
+```clarity
+(ok u42) ;; Returns (ok u42)
+(ok { status: "success", value: u100 })
+
+;; Success response
+(define-public (deposit (amount uint))
+  (begin
+    (map-set balances tx-sender 
+      (+ (get-balance tx-sender) amount))
+    (ok amount)))
+```
+
+### err [#err]
+
+`err` constructs an error response value.
+
+**Signature**
+
+```clarity
+(err value)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `value` | any | Error value |
+
+```clarity
+(err u404) ;; Returns (err u404)
+(err { code: u500, message: "Internal error" })
+
+;; Error responses
+(define-public (withdraw (amount uint))
+  (let ((balance (get-balance tx-sender)))
+    (if (>= balance amount)
+      (ok amount)
+      (err u1)))) ;; Insufficient balance
+```
+
+### asserts! [#asserts]
+
+`asserts!` checks a condition and exits with an error if false.
+
+**Signature**
+
+```clarity
+(asserts! condition thrown-value)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `condition` | `bool` | Condition to check |
+| `thrown-value` | any | Value to return if false |
+
+```clarity
+(define-public (transfer (amount uint) (recipient principal))
+  (begin
+    (asserts! (> amount u0) (err u1))
+    (asserts! (not (is-eq tx-sender recipient)) (err u2))
+    (asserts! (<= amount (get-balance tx-sender)) (err u3))
+    (ok true)))
+
+;; Guard functions
+(define-public (admin-only-function)
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) (err u401))
+    ;; Admin logic here
+    (ok true)))
+```
+
+### try! [#try]
+
+`try!` attempts to unwrap a response, propagating any error.
+
+**Signature**
+
+```clarity
+(try! response)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `response` | response | Response to try |
+
+```clarity
+(try! (ok u42)) ;; Returns u42
+(try! (err u404)) ;; Propagates (err u404)
+
+;; Chain operations
+(define-public (complex-operation (amount uint))
+  (begin
+    (try! (check-preconditions amount))
+    (try! (process-payment amount))
+    (try! (update-records))
+    (ok true)))
+```
+
+### unwrap! [#unwrap]
+
+`unwrap!` extracts the inner value from an optional or ok response.
+
+**Signature**
+
+```clarity
+(unwrap! optional-or-response thrown-value)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `optional-or-response` | optional/response | Value to unwrap |
+| `thrown-value` | any | Value if none/err |
+
+```clarity
+(unwrap! (some u42) (err u1)) ;; Returns u42
+(unwrap! none (err u404)) ;; Throws (err u404)
+
+;; Safe access
+(define-public (transfer-from-map (recipient principal))
+  (let ((amount (unwrap! (map-get? pending-transfers tx-sender) (err u404))))
+    (try! (ft-transfer? token amount tx-sender recipient))
+    (map-delete pending-transfers tx-sender)
+    (ok amount)))
+```
+
+### unwrap-err! [#unwrap-err]
+
+`unwrap-err!` extracts the error value from an err response.
+
+**Signature**
+
+```clarity
+(unwrap-err! response thrown-value)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `response` | response | Response to unwrap |
+| `thrown-value` | any | Value if ok |
+
+```clarity
+(unwrap-err! (err u404) u0) ;; Returns u404
+(unwrap-err! (ok u42) u0) ;; Returns u0
+
+;; Error handling
+(define-public (handle-error)
+  (let ((error-code (unwrap-err! (process-action) u0)))
+    (print { error: error-code })
+    (ok error-code)))
+```
+
+### unwrap-panic [#unwrap-panic]
+
+`unwrap-panic` extracts a value or causes a runtime panic.
+
+**Signature**
+
+```clarity
+(unwrap-panic optional-or-response)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `optional-or-response` | optional/response | Value to unwrap |
+
+```clarity
+(unwrap-panic (some u42)) ;; Returns u42
+(unwrap-panic none) ;; Runtime panic
+
+;; Critical unwrap
+(define-read-only (get-critical-value)
+  (unwrap-panic (map-get? critical-config "version")))
+```
+
+### unwrap-err-panic [#unwrap-err-panic]
+
+`unwrap-err-panic` extracts an error value or causes a runtime panic.
+
+**Signature**
+
+```clarity
+(unwrap-err-panic response)
+```
+
+**Parameters**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `response` | response | Response to unwrap |
+
+```clarity
+(unwrap-err-panic (err u404)) ;; Returns u404
+(unwrap-err-panic (ok u42)) ;; Runtime panic
+
+;; Force error
+(define-read-only (get-error-code)
+  (unwrap-err-panic (always-fails)))
+```
+
 ## Control flow [#control-flow]
 
 ### if [#if]
@@ -1521,96 +1751,7 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
       (ok reward))))
 ```
 
-### asserts! [#asserts]
-
-`asserts!` checks a condition and exits with an error if false.
-
-**Signature**
-
-```clarity
-(asserts! condition thrown-value)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `condition` | `bool` | Condition to check |
-| `thrown-value` | any | Value to return if false |
-
-```clarity
-(define-public (transfer (amount uint) (recipient principal))
-  (begin
-    (asserts! (> amount u0) (err u1))
-    (asserts! (not (is-eq tx-sender recipient)) (err u2))
-    (asserts! (<= amount (get-balance tx-sender)) (err u3))
-    (ok true)))
-
-;; Guard functions
-(define-public (admin-only-function)
-  (begin
-    (asserts! (is-eq tx-sender contract-owner) (err u401))
-    ;; Admin logic here
-    (ok true)))
-```
-
 ## Optional & response types [#optional-response-types]
-
-### ok [#ok]
-
-`ok` constructs a successful response value.
-
-**Signature**
-
-```clarity
-(ok value)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Success value |
-
-```clarity
-(ok u42) ;; Returns (ok u42)
-(ok { status: "success", value: u100 })
-
-;; Success response
-(define-public (deposit (amount uint))
-  (begin
-    (map-set balances tx-sender 
-      (+ (get-balance tx-sender) amount))
-    (ok amount)))
-```
-
-### err [#err]
-
-`err` constructs an error response value.
-
-**Signature**
-
-```clarity
-(err value)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Error value |
-
-```clarity
-(err u404) ;; Returns (err u404)
-(err { code: u500, message: "Internal error" })
-
-;; Error responses
-(define-public (withdraw (amount uint))
-  (let ((balance (get-balance tx-sender)))
-    (if (>= balance amount)
-      (ok amount)
-      (err u1)))) ;; Insufficient balance
-```
 
 ### some [#some]
 
@@ -1637,113 +1778,6 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (if (map-get? users id)
     (some (map-get? users id))
     none))
-```
-
-### unwrap! [#unwrap]
-
-`unwrap!` extracts the inner value from an optional or ok response.
-
-**Signature**
-
-```clarity
-(unwrap! optional-or-response thrown-value)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `optional-or-response` | optional/response | Value to unwrap |
-| `thrown-value` | any | Value if none/err |
-
-```clarity
-(unwrap! (some u42) (err u1)) ;; Returns u42
-(unwrap! none (err u404)) ;; Throws (err u404)
-
-;; Safe access
-(define-public (transfer-from-map (recipient principal))
-  (let ((amount (unwrap! (map-get? pending-transfers tx-sender) (err u404))))
-    (try! (ft-transfer? token amount tx-sender recipient))
-    (map-delete pending-transfers tx-sender)
-    (ok amount)))
-```
-
-### unwrap-err! [#unwrap-err]
-
-`unwrap-err!` extracts the error value from an err response.
-
-**Signature**
-
-```clarity
-(unwrap-err! response thrown-value)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to unwrap |
-| `thrown-value` | any | Value if ok |
-
-```clarity
-(unwrap-err! (err u404) u0) ;; Returns u404
-(unwrap-err! (ok u42) u0) ;; Returns u0
-
-;; Error handling
-(define-public (handle-error)
-  (let ((error-code (unwrap-err! (process-action) u0)))
-    (print { error: error-code })
-    (ok error-code)))
-```
-
-### unwrap-panic [#unwrap-panic]
-
-`unwrap-panic` extracts a value or causes a runtime panic.
-
-**Signature**
-
-```clarity
-(unwrap-panic optional-or-response)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `optional-or-response` | optional/response | Value to unwrap |
-
-```clarity
-(unwrap-panic (some u42)) ;; Returns u42
-(unwrap-panic none) ;; Runtime panic
-
-;; Critical unwrap
-(define-read-only (get-critical-value)
-  (unwrap-panic (map-get? critical-config "version")))
-```
-
-### unwrap-err-panic [#unwrap-err-panic]
-
-`unwrap-err-panic` extracts an error value or causes a runtime panic.
-
-**Signature**
-
-```clarity
-(unwrap-err-panic response)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to unwrap |
-
-```clarity
-(unwrap-err-panic (err u404)) ;; Returns u404
-(unwrap-err-panic (ok u42)) ;; Runtime panic
-
-;; Force error
-(define-read-only (get-error-code)
-  (unwrap-err-panic (always-fails)))
 ```
 
 ### is-ok [#is-ok]
@@ -1844,35 +1878,6 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 ;; Check absence
 (define-read-only (is-available (name (string-ascii 50)))
   (is-none (map-get? reserved-names name)))
-```
-
-### try! [#try]
-
-`try!` attempts to unwrap a response, propagating any error.
-
-**Signature**
-
-```clarity
-(try! response)
-```
-
-**Parameters**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to try |
-
-```clarity
-(try! (ok u42)) ;; Returns u42
-(try! (err u404)) ;; Propagates (err u404)
-
-;; Chain operations
-(define-public (complex-operation (amount uint))
-  (begin
-    (try! (check-preconditions amount))
-    (try! (process-payment amount))
-    (try! (update-records))
-    (ok true)))
 ```
 
 ### default-to [#default-to]
