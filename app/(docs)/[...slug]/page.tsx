@@ -31,6 +31,7 @@ import { Mermaid } from "@/components/mdx/mermaid";
 import { Callout } from "@/components/callout";
 import * as customIcons from "@/components/ui/icon";
 import * as lucideIcons from "lucide-react";
+import { FeedbackWrapper } from "@/components/feedback/feedback-wrapper";
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -163,7 +164,7 @@ export default async function Page(props: {
                       />
                     ),
                     input: (
-                      props: React.InputHTMLAttributes<HTMLInputElement>
+                      props: React.InputHTMLAttributes<HTMLInputElement>,
                     ) => {
                       if (props.type === "checkbox") {
                         return (
@@ -189,6 +190,11 @@ export default async function Page(props: {
                   })}
                 />
               </DocsPageProse>
+              <div className="border-b border-border/50" />
+              <FeedbackWrapper
+                pageTitle={page.data.title}
+                pagePath={page.url}
+              />
             </DocsPageContent>
           </DocsPageContentWrapper>
         </DocsPageLayout>
@@ -261,7 +267,7 @@ export default async function Page(props: {
                       />
                     ),
                     input: (
-                      props: React.InputHTMLAttributes<HTMLInputElement>
+                      props: React.InputHTMLAttributes<HTMLInputElement>,
                     ) => {
                       if (props.type === "checkbox") {
                         return (
@@ -287,6 +293,11 @@ export default async function Page(props: {
                   })}
                 />
               </DocsPageProse>
+              <div className="border-b border-border/50" />
+              <FeedbackWrapper
+                pageTitle={page.data.title}
+                pagePath={page.url}
+              />
             </DocsPageContent>
           </DocsPageContentWrapper>
         </DocsPageLayout>
@@ -299,7 +310,7 @@ export async function generateStaticParams() {
   return source.generateParams().filter(
     (params) =>
       // Filter out empty slug arrays (root path)
-      params.slug && params.slug.length > 0
+      params.slug && params.slug.length > 0,
   );
 }
 
