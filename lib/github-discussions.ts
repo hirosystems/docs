@@ -1,9 +1,12 @@
 import { App } from '@octokit/app';
 import { graphql } from '@octokit/graphql';
 
+// Decode base64 private key for Vercel deployment
+const privateKey = Buffer.from(process.env.GITHUB_APP_PRIVATE_KEY!, 'base64').toString('utf-8');
+
 const app = new App({
   appId: process.env.GITHUB_APP_ID!,
-  privateKey: process.env.GITHUB_APP_PRIVATE_KEY!,
+  privateKey: privateKey,
 });
 
 async function getGraphQLClient() {
