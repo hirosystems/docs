@@ -1,15 +1,15 @@
-import { Code } from "./code";
-import { InlineCode } from "./inline-code";
-import { WithNotes } from "./notes";
-import { NoteTooltip } from "./notes.tooltip";
-import { z } from "zod";
-import { RawCode } from "codehike/code";
-import { Block, CodeBlock } from "codehike/blocks";
-import { Terminal } from "./terminal";
-import Link from "fumadocs-core/link";
-import ScrollyCoding from "./scrollycoding";
-import Spotlight from "./spotlight";
-import Slideshow from "./slideshow";
+import { Code } from './code';
+import { InlineCode } from './inline-code';
+import { WithNotes } from './notes';
+import { NoteTooltip } from './notes.tooltip';
+import { z } from 'zod';
+import { RawCode } from 'codehike/code';
+import { Block, CodeBlock } from 'codehike/blocks';
+import { Terminal } from './terminal';
+import Link from 'fumadocs-core/link';
+import ScrollyCoding from './scrollycoding';
+import Spotlight from './spotlight';
+import Slideshow from './slideshow';
 
 // Export RawCode type for external use
 export type { RawCode };
@@ -36,13 +36,13 @@ export const docskit = {
 function DocsKitCode(props: { codeblock: RawCode }) {
   const { codeblock, ...rest } = props;
 
-  if (codeblock.lang === "package-install") {
+  if (codeblock.lang === 'package-install') {
     return <PackageInstall codeblock={codeblock} />;
   }
 
-  if (codeblock.lang === "terminal") {
+  if (codeblock.lang === 'terminal') {
     // Parse flags from meta string (e.g., "terminal -o" -> hideOutput: true)
-    const hideOutput = codeblock.meta?.includes("-o") || false;
+    const hideOutput = codeblock.meta?.includes('-o') || false;
     return <Terminal codeblocks={[codeblock]} hideOutput={hideOutput} />;
   }
 
@@ -57,7 +57,7 @@ function CodeTabs(props: unknown) {
   }).safeParse(props);
 
   if (error) {
-    throw betterError(error, "CodeTabs");
+    throw betterError(error, 'CodeTabs');
   }
 
   const { code, flags, storage } = data;
@@ -67,17 +67,15 @@ function CodeTabs(props: unknown) {
 
 function betterError(error: z.ZodError, componentName: string) {
   const { issues } = error;
-  if (issues.length === 1 && issues[0].path[0] === "code") {
-    return new Error(
-      `<${componentName}> should contain at least one codeblock marked with \`!!\``
-    );
+  if (issues.length === 1 && issues[0].path[0] === 'code') {
+    return new Error(`<${componentName}> should contain at least one codeblock marked with \`!!\``);
   } else {
     return error;
   }
 }
 
 function DocsKitLink(props: any) {
-  if (props.href === "tooltip") {
+  if (props.href === 'tooltip') {
     return <NoteTooltip name={props.title}>{props.children}</NoteTooltip>;
   }
   return <Link {...props} />;
@@ -90,27 +88,27 @@ function PackageInstall({ codeblock }: { codeblock: RawCode }) {
       codeblocks={[
         {
           ...codeblock,
-          value: "$ npm install " + codeblock.value,
-          meta: "npm",
-          lang: "terminal",
+          value: '$ npm install ' + codeblock.value,
+          meta: 'npm',
+          lang: 'terminal',
         },
         {
           ...codeblock,
-          value: "$ yarn add " + codeblock.value,
-          meta: "yarn",
-          lang: "terminal",
+          value: '$ yarn add ' + codeblock.value,
+          meta: 'yarn',
+          lang: 'terminal',
         },
         {
           ...codeblock,
-          value: "$ pnpm add " + codeblock.value,
-          meta: "pnpm",
-          lang: "terminal",
+          value: '$ pnpm add ' + codeblock.value,
+          meta: 'pnpm',
+          lang: 'terminal',
         },
         {
           ...codeblock,
-          value: "$ bun add " + codeblock.value,
-          meta: "bun",
-          lang: "terminal",
+          value: '$ bun add ' + codeblock.value,
+          meta: 'bun',
+          lang: 'terminal',
         },
       ]}
     />
@@ -125,10 +123,10 @@ function TerminalPicker(props: unknown) {
   }).safeParse(props);
 
   if (error) {
-    throw betterError(error, "TerminalPicker");
+    throw betterError(error, 'TerminalPicker');
   }
 
   const { code, storage, flags } = data;
-  const hideOutput = flags?.includes("-o") || false;
+  const hideOutput = flags?.includes('-o') || false;
   return <Terminal codeblocks={code} storage={storage} hideOutput={hideOutput} />;
 }

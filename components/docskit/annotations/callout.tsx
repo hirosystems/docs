@@ -1,8 +1,8 @@
-import { AnnotationHandler, InlineAnnotation, InnerLine } from "codehike/code";
-import { CalloutContent } from "./callout.client";
+import { AnnotationHandler, InlineAnnotation, InnerLine } from 'codehike/code';
+import { CalloutContent } from './callout.client';
 
 export const callout: AnnotationHandler = {
-  name: "callout",
+  name: 'callout',
   transform: (annotation: InlineAnnotation) => {
     // transform inline annotation to block annotation
     const { name, query, lineNumber, fromColumn, toColumn } = annotation;

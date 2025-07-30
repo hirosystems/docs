@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useHover } from "@/components/docskit/context/hover";
+import { useHover } from '@/components/docskit/context/hover';
 
 export function HoverLinkClient(props: {
   href?: string;
@@ -8,7 +8,7 @@ export function HoverLinkClient(props: {
   className?: string;
 }) {
   const { setHoveredId, setWasClicked } = useHover(); // Add setWasClicked
-  const hoverId = props.href?.slice("hover:".length);
+  const hoverId = props.href?.slice('hover:'.length);
 
   return (
     <span

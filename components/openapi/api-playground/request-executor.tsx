@@ -1,11 +1,11 @@
-import { ClarityConverter, type ClarityTypeHint } from "./clarity-converter";
-import { cvToString } from "@stacks/transactions";
-import type { OpenAPIOperation } from "../types";
+import { ClarityConverter, type ClarityTypeHint } from './clarity-converter';
+import { cvToString } from '@stacks/transactions';
+import type { OpenAPIOperation } from '../types';
 
 interface ExecuteRequestOptions {
   proxyUrl?: string;
   auth?: {
-    type: "bearer" | "api-key";
+    type: 'bearer' | 'api-key';
     value: string;
     headerName?: string;
   };
@@ -16,27 +16,21 @@ export async function executeRequest(
   formData: Record<string, any>,
   baseUrl: string,
   clarityConversion: boolean,
-  options?: ExecuteRequestOptions
+  options?: ExecuteRequestOptions,
 ): Promise<any> {
   let url = `${baseUrl}${operation.path}`;
 
-  const pathParams = operation.parameters?.filter((p) => p.in === "path") || [];
+  const pathParams = operation.parameters?.filter((p) => p.in === 'path') || [];
   for (const param of pathParams) {
     const value = formData[param.name];
     if (!value) continue;
 
-    if (clarityConversion && param.schema?.["x-clarity-type"]) {
+    if (clarityConversion && param.schema?.['x-clarity-type']) {
       try {
-        const clarityType = param.schema["x-clarity-type"] as ClarityTypeHint;
-        const clarityValue = ClarityConverter.convertToClarity(
-          value,
-          clarityType
-        );
+        const clarityType = param.schema['x-clarity-type'] as ClarityTypeHint;
+        const clarityValue = ClarityConverter.convertToClarity(value, clarityType);
         // For URL parameters, we need the string representation
-        url = url.replace(
-          `{${param.name}}`,
-          encodeURIComponent(cvToString(clarityValue))
-        );
+        url = url.replace(`{${param.name}}`, encodeURIComponent(cvToString(clarityValue)));
       } catch (error) {
         // If conversion fails, use raw value
         url = url.replace(`{${param.name}}`, encodeURIComponent(value));
@@ -47,19 +41,15 @@ export async function executeRequest(
   }
 
   const queryParams = new URLSearchParams();
-  const queryParameters =
-    operation.parameters?.filter((p) => p.in === "query") || [];
+  const queryParameters = operation.parameters?.filter((p) => p.in === 'query') || [];
   for (const param of queryParameters) {
     const value = formData[param.name];
-    if (!value || value.trim() === "") continue;
+    if (!value || value.trim() === '') continue;
 
-    if (clarityConversion && param.schema?.["x-clarity-type"]) {
+    if (clarityConversion && param.schema?.['x-clarity-type']) {
       try {
-        const clarityType = param.schema["x-clarity-type"] as ClarityTypeHint;
-        const clarityValue = ClarityConverter.convertToClarity(
-          value,
-          clarityType
-        );
+        const clarityType = param.schema['x-clarity-type'] as ClarityTypeHint;
+        const clarityValue = ClarityConverter.convertToClarity(value, clarityType);
         queryParams.append(param.name, cvToString(clarityValue));
       } catch (error) {
         queryParams.append(param.name, value);
@@ -75,11 +65,11 @@ export async function executeRequest(
 
   // Build headers
   const headers: Record<string, string> = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
   };
 
-  const headerParameters = operation.parameters?.filter((p) => p.in === "header") || [];
+  const headerParameters = operation.parameters?.filter((p) => p.in === 'header') || [];
   for (const param of headerParameters) {
     const value = formData[param.name];
     if (value) {
@@ -88,9 +78,9 @@ export async function executeRequest(
   }
 
   if (options?.auth) {
-    if (options.auth.type === "bearer") {
-      headers["Authorization"] = `Bearer ${options.auth.value}`;
-    } else if (options.auth.type === "api-key" && options.auth.headerName) {
+    if (options.auth.type === 'bearer') {
+      headers['Authorization'] = `Bearer ${options.auth.value}`;
+    } else if (options.auth.type === 'api-key' && options.auth.headerName) {
       headers[options.auth.headerName] = options.auth.value;
     }
   }
@@ -98,26 +88,25 @@ export async function executeRequest(
   let requestBody: any = undefined;
   if (
     formData.body &&
-    (operation.requestBody ||
-      ["POST", "PUT", "PATCH"].includes(operation.method.toUpperCase()))
+    (operation.requestBody || ['POST', 'PUT', 'PATCH'].includes(operation.method.toUpperCase()))
   ) {
     try {
       // Parse and re-stringify to validate JSON
       const parsedBody = JSON.parse(formData.body);
       requestBody = parsedBody;
-      console.log("Request body prepared:", requestBody);
+      console.log('Request body prepared:', requestBody);
     } catch (error) {
-      console.error("Failed to parse body as JSON:", error);
+      console.error('Failed to parse body as JSON:', error);
       requestBody = formData.body;
     }
   } else {
     console.log(
-      "No body to send. formData.body:",
+      'No body to send. formData.body:',
       formData.body,
-      "operation.requestBody:",
+      'operation.requestBody:',
       operation.requestBody,
-      "method:",
-      operation.method
+      'method:',
+      operation.method,
     );
   }
 
@@ -129,9 +118,9 @@ export async function executeRequest(
 
     if (options?.proxyUrl) {
       response = await fetch(options.proxyUrl, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           url,
@@ -149,7 +138,7 @@ export async function executeRequest(
         time: Math.round(endTime - startTime),
       };
     }
-    
+
     // Direct request
     const requestOptions: RequestInit = {
       method: operation.method,
@@ -165,9 +154,9 @@ export async function executeRequest(
 
     // Parse response
     let data;
-    const contentType = response.headers.get("content-type");
+    const contentType = response.headers.get('content-type');
 
-    if (contentType?.includes("application/json")) {
+    if (contentType?.includes('application/json')) {
       data = await response.json();
     } else {
       data = await response.text();
@@ -181,8 +170,6 @@ export async function executeRequest(
       time: Math.round(endTime - startTime),
     };
   } catch (error) {
-    throw new Error(
-      error instanceof Error ? error.message : "Network request failed"
-    );
+    throw new Error(error instanceof Error ? error.message : 'Network request failed');
   }
 }

@@ -1,10 +1,10 @@
-"use client";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { TerminalIcon } from "lucide-react";
-import { useStateOrLocalStorage } from "./hooks/local-storage";
-import type { ReactNode } from "react";
-import { CODEBLOCK, TITLEBAR } from "./code-group";
-import { cn } from "@/lib/utils";
+'use client';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { TerminalIcon } from 'lucide-react';
+import { useStateOrLocalStorage } from './hooks/local-storage';
+import type { ReactNode } from 'react';
+import { CODEBLOCK, TITLEBAR } from './code-group';
+import { cn } from '@/lib/utils';
 
 export function TerminalClient({
   tabs,
@@ -14,8 +14,8 @@ export function TerminalClient({
   tabs: { name: string; pre: ReactNode }[];
 }) {
   const [currentName, setCurrentName] = useStateOrLocalStorage(
-    storeKey && "terminal-picker-" + storeKey,
-    tabs[0]?.name
+    storeKey && 'terminal-picker-' + storeKey,
+    tabs[0]?.name,
   );
 
   const current = tabs.find((tab) => tab.name === currentName) || tabs[0];
@@ -24,8 +24,8 @@ export function TerminalClient({
       <div
         className={cn(
           TITLEBAR,
-          "flex items-center gap-2",
-          "text-ch-tab-active-foreground text-sm font-mono"
+          'flex items-center gap-2',
+          'text-ch-tab-active-foreground text-sm font-mono',
         )}
       >
         <TerminalIcon size={16} className="ml-2 mr-1" />
