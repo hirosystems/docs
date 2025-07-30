@@ -12,13 +12,13 @@ const config = {
   redirects: async () => {
     return [
       {
-        source: "/start",
-        destination: "/",
+        source: '/start',
+        destination: '/',
         permanent: false,
       },
       {
-        source: "/.well-known/llms.txt",
-        destination: "/llms.txt",
+        source: '/.well-known/llms.txt',
+        destination: '/llms.txt',
         permanent: true, // 301 redirect - tells crawlers this is the canonical location
       },
     ];

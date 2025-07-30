@@ -11,7 +11,7 @@ const app = new App({
 
 async function getGraphQLClient() {
   const octokit = await app.getInstallationOctokit(
-    parseInt(process.env.GITHUB_APP_INSTALLATION_ID!)
+    parseInt(process.env.GITHUB_APP_INSTALLATION_ID!),
   );
   return octokit.graphql;
 }
@@ -28,11 +28,10 @@ export interface Discussion {
   };
 }
 
-
 export async function findDiscussionByTitle(title: string): Promise<Discussion | null> {
   const graphqlClient = await getGraphQLClient();
   const [owner, repo] = process.env.GITHUB_REPOSITORY!.split('/');
-  
+
   try {
     const response = await graphqlClient<{
       repository: {
@@ -40,7 +39,8 @@ export async function findDiscussionByTitle(title: string): Promise<Discussion |
           nodes: Discussion[];
         };
       };
-    }>(`
+    }>(
+      `
       query FindDiscussion($owner: String!, $repo: String!) {
         repository(owner: $owner, name: $repo) {
           discussions(first: 10, categoryId: "${process.env.GITHUB_DISCUSSION_CATEGORY_ID}", orderBy: {field: CREATED_AT, direction: DESC}) {
@@ -58,15 +58,15 @@ export async function findDiscussionByTitle(title: string): Promise<Discussion |
           }
         }
       }
-    `, {
-      owner,
-      repo
-    });
-    
-    const discussion = response.repository.discussions.nodes.find(
-      d => d.title === title
+    `,
+      {
+        owner,
+        repo,
+      },
     );
-    
+
+    const discussion = response.repository.discussions.nodes.find((d) => d.title === title);
+
     return discussion || null;
   } catch (error) {
     console.error('Error finding discussion:', error);
@@ -74,13 +74,10 @@ export async function findDiscussionByTitle(title: string): Promise<Discussion |
   }
 }
 
-export async function createDiscussion(
-  title: string,
-  body: string
-): Promise<Discussion> {
+export async function createDiscussion(title: string, body: string): Promise<Discussion> {
   const graphqlClient = await getGraphQLClient();
   const [owner, repo] = process.env.GITHUB_REPOSITORY!.split('/');
-  
+
   const mutation = `
     mutation CreateDiscussion($repositoryId: ID!, $categoryId: ID!, $title: String!, $body: String!) {
       createDiscussion(input: {
@@ -103,17 +100,20 @@ export async function createDiscussion(
       }
     }
   `;
-  
+
   const repoResponse = await graphqlClient<{
     repository: { id: string };
-  }>(`
+  }>(
+    `
     query GetRepoId($owner: String!, $repo: String!) {
       repository(owner: $owner, name: $repo) {
         id
       }
     }
-  `, { owner, repo });
-  
+  `,
+    { owner, repo },
+  );
+
   const response = await graphqlClient<{
     createDiscussion: {
       discussion: Discussion;
@@ -122,19 +122,17 @@ export async function createDiscussion(
     repositoryId: repoResponse.repository.id,
     categoryId: process.env.GITHUB_DISCUSSION_CATEGORY_ID!,
     title,
-    body
+    body,
   });
-  
+
   return response.createDiscussion.discussion;
 }
 
-export async function addDiscussionComment(
-  discussionId: string,
-  body: string
-): Promise<void> {
+export async function addDiscussionComment(discussionId: string, body: string): Promise<void> {
   const graphqlClient = await getGraphQLClient();
-  
-  await graphqlClient(`
+
+  await graphqlClient(
+    `
     mutation AddDiscussionComment($discussionId: ID!, $body: String!) {
       addDiscussionComment(input: {
         discussionId: $discussionId,
@@ -145,27 +143,28 @@ export async function addDiscussionComment(
         }
       }
     }
-  `, {
-    discussionId,
-    body
-  });
+  `,
+    {
+      discussionId,
+      body,
+    },
+  );
 }
-
 
 export function formatDiscussionTitle(pageTitle: string, pagePath: string): string {
   let formattedPath = pagePath;
-  
+
   const pathParts = pagePath.split('/').filter(Boolean);
   if (pathParts.length === 2) {
     formattedPath = `${pagePath}/index`;
   }
-  
+
   return formattedPath;
 }
 
 export function formatDiscussionBody(pageTitle: string, pageUrl: string): string {
   const productionUrl = pageUrl.replace('http://localhost:3000', 'https://docs.hiro.so');
-  
+
   return `## Documentation Feedback
 
 This discussion thread is for feedback on the following documentation page:

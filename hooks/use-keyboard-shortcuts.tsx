@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
 interface ShortcutHandler {
   key: string;
@@ -18,9 +18,7 @@ const KeyboardShortcutsContext = React.createContext<{
   registerShortcut: (shortcut: ShortcutHandler) => () => void;
 } | null>(null);
 
-export function KeyboardShortcutsProvider({
-  children,
-}: KeyboardShortcutsProviderProps) {
+export function KeyboardShortcutsProvider({ children }: KeyboardShortcutsProviderProps) {
   const shortcutsRef = React.useRef<ShortcutHandler[]>([]);
 
   React.useEffect(() => {
@@ -47,8 +45,8 @@ export function KeyboardShortcutsProvider({
       });
     };
 
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
   }, []);
 
   const registerShortcut = React.useCallback((shortcut: ShortcutHandler) => {
@@ -68,8 +66,6 @@ export function KeyboardShortcutsProvider({
 export function useKeyboardShortcuts() {
   const context = React.useContext(KeyboardShortcutsContext);
   if (!context)
-    throw new Error(
-      "useKeyboardShortcuts must be used within KeyboardShortcutsProvider"
-    );
+    throw new Error('useKeyboardShortcuts must be used within KeyboardShortcutsProvider');
   return context;
 }

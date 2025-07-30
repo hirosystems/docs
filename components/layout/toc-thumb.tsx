@@ -21,9 +21,7 @@ function calc(container: HTMLElement, active: string[]): TOCThumb {
     upper = Math.min(upper, element.offsetTop + parseFloat(styles.paddingTop));
     lower = Math.max(
       lower,
-      element.offsetTop +
-        element.clientHeight -
-        parseFloat(styles.paddingBottom),
+      element.offsetTop + element.clientHeight - parseFloat(styles.paddingBottom),
     );
   }
 

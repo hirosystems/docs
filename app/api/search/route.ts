@@ -1,5 +1,5 @@
-import { source } from "@/lib/source";
-import { createFromSource } from "fumadocs-core/search/server";
+import { source } from '@/lib/source';
+import { createFromSource } from 'fumadocs-core/search/server';
 
 // Cache the search API responses at runtime for optimal performance
 export const revalidate = false;

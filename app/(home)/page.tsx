@@ -1,6 +1,6 @@
-import Link from "fumadocs-core/link";
-import { Cards, Card, SmallCard } from "@/components/card";
-import { Play, Database, Braces } from "lucide-react";
+import Link from 'fumadocs-core/link';
+import { Cards, Card, SmallCard } from '@/components/card';
+import { Play, Database, Braces } from 'lucide-react';
 import {
   API,
   Backend,
@@ -12,9 +12,9 @@ import {
   Ordinals,
   Runes,
   StacksIcon,
-} from "@/components/ui/icon";
-import { ImageZoom } from "fumadocs-ui/components/image-zoom";
-import heroImage from "@/public/stacks-hero.svg";
+} from '@/components/ui/icon';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import heroImage from '@/public/stacks-hero.svg';
 
 export default function HomePage() {
   return (
@@ -32,9 +32,7 @@ export default function HomePage() {
 
               <div className="flex flex-col [&_p]:mb-6 space-y-3">
                 <h3 className="text-3xl">Welcome to Hiro Docs</h3>
-                <p>
-                  Find all the guides and resources you need to build on Stacks.
-                </p>
+                <p>Find all the guides and resources you need to build on Stacks.</p>
               </div>
             </div>
           </div>
@@ -96,14 +94,8 @@ export default function HomePage() {
             </Cards>
           </div>
           <div className="flex flex-col">
-            <h4
-              id="explore-by-category"
-              className="text-muted-foreground scroll-m-20"
-            >
-              <a
-                href="#explore-by-category"
-                className="not-prose group text-sm uppercase"
-              >
+            <h4 id="explore-by-category" className="text-muted-foreground scroll-m-20">
+              <a href="#explore-by-category" className="not-prose group text-sm uppercase">
                 APIs
               </a>
             </h4>
@@ -148,14 +140,8 @@ export default function HomePage() {
             </Cards>
           </div>
           <div className="flex flex-col">
-            <h4
-              id="explore-by-category"
-              className="text-muted-foreground scroll-m-20"
-            >
-              <a
-                href="#explore-by-category"
-                className="not-prose group text-sm uppercase"
-              >
+            <h4 id="explore-by-category" className="text-muted-foreground scroll-m-20">
+              <a href="#explore-by-category" className="not-prose group text-sm uppercase">
                 Libraries &amp; SDKs
               </a>
             </h4>
@@ -182,14 +168,8 @@ export default function HomePage() {
             </Cards>
           </div>
           <div className="flex flex-col">
-            <h4
-              id="explore-by-category"
-              className="text-muted-foreground scroll-m-20"
-            >
-              <a
-                href="#explore-by-category"
-                className="not-prose group text-sm uppercase"
-              >
+            <h4 id="explore-by-category" className="text-muted-foreground scroll-m-20">
+              <a href="#explore-by-category" className="not-prose group text-sm uppercase">
                 Resources
               </a>
             </h4>

@@ -58,7 +58,7 @@ export function buildTagToPageMap(pages: FilterablePage[]): TagToPageMap {
 export function filterPagesByTag(
   tag: string,
   pages: FilterablePage[],
-  section?: string
+  section?: string,
 ): FilterResult {
   const filteredPages = pages.filter((page) => {
     // Check if page matches the section (if specified)
@@ -82,10 +82,7 @@ export function filterPagesByTag(
  * @param section - Section identifier
  * @returns Array of unique tags available in the section
  */
-export function getAvailableTagsForSection(
-  pages: FilterablePage[],
-  section: string
-): string[] {
+export function getAvailableTagsForSection(pages: FilterablePage[], section: string): string[] {
   const tags = new Set<string>();
 
   pages
@@ -107,7 +104,7 @@ export function getAvailableTagsForSection(
 export function createTagFilterConfig(
   section: string,
   allPages: FilterablePage[],
-  displayTags: string[]
+  displayTags: string[],
 ): TagFilterConfig {
   const sectionPages = allPages.filter((page) => page.section === section);
 

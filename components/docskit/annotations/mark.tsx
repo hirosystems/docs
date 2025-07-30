@@ -1,13 +1,13 @@
-import { type AnnotationHandler, InnerLine } from "codehike/code";
+import { type AnnotationHandler, InnerLine } from 'codehike/code';
 
 export const mark: AnnotationHandler = {
-  name: "mark",
+  name: 'mark',
   Line: ({ annotation, ...props }) => {
     const color = getColor(annotation);
     return (
       <div
         style={{
-          borderLeft: "solid 2px transparent",
+          borderLeft: 'solid 2px transparent',
           borderLeftColor: annotation && `rgb(from ${color} r g b / 0.9)`,
           backgroundColor: annotation && `rgb(from ${color} r g b / 0.1)`,
         }}
@@ -34,8 +34,8 @@ export const mark: AnnotationHandler = {
 };
 
 function getColor(annotation?: { query?: string }) {
-  const n = Number(annotation?.query || "0") % colors.length;
+  const n = Number(annotation?.query || '0') % colors.length;
   return colors[n] || annotation?.query;
 }
 
-const colors = ["var(--ch-9)", "var(--ch-7)", "var(--ch-8)"];
+const colors = ['var(--ch-9)', 'var(--ch-7)', 'var(--ch-8)'];

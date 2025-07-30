@@ -1,7 +1,7 @@
 // lib/remark-custom-directives.ts
-import { visit } from "unist-util-visit";
-import type { Plugin } from "unified";
-import type { Root } from "mdast";
+import { visit } from 'unist-util-visit';
+import type { Plugin } from 'unified';
+import type { Root } from 'mdast';
 
 /**
  * Custom remark plugin to transform directive syntax into MDX JSX elements
@@ -15,23 +15,23 @@ export const remarkCustomDirectives: Plugin<[], Root> = () => {
   return (tree: Root, file) => {
     visit(tree, (node: any, index, parent) => {
       // Handle container directives (:::)
-      if (node.type === "containerDirective") {
+      if (node.type === 'containerDirective') {
         switch (node.name) {
-          case "next-steps":
+          case 'next-steps':
             transformNextStepsDirective(node, index, parent, file);
             break;
-          case "callout":
+          case 'callout':
             transformCalloutDirective(node, index, parent, file);
             break;
-          case "objectives":
+          case 'objectives':
             transformObjectivesDirective(node, index, parent, file);
             break;
-          case "prerequisites":
+          case 'prerequisites':
             transformPrerequisitesDirective(node, index, parent, file);
             break;
           default:
             // For unknown directives, transform to mdxJsxFlowElement with empty attributes
-            node.type = "mdxJsxFlowElement";
+            node.type = 'mdxJsxFlowElement';
             node.attributes = [];
         }
       }
@@ -47,17 +47,12 @@ export const remarkCustomDirectives: Plugin<[], Root> = () => {
  * - [Title](href): Description
  * :::
  */
-function transformNextStepsDirective(
-  node: any,
-  index: number | undefined,
-  parent: any,
-  file: any
-) {
+function transformNextStepsDirective(node: any, index: number | undefined, parent: any, file: any) {
   // Validate that we have exactly one child that is a list
-  const listNode = node.children?.find((child: any) => child.type === "list");
+  const listNode = node.children?.find((child: any) => child.type === 'list');
 
   if (!listNode) {
-    file.fail("next-steps directive must contain a list", node.position);
+    file.fail('next-steps directive must contain a list', node.position);
     return;
   }
 
@@ -65,7 +60,7 @@ function transformNextStepsDirective(
   if (listNode.children?.length !== 2) {
     file.fail(
       `next-steps directive must contain exactly 2 list items (found ${listNode.children?.length || 0})`,
-      node.position
+      node.position,
     );
     return;
   }
@@ -89,32 +84,32 @@ function transformNextStepsDirective(
   const transformedNodes = [
     // ## Next steps header
     {
-      type: "heading",
+      type: 'heading',
       depth: 2,
-      children: [{ type: "text", value: "Next steps" }],
+      children: [{ type: 'text', value: 'Next steps' }],
     },
     // <Cards> wrapper with <NextCard> children
     {
-      type: "mdxJsxFlowElement",
-      name: "Cards",
+      type: 'mdxJsxFlowElement',
+      name: 'Cards',
       attributes: [],
       children: nextStepsData.map((step) => ({
-        type: "mdxJsxFlowElement",
-        name: "NextCard",
+        type: 'mdxJsxFlowElement',
+        name: 'NextCard',
         attributes: [
           {
-            type: "mdxJsxAttribute",
-            name: "href",
+            type: 'mdxJsxAttribute',
+            name: 'href',
             value: step.href,
           },
           {
-            type: "mdxJsxAttribute",
-            name: "title",
+            type: 'mdxJsxAttribute',
+            name: 'title',
             value: step.title,
           },
           {
-            type: "mdxJsxAttribute",
-            name: "description",
+            type: 'mdxJsxAttribute',
+            name: 'description',
             value: step.description,
           },
         ],
@@ -135,53 +130,40 @@ function transformNextStepsDirective(
 function parseNextStepItem(
   listItem: any,
   itemNumber: number,
-  file: any
+  file: any,
 ): { title: string; href: string; description: string } | null {
   // List item should have a paragraph as its first child
-  const paragraph = listItem.children?.find(
-    (child: any) => child.type === "paragraph"
-  );
+  const paragraph = listItem.children?.find((child: any) => child.type === 'paragraph');
   if (!paragraph) {
-    file.fail(
-      `List item ${itemNumber} in next-steps must contain a paragraph`,
-      listItem.position
-    );
+    file.fail(`List item ${itemNumber} in next-steps must contain a paragraph`, listItem.position);
     return null;
   }
 
   // Find the link node
-  const linkNode = paragraph.children?.find(
-    (child: any) => child.type === "link"
-  );
+  const linkNode = paragraph.children?.find((child: any) => child.type === 'link');
   if (!linkNode) {
     file.fail(
       `List item ${itemNumber} in next-steps must contain a link in the format [Title](href)`,
-      listItem.position
+      listItem.position,
     );
     return null;
   }
 
   // Extract title from link text
   const title = linkNode.children
-    ?.filter((child: any) => child.type === "text")
+    ?.filter((child: any) => child.type === 'text')
     .map((child: any) => child.value)
-    .join("");
+    .join('');
 
   if (!title) {
-    file.fail(
-      `List item ${itemNumber} in next-steps must have link text`,
-      linkNode.position
-    );
+    file.fail(`List item ${itemNumber} in next-steps must have link text`, linkNode.position);
     return null;
   }
 
   // Extract href
   const href = linkNode.url;
   if (!href) {
-    file.fail(
-      `List item ${itemNumber} in next-steps must have a valid href`,
-      linkNode.position
-    );
+    file.fail(`List item ${itemNumber} in next-steps must have a valid href`, linkNode.position);
     return null;
   }
 
@@ -190,21 +172,21 @@ function parseNextStepItem(
   const afterLink = paragraph.children.slice(linkIndex + 1);
 
   // Look for text nodes after the link
-  let description = "";
+  let description = '';
   for (const node of afterLink) {
-    if (node.type === "text") {
+    if (node.type === 'text') {
       description += node.value;
     }
   }
 
   // Clean up and validate description
   description = description.trim();
-  if (description.startsWith(":")) {
+  if (description.startsWith(':')) {
     description = description.substring(1).trim();
   } else {
     file.fail(
       `List item ${itemNumber} in next-steps must have a description after the link, separated by a colon (:)`,
-      listItem.position
+      listItem.position,
     );
     return null;
   }
@@ -212,7 +194,7 @@ function parseNextStepItem(
   if (!description) {
     file.fail(
       `List item ${itemNumber} in next-steps must have a non-empty description`,
-      listItem.position
+      listItem.position,
     );
     return null;
   }
@@ -229,30 +211,25 @@ function parseNextStepItem(
  * Content here
  * :::
  */
-function transformCalloutDirective(
-  node: any,
-  index: number | undefined,
-  parent: any,
-  file: any
-) {
+function transformCalloutDirective(node: any, index: number | undefined, parent: any, file: any) {
   // Transform the directive node to mdxJsxFlowElement
-  node.type = "mdxJsxFlowElement";
-  node.name = "Callout";
+  node.type = 'mdxJsxFlowElement';
+  node.name = 'Callout';
 
   // Initialize attributes array
   node.attributes = [];
 
-  let calloutType = "info"; // default
-  let titleText = "";
+  let calloutType = 'info'; // default
+  let titleText = '';
 
   // Check if first child is a paragraph with "type: X" pattern
   if (node.children && node.children.length > 0) {
     const firstChild = node.children[0];
-    if (firstChild.type === "paragraph" && firstChild.children) {
+    if (firstChild.type === 'paragraph' && firstChild.children) {
       const textContent = firstChild.children
-        .filter((child: any) => child.type === "text")
+        .filter((child: any) => child.type === 'text')
         .map((child: any) => child.value)
-        .join("");
+        .join('');
 
       // Check for type: pattern
       const typeMatch = textContent.match(/^type:\s*(tip|info|warn|help)\s*$/);
@@ -266,25 +243,25 @@ function transformCalloutDirective(
 
   // Add type attribute
   node.attributes.push({
-    type: "mdxJsxAttribute",
-    name: "type",
+    type: 'mdxJsxAttribute',
+    name: 'type',
     value: calloutType,
   });
 
   // Check if next child is a heading for title
   if (node.children && node.children.length > 0) {
     const firstChild = node.children[0];
-    if (firstChild.type === "heading" && firstChild.depth === 3) {
+    if (firstChild.type === 'heading' && firstChild.depth === 3) {
       // Extract title from heading
       titleText = firstChild.children
-        ?.filter((child: any) => child.type === "text")
+        ?.filter((child: any) => child.type === 'text')
         .map((child: any) => child.value)
-        .join("");
+        .join('');
 
       if (titleText) {
         node.attributes.push({
-          type: "mdxJsxAttribute",
-          name: "title",
+          type: 'mdxJsxAttribute',
+          name: 'title',
           value: titleText,
         });
 
@@ -309,29 +286,23 @@ function transformObjectivesDirective(
   node: any,
   index: number | undefined,
   parent: any,
-  file: any
+  file: any,
 ) {
   // Validate list exists
-  const listNode = node.children?.find((child: any) => child.type === "list");
+  const listNode = node.children?.find((child: any) => child.type === 'list');
 
   if (!listNode) {
-    file.fail("objectives directive must contain a list", node.position);
+    file.fail('objectives directive must contain a list', node.position);
     return;
   }
 
   // Validate item count
   const itemCount = listNode.children?.length || 0;
   if (itemCount < 2) {
-    file.warn(
-      "objectives directive should contain at least 2 items",
-      node.position
-    );
+    file.warn('objectives directive should contain at least 2 items', node.position);
   }
   if (itemCount > 6) {
-    file.warn(
-      "objectives directive should contain at most 6 items",
-      node.position
-    );
+    file.warn('objectives directive should contain at most 6 items', node.position);
   }
 
   // Parse list items
@@ -347,52 +318,51 @@ function transformObjectivesDirective(
   const transformedNodes = [
     // ## What you'll learn
     {
-      type: "heading",
+      type: 'heading',
       depth: 2,
-      children: [{ type: "text", value: "What you'll learn" }],
+      children: [{ type: 'text', value: "What you'll learn" }],
     },
     // Container div with objectives
     {
-      type: "mdxJsxFlowElement",
-      name: "div",
+      type: 'mdxJsxFlowElement',
+      name: 'div',
       attributes: [
         {
-          type: "mdxJsxAttribute",
-          name: "className",
-          value: "space-y-3 my-6",
+          type: 'mdxJsxAttribute',
+          name: 'className',
+          value: 'space-y-3 my-6',
         },
       ],
       children: objectives.map((text) => ({
-        type: "mdxJsxFlowElement",
-        name: "div",
+        type: 'mdxJsxFlowElement',
+        name: 'div',
         attributes: [
           {
-            type: "mdxJsxAttribute",
-            name: "className",
-            value: "flex items-start gap-3",
+            type: 'mdxJsxAttribute',
+            name: 'className',
+            value: 'flex items-start gap-3',
           },
         ],
         children: [
           // ArrowRight icon
           {
-            type: "mdxJsxFlowElement",
-            name: "ArrowRight",
+            type: 'mdxJsxFlowElement',
+            name: 'ArrowRight',
             attributes: [
               {
-                type: "mdxJsxAttribute",
-                name: "className",
-                value:
-                  "h-4 w-4 text-brand-orange dark:text-brand-orange mt-1.5 flex-shrink-0",
+                type: 'mdxJsxAttribute',
+                name: 'className',
+                value: 'h-4 w-4 text-brand-orange dark:text-brand-orange mt-1.5 flex-shrink-0',
               },
             ],
             children: [],
           },
           // Text span
           {
-            type: "mdxJsxFlowElement",
-            name: "span",
+            type: 'mdxJsxFlowElement',
+            name: 'span',
             attributes: [],
-            children: [{ type: "text", value: text }],
+            children: [{ type: 'text', value: text }],
           },
         ],
       })),
@@ -418,48 +388,42 @@ function transformPrerequisitesDirective(
   node: any,
   index: number | undefined,
   parent: any,
-  file: any
+  file: any,
 ) {
   // Validate list exists
-  const listNode = node.children?.find((child: any) => child.type === "list");
+  const listNode = node.children?.find((child: any) => child.type === 'list');
 
   if (!listNode) {
-    file.fail("prerequisites directive must contain a list", node.position);
+    file.fail('prerequisites directive must contain a list', node.position);
     return;
   }
 
   // Validate item count
   const itemCount = listNode.children?.length || 0;
   if (itemCount < 1) {
-    file.warn(
-      "prerequisites directive should contain at least 1 item",
-      node.position
-    );
+    file.warn('prerequisites directive should contain at least 1 item', node.position);
   }
   if (itemCount > 6) {
-    file.warn(
-      "prerequisites directive should contain at most 6 items",
-      node.position
-    );
+    file.warn('prerequisites directive should contain at most 6 items', node.position);
   }
 
   // Create transformed nodes
   const transformedNodes = [
     // ## Prerequisites
     {
-      type: "heading",
+      type: 'heading',
       depth: 2,
-      children: [{ type: "text", value: "Prerequisites" }],
+      children: [{ type: 'text', value: 'Prerequisites' }],
     },
     // Container div with the original list inside
     {
-      type: "mdxJsxFlowElement",
-      name: "div",
+      type: 'mdxJsxFlowElement',
+      name: 'div',
       attributes: [
         {
-          type: "mdxJsxAttribute",
-          name: "className",
-          value: "my-6",
+          type: 'mdxJsxAttribute',
+          name: 'className',
+          value: 'my-6',
         },
       ],
       children: node.children, // Keep all original children including the list
@@ -478,21 +442,21 @@ function transformPrerequisitesDirective(
 function extractTextFromListItem(item: any): string {
   // List item should have children
   if (!item.children || item.children.length === 0) {
-    return "";
+    return '';
   }
 
-  let text = "";
+  let text = '';
 
   // Process children to extract text
   for (const child of item.children) {
-    if (child.type === "paragraph" && child.children) {
+    if (child.type === 'paragraph' && child.children) {
       // Extract text from paragraph children
       for (const paragraphChild of child.children) {
-        if (paragraphChild.type === "text") {
+        if (paragraphChild.type === 'text') {
           text += paragraphChild.value;
         }
       }
-    } else if (child.type === "text") {
+    } else if (child.type === 'text') {
       // Direct text node
       text += child.value;
     }

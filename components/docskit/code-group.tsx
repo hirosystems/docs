@@ -1,6 +1,6 @@
-export const TITLEBAR = "px-2 py-1 w-full h-10 font-inter";
+export const TITLEBAR = 'px-2 py-1 w-full h-10 font-inter';
 export const CODEBLOCK =
-  "border rounded selection:bg-ch-selection border-ch-border overflow-x-auto my-4 relative grid";
+  'border rounded selection:bg-ch-selection border-ch-border overflow-x-auto my-4 relative grid';
 
 type CodeOptions = {
   copyButton?: boolean;
@@ -29,15 +29,15 @@ export type CodeGroup = {
  * flagsToOptions("na") // { lineNumbers: true, animate: true }
  * flagsToOptions("c") // { copyButton: true }
  */
-export function flagsToOptions(flags: string = "") {
+export function flagsToOptions(flags: string = '') {
   const options: CodeOptions = {};
   const map = {
-    c: "copyButton",
-    n: "lineNumbers",
-    w: "wordWrap",
-    a: "animate",
+    c: 'copyButton',
+    n: 'lineNumbers',
+    w: 'wordWrap',
+    a: 'animate',
   } as const;
-  flags.split("").forEach((flag) => {
+  flags.split('').forEach((flag) => {
     if (flag in map) {
       const key = map[flag as keyof typeof map];
       options[key] = true;

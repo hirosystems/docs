@@ -1,6 +1,6 @@
-import { Cards, IndexCard } from "@/components/card";
-import { Database, Brackets } from "lucide-react";
-import { Clarinet, Chainhook } from "@/components/ui/icon";
+import { Cards, IndexCard } from '@/components/card';
+import { Database, Brackets } from 'lucide-react';
+import { Clarinet, Chainhook } from '@/components/ui/icon';
 
 export default function ToolsPage() {
   return (

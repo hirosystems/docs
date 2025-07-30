@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { Button } from './ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Copy, ExternalLink, Check, Text, ChevronDown } from "lucide-react";
-import { OpenAIIcon, ClaudeIcon } from "@/components/ui/icon";
-import { useLLMsTxt, useCurrentPageMarkdown } from "@/hooks/use-llms-txt";
-import { processMarkdownLinks } from "@/utils/process-markdown-links";
-import { cn } from "@/lib/utils";
+} from './ui/dropdown-menu';
+import { Copy, ExternalLink, Check, Text, ChevronDown } from 'lucide-react';
+import { OpenAIIcon, ClaudeIcon } from '@/components/ui/icon';
+import { useLLMsTxt, useCurrentPageMarkdown } from '@/hooks/use-llms-txt';
+import { processMarkdownLinks } from '@/utils/process-markdown-links';
+import { cn } from '@/lib/utils';
 
 interface LLMShareProps {
   content: string;
@@ -21,16 +21,16 @@ interface LLMShareProps {
 
 const LLM_PROVIDERS = [
   {
-    name: "ChatGPT",
-    url: "https://chat.openai.com",
+    name: 'ChatGPT',
+    url: 'https://chat.openai.com',
     icon: OpenAIIcon,
-    description: "Ask questions about this page",
+    description: 'Ask questions about this page',
   },
   {
-    name: "Claude",
-    url: "https://claude.ai",
+    name: 'Claude',
+    url: 'https://claude.ai',
     icon: ClaudeIcon,
-    description: "Ask questions about this page",
+    description: 'Ask questions about this page',
   },
 ];
 
@@ -43,7 +43,7 @@ export function LLMShare({ content }: LLMShareProps) {
   const handleCopy = async () => {
     try {
       let contentToCopy = content;
-      
+
       // Check if this is an API reference page
       if (pathname && pathname.match(/^\/apis\/[^\/]+\/reference\//)) {
         try {
@@ -53,17 +53,17 @@ export function LLMShare({ content }: LLMShareProps) {
             contentToCopy = await response.text();
           }
         } catch (error) {
-          console.error("Failed to fetch generated markdown:", error);
+          console.error('Failed to fetch generated markdown:', error);
           // Fall back to original content
         }
       }
-      
+
       const processedContent = processMarkdownLinks(contentToCopy);
       await navigator.clipboard.writeText(processedContent);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 1200);
     } catch (err) {
-      console.error("Failed to copy text: ", err);
+      console.error('Failed to copy text: ', err);
     }
   };
 
@@ -71,15 +71,15 @@ export function LLMShare({ content }: LLMShareProps) {
     if (!pathname) return;
 
     let mdPath = pathname;
-    if (mdPath.startsWith("/docs")) {
+    if (mdPath.startsWith('/docs')) {
       mdPath = mdPath.substring(5);
     }
 
-    if (!mdPath || mdPath === "/") {
-      mdPath = "/index";
+    if (!mdPath || mdPath === '/') {
+      mdPath = '/index';
     }
 
-    window.open(`${mdPath}.md`, "_blank");
+    window.open(`${mdPath}.md`, '_blank');
   };
 
   const handleShare = async (provider: (typeof LLM_PROVIDERS)[number]) => {
@@ -89,16 +89,16 @@ export function LLMShare({ content }: LLMShareProps) {
       const encodedInstruction = encodeURIComponent(instruction);
 
       const shareUrl =
-        provider.name === "Claude"
+        provider.name === 'Claude'
           ? `https://claude.ai/new?q=${encodedInstruction}`
           : `${provider.url}?q=${encodedInstruction}`;
 
-      window.open(shareUrl, "_blank");
+      window.open(shareUrl, '_blank');
 
       // prefetch the section-specific llms.txt for next time
       refetch();
     } catch (error) {
-      console.error("[LLMShare] Failed to share:", error);
+      console.error('[LLMShare] Failed to share:', error);
     }
   };
 
@@ -112,15 +112,11 @@ export function LLMShare({ content }: LLMShareProps) {
       >
         <span
           className={cn(
-            "inline-flex items-center justify-center rounded p-0.5 transition-all duration-150",
-            isCopied && "!text-brand-orange"
+            'inline-flex items-center justify-center rounded p-0.5 transition-all duration-150',
+            isCopied && '!text-brand-orange',
           )}
         >
-          {isCopied ? (
-            <Check className="h-3 w-3" />
-          ) : (
-            <Copy className="h-3 w-3" />
-          )}
+          {isCopied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
         </span>
         Copy markdown
       </button>
@@ -136,10 +132,7 @@ export function LLMShare({ content }: LLMShareProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-64">
-          <DropdownMenuItem
-            onSelect={handleViewRawMarkdown}
-            className="cursor-pointer"
-          >
+          <DropdownMenuItem onSelect={handleViewRawMarkdown} className="cursor-pointer">
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <Text className="h-3 w-3 text-muted-foreground" />
@@ -157,9 +150,7 @@ export function LLMShare({ content }: LLMShareProps) {
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <provider.icon className="h-3 w-3 text-muted-foreground" />
-                  <span className="font-medium font-fono">
-                    Open in {provider.name}
-                  </span>
+                  <span className="font-medium font-fono">Open in {provider.name}</span>
                 </div>
               </div>
               <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />

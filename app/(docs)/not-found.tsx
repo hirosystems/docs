@@ -1,20 +1,21 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function DocsNotFound() {
   return (
     <>
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           aside {
             display: none !important;
           }
-        `
-      }} />
+        `,
+        }}
+      />
       <div className="w-full flex flex-col items-center justify-center text-center min-h-[50vh]">
         <h1 className="text-3xl font-regular mb-4">Page not found</h1>
         <p className="text-muted-foreground max-w-md mb-6">
-          The documentation you are looking for doesn&apos;t exist or has been
-          moved.
+          The documentation you are looking for doesn&apos;t exist or has been moved.
         </p>
         <Link
           href="/"

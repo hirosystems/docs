@@ -12,15 +12,15 @@ export function parseFrontmatterArray(value: unknown): string[] {
 
   if (Array.isArray(value)) {
     return value
-      .filter((item): item is string => typeof item === "string")
+      .filter((item): item is string => typeof item === 'string')
       .map((item) => item.trim())
       .filter((item) => item.length > 0);
   }
 
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     // Handle comma-separated strings
     return value
-      .split(",")
+      .split(',')
       .map((item) => item.trim())
       .filter((item) => item.length > 0);
   }
@@ -39,7 +39,7 @@ export function validateTags(tags: unknown): string[] {
   // Additional validation for tags could go here
   // For now, just ensure they're non-empty strings
   return parsed.filter(
-    (tag) => typeof tag === "string" && tag.length > 0 && tag.length <= 50 // Reasonable length limit
+    (tag) => typeof tag === 'string' && tag.length > 0 && tag.length <= 50, // Reasonable length limit
   );
 }
 
@@ -54,8 +54,7 @@ export function validateLabels(labels: unknown): string[] {
   // Additional validation for labels could go here
   // For now, just ensure they're non-empty strings
   return parsed.filter(
-    (label) =>
-      typeof label === "string" && label.length > 0 && label.length <= 50 // Reasonable length limit
+    (label) => typeof label === 'string' && label.length > 0 && label.length <= 50, // Reasonable length limit
   );
 }
 

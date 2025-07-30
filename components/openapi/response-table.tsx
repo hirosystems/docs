@@ -1,6 +1,6 @@
-import React from "react";
-import { CustomTable as Table } from "@/components/table";
-import type { OpenAPIResponse } from "./types";
+import React from 'react';
+import { CustomTable as Table } from '@/components/table';
+import type { OpenAPIResponse } from './types';
 
 interface ResponseTableProps {
   responses: Record<string, OpenAPIResponse>;
@@ -20,7 +20,7 @@ export function ResponseTable({ responses }: ResponseTableProps) {
           {Object.entries(responses).map(([code, response]) => (
             <tr key={code}>
               <td>{code}</td>
-              <td>{response.description || "No description"}</td>
+              <td>{response.description || 'No description'}</td>
             </tr>
           ))}
         </tbody>

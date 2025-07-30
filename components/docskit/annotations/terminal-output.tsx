@@ -1,13 +1,13 @@
-"use client";
-import type { AnnotationHandler } from "codehike/code";
-import React from "react";
+'use client';
+import type { AnnotationHandler } from 'codehike/code';
+import React from 'react';
 
 interface OutputBlockProps {
   children: React.ReactNode;
   hideOutput?: boolean;
 }
 
-export const OutputBlock: AnnotationHandler["Block"] = ({
+export const OutputBlock: AnnotationHandler['Block'] = ({
   children,
   hideOutput = false,
 }: OutputBlockProps) => {
@@ -27,7 +27,7 @@ export const OutputBlock: AnnotationHandler["Block"] = ({
         className="opacity-70 cursor-pointer hover:opacity-90 select-none transition-opacity"
         onClick={() => setHidden(false)}
       >
-        {"[show output]"}
+        {'[show output]'}
       </button>
     </div>
   ) : (

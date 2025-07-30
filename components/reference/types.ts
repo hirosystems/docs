@@ -29,14 +29,7 @@ export interface APISignature {
 
 export interface APIExport {
   name: string;
-  kind:
-    | "Function"
-    | "Type alias"
-    | "Namespace"
-    | "Class"
-    | "Interface"
-    | "Variable"
-    | "Enum";
+  kind: 'Function' | 'Type alias' | 'Namespace' | 'Class' | 'Interface' | 'Variable' | 'Enum';
   source?: APISource;
   signatures?: APISignature[];
   description?: string;
@@ -48,4 +41,4 @@ export interface APIDocument {
   exports: APIExport[];
 }
 
-export type APIKind = APIExport["kind"];
+export type APIKind = APIExport['kind'];

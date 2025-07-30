@@ -1,11 +1,11 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { readFile, readdir } from "fs/promises";
-import { join } from "path";
-import { existsSync } from "fs";
+import { type NextRequest, NextResponse } from 'next/server';
+import { readFile, readdir } from 'fs/promises';
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 async function findFileWithParentheses(
   basePath: string,
-  segments: string[]
+  segments: string[],
 ): Promise<string | null> {
   if (segments.length === 0) return null;
 
@@ -24,11 +24,7 @@ async function findFileWithParentheses(
   try {
     const entries = await readdir(basePath, { withFileTypes: true });
     for (const entry of entries) {
-      if (
-        entry.isDirectory() &&
-        entry.name.startsWith("(") &&
-        entry.name.endsWith(")")
-      ) {
+      if (entry.isDirectory() && entry.name.startsWith('(') && entry.name.endsWith(')')) {
         const parenthesesPath = join(basePath, entry.name);
 
         if (rest.length === 0) {
@@ -37,10 +33,7 @@ async function findFileWithParentheses(
             return filePath;
           }
         } else {
-          const found = await findFileWithParentheses(parenthesesPath, [
-            current,
-            ...rest,
-          ]);
+          const found = await findFileWithParentheses(parenthesesPath, [current, ...rest]);
           if (found) return found;
         }
       }
@@ -54,34 +47,34 @@ async function findFileWithParentheses(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> }
+  { params }: { params: Promise<{ slug: string[] }> },
 ) {
   try {
     const { slug = [] } = await params;
-    const basePath = join(process.cwd(), "content/docs");
+    const basePath = join(process.cwd(), 'content/docs');
 
     const directPath = join(basePath, ...slug);
     if (existsSync(directPath)) {
-      const content = await readFile(directPath, "utf-8");
+      const content = await readFile(directPath, 'utf-8');
       return new NextResponse(content, {
         headers: {
-          "Content-Type": "text/markdown; charset=utf-8",
+          'Content-Type': 'text/markdown; charset=utf-8',
         },
       });
     }
 
     const foundPath = await findFileWithParentheses(basePath, slug);
     if (foundPath) {
-      const content = await readFile(foundPath, "utf-8");
+      const content = await readFile(foundPath, 'utf-8');
       return new NextResponse(content, {
         headers: {
-          "Content-Type": "text/markdown; charset=utf-8",
+          'Content-Type': 'text/markdown; charset=utf-8',
         },
       });
     }
 
-    return new NextResponse("File not found", { status: 404 });
+    return new NextResponse('File not found', { status: 404 });
   } catch (error) {
-    return new NextResponse("File not found", { status: 404 });
+    return new NextResponse('File not found', { status: 404 });
   }
 }

@@ -1,36 +1,26 @@
-"use client";
+'use client';
 
-import React, { ButtonHTMLAttributes } from "react";
-import type { PageTree } from "fumadocs-core/server";
-import { type ReactNode, useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { TreeContextProvider, useTreeContext } from "fumadocs-ui/contexts/tree";
-import Link from "fumadocs-core/link";
-import { useSidebar } from "fumadocs-ui/contexts/sidebar";
-import { cva } from "class-variance-authority";
-import { usePathname } from "fumadocs-core/framework";
-import { Button } from "../ui/button";
-import { ThemeToggle } from "../layout/theme-toggle";
-import {
-  ArrowUpRight,
-  SidebarIcon,
-  ChevronRight,
-  ChevronDown,
-} from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../ui/accordion";
-import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
-import { DocsLogo } from "../ui/icon";
-import { SearchToggle } from "../layout/search-toggle";
-import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
-import { renderNavItem } from "./links";
-import { baseOptions } from "@/app/layout.config";
-import { MobileMenuButton } from "../layout/mobile-menu-button";
-import { MobileMenuProvider } from "@/contexts/mobile-menu";
+import React, { ButtonHTMLAttributes } from 'react';
+import type { PageTree } from 'fumadocs-core/server';
+import { type ReactNode, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import { TreeContextProvider, useTreeContext } from 'fumadocs-ui/contexts/tree';
+import Link from 'fumadocs-core/link';
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
+import { cva } from 'class-variance-authority';
+import { usePathname } from 'fumadocs-core/framework';
+import { Button } from '../ui/button';
+import { ThemeToggle } from '../layout/theme-toggle';
+import { ArrowUpRight, SidebarIcon, ChevronRight, ChevronDown } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
+import { DocsLogo } from '../ui/icon';
+import { SearchToggle } from '../layout/search-toggle';
+import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu';
+import { renderNavItem } from './links';
+import { baseOptions } from '@/app/layout.config';
+import { MobileMenuButton } from '../layout/mobile-menu-button';
+import { MobileMenuProvider } from '@/contexts/mobile-menu';
 
 export interface DocsLayoutProps {
   tree: PageTree.Root;
@@ -47,35 +37,27 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       setIsScrolled(window.scrollY > 45);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   React.useEffect(() => {
     // register 'p' shortcut for platform navigation
     const platformShortcut = registerShortcut({
-      key: "p",
+      key: 'p',
       callback: () => {
-        window.open(
-          "https://platform.hiro.so",
-          "_blank",
-          "noopener,noreferrer"
-        );
+        window.open('https://platform.hiro.so', '_blank', 'noopener,noreferrer');
       },
       preventDefault: true,
     });
 
     // register 't' shortcut for calendar scheduling
     const calendarShortcut = registerShortcut({
-      key: "t",
+      key: 't',
       callback: () => {
-        window.open(
-          "https://cal.com/waits/15min",
-          "_blank",
-          "noopener,noreferrer"
-        );
+        window.open('https://cal.com/waits/15min', '_blank', 'noopener,noreferrer');
       },
       preventDefault: true,
     });
@@ -91,19 +73,16 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
       <TreeContextProvider tree={tree}>
         <header
           className={cn(
-            "sticky top-0 z-50 h-16 transition-all duration-200",
-            "bg-background backdrop-blur-md",
-            "border-b border-border/50"
+            'sticky top-0 z-50 h-16 transition-all duration-200',
+            'bg-background backdrop-blur-md',
+            'border-b border-border/50',
           )}
         >
           <nav className="flex flex-row items-center gap-4 size-full px-2 md:px-4">
             {/* Mobile layout */}
             <div className="flex md:hidden items-center justify-between w-full">
               <MobileMenuButton tree={tree} />
-              <Link
-                href="/"
-                className="absolute left-1/2 transform -translate-x-1/2"
-              >
+              <Link href="/" className="absolute left-1/2 transform -translate-x-1/2">
                 <DocsLogo />
               </Link>
               <SearchToggle />
@@ -143,8 +122,8 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
         <main
           id="nd-docs-layout"
           className={cn(
-            "flex flex-1 flex-row transition-all duration-100",
-            collapsed && "md:pl-[calc(var(--nav-offset)-115px)]"
+            'flex flex-1 flex-row transition-all duration-100',
+            collapsed && 'md:pl-[calc(var(--nav-offset)-115px)]',
           )}
         >
           <Sidebar />
@@ -161,22 +140,20 @@ export function Sidebar() {
   const pathname = usePathname();
 
   const children = useMemo(() => {
-    const filterCriteria = ["tools", "apis", "reference", "resources"];
+    const filterCriteria = ['tools', 'apis', 'reference', 'resources'];
 
     const shouldFilterItem = (item: PageTree.Node): boolean => {
       const isCurrentSection = filterCriteria.some(
-        (criteria) =>
-          pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`
+        (criteria) => pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`,
       );
 
       if (isCurrentSection) {
         const matchingCriteria = filterCriteria.filter(
-          (criteria) =>
-            pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`
+          (criteria) => pathname?.includes(`/${criteria}/`) || pathname === `/${criteria}`,
         );
 
         const belongsToCurrentSection = matchingCriteria.some((criteria) =>
-          item.$id?.includes(criteria)
+          item.$id?.includes(criteria),
         );
 
         if (belongsToCurrentSection) {
@@ -184,7 +161,7 @@ export function Sidebar() {
         }
 
         return filterCriteria.some((criteria) => {
-          const itemPath = item.$id || "";
+          const itemPath = item.$id || '';
           return (
             itemPath === criteria ||
             itemPath.startsWith(`${criteria}/`) ||
@@ -196,7 +173,7 @@ export function Sidebar() {
 
       return filterCriteria.some((criteria) => {
         // Check if item.$id matches the exact criteria as a path segment
-        const itemPath = item.$id || "";
+        const itemPath = item.$id || '';
         return (
           itemPath === criteria ||
           itemPath.startsWith(`${criteria}/`) ||
@@ -211,7 +188,7 @@ export function Sidebar() {
 
       return filteredItems.map((item) => (
         <SidebarItem key={item.$id} item={item}>
-          {item.type === "folder" ? renderItems(item.children) : null}
+          {item.type === 'folder' ? renderItems(item.children) : null}
         </SidebarItem>
       ));
     }
@@ -223,11 +200,11 @@ export function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        "fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-base md:text-sm overflow-auto md:sticky md:h-[calc(100dvh-64px)]",
-        "max-md:inset-x-0 max-md:bottom-0",
-        !open && "max-md:invisible",
-        "md:w-[250px] md:transition-all md:duration-100 ease-linear",
-        collapsed && "md:w-0 md:p-0 md:overflow-hidden md:invisible"
+        'fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-base md:text-sm overflow-auto md:sticky md:h-[calc(100dvh-64px)]',
+        'max-md:inset-x-0 max-md:bottom-0',
+        !open && 'max-md:invisible',
+        'md:w-[250px] md:transition-all md:duration-100 ease-linear',
+        collapsed && 'md:w-0 md:p-0 md:overflow-hidden md:invisible',
       )}
     >
       {children}
@@ -236,20 +213,18 @@ export function Sidebar() {
 }
 
 export const linkVariants = cva(
-  "flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground !font-sans [&_svg]:size-3",
+  'flex items-center gap-3 w-full py-1.5 px-2 rounded-lg text-muted-foreground !font-sans [&_svg]:size-3',
   {
     variants: {
       active: {
-        true: "text-primary bg-neutral-150 dark:bg-neutral-700 font-medium",
-        false: "hover:text-muted-foreground hover:bg-card",
+        true: 'text-primary bg-neutral-150 dark:bg-neutral-700 font-medium',
+        false: 'hover:text-muted-foreground hover:bg-card',
       },
     },
-  }
+  },
 );
 
-export function NavbarSidebarTrigger(
-  props: ButtonHTMLAttributes<HTMLButtonElement>
-) {
+export function NavbarSidebarTrigger(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   const { collapsed, setCollapsed } = useSidebar();
 
   return (
@@ -259,9 +234,9 @@ export function NavbarSidebarTrigger(
       data-collapsed={collapsed}
       {...props}
       className={cn(
-        "flex items-center justify-center w-8 h-8 rounded-md border border-border hover:bg-neutral-200 dark:bg-neutral-700 transition-colors cursor-pointer",
-        "hidden md:flex",
-        props.className
+        'flex items-center justify-center w-8 h-8 rounded-md border border-border hover:bg-neutral-200 dark:bg-neutral-700 transition-colors cursor-pointer',
+        'hidden md:flex',
+        props.className,
       )}
       onClick={() => {
         setCollapsed((prev) => !prev);
@@ -272,26 +247,17 @@ export function NavbarSidebarTrigger(
   );
 }
 
-export function SidebarItem({
-  item,
-  children,
-}: {
-  item: PageTree.Node;
-  children: ReactNode;
-}) {
+export function SidebarItem({ item, children }: { item: PageTree.Node; children: ReactNode }) {
   const pathname = usePathname();
 
-  const isPathInFolder = (
-    folderItem: PageTree.Node,
-    currentPath: string
-  ): boolean => {
-    if (folderItem.type !== "folder") return false;
+  const isPathInFolder = (folderItem: PageTree.Node, currentPath: string): boolean => {
+    if (folderItem.type !== 'folder') return false;
 
     if (folderItem.index?.url === currentPath) return true;
     const checkChildren = (children: PageTree.Node[]): boolean => {
       return children.some((child) => {
-        if (child.type === "page" && child.url === currentPath) return true;
-        if (child.type === "folder") {
+        if (child.type === 'page' && child.url === currentPath) return true;
+        if (child.type === 'folder') {
           if (child.index?.url === currentPath) return true;
           return checkChildren(child.children);
         }
@@ -303,12 +269,12 @@ export function SidebarItem({
   };
 
   const shouldExpand =
-    item.type === "folder" &&
+    item.type === 'folder' &&
     (isPathInFolder(item, pathname) || (item as any).defaultOpen === true);
 
   const [isOpen, setIsOpen] = React.useState(shouldExpand);
 
-  if (item.type === "page") {
+  if (item.type === 'page') {
     const sidebarTitle = (item as any).data?.sidebarTitle;
     const displayName = sidebarTitle || item.name;
     const isRootPage = (item as any).data?.root === true;
@@ -321,12 +287,12 @@ export function SidebarItem({
             active: pathname === item.url,
           }),
           // Special styling for root pages - applies on top of linkVariants
-          isRootPage && ["font-normal font-sans text-sm"],
+          isRootPage && ['font-normal font-sans text-sm'],
           // Style the icon when root page is active
           isRootPage &&
             pathname === item.url && [
-              "[&_.icons]:bg-primary [&_.icons]:border-primary [&_.icons]:text-white dark:[&_.icons]:text-neutral-950",
-            ]
+              '[&_.icons]:bg-primary [&_.icons]:border-primary [&_.icons]:text-white dark:[&_.icons]:text-neutral-950',
+            ],
         )}
       >
         <div className="!font-normal flex items-center gap-2 flex-1">
@@ -338,22 +304,19 @@ export function SidebarItem({
     );
   }
 
-  if (item.type === "separator") {
+  if (item.type === 'separator') {
     return (
-      <p className="text-primary font-fono font-semibold mt-6 mb-2 first:mt-0 px-2">
-        {item.name}
-      </p>
+      <p className="text-primary font-fono font-semibold mt-6 mb-2 first:mt-0 px-2">{item.name}</p>
     );
   }
 
   const getStringValue = (value: any): string => {
-    if (typeof value === "string") return value;
-    if (typeof value === "number") return value.toString();
-    return "folder";
+    if (typeof value === 'string') return value;
+    if (typeof value === 'number') return value.toString();
+    return 'folder';
   };
 
-  const accordionValue =
-    getStringValue(item.$id) || getStringValue(item.name) || "folder";
+  const accordionValue = getStringValue(item.$id) || getStringValue(item.name) || 'folder';
 
   return (
     <div>
@@ -371,8 +334,8 @@ export function SidebarItem({
                 linkVariants({
                   active: item.index ? pathname === item.index.url : false,
                 }),
-                "justify-between w-full",
-                "!font-normal"
+                'justify-between w-full',
+                '!font-normal',
               )}
             >
               <div className="!font-normal flex items-center gap-2 flex-1">
@@ -381,10 +344,10 @@ export function SidebarItem({
                     href={item.index.url}
                     onClick={(e) => e.stopPropagation()}
                     className={cn(
-                      "flex items-center gap-2 font-sans hover:no-underline",
+                      'flex items-center gap-2 font-sans hover:no-underline',
                       pathname === item.index.url
-                        ? "font-normal text-primary"
-                        : "font-normal text-muted-foreground"
+                        ? 'font-normal text-primary'
+                        : 'font-normal text-muted-foreground',
                     )}
                   >
                     {item.index.icon}
@@ -417,7 +380,7 @@ export function SidebarItem({
 }
 
 export function PageBadges({ item }: { item: PageTree.Node }) {
-  if (item.type !== "page") return null;
+  if (item.type !== 'page') return null;
 
   const badges: React.ReactNode[] = [];
 
@@ -430,7 +393,7 @@ export function PageBadges({ item }: { item: PageTree.Node }) {
         className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none"
       >
         New
-      </span>
+      </span>,
     );
   }
 
@@ -441,22 +404,22 @@ export function PageBadges({ item }: { item: PageTree.Node }) {
 
   for (const method of methods) {
     const colors = {
-      GET: "bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]",
-      POST: "bg-[#e7f0ff] text-[#4B5F8A] border-[#c2d9ff] dark:bg-background dark:text-[#c2d9ff] dark:border-[#c2d9ff]",
-      PUT: "bg-[#fff4e7] text-[#8A6B4B] border-[#ffd9c2] dark:bg-background dark:text-[#ffd9c2] dark:border-[#ffd9c2]",
+      GET: 'bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]',
+      POST: 'bg-[#e7f0ff] text-[#4B5F8A] border-[#c2d9ff] dark:bg-background dark:text-[#c2d9ff] dark:border-[#c2d9ff]',
+      PUT: 'bg-[#fff4e7] text-[#8A6B4B] border-[#ffd9c2] dark:bg-background dark:text-[#ffd9c2] dark:border-[#ffd9c2]',
       PATCH:
-        "bg-[#fffce7] text-[#8A864B] border-[#fff9c2] dark:bg-background dark:text-[#fff9c2] dark:border-[#fff9c2]",
+        'bg-[#fffce7] text-[#8A864B] border-[#fff9c2] dark:bg-background dark:text-[#fff9c2] dark:border-[#fff9c2]',
       DELETE:
-        "bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]",
+        'bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]',
     };
 
     badges.push(
       <span
         key={String(method)}
-        className={`font-mono font-medium text-[10px] py-0.25 px-0.75 rounded border ${colors[String(method) as keyof typeof colors] || "bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]"}`}
+        className={`font-mono font-medium text-[10px] py-0.25 px-0.75 rounded border ${colors[String(method) as keyof typeof colors] || 'bg-[#f5f5f5] text-[#666666] border-[#d4d4d4] dark:bg-background dark:text-[#d4d4d4] dark:border-[#d4d4d4]'}`}
       >
         {String(method)}
-      </span>
+      </span>,
     );
   }
 

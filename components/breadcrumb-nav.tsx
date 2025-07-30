@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Fragment } from "react";
-import { useBreadcrumb } from "@/hooks/use-breadcrumb";
+import Link from 'next/link';
+import { Fragment } from 'react';
+import { useBreadcrumb } from '@/hooks/use-breadcrumb';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -10,7 +10,7 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 
 export function BreadcrumbNav() {
   const items = useBreadcrumb();

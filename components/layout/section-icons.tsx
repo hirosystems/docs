@@ -1,13 +1,7 @@
 type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const DeveloperToolsIcon = (props: IconProps) => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    {...props}
-  >
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -18,13 +12,7 @@ export const DeveloperToolsIcon = (props: IconProps) => (
 );
 
 export const ApiServicesIcon = (props: IconProps) => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    {...props}
-  >
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -35,13 +23,7 @@ export const ApiServicesIcon = (props: IconProps) => (
 );
 
 export const BitcoinInnovationIcon = (props: IconProps) => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    {...props}
-  >
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
