@@ -12,25 +12,25 @@ Stacks.js supports multiple networks—mainnet for production, testnet for devel
 Configure standard networks:
 
 ```typescript
-import { 
-  StacksMainnet, 
-  StacksTestnet, 
-  StacksMocknet 
+import {
+  StacksMainnet,
+  StacksTestnet,
+  StacksMocknet
 } from '@stacks/network';
 
 // Production network
 const mainnet = new StacksMainnet();
-console.log('Mainnet API:', mainnet.coreApiUrl); 
+console.log('Mainnet API:', mainnet.coreApiUrl);
 // https://api.hiro.so
 
 // Test network
 const testnet = new StacksTestnet();
-console.log('Testnet API:', testnet.coreApiUrl); 
+console.log('Testnet API:', testnet.coreApiUrl);
 // https://api.testnet.hiro.so
 
 // Local development network
 const mocknet = new StacksMocknet();
-console.log('Mocknet API:', mocknet.coreApiUrl); 
+console.log('Mocknet API:', mocknet.coreApiUrl);
 // http://localhost:3999
 ```
 
@@ -60,7 +60,7 @@ class CustomNetwork extends StacksNetwork {
       networkType: 'mainnet', // or 'testnet', 'mocknet'
     });
   }
-  
+
   // Override methods as needed
   getBroadcastApiUrl() {
     return `${this.coreApiUrl}/custom/broadcast`;
@@ -74,11 +74,11 @@ Manage networks across environments:
 
 ```typescript
 // config/network.ts
-import { 
-  StacksNetwork, 
-  StacksMainnet, 
-  StacksTestnet, 
-  StacksMocknet 
+import {
+  StacksNetwork,
+  StacksMainnet,
+  StacksTestnet,
+  StacksMocknet
 } from '@stacks/network';
 
 interface NetworkConfig {
@@ -128,14 +128,14 @@ async function detectNetwork(url: string): Promise<'mainnet' | 'testnet' | 'unkn
   try {
     const response = await fetch(`${url}/v2/info`);
     const info = await response.json();
-    
+
     // Check network ID
     if (info.network_id === 1) {
       return 'mainnet';
     } else if (info.network_id === 2147483648) {
       return 'testnet';
     }
-    
+
     return 'unknown';
   } catch (error) {
     console.error('Failed to detect network:', error);
@@ -149,12 +149,12 @@ async function validateNetwork(
   expected: 'mainnet' | 'testnet'
 ): Promise<boolean> {
   const detected = await detectNetwork(network.coreApiUrl);
-  
+
   if (detected !== expected) {
     console.warn(`Network mismatch! Expected ${expected}, got ${detected}`);
     return false;
   }
-  
+
   return true;
 }
 ```
@@ -168,20 +168,20 @@ Add authentication or custom headers:
 ```typescript
 class AuthenticatedNetwork extends StacksMainnet {
   private apiKey: string;
-  
+
   constructor(apiKey: string) {
     super();
     this.apiKey = apiKey;
   }
-  
+
   createFetchFn(): FetchFn {
     return (url: string, init?: RequestInit) => {
       const headers = {
         ...init?.headers,
-        'X-API-Key': this.apiKey,
-        'X-Client-Version': '1.0.0',
+        'x-api-key': this.apiKey,
+        'x-client-version': '1.0.0',
       };
-      
+
       return fetch(url, { ...init, headers });
     };
   }
@@ -199,21 +199,21 @@ Implement resilient network requests:
 class ResilientNetwork extends StacksTestnet {
   private maxRetries = 3;
   private timeout = 30000; // 30 seconds
-  
+
   createFetchFn(): FetchFn {
     return async (url: string, init?: RequestInit) => {
       for (let attempt = 0; attempt < this.maxRetries; attempt++) {
         try {
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-          
+
           const response = await fetch(url, {
             ...init,
             signal: controller.signal,
           });
-          
+
           clearTimeout(timeoutId);
-          
+
           if (!response.ok && attempt < this.maxRetries - 1) {
             // Retry on server errors
             if (response.status >= 500) {
@@ -221,18 +221,18 @@ class ResilientNetwork extends StacksTestnet {
               continue;
             }
           }
-          
+
           return response;
         } catch (error) {
           if (attempt === this.maxRetries - 1) throw error;
           await this.delay(1000 * Math.pow(2, attempt));
         }
       }
-      
+
       throw new Error('Max retries exceeded');
     };
   }
-  
+
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -250,7 +250,7 @@ function getNetworkByChainId(chainId: number): StacksNetwork {
   switch (chainId) {
     case 1: // Mainnet
       return new StacksMainnet();
-    case 2147483648: // Testnet  
+    case 2147483648: // Testnet
       return new StacksTestnet();
     default:
       throw new Error(`Unknown chain ID: ${chainId}`);
@@ -261,14 +261,14 @@ function getNetworkByChainId(chainId: number): StacksNetwork {
 async function getNetworkFromWallet(): Promise<StacksNetwork> {
   const userData = userSession.loadUserData();
   const address = userData.profile.stxAddress.testnet;
-  
+
   // Determine network from address prefix
   if (address.startsWith('SP') || address.startsWith('SM')) {
     return new StacksMainnet();
   } else if (address.startsWith('ST') || address.startsWith('SN')) {
     return new StacksTestnet();
   }
-  
+
   throw new Error('Unable to determine network from address');
 }
 ```
@@ -281,31 +281,31 @@ Support multiple networks simultaneously:
 class NetworkManager {
   private networks: Map<string, StacksNetwork> = new Map();
   private currentNetwork: string = 'testnet';
-  
+
   constructor() {
     this.networks.set('mainnet', new StacksMainnet());
     this.networks.set('testnet', new StacksTestnet());
     this.networks.set('devnet', new StacksMocknet());
   }
-  
+
   getNetwork(name?: string): StacksNetwork {
     const networkName = name || this.currentNetwork;
     const network = this.networks.get(networkName);
-    
+
     if (!network) {
       throw new Error(`Unknown network: ${networkName}`);
     }
-    
+
     return network;
   }
-  
+
   setCurrentNetwork(name: string): void {
     if (!this.networks.has(name)) {
       throw new Error(`Unknown network: ${name}`);
     }
     this.currentNetwork = name;
   }
-  
+
   addCustomNetwork(name: string, url: string): void {
     const network = new StacksNetwork({ url });
     this.networks.set(name, network);
@@ -327,12 +327,12 @@ class NetworkMonitor {
   private network: StacksNetwork;
   private isHealthy = true;
   private listeners: Set<(healthy: boolean) => void> = new Set();
-  
+
   constructor(network: StacksNetwork) {
     this.network = network;
     this.startMonitoring();
   }
-  
+
   private async startMonitoring() {
     setInterval(async () => {
       try {
@@ -340,40 +340,40 @@ class NetworkMonitor {
           `${this.network.coreApiUrl}/v2/info`,
           { signal: AbortSignal.timeout(5000) }
         );
-        
+
         const wasHealthy = this.isHealthy;
         this.isHealthy = response.ok;
-        
+
         if (wasHealthy !== this.isHealthy) {
           this.notifyListeners();
         }
       } catch (error) {
         const wasHealthy = this.isHealthy;
         this.isHealthy = false;
-        
+
         if (wasHealthy) {
           this.notifyListeners();
         }
       }
     }, 30000); // Check every 30 seconds
   }
-  
+
   onHealthChange(callback: (healthy: boolean) => void): () => void {
     this.listeners.add(callback);
     return () => this.listeners.delete(callback);
   }
-  
+
   private notifyListeners() {
     this.listeners.forEach(callback => callback(this.isHealthy));
   }
-  
+
   async waitForHealth(timeout = 60000): Promise<void> {
     const start = Date.now();
-    
+
     while (!this.isHealthy && Date.now() - start < timeout) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
-    
+
     if (!this.isHealthy) {
       throw new Error('Network unhealthy after timeout');
     }
@@ -396,7 +396,7 @@ class StacksWebSocketClient {
   private ws: WebSocket | null = null;
   private config: WebSocketConfig;
   private reconnectAttempts = 0;
-  
+
   constructor(network: StacksNetwork) {
     this.config = {
       url: this.getWebSocketUrl(network),
@@ -404,29 +404,29 @@ class StacksWebSocketClient {
       maxReconnectAttempts: 10,
     };
   }
-  
+
   private getWebSocketUrl(network: StacksNetwork): string {
     const apiUrl = network.coreApiUrl;
     return apiUrl.replace('https://', 'wss://').replace('http://', 'ws://');
   }
-  
+
   connect(): void {
     this.ws = new WebSocket(this.config.url);
-    
+
     this.ws.onopen = () => {
       console.log('WebSocket connected');
       this.reconnectAttempts = 0;
     };
-    
+
     this.ws.onclose = () => {
       this.handleReconnect();
     };
-    
+
     this.ws.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
   }
-  
+
   private handleReconnect(): void {
     if (this.reconnectAttempts < this.config.maxReconnectAttempts) {
       setTimeout(() => {
@@ -435,15 +435,15 @@ class StacksWebSocketClient {
       }, this.config.reconnectInterval);
     }
   }
-  
+
   subscribe(event: string, callback: (data: any) => void): void {
     if (!this.ws) throw new Error('WebSocket not connected');
-    
-    this.ws.send(JSON.stringify({ 
-      method: 'subscribe', 
-      params: { event } 
+
+    this.ws.send(JSON.stringify({
+      method: 'subscribe',
+      params: { event }
     }));
-    
+
     this.ws.onmessage = (message) => {
       const data = JSON.parse(message.data);
       if (data.event === event) {
@@ -466,18 +466,18 @@ describe('Cross-network tests', () => {
     { name: 'mainnet', network: new StacksMainnet() },
     { name: 'testnet', network: new StacksTestnet() },
   ];
-  
+
   networks.forEach(({ name, network }) => {
     describe(`${name} tests`, () => {
       it('should connect to network', async () => {
         const response = await fetch(`${network.coreApiUrl}/v2/info`);
         expect(response.ok).toBe(true);
       });
-      
+
       it('should have correct chain ID', async () => {
         const response = await fetch(`${network.coreApiUrl}/v2/info`);
         const info = await response.json();
-        
+
         if (name === 'mainnet') {
           expect(info.network_id).toBe(1);
         } else {
@@ -521,7 +521,7 @@ class TimeoutNetwork extends StacksMainnet {
   async fetchWithTimeout(url: string, timeout = 30000): Promise<Response> {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    
+
     try {
       const response = await fetch(url, {
         signal: controller.signal,

@@ -5,20 +5,18 @@ description: Understand the rate limits for Hiro APIs and the STX Faucet.
 
 ## API rate limits
 
-The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
+The following rate-limits (in requests per minute, or RPM) are applicable for [all Hiro APIs](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
 
 | API key | Rate Limit                        |
 |:--------|:----------------------------------|
 | No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
 | Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
-These rate-limits apply to the entirety of API traffic, regardless of whether it's from one or all of these APIs:
-- [Stacks Blockchain API](/apis/stacks-blockchain-api)
-- [Token Metadata API](/apis/token-metadata-api)
-- [Ordinals API](/apis/ordinals-api)
-- [Runes API](/apis/runes-api)
+Rate limits are split between two service types:
+- **Stacks services**: [Stacks Blockchain API](/apis/stacks-blockchain-api) and [Token Metadata API](/apis/token-metadata-api)
+- **Bitcoin services**: [Ordinals API](/apis/ordinals-api) and [Runes API](/apis/runes-api)
 
-These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
+Each service type has its own independent quota, allowing you to use both Stacks and Bitcoin APIs without one affecting the other's rate limits. For more details, see our guide on [response headers](/resources/guides/response-headers).
 
 :::callout
 You can create one for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
