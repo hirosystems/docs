@@ -96,19 +96,18 @@ The following headers will be removed on September 1st, 2024:
 - `x-ratelimit-remaining-minute`
 - `x-ratelimit-remaining-month`
 
-## API-specific quotas
+## Service classification
 
-Different APIs consume different amounts of quota based on the computational cost:
+APIs are classified into service types based on their URL path:
 
-| API | Service Type | Typical Cost |
-|:----|:-------------|:-------------|
-| Stacks Blockchain API | Stacks | 1 per request |
-| Token Metadata API | Stacks | 1 per request |
-| Ordinals API | Bitcoin | 1 per request |
-| Runes API | Bitcoin | 1 per request |
+| Service Type | Path Pattern | Examples |
+|:-------------|:-------------|:---------|
+| Bitcoin | `/ordinals/*` | Ordinals API endpoints |
+| Bitcoin | `/runes/*` | Runes API endpoints |
+| Stacks | All other paths | Stacks Blockchain API, Token Metadata API, Signer Metrics API, Explorer, and other services |
 
 :::callout
-The `x-ratelimit-cost-*` header shows the exact quota cost for each request, which may vary based on the endpoint and parameters used.
+The `x-ratelimit-cost-*` header shows the exact quota cost for each request, which may vary based on the endpoint and parameters used. Platform services (Platform API, Devnet) have separate rate limiting.
 :::
 
 ## Further reading

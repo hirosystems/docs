@@ -12,11 +12,15 @@ The following rate-limits (in requests per minute, or RPM) are applicable for [a
 | No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
 | Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
-Rate limits are split between two service types:
-- **Stacks services**: [Stacks Blockchain API](/apis/stacks-blockchain-api) and [Token Metadata API](/apis/token-metadata-api)
-- **Bitcoin services**: [Ordinals API](/apis/ordinals-api) and [Runes API](/apis/runes-api)
+Rate limits are split between two service types based on the API path:
+- **Bitcoin services** (`/ordinals/*` and `/runes/*` paths): [Ordinals API](/apis/ordinals-api) and [Runes API](/apis/runes-api)
+- **Stacks services** (all other paths): [Stacks Blockchain API](/apis/stacks-blockchain-api), [Token Metadata API](/apis/token-metadata-api), [Signer Metrics API](/apis/signer-metrics-api), Explorer endpoints, and other Hiro services
 
 Each service type has its own independent quota, allowing you to use both Stacks and Bitcoin APIs without one affecting the other's rate limits. For more details, see our guide on [response headers](/resources/guides/response-headers).
+
+:::callout
+Platform services (Platform API, Devnet) have separate rate limiting and are not part of this quota system.
+:::
 
 :::callout
 You can create one for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
