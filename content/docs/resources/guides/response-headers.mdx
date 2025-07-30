@@ -1,0 +1,117 @@
+---
+title: Response headers
+description: Understanding rate limit and quota information in API response headers.
+---
+
+All Hiro APIs return response headers that provide important information about rate limits and usage quotas. These headers are separated by service type (Stacks vs Bitcoin) to provide more granular control over API usage.
+
+The following headers are returned with every API response:
+
+```terminal
+$ curl -I https://api.hiro.so/extended/v1/info -H 'x-api-key: your-api-key'
+```
+
+| Header | Description |
+|:-------|:------------|
+| `ratelimit-limit` | The rate limit ceiling for that endpoint |
+| `ratelimit-remaining` | The number of requests left for the current window |
+| `ratelimit-reset` | The time when the rate limit window resets (Unix timestamp) |
+| `retry-after` | Time to wait before retrying (only present when rate limited) |
+
+## Service-specific headers
+
+Hiro APIs include additional headers that provide granular rate limit information per service type, reflecting the separation of rate limits between Stacks and Bitcoin services.
+
+### Stacks service headers
+
+When calling Stacks-related endpoints (Stacks Blockchain API, Token Metadata API), you'll receive:
+
+```typescript -c
+// Example: Fetching Stacks account info
+const response = await fetch('https://api.hiro.so/extended/v1/address/SP318Q55DEKHRXJK696033DQN5C54D9K2EE6DHRWP/assets', {
+  headers: { 'x-api-key': apiKey }
+});
+
+console.log(response)
+
+// New headers in response:
+// x-ratelimit-cost-stacks: 1 // !mark
+// x-ratelimit-limit-stacks-minute: 500
+// x-ratelimit-remaining-stacks-minute: 499
+```
+
+| Header | Description |
+|:-------|:------------|
+| `x-ratelimit-cost-stacks` | The quota cost for this specific request |
+| `x-ratelimit-limit-stacks-second` | Per-second limit for Stacks services |
+| `x-ratelimit-remaining-stacks-second` | Remaining requests this second |
+| `x-ratelimit-limit-stacks-minute` | Per-minute limit for Stacks services |
+| `x-ratelimit-remaining-stacks-minute` | Remaining requests this minute |
+| `x-ratelimit-limit-stacks-month` | Monthly limit for Stacks services |
+| `x-ratelimit-remaining-stacks-month` | Remaining requests this month |
+
+### Bitcoin service headers
+
+When calling Bitcoin-related endpoints (Ordinals API, Runes API), you'll receive:
+
+```typescript
+// Example: Fetching inscription data
+const response = await fetch('https://api.hiro.so/ordinals/v1/inscriptions', {
+  headers: { 'x-api-key': apiKey }
+});
+
+console.log(response)
+
+// New headers in response:
+// x-ratelimit-cost-bitcoin: 1
+// x-ratelimit-limit-bitcoin-minute: 500
+// x-ratelimit-remaining-bitcoin-minute: 499
+```
+
+| Header | Description |
+|:-------|:------------|
+| `x-ratelimit-cost-bitcoin` | The quota cost for this specific request |
+| `x-ratelimit-limit-bitcoin-second` | Per-second limit for Bitcoin services |
+| `x-ratelimit-remaining-bitcoin-second` | Remaining requests this second |
+| `x-ratelimit-limit-bitcoin-minute` | Per-minute limit for Bitcoin services |
+| `x-ratelimit-remaining-bitcoin-minute` | Remaining requests this minute |
+| `x-ratelimit-limit-bitcoin-month` | Monthly limit for Bitcoin services |
+| `x-ratelimit-remaining-bitcoin-month` | Remaining requests this month |
+
+## Migration timeline
+
+To ensure a smooth transition, we're maintaining backward compatibility:
+
+- **August 1, 2024**: New headers are introduced alongside existing headers
+- **September 1, 2024**: Legacy headers will be deprecated and removed
+
+### Legacy headers (deprecated)
+
+The following headers will be removed on September 1st, 2024:
+
+- `x-ratelimit-limit-second`
+- `x-ratelimit-limit-minute`
+- `x-ratelimit-limit-month`
+- `x-ratelimit-remaining-second`
+- `x-ratelimit-remaining-minute`
+- `x-ratelimit-remaining-month`
+
+## API-specific quotas
+
+Different APIs consume different amounts of quota based on the computational cost:
+
+| API | Service Type | Typical Cost |
+|:----|:-------------|:-------------|
+| Stacks Blockchain API | Stacks | 1 per request |
+| Token Metadata API | Stacks | 1 per request |
+| Ordinals API | Bitcoin | 1 per request |
+| Runes API | Bitcoin | 1 per request |
+
+:::callout
+The `x-ratelimit-cost-*` header shows the exact quota cost for each request, which may vary based on the endpoint and parameters used.
+:::
+
+## Further reading
+
+- [Rate limiting](/resources/guides/rate-limits)
+- [API keys](/resources/guides/api-keys)
