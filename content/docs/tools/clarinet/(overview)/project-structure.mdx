@@ -51,7 +51,7 @@ description = "A counter smart contract"
 [contracts.traits]
 path = "contracts/traits.clar"
 clarity_version = 3
-epoch = 3.1
+epoch = "latest"
 
 [contracts.counter]
 path = 'contracts/counter.clar'
@@ -64,6 +64,20 @@ The manifest handles several critical functions:
 - **Contract registration**: Every contract must be listed here
 - **Stacks Epoch and Clarity version**: Specifies Clarity version and epoch for each contract
 - **Boot sequence**: Lists contracts to deploy on `clarinet devnet start`
+
+### Epoch configuration
+
+You can specify the epoch in two ways:
+
+```toml
+# Use a specific epoch version
+epoch = 3.1
+
+# Use the latest available epoch (recommended for new projects)
+epoch = "latest"
+```
+
+Using `"latest"` ensures your contracts always use the newest Clarity features and optimizations available in your version of Clarinet.
 
 ## Testing infrastructure
 
