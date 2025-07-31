@@ -365,14 +365,16 @@ $ clarinet format [OPTIONS]
 ```
 
 ```terminal
+$ clarinet format --check
 $ clarinet format --dry-run
 $ clarinet format --file contracts/token.clar --in-place
 ```
 
 | Option | Short | Description | Required |
 |--------|-------|-------------|----------|
-| `--dry-run` | | Only echo the result of formatting | Yes |
-| `--in-place` | | Replace the contents of a file with the formatted code | Yes |
+| `--check` | | Check if code is formatted without modifying files | No |
+| `--dry-run` | | Only echo the result of formatting | No |
+| `--in-place` | | Replace the contents of a file with the formatted code | No |
 | `--manifest-path <path>` | `-m` | Path to Clarinet.toml | No |
 | `--file <file>` | `-f` | If specified, format only this file | No |
 | `--max-line-length <length>` | `-l` | Maximum line length | No |

@@ -51,12 +51,12 @@ description = "A counter smart contract"
 [contracts.traits]
 path = "contracts/traits.clar"
 clarity_version = 3
-epoch = 3.1
+epoch = "latest"
 
 [contracts.counter]
 path = 'contracts/counter.clar'
 clarity_version = 3
-epoch = 3.1
+epoch = "latest"
 ```
 
 The manifest handles several critical functions:
@@ -64,6 +64,20 @@ The manifest handles several critical functions:
 - **Contract registration**: Every contract must be listed here
 - **Stacks Epoch and Clarity version**: Specifies Clarity version and epoch for each contract
 - **Boot sequence**: Lists contracts to deploy on `clarinet devnet start`
+
+### Epoch configuration
+
+You can specify the epoch in two ways:
+
+```toml
+# Use a specific epoch version
+epoch = 3.1
+
+# Use the latest available epoch (default)
+epoch = "latest"
+```
+
+Using `"latest"` ensures your contracts always use the newest Clarity features and optimizations available in your version of Clarinet.
 
 ## Testing infrastructure
 
@@ -241,11 +255,11 @@ Never commit mainnet private keys or mnemonics. Use environment variables for pr
         ```toml Clarinet.toml
         [contracts.token]
         clarity_version = 3
-        epoch = 3.1 # !mark
+        epoch = "latest" # !mark
 
         [contracts.pool]
         clarity_version = 3
-        epoch = 3.1 # !mark
+        epoch = "latest" # !mark
         ```
 
         Mismatched versions can cause deployment failures and unexpected behavior. Always upgrade all contracts together when moving to a new Clarity version.

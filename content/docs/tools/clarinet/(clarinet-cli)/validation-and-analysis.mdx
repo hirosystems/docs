@@ -77,6 +77,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check Clarity contracts check
         run: clarinet check --use-on-disk-deployment-plan
+      - name: Check Clarity contracts format
+        run: clarinet format --check
 ```
 
 ## Runtime analysis
@@ -142,7 +144,7 @@ $ continue
 Debug navigation commands:
 - `step` or `s` - Step into sub-expressions
 - `finish` or `f` - Complete current expression
-- `next` or `n` - Step over sub-expressions  
+- `next` or `n` - Step over sub-expressions
 - `continue` or `c` - Continue to next breakpoint
 
 ### **Using `::get_costs` for analyzing specific function costs**
@@ -185,15 +187,15 @@ Master interactive debugging to quickly identify issues by starting a debugging 
 $ clarinet console
 $ ::debug (contract-call? .counter count-up)
 [1mST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter[0m[1m:9:3[0m
-   6      
+   6
    7      ;; Increment the count for the caller
    8      (define-public (count-up)
 -> 9        (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
             ^
    10     )
-   11     
+   11
    12     ;; Get the current count for a user
-(debug) 
+(debug)
 $ continue
 ```
 
