@@ -56,7 +56,7 @@ epoch = "latest"
 [contracts.counter]
 path = 'contracts/counter.clar'
 clarity_version = 3
-epoch = 3.1
+epoch = "latest"
 ```
 
 The manifest handles several critical functions:
@@ -255,11 +255,11 @@ Never commit mainnet private keys or mnemonics. Use environment variables for pr
         ```toml Clarinet.toml
         [contracts.token]
         clarity_version = 3
-        epoch = 3.1 # !mark
+        epoch = "latest" # !mark
 
         [contracts.pool]
         clarity_version = 3
-        epoch = 3.1 # !mark
+        epoch = "latest" # !mark
         ```
 
         Mismatched versions can cause deployment failures and unexpected behavior. Always upgrade all contracts together when moving to a new Clarity version.
