@@ -40,6 +40,22 @@ type: tip
 Setting a specific `initial_height` ensures consistent and reproducible test results.
 :::
 
+## Using mainnet addresses
+
+When testing contracts that check or require mainnet addresses, set `use_mainnet_wallets = true`. This enables your simnet tests to use mainnet addresses (SP/SM) instead of testnet addresses (ST).
+
+```toml Clarinet.toml
+[repl.remote_data]
+enabled = true
+initial_height = 522000
+use_mainnet_wallets = true  # !mark
+```
+
+This is particularly useful when:
+- Testing against mainnet-only contracts like DEX protocols
+- Your contract includes [`(is-standard standard-or-contract-principal)`](/resources/clarity/reference/functions#is-standard) validation
+- Simulating transactions that require mainnet address formats
+
 ## Configure API access
 
 While MXS works without an API key, you may encounter rate limits. Set up an API key for reliable access:
@@ -68,10 +84,10 @@ describe("pox-4 mainnet interaction", () => {
       [],
       deployer
     );
-    
+
     // Assert the result (adjust based on your initial_height)
     expect(call.result).toBeUint(109);
-    
+
     console.log("Current POX reward cycle:", Cl.prettyPrint(call.result));
   });
 });
