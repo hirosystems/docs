@@ -5,23 +5,25 @@ description: Understand the rate limits for Hiro APIs and the STX Faucet.
 
 ## API rate limits
 
-The following rate-limits (in requests per minute, or RPM) are applicable for all Hiro APIs as of [November 2023](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
+The following rate-limits (in requests per minute, or RPM) are applicable for [all Hiro APIs](https://www.hiro.so/blog/updated-rate-limits-for-hiro-apis):
 
 | API key | Rate Limit                        |
 |:--------|:----------------------------------|
 | No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
 | Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
-These rate-limits apply to the entirety of API traffic, regardless of whether it's from one or all of these APIs:
-- [Stacks Blockchain API](/apis/stacks-blockchain-api)
-- [Token Metadata API](/apis/token-metadata-api)
-- [Ordinals API](/apis/ordinals-api)
-- [Runes API](/apis/runes-api)
+Rate limits are split between two service types based on the API path:
+- **Bitcoin services** (`/ordinals/*` and `/runes/*` paths): [Ordinals API](/apis/ordinals-api) and [Runes API](/apis/runes-api)
+- **Stacks services** (all other paths): [Stacks Blockchain API](/apis/stacks-blockchain-api), [Token Metadata API](/apis/token-metadata-api), [Signer Metrics API](/apis/signer-metrics-api), Explorer endpoints, and other Hiro services
 
-These new rate limits help us ensure fair usage of Hiro APIs and provide the best possible service as our community of developers and applications grow.
+Each service type has its own independent quota, allowing you to use both Stacks and Bitcoin APIs without one affecting the other's rate limits. For more details, see our guide on [response headers](/resources/guides/response-headers).
 
 :::callout
-You can create one for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
+Platform services (Platform API, Devnet) have separate rate limiting and are not part of this quota system.
+:::
+
+:::callout
+You can create an API key for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
 :::
 
 ## STX Faucet rate limits

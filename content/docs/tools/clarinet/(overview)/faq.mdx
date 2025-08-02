@@ -24,7 +24,7 @@ This page addresses common questions and issues encountered when developing with
         ```typescript
         // The sBTC multisig address that can mint
         const sbtcDeployer = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
-        
+
         // Mint sBTC to your test wallet
         const mintTx = simnet.callPublicFn(
           "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
@@ -40,19 +40,28 @@ This page addresses common questions and issues encountered when developing with
   </AccordionItem>
 
   <AccordionItem value="mainnet-simulation-addresses">
-    <AccordionTrigger>Why does is-standard fail with mainnet addresses during mainnet simulation?</AccordionTrigger>
+    <AccordionTrigger>Why am I getting an error when using mainnet addresses during mainnet simulation?</AccordionTrigger>
     <AccordionContent>
       <div className="pb-4 pt-2">
-        When using mainnet execution simulation, the `is-standard` function expects mainnet addresses, not testnet addresses. Here's how to handle this:
+        When using mainnet execution simulation, it's possible that the mainnet contract is checking for mainnet address contract calls, not testnet addresses.
 
-        **Use mainnet addresses instead of default testnet addresses:**
+        **As of Clarinet v3.4.0**, you can enable mainnet addresses in simnet by adding `use_mainnet_wallets = true` to your configuration:
+
+        ```toml Clarinet.toml
+        [repl.remote_data]
+        enabled = true
+        initial_height = 522000
+        use_mainnet_wallets = true  # Enable mainnet addresses
+        ```
+
+        **Alternative: Manually use mainnet addresses:**
         ```typescript
         // Instead of using simnet.getAccounts()
         const mainnetAddress = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY";
-        
+
         // Mint STX to any mainnet address
         simnet.mintSTX(mainnetAddress, 1000000n);
-        
+
         // Call functions with mainnet address
         const result = simnet.callReadOnlyFn(
           "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3",
