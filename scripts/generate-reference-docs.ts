@@ -1,8 +1,8 @@
 // scripts/generate-reference-docs.ts
 
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { ReferenceMarkdownGenerator } from '../lib/markdown-generator';
-import fs from 'fs/promises';
-import path from 'path';
 
 // Configuration
 const INPUT_JSON_PATH = process.argv[2] || './typedoc-output.json';

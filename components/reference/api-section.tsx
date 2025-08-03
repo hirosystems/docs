@@ -1,12 +1,12 @@
-import { ExternalLink, X, ChevronRight, ArrowUpRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import type { APIExport, APIParameter } from './types';
+import { ArrowUpRight, ChevronRight, ExternalLink, X } from 'lucide-react';
 import React from 'react';
 import { Code } from '@/components/docskit/code';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { APICollapsibleClient } from './api-collapsible.client';
+import type { APIExport, APIParameter } from './types';
 
 interface APISectionProps {
   apiExport: APIExport;

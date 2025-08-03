@@ -1,4 +1,4 @@
-import { AnnotationHandler } from 'codehike/code';
+import type { AnnotationHandler } from 'codehike/code';
 import Link from 'next/link';
 
 export const link: AnnotationHandler = {

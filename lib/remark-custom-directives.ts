@@ -1,7 +1,8 @@
 // lib/remark-custom-directives.ts
-import { visit } from 'unist-util-visit';
-import type { Plugin } from 'unified';
+
 import type { Root } from 'mdast';
+import type { Plugin } from 'unified';
+import { visit } from 'unist-util-visit';
 
 /**
  * Custom remark plugin to transform directive syntax into MDX JSX elements

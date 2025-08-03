@@ -1,4 +1,4 @@
-import { AnnotationHandler } from 'codehike/code';
+import type { AnnotationHandler } from 'codehike/code';
 import { NoteTooltip } from '../notes.tooltip';
 
 export const tooltip: AnnotationHandler = {

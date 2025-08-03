@@ -1,15 +1,15 @@
+import { Block, CodeBlock } from 'codehike/blocks';
+import type { RawCode } from 'codehike/code';
+import Link from 'fumadocs-core/link';
+import { z } from 'zod';
 import { Code } from './code';
 import { InlineCode } from './inline-code';
 import { WithNotes } from './notes';
 import { NoteTooltip } from './notes.tooltip';
-import { z } from 'zod';
-import { RawCode } from 'codehike/code';
-import { Block, CodeBlock } from 'codehike/blocks';
-import { Terminal } from './terminal';
-import Link from 'fumadocs-core/link';
 import ScrollyCoding from './scrollycoding';
-import Spotlight from './spotlight';
 import Slideshow from './slideshow';
+import Spotlight from './spotlight';
+import { Terminal } from './terminal';
 
 // Export RawCode type for external use
 export type { RawCode };

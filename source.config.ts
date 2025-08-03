@@ -1,8 +1,8 @@
+import { type CodeHikeConfig, recmaCodeHike, remarkCodeHike } from 'codehike/mdx';
 import { defineConfig, defineDocs, frontmatterSchema } from 'fumadocs-mdx/config';
-import { remarkCodeHike, recmaCodeHike, type CodeHikeConfig } from 'codehike/mdx';
 import remarkDirective from 'remark-directive';
-import { remarkCustomDirectives } from './lib/remark-custom-directives';
 import { z } from 'zod';
+import { remarkCustomDirectives } from './lib/remark-custom-directives';
 
 export const docs = defineDocs({
   dir: 'content/docs',

@@ -1,4 +1,4 @@
-import { AnnotationHandler } from 'codehike/code';
+import type { AnnotationHandler } from 'codehike/code';
 import { InlineFold } from './fold.client';
 
 export const fold: AnnotationHandler = {

@@ -1,5 +1,5 @@
+import * as fs from 'node:fs/promises';
 import SwaggerParser from '@apidevtools/swagger-parser';
-import * as fs from 'fs/promises';
 
 async function generateOpenAPI() {
   const url =

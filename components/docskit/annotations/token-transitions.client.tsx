@@ -1,10 +1,10 @@
 'use client';
 
-import { CustomPreProps, InnerPre, getPreRef } from 'codehike/code';
+import { type CustomPreProps, getPreRef, InnerPre } from 'codehike/code';
 import {
-  TokenTransitionsSnapshot,
   calculateTransitions,
   getStartingSnapshot,
+  type TokenTransitionsSnapshot,
 } from 'codehike/utils/token-transitions';
 import React from 'react';
 

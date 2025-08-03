@@ -1,6 +1,6 @@
 import { AlertTriangle, Info, Star } from 'lucide-react';
-import { HiroSVG } from '@/components/ui/icon';
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { HiroSVG } from '@/components/ui/icon';
 import { cn } from '@/lib/utils';
 
 type CalloutProps = Omit<HTMLAttributes<HTMLDivElement>, 'title' | 'type' | 'icon'> & {

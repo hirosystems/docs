@@ -1,25 +1,24 @@
 'use client';
 
-import { X, ChevronRight } from 'lucide-react';
 import type { PageTree } from 'fumadocs-core/server';
-import { SearchToggle } from '../layout/search-toggle';
 import { TreeContextProvider } from 'fumadocs-ui/contexts/tree';
-import { baseOptions } from '@/app/layout.config';
+import { ChevronRight, X } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+import { baseOptions } from '@/app/layout.config';
 import { Sidebar } from '@/components/layouts/docs';
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { DocsLogo } from '@/components/ui/icon';
 import { cn } from '@/lib/utils';
+import { SearchToggle } from '../layout/search-toggle';
 
 interface MobileNavigationProps {
   isOpen?: boolean;
@@ -234,34 +233,32 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
         <nav className="overflow-y-auto h-[calc(100vh-64px)] bg-background px-3">
           <div className="py-2">
             {activeSubmenu ? (
-              <>
-                {(
-                  baseOptions.links?.find(
-                    (item: any) => item.text === activeSubmenu && item.type === 'menu',
-                  ) as any
-                )?.items?.map((subItem: any) => {
-                  if (subItem.type === 'custom' || !('url' in subItem) || !subItem.url) return null;
+              (
+                baseOptions.links?.find(
+                  (item: any) => item.text === activeSubmenu && item.type === 'menu',
+                ) as any
+              )?.items?.map((subItem: any) => {
+                if (subItem.type === 'custom' || !('url' in subItem) || !subItem.url) return null;
 
-                  return (
-                    <Link
-                      key={subItem.url}
-                      href={subItem.url}
-                      onClick={handleClose}
-                      className={cn(
-                        'flex items-center justify-between px-2 py-3 text-lg hover:bg-accent transition-colors',
-                        subItem.isNew && 'gap-3 justify-start',
-                      )}
-                    >
-                      <span className="font-fono text-muted-foreground">{subItem.text}</span>
-                      {subItem.isNew && (
-                        <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none">
-                          New
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </>
+                return (
+                  <Link
+                    key={subItem.url}
+                    href={subItem.url}
+                    onClick={handleClose}
+                    className={cn(
+                      'flex items-center justify-between px-2 py-3 text-lg hover:bg-accent transition-colors',
+                      subItem.isNew && 'gap-3 justify-start',
+                    )}
+                  >
+                    <span className="font-fono text-muted-foreground">{subItem.text}</span>
+                    {subItem.isNew && (
+                      <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none">
+                        New
+                      </span>
+                    )}
+                  </Link>
+                );
+              })
             ) : isInDocsContext && !showMainMenu ? (
               <TreeContextProvider tree={tree}>
                 <div className="bg-background">

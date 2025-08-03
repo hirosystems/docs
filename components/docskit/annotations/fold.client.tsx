@@ -1,6 +1,6 @@
 'use client';
 
-import { AnnotationHandler } from 'codehike/code';
+import type { AnnotationHandler } from 'codehike/code';
 import { useState } from 'react';
 
 export const InlineFold: AnnotationHandler['Inline'] = ({ children }) => {
@@ -10,6 +10,7 @@ export const InlineFold: AnnotationHandler['Inline'] = ({ children }) => {
   }
   return (
     <button
+      type="button"
       onClick={() => setFolded(false)}
       aria-label="Expand"
       title="Click to expand"

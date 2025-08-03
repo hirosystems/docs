@@ -1,8 +1,8 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import React from 'react';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
-import type { OpenAPIDocument, OpenAPIOperation } from './types';
 import { OperationSection } from './operation-section';
+import type { OpenAPIDocument, OpenAPIOperation } from './types';
 import { processOpenAPIDocument, processRequestBody } from './utils/openapi-processor';
 
 interface APIPageProps {

@@ -1,6 +1,6 @@
-export { Section, SectionHeader, SectionContent } from './section';
 export type {
-  SectionProps,
-  SectionHeaderProps,
   SectionContentProps,
+  SectionHeaderProps,
+  SectionProps,
 } from './section';
+export { Section, SectionContent, SectionHeader } from './section';

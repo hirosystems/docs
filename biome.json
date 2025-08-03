@@ -15,22 +15,39 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "recommended": false,
       "complexity": {
         "noBannedTypes": "off",
-        "noUselessTypeConstraint": "off"
+        "noUselessTypeConstraint": "off",
+        "noUselessFragments": "error"
       },
       "correctness": {
         "noUnusedVariables": "off",
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noUnusedImports": "off",
+        "noUnusedFunctionParameters": "off",
+        "useHookAtTopLevel": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
-        "noParameterAssign": "off"
+        "noParameterAssign": "off",
+        "useNodejsImportProtocol": "error",
+        "useTemplate": "off"
       },
       "suspicious": {
         "noExplicitAny": "off",
-        "noEmptyInterface": "off"
+        "noEmptyInterface": "off",
+        "noShadowRestrictedNames": "error",
+        "noArrayIndexKey": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "error",
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     }
   },

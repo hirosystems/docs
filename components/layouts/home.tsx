@@ -1,20 +1,19 @@
 'use client';
-import React, { type HTMLAttributes, useMemo } from 'react';
-import { type NavOptions, slot } from './shared';
-import { cn } from '@/lib/utils';
-import { type BaseLayoutProps, getLinks } from './shared';
+import Link from 'fumadocs-core/link';
 import { NavProvider } from 'fumadocs-ui/contexts/layout';
+import { ArrowUpRight } from 'lucide-react';
+import React, { type HTMLAttributes, useMemo } from 'react';
+import { baseOptions } from '@/app/layout.config';
+import { MobileMenuProvider } from '@/contexts/mobile-menu';
+import { cn } from '@/lib/utils';
+import { MobileMenuButton } from '../layout/mobile-menu-button';
 import { SearchToggle } from '../layout/search-toggle';
 import { ThemeToggle } from '../layout/theme-toggle';
-import { ArrowUpRight } from 'lucide-react';
-import Link from 'fumadocs-core/link';
 import { Button } from '../ui/button';
 import { DocsLogo } from '../ui/icon';
 import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu';
 import { renderNavItem } from './links';
-import { baseOptions } from '@/app/layout.config';
-import { MobileMenuButton } from '../layout/mobile-menu-button';
-import { MobileMenuProvider } from '@/contexts/mobile-menu';
+import { type BaseLayoutProps, getLinks, type NavOptions, slot } from './shared';
 
 export interface HomeLayoutProps extends BaseLayoutProps {
   nav?: Partial<

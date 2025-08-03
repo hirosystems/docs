@@ -1,8 +1,20 @@
 'use client';
 
-import * as React from 'react';
 import { useDocsSearch } from 'fumadocs-core/search/client';
-
+import {
+  Code,
+  Copy,
+  ExternalLink,
+  Eye,
+  File,
+  Layers,
+  Package,
+  Search,
+  Terminal,
+  Webhook,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import * as React from 'react';
 import {
   Command,
   CommandDialog,
@@ -13,20 +25,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
-import {
-  Search,
-  File,
-  Terminal,
-  Code,
-  Webhook,
-  Layers,
-  Package,
-  Copy,
-  Eye,
-  ExternalLink,
-} from 'lucide-react';
 import { useSearch } from '@/hooks/use-search';
-import { useRouter } from 'next/navigation';
 
 const stopWords = new Set([
   'a',

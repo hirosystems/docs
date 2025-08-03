@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
 import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
+import * as React from 'react';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -11,8 +11,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import type { Recipe } from '@/types';
 import { truncate } from '@/lib/utils';
+import type { Recipe } from '@/types';
 
 interface RecipeCarouselProps {
   currentRecipeId: string; // To exclude current recipe from carousel

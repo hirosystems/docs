@@ -1,30 +1,30 @@
 'use client';
-import Link from 'fumadocs-core/link';
 import { usePathname } from 'fumadocs-core/framework';
+import Link from 'fumadocs-core/link';
+import { ChevronDown } from 'lucide-react';
 import React, {
   type AnchorHTMLAttributes,
   forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  useState,
-  useRef,
   useEffect,
+  useRef,
+  useState,
 } from 'react';
 import { isActive } from '../../lib/is-active';
+import { cn } from '../../lib/utils';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import {
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-  NavigationMenuContent,
 } from '../ui/navigation-menu';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '../ui/dropdown-menu';
-import { ChevronDown } from 'lucide-react';
-import { cn } from '../../lib/utils';
 
 interface BaseItem {
   /**

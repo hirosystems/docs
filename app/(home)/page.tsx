@@ -1,19 +1,17 @@
-import Link from 'fumadocs-core/link';
-import { Cards, Card, SmallCard } from '@/components/card';
-import { Play, Database, Braces } from 'lucide-react';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { Braces, Database, Play } from 'lucide-react';
+import { Card, Cards, SmallCard } from '@/components/card';
 import {
   API,
-  Backend,
-  Clarity,
   Chainhook,
   Clarinet,
+  Clarity,
   Hiro,
   Js,
   Ordinals,
   Runes,
   StacksIcon,
 } from '@/components/ui/icon';
-import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import heroImage from '@/public/stacks-hero.svg';
 
 export default function HomePage() {

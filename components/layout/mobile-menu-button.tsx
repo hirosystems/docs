@@ -1,10 +1,10 @@
 'use client';
 
+import type { PageTree } from 'fumadocs-core/server';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useMobileMenu } from '@/contexts/mobile-menu';
 import { MobileNavigation } from './mobile-navigation';
-import type { PageTree } from 'fumadocs-core/server';
 
 interface MobileMenuButtonProps {
   tree?: PageTree.Root;

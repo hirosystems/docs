@@ -1,6 +1,6 @@
-import { ClarityConverter, type ClarityTypeHint } from './clarity-converter';
 import { cvToString } from '@stacks/transactions';
 import type { OpenAPIOperation } from '../types';
+import { ClarityConverter, type ClarityTypeHint } from './clarity-converter';
 
 interface ExecuteRequestOptions {
   proxyUrl?: string;
@@ -85,7 +85,7 @@ export async function executeRequest(
     }
   }
 
-  let requestBody: any = undefined;
+  let requestBody: any;
   if (
     formData.body &&
     (operation.requestBody || ['POST', 'PUT', 'PATCH'].includes(operation.method.toUpperCase()))

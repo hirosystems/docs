@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { InteractiveTags } from './interactive-tags';
-import { useTagFiltering } from '@/hooks/use-tag-filtering';
-import type { FilterablePage } from '@/lib/utils/tag-filtering';
-import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { useTagFiltering } from '@/hooks/use-tag-filtering';
+import { cn } from '@/lib/utils';
+import type { FilterablePage } from '@/lib/utils/tag-filtering';
+import { InteractiveTags } from './interactive-tags';
 
 export interface TagFilterSystemProps {
   tags: string[];
@@ -69,14 +69,9 @@ function EmptyState({ selectedTag }: { selectedTag?: string }) {
       </div>
       <h3 className="text-lg font-medium mb-2">No results found</h3>
       <p className="text-muted-foreground max-w-sm">
-        {selectedTag ? (
-          <>
-            No pages found with the label selectedTag. Try selecting a different tag or check back
-            later.
-          </>
-        ) : (
-          'No pages match your current filter. Try selecting a different tag.'
-        )}
+        {selectedTag
+          ? 'No pages found with the label selectedTag. Try selecting a different tag or check back later.'
+          : 'No pages match your current filter. Try selecting a different tag.'}
       </p>
     </div>
   );

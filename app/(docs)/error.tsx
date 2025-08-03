@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
 
-export default function Error({
+export default function ErrorBoundary({
   error,
   reset,
 }: {
@@ -47,6 +47,7 @@ export default function Error({
         </Link>
         {!is404 && (
           <button
+            type="button"
             onClick={reset}
             className="inline-flex h-9 items-center rounded-md border border-neutral-200 dark:border-neutral-800 px-4 text-sm font-medium transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
           >

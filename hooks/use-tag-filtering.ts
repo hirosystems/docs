@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { FilterablePage, FilterResult } from '@/lib/utils/tag-filtering';
 import { filterPagesByTag } from '@/lib/utils/tag-filtering';
 

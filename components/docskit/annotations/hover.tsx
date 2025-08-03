@@ -1,4 +1,4 @@
-import { AnnotationHandler, InnerLine } from 'codehike/code';
+import { type AnnotationHandler, InnerLine } from 'codehike/code';
 import { HoverLinkClient } from './hover.client';
 import { HoverLineClient } from './hover-line.client';
 

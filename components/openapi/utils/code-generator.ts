@@ -1,4 +1,4 @@
-import type { OpenAPIOperation, CodeExample } from '../types';
+import type { CodeExample, OpenAPIOperation } from '../types';
 
 export async function generateCodeExamples(
   operation: OpenAPIOperation,

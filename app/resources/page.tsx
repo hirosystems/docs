@@ -1,6 +1,6 @@
+import { Code, Database, Terminal } from 'lucide-react';
 import { Cards, IndexCard } from '@/components/card';
 import { Clarity } from '@/components/ui/icon';
-import { Braces, Code, Database, Terminal } from 'lucide-react';
 
 export default function ResourcesPage() {
   return (

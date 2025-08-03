@@ -1,7 +1,7 @@
 'use client';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useNotesContext } from './notes.client';
 import { cn } from '@/lib/utils';
+import { useNotesContext } from './notes.client';
 
 export function NoteTooltip({ children, name }: { children: React.ReactNode; name: string }) {
   let note = useNotesContext(name);

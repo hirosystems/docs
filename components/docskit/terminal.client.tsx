@@ -1,10 +1,10 @@
 'use client';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { TerminalIcon } from 'lucide-react';
-import { useStateOrLocalStorage } from './hooks/local-storage';
 import type { ReactNode } from 'react';
-import { CODEBLOCK, TITLEBAR } from './code-group';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { cn } from '@/lib/utils';
+import { CODEBLOCK, TITLEBAR } from './code-group';
+import { useStateOrLocalStorage } from './hooks/local-storage';
 
 export function TerminalClient({
   tabs,

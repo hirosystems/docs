@@ -24,7 +24,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Run Biome checks
-        run: bun run check
+        run: bun run biome check app/ components/ lib/ scripts/ content/ --error-on-warnings
 
       - name: Generate llms.txt files
         run: bun run generate-llms

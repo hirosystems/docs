@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { glob } from 'glob';
 
 interface EndpointMapping {
@@ -56,22 +56,22 @@ export async function buildEndpointMappings(): Promise<EndpointMapping> {
       const operationRegex =
         /\{\s*path:\s*['"`]([^'"`]+)['"`]\s*,\s*method:\s*['"`]([^'"`]+)['"`]\s*\}/g;
 
-      let opMatch;
-      while ((opMatch = operationRegex.exec(operationsStr)) !== null) {
+      let opMatch: RegExpExecArray | null;
+      opMatch = operationRegex.exec(operationsStr);
+      while (opMatch !== null) {
         const endpoint = opMatch[1];
         const method = opMatch[2].toUpperCase();
 
         // Calculate URL path from file path
         const relativePath = path.relative(contentDir, file);
-        const urlPath = '/' + relativePath.replace(/\.mdx?$/, '');
+        const urlPath = `/${relativePath.replace(/\.mdx?$/, '')}`;
 
         // Generate the expected markdown filename
-        const generatedFile =
-          `${method} ${endpoint}`
-            .toLowerCase()
-            .replace(/[{}]/g, '')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '') + '.md';
+        const generatedFile = `${`${method} ${endpoint}`
+          .toLowerCase()
+          .replace(/[{}]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '')}.md`;
 
         mappings[urlPath] = {
           apiName,
@@ -79,6 +79,7 @@ export async function buildEndpointMappings(): Promise<EndpointMapping> {
           endpoint,
           generatedFile,
         };
+        opMatch = operationRegex.exec(operationsStr);
       }
     } catch (error) {
       console.error(`Error processing ${file}:`, error);

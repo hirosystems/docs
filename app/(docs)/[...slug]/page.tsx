@@ -1,34 +1,33 @@
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
 import matter from 'gray-matter';
-import { source } from '@/lib/source';
+import * as lucideIcons from 'lucide-react';
+import { CheckIcon } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import type { HeadingProps } from '@/types';
-import { getMDXComponents } from '@/components/mdx';
-import { API } from '@/components/reference/api-page';
-import { APIPage } from '@/components/openapi/api-page';
-import { Badge } from '@/components/ui/badge';
+import { Callout } from '@/components/callout';
+import { FeedbackWrapper } from '@/components/feedback/feedback-wrapper';
+import { InteractiveHeader, InteractiveLayout } from '@/components/layouts/interactive';
 import {
   DocsPage,
-  DocsPageLayout,
-  DocsPageHeader,
+  DocsPageBreadcrumb,
   DocsPageContent,
   DocsPageContentWrapper,
-  DocsPageBreadcrumb,
-  DocsPageTitle,
   DocsPageDescription,
+  DocsPageHeader,
+  DocsPageLayout,
   DocsPageProse,
+  DocsPageTitle,
 } from '@/components/layouts/page';
-import { InteractiveHeader, InteractiveLayout } from '@/components/layouts/interactive';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { LLMShare } from '@/components/llm-share';
-import { CheckIcon } from 'lucide-react';
-import { TagFilterSystem } from '@/components/ui/tag-filter-system';
-import { getAllFilterablePages } from '@/lib/source';
+import { getMDXComponents } from '@/components/mdx';
 import { Mermaid } from '@/components/mdx/mermaid';
-import { Callout } from '@/components/callout';
+import { APIPage } from '@/components/openapi/api-page';
+import { API } from '@/components/reference/api-page';
+import { Badge } from '@/components/ui/badge';
 import * as customIcons from '@/components/ui/icon';
-import * as lucideIcons from 'lucide-react';
-import { FeedbackWrapper } from '@/components/feedback/feedback-wrapper';
+import { TagFilterSystem } from '@/components/ui/tag-filter-system';
+import { getAllFilterablePages, source } from '@/lib/source';
+import type { HeadingProps } from '@/types';
 
 export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {
   const params = await props.params;

@@ -1,5 +1,5 @@
 import { Cards, IndexCard } from '@/components/card';
-import { API, Js } from '@/components/ui/icon';
+import { Js } from '@/components/ui/icon';
 
 export default function ReferencePage() {
   return (

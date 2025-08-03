@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
-import { cn } from '@/lib/utils';
+import type React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 export interface InteractiveTagsProps {
   tags: string[];

@@ -2,15 +2,15 @@
 
 import Link from 'next/link';
 import { Fragment } from 'react';
-import { useBreadcrumb } from '@/hooks/use-breadcrumb';
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { useBreadcrumb } from '@/hooks/use-breadcrumb';
 
 export function BreadcrumbNav() {
   const items = useBreadcrumb();

@@ -1,16 +1,16 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { Play, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { cvToJSON, cvToString, hexToCV } from '@stacks/transactions';
+import { ChevronDown, Play } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { CodeSync } from '@/components/docskit/code';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
+import type { OpenAPIOperation } from '../types';
 import { RequestBuilder } from './request-builder';
 import { executeRequest } from './request-executor';
-import { CodeSync } from '@/components/docskit/code';
-import { hexToCV, cvToJSON, cvToString } from '@stacks/transactions';
-import type { OpenAPIOperation } from '../types';
 
 interface APIPlaygroundProps {
   operation: OpenAPIOperation;

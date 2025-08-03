@@ -1,6 +1,6 @@
+import { Braces, Terminal } from 'lucide-react';
 import { themeIcons } from 'seti-icons';
 import { Clarity } from '@/components/ui/icon';
-import { Braces, Terminal } from 'lucide-react';
 
 export function CodeIcon({
   title,

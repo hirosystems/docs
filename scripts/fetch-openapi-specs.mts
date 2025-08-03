@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-import fs from 'fs/promises';
-import path from 'path';
-import yaml from 'js-yaml';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import SwaggerParser from '@apidevtools/swagger-parser';
+import yaml from 'js-yaml';
 import stringify from 'json-stringify-safe';
-import { OpenAPIMarkdownGenerator } from './openapi-to-markdown.mts';
 import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+import { OpenAPIMarkdownGenerator } from './openapi-to-markdown.mts';
 import { buildEndpointMappings, saveMappings } from './utils/api-endpoint-mapping.mts';
 
 interface ApiSpec {
@@ -971,7 +971,7 @@ async function fetchApiSpec(spec: ApiSpec): Promise<void> {
     const text = await response.text();
 
     // Validate that the response is valid JSON
-    let jsonData;
+    let jsonData: unknown;
     try {
       jsonData = JSON.parse(text);
     } catch (parseError) {
@@ -1006,7 +1006,7 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
     const yamlText = await response.text();
 
     // Parse YAML to check if it's valid
-    let yamlData;
+    let yamlData: unknown;
     try {
       yamlData = yaml.load(yamlText);
     } catch (parseError) {
@@ -1057,12 +1057,11 @@ async function generateMarkdownForSpec(specPath: string, specName: string): Prom
     for (const [key, markdown] of markdownMap) {
       // Create a filename from the endpoint key
       // e.g., "GET /v1/users/{id}" -> "get-v1-users-id.md"
-      const filename =
-        key
-          .toLowerCase()
-          .replace(/[{}]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '') + '.md';
+      const filename = `${key
+        .toLowerCase()
+        .replace(/[{}]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')}.md`;
 
       const filePath = path.join(outputDir, filename);
       await fs.writeFile(filePath, markdown.content);

@@ -1,11 +1,10 @@
 import Link, { type LinkProps } from 'fumadocs-core/link';
-import type { HTMLAttributes, ReactNode } from 'react';
-import { cn } from '@/lib/utils';
-
-import { Badge } from '@/components/ui/badge';
-import { InteractiveBadge } from '@/app/(home)/components/interactive-badge';
 import { ChevronRight } from 'lucide-react';
+import type { HTMLAttributes, ReactNode } from 'react';
+import { InteractiveBadge } from '@/app/(home)/components/interactive-badge';
 import { CopyButton } from '@/components/docskit/copy-button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export function Cards(props: HTMLAttributes<HTMLDivElement>): React.ReactElement {
   return (

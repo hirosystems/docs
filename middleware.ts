@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   if (pathname.endsWith('.md')) {
     const pathWithoutMd = pathname.slice(0, -3);
 
-    if (pathWithoutMd.match(/^\/apis\/[^\/]+\/reference\//)) {
+    if (pathWithoutMd.match(/^\/apis\/[^/]+\/reference\//)) {
       // Rewrite to our openapi-markdown API route
       const apiPath = `/api/openapi-markdown${pathWithoutMd}`;
       return NextResponse.rewrite(new URL(apiPath, request.url));

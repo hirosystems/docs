@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
+import fs from 'node:fs/promises';
 import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
-import fs from 'fs/promises';
-import path from 'path';
 
 // Type guard for OpenAPI 3.x documents
 type OpenAPIDocument = OpenAPIV3.Document | OpenAPIV3_1.Document;
@@ -363,9 +362,9 @@ export class OpenAPIMarkdownGenerator {
     // Add request body if present
     if (operation.requestBody) {
       const requestBody = this.resolveReference(operation.requestBody) as RequestBodyObject;
-      if (requestBody && requestBody.content) {
+      if (requestBody?.content) {
         const jsonContent = requestBody.content['application/json'];
-        if (jsonContent && jsonContent.example) {
+        if (jsonContent?.example) {
           sections.push(`  -H "Content-Type: application/json"`);
           sections.push(`  -d '${JSON.stringify(jsonContent.example)}'`);
         }
@@ -480,7 +479,7 @@ export class OpenAPIMarkdownGenerator {
 
       for (const code of errorCodes) {
         const response = this.resolveReference(responses[code]) as ResponseObject;
-        if (response && response.description) {
+        if (response?.description) {
           sections.push(`| ${code} | ${response.description} |`);
         }
       }
@@ -665,7 +664,7 @@ export class OpenAPIMarkdownGenerator {
           }
           return [];
 
-        case 'object':
+        case 'object': {
           const obj: any = {};
           if ('properties' in schema && schema.properties) {
             for (const [key, propSchema] of Object.entries(schema.properties)) {
@@ -674,6 +673,7 @@ export class OpenAPIMarkdownGenerator {
             }
           }
           return obj;
+        }
 
         case 'null':
           return null;

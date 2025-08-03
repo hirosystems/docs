@@ -1,9 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { CopyButton } from './copy-button';
-import { CodeIcon } from './code-icon';
 import { CODEBLOCK, TITLEBAR } from './code-group';
+import { CodeIcon } from './code-icon';
+import { CopyButton } from './copy-button';
 
 interface SimpleCodeProps {
   code: string;

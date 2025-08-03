@@ -3,8 +3,8 @@ import type { TOCItemType } from 'fumadocs-core/server';
 import * as Primitive from 'fumadocs-core/toc';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
-import { TocThumb } from './toc-thumb';
 import { TocItemsEmpty } from './toc';
+import { TocThumb } from './toc-thumb';
 
 export default function ClerkTOCItems({ items }: { items: TOCItemType[] }) {
   const containerRef = useRef<HTMLDivElement>(null);

@@ -1,10 +1,9 @@
+import { ListFilter } from 'lucide-react';
+import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { useId } from 'react';
-
-import { ListFilter } from 'lucide-react';
 
 const CATEGORIES = [
   { label: 'Stacks.js', value: 'stacks.js' },

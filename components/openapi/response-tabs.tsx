@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Code } from '@/components/docskit/code';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CollapsibleSchema } from './collapsible-schema';
 import type { OpenAPIResponse } from './types';
 import { buildExampleFromSchema } from './utils/openapi-processor';

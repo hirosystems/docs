@@ -1,7 +1,7 @@
-import React from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
+import React from 'react';
 import { Code } from '@/components/docskit/code';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface CollapsibleSchemaProps {
   schema: any;

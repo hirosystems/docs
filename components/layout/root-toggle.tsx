@@ -1,11 +1,11 @@
 'use client';
+import { useSidebar } from 'fumadocs-ui/provider';
 import { ChevronsUpDown } from 'lucide-react';
-import { type HTMLAttributes, type ReactNode, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import { type HTMLAttributes, type ReactNode, useMemo, useState } from 'react';
 import { isActive } from '@/lib/is-active';
-import { useSidebar } from 'fumadocs-ui/provider';
+import { cn } from '@/lib/utils';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 export interface Option {

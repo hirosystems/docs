@@ -1,11 +1,11 @@
 'use client';
 
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { CopyButton } from './copy-button';
-import React from 'react';
-import { useStateOrLocalStorage } from './hooks/local-storage';
 import { CODEBLOCK, type CodeGroup, TITLEBAR } from './code-group';
+import { CopyButton } from './copy-button';
+import { useStateOrLocalStorage } from './hooks/local-storage';
 
 export function MultiCode({ group, className }: { group: CodeGroup; className?: string }) {
   const [currentTitle, setCurrentTitle] = useStateOrLocalStorage(

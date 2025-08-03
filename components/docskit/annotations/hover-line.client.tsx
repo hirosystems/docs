@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { InnerLine } from 'codehike/code';
+import { useEffect, useRef } from 'react';
 import { useHover } from '@/components/docskit/context/hover';
 
 export function HoverLineClient({ annotation, ...props }: any) {

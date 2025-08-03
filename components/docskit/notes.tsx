@@ -7,19 +7,19 @@ export function WithNotes({ children, ...rest }: { children: React.ReactNode }) 
   const notes = Object.entries(rest)
     .filter(([name]) => name !== 'title' && name !== '_data')
     .map(([name, block]: any) => {
-      if (block.hasOwnProperty('children')) {
+      if (Object.hasOwn(block, 'children')) {
         return {
           name,
           type: block.type || 'prose',
           children: block.children,
         };
-      } else if (block.hasOwnProperty('value') && block.hasOwnProperty('lang')) {
+      } else if (Object.hasOwn(block, 'value') && Object.hasOwn(block, 'lang')) {
         return {
           name,
           type: 'code',
           children: <Code codeblocks={[block as any]} />,
         };
-      } else if (block.hasOwnProperty('url') && block.hasOwnProperty('alt')) {
+      } else if (Object.hasOwn(block, 'url') && Object.hasOwn(block, 'alt')) {
         return {
           name,
           type: 'image',

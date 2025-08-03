@@ -1,7 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import React, { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 
 interface MobileMenuContextType {
   isOpen: boolean;

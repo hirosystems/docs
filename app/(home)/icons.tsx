@@ -1,5 +1,4 @@
-import React, { JSX } from 'react';
-import type { SVGProps } from 'react';
+import type { JSX, SVGProps } from 'react';
 
 export function HiroPlatformSVG(props: SVGProps<SVGSVGElement>) {
   return (

@@ -1,19 +1,19 @@
 'use client';
 
+import type { TableOfContents, TOCItemType } from 'fumadocs-core/server';
+import * as Primitive from 'fumadocs-core/toc';
+import { AnchorProvider } from 'fumadocs-core/toc';
+import { AlignLeft } from 'lucide-react';
 import React, {
-  createContext,
-  useContext,
-  type ReactNode,
   type ComponentProps,
+  createContext,
+  type ReactNode,
+  useContext,
   useRef,
 } from 'react';
-import type { TableOfContents, TOCItemType } from 'fumadocs-core/server';
-import { AnchorProvider } from 'fumadocs-core/toc';
-import * as Primitive from 'fumadocs-core/toc';
-import { cn } from '@/lib/utils';
-import { AlignLeft } from 'lucide-react';
-import { TocThumb } from '@/components/layout/toc-thumb';
 import { BreadcrumbNav as OriginalBreadcrumb } from '@/components/breadcrumb-nav';
+import { TocThumb } from '@/components/layout/toc-thumb';
+import { cn } from '@/lib/utils';
 
 export interface PageData {
   toc?: TableOfContents;
@@ -86,7 +86,7 @@ function ContentWrapper({ children, className }: ContentWrapperProps) {
       <PageTOC />
     </div>
   ) : (
-    <>{children}</>
+    children
   );
 }
 

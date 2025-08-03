@@ -1,7 +1,7 @@
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import matter from 'gray-matter';
-import path from 'path';
-import { Recipe } from '@/types';
+import type { Recipe } from '@/types';
 
 function extractCodeAndContent(content: string) {
   // Match code blocks with their language

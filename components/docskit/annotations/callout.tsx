@@ -1,4 +1,4 @@
-import { AnnotationHandler, InlineAnnotation, InnerLine } from 'codehike/code';
+import { type AnnotationHandler, type InlineAnnotation, InnerLine } from 'codehike/code';
 import { CalloutContent } from './callout.client';
 
 export const callout: AnnotationHandler = {

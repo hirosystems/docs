@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Code } from '../docskit/code';
-
 import { initSimnet } from '@hirosystems/clarinet-sdk-browser';
 import { Cl } from '@stacks/transactions';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { Code } from '../docskit/code';
 
 export const ClarinetSDK: React.FC = () => {
   const [evaluatedResponse, setEvaluatedResponse] = React.useState<string>();

@@ -1,4 +1,4 @@
-import { AnnotationHandler, InnerLine, BlockAnnotation } from 'codehike/code';
+import { type AnnotationHandler, type BlockAnnotation, InnerLine } from 'codehike/code';
 
 export const diff: AnnotationHandler = {
   name: 'diff',

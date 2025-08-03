@@ -1,7 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Check, ChevronDown, Copy, ExternalLink, Text } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { ClaudeIcon, OpenAIIcon } from '@/components/ui/icon';
+import { useCurrentPageMarkdown, useLLMsTxt } from '@/hooks/use-llms-txt';
+import { cn } from '@/lib/utils';
+import { processMarkdownLinks } from '@/utils/process-markdown-links';
 import { Button } from './ui/button';
 import {
   DropdownMenu,
@@ -9,11 +14,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { Copy, ExternalLink, Check, Text, ChevronDown } from 'lucide-react';
-import { OpenAIIcon, ClaudeIcon } from '@/components/ui/icon';
-import { useLLMsTxt, useCurrentPageMarkdown } from '@/hooks/use-llms-txt';
-import { processMarkdownLinks } from '@/utils/process-markdown-links';
-import { cn } from '@/lib/utils';
 
 interface LLMShareProps {
   content: string;
@@ -45,7 +45,7 @@ export function LLMShare({ content }: LLMShareProps) {
       let contentToCopy = content;
 
       // Check if this is an API reference page
-      if (pathname && pathname.match(/^\/apis\/[^\/]+\/reference\//)) {
+      if (pathname && pathname.match(/^\/apis\/[^/]+\/reference\//)) {
         try {
           // Fetch the generated markdown
           const response = await fetch(`${pathname}.md`);

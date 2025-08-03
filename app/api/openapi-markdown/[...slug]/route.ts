@@ -1,7 +1,7 @@
+import { existsSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { type NextRequest, NextResponse } from 'next/server';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
 
 interface EndpointMapping {
   [urlPath: string]: {
@@ -29,12 +29,12 @@ async function loadMappings(): Promise<EndpointMapping> {
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   try {
     const { slug = [] } = await params;
-    const urlPath = '/' + slug.join('/');
+    const urlPath = `/${slug.join('/')}`;
 
     // Load mappings
     const mappings = await loadMappings();
@@ -62,8 +62,8 @@ export async function GET(
     }
 
     // For non-mapped API reference pages, check if it's an MDX file that uses APIPage
-    if (urlPath.match(/^\/apis\/[^\/]+\/reference\//)) {
-      const mdxPath = join(process.cwd(), 'content', 'docs', ...slug) + '.mdx';
+    if (urlPath.match(/^\/apis\/[^/]+\/reference\//)) {
+      const mdxPath = `${join(process.cwd(), 'content', 'docs', ...slug)}.mdx`;
 
       if (existsSync(mdxPath)) {
         const mdxContent = await readFile(mdxPath, 'utf-8');
@@ -86,7 +86,7 @@ export async function GET(
     }
 
     // Fallback to content/docs for non-API pages
-    const contentPath = join(process.cwd(), 'content', 'docs', ...slug) + '.mdx';
+    const contentPath = `${join(process.cwd(), 'content', 'docs', ...slug)}.mdx`;
     if (existsSync(contentPath)) {
       const content = await readFile(contentPath, 'utf-8');
       return new NextResponse(content, {

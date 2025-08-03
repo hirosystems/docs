@@ -1,8 +1,8 @@
 import { Block, CodeBlock, parseProps } from 'codehike/blocks';
-import { z } from 'zod';
 import { Selection, SelectionProvider } from 'codehike/utils/selection';
-import { Controls } from './slideshow.controls';
+import { z } from 'zod';
 import { Code } from './code';
+import { Controls } from './slideshow.controls';
 
 const Schema = Block.extend({
   steps: z.array(Block.extend({ code: CodeBlock })),

@@ -1,26 +1,25 @@
 'use client';
 
-import React, { ButtonHTMLAttributes } from 'react';
-import type { PageTree } from 'fumadocs-core/server';
-import { type ReactNode, useMemo } from 'react';
-import { cn } from '@/lib/utils';
-import { TreeContextProvider, useTreeContext } from 'fumadocs-ui/contexts/tree';
-import Link from 'fumadocs-core/link';
-import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'fumadocs-core/framework';
-import { Button } from '../ui/button';
-import { ThemeToggle } from '../layout/theme-toggle';
-import { ArrowUpRight, SidebarIcon, ChevronRight, ChevronDown } from 'lucide-react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import Link from 'fumadocs-core/link';
+import type { PageTree } from 'fumadocs-core/server';
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
+import { TreeContextProvider, useTreeContext } from 'fumadocs-ui/contexts/tree';
+import { ArrowUpRight, ChevronDown, ChevronRight, SidebarIcon } from 'lucide-react';
+import React, { type ButtonHTMLAttributes, type ReactNode, useMemo } from 'react';
+import { baseOptions } from '@/app/layout.config';
+import { MobileMenuProvider } from '@/contexts/mobile-menu';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
-import { DocsLogo } from '../ui/icon';
+import { cn } from '@/lib/utils';
+import { MobileMenuButton } from '../layout/mobile-menu-button';
 import { SearchToggle } from '../layout/search-toggle';
+import { ThemeToggle } from '../layout/theme-toggle';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
+import { Button } from '../ui/button';
+import { DocsLogo } from '../ui/icon';
 import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu';
 import { renderNavItem } from './links';
-import { baseOptions } from '@/app/layout.config';
-import { MobileMenuButton } from '../layout/mobile-menu-button';
-import { MobileMenuProvider } from '@/contexts/mobile-menu';
 
 export interface DocsLayoutProps {
   tree: PageTree.Root;

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useCallback, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { FeedbackResponse } from '@/types/feedback';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
 interface FeedbackWrapperProps {
   pageTitle: string;

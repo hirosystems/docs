@@ -1,11 +1,11 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import type { OpenAPIOperation } from './types';
+import { APIPlayground } from './api-playground';
+import { CodeExamplesSection } from './code-examples-section';
 import { ParametersSection } from './parameters-section';
 import { ResponseTable } from './response-table';
-import { CodeExamplesSection } from './code-examples-section';
 import { ResponseTabs } from './response-tabs';
-import { APIPlayground } from './api-playground';
+import type { OpenAPIOperation } from './types';
 
 interface OperationSectionProps {
   operation: OpenAPIOperation;

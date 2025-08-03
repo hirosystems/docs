@@ -1,6 +1,6 @@
 'use client';
 
-import { Cl, type ClarityValue, cvToString, cvToJSON } from '@stacks/transactions';
+import { Cl, type ClarityValue, cvToJSON, cvToString } from '@stacks/transactions';
 
 export type ClarityTypeHint =
   | 'uint'
@@ -22,7 +22,7 @@ export class ClarityConverter {
    */
   static convertToClarity(value: string, hint?: ClarityTypeHint): ClarityValue {
     // Auto-detect type if no hint provided
-    const type = hint || this.detectType(value);
+    const type = hint || ClarityConverter.detectType(value);
 
     try {
       switch (type) {
@@ -48,33 +48,36 @@ export class ClarityConverter {
         case 'string-utf8':
           return Cl.stringUtf8(value);
 
-        case 'buffer':
+        case 'buffer': {
           const hexValue = value.startsWith('0x') ? value : `0x${value}`;
           return Cl.buffer(Buffer.from(hexValue.slice(2), 'hex'));
+        }
 
-        case 'list':
+        case 'list': {
           const items = JSON.parse(value);
           if (!Array.isArray(items)) {
             throw new Error('Expected JSON array for list type');
           }
-          return Cl.list(items.map((item) => this.convertToClarity(String(item))));
+          return Cl.list(items.map((item) => ClarityConverter.convertToClarity(String(item))));
+        }
 
-        case 'tuple':
+        case 'tuple': {
           const obj = JSON.parse(value);
           if (typeof obj !== 'object' || obj === null) {
             throw new Error('Expected JSON object for tuple type');
           }
           const tupleData: Record<string, ClarityValue> = {};
           for (const [key, val] of Object.entries(obj)) {
-            tupleData[key] = this.convertToClarity(String(val));
+            tupleData[key] = ClarityConverter.convertToClarity(String(val));
           }
           return Cl.tuple(tupleData);
+        }
 
         case 'optional':
           if (value === 'none' || value === '') {
             return Cl.none();
           }
-          return Cl.some(this.convertToClarity(value));
+          return Cl.some(ClarityConverter.convertToClarity(value));
 
         default:
           throw new Error(`Unknown Clarity type: ${type}`);

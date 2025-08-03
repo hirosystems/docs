@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
 import { connect, disconnect } from '@stacks/connect';
-import { cn } from '@/lib/utils';
+import React from 'react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export const ConnectWalletButton: React.FC = () => {
   const [isSignedIn, setIsSignedIn] = React.useState(false);

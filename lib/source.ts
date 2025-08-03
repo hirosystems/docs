@@ -1,8 +1,11 @@
-import { docs } from '@/.source';
+import { execSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { loader } from 'fumadocs-core/source';
 import { attachFile, createOpenAPI } from 'fumadocs-openapi/server';
-import type { ThemeRegistrationResolved } from 'shiki';
 import { icons as lucideIcons } from 'lucide-react';
+import type { ThemeRegistrationResolved } from 'shiki';
+import { docs } from '@/.source';
 import {
   API,
   Bitcoin,
@@ -14,9 +17,6 @@ import {
   Js,
   StacksIcon,
 } from '@/components/ui/icon';
-import { execSync } from 'child_process';
-import { existsSync } from 'fs';
-import { join } from 'path';
 import { extractTagsAndLabels } from './utils/frontmatter-parser';
 import type { FilterablePage } from './utils/tag-filtering';
 

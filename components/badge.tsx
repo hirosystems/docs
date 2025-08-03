@@ -1,6 +1,6 @@
 import React from 'react';
-import { CircleDot, HalfCircle, Flame } from './ui/icon';
 import { cn } from '@/lib/utils';
+import { CircleDot, Flame, HalfCircle } from './ui/icon';
 
 type BadgeVariant = 'starter' | 'intermediate' | 'advanced';
 

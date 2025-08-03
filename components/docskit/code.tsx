@@ -1,22 +1,22 @@
-import { cn } from '@/lib/utils';
-import { CopyButton } from './copy-button';
-import { MultiCode } from './code.client';
 import { type AnnotationHandler, highlight, Pre, type RawCode } from 'codehike/code';
-import { CodeIcon } from './code-icon';
-import theme from './theme.mjs';
 import React from 'react';
-import { lineNumbers } from './annotations/line-numbers';
-import { mark } from './annotations/mark';
-import { wordWrap } from './annotations/word-wrap';
-import { diff } from './annotations/diff';
+import { cn } from '@/lib/utils';
+import { callout } from './annotations/callout';
 import { collapse } from './annotations/collapse';
+import { diff } from './annotations/diff';
 import { fold } from './annotations/fold';
+import { hover } from './annotations/hover';
+import { lineNumbers } from './annotations/line-numbers';
 import { link } from './annotations/link';
+import { mark } from './annotations/mark';
 import { tokenTransitions } from './annotations/token-transitions';
 import { tooltip } from './annotations/tooltip';
-import { callout } from './annotations/callout';
-import { hover } from './annotations/hover';
+import { wordWrap } from './annotations/word-wrap';
+import { MultiCode } from './code.client';
 import { CODEBLOCK, type CodeGroup, flagsToOptions, TITLEBAR } from './code-group';
+import { CodeIcon } from './code-icon';
+import { CopyButton } from './copy-button';
+import theme from './theme.mjs';
 
 export async function Code(props: {
   codeblocks: RawCode[];

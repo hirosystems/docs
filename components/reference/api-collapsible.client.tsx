@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import { X } from 'lucide-react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 

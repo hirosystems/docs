@@ -1,7 +1,7 @@
-import React, { JSX } from 'react';
-import type { SVGProps } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { TerminalIcon } from 'lucide-react';
+import type React from 'react';
+import type { JSX, SVGProps } from 'react';
 
 export function create({ icon: Icon }: { icon?: LucideIcon }) {
   return (

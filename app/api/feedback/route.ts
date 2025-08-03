@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import {
-  findDiscussionByTitle,
-  createDiscussion,
   addDiscussionComment,
-  formatDiscussionTitle,
+  createDiscussion,
+  findDiscussionByTitle,
   formatDiscussionBody,
+  formatDiscussionTitle,
 } from '@/lib/github-discussions';
 
 export const runtime = 'nodejs';

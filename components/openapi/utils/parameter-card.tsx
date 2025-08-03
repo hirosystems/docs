@@ -1,6 +1,6 @@
 import React from 'react';
-import { RequiredBadge } from './required-badge';
 import { cn } from '@/lib/utils';
+import { RequiredBadge } from './required-badge';
 
 interface ParameterCardProps {
   name: string;

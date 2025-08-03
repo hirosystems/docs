@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { Moon, Sun, Airplay } from 'lucide-react';
+import { Airplay, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { type HTMLAttributes, useLayoutEffect, useState } from 'react';
 import { cn } from '../../lib/utils';
@@ -42,6 +42,7 @@ export function ThemeToggle({
     <div className={container} data-theme-toggle="" {...props}>
       {full.map(([key, Icon]) => (
         <button
+          type="button"
           key={key}
           aria-label={key}
           className={cn(itemVariants({ active: value === key }))}

@@ -1,9 +1,9 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import React from 'react';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
-import type { APIDocument, APIExport, APIKind } from './types';
-import { APISection } from './api-section';
 import { PackageInstall, type RawCode } from '@/components/docskit/components';
+import { APISection } from './api-section';
+import type { APIDocument, APIExport, APIKind } from './types';
 
 interface APIProps {
   document: string | APIDocument;

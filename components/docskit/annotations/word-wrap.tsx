@@ -1,4 +1,4 @@
-import { AnnotationHandler, InnerLine, InnerPre, InnerToken } from 'codehike/code';
+import { type AnnotationHandler, InnerLine, InnerPre, InnerToken } from 'codehike/code';
 
 export const wordWrap: AnnotationHandler = {
   name: 'word-wrap',

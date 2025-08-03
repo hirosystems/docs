@@ -1,8 +1,8 @@
 'use client';
 
-import { type ReactNode } from 'react';
-import Link from 'next/link';
 import { Check } from 'lucide-react';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { usePageData } from './page';
 

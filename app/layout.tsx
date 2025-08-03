@@ -2,9 +2,9 @@ import './global.css';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { ReactNode } from 'react';
 import { aeonik, aeonikFono, aeonikMono, inter } from '@/fonts';
-import { SearchProvider } from '@/hooks/use-search';
 // import SearchDialog from "@/components/search-dialog";
 import { KeyboardShortcutsProvider } from '@/hooks/use-keyboard-shortcuts';
+import { SearchProvider } from '@/hooks/use-search';
 import { QueryProvider } from '@/providers/query-provider';
 
 export default function RootLayout({ children }: { children: ReactNode }) {

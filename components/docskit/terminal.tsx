@@ -1,4 +1,3 @@
-import theme from './theme.mjs';
 import {
   type AnnotationHandler,
   type BlockAnnotation,
@@ -6,10 +5,11 @@ import {
   Pre,
   type RawCode,
 } from 'codehike/code';
-import { TerminalClient } from './terminal.client';
-import { wordWrap } from './annotations/word-wrap';
 import { CommandBlock } from './annotations/terminal-command';
 import { OutputBlock } from './annotations/terminal-output';
+import { wordWrap } from './annotations/word-wrap';
+import { TerminalClient } from './terminal.client';
+import theme from './theme.mjs';
 
 export async function Terminal(props: {
   codeblocks: RawCode[];

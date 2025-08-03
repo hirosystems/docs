@@ -1,8 +1,8 @@
-import { z } from 'zod';
-import { Selection, Selectable, SelectionProvider } from 'codehike/utils/selection';
 import { Block, CodeBlock, parseProps } from 'codehike/blocks';
-import { Code } from './code';
+import { Selectable, Selection, SelectionProvider } from 'codehike/utils/selection';
+import { z } from 'zod';
 import { cn } from '@/lib/utils';
+import { Code } from './code';
 
 const Schema = Block.extend({
   steps: z.array(Block.extend({ code: CodeBlock })),

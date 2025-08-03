@@ -1,7 +1,7 @@
+import { existsSync } from 'node:fs';
+import { readdir, readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { type NextRequest, NextResponse } from 'next/server';
-import { readFile, readdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
 
 async function findFileWithParentheses(
   basePath: string,
@@ -46,7 +46,7 @@ async function findFileWithParentheses(
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   try {
