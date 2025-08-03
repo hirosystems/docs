@@ -1,4 +1,4 @@
-name: linkcheck
+name: CI
 
 on:
   push:
@@ -23,10 +23,13 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Run Biome checks
+        run: bun run check
+
       - name: Generate llms.txt files
         run: bun run generate-llms
         env:
           LLMS_BASE_URL: https://docs.hiro.so
 
       - name: Run link validation
-        run: bun run lint
+        run: bun run validate-links
