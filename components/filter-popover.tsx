@@ -1,21 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useId } from "react";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useId } from 'react';
 
-import { ListFilter } from "lucide-react";
+import { ListFilter } from 'lucide-react';
 
 const CATEGORIES = [
-  { label: "Stacks.js", value: "stacks.js" },
-  { label: "Clarity", value: "clarity" },
-  { label: "Bitcoin", value: "bitcoin" },
+  { label: 'Stacks.js', value: 'stacks.js' },
+  { label: 'Clarity', value: 'clarity' },
+  { label: 'Bitcoin', value: 'bitcoin' },
   // { label: "Chainhook", value: "chainhook" },
-  { label: "API", value: "api" },
+  { label: 'API', value: 'api' },
   // { label: "Clarinet", value: "clarinet" },
 ];
 
@@ -24,10 +20,7 @@ interface FilterPopoverProps {
   onCategoriesChange: (categories: string[]) => void;
 }
 
-function FilterPopover({
-  selectedCategories,
-  onCategoriesChange,
-}: FilterPopoverProps) {
+function FilterPopover({ selectedCategories, onCategoriesChange }: FilterPopoverProps) {
   const id = useId();
 
   const handleCheckboxChange = (category: string, checked: boolean) => {
@@ -56,9 +49,7 @@ function FilterPopover({
         </PopoverTrigger>
         <PopoverContent className="w-48 p-3">
           <div className="space-y-3">
-            <div className="text-sm font-medium text-muted-foreground">
-              Filter by category
-            </div>
+            <div className="text-sm font-medium text-muted-foreground">Filter by category</div>
             <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
               {CATEGORIES.map((category) => (
                 <div key={category.value} className="flex items-center gap-2">
@@ -69,10 +60,7 @@ function FilterPopover({
                       handleCheckboxChange(category.value, checked as boolean)
                     }
                   />
-                  <Label
-                    htmlFor={`${id}-${category.value}`}
-                    className="font-normal"
-                  >
+                  <Label htmlFor={`${id}-${category.value}`} className="font-normal">
                     {category.label}
                   </Label>
                 </div>

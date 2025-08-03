@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useCallback, useMemo } from "react";
-import type { FilterablePage, FilterResult } from "@/lib/utils/tag-filtering";
-import { filterPagesByTag } from "@/lib/utils/tag-filtering";
+import { useState, useCallback, useMemo } from 'react';
+import type { FilterablePage, FilterResult } from '@/lib/utils/tag-filtering';
+import { filterPagesByTag } from '@/lib/utils/tag-filtering';
 
 export interface UseTagFilteringProps {
   pages: FilterablePage[];
@@ -18,10 +18,7 @@ export interface UseTagFilteringReturn {
   clearTag: () => void;
 }
 
-export function useTagFiltering({
-  pages,
-  section,
-}: UseTagFilteringProps): UseTagFilteringReturn {
+export function useTagFiltering({ pages, section }: UseTagFilteringProps): UseTagFilteringReturn {
   const [selectedTag, setSelectedTag] = useState<string | undefined>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 

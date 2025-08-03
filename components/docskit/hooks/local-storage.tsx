@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export function useStateOrLocalStorage(
   key: string | undefined,
-  initialState: string
+  initialState: string,
 ): [string, (v: string) => void] {
   if (!key) {
     return React.useState(initialState);
@@ -24,16 +24,16 @@ export function useStateOrLocalStorage(
         setState(storedValue || initialState);
       }
     };
-    window.addEventListener("storage", onStorageChange);
-    return () => window.removeEventListener("storage", onStorageChange);
+    window.addEventListener('storage', onStorageChange);
+    return () => window.removeEventListener('storage', onStorageChange);
   }, [key]);
 
   const setStorage = !key
     ? setState
     : (value: string) => {
-        if (typeof window !== "undefined") {
+        if (typeof window !== 'undefined') {
           window.localStorage.setItem(key, value);
-          window.dispatchEvent(new StorageEvent("storage", { key }));
+          window.dispatchEvent(new StorageEvent('storage', { key }));
         }
       };
 

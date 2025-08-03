@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 
-import fs from "fs/promises";
-import path from "path";
-import yaml from "js-yaml";
-import SwaggerParser from "@apidevtools/swagger-parser";
-import stringify from "json-stringify-safe";
-import { OpenAPIMarkdownGenerator } from "./openapi-to-markdown.mts";
-import type { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
-import {
-  buildEndpointMappings,
-  saveMappings,
-} from "./utils/api-endpoint-mapping.mts";
+import fs from 'fs/promises';
+import path from 'path';
+import yaml from 'js-yaml';
+import SwaggerParser from '@apidevtools/swagger-parser';
+import stringify from 'json-stringify-safe';
+import { OpenAPIMarkdownGenerator } from './openapi-to-markdown.mts';
+import type { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+import { buildEndpointMappings, saveMappings } from './utils/api-endpoint-mapping.mts';
 
 interface ApiSpec {
   name: string;
@@ -19,7 +16,7 @@ interface ApiSpec {
 
 interface GitHubApiSpec {
   name: string;
-  type: "github";
+  type: 'github';
   repo: string;
   branch: string;
   filePath: string;
@@ -27,43 +24,43 @@ interface GitHubApiSpec {
 
 const API_SPECS: ApiSpec[] = [
   {
-    name: "stacks-blockchain",
-    url: "https://stacks-blockchain-api.vercel.app/openapi.json",
+    name: 'stacks-blockchain',
+    url: 'https://stacks-blockchain-api.vercel.app/openapi.json',
   },
   {
-    name: "token-metadata",
-    url: "https://token-metadata-api.vercel.app/openapi.json",
+    name: 'token-metadata',
+    url: 'https://token-metadata-api.vercel.app/openapi.json',
   },
   {
-    name: "signer-metrics",
-    url: "https://signer-metrics-api.vercel.app/openapi.json",
+    name: 'signer-metrics',
+    url: 'https://signer-metrics-api.vercel.app/openapi.json',
   },
   {
-    name: "ordinals",
-    url: "https://ordinals-api.vercel.app/openapi.json",
+    name: 'ordinals',
+    url: 'https://ordinals-api.vercel.app/openapi.json',
   },
   {
-    name: "runes",
-    url: "https://runes-api.vercel.app/openapi.json",
+    name: 'runes',
+    url: 'https://runes-api.vercel.app/openapi.json',
   },
 ];
 
 const GITHUB_API_SPECS: GitHubApiSpec[] = [
   {
-    name: "stacks-node-rpc",
-    type: "github",
-    repo: "stacks-network/stacks-core",
-    branch: "develop",
-    filePath: "docs/rpc/openapi.yaml",
+    name: 'stacks-node-rpc',
+    type: 'github',
+    repo: 'stacks-network/stacks-core',
+    branch: 'develop',
+    filePath: 'docs/rpc/openapi.yaml',
   },
 ];
 
 async function generatePlatformApiSpec(): Promise<void> {
   try {
-    const openApiDir = path.join(process.cwd(), "openapi");
+    const openApiDir = path.join(process.cwd(), 'openapi');
     await fs.mkdir(openApiDir, { recursive: true });
 
-    const platformApiPath = path.join(openApiDir, "platform-api.json");
+    const platformApiPath = path.join(openApiDir, 'platform-api.json');
 
     // Check if file already exists (skip if it does)
     try {
@@ -71,66 +68,65 @@ async function generatePlatformApiSpec(): Promise<void> {
       return;
     } catch {
       // File doesn't exist, generate it
-      console.log("Generating platform-api.json...");
+      console.log('Generating platform-api.json...');
     }
 
     // Hardcoded Platform API spec - copied from existing platform-api.json
     const platformApiSpec = {
-      openapi: "3.0.0",
+      openapi: '3.0.0',
       info: {
-        title: "Hiro Platform API",
-        version: "1.0.0",
-        description:
-          "API for managing devnets and chainhooks on the Hiro Platform",
+        title: 'Hiro Platform API',
+        version: '1.0.0',
+        description: 'API for managing devnets and chainhooks on the Hiro Platform',
       },
       servers: [
         {
-          url: "https://api.platform.hiro.so",
-          description: "Production server",
+          url: 'https://api.platform.hiro.so',
+          description: 'Production server',
         },
       ],
       paths: {
-        "/v1/ext/{apiKey}/devnet/{projectName}": {
+        '/v1/ext/{apiKey}/devnet/{projectName}': {
           put: {
-            summary: "Start devnet",
-            description: "Start a development network (devnet)",
-            operationId: "startDevnet",
-            tags: ["Devnet"],
+            summary: 'Start devnet',
+            description: 'Start a development network (devnet)',
+            operationId: 'startDevnet',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "projectName",
-                in: "path",
+                name: 'projectName',
+                in: 'path',
                 required: true,
-                description: "Project name",
+                description: 'Project name',
                 schema: {
-                  type: "string",
-                  example: "clarity-bitcoin-197s",
+                  type: 'string',
+                  example: 'clarity-bitcoin-197s',
                 },
               },
             ],
             requestBody: {
               required: true,
               content: {
-                "multipart/form-data": {
+                'multipart/form-data': {
                   schema: {
-                    type: "object",
-                    required: ["file"],
+                    type: 'object',
+                    required: ['file'],
                     properties: {
                       file: {
-                        type: "string",
-                        format: "binary",
+                        type: 'string',
+                        format: 'binary',
                         description:
-                          "JSON file containing the devnet plan. The file can be created using clarinet devnet package",
+                          'JSON file containing the devnet plan. The file can be created using clarinet devnet package',
                       },
                     },
                   },
@@ -138,12 +134,12 @@ async function generatePlatformApiSpec(): Promise<void> {
               },
             },
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                     },
                   },
                 },
@@ -151,32 +147,32 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
         },
-        "/v1/ext/{apiKey}/devnet": {
+        '/v1/ext/{apiKey}/devnet': {
           delete: {
-            summary: "Stop devnet",
-            description: "Stop a development network (devnet)",
-            operationId: "stopDevnet",
-            tags: ["Devnet"],
+            summary: 'Stop devnet',
+            description: 'Stop a development network (devnet)',
+            operationId: 'stopDevnet',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "text/plain": {
+                  'text/plain': {
                     schema: {
-                      type: "string",
-                      example: "Ok",
+                      type: 'string',
+                      example: 'Ok',
                     },
                   },
                 },
@@ -184,43 +180,41 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
         },
-        "/v1/ext/{apiKey}/stacks-blockchain-api/{*}": {
+        '/v1/ext/{apiKey}/stacks-blockchain-api/{*}': {
           get: {
-            summary: "Stacks Blockchain API Proxy (GET)",
-            description:
-              "Proxy for the Stacks Blockchain API on a development network (devnet)",
-            operationId: "stacksBlockchainApiProxyGet",
-            tags: ["Devnet"],
+            summary: 'Stacks Blockchain API Proxy (GET)',
+            description: 'Proxy for the Stacks Blockchain API on a development network (devnet)',
+            operationId: 'stacksBlockchainApiProxyGet',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description:
-                  "The path (endpoint) for the Stacks Blockchain API",
+                description: 'The path (endpoint) for the Stacks Blockchain API',
                 schema: {
-                  type: "string",
-                  example: "extended/v1/tx",
+                  type: 'string',
+                  example: 'extended/v1/tx',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                     },
                   },
                 },
@@ -228,50 +222,48 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
           post: {
-            summary: "Stacks Blockchain API Proxy (POST)",
-            description:
-              "Proxy for the Stacks Blockchain API on a development network (devnet)",
-            operationId: "stacksBlockchainApiProxyPost",
-            tags: ["Devnet"],
+            summary: 'Stacks Blockchain API Proxy (POST)',
+            description: 'Proxy for the Stacks Blockchain API on a development network (devnet)',
+            operationId: 'stacksBlockchainApiProxyPost',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description:
-                  "The path (endpoint) for the Stacks Blockchain API",
+                description: 'The path (endpoint) for the Stacks Blockchain API',
                 schema: {
-                  type: "string",
-                  example: "v2/transactions",
+                  type: 'string',
+                  example: 'v2/transactions',
                 },
               },
             ],
             requestBody: {
               content: {
-                "application/json": {
+                'application/json': {
                   schema: {
-                    type: "object",
+                    type: 'object',
                   },
                 },
               },
             },
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                     },
                   },
                 },
@@ -279,174 +271,165 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
           put: {
-            summary: "Stacks Blockchain API Proxy (PUT)",
-            description:
-              "Proxy for the Stacks Blockchain API on a development network (devnet)",
-            operationId: "stacksBlockchainApiProxyPut",
-            tags: ["Devnet"],
+            summary: 'Stacks Blockchain API Proxy (PUT)',
+            description: 'Proxy for the Stacks Blockchain API on a development network (devnet)',
+            operationId: 'stacksBlockchainApiProxyPut',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description:
-                  "The path (endpoint) for the Stacks Blockchain API",
+                description: 'The path (endpoint) for the Stacks Blockchain API',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
           delete: {
-            summary: "Stacks Blockchain API Proxy (DELETE)",
-            description:
-              "Proxy for the Stacks Blockchain API on a development network (devnet)",
-            operationId: "stacksBlockchainApiProxyDelete",
-            tags: ["Devnet"],
+            summary: 'Stacks Blockchain API Proxy (DELETE)',
+            description: 'Proxy for the Stacks Blockchain API on a development network (devnet)',
+            operationId: 'stacksBlockchainApiProxyDelete',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description:
-                  "The path (endpoint) for the Stacks Blockchain API",
+                description: 'The path (endpoint) for the Stacks Blockchain API',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
           patch: {
-            summary: "Stacks Blockchain API Proxy (PATCH)",
-            description:
-              "Proxy for the Stacks Blockchain API on a development network (devnet)",
-            operationId: "stacksBlockchainApiProxyPatch",
-            tags: ["Devnet"],
+            summary: 'Stacks Blockchain API Proxy (PATCH)',
+            description: 'Proxy for the Stacks Blockchain API on a development network (devnet)',
+            operationId: 'stacksBlockchainApiProxyPatch',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description:
-                  "The path (endpoint) for the Stacks Blockchain API",
+                description: 'The path (endpoint) for the Stacks Blockchain API',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
           options: {
-            summary: "Stacks Blockchain API Proxy (OPTIONS)",
-            description:
-              "Proxy for the Stacks Blockchain API on a development network (devnet)",
-            operationId: "stacksBlockchainApiProxyOptions",
-            tags: ["Devnet"],
+            summary: 'Stacks Blockchain API Proxy (OPTIONS)',
+            description: 'Proxy for the Stacks Blockchain API on a development network (devnet)',
+            operationId: 'stacksBlockchainApiProxyOptions',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description:
-                  "The path (endpoint) for the Stacks Blockchain API",
+                description: 'The path (endpoint) for the Stacks Blockchain API',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
         },
-        "/v1/ext/{apiKey}/bitcoin-node/{*}": {
+        '/v1/ext/{apiKey}/bitcoin-node/{*}': {
           get: {
-            summary: "Bitcoin node Proxy (GET)",
-            description:
-              "Proxy for the Bitcoin node on a development network (devnet)",
-            operationId: "bitcoinNodeProxyGet",
-            tags: ["Devnet"],
+            summary: 'Bitcoin node Proxy (GET)',
+            description: 'Proxy for the Bitcoin node on a development network (devnet)',
+            operationId: 'bitcoinNodeProxyGet',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description: "The path (endpoint) for the Bitcoin node RPC",
+                description: 'The path (endpoint) for the Bitcoin node RPC',
                 schema: {
-                  type: "string",
-                  example: "rest/chaininfo",
+                  type: 'string',
+                  example: 'rest/chaininfo',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                     },
                   },
                 },
@@ -454,49 +437,48 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
           post: {
-            summary: "Bitcoin node Proxy (POST)",
-            description:
-              "Proxy for the Bitcoin node on a development network (devnet)",
-            operationId: "bitcoinNodeProxyPost",
-            tags: ["Devnet"],
+            summary: 'Bitcoin node Proxy (POST)',
+            description: 'Proxy for the Bitcoin node on a development network (devnet)',
+            operationId: 'bitcoinNodeProxyPost',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description: "The path (endpoint) for the Bitcoin node RPC",
+                description: 'The path (endpoint) for the Bitcoin node RPC',
                 schema: {
-                  type: "string",
-                  example: "rest/chaininfo",
+                  type: 'string',
+                  example: 'rest/chaininfo',
                 },
               },
             ],
             requestBody: {
               content: {
-                "application/json": {
+                'application/json': {
                   schema: {
-                    type: "object",
+                    type: 'object',
                   },
                 },
               },
             },
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                     },
                   },
                 },
@@ -504,160 +486,156 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
           put: {
-            summary: "Bitcoin node Proxy (PUT)",
-            description:
-              "Proxy for the Bitcoin node on a development network (devnet)",
-            operationId: "bitcoinNodeProxyPut",
-            tags: ["Devnet"],
+            summary: 'Bitcoin node Proxy (PUT)',
+            description: 'Proxy for the Bitcoin node on a development network (devnet)',
+            operationId: 'bitcoinNodeProxyPut',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description: "The path (endpoint) for the Bitcoin node RPC",
+                description: 'The path (endpoint) for the Bitcoin node RPC',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
           delete: {
-            summary: "Bitcoin node Proxy (DELETE)",
-            description:
-              "Proxy for the Bitcoin node on a development network (devnet)",
-            operationId: "bitcoinNodeProxyDelete",
-            tags: ["Devnet"],
+            summary: 'Bitcoin node Proxy (DELETE)',
+            description: 'Proxy for the Bitcoin node on a development network (devnet)',
+            operationId: 'bitcoinNodeProxyDelete',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description: "The path (endpoint) for the Bitcoin node RPC",
+                description: 'The path (endpoint) for the Bitcoin node RPC',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
           patch: {
-            summary: "Bitcoin node Proxy (PATCH)",
-            description:
-              "Proxy for the Bitcoin node on a development network (devnet)",
-            operationId: "bitcoinNodeProxyPatch",
-            tags: ["Devnet"],
+            summary: 'Bitcoin node Proxy (PATCH)',
+            description: 'Proxy for the Bitcoin node on a development network (devnet)',
+            operationId: 'bitcoinNodeProxyPatch',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description: "The path (endpoint) for the Bitcoin node RPC",
+                description: 'The path (endpoint) for the Bitcoin node RPC',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
           options: {
-            summary: "Bitcoin node Proxy (OPTIONS)",
-            description:
-              "Proxy for the Bitcoin node on a development network (devnet)",
-            operationId: "bitcoinNodeProxyOptions",
-            tags: ["Devnet"],
+            summary: 'Bitcoin node Proxy (OPTIONS)',
+            description: 'Proxy for the Bitcoin node on a development network (devnet)',
+            operationId: 'bitcoinNodeProxyOptions',
+            tags: ['Devnet'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
               {
-                name: "*",
-                in: "path",
+                name: '*',
+                in: 'path',
                 required: true,
-                description: "The path (endpoint) for the Bitcoin node RPC",
+                description: 'The path (endpoint) for the Bitcoin node RPC',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
               },
             },
           },
         },
-        "/v1/ext/{apiKey}/chainhooks": {
+        '/v1/ext/{apiKey}/chainhooks': {
           get: {
-            summary: "Get all chainhooks",
-            description: "Get all of your chainhooks through the Hiro Platform",
-            operationId: "listAllChainhooks",
-            tags: ["Chainhooks"],
+            summary: 'Get all chainhooks',
+            description: 'Get all of your chainhooks through the Hiro Platform',
+            operationId: 'listAllChainhooks',
+            tags: ['Chainhooks'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
+                  type: 'string',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "array",
+                      type: 'array',
                       items: {
-                        type: "object",
+                        type: 'object',
                       },
                     },
                   },
@@ -666,46 +644,46 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
           post: {
-            summary: "Create a chainhook",
-            description: "Create a chainhook through the Hiro Platform",
-            operationId: "createChainhook",
-            tags: ["Chainhooks"],
+            summary: 'Create a chainhook',
+            description: 'Create a chainhook through the Hiro Platform',
+            operationId: 'createChainhook',
+            tags: ['Chainhooks'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
             ],
             requestBody: {
               required: true,
-              description: "Chainhook predicate configuration",
+              description: 'Chainhook predicate configuration',
               content: {
-                "application/json": {
+                'application/json': {
                   schema: {
-                    type: "object",
+                    type: 'object',
                   },
                 },
               },
             },
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                       properties: {
                         status: {
-                          type: "string",
+                          type: 'string',
                         },
                         chainhookUuid: {
-                          type: "string",
+                          type: 'string',
                         },
                       },
                     },
@@ -715,158 +693,158 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
         },
-        "/v1/ext/{apiKey}/chainhooks/{chainhookUuid}": {
+        '/v1/ext/{apiKey}/chainhooks/{chainhookUuid}': {
           get: {
-            summary: "Get a specific chainhook",
-            description: "Get a specific chainhook through the Hiro Platform",
-            operationId: "retrieveChainhook",
-            tags: ["Chainhooks"],
+            summary: 'Get a specific chainhook',
+            description: 'Get a specific chainhook through the Hiro Platform',
+            operationId: 'retrieveChainhook',
+            tags: ['Chainhooks'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "chainhookUuid",
-                in: "path",
+                name: 'chainhookUuid',
+                in: 'path',
                 required: true,
-                description: "Chainhook UUID",
+                description: 'Chainhook UUID',
                 schema: {
-                  type: "string",
-                  example: "aa3626dc-2090-49cd-8f1e-8f9994393aed",
+                  type: 'string',
+                  example: 'aa3626dc-2090-49cd-8f1e-8f9994393aed',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                       additionalProperties: true,
                     },
                   },
                 },
               },
-              "404": {
-                description: "Default Response",
+              '404': {
+                description: 'Default Response',
               },
             },
           },
           put: {
-            summary: "Update a chainhook",
-            description: "Update a chainhook through the Hiro Platform",
-            operationId: "updateChainhook",
-            tags: ["Chainhooks"],
+            summary: 'Update a chainhook',
+            description: 'Update a chainhook through the Hiro Platform',
+            operationId: 'updateChainhook',
+            tags: ['Chainhooks'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "chainhookUuid",
-                in: "path",
+                name: 'chainhookUuid',
+                in: 'path',
                 required: true,
-                description: "Chainhook UUID",
+                description: 'Chainhook UUID',
                 schema: {
-                  type: "string",
-                  example: "aa3626dc-2090-49cd-8f1e-8f9994393aed",
+                  type: 'string',
+                  example: 'aa3626dc-2090-49cd-8f1e-8f9994393aed',
                 },
               },
             ],
             requestBody: {
-              description: "Chainhook predicate configuration",
+              description: 'Chainhook predicate configuration',
               content: {
-                "application/json": {
+                'application/json': {
                   schema: {
-                    type: "object",
+                    type: 'object',
                   },
                 },
               },
             },
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                       properties: {
                         status: {
-                          type: "string",
+                          type: 'string',
                         },
                         chainhookUuid: {
-                          type: "string",
+                          type: 'string',
                         },
                       },
                     },
                   },
                 },
               },
-              "404": {
-                description: "Default Response",
+              '404': {
+                description: 'Default Response',
               },
-              "500": {
-                description: "Default Response",
+              '500': {
+                description: 'Default Response',
               },
             },
           },
           delete: {
-            summary: "Delete a chainhook",
-            description: "Delete a chainhook through the Hiro Platform",
-            operationId: "deleteChainhook",
-            tags: ["Chainhooks"],
+            summary: 'Delete a chainhook',
+            description: 'Delete a chainhook through the Hiro Platform',
+            operationId: 'deleteChainhook',
+            tags: ['Chainhooks'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "chainhookUuid",
-                in: "path",
+                name: 'chainhookUuid',
+                in: 'path',
                 required: true,
-                description: "Chainhook UUID",
+                description: 'Chainhook UUID',
                 schema: {
-                  type: "string",
-                  example: "aa3626dc-2090-49cd-8f1e-8f9994393aed",
+                  type: 'string',
+                  example: 'aa3626dc-2090-49cd-8f1e-8f9994393aed',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Default Response",
+              '200': {
+                description: 'Default Response',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                       properties: {
                         status: {
-                          type: "string",
+                          type: 'string',
                         },
                         chainhookUuid: {
-                          type: "string",
+                          type: 'string',
                         },
                         message: {
-                          type: "string",
+                          type: 'string',
                         },
                       },
                     },
@@ -876,81 +854,80 @@ async function generatePlatformApiSpec(): Promise<void> {
             },
           },
         },
-        "/v1/ext/{apiKey}/chainhooks/{chainhookUuid}/status": {
+        '/v1/ext/{apiKey}/chainhooks/{chainhookUuid}/status': {
           get: {
-            summary: "Get a chainhook status",
-            description:
-              "Retrieve the status of a specific chainhook through the Hiro Platform",
-            operationId: "retrieveChainhookStatus",
-            tags: ["Chainhooks"],
+            summary: 'Get a chainhook status',
+            description: 'Retrieve the status of a specific chainhook through the Hiro Platform',
+            operationId: 'retrieveChainhookStatus',
+            tags: ['Chainhooks'],
             parameters: [
               {
-                name: "apiKey",
-                in: "path",
+                name: 'apiKey',
+                in: 'path',
                 required: true,
-                description: "Hiro API key",
+                description: 'Hiro API key',
                 schema: {
-                  type: "string",
-                  example: "0941f307fd270ace19a5bfed67fbd3bc",
+                  type: 'string',
+                  example: '0941f307fd270ace19a5bfed67fbd3bc',
                 },
               },
               {
-                name: "chainhookUuid",
-                in: "path",
+                name: 'chainhookUuid',
+                in: 'path',
                 required: true,
-                description: "Chainhook UUID",
+                description: 'Chainhook UUID',
                 schema: {
-                  type: "string",
-                  example: "aa3626dc-2090-49cd-8f1e-8f9994393aed",
+                  type: 'string',
+                  example: 'aa3626dc-2090-49cd-8f1e-8f9994393aed',
                 },
               },
             ],
             responses: {
-              "200": {
-                description: "Successfully retrieved chainhook status",
+              '200': {
+                description: 'Successfully retrieved chainhook status',
                 content: {
-                  "application/json": {
+                  'application/json': {
                     schema: {
-                      type: "object",
+                      type: 'object',
                       properties: {
                         status: {
-                          type: "object",
+                          type: 'object',
                           properties: {
                             info: {
-                              type: "object",
+                              type: 'object',
                               properties: {
                                 expired_at_block_height: {
-                                  type: "integer",
+                                  type: 'integer',
                                 },
                                 last_evaluated_block_height: {
-                                  type: "integer",
+                                  type: 'integer',
                                 },
                                 last_occurrence: {
-                                  type: "integer",
+                                  type: 'integer',
                                 },
                                 number_of_blocks_evaluated: {
-                                  type: "integer",
+                                  type: 'integer',
                                 },
                                 number_of_times_triggered: {
-                                  type: "integer",
+                                  type: 'integer',
                                 },
                               },
                             },
                             type: {
-                              type: "string",
+                              type: 'string',
                             },
                           },
                         },
                         enabled: {
-                          type: "boolean",
+                          type: 'boolean',
                         },
                       },
                     },
                   },
                 },
               },
-              "404": {
-                description: "Chainhook not found",
+              '404': {
+                description: 'Chainhook not found',
               },
             },
           },
@@ -959,30 +936,27 @@ async function generatePlatformApiSpec(): Promise<void> {
       components: {
         securitySchemes: {
           ApiKeyAuth: {
-            type: "apiKey",
-            in: "path",
-            name: "apiKey",
+            type: 'apiKey',
+            in: 'path',
+            name: 'apiKey',
           },
         },
       },
       tags: [
         {
-          name: "Devnet",
-          description: "Development network management endpoints",
+          name: 'Devnet',
+          description: 'Development network management endpoints',
         },
         {
-          name: "Chainhooks",
-          description: "Chainhook management endpoints",
+          name: 'Chainhooks',
+          description: 'Chainhook management endpoints',
         },
       ],
     };
 
-    await fs.writeFile(
-      platformApiPath,
-      JSON.stringify(platformApiSpec, null, 2),
-    );
+    await fs.writeFile(platformApiPath, JSON.stringify(platformApiSpec, null, 2));
   } catch (error) {
-    console.error("❌ Failed to generate platform-api.json:", error);
+    console.error('❌ Failed to generate platform-api.json:', error);
   }
 }
 
@@ -1005,7 +979,7 @@ async function fetchApiSpec(spec: ApiSpec): Promise<void> {
     }
 
     // Ensure openapi directory exists
-    const openApiDir = path.join(process.cwd(), "openapi");
+    const openApiDir = path.join(process.cwd(), 'openapi');
     await fs.mkdir(openApiDir, { recursive: true });
 
     // Write the file with proper naming convention
@@ -1041,13 +1015,10 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
 
     // Use swagger-parser to dereference and bundle the spec
     // Pass the raw URL as the base URL so $ref resolution works correctly
-    const bundledSpec = await SwaggerParser.dereference(
-      rawUrl,
-      yamlData as any,
-    );
+    const bundledSpec = await SwaggerParser.dereference(rawUrl, yamlData as any);
 
     // Ensure openapi directory exists
-    const openApiDir = path.join(process.cwd(), "openapi");
+    const openApiDir = path.join(process.cwd(), 'openapi');
     await fs.mkdir(openApiDir, { recursive: true });
 
     // Write the file with proper naming convention
@@ -1060,18 +1031,13 @@ async function fetchGitHubApiSpec(spec: GitHubApiSpec): Promise<void> {
   }
 }
 
-async function generateMarkdownForSpec(
-  specPath: string,
-  specName: string,
-): Promise<void> {
+async function generateMarkdownForSpec(specPath: string, specName: string): Promise<void> {
   try {
     console.log(`📝 Generating markdown for ${specName}...`);
 
     // Read the OpenAPI spec
-    const specContent = await fs.readFile(specPath, "utf-8");
-    const spec = JSON.parse(specContent) as
-      | OpenAPIV3.Document
-      | OpenAPIV3_1.Document;
+    const specContent = await fs.readFile(specPath, 'utf-8');
+    const spec = JSON.parse(specContent) as OpenAPIV3.Document | OpenAPIV3_1.Document;
 
     // Create markdown generator
     const generator = new OpenAPIMarkdownGenerator(spec);
@@ -1080,14 +1046,11 @@ async function generateMarkdownForSpec(
     const markdownMap = await generator.generateAllEndpoints();
 
     // Create output directory
-    const outputDir = path.join(process.cwd(), "generated", "apis", specName);
+    const outputDir = path.join(process.cwd(), 'generated', 'apis', specName);
     await fs.mkdir(outputDir, { recursive: true });
 
     // Create mapping for URL to file lookup
-    const urlMapping: Record<
-      string,
-      { method: string; path: string; file: string }
-    > = {};
+    const urlMapping: Record<string, { method: string; path: string; file: string }> = {};
 
     // Save each endpoint's markdown
     let count = 0;
@@ -1097,9 +1060,9 @@ async function generateMarkdownForSpec(
       const filename =
         key
           .toLowerCase()
-          .replace(/[{}]/g, "")
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, "") + ".md";
+          .replace(/[{}]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '') + '.md';
 
       const filePath = path.join(outputDir, filename);
       await fs.writeFile(filePath, markdown.content);
@@ -1115,7 +1078,7 @@ async function generateMarkdownForSpec(
     }
 
     // Save the mapping file
-    const mappingPath = path.join(outputDir, "_mapping.json");
+    const mappingPath = path.join(outputDir, '_mapping.json');
     await fs.writeFile(mappingPath, JSON.stringify(urlMapping, null, 2));
 
     console.log(`✔️ Generated ${count} markdown files for ${specName}`);
@@ -1125,33 +1088,33 @@ async function generateMarkdownForSpec(
 }
 
 async function generateAllMarkdown(): Promise<void> {
-  console.log("\n📚 Generating markdown documentation...\n");
+  console.log('\n📚 Generating markdown documentation...\n');
 
-  const openApiDir = path.join(process.cwd(), "openapi");
+  const openApiDir = path.join(process.cwd(), 'openapi');
 
   // Get all OpenAPI spec files
   const specFiles = await fs.readdir(openApiDir);
-  const jsonFiles = specFiles.filter((file) => file.endsWith(".json"));
+  const jsonFiles = specFiles.filter((file) => file.endsWith('.json'));
 
   // Generate markdown for each spec
   const markdownPromises = jsonFiles.map((file) => {
     const specPath = path.join(openApiDir, file);
-    const specName = file.replace("-api.json", "");
+    const specName = file.replace('-api.json', '');
     return generateMarkdownForSpec(specPath, specName);
   });
 
   await Promise.all(markdownPromises);
 
   // Build and save endpoint mappings
-  console.log("\n📍 Building endpoint mappings...");
+  console.log('\n📍 Building endpoint mappings...');
   const mappings = await buildEndpointMappings();
   await saveMappings(mappings);
 
-  console.log("\n✔️ Markdown generation complete!");
+  console.log('\n✔️ Markdown generation complete!');
 }
 
 async function fetchAllSpecs(): Promise<void> {
-  console.log("Fetching OpenAPI specs...");
+  console.log('Fetching OpenAPI specs...');
 
   // Generate platform API spec and fetch other specs concurrently
   const allPromises = [
@@ -1162,7 +1125,7 @@ async function fetchAllSpecs(): Promise<void> {
 
   await Promise.all(allPromises);
 
-  console.log("✔️ Generated OpenAPI specs");
+  console.log('✔️ Generated OpenAPI specs');
 
   // Generate markdown for all specs
   await generateAllMarkdown();
@@ -1173,9 +1136,4 @@ if (require.main === module) {
   fetchAllSpecs().catch(console.error);
 }
 
-export {
-  fetchAllSpecs,
-  fetchApiSpec,
-  fetchGitHubApiSpec,
-  generatePlatformApiSpec,
-};
+export { fetchAllSpecs, fetchApiSpec, fetchGitHubApiSpec, generatePlatformApiSpec };

@@ -1,5 +1,5 @@
-import React, { JSX } from "react";
-import type { SVGProps } from "react";
+import React, { JSX } from 'react';
+import type { SVGProps } from 'react';
 
 export function HiroPlatformSVG(props: SVGProps<SVGSVGElement>) {
   return (
@@ -70,13 +70,7 @@ export function HiroPlatformSVG(props: SVGProps<SVGSVGElement>) {
 
 export function FumaDocsSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
-    <svg
-      width="80"
-      height="80"
-      viewBox="0 0 180 180"
-      filter="url(#shadow)"
-      {...props}
-    >
+    <svg width="80" height="80" viewBox="0 0 180 180" filter="url(#shadow)" {...props}>
       <circle cx="90" cy="90" r="90" fill="url(#iconGradient)" />
       <defs>
         <filter id="shadow" colorInterpolationFilters="sRGB">
@@ -112,7 +106,7 @@ export function NextSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
         height="180"
         id=":R0:mask0_408_134"
         maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
+        style={{ maskType: 'alpha' }}
         width="180"
         x="0"
         y="0"
@@ -133,13 +127,7 @@ export function NextSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
           d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
           fill="url(#:R0:paint0_linear_408_134)"
         />
-        <rect
-          fill="url(#:R0:paint1_linear_408_134)"
-          height="72"
-          width="12"
-          x="115"
-          y="54"
-        />
+        <rect fill="url(#:R0:paint1_linear_408_134)" height="72" width="12" x="115" y="54" />
       </g>
       <defs>
         <linearGradient
@@ -171,25 +159,12 @@ export function NextSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
 
 export function SourceSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
-    <svg
-      width="1320"
-      height="800"
-      viewBox="0 0 1320 800"
-      fill="none"
-      {...props}
-    >
+    <svg width="1320" height="800" viewBox="0 0 1320 800" fill="none" {...props}>
       <path
         d="M1308 599C1308 681.843 1240.84 749 1158 749C1075.16 749 1008 681.843 1008 599C1008 516.157 1075.16 449 1158 449C1240.84 449 1308 516.157 1308 599Z"
         fill="url(#paint0_radial_31_18)"
       />
-      <rect
-        x="1076.5"
-        y="513.5"
-        width="164"
-        height="173.545"
-        rx="82"
-        fill="#1D1A3F"
-      />
+      <rect x="1076.5" y="513.5" width="164" height="173.545" rx="82" fill="#1D1A3F" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -210,11 +185,7 @@ export function SourceSVG(props: SVGProps<SVGSVGElement>): JSX.Element {
         strokeWidth="9"
       />
       <path d="M934.804 303.783V249.098" stroke="black" strokeWidth="9" />
-      <path
-        d="M909.565 279.946L934.804 305.185L960.044 279.946"
-        stroke="black"
-        strokeWidth="9"
-      />
+      <path d="M909.565 279.946L934.804 305.185L960.044 279.946" stroke="black" strokeWidth="9" />
       <path
         d="M1032.02 306.101L977.337 251.435M977.804 306.12L1032.49 251.435"
         stroke="black"
@@ -319,13 +290,7 @@ export function VercelLogo(props: SVGProps<SVGSVGElement>): JSX.Element {
 
 export function NetlifyLogo(props: SVGProps<SVGSVGElement>): JSX.Element {
   return (
-    <svg
-      aria-label="Netlify"
-      width="512"
-      height="209"
-      viewBox="0 0 512 209"
-      {...props}
-    >
+    <svg aria-label="Netlify" width="512" height="209" viewBox="0 0 512 209" {...props}>
       <g>
         <path
           d="M117.436 207.036V154.604L118.529 153.51H129.452L130.545 154.604V207.036L129.452 208.13H118.529L117.436 207.036Z"

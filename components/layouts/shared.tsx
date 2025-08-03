@@ -67,10 +67,7 @@ export { type LinkItemType };
 /**
  * Get Links Items with shortcuts
  */
-export function getLinks(
-  links: LinkItemType[] = [],
-  githubUrl?: string,
-): LinkItemType[] {
+export function getLinks(links: LinkItemType[] = [], githubUrl?: string): LinkItemType[] {
   let result = links ?? [];
 
   if (githubUrl)
@@ -105,8 +102,7 @@ export function slot(
   disabled?: ReactNode,
 ): ReactNode {
   if (obj?.enabled === false) return disabled;
-  if (obj?.component !== undefined)
-    return <Slot {...customComponentProps}>{obj.component}</Slot>;
+  if (obj?.component !== undefined) return <Slot {...customComponentProps}>{obj.component}</Slot>;
 
   return def;
 }
@@ -122,8 +118,7 @@ export function slots<Comp extends Record<string, ReactNode>>(
   def: ReactNode,
 ): ReactNode {
   if (obj?.enabled === false) return;
-  if (obj?.components?.[variant] !== undefined)
-    return <Slot>{obj.components[variant]}</Slot>;
+  if (obj?.components?.[variant] !== undefined) return <Slot>{obj.components[variant]}</Slot>;
 
   return def;
 }

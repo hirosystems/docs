@@ -1,5 +1,5 @@
-import { Cards, IndexCard } from "@/components/card";
-import { API, Hiro, Ordinals, Runes, StacksIcon } from "@/components/ui/icon";
+import { Cards, IndexCard } from '@/components/card';
+import { API, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
 
 export default function APIsPage() {
   return (

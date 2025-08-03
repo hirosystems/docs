@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 export default function Error({
   error,
@@ -12,31 +12,31 @@ export default function Error({
 }) {
   React.useEffect(() => {
     // Hide sidebar for errors (including 404s)
-    const aside = document.querySelector("aside");
+    const aside = document.querySelector('aside');
     if (aside) {
-      aside.style.display = "none";
+      aside.style.display = 'none';
     }
 
     return () => {
-      const asideCleanup = document.querySelector("aside");
+      const asideCleanup = document.querySelector('aside');
       if (asideCleanup) {
-        asideCleanup.style.display = "";
+        asideCleanup.style.display = '';
       }
     };
   }, []);
 
   // Check if this is likely a 404 error
-  const is404 = error.message?.includes("404") || error.message?.includes("not found");
+  const is404 = error.message?.includes('404') || error.message?.includes('not found');
 
   return (
     <div className="w-full flex flex-col items-center justify-center text-center min-h-[50vh]">
       <h1 className="text-3xl font-regular mb-4">
-        {is404 ? "Page not found" : "Something went wrong"}
+        {is404 ? 'Page not found' : 'Something went wrong'}
       </h1>
       <p className="text-muted-foreground max-w-md mb-6">
         {is404
           ? "The documentation you are looking for doesn't exist or has been moved."
-          : "An error occurred while loading this page."}
+          : 'An error occurred while loading this page.'}
       </p>
       <div className="flex gap-4">
         <Link

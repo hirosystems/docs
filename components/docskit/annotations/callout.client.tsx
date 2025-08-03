@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useNotesContext } from "../notes.client";
+import { useNotesContext } from '../notes.client';
 
 export function CalloutContent({ query }: { query: string }) {
   const note = useNotesContext(query);
@@ -10,16 +10,16 @@ export function CalloutContent({ query }: { query: string }) {
   }
 
   const className =
-    note.type === "code"
-      ? "p-0 [&>*]:my-0 [&>*]:border-none overflow-auto rounded-none"
-      : "[&>*]:first:mt-0 p-2 prose dark:prose-invert prose-sm";
+    note.type === 'code'
+      ? 'p-0 [&>*]:my-0 [&>*]:border-none overflow-auto rounded-none'
+      : '[&>*]:first:mt-0 p-2 prose dark:prose-invert prose-sm';
   return (
     <div
       className={className}
       style={
         {
           // editorBackground
-          "--ch-16": "trasparent",
+          '--ch-16': 'trasparent',
         } as any
       }
     >

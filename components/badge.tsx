@@ -1,8 +1,8 @@
-import React from "react";
-import { CircleDot, HalfCircle, Flame } from "./ui/icon";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { CircleDot, HalfCircle, Flame } from './ui/icon';
+import { cn } from '@/lib/utils';
 
-type BadgeVariant = "starter" | "intermediate" | "advanced";
+type BadgeVariant = 'starter' | 'intermediate' | 'advanced';
 
 interface BadgeProps {
   variant: BadgeVariant;
@@ -10,11 +10,11 @@ interface BadgeProps {
 
 const variantStyles = {
   starter:
-    "bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]",
+    'bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]',
   intermediate:
-    "bg-[#F7F4E7] text-[#716B4B] border-[#EBDDC2] dark:bg-background dark:text-[#EBDDC2] dark:border-[#EBDDC2]",
+    'bg-[#F7F4E7] text-[#716B4B] border-[#EBDDC2] dark:bg-background dark:text-[#EBDDC2] dark:border-[#EBDDC2]',
   advanced:
-    "bg-[#F7E7E7] text-[#714B4B] border-[#EBC2C2] dark:bg-background dark:text-[#EBC2C2] dark:border-[#EBC2C2]",
+    'bg-[#F7E7E7] text-[#714B4B] border-[#EBC2C2] dark:bg-background dark:text-[#EBC2C2] dark:border-[#EBC2C2]',
 };
 
 const icons = {
@@ -29,9 +29,9 @@ export function HackBadge({ variant }: BadgeProps) {
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1.5 px-2 py-1 rounded-md border",
+        'inline-flex items-center gap-1.5 px-2 py-1 rounded-md border',
         variantStyles[variant],
-        "text-sm font-aeonik-fono"
+        'text-sm font-aeonik-fono',
       )}
     >
       <Icon className="w-4 h-4" />

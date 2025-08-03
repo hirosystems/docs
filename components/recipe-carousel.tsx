@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import * as React from 'react';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import type { Recipe } from "@/types";
-import { truncate } from "@/lib/utils";
+} from '@/components/ui/carousel';
+import type { Recipe } from '@/types';
+import { truncate } from '@/lib/utils';
 
 interface RecipeCarouselProps {
   currentRecipeId: string; // To exclude current recipe from carousel
@@ -26,15 +26,13 @@ function RecipeCarousel({ currentRecipeId, data }: RecipeCarouselProps) {
     <div className="w-full p-4 rounded-lg">
       <Carousel
         opts={{
-          align: "start",
+          align: 'start',
           loop: true,
         }}
         className="w-full"
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-mono text-muted-foreground">
-            More recipes
-          </h2>
+          <h2 className="text-xl font-mono text-muted-foreground">More recipes</h2>
           <div className="flex gap-2">
             <CarouselPrevious className="relative inset-0 translate-x-0 translate-y-0 h-7 w-7 border-border bg-background hover:bg-code" />
             <CarouselNext className="relative inset-0 translate-x-0 translate-y-0 h-7 w-7 border-border bg-background hover:bg-code" />

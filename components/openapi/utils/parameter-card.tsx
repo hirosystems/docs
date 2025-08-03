@@ -1,6 +1,6 @@
-import React from "react";
-import { RequiredBadge } from "./required-badge";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { RequiredBadge } from './required-badge';
+import { cn } from '@/lib/utils';
 
 interface ParameterCardProps {
   name: string;
@@ -10,19 +10,13 @@ interface ParameterCardProps {
   type?: string;
 }
 
-export function ParameterCard({
-  name,
-  description,
-  required,
-  example,
-  type,
-}: ParameterCardProps) {
+export function ParameterCard({ name, description, required, example, type }: ParameterCardProps) {
   return (
     <div
       className={cn(
-        "p-4 rounded-lg",
-        "bg-neutral-50 dark:bg-neutral-900",
-        "border border-neutral-200 dark:border-neutral-800"
+        'p-4 rounded-lg',
+        'bg-neutral-50 dark:bg-neutral-900',
+        'border border-neutral-200 dark:border-neutral-800',
       )}
     >
       <div className="flex items-start gap-2 mb-2">
@@ -30,9 +24,7 @@ export function ParameterCard({
         {required && <RequiredBadge />}
       </div>
 
-      {description && (
-        <p className="text-sm text-muted-foreground mb-2">{description}</p>
-      )}
+      {description && <p className="text-sm text-muted-foreground mb-2">{description}</p>}
 
       {example && (
         <div className="mt-2">

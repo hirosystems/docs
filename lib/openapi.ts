@@ -1,9 +1,9 @@
-import SwaggerParser from "@apidevtools/swagger-parser";
-import * as fs from "fs/promises";
+import SwaggerParser from '@apidevtools/swagger-parser';
+import * as fs from 'fs/promises';
 
 async function generateOpenAPI() {
   const url =
-    "https://raw.githubusercontent.com/stacks-network/stacks-core/master/docs/rpc/openapi.yaml";
+    'https://raw.githubusercontent.com/stacks-network/stacks-core/master/docs/rpc/openapi.yaml';
 
   try {
     // Validate the OpenAPI spec (optional but recommended)
@@ -17,10 +17,10 @@ async function generateOpenAPI() {
     const json = JSON.stringify(api, null, 2);
 
     // Save to a file (adjust the path as needed)
-    await fs.writeFile("./openapi/stacks-node-rpc-api.json", json);
-    console.log("OpenAPI JSON generated successfully.");
+    await fs.writeFile('./openapi/stacks-node-rpc-api.json', json);
+    console.log('OpenAPI JSON generated successfully.');
   } catch (err) {
-    console.error("Error generating OpenAPI JSON:", err);
+    console.error('Error generating OpenAPI JSON:', err);
     process.exit(1); // Exit with error code to signal CI failure
   }
 }

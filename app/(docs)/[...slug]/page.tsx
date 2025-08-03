@@ -1,12 +1,12 @@
-import fs from "fs/promises";
-import matter from "gray-matter";
-import { source } from "@/lib/source";
-import { notFound } from "next/navigation";
-import type { HeadingProps } from "@/types";
-import { getMDXComponents } from "@/components/mdx";
-import { API } from "@/components/reference/api-page";
-import { APIPage } from "@/components/openapi/api-page";
-import { Badge } from "@/components/ui/badge";
+import fs from 'fs/promises';
+import matter from 'gray-matter';
+import { source } from '@/lib/source';
+import { notFound } from 'next/navigation';
+import type { HeadingProps } from '@/types';
+import { getMDXComponents } from '@/components/mdx';
+import { API } from '@/components/reference/api-page';
+import { APIPage } from '@/components/openapi/api-page';
+import { Badge } from '@/components/ui/badge';
 import {
   DocsPage,
   DocsPageLayout,
@@ -17,42 +17,37 @@ import {
   DocsPageTitle,
   DocsPageDescription,
   DocsPageProse,
-} from "@/components/layouts/page";
-import {
-  InteractiveHeader,
-  InteractiveLayout,
-} from "@/components/layouts/interactive";
-import defaultMdxComponents from "fumadocs-ui/mdx";
-import { LLMShare } from "@/components/llm-share";
-import { CheckIcon } from "lucide-react";
-import { TagFilterSystem } from "@/components/ui/tag-filter-system";
-import { getAllFilterablePages } from "@/lib/source";
-import { Mermaid } from "@/components/mdx/mermaid";
-import { Callout } from "@/components/callout";
-import * as customIcons from "@/components/ui/icon";
-import * as lucideIcons from "lucide-react";
-import { FeedbackWrapper } from "@/components/feedback/feedback-wrapper";
+} from '@/components/layouts/page';
+import { InteractiveHeader, InteractiveLayout } from '@/components/layouts/interactive';
+import defaultMdxComponents from 'fumadocs-ui/mdx';
+import { LLMShare } from '@/components/llm-share';
+import { CheckIcon } from 'lucide-react';
+import { TagFilterSystem } from '@/components/ui/tag-filter-system';
+import { getAllFilterablePages } from '@/lib/source';
+import { Mermaid } from '@/components/mdx/mermaid';
+import { Callout } from '@/components/callout';
+import * as customIcons from '@/components/ui/icon';
+import * as lucideIcons from 'lucide-react';
+import { FeedbackWrapper } from '@/components/feedback/feedback-wrapper';
 
-export default async function Page(props: {
-  params: Promise<{ slug?: string[] }>;
-}) {
+export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const fileContent = await fs.readFile(page.data._file.absolutePath, "utf-8");
+  const fileContent = await fs.readFile(page.data._file.absolutePath, 'utf-8');
   const { content: rawMarkdownContent } = matter(fileContent);
 
   const LLMContent = rawMarkdownContent
-    .split("\n")
-    .filter((line) => !line.trim().startsWith("import"))
-    .join("\n")
+    .split('\n')
+    .filter((line) => !line.trim().startsWith('import'))
+    .join('\n')
     .trim();
 
   const MDX = page.data.body;
 
   if (!MDX) {
-    console.error("MDX component is undefined for page:", page.url);
+    console.error('MDX component is undefined for page:', page.url);
     notFound();
   }
 
@@ -60,21 +55,21 @@ export default async function Page(props: {
   const allFilterablePages = getAllFilterablePages();
 
   // Extract section from current page URL for scoped filtering
-  const currentSection = page.url.split("/").filter(Boolean)[1] || "general";
+  const currentSection = page.url.split('/').filter(Boolean)[1] || 'general';
 
   // Helper function to get icon component
   const getIconComponent = (iconName: string) => {
-    const iconProps = { className: "w-3 h-3 shrink-0" };
+    const iconProps = { className: 'w-3 h-3 shrink-0' };
 
     // Check custom icons first
     const CustomIcon = (customIcons as any)[iconName];
-    if (CustomIcon && typeof CustomIcon === "function") {
+    if (CustomIcon && typeof CustomIcon === 'function') {
       return <CustomIcon {...iconProps} />;
     }
 
     // Try with "Icon" suffix for custom icons
     const CustomIconWithSuffix = (customIcons as any)[`${iconName}Icon`];
-    if (CustomIconWithSuffix && typeof CustomIconWithSuffix === "function") {
+    if (CustomIconWithSuffix && typeof CustomIconWithSuffix === 'function') {
       return <CustomIconWithSuffix {...iconProps} />;
     }
 
@@ -88,7 +83,7 @@ export default async function Page(props: {
 
     for (const pattern of lucidePatterns) {
       const LucideIcon = (lucideIcons as any)[pattern];
-      if (LucideIcon && typeof LucideIcon === "function") {
+      if (LucideIcon && typeof LucideIcon === 'function') {
         return <LucideIcon {...iconProps} />;
       }
     }
@@ -140,10 +135,8 @@ export default async function Page(props: {
                       />
                     ),
                     h1: ({ children, ...props }: HeadingProps) => {
-                      const H1 =
-                        defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
-                      const id =
-                        typeof children === "string" ? children : undefined;
+                      const H1 = defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
+                      const id = typeof children === 'string' ? children : undefined;
                       return (
                         <H1 id={id} {...props}>
                           {children}
@@ -158,28 +151,21 @@ export default async function Page(props: {
                       />
                     ),
                     hr: (props: React.PropsWithChildren) => (
-                      <hr
-                        {...props}
-                        className="border-t border-border/50 mt-0"
-                      />
+                      <hr {...props} className="border-t border-border/50 mt-0" />
                     ),
-                    input: (
-                      props: React.InputHTMLAttributes<HTMLInputElement>,
-                    ) => {
-                      if (props.type === "checkbox") {
+                    input: (props: React.InputHTMLAttributes<HTMLInputElement>) => {
+                      if (props.type === 'checkbox') {
                         return (
                           <div className="relative inline-flex items-center mr-2">
                             <input {...props} className="sr-only" />
                             <div
                               className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center ${
                                 props.checked
-                                  ? "bg-brand-orange border-brand-orange text-white"
-                                  : "border-border bg-background"
+                                  ? 'bg-brand-orange border-brand-orange text-white'
+                                  : 'border-border bg-background'
                               }`}
                             >
-                              {props.checked && (
-                                <CheckIcon className="w-3 h-3" />
-                              )}
+                              {props.checked && <CheckIcon className="w-3 h-3" />}
                             </div>
                           </div>
                         );
@@ -191,10 +177,7 @@ export default async function Page(props: {
                 />
               </DocsPageProse>
               <div className="border-b border-border/50" />
-              <FeedbackWrapper
-                pageTitle={page.data.title}
-                pagePath={page.url}
-              />
+              <FeedbackWrapper pageTitle={page.data.title} pagePath={page.url} />
             </DocsPageContent>
           </DocsPageContentWrapper>
         </DocsPageLayout>
@@ -243,10 +226,8 @@ export default async function Page(props: {
                       />
                     ),
                     h1: ({ children, ...props }: HeadingProps) => {
-                      const H1 =
-                        defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
-                      const id =
-                        typeof children === "string" ? children : undefined;
+                      const H1 = defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
+                      const id = typeof children === 'string' ? children : undefined;
                       return (
                         <H1 id={id} {...props}>
                           {children}
@@ -261,28 +242,21 @@ export default async function Page(props: {
                       />
                     ),
                     hr: (props: React.PropsWithChildren) => (
-                      <hr
-                        {...props}
-                        className="border-t border-border/50 mt-0"
-                      />
+                      <hr {...props} className="border-t border-border/50 mt-0" />
                     ),
-                    input: (
-                      props: React.InputHTMLAttributes<HTMLInputElement>,
-                    ) => {
-                      if (props.type === "checkbox") {
+                    input: (props: React.InputHTMLAttributes<HTMLInputElement>) => {
+                      if (props.type === 'checkbox') {
                         return (
                           <div className="relative inline-flex items-center mr-2">
                             <input {...props} className="sr-only" />
                             <div
                               className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center ${
                                 props.checked
-                                  ? "bg-brand-orange border-brand-orange text-white"
-                                  : "border-border bg-background"
+                                  ? 'bg-brand-orange border-brand-orange text-white'
+                                  : 'border-border bg-background'
                               }`}
                             >
-                              {props.checked && (
-                                <CheckIcon className="w-3 h-3" />
-                              )}
+                              {props.checked && <CheckIcon className="w-3 h-3" />}
                             </div>
                           </div>
                         );
@@ -294,10 +268,7 @@ export default async function Page(props: {
                 />
               </DocsPageProse>
               <div className="border-b border-border/50" />
-              <FeedbackWrapper
-                pageTitle={page.data.title}
-                pagePath={page.url}
-              />
+              <FeedbackWrapper pageTitle={page.data.title} pagePath={page.url} />
             </DocsPageContent>
           </DocsPageContentWrapper>
         </DocsPageLayout>
@@ -314,9 +285,7 @@ export async function generateStaticParams() {
   );
 }
 
-export async function generateMetadata(props: {
-  params: Promise<{ slug?: string[] }>;
-}) {
+export async function generateMetadata(props: { params: Promise<{ slug?: string[] }> }) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();

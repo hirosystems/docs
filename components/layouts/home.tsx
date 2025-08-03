@@ -1,20 +1,20 @@
-"use client";
-import React, { type HTMLAttributes, useMemo } from "react";
-import { type NavOptions, slot } from "./shared";
-import { cn } from "@/lib/utils";
-import { type BaseLayoutProps, getLinks } from "./shared";
-import { NavProvider } from "fumadocs-ui/contexts/layout";
-import { SearchToggle } from "../layout/search-toggle";
-import { ThemeToggle } from "../layout/theme-toggle";
-import { ArrowUpRight } from "lucide-react";
-import Link from "fumadocs-core/link";
-import { Button } from "../ui/button";
-import { DocsLogo } from "../ui/icon";
-import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu";
-import { renderNavItem } from "./links";
-import { baseOptions } from "@/app/layout.config";
-import { MobileMenuButton } from "../layout/mobile-menu-button";
-import { MobileMenuProvider } from "@/contexts/mobile-menu";
+'use client';
+import React, { type HTMLAttributes, useMemo } from 'react';
+import { type NavOptions, slot } from './shared';
+import { cn } from '@/lib/utils';
+import { type BaseLayoutProps, getLinks } from './shared';
+import { NavProvider } from 'fumadocs-ui/contexts/layout';
+import { SearchToggle } from '../layout/search-toggle';
+import { ThemeToggle } from '../layout/theme-toggle';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'fumadocs-core/link';
+import { Button } from '../ui/button';
+import { DocsLogo } from '../ui/icon';
+import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu';
+import { renderNavItem } from './links';
+import { baseOptions } from '@/app/layout.config';
+import { MobileMenuButton } from '../layout/mobile-menu-button';
+import { MobileMenuProvider } from '@/contexts/mobile-menu';
 
 export interface HomeLayoutProps extends BaseLayoutProps {
   nav?: Partial<
@@ -27,9 +27,7 @@ export interface HomeLayoutProps extends BaseLayoutProps {
   >;
 }
 
-export function HomeLayout(
-  props: HomeLayoutProps & HTMLAttributes<HTMLElement>
-) {
+export function HomeLayout(props: HomeLayoutProps & HTMLAttributes<HTMLElement>) {
   const {
     nav,
     links,
@@ -44,11 +42,7 @@ export function HomeLayout(
   return (
     <MobileMenuProvider>
       <NavProvider transparentMode={nav?.transparentMode}>
-        <main
-          id="nd-home-layout"
-          {...rest}
-          className={cn("flex flex-1 flex-col", rest.className)}
-        >
+        <main id="nd-home-layout" {...rest} className={cn('flex flex-1 flex-col', rest.className)}>
           {slot(
             nav,
             <Header
@@ -58,7 +52,7 @@ export function HomeLayout(
               searchToggle={searchToggle}
               i18n={i18n}
               githubUrl={githubUrl}
-            />
+            />,
           )}
           {props.children}
         </main>
@@ -78,19 +72,16 @@ export function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 h-16 transition-all duration-200",
-        "bg-background backdrop-blur-md",
-        "border-b border-transparent"
+        'sticky top-0 z-50 h-16 transition-all duration-200',
+        'bg-background backdrop-blur-md',
+        'border-b border-transparent',
       )}
     >
       <nav className="flex flex-row items-center gap-4 size-full px-4">
         {/* Mobile layout */}
         <div className="flex md:hidden items-center justify-between w-full">
           <MobileMenuButton />
-          <Link
-            href="/"
-            className="absolute left-1/2 transform -translate-x-1/2"
-          >
+          <Link href="/" className="absolute left-1/2 transform -translate-x-1/2">
             <DocsLogo />
           </Link>
           <SearchToggle />

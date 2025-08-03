@@ -1,15 +1,15 @@
-import { AnnotationHandler } from "codehike/code"
-import Link from "next/link"
+import { AnnotationHandler } from 'codehike/code';
+import Link from 'next/link';
 
 export const link: AnnotationHandler = {
-  name: "link",
+  name: 'link',
   Inline: ({ annotation, children }) => {
-    const { query } = annotation
+    const { query } = annotation;
 
     return (
       <Link href={query} className="underline">
         {children}
       </Link>
-    )
+    );
   },
-}
+};
