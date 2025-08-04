@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { InteractiveTags } from "./interactive-tags";
-import { useTagFiltering } from "@/hooks/use-tag-filtering";
-import type { FilterablePage } from "@/lib/utils/tag-filtering";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { useTagFiltering } from '@/hooks/use-tag-filtering';
+import { cn } from '@/lib/utils';
+import type { FilterablePage } from '@/lib/utils/tag-filtering';
+import { InteractiveTags } from './interactive-tags';
 
 export interface TagFilterSystemProps {
   tags: string[];
@@ -14,14 +14,11 @@ export interface TagFilterSystemProps {
   className?: string;
 }
 
-export function TagFilterSystem({
-  tags,
-  pages,
-  section,
-  className,
-}: TagFilterSystemProps) {
-  const { selectedTag, isDialogOpen, filterResult, selectTag, closeDialog } =
-    useTagFiltering({ pages, section });
+export function TagFilterSystem({ tags, pages, section, className }: TagFilterSystemProps) {
+  const { selectedTag, isDialogOpen, filterResult, selectTag, closeDialog } = useTagFiltering({
+    pages,
+    section,
+  });
 
   const dialogContent =
     filterResult && filterResult.matchingPages.length > 0 ? (
@@ -33,9 +30,7 @@ export function TagFilterSystem({
                 {page.title}
               </h3>
               {page.description && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {page.description}
-                </p>
+                <p className="text-sm text-muted-foreground line-clamp-2">{page.description}</p>
               )}
               <div className="flex items-center gap-2 mt-3">
                 {page.type && (
@@ -45,9 +40,7 @@ export function TagFilterSystem({
                 )}
               </div>
             </a>
-            {index < filterResult.matchingPages.length - 1 && (
-              <hr className="border-border my-2" />
-            )}
+            {index < filterResult.matchingPages.length - 1 && <hr className="border-border my-2" />}
           </React.Fragment>
         ))}
       </div>
@@ -76,14 +69,9 @@ function EmptyState({ selectedTag }: { selectedTag?: string }) {
       </div>
       <h3 className="text-lg font-medium mb-2">No results found</h3>
       <p className="text-muted-foreground max-w-sm">
-        {selectedTag ? (
-          <>
-            No pages found with the label selectedTag. Try selecting a different
-            tag or check back later.
-          </>
-        ) : (
-          "No pages match your current filter. Try selecting a different tag."
-        )}
+        {selectedTag
+          ? 'No pages found with the label selectedTag. Try selecting a different tag or check back later.'
+          : 'No pages match your current filter. Try selecting a different tag.'}
       </p>
     </div>
   );

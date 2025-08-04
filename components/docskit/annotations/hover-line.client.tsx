@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { InnerLine } from "codehike/code";
-import { useHover } from "@/components/docskit/context/hover";
+import { InnerLine } from 'codehike/code';
+import { useEffect, useRef } from 'react';
+import { useHover } from '@/components/docskit/context/hover';
 
 export function HoverLineClient({ annotation, ...props }: any) {
   const lineRef = useRef<HTMLDivElement>(null);
@@ -13,18 +13,16 @@ export function HoverLineClient({ annotation, ...props }: any) {
     const isHovered = !hoveredId || annotation?.query === hoveredId;
 
     useEffect(() => {
-      const recipeContainer = lineRef.current?.closest(".recipe");
+      const recipeContainer = lineRef.current?.closest('.recipe');
       if (!recipeContainer) return;
 
-      const scrollableContainers = [
-        ...recipeContainer.querySelectorAll("*"),
-      ].filter((el) => {
+      const scrollableContainers = [...recipeContainer.querySelectorAll('*')].filter((el) => {
         const style = window.getComputedStyle(el);
         return (
-          style.overflow === "auto" ||
-          style.overflow === "scroll" ||
-          style.overflowY === "auto" ||
-          style.overflowY === "scroll"
+          style.overflow === 'auto' ||
+          style.overflow === 'scroll' ||
+          style.overflowY === 'auto' ||
+          style.overflowY === 'scroll'
         );
       });
 
@@ -39,30 +37,23 @@ export function HoverLineClient({ annotation, ...props }: any) {
         }
       };
 
-      codeContainer.addEventListener("scroll", handleScroll);
-      return () => codeContainer.removeEventListener("scroll", handleScroll);
+      codeContainer.addEventListener('scroll', handleScroll);
+      return () => codeContainer.removeEventListener('scroll', handleScroll);
     }, [wasClicked, setWasClicked]);
 
     useEffect(() => {
       // Add scrollable effect to the line when hovered
-      if (
-        hoveredId &&
-        annotation?.query &&
-        annotation.query === hoveredId &&
-        lineRef.current
-      ) {
-        const recipeContainer = lineRef.current.closest(".recipe");
+      if (hoveredId && annotation?.query && annotation.query === hoveredId && lineRef.current) {
+        const recipeContainer = lineRef.current.closest('.recipe');
 
         if (recipeContainer) {
-          const scrollableContainers = [
-            ...recipeContainer.querySelectorAll("*"),
-          ].filter((el) => {
+          const scrollableContainers = [...recipeContainer.querySelectorAll('*')].filter((el) => {
             const style = window.getComputedStyle(el);
             return (
-              style.overflow === "auto" ||
-              style.overflow === "scroll" ||
-              style.overflowY === "auto" ||
-              style.overflowY === "scroll"
+              style.overflow === 'auto' ||
+              style.overflow === 'scroll' ||
+              style.overflowY === 'auto' ||
+              style.overflowY === 'scroll'
             );
           });
 
@@ -77,32 +68,25 @@ export function HoverLineClient({ annotation, ...props }: any) {
             const offset = codeContainer.clientHeight / 3;
             const lineRect = lineRef.current.getBoundingClientRect();
             const containerRect = codeContainer.getBoundingClientRect();
-            const relativeTop =
-              lineRect.top - containerRect.top + codeContainer.scrollTop;
+            const relativeTop = lineRect.top - containerRect.top + codeContainer.scrollTop;
 
             codeContainer.scrollTo({
               top: relativeTop - offset,
-              behavior: "smooth",
+              behavior: 'smooth',
             });
           }
         }
-      } else if (
-        !hoveredId &&
-        originalScrollRef.current !== null &&
-        !wasClicked
-      ) {
+      } else if (!hoveredId && originalScrollRef.current !== null && !wasClicked) {
         // Only scroll back if we haven't clicked
-        const recipeContainer = lineRef.current?.closest(".recipe");
+        const recipeContainer = lineRef.current?.closest('.recipe');
         if (recipeContainer) {
-          const scrollableContainers = [
-            ...recipeContainer.querySelectorAll("*"),
-          ].filter((el) => {
+          const scrollableContainers = [...recipeContainer.querySelectorAll('*')].filter((el) => {
             const style = window.getComputedStyle(el);
             return (
-              style.overflow === "auto" ||
-              style.overflow === "scroll" ||
-              style.overflowY === "auto" ||
-              style.overflowY === "scroll"
+              style.overflow === 'auto' ||
+              style.overflow === 'scroll' ||
+              style.overflowY === 'auto' ||
+              style.overflowY === 'scroll'
             );
           });
 
@@ -111,7 +95,7 @@ export function HoverLineClient({ annotation, ...props }: any) {
           if (codeContainer) {
             codeContainer.scrollTo({
               top: originalScrollRef.current,
-              behavior: "smooth",
+              behavior: 'smooth',
             });
             // Reset the stored position
             originalScrollRef.current = null;
@@ -127,14 +111,14 @@ export function HoverLineClient({ annotation, ...props }: any) {
           className="transition-opacity duration-200"
           style={{
             opacity: isHovered ? 1 : 0.5,
-            filter: isHovered ? "none" : "blur(0.25px)",
+            filter: isHovered ? 'none' : 'blur(0.25px)',
           }}
-          data-line={annotation?.query || ""}
+          data-line={annotation?.query || ''}
         />
       </div>
     );
   } catch (error) {
-    console.warn("Hover context not ready:", error);
+    console.warn('Hover context not ready:', error);
     return <InnerLine merge={props} />;
   }
 }

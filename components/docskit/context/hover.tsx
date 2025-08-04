@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useState } from "react";
-import type React from "react";
+import type React from 'react';
+import { createContext, useContext, useState } from 'react';
 
 interface HoverContextType {
   hoveredId: string | null;
@@ -12,16 +12,12 @@ interface HoverContextType {
 
 const HoverContext = createContext<HoverContextType | undefined>(undefined);
 
-export const HoverProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const HoverProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [wasClicked, setWasClicked] = useState(false);
 
   return (
-    <HoverContext.Provider
-      value={{ hoveredId, setHoveredId, wasClicked, setWasClicked }}
-    >
+    <HoverContext.Provider value={{ hoveredId, setHoveredId, wasClicked, setWasClicked }}>
       {children}
     </HoverContext.Provider>
   );
@@ -30,7 +26,7 @@ export const HoverProvider: React.FC<{ children: React.ReactNode }> = ({
 export const useHover = (): HoverContextType => {
   const context = useContext(HoverContext);
   if (!context) {
-    throw new Error("useHover must be used within a HoverProvider");
+    throw new Error('useHover must be used within a HoverProvider');
   }
   return context;
 };

@@ -1,35 +1,25 @@
-import { ExternalLink, X, ChevronRight, ArrowUpRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import type { APIExport, APIParameter } from "./types";
-import React from "react";
-import { Code } from "@/components/docskit/code";
-import { APICollapsibleClient } from "./api-collapsible.client";
+import { ArrowUpRight, ChevronRight, ExternalLink, X } from 'lucide-react';
+import React from 'react';
+import { Code } from '@/components/docskit/code';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { APICollapsibleClient } from './api-collapsible.client';
+import type { APIExport, APIParameter } from './types';
 
 interface APISectionProps {
   apiExport: APIExport;
   hasSource?: boolean;
 }
 
-export async function APISection({
-  apiExport,
-  hasSource = true,
-}: APISectionProps) {
+export async function APISection({ apiExport, hasSource = true }: APISectionProps) {
   const renderParameters = (parameters: APIParameter[]) => (
     <div className="space-y-6">
       <h3 className="text-lg font-normal text-foreground">Parameters</h3>
       <div className="space-y-4">
         {parameters.map((param, index) => (
-          <div
-            key={param.name}
-            className="border border-border rounded-lg p-4 space-y-3"
-          >
+          <div key={param.name} className="border border-border rounded-lg p-4 space-y-3">
             <div className="flex items-center gap-3 flex-wrap">
               <code className="px-2 py-0.5 bg-neutral-150 dark:bg-neutral-700 rounded text-sm font-mono font-medium">
                 {param.name}
@@ -39,15 +29,11 @@ export async function APISection({
                   REQUIRED
                 </Badge>
               )}
-              <span className="text-sm text-muted-foreground font-mono">
-                {param.type}
-              </span>
+              <span className="text-sm text-muted-foreground font-mono">{param.type}</span>
             </div>
 
             {param.description && (
-              <div className="text-sm text-muted-foreground">
-                {param.description}
-              </div>
+              <div className="text-sm text-muted-foreground">{param.description}</div>
             )}
 
             {/* <div className="text-sm">
@@ -57,7 +43,7 @@ export async function APISection({
               </code>
             </div> */}
 
-            {param.name === "options" && <APICollapsibleClient />}
+            {param.name === 'options' && <APICollapsibleClient />}
           </div>
         ))}
       </div>
@@ -68,8 +54,7 @@ export async function APISection({
   const primarySignature = apiExport.signatures?.[0];
 
   // Prepare all examples from all signatures
-  const allExamples =
-    apiExport.signatures?.flatMap((sig) => sig.examples || []) || [];
+  const allExamples = apiExport.signatures?.flatMap((sig) => sig.examples || []) || [];
 
   // Pre-render all code examples on the server
   const renderedExamples = await Promise.all(
@@ -77,14 +62,14 @@ export async function APISection({
       return await Code({
         codeblocks: [
           {
-            value: example.code.replace(/```\w*\n?/g, "").replace(/```$/g, ""),
-            lang: "typescript",
-            meta: "",
+            value: example.code.replace(/```\w*\n?/g, '').replace(/```$/g, ''),
+            lang: 'typescript',
+            meta: '',
           },
         ],
-        flags: "c",
+        flags: 'c',
       });
-    })
+    }),
   );
 
   return (
@@ -96,13 +81,9 @@ export async function APISection({
       <div className="sticky top-[var(--header-height,4rem)] z-10 flex items-center justify-between py-4 bg-gradient-to-b from-background from-85% to-transparent to-100%">
         <div className="flex items-center gap-4">
           <Badge className="px-1.5 py-0.5 bg-neutral-100 border-border dark:bg-neutral-800 font-medium">
-            <h2 className="text-lg font-normal text-foreground font-fono !m-0">
-              {apiExport.name}
-            </h2>
+            <h2 className="text-lg font-normal text-foreground font-fono !m-0">{apiExport.name}</h2>
           </Badge>
-          <span className="text-sm text-muted-foreground font-mono">
-            {apiExport.kind}
-          </span>
+          <span className="text-sm text-muted-foreground font-mono">{apiExport.kind}</span>
         </div>
         {hasSource && apiExport.source && (
           <Button
@@ -111,11 +92,7 @@ export async function APISection({
             asChild
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary no-underline hover:underline hover:bg-transparent"
           >
-            <a
-              href={apiExport.source.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={apiExport.source.url} target="_blank" rel="noopener noreferrer">
               View source
               <ArrowUpRight className="h-3 w-3" />
             </a>
@@ -132,9 +109,7 @@ export async function APISection({
             {primarySignature?.description ? (
               <p>{primarySignature.description}</p>
             ) : (
-              <p>
-                {apiExport.description || `${apiExport.kind} ${apiExport.name}`}
-              </p>
+              <p>{apiExport.description || `${apiExport.kind} ${apiExport.name}`}</p>
             )}
           </div>
 
@@ -175,30 +150,26 @@ export async function APISection({
                       className="font-fono px-2.5 py-1 rounded-full border-0 bg-inverted hover:bg-muted/80 text-sm text-muted-foreground data-[state=active]:bg-inverted data-[state=active]:text-background transition"
                     >
                       {index === 0
-                        ? "Basic usage"
+                        ? 'Basic usage'
                         : index === 1
-                          ? "With custom domain"
+                          ? 'With custom domain'
                           : index === 2
-                            ? "With additional parameters"
+                            ? 'With additional parameters'
                             : index === 3
-                              ? "With custom schemas"
+                              ? 'With custom schemas'
                               : index === 4
-                                ? "Custom fetch implementation"
+                                ? 'Custom fetch implementation'
                                 : index === 5
-                                  ? "React Native with AsyncStorage"
+                                  ? 'React Native with AsyncStorage'
                                   : index === 6
-                                    ? "React Native with Expo SecureStore"
+                                    ? 'React Native with Expo SecureStore'
                                     : `Example ${index + 1}`}
                     </TabsTrigger>
                   ))}
                 </TabsList>
 
                 {renderedExamples.map((renderedExample, index) => (
-                  <TabsContent
-                    key={index}
-                    value={index.toString()}
-                    className="mt-4"
-                  >
+                  <TabsContent key={index} value={index.toString()} className="mt-4">
                     {renderedExample}
                   </TabsContent>
                 ))}

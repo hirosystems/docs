@@ -1,32 +1,22 @@
-import { cn } from "@/lib/utils";
-import { CopyButton } from "./copy-button";
-import { MultiCode } from "./code.client";
-import {
-  type AnnotationHandler,
-  highlight,
-  Pre,
-  type RawCode,
-} from "codehike/code";
-import { CodeIcon } from "./code-icon";
-import theme from "./theme.mjs";
-import React from "react";
-import { lineNumbers } from "./annotations/line-numbers";
-import { mark } from "./annotations/mark";
-import { wordWrap } from "./annotations/word-wrap";
-import { diff } from "./annotations/diff";
-import { collapse } from "./annotations/collapse";
-import { fold } from "./annotations/fold";
-import { link } from "./annotations/link";
-import { tokenTransitions } from "./annotations/token-transitions";
-import { tooltip } from "./annotations/tooltip";
-import { callout } from "./annotations/callout";
-import { hover } from "./annotations/hover";
-import {
-  CODEBLOCK,
-  type CodeGroup,
-  flagsToOptions,
-  TITLEBAR,
-} from "./code-group";
+import { type AnnotationHandler, highlight, Pre, type RawCode } from 'codehike/code';
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { callout } from './annotations/callout';
+import { collapse } from './annotations/collapse';
+import { diff } from './annotations/diff';
+import { fold } from './annotations/fold';
+import { hover } from './annotations/hover';
+import { lineNumbers } from './annotations/line-numbers';
+import { link } from './annotations/link';
+import { mark } from './annotations/mark';
+import { tokenTransitions } from './annotations/token-transitions';
+import { tooltip } from './annotations/tooltip';
+import { wordWrap } from './annotations/word-wrap';
+import { MultiCode } from './code.client';
+import { CODEBLOCK, type CodeGroup, flagsToOptions, TITLEBAR } from './code-group';
+import { CodeIcon } from './code-icon';
+import { CopyButton } from './copy-button';
+import theme from './theme.mjs';
 
 export async function Code(props: {
   codeblocks: RawCode[];
@@ -68,13 +58,7 @@ export function CodeSync(props: {
 }
 
 // Shared client component
-function CodeClient({
-  group,
-  className,
-}: {
-  group: CodeGroup;
-  className?: string;
-}) {
+function CodeClient({ group, className }: { group: CodeGroup; className?: string }) {
   return group.tabs.length === 1 ? (
     <SingleCode group={group} className={className} />
   ) : (
@@ -82,39 +66,27 @@ function CodeClient({
   );
 }
 
-function SingleCode({
-  group,
-  className,
-}: {
-  group: CodeGroup;
-  className?: string;
-}) {
+function SingleCode({ group, className }: { group: CodeGroup; className?: string }) {
   const tab = group.tabs[0];
   if (!tab) return null;
 
   const { pre, style, code, title, icon, options } = tab;
-  const hasTitle = title?.trim() !== "";
+  const hasTitle = title?.trim() !== '';
   return (
-    <div
-      className={cn(CODEBLOCK, !hasTitle && "border-none", className)}
-      style={style}
-    >
+    <div className={cn(CODEBLOCK, !hasTitle && 'border-none', className)} style={style}>
       {hasTitle && (
         <div
           className={cn(
             TITLEBAR,
-            "flex items-center gap-2",
-            "text-muted-foreground text-sm font-mono"
+            'flex items-center gap-2',
+            'text-muted-foreground text-sm font-mono',
           )}
         >
           <span className="pl-2 pr-1">{icon}</span>
           {title}
           {options.copyButton && (
-            <div className={cn("ml-auto mr-1 items-center")}>
-              <CopyButton
-                text={code}
-                className="text-ch-tab-inactive-foreground"
-              />
+            <div className={cn('ml-auto mr-1 items-center')}>
+              <CopyButton text={code} className="text-ch-tab-inactive-foreground" />
             </div>
           )}
         </div>
@@ -155,16 +127,16 @@ export async function toCodeGroup(props: {
           <Pre
             code={highlighted}
             className={cn(
-              !title && "!m-0",
-              "overflow-x-auto px-0 py-2 m-3 rounded !bg-ch-code max-w-full",
-              props.preClassName
+              !title && '!m-0',
+              'overflow-x-auto px-0 py-2 m-3 rounded !bg-ch-code max-w-full',
+              props.preClassName,
             )}
             style={highlighted.style}
             handlers={handlers}
           />
         ),
       };
-    })
+    }),
   );
 
   return {
@@ -174,7 +146,7 @@ export async function toCodeGroup(props: {
   };
 }
 
-function getHandlers(options: CodeGroup["options"]) {
+function getHandlers(options: CodeGroup['options']) {
   return [
     mark,
     tooltip,
@@ -202,11 +174,7 @@ function getHandlers(options: CodeGroup["options"]) {
  * ```
  */
 function extractFlags(codeblock: RawCode) {
-  const flags =
-    codeblock.meta.split(" ").filter((flag) => flag.startsWith("-"))[0] ?? "";
-  const title =
-    codeblock.meta === flags
-      ? ""
-      : codeblock.meta.replace(" " + flags, "").trim();
+  const flags = codeblock.meta.split(' ').filter((flag) => flag.startsWith('-'))[0] ?? '';
+  const title = codeblock.meta === flags ? '' : codeblock.meta.replace(' ' + flags, '').trim();
   return { title, flags: flags.slice(1) };
 }

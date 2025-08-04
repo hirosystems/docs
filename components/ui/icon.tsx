@@ -1,7 +1,7 @@
-import React, { JSX } from "react";
-import type { SVGProps } from "react";
-import type { LucideIcon } from "lucide-react";
-import { TerminalIcon } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
+import { TerminalIcon } from 'lucide-react';
+import type React from 'react';
+import type { JSX, SVGProps } from 'react';
 
 export function create({ icon: Icon }: { icon?: LucideIcon }) {
   return (
@@ -20,7 +20,7 @@ type IconProps = {
 
 export function MagicIcon({
   size = 24,
-  color = "currentColor",
+  color = 'currentColor',
   className,
   style,
 }: IconProps): JSX.Element {
@@ -42,7 +42,7 @@ export function MagicIcon({
 
 export function ClaudeIcon({
   size = 24,
-  color = "currentColor",
+  color = 'currentColor',
   className,
   style,
 }: IconProps): JSX.Element {
@@ -64,7 +64,7 @@ export function ClaudeIcon({
 
 export function OpenAIIcon({
   size = 24,
-  color = "currentColor",
+  color = 'currentColor',
   className,
   style,
 }: IconProps): JSX.Element {
@@ -86,7 +86,7 @@ export function OpenAIIcon({
 
 export function StacksIcon({
   size = 24,
-  color = "currentColor",
+  color = 'currentColor',
   className,
   style,
 }: IconProps): JSX.Element {
@@ -109,23 +109,23 @@ export function StacksIcon({
         <path
           d="M10.4731 4.34457C10.4676 4.34254 10.4617 4.34142 10.4556 4.34142H7.66498C7.56531 4.34142 7.47632 4.28892 7.42981 4.2017C7.38333 4.11455 7.38871 4.01181 7.44355 3.92737C7.44361 3.92727 7.44368 3.92717 7.44375 3.92706L9.26679 1.2179L9.26691 1.21772C9.30487 1.16078 9.308 1.09041 9.27647 1.03052C9.24449 0.969753 9.18331 0.934558 9.11682 0.934558H8.40359C8.34467 0.934558 8.28646 0.962411 8.2532 1.01499L6.11856 4.18809L6.11845 4.18827C6.05401 4.28493 5.94741 4.34142 5.82998 4.34142H5.56454C5.44711 4.34142 5.34051 4.28493 5.27607 4.18827L5.27598 4.18812L3.14595 1.01731C3.1127 0.964726 3.05448 0.936866 2.99554 0.936866H2.28232C2.21517 0.936866 2.15203 0.974946 2.12036 1.03513L2.1646 1.05842L2.12036 1.03513C2.08824 1.09616 2.09509 1.1662 2.12955 1.21946L2.12954 1.21946L2.13004 1.22021L3.9535 3.93L3.9535 3.93001L3.95384 3.9305C4.00968 4.01138 4.01401 4.11361 3.96702 4.2017L3.96681 4.20211C3.92013 4.29158 3.83346 4.34373 3.73185 4.34373H0.943578C0.841532 4.34373 0.762012 4.4267 0.762012 4.5253V5.11619C0.762012 5.21823 0.844983 5.29775 0.943578 5.29775H10.4556C10.5576 5.29775 10.6371 5.21478 10.6371 5.11619V4.5253C10.6371 4.42935 10.5638 4.35332 10.4731 4.34457Z"
           style={{
-            fill: "currentColor",
-            stroke: "currentColor",
+            fill: 'currentColor',
+            stroke: 'currentColor',
             fillOpacity: 1,
             strokeOpacity: 1,
-            strokeWidth: "0.1",
-            strokeLinejoin: "round",
+            strokeWidth: '0.1',
+            strokeLinejoin: 'round',
           }}
         />
         <path
           d="M2.13004 10.8872L2.12992 10.8873C2.09196 10.9443 2.08883 11.0147 2.12036 11.0745C2.15234 11.1353 2.21352 11.1705 2.28001 11.1705H2.99324C3.05216 11.1705 3.11038 11.1427 3.14363 11.0901L5.27827 7.91697L5.27838 7.9168C5.34282 7.82014 5.44942 7.76364 5.56685 7.76364H5.83229C5.94972 7.76364 6.05632 7.82014 6.12076 7.9168L6.12086 7.91695L8.25361 11.0907L8.25391 11.0911C8.28845 11.1414 8.34297 11.1705 8.40359 11.1705H9.11682C9.18396 11.1705 9.24711 11.1324 9.27878 11.0722C9.3109 11.0112 9.30405 10.9412 9.26959 10.8879L9.2696 10.8879L9.2691 10.8872L7.44564 8.17737L7.4453 8.17687C7.38946 8.096 7.38513 7.99377 7.43212 7.90567L7.43233 7.90527C7.47901 7.8158 7.56568 7.76364 7.66729 7.76364H10.4556C10.5576 7.76364 10.6371 7.68067 10.6371 7.58208V6.99118C10.6371 6.88914 10.5542 6.80962 10.4556 6.80962C10.4503 6.80962 10.4453 6.81043 10.4405 6.81193H0.943578C0.841532 6.81193 0.762012 6.8949 0.762012 6.99349V7.58439C0.762012 7.68643 0.844983 7.76595 0.943578 7.76595H3.73185C3.83152 7.76595 3.92051 7.81846 3.96702 7.90567C4.01364 7.99308 4.00792 8.0957 3.95342 8.17749C3.95341 8.17751 3.95339 8.17753 3.95338 8.17755L2.13004 10.8872Z"
           style={{
-            fill: "currentColor",
-            stroke: "currentColor",
+            fill: 'currentColor',
+            stroke: 'currentColor',
             fillOpacity: 1,
             strokeOpacity: 1,
-            strokeWidth: "0.1",
-            strokeLinejoin: "round",
+            strokeWidth: '0.1',
+            strokeLinejoin: 'round',
           }}
         />
       </svg>
@@ -135,13 +135,7 @@ export function StacksIcon({
 
 export function Ordinals(): JSX.Element {
   return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 15 15"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="12" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="7.58228" cy="7.05255" r="6.36257" stroke="currentColor" />
       <circle cx="7.53107" cy="7.04505" r="3.76642" fill="currentColor" />
     </svg>
@@ -161,37 +155,37 @@ export function Bitcoin(props: any) {
       <path
         d="M1.19348 3.46362L8.58334 3.46362C9.10426 3.46362 9.60385 3.67056 9.97219 4.0389C10.3405 4.40725 10.5475 4.90684 10.5475 5.42776V5.53032C10.5475 6.05124 10.3405 6.55083 9.97219 6.91917C9.60385 7.28752 9.10426 7.49446 8.58334 7.49446L1.19348 7.49446L1.19348 3.46362Z"
         stroke="currentColor"
-        style={{ stroke: "currentColor", strokeOpacity: 1 }}
+        style={{ stroke: 'currentColor', strokeOpacity: 1 }}
         strokeMiterlimit="10"
       />
       <path
         d="M1.19287 7.49463L9.02376 7.49463C9.28843 7.49463 9.55051 7.54676 9.79503 7.64804C10.0396 7.74933 10.2617 7.89778 10.4489 8.08493C10.636 8.27208 10.7845 8.49426 10.8858 8.73878C10.987 8.9833 11.0392 9.24538 11.0392 9.51004V9.51004C11.0392 10.0446 10.8268 10.5572 10.4489 10.9352C10.0709 11.3131 9.55828 11.5255 9.02376 11.5255H1.19287L1.19287 7.49463Z"
         stroke="currentColor"
-        style={{ stroke: "currentColor", strokeOpacity: 1 }}
+        style={{ stroke: 'currentColor', strokeOpacity: 1 }}
         strokeMiterlimit="10"
       />
       <path
         d="M3.92407 0.489502V3.13593"
         stroke="currentColor"
-        style={{ stroke: "currentColor", strokeOpacity: 1 }}
+        style={{ stroke: 'currentColor', strokeOpacity: 1 }}
         strokeMiterlimit="10"
       />
       <path
         d="M7.10791 0.489502V3.13593"
         stroke="currentColor"
-        style={{ stroke: "currentColor", strokeOpacity: 1 }}
+        style={{ stroke: 'currentColor', strokeOpacity: 1 }}
         strokeMiterlimit="10"
       />
       <path
         d="M3.92407 11.8186V14.487"
         stroke="currentColor"
-        style={{ stroke: "currentColor", strokeOpacity: 1 }}
+        style={{ stroke: 'currentColor', strokeOpacity: 1 }}
         strokeMiterlimit="10"
       />
       <path
         d="M7.10864 11.8186V14.487"
         stroke="currentColor"
-        style={{ stroke: "currentColor", strokeOpacity: 1 }}
+        style={{ stroke: 'currentColor', strokeOpacity: 1 }}
         strokeMiterlimit="10"
       />
     </svg>
@@ -338,27 +332,9 @@ export function API(props: SVGProps<SVGSVGElement>): JSX.Element {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle
-        cx="9.16729"
-        cy="3.84845"
-        r="2.28644"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <circle
-        cx="14.8834"
-        cy="14.1373"
-        r="2.28644"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <circle
-        cx="3.45119"
-        cy="14.1373"
-        r="2.28644"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
+      <circle cx="9.16729" cy="3.84845" r="2.28644" stroke="currentColor" strokeWidth="1.1" />
+      <circle cx="14.8834" cy="14.1373" r="2.28644" stroke="currentColor" strokeWidth="1.1" />
+      <circle cx="3.45119" cy="14.1373" r="2.28644" stroke="currentColor" strokeWidth="1.1" />
       <path
         d="M9.16729 7.56372V10.136M9.16729 10.136L6.88085 11.8508M9.16729 10.136L11.4537 11.8508"
         stroke="currentColor"
@@ -378,31 +354,11 @@ export function Cloud(props: SVGProps<SVGSVGElement>): JSX.Element {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M21.7341 15.114L1.97607 15.114"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <path
-        d="M1.04974 12.9636V7.76025H6.44958"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <path
-        d="M4.56659 5.8419V0.88623H21.1918V5.8419"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <path
-        d="M12.9514 12.9636V7.76025H18.0669"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <path
-        d="M23.9503 12.9636V7.76025H19.7518"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
+      <path d="M21.7341 15.114L1.97607 15.114" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M1.04974 12.9636V7.76025H6.44958" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M4.56659 5.8419V0.88623H21.1918V5.8419" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M12.9514 12.9636V7.76025H18.0669" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M23.9503 12.9636V7.76025H19.7518" stroke="currentColor" strokeWidth="1.1" />
     </svg>
   );
 }
@@ -417,26 +373,10 @@ export function Js(props: SVGProps<SVGSVGElement>): JSX.Element {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M1.92111 2.81079V21.3582"
-        stroke="currentColor"
-        strokeWidth="1.14856"
-      />
-      <path
-        d="M19.4024 2.81079L19.4024 17.734"
-        stroke="currentColor"
-        strokeWidth="1.14856"
-      />
-      <path
-        d="M17.6972 1.53198L3.62672 1.53198"
-        stroke="currentColor"
-        strokeWidth="1.14856"
-      />
-      <path
-        d="M17.6972 18.1609H5.33223"
-        stroke="currentColor"
-        strokeWidth="1.14856"
-      />
+      <path d="M1.92111 2.81079V21.3582" stroke="currentColor" strokeWidth="1.14856" />
+      <path d="M19.4024 2.81079L19.4024 17.734" stroke="currentColor" strokeWidth="1.14856" />
+      <path d="M17.6972 1.53198L3.62672 1.53198" stroke="currentColor" strokeWidth="1.14856" />
+      <path d="M17.6972 18.1609H5.33223" stroke="currentColor" strokeWidth="1.14856" />
       <path
         d="M3.83958 21.7849H19.4023V20.0793"
         stroke="currentColor"
@@ -469,26 +409,10 @@ export function Frontend(props: SVGProps<SVGSVGElement>): JSX.Element {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M1.19843 2.19873V16.0931"
-        stroke="currentColor"
-        strokeWidth="1.3"
-      />
-      <path
-        d="M20.8015 2.19873V16.0931"
-        stroke="currentColor"
-        strokeWidth="1.3"
-      />
-      <path
-        d="M18.7293 1.25684L3.27064 1.25684"
-        stroke="currentColor"
-        strokeWidth="1.3"
-      />
-      <path
-        d="M18.7293 16.7432L3.27064 16.7432"
-        stroke="currentColor"
-        strokeWidth="1.3"
-      />
+      <path d="M1.19843 2.19873V16.0931" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M20.8015 2.19873V16.0931" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M18.7293 1.25684L3.27064 1.25684" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M18.7293 16.7432L3.27064 16.7432" stroke="currentColor" strokeWidth="1.3" />
       <circle cx="4.75156" cy="4.83826" r="1.04114" fill="currentColor" />
       <circle cx="7.94226" cy="4.83826" r="1.04114" fill="currentColor" />
       <circle cx="11.1177" cy="4.83826" r="1.04114" fill="currentColor" />
@@ -518,16 +442,8 @@ export function Backend(props: SVGProps<SVGSVGElement>): JSX.Element {
         strokeWidth="1.1"
         strokeLinejoin="bevel"
       />
-      <path
-        d="M1.6265 5.11718L6.074 0.669678"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
-      <path
-        d="M1.55878 9.05293L9.7748 0.836914"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      />
+      <path d="M1.6265 5.11718L6.074 0.669678" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M1.55878 9.05293L9.7748 0.836914" stroke="currentColor" strokeWidth="1.1" />
       <path
         d="M1.8178 12.5341L6.013 8.33893M13.2863 1.06567L8.88959 5.46233"
         stroke="currentColor"
@@ -584,13 +500,7 @@ export function Clarinet(props: SVGProps<SVGSVGElement>): JSX.Element {
         stroke="currentColor"
         strokeWidth="1.2"
       />
-      <circle
-        cx="14.8269"
-        cy="9.11588"
-        r="1.94229"
-        stroke="currentColor"
-        strokeWidth="1.2"
-      />
+      <circle cx="14.8269" cy="9.11588" r="1.94229" stroke="currentColor" strokeWidth="1.2" />
     </svg>
   );
 }
@@ -636,11 +546,7 @@ export function Blockchain(props: SVGProps<SVGSVGElement>): JSX.Element {
         stroke="currentColor"
         strokeLinejoin="bevel"
       />
-      <path
-        d="M7.69629 7.67358V14.7099"
-        stroke="currentColor"
-        strokeLinejoin="bevel"
-      />
+      <path d="M7.69629 7.67358V14.7099" stroke="currentColor" strokeLinejoin="bevel" />
     </svg>
   );
 }
@@ -671,54 +577,12 @@ export function Container(props: SVGProps<SVGSVGElement>): JSX.Element {
         rx="1"
         stroke="currentColor"
       />
-      <rect
-        x="6.98413"
-        y="12.9116"
-        width="3.57779"
-        height="3.57779"
-        rx="1"
-        stroke="currentColor"
-      />
-      <rect
-        x="6.98413"
-        y="7.15027"
-        width="3.57779"
-        height="3.57779"
-        rx="1"
-        stroke="currentColor"
-      />
-      <rect
-        x="12.9751"
-        y="1.38934"
-        width="3.57779"
-        height="3.57779"
-        rx="1"
-        stroke="currentColor"
-      />
-      <rect
-        x="12.9751"
-        y="12.9116"
-        width="3.57779"
-        height="3.57779"
-        rx="1"
-        stroke="currentColor"
-      />
-      <rect
-        x="18.9675"
-        y="12.9116"
-        width="3.57779"
-        height="3.57779"
-        rx="1"
-        stroke="currentColor"
-      />
-      <rect
-        x="12.9751"
-        y="7.15027"
-        width="3.57779"
-        height="3.57779"
-        rx="1"
-        stroke="currentColor"
-      />
+      <rect x="6.98413" y="12.9116" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
+      <rect x="6.98413" y="7.15027" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
+      <rect x="12.9751" y="1.38934" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
+      <rect x="12.9751" y="12.9116" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
+      <rect x="18.9675" y="12.9116" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
+      <rect x="12.9751" y="7.15027" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
     </svg>
   );
 }
@@ -1834,50 +1698,35 @@ export function ContentBackground(props: SVGProps<SVGSVGElement>): JSX.Element {
         d="M44.0465 70.1383C44.0465 69.7055 44.3714 69.4094 44.7844 69.4094C45.1975 69.4094 45.5223 69.7055 45.5223 70.1383C45.5223 70.5711 45.1975 70.8671 44.7844 70.8671C44.3714 70.8671 44.0465 70.5711 44.0465 70.1383ZM44.7844 69.577C44.4585 69.577 44.2141 69.8034 44.2141 70.1383C44.2141 70.4732 44.4585 70.6995 44.7844 70.6995C45.1103 70.6995 45.3547 70.4732 45.3547 70.1383C45.3547 69.8034 45.1103 69.577 44.7844 69.577Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M48.6134 68.3913V67.7668H52.7224V68.3913H48.6134Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M48.6134 68.3913V67.7668H52.7224V68.3913H48.6134Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M48.4458 68.5589V67.5991H52.89V68.5589H48.4458ZM48.6134 68.3912H52.7224V67.7667H48.6134V68.3912Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M54.497 68.3913V67.7668H58.606V68.3913H54.497Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M54.497 68.3913V67.7668H58.606V68.3913H54.497Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M54.3293 68.5589V67.5991H58.7736V68.5589H54.3293ZM54.497 68.3912H58.6059V67.7667H54.497V68.3912Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M60.3806 68.3913V67.7668H64.4895V68.3913H60.3806Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M60.3806 68.3913V67.7668H64.4895V68.3913H60.3806Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M60.2129 68.5589V67.5991H64.6571V68.5589H60.2129ZM60.3805 68.3912H64.4895V67.7667H60.3805V68.3912Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M66.2642 68.3913V67.7668H70.3732V68.3913H66.2642Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M66.2642 68.3913V67.7668H70.3732V68.3913H66.2642Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M66.0965 68.5589V67.5991H70.5407V68.5589H66.0965ZM66.2641 68.3912H70.3731V67.7667H66.2641V68.3912Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M72.1477 68.3913V67.7668H76.2567V68.3913H72.1477Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M72.1477 68.3913V67.7668H76.2567V68.3913H72.1477Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -1944,30 +1793,21 @@ export function ContentBackground(props: SVGProps<SVGSVGElement>): JSX.Element {
         d="M108.764 68.0135C108.764 67.5807 109.089 67.2846 109.502 67.2846C109.915 67.2846 110.24 67.5807 110.24 68.0135C110.24 68.4463 109.915 68.7423 109.502 68.7423C109.089 68.7423 108.764 68.4463 108.764 68.0135ZM109.502 67.4522C109.176 67.4522 108.931 67.6786 108.931 68.0135C108.931 68.3484 109.176 68.5747 109.502 68.5747C109.828 68.5747 110.072 68.3484 110.072 68.0135C110.072 67.6786 109.828 67.4522 109.502 67.4522Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M113.331 68.3913V67.7668H117.44V68.3913H113.331Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M113.331 68.3913V67.7668H117.44V68.3913H113.331Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M113.163 68.5589V67.5991H117.607V68.5589H113.163ZM113.331 68.3912H117.44V67.7667H113.331V68.3912Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M119.087 71.3331V70.7086H123.45V71.3331H119.087Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M119.087 71.3331V70.7086H123.45V71.3331H119.087Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M118.92 71.5007V70.541H123.617V71.5007H118.92ZM119.087 71.3331H123.45V70.7086H119.087V71.3331Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M125.098 68.3913V67.7668H129.207V68.3913H125.098Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M125.098 68.3913V67.7668H129.207V68.3913H125.098Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -2934,10 +2774,7 @@ export function ContentBackground(props: SVGProps<SVGSVGElement>): JSX.Element {
         d="M138.529 81.5596L137.216 79.9933H138.538L139.494 81.5596H138.529ZM138.607 81.392L137.575 80.1609H138.444L139.196 81.392H138.607Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M142.744 84.2318V83.6073H146.853V84.2318H142.744Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M142.744 84.2318V83.6073H146.853V84.2318H142.744Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -3054,20 +2891,14 @@ export function ContentBackground(props: SVGProps<SVGSVGElement>): JSX.Element {
         d="M208.78 85.9789C208.78 85.5461 209.105 85.2501 209.518 85.2501C209.931 85.2501 210.256 85.5461 210.256 85.9789C210.256 86.4117 209.931 86.7078 209.518 86.7078C209.105 86.7078 208.78 86.4118 208.78 85.9789ZM209.518 85.4177C209.192 85.4177 208.948 85.644 208.948 85.9789C208.948 86.3139 209.192 86.5402 209.518 86.5402C209.844 86.5402 210.088 86.3139 210.088 85.9789C210.088 85.644 209.844 85.4177 209.518 85.4177Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M213.347 84.2318V83.6073H217.456V84.2318H213.347Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M213.347 84.2318V83.6073H217.456V84.2318H213.347Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M213.179 84.3994V83.4396H217.623V84.3994H213.179ZM213.347 84.2318H217.456V83.6073H213.347V84.2318Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M219.23 84.2318V83.6073H223.339V84.2318H219.23Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M219.23 84.2318V83.6073H223.339V84.2318H219.23Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -3304,10 +3135,7 @@ export function ContentBackground(props: SVGProps<SVGSVGElement>): JSX.Element {
         d="M398.358 81.5506L399.339 79.9933H400.667L399.318 81.5506H398.358ZM398.662 81.3829H399.241L400.3 80.1609H399.431L398.662 81.3829Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M426.292 84.2318V83.6073H430.401V84.2318H426.292Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M426.292 84.2318V83.6073H430.401V84.2318H426.292Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -3544,10 +3372,7 @@ export function ContentBackground(props: SVGProps<SVGSVGElement>): JSX.Element {
         d="M562.929 83.854C562.929 83.4212 563.254 83.1251 563.667 83.1251C564.08 83.1251 564.405 83.4212 564.405 83.854C564.405 84.2868 564.08 84.5828 563.667 84.5828C563.254 84.5828 562.929 84.2868 562.929 83.854ZM563.667 83.2927C563.341 83.2927 563.096 83.5191 563.096 83.854C563.096 84.1889 563.341 84.4152 563.667 84.4152C563.993 84.4152 564.237 84.1889 564.237 83.854C564.237 83.5191 563.993 83.2927 563.667 83.2927Z"
         fill="hsl(var(--content))"
       />
-      <path
-        d="M586.31 84.2318V83.6073H590.419V84.2318H586.31Z"
-        fill="hsl(var(--content))"
-      />
+      <path d="M586.31 84.2318V83.6073H590.419V84.2318H586.31Z" fill="hsl(var(--content))" />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -3886,11 +3711,7 @@ export function StacksCardIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
             type="matrix"
             values="0 0 0 0 0.709804 0 0 0 0 0.67451 0 0 0 0 0.631373 0 0 0 0.28 0"
           />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_1005_5937"
-          />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1005_5937" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -3921,11 +3742,7 @@ export function StacksCardIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
             type="matrix"
             values="0 0 0 0 0.709804 0 0 0 0 0.67451 0 0 0 0 0.631373 0 0 0 0.28 0"
           />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_1005_5937"
-          />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1005_5937" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -3934,12 +3751,7 @@ export function StacksCardIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
           />
         </filter>
         <clipPath id="clip0_1005_5937">
-          <rect
-            width="22"
-            height="22"
-            fill="white"
-            transform="translate(12 9.02917)"
-          />
+          <rect width="22" height="22" fill="white" transform="translate(12 9.02917)" />
         </clipPath>
       </defs>
     </svg>
@@ -3948,13 +3760,7 @@ export function StacksCardIcon(props: SVGProps<SVGSVGElement>): JSX.Element {
 
 export function BitcoinCardIcon(): JSX.Element {
   return (
-    <svg
-      width="92"
-      height="89"
-      viewBox="0 0 92 89"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="92" height="89" viewBox="0 0 92 89" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g filter="url(#filter0_d_1005_5478)">
         <rect
           x="17.3506"
@@ -3965,7 +3771,7 @@ export function BitcoinCardIcon(): JSX.Element {
           transform="rotate(7.98575 17.3506 -0.0983887)"
           fill="#FF7733"
           fillOpacity="0.4"
-          style={{ fill: "#FF7733", fillOpacity: 0.4 }}
+          style={{ fill: '#FF7733', fillOpacity: 0.4 }}
           shapeRendering="crispEdges"
         />
       </g>
@@ -3977,49 +3783,49 @@ export function BitcoinCardIcon(): JSX.Element {
           height="72"
           rx="8"
           fill="#FF7733"
-          style={{ fill: "#FF7733" }}
+          style={{ fill: '#FF7733' }}
         />
       </g>
       <g clipPath="url(#clip0_1005_5478)">
         <path
           d="M16.5808 15.2339H26.2178C26.8972 15.2339 27.5487 15.5037 28.029 15.9841C28.5094 16.4645 28.7792 17.116 28.7792 17.7953V17.929C28.7792 18.6084 28.5094 19.2599 28.029 19.7402C27.5487 20.2206 26.8972 20.4904 26.2178 20.4904H16.5808V15.2339Z"
           stroke="#141312"
-          style={{ stroke: "#141312" }}
+          style={{ stroke: '#141312' }}
           strokeWidth="1.69531"
           strokeMiterlimit="10"
         />
         <path
           d="M16.5798 20.4905H26.792C27.1372 20.4905 27.4789 20.5585 27.7978 20.6905C28.1167 20.8226 28.4064 21.0162 28.6505 21.2603C28.8945 21.5043 29.0881 21.7941 29.2202 22.113C29.3523 22.4318 29.4203 22.7736 29.4203 23.1188V23.1188C29.4203 23.8158 29.1434 24.4843 28.6505 24.9772C28.1576 25.4701 27.4891 25.747 26.792 25.747H16.5798V20.4905Z"
           stroke="#141312"
-          style={{ stroke: "#141312" }}
+          style={{ stroke: '#141312' }}
           strokeWidth="1.69531"
           strokeMiterlimit="10"
         />
         <path
           d="M20.1416 11.3553V14.8065"
           stroke="#141312"
-          style={{ stroke: "#141312" }}
+          style={{ stroke: '#141312' }}
           strokeWidth="1.69531"
           strokeMiterlimit="10"
         />
         <path
           d="M24.2937 11.3553V14.8065"
           stroke="#141312"
-          style={{ stroke: "#141312" }}
+          style={{ stroke: '#141312' }}
           strokeWidth="1.69531"
           strokeMiterlimit="10"
         />
         <path
           d="M20.1416 26.1293V29.609"
           stroke="#141312"
-          style={{ stroke: "#141312" }}
+          style={{ stroke: '#141312' }}
           strokeWidth="1.69531"
           strokeMiterlimit="10"
         />
         <path
           d="M24.2947 26.1295V29.6093"
           stroke="#141312"
-          style={{ stroke: "#141312" }}
+          style={{ stroke: '#141312' }}
           strokeWidth="1.69531"
           strokeMiterlimit="10"
         />
@@ -4048,11 +3854,7 @@ export function BitcoinCardIcon(): JSX.Element {
             type="matrix"
             values="0 0 0 0 0.0509804 0 0 0 0 0.0470588 0 0 0 0 0.0470588 0 0 0 0.33 0"
           />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_1005_5478"
-          />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1005_5478" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -4083,11 +3885,7 @@ export function BitcoinCardIcon(): JSX.Element {
             type="matrix"
             values="0 0 0 0 0.0509804 0 0 0 0 0.0470588 0 0 0 0 0.0470588 0 0 0 0.33 0"
           />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_1005_5478"
-          />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1005_5478" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -4100,7 +3898,7 @@ export function BitcoinCardIcon(): JSX.Element {
             width="22"
             height="22"
             fill="white"
-            style={{ fill: "white" }}
+            style={{ fill: 'white' }}
             transform="translate(12 9.4823)"
           />
         </clipPath>
@@ -4127,12 +3925,7 @@ export function CircleDot(props: SVGProps<SVGSVGElement>): JSX.Element {
       </g>
       <defs>
         <clipPath id="clip0_834_787">
-          <rect
-            width="16"
-            height="16"
-            fill="white"
-            transform="translate(0.621582)"
-          />
+          <rect width="16" height="16" fill="white" transform="translate(0.621582)" />
         </clipPath>
       </defs>
     </svg>
@@ -4175,12 +3968,7 @@ export function Flame(props: SVGProps<SVGSVGElement>): JSX.Element {
       </g>
       <defs>
         <clipPath id="clip0_836_857">
-          <rect
-            width="16"
-            height="16"
-            fill="white"
-            transform="translate(0.621582)"
-          />
+          <rect width="16" height="16" fill="white" transform="translate(0.621582)" />
         </clipPath>
       </defs>
     </svg>

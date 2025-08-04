@@ -1,13 +1,9 @@
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDownIcon } from "lucide-react";
-import { BlockAnnotation, AnnotationHandler, InnerLine } from "codehike/code";
+import { type AnnotationHandler, type BlockAnnotation, InnerLine } from 'codehike/code';
+import { ChevronDownIcon } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const collapseRoot: AnnotationHandler = {
-  name: "collapse",
+  name: 'collapse',
   transform: (annotation: BlockAnnotation) => {
     const { fromLineNumber } = annotation;
     return [
@@ -16,21 +12,17 @@ const collapseRoot: AnnotationHandler = {
         ...annotation,
         fromLineNumber: fromLineNumber,
         toLineNumber: fromLineNumber,
-        name: "CollapseTrigger",
+        name: 'CollapseTrigger',
       },
       {
         ...annotation,
         fromLineNumber: fromLineNumber + 1,
-        name: "CollapseContent",
+        name: 'CollapseContent',
       },
     ];
   },
   Block: ({ annotation, children }) => {
-    return (
-      <Collapsible defaultOpen={annotation.query !== "collapsed"}>
-        {children}
-      </Collapsible>
-    );
+    return <Collapsible defaultOpen={annotation.query !== 'collapsed'}>{children}</Collapsible>;
   },
 };
 const icon = (
@@ -40,7 +32,7 @@ const icon = (
   />
 );
 const collapseTrigger: AnnotationHandler = {
-  name: "CollapseTrigger",
+  name: 'CollapseTrigger',
   onlyIfAnnotated: true,
   AnnotatedLine: ({ annotation, ...props }) => (
     <CollapsibleTrigger className="group contents font-mono">
@@ -61,7 +53,7 @@ const collapseTrigger: AnnotationHandler = {
 };
 
 const collapseContent: AnnotationHandler = {
-  name: "CollapseContent",
+  name: 'CollapseContent',
   Block: CollapsibleContent,
 };
 

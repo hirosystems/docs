@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from 'react';
 
 interface ListProps {
   children?: ReactNode;
@@ -24,10 +24,7 @@ function OrderedList({ children, items }: ListProps) {
 
   // For MDX usage, filter and process children
   const validChildren = React.Children.toArray(children).filter(
-    (child) =>
-      React.isValidElement(child) &&
-      typeof child.type === "string" &&
-      child.type === "li",
+    (child) => React.isValidElement(child) && typeof child.type === 'string' && child.type === 'li',
   );
 
   return (
@@ -69,10 +66,7 @@ function UnorderedList({ children, items }: ListProps) {
 
   // For MDX usage, filter and process children
   const validChildren = React.Children.toArray(children).filter(
-    (child) =>
-      React.isValidElement(child) &&
-      typeof child.type === "string" &&
-      child.type === "li",
+    (child) => React.isValidElement(child) && typeof child.type === 'string' && child.type === 'li',
   );
 
   // Helper function to recursively check for checkboxes in React elements
@@ -81,15 +75,13 @@ function UnorderedList({ children, items }: ListProps) {
 
     if (React.isValidElement(element)) {
       // Check if this element is an input with type checkbox
-      if ((element.props as any)?.type === "checkbox") {
+      if ((element.props as any)?.type === 'checkbox') {
         return true;
       }
 
       // Recursively check children
       if ((element.props as any)?.children) {
-        const children = React.Children.toArray(
-          (element.props as any).children,
-        );
+        const children = React.Children.toArray((element.props as any).children);
         return children.some(hasCheckboxInElement);
       }
     }
@@ -99,13 +91,13 @@ function UnorderedList({ children, items }: ListProps) {
 
   // Helper function to extract text content from React elements
   const getTextContent = (element: any): string => {
-    if (typeof element === "string") return element;
-    if (typeof element === "number") return element.toString();
-    if (!element) return "";
+    if (typeof element === 'string') return element;
+    if (typeof element === 'number') return element.toString();
+    if (!element) return '';
 
     // Handle arrays directly
     if (Array.isArray(element)) {
-      return element.map(getTextContent).join("");
+      return element.map(getTextContent).join('');
     }
 
     if (React.isValidElement(element)) {
@@ -113,14 +105,14 @@ function UnorderedList({ children, items }: ListProps) {
         const children = (element.props as any).children;
         // Handle both arrays and single children
         if (Array.isArray(children)) {
-          return children.map(getTextContent).join("");
+          return children.map(getTextContent).join('');
         } else {
           return getTextContent(children);
         }
       }
     }
 
-    return "";
+    return '';
   };
 
   // Check if any child contains a checkbox
@@ -135,14 +127,14 @@ function UnorderedList({ children, items }: ListProps) {
     const element = child as React.ReactElement<{ children?: ReactNode }>;
     const childText = getTextContent(element.props.children);
     // Only look for specific special characters, not a broad range
-    return childText.includes("✓") || childText.includes("✗");
+    return childText.includes('✓') || childText.includes('✗');
   });
 
   const shouldRemoveDashes = hasCheckboxes || hasSpecialPrefixes;
 
   return (
     <ul
-      className={`relative my-4 ${shouldRemoveDashes ? "pl-0" : "pl-6"}  [&_a]:underline
+      className={`relative my-4 ${shouldRemoveDashes ? 'pl-0' : 'pl-6'}  [&_a]:underline
        [&_a]:underline-offset-4
        [&_a]:decoration-border
        [&_a]:decoration-2
@@ -160,15 +152,15 @@ function UnorderedList({ children, items }: ListProps) {
             key={index}
             className={`relative pl-0 text-muted-foreground list-none ${
               shouldRemoveDashes
-                ? ""
+                ? ''
                 : "before:content-[''] before:absolute before:left-[-1.5rem] before:top-[0.875rem] before:w-[0.75rem] before:h-[1px] before:border-t before:border-border"
             }`}
           >
             <span
               className={
                 hasSpecialPrefixes
-                  ? "first-letter:text-orange-500 first-letter:dark:text-brand-orange"
-                  : ""
+                  ? 'first-letter:text-orange-500 first-letter:dark:text-brand-orange'
+                  : ''
               }
             >
               {element.props.children}

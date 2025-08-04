@@ -1,30 +1,30 @@
-"use client";
-import Link from "fumadocs-core/link";
-import { usePathname } from "fumadocs-core/framework";
+'use client';
+import { usePathname } from 'fumadocs-core/framework';
+import Link from 'fumadocs-core/link';
+import { ChevronDown } from 'lucide-react';
 import React, {
   type AnchorHTMLAttributes,
   forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  useState,
-  useRef,
   useEffect,
-} from "react";
-import { isActive } from "../../lib/is-active";
+  useRef,
+  useState,
+} from 'react';
+import { isActive } from '../../lib/is-active';
+import { cn } from '../../lib/utils';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import {
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-  NavigationMenuContent,
-} from "../ui/navigation-menu";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "../ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
-import { cn } from "../../lib/utils";
+} from '../ui/navigation-menu';
 
 interface BaseItem {
   /**
@@ -32,7 +32,7 @@ interface BaseItem {
    *
    * @defaultValue 'all'
    */
-  on?: "menu" | "nav" | "all";
+  on?: 'menu' | 'nav' | 'all';
 }
 
 export interface BaseLinkType extends BaseItem {
@@ -42,12 +42,12 @@ export interface BaseLinkType extends BaseItem {
    *
    * @defaultValue 'url'
    */
-  active?: "url" | "nested-url" | "none";
+  active?: 'url' | 'nested-url' | 'none';
   external?: boolean;
 }
 
 export interface MainItemType extends BaseLinkType {
-  type?: "main";
+  type?: 'main';
   icon?: ReactNode;
   text: ReactNode;
   description?: ReactNode;
@@ -55,7 +55,7 @@ export interface MainItemType extends BaseLinkType {
 }
 
 export interface IconItemType extends BaseLinkType {
-  type: "icon";
+  type: 'icon';
   /**
    * `aria-label` of icon button
    */
@@ -69,7 +69,7 @@ export interface IconItemType extends BaseLinkType {
 }
 
 interface ButtonItem extends BaseLinkType {
-  type: "button";
+  type: 'button';
   icon?: ReactNode;
   text: ReactNode;
   /**
@@ -79,7 +79,7 @@ interface ButtonItem extends BaseLinkType {
 }
 
 export interface MenuItemType extends BaseItem {
-  type: "menu";
+  type: 'menu';
   icon?: ReactNode;
   text: ReactNode;
 
@@ -103,7 +103,7 @@ export interface MenuItemType extends BaseItem {
 }
 
 export interface DropdownItemType extends BaseItem {
-  type: "dropdown";
+  type: 'dropdown';
   icon?: ReactNode;
   text: ReactNode;
   url?: string; // Optional URL for main item click navigation
@@ -123,7 +123,7 @@ export interface DropdownItemType extends BaseItem {
 }
 
 interface CustomItem extends BaseItem {
-  type: "custom";
+  type: 'custom';
   /**
    * @defaultValue false
    */
@@ -141,70 +141,58 @@ export type LinkItemType =
 
 export const BaseLinkItem = forwardRef<
   HTMLAnchorElement,
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & { item: BaseLinkType }
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & { item: BaseLinkType }
 >(({ item, ...props }, ref) => {
   const pathname = usePathname();
-  const activeType = item.active ?? "url";
-  const active =
-    activeType !== "none" &&
-    isActive(item.url, pathname, activeType === "nested-url");
+  const activeType = item.active ?? 'url';
+  const active = activeType !== 'none' && isActive(item.url, pathname, activeType === 'nested-url');
 
   return (
-    <Link
-      ref={ref}
-      href={item.url}
-      external={item.external}
-      {...props}
-      data-active={active}
-    >
+    <Link ref={ref} href={item.url} external={item.external} {...props} data-active={active}>
       {props.children}
     </Link>
   );
 });
 
-BaseLinkItem.displayName = "BaseLinkItem";
+BaseLinkItem.displayName = 'BaseLinkItem';
 
 // Helper function to determine if a navigation item should be active
 function isNavItemActive(item: LinkItemType, pathname: string): boolean {
-  if (!("url" in item) || !item.url) return false;
+  if (!('url' in item) || !item.url) return false;
 
   // Check if item has active property (only certain types have it)
   // For menu items, default to "nested-url" behavior since they should match child routes
   const activeType =
-    "active" in item
-      ? (item.active ?? "url")
-      : item.type === "menu"
-        ? "nested-url"
-        : "url";
-  if (activeType === "none") return false;
+    'active' in item ? (item.active ?? 'url') : item.type === 'menu' ? 'nested-url' : 'url';
+  if (activeType === 'none') return false;
 
   // Special handling for "Get started" link
-  if (item.url === "/start") {
+  if (item.url === '/start') {
     // Define the main sections that should override "Get started"
-    const mainSections = ["/tools", "/apis", "/reference", "/resources"];
+    const mainSections = ['/tools', '/apis', '/reference', '/resources'];
 
     // Check if current path is in any main section
     const isInMainSection = mainSections.some(
-      (section) => pathname === section || pathname.startsWith(`${section}/`)
+      (section) => pathname === section || pathname.startsWith(`${section}/`),
     );
 
     // "Get started" is active if:
     // 1. We're exactly on the start page, OR
     // 2. We're on any path that's not root ("/") AND not in the main sections
-    return pathname === "/start" || (pathname !== "/" && !isInMainSection);
+    return pathname === '/start' || (pathname !== '/' && !isInMainSection);
   }
 
   // For other items, use the standard isActive logic
-  return isActive(item.url, pathname, activeType === "nested-url");
+  return isActive(item.url, pathname, activeType === 'nested-url');
 }
 
 export function renderNavItem(item: LinkItemType): ReactNode {
-  const itemType = item.type ?? "main";
+  const itemType = item.type ?? 'main';
   const pathname = usePathname();
 
   switch (itemType) {
-    case "main": {
-      if (!("url" in item)) return null;
+    case 'main': {
+      if (!('url' in item)) return null;
 
       const isActive = isNavItemActive(item, pathname);
 
@@ -214,8 +202,8 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             <Link
               href={item.url}
               className={cn(
-                "font-fono text-sm px-4 py-2 rounded-md hover:bg-fd-accent/50 transition-colors",
-                isActive && "underline underline-offset-4 text-primary"
+                'font-fono text-sm px-4 py-2 rounded-md hover:bg-fd-accent/50 transition-colors',
+                isActive && 'underline underline-offset-4 text-primary',
               )}
             >
               {item.text}
@@ -225,18 +213,16 @@ export function renderNavItem(item: LinkItemType): ReactNode {
       );
     }
 
-    case "menu": {
-      if (!("items" in item)) return null;
+    case 'menu': {
+      if (!('items' in item)) return null;
 
       return (
-        <NavigationMenuItem
-          key={"text" in item ? String(item.text) : undefined}
-        >
+        <NavigationMenuItem key={'text' in item ? String(item.text) : undefined}>
           {item.url ? (
             <NavigationMenuTrigger asChild>
               <div
                 className={cn(
-                  "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer"
+                  'font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1 cursor-pointer',
                 )}
               >
                 <Link href={item.url} className="flex items-center gap-1">
@@ -248,9 +234,7 @@ export function renderNavItem(item: LinkItemType): ReactNode {
           ) : (
             // When no URL, use default button behavior
             <NavigationMenuTrigger
-              className={cn(
-                "font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1"
-              )}
+              className={cn('font-fono text-sm px-4 py-2 rounded-md group flex items-center gap-1')}
             >
               {item.text}
               <ChevronDown className="relative h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
@@ -307,11 +291,11 @@ export function renderNavItem(item: LinkItemType): ReactNode {
             {/* Simple two-column layout */}
             <div className="grid grid-cols-1 gap-x-5 px-2 py-1 w-max">
               {item.items.map((menuItem, index) => {
-                if (menuItem.type === "custom") {
+                if (menuItem.type === 'custom') {
                   return <div key={`custom-${index}`}>{menuItem.children}</div>;
                 }
 
-                if (!("url" in menuItem)) return null;
+                if (!('url' in menuItem)) return null;
 
                 const isMenuItemActive = isNavItemActive(menuItem, pathname);
 
@@ -321,9 +305,8 @@ export function renderNavItem(item: LinkItemType): ReactNode {
                       <Link
                         href={menuItem.url}
                         className={cn(
-                          "block py-2 text-sm font-fono text-muted-foreground hover:text-primary transition-colors",
-                          isMenuItemActive &&
-                            "underline underline-offset-4 text-primary"
+                          'block py-2 text-sm font-fono text-muted-foreground hover:text-primary transition-colors',
+                          isMenuItemActive && 'underline underline-offset-4 text-primary',
                         )}
                       >
                         {menuItem.text}
@@ -346,18 +329,18 @@ export function renderNavItem(item: LinkItemType): ReactNode {
       );
     }
 
-    case "dropdown":
-      if (!("items" in item)) return null;
+    case 'dropdown':
+      if (!('items' in item)) return null;
       return (
         <DropdownNavItem
-          key={"text" in item ? String(item.text) : undefined}
+          key={'text' in item ? String(item.text) : undefined}
           item={item as DropdownItemType}
         />
       );
 
-    case "icon":
-    case "button":
-    case "custom":
+    case 'icon':
+    case 'button':
+    case 'custom':
       // These types are not part of the current PRD scope
       return null;
 
@@ -382,7 +365,7 @@ function DropdownNavItem({ item }: { item: DropdownItemType }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" sideOffset={8} className="w-[400px]">
           {item.items.map((dropdownItem, index) => {
-            if (dropdownItem.type === "custom") {
+            if (dropdownItem.type === 'custom') {
               return (
                 <div key={`dropdown-custom-${index}`} className="p-2">
                   {dropdownItem.children}
@@ -390,19 +373,14 @@ function DropdownNavItem({ item }: { item: DropdownItemType }) {
               );
             }
 
-            if (!("url" in dropdownItem)) return null;
+            if (!('url' in dropdownItem)) return null;
 
             return (
               <DropdownMenuItem key={dropdownItem.url} asChild>
-                <Link
-                  href={dropdownItem.url}
-                  className="flex flex-col gap-1 cursor-pointer p-3"
-                >
+                <Link href={dropdownItem.url} className="flex flex-col gap-1 cursor-pointer p-3">
                   <div className="font-medium text-sm">{dropdownItem.text}</div>
                   {dropdownItem.description && (
-                    <div className="text-sm text-muted-foreground">
-                      {dropdownItem.description}
-                    </div>
+                    <div className="text-sm text-muted-foreground">{dropdownItem.description}</div>
                   )}
                 </Link>
               </DropdownMenuItem>

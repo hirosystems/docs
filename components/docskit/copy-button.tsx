@@ -1,26 +1,19 @@
-"use client";
+'use client';
 
-import { Copy, Check } from "lucide-react";
-import * as React from "react";
-import { cn } from "@/lib/utils";
+import { Check, Copy } from 'lucide-react';
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
-export function CopyButton({
-  text,
-  className,
-}: {
-  text: string;
-  className?: string;
-}) {
+export function CopyButton({ text, className }: { text: string; className?: string }) {
   const [copied, setCopied] = React.useState(false);
 
   return (
     <button
       type="button"
       className={cn(
-        copied &&
-          "!bg-[#A6E3A1] hover:bg-[#A6E3A1] !text-[hsl(var(--dark))]/70",
-        "hover:bg-accent -m-1 p-1 rounded hidden sm:block",
-        className
+        copied && '!bg-[#A6E3A1] hover:bg-[#A6E3A1] !text-[hsl(var(--dark))]/70',
+        'hover:bg-accent -m-1 p-1 rounded hidden sm:block',
+        className,
       )}
       onClick={() => {
         navigator.clipboard.writeText(text);

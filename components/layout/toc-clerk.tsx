@@ -1,10 +1,10 @@
-"use client";
-import type { TOCItemType } from "fumadocs-core/server";
-import * as Primitive from "fumadocs-core/toc";
-import { useEffect, useRef, useState } from "react";
-import { cn } from "../../lib/utils";
-import { TocThumb } from "./toc-thumb";
-import { TocItemsEmpty } from "./toc";
+'use client';
+import type { TOCItemType } from 'fumadocs-core/server';
+import * as Primitive from 'fumadocs-core/toc';
+import { useEffect, useRef, useState } from 'react';
+import { cn } from '../../lib/utils';
+import { TocItemsEmpty } from './toc';
+import { TocThumb } from './toc-thumb';
 
 export default function ClerkTOCItems({ items }: { items: TOCItemType[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,27 +26,24 @@ export default function ClerkTOCItems({ items }: { items: TOCItemType[] }) {
       const d: string[] = [];
       for (let i = 0; i < items.length; i++) {
         const element: HTMLElement | null = container.querySelector(
-          `a[href="#${items[i].url.slice(1)}"]`
+          `a[href="#${items[i].url.slice(1)}"]`,
         );
         if (!element) continue;
 
         const styles = getComputedStyle(element);
         const offset = getLineOffset(items[i].depth) + 1,
           top = element.offsetTop + parseFloat(styles.paddingTop),
-          bottom =
-            element.offsetTop +
-            element.clientHeight -
-            parseFloat(styles.paddingBottom);
+          bottom = element.offsetTop + element.clientHeight - parseFloat(styles.paddingBottom);
 
         w = Math.max(offset, w);
         h = Math.max(h, bottom);
 
-        d.push(`${i === 0 ? "M" : "L"}${offset} ${top}`);
+        d.push(`${i === 0 ? 'M' : 'L'}${offset} ${top}`);
         d.push(`L${offset} ${bottom}`);
       }
 
       setSvg({
-        path: d.join(" "),
+        path: d.join(' '),
         width: w + 1,
         height: h,
       });
@@ -74,7 +71,7 @@ export default function ClerkTOCItems({ items }: { items: TOCItemType[] }) {
             maskImage: `url("data:image/svg+xml,${
               // Inline SVG
               encodeURIComponent(
-                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg.width} ${svg.height}"><path d="${svg.path}" stroke="black" stroke-width="1" fill="none" /></svg>`
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svg.width} ${svg.height}"><path d="${svg.path}" stroke="black" stroke-width="1" fill="none" /></svg>`,
               )
             }")`,
           }}
@@ -148,9 +145,9 @@ function TOCItem({
       ) : null}
       <div
         className={cn(
-          "absolute inset-y-0 w-px bg-fd-foreground/10",
-          offset !== upperOffset && "top-1.5",
-          offset !== lowerOffset && "bottom-1.5"
+          'absolute inset-y-0 w-px bg-fd-foreground/10',
+          offset !== upperOffset && 'top-1.5',
+          offset !== lowerOffset && 'bottom-1.5',
         )}
         style={{
           insetInlineStart: offset,

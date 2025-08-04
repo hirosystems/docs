@@ -1,5 +1,5 @@
-import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { usePathname } from 'next/navigation';
+import type { ReactNode } from 'react';
 
 interface BreadcrumbItem {
   name: ReactNode;
@@ -11,18 +11,18 @@ interface BreadcrumbItem {
  */
 function formatBreadcrumbName(name: string): string {
   const specialCases: Record<string, string> = {
-    api: "API",
-    apis: "APIs",
-    cli: "CLI",
-    rpc: "RPC",
-    http: "HTTP",
-    sdk: "SDK",
-    sip: "SIP",
-    bns: "BNS",
-    stx: "STX",
-    nft: "NFT",
-    btc: "BTC",
-    auth: "Auth",
+    api: 'API',
+    apis: 'APIs',
+    cli: 'CLI',
+    rpc: 'RPC',
+    http: 'HTTP',
+    sdk: 'SDK',
+    sip: 'SIP',
+    bns: 'BNS',
+    stx: 'STX',
+    nft: 'NFT',
+    btc: 'BTC',
+    auth: 'Auth',
   };
 
   const lowerName = name.toLowerCase();
@@ -30,11 +30,11 @@ function formatBreadcrumbName(name: string): string {
     return specialCases[lowerName];
   }
 
-  if (name.includes("-")) {
+  if (name.includes('-')) {
     return name
-      .split("-")
+      .split('-')
       .map((word) => formatBreadcrumbName(word))
-      .join(" ");
+      .join(' ');
   }
 
   return name.charAt(0).toUpperCase() + name.slice(1);
@@ -46,18 +46,18 @@ function formatBreadcrumbName(name: string): string {
 export function useBreadcrumb(): BreadcrumbItem[] {
   const pathname = usePathname();
 
-  const segments = pathname.split("/").filter(Boolean);
+  const segments = pathname.split('/').filter(Boolean);
 
   const items: BreadcrumbItem[] = [];
-  let currentPath = "";
+  let currentPath = '';
   let skipNext = false;
 
   segments.forEach((segment, index) => {
     currentPath += `/${segment}`;
 
     // FIXME: Check if we're in an API section and this is a non-navigable segment
-    const isApiSection = segments[0] === "apis";
-    const isReferenceSegment = segment === "reference";
+    const isApiSection = segments[0] === 'apis';
+    const isReferenceSegment = segment === 'reference';
 
     if (isApiSection && isReferenceSegment) {
       skipNext = true;

@@ -1,13 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { X } from 'lucide-react';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 export function APICollapsibleClient() {
   const [isDetailsOpen, setIsDetailsOpen] = React.useState(false);

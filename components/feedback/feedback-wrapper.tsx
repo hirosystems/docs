@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useCallback } from "react";
-import { cn } from "@/lib/utils";
-import type { FeedbackResponse } from "@/types/feedback";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useCallback, useState } from 'react';
+import { cn } from '@/lib/utils';
+import type { FeedbackResponse } from '@/types/feedback';
 
 interface FeedbackWrapperProps {
   pageTitle: string;
@@ -11,17 +11,11 @@ interface FeedbackWrapperProps {
   className?: string;
 }
 
-export function FeedbackWrapper({
-  pageTitle,
-  pagePath,
-  className,
-}: FeedbackWrapperProps) {
-  const [feedback, setFeedback] = useState<"helpful" | "not-helpful" | null>(
-    null,
-  );
+export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrapperProps) {
+  const [feedback, setFeedback] = useState<'helpful' | 'not-helpful' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showTextarea, setShowTextarea] = useState(false);
-  const [additionalFeedback, setAdditionalFeedback] = useState("");
+  const [additionalFeedback, setAdditionalFeedback] = useState('');
   const [discussionUrl, setDiscussionUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,14 +26,12 @@ export function FeedbackWrapper({
 
       try {
         const pageUrl =
-          typeof window !== "undefined"
-            ? window.location.href
-            : `https://docs.hiro.so${pagePath}`;
+          typeof window !== 'undefined' ? window.location.href : `https://docs.hiro.so${pagePath}`;
 
-        const response = await fetch("/api/feedback", {
-          method: "POST",
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             pageTitle,
@@ -53,18 +45,18 @@ export function FeedbackWrapper({
         const data: FeedbackResponse = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "Failed to submit feedback");
+          throw new Error(data.error || 'Failed to submit feedback');
         }
 
-        setFeedback(helpful ? "helpful" : "not-helpful");
+        setFeedback(helpful ? 'helpful' : 'not-helpful');
         if (data.discussionUrl) {
           setDiscussionUrl(data.discussionUrl);
         }
 
         setShowTextarea(false);
-        setAdditionalFeedback("");
+        setAdditionalFeedback('');
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong");
+        setError(err instanceof Error ? err.message : 'Something went wrong');
       } finally {
         setIsSubmitting(false);
       }
@@ -73,12 +65,12 @@ export function FeedbackWrapper({
   );
 
   const handleFeedbackClick = (helpful: boolean) => {
-    const newFeedback = helpful ? "helpful" : "not-helpful";
+    const newFeedback = helpful ? 'helpful' : 'not-helpful';
 
     if (feedback === newFeedback && showTextarea) {
       setFeedback(null);
       setShowTextarea(false);
-      setAdditionalFeedback("");
+      setAdditionalFeedback('');
     } else {
       setFeedback(newFeedback);
       setShowTextarea(true);
@@ -86,9 +78,9 @@ export function FeedbackWrapper({
   };
 
   const handleSubmit = () => {
-    if (feedback === "helpful") {
+    if (feedback === 'helpful') {
       submitFeedback(true);
-    } else if (feedback === "not-helpful") {
+    } else if (feedback === 'not-helpful') {
       submitFeedback(false);
     }
   };
@@ -96,7 +88,7 @@ export function FeedbackWrapper({
   const handleCancel = () => {
     setFeedback(null);
     setShowTextarea(false);
-    setAdditionalFeedback("");
+    setAdditionalFeedback('');
     setError(null);
   };
 
@@ -108,15 +100,16 @@ export function FeedbackWrapper({
         {showTextarea ? (
           <div className="flex items-center gap-3">
             <button
+              type="button"
               onClick={() => handleFeedbackClick(true)}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all",
-                feedback === "helpful"
-                  ? "bg-green-200 dark:bg-green-900 text-green-700 dark:text-green-300 border-green-200 dark:border-green-900"
-                  : "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all",
-                "text-muted-foreground",
-                "hover:text-primary",
-                "border focus:outline-none",
+                'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all',
+                feedback === 'helpful'
+                  ? 'bg-green-200 dark:bg-green-900 text-green-700 dark:text-green-300 border-green-200 dark:border-green-900'
+                  : 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all',
+                'text-muted-foreground',
+                'hover:text-primary',
+                'border focus:outline-none',
               )}
             >
               <ThumbsUp className="w-4 h-4" />
@@ -124,15 +117,16 @@ export function FeedbackWrapper({
             </button>
 
             <button
+              type="button"
               onClick={() => handleFeedbackClick(false)}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all",
-                feedback === "not-helpful"
-                  ? "bg-red-200 dark:bg-red-900 text-red-700 dark:text-red-300 border-red-200 dark:border-red-900"
-                  : "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all",
-                "text-muted-foreground",
-                "hover:text-primary",
-                "border focus:outline-none",
+                'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all',
+                feedback === 'not-helpful'
+                  ? 'bg-red-200 dark:bg-red-900 text-red-700 dark:text-red-300 border-red-200 dark:border-red-900'
+                  : 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all',
+                'text-muted-foreground',
+                'hover:text-primary',
+                'border focus:outline-none',
               )}
             >
               <ThumbsDown className="w-4 h-4" />
@@ -142,12 +136,13 @@ export function FeedbackWrapper({
         ) : !feedback ? (
           <div className="flex items-center gap-3">
             <button
+              type="button"
               onClick={() => handleFeedbackClick(true)}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all",
-                "text-muted-foreground",
-                "hover:text-primary",
-                "border focus:outline-none",
+                'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all',
+                'text-muted-foreground',
+                'hover:text-primary',
+                'border focus:outline-none',
               )}
             >
               <ThumbsUp className="w-4 h-4" />
@@ -155,12 +150,13 @@ export function FeedbackWrapper({
             </button>
 
             <button
+              type="button"
               onClick={() => handleFeedbackClick(false)}
               className={cn(
-                "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all",
-                "text-muted-foreground",
-                "hover:text-primary",
-                "border focus:outline-none",
+                'inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm transition-all',
+                'text-muted-foreground',
+                'hover:text-primary',
+                'border focus:outline-none',
               )}
             >
               <ThumbsDown className="w-4 h-4" />
@@ -195,30 +191,29 @@ export function FeedbackWrapper({
             onChange={(e) => setAdditionalFeedback(e.target.value)}
             placeholder="Leave your feedback..."
             className={cn(
-              "font-fono",
-              "w-full min-h-[80px] p-3 rounded-md resize-none text-sm",
-              "border-1",
-              "focus:outline-none focus:ring-1 focus:ring-border",
-              "placeholder:font-fono placeholder:text-neutral-500 dark:placeholder:text-neutral-400",
+              'font-fono',
+              'w-full min-h-[80px] p-3 rounded-md resize-none text-sm',
+              'border-1',
+              'focus:outline-none focus:ring-1 focus:ring-border',
+              'placeholder:font-fono placeholder:text-neutral-500 dark:placeholder:text-neutral-400',
             )}
           />
 
-          {error && (
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-          )}
+          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
 
           <div className="flex">
             <button
+              type="button"
               onClick={handleSubmit}
               disabled={isSubmitting}
               className={cn(
-                "px-6 py-2 rounded-full text-sm font-medium transition-colors",
-                "border",
-                "hover:bg-neutral-100 dark:hover:bg-neutral-800/40",
-                "cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
+                'px-6 py-2 rounded-full text-sm font-medium transition-colors',
+                'border',
+                'hover:bg-neutral-100 dark:hover:bg-neutral-800/40',
+                'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
               )}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </div>

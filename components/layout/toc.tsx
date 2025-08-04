@@ -1,6 +1,9 @@
-"use client";
-import type { TOCItemType } from "fumadocs-core/server";
-import * as Primitive from "fumadocs-core/toc";
+'use client';
+import type { PopoverContentProps, PopoverTriggerProps } from '@radix-ui/react-popover';
+import type { TOCItemType } from 'fumadocs-core/server';
+import * as Primitive from 'fumadocs-core/toc';
+import { useI18n, usePageStyles } from 'fumadocs-ui/provider';
+import { ChevronRight, Text } from 'lucide-react';
 import {
   type ComponentProps,
   createContext,
@@ -9,22 +12,11 @@ import {
   use,
   useMemo,
   useRef,
-} from "react";
-import { cn } from "../../lib/utils";
-import { useI18n } from "fumadocs-ui/provider";
-import { TocThumb } from "./toc-thumb";
-import { ScrollArea, ScrollViewport } from "../ui/scroll-area";
-import type {
-  PopoverContentProps,
-  PopoverTriggerProps,
-} from "@radix-ui/react-popover";
-import { ChevronRight, Text } from "lucide-react";
-import { usePageStyles } from "fumadocs-ui/provider";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
+} from 'react';
+import { cn } from '../../lib/utils';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { ScrollArea, ScrollViewport } from '../ui/scroll-area';
+import { TocThumb } from './toc-thumb';
 
 export interface TOCProps {
   /**
@@ -48,15 +40,14 @@ export function Toc(props: HTMLAttributes<HTMLDivElement>) {
       id="nd-toc"
       {...props}
       className={cn(
-        "sticky top-[calc(var(--fd-banner-height)+var(--fd-nav-height))] h-(--fd-toc-height) pb-2 pt-12",
+        'sticky top-[calc(var(--fd-banner-height)+var(--fd-nav-height))] h-(--fd-toc-height) pb-2 pt-12',
         toc,
-        props.className
+        props.className,
       )}
       style={
         {
           ...props.style,
-          "--fd-toc-height":
-            "calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height))",
+          '--fd-toc-height': 'calc(100dvh - var(--fd-banner-height) - var(--fd-nav-height))',
         } as object
       }
     >
@@ -84,16 +75,10 @@ export function TOCScrollArea({
   const viewRef = useRef<HTMLDivElement>(null);
 
   return (
-    <ScrollArea
-      {...props}
-      className={cn("flex flex-col ps-px", props.className)}
-    >
+    <ScrollArea {...props} className={cn('flex flex-col ps-px', props.className)}>
       <Primitive.ScrollProvider containerRef={viewRef}>
         <ScrollViewport
-          className={cn(
-            "relative min-h-0 text-sm",
-            isMenu && "mt-2 mb-4 mx-4 md:mx-6"
-          )}
+          className={cn('relative min-h-0 text-sm', isMenu && 'mt-2 mb-4 mx-4 md:mx-6')}
           ref={viewRef}
         >
           {props.children}
@@ -114,10 +99,7 @@ export function TOCItems({ items }: { items: TOCItemType[] }) {
         containerRef={containerRef}
         className="absolute start-0 mt-(--fd-top) h-(--fd-height) w-px bg-fd-primary transition-all"
       />
-      <div
-        ref={containerRef}
-        className="flex flex-col border-s border-fd-foreground/10"
-      >
+      <div ref={containerRef} className="flex flex-col border-s border-fd-foreground/10">
         {items.map((item) => (
           <TOCItem key={item.url} item={item} />
         ))}
@@ -131,10 +113,10 @@ function TOCItem({ item }: { item: TOCItemType }) {
     <Primitive.TOCItem
       href={item.url}
       className={cn(
-        "prose py-1.5 text-sm text-fd-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-fd-primary",
-        item.depth <= 2 && "ps-3",
-        item.depth === 3 && "ps-6",
-        item.depth >= 4 && "ps-8"
+        'prose py-1.5 text-sm text-fd-muted-foreground transition-colors [overflow-wrap:anywhere] first:pt-0 last:pb-0 data-[active=true]:text-fd-primary',
+        item.depth <= 2 && 'ps-3',
+        item.depth === 3 && 'ps-6',
+        item.depth >= 4 && 'ps-8',
       )}
     >
       {item.title}
@@ -156,7 +138,7 @@ export function TocPopover({
   onOpenChange,
   ref: _ref,
   ...props
-}: MakeRequired<ComponentProps<typeof Collapsible>, "open" | "onOpenChange">) {
+}: MakeRequired<ComponentProps<typeof Collapsible>, 'open' | 'onOpenChange'>) {
   return (
     <Collapsible open={open} onOpenChange={onOpenChange} {...props}>
       <TocProvider
@@ -165,7 +147,7 @@ export function TocPopover({
             open,
             setOpen: onOpenChange,
           }),
-          [onOpenChange, open]
+          [onOpenChange, open],
         )}
       >
         {props.children}
@@ -189,23 +171,23 @@ export function TocPopoverTrigger({
     <CollapsibleTrigger
       {...props}
       className={cn(
-        "inline-flex items-center text-sm gap-2 text-nowrap px-4 py-2.5 text-start md:px-6 focus-visible:outline-none",
-        props.className
+        'inline-flex items-center text-sm gap-2 text-nowrap px-4 py-2.5 text-start md:px-6 focus-visible:outline-none',
+        props.className,
       )}
     >
       <Text className="size-4 shrink-0" />
       {text.toc}
       <ChevronRight
         className={cn(
-          "size-4 shrink-0 text-fd-muted-foreground transition-all",
-          !current && "opacity-0",
-          open ? "rotate-90" : "-ms-1.5"
+          'size-4 shrink-0 text-fd-muted-foreground transition-all',
+          !current && 'opacity-0',
+          open ? 'rotate-90' : '-ms-1.5',
         )}
       />
       <span
         className={cn(
-          "truncate text-fd-muted-foreground transition-opacity -ms-1.5",
-          (!current || open) && "opacity-0"
+          'truncate text-fd-muted-foreground transition-opacity -ms-1.5',
+          (!current || open) && 'opacity-0',
         )}
       >
         {current}
@@ -216,11 +198,7 @@ export function TocPopoverTrigger({
 
 export function TocPopoverContent(props: PopoverContentProps) {
   return (
-    <CollapsibleContent
-      data-toc-popover=""
-      className="flex flex-col max-h-[50vh]"
-      {...props}
-    >
+    <CollapsibleContent data-toc-popover="" className="flex flex-col max-h-[50vh]" {...props}>
       {props.children}
     </CollapsibleContent>
   );

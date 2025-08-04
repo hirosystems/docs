@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Code } from "../docskit/code";
-
-import { initSimnet } from "@hirosystems/clarinet-sdk-browser";
-import { Cl } from "@stacks/transactions";
+import { initSimnet } from '@hirosystems/clarinet-sdk-browser';
+import { Cl } from '@stacks/transactions';
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { Code } from '../docskit/code';
 
 export const ClarinetSDK: React.FC = () => {
   const [evaluatedResponse, setEvaluatedResponse] = React.useState<string>();
@@ -19,7 +18,7 @@ export const ClarinetSDK: React.FC = () => {
   async function runCode() {
     const simnet = await initSimnet();
     await simnet.initEmptySession(false);
-    simnet.setEpoch("2.5");
+    simnet.setEpoch('2.5');
 
     const result = simnet.runSnippet(clarityCode) as any;
     const deserializedResult = Cl.deserialize(result);
@@ -31,10 +30,10 @@ export const ClarinetSDK: React.FC = () => {
     <>
       <Button
         className={cn(
-          "px-5 py-2 text-sm leading-5 rounded-full font-semibold z-10",
-          "bg-neutral-900 text-white",
-          "dark:bg-white dark:text-neutral-900",
-          "hover:bg-neutral-900/90 dark:hover:bg-gray-100/90"
+          'px-5 py-2 text-sm leading-5 rounded-full font-semibold z-10',
+          'bg-neutral-900 text-white',
+          'dark:bg-white dark:text-neutral-900',
+          'hover:bg-neutral-900/90 dark:hover:bg-gray-100/90',
         )}
         onClick={runCode}
       >
@@ -44,9 +43,9 @@ export const ClarinetSDK: React.FC = () => {
       <Code
         codeblocks={[
           {
-            lang: "clarity",
+            lang: 'clarity',
             value: clarityCode,
-            meta: "",
+            meta: '',
           },
         ]}
       />
@@ -55,9 +54,9 @@ export const ClarinetSDK: React.FC = () => {
         <Code
           codeblocks={[
             {
-              lang: "clarity",
+              lang: 'clarity',
               value: evaluatedResponse,
-              meta: "",
+              meta: '',
             },
           ]}
         />

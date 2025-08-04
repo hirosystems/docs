@@ -1,13 +1,7 @@
-"use client";
+'use client';
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  type ReactNode,
-} from "react";
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation';
+import React, { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 
 interface MobileMenuContextType {
   isOpen: boolean;
@@ -15,14 +9,12 @@ interface MobileMenuContextType {
   close: () => void;
 }
 
-const MobileMenuContext = createContext<MobileMenuContextType | undefined>(
-  undefined
-);
+const MobileMenuContext = createContext<MobileMenuContextType | undefined>(undefined);
 
 export function useMobileMenu() {
   const context = useContext(MobileMenuContext);
   if (context === undefined) {
-    throw new Error("useMobileMenu must be used within a MobileMenuProvider");
+    throw new Error('useMobileMenu must be used within a MobileMenuProvider');
   }
   return context;
 }
@@ -47,28 +39,28 @@ export function MobileMenuProvider({ children }: MobileMenuProviderProps) {
     if (isOpen) {
       const scrollY = window.scrollY;
 
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
+      document.body.style.width = '100%';
     } else {
       const scrollY = document.body.style.top;
 
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
 
       if (scrollY) {
-        window.scrollTo(0, Number.parseInt(scrollY || "0", 10) * -1);
+        window.scrollTo(0, Number.parseInt(scrollY || '0', 10) * -1);
       }
     }
 
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [isOpen]);
 

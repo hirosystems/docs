@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
+import Link from 'next/link';
+import React from 'react';
 
-export default function Error({
+export default function ErrorBoundary({
   error,
   reset,
 }: {
@@ -12,31 +12,31 @@ export default function Error({
 }) {
   React.useEffect(() => {
     // Hide sidebar for errors (including 404s)
-    const aside = document.querySelector("aside");
+    const aside = document.querySelector('aside');
     if (aside) {
-      aside.style.display = "none";
+      aside.style.display = 'none';
     }
 
     return () => {
-      const asideCleanup = document.querySelector("aside");
+      const asideCleanup = document.querySelector('aside');
       if (asideCleanup) {
-        asideCleanup.style.display = "";
+        asideCleanup.style.display = '';
       }
     };
   }, []);
 
   // Check if this is likely a 404 error
-  const is404 = error.message?.includes("404") || error.message?.includes("not found");
+  const is404 = error.message?.includes('404') || error.message?.includes('not found');
 
   return (
     <div className="w-full flex flex-col items-center justify-center text-center min-h-[50vh]">
       <h1 className="text-3xl font-regular mb-4">
-        {is404 ? "Page not found" : "Something went wrong"}
+        {is404 ? 'Page not found' : 'Something went wrong'}
       </h1>
       <p className="text-muted-foreground max-w-md mb-6">
         {is404
           ? "The documentation you are looking for doesn't exist or has been moved."
-          : "An error occurred while loading this page."}
+          : 'An error occurred while loading this page.'}
       </p>
       <div className="flex gap-4">
         <Link
@@ -47,6 +47,7 @@ export default function Error({
         </Link>
         {!is404 && (
           <button
+            type="button"
             onClick={reset}
             className="inline-flex h-9 items-center rounded-md border border-neutral-200 dark:border-neutral-800 px-4 text-sm font-medium transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
           >

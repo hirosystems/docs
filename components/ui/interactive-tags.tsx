@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import type React from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 export interface InteractiveTagsProps {
   tags: string[];
@@ -30,19 +30,19 @@ export function InteractiveTags({
 
   return (
     <>
-      <div className={cn("flex flex-wrap gap-2", className)}>
+      <div className={cn('flex flex-wrap gap-2', className)}>
         {tags.map((tag) => (
           <Badge
             key={tag}
             variant="default"
             onClick={() => onTagClick(tag)}
             className={cn(
-              "cursor-pointer transition-colors duration-200 rounded-md",
-              "bg-neutral-150 dark:bg-neutral-600 text-neutral-400 dark:text-neutral-300",
-              "hover:bg-orange-500 hover:text-neutral-950",
-              "dark:hover:bg-brand-orange dark:hover:text-neutral-900",
-              "text-xs font-regular uppercase tracking-wide",
-              "px-2 py-1"
+              'cursor-pointer transition-colors duration-200 rounded-md',
+              'bg-neutral-150 dark:bg-neutral-600 text-neutral-400 dark:text-neutral-300',
+              'hover:bg-orange-500 hover:text-neutral-950',
+              'dark:hover:bg-brand-orange dark:hover:text-neutral-900',
+              'text-xs font-regular uppercase tracking-wide',
+              'px-2 py-1',
               // selectedTag === tag && [
               //   "bg-orange-500 text-neutral-950",
               //   "dark:bg-brand-orange dark:text-neutral-900",
@@ -59,7 +59,7 @@ export function InteractiveTags({
       <Dialog open={isDialogOpen} onOpenChange={onDialogClose}>
         <DialogContent className="max-w-4xl max-h-[80vh] flex flex-col">
           <DialogTitle className="sr-only">
-            {selectedTag ? `Pages tagged with ${selectedTag}` : "Tagged pages"}
+            {selectedTag ? `Pages tagged with ${selectedTag}` : 'Tagged pages'}
           </DialogTitle>
           <div className="flex-1 flex flex-col p-8">
             <div className="w-full space-y-8">
@@ -76,9 +76,7 @@ export function InteractiveTags({
                   </p>
                 </div>
               )}
-              <div className="max-h-[55vh] overflow-y-auto text-left">
-                {dialogContent}
-              </div>
+              <div className="max-h-[55vh] overflow-y-auto text-left">{dialogContent}</div>
             </div>
           </div>
         </DialogContent>

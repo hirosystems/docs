@@ -1,11 +1,7 @@
-import React from "react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import { Code } from "@/components/docskit/code";
+import { ChevronDown } from 'lucide-react';
+import React from 'react';
+import { Code } from '@/components/docskit/code';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface CollapsibleSchemaProps {
   schema: any;
@@ -34,29 +30,29 @@ async function SchemaContent({ schema }: { schema: any }) {
     codeblocks: [
       {
         value: JSON.stringify(formattedSchema, null, 2),
-        lang: "json",
-        meta: "",
+        lang: 'json',
+        meta: '',
       },
     ],
-    flags: "",
+    flags: '',
   });
 
   return codeBlock;
 }
 
 function formatSchema(schema: any): any {
-  if (typeof schema !== "object" || schema === null) {
+  if (typeof schema !== 'object' || schema === null) {
     return schema;
   }
 
   const result: any = {};
 
   for (const [key, value] of Object.entries(schema)) {
-    if (key === "$ref") {
+    if (key === '$ref') {
       return `Reference: ${value}`;
     }
 
-    if (key === "properties" && typeof value === "object") {
+    if (key === 'properties' && typeof value === 'object') {
       result[key] = {};
       for (const [propKey, propValue] of Object.entries(value as any)) {
         result[key][propKey] = formatSchema(propValue);
@@ -69,7 +65,7 @@ function formatSchema(schema: any): any {
       continue;
     }
 
-    if (typeof value === "object") {
+    if (typeof value === 'object') {
       result[key] = formatSchema(value);
       continue;
     }

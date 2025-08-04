@@ -1,19 +1,15 @@
-import React, { JSX } from "react";
-import { Bug, Newspaper, QuestionIcon, Pulse } from "@/components/ui/icon";
+import React, { type JSX } from 'react';
+import { Bug, Newspaper, Pulse, QuestionIcon } from '@/components/ui/icon';
 
 const items = [
   {
-    id: "questions",
+    id: 'questions',
     Icon: QuestionIcon,
-    preText: "Questions?",
+    preText: 'Questions?',
     body: (
       <span className="font-inter text-muted-foreground font-regular">
-        Get help in the <span className="font-bold">#builder-general</span>{" "}
-        channel on{" "}
-        <a
-          className="underline hover:text-primary"
-          href="https://discord.gg/stacks"
-        >
+        Get help in the <span className="font-bold">#builder-general</span> channel on{' '}
+        <a className="underline hover:text-primary" href="https://discord.gg/stacks">
           Discord
         </a>
         .
@@ -21,19 +17,16 @@ const items = [
     ),
   },
   {
-    id: "updates",
+    id: 'updates',
     Icon: Newspaper,
-    preText: "Stay updated.",
+    preText: 'Stay updated.',
     body: (
       <span className="font-inter text-muted-foreground font-regular">
-        Sign up to our{" "}
-        <a
-          className="underline hover:text-primary"
-          href="https://hiro.so/updates"
-        >
+        Sign up to our{' '}
+        <a className="underline hover:text-primary" href="https://hiro.so/updates">
           Newsletter
-        </a>{" "}
-        and read our{" "}
+        </a>{' '}
+        and read our{' '}
         <a className="underline hover:text-primary" href="https://hiro.so/blog">
           Blog
         </a>
@@ -42,16 +35,13 @@ const items = [
     ),
   },
   {
-    id: "status",
+    id: 'status',
     Icon: Pulse,
     preText: "Something's not right?",
     body: (
       <span className="font-inter text-muted-foreground font-regular">
-        Check{" "}
-        <a
-          className="underline hover:text-primary"
-          href="https://status.hiro.so/"
-        >
+        Check{' '}
+        <a className="underline hover:text-primary" href="https://status.hiro.so/">
           System Status
         </a>
         .
@@ -59,16 +49,13 @@ const items = [
     ),
   },
   {
-    id: "bug",
+    id: 'bug',
     Icon: Bug,
-    preText: "Found a bug?",
+    preText: 'Found a bug?',
     body: (
       <span className="font-inter text-muted-foreground font-regular">
-        See our{" "}
-        <a
-          className="underline hover:text-primary"
-          href="https://hackerone.com/hiro?type=team"
-        >
+        See our{' '}
+        <a className="underline hover:text-primary" href="https://hackerone.com/hiro?type=team">
           Bounty Program
         </a>
         .

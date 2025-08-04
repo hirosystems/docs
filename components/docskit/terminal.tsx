@@ -1,15 +1,15 @@
-import theme from "./theme.mjs";
 import {
   type AnnotationHandler,
   type BlockAnnotation,
   highlight,
   Pre,
   type RawCode,
-} from "codehike/code";
-import { TerminalClient } from "./terminal.client";
-import { wordWrap } from "./annotations/word-wrap";
-import { CommandBlock } from "./annotations/terminal-command";
-import { OutputBlock } from "./annotations/terminal-output";
+} from 'codehike/code';
+import { CommandBlock } from './annotations/terminal-command';
+import { OutputBlock } from './annotations/terminal-output';
+import { wordWrap } from './annotations/word-wrap';
+import { TerminalClient } from './terminal.client';
+import theme from './theme.mjs';
 
 export async function Terminal(props: {
   codeblocks: RawCode[];
@@ -24,30 +24,20 @@ export async function Terminal(props: {
         pre: (
           <Pre
             code={highlighted}
-            handlers={[
-              createOutputHandler(props.hideOutput),
-              wordWrap,
-              command,
-            ]}
+            handlers={[createOutputHandler(props.hideOutput), wordWrap, command]}
             className="bg-ch-code py-3 px-2 m-3 rounded leading-6 font-mono"
             style={{ color: highlighted.style.color }}
           />
         ),
       };
-    })
+    }),
   );
 
-  return (
-    <TerminalClient
-      tabs={tabs}
-      storeKey={props.storage}
-      key={props.storage || ""}
-    />
-  );
+  return <TerminalClient tabs={tabs} storeKey={props.storage} key={props.storage || ''} />;
 }
 
 const createOutputHandler = (hideOutput?: boolean): AnnotationHandler => ({
-  name: "output",
+  name: 'output',
   Block: (props) => {
     const Component = OutputBlock as any;
     return <Component {...props} hideOutput={hideOutput} />;
@@ -55,7 +45,7 @@ const createOutputHandler = (hideOutput?: boolean): AnnotationHandler => ({
 });
 
 const command: AnnotationHandler = {
-  name: "command",
+  name: 'command',
   Block: CommandBlock,
 };
 
@@ -73,32 +63,30 @@ function extractAnnotations(code: string) {
   const lines = code.split(/\r?\n/);
   const annotations = [] as BlockAnnotation[];
   lines.forEach((line, index) => {
-    if (line.startsWith("$ ")) {
+    if (line.startsWith('$ ')) {
       annotations.push({
-        name: "command",
+        name: 'command',
         query: line.slice(2),
         fromLineNumber: index + 1,
         toLineNumber: index + 1,
       });
     } else {
       const last = annotations[annotations.length - 1];
-      if (last.name === "command" && last.query.endsWith("\\")) {
+      if (last.name === 'command' && last.query.endsWith('\\')) {
         last.query = `${last.query}\n${line}`;
         last.toLineNumber = index + 1;
-      } else if (!last || last.name !== "output") {
+      } else if (!last || last.name !== 'output') {
         annotations.push({
-          name: "output",
-          query: "",
+          name: 'output',
+          query: '',
           fromLineNumber: index + 1,
           toLineNumber: index + 1,
         });
-      } else if ("toLineNumber" in last) {
+      } else if ('toLineNumber' in last) {
         last.toLineNumber = index + 1;
       }
     }
   });
-  const codeWithoutPrompt = lines
-    .map((line) => line.replace(/^\$ /, ""))
-    .join("\n");
+  const codeWithoutPrompt = lines.map((line) => line.replace(/^\$ /, '')).join('\n');
   return { annotations, value: codeWithoutPrompt };
 }

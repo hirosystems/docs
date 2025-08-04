@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react';
-import type { LinkItemType } from './links';
-import type { NavProviderProps } from 'fumadocs-ui/contexts/layout';
 import { Slot } from '@radix-ui/react-slot';
 import type { I18nConfig } from 'fumadocs-core/i18n';
+import type { NavProviderProps } from 'fumadocs-ui/contexts/layout';
+import type { ReactNode } from 'react';
+import type { LinkItemType } from './links';
 
 export interface NavOptions extends NavProviderProps {
   enabled: boolean;
@@ -62,15 +62,12 @@ export interface BaseLayoutProps {
   children?: ReactNode;
 }
 
-export { type LinkItemType };
+export type { LinkItemType };
 
 /**
  * Get Links Items with shortcuts
  */
-export function getLinks(
-  links: LinkItemType[] = [],
-  githubUrl?: string,
-): LinkItemType[] {
+export function getLinks(links: LinkItemType[] = [], githubUrl?: string): LinkItemType[] {
   let result = links ?? [];
 
   if (githubUrl)
@@ -105,8 +102,7 @@ export function slot(
   disabled?: ReactNode,
 ): ReactNode {
   if (obj?.enabled === false) return disabled;
-  if (obj?.component !== undefined)
-    return <Slot {...customComponentProps}>{obj.component}</Slot>;
+  if (obj?.component !== undefined) return <Slot {...customComponentProps}>{obj.component}</Slot>;
 
   return def;
 }
@@ -122,8 +118,7 @@ export function slots<Comp extends Record<string, ReactNode>>(
   def: ReactNode,
 ): ReactNode {
   if (obj?.enabled === false) return;
-  if (obj?.components?.[variant] !== undefined)
-    return <Slot>{obj.components[variant]}</Slot>;
+  if (obj?.components?.[variant] !== undefined) return <Slot>{obj.components[variant]}</Slot>;
 
   return def;
 }

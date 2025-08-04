@@ -1,8 +1,11 @@
-import { docs } from "@/.source";
-import { loader } from "fumadocs-core/source";
-import { attachFile, createOpenAPI } from "fumadocs-openapi/server";
-import type { ThemeRegistrationResolved } from "shiki";
-import { icons as lucideIcons } from "lucide-react";
+import { execSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { loader } from 'fumadocs-core/source';
+import { attachFile, createOpenAPI } from 'fumadocs-openapi/server';
+import { icons as lucideIcons } from 'lucide-react';
+import type { ThemeRegistrationResolved } from 'shiki';
+import { docs } from '@/.source';
 import {
   API,
   Bitcoin,
@@ -13,12 +16,9 @@ import {
   Hiro,
   Js,
   StacksIcon,
-} from "@/components/ui/icon";
-import { execSync } from "child_process";
-import { existsSync } from "fs";
-import { join } from "path";
-import { extractTagsAndLabels } from "./utils/frontmatter-parser";
-import type { FilterablePage } from "./utils/tag-filtering";
+} from '@/components/ui/icon';
+import { extractTagsAndLabels } from './utils/frontmatter-parser';
+import type { FilterablePage } from './utils/tag-filtering';
 
 const customIcons = {
   API,
@@ -38,10 +38,7 @@ const NEW_BADGE_DURATION = 10 * 24 * 60 * 60 * 1000;
 // FIXME: feature flag to enable/disable git-based "new" badge detection
 const ENABLE_GIT_NEW_DETECTION = false; // Set to true when ready to use
 
-const gitMetadataCache = new Map<
-  string,
-  { date: Date | null; timestamp: number }
->();
+const gitMetadataCache = new Map<string, { date: Date | null; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache TTL
 
 // Global storage for collecting filterable pages during build
@@ -49,10 +46,7 @@ const filterablePages: FilterablePage[] = [];
 
 function canUseGit(): boolean {
   try {
-    return (
-      existsSync(join(process.cwd(), ".git")) &&
-      process.env.NODE_ENV !== "production"
-    ); // Avoid git commands in production runtime
+    return existsSync(join(process.cwd(), '.git')) && process.env.NODE_ENV !== 'production'; // Avoid git commands in production runtime
   } catch {
     return false;
   }
@@ -61,36 +55,35 @@ function canUseGit(): boolean {
 function isValidFilePath(path: string): boolean {
   if (!path) return false;
 
-  if (path.startsWith("/")) return false;
+  if (path.startsWith('/')) return false;
 
-  if (!path.includes(".") && path.includes("/")) return false;
+  if (!path.includes('.') && path.includes('/')) return false;
 
-  return path.length > 0 && !path.startsWith("http");
+  return path.length > 0 && !path.startsWith('http');
 }
 
 function isFileNewInBranch(filePath: string): boolean {
   if (!canUseGit() || !isValidFilePath(filePath)) return false;
 
   try {
-    const currentBranch = execSync("git branch --show-current", {
-      encoding: "utf8",
+    const currentBranch = execSync('git branch --show-current', {
+      encoding: 'utf8',
       cwd: process.cwd(),
       timeout: 5000,
     }).trim();
 
-    if (!currentBranch || currentBranch === "main") return false;
+    if (!currentBranch || currentBranch === 'main') return false;
 
-    const gitFilePath = filePath.startsWith("content/docs/")
+    const gitFilePath = filePath.startsWith('content/docs/')
       ? filePath
       : `content/docs/${filePath}`;
 
     const diffResult = execSync(
       `git diff --name-status main...${currentBranch} -- "${gitFilePath}"`,
-      { encoding: "utf8", cwd: process.cwd(), timeout: 5000 }
+      { encoding: 'utf8', cwd: process.cwd(), timeout: 5000 },
     ).trim();
 
-    const isNewInBranch =
-      diffResult.startsWith("A") || diffResult.startsWith("M");
+    const isNewInBranch = diffResult.startsWith('A') || diffResult.startsWith('M');
 
     return isNewInBranch;
   } catch (error) {
@@ -110,18 +103,15 @@ function getFileGitDate(filePath: string): Date | null {
   let gitDate: Date | null = null;
 
   try {
-    const gitFilePath = filePath.startsWith("content/docs/")
+    const gitFilePath = filePath.startsWith('content/docs/')
       ? filePath
       : `content/docs/${filePath}`;
 
-    const modDateResult = execSync(
-      `git log -1 --format=%aI -- "${gitFilePath}"`,
-      {
-        encoding: "utf8",
-        cwd: process.cwd(),
-        timeout: 5000,
-      }
-    );
+    const modDateResult = execSync(`git log -1 --format=%aI -- "${gitFilePath}"`, {
+      encoding: 'utf8',
+      cwd: process.cwd(),
+      timeout: 5000,
+    });
 
     if (modDateResult.trim()) {
       gitDate = new Date(modDateResult.trim());
@@ -144,12 +134,11 @@ function isPageNew(filePath: string, frontmatter?: any): boolean {
   if (frontmatter?.publishedAt) {
     try {
       const publishDate = new Date(frontmatter.publishedAt);
-      const isNewByDate =
-        Date.now() - publishDate.getTime() < NEW_BADGE_DURATION;
-      console.log("Using publishedAt date, result:", isNewByDate);
+      const isNewByDate = Date.now() - publishDate.getTime() < NEW_BADGE_DURATION;
+      console.log('Using publishedAt date, result:', isNewByDate);
       return isNewByDate;
     } catch {
-      console.log("Invalid publishedAt date, falling through");
+      console.log('Invalid publishedAt date, falling through');
     }
   }
 
@@ -180,15 +169,14 @@ function isPageNew(filePath: string, frontmatter?: any): boolean {
   // if it's new in branch, check if it's within the time window
   const gitDate = getFileGitDate(filePath);
   if (gitDate && isValidDate(gitDate)) {
-    const isWithinTimeWindow =
-      Date.now() - gitDate.getTime() < NEW_BADGE_DURATION;
+    const isWithinTimeWindow = Date.now() - gitDate.getTime() < NEW_BADGE_DURATION;
     console.log(
-      `File modified ${Math.floor((Date.now() - gitDate.getTime()) / (24 * 60 * 60 * 1000))} days ago, within window: ${isWithinTimeWindow}`
+      `File modified ${Math.floor((Date.now() - gitDate.getTime()) / (24 * 60 * 60 * 1000))} days ago, within window: ${isWithinTimeWindow}`,
     );
     return isWithinTimeWindow;
   }
 
-  console.log("Could not determine git date");
+  console.log('Could not determine git date');
   return false;
 }
 
@@ -203,7 +191,7 @@ function isValidDate(date: Date): boolean {
  */
 function extractSectionFromUrl(url: string): string {
   // Remove leading slash and split by slash
-  const pathParts = url.replace(/^\//, "").split("/");
+  const pathParts = url.replace(/^\//, '').split('/');
 
   // For URLs like "/stacks/clarinet/guides/..." return "clarinet"
   // For URLs like "/tools/clarinet" return "clarinet"
@@ -216,7 +204,7 @@ function extractSectionFromUrl(url: string): string {
     return pathParts[0];
   }
 
-  return "general";
+  return 'general';
 }
 
 export function icon(iconName: string) {
@@ -225,9 +213,7 @@ export function icon(iconName: string) {
   }
 }
 
-function extractOperationsFromContent(
-  content: string
-): Array<{ path: string; method: string }> {
+function extractOperationsFromContent(content: string): Array<{ path: string; method: string }> {
   const operations: Array<{ path: string; method: string }> = [];
 
   const apiPageRegex = /<APIPage[^>]*operations=\{(\[[^\]]+\])\}[^>]*\/>/gs;
@@ -248,7 +234,7 @@ function extractOperationsFromContent(
         });
       }
     } catch (error) {
-      console.warn("Failed to parse operations from APIPage component:", error);
+      console.warn('Failed to parse operations from APIPage component:', error);
     }
   }
 
@@ -256,324 +242,316 @@ function extractOperationsFromContent(
 }
 
 export const hiroThemeDark: ThemeRegistrationResolved = {
-  name: "hiro-dark",
-  displayName: "Hiro Dark",
-  type: "dark",
-  fg: "#8c877d", // --ch-1
-  bg: "#1e1e2e", // --ch-18
+  name: 'hiro-dark',
+  displayName: 'Hiro Dark',
+  type: 'dark',
+  fg: '#8c877d', // --ch-1
+  bg: '#1e1e2e', // --ch-18
   settings: [
     {
       settings: {
-        foreground: "#8c877d", // --ch-1
-        background: "#1e1e2e", // --ch-18
+        foreground: '#8c877d', // --ch-1
+        background: '#1e1e2e', // --ch-18
       },
     },
     {
-      scope: ["comment", "punctuation.definition.comment"],
+      scope: ['comment', 'punctuation.definition.comment'],
       settings: {
-        foreground: "#595650", // --ch-3
-        fontStyle: "italic",
+        foreground: '#595650', // --ch-3
+        fontStyle: 'italic',
       },
     },
     {
-      scope: ["string", "punctuation.definition.string"],
+      scope: ['string', 'punctuation.definition.string'],
       settings: {
-        foreground: "#c2ebc4", // --ch-4
+        foreground: '#c2ebc4', // --ch-4
       },
     },
     {
-      scope: ["constant.character.escape"],
+      scope: ['constant.character.escape'],
       settings: {
-        foreground: "#f5c2e7", // --ch-5
-      },
-    },
-    {
-      scope: [
-        "constant.numeric",
-        "variable.other.constant",
-        "entity.name.constant",
-        "constant.language.boolean",
-        "constant.language.false",
-        "constant.language.true",
-      ],
-      settings: {
-        foreground: "#ff5500", // --ch-6
+        foreground: '#f5c2e7', // --ch-5
       },
     },
     {
       scope: [
-        "keyword",
-        "keyword.operator.word",
-        "keyword.operator.new",
-        "variable.language.super",
-        "support.type.primitive",
-        "storage.type",
-        "storage.modifier",
-        "punctuation.definition.keyword",
+        'constant.numeric',
+        'variable.other.constant',
+        'entity.name.constant',
+        'constant.language.boolean',
+        'constant.language.false',
+        'constant.language.true',
       ],
       settings: {
-        foreground: "#ff9ecf", // --ch-7
+        foreground: '#ff5500', // --ch-6
       },
     },
     {
       scope: [
-        "keyword.operator",
-        "punctuation.accessor",
-        "punctuation.definition.generic",
-        "punctuation.definition.tag",
-        "punctuation.separator.key-value",
+        'keyword',
+        'keyword.operator.word',
+        'keyword.operator.new',
+        'variable.language.super',
+        'support.type.primitive',
+        'storage.type',
+        'storage.modifier',
+        'punctuation.definition.keyword',
       ],
       settings: {
-        foreground: "#94e2d5", // --ch-8
+        foreground: '#ff9ecf', // --ch-7
       },
     },
     {
       scope: [
-        "entity.name.function",
-        "meta.function-call.method",
-        "support.function",
-        "support.function.misc",
-        "variable.function",
+        'keyword.operator',
+        'punctuation.accessor',
+        'punctuation.definition.generic',
+        'punctuation.definition.tag',
+        'punctuation.separator.key-value',
       ],
       settings: {
-        foreground: "#b3d9ff", // --ch-9
+        foreground: '#94e2d5', // --ch-8
       },
     },
     {
       scope: [
-        "entity.name.class",
-        "entity.other.inherited-class",
-        "support.class",
-        "meta.function-call.constructor",
-        "entity.name.struct",
-        "entity.name.type",
-        "support.type",
+        'entity.name.function',
+        'meta.function-call.method',
+        'support.function',
+        'support.function.misc',
+        'variable.function',
       ],
       settings: {
-        foreground: "#ff9ecf", // --ch-10
-      },
-    },
-    {
-      scope: ["variable.parameter", "meta.function.parameters"],
-      settings: {
-        foreground: "#8c877d", // --ch-11
-      },
-    },
-    {
-      scope: ["constant.language", "support.function.builtin"],
-      settings: {
-        foreground: "#ff9ecf", // --ch-12
+        foreground: '#b3d9ff', // --ch-9
       },
     },
     {
       scope: [
-        "support.type.property-name",
-        "entity.name.tag",
-        "entity.other.attribute-name",
+        'entity.name.class',
+        'entity.other.inherited-class',
+        'support.class',
+        'meta.function-call.constructor',
+        'entity.name.struct',
+        'entity.name.type',
+        'support.type',
       ],
       settings: {
-        foreground: "#b3d9ff", // --ch-9
+        foreground: '#ff9ecf', // --ch-10
       },
     },
     {
-      scope: ["variable", "variable.other.readwrite"],
+      scope: ['variable.parameter', 'meta.function.parameters'],
       settings: {
-        foreground: "#f2cdcd", // --ch-14
+        foreground: '#8c877d', // --ch-11
       },
     },
     {
-      scope: ["punctuation", "meta.brace"],
+      scope: ['constant.language', 'support.function.builtin'],
       settings: {
-        foreground: "#a6adc8", // --ch-15
+        foreground: '#ff9ecf', // --ch-12
       },
     },
     {
-      scope: ["invalid"],
+      scope: ['support.type.property-name', 'entity.name.tag', 'entity.other.attribute-name'],
       settings: {
-        foreground: "#f2cdcd", // --ch-14
+        foreground: '#b3d9ff', // --ch-9
       },
     },
     {
-      scope: ["invalid.deprecated"],
+      scope: ['variable', 'variable.other.readwrite'],
       settings: {
-        foreground: "#585b70", // --ch-24
+        foreground: '#f2cdcd', // --ch-14
+      },
+    },
+    {
+      scope: ['punctuation', 'meta.brace'],
+      settings: {
+        foreground: '#a6adc8', // --ch-15
+      },
+    },
+    {
+      scope: ['invalid'],
+      settings: {
+        foreground: '#f2cdcd', // --ch-14
+      },
+    },
+    {
+      scope: ['invalid.deprecated'],
+      settings: {
+        foreground: '#585b70', // --ch-24
       },
     },
   ],
   colors: {
-    "editor.background": "#1e1e2e", // --ch-18
-    "editor.foreground": "#8c877d", // --ch-1
-    "editorCursor.foreground": "#b3d9ff", // --ch-9
-    "editorIndentGuide.background": "#585b70", // --ch-24
-    "editorIndentGuide.activeBackground": "#7f849c", // --ch-26
-    "editor.lineHighlightBackground": "#cdd6f412", // --ch-19
-    "editor.selectionBackground": "#9399b240", // --ch-22
-    "editorBracketMatch.border": "#585b70", // --ch-24
-    "editorError.foreground": "#f2cdcd", // --ch-14
-    "editorWarning.foreground": "#b3d9ff", // --ch-9
-    "editorInfo.foreground": "#b3d9ff", // --ch-9
-    "editorHint.foreground": "#a6adc8", // --ch-15
+    'editor.background': '#1e1e2e', // --ch-18
+    'editor.foreground': '#8c877d', // --ch-1
+    'editorCursor.foreground': '#b3d9ff', // --ch-9
+    'editorIndentGuide.background': '#585b70', // --ch-24
+    'editorIndentGuide.activeBackground': '#7f849c', // --ch-26
+    'editor.lineHighlightBackground': '#cdd6f412', // --ch-19
+    'editor.selectionBackground': '#9399b240', // --ch-22
+    'editorBracketMatch.border': '#585b70', // --ch-24
+    'editorError.foreground': '#f2cdcd', // --ch-14
+    'editorWarning.foreground': '#b3d9ff', // --ch-9
+    'editorInfo.foreground': '#b3d9ff', // --ch-9
+    'editorHint.foreground': '#a6adc8', // --ch-15
   },
 };
 
 export const hiroThemeLight: ThemeRegistrationResolved = {
-  name: "hiro-light",
-  displayName: "Hiro Light",
-  type: "light",
-  fg: "#7a756b", // --ch-1
-  bg: "#eff1f5", // --ch-18
+  name: 'hiro-light',
+  displayName: 'Hiro Light',
+  type: 'light',
+  fg: '#7a756b', // --ch-1
+  bg: '#eff1f5', // --ch-18
   settings: [
     {
       settings: {
-        foreground: "#7a756b", // --ch-1
-        background: "#eff1f5", // --ch-18
+        foreground: '#7a756b', // --ch-1
+        background: '#eff1f5', // --ch-18
       },
     },
     {
-      scope: ["comment", "punctuation.definition.comment"],
+      scope: ['comment', 'punctuation.definition.comment'],
       settings: {
-        foreground: "#b5aca1", // --ch-3
-        fontStyle: "italic",
+        foreground: '#b5aca1', // --ch-3
+        fontStyle: 'italic',
       },
     },
     {
-      scope: ["string", "punctuation.definition.string"],
+      scope: ['string', 'punctuation.definition.string'],
       settings: {
-        foreground: "#48944c", // --ch-4
+        foreground: '#48944c', // --ch-4
       },
     },
     {
-      scope: ["constant.character.escape"],
+      scope: ['constant.character.escape'],
       settings: {
-        foreground: "#ea76cb", // --ch-5
-      },
-    },
-    {
-      scope: [
-        "constant.numeric",
-        "variable.other.constant",
-        "entity.name.constant",
-        "constant.language.boolean",
-        "constant.language.false",
-        "constant.language.true",
-      ],
-      settings: {
-        foreground: "#ff5500", // --ch-6
+        foreground: '#ea76cb', // --ch-5
       },
     },
     {
       scope: [
-        "keyword",
-        "keyword.operator.word",
-        "keyword.operator.new",
-        "variable.language.super",
-        "support.type.primitive",
-        "storage.type",
-        "storage.modifier",
-        "punctuation.definition.keyword",
+        'constant.numeric',
+        'variable.other.constant',
+        'entity.name.constant',
+        'constant.language.boolean',
+        'constant.language.false',
+        'constant.language.true',
       ],
       settings: {
-        foreground: "#bc812e", // --ch-7
+        foreground: '#ff5500', // --ch-6
       },
     },
     {
       scope: [
-        "keyword.operator",
-        "punctuation.accessor",
-        "punctuation.definition.generic",
-        "punctuation.definition.tag",
-        "punctuation.separator.key-value",
+        'keyword',
+        'keyword.operator.word',
+        'keyword.operator.new',
+        'variable.language.super',
+        'support.type.primitive',
+        'storage.type',
+        'storage.modifier',
+        'punctuation.definition.keyword',
       ],
       settings: {
-        foreground: "#179299", // --ch-8
+        foreground: '#bc812e', // --ch-7
       },
     },
     {
       scope: [
-        "entity.name.function",
-        "meta.function-call.method",
-        "support.function",
-        "support.function.misc",
-        "variable.function",
+        'keyword.operator',
+        'punctuation.accessor',
+        'punctuation.definition.generic',
+        'punctuation.definition.tag',
+        'punctuation.separator.key-value',
       ],
       settings: {
-        foreground: "#3676b7", // --ch-9
+        foreground: '#179299', // --ch-8
       },
     },
     {
       scope: [
-        "entity.name.class",
-        "entity.other.inherited-class",
-        "support.class",
-        "meta.function-call.constructor",
-        "entity.name.struct",
-        "entity.name.type",
-        "support.type",
+        'entity.name.function',
+        'meta.function-call.method',
+        'support.function',
+        'support.function.misc',
+        'variable.function',
       ],
       settings: {
-        foreground: "#bc812e", // --ch-10
-      },
-    },
-    {
-      scope: ["variable.parameter", "meta.function.parameters"],
-      settings: {
-        foreground: "#7a756b", // --ch-11
-      },
-    },
-    {
-      scope: ["constant.language", "support.function.builtin"],
-      settings: {
-        foreground: "#bc812e", // --ch-12
+        foreground: '#3676b7', // --ch-9
       },
     },
     {
       scope: [
-        "support.type.property-name",
-        "entity.name.tag",
-        "entity.other.attribute-name",
+        'entity.name.class',
+        'entity.other.inherited-class',
+        'support.class',
+        'meta.function-call.constructor',
+        'entity.name.struct',
+        'entity.name.type',
+        'support.type',
       ],
       settings: {
-        foreground: "#3676b7", // --ch-9
+        foreground: '#bc812e', // --ch-10
       },
     },
     {
-      scope: ["variable", "variable.other.readwrite"],
+      scope: ['variable.parameter', 'meta.function.parameters'],
       settings: {
-        foreground: "#dd7878", // --ch-14
+        foreground: '#7a756b', // --ch-11
       },
     },
     {
-      scope: ["punctuation", "meta.brace"],
+      scope: ['constant.language', 'support.function.builtin'],
       settings: {
-        foreground: "#6c6f85", // --ch-15
+        foreground: '#bc812e', // --ch-12
       },
     },
     {
-      scope: ["invalid"],
+      scope: ['support.type.property-name', 'entity.name.tag', 'entity.other.attribute-name'],
       settings: {
-        foreground: "#dd7878", // --ch-14
+        foreground: '#3676b7', // --ch-9
       },
     },
     {
-      scope: ["invalid.deprecated"],
+      scope: ['variable', 'variable.other.readwrite'],
       settings: {
-        foreground: "#acb0be", // --ch-24 equivalent
+        foreground: '#dd7878', // --ch-14
+      },
+    },
+    {
+      scope: ['punctuation', 'meta.brace'],
+      settings: {
+        foreground: '#6c6f85', // --ch-15
+      },
+    },
+    {
+      scope: ['invalid'],
+      settings: {
+        foreground: '#dd7878', // --ch-14
+      },
+    },
+    {
+      scope: ['invalid.deprecated'],
+      settings: {
+        foreground: '#acb0be', // --ch-24 equivalent
       },
     },
   ],
   colors: {
-    "editor.background": "#eff1f5", // --ch-18
-    "editor.foreground": "#7a756b", // --ch-1
-    "editorCursor.foreground": "#3676b7", // --ch-9
-    "editorIndentGuide.background": "#acb0be", // --ch-24 equivalent
-    "editorIndentGuide.activeBackground": "#8c8fa1", // --ch-26
-    "editor.lineHighlightBackground": "#4c4f6912", // --ch-19
-    "editor.selectionBackground": "#7c7f934d", // --ch-22
-    "editorBracketMatch.border": "#acb0be", // --ch-24 equivalent
-    "editorError.foreground": "#dd7878", // --ch-14
-    "editorWarning.foreground": "#3676b7", // --ch-9
-    "editorInfo.foreground": "#3676b7", // --ch-9
-    "editorHint.foreground": "#6c6f85", // --ch-15
+    'editor.background': '#eff1f5', // --ch-18
+    'editor.foreground': '#7a756b', // --ch-1
+    'editorCursor.foreground': '#3676b7', // --ch-9
+    'editorIndentGuide.background': '#acb0be', // --ch-24 equivalent
+    'editorIndentGuide.activeBackground': '#8c8fa1', // --ch-26
+    'editor.lineHighlightBackground': '#4c4f6912', // --ch-19
+    'editor.selectionBackground': '#7c7f934d', // --ch-22
+    'editorBracketMatch.border': '#acb0be', // --ch-24 equivalent
+    'editorError.foreground': '#dd7878', // --ch-14
+    'editorWarning.foreground': '#3676b7', // --ch-9
+    'editorInfo.foreground': '#3676b7', // --ch-9
+    'editorHint.foreground': '#6c6f85', // --ch-15
   },
 };
 
@@ -584,14 +562,12 @@ export const source = loader({
     attachFile: (node, file) => {
       let processedNode = attachFile(node, file);
 
-      if (node.type === "page") {
+      if (node.type === 'page') {
         const fileData = (file as any)?.data?.data;
         const frontmatter = fileData;
         const filePath = (file as any)?.file?.path;
 
-        const shouldShowNewBadge = filePath
-          ? isPageNew(filePath, frontmatter)
-          : false;
+        const shouldShowNewBadge = filePath ? isPageNew(filePath, frontmatter) : false;
 
         const dataToAdd: any = {};
 
@@ -672,11 +648,10 @@ export const source = loader({
       return processedNode;
     },
   },
-  baseUrl: "/",
+  baseUrl: '/',
   source: docs.toFumadocsSource(),
   icon(icon) {
-    if (icon && icon in icons)
-      return create({ icon: icons[icon as keyof typeof icons] });
+    if (icon && icon in icons) return create({ icon: icons[icon as keyof typeof icons] });
   },
 });
 
@@ -704,10 +679,7 @@ export function getAllFilterablePages(): FilterablePage[] {
  * @param section - Optional section to limit search scope
  * @returns Array of matching FilterablePage objects
  */
-export function getPagesWithMatchingLabels(
-  tag: string,
-  section?: string
-): FilterablePage[] {
+export function getPagesWithMatchingLabels(tag: string, section?: string): FilterablePage[] {
   return filterablePages.filter((page) => {
     const sectionMatches = !section || page.section === section;
     const tagMatches = page.labels.includes(tag);

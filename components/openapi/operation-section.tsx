@@ -1,11 +1,11 @@
-import React from "react";
-import { cn } from "@/lib/utils";
-import type { OpenAPIOperation } from "./types";
-import { ParametersSection } from "./parameters-section";
-import { ResponseTable } from "./response-table";
-import { CodeExamplesSection } from "./code-examples-section";
-import { ResponseTabs } from "./response-tabs";
-import { APIPlayground } from "./api-playground";
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { APIPlayground } from './api-playground';
+import { CodeExamplesSection } from './code-examples-section';
+import { ParametersSection } from './parameters-section';
+import { ResponseTable } from './response-table';
+import { ResponseTabs } from './response-tabs';
+import type { OpenAPIOperation } from './types';
 
 interface OperationSectionProps {
   operation: OpenAPIOperation;
@@ -16,7 +16,7 @@ interface OperationSectionProps {
   playgroundOptions?: {
     proxyUrl?: string;
     defaultAuth?: {
-      type: "bearer" | "api-key";
+      type: 'bearer' | 'api-key';
       value: string;
       headerName?: string;
     };
@@ -33,7 +33,7 @@ export async function OperationSection({
   playgroundOptions,
   baseUrl: baseUrlOverride,
 }: OperationSectionProps) {
-  const baseUrl = baseUrlOverride || servers?.[0]?.url || "";
+  const baseUrl = baseUrlOverride || servers?.[0]?.url || '';
 
   return (
     <section className="space-y-6">
@@ -79,19 +79,17 @@ function MethodBadge({ method }: { method: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold",
-        upperMethod === "GET" &&
-          "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-        upperMethod === "POST" &&
-          "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-        upperMethod === "PUT" &&
-          "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
-        upperMethod === "DELETE" &&
-          "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-        upperMethod === "PATCH" &&
-          "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
-        !["GET", "POST", "PUT", "DELETE", "PATCH"].includes(upperMethod) &&
-          "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400"
+        'inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold',
+        upperMethod === 'GET' && 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+        upperMethod === 'POST' &&
+          'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        upperMethod === 'PUT' &&
+          'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400',
+        upperMethod === 'DELETE' && 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+        upperMethod === 'PATCH' &&
+          'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+        !['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].includes(upperMethod) &&
+          'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
       )}
     >
       {upperMethod}

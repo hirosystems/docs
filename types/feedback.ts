@@ -5,7 +5,6 @@ export interface FeedbackResponse {
   error?: string;
 }
 
-
 export interface FeedbackSubmission {
   pageTitle: string;
   pagePath: string;

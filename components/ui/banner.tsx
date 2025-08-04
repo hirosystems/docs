@@ -1,35 +1,35 @@
-"use client";
+'use client';
 
-import { type HTMLAttributes, useCallback, useEffect, useState } from "react";
-import { Button } from "./button";
-import Link from "next/link";
-import { X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { cva } from "class-variance-authority";
-import { isWithinInterval, parseISO } from "date-fns";
+import { cva } from 'class-variance-authority';
+import { isWithinInterval, parseISO } from 'date-fns';
+import { X } from 'lucide-react';
+import Link from 'next/link';
+import { type HTMLAttributes, useCallback, useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Button } from './button';
 
 export const buttonVariants = cva(
-  "bg-[#ffddcc] hover:bg-[#ffeee5] inline-flex items-center justify-center rounded-md p-2 text-sm text-primary font-medium transition-colors duration-100 disabled:pointer-events-none disabled:opacity-50",
+  'bg-[#ffddcc] hover:bg-[#ffeee5] inline-flex items-center justify-center rounded-md p-2 text-sm text-primary font-medium transition-colors duration-100 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       color: {
-        outline: "border hover:bg-accent hover:text-accent-foreground",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        outline: 'border hover:bg-accent hover:text-accent-foreground',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
         secondary:
-          "border bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground",
+          'border bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground',
       },
       size: {
-        sm: "gap-1 p-0.5 text-xs",
-        icon: "p-1.5 [&_svg]:size-5",
+        sm: 'gap-1 p-0.5 text-xs',
+        icon: 'p-1.5 [&_svg]:size-5',
       },
     },
-  }
+  },
 );
 
 export function Banner({
   id,
-  cta = "Call to Action",
-  url = "/",
+  cta = 'Call to Action',
+  url = '/',
   startDate,
   endDate,
   children,
@@ -55,16 +55,16 @@ export function Banner({
       setIsWithinDateRange(true);
     }
 
-    if (id) setOpen(localStorage.getItem(`nd-banner-${id}`) !== "true");
+    if (id) setOpen(localStorage.getItem(`nd-banner-${id}`) !== 'true');
   }, [id, startDate, endDate]);
 
   useEffect(() => {
-    if (id) setOpen(localStorage.getItem(`nd-banner-${id}`) !== "true");
+    if (id) setOpen(localStorage.getItem(`nd-banner-${id}`) !== 'true');
   }, [id]);
 
   const onClick = useCallback(() => {
     setOpen(false);
-    if (id) localStorage.setItem(`nd-banner-${id}`, "true");
+    if (id) localStorage.setItem(`nd-banner-${id}`, 'true');
   }, [id]);
 
   if (!isWithinDateRange) return null;
@@ -74,9 +74,9 @@ export function Banner({
       id={id}
       {...props}
       className={cn(
-        "relative flex h-12 flex-row items-center justify-center bg-[#ff7733] px-4 text-center text-sm text-primary font-medium font-aeonik-fono",
-        !open && "hidden",
-        props.className
+        'relative flex h-12 flex-row items-center justify-center bg-[#ff7733] px-4 text-center text-sm text-primary font-medium font-aeonik-fono',
+        !open && 'hidden',
+        props.className,
       )}
       suppressHydrationWarning
     >
@@ -107,7 +107,7 @@ export function Banner({
             asChild
             className="bg-[hsl(var(--dark))] text-[#ff7733] font-aeonik-fono hover:bg-[hsl(var(--dark))] hover:text-[#ffeee5]"
           >
-            {url.startsWith("/") ? (
+            {url.startsWith('/') ? (
               <Link href={url}>{cta}</Link>
             ) : (
               <a href={url} target="_blank" rel="noopener noreferrer">
@@ -124,10 +124,9 @@ export function Banner({
           onClick={onClick}
           className={cn(
             buttonVariants({
-              className:
-                "absolute end-2 top-1/2 -translate-y-1/2 text-muted-foreground",
-              size: "icon",
-            })
+              className: 'absolute end-2 top-1/2 -translate-y-1/2 text-muted-foreground',
+              size: 'icon',
+            }),
           )}
         >
           <X className="text-primary" />

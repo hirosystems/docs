@@ -1,20 +1,14 @@
-import Link, { type LinkProps } from "fumadocs-core/link";
-import type { HTMLAttributes, ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import Link, { type LinkProps } from 'fumadocs-core/link';
+import { ChevronRight } from 'lucide-react';
+import type { HTMLAttributes, ReactNode } from 'react';
+import { InteractiveBadge } from '@/app/(home)/components/interactive-badge';
+import { CopyButton } from '@/components/docskit/copy-button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
-import { Badge } from "@/components/ui/badge";
-import { InteractiveBadge } from "@/app/(home)/components/interactive-badge";
-import { ChevronRight } from "lucide-react";
-import { CopyButton } from "@/components/docskit/copy-button";
-
-export function Cards(
-  props: HTMLAttributes<HTMLDivElement>
-): React.ReactElement {
+export function Cards(props: HTMLAttributes<HTMLDivElement>): React.ReactElement {
   return (
-    <div
-      {...props}
-      className={cn("grid grid-cols-1 gap-4 sm:grid-cols-2", props.className)}
-    >
+    <div {...props} className={cn('grid grid-cols-1 gap-4 sm:grid-cols-2', props.className)}>
       {props.children}
     </div>
   );
@@ -25,37 +19,37 @@ export type CardProps = {
   title: string;
   description: string;
   innerClassName?: string;
-  variant?: "default" | "secondary";
-} & Omit<LinkProps, "title">;
+  variant?: 'default' | 'secondary';
+} & Omit<LinkProps, 'title'>;
 
 export function Card({
   icon,
   title,
   description,
-  variant = "default",
+  variant = 'default',
   ...props
 }: CardProps): React.ReactElement {
   return (
     <Link
       {...props}
       className={cn(
-        "not-prose relative block rounded-lg p-[1.5px] transition-all duration-500 ease-linear",
+        'not-prose relative block rounded-lg p-[1.5px] transition-all duration-500 ease-linear',
         // Default border (non-hover state)
-        "bg-border",
+        'bg-border',
         // Variant-specific hover gradients with bottom-right direction
-        variant === "default" &&
-          "hover:bg-gradient-to-br hover:from-border hover:to-muted-foreground",
-        variant === "secondary" &&
-          "hover:bg-gradient-to-br hover:from-border hover:to-muted-foreground",
+        variant === 'default' &&
+          'hover:bg-gradient-to-br hover:from-border hover:to-muted-foreground',
+        variant === 'secondary' &&
+          'hover:bg-gradient-to-br hover:from-border hover:to-muted-foreground',
         // Hover shadow
-        "hover:shadow-[0_6px_17px_muted-foreground]",
-        props.className
+        'hover:shadow-[0_6px_17px_muted-foreground]',
+        props.className,
       )}
     >
       <div
         className={cn(
-          "space-y-3 group relative z-10 bg-card p-5 rounded-[calc(0.5rem-1.5px)] h-full transition-all duration-500 ease-linear",
-          props.innerClassName
+          'space-y-3 group relative z-10 bg-card p-5 rounded-[calc(0.5rem-1.5px)] h-full transition-all duration-500 ease-linear',
+          props.innerClassName,
         )}
       >
         {icon ? (
@@ -81,7 +75,7 @@ export type FeatureCardProps = {
     label: string;
     href: string;
   }>;
-  variant?: "default" | "secondary";
+  variant?: 'default' | 'secondary';
 };
 
 export function FeatureCard({
@@ -90,16 +84,16 @@ export function FeatureCard({
   title,
   description,
   badges,
-  variant = "default",
+  variant = 'default',
 }: FeatureCardProps): React.ReactElement {
   return (
     <div
       className={cn(
-        "relative rounded-[0.6rem] p-[1.5px] overflow-hidden transition-colors",
-        variant === "default" &&
-          "bg-gradient-to-br from-border via-border to-neutral-300 dark:to-neutral-200",
-        variant === "secondary" &&
-          "bg-gradient-to-br from-border via-border to-orange-500 dark:to-orange-700"
+        'relative rounded-[0.6rem] p-[1.5px] overflow-hidden transition-colors',
+        variant === 'default' &&
+          'bg-gradient-to-br from-border via-border to-neutral-300 dark:to-neutral-200',
+        variant === 'secondary' &&
+          'bg-gradient-to-br from-border via-border to-orange-500 dark:to-orange-700',
       )}
     >
       <Link
@@ -116,11 +110,7 @@ export function FeatureCard({
 
         <div className="flex flex-wrap gap-2">
           {badges?.map((badge) => (
-            <InteractiveBadge
-              key={badge.label}
-              href={badge.href}
-              label={badge.label}
-            />
+            <InteractiveBadge key={badge.label} href={badge.href} label={badge.label} />
           ))}
         </div>
       </Link>
@@ -133,7 +123,7 @@ export type SecondaryCardProps = {
   title: string;
   description: string;
   tag?: string;
-} & Omit<LinkProps, "title">;
+} & Omit<LinkProps, 'title'>;
 
 export function SecondaryCard({
   icon,
@@ -143,15 +133,14 @@ export function SecondaryCard({
   ...props
 }: SecondaryCardProps): React.ReactElement {
   const isBitcoinTag =
-    tag &&
-    (tag.toLowerCase() === "bitcoin" || tag.toLowerCase() === "bitcoin l1");
+    tag && (tag.toLowerCase() === 'bitcoin' || tag.toLowerCase() === 'bitcoin l1');
 
   return (
     <Link
       {...props}
       className={cn(
-        "not-prose block rounded-lg border bg-card p-4 text-md transition-all duration-100 ease-linear hover:bg-accent/80",
-        props.className
+        'not-prose block rounded-lg border bg-card p-4 text-md transition-all duration-100 ease-linear hover:bg-accent/80',
+        props.className,
       )}
     >
       {icon ? (
@@ -163,10 +152,10 @@ export function SecondaryCard({
             <Badge
               variant="outline"
               className={cn(
-                "uppercase rounded-md transition-colors h-fit",
+                'uppercase rounded-md transition-colors h-fit',
                 isBitcoinTag
-                  ? "bg-orange-500 dark:bg-orange-brand text-neutral-900 border-none"
-                  : "text-card-foreground bg-accent border border-border shadow-md"
+                  ? 'bg-orange-500 dark:bg-orange-brand text-neutral-900 border-none'
+                  : 'text-card-foreground bg-accent border border-border shadow-md',
               )}
             >
               {tag}
@@ -185,7 +174,7 @@ export type IndexCardProps = {
   title: string;
   description: string;
   tag?: string;
-} & Omit<LinkProps, "title">;
+} & Omit<LinkProps, 'title'>;
 
 export function IndexCard({
   icon,
@@ -195,15 +184,14 @@ export function IndexCard({
   ...props
 }: IndexCardProps): React.ReactElement {
   const isBitcoinTag =
-    tag &&
-    (tag.toLowerCase() === "bitcoin" || tag.toLowerCase() === "bitcoin l1");
+    tag && (tag.toLowerCase() === 'bitcoin' || tag.toLowerCase() === 'bitcoin l1');
 
   return (
     <Link
       {...props}
       className={cn(
-        "not-prose group relative block rounded-lg p-6 transition-all duration-200 ease-in-out hover:bg-card",
-        props.className
+        'not-prose group relative block rounded-lg p-6 transition-all duration-200 ease-in-out hover:bg-card',
+        props.className,
       )}
     >
       <div className="flex items-start gap-4">
@@ -213,21 +201,17 @@ export function IndexCard({
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="font-normal text-card-foreground mb-2 leading-tight">
-            {title}
-          </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {description}
-          </p>
+          <h3 className="font-normal text-card-foreground mb-2 leading-tight">{title}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
         </div>
         {tag && (
           <Badge
             variant="outline"
             className={cn(
-              "uppercase rounded-md transition-colors h-fit",
+              'uppercase rounded-md transition-colors h-fit',
               isBitcoinTag
-                ? "bg-orange-500 dark:bg-brand-orange text-neutral-900 border-none"
-                : "text-card-foreground bg-accent border border-border shadow-md"
+                ? 'bg-orange-500 dark:bg-brand-orange text-neutral-900 border-none'
+                : 'text-card-foreground bg-accent border border-border shadow-md',
             )}
           >
             {tag}
@@ -242,20 +226,15 @@ export type SmallCardProps = {
   icon: ReactNode;
   title: string;
   description: string;
-} & Omit<LinkProps, "title">;
+} & Omit<LinkProps, 'title'>;
 
-export function SmallCard({
-  icon,
-  title,
-  description,
-  ...props
-}: CardProps): React.ReactElement {
+export function SmallCard({ icon, title, description, ...props }: CardProps): React.ReactElement {
   return (
     <Link
       {...props}
       className={cn(
-        "not-prose block transition-all duration-100 ease-linear space-y-3",
-        props.className
+        'not-prose block transition-all duration-100 ease-linear space-y-3',
+        props.className,
       )}
     >
       <div className="group flex space-x-4 px-3 py-4 rounded-lg hover:bg-card transition-all duration-100 ease-linear">
@@ -282,12 +261,7 @@ export interface ToolCardProps {
   className?: string;
 }
 
-export function ToolCard({
-  icon,
-  title,
-  href,
-  className,
-}: ToolCardProps): React.ReactElement {
+export function ToolCard({ icon, title, href, className }: ToolCardProps): React.ReactElement {
   const content = (
     <div className="relative group">
       <div className="peer relative flex flex-col gap-12">
@@ -313,33 +287,27 @@ export function ToolCard({
 
   if (href) {
     return (
-      <a href={href} className={cn("col-span-6 md:col-span-4", className)}>
+      <a href={href} className={cn('col-span-6 md:col-span-4', className)}>
         {content}
       </a>
     );
   }
 
-  return (
-    <div className={cn("col-span-6 md:col-span-4", className)}>{content}</div>
-  );
+  return <div className={cn('col-span-6 md:col-span-4', className)}>{content}</div>;
 }
 
 export type NextCardProps = {
   title: string;
   description: string;
-} & Omit<LinkProps, "title">;
+} & Omit<LinkProps, 'title'>;
 
-export function NextCard({
-  title,
-  description,
-  ...props
-}: NextCardProps): React.ReactElement {
+export function NextCard({ title, description, ...props }: NextCardProps): React.ReactElement {
   return (
     <Link
       {...props}
       className={cn(
-        "group not-prose block rounded-lg border border-border bg-neutral-100/50 dark:bg-neutral-800/20 p-6 transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/40",
-        props.className
+        'group not-prose block rounded-lg border border-border bg-neutral-100/50 dark:bg-neutral-800/20 p-6 transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/40',
+        props.className,
       )}
     >
       <h3 className="flex items-center gap-2 text-lg font-medium mb-2">
@@ -357,7 +325,7 @@ export type SnippetCardProps = {
   title: string;
   badges?: string[];
   children: ReactNode;
-} & Omit<LinkProps, "title">;
+} & Omit<LinkProps, 'title'>;
 
 export function SnippetCard({
   title,
