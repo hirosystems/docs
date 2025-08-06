@@ -28,7 +28,7 @@ graph LR
     D -->|Submit VAA + TX| E[Stacks Chain]
     E -->|Verify & Update| F[Pyth Oracle Contract]
     F -->|Fresh Price| G[Your Contract]
-    
+
     style A fill:#FF7733,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
     style C fill:#B3D9FF,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
     style D fill:#F5F5F5,stroke:#0d0c0c,stroke-width:2px,color:#0d0c0c
@@ -72,7 +72,7 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
 <Steps>
   <Step>
     ### Write the smart contract
-    
+
     First, implement the Clarity contract that reads Pyth price data:
 
     ```clarity contracts/benjamin-club.clar
@@ -105,32 +105,32 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
             pyth-decoder-contract: PYTH-DECODER,
             wormhole-core-contract: WORMHOLE-CORE
           })))
-        
+
         ;; Get the updated BTC price
         (price-data (try! (contract-call? PYTH-ORACLE
           get-price BTC-USD-FEED-ID PYTH-STORAGE)))
-        
+
         ;; Process the price data
         (btc-price (process-price-data price-data))
-        
+
         ;; Calculate required sBTC amount for $100
         (required-sbtc (calculate-sbtc-amount btc-price))
-        
+
         ;; Get user's sBTC balance
-        (user-balance (unwrap! 
+        (user-balance (unwrap!
           (contract-call? .sbtc-token get-balance tx-sender)
           ERR-INSUFFICIENT-FUNDS))
       )
         ;; Verify price is fresh (less than 5 minutes old)
         (try! (verify-price-freshness price-data))
-        
+
         ;; Verify user has enough sBTC
         (asserts! (>= user-balance required-sbtc) ERR-INSUFFICIENT-FUNDS)
-        
+
         ;; Transfer sBTC from user
-        (try! (contract-call? .sbtc-token transfer 
+        (try! (contract-call? .sbtc-token transfer
           required-sbtc tx-sender (as-contract tx-sender) none))
-        
+
         ;; Mint the NFT
         (let ((token-id (+ (var-get last-token-id) u1)))
           (try! (nft-mint? benjamin-nft token-id tx-sender))
@@ -182,7 +182,7 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
 
   <Step>
     ### Build the frontend integration
-    
+
     Create a service to fetch price data from Pyth:
 
     ```typescript frontend/pyth-service.ts
@@ -201,7 +201,7 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
 
       const vaas = await pythClient.getLatestVaas([PRICE_FEEDS.BTC_USD]);
       const messageBuffer = Buffer.from(vaas[0], 'base64');
-      
+
       return `0x${messageBuffer.toString('hex')}`;
     }
     ```
@@ -222,7 +222,7 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
         try {
           // Fetch fresh price data
           const priceVAA = await fetchBTCPriceVAA();
-          
+
           // Create post-conditions for safety
           const postConditions = [
             // Oracle fee (1 uSTX max)
@@ -249,8 +249,8 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
       };
 
       return (
-        <button 
-          onClick={handleMint} 
+        <button
+          onClick={handleMint}
           disabled={loading}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg"
         >
@@ -265,7 +265,7 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
 
   <Step>
     ### Test your implementation
-    
+
     Write comprehensive tests using Clarinet:
 
     ```typescript tests/benjamin-club.test.ts
@@ -343,7 +343,7 @@ try {
 Batch multiple price updates when possible:
 
 ```clarity
-(define-public (update-multiple-prices 
+(define-public (update-multiple-prices
   (btc-vaa (buff 8192))
   (eth-vaa (buff 8192))
   (stx-vaa (buff 8192)))
@@ -362,14 +362,14 @@ Batch multiple price updates when possible:
       Ensure you're fetching VAA data with `binary: true` option and converting from base64 to hex correctly. The VAA must be recent (typically within 5 minutes).
     </AccordionContent>
   </AccordionItem>
-  
+
   <AccordionItem value="price-conversion">
     <AccordionTrigger>Price calculations are incorrect</AccordionTrigger>
     <AccordionContent>
       Check that you're handling the exponent correctly. Pyth uses fixed-point representation where the actual price = raw_price * 10^exponent. For negative exponents, divide by 10^(-exponent).
     </AccordionContent>
   </AccordionItem>
-  
+
   <AccordionItem value="gas-issues">
     <AccordionTrigger>Transaction runs out of gas</AccordionTrigger>
     <AccordionContent>
@@ -408,22 +408,9 @@ Batch multiple price updates when possible:
 
 - [Pyth Network documentation](https://docs.pyth.network)
 - [Trust Machines Pyth integration](https://github.com/Trust-Machines/stacks-pyth-bridge)
-- [Example repository](https://github.com/your-org/benjamin-club-example)
 - [Wormhole VAA specification](https://wormhole.com/docs/protocol/infrastructure/vaas/)
 
-## Next steps
-
-Now that you understand Pyth oracle integration:
-
-<Cards>
-  <NextCard
-    href="/resources/clarity/external-data"
-    title="Deep dive: Clarity"
-    description="Advanced oracle patterns and optimizations"
-  />
-  <NextCard
-    href="/reference/stacks.js/pyth-oracle-integration"
-    title="Deep dive: Frontend"
-    description="Building production-ready oracle UIs"
-  />
-</Cards>
+:::next-steps
+- [Deep dive on Clarity](/resources/clarity/external-data): Advanced oracle patterns and optimizations
+- [Deep dive on frontend](/reference/stacks.js/pyth-oracle-integration): Building production-ready oracle UIs
+:::
