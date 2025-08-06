@@ -44,6 +44,12 @@
       "destination": "/apis/ordinals-api",
       "permanent": true
     },
+    { "source": "/clarinet", "destination": "/tools/clarinet", "permanent": true },
+    {
+      "source": "/token-metadata-api",
+      "destination": "/apis/token-metadata-api",
+      "permanent": true
+    },
     { "source": "/bitcoin/runes/:path*", "destination": "/apis/runes-api", "permanent": true },
     { "source": "/stacks/:path*", "destination": "/", "permanent": true },
     { "source": "/bitcoin/:path*", "destination": "/", "permanent": true },
