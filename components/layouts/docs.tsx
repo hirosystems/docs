@@ -199,14 +199,14 @@ export function Sidebar() {
     <aside
       data-collapsed={collapsed}
       className={cn(
-        'fixed flex flex-col shrink-0 pt-4 px-2 pb-20 top-16 z-20 text-base md:text-sm overflow-auto md:sticky md:h-[calc(100dvh-64px)]',
+        'fixed flex flex-col shrink-0 top-16 z-20 text-base md:text-sm md:sticky md:h-[calc(100dvh-64px)]',
         'max-md:inset-x-0 max-md:bottom-0',
         !open && 'max-md:invisible',
         'md:w-[250px] md:transition-all md:duration-100 ease-linear',
         collapsed && 'md:w-0 md:p-0 md:overflow-hidden md:invisible',
       )}
     >
-      {children}
+      <div className="overflow-y-auto overscroll-y-contain h-full pt-4 pb-10">{children}</div>
     </aside>
   );
 }
