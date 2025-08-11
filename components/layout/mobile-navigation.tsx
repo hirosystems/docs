@@ -262,7 +262,7 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
             ) : isInDocsContext && !showMainMenu ? (
               <TreeContextProvider tree={tree}>
                 <div className="bg-background">
-                  <div className="[&_aside]:!relative [&_aside]:!top-auto [&_aside]:!w-full [&_aside]:!h-auto [&_aside]:!visible [&_aside]:!p-0">
+                  <div className="[&_aside]:!relative [&_aside]:!top-auto [&_aside]:!w-full [&_aside]:!h-auto [&_aside]:!visible [&_aside]:!px-0 [&_aside]:!pt-0 [&_aside]:!pb-20">
                     <Sidebar />
                   </div>
                 </div>
