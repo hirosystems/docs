@@ -4,6 +4,7 @@ import { NavProvider } from 'fumadocs-ui/contexts/layout';
 import { ArrowUpRight } from 'lucide-react';
 import React, { type HTMLAttributes, useMemo } from 'react';
 import { baseOptions } from '@/app/layout.config';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { MobileMenuProvider } from '@/contexts/mobile-menu';
 import { cn } from '@/lib/utils';
 import { MobileMenuButton } from '../layout/mobile-menu-button';
@@ -101,6 +102,7 @@ export function Header({
           <div className="flex flex-1 items-center justify-end space-x-3">
             <SearchToggle />
             <ThemeToggle />
+            <LanguageSwitcher />
             <Button
               asChild
               className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group hidden lg:flex"
