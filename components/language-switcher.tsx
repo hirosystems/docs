@@ -10,14 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  addLocalePrefix,
-  i18n,
-  languageAbbreviations,
-  languageFlags,
-  languageNames,
-  removeLocalePrefix,
-} from '@/lib/i18n';
+import { i18n, languageAbbreviations, languageFlags, languageNames } from '@/lib/i18n';
 
 export function LanguageSwitcher() {
   const router = useRouter();
@@ -32,11 +25,11 @@ export function LanguageSwitcher() {
     };
 
     const cookieLocale = getCookieLocale();
-    
+
     // Check if path has locale prefix
     const segments = pathname.split('/').filter(Boolean);
     const pathLocale = i18n.languages.includes(segments[0]) ? segments[0] : null;
-    
+
     // Use cookie locale first, then path locale, then default
     const detectedLocale = cookieLocale || pathLocale || i18n.defaultLanguage;
     setCurrentLang(detectedLocale);
@@ -46,20 +39,21 @@ export function LanguageSwitcher() {
     // Set cookie for the new language
     document.cookie = `locale=${newLang}; max-age=${60 * 60 * 24 * 365}; path=/; samesite=lax`;
 
-    // Get clean path without locale
-    const cleanPath = removeLocalePrefix(pathname);
+    // Parse current path to get the clean path without locale
+    const segments = pathname.split('/').filter(Boolean);
     
-    // Determine new path based on language
-    let newPath: string;
-    
-    if (newLang === i18n.defaultLanguage) {
-      // For English, always use clean URLs (no prefix)
-      newPath = cleanPath;
+    // Check if first segment is a locale
+    let cleanPath: string;
+    if (i18n.languages.includes(segments[0])) {
+      // Remove the locale prefix
+      cleanPath = '/' + segments.slice(1).join('/');
     } else {
-      // For other languages, add prefix for SEO
-      // This creates the initial prefixed URL that will help with SEO
-      newPath = addLocalePrefix(cleanPath, newLang);
+      // Path doesn't have locale prefix (shouldn't happen with our setup)
+      cleanPath = pathname;
     }
+
+    // Build new path with new locale
+    const newPath = `/${newLang}${cleanPath}`;
 
     // Navigate to the new path
     router.push(newPath);
@@ -74,6 +68,7 @@ export function LanguageSwitcher() {
           size="sm"
           className="font-thin text-sm gap-1.5 h-9 px-3 border-border text-muted-foreground hover:text-primary"
         >
+          <span className="text-base">{languageFlags[currentLang]}</span>
           <span className="font-fono">{languageAbbreviations[currentLang]}</span>
           <ChevronDown className="h-3 w-3 opacity-50" />
         </Button>
@@ -82,7 +77,7 @@ export function LanguageSwitcher() {
         {Object.entries(languageNames).map(([code, name]) => {
           // Only show languages that are configured
           if (!i18n.languages.includes(code)) return null;
-          
+
           return (
             <DropdownMenuItem
               key={code}
