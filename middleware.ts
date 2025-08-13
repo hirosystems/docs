@@ -38,12 +38,11 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Combined matcher for both .md files and i18n routes
   matcher: [
     // Match .md files
     '/(.*).md',
     '/docs/(.*).md',
-    // Match all paths except Next.js internals and static files
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    // Match all paths except Next.js internals, API routes, and static files
+    '/((?!_next|api/).*)', // This excludes /api/ but includes /apis/
   ],
 };
