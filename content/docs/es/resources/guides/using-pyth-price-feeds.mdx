@@ -1,22 +1,22 @@
 ---
-title: Uso de feeds de precios de Pyth
-description: Guía completa para integrar datos de precios de mercado en tiempo real de Pyth Network en tus aplicaciones de Stacks.
+title: Uso de fuentes de precios de Pyth
+description: Guía completa para integrar datos de precios de mercado en tiempo real de Pyth Network en sus aplicaciones de Stacks.
 ---
 import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Steps, Step } from '@/components/steps';
 import { ArrowRight, Check } from 'lucide-react';
 
-## Visión general
+## Resumen
 
-Esta guía completa te lleva paso a paso por la integración [Red Pyth](https://pyth.network)El oráculo descentralizado de  para datos de precios en tiempo real en tus aplicaciones de Stacks. Construiremos un ejemplo completo: un NFT que solo se puede acuñar pagando exactamente $100 en sBTC.
+Esta guía completa le explica paso a paso cómo integrar [Red Pyth](https://pyth.network)'s oráculo descentralizado para datos de precios en tiempo real en sus aplicaciones de Stacks. Construiremos un ejemplo completo: un NFT que solo se puede acuñar pagando exactamente $100 en sBTC.
 
 :::callout
-La integración del protocolo Pyth está disponible como Beta en las redes testnet y mainnet. Es mantenida por Trust Machines y proporciona acceso a feeds de precios en tiempo real para BTC, STX, ETH y USDC.
+La integración del protocolo Pyth está disponible como versión Beta en las redes de testnet y mainnet. Es mantenida por Trust Machines y proporciona acceso a feeds de precios en tiempo real para BTC, STX, ETH y USDC.
 :::
 
 ## Descripción general de la arquitectura
 
-Pyth Network utiliza un único **basado en extracción** diseño de oracle:
+Pyth Network utiliza una única **basado en pull** diseño de oracle:
 
 <Mermaid
   chart="
@@ -46,7 +46,7 @@ Crearemos un "Club Benjamin" - un NFT exclusivo que cuesta exactamente $100 en s
 * Conversión entre cantidades de USD y criptomonedas
 * Manejo de aritmética de punto fijo
 * Construyendo una integración frontend completa
-* Probando contratos dependientes de oráculos
+* Probando contratos dependientes de oráculo
 
 <Files className="font-mono pointer-events-none bg-background">
   <Folder name="benjamin-club" defaultOpen>
@@ -211,7 +211,7 @@ Crearemos un "Club Benjamin" - un NFT exclusivo que cuesta exactamente $100 en s
     }
     ```
 
-    Luego crea un componente de React para acuñar:
+    Luego cree un componente React para acuñar:
 
     ```typescript frontend/MintButton.tsx
     import { request } from '@stacks/connect';
@@ -265,7 +265,7 @@ Crearemos un "Club Benjamin" - un NFT exclusivo que cuesta exactamente $100 en s
     }
     ```
 
-    Para obtener detalles completos sobre la integración del frontend, consulte nuestra [Guía de integración de Stacks.js](/reference/stacks.js/pyth-oracle-integration).
+    Para obtener detalles completos sobre la integración frontend, consulte nuestra [Guía de integración de Stacks.js](/reference/stacks.js/pyth-oracle-integration).
   </Step>
 
   <Step>
@@ -305,7 +305,7 @@ Crearemos un "Club Benjamin" - un NFT exclusivo que cuesta exactamente $100 en s
     });
     ```
 
-    Para estrategias de prueba avanzadas, incluyendo simulación de mainnet, consulte nuestra [Guía de prueba del clarinete](/tools/clarinet/pyth-oracle-integration).
+    Para estrategias de prueba avanzadas, incluyendo simulación de mainnet, consulte nuestra [Guía de pruebas de clarinete](/tools/clarinet/pyth-oracle-integration).
   </Step>
 </Steps>
 
@@ -313,7 +313,7 @@ Crearemos un "Club Benjamin" - un NFT exclusivo que cuesta exactamente $100 en s
 
 ### Frescura de precios
 
-Siempre verifica que los datos de precios sean lo suficientemente recientes para tu caso de uso:
+Siempre verifique que los datos de precios sean lo suficientemente recientes para su caso de uso:
 
 ```clarity
 (define-constant MAX-PRICE-AGE u300) ;; 5 minutes
@@ -345,7 +345,7 @@ try {
 
 ### Optimización de gas
 
-Actualizar múltiples precios en lote cuando sea posible:
+Agrupar múltiples actualizaciones de precios cuando sea posible:
 
 ```clarity
 (define-public (update-multiple-prices
@@ -365,15 +365,15 @@ Actualizar múltiples precios en lote cuando sea posible:
     <AccordionTrigger>La verificación de VAA falla</AccordionTrigger>
 
     <AccordionContent>
-      Asegúrate de obtener datos VAA con `binary: true` opción y convertir correctamente de base64 a hexadecimal. El VAA debe ser reciente (normalmente dentro de los 5 minutos).
+      Asegúrate de obtener datos VAA con `binary: true` opción y convirtiendo correctamente de base64 a hexadecimal. El VAA debe ser reciente (típicamente dentro de los 5 minutos).
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="conversión-de-precios">
+  <AccordionItem value="conversión de precios">
     <AccordionTrigger>Los cálculos de precios son incorrectos</AccordionTrigger>
 
     <AccordionContent>
-      Verifica que estés manejando el exponente correctamente. Pyth utiliza representación de punto fijo donde el precio real = precio\_bruto \* 10^exponente. Para exponentes negativos, divide por 10^(-exponente).
+      Verifica que estés manejando el exponente correctamente. Pyth utiliza una representación de punto fijo donde el precio real = precio\_bruto \* 10^exponente. Para exponentes negativos, divide por 10^(-exponente).
     </AccordionContent>
   </AccordionItem>
 
@@ -381,15 +381,15 @@ Actualizar múltiples precios en lote cuando sea posible:
     <AccordionTrigger>La transacción se queda sin gas</AccordionTrigger>
 
     <AccordionContent>
-      Las actualizaciones de oráculos pueden consumir mucho gas. Asegúrate de que tus límites de gas tengan en cuenta tanto la actualización del oráculo como la lógica de tu contrato. Considera almacenar en caché los precios cuando múltiples operaciones necesiten el mismo precio.
+      Las actualizaciones de oráculos pueden consumir mucho gas. Asegúrese de que sus límites de gas tengan en cuenta tanto la actualización del oráculo como la lógica de su contrato. Considere almacenar en caché los precios cuando múltiples operaciones necesiten el mismo precio.
     </AccordionContent>
   </AccordionItem>
 </Accordion>
 
 ## Consideraciones de seguridad
 
-1. **Manipulación de precios**: Utiliza siempre intervalos de confianza e implementa comprobaciones de cordura
-2. **Adelantamiento**: Considere utilizar esquemas de compromiso-revelación para operaciones sensibles al precio
+1. **Manipulación de precios**: Utilice siempre intervalos de confianza e implemente controles de cordura
+2. **Front-running**: Considere utilizar esquemas de compromiso-revelación para operaciones sensibles al precio
 3. **Tarifas de Oracle**: Establecer condiciones posteriores apropiadas para limitar la exposición a tarifas
 4. **Rancidez**: Rechazar precios más antiguos que tu umbral de seguridad
 
@@ -399,14 +399,14 @@ Actualizar múltiples precios en lote cuando sea posible:
 
 | Red | Contrato | Dirección |
 |---------|----------|---------|
-| Mainnet | pyth-oracle-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
+| Red principal | pyth-oracle-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
 | Red principal | pyth-storage-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3` |
 | Red de pruebas | pyth-oracle-v3 | `ST3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
 
 ### IDs de fuentes de precios
 
-| Activo | ID del Feed |
-|--------|-------------|
+| Activo | ID de alimentación |
+|-------|---------|
 | BTC/USD | `0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43` |
 | STX/USD | `0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17` |
 | ETH/USD | `0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace` |
@@ -418,7 +418,9 @@ Actualizar múltiples precios en lote cuando sea posible:
 * [Integración de Pyth en Trust Machines](https://github.com/Trust-Machines/stacks-pyth-bridge)
 * [Especificación VAA de Wormhole](https://wormhole.com/docs/protocol/infrastructure/vaas/)
 
+## Próximos pasos
+
 :::next-steps
-- [Inmersión profunda en Clarity](/resources/clarity/external-data): Patrones y optimizaciones avanzadas de oráculo
-- [Inmersión profunda en el frontend](/reference/stacks.js/pyth-oracle-integration): Construyendo interfaces de usuario de oráculos listas para producción
+* [Inmersión profunda en Clarity](/resources/clarity/external-data): Patrones y optimizaciones avanzadas de oráculo
+* [Inmersión profunda en el frontend](/reference/stacks.js/pyth-oracle-integration): Construyendo interfaces de usuario de oráculos listas para producción
 :::

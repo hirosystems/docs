@@ -1,9 +1,11 @@
 ---
 title: Escribiendo pruebas de integración
 sidebarTitle: Pruebas de integración
-description: Las pruebas de integración son un paso crucial en el desarrollo de contratos inteligentes que implica probar cómo funcionan juntos los diferentes componentes de tu sistema. El SDK de Clarinet JS proporciona herramientas poderosas para escribir y ejecutar pruebas de integración, permitiéndote simular escenarios complejos e interacciones entre múltiples contratos.
+description: Las pruebas de integración son un paso crucial en el desarrollo de contratos inteligentes que implica probar cómo funcionan juntos los diferentes componentes de su sistema. El SDK de Clarinet JS proporciona herramientas poderosas para escribir y ejecutar pruebas de integración, permitiéndole simular escenarios complejos e interacciones entre múltiples contratos.
 ---
 import { ArrowRight, Check } from 'lucide-react';
+
+## Lo que aprenderás
 
 :::objectives
 * Configurar pruebas de integración para flujos de trabajo de múltiples pasos
@@ -24,7 +26,7 @@ $ npm install
 
 ## Crear el contrato mejorado
 
-Usaremos un contrato DeFi mejorado que admite tanto depósitos como préstamos. Crea el contrato:
+Utilizaremos un contrato DeFi mejorado que admite tanto depósitos como préstamos. Cree el contrato:
 
 ```terminal
 $ clarinet contract new defi
@@ -115,7 +117,7 @@ Reemplazar `contracts/defi.clar` con esta versión mejorada:
 )
 ```
 
-Ejecutar `clarinet check` para asegurar que su contrato sea válido:
+Correr `clarinet check` para asegurar que su contrato sea válido:
 
 ```terminal
 $ clarinet check
@@ -185,16 +187,16 @@ describe('stx-defi integration', () => {
 });
 ```
 
-En esta prueba de integración, estamos simulando un escenario donde un usuario deposita STX en el contrato DeFi y luego pide prestado contra ese depósito. Analicemos los aspectos clave:
+En esta prueba de integración, estamos simulando un escenario donde un usuario deposita STX en el contrato DeFi y luego pide un préstamo contra ese depósito. Analicemos los aspectos clave:
 
-* **`callPublicFn`** - Simula la llamada a funciones públicas tal como en la blockchain real
+* **`callPublicFn`** - Simula la llamada a funciones públicas tal como en la cadena de bloques real
 * **`getDataVar`** - Recupera el valor de las variables de datos del contrato
 * **`callReadOnlyFn`** - Llama a funciones de solo lectura sin modificar el estado
-* **Matchers personalizados** - `toBeOk()` y `toBeErr()` validar tipos de respuesta de Clarity
+* **Comparadores personalizados** - `toBeOk()` y `toBeErr()` validar tipos de respuesta de Clarity
 
 ## Pruébalo
 
-Ejecuta tus pruebas de integración:
+Ejecute sus pruebas de integración:
 
 ```terminal
 $ npm run test
@@ -203,10 +205,12 @@ $ npm run test
 ## Problemas comunes
 
 | Problema | Solución |
-|----------|----------|
+|-------|----------|
 | Contaminación del estado entre pruebas | Cada prueba se ejecuta de forma aislada - el estado no se transfiere |
 | Problemas de sincronización | Usar `simnet.mineEmptyBlocks()` para avanzar la altura del bloque |
-| Aserciones complejas | Desglosar en pruebas más pequeñas y enfocadas |
+| Afirmaciones complejas | Desglosar en pruebas más pequeñas y enfocadas |
+
+## Próximos pasos
 
 :::next-steps
 * [Referencia del SDK](/tools/clarinet/sdk-reference): Aprende más sobre el SDK de Clarinet JS.

@@ -1,7 +1,7 @@
 ---
-title: Validando tus contratos
+title: Validando sus contratos
 sidebarTitle: Validación y análisis
-description: Clarinet proporciona herramientas poderosas para validar, analizar y depurar tus contratos inteligentes. Desde la comprobación estática de tipos hasta el análisis de costos en tiempo real, puedes asegurarte de que tus contratos sean correctos y eficientes antes de su implementación.
+description: El clarinete proporciona herramientas poderosas para validar, analizar y depurar sus contratos inteligentes. Desde la comprobación estática de tipos hasta el análisis de costos en tiempo real, puede asegurarse de que sus contratos sean correctos y eficientes antes de la implementación.
 ---
 La validación de contratos en el desarrollo de Clarity abarca análisis estático, depuración en tiempo de ejecución y optimización de costos. Cada enfoque sirve para diferentes propósitos en la garantía de la corrección y eficiencia del contrato.
 
@@ -9,17 +9,17 @@ La validación de contratos en el desarrollo de Clarity abarca análisis estáti
 
 **Análisis Estático vs Depuración en Tiempo de Ejecución**
 
-| Análisis Estático             | Depuración en Tiempo de Ejecución |
-|-----------------------------|-------------------------------------|
+| Static Analysis             | Runtime Debugging            |
+|-----------------------------|------------------------------|
 | Detecta errores antes del despliegue | Revela el comportamiento durante la ejecución |
 | Incompatibilidades de tipos, errores de sintaxis | Costos reales de ejecución |
-| Violaciones de cumplimiento de traits | Cambios de estado y efectos secundarios |
+| Violaciones de cumplimiento de rasgos | Cambios de estado y efectos secundarios |
 | Uso de variables no definidas | Flujo y resultados de transacciones |
 | Problemas con firmas de funciones | Cuellos de botella de rendimiento |
 
 ## Análisis estático
 
-El `clarinet check` el comando realiza una validación exhaustiva de tus contratos sin ejecutarlos:
+El `clarinet check` el comando realiza una validación exhaustiva de sus contratos sin ejecutarlos:
 
 ```terminal
 $ clarinet check
@@ -41,17 +41,17 @@ $ clarinet check
 
 **Alcance de la validación**
 
-El clarinete valida múltiples aspectos de tus contratos:
+El clarinete valida múltiples aspectos de sus contratos:
 
 | Tipo de validación | Qué verifica |
 |----------------|----------------|
 | **Seguridad de tipos** | Parámetros de función, valores de retorno, tipos de variables |
 | **Cumplimiento de rasgos** | La implementación coincide con las definiciones de rasgos |
-| **Consistencia de respuesta** | Las ramas ok/err devuelven los mismos tipos |
+| **Consistencia de respuesta** | Las ramas Ok/err devuelven los mismos tipos |
 | **Ámbito de variables** | Todas las variables definidas antes de su uso |
-| **Visibilidad de funciones** | Modificadores público/privado/solo lectura |
+| **Visibilidad de funciones** | Modificadores públicos/privados/de solo lectura |
 
-**Comprobando contratos específicos**
+**Verificando contratos específicos**
 
 Validar contratos individuales durante el desarrollo enfocado:
 
@@ -62,7 +62,7 @@ $ clarinet check contracts/nft.clar
 
 **Integración con CI**
 
-Automatice la validación en su pipeline de integración continua. Por ejemplo, use GitHub Actions:
+Automatice la validación en su pipeline de integración continua. Por ejemplo, utilice GitHub Actions:
 
 ```yaml .github/workflows/validate.yml -c
 name: Contract Validation
@@ -82,7 +82,7 @@ jobs:
 
 ## Análisis de tiempo de ejecución
 
-La consola de Clarinet proporciona potentes herramientas de análisis en tiempo de ejecución que te permiten inspeccionar el comportamiento del contrato durante la ejecución.
+La consola de Clarinet proporciona potentes herramientas de análisis en tiempo de ejecución que le permiten inspeccionar el comportamiento del contrato durante la ejecución.
 
 ### **Análisis de costos con `::toggle_costs`**
 
@@ -111,7 +111,7 @@ $ (contract-call? .counter count-up)
 
 ### **Rastreo de ejecución con `::trace`**
 
-Rastrea las llamadas a funciones para entender el flujo de ejecución:
+Rastree las llamadas de función para comprender el flujo de ejecución:
 
 ```terminal
 $ ::trace (contract-call? .defi-pool swap u100 'token-a 'token-b)
@@ -130,7 +130,7 @@ $ ::trace (contract-call? .defi-pool swap u100 'token-a 'token-b)
 
 ### **Depuración interactiva con `::debug`**
 
-Establece puntos de interrupción y avanza paso a paso por la ejecución:
+Establezca puntos de interrupción y avance paso a paso por la ejecución:
 
 ```terminal
 $ ::debug (contract-call? .complex-contract process-batch)
@@ -140,7 +140,7 @@ $ continue
 [33mHit breakpoint at validate-input:23[0m
 ```
 
-Comandos de depuración de navegación:
+Comandos de navegación de depuración:
 
 * `step` o `s` - Entrar en sub-expresiones
 * `finish` o `f` - Completar la expresión actual
@@ -173,14 +173,14 @@ $ ::get_costs (contract-call? .defi-pool add-liquidity u1000 u1000)
 $ ::trace (contract-call? .complex-algo process-large-dataset)
 ```
 
-Busca:
+Buscar:
 
 * Bucles con altos conteos de iteración
 * Operaciones anidadas de map/filter
-* Llamadas repetidas a contratos
+* Llamadas de contrato repetidas
 * Manipulaciones de estructuras de datos grandes
 
-## Flujos de trabajo de depuración
+## Depuración de flujos de trabajo
 
 Domina la depuración interactiva para identificar problemas rápidamente iniciando una sesión de depuración:
 
@@ -234,7 +234,9 @@ $ (contract-call? .vesting claim)
 [32m(ok {claimed: u2500, remaining: u7500})[0m
 ```
 
+## Próximos pasos
+
 :::next-steps
-* [Despliegue](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
+* [Implementación](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
 * [SDK de Clarinete](/tools/clarinet/sdk-introduction): Aprende cómo usar el SDK de Clarinet.
 :::

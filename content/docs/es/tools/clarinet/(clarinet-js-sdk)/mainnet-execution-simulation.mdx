@@ -1,7 +1,7 @@
 ---
-title: Probando contra datos de la red principal
+title: Pruebas con datos de la red principal
 sidebarTitle: Simulación de ejecución de la red principal
-description: La Simulación de Ejecución de Mainnet (MXS) te permite probar tus contratos inteligentes de Clarity utilizando datos y estados reales de la mainnet de Stacks. Esta poderosa característica ayuda a asegurar que tus contratos se comporten como se espera en un entorno en vivo.
+description: Mainnet Execution Simulation (MXS) te permite probar tus contratos inteligentes de Clarity utilizando datos y estados reales de la red principal de Stacks. Esta poderosa función ayuda a garantizar que tus contratos se comporten como se espera en un entorno en vivo.
 ---
 :::objectives
 * Configurando MXS en tu proyecto de Clarinet
@@ -54,13 +54,13 @@ use_mainnet_wallets = true  # !mark
 
 Esto es particularmente útil cuando:
 
-* Probando contratos exclusivos de mainnet como protocolos DEX
+* Pruebas contra contratos exclusivos de mainnet como protocolos DEX
 * Su contrato incluye [`(is-standard standard-or-contract-principal)`](/resources/clarity/reference/functions#is-standard) validación
 * Simulando transacciones que requieren formatos de dirección de mainnet
 
 ## Configurar el acceso a la API
 
-Aunque MXS funciona sin una clave de API, es posible que encuentres límites de velocidad. Configura una clave de API para un acceso confiable:
+Aunque MXS funciona sin una clave de API, es posible que encuentre límites de velocidad. Configure una clave de API para un acceso confiable:
 
 ```terminal
 $ export HIRO_API_KEY="<your-api-key>"
@@ -110,12 +110,12 @@ $ npm run test
 | Problema | Solución |
 |----------|----------|
 | Errores de límite de tasa | Configurar `HIRO_API_KEY` variable de entorno |
-| Resultados inconsistentes | Solucionar `initial_height` en configuración |
+| Resultados inconsistentes | Corregir `initial_height` en configuración |
 | Función no encontrada | Verifique que el contrato exista en su altura de bloque |
 
-## Probando en el área de juegos
+## Probando en el área de pruebas
 
-Experimenta rápidamente con MXS sin configurar un proyecto:
+Experimente rápidamente con MXS sin configurar un proyecto:
 
 1. Visitar [https://play.hiro.so/?remote\_data=true](https://play.hiro.so/?remote_data=true)
 2. Ejecutar llamadas de contrato en la red principal:
@@ -124,7 +124,9 @@ Experimenta rápidamente con MXS sin configurar un proyecto:
 $ contract-call? 'SP000000000000000000002Q6VF78.pox-4 current-pox-reward-cycle
 ```
 
+## Próximos pasos
+
 :::next-steps
 * [Integración del oráculo Pyth](/tools/clarinet/pyth-oracle-integration): Aprende cómo integrar el oráculo Pyth con tu proyecto Clarinet.
-* [Integración de sBTC](/tools/clarinet/sbtc-integration): Aprende cómo integrar el sBTC con tu proyecto de Clarinet.
+* [Integración de sBTC](/tools/clarinet/sbtc-integration): Aprende cómo integrar el sBTC con tu proyecto Clarinet.
 :::

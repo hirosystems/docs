@@ -20,6 +20,16 @@ export const es: Translations = {
     toc: {
       contents: 'Contenidos',
     },
+    feedback: {
+      question: '¿Cómo es esta guía?',
+      good: 'Buena',
+      bad: 'Mala',
+      thankYou: '¡Gracias por tus comentarios!',
+      viewHere: 'Ver aquí',
+      placeholder: 'Deja tus comentarios...',
+      submit: 'Enviar',
+      submitting: 'Enviando...',
+    },
   },
   breadcrumb: {
     // Main sections

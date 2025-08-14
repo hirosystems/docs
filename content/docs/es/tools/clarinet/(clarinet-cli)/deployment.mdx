@@ -15,7 +15,7 @@ $ clarinet deployments generate --testnet
 [32mCreated file[0m [1mdeployments/default.testnet-plan.yaml[0m
 ```
 
-Esto crea un plan de despliegue basado en la configuración de tu proyecto:
+Esto crea un plan de despliegue basado en la configuración de su proyecto:
 
 ```yaml deployments/default.devnet-plan.yaml
 ---
@@ -45,20 +45,20 @@ Componentes clave de un plan de despliegue:
 | Campo | Descripción |
 |-------|-------------|
 | `id` | Identificador único para el despliegue |
-| `name` | Nombre de implementación legible para humanos |
+| `name` | Nombre de implementación legible por humanos |
 | `network` | Red objetivo (devnet/testnet/mainnet) |
 | `stacks-node` | Punto final RPC para el nodo Stacks |
-| `bitcoin-node` | Punto final RPC para el nodo Bitcoin |
+| `bitcoin-node` | Punto final RPC para el nodo de Bitcoin |
 | `plan.batches` | Matriz de lotes de implementación |
 
-### Especificaciones de implementación
+### Especificaciones de despliegue
 
-El comportamiento de despliegue se configura en dos lugares:
+El comportamiento de implementación se configura en dos lugares:
 
 **Configuración del proyecto** (`Clarinet.toml`):
 
 * Versión de Clarity para contratos
-* Dependencias de contrato
+* Dependencias contractuales
 * Requisitos de época
 
 **Configuración de red** (`settings/<Network>.toml`):
@@ -82,9 +82,9 @@ derivation = "m/44'/5757'/0'/0/0"
 
 ## Trabajando con requisitos contractuales
 
-Tu proyecto puede hacer referencia a contratos que ya existen en la blockchain. Esto es especialmente útil para implementar rasgos estandarizados.
+Su proyecto puede hacer referencia a contratos que ya existen en la blockchain. Esto es especialmente útil para implementar rasgos estandarizados.
 
-### Agregando requisitos
+### Añadiendo requisitos
 
 Agregar dependencias de contratos externos:
 
@@ -108,9 +108,9 @@ Al implementar, Clarinet automáticamente:
 
 * Descarga el contrato a través de la API de Stacks
 * Reasigna el principal a una cuenta local para devnet
-* Asegura que el requisito esté disponible antes de desplegar tus contratos
+* Garantiza que el requisito esté disponible antes de desplegar tus contratos
 
-## Desplegando en diferentes redes
+## Implementación en diferentes redes
 
 <Tabs defaultValue="devnet" className="w-full">
   <TabsList className="h-auto p-0 bg-transparent">
@@ -123,14 +123,14 @@ Al implementar, Clarinet automáticamente:
     </TabsTrigger>
 
     <TabsTrigger value="red principal" className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0">
-      Red principal
+      Mainnet
     </TabsTrigger>
   </TabsList>
 
   <TabsContent value="devnet" className="mt-4">
-    **Despliegue rápido para desarrollo local**
+    **Implementación rápida para desarrollo local**
 
-    Devnet despliega automáticamente los contratos al iniciarse:
+    Devnet despliega automáticamente los contratos cuando se inicia:
 
     ```terminal
     $ clarinet devnet start
@@ -182,13 +182,13 @@ Al implementar, Clarinet automáticamente:
     Antes de implementar en la red principal:
 
     1. Completar pruebas exhaustivas en la red de pruebas
-    2. Audita tus contratos en busca de vulnerabilidades de seguridad
+    2. Audite sus contratos para detectar vulnerabilidades de seguridad
     3. Asegúrate de tener suficiente STX para las tarifas de implementación
     4. Haga una copia de seguridad de sus claves de implementación de forma segura
-    5. Considere usar una billetera hardware para el despliegue
+    5. Considere usar una billetera de hardware para el despliegue
     :::
 
-    **Generar plan de despliegue en mainnet**:
+    **Generar plan de despliegue de red principal**:
 
     ```terminal
     $ clarinet deployments generate --mainnet --high-cost
@@ -229,7 +229,7 @@ $ clarinet deployments generate --testnet --medium-cost
 
 ## Configuraciones avanzadas de implementación
 
-### Implementaciones de múltiples lotes
+### Despliegues de múltiples lotes
 
 Despliegue sistemas complejos con dependencias utilizando lotes:
 
@@ -263,14 +263,14 @@ Los lotes garantizan:
 * Despliegue paralelo dentro de lotes
 * Ejecución secuencial entre lotes
 
-### Tipos de transacción
+### Tipos de transacciones
 
 Los planes de implementación admiten varios tipos de transacciones:
 
-| Tipo de Transacción | Descripción                                                                                |
-|---------------------|--------------------------------------------------------------------------------------------|
-| Operaciones de Contrato | Implica publicar y llamar contratos, especificando remitente, costo y ruta                |
-| Transferencias de Activos | Transfiere activos como STX o BTC, especificando remitente, destinatario y cantidades     |
+| Transaction Type   | Descripción                                                                                |
+|--------------------|--------------------------------------------------------------------------------------------|
+| Contract Operations| Implica publicar y llamar contratos, especificando remitente, costo y ruta                 |
+| Asset Transfers    | Transfiere activos como STX o BTC, especificando remitente, destinatario y cantidades      |
 
 **Con operaciones de contrato**:
 
@@ -315,7 +315,7 @@ Puede editar manualmente los planes de implementación para escenarios complejos
 :::callout
 ### Ediciones manuales
 
-Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no` para mantener tus personalizaciones.
+Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escriba `no` para mantener tus personalizaciones.
 :::
 
 **Ejemplo de inicialización de contrato**:
@@ -344,8 +344,8 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
 
         **Soluciones**:
 
-        1. **Obtén STX de testnet**: Visite el [faucet de testnet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
-        2. **Reducir la tasa de comisión**: Uso `--low-cost` opción
+        1. **Obtener STX de testnet**: Visita el [faucet de testnet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
+        2. **Reducir la tasa de comisión**: Usar `--low-cost` opción
         3. **Consultar saldo**:
 
         ```terminal
@@ -366,11 +366,11 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
         **Causas**:
 
         * Contrato con el mismo nombre ya desplegado
-        * El intento de despliegue anterior tuvo éxito
+        * Intento de implementación anterior exitoso
 
         **Soluciones**:
 
-        1. Utiliza un nombre de contrato diferente
+        1. Utilice un nombre de contrato diferente
         2. Desplegar desde una dirección diferente
         3. Si está realizando pruebas, utilice una cuenta nueva de testnet
       </div>
@@ -382,7 +382,7 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        **Error**: "Error al conectar con el nodo de testnet"
+        **Error**: "No se pudo conectar al nodo de testnet"
 
         **Comprobar la configuración de red**:
 
@@ -392,7 +392,7 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
         node_rpc_address = "https://stacks-node-api.testnet.stacks.co"
         ```
 
-        **Prueba puntos finales alternativos**:
+        **Probar puntos finales alternativos**:
 
         * Hiro: `https://api.testnet.hiro.so`
         * Usa tu propio nodo
@@ -406,8 +406,8 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="errores-del-plan-de-despliegue">
-    <AccordionTrigger>Plan de implementación no válido</AccordionTrigger>
+  <AccordionItem value="plan-de-implementación-errores">
+    <AccordionTrigger>Plan de despliegue no válido</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
@@ -417,7 +417,7 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
         * Faltan campos obligatorios
         * Rutas de contrato inválidas
 
-        **Valida tu plan**:
+        **Valide su plan**:
 
         ```terminal
         $ clarinet deployments check
@@ -438,6 +438,8 @@ Al implementar, Clarinet solicita sobrescribir los cambios manuales. Escribe `no
     </AccordionContent>
   </AccordionItem>
 </Accordion>
+
+## Próximos pasos
 
 :::next-steps
 * [Chainhook](/tools/chainhook): Aprende cómo monitorear tus contratos con Chainhook.

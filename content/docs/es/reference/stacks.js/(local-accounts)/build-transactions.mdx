@@ -1,7 +1,7 @@
 ---
 title: Construyendo transacciones
 sidebarTitle: Construir transacciones
-description: Aprende cómo construir transacciones programáticamente para tener control total sobre las interacciones con la blockchain.
+description: Aprende cómo construir transacciones de forma programática para tener un control completo sobre las interacciones con la blockchain.
 ---
 :::objectives
 * Construir transacciones firmadas para transmisión inmediata
@@ -9,7 +9,7 @@ description: Aprende cómo construir transacciones programáticamente para tener
 * Implementar transacciones patrocinadas para pagar tarifas por los usuarios
 :::
 
-## Tipos de transacción
+## Tipos de transacciones
 
 Stacks admite cinco tipos principales de transacciones, cada uno con un propósito específico.
 
@@ -92,7 +92,7 @@ const transaction = await makeContractCall({
 
 ## Transacciones no firmadas
 
-Crea transacciones sin firmar para flujos de trabajo de firma múltiple o firma fuera de línea.
+Crear transacciones sin firmar para flujos de trabajo de firma múltiple o firma fuera de línea.
 
 ```typescript
 import { makeUnsignedSTXTokenTransfer, TransactionSigner } from '@stacks/transactions';
@@ -117,7 +117,7 @@ const signedTx = signer.transaction;
 
 ## Transacciones patrocinadas
 
-Permite que una cuenta pague las tarifas de la transacción de otra cuenta.
+Permita que una cuenta pague las tarifas de la transacción de otra cuenta.
 
 ```typescript
 // User creates sponsored transaction
@@ -171,7 +171,7 @@ const signedTx = signer.transaction;
 
 ## Trabajando con valores de Clarity
 
-Usa el `Cl` ayudante para argumentos de contrato con seguridad de tipos.
+Utilice el `Cl` ayudante para argumentos de contrato con seguridad de tipos.
 
 ```typescript
 import { Cl } from '@stacks/transactions';
@@ -229,7 +229,7 @@ const transaction = await makeContractCall({
 
 ## Estimación de tarifas
 
-Obtenga estimaciones precisas de las tarifas antes de transmitir.
+Obtenga estimaciones precisas de tarifas antes de transmitir.
 
 ```typescript
 import { estimateFee } from '@stacks/transactions';
@@ -251,7 +251,9 @@ tx.setFee(feeRate);
 const result = await broadcastTransaction({ transaction: tx });
 ```
 
+## Próximos pasos
+
 :::next-steps
 * [Llamadas de contrato](/reference/stacks.js/contract-calls): Aprende cómo llamar a funciones de contratos.
-* [Postcondiciones](/reference/stacks.js/post-conditions): Entendiendo las post-condiciones.
+* [Postcondiciones](/reference/stacks.js/post-conditions): Comprendiendo las post-condiciones.
 :::

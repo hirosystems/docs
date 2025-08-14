@@ -3,11 +3,13 @@ title: Integración de Stacks.js con devnet
 sidebarTitle: Integración de Stacks.js
 description: En esta guía, aprenderás cómo interactuar con tus contratos inteligentes en devnet utilizando las bibliotecas de Stacks.js.
 ---
+## Lo que aprenderás
+
 :::objectives
 * Configurar Stacks.js para conexión a devnet local
 * Realizar transferencias STX entre cuentas de devnet
 * Llamar a funciones de contratos inteligentes desde JavaScript
-* Desplegar contratos de forma programática
+* Implementar contratos de forma programática
 :::
 
 ## Inicio rápido
@@ -16,7 +18,7 @@ description: En esta guía, aprenderás cómo interactuar con tus contratos inte
   <Step>
     ### Instalar paquetes de Stacks.js
 
-    Agrega los paquetes necesarios de Stacks.js a tu proyecto frontend:
+    Agregue los paquetes requeridos de Stacks.js a su proyecto frontend:
 
     ```package-install
     @stacks/transactions @stacks/network
@@ -53,7 +55,7 @@ description: En esta guía, aprenderás cómo interactuar con tus contratos inte
   <Step>
     ### Prueba de transferencias STX
 
-    Crea una transferencia simple de STX entre cuentas de devnet:
+    Cree una transferencia STX simple entre cuentas de devnet:
 
     ```ts stx-transfer.ts
     import { makeSTXTokenTransfer, broadcastTransaction, AnchorMode } from '@stacks/transactions';
@@ -89,7 +91,7 @@ description: En esta guía, aprenderás cómo interactuar con tus contratos inte
   <Step>
     ### Llamar a contratos inteligentes
 
-    Interactúa con contratos desplegados en devnet:
+    Interactúa con contratos implementados en devnet:
 
     ```ts contract-call.ts
     import { makeContractCall, broadcastTransaction, AnchorMode, Cl } from '@stacks/transactions';
@@ -139,7 +141,7 @@ description: En esta guía, aprenderás cómo interactuar con tus contratos inte
   <Step>
     ### Desplegar contratos desde el frontend
 
-    Despliegue nuevos contratos en devnet de forma programática:
+    Desplegar nuevos contratos en devnet de forma programática:
 
     ```ts deploy-contract.ts
     import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
@@ -181,7 +183,7 @@ description: En esta guía, aprenderás cómo interactuar con tus contratos inte
 
 ### Esperando la confirmación de la transacción
 
-Monitorea cuándo se confirman las transacciones en devnet:
+Monitorear cuándo se confirman las transacciones en devnet:
 
 ```ts transaction-monitor.ts
 async function waitForTransaction(txid: string) {

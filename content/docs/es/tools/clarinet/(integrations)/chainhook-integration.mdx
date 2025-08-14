@@ -3,6 +3,8 @@ title: Registrar Chainhooks en devnet
 sidebarTitle: Integración de Chainhook
 description: En esta guía, aprenderás cómo registrar Chainhooks en devnet para monitorear y reaccionar a eventos de contratos inteligentes durante el desarrollo local.
 ---
+## Lo que aprenderás
+
 :::objectives
 * Crear archivos de predicado Chainhook para monitoreo de eventos
 * Registrar Chainhooks con Clarinet devnet
@@ -10,9 +12,11 @@ description: En esta guía, aprenderás cómo registrar Chainhooks en devnet par
 * Configurar webhooks para notificaciones en tiempo real
 :::
 
+## Requisitos previos
+
 :::prerequisites
 * Se requiere Clarinet versión 2.1.0 o superior. Verificar con `clarinet --version`.
-* Se requiere Node.js versión 16 o superior. Compruebe con `node --version`.
+* Se requiere Node.js versión 16 o superior. Verifique con `node --version`.
 :::
 
 ## Inicio rápido
@@ -77,7 +81,7 @@ description: En esta guía, aprenderás cómo registrar Chainhooks en devnet par
     $ clarinet devnet start
     ```
 
-    Busca la confirmación de registro:
+    Busque la confirmación de registro:
 
     ```terminal
     $ clarinet devnet start
@@ -89,7 +93,7 @@ description: En esta guía, aprenderás cómo registrar Chainhooks en devnet par
   <Step>
     ### Monitorear la actividad de Chainhook
 
-    Cuando ocurran acciones de contrato, verás los disparadores de Chainhook en la terminal:
+    Cuando se producen acciones de contrato, verás los disparadores de Chainhook en la terminal:
 
     ```terminal
     $ clarinet devnet start
@@ -97,9 +101,9 @@ description: En esta guía, aprenderás cómo registrar Chainhooks en devnet par
     INFO Feb  5 15:21:07.233382 1 hooks triggered
     ```
 
-    Verifica la carga útil basada en tu `then_that` configuración:
+    Verifique la carga útil según su `then_that` configuration:
 
-    * **`http_post`** - Verifica que tu endpoint recibió la solicitud POST
+    * **`http_post`** - Verifica que tu endpoint haya recibido la solicitud POST
     * **`file_append`** - Verificar que el archivo fue creado/actualizado
   </Step>
 </Steps>
@@ -108,7 +112,7 @@ description: En esta guía, aprenderás cómo registrar Chainhooks en devnet par
 
 ### Gancho de despliegue de contrato
 
-Monitorear cuándo se despliegan contratos específicos:
+Monitorear cuándo se implementan contratos específicos:
 
 ```json chainhooks/deploy-monitor.json
 {

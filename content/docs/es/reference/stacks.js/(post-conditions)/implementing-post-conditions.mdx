@@ -5,13 +5,17 @@ description: Aprende cómo agregar post-condiciones para proteger tus transaccio
 ---
 Las post-condiciones son una poderosa característica de seguridad en Stacks que protege a los usuarios de resultados inesperados en las transacciones. Este tutorial te guiará a través de la implementación de post-condiciones en tus aplicaciones para garantizar que las transacciones se comporten exactamente como los usuarios esperan.
 
+## Lo que aprenderás
+
 :::objectives
 * Construir post-condiciones utilizando la API auxiliar Pc
 * Agregar post-condiciones a diferentes tipos de transacciones
-* Configurar modos de post-condición para la seguridad de transacciones
+* Configurar modos de post-condición para la seguridad de las transacciones
 * Implementar post-condiciones para STX, tokens fungibles y NFTs
-* Maneja tokens semi-fungibles (SFTs) con post-condiciones
+* Manejar tokens semi-fungibles (SFTs) con post-condiciones
 :::
+
+## Requisitos previos
 
 :::prerequisites
 * Comprensión básica de las transacciones de Stacks
@@ -21,7 +25,7 @@ Las post-condiciones son una poderosa característica de seguridad en Stacks que
 
 ## Construyendo post-condiciones
 
-El ayudante Pc en Stacks.js proporciona una API fluida inspirada en BDD para construir post-condiciones. Comienza con `Pc.principal()` para especificar qué dirección será verificada, luego encadena métodos para definir la condición.
+El ayudante Pc en Stacks.js proporciona una API fluida inspirada en BDD para construir post-condiciones. Comienza con `Pc.principal()` para especificar qué dirección será verificada, luego encadene métodos para definir la condición.
 
 ```ts
 import { Pc } from '@stacks/transactions';
@@ -33,7 +37,7 @@ const postCondition = Pc
   .ustx();
 ```
 
-El ayudante de Pc utiliza encadenamiento de métodos para una construcción intuitiva de condiciones. Tu IDE proporcionará autocompletado para los métodos disponibles en cada paso.
+El ayudante de PC utiliza encadenamiento de métodos para una construcción intuitiva de condiciones. Su IDE proporcionará autocompletado para los métodos disponibles en cada paso.
 
 ## Métodos de transferencia disponibles
 
@@ -54,13 +58,13 @@ Pc.principal(address).willSendLt(2000).ustx();
 
 Métodos de comparación disponibles:
 
-* `.willSendEq(amount)` - Exactamente igual a la cantidad
-* `.willSendGte(amount)` - Mayor o igual que cantidad
+* `.willSendEq(amount)` - Exactamente igual al monto
+* `.willSendGte(amount)` - Mayor o igual que la cantidad
 * `.willSendGt(amount)` - Mayor que la cantidad
-* `.willSendLte(amount)` - Menor o igual que la cantidad
-* `.willSendLt(amount)` - Menos que cantidad
+* `.willSendLte(amount)` - Menor o igual a la cantidad
+* `.willSendLt(amount)` - Menos que la cantidad
 
-### Métodos de tipo de activo
+### Métodos de tipos de activos
 
 ```ts
 // STX transfers
@@ -83,9 +87,9 @@ Pc.principal(address).willSendAsset().nft(...);
 Pc.principal(address).willNotSendAsset().nft(...);
 ```
 
-## Estableciendo el modo de post-condición
+## Configuración del modo de post-condición
 
-El modo de post-condición determina cómo la blockchain de Stacks maneja las transferencias de activos no cubiertas explícitamente por tus post-condiciones. Esta es una configuración de seguridad crítica.
+El modo de post-condición determina cómo la blockchain de Stacks maneja las transferencias de activos no cubiertas explícitamente por sus post-condiciones. Esta es una configuración de seguridad crítica.
 
 ```ts
 import { PostConditionMode, makeContractCall } from '@stacks/transactions';
@@ -101,14 +105,14 @@ const tx = await makeContractCall({
 
 Opciones de modo:
 
-* **`PostConditionMode.Deny`** (predeterminado): La transacción falla si ocurre alguna transferencia no especificada
+* **`PostConditionMode.Deny`** (default): La transacción falla si ocurre alguna transferencia no especificada
 * **`PostConditionMode.Allow`**: La transacción permite transferencias más allá de las condiciones posteriores especificadas
 
 ## Patrones de implementación comunes
 
 ### Condiciones posteriores a la transferencia de STX
 
-Protege las transferencias de STX especificando cantidades exactas o rangos.
+Proteja las transferencias de STX especificando cantidades exactas o rangos.
 
 ```ts
 import { Pc, makeSTXTokenTransfer } from '@stacks/transactions';
@@ -131,7 +135,7 @@ const tx = await makeSTXTokenTransfer({
 
 ### Condiciones posteriores de tokens fungibles
 
-Asegúrese de que los tokens fungibles se transfieran según lo esperado en las llamadas al contrato.
+Asegúrese de que los tokens fungibles se transfieran según lo esperado en las llamadas de contrato.
 
 ```ts
 import { Pc, makeContractCall } from '@stacks/transactions';
@@ -157,7 +161,7 @@ const tx = await makeContractCall({
 
 ### Condiciones posteriores a la transferencia de NFT
 
-Controla los cambios de propiedad de NFT con post-condiciones específicas.
+Controla los cambios de propiedad de NFT con condiciones posteriores específicas.
 
 ```ts
 import { Pc, Cl } from '@stacks/transactions';
@@ -205,7 +209,7 @@ const sftFtCondition = Pc
 
 ## Múltiples post-condiciones
 
-Las transacciones complejas a menudo requieren múltiples post-condiciones para proteger completamente todas las transferencias de activos.
+Las transacciones complejas a menudo requieren múltiples condiciones posteriores para proteger completamente todas las transferencias de activos.
 
 ```ts
 const tx = await makeContractCall({
@@ -234,7 +238,9 @@ type: tip
 Explora el [Plantilla de post-condiciones](https://platform.hiro.so) para ejemplos interactivos.
 :::
 
+## Próximos pasos
+
 :::next-steps
-* [Llamadas a contratos](/reference/stacks.js/contract-calls): Aprende cómo llamar a contratos en Stacks
+* [Llamada de contrato](/reference/stacks.js/contract-calls): Aprende cómo llamar contratos en Stacks
 * [Transmisión de transacciones](/reference/stacks.js/broadcast-transactions): Aprende cómo transmitir transacciones protegidas
 :::

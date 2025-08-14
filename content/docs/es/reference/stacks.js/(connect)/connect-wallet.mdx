@@ -4,12 +4,16 @@ description: Aprende cómo conectarte a billeteras de Stacks y autenticar usuari
 ---
 Aprende cómo integrar conexiones de billetera en tu aplicación de Stacks. Conectar una billetera autentica a los usuarios y permite interacciones con la blockchain como transferencias y llamadas a contratos.
 
+## Lo que aprenderás
+
 :::objectives
 * Instale el `@stacks/connect` paquete
 * Conectar a una billetera y autenticar usuarios
 * Gestionar el estado de autenticación
 * Acceder a los datos de la cuenta del usuario
 :::
+
+## Requisitos previos
 
 :::prerequisites
 * Node.js instalado en tu máquina
@@ -23,7 +27,7 @@ Aprende cómo integrar conexiones de billetera en tu aplicación de Stacks. Cone
   <Step>
     ### Instalar paquete
 
-    Agrega el paquete Stacks Connect a tu proyecto.
+    Agregue el paquete Stacks Connect a su proyecto.
 
     ```package-install
     @stacks/connect
@@ -87,7 +91,7 @@ Aprende cómo integrar conexiones de billetera en tu aplicación de Stacks. Cone
     }
     ```
 
-    Obtén información detallada de la cuenta, incluyendo claves públicas.
+    Obtenga información detallada de la cuenta, incluyendo las claves públicas.
 
     ```ts
     // Request full account details
@@ -103,7 +107,7 @@ Aprende cómo integrar conexiones de billetera en tu aplicación de Stacks. Cone
   <Step>
     ### Realiza tu primera transacción
 
-    Utiliza la conexión autenticada para enviar tokens STX.
+    Utilice la conexión autenticada para enviar tokens STX.
 
     ```ts
     import { request } from '@stacks/connect';
@@ -123,7 +127,9 @@ Aprende cómo integrar conexiones de billetera en tu aplicación de Stacks. Cone
   </Step>
 </Steps>
 
+## Próximos pasos
+
 :::next-steps
-* [Firmar mensajes](/reference/stacks.js/message-signing): Demuestra la propiedad de la dirección
+* [Firmar mensajes](/reference/stacks.js/message-signing): Demostrar la propiedad de la dirección
 * [Transmitir transacciones](/reference/stacks.js/broadcast-transactions): Aprende sobre diferentes tipos de transacciones
 :::

@@ -4,14 +4,14 @@ description: Instale PostgreSQL y compile el Indexador de Bitcoin desde el códi
 ---
 ## Requisitos previos
 
-Antes de instalar el Indexador de Bitcoin, asegúrate de tener:
+Antes de instalar el Indexador de Bitcoin, asegúrese de tener:
 
-* Un nodo de Bitcoin completamente sincronizado (ver [Configuración de nodo Bitcoin](/tools/bitcoin-indexer/full-sync))
+* Un nodo de Bitcoin completamente sincronizado (ver [Configuración de nodo de Bitcoin](/tools/bitcoin-indexer/full-sync))
 * Ubuntu 20.04+ o Debian 11+
 * Al menos 32GB de RAM
 * 2TB+ de almacenamiento NVMe rápido
 
-Instale los paquetes de sistema requeridos:
+Instalar los paquetes del sistema requeridos:
 
 ```terminal
 $ sudo apt update
@@ -40,14 +40,14 @@ $ source ~/.bashrc
 
 ### Configurar el directorio de datos de PostgreSQL
 
-Crea un directorio de datos personalizado para PostgreSQL:
+Crear un directorio de datos personalizado para PostgreSQL:
 
 ```terminal
 $ mkdir -p ~/bitcoin-indexer/pgdata
 $ sudo chown -R postgres:postgres ~/bitcoin-indexer/pgdata
 ```
 
-Inicializar el clúster de la base de datos:
+Inicializar el clúster de base de datos:
 
 ```terminal
 $ sudo -u postgres env "PATH=$PATH" initdb -D ~/bitcoin-indexer/pgdata
@@ -90,7 +90,7 @@ type: warn
 
 ### Nota de seguridad
 
-Utilice una contraseña segura en producción. La contraseña predeterminada 'postgres' es solo para desarrollo.
+Utilice una contraseña fuerte en producción. La contraseña predeterminada 'postgres' es solo para desarrollo.
 :::
 
 ## Instalar Rust
@@ -114,7 +114,7 @@ $ git clone https://github.com/hirosystems/bitcoin-indexer.git
 $ cd bitcoin-indexer
 ```
 
-### Construir desde el código fuente
+### Compilar desde el código fuente
 
 ```terminal
 $ cargo build --release
@@ -151,15 +151,15 @@ Configura los directorios necesarios para el indexador:
 $ mkdir -p ~/bitcoin-indexer/{rocksdb-chainstate,archives,logs}
 ```
 
-Propósitos de los directorios:
+Propósitos del directorio:
 
 * `rocksdb-chainstate/` - Almacena el estado indexado de la cadena de bloques
-* `archives/` - Archivos descargados del archivo para bootstrap
+* `archives/` - Archivos descargados del archivo comprimido para bootstrap
 * `logs/` - Registros de aplicación y errores
 
 ## Configurar servicio systemd
 
-Crear un servicio systemd para el inicio automático:
+Crear un servicio systemd para inicio automático:
 
 ```bash title="/etc/systemd/system/bitcoin-indexer.service"
 [Unit]
@@ -215,6 +215,8 @@ $ # Check indexer binary
 $ bitcoin-indexer --help
 Bitcoin Indexer - High-performance metaprotocol indexing engine
 ```
+
+## Próximos pasos
 
 :::next-steps
 * [Configurar el indexador](/tools/bitcoin-indexer/configuration): Configurar bitcoin-indexer-config.toml

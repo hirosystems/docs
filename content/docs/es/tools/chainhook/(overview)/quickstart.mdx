@@ -2,13 +2,17 @@
 title: Inicio rápido
 description: En esta guía, crearás tu primer predicado Chainhook para monitorear transferencias de STX en la blockchain de Stacks.
 ---
+## Lo que aprenderás
+
 :::objectives
-* Cómo crear un predicado de Chainhook para rastrear transferencias de STX
-* Cómo escanear datos históricos de blockchain usando Chainhook
+* Cómo crear un predicado Chainhook para rastrear transferencias de STX
+* Cómo escanear datos históricos de blockchain utilizando Chainhook
 :::
 
+## Requisitos previos
+
 :::prerequisites
-* Para obtener instrucciones de instalación, visite el [Guía de instalación de Chainhook](/tools/chainhook#installation).
+* Para instrucciones de instalación, visite el [Guía de instalación de Chainhook](/tools/chainhook#installation).
 :::
 
 ## Inicio rápido
@@ -17,13 +21,13 @@ description: En esta guía, crearás tu primer predicado Chainhook para monitore
   <Step>
     ### Generar un archivo de predicado
 
-    Chainhook utiliza predicados para definir qué eventos de blockchain rastrear. Genera un archivo de predicado de plantilla:
+    Chainhook utiliza predicados para definir qué eventos de la cadena de bloques se deben rastrear. Genere un archivo de predicado de plantilla:
 
     ```terminal
     $ chainhook predicates new stx-transfer.json --stacks
     ```
 
-    Esto crea un archivo JSON básico con la estructura de predicado fundamental. El `--stacks` flag especifica que estás rastreando eventos de Stacks (usa `--bitcoin` para Bitcoin).
+    Esto crea un archivo JSON de plantilla con la estructura básica del predicado. El `--stacks` flag especifica que estás rastreando eventos de Stacks (usa `--bitcoin` para Bitcoin).
   </Step>
 
   <Step>
@@ -71,14 +75,14 @@ description: En esta guía, crearás tu primer predicado Chainhook para monitore
     ```
 
     :::callout
-    El primero `scan` descarga un archivo de estado de cadena desde Hiro Archive. Los escaneos posteriores utilizan los datos en caché para un rendimiento más rápido.
+    El primero `scan` descarga un archivo de estado de cadena desde el Archivo Hiro. Los escaneos posteriores utilizan los datos almacenados en caché para un rendimiento más rápido.
     :::
   </Step>
 
   <Step>
     ### Ver resultados
 
-    Revisa el archivo de salida para ver los eventos de transferencia:
+    Verifique el archivo de salida para ver los eventos de transferencia:
 
     ```terminal
     $ head -5 stx-transfers.txt
@@ -88,7 +92,9 @@ description: En esta guía, crearás tu primer predicado Chainhook para monitore
   </Step>
 </Steps>
 
+## Próximos pasos
+
 :::next-steps
-* [Diseñar predicados personalizados](/tools/chainhook/usage): Aprende a crear predicados para llamadas a contratos, transferencias de NFT y más
+* [Diseñar predicados personalizados](/tools/chainhook/usage): Aprende a crear predicados para llamadas de contratos, transferencias de NFT y más
 * [Ejecutar Chainhook como un servicio](/tools/chainhook/service-mode): Configurar monitoreo continuo de blockchain con entrega por webhook
 :::

@@ -3,15 +3,19 @@ title: Integración del oráculo Pyth
 sidebarTitle: Integración del oráculo Pyth
 description: Aprende cómo probar contratos inteligentes que dependen de los feeds de precios del oráculo Pyth utilizando Clarinet.
 ---
+## Lo que aprenderás
+
 :::objectives
 * Configurar las dependencias del contrato de mainnet
-* Utilizar la ejecución de transacciones de la red principal (MXS) para pruebas de oráculos
+* Utilizar la ejecución de transacciones de mainnet (MXS) para pruebas de oráculos
 * Crear feeds de precios simulados para pruebas unitarias
 * Escribir pruebas de integración con datos reales de oracle
 :::
 
+## Requisitos previos
+
 :::prerequisites
-* Clarinete versión 2.1.0 o superior con soporte MXS
+* Versión 2.1.0 o superior de Clarinet con soporte MXS
 * Comprensión de [Contratos de oráculo de Pyth](/resources/clarity/external-data)
 :::
 
@@ -21,7 +25,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Configurar dependencias de mainnet
 
-    Agrega los contratos del oráculo Pyth a tus requisitos de Clarinet.toml:
+    Agregue los contratos de oráculo Pyth a sus requisitos de Clarinet.toml:
 
     ```toml Clarinet.toml
     [project]
@@ -46,7 +50,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Crear un oráculo simulado para pruebas unitarias
 
-    Para pruebas unitarias rápidas, crea un contrato de oráculo simulado:
+    Para pruebas unitarias rápidas, cree un contrato de oráculo simulado:
 
     ```clarity tests/mocks/mock-pyth-oracle.clar
     ;; Mock Pyth Oracle for testing
@@ -100,7 +104,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Escribir pruebas unitarias con precios simulados
 
-    Crea pruebas unitarias utilizando el oráculo simulado:
+    Crear pruebas unitarias utilizando el oráculo simulado:
 
     ```typescript tests/benjamin-club.test.ts
     import { Cl } from '@stacks/transactions';
@@ -168,7 +172,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Configurar pruebas de ejecución de mainnet
 
-    Para pruebas de integración con datos reales de oracle, utilice la ejecución de transacciones en mainnet:
+    Para pruebas de integración con datos reales de oracle, utilice la ejecución de transacciones de mainnet:
 
     ```typescript tests/benjamin-club-mxs.test.ts
     import { buildDevnetNetworkOrchestrator } from "@hirosystems/clarinet-sdk";
@@ -223,7 +227,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
 
 ### Probando diferentes escenarios de precios
 
-Crea funciones auxiliares para probar varias condiciones del mercado:
+Crear funciones auxiliares para probar diversas condiciones del mercado:
 
 ```typescript tests/helpers/oracle-helpers.ts
 export function setupPriceScenario(
@@ -297,9 +301,9 @@ describe("Price Staleness Handling", () => {
 });
 ```
 
-### Pruebas de despliegue
+### Pruebas de implementación
 
-Crea pruebas de implementación para garantizar una configuración adecuada:
+Crear pruebas de implementación para garantizar una configuración adecuada:
 
 ```toml deployments/mainnet.yaml
 ---
@@ -322,7 +326,7 @@ plan:
 
 ### Estimación de gas
 
-Prueba el consumo de gas para operaciones de oráculo:
+Probar el consumo de gas para operaciones de oráculo:
 
 ```typescript tests/gas-estimation.test.ts
 describe("Gas Estimation", () => {
@@ -345,7 +349,7 @@ describe("Gas Estimation", () => {
 
 ## Integración de CI/CD
 
-Configura GitHub Actions para pruebas automatizadas:
+Configurar GitHub Actions para pruebas automatizadas:
 
 ```yaml .github/workflows/test-oracle.yml
 name: Test Oracle Integration

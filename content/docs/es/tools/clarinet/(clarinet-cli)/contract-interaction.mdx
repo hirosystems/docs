@@ -1,7 +1,7 @@
 ---
 title: Interacción con contratos
 sidebarTitle: Interacción con contratos
-description: Clarinet proporciona herramientas poderosas para interactuar con tus contratos durante el desarrollo. La consola te ofrece un entorno REPL interactivo donde puedes llamar funciones, verificar el estado y depurar problemas en tiempo real.
+description: El clarinete proporciona herramientas poderosas para interactuar con sus contratos durante el desarrollo. La consola le ofrece un entorno REPL interactivo donde puede llamar funciones, verificar el estado y depurar problemas en tiempo real.
 ---
 ## Iniciando la consola
 
@@ -14,7 +14,7 @@ $ clarinet console
 [1mConnected to a transient in-memory database.[0m
 ```
 
-Una vez en la consola, tienes acceso a un REPL de Clarity con los contratos de tu proyecto ya desplegados y listos para interactuar. La consola admite varias opciones potentes para diferentes escenarios de desarrollo:
+Una vez en la consola, tienes acceso a un REPL de Clarity con los contratos de tu proyecto ya desplegados y listos para interactuar. La consola admite varias opciones poderosas para diferentes escenarios de desarrollo:
 
 | Opción | Descripción |
 |--------|-------------|
@@ -52,12 +52,12 @@ type: warn
 
 ### Requisitos de datos remotos
 
-Antes de usar datos remotos, asegúrate de agregar el contrato remoto a tu `Clarinet.toml` archivo con `clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`.
+Antes de usar datos remotos, asegúrese de agregar el contrato remoto a su `Clarinet.toml` archivo con `clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token`.
 :::
 
 ### Uso de la clave API de Hiro
 
-Para evitar límites de tasa al usar datos remotos, establece el `HIRO_API_KEY` variable de entorno. Clarinet incluye automáticamente esta clave en todas las solicitudes de API:
+Para evitar límites de tasa al usar datos remotos, establezca el `HIRO_API_KEY` variable de entorno. Clarinet incluye automáticamente esta clave en todas las solicitudes de API:
 
 ```terminal
 $ export HIRO_API_KEY=your_api_key_here
@@ -68,7 +68,7 @@ La clave de API se envía como el `x-api-key` encabezado en todas las solicitude
 
 ### Trabajando con contratos
 
-El `::get_contracts` command muestra todos los contratos disponibles:
+El `::get_contracts` los contratos disponibles se enumeran con el comando:
 
 ```terminal -o
 $ ::get_contracts
@@ -86,7 +86,7 @@ $ (contract-call? .counter get-count tx-sender)
 
 ### Trabajando con diferentes directores
 
-La consola proporciona varias carteras de prueba que puedes usar. Cambia entre ellas para probar escenarios multi-usuario:
+La consola proporciona varias carteras de prueba que puedes utilizar. Cambia entre ellas para probar escenarios de múltiples usuarios:
 
 ```terminal -o
 $ ::get_assets_maps
@@ -117,7 +117,7 @@ $ ::set_tx_sender ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
 [1mtx-sender switched to ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5[0m
 ```
 
-### Trabajando con alturas de bloque
+### Trabajando con alturas de bloques
 
 Prueba la lógica "dependiente del tiempo" avanzando la cadena:
 
@@ -145,7 +145,7 @@ Para obtener una lista completa de los comandos de consola disponibles y su uso,
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        Si ves errores de "uso de contrato no resuelto":
+        Si ve errores de "uso de contrato no resuelto":
 
         ```terminal
         $ (contract-call? .missing-contract get-value)
@@ -154,11 +154,11 @@ Para obtener una lista completa de los comandos de consola disponibles y su uso,
 
         **Causas comunes:**
 
-        * Nombre del contrato con error tipográfico
+        * Nombre del contrato mal escrito
         * Contrato no desplegado en la sesión
-        * Uso de prefijo de contrato incorrecto (`.` para contratos locales)
+        * Uso del prefijo de contrato incorrecto (`.` para contratos locales)
 
-        **Solución**: Verifique los contratos implementados con `::get_contracts` y use el nombre correcto.
+        **Solución**: Verificar contratos desplegados con `::get_contracts` y use el nombre correcto.
       </div>
     </AccordionContent>
   </AccordionItem>
@@ -177,15 +177,17 @@ Para obtener una lista completa de los comandos de consola disponibles y su uso,
 
         **Soluciones:**
 
-        1. Configura tu clave API de Hiro: `export HIRO_API_KEY=your_key_here`
-        2. Utilice un punto final de API personalizado: `--remote-data-api-url https://your-node.com`
+        1. Configura tu clave de API de Hiro: `export HIRO_API_KEY=your_key_here`
+        2. Usar un punto final de API personalizado: `--remote-data-api-url https://your-node.com`
         3. Esperar a que se restablezca el límite de tasa (generalmente 1 minuto)
       </div>
     </AccordionContent>
   </AccordionItem>
 </Accordion>
 
+## Próximos pasos
+
 :::next-steps
 * [Validación y análisis](/tools/clarinet/validation-and-analysis): Aprende cómo probar y validar tu proyecto de Clarinet.
-* [Despliegue](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
+* [Implementación](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
 :::

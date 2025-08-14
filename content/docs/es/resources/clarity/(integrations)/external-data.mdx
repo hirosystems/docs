@@ -7,7 +7,7 @@ description: En esta guía, aprenderás cómo leer datos de precios en tiempo re
 * Comprender el modelo de oráculo basado en extracción de Pyth
 * Leer y procesar datos de alimentación de precios
 * Trabajar con representación de precios de punto fijo
-* Construye contratos inteligentes denominados en USD
+* Construir contratos inteligentes denominados en USD
 :::
 
 :::prerequisites
@@ -17,7 +17,7 @@ description: En esta guía, aprenderás cómo leer datos de precios en tiempo re
 
 ## Entendiendo los oráculos de Pyth
 
-Pyth Network utiliza una **basado en extracción** modelo de oráculo, diferente de los oráculos tradicionales basados en push:
+Pyth Network utiliza una **basado en pull** modelo de oráculo, diferente de los oráculos tradicionales basados en push:
 
 * **Modelo push**: Oracle envía continuamente actualizaciones de precios en cadena
 * **Modelo de extracción**: Los usuarios obtienen y envían actualizaciones de precios cuando es necesario
@@ -29,19 +29,19 @@ Este enfoque es más eficiente en cuanto al gas y permite actualizaciones de pre
 La integración de Pyth en Stacks actualmente admite estos feeds de precios:
 
 | Activo | ID del Feed de Precios | Enlace del Explorador |
-|--------|------------------------|------------------------|
-| BTC/USD | `0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43` | [Vista](https://www.pyth.network/price-feeds/crypto-btc-usd) |
-| STX/USD | `0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17` | [Vista](https://www.pyth.network/price-feeds/crypto-stx-usd) |
-| ETH/USD | `0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace` | [Vista](https://www.pyth.network/price-feeds/crypto-eth-usd) |
-| USDC/USD | `0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a` | [Vista](https://www.pyth.network/price-feeds/crypto-usdc-usd) |
+|-------|--------------|---------------|
+| BTC/USD | `0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43` | [Ver](https://www.pyth.network/price-feeds/crypto-btc-usd) |
+| STX/USD | `0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17` | [Ver](https://www.pyth.network/price-feeds/crypto-stx-usd) |
+| ETH/USD | `0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace` | [Ver](https://www.pyth.network/price-feeds/crypto-eth-usd) |
+| USDC/USD | `0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a` | [Ver](https://www.pyth.network/price-feeds/crypto-usdc-usd) |
 
 ## Inicio rápido
 
 <Steps>
   <Step>
-    ### Configurar referencias de contrato
+    ### Configurar referencias de contratos
 
-    El oráculo Pyth en Stacks consta de varios contratos. Agrega estas referencias a tu contrato:
+    Los contratos del oráculo Pyth en Stacks constan de varios contratos. Añade estas referencias a tu contrato:
 
     ```clarity
     ;; Pyth oracle contract addresses (mainnet)
@@ -161,9 +161,9 @@ Crea un NFT que cueste exactamente $100 en valor de sBTC:
       (ok token-id))))
 ```
 
-### Protección contra precios obsoletos
+### Protección contra la obsolescencia de precios
 
-Asegúrate de que los datos de precios sean lo suficientemente recientes para tu caso de uso:
+Asegúrese de que los datos de precios sean lo suficientemente recientes para su caso de uso:
 
 ```clarity
 (define-constant MAX-PRICE-AGE u300) ;; 5 minutes in seconds
@@ -179,7 +179,7 @@ Asegúrate de que los datos de precios sean lo suficientemente recientes para tu
 
 ### Agregación de precios de múltiples activos
 
-Obtén múltiples fuentes de precios en una sola transacción:
+Obtenga múltiples fuentes de precios en una sola transacción:
 
 ```clarity
 (define-public (get-multiple-prices 
@@ -204,9 +204,9 @@ Obtén múltiples fuentes de precios en una sola transacción:
 )
 ```
 
-## Implementación en testnet
+## Implementación de testnet
 
-Para el desarrollo en testnet, utiliza estas direcciones de contrato:
+Para el desarrollo en testnet, utilice estas direcciones de contrato:
 
 ```clarity
 ;; Testnet addresses
@@ -214,7 +214,9 @@ Para el desarrollo en testnet, utiliza estas direcciones de contrato:
 (define-constant PYTH-STORAGE-CONTRACT-TESTNET 'ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-storage-v3)
 ```
 
+## Próximos pasos
+
 :::next-steps
 * [Integración frontend](/reference/stacks.js/pyth-oracle-integration): Aprende cómo obtener mensajes VAA y llamar a tus contratos habilitados para oráculos
-* [Probando con Clarinet](/tools/clarinet/pyth-oracle-integration): Configurar pruebas para contratos que dependen de datos de oráculos
+* [Pruebas con Clarinete](/tools/clarinet/pyth-oracle-integration): Configurar pruebas para contratos que dependen de datos de oráculos
 :::

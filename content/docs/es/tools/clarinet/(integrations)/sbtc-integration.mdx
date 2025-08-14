@@ -3,12 +3,16 @@ title: Integración de sBTC con Clarinet
 sidebarTitle: Integración de sBTC
 description: En esta guía, aprenderás cómo interactuar con el contrato sBTC de la red principal en tu proyecto Clarinet.
 ---
+## Lo que aprenderás
+
 :::objectives
-* Agregar contratos inteligentes de sBTC a tu proyecto Clarinet
+* Agregar contratos inteligentes sBTC a su proyecto Clarinet
 * Probar contratos con financiación automática de sBTC en devnet
-* Trabaja con sBTC como un token fungible SIP-010
+* Trabajar con sBTC como un token fungible SIP-010
 * Desplegar contratos sBTC en testnet y mainnet
 :::
+
+## Requisitos previos
 
 :::prerequisites
 * Se requiere Clarinet 2.15.0 o posterior para la integración automática de sBTC.
@@ -18,7 +22,7 @@ description: En esta guía, aprenderás cómo interactuar con el contrato sBTC d
 
 <Steps>
   <Step>
-    ### Agregue sBTC a su proyecto
+    ### Añade sBTC a tu proyecto
 
     Agregue los contratos inteligentes de sBTC a los requisitos de su proyecto Clarinet:
 
@@ -32,7 +36,7 @@ description: En esta guía, aprenderás cómo interactuar con el contrato sBTC d
     * **`sbtc-registry`** - Registro para gestionar la configuración de sBTC
     * **`sbtc-deposit`** - Maneja operaciones de depósito y retiro
 
-    Cuando Clarinet detecta estos contratos, automáticamente financia tus billeteras de prueba con sBTC para realizar pruebas.
+    Cuando Clarinet detecta estos contratos, automáticamente financia sus billeteras de prueba con sBTC para realizar pruebas.
   </Step>
 
   <Step>
@@ -145,9 +149,9 @@ description: En esta guía, aprenderás cómo interactuar con el contrato sBTC d
   </Step>
 
   <Step>
-    ### Desplegar en testnet
+    ### Implementar en testnet
 
-    En testnet, Clarinet automáticamente remapea a los contratos oficiales de sBTC de Hiro:
+    En la red de pruebas, Clarinet automáticamente reasigna a los contratos oficiales de sBTC de Hiro:
 
     ```terminal
     $ clarinet deployments generate --testnet
@@ -187,7 +191,7 @@ description: En esta guía, aprenderás cómo interactuar con el contrato sBTC d
 
 ## Trabajando con direcciones sBTC
 
-Clarinet maneja el mapeo de direcciones de contratos sBTC a través de las redes:
+El clarinete maneja el mapeo de direcciones de contratos sBTC a través de las redes:
 
 | Red | Dirección del Contrato sBTC |
 |---------|---------------------|
@@ -195,15 +199,15 @@ Clarinet maneja el mapeo de direcciones de contratos sBTC a través de las redes
 | Red de pruebas | `ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token` |
 | Mainnet | La dirección del contrato permanece sin cambios |
 
-Su código de contrato siempre hace referencia a la dirección de simnet. Clarinet automáticamente remapea durante el despliegue.
+Su código de contrato siempre hace referencia a la dirección de simnet. Clarinet automáticamente reasigna durante el despliegue.
 
 ## Acuñación manual de sBTC en pruebas unitarias
 
 Aunque Clarinet 2.15.0+ financia automáticamente las billeteras con sBTC en devnet, es posible que necesite acuñar manualmente sBTC en pruebas unitarias para escenarios específicos:
 
-### Acuñando sBTC usando la dirección del implementador
+### Acuñando sBTC utilizando la dirección del implementador
 
-El contrato del token sBTC permite que la dirección del implementador (multisig) acuñe tokens. Utiliza este enfoque en tus pruebas:
+El contrato del token sBTC permite que la dirección del implementador (multifirma) acuñe tokens. Utiliza este enfoque en tus pruebas:
 
 ```typescript tests/manual-sbtc-mint.test.ts -c
 import { describe, expect, it } from "vitest";
@@ -241,9 +245,9 @@ describe("Manual sBTC minting", () => {
 });
 ```
 
-### Pruebas con simulación de ejecución en mainnet
+### Pruebas con simulación de ejecución en la red principal
 
-Al utilizar la simulación de ejecución de mainnet, puedes acuñar sBTC utilizando el multisig real de mainnet:
+Cuando se utiliza la simulación de ejecución de la red principal, se puede acuñar sBTC utilizando la multifirma real de la red principal:
 
 ```typescript -c
 const mainnetMultisig = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
@@ -261,6 +265,6 @@ simnet.callPublicFn(
 Este enfoque es útil para:
 
 * Probando cantidades específicas de sBTC
-* Simulando diferentes saldos de billeteras
-* Probando casos límite con cantidades exactas de tokens
+* Simulando diferentes saldos de billetera
+* Probando casos límite con cantidades de tokens precisas
 * Pruebas de integración con contratos de mainnet

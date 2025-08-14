@@ -1,11 +1,13 @@
 ---
 title: Escribiendo pruebas unitarias
 sidebarTitle: Pruebas unitarias
-description: Las pruebas unitarias son el proceso de probar componentes o funciones individuales de contratos inteligentes para asegurar que funcionen como se espera. El SDK de Clarinet JS proporciona un marco de pruebas que te permite escribir estas pruebas utilizando el marco de pruebas Vitest, ayudándote a detectar errores y fallos temprano en el proceso de desarrollo.
+description: El testing unitario es el proceso de probar componentes o funciones individuales de contratos inteligentes para asegurar que funcionen como se espera. El SDK de Clarinet JS proporciona un marco de pruebas que te permite escribir estas pruebas utilizando el framework de testing Vitest, ayudándote a detectar errores y fallos temprano en el proceso de desarrollo.
 ---
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 import { ArrowRight, Check } from 'lucide-react';
+
+## Lo que aprenderás
 
 :::objectives
 * Configurar un proyecto de Clarinet para pruebas unitarias
@@ -16,14 +18,14 @@ import { ArrowRight, Check } from 'lucide-react';
 
 ## Configura tu proyecto
 
-Comienza creando un nuevo proyecto con la CLI de Clarinet. Este comando crea una estructura de proyecto con los archivos y carpetas necesarios, incluyendo el SDK JS de Clarinet ya configurado para pruebas:
+Comience creando un nuevo proyecto con la CLI de Clarinet. Este comando crea una estructura de proyecto con los archivos y carpetas necesarios, incluyendo el SDK JS de Clarinet ya configurado para pruebas:
 
 ```terminal
 $ clarinet new stx-defi
 $ cd stx-defi
 ```
 
-Después de cambiar al directorio de tu proyecto, instala las dependencias del paquete:
+Después de cambiar al directorio de su proyecto, instale las dependencias del paquete:
 
 ```terminal
 $ npm install
@@ -31,7 +33,7 @@ $ npm install
 
 ## Crear el contrato
 
-Genere un nuevo archivo de contrato utilizando la CLI de Clarinet:
+Generar un nuevo archivo de contrato utilizando la CLI de Clarinet:
 
 ```terminal
 $ clarinet contract new defi
@@ -70,7 +72,7 @@ Reemplace el contenido de `contracts/defi.clar` con este contrato DeFi:
 )
 ```
 
-Ejecutar `clarinet check` para asegurar que su contrato sea válido:
+Correr `clarinet check` para garantizar que su contrato sea válido:
 
 ```terminal
 $ clarinet check
@@ -143,9 +145,9 @@ Test Files  1 passed (1)
 
 | Problema | Solución |
 |----------|----------|
-| `toBeOk is not a function` | Asegúrate de estar utilizando los comparadores personalizados del SDK |
-| `Contract not found` | Ejecutar `clarinet check` para validar su contrato |
-| `Type errors` | Usa el `Cl` ayudantes para crear valores de Clarity adecuados |
+| `toBeOk is not a function` | Asegúrese de estar utilizando los comparadores personalizados del SDK |
+| `Contract not found` | Correr `clarinet check` para validar su contrato |
+| `Type errors` | Utilice el `Cl` ayudantes para crear valores de Clarity adecuados |
 
 <Accordion type="single" collapsible>
   <AccordionItem value="cobertura">
@@ -162,7 +164,7 @@ Test Files  1 passed (1)
         Esto genera:
 
         * `lcov.info` - Datos de cobertura de código
-        * `costs-reports.json` - Análisis del costo del gas
+        * `costs-reports.json` - Análisis de costo de gas
 
         Para ver el informe de cobertura:
 
@@ -206,6 +208,8 @@ Test Files  1 passed (1)
     </AccordionContent>
   </AccordionItem>
 </Accordion>
+
+## Próximos pasos
 
 :::next-steps
 * [Pruebas de integración](/tools/clarinet/integration-testing): Aprende cómo probar tu contrato con pruebas de integración.

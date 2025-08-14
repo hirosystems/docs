@@ -6,46 +6,46 @@ description: Aprende cómo integrar la funcionalidad de la blockchain de Stacks 
 Stacks.js puede integrarse en aplicaciones de React Native para llevar la funcionalidad de blockchain a dispositivos móviles. Este tutorial te guía a través de la configuración de un proyecto de React Native con Expo y su configuración para trabajar con las bibliotecas de Stacks.js.
 
 :::objectives
-* Configura un proyecto Expo configurado para Stacks.js
+* Configurar un proyecto Expo configurado para Stacks.js
 * Instalar y configurar los polyfills necesarios para React Native
-* Generar carteras y firmar transacciones en una aplicación móvil
-* Maneja las limitaciones del entorno JavaScript de React Native
+* Generar billeteras y firmar transacciones en una aplicación móvil
+* Manejar las limitaciones del entorno JavaScript de React Native
 * Construye una aplicación móvil funcional de Stacks
 :::
 
 :::prerequisites
 * Node.js y npm instalados en tu máquina de desarrollo
-* Conocimientos básicos de React Native y Expo
+* Conocimiento básico de React Native y Expo
 * Familiaridad con los conceptos de Stacks.js
-* Dispositivo/simulador iOS o Android para pruebas
+* Dispositivo o simulador iOS o Android para pruebas
 :::
 
-## Configura el proyecto de Expo
+## Configurar el proyecto Expo
 
-Comienza creando un nuevo proyecto de Expo. La última versión de Expo proporciona la mejor compatibilidad con los polyfills de Stacks.js.
+Comience creando un nuevo proyecto de Expo. La última versión de Expo proporciona la mejor compatibilidad con los polyfills de Stacks.js.
 
 ```terminal
 $ npx create-expo-app@latest my-stacks-app
 $ cd my-stacks-app
 ```
 
-El proyecto de plantilla incluye todo lo necesario para comenzar a construir. Prueba la configuración inicial ejecutando el servidor de desarrollo.
+El proyecto de plantilla incluye todo lo necesario para comenzar a construir. Pruebe la configuración inicial ejecutando el servidor de desarrollo.
 
 ```terminal
 $ npm start
 ```
 
-Conecta tu dispositivo móvil usando la aplicación Expo Go y escanea el código QR para verificar que el proyecto base funciona correctamente.
+Conecte su dispositivo móvil usando la aplicación Expo Go y escanee el código QR para verificar que el proyecto base funciona correctamente.
 
 ## Instalar las dependencias necesarias
 
-El entorno JavaScript de React Native carece de ciertas APIs de Node.js y del navegador que Stacks.js requiere. Instala las bibliotecas principales de Stacks junto con los polyfills necesarios.
+El entorno JavaScript de React Native carece de ciertas APIs de Node.js y del navegador que Stacks.js requiere. Instale las bibliotecas principales de Stacks junto con los polyfills necesarios.
 
 ```terminal
 $ npm install @stacks/transactions @stacks/wallet-sdk
 ```
 
-Instala las dependencias del polyfill como dependencias de desarrollo para manejar las APIs faltantes.
+Instale las dependencias del polyfill como dependencias de desarrollo para manejar las APIs faltantes.
 
 ```terminal
 $ npm install --save-dev buffer process react-native-get-random-values \
@@ -61,13 +61,13 @@ Estos polyfills proporcionan:
 
 ## Configurar el empaquetador Metro
 
-El empaquetador Metro necesita configuración para resolver correctamente los módulos de Node.js. Crea un archivo de configuración personalizado de Metro.
+El empaquetador Metro necesita configuración para resolver correctamente los módulos de Node.js. Cree un archivo de configuración personalizado de Metro.
 
 ```terminal
 $ npx expo customize metro.config.js
 ```
 
-Actualiza la configuración para mapear los módulos de Node.js a sus versiones compatibles con React Native.
+Actualice la configuración para mapear los módulos de Node.js a sus versiones compatibles con React Native.
 
 ```js metro.config.js
 const { getDefaultConfig } = require("expo/metro-config");
@@ -86,11 +86,11 @@ Esta configuración garantiza que cuando Stacks.js solicita módulos de Node.js,
 
 ## Configurar polyfills globales
 
-Crea un sistema de polyfill para hacer que las APIs del navegador y de Node.js estén disponibles en React Native. Esto requiere modificar el punto de entrada de la aplicación.
+Crear un sistema de polyfill para hacer que las APIs del navegador y Node.js estén disponibles en React Native. Esto requiere modificar el punto de entrada de la aplicación.
 
 ### Crear el archivo polyfill
 
-Crea un nuevo archivo para inicializar todos los objetos globales requeridos.
+Cree un nuevo archivo para inicializar todos los objetos globales requeridos.
 
 ```js polyfill.js
 import { Buffer } from "buffer/";
@@ -106,7 +106,7 @@ global.TextDecoder = TextDecoder;
 
 ### Crear punto de entrada personalizado
 
-Crea un nuevo punto de entrada que cargue polyfills antes de que la aplicación se inicie.
+Crear un nuevo punto de entrada que cargue polyfills antes de que la aplicación se inicie.
 
 ```js index.js
 import "./polyfill";
@@ -138,11 +138,11 @@ Los polyfills deben cargarse en archivos separados como se muestra. Cargarlos en
 
 ## Implementar la funcionalidad de pilas
 
-Con el entorno configurado, ahora puede usar Stacks.js en sus componentes de React Native. Actualice la pantalla principal para demostrar la generación de billeteras y la firma de transacciones.
+Con el entorno configurado, ahora puede utilizar Stacks.js en sus componentes de React Native. Actualice la pantalla principal para demostrar la generación de billeteras y la firma de transacciones.
 
 ### Importar módulos de Stacks.js
 
-Edita el componente de la pantalla principal para importar las funciones necesarias de Stacks.js.
+Edite el componente de la pantalla principal para importar las funciones necesarias de Stacks.js.
 
 ```tsx app/(tabs)/index.tsx
 import {
@@ -157,7 +157,7 @@ import { Button } from "react-native";
 
 ### Configurar el estado del componente
 
-Crea variables de estado para gestionar los datos de la cartera y la retroalimentación del usuario.
+Crear variables de estado para gestionar los datos de la cartera y la retroalimentación del usuario.
 
 ```tsx app/(tabs)/index.tsx
 export default function HomeScreen() {
@@ -171,7 +171,7 @@ export default function HomeScreen() {
 
 ### Generar billetera y firmar transacción
 
-Implementa la funcionalidad principal para crear una cartera y firmar una transacción.
+Implementar la funcionalidad principal para crear una billetera y firmar una transacción.
 
 ```tsx app/(tabs)/index.tsx
 const generate = async () => {
@@ -208,7 +208,7 @@ const generate = async () => {
 
 ### Construir la interfaz de usuario
 
-Crea una interfaz de usuario simple para mostrar información de la cartera y activar la generación de carteras.
+Crear una interfaz de usuario simple para mostrar información de la billetera y activar la generación de billeteras.
 
 ```tsx app/(tabs)/index.tsx
 return (
@@ -245,7 +245,7 @@ return (
 
 ## Prueba tu implementación
 
-Ejecuta tu aplicación para verificar que todo funcione correctamente.
+Ejecute su aplicación para verificar que todo funcione correctamente.
 
 ```terminal
 $ npm start
@@ -253,22 +253,22 @@ $ npm start
 
 Cuando presionas "Generar Nueva Billetera":
 
-1. Aparece una nueva frase semilla
+1. Una nueva frase semilla aparece
 2. La dirección de la billetera se muestra a continuación
 3. Una transacción es firmada (no transmitida)
-4. El mensaje de éxito confirma la firma
+4. Mensaje de éxito confirma la firma
 
 :::callout
 type: tip
 
 ### Almacenamiento seguro
 
-Para aplicaciones de producción, nunca muestres frases semilla directamente. Implementa almacenamiento seguro utilizando bibliotecas como `react-native-keychain` o `expo-secure-store`.
+Para aplicaciones de producción, nunca muestre frases semilla directamente. Implemente almacenamiento seguro utilizando bibliotecas como `react-native-keychain` o `expo-secure-store`.
 :::
 
 ## Pruébalo
 
-Amplía la implementación básica con características adicionales.
+Amplíe la implementación básica con características adicionales.
 
 ```tsx
 // Challenge: Add a function to check STX balance
@@ -283,6 +283,8 @@ const broadcastTransaction = async (transaction: StacksTransaction) => {
   // Remember to handle network selection
 };
 ```
+
+## Próximos pasos
 
 :::next-steps
 * [Paquete de transacciones](/reference/stacks.js/packages/transactions): Aprende sobre el paquete de transacciones.

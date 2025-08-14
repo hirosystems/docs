@@ -73,7 +73,7 @@ El contrato generado incluye una plantilla mínima:
 
 ### Eliminando contratos
 
-Limpie los contratos no utilizados con el `rm` comando:
+Limpiar contratos no utilizados con el `rm` comando:
 
 ```terminal
 $ clarinet contract rm old-token
@@ -82,16 +82,16 @@ $ clarinet contract rm old-token
 [33mUpdated[0m [1mClarinet.toml[0m
 ```
 
-## Verificando la sintaxis de los contratos del proyecto
+## Comprobando la sintaxis de los contratos del proyecto
 
-Valida la configuración completa de tu proyecto:
+Valide la configuración completa de su proyecto:
 
 ```terminal
 $ clarinet check
 [32m✔[0m [1m3 contracts checked[0m
 ```
 
-Verifique contratos específicos:
+Verificar contratos específicos:
 
 ```terminal
 $ clarinet check contracts/token.clar
@@ -100,9 +100,9 @@ $ clarinet check contracts/token.clar
 
 ## Formato de código
 
-Clarinet incluye un potente formateador de código para mantener un estilo consistente en todo tu proyecto:
+El clarinete incluye un potente formateador de código para mantener un estilo consistente en todo su proyecto:
 
-Formatear todos los contratos en tu proyecto:
+Formatee todos los contratos en su proyecto:
 
 ```terminal
 $ clarinet format --in-place
@@ -111,15 +111,15 @@ $ clarinet format --in-place
 
 ### Opciones de formato
 
-Personaliza el formato para que coincida con la guía de estilo de tu equipo:
+Personalice el formato para que coincida con la guía de estilo de su equipo:
 
 | Opción | Descripción | Ejemplo |
-|---------|-------------|---------|
+|--------|-------------|---------|
 | `--dry-run` | Vista previa de cambios sin modificar archivos | `clarinet format --dry-run` |
 | `--in-place` | Reemplazar contenido del archivo (requerido para el formato real) | `clarinet format --in-place` |
 | `--max-line-length` | Establecer longitud máxima de línea | `clarinet format --max-line-length 100` |
 | `--indent` | Establecer tamaño de sangría | `clarinet format --indent 2` |
-| `--tabs` | Usa tabulaciones en lugar de espacios | `clarinet format --tabs` |
+| `--tabs` | Utilice tabulaciones en lugar de espacios | `clarinet format --tabs` |
 
 ### Formatear archivos individuales
 
@@ -157,7 +157,7 @@ requirements = [
 ]
 ```
 
-Ahora puedes implementar traits de contratos de la red principal:
+Ahora puedes implementar rasgos de contratos de la red principal:
 
 ```clarity contracts/my-nft.clar
 (impl-trait 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait.nft-trait)
@@ -165,6 +165,8 @@ Ahora puedes implementar traits de contratos de la red principal:
 (define-non-fungible-token my-nft uint)
 ;; ... implement required functions
 ```
+
+## Próximos pasos
 
 :::next-steps
 * [Interacción con contratos](/tools/clarinet/contract-interaction): Aprende cómo interactuar con tus contratos.

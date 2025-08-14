@@ -1,11 +1,11 @@
 ---
 title: Trabajando con una blockchain local
 sidebarTitle: Desarrollo de blockchain local
-description: Clarinet proporciona un entorno blockchain local completo, ofreciendo todos los servicios que necesitas para el desarrollo de contratos inteligentes sin necesidad de desplegar en una red pública.
+description: Clarinet proporciona un entorno completo de blockchain local, ofreciendo todos los servicios necesarios para el desarrollo de contratos inteligentes sin necesidad de implementarlos en una red pública.
 ---
 ## Iniciando tu blockchain local
 
-Para iniciar devnet con todos los servicios requeridos, ejecute el siguiente comando:
+Para lanzar devnet con todos los servicios requeridos, ejecute el siguiente comando:
 
 ```terminal
 $ clarinet devnet start
@@ -18,12 +18,12 @@ $ clarinet devnet start
 | `--deployment-plan-path <path>` | Utilizar plan de despliegue específico |
 | `--use-on-disk-deployment-plan` | Usar el plan de despliegue existente sin actualizaciones |
 | `--use-computed-deployment-plan` | Calcular y sobrescribir el plan de implementación |
-| `--package <path>` | Utilice la configuración preempaquetada de devnet |
+| `--package <path>` | Usar configuración preempaquetada de devnet |
 
 :::callout
 ### Requisitos previos
 
-Devnet requiere que Docker esté en ejecución. Si ves "clarinet was unable to create network", asegúrate de que Docker Desktop esté funcionando o que el demonio de Docker esté iniciado.
+Devnet requiere que Docker esté en ejecución. Si ve "clarinet was unable to create network", asegúrese de que Docker Desktop esté funcionando o que el demonio de Docker se haya iniciado.
 :::
 
 Por defecto, devnet inicia con un panel interactivo que muestra:
@@ -34,14 +34,14 @@ Por defecto, devnet inicia con un panel interactivo que muestra:
 * Despliegues de contratos
 * Uso de recursos
 
-Usa el `--no-dashboard` bandera para entornos de CI/CD o cuando prefieres transmitir registros en tiempo real.
+Utilice el `--no-dashboard` bandera para entornos de CI/CD o cuando prefieres transmitir registros en tiempo real.
 
 ## Servicios y características principales
 
 Devnet crea un entorno blockchain completo con estos servicios:
 
 | Servicio | Puerto | Propósito |
-|----------|--------|-----------|
+|---------|------|---------|
 | **Nodo de Stacks** | 20443 | Procesa transacciones y mina bloques |
 | **Nodo de Bitcoin** | 18443 | Proporciona anclaje de bloques en modo regtest |
 | **API de Stacks** | 3999 | API REST para consultar datos de blockchain |
@@ -49,7 +49,7 @@ Devnet crea un entorno blockchain completo con estos servicios:
 | **Explorador de Stacks** | 8000 | Interfaz web para navegar transacciones |
 | **Explorador de Bitcoin** | 8001 | Interfaz web para la cadena regtest de Bitcoin |
 
-Devnet incluye cuentas preconfiguradas con saldos de STX:
+Devnet incluye cuentas preexistentes con saldos de STX:
 
 ```terminal -o
 $ clarinet console
@@ -79,7 +79,7 @@ $ clarinet devnet start
 
 ## Configuración y personalización
 
-El comportamiento de Devnet se controla a través de archivos de configuración en tu proyecto.
+El comportamiento de Devnet se controla a través de archivos de configuración en su proyecto.
 
 ### Configuración básica
 
@@ -107,7 +107,7 @@ disable_stacks_api = false
 
 ### Configuración del puerto
 
-Personaliza los puertos para evitar conflictos:
+Personalice los puertos para evitar conflictos:
 
 ```toml
 # Change default ports
@@ -117,7 +117,7 @@ postgres_port = 6432
 stacks_explorer_port = 4020
 ```
 
-### Minería de intervalos
+### Intervalos de minería
 
 Controlar la velocidad de producción de bloques:
 
@@ -146,9 +146,9 @@ mnemonic = "female adjust gallery certain visit token during great side clown fi
 balance = 5_000_000_000_000   # 5M STX
 ```
 
-## Accediendo a los servicios
+## Acceso a los servicios
 
-Accede a varios servicios para interactuar con la blockchain, incluyendo navegación de datos, consulta de APIs y envío de transacciones directamente.
+Accede a varios servicios para interactuar con la blockchain, incluyendo navegar datos, consultar APIs y enviar transacciones directamente.
 
 <Tabs defaultValue="explorer" className="w-full">
   <TabsList className="h-auto p-0 bg-transparent">
@@ -176,7 +176,7 @@ Accede a varios servicios para interactuar con la blockchain, incluyendo navegac
 
     * Historial y detalles de transacciones
     * Información del bloque
-    * Código fuente del contrato y estado
+    * Código fuente y estado del contrato
     * Saldos de cuenta
   </TabsContent>
 
@@ -213,7 +213,7 @@ Accede a varios servicios para interactuar con la blockchain, incluyendo navegac
     Puntos finales RPC:
 
     * `/v2/transactions` - Transmitir transacciones
-    * `/v2/contracts/call-read` - Llamar a funciones de solo lectura
+    * `/v2/contracts/call-read` - Llamar funciones de solo lectura
     * `/v2/fees/transfer` - Obtener estimaciones de tarifas
   </TabsContent>
 </Tabs>
@@ -276,7 +276,7 @@ $ clarinet devnet start --package demo-env.json
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        **Error**: "clarinet no pudo crear la red"
+        **Error**: "el clarinete no pudo crear la red"
 
         **Soluciones**:
 
@@ -320,7 +320,7 @@ $ clarinet devnet start --package demo-env.json
         $ taskkill /PID <PID> /F
         ```
 
-        **O configura diferentes puertos** en `settings/Devnet.toml`:
+        **O configura puertos diferentes** en `settings/Devnet.toml`:
 
         ```toml
         stacks_api_port = 4999
@@ -331,7 +331,7 @@ $ clarinet devnet start --package demo-env.json
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="límites-de-recursos">
+  <AccordionItem value="límites de recursos">
     <AccordionTrigger>Alto uso de recursos</AccordionTrigger>
 
     <AccordionContent>
@@ -390,28 +390,28 @@ $ clarinet devnet start --package demo-env.json
 
         **Prevención**:
 
-        * Usar `Ctrl+C` para detener elegantemente devnet
-        * Comprueba si hay redes huérfanas después de fallos:
+        * Usar `Ctrl+C` detener elegantemente devnet
+        * Comprobar si hay redes huérfanas después de fallos:
 
         ```terminal
         $ docker network prune
         ```
 
-        **Nota**: El nombre de la red se basa en el nombre del directorio de tu proyecto, así que un `clarinet new hello-world` el proyecto tendrá un nombre de red de `hello-world.devnet`.
+        **Nota**: El nombre de la red se basa en el nombre del directorio de tu proyecto, por lo que un `clarinet new hello-world` el proyecto tendrá un nombre de red de `hello-world.devnet`.
       </div>
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="error-de-flujo-docker">
+  <AccordionItem value="docker-stream-error">
     <AccordionTrigger>Error de flujo de Docker durante el inicio</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
         **Error**: "Fatal: no se puede crear la imagen: error de flujo de Docker"
 
-        Este error suele ocurrir cuando las imágenes de Docker están dañadas o cuando los exploradores no se inician correctamente.
+        Este error suele ocurrir cuando las imágenes de Docker están dañadas o cuando los exploradores no logran iniciarse correctamente.
 
-        **Solución 1 - Deshabilitar exploradores**:
+        **Solución 1 - Desactivar exploradores**:
 
         Si no necesitas los exploradores web, desactívalos en `settings/Devnet.toml`:
 
@@ -444,8 +444,8 @@ $ clarinet devnet start --package demo-env.json
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="fallos-de-implementación">
-    <AccordionTrigger>Fallos en el despliegue de contratos</AccordionTrigger>
+  <AccordionItem value="fallos de implementación">
+    <AccordionTrigger>Fallos en la implementación de contratos</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
@@ -466,7 +466,7 @@ $ clarinet devnet start --package demo-env.json
         $ clarinet check
         ```
 
-        **Revisar los registros de implementación**:
+        **Verificar los registros de implementación**:
 
         ```terminal
         $ clarinet devnet start --no-dashboard
@@ -483,7 +483,9 @@ $ clarinet devnet start --package demo-env.json
   </AccordionItem>
 </Accordion>
 
+## Próximos pasos
+
 :::next-steps
 * [Interacción con contratos](/tools/clarinet/contract-interaction): Aprende cómo interactuar con tus contratos.
-* [Despliegue](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
+* [Implementación](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
 :::

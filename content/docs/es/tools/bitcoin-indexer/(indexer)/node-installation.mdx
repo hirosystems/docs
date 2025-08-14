@@ -4,7 +4,7 @@ description: Configurar y sincronizar un nodo de Bitcoin Core optimizado para el
 ---
 ## Visión general
 
-El Indexador de Bitcoin requiere un nodo de Bitcoin Core completamente sincronizado con la indexación de transacciones habilitada. Esta guía explica paso a paso cómo configurar un nodo específicamente para la operación del indexador.
+El Indexador de Bitcoin requiere un nodo de Bitcoin Core completamente sincronizado con la indexación de transacciones habilitada. Esta guía explica cómo configurar un nodo específicamente configurado para la operación del indexador.
 
 ## Descargar Bitcoin Core
 
@@ -123,7 +123,7 @@ type: warn
 Utilice siempre una contraseña fuerte y única para el acceso RPC. El indexador utilizará estas credenciales para comunicarse con su nodo.
 :::
 
-## Sincronización inicial de la blockchain
+## Sincronización inicial de la cadena de bloques
 
 Inicie Bitcoin Core con su configuración:
 
@@ -134,10 +134,10 @@ $ bitcoind -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf
 :::callout
 ### Tiempo de sincronización inicial
 
-La sincronización inicial de la blockchain tarda de 1 a 3 días dependiendo del hardware y la velocidad de la red. El nodo descargará ~600GB de datos.
+La sincronización inicial de la cadena de bloques tarda de 1 a 3 días dependiendo del hardware y la velocidad de la red. El nodo descargará aproximadamente 600GB de datos.
 :::
 
-Monitorea el progreso de sincronización en otra terminal:
+Monitorear el progreso de sincronización en otra terminal:
 
 ```terminal
 $ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getblockchaininfo | jq '{blocks, headers, verificationprogress}'
@@ -178,7 +178,7 @@ $ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getzmqnotificatio
 
 ## Configuración del servicio systemd
 
-Crear un servicio systemd para el inicio automático:
+Crear un servicio systemd para inicio automático:
 
 ```console /etc/systemd/system/bitcoind.service
 [Unit]
@@ -213,7 +213,9 @@ $ sudo systemctl status bitcoind
     Active: [32mactive (running)[0m
 ```
 
+## Próximos pasos
+
 :::next-steps
-* [Configurar el indexador](/tools/bitcoin-indexer/configuration): Configura el Indexador de Bitcoin para conectarse a tu nodo
-* [Iniciar desde archivo](/tools/bitcoin-indexer/archive-bootstrap): Salta la espera con archivos pre-sincronizados
+* [Configurar el indexador](/tools/bitcoin-indexer/configuration): Configurar el Indexador de Bitcoin para conectarse a tu nodo
+* [Arrancar desde archivo](/tools/bitcoin-indexer/archive-bootstrap): Salta la espera con archivos pre-sincronizados
 :::

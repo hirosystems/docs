@@ -8,12 +8,16 @@ import { File, Folder, Files } from 'fumadocs-ui/components/files';
 import { Steps, Step } from '@/components/steps';
 import { ArrowRight, Check } from 'lucide-react';
 
+## Lo que aprenderás
+
 :::objectives
 * Instalar y configurar el SDK de Pyth
 * Obtener mensajes VAA de la API de Hermes
 * Construir transacciones con datos de oráculo
-* Manejar las post-condiciones para las tarifas del oráculo
+* Manejar las condiciones posteriores para las tarifas del oráculo
 :::
+
+## Requisitos previos
 
 :::prerequisites
 * Una aplicación de React o Node.js con Stacks.js instalado
@@ -32,7 +36,7 @@ import { ArrowRight, Check } from 'lucide-react';
     @pythnetwork/price-service-client buffer
     ```
 
-    El paquete buffer es necesario para la conversión de formatos de datos en entornos de navegador.
+    El paquete buffer es necesario para la conversión de formato de datos en entornos de navegador.
   </Step>
 
   <Step>
@@ -87,7 +91,7 @@ import { ArrowRight, Check } from 'lucide-react';
   <Step>
     ### Construir transacciones habilitadas para oráculos
 
-    Crea una transacción que incluya datos de precios actualizados:
+    Crear una transacción que incluya datos de precios actualizados:
 
     ```typescript components/PythTransaction.tsx
     import { request } from '@stacks/connect';
@@ -144,7 +148,7 @@ import { ArrowRight, Check } from 'lucide-react';
   <Step>
     ### Agregar post-condiciones para las tarifas del oráculo
 
-    Las actualizaciones del oráculo Pyth requieren una pequeña tarifa. Incluye post-condiciones al llamar a contratos:
+    Las actualizaciones del oráculo Pyth requieren una pequeña tarifa. Incluya condiciones posteriores al llamar a contratos:
 
     ```typescript components/MintWithPostConditions.tsx
     import { request } from '@stacks/connect';
@@ -189,7 +193,9 @@ import { ArrowRight, Check } from 'lucide-react';
   </Step>
 </Steps>
 
+## Próximos pasos
+
 :::next-steps
 * [Contratos de Clarity](/resources/clarity/external-data): Aprende cómo integrar el oráculo Pyth con contratos de Clarity.
-* [Probando con Clarinet](/tools/clarinet/pyth-oracle-integration): Aprende cómo probar la integración del oráculo Pyth con Clarinet.
+* [Pruebas con Clarinete](/tools/clarinet/pyth-oracle-integration): Aprende cómo probar la integración del oráculo Pyth con Clarinet.
 :::

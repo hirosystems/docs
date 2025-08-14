@@ -10,13 +10,13 @@ El SDK de Clarinet JS proporciona un potente marco de pruebas para contratos int
 
 ## Configuración inicial
 
-Comienza creando un nuevo proyecto de Node.js o utilizando uno existente:
+Comience creando un nuevo proyecto de Node.js o utilizando uno existente:
 
 ```package-install
 $ init -y
 ```
 
-Instala el SDK de Clarinet JS y las dependencias requeridas:
+Instale el SDK de Clarinet JS y las dependencias requeridas:
 
 ```package-install
 @hirosystems/clarinet-sdk vitest @stacks/transactions
@@ -24,7 +24,7 @@ Instala el SDK de Clarinet JS y las dependencias requeridas:
 
 ## Estructura del proyecto
 
-Crea la siguiente estructura para tus pruebas de contrato inteligente:
+Crea la siguiente estructura para tus pruebas de contratos inteligentes:
 
 <Files className="font-fono pointer-events-none bg-background">
   <Folder name="my-project" defaultOpen>
@@ -48,7 +48,7 @@ Crea la siguiente estructura para tus pruebas de contrato inteligente:
 
 ## Prueba simple
 
-Crea un archivo de prueba simple para verificar que tu contrato funciona:
+Cree un archivo de prueba simple para verificar que su contrato funciona:
 
 ```ts tests/counter.test.ts
 import { describe, expect, it } from "vitest";
@@ -65,13 +65,13 @@ describe("counter contract", () => {
 });
 ```
 
-El `simnet` object está automáticamente disponible en tus pruebas y proporciona un entorno simulado de la cadena de bloques de Stacks.
+El `simnet` el objeto está disponible automáticamente en tus pruebas y proporciona un entorno simulado de la cadena de bloques de Stacks.
 
 ## Opciones de configuración
 
 ### Configuración del clarinete
 
-Crea un `Clarinet.toml` archivo para definir tus contratos:
+Crear un `Clarinet.toml` archivo para definir tus contratos:
 
 ```toml Clarinet.toml
 [project]
@@ -103,7 +103,7 @@ Configurar TypeScript para el SDK:
 
 ### Configuración de Vitest
 
-Configura Vitest para que funcione con el SDK:
+Configura Vitest para trabajar con el SDK:
 
 ```js vitest.config.js
 import { defineConfig } from "vitest/config";
@@ -128,7 +128,7 @@ El `vitestSetupFilePath` debe incluirse en su `setupFiles` matriz para que el SD
 
 ### Scripts de paquete
 
-Agrega scripts de prueba a tu `package.json`:
+Agregue scripts de prueba a su `package.json`:
 
 ```json package.json
 "scripts": {
@@ -142,7 +142,7 @@ Agrega scripts de prueba a tu `package.json`:
 
 ### Probando funciones de solo lectura
 
-Cuando se prueban funciones que no modifican el estado, utiliza `callReadOnlyFn`:
+Cuando se prueban funciones que no modifican el estado, utilice `callReadOnlyFn`:
 
 ```ts
 const getCountCall = simnet.callReadOnlyFn(
@@ -156,7 +156,7 @@ expect(getCountCall.result).toBeUint(1);
 
 ### Probando funciones públicas con parámetros
 
-Pasa parámetros utilizando los ayudantes de tipo de Clarity apropiados:
+Pase parámetros utilizando los ayudantes de tipo Clarity apropiados:
 
 ```ts
 const depositCall = simnet.callPublicFn(
@@ -186,7 +186,7 @@ expect(balance).toBeUint(1000);
 
 ### Probando el despliegue de contratos
 
-Asegúrate de que tu contrato esté correctamente desplegado antes de probar sus funciones:
+Asegúrese de que su contrato esté correctamente implementado antes de probar sus funciones:
 
 ```ts
 it("ensures the contract is deployed", () => {
@@ -211,9 +211,9 @@ it("fails when borrowing too much", () => {
 });
 ```
 
-### Probando con múltiples cuentas
+### Pruebas con múltiples cuentas
 
-Simula interacciones entre diferentes usuarios:
+Simular interacciones entre diferentes usuarios:
 
 ```ts
 const wallet1 = accounts.get("wallet_1")!;
@@ -278,7 +278,7 @@ Si tienes un proyecto existente de JavaScript/TypeScript con una estructura pers
   </Folder>
 </Files>
 
-Especifica la ubicación de Clarinet.toml en tu configuración de Vitest:
+Especifique la ubicación de Clarinet.toml en su configuración de Vitest:
 
 ```js vitest.config.js
 export default defineConfig({
@@ -292,6 +292,8 @@ export default defineConfig({
   },
 });
 ```
+
+## Próximos pasos
 
 :::next-steps
 * [Pruebas unitarias](/tools/clarinet/unit-testing): Aprende cómo probar tu contrato con pruebas unitarias.

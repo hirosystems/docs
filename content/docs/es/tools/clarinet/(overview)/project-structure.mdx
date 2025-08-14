@@ -1,12 +1,12 @@
 ---
 title: Estructura del proyecto
 sidebarTitle: Estructura del proyecto
-description: Comprende la estructura completa y la configuración de un proyecto de Clarinet
+description: Comprende la estructura y configuración completa de un proyecto Clarinet
 type: concept
 ---
 Un proyecto de Clarinet sigue una estructura cuidadosamente diseñada que separa contratos, pruebas y configuración. Comprender esta estructura te ayuda a organizar el código de manera efectiva y configurar herramientas para un flujo de trabajo de desarrollo óptimo.
 
-## Diseño del proyecto principal
+## Diseño básico del proyecto
 
 Cada proyecto de Clarinet contiene estos directorios y archivos esenciales:
 
@@ -46,13 +46,13 @@ Cada proyecto de Clarinet contiene estos directorios y archivos esenciales:
   </Folder>
 </Files>
 
-Cada componente cumple un propósito específico en tu flujo de trabajo de desarrollo. Exploremos cómo funcionan juntos para crear un entorno de desarrollo completo.
+Cada componente cumple un propósito específico en su flujo de trabajo de desarrollo. Exploremos cómo funcionan juntos para crear un entorno de desarrollo completo.
 
 ## El manifiesto del proyecto
 
 ### Clarinet.toml
 
-El **Clarinet.toml** file es el corazón de tu proyecto. Define los metadatos del proyecto y rastrea todos los contratos:
+El **Clarinet.toml** file es el corazón de su proyecto. Define los metadatos del proyecto y rastrea todos los contratos:
 
 ```toml Clarinet.toml
 [project]
@@ -72,9 +72,9 @@ epoch = "latest"
 
 El manifiesto maneja varias funciones críticas:
 
-* **Registro de contrato**: Cada contrato debe estar listado aquí
-* **Épocas de Stacks y versión de Clarity**: Especifica la versión de Clarity y la época para cada contrato
-* **Secuencia de arranque**: Enumera los contratos a desplegar en `clarinet devnet start`
+* **Registro de contrato**: Todo contrato debe estar listado aquí
+* **Época de Stacks y versión de Clarity**: Especifica la versión de Clarity y la época para cada contrato
+* **Secuencia de arranque**: Lista los contratos a desplegar `clarinet devnet start`
 
 ### Configuración de época
 
@@ -94,7 +94,7 @@ Usando `"latest"` garantiza que tus contratos siempre utilicen las característi
 
 ### Configuración del paquete
 
-El **package.json** define tu entorno de pruebas y dependencias:
+El **package.json** define su entorno de pruebas y dependencias:
 
 ```json package.json
 {
@@ -122,9 +122,9 @@ El **package.json** define tu entorno de pruebas y dependencias:
 ```
 
 | Paquete | Propósito |
-|---------|-----------|
-| `@hirosystems/clarinet-sdk` | Clarinet compilado en WebAssembly para Node.js |
-| `@stacks/transactions` | Manipulación del valor de claridad en TypeScript |
+|---------|---------|
+| `@hirosystems/clarinet-sdk` | Clarinete compilado en WebAssembly para Node.js |
+| `@stacks/transactions` | Manipulación de valores de Clarity en TypeScript |
 | `vitest` | Marco de pruebas moderno con soporte nativo para TypeScript |
 | `vitest-environment-clarinet` | Arranque de Simnet para pruebas |
 
@@ -159,10 +159,10 @@ export default defineConfig({
 });
 ```
 
-Esta configuración habilita:
+Esta configuración permite:
 
 * **Entorno de clarinete**: Automático `simnet` configuración para cada prueba
-* **Modo de bifurcación única**: Ejecución eficiente de pruebas con aislamiento adecuado
+* **Modo de horquilla única**: Ejecución eficiente de pruebas con aislamiento adecuado
 * **Seguimiento de cobertura**: Generar informes en múltiples formatos
 * **Configuración personalizada**: Agregar utilidades de prueba específicas del proyecto
 
@@ -225,22 +225,22 @@ balance = 10_000_000_000_000
 Estos ajustes controlan:
 
 * **Puertos de red**: Puntos finales de API, RPC y explorador
-* **Configuración de la cuenta**: Billeteras de prueba con saldos de STX
-* **Parámetros de cadena**: Configuración específica de la red blockchain
+* **Configuración de la cuenta**: Carteras de prueba con saldos de STX
+* **Parámetros de cadena**: Configuración específica de la red de blockchain
 
 :::callout
 type: warn
 
 ### Aviso de Seguridad
 
-Nunca hagas commit de claves privadas o mnemónicos de mainnet. Utiliza variables de entorno para las credenciales de producción.
+Nunca comprometas claves privadas o frases mnemónicas de la red principal. Utiliza variables de entorno para las credenciales de producción.
 :::
 
 ## Problemas comunes
 
 <Accordion type="single" collapsible>
   <AccordionItem value="resolución-de-módulos">
-    <AccordionTrigger>Fallos en las importaciones en las pruebas</AccordionTrigger>
+    <AccordionTrigger>Importaciones fallando en pruebas</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
@@ -255,17 +255,17 @@ Nunca hagas commit de claves privadas o mnemónicos de mainnet. Utiliza variable
         }
         ```
 
-        Esta configuración asegura que TypeScript entienda la estrategia de resolución de módulos de Vite y permita la importación `.ts` archivos directamente.
+        Esta configuración garantiza que TypeScript comprenda la estrategia de resolución de módulos de Vite y permita la importación `.ts` archivos directamente.
       </div>
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="versión-de-clarity">
+  <AccordionItem value="claridad-versión">
     <AccordionTrigger>Versiones incompatibles</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        Todos los contratos en tu proyecto deben usar la misma versión de Clarity y época para evitar problemas de compatibilidad:
+        Todos los contratos en su proyecto deben usar la misma versión de Clarity y época para evitar problemas de compatibilidad:
 
         ```toml Clarinet.toml
         [contracts.token]
@@ -277,13 +277,15 @@ Nunca hagas commit de claves privadas o mnemónicos de mainnet. Utiliza variable
         epoch = "latest" # !mark
         ```
 
-        Las versiones incompatibles pueden causar fallos de implementación y comportamientos inesperados. Siempre actualice todos los contratos juntos cuando se cambie a una nueva versión de Clarity.
+        Las versiones incompatibles pueden causar fallos de implementación y comportamientos inesperados. Siempre actualice todos los contratos juntos al cambiar a una nueva versión de Clarity.
       </div>
     </AccordionContent>
   </AccordionItem>
 </Accordion>
 
+## Próximos pasos
+
 :::next-steps
-* [Escribiendo contratos de Clarity](/tools/clarinet/project-development): Crear y gestionar contratos de Clarity.
+* [Escribiendo contratos de Clarity](/tools/clarinet/project-development): Crea y gestiona contratos de Clarity.
 * [Pruebas y validación](/tools/clarinet/contract-interaction): Interactúa con contratos de Clarity en tu proyecto.
 :::

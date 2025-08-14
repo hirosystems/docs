@@ -18,6 +18,16 @@ export interface Translations {
     toc: {
       contents: string;
     };
+    feedback: {
+      question: string;
+      good: string;
+      bad: string;
+      thankYou: string;
+      viewHere: string;
+      placeholder: string;
+      submit: string;
+      submitting: string;
+    };
   };
   breadcrumb: {
     // Main sections

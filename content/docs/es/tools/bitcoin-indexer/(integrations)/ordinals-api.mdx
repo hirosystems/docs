@@ -3,15 +3,15 @@ title: Ejecutando tu propia API de Ordinals
 sidebarTitle: Integración de API de Ordinales
 description: Puntos finales de la API REST para consultar inscripciones de Ordinals, colecciones y rareza de satoshis.
 ---
-## Visión general
+## Resumen
 
-La API de Ordinals proporciona acceso completo a datos de inscripciones, artefactos digitales y seguimiento de satoshis. Todos los endpoints devuelven JSON y admiten paginación para conjuntos de resultados grandes.
+La API de Ordinals proporciona acceso integral a datos de inscripciones, artefactos digitales y seguimiento de satoshis. Todos los puntos de acceso devuelven JSON y admiten paginación para conjuntos de resultados grandes.
 
 URL base: `http://localhost:3000/ordinals/v1`
 
 ## Autenticación
 
-La API está abierta por defecto. Para implementaciones en producción, configure las claves de API:
+La API está abierta por defecto. Para implementaciones en producción, configure claves de API:
 
 ```bash title="bitcoin-indexer.toml"
 [api]
@@ -19,7 +19,7 @@ require_auth = true
 api_keys = ["your-api-key-here"]
 ```
 
-Incluya la clave de API en las solicitudes:
+Incluya la clave API en las solicitudes:
 
 ```bash
 Authorization: Bearer your-api-key-here
@@ -65,7 +65,7 @@ $ curl http://localhost:3000/ordinals/v1/inscriptions/0
 | `address` | string | Filtrar por dirección del propietario |
 | `mime_type` | string | Filtrar por tipo MIME |
 | `from_block` | número | Altura del bloque inicial |
-| `to_block` | número | Altura del bloque final |
+| `to_block` | número | Altura final del bloque |
 
 ```terminal
 $ curl "http://localhost:3000/ordinals/v1/inscriptions?limit=5&mime_type=image/png"
@@ -134,15 +134,15 @@ $ curl http://localhost:3000/ordinals/v1/sats/1252201400444387
 }
 ```
 
-### Listar rarezas de satoshi \[#list-rarities]
+### Lista de rarezas de satoshi \[#list-rarities]
 
 `GET /sats/rarities` devuelve satoshis por clase de rareza.
 
 | Rareza | Descripción |
 |--------|-------------|
-| `mythic` | Primer sat del bloque génesis |
+| `mythic` | Primer bloque de génesis |
 | `legendary` | Primer sat de la primera tx en el bloque |
-| `epic` | Primera sat después del halving |
+| `epic` | Primer sábado después del halving |
 | `rare` | Primer sábado después del ajuste de dificultad |
 | `uncommon` | Primer sábado de cada bloque |
 | `common` | Todos los demás sats |
@@ -219,11 +219,13 @@ Todos los errores devuelven una estructura JSON consistente:
 ```
 
 | Código | Estado HTTP | Descripción |
-|--------|-------------|-------------|
+|------|-------------|-------------|
 | `NOT_FOUND` | 404 | Recurso no encontrado |
 | `INVALID_REQUEST` | 400 | Solicitud mal formada |
 | `RATE_LIMITED` | 429 | Demasiadas solicitudes |
 | `INTERNAL_ERROR` | 500 | Error del servidor |
+
+## Próximos pasos
 
 :::next-steps
 * [API de Runas](/tools/bitcoin-indexer/runes-api): Consultar tokens y saldos de Runes

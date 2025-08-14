@@ -1,12 +1,12 @@
 ---
 title: Firmar mensajes
-description: Aprende cómo firmar y verificar mensajes para probar la propiedad de una dirección y autorizar acciones
+description: Aprende cómo firmar y verificar mensajes para demostrar la propiedad de una dirección y autorizar acciones
 ---
-Aprende cómo implementar la firma de mensajes en tu aplicación de Stacks. La firma de mensajes permite a los usuarios probar criptográficamente que controlan una dirección sin realizar una transacción en la cadena, permitiendo autenticación, autorización y declaraciones verificables.
+Aprende cómo implementar la firma de mensajes en tu aplicación Stacks. La firma de mensajes permite a los usuarios probar criptográficamente que controlan una dirección sin realizar una transacción en la cadena, permitiendo autenticación, autorización y declaraciones verificables.
 
 :::objectives
-* Conéctate a la billetera de un usuario y solicita firmas de mensajes
-* Firma tanto mensajes de texto simples como datos estructurados
+* Conéctese a la billetera de un usuario y solicite firmas de mensajes
+* Firme tanto mensajes de texto simples como datos estructurados
 * Verificar firmas para garantizar la autenticidad
 :::
 
@@ -23,9 +23,9 @@ Instale los paquetes necesarios para la firma y verificación de mensajes.
 @stacks/connect @stacks/encryption
 ```
 
-## Conectar a billetera
+## Conectar a la billetera
 
-Antes de firmar mensajes, establece una conexión con la billetera del usuario. La conexión persiste a través de las recargas de página.
+Antes de firmar mensajes, establezca una conexión con la billetera del usuario. La conexión persiste a través de las recargas de página.
 
 ```ts
 import { connect, isConnected } from '@stacks/connect';
@@ -42,7 +42,7 @@ Llama a esta función cuando tu aplicación se cargue o cuando el usuario haga c
 
 ## Firmar mensajes de texto
 
-Solicita una firma para un mensaje de texto simple utilizando el `request` método.
+Solicitar una firma para un mensaje de texto simple utilizando el `request` método.
 
 ```ts
 import { request } from '@stacks/connect';
@@ -65,7 +65,7 @@ La cartera mostrará el mensaje al usuario para su aprobación antes de firmar.
 
 ## Firmar datos estructurados
 
-Para datos más complejos, utiliza la firma de mensajes estructurados con valores de Clarity.
+Para datos más complejos, utilice la firma de mensajes estructurados con valores de Clarity.
 
 ```ts
 import { request } from '@stacks/connect';
@@ -190,6 +190,8 @@ async function authenticate() {
   return { success: false };
 }
 ```
+
+## Próximos pasos
 
 :::next-steps
 * [Transmitir transacciones](/reference/stacks.js/broadcast-transactions): Aprende cómo firmar y transmitir transacciones

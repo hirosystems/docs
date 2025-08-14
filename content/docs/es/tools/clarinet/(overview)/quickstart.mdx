@@ -2,14 +2,18 @@
 title: Inicio rápido
 description: En esta guía, construirás un contrato inteligente de contador simple e interactuarás con él en un entorno local.
 ---
+## Lo que aprenderás
+
 :::objectives
-* Crear un proyecto de contrato inteligente en Clarity
+* Crear un proyecto de contrato inteligente Clarity
 * Escribir código Clarity con mapas y funciones públicas
-* Prueba y valida tus contratos usando la consola de Clarinet
+* Prueba y valida tus contratos utilizando la consola de Clarinet
 :::
 
+## Requisitos previos
+
 :::prerequisites
-* Clarinete instalado en tu máquina. Sigue el [guía de instalación](/tools/clarinet#installation) si es necesario.
+* Clarinete instalado en su máquina. Siga el [guía de instalación](/tools/clarinet#installation) si es necesario.
 * Un editor de código como VS Code para editar archivos de Clarity.
 :::
 
@@ -19,7 +23,7 @@ description: En esta guía, construirás un contrato inteligente de contador sim
   <Step>
     ### Crea tu proyecto
 
-    Comencemos creando un nuevo proyecto de Clarinet. El `clarinet new` el comando configura todo lo que necesitas para el desarrollo de contratos inteligentes, incluyendo un marco de pruebas, configuraciones de despliegue y un entorno de desarrollo local:
+    Comencemos creando un nuevo proyecto de Clarinet. El `clarinet new` el comando configura todo lo que necesitas para el desarrollo de contratos inteligentes, incluyendo un marco de pruebas, configuraciones de implementación y un entorno de desarrollo local:
 
     ```terminal
     $ clarinet new counter
@@ -32,7 +36,7 @@ description: En esta guía, construirás un contrato inteligente de contador sim
     [32mCreate file[0m [1mvitest.config.js[0m
     ```
 
-    Clarinet crea una estructura de proyecto completa para ti. Cada carpeta cumple un propósito específico en tu flujo de trabajo de desarrollo:
+    Clarinete crea una estructura de proyecto completa para ti. Cada carpeta cumple un propósito específico en tu flujo de trabajo de desarrollo:
 
     <Files className="font-fono pointer-events-none bg-background">
       <Folder name="counter" defaultOpen>
@@ -60,7 +64,7 @@ description: En esta guía, construirás un contrato inteligente de contador sim
   <Step>
     ### Genere su contrato
 
-    Ahora que tenemos nuestra estructura de proyecto, vamos a crear un contrato inteligente. Navega a tu directorio de proyecto y usa el generador de contratos de Clarinet:
+    Ahora que tenemos nuestra estructura de proyecto, vamos a crear un contrato inteligente. Navega a tu directorio de proyecto y utiliza el generador de contratos de Clarinet:
 
     ```terminal
     $ cd counter
@@ -70,22 +74,22 @@ description: En esta guía, construirás un contrato inteligente de contador sim
     [33mUpdated Clarinet.toml[0m [1mwith contract counter[0m
     ```
 
-    Clarinet crea automáticamente tanto tu archivo de contrato como un archivo de prueba correspondiente. Esto sigue la mejor práctica de escribir pruebas junto con tu código de contrato:
+    Clarinet crea automáticamente tanto su archivo de contrato como un archivo de prueba correspondiente. Esto sigue la mejor práctica de escribir pruebas junto con su código de contrato:
 
     | Archivo | Propósito |
-    |----------|-----------|
+    |------|---------|
     | `contracts/counter.clar` | Tu código de contrato inteligente |
     | `tests/counter.test.ts` | Archivo de prueba para su contrato |
 
     :::callout
-    Observe que Clarinet también actualizó tu `Clarinet.toml` archivo. Este archivo de configuración rastrea todos los contratos en su proyecto y sus configuraciones de implementación.
+    Observe que Clarinet también actualizó su `Clarinet.toml` archivo. Este archivo de configuración rastrea todos los contratos en su proyecto y sus ajustes de implementación.
     :::
   </Step>
 
   <Step>
     ### Escriba su código de contrato
 
-    Abrir `contracts/counter.clar` y reemplaza su contenido con nuestra implementación del contador. Este contrato mantendrá un conteo separado para cada usuario que interactúe con él:
+    Abrir `contracts/counter.clar` y reemplazar su contenido con nuestra implementación del contador. Este contrato mantendrá un conteo separado para cada usuario que interactúe con él:
 
     ```clarity contracts/counter.clar -c
     ;; Define a map to store counts for each user
@@ -111,9 +115,9 @@ description: En esta guía, construirás un contrato inteligente de contador sim
   </Step>
 
   <Step>
-    ### Valida tu contrato
+    ### Valide su contrato
 
-    Antes de poder probar nuestro contrato, asegurémonos de que sea sintácticamente correcto y seguro en cuanto a tipos. El comando check de Clarinet analiza tu contrato sin desplegarlo:
+    Antes de poder probar nuestro contrato, asegurémonos de que sea sintácticamente correcto y seguro en cuanto a tipos. El comando check de Clarinet analiza su contrato sin desplegarlo:
 
     ```terminal
     $ clarinet check
@@ -124,7 +128,7 @@ description: En esta guía, construirás un contrato inteligente de contador sim
 
     | Error | Solución |
     |-------|-----|
-    | `Unknown keyword` | Verificar ortografía de las funciones de Clarity |
+    | `Unknown keyword` | Verificar la ortografía de las funciones de Clarity |
     | `Type mismatch` | Asegúrate de usar los tipos correctos (uint, principal, etc.) |
     | `Unresolved contract` | Verificar el nombre del contrato en `Clarinet.toml` coincide con el nombre del contrato en el archivo |
   </Step>
@@ -152,6 +156,8 @@ description: En esta guía, construirás un contrato inteligente de contador sim
     ```
   </Step>
 </Steps>
+
+## Próximos pasos
 
 :::next-steps
 * [Estructura del proyecto](/tools/clarinet/project-structure): Aprende sobre la estructura del proyecto y cómo gestionar tus contratos.

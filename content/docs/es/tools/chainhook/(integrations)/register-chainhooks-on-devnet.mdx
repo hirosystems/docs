@@ -2,11 +2,15 @@
 title: Registrar Chainhooks en devnet
 description: En esta guía, aprenderás cómo registrar automáticamente Chainhooks en devnet usando Clarinet.
 ---
+## Lo que aprenderás
+
 :::objectives
 * Crear archivos de predicado Chainhook en tu proyecto Clarinet
 * Registrar predicados automáticamente al iniciar devnet
 * Monitorear la ejecución de Chainhook durante el desarrollo local
 :::
+
+## Requisitos previos
 
 :::prerequisites
 * Clarinet versión 2.1.0 o superior instalada
@@ -20,7 +24,7 @@ description: En esta guía, aprenderás cómo registrar automáticamente Chainho
   <Step>
     ### Crear archivos de predicado
 
-    Crea tus archivos de predicado Chainhook en el directorio de tu proyecto Clarinet. Puedes colocarlos en la raíz del proyecto o organizarlos en una carpeta dedicada.
+    Cree sus archivos de predicado Chainhook en el directorio de su proyecto Clarinet. Puede colocarlos en la raíz del proyecto u organizarlos en una carpeta dedicada.
 
     ```json chainhooks/increment.json
     {
@@ -46,13 +50,13 @@ description: En esta guía, aprenderás cómo registrar automáticamente Chainho
     }
     ```
 
-    El predicado se activará cada vez que el `increment` se llama al método en tu contrato de contador.
+    El predicado se activará cada vez que el `increment` el método es llamado en tu contrato de contador.
   </Step>
 
   <Step>
     ### Organizar la estructura del proyecto
 
-    Estructure su proyecto con archivos Chainhook en una ubicación lógica. Aquí tiene una disposición de proyecto recomendada:
+    Estructure su proyecto con archivos Chainhook en una ubicación lógica. Aquí hay una disposición de proyecto recomendada:
 
     ```
     my-project/
@@ -66,7 +70,7 @@ description: En esta guía, aprenderás cómo registrar automáticamente Chainho
     └── Clarinet.toml
     ```
 
-    Clarinet descubrirá automáticamente los archivos de predicado en el directorio de tu proyecto al iniciar devnet.
+    Clarinet descubrirá automáticamente los archivos de predicado en el directorio de su proyecto al iniciar devnet.
   </Step>
 
   <Step>
@@ -78,7 +82,7 @@ description: En esta guía, aprenderás cómo registrar automáticamente Chainho
     $ clarinet devnet start
     ```
 
-    Busca la confirmación de registro en la salida de tu terminal:
+    Busque la confirmación de registro en la salida de su terminal:
 
     ```console
     Computing deployment plan
@@ -93,7 +97,7 @@ description: En esta guía, aprenderás cómo registrar automáticamente Chainho
   <Step>
     ### Verificar la ejecución de Chainhook
 
-    Interactúa con tus contratos para activar los Chainhooks registrados. Monitorea la terminal del devnet para confirmar la ejecución.
+    Interactúe con sus contratos para activar los Chainhooks registrados. Supervise la terminal de devnet para obtener confirmaciones de ejecución.
 
     ```terminal
     $ clarinet console
@@ -109,6 +113,8 @@ description: En esta guía, aprenderás cómo registrar automáticamente Chainho
     Su punto final de webhook o salida de archivo recibirá la carga útil del evento según su `then_that` configuración.
   </Step>
 </Steps>
+
+## Próximos pasos
 
 :::next-steps
 * [Alcances de Bitcoin](/tools/chainhook/reference/bitcoin-scopes): Explora los tipos de eventos disponibles para Bitcoin
