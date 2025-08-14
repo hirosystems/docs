@@ -1,5 +1,6 @@
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { i18n } from '@/lib/i18n';
 
 interface BreadcrumbItem {
   name: ReactNode;
@@ -47,6 +48,12 @@ export function useBreadcrumb(): BreadcrumbItem[] {
   const pathname = usePathname();
 
   const segments = pathname.split('/').filter(Boolean);
+  
+  // Remove locale prefix if it exists
+  const firstSegment = segments[0];
+  if (firstSegment && i18n.languages.includes(firstSegment)) {
+    segments.shift();
+  }
 
   const items: BreadcrumbItem[] = [];
   let currentPath = '';
