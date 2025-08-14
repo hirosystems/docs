@@ -3,11 +3,13 @@ import { useI18n } from 'fumadocs-ui/contexts/i18n';
 import { useSearchContext } from 'fumadocs-ui/contexts/search';
 import { Search, SearchIcon } from 'lucide-react';
 import type { ComponentProps } from 'react';
+import { useTranslations } from '@/hooks/use-translations';
 import { cn } from '@/lib/utils';
 import { Kbd } from '../ui/kbd';
 
 export function SearchToggle(props: ComponentProps<'button'>) {
   const { enabled, setOpenSearch } = useSearchContext();
+  const t = useTranslations();
   if (!enabled) return;
 
   return (
@@ -16,7 +18,7 @@ export function SearchToggle(props: ComponentProps<'button'>) {
       <button
         className="md:hidden h-8 w-8 flex items-center justify-center rounded-md hover:bg-accent transition-colors"
         onClick={() => setOpenSearch(true)}
-        aria-label="Search"
+        aria-label={t.navigation.searchAriaLabel}
         {...props}
       >
         <SearchIcon className="h-4 w-4 text-muted-foreground" />
@@ -31,7 +33,7 @@ export function SearchToggle(props: ComponentProps<'button'>) {
         <div className="flex items-center flex-1 gap-2">
           <SearchIcon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
           <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors md:inline hidden">
-            Search
+            {t.navigation.search}
           </span>
         </div>
         <div className="flex items-center gap-1 group">

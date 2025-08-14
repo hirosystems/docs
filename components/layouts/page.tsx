@@ -13,6 +13,7 @@ import React, {
 } from 'react';
 import { BreadcrumbNav as OriginalBreadcrumb } from '@/components/breadcrumb-nav';
 import { TocThumb } from '@/components/layout/toc-thumb';
+import { useTranslations } from '@/hooks/use-translations';
 import { cn } from '@/lib/utils';
 
 export interface PageData {
@@ -155,6 +156,7 @@ function TocItem({ item }: { item: TOCItemType }) {
 function PageTOC() {
   const { toc = [], full } = usePageData();
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations();
 
   if (toc.length === 0 || full) return null;
 
@@ -162,7 +164,7 @@ function PageTOC() {
     <div className="sticky top-[var(--fd-nav-height)] w-[275px] shrink-0 h-[calc(100dvh-var(--fd-nav-height))] px-4 py-3 max-xl:hidden overflow-auto">
       <div className="flex items-center mb-4">
         <AlignLeft className="w-4 h-4 mr-2 text-muted-foreground" />
-        <p className="text-sm font-fono text-muted-foreground">Contents</p>
+        <p className="text-sm font-fono text-muted-foreground">{t.navigation.toc.contents}</p>
       </div>
       <div className="relative">
         <TocThumb
