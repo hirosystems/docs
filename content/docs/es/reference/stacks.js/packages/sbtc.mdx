@@ -1,0 +1,321 @@
+---
+title: 'sbtc'
+description: Construye y gestiona depósitos y retiros de sBTC en Bitcoin y Stacks.
+---
+El `sbtc` El paquete proporciona funciones para crear depósitos de sBTC en Bitcoin e interactuar con el protocolo sBTC a través de las redes de Bitcoin y Stacks.
+
+## Instalación
+
+```package-install
+sbtc
+```
+
+## Funciones de depósito
+
+### buildSbtcDepositAddress \[#buildSbtcDepositAddress]
+
+`buildSbtcDepositAddress` crea una dirección de Bitcoin para depósitos de sBTC con metadatos incorporados.
+
+### Firma
+
+```typescript
+function buildSbtcDepositAddress(options: DepositAddressOptions): DepositAddress
+```
+
+### Parámetros
+
+| Nombre | Tipo | Obligatorio | Descripción |
+|--------|------|-------------|-------------|
+| `stacksAddress` | `string` | Sí | Dirección de Stacks para recibir sBTC |
+| `signersPublicKey` | `string` | Sí | Clave pública agregada de los firmantes |
+| `maxSignerFee` | `number` | No | Tarifa máxima para firmantes (predeterminado: 80,000 sats) |
+| `reclaimLockTime` | `number` | No | Tiempo de bloqueo para el script de recuperación (predeterminado: 6.000) |
+| `network` | `BitcoinNetwork` | No | Red de Bitcoin a utilizar (predeterminado: MAINNET) |
+
+### Ejemplo
+
+```typescript
+import { buildSbtcDepositAddress, SbtcApiClientMainnet } from 'sbtc';
+
+const client = new SbtcApiClientMainnet();
+
+// Build deposit address
+const deposit = buildSbtcDepositAddress({
+  stacksAddress: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
+  signersPublicKey: await client.fetchSignersPublicKey(),
+  maxSignerFee: 80_000, // Fee taken from deposit amount
+  reclaimLockTime: 6_000
+});
+
+// Send BTC to deposit.address using any Bitcoin wallet
+const txid = await wallet.sendTransfer({
+  recipient: deposit.address,
+  amount: 1_000_000 // 0.01 BTC
+});
+
+// Notify signers about the deposit
+await client.notifySbtc({ txid, ...deposit });
+```
+
+### buildSbtcDepositTx \[#buildSbtcDepositTx]
+
+`buildSbtcDepositTx` crea una transacción completa de Bitcoin para depósitos de sBTC.
+
+### Firma
+
+```typescript
+function buildSbtcDepositTx(options: DepositTxOptions): DepositTransaction
+```
+
+### Parámetros
+
+| Nombre | Tipo | Obligatorio | Descripción |
+|--------|------|-------------|-------------|
+| `amountSats` | `number \| bigint` | Sí | Cantidad a depositar en satoshis |
+| `stacksAddress` | `string` | Sí | Dirección de Stacks para recibir sBTC |
+| `signersPublicKey` | `string` | Sí | Clave pública agregada de los firmantes |
+| `maxSignerFee` | `number` | No | Tarifa máxima para firmantes (predeterminado: 80,000 sats) |
+| `reclaimLockTime` | `number` | No | Tiempo de bloqueo para el script de recuperación (predeterminado: 144) |
+| `network` | `BitcoinNetwork` | No | Red de Bitcoin a utilizar |
+
+### Ejemplo
+
+```typescript
+import { buildSbtcDepositTx, SbtcApiClientMainnet } from 'sbtc';
+
+const client = new SbtcApiClientMainnet();
+
+// Build deposit transaction
+const deposit = buildSbtcDepositTx({
+  amountSats: 100_000,
+  stacksAddress: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
+  signersPublicKey: await client.fetchSignersPublicKey()
+});
+
+// Sign transaction
+deposit.transaction.sign(privateKey);
+deposit.transaction.finalize();
+
+// Broadcast and notify
+const txid = await client.broadcastTx(deposit.transaction);
+await client.notifySbtc(deposit);
+```
+
+### sbtcDepositHelper \[#sbtcDepositHelper]
+
+`sbtcDepositHelper` crea una transacción de depósito completamente formada a partir de UTXOs.
+
+### Firma
+
+```typescript
+function sbtcDepositHelper(options: DepositHelperOptions): Promise<DepositTransaction>
+```
+
+### Parámetros
+
+| Nombre | Tipo | Obligatorio | Descripción |
+|--------|------|-------------|-------------|
+| `amountSats` | `number \| bigint` | Sí | Cantidad a depositar en satoshis |
+| `stacksAddress` | `string` | Sí | Dirección de Stacks para recibir sBTC |
+| `signersPublicKey` | `string` | Sí | Clave pública agregada de los firmantes |
+| `feeRate` | `number` | Sí | Tasa de comisión en sat/vbyte |
+| `utxos` | `UtxoWithTx[]` | Sí | UTXOs para financiar la transacción |
+| `bitcoinChangeAddress` | `string` | Sí | Dirección para el cambio de salida |
+| `reclaimPublicKey` | `string` | No | Clave pública para reclamar depósitos |
+| `reclaimLockTime` | `number` | No | Tiempo de bloqueo para reclamar (predeterminado: 144) |
+| `maxSignerFee` | `number` | No | Tarifa máxima del firmante (predeterminado: 80,000) |
+| `network` | `BitcoinNetwork` | No | Red de Bitcoin (predeterminado: MAINNET) |
+
+### Ejemplo
+
+```typescript
+import { sbtcDepositHelper, SbtcApiClientMainnet } from 'sbtc';
+
+const client = new SbtcApiClientMainnet();
+const btcAddress = 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4';
+
+// Create complete deposit transaction
+const deposit = await sbtcDepositHelper({
+  amountSats: 1_000_000,
+  stacksAddress: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
+  signersPublicKey: await client.fetchSignersPublicKey(),
+  feeRate: await client.fetchFeeRate('medium'),
+  utxos: await client.fetchUtxos(btcAddress),
+  bitcoinChangeAddress: btcAddress
+});
+
+// Sign and broadcast
+deposit.transaction.sign(privateKey);
+deposit.transaction.finalize();
+
+const txid = await client.broadcastTx(deposit.transaction);
+await client.notifySbtc(deposit);
+```
+
+## Clientes de API
+
+### SbtcApiClientMainnet
+
+`SbtcApiClientMainnet` proporciona acceso a la API de la red principal para operaciones de sBTC.
+
+```typescript
+import { SbtcApiClientMainnet } from 'sbtc';
+
+const client = new SbtcApiClientMainnet();
+```
+
+### SbtcApiClientTestnet
+
+`SbtcApiClientTestnet` proporciona acceso a la API de testnet para operaciones de sBTC.
+
+```typescript
+import { SbtcApiClientTestnet } from 'sbtc';
+
+const client = new SbtcApiClientTestnet();
+```
+
+### SbtcApiClientDevenv
+
+`SbtcApiClientDevenv` proporciona acceso a la API de desarrollo local.
+
+```typescript
+import { SbtcApiClientDevenv } from 'sbtc';
+
+const client = new SbtcApiClientDevenv();
+```
+
+## Métodos del cliente
+
+### fetchSignersPublicKey \[#fetchSignersPublicKey]
+
+`fetchSignersPublicKey` recupera la clave pública agregada de los firmantes de sBTC.
+
+```typescript
+const publicKey = await client.fetchSignersPublicKey();
+// '02abc123...' (32-byte hex string)
+```
+
+### fetchSignersAddress \[#fetchSignersAddress]
+
+`fetchSignersAddress` recupera la dirección de Bitcoin de los firmantes de sBTC.
+
+```typescript
+const address = await client.fetchSignersAddress();
+// 'bc1p...' (p2tr address)
+```
+
+### fetchFeeRate \[#fetchFeeRate]
+
+`fetchFeeRate` recupera las tarifas actuales de la red Bitcoin.
+
+```typescript
+const feeRate = await client.fetchFeeRate('medium');
+// 15 (sat/vbyte)
+
+// Also supports 'low' and 'high'
+const lowFee = await client.fetchFeeRate('low');
+const highFee = await client.fetchFeeRate('high');
+```
+
+### fetchUtxos \[#fetchUtxos]
+
+`fetchUtxos` recupera las salidas de transacciones no gastadas para una dirección de Bitcoin.
+
+```typescript
+const utxos = await client.fetchUtxos('bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4');
+// Array of UTXOs with transaction data
+```
+
+### broadcastTx \[#broadcastTx]
+
+`broadcastTx` transmite una transacción de Bitcoin a la red.
+
+```typescript
+const txid = await client.broadcastTx(transaction);
+// '0x1234abcd...'
+```
+
+### notificarSbtc \[#notifySbtc]
+
+`notifySbtc` notifica a la API de sBTC sobre una transacción de depósito.
+
+```typescript
+const response = await client.notifySbtc({
+  txid,
+  stacksAddress,
+  reclaimScript,
+  depositScript
+});
+// { status: 200, statusMessage: 'OK' }
+```
+
+### fetchSbtcBalance \[#fetchSbtcBalance]
+
+`fetchSbtcBalance` recupera el saldo de sBTC para una dirección de Stacks.
+
+```typescript
+const balance = await client.fetchSbtcBalance('SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159');
+// 1000000n (in micro-sBTC)
+```
+
+## Configuración
+
+### Opciones de configuración del cliente
+
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sbtcContract` | `string` | Dirección del contrato sBTC |
+| `sbtcApiUrl` | `string` | URL base de la API de sBTC (Emily) |
+| `btcApiUrl` | `string` | URL base de la API de Bitcoin |
+| `stxApiUrl` | `string` | URL base de la API de Stacks |
+
+### Configuración personalizada del cliente
+
+```typescript
+import { SbtcApiClient } from 'sbtc';
+
+const client = new SbtcApiClient({
+  sbtcContract: 'SP000000000000000000002Q6VF78.sbtc',
+  sbtcApiUrl: 'https://api.sbtc.tech',
+  btcApiUrl: 'https://mempool.space/api',
+  stxApiUrl: 'https://api.mainnet.hiro.so'
+});
+```
+
+## Ejemplo completo de depósito
+
+```typescript
+import { sbtcDepositHelper, SbtcApiClientMainnet } from 'sbtc';
+
+async function depositBtcForSbtc() {
+  const client = new SbtcApiClientMainnet();
+  const btcAddress = 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4';
+  const stxAddress = 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159';
+
+  // 1. Create deposit transaction
+  const deposit = await sbtcDepositHelper({
+    amountSats: 100_000,
+    stacksAddress: stxAddress,
+    signersPublicKey: await client.fetchSignersPublicKey(),
+    feeRate: await client.fetchFeeRate('medium'),
+    utxos: await client.fetchUtxos(btcAddress),
+    bitcoinChangeAddress: btcAddress
+  });
+
+  // 2. Sign transaction
+  deposit.transaction.sign(privateKey);
+  deposit.transaction.finalize();
+
+  // 3. Broadcast to Bitcoin network
+  const txid = await client.broadcastTx(deposit.transaction);
+  console.log('Bitcoin transaction:', txid);
+
+  // 4. Notify sBTC signers
+  await client.notifySbtc(deposit);
+  console.log('Deposit submitted successfully');
+
+  // 5. Check sBTC balance (after confirmation)
+  const balance = await client.fetchSbtcBalance(stxAddress);
+  console.log('sBTC balance:', balance);
+}
+```

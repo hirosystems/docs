@@ -1,0 +1,168 @@
+---
+title: Transmitir transacciones
+description: Solicita a los usuarios que firmen transacciones y las transmitan a la cadena de bloques de Stacks.
+---
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { ChevronRight, Code, Terminal } from 'lucide-react';
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+
+El proceso de transmitir transacciones es fundamental para interactuar con blockchains, ya sea que estés transfiriendo tokens, desplegando contratos o ejecutando funciones de contratos.
+
+En esta guía, aprenderás cómo:
+
+1. [Instale los paquetes necesarios](#setup-and-installation)
+2. [Conectar a la billetera de un usuario](#connect-to-a-users-wallet)
+3. [Firmar y transmitir transacciones](#sign-and-broadcast-transactions)
+4. [Manejar resultados de transacciones](#handle-transaction-results)
+
+***
+
+## Configuración e instalación
+
+Instale los paquetes necesarios para comenzar a construir y transmitir transacciones:
+
+```package-install
+@stacks/connect @stacks/transactions
+```
+
+## Conectar a la billetera de un usuario
+
+Antes de firmar transacciones, los usuarios necesitan conectar su billetera a su aplicación. Use el `connect` función para iniciar una conexión de billetera:
+
+```ts
+import { connect, isConnected } from '@stacks/connect';
+
+async function connectWallet() {
+  if (!isConnected()) {
+    const response = await connect();
+    console.log('Connected with addresses:', response);
+  }
+}
+```
+
+## Firmar y transmitir transacciones
+
+Hay tres tipos de transacciones que puedes crear: transferencias de STX, implementaciones de contratos y llamadas a contratos.
+
+<Tabs defaultValue="transfer">
+  <TabsList className="flex flex-wrap md:w-max">
+    <TabsTrigger value="transferir" className="tab group">
+      <Badge className="badge transition-colors">Transferencia de STX</Badge>
+    </TabsTrigger>
+
+    <TabsTrigger value="desplegar" className="tab group">
+      <Badge className="badge transition-colors">Despliegue de contratos</Badge>
+    </TabsTrigger>
+
+    <TabsTrigger value="ejecutar" className="tab group">
+      <Badge className="badge transition-colors">Ejecución del contrato</Badge>
+    </TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="transferir">
+    Para transferir tokens STX, utiliza el `request` método con `stx_transferStx`:
+
+    ```ts
+    import { request } from '@stacks/connect';
+
+    async function transferStx() {
+      const response = await request('stx_transferStx', {
+        recipient: 'ST2EB9WEQNR9P0K28D2DC352TM75YG3K0GT7V13CV',
+        amount: '100', // in micro-STX (1 STX = 1,000,000 micro-STX)
+        memo: 'Reimbursement', // optional
+      });
+      
+      console.log('Transaction ID:', response.txId);
+    }
+    ```
+  </TabsContent>
+
+  <TabsContent value="desplegar">
+    Para desplegar un contrato inteligente, utiliza el `request` método con `stx_deployContract`:
+
+    ```ts
+    import { request } from '@stacks/connect';
+
+    async function deployContract() {
+      const codeBody = '(define-public (say-hi) (ok "hello world"))';
+      
+      const response = await request('stx_deployContract', {
+        name: 'my-contract',
+        code: codeBody,
+        clarityVersion: 3, // optional, defaults to latest version
+      });
+      
+      console.log('Transaction ID:', response.txId);
+    }
+    ```
+
+    <Callout>Los contratos se implementarán en la dirección de Stacks de la billetera conectada.</Callout>
+  </TabsContent>
+
+  <TabsContent value="ejecutar">
+    Para llamar a una función de contrato, utiliza el `request` método con 'stx\_callContract'. Aquí hay un ejemplo usando un contrato simple:
+
+    ```clarity
+    (define-public (say-hi)
+      (print "hi")
+      (ok u0)
+    )
+    ```
+
+    Así es como se llama a esta función:
+
+    ```ts
+    import { request } from '@stacks/connect';
+    import { Cl } from '@stacks/transactions';
+
+    async function callContract() {
+      const response = await request('stx_callContract', {
+        contractAddress: 'ST22T6ZS7HVWEMZHHFK77H4GTNDTWNPQAX8WZAKHJ',
+        contractName: 'my-contract',
+        functionName: 'say-hi',
+        functionArgs: [], // array of Clarity values
+      });
+      
+      console.log('Transaction ID:', response.txId);
+    }
+    ```
+
+    Para funciones que toman argumentos, puedes usar el `Cl` espacio de nombres para construir valores de Clarity:
+
+    ```ts
+    const functionArgs = [
+      Cl.uint(123),
+      Cl.stringAscii("hello"),
+      Cl.standardPrincipalCV("ST1X.."),
+    ];
+    ```
+  </TabsContent>
+</Tabs>
+
+## Manejar resultados de transacciones
+
+Cuando una transacción es firmada y transmitida, el `request` el método devuelve un objeto de respuesta que contiene información sobre la transacción:
+
+```ts
+interface TransactionResponse {
+  txId: string;        // The transaction ID
+  txRaw: string;       // The raw transaction hex
+}
+```
+
+Puedes usar el ID de la transacción para crear un enlace para ver la transacción en el explorador:
+
+```ts
+async function handleTransaction() {
+  const response = await request('stx_transferStx', {
+    recipient: 'ST2EB9WEQNR9P0K28D2DC352TM75YG3K0GT7V13CV',
+    amount: '100',
+  });
+  
+  const explorerUrl = `https://explorer.stacks.co/txid/${response.txId}`;
+  console.log('View transaction in explorer:', explorerUrl);
+}
+```

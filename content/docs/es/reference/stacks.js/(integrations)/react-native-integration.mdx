@@ -1,0 +1,290 @@
+---
+title: Uso de Stacks.js con React Native
+sidebarTitle: Integración de React Native
+description: Aprende cómo integrar la funcionalidad de la blockchain de Stacks en aplicaciones móviles de React Native
+---
+Stacks.js puede integrarse en aplicaciones de React Native para llevar la funcionalidad de blockchain a dispositivos móviles. Este tutorial te guía a través de la configuración de un proyecto de React Native con Expo y su configuración para trabajar con las bibliotecas de Stacks.js.
+
+:::objectives
+* Configura un proyecto Expo configurado para Stacks.js
+* Instalar y configurar los polyfills necesarios para React Native
+* Generar carteras y firmar transacciones en una aplicación móvil
+* Maneja las limitaciones del entorno JavaScript de React Native
+* Construye una aplicación móvil funcional de Stacks
+:::
+
+:::prerequisites
+* Node.js y npm instalados en tu máquina de desarrollo
+* Conocimientos básicos de React Native y Expo
+* Familiaridad con los conceptos de Stacks.js
+* Dispositivo/simulador iOS o Android para pruebas
+:::
+
+## Configura el proyecto de Expo
+
+Comienza creando un nuevo proyecto de Expo. La última versión de Expo proporciona la mejor compatibilidad con los polyfills de Stacks.js.
+
+```terminal
+$ npx create-expo-app@latest my-stacks-app
+$ cd my-stacks-app
+```
+
+El proyecto de plantilla incluye todo lo necesario para comenzar a construir. Prueba la configuración inicial ejecutando el servidor de desarrollo.
+
+```terminal
+$ npm start
+```
+
+Conecta tu dispositivo móvil usando la aplicación Expo Go y escanea el código QR para verificar que el proyecto base funciona correctamente.
+
+## Instalar las dependencias necesarias
+
+El entorno JavaScript de React Native carece de ciertas APIs de Node.js y del navegador que Stacks.js requiere. Instala las bibliotecas principales de Stacks junto con los polyfills necesarios.
+
+```terminal
+$ npm install @stacks/transactions @stacks/wallet-sdk
+```
+
+Instala las dependencias del polyfill como dependencias de desarrollo para manejar las APIs faltantes.
+
+```terminal
+$ npm install --save-dev buffer process react-native-get-random-values \
+  text-encoding readable-stream crypto-browserify @peculiar/webcrypto
+```
+
+Estos polyfills proporcionan:
+
+* `buffer` y `process` - Globales de Node.js
+* `react-native-get-random-values` - Valores aleatorios criptográficos
+* `text-encoding` - APIs de TextEncoder/TextDecoder
+* `crypto-browserify` y `@peculiar/webcrypto` - Funciones criptográficas
+
+## Configurar el empaquetador Metro
+
+El empaquetador Metro necesita configuración para resolver correctamente los módulos de Node.js. Crea un archivo de configuración personalizado de Metro.
+
+```terminal
+$ npx expo customize metro.config.js
+```
+
+Actualiza la configuración para mapear los módulos de Node.js a sus versiones compatibles con React Native.
+
+```js metro.config.js
+const { getDefaultConfig } = require("expo/metro-config");
+
+const config = getDefaultConfig(__dirname);
+
+config.resolver.extraNodeModules = {
+  stream: require.resolve("readable-stream"),
+  crypto: require.resolve("crypto-browserify"),
+};
+
+module.exports = config;
+```
+
+Esta configuración garantiza que cuando Stacks.js solicita módulos de Node.js, Metro proporciona los polyfills adecuados.
+
+## Configurar polyfills globales
+
+Crea un sistema de polyfill para hacer que las APIs del navegador y de Node.js estén disponibles en React Native. Esto requiere modificar el punto de entrada de la aplicación.
+
+### Crear el archivo polyfill
+
+Crea un nuevo archivo para inicializar todos los objetos globales requeridos.
+
+```js polyfill.js
+import { Buffer } from "buffer/";
+import process from "process";
+import "react-native-get-random-values";
+import { TextDecoder, TextEncoder } from "text-encoding";
+
+global.process = process;
+global.Buffer = Buffer;
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+```
+
+### Crear punto de entrada personalizado
+
+Crea un nuevo punto de entrada que cargue polyfills antes de que la aplicación se inicie.
+
+```js index.js
+import "./polyfill";
+import { Crypto } from "@peculiar/webcrypto";
+
+Object.assign(global.crypto, new Crypto());
+
+import "expo-router/entry";
+```
+
+### Actualizar package.json
+
+Dirija la aplicación para que utilice el nuevo punto de entrada.
+
+```json package.json
+{
+  "main": "index.js",
+  // ... other configuration
+}
+```
+
+:::callout
+type: warn
+
+### Errores de inicialización en tiempo de ejecución
+
+Los polyfills deben cargarse en archivos separados como se muestra. Cargarlos en el mismo archivo puede causar errores de inicialización en tiempo de ejecución.
+:::
+
+## Implementar la funcionalidad de pilas
+
+Con el entorno configurado, ahora puede usar Stacks.js en sus componentes de React Native. Actualice la pantalla principal para demostrar la generación de billeteras y la firma de transacciones.
+
+### Importar módulos de Stacks.js
+
+Edita el componente de la pantalla principal para importar las funciones necesarias de Stacks.js.
+
+```tsx app/(tabs)/index.tsx
+import {
+  TransactionVersion,
+  getAddressFromPrivateKey,
+  makeSTXTokenTransfer,
+} from "@stacks/transactions";
+import { Wallet, generateSecretKey, generateWallet } from "@stacks/wallet-sdk";
+import { useState } from "react";
+import { Button } from "react-native";
+```
+
+### Configurar el estado del componente
+
+Crea variables de estado para gestionar los datos de la cartera y la retroalimentación del usuario.
+
+```tsx app/(tabs)/index.tsx
+export default function HomeScreen() {
+  const [mnemonic, setMnemonic] = useState("Press button to generate");
+  const [wallet, setWallet] = useState<Wallet | null>(null);
+  const [log, setLog] = useState("");
+
+  // Component implementation continues...
+}
+```
+
+### Generar billetera y firmar transacción
+
+Implementa la funcionalidad principal para crear una cartera y firmar una transacción.
+
+```tsx app/(tabs)/index.tsx
+const generate = async () => {
+  try {
+    // Generate a new seed phrase
+    const mnemonic = generateSecretKey();
+    setMnemonic(mnemonic);
+
+    // Create wallet from seed phrase
+    const wallet = await generateWallet({
+      secretKey: mnemonic,
+      password: "",
+    });
+    setWallet(wallet);
+
+    // Create and sign a transaction
+    const txOptions = {
+      amount: 1000,
+      anchorMode: "any" as const,
+      recipient: "SP3W993D3BRDYB284CY3SBFDEGTC5XEDJPDEA21CN",
+      senderKey: wallet.accounts[0].stxPrivateKey,
+      fee: 300,
+      network: "testnet" as const,
+      nonce: 0,
+    };
+
+    const transaction = await makeSTXTokenTransfer(txOptions);
+    setLog("Transaction signed successfully ✓");
+  } catch (error) {
+    setLog(`Error: ${error.message}`);
+  }
+};
+```
+
+### Construir la interfaz de usuario
+
+Crea una interfaz de usuario simple para mostrar información de la cartera y activar la generación de carteras.
+
+```tsx app/(tabs)/index.tsx
+return (
+  <ThemedView style={{ padding: 20 }}>
+    <ThemedText type="title">Stacks Wallet Demo</ThemedText>
+
+    <ThemedView style={{ marginVertical: 20 }}>
+      <ThemedText type="subtitle">Seed Phrase</ThemedText>
+      <ThemedText style={{ marginBottom: 10 }}>{mnemonic}</ThemedText>
+      <Button title="Generate New Wallet" onPress={generate} />
+    </ThemedView>
+
+    {wallet && (
+      <ThemedView style={{ marginVertical: 20 }}>
+        <ThemedText type="subtitle">Wallet Address</ThemedText>
+        <ThemedText>
+          {getAddressFromPrivateKey(
+            wallet.accounts[0].stxPrivateKey,
+            TransactionVersion.Testnet
+          )}
+        </ThemedText>
+      </ThemedView>
+    )}
+
+    {log && (
+      <ThemedView style={{ marginTop: 20 }}>
+        <ThemedText type="subtitle">Status</ThemedText>
+        <ThemedText>{log}</ThemedText>
+      </ThemedView>
+    )}
+  </ThemedView>
+);
+```
+
+## Prueba tu implementación
+
+Ejecuta tu aplicación para verificar que todo funcione correctamente.
+
+```terminal
+$ npm start
+```
+
+Cuando presionas "Generar Nueva Billetera":
+
+1. Aparece una nueva frase semilla
+2. La dirección de la billetera se muestra a continuación
+3. Una transacción es firmada (no transmitida)
+4. El mensaje de éxito confirma la firma
+
+:::callout
+type: tip
+
+### Almacenamiento seguro
+
+Para aplicaciones de producción, nunca muestres frases semilla directamente. Implementa almacenamiento seguro utilizando bibliotecas como `react-native-keychain` o `expo-secure-store`.
+:::
+
+## Pruébalo
+
+Amplía la implementación básica con características adicionales.
+
+```tsx
+// Challenge: Add a function to check STX balance
+const checkBalance = async (address: string) => {
+  // Implement balance checking
+  // Hint: You'll need to use @stacks/blockchain-api-client
+};
+
+// Challenge: Implement transaction broadcasting
+const broadcastTransaction = async (transaction: StacksTransaction) => {
+  // Implement broadcasting logic
+  // Remember to handle network selection
+};
+```
+
+:::next-steps
+* [Paquete de transacciones](/reference/stacks.js/packages/transactions): Aprende sobre el paquete de transacciones.
+* [Paquete de red](/reference/stacks.js/packages/network): Aprende sobre las utilidades del paquete de red.
+:::

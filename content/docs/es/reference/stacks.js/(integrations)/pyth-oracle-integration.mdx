@@ -1,0 +1,195 @@
+---
+title: Integración del oráculo Pyth
+sidebarTitle: Integración del oráculo Pyth
+description: En esta guía, aprenderás cómo integrar los feeds de precios de Pyth Network en tu aplicación frontend utilizando Stacks.js.
+isNew: true
+---
+import { File, Folder, Files } from 'fumadocs-ui/components/files';
+import { Steps, Step } from '@/components/steps';
+import { ArrowRight, Check } from 'lucide-react';
+
+:::objectives
+* Instalar y configurar el SDK de Pyth
+* Obtener mensajes VAA de la API de Hermes
+* Construir transacciones con datos de oráculo
+* Manejar las post-condiciones para las tarifas del oráculo
+:::
+
+:::prerequisites
+* Una aplicación de React o Node.js con Stacks.js instalado
+* Comprensión de [Contratos de oráculo de Pyth](/resources/clarity/external-data)
+:::
+
+## Inicio rápido
+
+<Steps>
+  <Step>
+    ### Instalar dependencias
+
+    Instale el SDK de Pyth junto con sus paquetes existentes de Stacks.js:
+
+    ```package-install
+    @pythnetwork/price-service-client buffer
+    ```
+
+    El paquete buffer es necesario para la conversión de formatos de datos en entornos de navegador.
+  </Step>
+
+  <Step>
+    ### Configurar el cliente de Pyth
+
+    Crea un servicio para manejar las interacciones del feed de precios de Pyth:
+
+    ```typescript services/pyth.ts
+    import { PriceServiceConnection } from '@pythnetwork/price-service-client';
+    import { Buffer } from 'buffer';
+
+    // Price feed IDs
+    export const PRICE_FEEDS = {
+      BTC_USD: '0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43',
+      STX_USD: '0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17',
+      ETH_USD: '0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace',
+      USDC_USD: '0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a'
+    };
+
+    // Initialize Pyth client
+    const pythClient = new PriceServiceConnection(
+      'https://hermes.pyth.network',
+      {
+        priceFeedRequestConfig: {
+          binary: true // Request binary format for on-chain use
+        }
+      }
+    );
+
+    export async function fetchPriceUpdateVAA(priceFeedId: string): Promise<string> {
+      try {
+        // Fetch the latest VAA for the price feed
+        const vaas = await pythClient.getLatestVaas([priceFeedId]);
+        
+        if (!vaas || vaas.length === 0) {
+          throw new Error('No VAA data received');
+        }
+
+        // Convert base64 to hex for Clarity
+        const messageBuffer = Buffer.from(vaas[0], 'base64');
+        const hexString = messageBuffer.toString('hex');
+        
+        return `0x${hexString}`;
+      } catch (error) {
+        console.error('Failed to fetch price VAA:', error);
+        throw error;
+      }
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Construir transacciones habilitadas para oráculos
+
+    Crea una transacción que incluya datos de precios actualizados:
+
+    ```typescript components/PythTransaction.tsx
+    import { request } from '@stacks/connect';
+    import { 
+      Cl,
+      PostConditionMode 
+    } from '@stacks/transactions';
+    import { fetchPriceUpdateVAA, PRICE_FEEDS } from '../services/pyth';
+    import { useState } from 'react';
+
+    export function MintWithOraclePrice() {
+      const [loading, setLoading] = useState(false);
+
+      const handleMint = async () => {
+        setLoading(true);
+        try {
+          // Fetch fresh price data
+          const priceVAA = await fetchPriceUpdateVAA(PRICE_FEEDS.BTC_USD);
+          
+          // Convert hex string to buffer Clarity value
+          const vaaBuffer = Cl.bufferFromHex(priceVAA.slice(2));
+
+          // Call contract with price data using request
+          const response = await request('stx_callContract', {
+            contract: 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R.benjamin-club',
+            functionName: 'mint-for-hundred-dollars',
+            functionArgs: [vaaBuffer],
+            postConditionMode: 'deny',
+            network: 'mainnet'
+          });
+
+          console.log('Transaction submitted:', response.txid);
+          alert(`NFT minted! Transaction ID: ${response.txid}`);
+        } catch (error) {
+          console.error('Minting failed:', error);
+          alert('Failed to mint NFT');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <button 
+          onClick={handleMint}
+          disabled={loading}
+        >
+          {loading ? 'Processing...' : 'Mint NFT for $100'}
+        </button>
+      );
+    }
+    ```
+  </Step>
+
+  <Step>
+    ### Agregar post-condiciones para las tarifas del oráculo
+
+    Las actualizaciones del oráculo Pyth requieren una pequeña tarifa. Incluye post-condiciones al llamar a contratos:
+
+    ```typescript components/MintWithPostConditions.tsx
+    import { request } from '@stacks/connect';
+    import { Cl, Pc } from '@stacks/transactions';
+    import { fetchPriceUpdateVAA, PRICE_FEEDS } from '../services/pyth';
+
+    export function MintWithPostConditions() {
+      const handleMint = async () => {
+        const userAddress = 'SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R';
+        
+        // Create post-conditions
+        const postConditions = [
+          // Oracle fee (1 uSTX)
+          Pc.principal(userAddress).willSendLte(1).ustx(),
+          // sBTC transfer for $100 worth (example: 100,000 sats)
+          Pc.principal(userAddress)
+            .willSendEq(100000)
+            .ft('SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sbtc-token', 'sbtc')
+        ];
+
+        try {
+          const priceVAA = await fetchPriceUpdateVAA(PRICE_FEEDS.BTC_USD);
+          
+          const response = await request('stx_callContract', {
+            contract: `${userAddress}.benjamin-club`,
+            functionName: 'mint-for-hundred-dollars',
+            functionArgs: [Cl.bufferFromHex(priceVAA.slice(2))],
+            postConditions,
+            postConditionMode: 'deny',
+            network: 'mainnet'
+          });
+
+          console.log('Transaction successful:', response.txid);
+        } catch (error) {
+          console.error('Transaction failed:', error);
+        }
+      };
+
+      return <button onClick={handleMint}>Mint with Post-Conditions</button>;
+    }
+    ```
+  </Step>
+</Steps>
+
+:::next-steps
+* [Contratos de Clarity](/resources/clarity/external-data): Aprende cómo integrar el oráculo Pyth con contratos de Clarity.
+* [Probando con Clarinet](/tools/clarinet/pyth-oracle-integration): Aprende cómo probar la integración del oráculo Pyth con Clarinet.
+:::

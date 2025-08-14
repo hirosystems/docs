@@ -1,0 +1,35 @@
+---
+title: API de Ordinales
+sidebarTitle: Visión general
+description: Datos rápidos y confiables para ordinales de Bitcoin y tokens BRC-20 a través de REST.
+llm: false
+---
+## Visión general
+
+La API de Ordinals proporciona datos completos de inscripciones para ordinales de Bitcoin a través de una interfaz REST de alto rendimiento. Construida con respuestas en caché e indexación optimizada, ofrece metadatos de inscripciones, actividad de trading, información de tokens BRC-20 y datos a nivel de satoshi con latencia mínima.
+
+## Características principales
+
+* **Datos completos de inscripción** - Metadatos, contenido y propiedad de todos los ordinales
+* **Soporte para tokens BRC-20** - Metadatos completos de tokens, saldos e información del titular
+* **Seguimiento a nivel Satoshi** - Datos de inscripción vinculados a satoshis específicos
+
+## Uso
+
+```terminal
+$ curl -L 'https://api.hiro.so/ordinals/v1/inscriptions' -H 'Accept: application/json'
+```
+
+Para más ejemplos de uso, haga clic [aquí](/apis/ordinals-api/usage).
+
+:::callout
+Todas las respuestas de la API de Ordinals incluyen [límites de tasa de encabezados](/resources/guides/response-headers) que te ayudan a monitorear el uso de tu API con información de cuota específica de Bitcoin.
+:::
+
+:::callout
+type: help
+
+### ¿Necesitas ayuda para construir con la API de Ordinals?
+
+Contáctanos en el <span className="font-bold">#ordinales</span> canal activado [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro. También hay una [horas de oficina semanales](https://www.addevent.com/event/kI22007085) llamada todos los miércoles a la 1 pm ET.
+:::

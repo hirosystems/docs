@@ -1,0 +1,73 @@
+---
+title: Stacks.js
+sidebarTitle: Visión general
+description: Un SDK de JavaScript/TypeScript para construir aplicaciones en la cadena de bloques Stacks.
+llm: false
+---
+## Visión general
+
+Stacks.js es una colección de bibliotecas JavaScript que te permiten construir aplicaciones web en la blockchain de Stacks. Desde autenticación de billeteras hasta interacciones con contratos inteligentes.
+
+Para explorar Stacks.js con IA, copia y pega [llms.txt](/reference/stacks.js/llms.txt) en tu LLM de preferencia.
+
+## Características principales
+
+* **Construcción de transacciones** - Construir y transmitir todos los tipos de transacciones con APIs de tipo seguro
+* **Interacción con contratos inteligentes** - Desplegar contratos y llamar funciones con codificación automática
+* **Integración de billetera** - Conéctate a Leather, Xverse y otras billeteras de Stacks sin problemas
+* **Postcondiciones** - Proteger a los usuarios con validaciones de transferencia de activos incorporadas
+
+## Instalación
+
+Stacks.js está separado en paquetes específicos publicados bajo el `@stacks` alcance. Instala solo lo que necesitas:
+
+<TerminalPicker storage="transactions">
+  ```terminal !! transactions
+  $ npm install @stacks/transactions
+  ```
+
+  ```terminal !! connect
+  $ npm install @stacks/connect
+  ```
+
+  ```terminal !! network
+  $ npm install @stacks/network
+  ```
+
+  ```terminal !! common
+  $ npm install @stacks/common
+  ```
+</TerminalPicker>
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="paquetes">
+    <AccordionTrigger>Paquetes disponibles</AccordionTrigger>
+
+    <AccordionContent>
+      * `@stacks/api`
+      * `@stacks/auth`
+      * `@stacks/encryption`
+      * `@stacks/network`
+      * `@stacks/stacking`
+      * `@stacks/transactions`
+      * `@stacks/bns`
+      * `@stacks/common`
+      * `@stacks/profile`
+      * `@stacks/storage`
+      * `@stacks/wallet-sdk`
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+:::next-steps
+* [Conectar billetera](/reference/stacks.js/connect-wallet): Agregar autenticación de billetera
+* [Construir transacciones](/reference/stacks.js/build-transactions): Construir y transmitir transacciones
+:::
+
+:::callout
+type: help
+
+### ¿Necesitas ayuda para construir con Stacks.js?
+
+Contáctanos en el **#stacks-js** canal activado [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro. También hay una [horas de oficina semanales](https://www.addevent.com/event/kI22007085) llamada todos los miércoles a la 1 pm ET.
+:::

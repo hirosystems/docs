@@ -1,0 +1,130 @@
+---
+title: Probando contra datos de la red principal
+sidebarTitle: Simulación de ejecución de la red principal
+description: La Simulación de Ejecución de Mainnet (MXS) te permite probar tus contratos inteligentes de Clarity utilizando datos y estados reales de la mainnet de Stacks. Esta poderosa característica ayuda a asegurar que tus contratos se comporten como se espera en un entorno en vivo.
+---
+:::objectives
+* Configurando MXS en tu proyecto de Clarinet
+* Escribiendo pruebas que interactúan con contratos de la red principal
+* Simulando transacciones históricas
+* Entendiendo las limitaciones de MXS
+:::
+
+## ¿Qué es la simulación de ejecución de Mainnet?
+
+Probar contratos inteligentes en condiciones realistas es esencial. Simnet ofrece un entorno aislado pero carece de la complejidad y el historial de la red principal de Stacks en vivo.
+
+MXS llena este vacío al permitir pruebas unitarias con el SDK de Clarinet JS y Vitest para simular el estado de la red principal de Stacks en una altura de bloque específica. Esto te permite:
+
+* **Validar la lógica del contrato con datos reales:** Prueba directamente contratos o datos de la red principal dentro de tus pruebas.
+* **(Re)simular transacciones:** Analiza los resultados, la ejecución o los costos de las transacciones de la red principal sin implementar ni usar STX reales.
+
+## Habilitar MXS en su proyecto
+
+Agregue la siguiente configuración a su `Clarinet.toml` archivo:
+
+```toml Clarinet.toml
+[repl.remote_data]
+# Enable mainnet execution simulation
+enabled = true
+# Specify the Stacks block height to fork from
+initial_height = 522000
+# API URL (optional, defaults to https://api.hiro.so)
+api_url = 'https://api.hiro.so'
+```
+
+:::callout
+type: tip
+
+### Consejo profesional
+
+Estableciendo un específico `initial_height` garantiza resultados de pruebas consistentes y reproducibles.
+:::
+
+## Uso de direcciones de mainnet
+
+Cuando se prueban contratos que verifican o requieren direcciones de la red principal, establezca `use_mainnet_wallets = true`. Esto permite que tus pruebas de simnet utilicen direcciones de mainnet (SP/SM) en lugar de direcciones de testnet (ST).
+
+```toml Clarinet.toml
+[repl.remote_data]
+enabled = true
+initial_height = 522000
+use_mainnet_wallets = true  # !mark
+```
+
+Esto es particularmente útil cuando:
+
+* Probando contratos exclusivos de mainnet como protocolos DEX
+* Su contrato incluye [`(is-standard standard-or-contract-principal)`](/resources/clarity/reference/functions#is-standard) validación
+* Simulando transacciones que requieren formatos de dirección de mainnet
+
+## Configurar el acceso a la API
+
+Aunque MXS funciona sin una clave de API, es posible que encuentres límites de velocidad. Configura una clave de API para un acceso confiable:
+
+```terminal
+$ export HIRO_API_KEY="<your-api-key>"
+```
+
+## Escribir pruebas con datos de la red principal
+
+Una vez que MXS está habilitado, tus pruebas operan automáticamente contra la instantánea del estado de la red principal. Aquí tienes un ejemplo de prueba contra la red principal `pox-4` contrato:
+
+```ts tests/pox-4.test.ts
+import { describe, it, expect } from "vitest";
+import { Cl } from "@stacks/transactions";
+
+const accounts = simnet.getAccounts();
+const deployer = accounts.get("deployer")!;
+
+describe("pox-4 mainnet interaction", () => {
+  it("reads current reward cycle from mainnet", () => {
+    // Call the mainnet pox-4 contract
+    const call = simnet.callReadOnlyFn(
+      "SP000000000000000000002Q6VF78.pox-4", // Mainnet contract
+      "current-pox-reward-cycle",
+      [],
+      deployer
+    );
+
+    // Assert the result (adjust based on your initial_height)
+    expect(call.result).toBeUint(109);
+
+    console.log("Current POX reward cycle:", Cl.prettyPrint(call.result));
+  });
+});
+```
+
+La prueba utiliza `simnet.callReadOnlyFn` al igual que en las pruebas unitarias estándar, pero debido a que MXS está habilitado, se dirige al real `pox-4` estado del contrato en la altura de bloque especificada.
+
+## Pruébalo
+
+Ejecuta tu prueba para ver MXS en acción:
+
+```terminal
+$ npm run test
+```
+
+## Problemas comunes
+
+| Problema | Solución |
+|----------|----------|
+| Errores de límite de tasa | Configurar `HIRO_API_KEY` variable de entorno |
+| Resultados inconsistentes | Solucionar `initial_height` en configuración |
+| Función no encontrada | Verifique que el contrato exista en su altura de bloque |
+
+## Probando en el área de juegos
+
+Experimenta rápidamente con MXS sin configurar un proyecto:
+
+1. Visitar [https://play.hiro.so/?remote\_data=true](https://play.hiro.so/?remote_data=true)
+2. Ejecutar llamadas de contrato en la red principal:
+
+```terminal
+$ contract-call? 'SP000000000000000000002Q6VF78.pox-4 current-pox-reward-cycle
+```
+
+:::next-steps
+* [Integración del oráculo Pyth](/tools/clarinet/pyth-oracle-integration): Aprende cómo integrar el oráculo Pyth con tu proyecto Clarinet.
+* [Integración de sBTC](/tools/clarinet/sbtc-integration): Aprende cómo integrar el sBTC con tu proyecto de Clarinet.
+:::

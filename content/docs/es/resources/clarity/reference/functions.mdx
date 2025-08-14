@@ -1,28 +1,27 @@
 ---
-title: Functions reference
-sidebarTitle: Functions
-description: Complete reference for all Clarity functions organized by category, from arithmetic operations to token management.
+title: Referencia de funciones
+sidebarTitle: Funciones
+description: Referencia completa de todas las funciones de Clarity organizadas por categoría, desde operaciones aritméticas hasta gestión de tokens.
 ---
+Clarity proporciona un conjunto completo de funciones integradas para el desarrollo de contratos inteligentes. Estas funciones abarcan desde aritmética básica hasta operaciones complejas de tokens e interacciones con la cadena de bloques.
 
-Clarity provides a comprehensive set of built-in functions for smart contract development. These functions cover everything from basic arithmetic to complex token operations and blockchain interactions.
+## Operaciones aritméticas \[#arithmetic-operations]
 
-## Arithmetic operations [#arithmetic-operations]
+### + (sumar) \[#sumar]
 
-### + (add) [#add]
+`+` realiza la suma de un número variable de entradas enteras.
 
-`+` performs addition on a variable number of integer inputs.
-
-**Signature**
+**Firma**
 
 ```clarity
 (+ i1 i2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| i1, i2, ... | `int` or `uint` | Two or more integers to add |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| i1, i2, ... | `int` o `uint` | Dos o más enteros para sumar |
 
 ```clarity
 (+ 1 2 3) ;; Returns 6
@@ -36,21 +35,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok (var-get counter))))
 ```
 
-### - (subtract) [#subtract]
+### - (restar) \[#subtract]
 
-`-` performs subtraction on a variable number of integer inputs.
+`-` realiza la resta en un número variable de entradas enteras.
 
-**Signature**
+**Firma**
 
 ```clarity
 (- i1 i2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| i1, i2, ... | `int` or `uint` | Two or more integers to subtract |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1`, `i2`, ... | `int` o `uint` | Dos o más números enteros para restar |
 
 ```clarity
 (- 10 3) ;; Returns 7
@@ -65,21 +64,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok amount)))
 ```
 
-### * (multiply) [#multiply]
+### \* (multiplicar) \[#multiply]
 
-`*` performs multiplication on a variable number of integer inputs.
+`*` realiza la multiplicación de un número variable de entradas enteras.
 
-**Signature**
+**Firma**
 
 ```clarity
 (* i1 i2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| i1, i2, ... | `int` or `uint` | Two or more integers to multiply |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1`, `i2`, ... | `int` o `uint` | Dos o más números enteros para multiplicar |
 
 ```clarity
 (* 3 4) ;; Returns 12
@@ -91,21 +90,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (/ (* amount u3) u100)) ;; 3% fee
 ```
 
-### / (divide) [#divide]
+### / (dividir) \[#divide]
 
-`/` performs integer division on a variable number of integer inputs.
+`/` realiza división entera en un número variable de entradas enteras.
 
-**Signature**
+**Firma**
 
 ```clarity
 (/ i1 i2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| i1, i2, ... | `int` or `uint` | Two or more integers to divide |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1`, `i2`, ... | `int` o `uint` | Dos o más enteros para dividir |
 
 ```clarity
 (/ 10 2) ;; Returns 5
@@ -117,22 +116,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (/ (+ a b) u2))
 ```
 
-### mod [#mod]
+### mod \[#mod]
 
-`mod` returns the remainder of integer division.
+`mod` devuelve el resto de la división entera.
 
-**Signature**
+**Firma**
 
 ```clarity
 (mod i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | Dividend |
-| `i2` | `int` or `uint` | Divisor |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Dividendo |
+| `i2` | `int` o `uint` | Divisor |
 
 ```clarity
 (mod 10 3) ;; Returns 1
@@ -143,22 +142,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (is-eq (mod n u2) u0))
 ```
 
-### pow [#pow]
+### pow \[#pow]
 
-`pow` raises a number to a power.
+`pow` eleva un número a una potencia.
 
-**Signature**
+**Firma**
 
 ```clarity
 (pow i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | Base |
-| `i2` | `int` or `uint` | Exponent |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Base |
+| `i2` | `int` o `uint` | Exponente |
 
 ```clarity
 (pow 2 3) ;; Returns 8
@@ -170,21 +169,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (/ (* principal (pow rate-factor periods)) (pow u100 periods))))
 ```
 
-### sqrti [#sqrti]
+### sqrti \[#sqrti]
 
-`sqrti` returns the integer square root of a number.
+`sqrti` devuelve la raíz cuadrada entera de un número.
 
-**Signature**
+**Firma**
 
 ```clarity
 (sqrti n)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `n` | `int` or `uint` | Number to find square root of |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `n` | `int` o `uint` | Número del que se quiere encontrar la raíz cuadrada |
 
 ```clarity
 (sqrti u16) ;; Returns u4
@@ -196,21 +195,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (sqrti (+ (* x x) (* y y))))
 ```
 
-### log2 [#log2]
+### log2 \[#log2]
 
-`log2` returns the base-2 logarithm of a number.
+`log2` devuelve el logaritmo en base 2 de un número.
 
-**Signature**
+**Firma**
 
 ```clarity
 (log2 n)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `n` | `int` or `uint` | Number to find logarithm of |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `n` | `int` o `uint` | Número del que se quiere encontrar el logaritmo |
 
 ```clarity
 (log2 u8) ;; Returns u3
@@ -223,22 +222,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     none))
 ```
 
-### < (less-than) [#less-than]
+### \< (menor que) \[#less-than]
 
-`<` returns true if the first argument is less than the second.
+`<` devuelve true si el primer argumento es menor que el segundo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (< i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (< 5 10) ;; Returns true
@@ -251,22 +250,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok amount)))
 ```
 
-### > (greater-than) [#greater-than]
+### > (mayor que) \[#mayor-que]
 
-`>` returns true if the first argument is greater than the second.
+`>` devuelve true si el primer argumento es mayor que el segundo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (> i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (> 10 5) ;; Returns true
@@ -277,22 +276,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (> value u1000000))
 ```
 
-### &lt;= (less-than-or-equal) [#less-than-or-equal]
+### \<= (menor o igual) \[#menor-o-igual]
 
-`<=` returns true if the first argument is less than or equal to the second.
+`<=` devuelve true si el primer argumento es menor o igual que el segundo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (<= i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (<= 5 10) ;; Returns true
@@ -304,22 +303,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (and (<= u0 value) (<= value u100)))
 ```
 
-### &gt;= (greater-than-or-equal) [#greater-than-or-equal]
+### >= (mayor o igual que) \[#mayor-o-igual-que]
 
-`>=` returns true if the first argument is greater than or equal to the second.
+`>=` devuelve true si el primer argumento es mayor o igual que el segundo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (>= i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (>= 10 5) ;; Returns true
@@ -331,23 +330,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (ok (>= (stx-get-balance tx-sender) price)))
 ```
 
-## Logical operations [#logical-operations]
+## Operaciones lógicas \[#logical-operations]
 
-### and [#and]
+### y \[#and]
 
-`and` returns true if all arguments are true.
+`and` devuelve true si todos los argumentos son true.
 
-**Signature**
+**Firma**
 
 ```clarity
 (and b1 b2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| b1, b2, ... | `bool` | Boolean values to evaluate |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `b1`, `b2`, ... | `bool` | Valores booleanos a evaluar |
 
 ```clarity
 (and true true) ;; Returns true
@@ -356,27 +355,27 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 
 ;; Multiple conditions
 (define-read-only (is-valid-transfer (amount uint) (recipient principal))
-  (and
+  (and 
     (> amount u0)
     (not (is-eq recipient tx-sender))
     (<= amount (get-balance tx-sender))))
 ```
 
-### or [#or]
+### o \[#or]
 
-`or` returns true if at least one argument is true.
+`or` devuelve true si al menos un argumento es verdadero.
 
-**Signature**
+**Firma**
 
 ```clarity
 (or b1 b2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| b1, b2, ... | `bool` | Boolean values to evaluate |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `b1`, `b2`, ... | `bool` | Valores booleanos a evaluar |
 
 ```clarity
 (or true false) ;; Returns true
@@ -385,27 +384,27 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 
 ;; Check permissions
 (define-read-only (can-access (user principal))
-  (or
+  (or 
     (is-eq user contract-owner)
     (default-to false (map-get? admins user))
     (var-get public-access)))
 ```
 
-### not [#not]
+### no \[#not]
 
-`not` returns the logical negation of a boolean value.
+`not` devuelve la negación lógica de un valor booleano.
 
-**Signature**
+**Firma**
 
 ```clarity
 (not b)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `b` | `bool` | Boolean value to negate |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `b` | `bool` | Valor booleano a negar |
 
 ```clarity
 (not true) ;; Returns false
@@ -416,22 +415,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (not (is-eq user contract-owner)))
 ```
 
-### xor [#xor]
+### xor \[#xor]
 
-`xor` returns true if exactly one of two arguments is true.
+`xor` devuelve true si exactamente uno de los dos argumentos es verdadero.
 
-**Signature**
+**Firma**
 
 ```clarity
 (xor b1 b2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `b1` | `bool` | First boolean value |
-| `b2` | `bool` | Second boolean value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `b1` | `bool` | Primer valor booleano |
+| `b2` | `bool` | Segundo valor booleano |
 
 ```clarity
 (xor true false) ;; Returns true
@@ -443,21 +442,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (xor is-admin is-moderator))
 ```
 
-### is-eq [#is-eq]
+### es-igual \[#is-eq]
 
-`is-eq` returns true if all arguments are equal.
+`is-eq` devuelve true si todos los argumentos son iguales.
 
-**Signature**
+**Firma**
 
 ```clarity
 (is-eq v1 v2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| v1, v2, ... | any | Values to compare for equality |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `v1`, `v2`, ... | cualquiera | Valores a comparar para igualdad |
 
 ```clarity
 (is-eq 5 5) ;; Returns true
@@ -472,49 +471,49 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-## Sequence & string operations [#sequence-string-operations]
+## Operaciones de secuencia y cadena \[#sequence-string-operations]
 
-### list [#list]
+### lista \[#list]
 
-`list` constructs a list from provided values.
+`list` construye una lista a partir de los valores proporcionados.
 
-**Signature**
+**Firma**
 
 ```clarity
 (list v1 v2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| v1, v2, ... | any | Values to include in the list |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `v1`, `v2`, ... | cualquiera | Valores para incluir en la lista |
 
 ```clarity
 (list 1 2 3) ;; Returns (1 2 3)
 (list true false true) ;; Returns (true false true)
 
 ;; Create address list
-(define-data-var admins (list 5 principal)
+(define-data-var admins (list 5 principal) 
   (list 'SP1234... 'SP5678...))
 ```
 
-### append [#append]
+### agregar \[#append]
 
-`append` adds an element to the end of a list.
+`append` agrega un elemento al final de una lista.
 
-**Signature**
+**Firma**
 
 ```clarity
 (append list-expr element)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `list-expr` | `list` | List to append to |
-| `element` | any | Element to add |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `list-expr` | `list` | Lista a la que añadir |
+| `element` | cualquier | Elemento para agregar |
 
 ```clarity
 (append (list 1 2) 3) ;; Returns (1 2 3)
@@ -530,22 +529,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
       (err u1))))
 ```
 
-### concat [#concat]
+### concat \[#concat]
 
-`concat` joins two sequences of the same type.
+`concat` une dos secuencias del mismo tipo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (concat sequence1 sequence2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence1` | sequence | First sequence |
-| `sequence2` | sequence | Second sequence |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence1` | secuencia | Primera secuencia |
+| `sequence2` | secuencia | Segunda secuencia |
 
 ```clarity
 (concat "Hello " "World") ;; Returns "Hello World"
@@ -557,21 +556,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (concat prefix msg))
 ```
 
-### len [#len]
+### len \[#len]
 
-`len` returns the length of a sequence.
+`len` devuelve la longitud de una secuencia.
 
-**Signature**
+**Firma**
 
 ```clarity
 (len sequence)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to measure |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence` | secuencia | Secuencia a medir |
 
 ```clarity
 (len "Hello") ;; Returns u5
@@ -586,22 +585,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok name)))
 ```
 
-### element-at [#element-at]
+### elemento-en \[#elemento-en]
 
-`element-at` retrieves an element at a specific index.
+`element-at` recupera un elemento en un índice específico.
 
-**Signature**
+**Firma**
 
 ```clarity
 (element-at sequence index)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to access |
-| `index` | `uint` | Zero-based index |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence` | secuencia | Secuencia para acceder |
+| `index` | `uint` | Índice basado en cero |
 
 ```clarity
 (element-at "Hello" u1) ;; Returns (some "e")
@@ -613,22 +612,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (element-at (var-get members) index))
 ```
 
-### index-of [#index-of]
+### índice-de \[#index-of]
 
-`index-of` finds the first occurrence of an element in a sequence.
+`index-of` encuentra la primera aparición de un elemento en una secuencia.
 
-**Signature**
+**Firma**
 
 ```clarity
 (index-of sequence element)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to search |
-| `element` | any | Element to find |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence` | secuencia | Secuencia a buscar |
+| `element` | cualquier | Elemento a encontrar |
 
 ```clarity
 (index-of "Hello" "l") ;; Returns (some u2)
@@ -640,23 +639,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (is-some (index-of (var-get members) user)))
 ```
 
-### slice [#slice]
+### rebanada \[#slice]
 
-`slice` extracts a subsequence from a sequence.
+`slice` extrae una subsecuencia de una secuencia.
 
-**Signature**
+**Firma**
 
 ```clarity
 (slice sequence left-position right-position)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to slice |
-| `left-position` | `uint` | Starting index (inclusive) |
-| `right-position` | `uint` | Ending index (exclusive) |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence` | secuencia | Secuencia para cortar |
+| `left-position` | `uint` | Índice inicial (inclusivo) |
+| `right-position` | `uint` | Índice final (exclusivo) |
 
 ```clarity
 (slice "Hello World" u0 u5) ;; Returns (some "Hello")
@@ -667,23 +666,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (slice text u0 length))
 ```
 
-### replace-at [#replace-at]
+### reemplazar-en \[#reemplazar-en]
 
-`replace-at` replaces an element at a specific index.
+`replace-at` reemplaza un elemento en un índice específico.
 
-**Signature**
+**Firma**
 
 ```clarity
 (replace-at sequence index new-element)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to modify |
-| `index` | `uint` | Index to replace at |
-| `new-element` | any | New element |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence` | secuencia | Secuencia a modificar |
+| `index` | `uint` | Índice a reemplazar en |
+| `new-element` | cualquier | Nuevo elemento |
 
 ```clarity
 (replace-at "Hello" u1 "a") ;; Returns (some "Hallo")
@@ -698,22 +697,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (err u404)))
 ```
 
+### int-a-ascii \[#int-to-ascii]
 
-### int-to-ascii [#int-to-ascii]
+`int-to-ascii` convierte un entero a su representación de cadena ASCII.
 
-`int-to-ascii` converts an integer to its ASCII string representation.
-
-**Signature**
+**Firma**
 
 ```clarity
 (int-to-ascii value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | `int` or `uint` | Integer to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | `int` o `uint` | Entero a convertir |
 
 ```clarity
 (int-to-ascii 123) ;; Returns "123"
@@ -724,21 +722,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (concat "ID-" (int-to-ascii id)))
 ```
 
-### int-to-utf8 [#int-to-utf8]
+### int-a-utf8 \[#int-to-utf8]
 
-`int-to-utf8` converts an integer to its UTF-8 string representation.
+`int-to-utf8` convierte un entero a su representación de cadena UTF-8.
 
-**Signature**
+**Firma**
 
 ```clarity
 (int-to-utf8 value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | `int` or `uint` | Integer to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | `int` o `uint` | Entero a convertir |
 
 ```clarity
 (int-to-utf8 789) ;; Returns u"789"
@@ -749,21 +747,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (concat u"Label #" (int-to-utf8 num)))
 ```
 
-### string-to-int [#string-to-int]
+### string-a-int \[#string-a-int]
 
-`string-to-int` converts a string to an optional integer.
+`string-to-int` convierte una cadena a un entero opcional.
 
-**Signature**
+**Firma**
 
 ```clarity
 (string-to-int string)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `string` | `string-ascii` or `string-utf8` | String to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `string` | `string-ascii` o `string-utf8` | Cadena para convertir |
 
 ```clarity
 (string-to-int "123") ;; Returns (some 123)
@@ -777,21 +775,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (err u1)))
 ```
 
-### string-to-uint [#string-to-uint]
+### string-a-uint \[#string-a-uint]
 
-`string-to-uint` converts a string to an optional unsigned integer.
+`string-to-uint` convierte una cadena a un entero sin signo opcional.
 
-**Signature**
+**Firma**
 
 ```clarity
 (string-to-uint string)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `string` | `string-ascii` or `string-utf8` | String to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `string` | `string-ascii` o `string-utf8` | Cadena para convertir |
 
 ```clarity
 (string-to-uint "123") ;; Returns (some u123)
@@ -803,21 +801,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (string-to-uint input))
 ```
 
-### buff-to-int-be [#buff-to-int-be]
+### buff-to-int-be \[#buff-to-int-be]
 
-`buff-to-int-be` converts a buffer to a signed integer (big-endian).
+`buff-to-int-be` convierte un búfer a un entero con signo (big-endian).
 
-**Signature**
+**Firma**
 
 ```clarity
 (buff-to-int-be buffer)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `buffer` | `buff` | Buffer to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `buffer` | `buff` | Buffer a convertir |
 
 ```clarity
 (buff-to-int-be 0x0001) ;; Returns 1
@@ -829,21 +827,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (buff-to-int-be data))
 ```
 
-### buff-to-int-le [#buff-to-int-le]
+### buff-to-int-le \[#buff-to-int-le]
 
-`buff-to-int-le` converts a buffer to a signed integer (little-endian).
+`buff-to-int-le` convierte un búfer a un entero con signo (little-endian).
 
-**Signature**
+**Firma**
 
 ```clarity
 (buff-to-int-le buffer)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `buffer` | `buff` | Buffer to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `buffer` | `buff` | Buffer a convertir |
 
 ```clarity
 (buff-to-int-le 0x0100) ;; Returns 1
@@ -854,21 +852,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (buff-to-int-le data))
 ```
 
-### buff-to-uint-be [#buff-to-uint-be]
+### buff-to-uint-be \[#buff-to-uint-be]
 
-`buff-to-uint-be` converts a buffer to an unsigned integer (big-endian).
+`buff-to-uint-be` convierte un búfer a un entero sin signo (big-endian).
 
-**Signature**
+**Firma**
 
 ```clarity
 (buff-to-uint-be buffer)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `buffer` | `buff` | Buffer to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `buffer` | `buff` | Buffer a convertir |
 
 ```clarity
 (buff-to-uint-be 0x0001) ;; Returns u1
@@ -879,21 +877,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (buff-to-uint-be data))
 ```
 
-### buff-to-uint-le [#buff-to-uint-le]
+### buff-to-uint-le \[#buff-to-uint-le]
 
-`buff-to-uint-le` converts a buffer to an unsigned integer (little-endian).
+`buff-to-uint-le` convierte un búfer a un entero sin signo (little-endian).
 
-**Signature**
+**Firma**
 
 ```clarity
 (buff-to-uint-le buffer)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `buffer` | `buff` | Buffer to convert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `buffer` | `buff` | Buffer a convertir |
 
 ```clarity
 (buff-to-uint-le 0x0100) ;; Returns u1
@@ -904,24 +902,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (buff-to-uint-le data))
 ```
 
-## Iterators [#iterators]
+## Iteradores \[#iterators]
 
-### map [#map]
+### mapa \[#map]
 
-`map` applies a function to each element of a list.
+`map` aplica una función a cada elemento de una lista.
 
-**Signature**
+**Firma**
 
 ```clarity
 (map func list1 list2...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `func` | function | Function to apply |
-| list1, list2, ... | `list` | Lists to map over |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `func` | función | Función a aplicar |
+| `list1`, `list2`, ... | `list` | Listas para recorrer |
 
 ```clarity
 (map + (list 1 2 3) (list 10 20 30)) ;; Returns (11 22 33)
@@ -934,22 +932,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (map double numbers))
 ```
 
-### filter [#filter]
+### filtro \[#filter]
 
-`filter` returns elements that satisfy a predicate.
+`filter` devuelve elementos que satisfacen un predicado.
 
-**Signature**
+**Firma**
 
 ```clarity
 (filter func list)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `func` | function | Predicate function |
-| `list` | `list` | List to filter |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `func` | función | Función predicado |
+| `list` | `list` | Lista para filtrar |
 
 ```clarity
 (define-private (is-even (x uint))
@@ -962,23 +960,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (filter is-active (var-get all-users)))
 ```
 
-### fold [#fold]
+### plegar \[#fold]
 
-`fold` reduces a list to a single value.
+`fold` reduce una lista a un solo valor.
 
-**Signature**
+**Firma**
 
 ```clarity
 (fold func list initial-value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `func` | function | Reducer function |
-| `list` | `list` | List to reduce |
-| `initial-value` | any | Starting value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `func` | función | Función reductora |
+| `list` | `list` | Lista para reducir |
+| `initial-value` | cualquier | Valor inicial |
 
 ```clarity
 (fold + (list u1 u2 u3 u4) u0) ;; Returns u10
@@ -991,24 +989,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (fold add-balance (var-get users) u0))
 ```
 
-## Data storage & variables [#data-storage-variables]
+## Almacenamiento de datos y variables \[#data-storage-variables]
 
-### define-constant [#define-constant]
+### define-constant \[#define-constant]
 
-`define-constant` creates an immutable constant value.
+`define-constant` crea un valor constante inmutable.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-constant name value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `name` | symbol | Name of the constant |
-| `value` | any | Value of the constant |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `name` | símbolo | Nombre de la constante |
+| `value` | cualquier | Valor de la constante |
 
 ```clarity
 (define-constant contract-owner tx-sender)
@@ -1020,23 +1018,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   contract-owner)
 ```
 
-### define-data-var [#define-data-var]
+### define-data-var \[#define-data-var]
 
-`define-data-var` creates a mutable data variable.
+`define-data-var` crea una variable de datos mutable.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-data-var name type value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `name` | symbol | Name of the variable |
-| `type` | type | Type of the variable |
-| `value` | any | Initial value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `name` | símbolo | Nombre de la variable |
+| `type` | tipo | Tipo de la variable |
+| `value` | cualquier | Valor inicial |
 
 ```clarity
 (define-data-var counter uint u0)
@@ -1050,21 +1048,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok (var-get counter))))
 ```
 
-### var-get [#var-get]
+### var-get \[#var-get]
 
-`var-get` retrieves the value of a data variable.
+`var-get` recupera el valor de una variable de datos.
 
-**Signature**
+**Firma**
 
 ```clarity
 (var-get name)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `name` | symbol | Name of the variable |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `name` | símbolo | Nombre de la variable |
 
 ```clarity
 (define-data-var balance uint u100)
@@ -1079,22 +1077,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok (var-get balance))))
 ```
 
-### var-set [#var-set]
+### var-set \[#var-set]
 
-`var-set` updates the value of a data variable.
+`var-set` actualiza el valor de una variable de datos.
 
-**Signature**
+**Firma**
 
 ```clarity
 (var-set name value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `name` | symbol | Name of the variable |
-| `value` | any | New value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `name` | símbolo | Nombre de la variable |
+| `value` | cualquier | Nuevo valor |
 
 ```clarity
 (define-data-var counter uint u0)
@@ -1113,28 +1111,28 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (err u1)))
 ```
 
-### define-map [#define-map]
+### define-map \[#define-map]
 
-`define-map` creates a new data map.
+`define-map` crea un nuevo mapa de datos.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-map name key-type value-type)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `name` | symbol | Name of the map |
-| `key-type` | type | Type of the keys |
-| `value-type` | type | Type of the values |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `name` | símbolo | Nombre del mapa |
+| `key-type` | tipo | Tipo de las claves |
+| `value-type` | tipo | Tipo de los valores |
 
 ```clarity
 (define-map balances principal uint)
-(define-map user-profiles
-  principal
+(define-map user-profiles 
+  principal 
   {
     name: (string-ascii 50),
     age: uint,
@@ -1142,27 +1140,27 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   })
 
 ;; Composite key
-(define-map allowances
-  { owner: principal, spender: principal }
+(define-map allowances 
+  { owner: principal, spender: principal } 
   uint)
 ```
 
-### map-get? [#map-get]
+### map-get? \[#map-get]
 
-`map-get?` retrieves a value from a map.
+`map-get?` recupera un valor de un mapa.
 
-**Signature**
+**Firma**
 
 ```clarity
 (map-get? map-name key)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `map-name` | symbol | Name of the map |
-| `key` | any | Key to look up |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `map-name` | símbolo | Nombre del mapa |
+| `key` | cualquier | Clave para buscar |
 
 ```clarity
 (define-map balances principal uint)
@@ -1177,23 +1175,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     "Unknown"))
 ```
 
-### map-set [#map-set]
+### map-set \[#map-set]
 
-`map-set` sets or updates a value in a map.
+`map-set` establece o actualiza un valor en un mapa.
 
-**Signature**
+**Firma**
 
 ```clarity
 (map-set map-name key value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `map-name` | symbol | Name of the map |
-| `key` | any | Key to set |
-| `value` | any | Value to store |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `map-name` | símbolo | Nombre del mapa |
+| `key` | cualquier | Tecla para establecer |
+| `value` | cualquier | Valor para almacenar |
 
 ```clarity
 (define-map balances principal uint)
@@ -1214,23 +1212,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### map-insert [#map-insert]
+### map-insert \[#map-insert]
 
-`map-insert` inserts a value only if the key doesn't exist.
+`map-insert` inserta un valor solo si la clave no existe.
 
-**Signature**
+**Firma**
 
 ```clarity
 (map-insert map-name key value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `map-name` | symbol | Name of the map |
-| `key` | any | Key to insert |
-| `value` | any | Value to store |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `map-name` | símbolo | Nombre del mapa |
+| `key` | cualquier | Tecla para insertar |
+| `value` | cualquier | Valor para almacenar |
 
 ```clarity
 (define-map users principal { joined: uint })
@@ -1247,22 +1245,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### map-delete [#map-delete]
+### map-delete \[#map-delete]
 
-`map-delete` removes a key-value pair from a map.
+`map-delete` elimina un par clave-valor de un mapa.
 
-**Signature**
+**Firma**
 
 ```clarity
 (map-delete map-name key)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `map-name` | symbol | Name of the map |
-| `key` | any | Key to delete |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `map-name` | símbolo | Nombre del mapa |
+| `key` | cualquier | Tecla para borrar |
 
 ```clarity
 (define-map users principal { data: uint })
@@ -1280,24 +1278,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### define-private [#define-private]
+### definir-privada \[#definir-privada]
 
-`define-private` creates a private function only callable within the contract.
+`define-private` crea una función privada que solo se puede llamar dentro del contrato.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-private (function-name (arg-name arg-type)...) body)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `function-name` | symbol | Name of the function |
-| `arg-name` | symbol | Argument names |
-| `arg-type` | type | Argument types |
-| `body` | expression | Function body |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `function-name` | símbolo | Nombre de la función |
+| `arg-name` | símbolo | Nombres de argumentos |
+| `arg-type` | tipo | Tipos de argumentos |
+| `body` | expresión | Cuerpo de la función |
 
 ```clarity
 (define-private (calculate-fee (amount uint))
@@ -1314,24 +1312,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (and (> amount u0) (<= amount u1000000)))
 ```
 
-### define-public [#define-public]
+### define-public \[#define-public]
 
-`define-public` creates a public function callable from outside the contract.
+`define-public` crea una función pública que se puede llamar desde fuera del contrato.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-public (function-name (arg-name arg-type)...) body)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `function-name` | symbol | Name of the function |
-| `arg-name` | symbol | Argument names |
-| `arg-type` | type | Argument types |
-| `body` | expression | Function body (must return response) |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `function-name` | símbolo | Nombre de la función |
+| `arg-name` | símbolo | Nombres de argumentos |
+| `arg-type` | tipo | Tipos de argumentos |
+| `body` | expresión | Cuerpo de la función (debe devolver respuesta) |
 
 ```clarity
 (define-public (transfer (recipient principal) (amount uint))
@@ -1348,24 +1346,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok new-name)))
 ```
 
-### define-read-only [#define-read-only]
+### define-read-only \[#define-read-only]
 
-`define-read-only` creates a public read-only function.
+`define-read-only` crea una función pública de solo lectura.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-read-only (function-name (arg-name arg-type)...) body)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `function-name` | symbol | Name of the function |
-| `arg-name` | symbol | Argument names |
-| `arg-type` | type | Argument types |
-| `body` | expression | Function body |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `function-name` | símbolo | Nombre de la función |
+| `arg-name` | símbolo | Nombres de argumentos |
+| `arg-type` | tipo | Tipos de argumentos |
+| `body` | expresión | Cuerpo de la función |
 
 ```clarity
 (define-read-only (get-balance (user principal))
@@ -1383,23 +1381,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   })
 ```
 
-## Error handling [#error-handling]
+## Manejo de errores \[#error-handling]
 
-### ok [#ok]
+### ok \[#ok]
 
-`ok` constructs a successful response value.
+`ok` construye un valor de respuesta exitoso.
 
-**Signature**
+**Firma**
 
 ```clarity
 (ok value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Success value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | cualquier | Valor de éxito |
 
 ```clarity
 (ok u42) ;; Returns (ok u42)
@@ -1408,26 +1406,26 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 ;; Success response
 (define-public (deposit (amount uint))
   (begin
-    (map-set balances tx-sender
+    (map-set balances tx-sender 
       (+ (get-balance tx-sender) amount))
     (ok amount)))
 ```
 
-### err [#err]
+### err \[#err]
 
-`err` constructs an error response value.
+`err` construye un valor de respuesta de error.
 
-**Signature**
+**Firma**
 
 ```clarity
 (err value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Error value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | cualquier | Valor de error |
 
 ```clarity
 (err u404) ;; Returns (err u404)
@@ -1441,22 +1439,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
       (err u1)))) ;; Insufficient balance
 ```
 
-### asserts! [#asserts]
+### ¡afirmaciones! \[#afirmaciones]
 
-`asserts!` checks a condition and exits with an error if false.
+`asserts!` comprueba una condición y sale con un error si es falsa.
 
-**Signature**
+**Firma**
 
 ```clarity
 (asserts! condition thrown-value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `condition` | `bool` | Condition to check |
-| `thrown-value` | any | Value to return if false |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `condition` | `bool` | Condición a verificar |
+| `thrown-value` | cualquier | Valor a devolver si es falso |
 
 ```clarity
 (define-public (transfer (amount uint) (recipient principal))
@@ -1474,21 +1472,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### try! [#try]
+### ¡inténtalo! \[#try]
 
-`try!` attempts to unwrap a response, propagating any error.
+`try!` intenta desenvolver una respuesta, propagando cualquier error.
 
-**Signature**
+**Firma**
 
 ```clarity
 (try! response)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to try |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `response` | respuesta | Respuesta a probar |
 
 ```clarity
 (try! (ok u42)) ;; Returns u42
@@ -1503,22 +1501,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### unwrap! [#unwrap]
+### ¡desenvolver! \[#unwrap]
 
-`unwrap!` extracts the inner value from an optional or ok response.
+`unwrap!` extrae el valor interno de una respuesta opcional o correcta.
 
-**Signature**
+**Firma**
 
 ```clarity
 (unwrap! optional-or-response thrown-value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `optional-or-response` | optional/response | Value to unwrap |
-| `thrown-value` | any | Value if none/err |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `optional-or-response` | opcional/respuesta | Valor a desenvolver |
+| `thrown-value` | cualquier | Valor si ninguno/error |
 
 ```clarity
 (unwrap! (some u42) (err u1)) ;; Returns u42
@@ -1532,22 +1530,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok amount)))
 ```
 
-### unwrap-err! [#unwrap-err]
+### ¡desenvolver-err! \[#desenvolver-err]
 
-`unwrap-err!` extracts the error value from an err response.
+`unwrap-err!` extrae el valor de error de una respuesta de error.
 
-**Signature**
+**Firma**
 
 ```clarity
 (unwrap-err! response thrown-value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to unwrap |
-| `thrown-value` | any | Value if ok |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `response` | respuesta | Respuesta a desenvolver |
+| `thrown-value` | cualquier | Valor si está bien |
 
 ```clarity
 (unwrap-err! (err u404) u0) ;; Returns u404
@@ -1560,21 +1558,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok error-code)))
 ```
 
-### unwrap-panic [#unwrap-panic]
+### unwrap-panic \[#unwrap-panic]
 
-`unwrap-panic` extracts a value or causes a runtime panic.
+`unwrap-panic` extrae un valor o provoca un pánico en tiempo de ejecución.
 
-**Signature**
+**Firma**
 
 ```clarity
 (unwrap-panic optional-or-response)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `optional-or-response` | optional/response | Value to unwrap |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `optional-or-response` | opcional/respuesta | Valor a desenvolver |
 
 ```clarity
 (unwrap-panic (some u42)) ;; Returns u42
@@ -1585,21 +1583,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (unwrap-panic (map-get? critical-config "version")))
 ```
 
-### unwrap-err-panic [#unwrap-err-panic]
+### unwrap-err-panic \[#unwrap-err-panic]
 
-`unwrap-err-panic` extracts an error value or causes a runtime panic.
+`unwrap-err-panic` extrae un valor de error o provoca un pánico en tiempo de ejecución.
 
-**Signature**
+**Firma**
 
 ```clarity
 (unwrap-err-panic response)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to unwrap |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `response` | respuesta | Respuesta a desenvolver |
 
 ```clarity
 (unwrap-err-panic (err u404)) ;; Returns u404
@@ -1610,24 +1608,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (unwrap-err-panic (always-fails)))
 ```
 
-## Data helpers [#data-helpers]
+## Ayudantes de datos \[#data-helpers]
 
-### default-to [#default-to]
+### default-a \[#default-to]
 
-`default-to` returns a default value for none.
+`default-to` devuelve un valor predeterminado para ninguno.
 
-**Signature**
+**Firma**
 
 ```clarity
 (default-to default optional)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `default` | any | Default value |
-| `optional` | optional | Optional value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `default` | cualquier | Valor predeterminado |
+| `optional` | opcional | Valor opcional |
 
 ```clarity
 (default-to u0 (some u42)) ;; Returns u42
@@ -1638,22 +1636,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (default-to u0 (map-get? balances user)))
 ```
 
-### merge [#merge]
+### fusionar \[#merge]
 
-`merge` combines two tuples, with the second overriding the first.
+`merge` combina dos tuplas, con la segunda anulando la primera.
 
-**Signature**
+**Firma**
 
 ```clarity
 (merge tuple1 tuple2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `tuple1` | tuple | Base tuple |
-| `tuple2` | tuple | Override tuple |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `tuple1` | tupla | Tupla base |
+| `tuple2` | tupla | Anular tupla |
 
 ```clarity
 (merge { a: u1, b: u2 } { b: u3, c: u4 })
@@ -1666,22 +1664,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### get [#get]
+### obtener \[#get]
 
-`get` extracts a value from a tuple by key.
+`get` extrae un valor de una tupla por clave.
 
-**Signature**
+**Firma**
 
 ```clarity
 (get key tuple)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `key` | symbol | Key to extract |
-| `tuple` | tuple | Tuple to access |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `key` | símbolo | Clave para extraer |
+| `tuple` | tupla | Tupla a la que acceder |
 
 ```clarity
 (get balance { balance: u100, locked: u50 }) ;; Returns u100
@@ -1693,22 +1691,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     u0))
 ```
 
-### as-max-len? [#as-max-len]
+### ¿as-max-len? \[#as-max-len]
 
-`as-max-len?` checks if a sequence fits within a maximum length.
+`as-max-len?` comprueba si una secuencia cabe dentro de una longitud máxima.
 
-**Signature**
+**Firma**
 
 ```clarity
 (as-max-len? sequence max-length)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `sequence` | sequence | Sequence to check |
-| `max-length` | uint | Maximum allowed length |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `sequence` | secuencia | Secuencia a verificar |
+| `max-length` | uint | Longitud máxima permitida |
 
 ```clarity
 (as-max-len? (list 1 2 3) u5) ;; Returns (some (1 2 3))
@@ -1723,25 +1721,25 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (err u1)))
 ```
 
-## Control flow [#control-flow]
+## Flujo de control \[#control-flow]
 
-### if [#if]
+### si \[#if]
 
-`if` evaluates a condition and returns one of two values.
+`if` evalúa una condición y devuelve uno de dos valores.
 
-**Signature**
+**Firma**
 
 ```clarity
 (if condition true-branch false-branch)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `condition` | `bool` | Condition to evaluate |
-| `true-branch` | any | Value if true |
-| `false-branch` | any | Value if false |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `condition` | `bool` | Condición a evaluar |
+| `true-branch` | cualquier | Valor si es verdadero |
+| `false-branch` | cualquier | Valor si es falso |
 
 ```clarity
 (if (> u10 u5)
@@ -1758,11 +1756,11 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
       (err u1))))
 ```
 
-### match [#match]
+### partido \[#match]
 
-`match` performs pattern matching on optional and response types.
+`match` realiza coincidencia de patrones en tipos opcionales y de respuesta.
 
-**Signature**
+**Firma**
 
 ```clarity
 (match value
@@ -1770,14 +1768,14 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   none-branch)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | optional/response | Value to match |
-| `some-name` | symbol | Binding for some value |
-| `some-branch` | expression | Expression if some |
-| `none-branch` | expression | Expression if none |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | opcional/respuesta | Valor a coincidir |
+| `some-name` | símbolo | Enlace para algún valor |
+| `some-branch` | expresión | Expresión si alguna |
+| `none-branch` | expresión | Expresión si no hay ninguna |
 
 ```clarity
 (match (map-get? balances tx-sender)
@@ -1798,22 +1796,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (err u404)))
 ```
 
-### begin [#begin]
+### comenzar \[#begin]
 
-`begin` executes multiple expressions in sequence.
+`begin` ejecuta múltiples expresiones en secuencia.
 
-**Signature**
+**Firma**
 
 ```clarity
 (begin expr1 expr2... last-expr)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| expr1, expr2, ... | any | Expressions to execute |
-| `last-expr` | any | Final expression (return value) |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `expr1`, `expr2`, ... | cualquiera | Expresiones a ejecutar |
+| `last-expr` | cualquier | Expresión final (valor de retorno) |
 
 ```clarity
 (begin
@@ -1831,23 +1829,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok true)))
 ```
 
-### let [#let]
+### let \[#let]
 
-`let` creates local bindings for use in an expression.
+`let` crea enlaces locales para su uso en una expresión.
 
-**Signature**
+**Firma**
 
 ```clarity
 (let ((name1 value1) (name2 value2)...) body)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `name` | symbol | Binding name |
-| `value` | any | Value to bind |
-| `body` | expression | Expression using bindings |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `name` | símbolo | Nombre de enlace |
+| `value` | cualquier | Valor para vincular |
+| `body` | expresión | Expresión usando enlaces |
 
 ```clarity
 (let ((x 10) (y 20))
@@ -1864,23 +1862,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
       (ok reward))))
 ```
 
-## Optional & response types [#optional-response-types]
+## Tipos opcionales y tipos de respuesta \[#optional-response-types]
 
-### some [#some]
+### algunos \[#some]
 
-`some` constructs an optional value that contains a value.
+`some` construye un valor opcional que contiene un valor.
 
-**Signature**
+**Firma**
 
 ```clarity
 (some value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Value to wrap |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | cualquier | Valor para envolver |
 
 ```clarity
 (some u42) ;; Returns (some u42)
@@ -1893,21 +1891,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     none))
 ```
 
-### is-ok [#is-ok]
+### está-bien \[#is-ok]
 
-`is-ok` checks if a response is ok.
+`is-ok` comprueba si una respuesta es correcta.
 
-**Signature**
+**Firma**
 
 ```clarity
 (is-ok response)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `response` | respuesta | Respuesta a verificar |
 
 ```clarity
 (is-ok (ok u42)) ;; Returns true
@@ -1918,21 +1916,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (is-ok (map-get? transaction-results tx-id)))
 ```
 
-### is-err [#is-err]
+### es-err \[#es-err]
 
-`is-err` checks if a response is err.
+`is-err` comprueba si una respuesta es err.
 
-**Signature**
+**Firma**
 
 ```clarity
 (is-err response)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `response` | response | Response to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `response` | respuesta | Respuesta a verificar |
 
 ```clarity
 (is-err (err u404)) ;; Returns true
@@ -1943,21 +1941,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (is-err result))
 ```
 
-### is-some [#is-some]
+### es-alguno \[#es-alguno]
 
-`is-some` checks if an optional contains a value.
+`is-some` comprueba si un opcional contiene un valor.
 
-**Signature**
+**Firma**
 
 ```clarity
 (is-some optional)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `optional` | optional | Optional to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `optional` | opcional | Opcional para verificar |
 
 ```clarity
 (is-some (some u42)) ;; Returns true
@@ -1968,21 +1966,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (is-some (map-get? users user)))
 ```
 
-### is-none [#is-none]
+### es-ninguno \[#es-ninguno]
 
-`is-none` checks if an optional is none.
+`is-none` comprueba si un opcional es none.
 
-**Signature**
+**Firma**
 
 ```clarity
 (is-none optional)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `optional` | optional | Optional to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `optional` | opcional | Opcional para verificar |
 
 ```clarity
 (is-none none) ;; Returns true
@@ -1993,24 +1991,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (is-none (map-get? reserved-names name)))
 ```
 
-## Fungible tokens [#fungible-tokens]
+## Tokens fungibles \[#fungible-tokens]
 
-### define-fungible-token [#define-fungible-token]
+### define-fungible-token \[#define-fungible-token]
 
-`define-fungible-token` creates a new fungible token.
+`define-fungible-token` crea un nuevo token fungible.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-fungible-token token-name [total-supply])
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token-name` | symbol | Name of the token |
-| `total-supply` | `uint` (optional) | Maximum supply |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token-name` | símbolo | Nombre del token |
+| `total-supply` | `uint` (opcional) | Suministro máximo |
 
 ```clarity
 (define-fungible-token my-token)
@@ -2021,23 +2019,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (ok (ft-get-balance my-token user)))
 ```
 
-### ft-mint? [#ft-mint]
+### ¿ft-mint? \[#ft-mint]
 
-`ft-mint?` creates new tokens for a recipient.
+`ft-mint?` crea nuevos tokens para un destinatario.
 
-**Signature**
+**Firma**
 
 ```clarity
 (ft-mint? token amount recipient)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | Token to mint |
-| `amount` | `uint` | Amount to mint |
-| `recipient` | `principal` | Recipient of tokens |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | Token a acuñar |
+| `amount` | `uint` | Cantidad para acuñar |
+| `recipient` | `principal` | Destinatario de tokens |
 
 ```clarity
 (ft-mint? my-token u100 tx-sender)
@@ -2049,23 +2047,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ft-mint? my-token amount recipient)))
 ```
 
-### ft-burn? [#ft-burn]
+### ¿ft-burn? \[#ft-burn]
 
-`ft-burn?` destroys tokens from an owner.
+`ft-burn?` destruye tokens de un propietario.
 
-**Signature**
+**Firma**
 
 ```clarity
 (ft-burn? token amount owner)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | Token to burn |
-| `amount` | `uint` | Amount to burn |
-| `owner` | `principal` | Owner of tokens |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | Token para quemar |
+| `amount` | `uint` | Cantidad para quemar |
+| `owner` | `principal` | Propietario de tokens |
 
 ```clarity
 (ft-burn? my-token u50 tx-sender)
@@ -2075,24 +2073,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (ft-burn? my-token amount tx-sender))
 ```
 
-### ft-transfer? [#ft-transfer]
+### ¿ft-transfer? \[#ft-transfer]
 
-`ft-transfer?` transfers tokens between principals.
+`ft-transfer?` transfiere tokens entre principales.
 
-**Signature**
+**Firma**
 
 ```clarity
 (ft-transfer? token amount sender recipient)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | Token to transfer |
-| `amount` | `uint` | Amount to transfer |
-| `sender` | `principal` | Sender |
-| `recipient` | `principal` | Recipient |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | Token a transferir |
+| `amount` | `uint` | Cantidad a transferir |
+| `sender` | `principal` | Remitente |
+| `recipient` | `principal` | Destinatario |
 
 ```clarity
 (ft-transfer? my-token u50 tx-sender recipient)
@@ -2104,22 +2102,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ft-transfer? my-token amount tx-sender recipient)))
 ```
 
-### ft-get-balance [#ft-get-balance]
+### ft-get-balance \[#ft-get-balance]
 
-`ft-get-balance` returns the token balance of a principal.
+`ft-get-balance` devuelve el saldo de tokens de un principal.
 
-**Signature**
+**Firma**
 
 ```clarity
 (ft-get-balance token principal)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | Token to query |
-| `principal` | `principal` | Account to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | Token a consultar |
+| `principal` | `principal` | Cuenta a verificar |
 
 ```clarity
 (ft-get-balance my-token tx-sender) ;; Returns uint
@@ -2129,21 +2127,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (>= (ft-get-balance my-token user) required))
 ```
 
-### ft-get-supply [#ft-get-supply]
+### ft-get-supply \[#ft-get-supply]
 
-`ft-get-supply` returns the current token supply.
+`ft-get-supply` devuelve el suministro actual de tokens.
 
-**Signature**
+**Firma**
 
 ```clarity
 (ft-get-supply token)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | Token to query |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | Token a consultar |
 
 ```clarity
 (ft-get-supply my-token) ;; Returns uint
@@ -2157,53 +2155,53 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   })
 ```
 
-## Non-fungible tokens [#non-fungible-tokens]
+## Tokens no fungibles \[#non-fungible-tokens]
 
-### define-non-fungible-token [#define-non-fungible-token]
+### define-token-no-fungible \[#define-token-no-fungible]
 
-`define-non-fungible-token` creates a new non-fungible token.
+`define-non-fungible-token` crea un nuevo token no fungible.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-non-fungible-token token-name identifier-type)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token-name` | symbol | Name of the NFT |
-| `identifier-type` | type | Type of the identifier |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token-name` | símbolo | Nombre del NFT |
+| `identifier-type` | tipo | Tipo del identificador |
 
 ```clarity
 (define-non-fungible-token my-nft uint)
 (define-non-fungible-token complex-nft { id: uint, serial: (buff 20) })
 
 ;; NFT with metadata
-(define-map nft-metadata uint {
+(define-map nft-metadata uint { 
   name: (string-ascii 50),
   uri: (string-ascii 200)
 })
 ```
 
-### nft-mint? [#nft-mint]
+### ¿acuñación-nft? \[#nft-mint]
 
-`nft-mint?` creates a new NFT for a recipient.
+`nft-mint?` crea un nuevo NFT para un destinatario.
 
-**Signature**
+**Firma**
 
 ```clarity
 (nft-mint? token identifier recipient)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | NFT to mint |
-| `identifier` | any | Unique identifier |
-| `recipient` | `principal` | Recipient |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | NFT para acuñar |
+| `identifier` | cualquier | Identificador único |
+| `recipient` | `principal` | Destinatario |
 
 ```clarity
 (nft-mint? my-nft u1 tx-sender)
@@ -2216,23 +2214,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok id)))
 ```
 
-### nft-burn? [#nft-burn]
+### ¿quema-nft? \[#quema-nft]
 
-`nft-burn?` destroys an NFT.
+`nft-burn?` destruye un NFT.
 
-**Signature**
+**Firma**
 
 ```clarity
 (nft-burn? token identifier owner)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | NFT to burn |
-| `identifier` | any | NFT identifier |
-| `owner` | `principal` | Current owner |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | NFT para quemar |
+| `identifier` | cualquier | identificador de NFT |
+| `owner` | `principal` | Propietario actual |
 
 ```clarity
 (nft-burn? my-nft u1 tx-sender)
@@ -2244,24 +2242,24 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (nft-burn? my-nft id tx-sender)))
 ```
 
-### nft-transfer? [#nft-transfer]
+### ¿transferencia-nft? \[#transferencia-nft]
 
-`nft-transfer?` transfers an NFT between principals.
+`nft-transfer?` transfiere un NFT entre principales.
 
-**Signature**
+**Firma**
 
 ```clarity
 (nft-transfer? token identifier sender recipient)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | NFT to transfer |
-| `identifier` | any | NFT identifier |
-| `sender` | `principal` | Current owner |
-| `recipient` | `principal` | New owner |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | NFT a transferir |
+| `identifier` | cualquier | identificador de NFT |
+| `sender` | `principal` | Propietario actual |
+| `recipient` | `principal` | Nuevo propietario |
 
 ```clarity
 (nft-transfer? my-nft u1 tx-sender recipient)
@@ -2273,22 +2271,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (nft-transfer? my-nft id tx-sender recipient)))
 ```
 
-### nft-get-owner? [#nft-get-owner]
+### nft-get-owner? \[#nft-get-owner]
 
-`nft-get-owner?` returns the owner of an NFT.
+`nft-get-owner?` devuelve el propietario de un NFT.
 
-**Signature**
+**Firma**
 
 ```clarity
 (nft-get-owner? token identifier)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `token` | token-name | NFT to query |
-| `identifier` | any | NFT identifier |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `token` | nombre-del-token | NFT a consultar |
+| `identifier` | cualquier | identificador de NFT |
 
 ```clarity
 (nft-get-owner? my-nft u1) ;; Returns (optional principal)
@@ -2300,25 +2298,25 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     false))
 ```
 
-## STX operations [#stx-operations]
+## Operaciones STX \[#stx-operations]
 
-### stx-transfer? [#stx-transfer]
+### ¿transferencia-stx? \[#transferencia-stx]
 
-`stx-transfer?` transfers STX between addresses.
+`stx-transfer?` transfiere STX entre direcciones.
 
-**Signature**
+**Firma**
 
 ```clarity
 (stx-transfer? amount sender recipient)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `amount` | `uint` | Amount in microSTX |
-| `sender` | `principal` | Sender address |
-| `recipient` | `principal` | Recipient address |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `amount` | `uint` | Cantidad en microSTX |
+| `sender` | `principal` | Dirección del remitente |
+| `recipient` | `principal` | Dirección del destinatario |
 
 ```clarity
 (stx-transfer? u1000000 tx-sender recipient) ;; Transfer 1 STX
@@ -2330,50 +2328,50 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (stx-transfer? amount tx-sender recipient)))
 ```
 
-### stx-transfer-memo? [#stx-transfer-memo]
+### stx-transfer-memo? \[#stx-transfer-memo]
 
-`stx-transfer-memo?` transfers STX with a memo.
+`stx-transfer-memo?` transfiere STX con una nota.
 
-**Signature**
+**Firma**
 
 ```clarity
 (stx-transfer-memo? amount sender recipient memo)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `amount` | `uint` | Amount in microSTX |
-| `sender` | `principal` | Sender address |
-| `recipient` | `principal` | Recipient address |
-| `memo` | `(buff 34)` | Transfer memo |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `amount` | `uint` | Cantidad en microSTX |
+| `sender` | `principal` | Dirección del remitente |
+| `recipient` | `principal` | Dirección del destinatario |
+| `memo` | `(buff 34)` | Memo de transferencia |
 
 ```clarity
 (stx-transfer-memo? u1000000 tx-sender recipient 0x12345678)
 
 ;; Payment with reference
 (define-public (pay-invoice (amount uint) (recipient principal) (invoice-id (buff 16)))
-  (stx-transfer-memo? amount tx-sender recipient
+  (stx-transfer-memo? amount tx-sender recipient 
     (concat 0x494e56 invoice-id))) ;; "INV" prefix
 ```
 
-### stx-burn? [#stx-burn]
+### ¿quema-stx? \[#stx-burn]
 
-`stx-burn?` burns STX by sending to a burn address.
+`stx-burn?` quema STX enviándolo a una dirección de quemado.
 
-**Signature**
+**Firma**
 
 ```clarity
 (stx-burn? amount sender)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `amount` | `uint` | Amount to burn |
-| `sender` | `principal` | Address burning STX |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `amount` | `uint` | Cantidad para quemar |
+| `sender` | `principal` | Quemando direcciones STX |
 
 ```clarity
 (stx-burn? u1000000 tx-sender)
@@ -2385,21 +2383,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (stx-burn? amount tx-sender)))
 ```
 
-### stx-get-balance [#stx-get-balance]
+### stx-get-balance \[#stx-get-balance]
 
-`stx-get-balance` returns the STX balance of an address.
+`stx-get-balance` devuelve el saldo de STX de una dirección.
 
-**Signature**
+**Firma**
 
 ```clarity
 (stx-get-balance principal)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `principal` | `principal` | Address to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `principal` | `principal` | Dirección a verificar |
 
 ```clarity
 (stx-get-balance tx-sender) ;; Returns uint
@@ -2409,21 +2407,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (>= (stx-get-balance user) fee))
 ```
 
-### stx-account [#stx-account]
+### stx-cuenta \[#stx-cuenta]
 
-`stx-account` returns detailed account information.
+`stx-account` devuelve información detallada de la cuenta.
 
-**Signature**
+**Firma**
 
 ```clarity
 (stx-account principal)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `principal` | `principal` | Address to query |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `principal` | `principal` | Dirección a consultar |
 
 ```clarity
 (stx-account tx-sender)
@@ -2434,23 +2432,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (get unlocked (stx-account user)))
 ```
 
-## Cryptographic functions [#cryptographic-functions]
+## Funciones criptográficas \[#cryptographic-functions]
 
-### sha256 [#sha256]
+### sha256 \[#sha256]
 
-`sha256` computes the SHA-256 hash of input data.
+`sha256` calcula el hash SHA-256 de los datos de entrada.
 
-**Signature**
+**Firma**
 
 ```clarity
 (sha256 data)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `data` | sequence | Data to hash |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `data` | secuencia | Datos a hashear |
 
 ```clarity
 (sha256 0x616263) ;; Returns SHA-256 of "abc"
@@ -2463,21 +2461,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok hash)))
 ```
 
-### sha512 [#sha512]
+### sha512 \[#sha512]
 
-`sha512` computes the SHA-512 hash of input data.
+`sha512` calcula el hash SHA-512 de los datos de entrada.
 
-**Signature**
+**Firma**
 
 ```clarity
 (sha512 data)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `data` | sequence | Data to hash |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `data` | secuencia | Datos a hashear |
 
 ```clarity
 (sha512 0x616263) ;; Returns SHA-512 hash
@@ -2488,21 +2486,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (sha512 input))
 ```
 
-### sha512/256 [#sha512-256]
+### sha512/256 \[#sha512-256]
 
-`sha512/256` computes the SHA-512/256 hash of input data.
+`sha512/256` calcula el hash SHA-512/256 de los datos de entrada.
 
-**Signature**
+**Firma**
 
 ```clarity
 (sha512/256 data)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `data` | sequence | Data to hash |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `data` | secuencia | Datos a hashear |
 
 ```clarity
 (sha512/256 0x616263) ;; Returns 256-bit hash
@@ -2513,21 +2511,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (sha512/256 (concat left right)))
 ```
 
-### keccak256 [#keccak256]
+### keccak256 \[#keccak256]
 
-`keccak256` computes the Keccak-256 hash of input data.
+`keccak256` calcula el hash Keccak-256 de los datos de entrada.
 
-**Signature**
+**Firma**
 
 ```clarity
 (keccak256 data)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `data` | sequence | Data to hash |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `data` | secuencia | Datos a hashear |
 
 ```clarity
 (keccak256 0x616263) ;; Returns Keccak-256 hash
@@ -2538,21 +2536,21 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (keccak256 data))
 ```
 
-### hash160 [#hash160]
+### hash160 \[#hash160]
 
-`hash160` computes RIPEMD160(SHA256(data)).
+`hash160` calcula RIPEMD160(SHA256(datos)).
 
-**Signature**
+**Firma**
 
 ```clarity
 (hash160 data)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `data` | sequence | Data to hash |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `data` | secuencia | Datos a hashear |
 
 ```clarity
 (hash160 0x616263) ;; Returns 160-bit hash
@@ -2563,26 +2561,26 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (hash160 data))
 ```
 
-### secp256k1-verify [#secp256k1-verify]
+### secp256k1-verify \[#secp256k1-verify]
 
-`secp256k1-verify` verifies a signature against a message hash.
+`secp256k1-verify` verifica una firma contra un hash de mensaje.
 
-**Signature**
+**Firma**
 
 ```clarity
 (secp256k1-verify hash signature public-key)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `hash` | `(buff 32)` | Message hash |
-| `signature` | `(buff 65)` | Signature |
-| `public-key` | `(buff 33)` | Public key |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `hash` | `(buff 32)` | Hash del mensaje |
+| `signature` | `(buff 65)` | Firma |
+| `public-key` | `(buff 33)` | Clave pública |
 
 ```clarity
-(secp256k1-verify
+(secp256k1-verify 
   0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
   signature
   public-key) ;; Returns bool
@@ -2592,22 +2590,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (ok (secp256k1-verify hash sig pubkey)))
 ```
 
-### secp256k1-recover? [#secp256k1-recover]
+### ¿secp256k1-recover? \[#secp256k1-recover]
 
-`secp256k1-recover?` recovers a public key from a signature.
+`secp256k1-recover?` recupera una clave pública a partir de una firma.
 
-**Signature**
+**Firma**
 
 ```clarity
 (secp256k1-recover? hash signature)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `hash` | `(buff 32)` | Message hash |
-| `signature` | `(buff 65)` | Signature |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `hash` | `(buff 32)` | Hash del mensaje |
+| `signature` | `(buff 65)` | Firma |
 
 ```clarity
 (secp256k1-recover? message-hash signature)
@@ -2618,26 +2616,26 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (secp256k1-recover? hash sig))
 ```
 
-## Blockchain data [#blockchain-data]
+## Datos de blockchain \[#blockchain-data]
 
-### get-block-info? [#get-block-info]
+### obtener-información-del-bloque? \[#obtener-información-del-bloque]
 
-`get-block-info?` retrieves information about a block.
+`get-block-info?` recupera información sobre un bloque.
 
-**Signature**
+**Firma**
 
 ```clarity
 (get-block-info? property block)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `property` | PropertyName | Property to retrieve |
-| `block` | `uint` | Block height |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `property` | NombreDePropiedad | Propiedad a recuperar |
+| `block` | `uint` | Altura del bloque |
 
-Properties: `header-hash`, `burnchain-header-hash`, `time`, `miner-address`, `block-reward`, `miner-spend-total`, `miner-spend-winner`
+Propiedades: `header-hash`, `burnchain-header-hash`, `time`, `miner-address`, `block-reward`, `miner-spend-total`, `miner-spend-winner`
 
 ```clarity
 (get-block-info? time u100) ;; Returns (optional uint)
@@ -2648,24 +2646,24 @@ Properties: `header-hash`, `burnchain-header-hash`, `time`, `miner-address`, `bl
   (get-block-info? time height))
 ```
 
-### get-burn-block-info? [#get-burn-block-info]
+### obtener-información-bloque-quemado? \[#obtener-información-bloque-quemado]
 
-`get-burn-block-info?` retrieves Bitcoin block information.
+`get-burn-block-info?` recupera información de bloques de Bitcoin.
 
-**Signature**
+**Firma**
 
 ```clarity
 (get-burn-block-info? property block)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `property` | PropertyName | Property to retrieve |
-| `block` | `uint` | Burn block height |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `property` | NombreDePropiedad | Propiedad a recuperar |
+| `block` | `uint` | Altura del bloque de quemado |
 
-Properties: `header-hash`, `pox-addrs`
+Propiedades: `header-hash`, `pox-addrs`
 
 ```clarity
 (get-burn-block-info? header-hash u100) ;; Returns (optional (buff 32))
@@ -2675,24 +2673,24 @@ Properties: `header-hash`, `pox-addrs`
   (get-burn-block-info? header-hash height))
 ```
 
-### get-stacks-block-info? [#get-stacks-block-info]
+### obtener-información-bloque-stacks? \[#obtener-información-bloque-stacks]
 
-`get-stacks-block-info?` retrieves Stacks block information.
+`get-stacks-block-info?` recupera información de bloques de Stacks.
 
-**Signature**
+**Firma**
 
 ```clarity
 (get-stacks-block-info? property block)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `property` | PropertyName | Property to retrieve |
-| `block` | `uint` | Stacks block height |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `property` | NombreDePropiedad | Propiedad a recuperar |
+| `block` | `uint` | Altura del bloque de Stacks |
 
-Properties: `header-hash`, `block-hash`, `miner-address`, `block-reward`
+Propiedades: `header-hash`, `block-hash`, `miner-address`, `block-reward`
 
 ```clarity
 (get-stacks-block-info? block-hash u100) ;; Returns (optional (buff 32))
@@ -2702,24 +2700,24 @@ Properties: `header-hash`, `block-hash`, `miner-address`, `block-reward`
   (get-stacks-block-info? block-hash height))
 ```
 
-### get-tenure-info? [#get-tenure-info]
+### ¿obtener-información-de-permanencia? \[#obtener-información-de-permanencia]
 
-`get-tenure-info?` retrieves tenure information.
+`get-tenure-info?` recupera información sobre la permanencia.
 
-**Signature**
+**Firma**
 
 ```clarity
 (get-tenure-info? property block)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `property` | PropertyName | Property to retrieve |
-| `block` | `uint` | Tenure block |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `property` | NombreDePropiedad | Propiedad a recuperar |
+| `block` | `uint` | Bloque de permanencia |
 
-Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
+Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
 
 ```clarity
 (get-tenure-info? vrf-seed u100) ;; Returns (optional (buff 32))
@@ -2729,22 +2727,22 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (get-tenure-info? vrf-seed tenure))
 ```
 
-### at-block [#at-block]
+### en-bloque \[#at-block]
 
-`at-block` evaluates an expression at a specific block context.
+`at-block` evalúa una expresión en un contexto de bloque específico.
 
-**Signature**
+**Firma**
 
 ```clarity
 (at-block block-hash expr)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `block-hash` | `(buff 32)` | Block hash |
-| `expr` | expression | Expression to evaluate |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `block-hash` | `(buff 32)` | Hash del bloque |
+| `expr` | expresión | Expresión a evaluar |
 
 ```clarity
 (at-block 0x1234... (var-get counter)) ;; Get historical value
@@ -2754,24 +2752,24 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (at-block block-hash (ft-get-balance my-token user)))
 ```
 
-## Principal & contract operations [#principal-contract-operations]
+## Operaciones principales y de contrato \[#principal-contract-operations]
 
-### principal-construct? [#principal-construct]
+### ¿constructor-principal? \[#constructor-principal]
 
-`principal-construct?` creates a principal from address components.
+`principal-construct?` crea un principal a partir de componentes de dirección.
 
-**Signature**
+**Firma**
 
 ```clarity
 (principal-construct? version-byte hash)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `version-byte` | `(buff 1)` | Version byte |
-| `hash` | `(buff 20)` | Address hash |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `version-byte` | `(buff 1)` | Byte de versión |
+| `hash` | `(buff 20)` | Hash de dirección |
 
 ```clarity
 (principal-construct? 0x16 0x1234567890abcdef1234567890abcdef12345678)
@@ -2782,21 +2780,21 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (principal-construct? version hash))
 ```
 
-### principal-destruct? [#principal-destruct]
+### ¿destrucción-del-principal? \[#destruccion-del-principal]
 
-`principal-destruct?` decomposes a principal into components.
+`principal-destruct?` descompone un principal en componentes.
 
-**Signature**
+**Firma**
 
 ```clarity
 (principal-destruct? principal)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `principal` | `principal` | Principal to decompose |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `principal` | `principal` | Principal a descomponer |
 
 ```clarity
 (principal-destruct? tx-sender)
@@ -2807,21 +2805,21 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (principal-destruct? user))
 ```
 
-### principal-of? [#principal-of]
+### ¿principal-de? \[#principal-of]
 
-`principal-of?` returns the principal from a public key.
+`principal-of?` devuelve el principal de una clave pública.
 
-**Signature**
+**Firma**
 
 ```clarity
 (principal-of? public-key)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `public-key` | `(buff 33)` | Public key |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `public-key` | `(buff 33)` | Clave pública |
 
 ```clarity
 (principal-of? 0x0234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef12)
@@ -2832,23 +2830,23 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (principal-of? pubkey))
 ```
 
-### contract-call? [#contract-call]
+### contract-call? \[#contract-call]
 
-`contract-call?` calls a public function in another contract.
+`contract-call?` llama a una función pública en otro contrato.
 
-**Signature**
+**Firma**
 
 ```clarity
 (contract-call? contract function-name args...)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `contract` | principal | Contract to call |
-| `function-name` | symbol | Function name |
-| `args` | any | Function arguments |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `contract` | principal | Contrato a llamar |
+| `function-name` | símbolo | Nombre de la función |
+| `args` | cualquier | Argumentos de función |
 
 ```clarity
 (contract-call? .other-contract transfer u100 tx-sender recipient)
@@ -2858,21 +2856,21 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (contract-call? .token-contract transfer amount tx-sender contract-owner))
 ```
 
-### as-contract [#as-contract]
+### como-contrato \[#como-contrato]
 
-`as-contract` executes an expression with the contract as tx-sender.
+`as-contract` ejecuta una expresión con el contrato como tx-sender.
 
-**Signature**
+**Firma**
 
 ```clarity
 (as-contract expr)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `expr` | expression | Expression to execute |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `expr` | expresión | Expresión a ejecutar |
 
 ```clarity
 (as-contract (stx-transfer? u1000 tx-sender recipient))
@@ -2883,21 +2881,21 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
     (as-contract (stx-transfer? balance tx-sender recipient))))
 ```
 
-### contract-of [#contract-of]
+### contrato-de \[#contrato-de]
 
-`contract-of` returns the principal of a trait reference.
+`contract-of` devuelve el principal de una referencia de rasgo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (contract-of trait-ref)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `trait-ref` | trait | Trait reference |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `trait-ref` | rasgo | Referencia del rasgo |
 
 ```clarity
 (contract-of token-trait) ;; Returns principal
@@ -2907,21 +2905,21 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (contract-of deployed-token))
 ```
 
-### is-standard [#is-standard]
+### es-estándar \[#is-standard]
 
-`is-standard` checks if a principal matches the current network type and can spend tokens.
+`is-standard` comprueba si un principal coincide con el tipo de red actual y puede gastar tokens.
 
-**Signature**
+**Firma**
 
 ```clarity
 (is-standard standard-or-contract-principal)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `standard-or-contract-principal` | `principal` | Principal to check |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `standard-or-contract-principal` | `principal` | Principal a verificar |
 
 ```clarity
 ;; On testnet
@@ -2935,12 +2933,13 @@ Properties: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
 (is-standard 'STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6) ;; Returns false
 ```
 
-Key points:
-- Tests if a principal can spend tokens on the current network
-- Mainnet: Only `SP` and `SM` addresses can spend
-- Testnet: Only `ST` and `SN` addresses can spend
-- All addresses can receive tokens, but only matching network types can spend
-- Available starting with Stacks 2.1
+Puntos clave:
+
+* Comprueba si un principal puede gastar tokens en la red actual
+* Solo Mainnet `SP` y `SM` las direcciones pueden gastar
+* Solo testnet `ST` y `SN` las direcciones pueden gastar
+* Todas las direcciones pueden recibir tokens, pero solo los tipos de red coincidentes pueden gastarlos
+* Disponible a partir de Stacks 2.1
 
 ```clarity
 ;; Network-aware validation
@@ -2956,24 +2955,24 @@ Key points:
     (ok true)))
 ```
 
-## Traits [#traits]
+## Rasgos \[#traits]
 
-### define-trait [#define-trait]
+### definir-rasgo \[#definir-rasgo]
 
-`define-trait` creates a new trait definition.
+`define-trait` crea una nueva definición de rasgo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (define-trait trait-name ((function-name (args...) response-type)...))
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `trait-name` | symbol | Name of the trait |
-| `function-name` | symbol | Function signatures |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `trait-name` | símbolo | Nombre del rasgo |
+| `function-name` | símbolo | Firmas de función |
 
 ```clarity
 (define-trait fungible-token (
@@ -2988,21 +2987,21 @@ Key points:
 ))
 ```
 
-### impl-trait [#impl-trait]
+### impl-trait \[#impl-trait]
 
-`impl-trait` declares that a contract implements a trait.
+`impl-trait` declara que un contrato implementa un trait.
 
-**Signature**
+**Firma**
 
 ```clarity
 (impl-trait trait-identifier)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `trait-identifier` | trait | Trait to implement |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `trait-identifier` | rasgo | Rasgo a implementar |
 
 ```clarity
 (impl-trait .token-trait.fungible-token)
@@ -3012,22 +3011,22 @@ Key points:
 (impl-trait .dao-traits.voting-trait)
 ```
 
-### use-trait [#use-trait]
+### uso-trait \[#uso-trait]
 
-`use-trait` creates a trait alias for use in functions.
+`use-trait` crea un alias de rasgo para usar en funciones.
 
-**Signature**
+**Firma**
 
 ```clarity
 (use-trait alias trait-identifier)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `alias` | symbol | Local alias |
-| `trait-identifier` | trait | Trait to alias |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `alias` | símbolo | Alias local |
+| `trait-identifier` | rasgo | Rasgo a alias |
 
 ```clarity
 (use-trait token-trait .token-trait.fungible-token)
@@ -3036,23 +3035,23 @@ Key points:
   (contract-call? token transfer amount tx-sender .pool))
 ```
 
-## Type conversions [#type-conversions]
+## Conversiones de tipo \[#type-conversions]
 
-### to-int [#to-int]
+### a-entero \[#a-entero]
 
-`to-int` converts an unsigned integer to a signed integer.
+`to-int` convierte un entero sin signo a un entero con signo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (to-int uint)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `uint` | `uint` | Unsigned integer |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `uint` | `uint` | Entero sin signo |
 
 ```clarity
 (to-int u100) ;; Returns 100
@@ -3063,21 +3062,21 @@ Key points:
   (- (to-int a) (to-int b)))
 ```
 
-### to-uint [#to-uint]
+### a-uint \[#a-uint]
 
-`to-uint` converts a signed integer to an unsigned integer.
+`to-uint` convierte un número entero con signo a un número entero sin signo.
 
-**Signature**
+**Firma**
 
 ```clarity
 (to-uint int)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `int` | `int` | Signed integer |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `int` | `int` | Entero con signo |
 
 ```clarity
 (to-uint 100) ;; Returns u100
@@ -3090,21 +3089,21 @@ Key points:
     none))
 ```
 
-### to-consensus-buff? [#to-consensus-buff]
+### ¿a-consenso-buff? \[#a-consenso-buff]
 
-`to-consensus-buff?` serializes a value to consensus format.
+`to-consensus-buff?` serializa un valor al formato de consenso.
 
-**Signature**
+**Firma**
 
 ```clarity
 (to-consensus-buff? value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Value to serialize |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | cualquier | Valor para serializar |
 
 ```clarity
 (to-consensus-buff? u100) ;; Returns (optional (buff 3))
@@ -3117,22 +3116,22 @@ Key points:
     0x00))
 ```
 
-### from-consensus-buff? [#from-consensus-buff]
+### ¿del-consenso-buff? \[#del-consenso-buff]
 
-`from-consensus-buff?` deserializes from consensus format.
+`from-consensus-buff?` deserializa desde el formato de consenso.
 
-**Signature**
+**Firma**
 
 ```clarity
 (from-consensus-buff? type buffer)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `type` | type-signature | Expected type |
-| `buffer` | `buff` | Buffer to deserialize |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `type` | tipo-firma | Tipo esperado |
+| `buffer` | `buff` | Buffer a deserializar |
 
 ```clarity
 (from-consensus-buff? uint 0x0100) ;; Returns (optional u1)
@@ -3143,24 +3142,24 @@ Key points:
   (from-consensus-buff? { value: uint, timestamp: uint } data))
 ```
 
-## Bit operations [#bit-operations]
+## Operaciones de bits \[#bit-operations]
 
-### bit-and [#bit-and]
+### bit-and \[#bit-and]
 
-`bit-and` performs bitwise AND operation.
+`bit-and` realiza la operación AND a nivel de bits.
 
-**Signature**
+**Firma**
 
 ```clarity
 (bit-and i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (bit-and u12 u10) ;; Returns u8 (1100 & 1010 = 1000)
@@ -3171,22 +3170,22 @@ Key points:
   (> (bit-and flags permission) u0))
 ```
 
-### bit-or [#bit-or]
+### bit-or \[#bit-or]
 
-`bit-or` performs bitwise OR operation.
+`bit-or` realiza la operación OR bit a bit.
 
-**Signature**
+**Firma**
 
 ```clarity
 (bit-or i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (bit-or u12 u10) ;; Returns u14 (1100 | 1010 = 1110)
@@ -3197,22 +3196,22 @@ Key points:
   (ok (bit-or current new-permission)))
 ```
 
-### bit-xor [#bit-xor]
+### bit-xor \[#bit-xor]
 
-`bit-xor` performs bitwise XOR operation.
+`bit-xor` realiza la operación XOR a nivel de bits.
 
-**Signature**
+**Firma**
 
 ```clarity
 (bit-xor i1 i2)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i1` | `int` or `uint` | First value |
-| `i2` | `int` or `uint` | Second value |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i1` | `int` o `uint` | Primer valor |
+| `i2` | `int` o `uint` | Segundo valor |
 
 ```clarity
 (bit-xor u12 u10) ;; Returns u6 (1100 ^ 1010 = 0110)
@@ -3223,21 +3222,21 @@ Key points:
   (ok (bit-xor flags flag)))
 ```
 
-### bit-not [#bit-not]
+### bit-not \[#bit-not]
 
-`bit-not` performs bitwise NOT operation.
+`bit-not` realiza la operación bitwise NOT.
 
-**Signature**
+**Firma**
 
 ```clarity
 (bit-not i)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i` | `int` or `uint` | Value to invert |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i` | `int` o `uint` | Valor a invertir |
 
 ```clarity
 (bit-not u0) ;; Returns maximum uint
@@ -3248,22 +3247,22 @@ Key points:
   (bit-not permissions))
 ```
 
-### bit-shift-left [#bit-shift-left]
+### desplazamiento-de-bits-a-la-izquierda \[#desplazamiento-de-bits-a-la-izquierda]
 
-`bit-shift-left` shifts bits to the left.
+`bit-shift-left` desplaza bits hacia la izquierda.
 
-**Signature**
+**Firma**
 
 ```clarity
 (bit-shift-left i positions)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i` | `int` or `uint` | Value to shift |
-| `positions` | `uint` | Positions to shift |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i` | `int` o `uint` | Valor a desplazar |
+| `positions` | `uint` | Posiciones a desplazar |
 
 ```clarity
 (bit-shift-left u1 u3) ;; Returns u8 (1 << 3)
@@ -3274,22 +3273,22 @@ Key points:
   (bit-shift-left u1 exponent))
 ```
 
-### bit-shift-right [#bit-shift-right]
+### desplazamiento-de-bits-a-la-derecha \[#desplazamiento-de-bits-a-la-derecha]
 
-`bit-shift-right` shifts bits to the right.
+`bit-shift-right` desplaza bits hacia la derecha.
 
-**Signature**
+**Firma**
 
 ```clarity
 (bit-shift-right i positions)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `i` | `int` or `uint` | Value to shift |
-| `positions` | `uint` | Positions to shift |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `i` | `int` o `uint` | Valor a desplazar |
+| `positions` | `uint` | Posiciones a desplazar |
 
 ```clarity
 (bit-shift-right u8 u3) ;; Returns u1 (8 >> 3)
@@ -3300,23 +3299,23 @@ Key points:
   (bit-shift-right value exponent))
 ```
 
-## Utility functions [#utility-functions]
+## Funciones de utilidad \[#utility-functions]
 
-### print [#print]
+### print \[#imprimir]
 
-`print` outputs a value and returns it.
+`print` devuelve un valor y lo retorna.
 
-**Signature**
+**Firma**
 
 ```clarity
 (print value)
 ```
 
-**Parameters**
+**Parámetros**
 
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | any | Value to print |
+| Nombre | Tipo | Descripción |
+|--------|------|-------------|
+| `value` | cualquier | Valor a imprimir |
 
 ```clarity
 (print "Debug message") ;; Prints and returns "Debug message"

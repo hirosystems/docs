@@ -1,0 +1,44 @@
+---
+title: Despliegue de contratos
+description: Implementa contratos inteligentes en la cadena de bloques de Stacks
+---
+## Visión general
+
+El despliegue de contratos crea nuevos contratos inteligentes en la blockchain. Stacks.js proporciona herramientas para compilar, desplegar y verificar contratos de Clarity de forma programática. Los despliegues pueden ser contratos individuales simples o sistemas complejos de múltiples contratos con dependencias.
+
+## Despliegue básico de contratos
+
+Despliegue un contrato inteligente simple:
+
+```typescript
+import { 
+  makeContractDeploy,
+  broadcastTransaction,
+  AnchorMode 
+} from '@stacks/transactions';
+import { STACKS_TESTNET } from '@stacks/network';
+import { readFileSync } from 'fs';
+
+async function deployContract() {
+  const network = new StacksTestnet();
+  
+  // Read contract source code
+  const contractSource = readFileSync('./contracts/my-contract.clar', 'utf-8');
+  
+  const txOptions = {
+    contractName: 'my-contract',
+    codeBody: contractSource,
+    senderKey: 'your-private-key',
+    network,
+    anchorMode: AnchorMode.Any,
+    fee: 10000, // Higher fee for deployment
+  };
+  
+  const transaction = await makeContractDeploy(txOptions);
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  
+  console.log('Contract deployed!');
+  console.log('Transaction ID:', broadcastResponse.txid);
+  console.log('Contract address:', `${senderAddress}.${txOptions.contractName}`);
+}
+```

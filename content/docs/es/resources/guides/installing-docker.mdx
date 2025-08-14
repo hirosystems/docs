@@ -1,0 +1,45 @@
+---
+title: Cómo instalar Docker
+description: Instala Docker para ejecutar una devnet local.
+---
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+<Tabs id="docker" items={['macOS', 'Windows']}>
+  <Tab value="macOS">
+    1. Ve al [Docker Desktop para Mac](https://www.docker.com/products/docker-desktop/) página.
+    2. Descarga el archivo .dmg.
+    3. Abra el archivo .dmg descargado.
+    4. Arrastra el icono de Docker a la carpeta Aplicaciones.
+    5. Abra Docker desde la carpeta Aplicaciones.
+    6. Conceda los permisos necesarios si se le solicita.
+    7. El icono de Docker Desktop aparecerá en la barra de menú indicando que Docker está en ejecución.
+
+    Para verificar la instalación, ejecute `docker --version` en tu terminal. Deberías ver la información de la versión de Docker.
+  </Tab>
+
+  <Tab value="Windows">
+    1. Ve al [Docker Desktop para Windows](https://www.docker.com/products/docker-desktop/) página.
+    2. Descarga el ejecutable.
+    3. Ejecute el archivo ejecutable descargado.
+    4. Siga los pasos del asistente de instalación (es posible que necesite reiniciar su computadora).
+    5. Asegúrese de que el backend WSL 2 (Subsistema de Windows para Linux) esté marcado durante la instalación, si corresponde.
+    6. Abra Docker Desktop desde el menú Inicio.
+    7. Conceda los permisos necesarios si se le solicita.
+    8. El icono de Docker aparecerá en la bandeja del sistema indicando que Docker está en ejecución.
+
+    Para verificar la instalación, ejecute `docker --version` en tu terminal. Deberías ver la información de la versión de Docker.
+
+    :::callout
+    ### Instalación de Windows
+
+    Es posible que necesites instalar componentes adicionales de Windows como Hyper-V o WSL 2.
+    :::
+  </Tab>
+</Tabs>
+
+***
+
+:::next-steps
+* [Sincronizar un nodo de Bitcoin](/resources/guides/sync-a-bitcoin-node): Aprende cómo sincronizar un nodo de Bitcoin para ejecutar Chainhook como un servicio.
+* [Sincronizar un nodo de Stacks](/resources/guides/sync-a-stacks-node): Aprende cómo sincronizar un nodo de Stacks para ejecutar una devnet local.
+:::

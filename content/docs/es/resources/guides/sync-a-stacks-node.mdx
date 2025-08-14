@@ -1,0 +1,45 @@
+---
+title: Cómo sincronizar un nodo de Stacks
+description: Aprende cómo sincronizar un nodo de Stacks para ejecutar una devnet local o mainnet.
+---
+Ejecutar un nodo de Stacks es crucial para los desarrolladores que buscan interactuar directamente con la cadena de bloques de Stacks. Permite la verificación de transacciones, garantiza operaciones descentralizadas y mejora la seguridad de la cadena de bloques.
+
+:::objectives
+* Clonar el repositorio Docker de la blockchain de Stacks
+* Iniciar el servicio
+* Monitorear el proceso de sincronización del nodo
+:::
+
+## Clonar el repositorio Docker de la blockchain de Stacks
+
+Clona el repositorio Docker de la blockchain de Stacks desde GitHub:
+
+```terminal
+$ git clone git@github.com:hirosystems/stacks-blockchain-docker.git
+$ cd stacks-blockchain-docker
+```
+
+## Iniciar el servicio
+
+Dentro del `stacks-blockchain-docker` directorio, ejecute el siguiente comando para iniciar el nodo de Stacks:
+
+```terminal
+$ chmod +x manage.sh
+$ ./manage.sh -n <network> -a start
+```
+
+El `<network>` Los marcadores de posición utilizados a continuación pueden ser reemplazados por uno de:
+
+* `mainnet`
+* `testnet`
+* `mocknet`
+
+## Monitorear el proceso de sincronización del nodo
+
+Para seguir los registros del nodo de Stacks, ejecute el siguiente comando:
+
+```terminal
+$ ./manage.sh -n <network> -a logs
+```
+
+Para redes distintas a `mocknet`, la descarga de los encabezados iniciales puede tardar varios minutos. Hasta que se descarguen los encabezados, el `/v2/info` los endpoints no devolverán ningún dato.

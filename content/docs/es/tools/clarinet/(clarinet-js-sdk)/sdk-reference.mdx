@@ -1,0 +1,617 @@
+---
+title: Referencia del SDK de Clarinet JS
+sidebarTitle: Referencia del SDK
+isNew: true
+---
+El SDK de Clarinet JS proporciona una suite completa de métodos para probar e interactuar con contratos inteligentes de Clarity. Desde la inicialización del simnet hasta el despliegue de contratos, el SDK simplifica todo tu flujo de trabajo de pruebas.
+
+* Inicializar una red simulada: [`initSimnet`](#initSimnet)
+* Gestionar el estado del contrato: [`getDataVar`](#getDataVar), [`getMapEntry`](#getMapEntry)
+* Llamar a funciones de contrato: [`callReadOnlyFn`](#callReadOnlyFn), [`callPublicFn`](#callPublicFn)
+* Transferir STX: [`transferSTX`](#transferSTX)
+* Desplegar contratos: [`deployContract`](#deployContract)
+* Mina bloques: [`mineBlock`](#mineBlock), [`mineEmptyBlock`](#mineEmptyBlock)
+* Aserciones personalizadas: [`toBeOk`](#toBeOk), [`toBeErr`](#toBeErr)
+
+## Instalación
+
+```package-install
+@hirosystems/clarinet-sdk
+```
+
+## Inicializar red simulada \[#initalize-simnet]
+
+### iniciarSimnet
+
+`initSimnet` inicializa una red simulada para probar tus contratos inteligentes.
+
+**Uso**
+
+```console
+initSimnet(manifestPath?: string): Promise<Simnet>
+```
+
+```ts -c
+import { initSimnet } from '@hirosystems/clarinet-sdk';
+
+const simnet = await initSimnet();
+```
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `manifestPath` | `string` | Ruta opcional al archivo de manifiesto Clarinet.toml |
+
+## Propiedades de Simnet \[#properties]
+
+### altura del bloque \[#blockHeight]
+
+Devuelve la altura actual del bloque de simnet.
+
+```ts -c
+const currentBlockHeight = simnet.blockHeight;
+// Returns: 1
+```
+
+### desplegador \[#deployer]
+
+Devuelve la dirección del deployer predeterminado según se define en el archivo del proyecto.
+
+```ts -c
+const deployerAddress = simnet.deployer;
+// Returns: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+```
+
+También puedes actualizar el deployer:
+
+```ts -c
+simnet.deployer = 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5';
+```
+
+### épocaActual \[#épocaActual]
+
+Devuelve la época actual de simnet (por ejemplo, 2.5 para Stacks 2.5).
+
+```ts -c
+const epoch = simnet.currentEpoch;
+// Returns: 2.5
+```
+
+## Gestión de cuenta \[#account-management]
+
+### getAccounts \[#getAccounts]
+
+`getAccounts` recupera todas las direcciones de Stacks configuradas, incluyendo billeteras, implementadores y faucets.
+
+**Uso**
+
+```console
+getAccounts(): Map<string, string>
+```
+
+```ts -c
+const accounts = simnet.getAccounts();
+const wallet1 = accounts.get('wallet_1')!;
+// Returns: ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+```
+
+## Saldos de activos \[#asset-balances]
+
+### getAssetsMap \[#getAssetsMap]
+
+`getAssetsMap` recupera los saldos de activos para todas las direcciones, incluyendo STX, tokens fungibles y no fungibles.
+
+**Uso**
+
+```console
+getAssetsMap(): Map<string, Map<string, bigint>>
+```
+
+```ts -c
+const assets = simnet.getAssetsMap();
+const stxBalances = assets.get('STX')!;
+const deployerBalance = stxBalances.get(simnet.deployer)!;
+// Returns: 100000000000000n
+```
+
+## Leer el estado del contrato \[#state-reading]
+
+### getDataVar \[#getDataVar]
+
+`getDataVar` recupera el valor de una variable de datos de un contrato.
+
+**Uso**
+
+```console
+getDataVar(contract: string, dataVar: string): ClarityValue
+```
+
+```ts -c
+const count = simnet.getDataVar('counter', 'count');
+// Returns: { type: 1, value: 1n }
+```
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `contract` | `string` | Identificador del contrato |
+| `dataVar` | `string` | Nombre de la variable de datos |
+
+### getMapEntry \[#getMapEntry]
+
+`getMapEntry` recupera un valor de un mapa de contrato por su clave.
+
+**Uso**
+
+```console
+getMapEntry(contract: string, mapName: string, mapKey: ClarityValue): ClarityValue
+```
+
+```ts -c
+import { Cl } from '@stacks/transactions';
+
+const hasParticipated = simnet.getMapEntry(
+  "pool",
+  "Participants",
+  Cl.standardPrincipal(wallet)
+);
+// Returns: { type: 10, value: { type: 3 } }
+```
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `contract` | `string` | Identificador del contrato |
+| `mapName` | `string` | Nombre del mapa |
+| `mapKey` | `ClarityValue` | Clave para buscar |
+
+## Llamar a funciones de contrato \[#function-calls]
+
+### callReadOnlyFn \[#callReadOnlyFn]
+
+`callReadOnlyFn` llama a funciones de solo lectura sin minar un bloque.
+
+**Uso**
+
+```console
+callReadOnlyFn(
+  contract: string,
+  method: string,
+  args: ClarityValue[],
+  sender: string
+): ParsedTransactionResult
+```
+
+```ts -c
+import { Cl } from '@stacks/transactions';
+
+const result = simnet.callReadOnlyFn(
+  'pool',
+  'get-contribution-amount',
+  [Cl.standardPrincipal(wallet)],
+  wallet
+);
+// Returns: { result: { type: 1, value: 42000000n }, events: [] }
+```
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `contract` | `string` | Identificador del contrato |
+| `method` | `string` | Nombre de la función |
+| `args` | `ClarityValue[]` | Argumentos de función |
+| `sender` | `string` | Dirección del remitente |
+
+### callPublicFn \[#callPublicFn]
+
+`callPublicFn` llama a funciones públicas y mina un bloque.
+
+**Uso**
+
+```console
+callPublicFn(
+  contract: string,
+  method: string,
+  args: ClarityValue[],
+  sender: string
+): ParsedTransactionResult
+```
+
+```ts -c
+import { Cl } from '@stacks/transactions';
+
+const result = simnet.callPublicFn(
+  'pool',
+  'register-participant',
+  [Cl.standardPrincipal(wallet)],
+  wallet
+);
+// Mines block and returns result
+```
+
+### callPrivateFn \[#callPrivateFn]
+
+`callPrivateFn` llama a funciones privadas (solo para pruebas) y mina un bloque.
+
+**Uso**
+
+```console
+callPrivateFn(
+  contract: string,
+  method: string,
+  args: ClarityValue[],
+  sender: string
+): ParsedTransactionResult
+```
+
+```ts -c
+const result = simnet.callPrivateFn(
+  "pool",
+  "reward-participant-points",
+  [Cl.standardPrincipal(address1)],
+  wallet
+);
+```
+
+## Transferir STX \[#transferSTX]
+
+`transferSTX` transfiere STX entre direcciones y mina un bloque.
+
+**Uso**
+
+```console
+transferSTX(
+  amount: number | bigint,
+  recipient: string,
+  sender: string
+): ParsedTransactionResult
+```
+
+```ts -c
+const transfer = simnet.transferSTX(
+  42000000, // 42 STX in microSTX
+  recipient,
+  simnet.deployer
+);
+// Returns transaction result with transfer event
+```
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `amount` | `number \| bigint` | Cantidad en microSTX |
+| `recipient` | `string` | Dirección del destinatario |
+| `sender` | `string` | Dirección del remitente |
+
+## Desplegar contratos \[#deployContract]
+
+`deployContract` despliega un nuevo contrato en simnet y mina un bloque.
+
+**Uso**
+
+```console
+deployContract(
+  name: string,
+  content: string,
+  options: DeployContractOptions | null,
+  sender: string
+): ParsedTransactionResult
+```
+
+```ts -c
+const sourceCode = '(define-read-only (say-hi) (ok "Hello World"))';
+
+const contract = simnet.deployContract(
+  'hello-world',
+  sourceCode,
+  { clarityVersion: 2 },
+  simnet.deployer
+);
+```
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `name` | `string` | Nombre del contrato |
+| `content` | `string` | Código fuente de Clarity |
+| `options` | `object \| null` | Opciones de implementación |
+| `sender` | `string` | Dirección del implementador |
+
+## Minería de bloques \[#block-mining]
+
+### minarBloque \[#mineBlock]
+
+`mineBlock` mina un bloque con múltiples transacciones.
+
+**Uso**
+
+```console
+mineBlock(txs: Tx[]): ParsedTransactionResult[]
+```
+
+```ts -c
+import { tx } from '@hirosystems/clarinet-sdk';
+import { Cl } from '@stacks/transactions';
+
+const block = simnet.mineBlock([
+  tx.callPublicFn("counter", "increment", [], simnet.deployer),
+  tx.transferSTX(19000000, wallet, simnet.deployer),
+]);
+```
+
+### minarBloqueVacío \[#mineEmptyBlock]
+
+`mineEmptyBlock` mina un bloque vacío y aumenta la altura del bloque.
+
+**Uso**
+
+```console
+mineEmptyBlock(): number
+```
+
+```ts -c
+simnet.mineEmptyBlock();
+const newHeight = simnet.blockHeight;
+// Returns: 2
+```
+
+### minarBloquesVacíos \[#mineEmptyBlocks]
+
+`mineEmptyBlocks` mina múltiples bloques vacíos.
+
+**Uso**
+
+```console
+mineEmptyBlocks(count?: number): number
+```
+
+```ts -c
+simnet.mineEmptyBlocks(5);
+const newHeight = simnet.blockHeight;
+// Returns: 6
+```
+
+## Métodos de utilidad \[#utility-methods]
+
+### ejecutarFragmento \[#ejecutarFragmento]
+
+`runSnippet` ejecuta código Clarity arbitrario sin desplegar.
+
+**Uso**
+
+```console
+runSnippet(snippet: string): string | ClarityValue
+```
+
+```ts -c
+const result = simnet.runSnippet('(stx-account tx-sender)');
+// Returns account balance information
+```
+
+### getContractsInterfaces \[#getContractsInterfaces]
+
+`getContractsInterfaces` devuelve interfaces de contrato con firmas de funciones y almacenamiento.
+
+**Uso**
+
+```console
+getContractsInterfaces(): Map<string, ContractInterface>
+```
+
+```ts -c
+const interfaces = simnet.getContractsInterfaces();
+const poolInterface = interfaces.get(`${simnet.deployer}.pool`);
+// Returns contract interface with functions, maps, variables
+```
+
+### getContractSource \[#getContractSource]
+
+`getContractSource` recupera el código fuente de un contrato implementado.
+
+**Uso**
+
+```console
+getContractSource(contract: string): string | undefined
+```
+
+```ts -c
+const source = simnet.getContractSource('pool');
+// Returns Clarity source code as string
+```
+
+### getContractAST \[#getContractAST]
+
+`getContractAST` devuelve el Árbol de Sintaxis Abstracta de un contrato.
+
+**Uso**
+
+```console
+getContractAST(contractId: string): ContractAST
+```
+
+```ts -c
+const ast = simnet.getContractAST('pool');
+// Returns parsed AST structure
+```
+
+## Comparadores personalizados \[#custom-matchers]
+
+El SDK proporciona comparadores de Vitest para aserciones de valores de Clarity.
+
+### Comparadores de respuesta \[#response-matchers]
+
+#### toBeOk \[#toBeOk]
+
+Afirma que una respuesta es `(ok <value>)`.
+
+```ts
+expect(result).toBeOk(Cl.uint(1));
+```
+
+#### toBeErr \[#toBeErr]
+
+Afirma que una respuesta es `(err <value>)`.
+
+```ts
+expect(result).toBeErr(Cl.uint(500));
+```
+
+#### toBeSome \[#toBeSome]
+
+Afirma que una respuesta es `(some <value>)`.
+
+```ts
+expect(result).toBeSome(Cl.bool(true));
+```
+
+#### toBeNone \[#toBeNone]
+
+Afirma que una respuesta es `(none)`.
+
+```ts
+expect(result).toBeNone();
+```
+
+### Comparadores de valor \[#value-matchers]
+
+#### toBeBool \[#toBeBool]
+
+Afirma un valor booleano.
+
+```ts
+expect(result).toBeBool(true);
+```
+
+#### toBeInt \[#toBeInt]
+
+Afirma un valor entero con signo.
+
+```ts
+expect(result).toBeInt(1); // or 1n
+```
+
+#### toBeUint \[#toBeUint]
+
+Afirma un valor entero sin signo.
+
+```ts
+expect(result).toBeUint(1); // or 1n
+```
+
+#### toBeAscii \[#toBeAscii]
+
+Afirma un valor de cadena ASCII.
+
+```ts
+expect(result).toBeAscii('Hello World');
+```
+
+#### toBeUtf8 \[#toBeUtf8]
+
+Afirma un valor string-utf8.
+
+```ts
+expect(result).toBeUtf8('Hello World');
+```
+
+#### serPrincipal \[#serPrincipal]
+
+Afirma un valor principal.
+
+```ts
+expect(Cl.standardPrincipal(deployer)).toBePrincipal(deployer);
+```
+
+#### toBeBuff \[#toBeBuff]
+
+Afirma un valor de búfer.
+
+```ts
+const buffer = Uint8Array.from([1, 2, 3, 4]);
+expect(result).toBeBuff(buffer);
+```
+
+#### Lista de ser \[#toBeList]
+
+Afirma una lista de valores de Clarity.
+
+```ts
+expect(result).toBeList([
+  Cl.standardPrincipal('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+  Cl.standardPrincipal('ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5')
+]);
+```
+
+#### toBeTupla \[#toBeTupla]
+
+Afirma un valor de tupla.
+
+```ts
+expect(result).toBeTuple({
+  enrollmentBlock: Cl.some(Cl.uint(1)),
+  contributionAmount: Cl.some(Cl.uint(19000000))
+});
+```
+
+### Comprobación de tipos \[#type-checking]
+
+#### toTenerTipoDeClarity \[#toTenerTipoDeClarity]
+
+Comprueba que un valor tiene el tipo de Clarity esperado.
+
+```ts
+expect(result).toHaveClarityType(ClarityType.ResponseOk);
+```
+
+### Comparadores de eventos \[#event-matchers]
+
+#### toContainEqual \[#toContainEqual]
+
+Afirma que un array de eventos contiene un evento específico. Esto es útil para verificar eventos de transacciones.
+
+```ts
+// STX transfer event
+expect(events).toContainEqual({
+  event: "stx_transfer_event",
+  data: {
+    amount: "1000000",
+    memo: "",
+    recipient: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+    sender: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+  },
+});
+
+// Fungible token transfer event
+expect(events).toContainEqual({
+  event: "ft_transfer_event",
+  data: {
+    amount: "1000",
+    asset_identifier: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token::my-token",
+    recipient: recipientAddress,
+    sender: senderAddress,
+  },
+});
+
+// NFT transfer event
+expect(events).toContainEqual({
+  event: "nft_transfer_event",
+  data: {
+    asset_identifier: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.nft::my-nft",
+    value: Cl.serialize(Cl.uint(1)),
+    recipient: newOwner,
+    sender: previousOwner,
+  },
+});
+
+// Print event
+expect(events).toContainEqual({
+  event: "print_event",
+  data: {
+    contract_id: `${deployer}.my-contract`,
+    value: Cl.serialize(Cl.tuple({ message: Cl.stringAscii("Hello") })),
+  },
+});
+
+// Check only specific properties with objectContaining
+expect(events).toContainEqual({
+  event: "stx_transfer_event",
+  data: expect.objectContaining({
+    sender: senderAddress,
+    recipient: recipientAddress,
+  }),
+});
+```

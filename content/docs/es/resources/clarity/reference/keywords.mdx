@@ -1,0 +1,560 @@
+---
+title: Referencia de palabras clave
+sidebarTitle: Palabras clave
+description: Referencia completa de todas las palabras clave de Clarity, incluyendo constantes, variables de contexto y datos de blockchain.
+isNew: true
+---
+Clarity proporciona palabras clave incorporadas para acceder al estado de la blockchain, el contexto de la transacción y valores constantes. Estas palabras clave permiten a los contratos inteligentes interactuar con la blockchain de Stacks y tomar decisiones basadas en el contexto de ejecución actual.
+
+* Constantes booleanas: [`true`](#true), [`false`](#false)
+* Constante opcional: [`none`](#none)
+* Información del bloque: [`block-height`](#block-height), [`burn-block-height`](#burn-block-height), [`stacks-block-height`](#stacks-block-height), [`tenure-height`](#tenure-height)
+* Contexto de la transacción: [`tx-sender`](#tx-sender), [`tx-sponsor`](#tx-sponsor), [`contract-caller`](#contract-caller)
+* Información de la cadena: [`chain-id`](#chain-id), [`is-in-mainnet`](#is-in-mainnet), [`is-in-regtest`](#is-in-regtest)
+* Datos económicos: [`stx-liquid-supply`](#stx-liquid-supply)
+
+## Constantes booleanas \[#boolean-constants]
+
+### verdadero \[#true]
+
+`true` representa el valor booleano verdadero en Clarity.
+
+**Tipo**
+
+```clarity
+bool
+```
+
+```clarity
+;; Direct usage
+(define-constant is-active true)
+
+;; In conditionals
+(if true
+  (print "This will execute")
+  (print "This won't execute"))
+
+;; Boolean operations
+(and true true)   ;; Returns true
+(or false true)   ;; Returns true
+```
+
+Los patrones comunes incluyen el uso de `true` para:
+
+* Estados habilitados por defecto en la configuración
+* Valores de retorno de éxito en funciones públicas
+* Banderas y conmutadores de características
+
+```clarity
+(define-data-var protocol-enabled bool true)
+
+(define-public (pause-protocol)
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) (err u401))
+    (var-set protocol-enabled false)
+    (ok true)))
+
+;; Feature toggle pattern
+(define-map features (string-ascii 50) bool)
+(map-set features "trading" true)
+(map-set features "staking" true)
+```
+
+### falso \[#false]
+
+`false` representa el valor booleano falso en Clarity.
+
+**Tipo**
+
+```clarity
+bool
+```
+
+```clarity
+;; Direct usage
+(define-constant is-paused false)
+
+;; In conditionals
+(if false
+  (print "This won't execute")
+  (print "This will execute"))
+
+;; Boolean operations
+(and true false)  ;; Returns false
+(or false false)  ;; Returns false
+```
+
+Los patrones comunes incluyen el uso de `false` para:
+
+* Estados deshabilitados predeterminados
+* Indicadores de fallo
+* Estados iniciales no establecidos
+
+```clarity
+(define-data-var is-initialized bool false)
+
+(define-public (initialize)
+  (begin
+    (asserts! (not (var-get is-initialized)) (err u100))
+    (var-set is-initialized true)
+    (ok true)))
+
+;; Access control pattern
+(define-map admins principal bool)
+(define-read-only (is-admin (user principal))
+  (default-to false (map-get? admins user)))
+```
+
+## Constante opcional \[#optional-constant]
+
+### ninguno \[#ninguno]
+
+`none` representa un valor opcional vacío.
+
+**Tipo**
+
+```clarity
+(optional ?)
+```
+
+```clarity
+;; Direct usage
+(define-constant empty-value none)
+
+;; Optional map returns
+(map-get? non-existent-map non-existent-key) ;; Returns none
+
+;; Pattern matching
+(match (map-get? balances user)
+  balance (+ balance u100)
+  u0) ;; If none, return u0
+```
+
+Los patrones comunes incluyen:
+
+* Valores predeterminados para tipos opcionales
+* Representando la ausencia de datos
+* Estados iniciales antes de que se establezcan los datos
+
+```clarity
+(define-map user-profiles principal 
+  {
+    name: (string-ascii 50),
+    created-at: uint
+  })
+
+(define-read-only (get-user-name (user principal))
+  (match (map-get? user-profiles user)
+    profile (some (get name profile))
+    none)) ;; Return none if profile doesn't exist
+
+;; Clearing optional data
+(define-data-var current-proposal (optional uint) none)
+(define-public (clear-proposal)
+  (begin
+    (var-set current-proposal none)
+    (ok true)))
+```
+
+## Información del bloque \[#block-information]
+
+### altura-del-bloque \[#altura-del-bloque]
+
+`block-height` devuelve la altura actual del bloque de Stacks.
+
+**Tipo**
+
+```clarity
+uint
+```
+
+```clarity
+;; Get current height
+(print block-height)
+
+;; Time-locked functionality
+(define-public (claim-rewards)
+  (begin
+    (asserts! (> block-height u50000) (err u1))
+    (ok true)))
+```
+
+Los casos de uso incluyen:
+
+* Implementación de programas de adquisición de derechos
+* Creando fases basadas en tiempo
+* Grabación de marcas de tiempo
+* Aplicando retrasos
+
+```clarity
+(define-constant VESTING_START u100000)
+(define-constant VESTING_PERIOD u4320) ;; ~30 days
+
+(define-read-only (get-vested-amount (total uint))
+  (if (<= block-height VESTING_START)
+    u0
+    (let ((blocks-elapsed (- block-height VESTING_START)))
+      (if (>= blocks-elapsed VESTING_PERIOD)
+        total
+        (/ (* total blocks-elapsed) VESTING_PERIOD)))))
+
+;; Phase-based protocol
+(define-constant PHASE1_END u100000)
+(define-constant PHASE2_END u200000)
+
+(define-read-only (get-current-phase)
+  (if (<= block-height PHASE1_END)
+    u1
+    (if (<= block-height PHASE2_END)
+      u2
+      u3)))
+```
+
+### altura-del-bloque-quemado \[#altura-del-bloque-quemado]
+
+`burn-block-height` devuelve la altura actual del bloque de Bitcoin.
+
+**Tipo**
+
+```clarity
+uint
+```
+
+```clarity
+;; Get current Bitcoin height
+(print burn-block-height)
+
+;; Bitcoin-anchored timing
+(define-read-only (get-burn-height-difference)
+  (- burn-block-height u700000))
+```
+
+Usos comunes:
+
+* Marcas de tiempo ancladas a Bitcoin
+* Coordinación de tiempos entre cadenas
+* Cálculos de Prueba de Transferencia
+
+```clarity
+(define-map btc-price-at-height uint uint)
+
+(define-public (record-btc-price (price uint))
+  (begin
+    (map-set btc-price-at-height burn-block-height price)
+    (ok burn-block-height)))
+
+;; Time calculations based on Bitcoin blocks
+(define-read-only (hours-since (btc-height uint))
+  (/ (- burn-block-height btc-height) u6)) ;; ~6 blocks per hour
+```
+
+### altura-del-bloque-stacks \[#altura-del-bloque-stacks]
+
+`stacks-block-height` devuelve la altura actual de la punta de la cadena Stacks (para Stacks 2.5+).
+
+**Tipo**
+
+```clarity
+uint
+```
+
+```clarity
+;; Stacks 2.5+ specific height
+(print stacks-block-height)
+
+;; Height comparison
+(define-read-only (get-height-info)
+  {
+    stacks: stacks-block-height,
+    block: block-height,
+    difference: (- stacks-block-height block-height)
+  })
+```
+
+### altura-de-tenencia \[#altura-de-tenencia]
+
+`tenure-height` devuelve el número de tenencias (ciclos de recompensa) que han transcurrido.
+
+**Tipo**
+
+```clarity
+uint
+```
+
+```clarity
+;; Get current tenure
+(print tenure-height)
+
+;; Tenure-based rewards
+(define-map tenure-rewards uint uint)
+
+(define-read-only (get-rewards-for-tenure (tenure uint))
+  (default-to u0 (map-get? tenure-rewards tenure)))
+```
+
+## Contexto de transacción \[#transaction-context]
+
+### tx-sender \[#tx-sender]
+
+`tx-sender` devuelve el principal que inició la transacción actual.
+
+**Tipo**
+
+```clarity
+principal
+```
+
+```clarity
+;; Get transaction originator
+(print tx-sender)
+
+;; Authorization pattern
+(define-constant contract-owner tx-sender)
+
+(define-public (admin-only-function)
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) (err u401))
+    (ok true)))
+```
+
+Características clave:
+
+* Se mantiene constante durante todas las llamadas al contrato
+* Siempre representa al iniciador original de la transacción
+* Utilizado para autorización y propiedad
+
+```clarity
+(define-map balances principal uint)
+
+(define-public (deposit (amount uint))
+  (begin
+    (try! (stx-transfer? amount tx-sender (as-contract tx-sender)))
+    (map-set balances tx-sender 
+      (+ (default-to u0 (map-get? balances tx-sender)) amount))
+    (ok amount)))
+
+;; Multi-signature pattern
+(define-map signers principal bool)
+(define-public (add-signature (proposal-id uint))
+  (begin
+    (asserts! (default-to false (map-get? signers tx-sender)) (err u401))
+    ;; Add signature logic
+    (ok true)))
+```
+
+### tx-sponsor \[#tx-sponsor]
+
+`tx-sponsor` devuelve el principal que paga las tarifas de transacción (opcional).
+
+**Tipo**
+
+```clarity
+(optional principal)
+```
+
+```clarity
+;; Check if transaction is sponsored
+(match tx-sponsor
+  sponsor (print { sponsored-by: sponsor })
+  (print "Not a sponsored transaction"))
+
+;; Get sponsor or sender
+(define-read-only (get-fee-payer)
+  (default-to tx-sender tx-sponsor))
+```
+
+Casos de uso:
+
+* Programas de subsidio de tarifas
+* Transacciones sin gas
+* Incorporación patrocinada
+* Adquisición de usuarios
+
+```clarity
+(define-map sponsored-actions { user: principal, sponsor: principal } uint)
+
+(define-public (sponsored-action)
+  (match tx-sponsor
+    sponsor (begin
+      ;; Record sponsored action
+      (map-set sponsored-actions 
+        { user: tx-sender, sponsor: sponsor }
+        (+ (default-to u0 (map-get? sponsored-actions 
+          { user: tx-sender, sponsor: sponsor })) u1))
+      (ok { user: tx-sender, sponsor: sponsor }))
+    (err u1))) ;; Must be sponsored
+
+;; Subsidized operations with approved sponsors
+(define-map approved-sponsors principal bool)
+
+(define-public (subsidized-transfer (recipient principal) (amount uint))
+  (match tx-sponsor
+    sponsor (begin
+      (asserts! (default-to false (map-get? approved-sponsors sponsor)) (err u401))
+      (ft-transfer? my-token amount tx-sender recipient))
+    ;; Not sponsored - user pays normally
+    (ft-transfer? my-token amount tx-sender recipient)))
+```
+
+### contract-caller \[#contract-caller]
+
+`contract-caller` devuelve el principal llamante inmediato (contrato o usuario).
+
+**Tipo**
+
+```clarity
+principal
+```
+
+```clarity
+;; Get immediate caller
+(print contract-caller)
+
+;; Direct-call only
+(define-public (direct-only)
+  (begin
+    (asserts! (is-eq tx-sender contract-caller) (err u405))
+    (ok true)))
+```
+
+Distinciones importantes:
+
+* Cambios con cada llamada de contrato
+* Igual a `tx-sender` para llamadas directas
+* Representa el contrato que llama en llamadas de contrato a contrato
+
+```clarity
+;; Contract A
+(define-public (call-contract-b)
+  (contract-call? .contract-b check-callers))
+
+;; Contract B
+(define-public (check-callers)
+  (begin
+    (print { 
+      tx-sender: tx-sender,             ;; Original user
+      contract-caller: contract-caller  ;; Contract A
+    })
+    (ok true)))
+
+;; Allowlist pattern
+(define-map allowed-contracts principal bool)
+(define-public (restricted-function)
+  (begin
+    (asserts! 
+      (or 
+        (is-eq tx-sender contract-caller) ;; Direct call
+        (default-to false (map-get? allowed-contracts contract-caller)))
+      (err u401))
+    (ok true)))
+```
+
+## Información de la cadena \[#chain-information]
+
+### chain-id \[#chain-id]
+
+`chain-id` devuelve el identificador de cadena de 32 bytes.
+
+**Tipo**
+
+```clarity
+uint
+```
+
+```clarity
+;; Get chain ID
+(print chain-id)
+
+;; Mainnet: 0x00000001
+;; Testnet: 0x80000000
+```
+
+### está-en-mainnet \[#esta-en-mainnet]
+
+`is-in-mainnet` devuelve true si el contrato se está ejecutando en la red principal.
+
+**Tipo**
+
+```clarity
+bool
+```
+
+```clarity
+;; Check if on mainnet
+(asserts! is-in-mainnet (err u500))
+
+;; Environment-specific constants
+(define-constant TOKEN-SUPPLY 
+  (if is-in-mainnet
+    u1000000000  ;; 1 billion on mainnet
+    u1000000))   ;; 1 million on testnet
+```
+
+### está-en-regtest \[#esta-en-regtest]
+
+`is-in-regtest` devuelve true si el contrato se está ejecutando en regtest.
+
+**Tipo**
+
+```clarity
+bool
+```
+
+```clarity
+;; Development-only functions
+(define-public (debug-function)
+  (begin
+    (asserts! is-in-regtest (err u403))
+    ;; Debug logic
+    (ok true)))
+```
+
+## Datos económicos \[#economic-data]
+
+### suministro-líquido-de-stx \[#suministro-líquido-de-stx]
+
+`stx-liquid-supply` devuelve el suministro total de STX líquido en micro-STX.
+
+**Tipo**
+
+```clarity
+uint
+```
+
+```clarity
+;; Get current liquid supply
+(print stx-liquid-supply)
+
+;; Calculate percentage of supply
+(define-read-only (get-percent-of-liquid (amount uint))
+  (/ (* amount u10000) stx-liquid-supply)) ;; Returns basis points
+```
+
+Casos de uso:
+
+* Cálculos económicos
+* Límites basados en el suministro
+* Implementaciones de tokenomía
+* Umbrales de gobernanza
+
+```clarity
+;; Dynamic fee based on supply percentage
+(define-constant FEE_BASIS_POINTS u50) ;; 0.5%
+
+(define-read-only (calculate-dynamic-fee (amount uint))
+  (let (
+    (supply-ratio (/ (* amount u1000000) stx-liquid-supply))
+    (multiplier (+ u100 supply-ratio)))
+    (/ (* amount FEE_BASIS_POINTS multiplier) u10000)))
+
+;; Governance with supply-based thresholds
+(define-constant PROPOSAL_THRESHOLD_BASIS u100) ;; 1% of liquid supply
+
+(define-public (create-proposal (description (string-utf8 500)))
+  (let (
+    (required-stake (/ (* stx-liquid-supply PROPOSAL_THRESHOLD_BASIS) u10000))
+    (user-balance (stx-get-balance tx-sender)))
+    (asserts! (>= user-balance required-stake) (err u402))
+    (try! (stx-transfer? required-stake tx-sender (as-contract tx-sender)))
+    (ok required-stake)))
+```

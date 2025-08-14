@@ -1,0 +1,113 @@
+---
+title: Llamadas de solo lectura
+description: Consultar el estado del contrato inteligente sin crear transacciones
+---
+Las llamadas a funciones de solo lectura te permiten consultar datos de contratos inteligentes sin crear una transacción. Estas llamadas son gratuitas, instantáneas y no requieren interacción con la billetera.
+
+## Llamada básica de solo lectura
+
+Llama a una función de solo lectura para obtener datos del contrato sin ninguna tarifa de transacción:
+
+```typescript
+import { fetchCallReadOnlyFunction, cvToValue } from '@stacks/transactions';
+
+const contractAddress = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+const contractName = 'my-contract';
+const functionName = 'get-balance';
+
+const response = await fetchCallReadOnlyFunction({
+  contractAddress,
+  contractName,
+  functionName,
+  functionArgs: [],
+  senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+});
+
+const balance = cvToValue(response);
+console.log('Balance:', balance);
+```
+
+## Pasando argumentos de función
+
+La mayoría de las funciones de solo lectura requieren argumentos. Utiliza los constructores de valores de Clarity para construir los tipos apropiados:
+
+```typescript
+import {
+  fetchCallReadOnlyFunction,
+  principalCV,
+  uintCV,
+  stringUtf8CV
+} from '@stacks/transactions';
+
+const functionArgs = [
+  principalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'),
+  stringUtf8CV('admin')
+];
+
+const response = await fetchCallReadOnlyFunction({
+  contractAddress: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+  contractName: 'access-control',
+  functionName: 'has-role',
+  functionArgs,
+  senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+});
+
+const hasRole = cvToValue(response);
+console.log('Has admin role:', hasRole);
+```
+
+## Manejo de tipos de respuesta
+
+Las funciones de solo lectura pueden devolver tipos de respuesta (ok/err). Verifica el tipo de respuesta para manejar tanto los casos de éxito como los de error:
+
+```typescript
+import {
+  fetchCallReadOnlyFunction,
+  cvToJSON,
+  ResponseOkCV,
+  ResponseErrorCV
+} from '@stacks/transactions';
+
+const response = await fetchCallReadOnlyFunction({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'sip-010-token',
+  functionName: 'get-token-info',
+  functionArgs: [],
+  senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+});
+
+if (response.type === 'ok') {
+  const tokenInfo = cvToJSON(response.value);
+  console.log('Token info:', tokenInfo);
+  // {
+  //   name: "My Token",
+  //   symbol: "MTK",
+  //   decimals: 6,
+  //   totalSupply: "1000000000000"
+  // }
+} else {
+  console.error('Error:', cvToValue(response.value));
+}
+```
+
+## Uso de red personalizada
+
+Especifique una URL de red personalizada para conexiones de testnet o nodos personalizados:
+
+```typescript
+import { fetchCallReadOnlyFunction } from '@stacks/transactions';
+
+const response = await fetchCallReadOnlyFunction({
+  contractAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  contractName: 'my-contract',
+  functionName: 'get-data',
+  functionArgs: [],
+  senderAddress: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  network: 'testnet', // or custom URL like 'http://localhost:3999'
+});
+```
+
+## Lecturas adicionales
+
+* [Ejecutar funciones de contrato que cambian el estado](/reference/stacks.js/contract-calls)
+* [Trabajar con valores y tipos de Clarity](/reference/stacks.js/encoding-decoding)

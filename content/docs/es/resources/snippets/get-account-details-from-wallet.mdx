@@ -1,0 +1,52 @@
+---
+title: Obtener detalles de la cuenta desde la billetera
+description: Extraer direcciones, claves y otra información de cuenta de una instancia de billetera
+---
+```typescript
+import { STACKS_TESTNET, STACKS_MAINNET } from "@stacks/network";
+import { generateWallet, getStxAddress } from "@stacks/wallet-sdk";
+
+// Generate or restore wallet
+const wallet = await generateWallet({
+  secretKey: "your twenty four word mnemonic phrase goes here...",
+  password: "wallet-password",
+});
+
+// Get first account
+const account = wallet.accounts[0];
+
+// Get addresses for different networks
+const testnetAddress = getStxAddress({ 
+  account, 
+  transactionVersion: 0 // testnet
+});
+
+const mainnetAddress = getStxAddress({ 
+  account, 
+  transactionVersion: 1 // mainnet
+});
+
+// Get keys
+const privateKey = account.stxPrivateKey;
+const publicKey = account.stxPublicKey;
+
+console.log("Testnet address:", testnetAddress);
+console.log("Mainnet address:", mainnetAddress);
+console.log("Public key:", publicKey);
+```
+
+## Casos de uso
+
+* Mostrando direcciones de usuario en interfaces de billeteras
+* Obtención de claves privadas para la firma de transacciones
+* Derivando direcciones para diferentes redes
+* Construyendo herramientas de gestión de billeteras
+
+## Conceptos clave
+
+Las cuentas de billetera contienen:
+
+* **Clave privada**: Se utiliza para firmar transacciones
+* **Clave pública**: Derivado de la clave privada
+* **Direcciones**: Específico de la red (red principal vs red de pruebas)
+* **Ruta de derivación**: Ruta BIP44 utilizada para generar la cuenta

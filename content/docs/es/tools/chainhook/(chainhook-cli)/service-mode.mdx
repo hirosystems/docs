@@ -1,0 +1,151 @@
+---
+title: Ejecutar Chainhook como un servicio
+sidebarTitle: Modo de servicio
+description: Implementa Chainhook como un servicio para la transmisión de eventos de blockchain en tiempo real con nodos de Bitcoin y Stacks.
+---
+Esta guía te muestra cómo ejecutar Chainhook como un servicio para el monitoreo continuo de eventos de blockchain. Aprenderás cómo configurar Chainhook con nodos de Bitcoin y Stacks, gestionar predicados de forma dinámica y optimizar para implementaciones en producción.
+
+## Configuración básica del servicio
+
+Inicie Chainhook como un servicio utilizando un archivo de configuración:
+
+```terminal
+$ chainhook service start --config-path=./Chainhook.toml
+```
+
+El servicio se conecta a tus nodos de blockchain y comienza a monitorear eventos que coincidan con tus predicados registrados.
+
+### Configuración mínima
+
+```toml Chainhook.toml
+[storage]
+working_dir = "/var/chainhook"
+
+[network]
+mode = "mainnet"
+
+[limits]
+max_number_of_bitcoin_predicates = 100
+max_number_of_stacks_predicates = 10
+```
+
+## Configuración del nodo Bitcoin
+
+Configurar Chainhook para trabajar con un nodo de Bitcoin para monitorear eventos de Bitcoin:
+
+```toml Chainhook.toml
+[network]
+mode = "mainnet"
+bitcoind_rpc_url = "http://localhost:8332"
+bitcoind_rpc_username = "devnet"
+bitcoind_rpc_password = "devnet"
+
+# Option 1: Receive events via ZeroMQ (recommended for Bitcoin-only)
+bitcoind_zmq_url = "tcp://0.0.0.0:18543"
+
+# Option 2: Receive events via Stacks node (if running both chains)
+# stacks_node_rpc_url = "http://localhost:20443"
+```
+
+### Configuración de mapeo de Bitcoin
+
+| bitcoin.conf | Chainhook.toml |
+|--------------|----------------|
+| rpcuser | bitcoind\_rpc\_username |
+| rpcpassword | bitcoind\_rpc\_password |
+| rpcport | bitcoind\_rpc\_url |
+| zmqpubhashblock | bitcoind\_zmq\_url |
+
+## Configuración del nodo Stacks
+
+Para monitorear eventos de Stacks, configure tanto el nodo de Stacks como Chainhook:
+
+### Configuración del nodo Stacks
+
+```toml Stacks.toml
+[node]
+working_dir = "/stacks-blockchain"
+rpc_bind = "0.0.0.0:20443"
+p2p_bind = "0.0.0.0:20444"
+
+[burnchain]
+chain = "bitcoin"
+mode = "mainnet"
+peer_host = "localhost"
+username = "devnet"      # Must match bitcoin.conf rpcuser
+password = "devnet"      # Must match bitcoin.conf rpcpassword
+rpc_port = 8332          # Must match bitcoin.conf rpcport
+
+[[events_observer]]
+endpoint = "localhost:20455"
+retry_count = 255
+events_keys = ["*"]
+```
+
+### Configuración de Chainhook para Stacks
+
+```toml Chainhook.toml
+[network]
+mode = "mainnet"
+bitcoind_rpc_url = "http://localhost:8332"
+bitcoind_rpc_username = "devnet"
+bitcoind_rpc_password = "devnet"
+stacks_node_rpc_url = "http://localhost:20443"
+stacks_events_ingestion_port = 20455
+```
+
+## Gestión de predicados
+
+Registre predicados con el servicio para comenzar a monitorear eventos específicos.
+
+### Comienza con predicados
+
+```terminal
+$ chainhook service start --predicate-path=my-predicate.json --config-path=Chainhook.toml
+```
+
+### Registro dinámico
+
+Habilite la API HTTP para registrar predicados mientras el servicio está en ejecución:
+
+```toml Chainhook.toml
+[http_api]
+http_port = 20456
+database_uri = "redis://localhost:6379/"
+```
+
+Registrar un nuevo predicado a través de la API:
+
+```terminal
+$ curl -X POST http://localhost:20456/v1/chainhooks \
+    -H "Content-Type: application/json" \
+    -d @predicate.json
+
+{"result":"f8d43129-dba1-4a6c-b368-21426de0f3cd","status":200}
+```
+
+## Monitoreo de servicios
+
+Monitoree la salud y el estado de su servicio Chainhook.
+
+### Chequeo de salud
+
+```terminal
+$ curl http://localhost:20456/health
+```
+
+```json
+{
+  "status": "healthy",
+  "stacks_node": "connected",
+  "bitcoin_node": "connected",
+  "database": "connected",
+  "predicates_active": 3
+}
+```
+
+## Lecturas adicionales
+
+* [Diseño de predicados](/tools/chainhook/usage)
+* [Ámbitos de eventos de Bitcoin](/tools/chainhook/reference/bitcoin-scopes)
+* [Ámbitos de eventos de Stacks](/tools/chainhook/reference/stacks-scopes)
