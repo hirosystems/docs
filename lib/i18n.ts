@@ -20,3 +20,15 @@ export const languageFlags: Record<string, string> = {
   en: '🇺🇸',
   es: '🇪🇸',
 };
+
+// Localized language names - key is the language code, value is how to say that language name in different locales
+export const localizedLanguageNames: Record<string, Record<string, string>> = {
+  en: {
+    en: 'English',
+    es: 'Inglés',
+  },
+  es: {
+    en: 'Spanish',
+    es: 'Español',
+  },
+};

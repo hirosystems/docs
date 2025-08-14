@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { i18n, languageAbbreviations, languageFlags, languageNames } from '@/lib/i18n';
+import { i18n, languageAbbreviations, languageNames, localizedLanguageNames } from '@/lib/i18n';
 
 export function LanguageSwitcher() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export function LanguageSwitcher() {
 
     // Parse current path to get the clean path without locale
     const segments = pathname.split('/').filter(Boolean);
-    
+
     // Check if first segment is a locale
     let cleanPath: string;
     if (i18n.languages.includes(segments[0])) {
@@ -68,7 +68,6 @@ export function LanguageSwitcher() {
           size="sm"
           className="font-thin text-sm gap-1.5 h-9 px-3 border-border text-muted-foreground hover:text-primary"
         >
-          <span className="text-base">{languageFlags[currentLang]}</span>
           <span className="font-fono">{languageAbbreviations[currentLang]}</span>
           <ChevronDown className="h-3 w-3 opacity-50" />
         </Button>
@@ -78,14 +77,16 @@ export function LanguageSwitcher() {
           // Only show languages that are configured
           if (!i18n.languages.includes(code)) return null;
 
+          // Get the localized name for this language in the current language
+          const localizedName = localizedLanguageNames[code]?.[currentLang] || name;
+
           return (
             <DropdownMenuItem
               key={code}
               onClick={() => handleLanguageChange(code)}
               className="gap-3 font-sans text-sm"
             >
-              <span className="text-base">{languageFlags[code]}</span>
-              <span className="flex-1 font-fono">{name}</span>
+              <span className="flex-1 font-fono uppercase">{localizedName}</span>
               {code === currentLang && <span className="ml-auto text-xs">✓</span>}
             </DropdownMenuItem>
           );
