@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 import { i18n } from '@/lib/i18n';
-import { translations, type Translations } from '@/lib/translations';
+import { type Translations, translations } from '@/lib/translations';
 
 /**
  * Hook to get translations for the current locale
