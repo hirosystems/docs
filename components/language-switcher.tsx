@@ -30,9 +30,14 @@ export function LanguageSwitcher() {
     const segments = pathname.split('/').filter(Boolean);
     const pathLocale = i18n.languages.includes(segments[0]) ? segments[0] : null;
 
-    // Use cookie locale first, then path locale, then default
-    const detectedLocale = cookieLocale || pathLocale || i18n.defaultLanguage;
+    // Use path locale first (matches middleware logic), then cookie, then default
+    const detectedLocale = pathLocale || cookieLocale || i18n.defaultLanguage;
     setCurrentLang(detectedLocale);
+
+    // Sync cookie with path locale if they differ
+    if (pathLocale && pathLocale !== cookieLocale) {
+      document.cookie = `locale=${pathLocale}; max-age=${60 * 60 * 24 * 365}; path=/; samesite=lax`;
+    }
   }, [pathname]);
 
   const handleLanguageChange = (newLang: string) => {
