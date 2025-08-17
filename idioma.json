@@ -1,0 +1,16 @@
+{
+  "provider": "anthropic",
+  "locale": {
+    "source": "en",
+    "targets": ["es"]
+  },
+  "files": {
+    "include": [
+      {
+        "source": "app/[locale]/(home)/_pages/page.en.tsx",
+        "target": "app/[locale]/(home)/_pages/page.es.tsx"
+      }
+    ]
+  },
+  "preserve": ["Clarinet", "Stacks", "Clarity", "/^type:\\s*\\w+$/"]
+}
