@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { I18nProvider } from "fumadocs-ui/i18n";
-import { i18n } from '@/lib/i18n';
+import { i18n, languageNames } from '@/lib/i18n';
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -12,8 +12,14 @@ interface LocaleLayoutProps {
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale } = await params;
   
+  // Convert language strings to LocaleItem objects
+  const locales = i18n.languages.map(lang => ({
+    name: languageNames[lang],
+    locale: lang,
+  }));
+  
   return (
-    <I18nProvider locale={locale} locales={i18n.languages}>
+    <I18nProvider locale={locale} locales={locales}>
       {children}
     </I18nProvider>
   );

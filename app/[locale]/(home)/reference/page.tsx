@@ -7,12 +7,12 @@ export default async function ReferencePage({
   
   // Dynamically import the locale-specific page
   try {
-    const LocalePage = (await import(`./_pages/page.${locale}.tsx`)).default;
+    const LocalePage = (await import(`./_pages/page.${locale}`)).default;
     return <LocalePage />;
   } catch (error) {
     // Fallback to English if locale file doesn't exist
     console.log(`No ${locale} translation found for reference page, falling back to English`);
-    const EnglishPage = (await import('./_pages/page.en.tsx')).default;
+    const EnglishPage = (await import('./_pages/page.en')).default;
     return <EnglishPage />;
   }
 }
