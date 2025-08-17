@@ -1,7 +1,7 @@
 import { Cards, IndexCard } from '@/components/card';
 import { API, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
 
-export default function APIsPageEN() {
+export default function APIsPage() {
   return (
     <main className="my-6 space-y-10">
       <div className="px-4 md:px-[var(--nav-offset)]">
