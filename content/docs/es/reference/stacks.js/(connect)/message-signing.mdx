@@ -1,0 +1,199 @@
+---
+title: Firmar mensajes
+description: Aprende cómo firmar y verificar mensajes para demostrar la propiedad de una dirección y autorizar acciones
+---
+Aprende cómo implementar la firma de mensajes en tu aplicación Stacks. La firma de mensajes permite a los usuarios probar criptográficamente que controlan una dirección sin realizar una transacción en la cadena, permitiendo autenticación, autorización y declaraciones verificables.
+
+:::objectives
+* Conéctese a la billetera de un usuario y solicite firmas de mensajes
+* Firme tanto mensajes de texto simples como datos estructurados
+* Verificar firmas para garantizar la autenticidad
+:::
+
+:::prerequisites
+* Node.js instalado en tu máquina
+* Un editor de código como VS Code
+:::
+
+## Instalación
+
+Instale los paquetes necesarios para la firma y verificación de mensajes.
+
+```package-install
+@stacks/connect @stacks/encryption
+```
+
+## Conectar a la billetera
+
+Antes de firmar mensajes, establezca una conexión con la billetera del usuario. La conexión persiste a través de las recargas de página.
+
+```ts
+import { connect, isConnected } from '@stacks/connect';
+
+async function connectWallet() {
+  if (!isConnected()) {
+    const response = await connect();
+    console.log('Connected addresses:', response.addresses);
+  }
+}
+```
+
+Llama a esta función cuando tu aplicación se cargue o cuando el usuario haga clic en un botón de conexión.
+
+## Firmar mensajes de texto
+
+Solicitar una firma para un mensaje de texto simple utilizando el `request` método.
+
+```ts
+import { request } from '@stacks/connect';
+
+async function signMessage() {
+  const message = 'Hello World';
+  
+  const response = await request('stx_signMessage', {
+    message,
+  });
+  
+  console.log('Signature:', response.signature);
+  console.log('Public key:', response.publicKey);
+  
+  return response;
+}
+```
+
+La cartera mostrará el mensaje al usuario para su aprobación antes de firmar.
+
+## Firmar datos estructurados
+
+Para datos más complejos, utilice la firma de mensajes estructurados con valores de Clarity.
+
+```ts
+import { request } from '@stacks/connect';
+import { Cl } from '@stacks/transactions';
+
+async function signStructuredMessage() {
+  const message = Cl.tuple({
+    action: Cl.stringAscii('transfer'),
+    amount: Cl.uint(1000),
+    recipient: Cl.stringAscii('alice.btc')
+  });
+  
+  const domain = Cl.tuple({
+    name: Cl.stringAscii('My App'),
+    version: Cl.stringAscii('1.0.0'),
+    'chain-id': Cl.uint(1) // 1 for mainnet
+  });
+
+  const response = await request('stx_signStructuredMessage', {
+    message,
+    domain
+  });
+  
+  return response;
+}
+```
+
+Los mensajes estructurados proporcionan una mejor seguridad de tipos y son más fáciles de analizar en la cadena.
+
+## Verificar firmas
+
+Validar firmas para asegurar que coincidan con el mensaje esperado y la clave pública.
+
+```ts
+import { verifyMessageSignatureRsv } from '@stacks/encryption';
+
+async function verifySignature(
+  message: string,
+  signature: string,
+  publicKey: string
+): Promise<boolean> {
+  const isValid = verifyMessageSignatureRsv({
+    message,
+    signature,
+    publicKey
+  });
+  
+  if (isValid) {
+    console.log('✓ Signature verified successfully');
+  } else {
+    console.log('✗ Invalid signature');
+  }
+  
+  return isValid;
+}
+```
+
+Siempre verifique las firmas antes de confiar en los datos firmados.
+
+### Completar el flujo de verificación
+
+```ts
+async function signAndVerify() {
+  // Request signature
+  const message = 'Authorize login at ' + new Date().toISOString();
+  const signResponse = await request('stx_signMessage', { message });
+  
+  // Verify immediately
+  const isValid = await verifySignature(
+    message,
+    signResponse.signature,
+    signResponse.publicKey
+  );
+  
+  if (isValid) {
+    // Proceed with authenticated action
+    console.log('Authentication successful');
+  }
+}
+```
+
+## Pruébalo
+
+Crea un sistema de autenticación simple utilizando firmas de mensajes.
+
+```ts
+// Generate a unique challenge
+function generateChallenge(): string {
+  const nonce = Math.random().toString(36).substring(7);
+  const timestamp = Date.now();
+  return `Sign this message to authenticate:\nNonce: ${nonce}\nTime: ${timestamp}`;
+}
+
+// Complete auth flow
+async function authenticate() {
+  const challenge = generateChallenge();
+  
+  try {
+    const response = await request('stx_signMessage', {
+      message: challenge
+    });
+    
+    const isValid = verifyMessageSignatureRsv({
+      message: challenge,
+      signature: response.signature,
+      publicKey: response.publicKey
+    });
+    
+    if (isValid) {
+      // Store auth token or session
+      localStorage.setItem('auth', JSON.stringify({
+        publicKey: response.publicKey,
+        timestamp: Date.now()
+      }));
+      
+      return { success: true };
+    }
+  } catch (error) {
+    console.error('Authentication failed:', error);
+  }
+  
+  return { success: false };
+}
+```
+
+## Próximos pasos
+
+:::next-steps
+* [Transmitir transacciones](/reference/stacks.js/broadcast-transactions): Aprende cómo firmar y transmitir transacciones
+* [Referencia de la API de Connect](/reference/stacks.js/packages/connect): Explora todos los métodos disponibles
+:::

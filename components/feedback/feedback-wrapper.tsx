@@ -3,6 +3,7 @@
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useTranslations } from '@/hooks/use-translations';
 import type { FeedbackResponse } from '@/types/feedback';
 
 interface FeedbackWrapperProps {
@@ -12,6 +13,7 @@ interface FeedbackWrapperProps {
 }
 
 export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrapperProps) {
+  const t = useTranslations();
   const [feedback, setFeedback] = useState<'helpful' | 'not-helpful' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showTextarea, setShowTextarea] = useState(false);
@@ -95,7 +97,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
   return (
     <div className={className}>
       <div className="flex items-center gap-6">
-        <h3 className="text-base">How is this guide?</h3>
+        <h3 className="text-base">{t.navigation.feedback.question}</h3>
 
         {showTextarea ? (
           <div className="flex items-center gap-3">
@@ -113,7 +115,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
               )}
             >
               <ThumbsUp className="w-4 h-4" />
-              <span className="font-fono">Good</span>
+              <span className="font-fono">{t.navigation.feedback.good}</span>
             </button>
 
             <button
@@ -130,7 +132,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
               )}
             >
               <ThumbsDown className="w-4 h-4" />
-              <span className="font-fono">Bad</span>
+              <span className="font-fono">{t.navigation.feedback.bad}</span>
             </button>
           </div>
         ) : !feedback ? (
@@ -146,7 +148,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
               )}
             >
               <ThumbsUp className="w-4 h-4" />
-              <span className="font-fono">Good</span>
+              <span className="font-fono">{t.navigation.feedback.good}</span>
             </button>
 
             <button
@@ -160,7 +162,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
               )}
             >
               <ThumbsDown className="w-4 h-4" />
-              <span className="font-fono">Bad</span>
+              <span className="font-fono">{t.navigation.feedback.bad}</span>
             </button>
           </div>
         ) : null}
@@ -169,7 +171,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
       {feedback && !showTextarea && (
         <div className="mt-4 flex flex-row gap-2">
           <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            Thank you for your feedback!
+            {t.navigation.feedback.thankYou}
           </p>
           {discussionUrl && (
             <a
@@ -178,7 +180,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
               rel="noopener noreferrer"
               className="text-sm hover:underline"
             >
-              View here
+              {t.navigation.feedback.viewHere}
             </a>
           )}
         </div>
@@ -189,7 +191,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
           <textarea
             value={additionalFeedback}
             onChange={(e) => setAdditionalFeedback(e.target.value)}
-            placeholder="Leave your feedback..."
+            placeholder={t.navigation.feedback.placeholder}
             className={cn(
               'font-fono',
               'w-full min-h-[80px] p-3 rounded-md resize-none text-sm',
@@ -213,7 +215,7 @@ export function FeedbackWrapper({ pageTitle, pagePath, className }: FeedbackWrap
                 'cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed',
               )}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+              {isSubmitting ? t.navigation.feedback.submitting : t.navigation.feedback.submit}
             </button>
           </div>
         </div>

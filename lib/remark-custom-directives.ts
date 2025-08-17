@@ -81,47 +81,38 @@ function transformNextStepsDirective(node: any, index: number | undefined, paren
     return;
   }
 
-  // Create the transformed nodes
-  const transformedNodes = [
-    // ## Next steps header
-    {
-      type: 'heading',
-      depth: 2,
-      children: [{ type: 'text', value: 'Next steps' }],
-    },
-    // <Cards> wrapper with <NextCard> children
-    {
+  // Create the transformed node - just the <Cards> wrapper with <NextCard> children
+  const transformedNode = {
+    type: 'mdxJsxFlowElement',
+    name: 'Cards',
+    attributes: [],
+    children: nextStepsData.map((step) => ({
       type: 'mdxJsxFlowElement',
-      name: 'Cards',
-      attributes: [],
-      children: nextStepsData.map((step) => ({
-        type: 'mdxJsxFlowElement',
-        name: 'NextCard',
-        attributes: [
-          {
-            type: 'mdxJsxAttribute',
-            name: 'href',
-            value: step.href,
-          },
-          {
-            type: 'mdxJsxAttribute',
-            name: 'title',
-            value: step.title,
-          },
-          {
-            type: 'mdxJsxAttribute',
-            name: 'description',
-            value: step.description,
-          },
-        ],
-        children: [],
-      })),
-    },
-  ];
+      name: 'NextCard',
+      attributes: [
+        {
+          type: 'mdxJsxAttribute',
+          name: 'href',
+          value: step.href,
+        },
+        {
+          type: 'mdxJsxAttribute',
+          name: 'title',
+          value: step.title,
+        },
+        {
+          type: 'mdxJsxAttribute',
+          name: 'description',
+          value: step.description,
+        },
+      ],
+      children: [],
+    })),
+  };
 
-  // Replace the directive node with our transformed nodes
+  // Replace the directive node with our transformed node
   if (parent && index !== null) {
-    parent.children.splice(index, 1, ...transformedNodes);
+    parent.children.splice(index, 1, transformedNode);
   }
 }
 
@@ -315,64 +306,55 @@ function transformObjectivesDirective(
     }
   }
 
-  // Create transformed nodes
-  const transformedNodes = [
-    // ## What you'll learn
-    {
-      type: 'heading',
-      depth: 2,
-      children: [{ type: 'text', value: "What you'll learn" }],
-    },
-    // Container div with objectives
-    {
+  // Create transformed node - just the container div with objectives
+  const transformedNode = {
+    type: 'mdxJsxFlowElement',
+    name: 'div',
+    attributes: [
+      {
+        type: 'mdxJsxAttribute',
+        name: 'className',
+        value: 'space-y-3 my-6',
+      },
+    ],
+    children: objectives.map((text) => ({
       type: 'mdxJsxFlowElement',
       name: 'div',
       attributes: [
         {
           type: 'mdxJsxAttribute',
           name: 'className',
-          value: 'space-y-3 my-6',
+          value: 'flex items-start gap-3',
         },
       ],
-      children: objectives.map((text) => ({
-        type: 'mdxJsxFlowElement',
-        name: 'div',
-        attributes: [
-          {
-            type: 'mdxJsxAttribute',
-            name: 'className',
-            value: 'flex items-start gap-3',
-          },
-        ],
-        children: [
-          // ArrowRight icon
-          {
-            type: 'mdxJsxFlowElement',
-            name: 'ArrowRight',
-            attributes: [
-              {
-                type: 'mdxJsxAttribute',
-                name: 'className',
-                value: 'h-4 w-4 text-brand-orange dark:text-brand-orange mt-1.5 flex-shrink-0',
-              },
-            ],
-            children: [],
-          },
-          // Text span
-          {
-            type: 'mdxJsxFlowElement',
-            name: 'span',
-            attributes: [],
-            children: [{ type: 'text', value: text }],
-          },
-        ],
-      })),
-    },
-  ];
+      children: [
+        // ArrowRight icon
+        {
+          type: 'mdxJsxFlowElement',
+          name: 'ArrowRight',
+          attributes: [
+            {
+              type: 'mdxJsxAttribute',
+              name: 'className',
+              value: 'h-4 w-4 text-brand-orange dark:text-brand-orange mt-1.5 flex-shrink-0',
+            },
+          ],
+          children: [],
+        },
+        // Text span
+        {
+          type: 'mdxJsxFlowElement',
+          name: 'span',
+          attributes: [],
+          children: [{ type: 'text', value: text }],
+        },
+      ],
+    })),
+  };
 
-  // Replace directive with transformed nodes
+  // Replace directive with transformed node
   if (parent && index !== undefined) {
-    parent.children.splice(index, 1, ...transformedNodes);
+    parent.children.splice(index, 1, transformedNode);
   }
 }
 
@@ -408,32 +390,23 @@ function transformPrerequisitesDirective(
     file.warn('prerequisites directive should contain at most 6 items', node.position);
   }
 
-  // Create transformed nodes
-  const transformedNodes = [
-    // ## Prerequisites
-    {
-      type: 'heading',
-      depth: 2,
-      children: [{ type: 'text', value: 'Prerequisites' }],
-    },
-    // Container div with the original list inside
-    {
-      type: 'mdxJsxFlowElement',
-      name: 'div',
-      attributes: [
-        {
-          type: 'mdxJsxAttribute',
-          name: 'className',
-          value: 'my-6',
-        },
-      ],
-      children: node.children, // Keep all original children including the list
-    },
-  ];
+  // Create transformed node - just the container div with the original list inside
+  const transformedNode = {
+    type: 'mdxJsxFlowElement',
+    name: 'div',
+    attributes: [
+      {
+        type: 'mdxJsxAttribute',
+        name: 'className',
+        value: 'my-6',
+      },
+    ],
+    children: node.children, // Keep all original children including the list
+  };
 
-  // Replace directive with transformed nodes
+  // Replace directive with transformed node
   if (parent && index !== undefined) {
-    parent.children.splice(index, 1, ...transformedNodes);
+    parent.children.splice(index, 1, transformedNode);
   }
 }
 

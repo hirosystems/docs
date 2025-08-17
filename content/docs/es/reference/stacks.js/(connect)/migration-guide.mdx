@@ -1,0 +1,103 @@
+---
+title: Guía de Migración
+description: Cómo migrar de v7.x.x a v8.x.x de @stacks/connect
+---
+import { Steps, Step } from 'fumadocs-ui/components/steps'
+
+Durante un tiempo, la comunidad de Stacks ha estado trabajando en un nuevo estándar para la comunicación entre billeteras y dapps.
+Stacks Connect y proyectos relacionados ahora utilizan estándares como [WBIPs](https://wbips.netlify.app/) y [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) para permitir que las billeteras se comuniquen con las dapps de una manera más simplificada y flexible.
+
+:::callout
+### Estado de la Migración
+
+**Siéntete libre de seguir usando Stacks Connect `7.x.x` mientras las cosas se estabilizan.**
+El `7.x.x` La versión puede seguir siendo mejor soportada por algunas billeteras.
+
+Para la versión heredada de `@stacks/connect` usando tokens JWT, puedes usar:
+
+```sh
+npm install @stacks/connect@7.10.1
+```
+:::
+
+## Obsolescencias
+
+Las siguientes clases, métodos y tipos están obsoletos en favor de los nuevos `request` Métodos RPC:
+
+* `show...` y `open...` métodos
+* `authenticate` método
+* `UserSession` clase y funcionalidad relacionada
+* `AppConfig` clase
+* `SessionOptions` interfaz
+* `SessionData` interfaz
+* `UserData` interfaz
+* `SessionDataStore` clase
+* `InstanceDataStore` clase
+* `LocalStorageStore` clase
+
+:::callout
+### Compatibilidad hacia atrás
+
+Para facilitar la migración, el familiar `UserSession` & `AppConfig` la clase aún existe y es semi-compatible con versiones anteriores para el `8.x.x` lanzamiento.
+"Almacenará en caché" la dirección del usuario en el almacenamiento local y permitirá el acceso a ella a través del `loadUserData` método (como se hizo anteriormente).
+:::
+
+## Pasos de migración
+
+Para actualizar desde `<=7.x.x` a la última/`8.x.x`, sigue estos pasos:
+
+<Steps>
+  <Step title="Actualiza tu versión de @stacks/connect">
+    ```sh
+    npm install @stacks/connect@latest
+    ```
+  </Step>
+
+  <Step title="Reemplazar Métodos Heredados con request">
+    Cambiar de `showXyz`, `openXyz`, `doXyz` métodos al `request` método:
+
+    * `request` sigue el patrón `request(method: string, params: object)`, ver [Uso](#usage) para más detalles
+    * `request` es una función asíncrona, así que reemplaza el `onFinish` y `onCancel` devoluciones de llamada con `.then().catch()` o `try & await`
+
+    Ejemplos:
+
+    * `showConnect()`, `authenticate()` → `connect()`
+    * `useConnect().doContractCall({})` → `request("stx_callContract", {})`
+    * `openContractDeploy()` → `request("stx_deployContract", {})`
+  </Step>
+
+  <Step title="Utilice Connect en lugar de ShowConnect/Authenticate">
+    Cambiar de `showConnect` o `authenticate` a `connect()` métodos:
+
+    * `connect()` es un alias para `request({forceWalletSelect: true}, 'getAddresses')`
+    * `connect()` por defecto almacena en caché la dirección del usuario en el almacenamiento local
+  </Step>
+
+  <Step title="Actualizar la Gestión del Estado de Autenticación">
+    * Cambiar de `UserSession.isSignedIn()` a `isConnected()`
+    * Cambiar de `UserSession.signUserOut()` a `disconnect()`
+  </Step>
+
+  <Step title="Eliminar Código Heredado">
+    * Eliminar código que haga referencia a métodos obsoletos (`AppConfig`, `UserSession`, etc.)
+    * Elimina el `@stacks/connect-react` paquete
+      * Es posible que necesites recargar manualmente un componente para ver las actualizaciones del almacenamiento local
+      * Ya no se necesitan hooks personalizados para usar Stacks Connect
+      * Estamos trabajando en un nuevo `@stacks/react` paquete que hará que el uso sea aún más fácil en el futuro (por ejemplo, seguimiento del estado de las transacciones, recarga de componentes cuando se establece una conexión, actualización de la página cuando cambia la red, y más)
+  </Step>
+</Steps>
+
+## Acceso a Direcciones
+
+Anteriormente, el `UserSession` La clase se utilizaba para acceder a las direcciones y datos del usuario, lo cual abstraía los detalles de implementación subyacentes.
+Ahora, el `request` El método se utiliza para interactuar directamente con la billetera, dando a los desarrolladores un control más explícito y claridad sobre lo que está sucediendo internamente.
+Este enfoque manual hace que la interacción con la billetera sea más transparente y personalizable.
+Los desarrolladores pueden gestionar manualmente la dirección del usuario actualmente conectado en, por ejemplo, almacenamiento local, jotai, etc. o usar el `connect()`/`request()` método para almacenar en caché la dirección en el almacenamiento local.
+
+:::callout
+type: warn
+
+### Nota de seguridad
+
+Por razones de seguridad, el `8.x.x` release solo devuelve la dirección de la red actual (donde anteriormente se devolvían las direcciones tanto de mainnet como de testnet).
+:::

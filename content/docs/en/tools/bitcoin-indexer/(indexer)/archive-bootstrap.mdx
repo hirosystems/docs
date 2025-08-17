@@ -1,0 +1,166 @@
+---
+title: Archive bootstrap  
+description: Skip weeks of indexing by bootstrapping from Hiro's pre-indexed archives.
+---
+
+## Overview
+
+Instead of indexing from the genesis block, you can bootstrap your indexer using Hiro's regularly updated archives. This reduces initial sync time from weeks to hours.
+
+## Available archives
+
+Hiro provides archives for different configurations:
+
+| Archive Type | Metaprotocols | Size | Sync Time |
+|--------------|---------------|------|-----------|
+| Full | Ordinals, Runes, BRC-20 | ~800 GB | 2-4 hours |
+| Ordinals only | Ordinals | ~450 GB | 1-2 hours |
+| Runes only | Runes | ~80 GB | 30 mins |
+| BRC-20 only | BRC-20 | ~120 GB | 45 mins |
+
+## Download archives
+
+### Create archive directory
+
+```terminal
+$ mkdir -p ~/bitcoin-indexer/archives
+$ cd ~/bitcoin-indexer/archives
+```
+
+### Download required archives
+
+Download the archives for the metaprotocols you want to index:
+
+```terminal
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-brc20-pg-latest.tar
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-rocksdb-latest.tar.gz
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-runes-pg-latest.tar
+```
+
+:::callout
+### Download time
+Archives are large (100-800GB). Use `-C -` flag to enable resume on interruption. Download times vary from 2-8 hours depending on connection speed.
+:::
+
+### Extract archives
+
+```terminal
+$ tar -xzf mainnet-bitcoin-indexer-rocksdb-latest.tar.gz
+$ tar -xf mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+$ tar -xf mainnet-bitcoin-indexer-brc20-pg-latest.tar
+$ tar -xf mainnet-bitcoin-indexer-runes-pg-latest.tar
+```
+
+### Move RocksDB data
+
+```terminal
+$ mv rocksdb ~/bitcoin-indexer/rocksdb-chainstate
+```
+
+## Restore PostgreSQL databases
+
+### Set permissions
+
+```terminal
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/brc20.dump
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/ordinals.dump
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/runes.dump
+```
+
+### Import database dumps
+
+Restore the PostgreSQL archives to your databases:
+
+```terminal
+$ sudo -u postgres pg_restore --verbose --jobs=6 -d ordinals -c --if-exists ~/bitcoin-indexer/archives/ordinals.dump
+
+$ # Restore Runes database (if downloaded)
+$ sudo -u postgres pg_restore --verbose --jobs=6 -d runes -c --if-exists ~/bitcoin-indexer/archives/runes.dump
+```
+
+:::callout
+### Restore time
+Database restoration takes 1-4 hours depending on archive size and disk speed. The `--jobs=6` flag uses parallel processing to speed up the restore.
+:::
+
+### Verify restoration
+
+Check that data was imported successfully:
+
+```terminal
+$ sudo -u postgres psql -d ordinals -c "SELECT COUNT(*) FROM inscriptions;"
+$ sudo -u postgres psql -d brc20 -c "SELECT COUNT(DISTINCT ticker) FROM tokens;"
+```
+
+## Check archive block height
+
+Find the block height of your restored archive:
+
+```terminal
+$ ls -la ~/bitcoin-indexer/rocksdb-chainstate/rocksdb/ | grep -i manifest
+```
+
+## Configuration for archive bootstrap
+
+No special configuration needed! The indexer automatically detects the archive state and continues from where it left off. Just ensure your paths match:
+
+```toml title="bitcoin-indexer-config.toml"
+[storage]
+working_dir = "/home/bitcoin-indexer/bitcoin-indexer/rocksdb-chainstate"
+
+# ... rest of your configuration
+```
+
+## Start indexing
+
+With the archive in place, start the indexer:
+
+```terminal
+$ bitcoin-indexer runes service start --config-path=bitcoin-indexer.toml
+$ bitcoin-indexer ordinals service start --config-path=bitcoin-indexer.toml
+```
+
+The indexer will:
+1. Load the archive state
+2. Connect to your Bitcoin node
+3. Process new blocks since the archive height
+4. Catch up to the chain tip
+
+## Creating custom archives
+
+Export your own archives for backup or migration:
+
+```terminal
+$ bitcoin-indexer export \
+  --data-dir /data/bitcoin-indexer \
+  --output /backups/indexer-backup.tar.gz \
+  --compress
+```
+
+## Troubleshooting
+
+### Archive extraction fails
+
+Ensure sufficient disk space - archives extract to 2x their compressed size temporarily.
+
+### Verification errors
+
+```terminal
+$ tar -tzf bitcoin-indexer-full-latest.tar.gz | wc -l
+```
+
+### Slow download speeds
+
+Use a download manager with resume support:
+
+```terminal
+$ aria2c -x 16 -s 16 https://archive.hiro.so/bitcoin-indexer/mainnet/bitcoin-indexer-full-latest.tar.gz
+```
+
+## Next steps
+
+:::next-steps
+- [Configure the indexer](/tools/bitcoin-indexer/configuration): Fine-tune settings for your use case
+- [Start using the Ordinals API](/tools/bitcoin-indexer/ordinals-api): Run queries on your indexed data
+:::

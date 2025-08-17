@@ -1,0 +1,234 @@
+---
+title: Running your own Ordinals API
+sidebarTitle: Ordinals API integration
+description: REST API endpoints for querying Ordinals inscriptions, collections, and satoshi rarity.
+---
+
+## Overview
+
+The Ordinals API provides comprehensive access to inscription data, digital artifacts, and satoshi tracking. All endpoints return JSON and support pagination for large result sets.
+
+Base URL: `http://localhost:3000/ordinals/v1`
+
+## Authentication
+
+The API is open by default. For production deployments, configure API keys:
+
+```bash title="bitcoin-indexer.toml"
+[api]
+require_auth = true
+api_keys = ["your-api-key-here"]
+```
+
+Include the API key in requests:
+
+```bash
+Authorization: Bearer your-api-key-here
+```
+
+## Inscription endpoints
+
+### Get inscription [#get-inscription]
+
+`GET /inscriptions/{inscription_id}` retrieves inscription details by ID or number.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/inscriptions/0
+```
+
+```json
+{
+  "id": "6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0",
+  "number": 0,
+  "address": "bc1pxaneaf3w4d27hl2y93fuft2xk6m4u3wc4rafevc6slgd7f5tq2dqynekta",
+  "genesis_address": "bc1pxaneaf3w4d27hl2y93fuft2xk6m4u3wc4rafevc6slgd7f5tq2dqynekta",
+  "genesis_block_height": 767430,
+  "genesis_block_hash": "00000000000000000002a90330a99f67e3f01eb2ce070b45930581e82fb7ddad",
+  "genesis_tx_id": "6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799",
+  "genesis_fee": "0",
+  "genesis_timestamp": 1670913723,
+  "content_type": "text/plain;charset=utf-8",
+  "content_length": 793,
+  "sat_ordinal": "1252201400444387",
+  "sat_rarity": "common",
+  "sat_coinbase_height": 59291
+}
+```
+
+### List inscriptions [#list-inscriptions]
+
+`GET /inscriptions` returns paginated inscription list.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | number | Results per page (max 100) |
+| `offset` | number | Number of results to skip |
+| `address` | string | Filter by owner address |
+| `mime_type` | string | Filter by MIME type |
+| `from_block` | number | Start block height |
+| `to_block` | number | End block height |
+
+```terminal
+$ curl "http://localhost:3000/ordinals/v1/inscriptions?limit=5&mime_type=image/png"
+```
+
+### Get inscription content [#get-content]
+
+`GET /inscriptions/{inscription_id}/content` returns raw inscription content.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/inscriptions/0/content
+hello world
+```
+
+For binary content (images, etc.), appropriate Content-Type headers are set.
+
+## Collection endpoints
+
+### List collections [#list-collections]
+
+`GET /collections` returns recognized Ordinals collections.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/collections
+```
+
+```json
+{
+  "results": [
+    {
+      "id": "bitcoin-punks",
+      "name": "Bitcoin Punks", 
+      "inscription_count": 10000,
+      "holder_count": 3847,
+      "floor_price": 15000000,
+      "volume_24h": 580000000
+    }
+  ],
+  "total": 156
+}
+```
+
+### Get collection details [#get-collection]
+
+`GET /collections/{collection_id}` returns collection metadata and stats.
+
+## Satoshi endpoints
+
+### Get satoshi info [#get-satoshi]
+
+`GET /sats/{ordinal}` returns details about a specific satoshi.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/sats/1252201400444387
+```
+
+```json
+{
+  "ordinal": "1252201400444387",
+  "decimal": "59291.444387",
+  "rarity": "common",
+  "name": "ntwmwqcqfcb",
+  "block_height": 59291,
+  "offset": 444387,
+  "inscriptions": ["6fb976...42799i0"]
+}
+```
+
+### List satoshi rarities [#list-rarities]
+
+`GET /sats/rarities` returns satoshis by rarity class.
+
+| Rarity | Description |
+|--------|-------------|
+| `mythic` | First sat of genesis block |
+| `legendary` | First sat of first tx in block |
+| `epic` | First sat after halving |
+| `rare` | First sat after difficulty adjustment |
+| `uncommon` | First sat of each block |
+| `common` | All other sats |
+
+## Activity endpoints
+
+### Get recent activity [#recent-activity]
+
+`GET /activity` returns recent inscription transfers and sales.
+
+```terminal
+$ curl "http://localhost:3000/ordinals/v1/activity?type=transfer&limit=10"
+```
+
+### Get address activity [#address-activity]
+
+`GET /addresses/{address}/activity` returns activity for specific address.
+
+## Statistics endpoints
+
+### Get global stats [#global-stats]
+
+`GET /stats` returns aggregate Ordinals statistics.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/stats
+```
+
+```json
+{
+  "total_inscriptions": 52342891,
+  "total_fees_paid": "4821.23",
+  "unique_mime_types": 847,
+  "holder_addresses": 892341,
+  "inscriptions_24h": 45123,
+  "volume_24h": "18.5"
+}
+```
+
+## Websocket subscriptions
+
+Subscribe to real-time inscription events:
+
+```javascript
+const ws = new WebSocket('ws://localhost:3000/ordinals/v1/subscribe');
+
+ws.on('message', (data) => {
+  const event = JSON.parse(data);
+  // Handle inscription_revealed, inscription_transferred, etc.
+});
+
+// Subscribe to specific events
+ws.send(JSON.stringify({
+  type: 'subscribe',
+  events: ['inscription_revealed'],
+  filters: { mime_type: 'image/*' }
+}));
+```
+
+## Error responses
+
+All errors return consistent JSON structure:
+
+```json
+{
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "Inscription not found",
+    "details": {
+      "inscription_id": "invalid123"
+    }
+  }
+}
+```
+
+| Code | HTTP Status | Description |
+|------|-------------|-------------|
+| `NOT_FOUND` | 404 | Resource not found |
+| `INVALID_REQUEST` | 400 | Malformed request |
+| `RATE_LIMITED` | 429 | Too many requests |
+| `INTERNAL_ERROR` | 500 | Server error |
+
+## Next steps
+
+:::next-steps
+- [Runes API](/tools/bitcoin-indexer/runes-api): Query Runes tokens and balances
+- [Ordinals API](/tools/bitcoin-indexer/ordinals-api): Access Ordinals data
+:::

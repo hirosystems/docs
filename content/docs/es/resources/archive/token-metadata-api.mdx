@@ -1,0 +1,44 @@
+---
+title: Utilice el archivo de la API de metadatos de tokens
+description: Descubre cómo utilizar el Archivo Hiro para crear una API de Metadatos de Tokens.
+---
+## Requisitos previos
+
+Dado que la API de metadatos de tokens depende de una API de blockchain de Stacks, primero deberá lanzar una API de blockchain de Stacks configurada para la misma red de Stacks.
+
+Si aún no tienes uno, puedes seguir [estas instrucciones](/resources/archive/stacks-blockchain) para lanzar uno con un archivo.
+
+## Dónde descargar archivos
+
+Los archivos de la API de metadatos de tokens para cada red se pueden encontrar en las siguientes ubicaciones:
+
+* mainnet: https://archive.hiro.so/mainnet/token-metadata-api-pg/
+* testnet: https://archive.hiro.so/testnet/token-metadata-api-pg/
+
+Los patrones de nombres de archivo son los siguientes:
+
+* archivo: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-<DATE(YYYYMMDD)>.dump`
+* shasum: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-<DATE(YYYYMMDD)>.sha256`
+
+Existe un archivo y shasum continuamente actualizados que siempre apuntan a la carga más reciente:
+
+* archivo: `token-metadata-api-pg-<DATABASE VERSION>-latest.dump`
+* shasum: `token-metadata-api-pg-<DATABASE VERSION>-latest.sha256`
+
+o la carga más reciente para una versión en particular:
+
+* archivo: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-latest.dump`
+* shasum: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-latest.sha256`
+
+## Restaurando la API de Metadatos de Tokens utilizando el Archivo de Hiro
+
+1. Descargue el archivo y el shasum para la red correspondiente.
+2. [Verificar el archivo](/resources/archive/verify-archive-data) con el shasum.
+3. Importar el archivo de archivo en una base de datos Postgres en ejecución (puede tardar hasta una hora dependiendo de las especificaciones y ajustes de la base de datos):
+   ```terminal
+   $ export PGPASSWORD=<YOUR POSTGRES PASSWORD>
+   $ pg_restore --username postgres --verbose --jobs 4 --dbname token_metadata_api /path/to/archive/file
+   ```
+4. Inicie el servicio de API de metadatos de tokens.
+5. Verifique que la restauración se haya realizado correctamente visualizando el [número total de tokens y contratos rastreados en el servicio.](http://localhost:3000/metadata) Si el número total de cada propiedad es mayor que cero, la restauración fue exitosa.
+   1. Es posible que el nodo local tarde unos minutos en responder en este punto final.

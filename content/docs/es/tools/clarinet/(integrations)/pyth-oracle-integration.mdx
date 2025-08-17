@@ -1,0 +1,378 @@
+---
+title: Integración del oráculo Pyth
+sidebarTitle: Integración del oráculo Pyth
+description: Aprende cómo probar contratos inteligentes que dependen de los feeds de precios del oráculo Pyth utilizando Clarinet.
+---
+## Lo que aprenderás
+
+:::objectives
+* Configurar las dependencias del contrato de mainnet
+* Utilizar la ejecución de transacciones de mainnet (MXS) para pruebas de oráculos
+* Crear feeds de precios simulados para pruebas unitarias
+* Escribir pruebas de integración con datos reales de oracle
+:::
+
+## Requisitos previos
+
+:::prerequisites
+* Versión 2.1.0 o superior de Clarinet con soporte MXS
+* Comprensión de [Contratos de oráculo de Pyth](/resources/clarity/external-data)
+:::
+
+## Inicio rápido
+
+<Steps>
+  <Step>
+    ### Configurar dependencias de mainnet
+
+    Agregue los contratos de oráculo Pyth a sus requisitos de Clarinet.toml:
+
+    ```toml Clarinet.toml
+    [project]
+    name = "my-oracle-project"
+
+    [[project.requirements]]
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3"
+
+    [[project.requirements]]
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3"
+
+    [[project.requirements]]
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v2"
+
+    [[project.requirements]]
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3"
+    ```
+
+    Esto permite que tus pruebas interactúen con los contratos de oráculo reales de la red principal.
+  </Step>
+
+  <Step>
+    ### Crear un oráculo simulado para pruebas unitarias
+
+    Para pruebas unitarias rápidas, cree un contrato de oráculo simulado:
+
+    ```clarity tests/mocks/mock-pyth-oracle.clar
+    ;; Mock Pyth Oracle for testing
+    (define-map price-feeds
+      (buff 32)  ;; price-feed-id
+      {
+        price: int,
+        conf: uint,
+        expo: int,
+        ema-price: int,
+        ema-conf: uint,
+        publish-time: uint,
+        prev-publish-time: uint
+      }
+    )
+
+    ;; Set a mock price
+    (define-public (set-mock-price 
+      (feed-id (buff 32))
+      (price int)
+      (expo int))
+      (ok (map-set price-feeds feed-id {
+        price: price,
+        conf: u1000000,
+        expo: expo,
+        ema-price: price,
+        ema-conf: u1000000,
+        publish-time: block-height,
+        prev-publish-time: (- block-height u1)
+      }))
+    )
+
+    ;; Mock get-price function matching real oracle interface
+    (define-read-only (get-price 
+      (feed-id (buff 32))
+      (storage-contract principal))
+      (ok (unwrap! 
+        (map-get? price-feeds feed-id)
+        (err u404)))
+    )
+
+    ;; Mock verify-and-update-price-feeds (no-op for testing)
+    (define-public (verify-and-update-price-feeds
+      (vaa (buff 8192))
+      (params (tuple)))
+      (ok u1)
+    )
+    ```
+  </Step>
+
+  <Step>
+    ### Escribir pruebas unitarias con precios simulados
+
+    Crear pruebas unitarias utilizando el oráculo simulado:
+
+    ```typescript tests/benjamin-club.test.ts
+    import { Cl } from '@stacks/transactions';
+    import { describe, expect, it } from "vitest";
+
+    const accounts = simnet.getAccounts();
+    const deployer = accounts.get("deployer")!;
+    const wallet1 = accounts.get("wallet_1")!;
+
+    describe("Benjamin Club with Mock Oracle", () => {
+      it("should set up mock BTC price", () => {
+        // Set BTC price to $100,000 (with 8 decimals)
+        const btcFeedId = "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43";
+        const mockPrice = Cl.int(10000000000000); // $100,000.00 * 10^8
+        const expo = Cl.int(-8);
+        
+        const setPriceResponse = simnet.callPublicFn(
+          "mock-pyth-oracle",
+          "set-mock-price",
+          [Cl.bufferFromHex(btcFeedId), mockPrice, expo],
+          deployer
+        );
+        
+        expect(setPriceResponse.result).toBeOk(Cl.uint(1));
+      });
+
+      it("should calculate correct sBTC amount for $100", () => {
+        // With BTC at $100,000, $100 = 0.001 BTC
+        const response = simnet.callReadOnlyFn(
+          "benjamin-club",
+          "get-required-sbtc-amount",
+          [],
+          wallet1
+        );
+        
+        // 0.001 BTC = 100,000 sats
+        expect(response.result).toBeOk(Cl.uint(100000));
+      });
+
+      it("should mint NFT when user has enough sBTC", () => {
+        // Mock VAA data (can be dummy data for unit tests)
+        const mockVaa = Cl.bufferFromHex("00".repeat(100));
+        
+        // Give user 1 BTC worth of sBTC
+        simnet.callPublicFn(
+          "sbtc-token",
+          "mint",
+          [Cl.uint(100000000), Cl.principal(wallet1)],
+          deployer
+        );
+        
+        const mintResponse = simnet.callPublicFn(
+          "benjamin-club",
+          "mint-for-hundred-dollars",
+          [mockVaa],
+          wallet1
+        );
+        
+        expect(mintResponse.result).toBeOk(Cl.uint(1));
+      });
+    });
+    ```
+  </Step>
+
+  <Step>
+    ### Configurar pruebas de ejecución de mainnet
+
+    Para pruebas de integración con datos reales de oracle, utilice la ejecución de transacciones de mainnet:
+
+    ```typescript tests/benjamin-club-mxs.test.ts
+    import { buildDevnetNetworkOrchestrator } from "@hirosystems/clarinet-sdk";
+    import { Cl } from '@stacks/transactions';
+    import { PriceServiceConnection } from '@pythnetwork/price-service-client';
+    import { describe, expect, it } from "vitest";
+
+    describe("Benjamin Club with Mainnet Oracle", () => {
+      let orchestrator: any;
+      
+      beforeAll(async () => {
+        orchestrator = buildDevnetNetworkOrchestrator({
+          // Point to a mainnet fork
+          manifest: "./Clarinet.toml",
+          networkId: 1 // Mainnet
+        });
+      });
+
+      it("should interact with real Pyth oracle", async () => {
+        // Fetch real VAA from Pyth
+        const pythClient = new PriceServiceConnection(
+          "https://hermes.pyth.network",
+          { priceFeedRequestConfig: { binary: true } }
+        );
+        
+        const btcFeedId = "e62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43";
+        const vaas = await pythClient.getLatestVaas([btcFeedId]);
+        const vaaHex = Buffer.from(vaas[0], 'base64').toString('hex');
+        
+        // Use mainnet execution to test with real oracle
+        const response = await orchestrator.callPublicFn(
+          "benjamin-club",
+          "get-current-btc-price",
+          [Cl.bufferFromHex(vaaHex)],
+          "wallet_1"
+        );
+        
+        expect(response.result).toBeOk();
+        
+        // Verify price is reasonable (between $10k and $200k)
+        const priceData = response.result.value;
+        const price = priceData.data.price.value;
+        expect(price).toBeGreaterThan(1000000000000); // $10k
+        expect(price).toBeLessThan(20000000000000);   // $200k
+      });
+    });
+    ```
+  </Step>
+</Steps>
+
+## Patrones comunes
+
+### Probando diferentes escenarios de precios
+
+Crear funciones auxiliares para probar diversas condiciones del mercado:
+
+```typescript tests/helpers/oracle-helpers.ts
+export function setupPriceScenario(
+  scenario: 'bull' | 'bear' | 'stable',
+  simnet: any
+) {
+  const prices = {
+    bull: {
+      btc: 15000000000000,  // $150,000
+      stx: 500000000,       // $5.00
+      eth: 500000000000     // $5,000
+    },
+    bear: {
+      btc: 2000000000000,   // $20,000
+      stx: 50000000,        // $0.50
+      eth: 100000000000     // $1,000
+    },
+    stable: {
+      btc: 10000000000000,  // $100,000
+      stx: 200000000,       // $2.00
+      eth: 300000000000     // $3,000
+    }
+  };
+
+  const selectedPrices = prices[scenario];
+  
+  // Set up all price feeds
+  Object.entries(selectedPrices).forEach(([asset, price]) => {
+    const feedId = getFeedId(asset);
+    simnet.callPublicFn(
+      "mock-pyth-oracle",
+      "set-mock-price",
+      [Cl.bufferFromHex(feedId), Cl.int(price), Cl.int(-8)],
+      "deployer"
+    );
+  });
+}
+```
+
+### Probando la obsolescencia de precios
+
+Asegúrate de que tu contrato maneje correctamente los precios obsoletos:
+
+```typescript tests/price-staleness.test.ts
+describe("Price Staleness Handling", () => {
+  it("should reject stale prices", () => {
+    // Set a price with old timestamp
+    const oldTimestamp = simnet.getBlockHeight() - 1000;
+    
+    simnet.callPublicFn(
+      "mock-pyth-oracle",
+      "set-price-with-timestamp",
+      [
+        Cl.bufferFromHex(BTC_FEED_ID),
+        Cl.int(10000000000000),
+        Cl.int(-8),
+        Cl.uint(oldTimestamp)
+      ],
+      deployer
+    );
+    
+    const response = simnet.callPublicFn(
+      "benjamin-club",
+      "mint-for-hundred-dollars",
+      [mockVaa],
+      wallet1
+    );
+    
+    expect(response.result).toBeErr(Cl.uint(ERR_STALE_PRICE));
+  });
+});
+```
+
+### Pruebas de implementación
+
+Crear pruebas de implementación para garantizar una configuración adecuada:
+
+```toml deployments/mainnet.yaml
+---
+id: 0
+name: "Mainnet deployment"
+network: mainnet
+stacks-node: "https://api.mainnet.hiro.so"
+bitcoin-node: "https://blockstream.info/api/"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-call:
+            contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R.benjamin-club
+            method: initialize
+            parameters:
+              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3"
+              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3"
+```
+
+### Estimación de gas
+
+Probar el consumo de gas para operaciones de oráculo:
+
+```typescript tests/gas-estimation.test.ts
+describe("Gas Estimation", () => {
+  it("should estimate gas for oracle update + mint", () => {
+    const txCost = simnet.getTransactionCost(
+      "benjamin-club",
+      "mint-for-hundred-dollars",
+      [Cl.bufferFromHex("00".repeat(1000))], // Typical VAA size
+      wallet1
+    );
+    
+    console.log("Estimated gas cost:", txCost);
+    
+    // Ensure gas cost is reasonable
+    expect(txCost.write_length).toBeLessThan(20000);
+    expect(txCost.runtime).toBeLessThan(50000000);
+  });
+});
+```
+
+## Integración de CI/CD
+
+Configurar GitHub Actions para pruebas automatizadas:
+
+```yaml .github/workflows/test-oracle.yml
+name: Test Oracle Integration
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Clarinet
+        run: |
+          curl -L https://github.com/hirosystems/clarinet/releases/download/v2.1.0/clarinet-linux-x64.tar.gz | tar xz
+          chmod +x ./clarinet
+          sudo mv ./clarinet /usr/local/bin
+      
+      - name: Run unit tests
+        run: clarinet test --coverage
+      
+      - name: Run mainnet fork tests
+        run: clarinet test --mainnet-fork
+        env:
+          MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
+```

@@ -1,0 +1,50 @@
+---
+title: Construir una transacción sin firmar
+description: Crear transacciones sin firmar para billeteras de hardware o escenarios de firma múltiple
+---
+```typescript
+import { getPublicKeyFromPrivate } from "@stacks/encryption";
+import { 
+  makeUnsignedSTXTokenTransfer,
+  makeUnsignedContractCall,
+  Cl,
+  AnchorMode,
+  PostConditionMode
+} from "@stacks/transactions";
+import { STACKS_TESTNET } from "@stacks/network";
+
+// Get public key from private key
+const privateKey = "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601";
+const publicKey = getPublicKeyFromPrivate(privateKey);
+
+// Build unsigned STX transfer
+const unsignedTx = await makeUnsignedSTXTokenTransfer({
+  recipient: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+  amount: 1000000n, // 1 STX in micro-STX
+  fee: 200n,
+  nonce: 0n,
+  network: STACKS_TESTNET,
+  memo: "Test transfer",
+  publicKey,
+  anchorMode: AnchorMode.Any,
+  postConditionMode: PostConditionMode.Deny,
+});
+
+// Transaction is ready for external signing
+console.log("Unsigned transaction created:", unsignedTx.txid());
+```
+
+## Casos de uso
+
+* Integración de billetera hardware (Ledger, Trezor)
+* Transacciones de billetera multifirma
+* Firma de transacciones sin conexión
+* Sistemas de gestión de claves seguras
+
+## Conceptos clave
+
+Las transacciones sin firmar separan la creación de la transacción de la firma:
+
+* **Clave pública solamente**: No se necesita clave privada para la creación
+* **Firma externa**: Firmar con cartera de hardware o enclave seguro
+* **Serialización**: Se puede transportar y firmar en otro lugar

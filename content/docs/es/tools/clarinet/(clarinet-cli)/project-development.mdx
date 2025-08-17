@@ -1,0 +1,174 @@
+---
+title: Administrando tus proyectos
+sidebarTitle: Desarrollo del proyecto
+description: Clarinet agiliza todo el ciclo de vida del desarrollo de contratos inteligentes en Clarity. Desde la inicialización del proyecto hasta la gestión de contratos y el formateo de código, tendrás todas las herramientas necesarias para un desarrollo profesional.
+---
+## Creando un proyecto nuevo
+
+El `clarinet new` el comando crea una estructura de proyecto completa con todos los archivos de configuración necesarios:
+
+```terminal
+$ clarinet new my-defi-app
+[32mCreate directory[0m [1mmy-defi-app[0m
+[32mCreate directory[0m [1mcontracts[0m
+[32mCreate directory[0m [1msettings[0m
+[32mCreate directory[0m [1mtests[0m
+[32mCreate file[0m [1mClarinet.toml[0m
+[32mCreate file[0m [1msettings/Mainnet.toml[0m
+[32mCreate file[0m [1msettings/Testnet.toml[0m
+[32mCreate file[0m [1msettings/Devnet.toml[0m
+[32mCreate directory[0m [1m.vscode[0m
+[32mCreate file[0m [1m.vscode/settings.json[0m
+[32mCreate file[0m [1m.vscode/tasks.json[0m
+[32mCreate file[0m [1m.gitignore[0m
+[32mCreate file[0m [1m.gitattributes[0m
+[32mCreate file[0m [1mpackage.json[0m
+[32mCreate file[0m [1mtsconfig.json[0m
+[32mCreate file[0m [1mvitest.config.js[0m
+```
+
+| Opción | Descripción | Ejemplo |
+|--------|-------------|---------|
+| `--disable-telemetry` | Optar por no participar en la recopilación de telemetría | `clarinet new my-app --disable-telemetry` |
+
+Para una mirada más profunda a la estructura del proyecto generada, consulte el [estructura del proyecto](/tools/clarinet/project-structure) guía.
+
+## Gestionando contratos
+
+### Creando nuevos contratos
+
+El `clarinet contract new` el comando genera tanto un archivo de contrato como su archivo de prueba correspondiente:
+
+```terminal
+$ clarinet contract new token
+[32mCreated file[0m [1mcontracts/token.clar[0m
+[32mCreated file[0m [1mtests/token.test.ts[0m
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+El contrato generado incluye una plantilla mínima:
+
+```clarity contracts/token.clar
+;; token
+;; <add a description here>
+
+;; constants
+;;
+
+;; data vars
+;;
+
+;; data maps
+;;
+
+;; public functions
+;;
+
+;; read only functions
+;;
+
+;; private functions
+;;
+```
+
+### Eliminando contratos
+
+Limpiar contratos no utilizados con el `rm` comando:
+
+```terminal
+$ clarinet contract rm old-token
+[33mRemoved file[0m [1mcontracts/old-token.clar[0m
+[33mRemoved file[0m [1mtests/old-token.test.ts[0m
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+## Verificando la sintaxis de los contratos del proyecto
+
+Valide la configuración completa de su proyecto:
+
+```terminal
+$ clarinet check
+[32m✔[0m [1m3 contracts checked[0m
+```
+
+Verificar contratos específicos:
+
+```terminal
+$ clarinet check contracts/token.clar
+[32m✔[0m [1mcontracts/token.clar Syntax of contract successfully checked[0m
+```
+
+## Formato de código
+
+Clarinet incluye un potente formateador de código para mantener un estilo consistente en todo su proyecto:
+
+Formatear todos los contratos en tu proyecto:
+
+```terminal
+$ clarinet format --in-place
+[32mFormatted[0m [1m5 contracts[0m
+```
+
+### Opciones de formato
+
+Personaliza el formato para que coincida con la guía de estilo de tu equipo:
+
+| Opción | Descripción | Ejemplo |
+|--------|-------------|---------|
+| `--dry-run` | Vista previa de cambios sin modificar archivos | `clarinet format --dry-run` |
+| `--in-place` | Reemplazar contenido del archivo (requerido para el formato real) | `clarinet format --in-place` |
+| `--max-line-length` | Establecer longitud máxima de línea | `clarinet format --max-line-length 100` |
+| `--indent` | Establecer tamaño de sangría | `clarinet format --indent 2` |
+| `--tabs` | Utilice tabulaciones en lugar de espacios | `clarinet format --tabs` |
+
+### Dar formato a archivos individuales
+
+```terminal
+$ clarinet format contracts/messy-contract.clar --in-place
+[32mFormatted[0m [1mcontracts/messy-contract.clar[0m
+```
+
+Formatear contratos específicos utilizando patrones glob:
+
+```terminal
+$ clarinet format contracts/token*.clar --in-place
+[32mFormatted[0m [1mcontracts/token-trait.clar[0m
+[32mFormatted[0m [1mcontracts/token-impl.clar[0m
+```
+
+## Configuración del proyecto
+
+### Trabajando con requisitos
+
+Agregar contratos de mainnet como dependencias:
+
+```terminal
+$ clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[32mAdded requirement[0m SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+Esto actualiza tu configuración:
+
+```toml Clarinet.toml
+[project]
+requirements = [
+  { contract_id = "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait" }
+]
+```
+
+Ahora puedes implementar rasgos de contratos de la red principal:
+
+```clarity contracts/my-nft.clar
+(impl-trait 'SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait.nft-trait)
+
+(define-non-fungible-token my-nft uint)
+;; ... implement required functions
+```
+
+## Próximos pasos
+
+:::next-steps
+* [Interacción con contratos](/tools/clarinet/contract-interaction): Aprende cómo interactuar con tus contratos.
+* [Pruebas y validación](/tools/clarinet/validation-and-analysis): Aprende cómo probar y validar tu proyecto de Clarinet.
+:::

@@ -1,0 +1,64 @@
+---
+title: Derivar direcciones principales entre redes
+description: Convierte direcciones entre mainnet y testnet extrayendo y reconstruyendo con diferentes bytes de versión
+---
+```clarity
+;; Extract hash bytes from an address
+(define-read-only (get-address-hash-bytes (address principal))
+  (get hash-bytes (unwrap-panic (principal-destruct? address)))
+)
+
+;; Convert testnet address to mainnet
+(define-read-only (testnet-to-mainnet (testnet-address principal))
+  (let (
+    ;; Extract the hash bytes from testnet address
+    (hash-bytes (get-address-hash-bytes testnet-address))
+    ;; Mainnet version byte
+    (mainnet-version 0x16)
+  )
+    ;; Reconstruct with mainnet version
+    (principal-construct? mainnet-version hash-bytes)
+  )
+)
+
+;; Convert mainnet address to testnet
+(define-read-only (mainnet-to-testnet (mainnet-address principal))
+  (let (
+    ;; Extract the hash bytes from mainnet address
+    (hash-bytes (get-address-hash-bytes mainnet-address))
+    ;; Testnet version byte
+    (testnet-version 0x1a)
+  )
+    ;; Reconstruct with testnet version
+    (principal-construct? testnet-version hash-bytes)
+  )
+)
+
+;; Example usage
+(testnet-to-mainnet 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)
+;; Returns: (ok SP1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R)
+```
+
+## Casos de uso
+
+* Verificación de direcciones entre redes
+* Construyendo dApps multi-red
+* Herramientas de validación de direcciones
+* Utilidades de migración de red
+
+## Conceptos clave
+
+Las direcciones de Stacks consisten en:
+
+* **Byte de versión**: Indica el tipo de red y dirección
+* **Bytes de hash**: hash de 20 bytes de la clave pública
+* **Suma de verificación**: Incorporado en la codificación c32
+
+### Referencia de bytes de versión
+
+| Versión | Red | Tipo | Prefijo |
+|---------|------|------|--------|
+| 0x16 | Red principal | Estándar | SP |
+| 0x17 | Red principal | Contrato | SM |
+| 0x1a | Red de pruebas | Estándar | ST |
+| 0x1b | Red de pruebas | Contrato | SN |

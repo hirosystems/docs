@@ -1,0 +1,53 @@
+---
+title: Uso de los valores de Clarity
+description: Aprende cómo usar los valores de Clarity en tus contratos inteligentes de Clarity.
+---
+Algunos endpoints, como el [llamada a función de contrato de solo lectura](https://docs.hiro.so/api#operation/call_read_only_function), requiere entrada a un serializado [Valor de claridad](https://docs.stacks.co/docs/clarity/). Otros endpoints devuelven valores serializados que necesitan ser deserializados.
+
+El ejemplo que se muestra a continuación ilustra el uso del valor de Clarity en combinación con la API.
+
+El `@stacks/transactions` la biblioteca admite llamadas a contratos tipificadas y facilita [utilización del valor de respuesta mucho más simple](https://docs.stacks.co/docs/clarity/).
+
+## Ejemplo de uso
+
+```ts
+import {
+  Configuration,
+  SmartContractsApiInterface,
+  SmartContractsApi,
+  ReadOnlyFunctionSuccessResponse,
+} from '@stacks/blockchain-api-client';
+import { uintCV, UIntCV, cvToHex, hexToCV, ClarityType } from '@stacks/transactions';
+
+(async () => {
+  const apiConfig: Configuration = new Configuration({
+    fetchApi: fetch,
+    // for mainnet, replace `testnet` with `mainnet`
+    basePath: 'https://api.testnet.hiro.so', // defaults to http://localhost:3999
+  });
+
+  const contractsApi: SmartContractsApiInterface = new SmartContractsApi(apiConfig);
+
+  const principal: string = 'ST000000000000000000002AMW42H';
+
+  // use most recent from: https://api.<mainnet/testnet>.hiro.so/v2/pox
+  const rewardCycle: UIntCV = uintCV(22);
+
+  // call a read-only function
+  const fnCall: ReadOnlyFunctionSuccessResponse = await contractsApi.callReadOnlyFunction({
+    contractAddress: principal,
+    contractName: 'pox',
+    functionName: 'is-pox-active',
+    readOnlyFunctionArgs: {
+      sender: principal,
+      arguments: [cvToHex(rewardCycle)],
+    },
+  });
+
+  console.log({
+    status: fnCall.okay,
+    result: fnCall.result,
+    representation: hexToCV(fnCall.result).type === ClarityType.BoolTrue,
+  });
+})().catch(console.error);
+```

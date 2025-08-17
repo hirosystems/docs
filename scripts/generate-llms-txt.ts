@@ -20,6 +20,7 @@ interface PageMetadata {
   title: string;
   description: string;
   url: string;
+  cleanUrl: string;
   section: string[];
 }
 
@@ -33,10 +34,19 @@ function getAllPages(): PageMetadata[] {
       const urlParts = page.url.split('/').filter(Boolean);
       const section = urlParts.slice(0, -1); // All parts except the last one
 
+      // Clean URL for content links (remove locale prefix)
+      let cleanUrl = page.url;
+      const locales = ['en', 'es']; // Add your supported locales here
+      if (urlParts.length > 0 && locales.includes(urlParts[0])) {
+        // Remove the locale prefix for content links
+        cleanUrl = '/' + urlParts.slice(1).join('/');
+      }
+
       return {
         title: (page.data as any)?.title || page.file.name,
         description: (page.data as any)?.description || '',
-        url: page.url,
+        url: page.url, // Keep original URL for file path generation
+        cleanUrl: cleanUrl, // Add clean URL for content links
         section: section,
       };
     })
@@ -96,11 +106,13 @@ function generateLLMsContent(
     if (section === '_overview') {
       // These are overview pages at the current level
       for (const page of sectionPages) {
-        const mdUrl =
-          page.url === '/'
-            ? `${config.productionUrl}/index.md`
-            : `${config.productionUrl}${page.url}.md`;
-        lines.push(`- [${page.title}](${mdUrl})${page.description ? `: ${page.description}` : ''}`);
+        const pageUrl =
+          page.cleanUrl === '/'
+            ? `${config.productionUrl}/`
+            : `${config.productionUrl}${page.cleanUrl}`;
+        lines.push(
+          `- [${page.title}](${pageUrl})${page.description ? `: ${page.description}` : ''}`,
+        );
       }
       if (sectionPages.length > 0) lines.push('');
     } else if (section !== 'root') {
@@ -114,21 +126,25 @@ function generateLLMsContent(
       }
 
       for (const page of sectionPages) {
-        const mdUrl =
-          page.url === '/'
-            ? `${config.productionUrl}/index.md`
-            : `${config.productionUrl}${page.url}.md`;
-        lines.push(`- [${page.title}](${mdUrl})${page.description ? `: ${page.description}` : ''}`);
+        const pageUrl =
+          page.cleanUrl === '/'
+            ? `${config.productionUrl}/`
+            : `${config.productionUrl}${page.cleanUrl}`;
+        lines.push(
+          `- [${page.title}](${pageUrl})${page.description ? `: ${page.description}` : ''}`,
+        );
       }
       lines.push('');
     } else {
       // Root level pages
       for (const page of sectionPages) {
-        const mdUrl =
-          page.url === '/'
-            ? `${config.productionUrl}/index.md`
-            : `${config.productionUrl}${page.url}.md`;
-        lines.push(`- [${page.title}](${mdUrl})${page.description ? `: ${page.description}` : ''}`);
+        const pageUrl =
+          page.cleanUrl === '/'
+            ? `${config.productionUrl}/`
+            : `${config.productionUrl}${page.cleanUrl}`;
+        lines.push(
+          `- [${page.title}](${pageUrl})${page.description ? `: ${page.description}` : ''}`,
+        );
       }
       if (sectionPages.length > 0) lines.push('');
     }
@@ -174,9 +190,7 @@ async function generateAllLLMsTxt() {
   // Create llms.txt for each section
   for (const [sectionPath, sectionPages] of sections) {
     const sectionParts = sectionPath.split('/');
-    const sectionTitle = `${sectionParts
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(' ')} Documentation`;
+    const sectionTitle = 'Documentation';
 
     const sectionContent = generateLLMsContent(sectionPages, sectionTitle, sectionParts);
     const outputPath = path.join(PUBLIC_DIR, sectionPath);

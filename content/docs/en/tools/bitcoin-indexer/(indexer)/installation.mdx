@@ -1,0 +1,220 @@
+---
+title: Installation
+description: Install PostgreSQL and build the Bitcoin Indexer from source on Linux systems.
+---
+
+## Prerequisites
+
+Before installing the Bitcoin Indexer, ensure you have:
+- A fully synced Bitcoin node (see [Bitcoin node setup](/tools/bitcoin-indexer/full-sync))
+- Ubuntu 20.04+ or Debian 11+
+- At least 32GB RAM
+- 2TB+ of fast NVMe storage
+
+Install required system packages:
+
+```terminal
+$ sudo apt update
+$ sudo apt install -y build-essential git curl pkg-config libssl-dev
+```
+
+## Install PostgreSQL
+
+The Bitcoin Indexer requires PostgreSQL 14 or higher for storing metaprotocol data.
+
+### Add PostgreSQL repository
+
+```terminal
+$ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+$ curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+$ sudo apt update
+```
+
+### Install PostgreSQL 17
+
+```terminal
+$ sudo apt install postgresql-17
+$ echo 'export PATH=/usr/lib/postgresql/17/bin:$PATH' >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+### Configure PostgreSQL data directory
+
+Create a custom data directory for PostgreSQL:
+
+```terminal
+$ mkdir -p ~/bitcoin-indexer/pgdata
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/pgdata
+```
+
+Initialize the database cluster:
+
+```terminal
+$ sudo -u postgres env "PATH=$PATH" initdb -D ~/bitcoin-indexer/pgdata
+[32mThe files belonging to this database system will be owned by user "postgres".[0m
+[32mThis user must also own the server process.[0m
+```
+
+### Start PostgreSQL server
+
+```terminal
+$ sudo -u postgres env "PATH=$PATH" pg_ctl -D ~/bitcoin-indexer/pgdata start
+[32mserver starting[0m
+```
+
+Verify PostgreSQL is running:
+
+```terminal
+$ sudo -u postgres psql -c "SELECT version();"
+```
+
+### Create databases
+
+Create separate databases for each metaprotocol:
+
+```terminal
+$ sudo -u postgres createdb -p 5432 ordinals
+$ sudo -u postgres createdb -p 5432 brc20
+$ sudo -u postgres createdb -p 5432 runes
+```
+
+Set the postgres user password:
+
+```terminal
+$ sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+[32mALTER ROLE[0m
+```
+
+:::callout
+type: warn
+### Security note
+Use a strong password in production. The default 'postgres' password is for development only.
+:::
+
+## Install Rust
+
+The Bitcoin Indexer is written in Rust. Install the latest stable version:
+
+```terminal
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+$ source $HOME/.cargo/env
+$ rustc --version
+rustc 1.75.0 (82e1608df 2023-12-21)
+```
+
+## Build Bitcoin Indexer
+
+### Clone the repository
+
+```terminal
+$ cd ~/bitcoin-indexer
+$ git clone https://github.com/hirosystems/bitcoin-indexer.git
+$ cd bitcoin-indexer
+```
+
+### Build from source
+
+```terminal
+$ cargo build --release
+   [32mCompiling[0m bitcoin-indexer v0.1.0
+   [32mFinished[0m release [optimized] target(s) in 4m 23s
+```
+
+The compiled binary will be at `target/release/bitcoin-indexer`.
+
+:::callout
+### Build time
+Initial compilation takes 5-10 minutes. Subsequent builds are much faster due to caching.
+:::
+
+### Create symlink for global access
+
+```terminal
+$ sudo ln -s ~/bitcoin-indexer/bitcoin-indexer/target/release/bitcoin-indexer /usr/local/bin/bitcoin-indexer
+```
+
+Verify installation:
+
+```terminal
+$ bitcoin-indexer --version
+bitcoin-indexer 0.1.0
+```
+
+## Create directory structure
+
+Set up the required directories for the indexer:
+
+```terminal
+$ mkdir -p ~/bitcoin-indexer/{rocksdb-chainstate,archives,logs}
+```
+
+Directory purposes:
+- `rocksdb-chainstate/` - Stores the indexed blockchain state
+- `archives/` - Downloaded archive files for bootstrap
+- `logs/` - Application and error logs
+
+## Configure systemd service
+
+Create a systemd service for automatic startup:
+
+```bash title="/etc/systemd/system/bitcoin-indexer.service"
+[Unit]
+Description=Bitcoin Metaprotocol Indexer
+After=network.target postgresql.service bitcoind.service
+
+[Service]
+Type=simple
+User=bitcoin-indexer
+Group=bitcoin-indexer
+WorkingDirectory=/home/bitcoin-indexer/bitcoin-indexer
+
+ExecStart=/usr/local/bin/bitcoin-indexer ordinals service start --config-path=/home/bitcoin-indexer/bitcoin-indexer/bitcoin-indexer-config.toml
+Restart=on-failure
+RestartSec=30
+
+# Process management
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=300
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable the service:
+
+```terminal
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable bitcoin-indexer
+```
+
+## Verify installation
+
+Check all components are properly installed:
+
+```terminal
+$ # Check Bitcoin node
+$ bitcoin-cli getblockcount
+820000
+
+$ # Check PostgreSQL
+$ sudo -u postgres psql -l | grep -E "ordinals|brc20|runes"
+ ordinals  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ brc20     | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ runes     | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+
+$ # Check indexer binary
+$ bitcoin-indexer --help
+Bitcoin Indexer - High-performance metaprotocol indexing engine
+```
+
+## Next steps
+
+:::next-steps
+- [Configure the indexer](/tools/bitcoin-indexer/configuration): Set up bitcoin-indexer-config.toml
+- [Bootstrap from archives](/tools/bitcoin-indexer/archive-bootstrap): Speed up initial sync with pre-indexed data
+:::

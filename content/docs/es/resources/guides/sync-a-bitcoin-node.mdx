@@ -1,0 +1,147 @@
+---
+title: Cómo sincronizar un nodo de Bitcoin
+description: Aprende cómo sincronizar un nodo de Bitcoin para construir aplicaciones de Bitcoin.
+---
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+Sincronizar un nodo de Bitcoin es a menudo uno de los primeros pasos que da un desarrollador cuando construye una aplicación de Bitcoin. Es una gran introducción al ecosistema de desarrolladores de Bitcoin, y si dependes de datos en cadena, no hay forma más segura de obtener esos datos que haciéndolo tú mismo.
+
+En esta guía, aprenderás cómo:
+
+1. Descargue el daemon de Bitcoin Core en su máquina
+2. Configurar `bitcoind`
+3. Comience a sincronizar su nodo
+4. Apague y reinicie correctamente su nodo
+
+:::callout
+type: warn
+
+### Requisitos
+
+Para comenzar, primero necesitamos descargar `bitcoind`En nuestro ejemplo, usaremos la versión 25.0. Puedes seleccionar una versión de software compatible con tu dispositivo [de esta lista](https://bitcoincore.org/bin/bitcoin-core-25.0).
+:::
+
+***
+
+## Configurar `bitcoind`
+
+Una vez que tu descarga esté completa, toma nota de tu ruta hacia el `bitcoind` ejecutable.
+
+:::callout
+### Nota
+
+Cuando sincronices tu nodo, estaremos ejecutando el programa en `/bitcoin-25.0/bin/bitcoin`, que es donde el `bitcoind` el ejecutable está ubicado.
+:::
+
+A continuación, un par de pasos de configuración.
+
+1. Seleccione o cree un directorio para almacenar sus datos de Bitcoin.
+2. Actualiza el `bitcoin.conf` archivo para incluir la ruta a tu directorio de datos de Bitcoin.
+
+El chainstate de Bitcoin es bastante grande, y necesitas un lugar para almacenarlo. En este ejemplo, vamos a configurar un directorio llamado `bitcoin-data` en una unidad de disco duro externa que hemos montado en `/Volumes/SSD`.
+
+:::callout
+### Nota
+
+Esta carpeta, `bitcoin-data`, puede nombrarse como desee y puede existir localmente o en un disco duro externo.
+
+Lo más importante es que debe existir en un lugar que tenga suficiente almacenamiento para contener todos los datos de Bitcoin que recibiremos una vez que comience a sincronizarse.
+:::
+
+Ahora navega a tu `bitcoin.conf` archivo, que se encuentra en tu `/path/to/bitcoin` directorio y actualizar el `datadir` campo con tu directorio.
+
+En este ejemplo, se vería así:
+
+```bash bitcoin.conf
+datadir=/Volumes/SSD/bitcoin-data/
+```
+
+<Accordions>
+  <Accordion title="Ejemplo de bitcoin.conf">
+    Puede anular la configuración predeterminada con lo siguiente, incluyendo la ruta donde almacenará todos los datos de Bitcoin una vez que comience la sincronización:
+
+    ```bash
+    datadir=/your-path-to/bitcoin-data/
+    server=1
+    rpcuser=devnet
+    rpcpassword=devnet
+    rpcport=8332
+    rpcallowip=0.0.0.0/0
+    rpcallowip=::/0
+    txindex=1
+    listen=1
+    discover=0
+    dns=0
+    dnsseed=0
+    listenonion=0
+    rpcserialversion=1
+    disablewallet=0
+    fallbackfee=0.00001
+    rpcthreads=8
+    blocksonly=1
+    dbcache=4096
+
+    # Start zeromq
+    zmqpubhashblock=tcp://0.0.0.0:18543
+    ```
+  </Accordion>
+</Accordions>
+
+Si planeas usar tu nodo para recibir transacciones, deberás tomar nota del `username` y `password` campos para tu nodo.
+
+:::callout
+### Nota
+
+En el ejemplo `bitcoin.conf` encima, `devnet` figura como el predeterminado `username` y `password`.
+:::
+
+## Ejecute el nodo
+
+Con un terminado `bitcoin.conf` archivo, es hora de iniciar tu nodo.
+
+Esto toma la forma de `path/to/bitcoind -conf=path/to/bitcoin.conf`, que en este ejemplo se ve así:
+
+```terminal
+$ /Volumes/SSD/bitcoin-25.0/bin/bitcoind -conf=/Volumes/SSD/bitcoin-25.0/bitcoin.conf
+```
+
+Después de ejecutar este comando, verás `zmq_url` entradas en la salida estándar de tu consola, mostrando los registros de ZeroMQ de tu nodo de Bitcoin. ¡Felicidades! ¡Ahora estás sincronizando!
+
+:::callout
+### Nota
+
+Puede tardar desde unas pocas horas hasta varios días en ejecutarse y sincronizarse completamente, dependiendo de si es la primera vez que sincroniza un nodo.
+:::
+
+## Procedimiento adecuado de apagado y reinicio
+
+1. Apagando su nodo
+2. Reiniciando tu nodo
+
+Para apagar tu nodo de forma segura, utiliza el `bitcoin-cli` ejecutable, ubicado dentro del `bin` directorio, y ejecuta el `stop` comando:
+
+```terminal
+$ /path/to/bitcoin-cli \
+  --conf=/path/to/bitcoin.conf \
+  --rpcuser={{your-rpc-username}} \
+  --rpcpassword={{your-rpc-password}} stop
+```
+
+Para volver a iniciar tu nodo, todo lo que necesitas hacer es consultar los pasos anteriores mencionados arriba ejecutando `path/to/bitcoind -conf=path/to/bitcoin.conf`.
+
+:::callout
+### Cómo expulsar un disco duro externo
+
+<Tabs items={["macOS","Windows"]}>
+  <Tab value={"macOS"}>
+    1. Ve al Finder, luego a la barra lateral, y selecciona el disco que quieres expulsar bajo "Dispositivos". Haz clic en el icono de expulsión junto al nombre.
+    2. Espere un mensaje de confirmación que indique que es seguro expulsar el dispositivo antes de desconectar la unidad.
+  </Tab>
+
+  <Tab value={"Windows"}>
+    1. Abra el Explorador de archivos, seleccione la unidad de la lista bajo "Este equipo" (PC > Dispositivos y unidades), y haga clic en el botón "Expulsar".
+    2. Espere un mensaje de confirmación que indique que es seguro expulsar el dispositivo antes de desconectar la unidad.
+  </Tab>
+</Tabs>
+:::

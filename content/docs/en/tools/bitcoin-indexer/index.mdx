@@ -1,0 +1,43 @@
+---
+title: Bitcoin Indexer
+sidebarTitle: Overview
+description: The Bitcoin Indexer is a high-performance, reorg-aware indexing engine that tracks Bitcoin metaprotocols and serves API endpoints for Ordinals, Runes, and BRC-20 tokens.
+llm: false
+---
+
+## Overview
+
+The Bitcoin Indexer connects to your Bitcoin node, processes blocks in real-time, stores metaprotocol data in PostgreSQL, and serves REST APIs for each protocol.
+
+## Key features
+
+- **Metaprotocol indexing** - Built-in support for Ordinals, Runes, and BRC-20 with extensible architecture
+- **Reorg-aware processing** - Automatically handles chain forks and reorganizations
+- **REST API endpoints** - Production-ready APIs for Ordinals and Runes
+- **Archive bootstrapping** - Quick sync from Hiro archives instead of full indexing
+
+## Installation
+
+```terminal
+$ git clone https://github.com/hirosystems/bitcoin-indexer.git
+$ cd bitcoin-indexer && cargo build --release
+```
+
+Docker images are also available:
+
+```terminal
+$ docker pull hirosystems/bitcoin-indexer:latest
+```
+
+## Next steps
+
+:::next-steps
+- [Node installation](/tools/bitcoin-indexer/node-installation): Configure and sync a Bitcoin Core node optimized for the Bitcoin Indexer.
+- [Full sync](/tools/bitcoin-indexer/full-sync): Run the indexer from scratch
+:::
+
+:::callout
+type: help
+### Need help with the Bitcoin Indexer?
+Reach out to us on the <span className="font-bold">#ordinals</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/kI22007085) call every Wednesday at 1pm ET.
+:::

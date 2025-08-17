@@ -1,0 +1,178 @@
+---
+title: Claves privadas
+description: Aprende cómo gestionar claves privadas con Stacks.js
+---
+Las aplicaciones de Stacks pueden funcionar con dos tipos diferentes de cuentas: billeteras web (como Hiro Wallet o Xverse) que los usuarios controlan, o cuentas locales de las que gestionas directamente las claves privadas.
+
+## Monederos web (controlados por el usuario)
+
+La mayoría de los usuarios interactúan con las aplicaciones de Stacks a través de billeteras web, donde la billetera maneja toda la gestión de claves privadas y la firma de transacciones.
+
+```typescript
+import { connect } from '@stacks/connect';
+
+// Users connect their wallet
+const response = await connect();
+console.log('Connected addresses:', response.addresses);
+
+// The wallet handles all cryptographic operations
+// when signing transactions or messages
+```
+
+Utilice billeteras web al crear aplicaciones orientadas al usuario donde los usuarios deben mantener el control de sus claves.
+
+## Cuentas locales (controladas por la aplicación)
+
+Las cuentas locales otorgan a tu aplicación control directo sobre las claves privadas, permitiendo la firma programática de transacciones sin interacción del usuario.
+
+```typescript
+import { makeSTXTokenTransfer } from '@stacks/transactions';
+
+// Your application controls the private key
+const privateKey = 'your-private-key-here';
+
+const txOptions = {
+  recipient: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+  amount: 1000000n,
+  senderKey: privateKey, // Direct private key usage
+  network: 'testnet',
+};
+
+const transaction = await makeSTXTokenTransfer(txOptions);
+// Transaction is signed programmatically
+```
+
+Utilice cuentas locales para servicios backend, sistemas automatizados o herramientas de desarrollo que necesiten firmar transacciones sin interacción del usuario.
+
+## Trabajando con claves privadas
+
+Al crear aplicaciones que utilizan cuentas locales, necesitarás generar y gestionar claves privadas de forma segura.
+
+### Generando claves privadas aleatorias
+
+Crea una nueva clave privada para uso único o con fines de prueba.
+
+```typescript
+import { randomPrivateKey } from '@stacks/transactions';
+
+function generateNewAccount() {
+  const privateKey = randomPrivateKey();
+  console.log('Private key:', privateKey);
+  // 'f5a31c1268a1e37d4edaa05c7d11183c5fbf...'
+  
+  // IMPORTANT: Store this securely!
+  // Anyone with this key can control the account
+  return privateKey;
+}
+```
+
+Las claves privadas en Stacks son números de 256 bits, generalmente representados como cadenas hexadecimales de 64 caracteres.
+
+## Formatos de clave privada
+
+Stacks.js admite múltiples formatos de clave privada para diferentes casos de uso.
+
+```typescript
+import { PrivateKey } from '@stacks/transactions';
+
+// Hex string format (most common)
+const hexKey = 'f5a31c1268a1e37d4edaa05c7d11183c5fbf...';
+
+// Compressed format with suffix
+const compressedKey = 'f5a31c1268a1e37d4edaa05c7d11183c5fbf...01';
+
+// Create from raw bytes
+const bytes = new Uint8Array(32); // 32 bytes = 256 bits
+crypto.getRandomValues(bytes);
+const privateKeyFromBytes = PrivateKey.fromBytes(bytes);
+```
+
+El formato comprimido incluye un byte de sufijo (01) que indica que la clave debe usar codificación de clave pública comprimida.
+
+## Generación de billetera con frases semilla
+
+Para una mejor seguridad y recuperabilidad, utiliza carteras determinísticas jerárquicas (HD) basadas en frases semilla.
+
+### Generar una frase semilla
+
+Crea una nueva frase semilla mnemónica de 24 palabras que pueda regenerar todas las cuentas de la billetera.
+
+```typescript
+import { generateSecretKey } from '@stacks/wallet-sdk';
+
+function createNewWallet() {
+  const secretKey = generateSecretKey();
+  console.log('Seed phrase:', secretKey);
+  // "warrior volume sport ... figure cake since"
+  
+  // Users should write this down and store it securely
+  // This phrase can regenerate all accounts in the wallet
+  return secretKey;
+}
+```
+
+Las frases semilla proporcionan una copia de seguridad legible por humanos que puede restaurar toda una jerarquía de billeteras.
+
+### Crear billetera a partir de frase semilla
+
+Generar una estructura completa de billetera a partir de una frase semilla, incluyendo múltiples cuentas.
+
+```typescript
+import { generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
+
+async function setupWallet() {
+  // Use existing seed phrase or generate new one
+  const seedPhrase = generateSecretKey();
+  
+  const wallet = await generateWallet({
+    secretKey: seedPhrase,
+    password: 'optional-encryption-password',
+  });
+  
+  // Access the first account
+  const account = wallet.accounts[0];
+  console.log('STX address:', account.address);
+  console.log('STX private key:', account.stxPrivateKey);
+  console.log('Data private key:', account.dataPrivateKey);
+  
+  return wallet;
+}
+```
+
+Cada billetera puede contener múltiples cuentas, todas derivadas de la misma frase semilla pero con diferentes claves privadas.
+
+### Administración de múltiples cuentas
+
+Las billeteras HD admiten múltiples cuentas a partir de una sola frase semilla, útil para organizar fondos o separar asuntos.
+
+```typescript
+import { generateNewAccount, generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
+
+async function createMultipleAccounts() {
+  const seedPhrase = generateSecretKey();
+  
+  let wallet = await generateWallet({
+    secretKey: seedPhrase,
+    password: 'my-password',
+  });
+  
+  console.log('Accounts:', wallet.accounts.length); // 1 (default)
+  
+  // Add more accounts
+  wallet = generateNewAccount(wallet);
+  wallet = generateNewAccount(wallet);
+  
+  console.log('Accounts:', wallet.accounts.length); // 3
+  
+  // Each account has its own keys and address
+  wallet.accounts.forEach((account, index) => {
+    console.log(`Account ${index}:`, account.address);
+  });
+}
+```
+
+Todas las cuentas pueden regenerarse a partir de la frase semilla original, lo que simplifica la copia de seguridad mientras se mantienen direcciones separadas.
+
+## Lecturas adicionales
+
+* [Conectar con Stacks](/reference/stacks.js/connect-wallet) - Creando aplicaciones con billeteras web

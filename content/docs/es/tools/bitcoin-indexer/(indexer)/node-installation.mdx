@@ -1,0 +1,221 @@
+---
+title: Instalación de Node
+description: Configurar y sincronizar un nodo de Bitcoin Core optimizado para el Indexador de Bitcoin.
+---
+## Visión general
+
+El Indexador de Bitcoin requiere un nodo de Bitcoin Core completamente sincronizado con la indexación de transacciones habilitada. Esta guía explica cómo configurar un nodo específicamente configurado para la operación del indexador.
+
+## Descargar Bitcoin Core
+
+Descargue Bitcoin Core versión 25.0 o superior. Elija la versión correcta para la arquitectura de su procesador.
+
+### Crear directorio de Bitcoin
+
+```terminal
+$ mkdir -p ~/bitcoin-indexer/bitcoin
+$ cd ~/bitcoin-indexer/bitcoin
+```
+
+### Descargar y extraer
+
+<Tabs defaultValue="x86_64">
+  <TabsList className="flex flex-wrap md:w-max">
+    <TabsTrigger value="x86_64" className="tab group">
+      <Badge className="badge transition-colors">Para x86\_64 (Intel/AMD)</Badge>
+    </TabsTrigger>
+
+    <TabsTrigger value="ARM64" className="tab group">
+      <Badge className="badge transition-colors">Para ARM64</Badge>
+    </TabsTrigger>
+
+    <TabsTrigger value="global" className="tab group">
+      <Badge className="badge transition-colors">Instalar globalmente con enlaces simbólicos</Badge>
+    </TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="x86_64">
+    ```terminal
+    $ curl -O https://bitcoincore.org/bin/bitcoin-core-25.1/bitcoin-25.1-x86_64-linux-gnu.tar.gz
+    $ tar -xzf bitcoin-25.1-x86_64-linux-gnu.tar.gz
+    ```
+  </TabsContent>
+
+  <TabsContent value="ARM64">
+    ```terminal
+    $ curl -O https://bitcoincore.org/bin/bitcoin-core-25.1/bitcoin-25.1-aarch64-linux-gnu.tar.gz
+    $ tar -xzf bitcoin-25.1-aarch64-linux-gnu.tar.gz
+    ```
+  </TabsContent>
+
+  <TabsContent value="global">
+    ```terminal
+    $ sudo ln -s ~/bitcoin-indexer/bitcoin/bitcoin-25.1/bin/bitcoind /usr/local/bin/bitcoind
+    $ sudo ln -s ~/bitcoin-indexer/bitcoin/bitcoin-25.1/bin/bitcoin-cli /usr/local/bin/bitcoin-cli
+    ```
+  </TabsContent>
+</Tabs>
+
+Verificar instalación:
+
+```terminal
+$ bitcoind --version
+Bitcoin Core version v25.1.0
+```
+
+## Configurar para indexación
+
+### Crear directorio de datos
+
+```terminal
+$ mkdir -p ~/bitcoin-indexer/bitcoin/chainstate
+```
+
+### Crear archivo de configuración
+
+```terminal
+$ nano ~/bitcoin-indexer/bitcoin/bitcoin.conf
+```
+
+Agregue la siguiente configuración:
+
+```console ~/bitcoin-indexer/bitcoin/bitcoin.conf
+# Data directory
+datadir=/home/$USER/bitcoin-indexer/bitcoin/chainstate
+
+# Core settings
+server=1
+txindex=1
+daemon=1
+
+# RPC settings
+rpcuser=user
+rpcpassword=password
+rpcport=8332
+rpcallowip=127.0.0.1
+rpcthreads=16
+
+# ZeroMQ settings (required for indexer)
+zmqpubrawblock=tcp://0.0.0.0:18543
+zmqpubrawtx=tcp://0.0.0.0:18544
+zmqpubhashtx=tcp://0.0.0.0:18545
+zmqpubhashblock=tcp://0.0.0.0:18546
+
+# Performance settings
+# Set to 16384 (16GB) during initial sync, reduce to 2048 after
+dbcache=16384
+maxmempool=1000
+mempoolexpiry=72
+
+# Network settings
+listen=1
+maxconnections=125
+
+# Deprecated RPC
+deprecatedrpc=warnings
+```
+
+:::callout
+type: warn
+
+### Nota de seguridad
+
+Utilice siempre una contraseña fuerte y única para el acceso RPC. El indexador utilizará estas credenciales para comunicarse con su nodo.
+:::
+
+## Sincronización inicial de la cadena de bloques
+
+Inicie Bitcoin Core con su configuración:
+
+```terminal
+$ bitcoind -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf
+```
+
+:::callout
+### Tiempo de sincronización inicial
+
+La sincronización inicial de la cadena de bloques tarda de 1 a 3 días dependiendo del hardware y la velocidad de la red. El nodo descargará aproximadamente 600GB de datos.
+:::
+
+Monitorear el progreso de sincronización en otra terminal:
+
+```terminal
+$ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getblockchaininfo | jq '{blocks, headers, verificationprogress}'
+```
+
+También puedes monitorear el estado detallado de sincronización:
+
+```terminal
+$ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getblockchaininfo | jq '{chain, blocks, headers, bestblockhash, verificationprogress, size_on_disk}'
+```
+
+## Verificar la compatibilidad del indexador
+
+Una vez sincronizado, verifique que el nodo esté configurado correctamente:
+
+```terminal -o
+$ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getindexinfo
+{
+  "txindex": {
+    "synced": true,
+    "best_block_height": 820000
+  }
+}
+$ bitcoin-cli -conf=$HOME/bitcoin-indexer/bitcoin/bitcoin.conf getzmqnotifications
+[
+  {
+    "type": "pubrawblock",
+    "address": "tcp://0.0.0.0:18543",
+    "hwm": 1000
+  },
+  {
+    "type": "pubrawtx",
+    "address": "tcp://0.0.0.0:18544",
+    "hwm": 1000
+  }
+]
+```
+
+## Configuración del servicio systemd
+
+Crear un servicio systemd para inicio automático:
+
+```console /etc/systemd/system/bitcoind.service
+[Unit]
+Description=Bitcoin Core Daemon
+After=network.target
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/bitcoind -conf=/home/bitcoin-indexer/bitcoin/bitcoin.conf
+User=bitcoin-indexer
+Group=bitcoin-indexer
+Restart=on-failure
+RestartSec=30
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/home/bitcoin-indexer/bitcoin/chainstate
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Habilite e inicie el servicio:
+
+```terminal
+$ sudo systemctl enable bitcoind
+$ sudo systemctl start bitcoind
+$ sudo systemctl status bitcoind
+[32m●[0m bitcoind.service - Bitcoin Core Daemon
+    Active: [32mactive (running)[0m
+```
+
+## Próximos pasos
+
+:::next-steps
+* [Configurar el indexador](/tools/bitcoin-indexer/configuration): Configurar el Indexador de Bitcoin para conectarse a tu nodo
+* [Arrancar desde archivo](/tools/bitcoin-indexer/archive-bootstrap): Salta la espera con archivos pre-sincronizados
+:::

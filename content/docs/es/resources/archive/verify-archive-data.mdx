@@ -1,0 +1,29 @@
+---
+title: Verificar datos de archivo
+description: Verificar la integridad de los datos en una instantánea específica.
+---
+Todos los conjuntos de datos tienen un archivo hash SHA256 asociado que se puede utilizar para verificar la integridad del conjunto de datos descargado.
+Como algunos de los archivos son bastante grandes, esto es útil para asegurar que el archivo que ha descargado coincide con el archivo mantenido en el Archivo Hiro.
+
+Después de descargar un archivo de archivo y su archivo shasum asociado, puedes verificar la integridad del archivo de archivo de la siguiente manera:
+
+```terminal
+$ echo "$(cat <SHASUM FILE> | awk '{print $1}')  <ARCHIVE FILE>" | shasum --check
+<ARCHIVE FILE>: OK
+
+$ echo "$(cat mainnet-stacks-blockchain-api-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-api-latest.gz" | shasum --check
+
+mainnet-stacks-blockchain-api-latest.gz: OK
+
+# Otherwise a log will be printed indicating failure
+mainnet-stacks-blockchain-api-latest.gz: FAILED
+shasum: WARNING: 1 computed checksum did NOT match
+```
+
+:::callout
+type: warn
+
+### Nota
+
+Si la verificación de integridad falla por cualquier motivo, es posible que necesite eliminar el archivo local e intentar la descarga nuevamente. Si los problemas persisten, cambie a una red diferente y vuelva a intentarlo.
+:::

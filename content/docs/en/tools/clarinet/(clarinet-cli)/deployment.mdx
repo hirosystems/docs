@@ -1,0 +1,427 @@
+---
+title: Deploying your contracts
+sidebarTitle: Contract deployment
+description: Clarinet provides comprehensive deployment tools to help you move your contracts from local development to production networks. Whether you're testing on devnet, staging on testnet, or launching on mainnet, Clarinet streamlines the entire deployment process.
+---
+
+## Generating deployment plans
+
+Deployment plans are YAML files that define exactly how your contracts will be deployed. They specify the order, configuration, and network details for each contract, ensuring reproducible deployments across all environments. To create a deployment plan for any network, run the following command:
+
+```terminal
+$ clarinet deployments generate --testnet
+[32mAnalyzing contracts...[0m
+[32mCalculating deployment costs...[0m
+[32mGenerating deployment plan[0m
+[32mCreated file[0m [1mdeployments/default.testnet-plan.yaml[0m
+```
+
+This creates a deployment plan based on your project's configuration:
+
+```yaml deployments/default.devnet-plan.yaml
+---
+id: 0
+name: Devnet deployment
+network: devnet
+stacks-node: "http://localhost:20443"
+bitcoin-node: "http://devnet:devnet@localhost:18443"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: counter
+            expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            cost: 6940
+            path: contracts/counter.clar
+            anchor-block-only: true
+            clarity-version: 2
+      epoch: "2.5"
+```
+
+### Deployment plan structure
+
+Key components of a deployment plan:
+
+| Field | Description |
+|-------|-------------|
+| `id` | Unique identifier for the deployment |
+| `name` | Human-readable deployment name |
+| `network` | Target network (devnet/testnet/mainnet) |
+| `stacks-node` | RPC endpoint for the Stacks node |
+| `bitcoin-node` | RPC endpoint for the Bitcoin node |
+| `plan.batches` | Array of deployment batches |
+
+### Deployment specifications
+
+Deployment behavior is configured in two places:
+
+**Project configuration** (`Clarinet.toml`):
+- Clarity version for contracts
+- Contract dependencies
+- Epoch requirements
+
+**Network configuration** (`settings/<Network>.toml`):
+- Account details and balances
+- Network endpoints
+- Custom deployment accounts
+
+Example network configuration:
+
+```toml settings/Testnet.toml
+[network]
+name = "testnet"
+deployment_fee_rate = 10
+
+[accounts.deployer]
+mnemonic = "<YOUR TESTNET MNEMONIC>"
+balance = 100_000_000_000_000
+derivation = "m/44'/5757'/0'/0/0"
+```
+
+## Working with contract requirements
+
+Your project can reference contracts that already exist on the blockchain. This is especially useful for implementing standardized traits.
+
+### Adding requirements
+
+Add external contract dependencies:
+
+```terminal
+$ clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[32mAdded requirement[0m SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+This updates your project configuration:
+
+```toml Clarinet.toml
+[project]
+name = "my-nft-project"
+requirements = [
+  { contract_id = "SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait" }
+]
+```
+
+When deploying, Clarinet automatically:
+- Downloads the contract via the Stacks API
+- Remaps the principal to a local account for devnet
+- Ensures the requirement is available before deploying your contracts
+
+## Deploying to different networks
+
+<Tabs defaultValue="devnet" className="w-full">
+  <TabsList className="h-auto p-0 bg-transparent">
+    <TabsTrigger 
+      value="devnet" 
+      className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0"
+    >
+      Devnet
+    </TabsTrigger>
+    <TabsTrigger 
+      value="testnet"
+      className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0"
+    >
+      Testnet
+    </TabsTrigger>
+    <TabsTrigger 
+      value="mainnet"
+      className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0"
+    >
+      Mainnet
+    </TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="devnet" className="mt-4">
+    **Quick deployment for local development**
+    
+    Devnet automatically deploys contracts when started:
+    
+    ```terminal
+    $ clarinet devnet start
+    [32mStarting devnet...[0m
+    [32mDeploying contracts...[0m
+    [90mDeploying[0m counter.clar        [32m✓[0m  ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter
+    [90mDeploying[0m token.clar          [32m✓[0m  ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token
+    ```
+    
+    For manual deployment to a running devnet:
+    
+    ```terminal
+    $ clarinet deployments apply --devnet
+    ```
+    
+    See [local development](/tools/clarinet/local-development) for detailed devnet configuration.
+  </TabsContent>
+
+  <TabsContent value="testnet" className="mt-4">
+    :::callout
+### Prerequisites
+Before deploying to testnet:
+      - Get testnet STX from the [faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
+      - Configure your account in `settings/Testnet.toml`
+      - Validate contracts with `clarinet check`
+:::
+    
+    **Generate deployment plan with cost estimation**:
+    
+    ```terminal
+    $ clarinet deployments generate --testnet --medium-cost
+    ```
+    
+    **Deploy contracts**:
+    
+    ```terminal
+    $ clarinet deployments apply --testnet
+    ```
+  </TabsContent>
+
+  <TabsContent value="mainnet" className="mt-4">
+    :::callout
+type: warn
+### Mainnet checklist
+Before deploying to mainnet:
+      1. Complete thorough testing on testnet
+      2. Audit your contracts for security vulnerabilities
+      3. Ensure you have sufficient STX for deployment fees
+      4. Back up your deployment keys securely
+      5. Consider using a hardware wallet for deployment
+:::
+    
+    **Generate mainnet deployment plan**:
+    
+    ```terminal
+    $ clarinet deployments generate --mainnet --high-cost
+    ```
+    
+    **Deploy with confirmation**:
+    
+    ```terminal
+    $ clarinet deployments apply --mainnet
+    ```
+  </TabsContent>
+</Tabs>
+
+## Cost estimation and optimization
+
+### Fee levels
+
+Choose the right fee level for your deployment:
+
+```terminal
+$ clarinet deployments generate --testnet --manual-cost
+```
+
+Fee level options:
+- `--low-cost`: Minimize fees, slower confirmation
+- `--medium-cost`: Balanced fees and speed
+- `--high-cost`: Priority inclusion
+- `--manual-cost`: Choose interactively
+
+### Analyzing deployment costs
+
+Get detailed cost breakdown before deploying:
+
+```terminal
+$ clarinet deployments generate --testnet --medium-cost
+```
+
+## Advanced deployment configurations
+
+### Multi-batch deployments
+
+Deploy complex systems with dependencies using batches:
+
+```yaml deployments/defi-protocol.yaml
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - contract-publish:
+            contract-name: trait-definitions
+            path: contracts/traits.clar
+            clarity-version: 2
+    - id: 1
+      transactions:
+        - contract-publish:
+            contract-name: token
+            path: contracts/token.clar
+        - contract-publish:
+            contract-name: oracle
+            path: contracts/oracle.clar
+    - id: 2
+      transactions:
+        - contract-publish:
+            contract-name: defi-pool
+            path: contracts/defi-pool.clar
+```
+
+Batches ensure:
+- Dependencies are deployed first
+- Parallel deployment within batches
+- Sequential execution between batches
+
+### Transaction types
+
+Deployment plans support various transaction types:
+
+| Transaction Type   | Description                                                                 |
+|--------------------|-----------------------------------------------------------------------------|
+| Contract Operations| Involves publishing and calling contracts, specifying sender, cost, and path|
+| Asset Transfers    | Transfers assets like STX or BTC, specifying sender, recipient, and amounts |
+
+**With contract operations**:
+```yaml
+- contract-publish:
+    contract-name: my-contract
+    expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    cost: 5960
+    path: contracts/my-contract.clar
+    clarity-version: 2
+
+- contract-call:
+    contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.my-contract
+    expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    method: initialize
+    parameters:
+      - u1000000
+      - "Token Name"
+    cost: 5960
+```
+
+**With asset transfers**:
+```yaml
+- stx-transfer:
+    expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+    recipient: ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG
+    mstx-amount: 1000000
+    memo: '0x48656c6c6f'  # "Hello" in hex
+
+- btc-transfer:
+    expected-sender: mjSrB3wS4xab3kYqFktwBzfTdPg367ZJ2d
+    recipient: bcrt1qnxknq3wqtphv7sfwy07m7e4sr6ut9yt6ed99jg
+    sats-amount: 100000000
+    sats-per-byte: 10
+```
+
+### Manual plan customization
+
+You can manually edit deployment plans for complex scenarios:
+
+:::callout
+### Manual edits
+When deploying, Clarinet prompts to overwrite manual changes. Type `no` to keep your customizations.
+:::
+
+**Contract initialization example**:
+```yaml
+- id: 3
+  transactions:
+    - contract-call:
+        contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token
+        method: initialize
+        parameters:
+          - u1000000  # Initial supply
+          - { name: "My Token", symbol: "MTK", decimals: u6 }
+        expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+```
+
+## Common issues
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="insufficient-balance">
+    <AccordionTrigger>Insufficient STX balance</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "Insufficient STX balance for deployment"
+        
+        **Solutions**:
+        1. **Get testnet STX**: Visit the [testnet faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet)
+        2. **Reduce fee rate**: Use `--low-cost` option
+        3. **Check balance**:
+        
+        ```terminal
+        $ clarinet console --testnet
+        >> stx-account 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="contract-exists">
+    <AccordionTrigger>Contract already exists</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "Contract 'token' already deployed at this address"
+        
+        **Causes**:
+        - Contract with same name already deployed
+        - Previous deployment attempt succeeded
+        
+        **Solutions**:
+        1. Use a different contract name
+        2. Deploy from a different address
+        3. If testing, use a fresh testnet account
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="network-issues">
+    <AccordionTrigger>Network connection failures</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "Failed to connect to testnet node"
+        
+        **Check network settings**:
+        ```toml settings/Testnet.toml
+        [network]
+        name = "testnet"
+        node_rpc_address = "https://stacks-node-api.testnet.stacks.co"
+        ```
+        
+        **Try alternative endpoints**:
+        - Hiro: `https://api.testnet.hiro.so`
+        - Use your own node
+        
+        **Debug connection**:
+        ```terminal
+        $ curl -I https://api.testnet.hiro.so/v2/info
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="deployment-plan-errors">
+    <AccordionTrigger>Invalid deployment plan</AccordionTrigger>
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Common YAML errors**:
+        - Incorrect indentation
+        - Missing required fields
+        - Invalid contract paths
+        
+        **Validate your plan**:
+        ```terminal
+        $ clarinet deployments check
+        ```
+        
+        **Regenerate if needed**:
+        ```terminal
+        $ clarinet deployments generate --testnet
+        ```
+        
+        **Check contract paths exist**:
+        ```terminal
+        $ ls contracts/
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Next steps
+
+:::next-steps
+- [Chainhook](/tools/chainhook): Learn how to monitor your contracts with Chainhook.
+- [Contract monitoring](/tools/contract-monitoring): Learn how to monitor your contracts with Chainhook.
+:::
