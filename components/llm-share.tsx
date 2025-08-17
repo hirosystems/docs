@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, ChevronDown, Copy, ExternalLink, Text } from 'lucide-react';
+import { Check, ChevronDown, Copy, ExternalLink } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ClaudeIcon, OpenAIIcon } from '@/components/ui/icon';
@@ -70,20 +70,6 @@ export function LLMShare({ content }: LLMShareProps) {
     }
   };
 
-  const handleViewRawMarkdown = () => {
-    if (!pathname) return;
-
-    let mdPath = pathname;
-    if (mdPath.startsWith('/docs')) {
-      mdPath = mdPath.substring(5);
-    }
-
-    if (!mdPath || mdPath === '/') {
-      mdPath = '/index';
-    }
-
-    window.open(`${mdPath}.md`, '_blank');
-  };
 
   const handleShare = async (provider: ReturnType<typeof getLLMProviders>[number]) => {
     try {
@@ -135,15 +121,6 @@ export function LLMShare({ content }: LLMShareProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-64">
-          <DropdownMenuItem onSelect={handleViewRawMarkdown} className="cursor-pointer">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <Text className="h-3 w-3 text-muted-foreground" />
-                <span className="font-medium font-fono">{t.navigation.llmShare.viewAsMarkdown}</span>
-              </div>
-            </div>
-            <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
-          </DropdownMenuItem>
           {llmProviders.map((provider) => (
             <DropdownMenuItem
               key={provider.name}
