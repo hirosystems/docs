@@ -1,0 +1,102 @@
+---
+title: Extensión de VS Code
+sidebarTitle: Introducción
+description: La extensión Clarity para VS Code transforma tu editor en un potente entorno de desarrollo de contratos inteligentes. Obtienes resaltado de sintaxis, autocompletado, depuración y verificación de errores en tiempo real.
+---
+## Características
+
+### Autocompletado inteligente
+
+La extensión proporciona autocompletado de código inteligente que comprende el contexto de Clarity. Cuando comienzas a escribir cualquier función de Clarity, obtienes sugerencias instantáneas con documentación:
+
+```clarity
+;; Type "stx-tr" and get:
+(stx-transfer? amount sender recipient)
+;;             ^      ^      ^
+;;             Placeholders for easy navigation
+```
+
+Usar `Tab` para saltar entre marcadores de posición y `Escape` para salir del modo de marcador de posición.
+
+### Documentación al pasar el cursor
+
+Accede a documentación completa sin salir de tu editor. Pasa el cursor sobre cualquier función o palabra clave de Clarity para ver:
+
+```clarity
+;; Hover over 'map-set' to see:
+;; - Function signature
+;; - Parameter descriptions
+;; - Return type
+;; - Usage examples
+(map-set my-map {key: "value"} "data")
+```
+
+### Definición de referencia
+
+Navega por tu base de código de manera eficiente con las funciones de salto a definición:
+
+* `F12` o `Ctrl+Click` - Ir a la definición
+* `Alt+F12` - Ver la definición sin salir del archivo actual
+* Funciona en archivos de contrato y llamadas de contrato
+
+### Comprobación de errores en tiempo real
+
+La extensión valida tu código continuamente, proporcionando retroalimentación inmediata:
+
+* **Subrayados rojos** - Errores de sintaxis, palabras clave desconocidas
+* **Garabatos amarillos** - Advertencias para código potencialmente inseguro
+* **Lista de errores** - Todos los problemas en el panel Problemas (`Ctrl+Shift+M`)
+
+Los errores comunes detectados incluyen variables no definidas, incompatibilidades de tipos, implementaciones de rasgos faltantes y firmas de funciones inválidas.
+
+### Resolución de contratos locales
+
+La autocompletación funciona en todo tu proyecto. Haz referencia a funciones de otros contratos en tu espacio de trabajo:
+
+```clarity
+;; Auto-complete local contract calls
+(contract-call? .my-token transfer amount sender recipient)
+;;               ^
+;;               Suggests contracts in your project
+```
+
+### Soporte de rasgos
+
+Al implementar rasgos (como NFTs SIP-009 o tokens SIP-010), la extensión verifica:
+
+* Todas las funciones requeridas están implementadas
+* Las firmas de función coinciden con las definiciones de rasgos
+* Los tipos de retorno son correctos
+
+```clarity
+;; Extension warns if missing required trait functions
+(impl-trait .sip-010-trait.sip-010-trait)
+
+;; ⚠️ Warning: Missing required function 'get-balance'
+```
+
+### Depuración visual
+
+La extensión incluye un depurador visual para la ejecución de código paso a paso:
+
+1. Establece puntos de interrupción haciendo clic en los números de línea
+2. Presionar `F5` o usa Ejecutar → Iniciar depuración
+3. Recorre el código línea por línea
+4. Inspeccionar variables y estado de la pila
+
+:::callout
+### Requisitos
+
+La depuración visual requiere VS Code Desktop y Clarinet instalados localmente.
+:::
+
+## Tabla de comparación
+
+| Característica | Editor Básico | Extensión de VS Code |
+|----------------|----------------|------------------------|
+| Resaltado de sintaxis | Limitado | Soporte completo de Clarity |
+| Autocompletado | Ninguno | Contextual con documentación |
+| Verificación de errores | Solo al desplegar | Validación en tiempo real |
+| Documentación | Búsqueda externa | Documentación emergente en línea |
+| Depuración | Solo consola | Depurador visual |
+| Navegación entre archivos | Manual | Salto a definición |

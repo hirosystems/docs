@@ -1,0 +1,131 @@
+---
+title: Introducción
+sidebarTitle: Introducción
+description: Aprende cómo las post-condiciones protegen a los usuarios de resultados inesperados en las transacciones
+---
+Las post-condiciones son características de seguridad en Stacks que protegen a los usuarios al garantizar que las transacciones se ejecuten exactamente como se espera. Verifican que se produzcan transferencias específicas de activos durante una transacción, y si las condiciones no se cumplen, toda la transacción falla sin cambios de estado.
+
+## ¿Qué son las post-condiciones?
+
+Las post-condiciones actúan como salvaguardias que verifican que las transferencias de activos coincidan con tus expectativas. Pueden comprobar transferencias de STX, tokens fungibles y cambios de propiedad de tokens no fungibles.
+
+```ts
+import { Pc } from '@stacks/transactions';
+
+const tx = await makeContractCall({
+  // ...
+  postConditions: [
+    Pc.principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6').willSendEq(1000).ustx(),
+  ],
+});
+```
+
+Las post-condiciones solo verifican que los activos sean enviados, no recibidos. No pueden garantizar el destinatario final de los tokens.
+
+## Uso del asistente de PC
+
+El `Pc` helper proporciona una API fluida para crear post-condiciones con mejor seguridad de tipos y legibilidad.
+
+```ts
+import { Pc } from '@stacks/transactions';
+
+// STX transfer post-condition
+const stxCondition = Pc
+  .principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+  .willSendGte(1000)
+  .ustx();
+
+// Fungible token post-condition
+const ftCondition = Pc
+  .principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+  .willSendEq(50)
+  .ft('SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-token', 'my-token');
+
+// NFT post-condition
+const nftCondition = Pc
+  .principal('STB44HYPYAT2BB2QE513NSP81HTMYWBJP02HPGK6')
+  .willSendAsset()
+  .nft('SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-nft::my-asset', Cl.uint(1));
+```
+
+## Creación manual
+
+Cree post-condiciones manualmente utilizando definiciones de tipo al construir condiciones dinámicamente.
+
+```ts
+import {
+  StxPostCondition,
+  FungiblePostCondition,
+  NonFungiblePostCondition
+} from '@stacks/transactions';
+
+// STX post-condition
+const stxPostCondition: StxPostCondition = {
+  type: 'stx-postcondition',
+  address: 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B',
+  condition: 'gte', // 'eq' | 'gt' | 'gte' | 'lt' | 'lte'
+  amount: '100',
+};
+```
+
+Tipos de condiciones disponibles:
+
+* `eq`: Exactamente igual a la cantidad
+* `gt`: Mayor que cantidad
+* `gte`: Mayor o igual que cantidad
+* `lt`: Menos que cantidad
+* `lte`: Menor o igual que la cantidad
+
+### Tokens fungibles
+
+```ts
+const ftPostCondition: FungiblePostCondition = {
+  type: 'ft-postcondition',
+  address: 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B',
+  condition: 'eq',
+  amount: '100',
+  asset: 'SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-ft-token::my-token',
+};
+```
+
+### Tokens no fungibles
+
+```ts
+const nftPostCondition: NonFungiblePostCondition = {
+  type: 'nft-postcondition',
+  address: 'SP2JXKMSH007NPYAQHKJPQMAQYAD90NQGTVJVQ02B',
+  condition: 'sent', // 'sent' | 'not-sent'
+  asset: 'SP3D6PV2ACBPEKYJTCMH7HEN02KP87QSP8KTEH335.my-nft::my-asset',
+  assetId: Cl.uint(602),
+};
+```
+
+## Modo de post-condición
+
+Controla cómo se manejan las transferencias de activos no especificadas con el modo de post-condición.
+
+```ts
+import { PostConditionMode } from '@stacks/transactions';
+
+const tx = await makeContractCall({
+  // ...
+  postConditionMode: PostConditionMode.Deny,
+  postConditions: [
+    // your conditions
+  ],
+});
+```
+
+:::callout
+type: warn
+
+### Modo de post-condición
+
+Siempre usa `Deny` modo a menos que tenga una razón específica para permitir transferencias adicionales. Esto proporciona la máxima seguridad para los usuarios.
+:::
+
+## Lecturas adicionales
+
+* [Implementando post-condiciones](/reference/stacks.js/implementing-post-conditions)
+* [Construcción de transacciones](/reference/stacks.js/build-transactions)
+* [Llamadas de contrato](/reference/stacks.js/contract-calls)

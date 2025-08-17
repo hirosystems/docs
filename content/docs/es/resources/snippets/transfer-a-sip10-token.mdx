@@ -1,0 +1,68 @@
+---
+title: Transferir un token SIP-10
+description: Transferir tokens fungibles utilizando el estándar SIP-10 con post-condiciones
+---
+```typescript
+import { STACKS_MAINNET } from "@stacks/network";
+import {
+  AnchorMode,
+  broadcastTransaction,
+  Cl,
+  makeContractCall,
+  Pc,
+  PostConditionMode,
+} from "@stacks/transactions";
+
+// Token contract details
+const tokenAddress = "SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9";
+const tokenName = "wrapped-bitcoin";
+const contractIdentifier = `${tokenAddress}.${tokenName}`;
+
+// Create post-condition to ensure exact amount is transferred
+const postConditions = [
+  Pc.principal("SP2C20XGZBAYFZ1NYNHT1J6MGBGVX9X7X3P7LAX7K")
+    .willSendEq(100000000) // 1 wBTC (8 decimals)
+    .ft(contractIdentifier, tokenName)
+];
+
+const txOptions = {
+  contractAddress: tokenAddress,
+  contractName: tokenName,
+  functionName: "transfer",
+  functionArgs: [
+    Cl.uint(100000000), // amount (with decimals)
+    Cl.principal("SP2C20XGZBAYFZ1NYNHT1J6MGBGVX9X7X3P7LAX7K"), // sender
+    Cl.principal("SP31DA84DWTF6510EW6DCTC3GB3XH1EEBGP7MYT2"), // recipient
+    Cl.none(), // optional memo
+  ],
+  senderKey: "753b7cc01a1a2e86221266a154af739463fce51219d97e4f856cd7200c3bd2a601",
+  validateWithAbi: true,
+  network: STACKS_MAINNET,
+  postConditions,
+  postConditionMode: PostConditionMode.Deny,
+  anchorMode: AnchorMode.Any,
+};
+
+const transaction = await makeContractCall(txOptions);
+const broadcastResponse = await broadcastTransaction({ 
+  transaction,
+  network: STACKS_MAINNET,
+});
+
+console.log("Transaction ID:", broadcastResponse.txid);
+```
+
+## Casos de uso
+
+* Transferir tokens fungibles entre billeteras
+* Integrando transferencias de tokens en dApps
+* Construyendo funcionalidad de DEX o intercambio
+* Implementación de sistemas de pago con tokens personalizados
+
+## Conceptos clave
+
+SIP-10 es el estándar de token fungible en Stacks, similar a ERC-20:
+
+* **Interfaz estándar**: Todos los tokens SIP-10 implementan `transfer`, `get-balance`, etc.
+* **Postcondiciones**: Proteger a los usuarios asegurando que se transfieran cantidades exactas
+* **Memorandos**: Campo opcional para incluir notas de transferencia

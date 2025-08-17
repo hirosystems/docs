@@ -1,0 +1,168 @@
+---
+title: Archivo bootstrap  
+description: Sáltese semanas de indexación mediante el arranque desde los archivos preindexados de Hiro.
+---
+## Resumen
+
+En lugar de indexar desde el bloque génesis, puedes iniciar tu indexador utilizando los archivos actualizados regularmente de Hiro. Esto reduce el tiempo de sincronización inicial de semanas a horas.
+
+## Archivos disponibles
+
+Hiro proporciona archivos para diferentes configuraciones:
+
+| Tipo de Archivo | Metaprotocolos | Tamaño | Tiempo de Sincronización |
+|--------------|---------------|------|-----------|
+| Completo | Ordinals, Runes, BRC-20 | ~800 GB | 2-4 horas |
+| Solo Ordinals | Ordinals | ~450 GB | 1-2 horas |
+| Solo Runes | Runes | ~80 GB | 30 minutos |
+| Solo BRC-20 | BRC-20 | ~120 GB | 45 minutos |
+
+## Descargar archivos
+
+### Crear directorio de archivo
+
+```terminal
+$ mkdir -p ~/bitcoin-indexer/archives
+$ cd ~/bitcoin-indexer/archives
+```
+
+### Descargar archivos requeridos
+
+Descarga los archivos para los metaprotocolos que deseas indexar:
+
+```terminal
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-brc20-pg-latest.tar
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-rocksdb-latest.tar.gz
+$ curl -O -C - https://archive.hiro.so/mainnet/bitcoin-indexer-adhoc/mainnet-bitcoin-indexer-runes-pg-latest.tar
+```
+
+:::callout
+### Tiempo de descarga
+
+Los archivos son grandes (100-800GB). Usar `-C -` bandera para habilitar la reanudación en caso de interrupción. Los tiempos de descarga varían de 2 a 8 horas dependiendo de la velocidad de conexión.
+:::
+
+### Extraer archivos
+
+```terminal
+$ tar -xzf mainnet-bitcoin-indexer-rocksdb-latest.tar.gz
+$ tar -xf mainnet-bitcoin-indexer-ordinals-pg-latest.tar
+$ tar -xf mainnet-bitcoin-indexer-brc20-pg-latest.tar
+$ tar -xf mainnet-bitcoin-indexer-runes-pg-latest.tar
+```
+
+### Mover datos de RocksDB
+
+```terminal
+$ mv rocksdb ~/bitcoin-indexer/rocksdb-chainstate
+```
+
+## Restaurar bases de datos PostgreSQL
+
+### Establecer permisos
+
+```terminal
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/brc20.dump
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/ordinals.dump
+$ sudo chown -R postgres:postgres ~/bitcoin-indexer/archives/runes.dump
+```
+
+### Importar volcados de base de datos
+
+Restaure los archivos de PostgreSQL en sus bases de datos:
+
+```terminal
+$ sudo -u postgres pg_restore --verbose --jobs=6 -d ordinals -c --if-exists ~/bitcoin-indexer/archives/ordinals.dump
+
+$ # Restore Runes database (if downloaded)
+$ sudo -u postgres pg_restore --verbose --jobs=6 -d runes -c --if-exists ~/bitcoin-indexer/archives/runes.dump
+```
+
+:::callout
+### Tiempo de restauración
+
+La restauración de la base de datos tarda entre 1 y 4 horas dependiendo del tamaño del archivo y la velocidad del disco. El `--jobs=6` flag utiliza procesamiento paralelo para acelerar la restauración.
+:::
+
+### Verificar restauración
+
+Verifique que los datos se hayan importado correctamente:
+
+```terminal
+$ sudo -u postgres psql -d ordinals -c "SELECT COUNT(*) FROM inscriptions;"
+$ sudo -u postgres psql -d brc20 -c "SELECT COUNT(DISTINCT ticker) FROM tokens;"
+```
+
+## Verificar la altura del bloque de archivo
+
+Encuentra la altura del bloque de tu archivo restaurado:
+
+```terminal
+$ ls -la ~/bitcoin-indexer/rocksdb-chainstate/rocksdb/ | grep -i manifest
+```
+
+## Configuración para el arranque del archivo
+
+¡No se necesita configuración especial! El indexador detecta automáticamente el estado del archivo y continúa desde donde se quedó. Solo asegúrate de que tus rutas coincidan:
+
+```toml title="bitcoin-indexer-config.toml"
+[storage]
+working_dir = "/home/bitcoin-indexer/bitcoin-indexer/rocksdb-chainstate"
+
+# ... rest of your configuration
+```
+
+## Comenzar indexación
+
+Con el archivo en su lugar, inicie el indexador:
+
+```terminal
+$ bitcoin-indexer runes service start --config-path=bitcoin-indexer.toml
+$ bitcoin-indexer ordinals service start --config-path=bitcoin-indexer.toml
+```
+
+El indexador:
+
+1. Cargar el estado del archivo
+2. Conéctese a su nodo de Bitcoin
+3. Procesar nuevos bloques desde la altura del archivo
+4. Alcanzar la punta de la cadena
+
+## Creando archivos personalizados
+
+Exporte sus propios archivos para respaldo o migración:
+
+```terminal
+$ bitcoin-indexer export \
+  --data-dir /data/bitcoin-indexer \
+  --output /backups/indexer-backup.tar.gz \
+  --compress
+```
+
+## Solución de problemas
+
+### Error al extraer el archivo
+
+Asegúrese de tener suficiente espacio en disco - los archivos se extraen temporalmente al doble de su tamaño comprimido.
+
+### Errores de verificación
+
+```terminal
+$ tar -tzf bitcoin-indexer-full-latest.tar.gz | wc -l
+```
+
+### Velocidades de descarga lentas
+
+Utilice un gestor de descargas con soporte de reanudación:
+
+```terminal
+$ aria2c -x 16 -s 16 https://archive.hiro.so/bitcoin-indexer/mainnet/bitcoin-indexer-full-latest.tar.gz
+```
+
+## Próximos pasos
+
+:::next-steps
+* [Configurar el indexador](/tools/bitcoin-indexer/configuration): Ajusta la configuración para tu caso de uso
+* [Comience a usar la API de Ordinals](/tools/bitcoin-indexer/ordinals-api): Ejecutar consultas en sus datos indexados
+:::

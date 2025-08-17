@@ -1,0 +1,211 @@
+---
+title: Preguntas frecuentes
+sidebarTitle: Preguntas frecuentes
+description: Preguntas comunes y soluciones para el desarrollo de Clarinet
+---
+Esta página aborda preguntas y problemas comunes encontrados al desarrollar con Clarinet, basados en comentarios de la comunidad e interacciones de soporte.
+
+## Pruebas y desarrollo
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="sbtc-pruebas">
+    <AccordionTrigger>¿Cómo puedo probar con tokens sBTC en mi entorno de desarrollo?</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Para probar con tokens sBTC, añade el contrato sBTC de la red principal como requisito y acuña tokens usando la dirección del desplegador:
+
+        **Paso 1: Agregar sBTC como requisito**
+
+        ```terminal
+        $ clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
+        ```
+
+        **Paso 2: Acuñar sBTC en tus pruebas**
+
+        ```typescript
+        // The sBTC multisig address that can mint
+        const sbtcDeployer = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4";
+
+        // Mint sBTC to your test wallet
+        const mintTx = simnet.callPublicFn(
+          "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token",
+          "mint",
+          [Cl.uint(1000000), Cl.principal(wallet1)],
+          sbtcDeployer
+        );
+        ```
+
+        Este enfoque te permite trabajar con sBTC en pruebas unitarias sin una simulación compleja de transacciones de Bitcoin.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="direcciones-de-simulación-de-red-principal">
+    <AccordionTrigger>¿Por qué estoy recibiendo un error al usar direcciones de mainnet durante la simulación de mainnet?</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Al utilizar la simulación de ejecución en la red principal, es posible que el contrato de la red principal esté verificando las llamadas de contrato de direcciones de la red principal, no las direcciones de la red de prueba.
+
+        **A partir de Clarinet v3.4.0**, puedes habilitar direcciones de mainnet en simnet agregando `use_mainnet_wallets = true` a tu configuración:
+
+        ```toml Clarinet.toml
+        [repl.remote_data]
+        enabled = true
+        initial_height = 522000
+        use_mainnet_wallets = true  # Enable mainnet addresses
+        ```
+
+        **Alternativa: Usar manualmente direcciones de mainnet:**
+
+        ```typescript
+        // Instead of using simnet.getAccounts()
+        const mainnetAddress = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY";
+
+        // Mint STX to any mainnet address
+        simnet.mintSTX(mainnetAddress, 1000000n);
+
+        // Call functions with mainnet address
+        const result = simnet.callReadOnlyFn(
+          "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3",
+          "get-price",
+          [priceFeed],
+          mainnetAddress
+        );
+        ```
+
+        La simnet es permisiva y acepta cualquier dirección válida de Stacks cuando la simulación de mainnet está habilitada.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="ayudantes-de-prueba-migración">
+    <AccordionTrigger>¿Cómo migro de expectSTXTransferEvent al nuevo SDK?</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        El SDK de Clarinet v2 utiliza comparadores estándar de Vitest en lugar de ayudantes de eventos personalizados. Así es cómo migrar:
+
+        **Enfoque antiguo (Clarinet v1):**
+
+        ```typescript
+        block.receipts[0].events.expectSTXTransferEvent(
+          amount,
+          sender,
+          recipient
+        );
+        ```
+
+        **Nuevo enfoque (Clarinet v2):**
+
+        ```typescript
+        // Check for exact event match
+        expect(events).toContainEqual({
+          event: "stx_transfer_event",
+          data: {
+            amount: "1000000",
+            memo: "",
+            recipient: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+            sender: "ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5",
+          },
+        });
+
+        // Or check only specific properties
+        expect(events).toContainEqual({
+          event: "stx_transfer_event",
+          data: expect.objectContaining({
+            sender: address1,
+            recipient: contractAddress,
+          }),
+        });
+        ```
+
+        Para las aserciones de valor de Clarity, utiliza los comparadores incorporados:
+
+        ```typescript
+        expect(result).toBeOk(Cl.bool(true));
+        expect(result).toBeErr(Cl.uint(500));
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Configuración e instalación
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="mnemónico-24-palabras">
+    <AccordionTrigger>¿Por qué estoy recibiendo "error bip39" al generar planes de implementación?</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        A partir de Clarinet 2.15.0, las configuraciones de implementación requieren mnemotécnicas de 24 palabras. Las mnemotécnicas de 12 palabras ya no son compatibles.
+
+        **Actualice su configuración:**
+
+        ```toml settings/Mainnet.toml
+        [accounts.deployer]
+        # Use a 24-word mnemonic
+        mnemonic = "twice kind fence tip hidden tilt action fragile skin nothing glory cousin green tomorrow spring wrist shed math olympic multiply hip blue scout claw"
+        ```
+
+        Genere una nueva mnemotecnia de 24 palabras usando un generador BIP39 si es necesario. Este cambio mejora la seguridad para implementaciones en producción.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Limitaciones conocidas
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="limitaciones-de-pruebas-de-bitcoin">
+    <AccordionTrigger>¿Puedo probar la verificación de transacciones de Bitcoin en Clarinet?</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        Probar contratos que utilizan clarity-bitcoin-lib para la verificación de transacciones de Bitcoin tiene limitaciones en simnet y devnet:
+
+        **Limitaciones actuales:**
+
+        * No hay bloques ni transacciones reales de Bitcoin en simnet
+        * Los bloques simulados no contienen transacciones de Bitcoin verificables
+        * `get-burn-block-info?` devuelve datos simulados no aptos para verificación
+
+        **Soluciones alternativas:**
+
+        * Probar la lógica de verificación de Bitcoin en la red principal o con simulación de ejecución de la red principal
+        * Crear pruebas unitarias que simulen el comportamiento esperado sin verificación real
+        * Considere separar la lógica de verificación de Bitcoin para facilitar las pruebas
+
+        El equipo de Clarinet está explorando soluciones para un mejor soporte de pruebas de Bitcoin.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="transición de época">
+    <AccordionTrigger>¿Por qué mi devnet se congela en la transición de la época 3.0?</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        La transición de época 3.0 en devnet puede ser inestable, con tasas de éxito que varían entre el 50-80% dependiendo de tu configuración.
+
+        **Soluciones temporales actuales:**
+
+        * Reinicie devnet si se congela alrededor de los bloques 139-140
+        * Prueba Clarinet 2.14.0, que algunos usuarios informan que es más estable
+        * Espera a que la próxima función comience devnet directamente en la época 3.0
+
+        **Monitoreando la transición:**
+
+        ```console
+        # Watch for the transition around these blocks
+        Block 139: Epoch 2.5
+        Block 140: Should transition to 3.0
+        ```
+
+        El equipo de Clarinet está trabajando en mejorar la estabilidad de la transición de época y planea permitir iniciar devnet directamente en la época 3.0.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>

@@ -1,0 +1,35 @@
+---
+title: API de Blockchain de Stacks
+sidebarTitle: Visión general
+description: Datos de blockchain rápidos y confiables para el ecosistema Stacks a través de REST.
+llm: false
+---
+## Visión general
+
+La API de Stacks proporciona acceso completo a los datos de la blockchain de Stacks a través de una interfaz REST de alto rendimiento. Construida sobre respuestas en caché e indexación optimizada, entrega datos de transacciones, información de contratos inteligentes, saldos de cuentas y detalles de bloques con una latencia mínima.
+
+## Características principales
+
+* **Ingesta de datos en tiempo real** - Indexa continuamente la actividad de la cadena de bloques a medida que ocurre
+* **Respuestas en caché** - Rendimiento optimizado mediante estrategias de almacenamiento en caché inteligentes
+* **Acceso completo a los datos** - Historial de transacciones, contratos inteligentes, cuentas y bloques
+
+## Uso
+
+```terminal
+$ curl -L 'https://api.hiro.so/extended' -H 'Accept: application/json'
+```
+
+Para más ejemplos de uso, haga clic [aquí](/apis/stacks-blockchain-api/usage).
+
+:::callout
+Todas las respuestas de la API de Stacks Blockchain incluyen [límites de tasa de encabezados](/resources/guides/response-headers) que te ayudan a monitorear el uso de tu API con información de cuota específica de Stacks.
+:::
+
+:::callout
+type: help
+
+### ¿Necesitas ayuda para construir con la API de la Blockchain de Stacks?
+
+Contáctanos en el <span className="font-bold">#api</span> canal activado [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro. También hay una [horas de oficina semanales](https://www.addevent.com/event/kI22007085) llamada todos los miércoles a la 1 pm ET.
+:::

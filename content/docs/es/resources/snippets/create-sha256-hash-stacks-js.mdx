@@ -1,0 +1,45 @@
+---
+title: Crear hash SHA256 en Stacks.js
+description: Generar hashes SHA-256 que coincidan con la salida de hash de Clarity
+---
+```typescript
+import { sha256 } from "@noble/hashes/sha256";
+import { bytesToHex, hexToBytes, utf8ToBytes } from "@stacks/common";
+import { bufferCV, stringUtf8CV, serializeCV } from "@stacks/transactions";
+
+// Hash a string (matching Clarity's sha256 output)
+function hashString(text: string) {
+  const clarityValue = stringUtf8CV(text);
+  const serialized = serializeCV(clarityValue);
+  return bytesToHex(sha256(serialized));
+}
+
+// Hash hex data (matching Clarity's sha256 output)  
+function hashHexData(hexData: string) {
+  const clarityValue = bufferCV(hexToBytes(hexData));
+  const serialized = serializeCV(clarityValue);
+  return bytesToHex(sha256(serialized));
+}
+
+// Example usage
+const hash1 = hashString("Hello World");
+console.log("String hash:", hash1);
+
+const hash2 = hashHexData("0x1234567890abcdef");
+console.log("Hex hash:", hash2);
+```
+
+## Casos de uso
+
+* Creando identificadores deterministas
+* Verificando la integridad de los datos entre on-chain y off-chain
+* Implementación de esquemas de compromiso-revelación fuera de la cadena
+* Construyendo árboles de Merkle compatibles con Clarity
+
+## Conceptos clave
+
+Para que coincida con la salida SHA-256 de Clarity:
+
+1. **Convertir a valor de Clarity**: Utilice el tipo de CV apropiado (`stringUtf8CV`, `bufferCV`, etc.)
+2. **Serializar**: Uso `serializeCV` para coincidir con la codificación de Clarity
+3. **Hash**: Aplicar SHA-256 a los bytes serializados

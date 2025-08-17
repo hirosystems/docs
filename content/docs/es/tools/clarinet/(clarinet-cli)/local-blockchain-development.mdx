@@ -1,0 +1,491 @@
+---
+title: Trabajando con una blockchain local
+sidebarTitle: Desarrollo de blockchain local
+description: Clarinet proporciona un entorno de blockchain local completo, ofreciendo todos los servicios que necesitas para el desarrollo de contratos inteligentes sin necesidad de desplegar en una red pública.
+---
+## Iniciando tu blockchain local
+
+Para iniciar devnet con todos los servicios requeridos, ejecute el siguiente comando:
+
+```terminal
+$ clarinet devnet start
+```
+
+| Opción | Descripción |
+|--------|-------------|
+| `--manifest-path <path>` | Usar ubicación alternativa de Clarinet.toml |
+| `--no-dashboard` | Mostrar registros en lugar de interfaz de usuario interactiva |
+| `--deployment-plan-path <path>` | Usar plan de despliegue específico |
+| `--use-on-disk-deployment-plan` | Usar el plan de despliegue existente sin actualizaciones |
+| `--use-computed-deployment-plan` | Calcular y sobrescribir el plan de implementación |
+| `--package <path>` | Usar configuración preempaquetada de devnet |
+
+:::callout
+### Requisitos previos
+
+Devnet requiere que Docker esté en ejecución. Si ves "clarinet was unable to create network", asegúrate de que Docker Desktop esté funcionando o que el demonio de Docker se haya iniciado.
+:::
+
+Por defecto, devnet inicia con un panel interactivo que muestra:
+
+* Estado del servicio y salud
+* Transacciones recientes
+* Producción de bloques
+* Despliegues de contratos
+* Uso de recursos
+
+Usa el `--no-dashboard` bandera para entornos de CI/CD o cuando prefieres registros en streaming.
+
+## Servicios y características principales
+
+Devnet crea un entorno blockchain completo con estos servicios:
+
+| Servicio | Puerto | Propósito |
+|---------|------|---------|
+| **Nodo de Stacks** | 20443 | Procesa transacciones y mina bloques |
+| **Nodo de Bitcoin** | 18443 | Proporciona anclaje de bloques en modo regtest |
+| **API de Stacks** | 3999 | REST API for querying blockchain data |
+| **Base de datos Postgres** | 5432 | Indexa los datos de la cadena de bloques para consultas rápidas |
+| **Explorador de Stacks** | 8000 | Interfaz web para navegar transacciones |
+| **Explorador de Bitcoin** | 8001 | Interfaz de usuario web para la cadena regtest de Bitcoin |
+
+Devnet incluye cuentas prefinanciadas con saldos de STX:
+
+```terminal -o
+$ clarinet console
+$ ::get_assets_maps
+[1m+-------------------------------------------+-----------------+
+| Address                                   | STX Balance     |
+|-------------------------------------------+-----------------|
+| ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM | 100000000000000 |
+| ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5 | 100000000000000 |
+| ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG | 100000000000000 |
+| ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC | 100000000000000 |
+| ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND  | 100000000000000 |
++-------------------------------------------+-----------------+[0m
+```
+
+Cuando se inicia devnet, automáticamente despliega los contratos de tu proyecto:
+
+```terminal -o
+$ clarinet devnet start
+[32mDeploying contracts...[0m
+[90mDeploying[0m counter.clar        [32m✓[0m  ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter
+[90mDeploying[0m token.clar         [32m✓[0m  ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token
+[90mDeploying[0m marketplace.clar   [32m✓[0m  ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.marketplace
+
+[32mAll contracts deployed successfully[0m
+```
+
+## Configuración y personalización
+
+El comportamiento de Devnet se controla a través de archivos de configuración en su proyecto.
+
+### Configuración básica
+
+El `settings/Devnet.toml` archivo controla la configuración de red:
+
+```toml settings/Devnet.toml
+[network]
+name = "devnet"
+
+# Service ports
+stacks_node_rpc_port = 20443
+stacks_api_port = 3999
+stacks_explorer_port = 8000
+bitcoin_node_rpc_port = 18443
+
+# Mining configuration  
+[network.devnet]
+bitcoin_controller_block_time = 30_000  # 30 seconds
+
+# Disable services you don't need
+disable_bitcoin_explorer = false
+disable_stacks_explorer = false
+disable_stacks_api = false
+```
+
+### Configuración del puerto
+
+Personalice los puertos para evitar conflictos:
+
+```toml
+# Change default ports
+stacks_node_rpc_port = 30443
+stacks_api_port = 4999
+postgres_port = 6432
+stacks_explorer_port = 4020
+```
+
+### Intervalos de minería
+
+Controlar la velocidad de producción de bloques:
+
+```toml
+# Fast blocks for development (1 second)
+bitcoin_controller_block_time = 1_000
+
+# Standard testing (30 seconds)
+bitcoin_controller_block_time = 30_000
+
+# Realistic timing (2 minutes)
+bitcoin_controller_block_time = 120_000
+```
+
+### Cuentas personalizadas
+
+Agregar cuentas con saldos específicos:
+
+```toml Clarinet.toml
+[accounts.treasury]
+mnemonic = "twice kind fence tip hidden tilt action fragile skin nothing glory cousin"
+balance = 10_000_000_000_000  # 10M STX
+
+[accounts.alice]
+mnemonic = "female adjust gallery certain visit token during great side clown fitness like"
+balance = 5_000_000_000_000   # 5M STX
+```
+
+## Accediendo a los servicios
+
+Accede a varios servicios para interactuar con la blockchain, incluyendo la navegación de datos, consulta de APIs y envío de transacciones directamente.
+
+<Tabs defaultValue="explorador" className="w-full">
+  <TabsList className="h-auto p-0 bg-transparent">
+    <TabsTrigger value="explorador" className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0">
+      Explorador de Stacks
+    </TabsTrigger>
+
+    <TabsTrigger value="api" className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0">
+      Puntos finales de la API
+    </TabsTrigger>
+
+    <TabsTrigger value="rpc" className="data-[state=active]:border-b-2 data-[state=active]:border-primary border-b-2 border-border/50 pb-2 px-4 bg-transparent hover:bg-transparent rounded-none text-muted-foreground data-[state=active]:text-primary font-fono [&>p]:m-0">
+      RPC directo
+    </TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="explorador" className="mt-4">
+    Explore transacciones, bloques y el estado de los contratos a través de la interfaz web:
+
+    ```
+    http://localhost:8000
+    ```
+
+    El explorador proporciona:
+
+    * Historial y detalles de transacciones
+    * Información del bloque
+    * Código fuente y estado del contrato
+    * Saldos de cuenta
+  </TabsContent>
+
+  <TabsContent value="api" className="mt-4">
+    Consulta datos de blockchain utilizando la API de Stacks:
+
+    ```terminal
+    $ curl http://localhost:3999/v2/info
+    {
+      "peer_version": 4207599113,
+      "burn_block_height": 102,
+      "stacks_tip_height": 68,
+      "network_id": 2147483648
+    }
+    ```
+
+    Puntos finales comunes:
+
+    * `/v2/info` - Información de la red
+    * `/v2/accounts/{address}` - Detalles de la cuenta
+    * `/v2/contracts/source/{address}/{name}` - Fuente del contrato
+    * `/extended/v1/tx/{txid}` - Detalles de la transacción
+  </TabsContent>
+
+  <TabsContent value="rpc" className="mt-4">
+    Enviar transacciones directamente al nodo de Stacks:
+
+    ```terminal
+    $ curl -X POST http://localhost:20443/v2/transactions \
+      -H "Content-Type: application/json" \
+      -d @transaction.json
+    ```
+
+    Puntos finales RPC:
+
+    * `/v2/transactions` - Transmitir transacciones
+    * `/v2/contracts/call-read` - Llamar funciones de solo lectura
+    * `/v2/fees/transfer` - Obtener estimaciones de tarifas
+  </TabsContent>
+</Tabs>
+
+## Configuración avanzada
+
+### Optimización del rendimiento
+
+Para ciclos de desarrollo rápidos:
+
+```toml settings/Devnet.toml
+[network.devnet]
+# 1 second blocks
+bitcoin_controller_block_time = 1_000
+
+# Disable explorers for speed
+disable_bitcoin_explorer = true
+disable_stacks_explorer = true
+
+# Keep API for contract interaction
+disable_stacks_api = false
+```
+
+### Configuración de época
+
+Prueba diferentes versiones de Stacks:
+
+```toml
+[epochs]
+epoch_2_0 = 0     # Stacks 2.0 from genesis
+epoch_2_05 = 0    # Stacks 2.05 from genesis  
+epoch_2_1 = 0     # Stacks 2.1 from genesis
+epoch_2_2 = 0     # Pox-2 from genesis
+epoch_2_3 = 0     # Pox-3 from genesis
+epoch_2_4 = 0     # Pox-4 from genesis
+epoch_3_0 = 101   # Nakamoto activation at block 101
+```
+
+### Despliegue de paquetes
+
+Crear configuraciones de devnet reutilizables:
+
+```terminal
+$ clarinet devnet package --name demo-env
+[32mPackaging devnet configuration...[0m
+[32mCreated[0m demo-env.json
+```
+
+Usar configuración empaquetada:
+
+```terminal
+$ clarinet devnet start --package demo-env.json
+```
+
+## Problemas comunes
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="conexión-docker">
+    <AccordionTrigger>Errores de conexión de Docker</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "clarinet no pudo crear la red"
+
+        **Soluciones**:
+
+        1. Asegúrese de que Docker Desktop esté en ejecución (macOS/Windows)
+        2. Iniciar el daemon de Docker: `sudo systemctl start docker` (Linux)
+        3. Verificar los permisos de Docker: `docker ps`
+        4. Restablecer Docker a los valores predeterminados de fábrica si los problemas persisten
+
+        **Verificar Docker**:
+
+        ```terminal
+        $ docker --version
+        Docker version 24.0.7, build afdd53b
+        $ docker ps
+        CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="conflictos de puertos">
+    <AccordionTrigger>Puerto ya en uso</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "bind: dirección ya en uso"
+
+        **Encontrar proceso usando puerto**:
+
+        Para macOS/Linux:
+
+        ```terminal
+        $ lsof -i :3999
+        $ kill -9 $(lsof -t -i:3999)
+        ```
+
+        Para Windows:
+
+        ```terminal
+        $ netstat -ano | findstr :3999
+        $ taskkill /PID <PID> /F
+        ```
+
+        **O configura puertos diferentes** en `settings/Devnet.toml`:
+
+        ```toml
+        stacks_api_port = 4999
+        stacks_explorer_port = 4020
+        postgres_port = 6432
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="límites de recursos">
+    <AccordionTrigger>Alto uso de recursos</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Síntomas**: Rendimiento lento, alto uso de CPU/memoria
+
+        **Optimizar recursos**:
+
+        ```toml
+        # Disable unused services
+        disable_bitcoin_explorer = true
+        disable_stacks_explorer = true
+
+        # Slower block production
+        bitcoin_controller_block_time = 60_000
+        ```
+
+        **Límites de recursos de Docker**:
+
+        ```terminal
+        $ docker update --memory="2g" --cpus="1" <container_id>
+        ```
+
+        **Limpiar datos antiguos**:
+
+        ```terminal
+        $ clarinet devnet stop
+        $ docker system prune -a
+        $ rm -rf tmp/devnet
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="red-existe">
+    <AccordionTrigger>Error: la red ya existe</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "Docker respondió con el código de estado 409: red con nombre `<my-project>.devnet` ya existe"
+
+        Esto ocurre cuando una sesión anterior de devnet no se limpió correctamente, dejando una red Docker atrás.
+
+        **Solución - Eliminar la red existente**:
+
+        ```terminal
+        $ docker network rm <my-project>.devnet
+        ```
+
+        O si no estás seguro del nombre exacto de la red:
+
+        ```terminal
+        $ docker network ls | grep devnet
+        $ docker network rm <network-name>
+        ```
+
+        **Prevención**:
+
+        * Usar `Ctrl+C` para detener elegantemente devnet
+        * Verificar si hay redes huérfanas después de bloqueos:
+
+        ```terminal
+        $ docker network prune
+        ```
+
+        **Nota**: El nombre de la red se basa en el nombre del directorio de su proyecto, por lo que un `clarinet new hello-world` el proyecto tendrá un nombre de red de `hello-world.devnet`.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="error de flujo de docker">
+    <AccordionTrigger>Error de flujo de Docker durante el inicio</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Error**: "Fatal: no se puede crear la imagen: error de flujo de Docker"
+
+        Este error suele ocurrir cuando las imágenes de Docker están dañadas o cuando los exploradores no logran iniciarse correctamente.
+
+        **Solución 1 - Desactivar exploradores**:
+
+        Si no necesitas los exploradores web, desactívalos en `settings/Devnet.toml`:
+
+        ```toml
+        disable_bitcoin_explorer = true
+        disable_stacks_explorer = true
+        ```
+
+        **Solución 2 - Limpiar el entorno de Docker**:
+
+        Eliminar todos los contenedores e imágenes, luego reiniciar:
+
+        ```terminal
+        $ docker stop $(docker ps -a -q)
+        $ docker system prune -a
+        $ docker volume prune
+        ```
+
+        **Solución 3 - Limpieza completa y reinicio**:
+
+        ```terminal
+        $ docker stop $(docker ps -a -q)
+        $ docker network rm <project-name>.devnet
+        $ docker system prune --all --volumes
+        $ clarinet devnet start
+        ```
+
+        Esto garantiza un entorno Docker limpio para que devnet comience de cero.
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="fallos-de-implementación">
+    <AccordionTrigger>Fallos en el despliegue de contratos</AccordionTrigger>
+
+    <AccordionContent>
+      <div className="pb-4 pt-2">
+        **Verificar el orden de despliegue** en `Clarinet.toml`:
+
+        ```toml
+        # Deploy dependencies first
+        [contracts.sip-010-trait]
+        path = "contracts/sip-010-trait.clar"
+
+        [contracts.token]
+        path = "contracts/token.clar"
+        ```
+
+        **Validar contratos primero**:
+
+        ```terminal
+        $ clarinet check
+        ```
+
+        **Revisar los registros de implementación**:
+
+        ```terminal
+        $ clarinet devnet start --no-dashboard
+        ```
+
+        **Despliegue manual**:
+
+        ```terminal
+        $ clarinet deployments generate --devnet
+        $ clarinet deployments apply --devnet
+        ```
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Próximos pasos
+
+:::next-steps
+* [Interacción con contratos](/tools/clarinet/contract-interaction): Aprende cómo interactuar con tus contratos.
+* [Despliegue](/tools/clarinet/deployment): Aprende cómo desplegar tu proyecto de Clarinet.
+:::

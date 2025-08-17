@@ -1,0 +1,101 @@
+---
+title: Empezar
+description: Comienza a construir aplicaciones descentralizadas en Stacks con las herramientas de Hiro.
+sidebarTitle: Visión general
+full: true
+llm: false
+---
+import { Card as MainCard, SecondaryCard, SmallCard } from '@/components/card';
+import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
+import { PageFooter } from '@/components/footer';
+import { MessageCircle, Braces, Brackets, ChevronRight, Code, Database, Play, Rocket, Star, Terminal, Wallet, NotebookIcon, TestTube, Layers, Calculator, Activity, Filter, Server, Package, Shield, Zap, Hammer } from 'lucide-react';
+import { API, Backend, BugIcon, Clarinet, Clarity, Cloud, Chainhook, Frontend, Hiro, Js, Newspaper, Pulse, QuestionIcon } from '@/components/ui/icon';
+import heroImage from '@/public/stacks-hero.svg';
+
+<div className="flex flex-col space-y-10 pt-0">
+  <Cards>
+    <SecondaryCard href="/features" title="Introducción a las herramientas de Hiro" icon={<Hiro />} tag="Hiro" description="Aprende más sobre las características que ofrecen nuestras herramientas." />
+
+    <SecondaryCard href="/recommended-resources" title="Recursos recomendados" icon={<NotebookIcon />} tag="Resources" description="Comienza con una colección de recursos seleccionados en todo el ecosistema de Stacks." />
+  </Cards>
+
+  <div className="flex flex-col">
+    <h4 id="explore-by-goal" className="scroll-m-20">
+      <a href="#explore-by-goal" className="not-prose group text-sm text-muted-foreground uppercase">
+        Inicios rápidos
+      </a>
+    </h4>
+
+    <hr className="border-t border-border my-2" />
+
+    <Cards>
+      <SmallCard icon={<Rocket />} href="/creating-a-clarinet-project" title="Quiero escribir contratos inteligentes" description="Comienza con la configuración del proyecto y los fundamentos del desarrollo local." />
+
+      <SmallCard icon={<Shield />} href="/unit-testing" title="Quiero probar mis contratos" description="Aprende las mejores prácticas de pruebas y técnicas de depuración." />
+
+      <SmallCard icon={<Zap />} href="/contract-monitoring" title="Quiero monitorear datos de blockchain" description="Configura el monitoreo e indexación en tiempo real." />
+
+      <SmallCard icon={<Hammer />} href="/building-transactions" title="Quiero interactuar con contratos" description="Aprende cómo construir y enviar transacciones de forma programática." />
+    </Cards>
+  </div>
+
+  <div className="flex flex-col">
+    <h4 id="explore-by-workflow" className="scroll-m-20">
+      <a href="#explore-by-workflow" className="not-prose group text-sm text-muted-foreground uppercase">
+        Flujo de trabajo de desarrollo
+      </a>
+    </h4>
+
+    <hr className="border-t border-border my-2" />
+
+    <Cards>
+      <SmallCard icon={<Code />} href="/creating-a-clarinet-project" title="Crea Tu Primer Proyecto" description="Configura un nuevo proyecto de Clarinet y comienza a construir contratos inteligentes localmente." />
+
+      <SmallCard icon={<Terminal />} href="/configuring-clarity-vscode-extension" title="Configura Tu IDE" description="Configure VS Code con la extensión Clarity para una experiencia de desarrollo mejorada." />
+
+      <SmallCard icon={<Wallet />} href="/using-local-accounts" title="Administrar Cuentas Locales" description="Trabaja con cuentas y billeteras de prueba en tu entorno de desarrollo local." />
+
+      <SmallCard icon={<Database />} href="/working-with-devnet" title="Configuración de Red Local" description="Ejecuta y configura una blockchain local de Stacks para pruebas." />
+    </Cards>
+  </div>
+
+  <div className="flex flex-col">
+    <h4 id="explore-by-testing" className="scroll-m-20">
+      <a href="#explore-by-testing" className="not-prose group text-sm text-muted-foreground uppercase">
+        Pruebas y Calidad
+      </a>
+    </h4>
+
+    <hr className="border-t border-border my-2" />
+
+    <Cards>
+      <SmallCard icon={<TestTube />} href="/unit-testing" title="Pruebas Unitarias" description="Escriba pruebas unitarias exhaustivas para asegurarse de que la lógica de su contrato sea correcta." />
+
+      <SmallCard icon={<Layers />} href="/integration-testing" title="Pruebas de Integración" description="Prueba las interacciones del contrato y los escenarios complejos con pruebas de integración." />
+
+      <SmallCard icon={<Calculator />} href="/cost-analysis-and-debugging" title="Análisis de Costos" description="Analizar los costos de transacción y depurar problemas de rendimiento del contrato." />
+    </Cards>
+  </div>
+
+  <div className="flex flex-col">
+    <h4 id="explore-by-events" className="scroll-m-20">
+      <a href="#explore-by-events" className="not-prose group text-sm text-muted-foreground uppercase">
+        Datos y eventos en tiempo real
+      </a>
+    </h4>
+
+    <hr className="border-t border-border my-2" />
+
+    <Cards>
+      <SmallCard icon={<Activity />} href="/contract-monitoring" title="Monitorear Contratos" description="Rastrea la actividad y los eventos de contratos inteligentes en tiempo real." />
+
+      <SmallCard icon={<Filter />} href="/creating-predicates" title="Crear Filtros de Eventos" description="Construye predicados personalizados para filtrar eventos de blockchain." />
+
+      <SmallCard icon={<Server />} href="/building-a-simple-indexer" title="Construir un Indexador" description="Crea tu propio indexador de datos de blockchain para aplicaciones personalizadas." />
+
+      <SmallCard icon={<Package />} href="/working-with-events-and-transaction-payloads" title="Cargas útiles de eventos" description="Analiza y trabaja con datos de transacciones y cargas útiles de eventos." />
+    </Cards>
+  </div>
+</div>
+
+<PageFooter />

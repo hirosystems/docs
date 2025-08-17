@@ -1,0 +1,34 @@
+---
+title: Generar una cartera
+description: Crea una nueva billetera con frase mnemotécnica o restaura desde una semilla existente
+---
+```typescript
+import { generateWallet, generateSecretKey } from '@stacks/wallet-sdk';
+
+// Generate a new wallet with a new 24-word seed phrase
+const secretKey = generateSecretKey(256); // 256 bits = 24 words
+const wallet = await generateWallet({
+  secretKey,
+  password: 'your-secure-password',
+});
+
+// Access the first account
+const account = wallet.accounts[0];
+console.log('Address:', account.stxAddress);
+console.log('Mnemonic:', secretKey);
+```
+
+## Casos de uso
+
+* Creando nuevas billeteras para usuarios
+* Restauración de billeteras a partir de frases semilla
+* Generando direcciones de billetera deterministas
+* Creando aplicaciones de billetera
+
+## Conceptos clave
+
+El SDK de la billetera genera billeteras determinísticas jerárquicas (HD) siguiendo los estándares BIP32/BIP39:
+
+* **Clave secreta**: Puede ser una frase mnemotécnica o clave privada
+* **Contraseña**: Cifra la cartera (diferente de la frase de contraseña mnemónica)
+* **Cuentas**: Se pueden derivar múltiples cuentas de una sola semilla

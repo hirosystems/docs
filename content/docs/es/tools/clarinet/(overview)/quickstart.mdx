@@ -1,0 +1,165 @@
+---
+title: Inicio rápido
+description: En esta guía, construirás un contrato inteligente de contador simple e interactuarás con él en un entorno local.
+---
+## Lo que aprenderás
+
+:::objectives
+* Crear un proyecto de contrato inteligente en Clarity
+* Escribir código Clarity con mapas y funciones públicas
+* Prueba y valida tus contratos utilizando la consola de Clarinet
+:::
+
+## Requisitos previos
+
+:::prerequisites
+* Clarinet instalado en tu máquina. Sigue el [guía de instalación](/tools/clarinet#installation) si es necesario.
+* Un editor de código como VS Code para editar archivos de Clarity.
+:::
+
+## Inicio rápido
+
+<Steps>
+  <Step>
+    ### Crea tu proyecto
+
+    Comencemos creando un nuevo proyecto de Clarinet. El `clarinet new` el comando configura todo lo que necesitas para el desarrollo de contratos inteligentes, incluyendo un marco de pruebas, configuraciones de implementación y un entorno de desarrollo local:
+
+    ```terminal
+    $ clarinet new counter
+    [32mCreate directory[0m [1mcounter[0m
+    [32mCreate directory[0m [1mcontracts[0m
+    [32mCreate directory[0m [1msettings[0m
+    [32mCreate directory[0m [1mtests[0m
+    [32mCreate file[0m [1mClarinet.toml[0m
+    [32mCreate file[0m [1mpackage.json[0m
+    [32mCreate file[0m [1mvitest.config.js[0m
+    ```
+
+    Clarinet crea una estructura de proyecto completa para ti. Cada carpeta tiene un propósito específico en tu flujo de trabajo de desarrollo:
+
+    <Files className="font-fono pointer-events-none bg-background">
+      <Folder name="counter" defaultOpen>
+        <Folder name="contracts" />
+
+        <Folder name="settings">
+          <File name="Devnet.toml" />
+
+          <File name="Mainnet.toml" />
+
+          <File name="Testnet.toml" />
+        </Folder>
+
+        <Folder name="tests" />
+
+        <File name="Clarinet.toml" />
+
+        <File name="package.json" />
+
+        <File name="vitest.config.js" />
+      </Folder>
+    </Files>
+  </Step>
+
+  <Step>
+    ### Genera tu contrato
+
+    Ahora que tenemos nuestra estructura de proyecto, vamos a crear un contrato inteligente. Navega a tu directorio de proyecto y utiliza el generador de contratos de Clarinet:
+
+    ```terminal
+    $ cd counter
+    $ clarinet contract new counter
+    [32mCreated file[0m [1mcontracts/counter.clar[0m
+    [32mCreated file[0m [1mtests/counter.test.ts[0m
+    [33mUpdated Clarinet.toml[0m [1mwith contract counter[0m
+    ```
+
+    Clarinet crea automáticamente tanto su archivo de contrato como un archivo de prueba correspondiente. Esto sigue la mejor práctica de escribir pruebas junto con su código de contrato:
+
+    | Archivo | Propósito |
+    |------|---------|
+    | `contracts/counter.clar` | Tu código de contrato inteligente |
+    | `tests/counter.test.ts` | Archivo de prueba para su contrato |
+
+    :::callout
+    Observe que Clarinet también actualizó su `Clarinet.toml` archivo. Este archivo de configuración rastrea todos los contratos en su proyecto y sus ajustes de implementación.
+    :::
+  </Step>
+
+  <Step>
+    ### Escriba el código de su contrato
+
+    Abrir `contracts/counter.clar` y reemplazar su contenido con nuestra implementación del contador. Este contrato mantendrá un conteo separado para cada usuario que interactúe con él:
+
+    ```clarity contracts/counter.clar -c
+    ;; Define a map to store counts for each user
+    (define-map counters principal uint)
+
+    ;; Increment the count for the caller
+    (define-public (count-up)
+      (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
+    )
+
+    ;; Get the current count for a user
+    (define-read-only (get-count (who principal))
+      (default-to u0 (map-get? counters who))
+    )
+    ```
+
+    Entendamos qué hace cada parte:
+
+    * [`define-map`](/resources/clarity/reference/functions#define-map) crea un mapa de almacenamiento persistente que asocia a cada usuario (principal) con su conteo
+    * [`tx-sender`](/resources/clarity/reference/keywords#tx-sender) es una variable incorporada que contiene la dirección de quien llama a la función
+    * [`define-public`](/resources/clarity/reference/functions#define-public) declara funciones que pueden modificar el estado del contrato
+    * [`define-read-only`](/resources/clarity/reference/functions#define-read-only) declara funciones que solo leen datos sin modificarlos
+  </Step>
+
+  <Step>
+    ### Valide su contrato
+
+    Antes de poder probar nuestro contrato, asegurémonos de que sea sintácticamente correcto y seguro en cuanto a tipos. El comando check de Clarinet analiza tu contrato sin desplegarlo:
+
+    ```terminal
+    $ clarinet check
+    [32m✔[0m [1m1 contract checked[0m
+    ```
+
+    Si ve errores en su lugar, estos son los problemas más comunes y cómo solucionarlos:
+
+    | Error | Solución |
+    |-------|-----|
+    | `Unknown keyword` | Verificar la ortografía de las funciones de Clarity |
+    | `Type mismatch` | Asegúrate de usar los tipos correctos (uint, principal, etc.) |
+    | `Unresolved contract` | Verificar el nombre del contrato en `Clarinet.toml` coincide con el nombre del contrato en el archivo |
+  </Step>
+
+  <Step>
+    ### Prueba en la consola
+
+    Ahora viene la parte emocionante: ¡interactuemos con nuestro contrato! Clarinet proporciona una consola interactiva donde puedes llamar funciones y ver resultados inmediatamente. Inicia la consola con:
+
+    ```terminal
+    $ clarinet console
+    ```
+
+    Una vez que la consola se carga, puedes llamar a las funciones de tu contrato directamente. Aquí hay algunos ejemplos que puedes probar:
+
+    ```terminal
+    $ (contract-call? .counter count-up)
+    [32m(ok true)[0m
+    $ (contract-call? .counter get-count tx-sender)
+    [32mu1[0m
+    $ (contract-call? .counter count-up)
+    [32m(ok true)[0m
+    $ (contract-call? .counter get-count tx-sender)
+    [32mu2[0m
+    ```
+  </Step>
+</Steps>
+
+## Próximos pasos
+
+:::next-steps
+* [Estructura del proyecto](/tools/clarinet/project-structure): Aprende sobre la estructura del proyecto y cómo gestionar tus contratos.
+* [Desarrollo de blockchain local](/tools/clarinet/local-blockchain-development): Inicia una cadena de bloques local para probar tus contratos.
+:::
