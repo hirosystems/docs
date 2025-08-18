@@ -1,0 +1,65 @@
+---
+title: Uso básico
+sidebarTitle: Uso
+description: Aprende los conceptos básicos del uso de la API RPC del Nodo Stacks.
+---
+## Uso
+
+The Stacks Node RPC API provides direct access to Stacks blockchain nodes through RPC endpoints. All requests use HTTPS and enforce standard REST principles.
+
+### URL base
+
+```console -c
+https://api.hiro.so
+```
+
+### Realizando solicitudes
+
+```terminal
+$ curl -L 'https://api.hiro.so/v2/info' \
+  -H 'Accept: application/json'
+```
+
+### Autenticación
+
+Incluya su clave API para límites de tasa más altos:
+
+```terminal
+$ curl -L 'https://api.hiro.so/v2/info' \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: $HIRO_API_KEY'
+```
+
+## Límites de tasa
+
+Las llamadas RPC son **ponderado según el costo del método** and consume more units than REST endpoints:
+
+| Tipo de método | Ejemplos | Multiplicador de costo |
+|-------------|----------|-----------------|
+| Lecturas ligeras | `get_block`, `get_transaction` | 1× |
+| Llamadas a contratos de solo lectura | `call_read_only_function` | 2× |
+| Envío de transacción | `submit_transaction` | 3× |
+| Operaciones pesadas | `trace_call`, escaneos profundos de contratos | 5× |
+
+### Encabezados de límite de tasa
+
+```
+X-RateLimit-Limit: 900              # window capacity in units
+X-RateLimit-Remaining: 125          # remaining units
+X-RateLimit-Reset: 60               # seconds until reset
+X-RateLimit-Method-Cost: 3          # cost for this RPC method
+X-Plan-Tier: starter                # your plan tier
+X-Surface: rpc                      # indicates RPC endpoint
+```
+
+## Códigos de respuesta
+
+| Código | Descripción |
+|------|-------------|
+| `200` | Solicitud exitosa |
+| `400` | Parámetros inválidos |
+| `401` | Falta la clave API |
+| `403` | Clave de API inválida |
+| `404` | Recurso no encontrado |
+| `429` | Límite de velocidad excedido |
+| `5xx` | Errores del servidor/nodo ascendente |
