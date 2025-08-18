@@ -26,6 +26,7 @@ import { API } from '@/components/reference/api-page';
 import { Badge } from '@/components/ui/badge';
 import * as customIcons from '@/components/ui/icon';
 import { TagFilterSystem } from '@/components/ui/tag-filter-system';
+import { i18n } from '@/lib/i18n';
 import { getAllFilterablePages, source } from '@/lib/source';
 import type { HeadingProps } from '@/types';
 
@@ -298,20 +299,31 @@ export default async function Page(props: {
 }
 
 export async function generateStaticParams() {
-  // Generate params for both locales and slugs
+  const { languages, defaultLanguage } = i18n;
+
+  // Generate params for all locales and slugs
   const slugParams = source.generateParams().filter(
     (params) =>
-      // Filter out empty slug arrays (root path)
       params.slug && params.slug.length > 0,
   );
 
-  // The source slugs include 'en' as first element, we need to extract it
-  return slugParams
-    .filter((params) => params.slug[0] === 'en') // Only handle 'en' for now
-    .map((params) => ({
-      locale: 'en',
-      slug: params.slug.slice(1), // Remove the 'en' prefix from slug
-    }));
+  const allParams = [];
+
+  for (const params of slugParams) {
+    const [sourceLocale, ...restSlug] = params.slug;
+
+    // Generate for all configured locales
+    if (sourceLocale === defaultLanguage) {
+      for (const locale of languages) {
+        allParams.push({
+          locale,
+          slug: restSlug,
+        });
+      }
+    }
+  }
+
+  return allParams;
 }
 
 export async function generateMetadata(props: {
@@ -322,7 +334,7 @@ export async function generateMetadata(props: {
 }) {
   const params = await props.params;
   const { locale, slug } = params;
-  // The source includes 'en' in the slug path, so we need to prepend it
+  // The source includes [locale] in the slug path, so we need to prepend it
   const fullSlug = [locale, ...slug];
   const page = source.getPage(fullSlug);
   if (!page) notFound();
