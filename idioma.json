@@ -5,12 +5,7 @@
     "targets": ["es"]
   },
   "files": {
-    "include": [
-      {
-        "source": "app/[locale]/(home)/_pages/page.en.tsx",
-        "target": "app/[locale]/(home)/_pages/page.es.tsx"
-      }
-    ]
+    "include": ["content/docs/[locale]/**/*.{md,mdx}"]
   },
   "preserve": ["Clarinet", "Stacks", "Clarity", "/^type:\\s*\\w+$/"]
 }
