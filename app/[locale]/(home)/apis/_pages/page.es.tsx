@@ -14,8 +14,15 @@ export default function APIsPage() {
             <IndexCard
               icon={<StacksIcon />}
               href="/apis/stacks-blockchain-api"
-              title="API de Blockchain de Stacks"
+              title="API de la cadena de bloques Stacks"
               description="API REST completa para interactuar con la cadena de bloques de Stacks y los datos de la red."
+            />
+
+            <IndexCard
+              icon={<StacksIcon />}
+              href="/apis/stacks-node-rpc-api"
+              title="API RPC del Nodo Stacks"
+              description="Métodos de nodo de blockchain sin procesar: enviar transacciones, llamar contratos de solo lectura, consultar mempool/estado."
             />
 
             <IndexCard
@@ -29,7 +36,7 @@ export default function APIsPage() {
               icon={<Hiro />}
               href="/apis/platform-api"
               title="API de la plataforma"
-              description="Administre programáticamente devnets y chainhooks a través de la interfaz REST."
+              description="Gestione programáticamente devnets y chainhooks a través de la interfaz REST."
             />
 
             <IndexCard
@@ -52,7 +59,7 @@ export default function APIsPage() {
               icon={<API />}
               href="/apis/signer-metrics-api"
               title="API de Métricas del Firmante"
-              description="Monitorear y analizar el comportamiento y rendimiento de los firmantes en la red Stacks."
+              description="Monitorea y analiza el comportamiento y rendimiento de los firmantes en la red Stacks."
             />
           </Cards>
         </div>

@@ -96,6 +96,11 @@ export const es: Translations = {
       title: 'API de Stacks',
       description: 'API RESTful para acceder a datos y funcionalidad de la blockchain Stacks.',
     },
+    stacksNodeRpcApi: {
+      title: 'API de Nodo RPC de Stacks',
+      description:
+        'Métodos de nodo blockchain sin procesar: enviar txs, llamar contratos de solo lectura, consultar mempool/estado.',
+    },
     tokenMetadata: {
       title: 'API de Metadatos de Tokens',
       description: 'API para obtener metadatos de tokens NFT y fungibles.',

@@ -18,6 +18,12 @@ export default function APIsPage() {
               description="Comprehensive REST API for interacting with the Stacks blockchain and network data."
             />
             <IndexCard
+              icon={<StacksIcon />}
+              href="/apis/stacks-node-rpc-api"
+              title="Stacks Node RPC API"
+              description="Raw blockchain node methods: submit txs, call read-only contracts, query mempool/state."
+            />
+            <IndexCard
               icon={<API />}
               href="/apis/token-metadata-api"
               title="Token Metadata API"
