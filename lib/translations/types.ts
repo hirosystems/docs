@@ -94,6 +94,10 @@ export interface Translations {
       title: string;
       description: string;
     };
+    stacksNodeRpcApi: {
+      title: string;
+      description: string;
+    };
     tokenMetadata: {
       title: string;
       description: string;
