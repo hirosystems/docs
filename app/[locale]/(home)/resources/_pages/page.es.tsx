@@ -16,13 +16,15 @@ export default function ResourcesPage() {
               icon={<Clarity />}
               href="/resources/clarity"
               title="Referencia de Clarity"
-              description="Guías completas y referencia de funciones para el lenguaje de contratos inteligentes Clarity." />
+              description="Guías completas y referencia de funciones para el lenguaje de contratos inteligentes Clarity."
+            />
 
             <IndexCard
               icon={<Terminal />}
               href="/resources/guides"
               title="Guías"
-              description="Guías para desarrollar en Stacks y Bitcoin." />
+              description="Guías para desarrollar en Stacks y Bitcoin."
+            />
 
             {/* <IndexCard
                icon={<Braces />}
@@ -34,17 +36,18 @@ export default function ResourcesPage() {
               icon={<Code />}
               href="/resources/snippets"
               title="Fragmentos"
-              description="Fragmentos de código para construir en Stacks y Bitcoin." />
+              description="Fragmentos de código para construir en Stacks y Bitcoin."
+            />
 
             <IndexCard
               icon={<Database />}
               href="/resources/archive"
               title="Archivo Hiro"
-              description="Instantáneas de datos para iniciar rápidamente servicios del ecosistema Stacks con datos precargados." />
-
+              description="Instantáneas de datos para iniciar rápidamente servicios del ecosistema Stacks con datos precargados."
+            />
           </Cards>
         </div>
       </div>
-    </main>);
-
+    </main>
+  );
 }

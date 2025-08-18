@@ -37,7 +37,7 @@ export const es: Translations = {
     apis: 'APIs',
     reference: 'Referencia',
     resources: 'Recursos',
-    
+
     // Common terms
     api: 'API',
     cli: 'CLI',
@@ -50,11 +50,11 @@ export const es: Translations = {
     nft: 'NFT',
     btc: 'BTC',
     auth: 'Auth',
-    
+
     // Tools
     clarinet: 'Clarinet',
     chainhook: 'Chainhook',
-    
+
     // Specific pages/sections
     guides: 'Guías',
     clarity: 'Clarity',

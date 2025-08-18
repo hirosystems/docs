@@ -9,7 +9,7 @@ export function getLocaleFromPath(pathname: string): string {
   // Check if path has locale prefix
   const segments = pathname.split('/').filter(Boolean);
   const pathLocale = i18n.languages.includes(segments[0]) ? segments[0] : null;
-  
+
   return pathLocale || i18n.defaultLanguage;
 }
 
@@ -30,7 +30,7 @@ export function getLocaleFromRequest(request: Request): string {
       // Invalid referer URL, fall back to default
     }
   }
-  
+
   // Could also check Accept-Language header as fallback
   const acceptLanguage = request.headers.get('accept-language');
   if (acceptLanguage) {
@@ -39,6 +39,6 @@ export function getLocaleFromRequest(request: Request): string {
       return preferredLang;
     }
   }
-  
+
   return i18n.defaultLanguage;
 }

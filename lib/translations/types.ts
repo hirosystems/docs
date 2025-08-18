@@ -35,7 +35,7 @@ export interface Translations {
     apis: string;
     reference: string;
     resources: string;
-    
+
     // Common terms
     api: string;
     cli: string;
@@ -48,11 +48,11 @@ export interface Translations {
     nft: string;
     btc: string;
     auth: string;
-    
+
     // Tools
     clarinet: string;
     chainhook: string;
-    
+
     // Specific pages/sections
     guides: string;
     clarity: string;

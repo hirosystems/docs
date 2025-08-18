@@ -70,7 +70,6 @@ export function LLMShare({ content }: LLMShareProps) {
     }
   };
 
-
   const handleShare = async (provider: ReturnType<typeof getLLMProviders>[number]) => {
     try {
       const instruction = `Read from ${markdownUrl} so I can ask questions about it.`;
@@ -130,7 +129,9 @@ export function LLMShare({ content }: LLMShareProps) {
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <provider.icon className="h-3 w-3 text-muted-foreground" />
-                  <span className="font-medium font-fono">{t.navigation.llmShare.openIn} {provider.name}</span>
+                  <span className="font-medium font-fono">
+                    {t.navigation.llmShare.openIn} {provider.name}
+                  </span>
                 </div>
               </div>
               <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />

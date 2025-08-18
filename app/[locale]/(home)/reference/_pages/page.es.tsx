@@ -15,19 +15,22 @@ export default function ReferencePage() {
               icon={<Js />}
               href="/reference/stacks.js"
               title="Stacks.js"
-              description="SDK de JavaScript para construir aplicaciones en Stacks con transacciones, utilidades de red e integración de billetera." />
+              description="SDK de JavaScript para construir aplicaciones en Stacks con transacciones, utilidades de red e integración de billetera."
+            />
 
             <IndexCard
               icon={<Js />}
               href="/tools/clarinet/sdk-introduction"
               title="SDK de Clarinet JS"
-              description="SDK de JavaScript para probar e interactuar con contratos inteligentes de Clarity en entornos simulados." />
+              description="SDK de JavaScript para probar e interactuar con contratos inteligentes de Clarity en entornos simulados."
+            />
 
             <IndexCard
               icon={<Js />}
               href="/tools/clarinet/browser-sdk-reference"
               title="Clarinet JS SDK para navegador"
-              description="SDK de JavaScript para interactuar con la simnet en navegadores web." />
+              description="SDK de JavaScript para interactuar con la simnet en navegadores web."
+            />
 
             {/* <IndexCard
                icon={<API />}
@@ -38,6 +41,6 @@ export default function ReferencePage() {
           </Cards>
         </div>
       </div>
-    </main>);
-
+    </main>
+  );
 }

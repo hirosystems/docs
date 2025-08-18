@@ -1,10 +1,6 @@
-export default async function ResourcesPage({ 
-  params 
-}: { 
-  params: Promise<{ locale: string }> 
-}) {
+export default async function ResourcesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  
+
   // Dynamically import the locale-specific page
   try {
     const LocalePage = (await import(`./_pages/page.${locale}`)).default;

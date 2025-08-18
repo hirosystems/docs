@@ -2,8 +2,8 @@
 
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useCallback, useState } from 'react';
-import { cn } from '@/lib/utils';
 import { useTranslations } from '@/hooks/use-translations';
+import { cn } from '@/lib/utils';
 import type { FeedbackResponse } from '@/types/feedback';
 
 interface FeedbackWrapperProps {

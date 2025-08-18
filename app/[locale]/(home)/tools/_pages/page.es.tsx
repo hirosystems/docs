@@ -16,30 +16,33 @@ export default function ToolsPage() {
               href="/tools/clarinet"
               title="Clarinet"
               icon={<Clarinet />}
-              description="Un entorno de desarrollo integral para construir y probar contratos inteligentes de Clarity." />
+              description="Un entorno de desarrollo integral para construir y probar contratos inteligentes de Clarity."
+            />
 
             <IndexCard
               href="/tools/chainhook"
               title="Chainhook"
               icon={<Chainhook />}
-              description="Crea flujos de eventos personalizados y desencadenantes para el procesamiento de datos de blockchain en tiempo real." />
+              description="Crea flujos de eventos personalizados y desencadenantes para el procesamiento de datos de blockchain en tiempo real."
+            />
 
             <IndexCard
               href="/tools/contract-monitoring"
               title="Monitoreo de Contratos"
               icon={<Brackets />}
-              description="Monitorea y rastrea la actividad de contratos inteligentes y las métricas de rendimiento." />
+              description="Monitorea y rastrea la actividad de contratos inteligentes y las métricas de rendimiento."
+            />
 
             <IndexCard
               href="/tools/bitcoin-indexer"
               title="Indexador de Bitcoin"
               icon={<Database />}
               tag="Bitcoin L1"
-              description="Indexa y consulta datos de la cadena de bloques de Bitcoin con indexación de alto rendimiento." />
-
+              description="Indexa y consulta datos de la cadena de bloques de Bitcoin con indexación de alto rendimiento."
+            />
           </Cards>
         </div>
       </div>
-    </main>);
-
+    </main>
+  );
 }

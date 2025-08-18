@@ -32,18 +32,18 @@ import type { HeadingProps } from '@/types';
 export default async function Page(props: {
   params: Promise<{
     locale: string;
-    slug: string[]
-  }>
+    slug: string[];
+  }>;
 }) {
   const params = await props.params;
   const { locale, slug } = params;
-  
+
   // The source includes 'en' in the slug path, so we need to prepend it
   const fullSlug = [locale, ...slug];
-  
+
   // Get the page with the locale prepended
   const page = source.getPage(fullSlug);
-  
+
   if (!page) notFound();
 
   const fileContent = await fs.readFile(page.data._file.absolutePath, 'utf-8');
@@ -298,18 +298,18 @@ export async function generateStaticParams() {
 
   // The source slugs include 'en' as first element, we need to extract it
   return slugParams
-    .filter(params => params.slug[0] === 'en') // Only handle 'en' for now
-    .map(params => ({
+    .filter((params) => params.slug[0] === 'en') // Only handle 'en' for now
+    .map((params) => ({
       locale: 'en',
-      slug: params.slug.slice(1) // Remove the 'en' prefix from slug
+      slug: params.slug.slice(1), // Remove the 'en' prefix from slug
     }));
 }
 
 export async function generateMetadata(props: {
   params: Promise<{
     locale: string;
-    slug: string[]
-  }>
+    slug: string[];
+  }>;
 }) {
   const params = await props.params;
   const { locale, slug } = params;
