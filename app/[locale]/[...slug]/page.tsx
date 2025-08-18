@@ -213,6 +213,13 @@ export default async function Page(props: {
               </div>
               <DocsPageDescription />
 
+              {/* RPC endpoint callout */}
+              {page.data.isRpc && (
+                <Callout type="info" title="About RPC endpoints">
+                  These are served by Stacks nodes, not directly operated by Hiro. Availability and performance may vary depending on upstream node health. For guaranteed performance, run your own node or talk to us about dedicated options.
+                </Callout>
+              )}
+
               {/* Render TagFilterSystem if tags are present in frontmatter */}
               {page.data.tags && page.data.tags.length > 0 && (
                 <TagFilterSystem

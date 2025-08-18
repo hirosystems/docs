@@ -69,6 +69,12 @@ export const baseOptions: BaseLayoutProps = {
           url: '/apis/stacks-blockchain-api',
         },
         {
+          text: 'Stacks RPC Node API',
+          description:
+            'Raw blockchain node methods: submit txs, call read-only contracts, query mempool/state.',
+          url: '/apis/stacks-node-rpc-api',
+        },
+        {
           text: 'Token Metadata API',
           description: 'API for retrieving NFT and fungible token metadata.',
           url: '/apis/token-metadata-api',
