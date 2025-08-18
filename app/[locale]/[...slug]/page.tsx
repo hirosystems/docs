@@ -302,10 +302,9 @@ export async function generateStaticParams() {
   const { languages, defaultLanguage } = i18n;
 
   // Generate params for all locales and slugs
-  const slugParams = source.generateParams().filter(
-    (params) =>
-      params.slug && params.slug.length > 0,
-  );
+  const slugParams = source
+    .generateParams()
+    .filter((params) => params.slug && params.slug.length > 0);
 
   const allParams = [];
 

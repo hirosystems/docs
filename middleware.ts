@@ -8,12 +8,6 @@ const fumadocsMiddleware = createI18nMiddleware(i18n);
 export default function middleware(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
 
-  // FIXME: Check for double locale prefix (Vercel-specific issue)
-  if (pathname.match(/^\/[a-z]{2}\/[a-z]{2}\//)) {
-    console.log('Double locale detected, skipping middleware for:', pathname);
-    return NextResponse.next();
-  }
-
   const segments = pathname.split('/').filter(Boolean);
   const currentLocale = i18n.languages.includes(segments[0]) ? segments[0] : null;
 
