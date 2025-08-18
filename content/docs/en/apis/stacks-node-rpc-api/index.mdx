@@ -7,14 +7,14 @@ llm: false
 
 ## Overview
 
-The Stacks Node RPC API provides direct access to Stacks blockchain nodes through RPC endpoints. These endpoints offer real-time access to blockchain state, smart contract execution, and node operations without intermediary caching layers.
+The Stacks Node RPC API provides direct access to Stacks blockchain nodes through RPC endpoints. **Hiro proxies these calls to upstream Stacks nodes** - we don't maintain or control the nodes themselves, so performance and availability depend on upstream blockchain infrastructure.
 
 ## Key features
 
-- **Direct node access** - Connect directly to Stacks nodes for real-time data
-- **Smart contract interaction** - Execute read-only functions and retrieve contract state
-- **Block and transaction data** - Access detailed block information and transaction details
-- **Network operations** - Perform network-level operations like broadcasting transactions
+- **Raw blockchain node methods** - Submit transactions, call read-only contracts, query mempool/state
+- **Real-time blockchain state** - No caching layers, direct node responses
+- **Smart contract execution** - Execute read-only functions and retrieve contract state
+- **Transaction broadcasting** - Submit transactions directly to the network
 
 ## Usage
 
@@ -22,12 +22,8 @@ The Stacks Node RPC API provides direct access to Stacks blockchain nodes throug
 $ curl -L 'https://api.hiro.so/v2/info' -H 'Accept: application/json'
 ```
 
-For more usage examples, click [here](/apis/stacks-node-rpc-api/usage).
+For more usage examples and rate limiting information, see [Usage](/apis/stacks-node-rpc-api/usage).
 
 :::callout
-All Stacks Node RPC API responses provide direct access to blockchain data without caching, ensuring you receive the most current information available.
-:::
-
-:::callout
-The RPC endpoints are designed for applications that require real-time blockchain state and direct node interaction. For cached and optimized data access, consider using the [Stacks Blockchain API](/apis/stacks-blockchain-api).
+**REST vs RPC:** Use [Stacks Blockchain API](/apis/stacks-blockchain-api) for cached, indexed blockchain data (balances, transactions, events). Use RPC endpoints for raw node operations and real-time blockchain state queries.
 :::

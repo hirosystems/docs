@@ -6,7 +6,7 @@ description: Learn the basics of using the Stacks Node RPC API.
 
 ## Usage
 
-The Stacks Node RPC API provides direct access to Stacks blockchain nodes through RPC endpoints, built on REST principles and enforcing HTTPS for all requests to ensure data security, integrity, and privacy.
+The Stacks Node RPC API provides direct access to Stacks blockchain nodes through RPC endpoints. All requests use HTTPS and enforce standard REST principles.
 
 ### Base URL
 
@@ -16,8 +16,6 @@ https://api.hiro.so
 
 ### Making requests
 
-To make a request to the Stacks Node RPC API, you can paste the curl command below in your terminal.
-
 ```terminal
 $ curl -L 'https://api.hiro.so/v2/info' \
   -H 'Accept: application/json'
@@ -25,7 +23,7 @@ $ curl -L 'https://api.hiro.so/v2/info' \
 
 ### Authentication
 
-If you are using an api-key, replace `$HIRO_API_KEY` with your secret API key.
+Include your API key for higher rate limits:
 
 ```terminal
 $ curl -L 'https://api.hiro.so/v2/info' \
@@ -33,31 +31,36 @@ $ curl -L 'https://api.hiro.so/v2/info' \
   -H 'x-api-key: $HIRO_API_KEY'
 ```
 
-## Response codes
+## Rate limits
 
-The Stacks Node RPC API uses standard HTTP response codes to indicate request success or failure.
+RPC calls are **weighted based on method cost** and consume more units than REST endpoints:
+
+| Method Type | Examples | Cost Multiplier |
+|-------------|----------|-----------------|
+| Light reads | `get_block`, `get_transaction` | 1× |
+| Read-only contract calls | `call_read_only_function` | 2× |
+| Transaction submission | `submit_transaction` | 3× |
+| Heavy operations | `trace_call`, deep contract scans | 5× |
+
+### Rate limit headers
+
+```
+X-RateLimit-Limit: 900              # window capacity in units
+X-RateLimit-Remaining: 125          # remaining units
+X-RateLimit-Reset: 60               # seconds until reset
+X-RateLimit-Method-Cost: 3          # cost for this RPC method
+X-Plan-Tier: starter                # your plan tier
+X-Surface: rpc                      # indicates RPC endpoint
+```
+
+## Response codes
 
 | Code | Description |
 |------|-------------|
 | `200` | Successful request |
-| `400` | Check that the parameters were correct |
+| `400` | Invalid parameters |
 | `401` | Missing API key |
 | `403` | Invalid API key |
 | `404` | Resource not found |
 | `429` | Rate limit exceeded |
-| `5xx` | Server errors |
-
-## Real-time data
-
-Unlike cached APIs, the RPC endpoints provide direct access to blockchain state:
-
-- Smart contract calls return current state
-- Block data reflects the latest confirmed blocks
-- Transaction details include real-time status
-
-## Common use cases
-
-- **Smart contract development** - Test and debug contract functions
-- **Real-time monitoring** - Track blockchain state changes as they occur  
-- **Node operations** - Perform administrative and diagnostic operations
-- **Transaction broadcasting** - Submit transactions directly to the network
+| `5xx` | Server/upstream node errors |
