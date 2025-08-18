@@ -216,7 +216,9 @@ export default async function Page(props: {
               {/* RPC endpoint callout */}
               {page.data.isRpc && (
                 <Callout type="info" title="About RPC endpoints">
-                  These are served by Stacks nodes, not directly operated by Hiro. Availability and performance may vary depending on upstream node health. For guaranteed performance, run your own node or talk to us about dedicated options.
+                  These are served by Stacks nodes, not directly operated by Hiro. Availability and
+                  performance may vary depending on upstream node health. For guaranteed
+                  performance, run your own node or talk to us about dedicated options.
                 </Callout>
               )}
 
