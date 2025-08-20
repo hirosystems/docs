@@ -1,0 +1,179 @@
+---
+title: Cómo descargar los archivos de Hiro
+description: Guía completa para descargar archivos de archivo grandes de manera confiable con consejos para solucionar problemas.
+---
+## Visión general
+
+Los archivos de Hiro Archive son grandes conjuntos de datos (que van desde varios GB hasta más de 300GB) alojados en Google Cloud Storage. Debido a su tamaño, las descargas pueden verse interrumpidas por problemas de red, límites de velocidad o tiempos de espera de conexión. Esta guía proporciona múltiples métodos de descarga y soluciones para resolver problemas.
+
+## Tamaños y requisitos de archivos
+
+Antes de descargar, asegúrese de tener suficiente:
+
+* **Espacio en disco**: Los archivos van desde 10GB (APIs) hasta más de 321GB (datos de blockchain)
+* **Ancho de banda**: Las descargas pueden tardar horas o días dependiendo de tu conexión
+* **Almacenamiento para extracción**: Los archivos comprimidos se expanden significativamente cuando se extraen
+
+## Métodos de descarga
+
+### Método 1: wget con reanudación (Recomendado para la mayoría de los usuarios)
+
+El `wget` comando con el `-c` la bandera permite reanudar descargas interrumpidas:
+
+```terminal
+$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+```
+
+**Ventajas:**
+
+* Reanuda automáticamente las descargas interrumpidas
+* Incorporado en la mayoría de los sistemas Unix
+* Fácil de usar
+
+**Desventajas:**
+
+* Descargas de un solo hilo
+* Aún puede experimentar reinicios de conexión
+
+### Método 2: curl con reintentos
+
+Usar `curl` con reintentos automáticos para descargas robustas:
+
+```terminal
+$ curl -C - -O https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ curl -C - --retry 10 --retry-delay 5 --retry-max-time 0 \
+  --progress-bar \
+  -o mainnet-stacks-blockchain-latest.tar.gz \
+  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+```
+
+**Ventajas:**
+
+* Mecanismo de reintento automático
+* Reanudar capacidad con `-C -`
+* Más opciones de configuración
+
+### Método 3: gcloud storage cp (El más rápido, requiere autenticación)
+
+Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias paralelas:
+
+```terminal
+$ gcloud auth login
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
+```
+
+**Ventajas:**
+
+* Descargas significativamente más rápidas (mejora de velocidad de 2 a 3 veces)
+* Transferencias paralelas incorporadas
+* Manejo automático de reintentos
+* Puede transmitir directamente a la extracción
+
+**Desventajas:**
+
+* Requiere autenticación de cuenta de Google
+* Se requiere la instalación de software adicional
+
+### Método 4: Gestores de descargas (JDownloader)
+
+Para usuarios que prefieren aplicaciones con interfaz gráfica o necesitan gestión avanzada de descargas:
+
+1. Descargar e instalar [JDownloader](https://jdownloader.org/download/index)
+2. Copie la URL del archivo en JDownloader
+3. Configurar conexiones paralelas para descargas más rápidas
+
+**Ventajas:**
+
+* Interfaz gráfica
+* Descarga en paralelo
+* Mecanismos avanzados de reintento
+* Soporte multiplataforma
+
+## Verificación y extracción
+
+Después de descargar, siempre verifique la integridad del archivo:
+
+1. **Descargue el archivo de suma de comprobación:**
+   ```terminal
+   $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
+   ```
+
+2. **Verifique la descarga:**
+   ```terminal
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  $ mainnet-stacks-blockchain-latest.tar.gz" | shasum --check
+   ```
+
+3. **Extraer el archivo:**
+   ```terminal
+   $ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /target/directory
+   ```
+
+:::callout
+type: info
+
+### Extracción de archivos grandes
+
+El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo considerable extraerlo. Asegúrese de tener suficiente espacio en disco y sea paciente durante la extracción.
+:::
+
+## Consejos de rendimiento
+
+1. **Utiliza gcloud para las descargas más rápidas** - requiere autenticación pero proporciona mejoras significativas de velocidad
+2. **Descargar durante horas de menor demanda** - típicamente tarde en la noche o temprano en la mañana
+3. **Utilizar conexiones por cable** - evitar el Wi-Fi para descargas grandes cuando sea posible
+4. **Monitorear el espacio en disco** - los archivos extraídos pueden ser de 2 a 3 veces más grandes que los archivos comprimidos
+5. **Considere la extracción por transmisión** con gcloud para ahorrar espacio en disco
+
+## Preguntas frecuentes
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="descargas fallando">
+    <AccordionTrigger>¿Por qué siguen fallando las descargas?</AccordionTrigger>
+
+    <AccordionContent>
+      Las descargas de archivos grandes desde el almacenamiento en la nube pueden interrumpirse debido a problemas de red, limitación de velocidad o tiempos de espera de conexión. Utilice herramientas con capacidad de reanudación como `wget -c` o `gcloud storage cp`.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="método-de-descarga">
+    <AccordionTrigger>¿Qué método de descarga debo usar?</AccordionTrigger>
+
+    <AccordionContent>
+      Para obtener las velocidades más rápidas, use `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`Para mayor fiabilidad sin autenticación, prueba un gestor de descargas como JDownloader.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="tiempo-de-descarga">
+    <AccordionTrigger>¿Cuánto tiempo debería tardar una descarga?</AccordionTrigger>
+
+    <AccordionContent>
+      El tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de la cadena de bloques de la red principal (321GB+) puede tardar entre 6 y 24 horas o más en conexiones de banda ancha típicas.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="descargar-currículum">
+    <AccordionTrigger>¿Puedo reanudar una descarga fallida?</AccordionTrigger>
+
+    <AccordionContent>
+      Sí, use `wget -c`, `curl -C -`, o `gcloud storage cp` para reanudar las descargas interrumpidas desde donde se detuvieron.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="gcloud-más rápido">
+    <AccordionTrigger>¿Por qué gcloud es más rápido?</AccordionTrigger>
+
+    <AccordionContent>
+      Google Cloud CLI utiliza transferencias paralelas y protocolos optimizados al descargar desde Google Cloud Storage, lo que resulta en mejoras de velocidad de 2 a 3 veces.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="verificar-archivos">
+    <AccordionTrigger>¿Necesito verificar los archivos descargados?</AccordionTrigger>
+
+    <AccordionContent>
+      Yes, always verify large downloads using the provided SHA256 checksums to ensure data integrity.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>

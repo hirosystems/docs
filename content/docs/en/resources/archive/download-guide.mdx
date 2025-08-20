@@ -1,0 +1,165 @@
+---
+title: How to download Hiro archives
+description: Comprehensive guide for downloading large archive files reliably with troubleshooting tips.
+---
+
+## Overview
+
+Hiro Archive files are large datasets (ranging from several GB to over 300GB) hosted on Google Cloud Storage. Due to their size, downloads can be interrupted by network issues, rate limits, or connection timeouts. This guide provides multiple download methods and troubleshooting solutions.
+
+## File sizes and requirements
+
+Before downloading, ensure you have sufficient:
+- **Disk space**: Archives range from 10GB (APIs) to 321GB+ (blockchain data)
+- **Bandwidth**: Downloads can take hours or days depending on your connection
+- **Storage for extraction**: Archives expand significantly when extracted
+
+## Download methods
+
+### Method 1: wget with resume (Recommended for most users)
+
+The `wget` command with the `-c` flag enables resuming interrupted downloads:
+
+```terminal
+$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+```
+
+**Advantages:**
+- Resumes interrupted downloads automatically
+- Built into most Unix systems
+- Simple to use
+
+**Disadvantages:**
+- Single-threaded downloads
+- May still experience connection resets
+
+### Method 2: curl with retries
+
+Use `curl` with automatic retries for robust downloads:
+
+```terminal
+$ curl -C - -O https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ curl -C - --retry 10 --retry-delay 5 --retry-max-time 0 \
+  --progress-bar \
+  -o mainnet-stacks-blockchain-latest.tar.gz \
+  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+```
+
+**Advantages:**
+- Automatic retry mechanism
+- Resume capability with `-C -`
+- More configuration options
+
+### Method 3: gcloud storage cp (Fastest, requires authentication)
+
+Google Cloud CLI provides the fastest download speeds with parallel transfers:
+
+```terminal
+$ gcloud auth login
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
+```
+
+**Advantages:**
+- Significantly faster downloads (2-3x speed improvement)
+- Built-in parallel transfers
+- Automatic retry handling
+- Can stream directly to extraction
+
+**Disadvantages:**
+- Requires Google account authentication
+- Additional software installation needed
+
+### Method 4: Download managers (JDownloader)
+
+For users who prefer GUI applications or need advanced download management:
+
+1. Download and install [JDownloader](https://jdownloader.org/download/index)
+2. Copy the archive URL into JDownloader
+3. Configure parallel connections for faster downloads
+
+**Advantages:**
+- Graphical interface
+- Parallel downloading
+- Advanced retry mechanisms
+- Cross-platform support
+
+## Verification and extraction
+
+After downloading, always verify the file integrity:
+
+1. **Download the checksum file:**
+   ```terminal
+   $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
+   ```
+
+2. **Verify the download:**
+   ```terminal
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  $ mainnet-stacks-blockchain-latest.tar.gz" | shasum --check
+   ```
+
+3. **Extract the archive:**
+   ```terminal
+   $ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /target/directory
+   ```
+
+:::callout
+type: info
+### Large file extraction
+The `marf.sqlite.blobs` file can be very large and may take significant time to extract. Ensure you have sufficient disk space and be patient during extraction.
+:::
+
+## Performance tips
+
+1. **Use gcloud for fastest downloads** - requires authentication but provides significant speed improvements
+2. **Download during off-peak hours** - typically late night or early morning
+3. **Use wired connections** - avoid Wi-Fi for large downloads when possible
+4. **Monitor disk space** - extracted archives can be 2-3x larger than compressed files
+5. **Consider streaming extraction** with gcloud to save disk space
+
+## FAQ
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="downloads-failing">
+    <AccordionTrigger>Why do downloads keep failing?</AccordionTrigger>
+    <AccordionContent>
+      Large file downloads from cloud storage can be interrupted due to network issues, rate limiting, or connection timeouts. Use resume-capable tools like `wget -c` or `gcloud storage cp`.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="download-method">
+    <AccordionTrigger>Which download method should I use?</AccordionTrigger>
+    <AccordionContent>
+      For fastest speeds, use `gcloud storage cp` (requires Google auth). For simplicity, use `wget -c`. For reliability without authentication, try a download manager like JDownloader.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="download-time">
+    <AccordionTrigger>How long should a download take?</AccordionTrigger>
+    <AccordionContent>
+      Download time varies based on file size and connection speed. The mainnet blockchain archive (321GB+) can take 6-24+ hours on typical broadband connections.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="resume-download">
+    <AccordionTrigger>Can I resume a failed download?</AccordionTrigger>
+    <AccordionContent>
+      Yes, use `wget -c`, `curl -C -`, or `gcloud storage cp` to resume interrupted downloads from where they stopped.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="gcloud-faster">
+    <AccordionTrigger>Why is gcloud faster?</AccordionTrigger>
+    <AccordionContent>
+      Google Cloud CLI uses parallel transfers and optimized protocols when downloading from Google Cloud Storage, resulting in 2-3x speed improvements.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="verify-files">
+    <AccordionTrigger>Do I need to verify downloaded files?</AccordionTrigger>
+    <AccordionContent>
+      Yes, always verify large downloads using the provided SHA256 checksums to ensure data integrity.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
