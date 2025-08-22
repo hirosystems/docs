@@ -8,17 +8,25 @@ Los archivos de Hiro Archive son grandes conjuntos de datos (que van desde vario
 
 ## Tamaños y requisitos de archivos
 
-Antes de descargar, asegúrese de tener suficiente:
+Antes de descargar, asegúrate de tener suficiente:
 
 * **Espacio en disco**: Los archivos van desde 10GB (APIs) hasta más de 321GB (datos de blockchain)
 * **Ancho de banda**: Las descargas pueden tardar horas o días dependiendo de tu conexión
-* **Almacenamiento para extracción**: Los archivos comprimidos se expanden significativamente cuando se extraen
+* **Almacenamiento para extracción**: Los archivos se expanden significativamente cuando se extraen
 
 ## Métodos de descarga
 
 ### Método 1: wget con reanudación (Recomendado para la mayoría de los usuarios)
 
 El `wget` comando con el `-c` la bandera permite reanudar descargas interrumpidas:
+
+:::callout
+type: info
+
+### Usuarios de macOS
+
+Es posible que necesite instalar wget primero: `brew install wget`. Alternativamente, utilice el método curl que se muestra a continuación, el cual viene preinstalado en macOS.
+:::
 
 ```terminal
 $ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
@@ -93,16 +101,24 @@ Para usuarios que prefieren aplicaciones con interfaz gráfica o necesitan gesti
 
 ## Verificación y extracción
 
-Después de descargar, siempre verifique la integridad del archivo:
+Después de descargar, verifique la integridad del archivo (disponible solo para archivos de blockchain):
 
-1. **Descargue el archivo de suma de comprobación:**
+:::callout
+type: info
+
+### Disponibilidad de Suma de Comprobación
+
+SHA256 checksum files are currently only available for **archivos de blockchain**Los archivos de API no tienen archivos de suma de verificación para su verificación.
+:::
+
+1. **Descargue el archivo de suma de verificación (solo archivos de blockchain):**
    ```terminal
    $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
    ```
 
 2. **Verifique la descarga:**
    ```terminal
-   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  $ mainnet-stacks-blockchain-latest.tar.gz" | shasum --check
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.gz" | shasum -a 256 -c
    ```
 
 3. **Extraer el archivo:**
@@ -141,7 +157,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
     <AccordionTrigger>¿Qué método de descarga debo usar?</AccordionTrigger>
 
     <AccordionContent>
-      Para obtener las velocidades más rápidas, use `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`Para mayor fiabilidad sin autenticación, prueba un gestor de descargas como JDownloader.
+      Para obtener las velocidades más rápidas, use `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`Para obtener fiabilidad sin autenticación, prueba un gestor de descargas como JDownloader.
     </AccordionContent>
   </AccordionItem>
 
@@ -173,7 +189,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
     <AccordionTrigger>¿Necesito verificar los archivos descargados?</AccordionTrigger>
 
     <AccordionContent>
-      Yes, always verify large downloads using the provided SHA256 checksums to ensure data integrity.
+      Yes, verify large downloads when SHA256 checksums are available (currently only for blockchain archives) to ensure data integrity.
     </AccordionContent>
   </AccordionItem>
 </Accordion>

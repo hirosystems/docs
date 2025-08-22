@@ -20,6 +20,12 @@ Before downloading, ensure you have sufficient:
 
 The `wget` command with the `-c` flag enables resuming interrupted downloads:
 
+:::callout
+type: info
+### macOS Users
+You may need to install wget first: `brew install wget`. Alternatively, use the curl method below which is pre-installed on macOS.
+:::
+
 ```terminal
 $ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
 $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
@@ -87,16 +93,22 @@ For users who prefer GUI applications or need advanced download management:
 
 ## Verification and extraction
 
-After downloading, always verify the file integrity:
+After downloading, verify the file integrity (available for blockchain archives only):
 
-1. **Download the checksum file:**
+:::callout
+type: info
+### Checksum Availability
+SHA256 checksum files are currently only available for **blockchain archives**. API archives do not have checksum files for verification.
+:::
+
+1. **Download the checksum file (blockchain archives only):**
    ```terminal
    $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
    ```
 
 2. **Verify the download:**
    ```terminal
-   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  $ mainnet-stacks-blockchain-latest.tar.gz" | shasum --check
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.gz" | shasum -a 256 -c
    ```
 
 3. **Extract the archive:**
@@ -159,7 +171,7 @@ The `marf.sqlite.blobs` file can be very large and may take significant time to 
   <AccordionItem value="verify-files">
     <AccordionTrigger>Do I need to verify downloaded files?</AccordionTrigger>
     <AccordionContent>
-      Yes, always verify large downloads using the provided SHA256 checksums to ensure data integrity.
+      Yes, verify large downloads when SHA256 checksums are available (currently only for blockchain archives) to ensure data integrity.
     </AccordionContent>
   </AccordionItem>
 </Accordion>
