@@ -42,10 +42,9 @@ $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-b
 
 ### Method 2: curl with retries
 
-Use `curl` with automatic retries for robust downloads. The `--continue-at -` flag resumes partial downloads, while `--remote-name` saves the file with its original name:
+Use `curl` with automatic retries for robust downloads. The `--continue-at -` flag resumes partial downloads, while `--output` specifies the filename:
 
 ```terminal
-$ curl --continue-at - --remote-name https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
 $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
   --output mainnet-stacks-blockchain-latest.tar.gz \
@@ -59,11 +58,17 @@ $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
 
 ### Method 3: gcloud storage cp (Fastest, requires authentication)
 
-Google Cloud CLI provides the fastest download speeds with parallel transfers:
+Google Cloud CLI provides the fastest download speeds with parallel transfers. First authenticate with `gcloud auth login`, then either download the file to disk or stream directly to extraction:
+
+#### Download file to current directory
 
 ```terminal
-$ gcloud auth login
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+```
+
+#### OR stream directly to extraction (saves disk space but slower due to sequential download)
+
+```terminal
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
 ```
 

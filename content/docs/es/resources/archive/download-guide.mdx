@@ -8,7 +8,7 @@ Los archivos de Hiro Archive son grandes conjuntos de datos (que van desde vario
 
 ## Tamaños y requisitos de archivos
 
-Antes de descargar, asegúrese de tener suficiente:
+Antes de descargar, asegúrate de tener suficiente:
 
 * **Espacio en disco**: Los archivos van desde 10GB (APIs) hasta varios cientos de GB+ (datos de blockchain)
 * **Ancho de banda**: Las descargas pueden tardar horas o días dependiendo de tu conexión
@@ -46,10 +46,9 @@ $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-b
 
 ### Método 2: curl con reintentos
 
-Usar `curl` con reintentos automáticos para descargas robustas. El `--continue-at -` la bandera reanuda las descargas parciales, mientras que `--remote-name` guarda el archivo con su nombre original:
+Usar `curl` con reintentos automáticos para descargas robustas. El `--continue-at -` la bandera reanuda las descargas parciales, mientras que `--output` especifica el nombre del archivo:
 
 ```terminal
-$ curl --continue-at - --remote-name https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
 $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
   --output mainnet-stacks-blockchain-latest.tar.gz \
@@ -64,11 +63,17 @@ $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
 
 ### Método 3: gcloud storage cp (El más rápido, requiere autenticación)
 
-Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias paralelas:
+Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias paralelas. Primero autentícate con `gcloud auth login`, luego descargue el archivo al disco o transmita directamente a la extracción:
+
+#### Descargar archivo al directorio actual
 
 ```terminal
-$ gcloud auth login
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+```
+
+#### O transmitir directamente a la extracción (ahorra espacio en disco pero es más lento debido a la descarga secuencial)
+
+```terminal
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
 ```
 
@@ -145,7 +150,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
 ## Preguntas frecuentes
 
 <Accordion type="single" collapsible>
-  <AccordionItem value="descargas-fallando">
+  <AccordionItem value="descargas fallando">
     <AccordionTrigger>¿Por qué siguen fallando las descargas?</AccordionTrigger>
 
     <AccordionContent>
