@@ -42,13 +42,13 @@ $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-b
 
 ### Method 2: curl with retries
 
-Use `curl` with automatic retries for robust downloads:
+Use `curl` with automatic retries for robust downloads. The `--continue-at -` flag resumes partial downloads, while `--remote-name` saves the file with its original name:
 
 ```terminal
-$ curl -C - -O https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
-$ curl -C - --retry 10 --retry-delay 5 --retry-max-time 0 \
+$ curl --continue-at - --remote-name https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
-  -o mainnet-stacks-blockchain-latest.tar.gz \
+  --output mainnet-stacks-blockchain-latest.tar.gz \
   https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
 ```
 
@@ -71,7 +71,7 @@ $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stack
 - Significantly faster downloads (2-3x speed improvement)
 - Built-in parallel transfers
 - Automatic retry handling
-- Can stream directly to extraction
+- Can stream directly to extraction (useful when disk space is limited, but disables parallel transfers)
 
 **Disadvantages:**
 - Requires Google account authentication
@@ -93,15 +93,15 @@ For users who prefer GUI applications or need advanced download management:
 
 ## Verification and extraction
 
-After downloading, verify the file integrity (available for blockchain archives only):
+After downloading, verify the file integrity:
 
 :::callout
 type: info
 ### Checksum Availability
-SHA256 checksum files are currently only available for **blockchain archives**. API archives do not have checksum files for verification.
+SHA256 checksum files are available for **all archives** to verify download integrity.
 :::
 
-1. **Download the checksum file (blockchain archives only):**
+1. **Download the checksum file:**
    ```terminal
    $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
    ```
@@ -171,7 +171,7 @@ The `marf.sqlite.blobs` file can be very large and may take significant time to 
   <AccordionItem value="verify-files">
     <AccordionTrigger>Do I need to verify downloaded files?</AccordionTrigger>
     <AccordionContent>
-      Yes, verify large downloads when SHA256 checksums are available (currently only for blockchain archives) to ensure data integrity.
+      Yes, verify large downloads using SHA256 checksums to ensure data integrity.
     </AccordionContent>
   </AccordionItem>
 </Accordion>

@@ -4,15 +4,15 @@ description: Guía completa para descargar archivos de archivo grandes de manera
 ---
 ## Visión general
 
-Los archivos de Hiro Archive son grandes conjuntos de datos (que van desde varios GB hasta más de 300GB) alojados en Google Cloud Storage. Debido a su tamaño, las descargas pueden verse interrumpidas por problemas de red, límites de velocidad o tiempos de espera de conexión. Esta guía proporciona múltiples métodos de descarga y soluciones para resolver problemas.
+Los archivos de Hiro Archive son grandes conjuntos de datos (que van desde varios GB hasta varios *cien* ES) alojado en Google Cloud Storage. Debido a su tamaño, las descargas pueden verse interrumpidas por problemas de red, límites de velocidad o tiempos de espera de conexión. Esta guía proporciona múltiples métodos de descarga y soluciones para resolver problemas.
 
 ## Tamaños y requisitos de archivos
 
-Antes de descargar, asegúrate de tener suficiente:
+Antes de descargar, asegúrese de tener suficiente:
 
-* **Espacio en disco**: Los archivos van desde 10GB (APIs) hasta más de 321GB (datos de blockchain)
+* **Espacio en disco**: Los archivos van desde 10GB (APIs) hasta varios cientos de GB+ (datos de blockchain)
 * **Ancho de banda**: Las descargas pueden tardar horas o días dependiendo de tu conexión
-* **Almacenamiento para extracción**: Los archivos se expanden significativamente cuando se extraen
+* **Almacenamiento para extracción**: Los archivos comprimidos se expanden significativamente cuando se extraen
 
 ## Métodos de descarga
 
@@ -46,13 +46,13 @@ $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-b
 
 ### Método 2: curl con reintentos
 
-Usar `curl` con reintentos automáticos para descargas robustas:
+Usar `curl` con reintentos automáticos para descargas robustas. El `--continue-at -` la bandera reanuda las descargas parciales, mientras que `--remote-name` guarda el archivo con su nombre original:
 
 ```terminal
-$ curl -C - -O https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
-$ curl -C - --retry 10 --retry-delay 5 --retry-max-time 0 \
+$ curl --continue-at - --remote-name https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
-  -o mainnet-stacks-blockchain-latest.tar.gz \
+  --output mainnet-stacks-blockchain-latest.tar.gz \
   https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
 ```
 
@@ -77,7 +77,7 @@ $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stack
 * Descargas significativamente más rápidas (mejora de velocidad de 2 a 3 veces)
 * Transferencias paralelas incorporadas
 * Manejo automático de reintentos
-* Puede transmitir directamente a la extracción
+* Puede transmitir directamente a la extracción (útil cuando el espacio en disco es limitado, pero desactiva las transferencias paralelas)
 
 **Desventajas:**
 
@@ -101,17 +101,17 @@ Para usuarios que prefieren aplicaciones con interfaz gráfica o necesitan gesti
 
 ## Verificación y extracción
 
-Después de descargar, verifique la integridad del archivo (disponible solo para archivos de blockchain):
+Después de descargar, verifique la integridad del archivo:
 
 :::callout
 type: info
 
 ### Disponibilidad de Suma de Comprobación
 
-SHA256 checksum files are currently only available for **archivos de blockchain**Los archivos de API no tienen archivos de suma de verificación para su verificación.
+SHA256 checksum files are available for **todos los archivos** para verificar la integridad de la descarga.
 :::
 
-1. **Descargue el archivo de suma de verificación (solo archivos de blockchain):**
+1. **Descargue el archivo de suma de comprobación:**
    ```terminal
    $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
    ```
@@ -145,7 +145,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
 ## Preguntas frecuentes
 
 <Accordion type="single" collapsible>
-  <AccordionItem value="descargas fallando">
+  <AccordionItem value="descargas-fallando">
     <AccordionTrigger>¿Por qué siguen fallando las descargas?</AccordionTrigger>
 
     <AccordionContent>
@@ -157,7 +157,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
     <AccordionTrigger>¿Qué método de descarga debo usar?</AccordionTrigger>
 
     <AccordionContent>
-      Para obtener las velocidades más rápidas, use `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`Para obtener fiabilidad sin autenticación, prueba un gestor de descargas como JDownloader.
+      Para obtener las velocidades más rápidas, use `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`Para obtener fiabilidad sin autenticación, pruebe un gestor de descargas como JDownloader.
     </AccordionContent>
   </AccordionItem>
 
@@ -165,7 +165,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
     <AccordionTrigger>¿Cuánto tiempo debería tardar una descarga?</AccordionTrigger>
 
     <AccordionContent>
-      El tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de la cadena de bloques de la red principal (321GB+) puede tardar entre 6 y 24 horas o más en conexiones de banda ancha típicas.
+      El tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de la cadena de bloques de la red principal (varios cientos de GB o más) puede tardar entre 6 y 24 horas o más en conexiones de banda ancha típicas.
     </AccordionContent>
   </AccordionItem>
 
@@ -189,7 +189,7 @@ El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo 
     <AccordionTrigger>¿Necesito verificar los archivos descargados?</AccordionTrigger>
 
     <AccordionContent>
-      Yes, verify large downloads when SHA256 checksums are available (currently only for blockchain archives) to ensure data integrity.
+      Yes, verify large downloads using SHA256 checksums to ensure data integrity.
     </AccordionContent>
   </AccordionItem>
 </Accordion>
