@@ -1,35 +1,46 @@
-import type { NextRequest } from 'next/server';
+import { createI18nMiddleware } from 'fumadocs-core/i18n';
+import type { NextFetchEvent, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { i18n } from '@/lib/i18n';
 
-export function middleware(request: NextRequest) {
+const fumadocsMiddleware = createI18nMiddleware(i18n);
+
+export default function middleware(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.endsWith('.md')) {
-    const pathWithoutMd = pathname.slice(0, -3);
+  const segments = pathname.split('/').filter(Boolean);
+  const currentLocale = i18n.languages.includes(segments[0]) ? segments[0] : null;
 
-    if (pathWithoutMd.match(/^\/apis\/[^/]+\/reference\//)) {
-      // Rewrite to our openapi-markdown API route
-      const apiPath = `/api/openapi-markdown${pathWithoutMd}`;
-      return NextResponse.rewrite(new URL(apiPath, request.url));
+  // Get the referer to detect if user is coming from a localized page
+  const referer = request.headers.get('referer');
+
+  if (referer && !currentLocale) {
+    try {
+      const refererUrl = new URL(referer);
+      const refererSegments = refererUrl.pathname.split('/').filter(Boolean);
+      const refererLocale = i18n.languages.includes(refererSegments[0]) ? refererSegments[0] : null;
+
+      // If coming from a non-default locale page to a non-prefixed URL
+      if (refererLocale && refererLocale !== i18n.defaultLanguage) {
+        if (pathname.match(/^\/(tools|apis|resources|reference)\//)) {
+          return NextResponse.redirect(new URL(`/${refererLocale}${pathname}`, request.url));
+        }
+      }
+    } catch {
+      // Ignore invalid referer URLs
     }
-
-    if (pathWithoutMd === '/index') {
-      return NextResponse.rewrite(new URL('/raw/index.mdx', request.url));
-    }
-
-    if (pathWithoutMd.startsWith('/docs/') || pathWithoutMd === '/docs') {
-      const docPath = pathWithoutMd.startsWith('/docs/') ? pathWithoutMd.slice(6) : '';
-      const rawPath = `/raw/${docPath || 'index'}.mdx`;
-      return NextResponse.rewrite(new URL(rawPath, request.url));
-    }
-
-    const rawPath = `/raw${pathWithoutMd}.mdx`;
-    return NextResponse.rewrite(new URL(rawPath, request.url));
   }
 
-  return NextResponse.next();
+  const result = fumadocsMiddleware(request, event);
+  return result;
 }
 
 export const config = {
-  matcher: ['/(.*).md', '/docs/(.*).md'],
+  matcher: [
+    // Match .md files
+    '/(.*).md',
+    '/docs/(.*).md',
+    // Match all paths except Next.js internals, API routes, and static files
+    '/((?!_next|api/).*)', // This excludes /api/ but includes /apis/
+  ],
 };

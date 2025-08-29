@@ -1,0 +1,245 @@
+---
+title: Integración de Stacks.js con devnet
+sidebarTitle: Integración de Stacks.js
+description: En esta guía, aprenderás cómo interactuar con tus contratos inteligentes en devnet utilizando las bibliotecas de Stacks.js.
+---
+## Lo que aprenderás
+
+:::objectives
+* Configurar Stacks.js para conexión a devnet local
+* Realizar transferencias STX entre cuentas de devnet
+* Llamar a funciones de contratos inteligentes desde JavaScript
+* Implementar contratos de forma programática
+:::
+
+## Inicio rápido
+
+<Steps>
+  <Step>
+    ### Instalar paquetes de Stacks.js
+
+    Agregue los paquetes requeridos de Stacks.js a su proyecto frontend:
+
+    ```package-install
+    @stacks/transactions @stacks/network
+    ```
+  </Step>
+
+  <Step>
+    ### Configurar para devnet
+
+    Configurar una configuración de red devnet:
+
+    ```ts devnet-config.ts
+    import { StacksDevnet } from '@stacks/network';
+
+    // Configure for local devnet
+    export const devnet = new StacksDevnet({
+      url: 'http://localhost:3999'
+    });
+
+    // Get devnet accounts (matches Clarinet wallets)
+    export const accounts = {
+      deployer: {
+        address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+        key: 'cb3df38053d132895220b9ce471f6b676db5b9bf0b4adefb55f2118ece2478df01'
+      },
+      wallet1: {
+        address: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+        key: '7287ba251d44a4d3fd9276c88ce34c5c52a038955511cccaf77e61068649c17801'
+      }
+    };
+    ```
+  </Step>
+
+  <Step>
+    ### Prueba de transferencias STX
+
+    Cree una transferencia STX simple entre cuentas de devnet:
+
+    ```ts stx-transfer.ts
+    import { makeSTXTokenTransfer, broadcastTransaction, AnchorMode } from '@stacks/transactions';
+    import { devnet, accounts } from './devnet-config';
+
+    async function transferSTX() {
+      const tx = await makeSTXTokenTransfer({
+        amount: 1000000n, // 1 STX in microSTX
+        recipient: accounts.wallet1.address,
+        senderKey: accounts.deployer.key,
+        network: devnet,
+        anchorMode: AnchorMode.Any,
+      });
+
+      const result = await broadcastTransaction(tx, devnet);
+      console.log('Transaction ID:', result.txid);
+
+      // Transaction will be mined in next devnet block
+      return result.txid;
+    }
+
+    transferSTX().catch(console.error);
+    ```
+
+    Ejecute la transferencia:
+
+    ```terminal
+    $ ts-node stx-transfer.ts
+    Transaction ID: 0x3d5f8a70c4821e0f8c985b1f5b9d77f8c4b6d1a2e7f9c3b8a4d5e6f1c8d9b7a3
+    ```
+  </Step>
+
+  <Step>
+    ### Llamar a contratos inteligentes
+
+    Interactúa con contratos implementados en devnet:
+
+    ```ts contract-call.ts
+    import { makeContractCall, broadcastTransaction, AnchorMode, Cl } from '@stacks/transactions';
+    import { devnet, accounts } from './devnet-config';
+
+    async function callContract() {
+      const tx = await makeContractCall({
+        contractAddress: accounts.deployer.address,
+        contractName: 'counter',
+        functionName: 'increment',
+        functionArgs: [],
+        senderKey: accounts.wallet1.key,
+        network: devnet,
+        anchorMode: AnchorMode.Any,
+      });
+
+      const result = await broadcastTransaction(tx, devnet);
+      console.log('Contract call ID:', result.txid);
+
+      return result.txid;
+    }
+
+    // Read contract state
+    async function readCount() {
+      const response = await fetch(
+        `${devnet.coreApiUrl}/v2/contracts/call-read/${accounts.deployer.address}/counter/get-count`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sender: accounts.wallet1.address,
+            arguments: []
+          })
+        }
+      );
+
+      const data = await response.json();
+      console.log('Current count:', data.result);
+    }
+
+    callContract()
+      .then(() => readCount())
+      .catch(console.error);
+    ```
+  </Step>
+
+  <Step>
+    ### Desplegar contratos desde el frontend
+
+    Desplegar nuevos contratos en devnet de forma programática:
+
+    ```ts deploy-contract.ts
+    import { makeContractDeploy, broadcastTransaction, AnchorMode } from '@stacks/transactions';
+    import { devnet, accounts } from './devnet-config';
+
+    async function deployContract() {
+      const contractCode = `
+        (define-data-var count uint u0)
+
+        (define-public (increment)
+          (ok (var-set count (+ (var-get count) u1)))
+        )
+
+        (define-read-only (get-count)
+          (var-get count)
+        )
+      `;
+
+      const tx = await makeContractDeploy({
+        contractName: 'my-counter',
+        codeBody: contractCode,
+        senderKey: accounts.deployer.key,
+        network: devnet,
+        anchorMode: AnchorMode.Any,
+      });
+
+      const result = await broadcastTransaction(tx, devnet);
+      console.log('Contract deployed:', result.txid);
+
+      return result.txid;
+    }
+
+    deployContract().catch(console.error);
+    ```
+  </Step>
+</Steps>
+
+## Patrones comunes
+
+### Esperando la confirmación de la transacción
+
+Monitorear cuándo se confirman las transacciones en devnet:
+
+```ts transaction-monitor.ts
+async function waitForTransaction(txid: string) {
+  let attempts = 0;
+  const maxAttempts = 10;
+
+  while (attempts < maxAttempts) {
+    const response = await fetch(
+      `${devnet.coreApiUrl}/extended/v1/tx/${txid}`
+    );
+
+    const tx = await response.json();
+
+    if (tx.tx_status === 'success') {
+      console.log('Transaction confirmed!');
+      return tx;
+    }
+
+    if (tx.tx_status === 'abort_by_response') {
+      throw new Error(`Transaction failed: ${tx.tx_result.repr}`);
+    }
+
+    // Wait for next block
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    attempts++;
+  }
+
+  throw new Error('Transaction timeout');
+}
+```
+
+### Condiciones posteriores para la seguridad
+
+Agregar condiciones posteriores para garantizar que las llamadas al contrato se comporten según lo esperado:
+
+```ts safe-transfer.ts
+import { Pc } from '@stacks/transactions';
+
+const postConditions = [
+  // Ensure sender's balance decreases by exactly the amount
+  Pc.principal(accounts.wallet1.address)
+    .willSendEq(1000000n)
+    .ustx(),
+
+  // Ensure recipient receives the amount
+  Pc.principal(accounts.deployer.address)
+    .willReceiveEq(1000000n)
+    .ustx()
+];
+
+const tx = await makeSTXTokenTransfer({
+  amount: 1000000n,
+  recipient: accounts.deployer.address,
+  senderKey: accounts.wallet1.key,
+  network: devnet,
+  postConditions,
+  anchorMode: AnchorMode.Any,
+});
+```

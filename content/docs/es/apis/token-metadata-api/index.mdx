@@ -1,0 +1,35 @@
+---
+title: API de Metadatos de Tokens
+sidebarTitle: Visión general
+description: Metadatos rápidos y confiables para tokens de Stacks a través de REST.
+llm: false
+---
+## Visión general
+
+La API de Metadatos de Tokens proporciona metadatos completos para tokens en la blockchain de Stacks a través de una interfaz REST de alto rendimiento. Construida con respuestas en caché e indexación optimizada, ofrece información de tokens fungibles, propiedades de NFT y datos de colecciones con una latencia mínima.
+
+## Características principales
+
+* **Cobertura completa de tokens** - Metadatos para tokens fungibles, no fungibles y semi-fungibles
+* **Respuestas en caché** - Rendimiento optimizado mediante estrategias de almacenamiento en caché inteligentes
+* **Metadatos enriquecidos** - Propiedades de tokens, atributos e información de colección
+
+## Uso
+
+```terminal
+$ curl -L 'https://api.hiro.so/metadata/v1/ft' -H 'Accept: application/json'
+```
+
+Para más ejemplos de uso, haga clic [aquí](/apis/token-metadata-api/usage).
+
+:::callout
+Todas las respuestas de la API de metadatos de tokens incluyen [límites de tasa de encabezados](/resources/guides/response-headers) que te ayudan a monitorear el uso de tu API con información de cuota específica de Stacks.
+:::
+
+:::callout
+type: help
+
+### ¿Necesitas ayuda para construir con la API de Metadatos de Tokens?
+
+Contáctanos en el <span className="font-bold">#api</span> canal activado [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro. También hay una [horas de oficina semanales](https://www.addevent.com/event/kI22007085) llamada todos los miércoles a la 1 pm ET.
+:::

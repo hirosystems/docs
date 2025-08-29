@@ -1,5 +1,7 @@
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { i18n } from '@/lib/i18n';
+import { useTranslations } from './use-translations';
 
 interface BreadcrumbItem {
   name: ReactNode;
@@ -7,36 +9,25 @@ interface BreadcrumbItem {
 }
 
 /**
- * Format breadcrumb names for display
+ * Format breadcrumb names for display using translations
  */
-function formatBreadcrumbName(name: string): string {
-  const specialCases: Record<string, string> = {
-    api: 'API',
-    apis: 'APIs',
-    cli: 'CLI',
-    rpc: 'RPC',
-    http: 'HTTP',
-    sdk: 'SDK',
-    sip: 'SIP',
-    bns: 'BNS',
-    stx: 'STX',
-    nft: 'NFT',
-    btc: 'BTC',
-    auth: 'Auth',
-  };
-
+function formatBreadcrumbName(name: string, translations: any): string {
   const lowerName = name.toLowerCase();
-  if (specialCases[lowerName]) {
-    return specialCases[lowerName];
+  
+  // Check if we have a direct translation for this term
+  if (translations.breadcrumb[lowerName]) {
+    return translations.breadcrumb[lowerName];
   }
 
+  // Handle hyphenated names
   if (name.includes('-')) {
     return name
       .split('-')
-      .map((word) => formatBreadcrumbName(word))
+      .map((word) => formatBreadcrumbName(word, translations))
       .join(' ');
   }
 
+  // Default to capitalizing first letter
   return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
@@ -45,8 +36,15 @@ function formatBreadcrumbName(name: string): string {
  */
 export function useBreadcrumb(): BreadcrumbItem[] {
   const pathname = usePathname();
+  const translations = useTranslations();
 
   const segments = pathname.split('/').filter(Boolean);
+  
+  // Remove locale prefix if it exists
+  const firstSegment = segments[0];
+  if (firstSegment && i18n.languages.includes(firstSegment)) {
+    segments.shift();
+  }
 
   const items: BreadcrumbItem[] = [];
   let currentPath = '';
@@ -69,7 +67,7 @@ export function useBreadcrumb(): BreadcrumbItem[] {
       return;
     }
 
-    const name = formatBreadcrumbName(segment);
+    const name = formatBreadcrumbName(segment, translations);
 
     // For the last segment, don't include URL (current page)
     if (index === segments.length - 1) {

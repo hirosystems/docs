@@ -1,0 +1,47 @@
+---
+title: Uso básico
+sidebarTitle: Uso
+description: Aprende los conceptos básicos del uso de la API de Metadatos de Token.
+---
+## Uso
+
+La API de Metadatos de Tokens está construida sobre principios REST, imponiendo HTTPS para todas las solicitudes para garantizar la seguridad, integridad y privacidad de los datos.
+
+### URL base
+
+```console -c
+https://api.hiro.so
+```
+
+### Realizando solicitudes
+
+Para hacer una solicitud a la API de Metadatos de Token, puedes pegar el comando curl a continuación en tu terminal.
+
+```terminal
+$ curl -L 'https://api.hiro.so/metadata/v1/ft' \
+  -H 'Accept: application/json'
+```
+
+### Autenticación
+
+Si estás utilizando una api-key, reemplaza `$HIRO_API_KEY` con tu clave API secreta.
+
+```terminal
+$ curl -L 'https://api.hiro.so/metadata/v1/ft' \
+  -H 'Accept: application/json' \
+  -H 'x-api-key: $HIRO_API_KEY'
+```
+
+## Códigos de respuesta
+
+La API de Metadatos de Tokens utiliza códigos de respuesta HTTP estándar para indicar el éxito o fracaso de la solicitud.
+
+| Código | Descripción |
+|--------|-------------|
+| `200` | Solicitud exitosa |
+| `400` | Verifique que los parámetros fueran correctos |
+| `401` | Clave de API faltante |
+| `403` | Clave API inválida |
+| `404` | Recurso no encontrado |
+| `429` | Límite de tasa excedido |
+| `5xx` | Errores del servidor |

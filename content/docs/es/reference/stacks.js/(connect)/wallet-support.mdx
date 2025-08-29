@@ -1,0 +1,56 @@
+---
+title: Soporte de Billetera
+description: Información de compatibilidad para diferentes proveedores de billeteras
+---
+Esta página proporciona información detallada sobre qué métodos y eventos son compatibles con diferentes proveedores de billeteras en el ecosistema de Stacks.
+
+## Compatibilidad de Métodos
+
+* 🔴 Sin soporte (aún)
+* 🟡 Soporte parcial
+* 🟢 Soportado
+
+| Método                      | Cuero                                        | Tipo Xverse                                                   |
+|-----------------------------|----------------------------------------------|---------------------------------------------------------------|
+| `getAddresses`              | 🟡 Sin soporte para fines experimentales      | 🟡 Uso `wallet_connect` en su lugar                               |
+| `sendTransfer`              | 🟡 Espera `amount` como cadena                | 🟡 Espera `amount` como número                                 |
+| `signPsbt`                  | 🟡 Usa solo el array de índices de firma | 🟡 Usa `signInputs` registro en lugar de matriz                  |
+| `stx_getAddresses`          | 🟢                                          | 🔴                                                           |
+| `stx_getAccounts`           | 🔴                                          | 🟢                                                           |
+| `stx_getNetworks`           | 🔴                                          | 🔴                                                           |
+| `stx_transferStx`           | 🟢                                          | 🟢                                                           |
+| `stx_transferSip10Ft`       | 🟢                                          | 🔴                                                           |
+| `stx_transferSip9Nft`       | 🟢                                          | 🔴                                                           |
+| `stx_callContract`          | 🟡 Valores de Clarity codificados en hexadecimal solamente | 🟡 Valores de Clarity codificados en hexadecimal solamente, sin soporte para `postConditions` |
+| `stx_deployContract`        | 🟡 Valores de Clarity codificados en hexadecimal solamente | 🟡 Valores de Clarity codificados en hexadecimal solamente, sin soporte para `postConditions` |
+| `stx_signTransaction`       | 🟡 Valores de Clarity codificados en hexadecimal solamente | 🟡 Valores de Clarity codificados en hexadecimal solamente |
+| `stx_signMessage`           | 🟡 Valores de Clarity codificados en hexadecimal solamente | 🟡 Valores de Clarity codificados en hexadecimal solamente |
+| `stx_signStructuredMessage` | 🟡 Valores de Clarity codificados en hexadecimal solamente | 🟡 Valores de Clarity codificados en hexadecimal solamente |
+| `stx_updateProfile`         | 🔴                                          | 🔴                                                           |
+
+## Compatibilidad de Eventos
+
+| Evento              | Leather | Xverse |
+|---------------------|---------|--------|
+| `stx_accountChange` | 🔴      | 🔴     |
+| `stx_networkChange` | 🔴      | 🔴     |
+
+## Capa de Compatibilidad
+
+El `request` método en `@stacks/connect` agrega una capa de auto-compatibilidad para diferentes proveedores de billeteras. Esto ayuda a unificar la interfaz donde los proveedores de billeteras pueden implementar métodos y resultados de manera diferente.
+
+* 🟢 No se necesitan anulaciones para ninguna cartera
+* 🔵 Tiene anulaciones de compatibilidad que mantienen la funcionalidad
+* 🟡 Tiene anulaciones disruptivas que pueden perder cierta información
+
+| Método                      | Estado | Notas                                                                                                |
+| --------------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
+| `getAddresses`              | 🔵     | Se asigna a `wallet_connect` para billeteras tipo Xverse                                                |
+| `sendTransfer`              | 🔵     | Convierte `amount` para número en Xverse, cadena en Leather                                           |
+| `signPsbt`                  | 🟡     | Transforma el formato PSBT para Leather (base64 a hex) con reestructuración con pérdidas de `signInputs`            |
+| `stx_getAddresses`          | 🔵     | Se asigna a `wallet_connect` para billeteras tipo Xverse                                                |
+| `stx_callContract`          | 🔵     | Transforma los valores de Clarity a formato codificado en hexadecimal para compatibilidad           |
+| `stx_deployContract`        | 🔵     | Transforma los valores de Clarity a formato codificado en hexadecimal para compatibilidad           |
+| `stx_signTransaction`       | 🔵     | Transforma los valores de Clarity a formato codificado en hexadecimal para compatibilidad           |
+| `stx_signMessage`           | 🔵     | Transforma los valores de Clarity a formato codificado en hexadecimal para compatibilidad           |
+| `stx_signStructuredMessage` | 🔵     | Transforma los valores de Clarity a formato codificado en hexadecimal para compatibilidad           |

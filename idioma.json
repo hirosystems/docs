@@ -1,0 +1,11 @@
+{
+  "provider": "anthropic",
+  "locale": {
+    "source": "en",
+    "targets": ["es"]
+  },
+  "files": {
+    "include": ["content/docs/[locale]/**/*.{md,mdx}"]
+  },
+  "preserve": ["Clarinet", "Stacks", "Clarity", "/^type:\\s*\\w+$/"]
+}

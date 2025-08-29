@@ -1,0 +1,222 @@
+---
+title: Uso de datos del oráculo Pyth
+sidebarTitle: Integración de Oracle
+description: En esta guía, aprenderás cómo leer datos de precios en tiempo real del oráculo descentralizado de Pyth Network en tus contratos de Clarity.
+---
+:::objectives
+* Comprender el modelo de oráculo basado en extracción de Pyth
+* Leer y procesar datos de alimentación de precios
+* Trabajar con representación de precios de punto fijo
+* Construir contratos inteligentes denominados en USD
+:::
+
+:::prerequisites
+* Comprensión básica de los contratos inteligentes de Clarity
+* Un proyecto de Clarinet configurado para desarrollo local
+:::
+
+## Entendiendo los oráculos de Pyth
+
+Pyth Network utiliza una **basado en pull** modelo de oráculo, diferente de los oráculos tradicionales basados en push:
+
+* **Modelo push**: Oracle envía continuamente actualizaciones de precios en la cadena
+* **Modelo de extracción**: Los usuarios obtienen y envían actualizaciones de precios cuando es necesario
+
+Este enfoque es más eficiente en cuanto al gas y permite actualizaciones de precios con mayor frecuencia.
+
+### Fuentes de precios admitidas
+
+La integración de Pyth en Stacks actualmente admite estos feeds de precios:
+
+| Activo | ID del Feed de Precios | Enlace del Explorador |
+|-------|--------------|---------------|
+| BTC/USD | `0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43` | [Ver](https://www.pyth.network/price-feeds/crypto-btc-usd) |
+| STX/USD | `0xec7a775f46379b5e943c3526b1c8d54cd49749176b0b98e02dde68d1bd335c17` | [Ver](https://www.pyth.network/price-feeds/crypto-stx-usd) |
+| ETH/USD | `0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace` | [Ver](https://www.pyth.network/price-feeds/crypto-eth-usd) |
+| USDC/USD | `0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a` | [Ver](https://www.pyth.network/price-feeds/crypto-usdc-usd) |
+
+## Inicio rápido
+
+<Steps>
+  <Step>
+    ### Configurar referencias de contratos
+
+    El oráculo Pyth en Stacks consta de varios contratos. Agregue estas referencias a su contrato:
+
+    ```clarity
+    ;; Pyth oracle contract addresses (mainnet)
+    (define-constant PYTH-ORACLE-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3)
+    (define-constant PYTH-STORAGE-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3)
+    (define-constant PYTH-DECODER-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v2)
+    (define-constant WORMHOLE-CORE-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3)
+
+    ;; Price feed IDs
+    (define-constant BTC-USD-FEED-ID 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43)
+    ```
+  </Step>
+
+  <Step>
+    ### Actualizar y leer datos de precios
+
+    Crear una función que actualice el feed de precios y lea el precio actual:
+
+    ```clarity
+    (define-public (get-btc-price (price-feed-bytes (buff 8192)))
+      (let (
+        ;; Update the price feed with fresh data
+        (update-result (try! (contract-call? PYTH-ORACLE-CONTRACT
+          verify-and-update-price-feeds price-feed-bytes {
+            pyth-storage-contract: PYTH-STORAGE-CONTRACT,
+            pyth-decoder-contract: PYTH-DECODER-CONTRACT,
+            wormhole-core-contract: WORMHOLE-CORE-CONTRACT
+          })))
+        
+        ;; Read the updated price
+        (price-data (try! (contract-call? PYTH-ORACLE-CONTRACT
+          get-price
+          BTC-USD-FEED-ID
+          PYTH-STORAGE-CONTRACT)))
+      )
+      (ok price-data)
+    ))
+    ```
+
+    La operación de actualización requiere una pequeña tarifa (típicamente 1 uSTX) para prevenir el spam.
+  </Step>
+
+  <Step>
+    ### Procesar datos de precios
+
+    Los datos de precio utilizan representación de punto fijo. Conviértelos a un formato utilizable:
+
+    ```clarity
+    (define-read-only (process-price-data (price-data {
+      price-identifier: (buff 32),
+      price: int,
+      conf: uint,
+      expo: int,
+      ema-price: int,
+      ema-conf: uint,
+      publish-time: uint,
+      prev-publish-time: uint
+    }))
+      (let (
+        ;; Calculate the denominator based on the exponent
+        ;; For expo = -8, denominator = 10^8 = 100,000,000
+        (exponent (get expo price-data))
+        (denominator (pow u10 (to-uint (* exponent -1))))
+        
+        ;; Convert to standard decimal representation
+        ;; If price = 10603557773590 and expo = -8
+        ;; Actual price = 10603557773590 / 100,000,000 = 106,035.58
+        (adjusted-price (/ (to-uint (get price price-data)) denominator))
+      )
+      adjusted-price
+    ))
+    ```
+  </Step>
+</Steps>
+
+## Patrones comunes
+
+### Acuñación de NFT denominados en USD
+
+Crear un NFT que cueste exactamente $100 en valor de sBTC:
+
+```clarity contracts/benjamin-club.clar
+;; Benjamin Club - $100 NFT minting contract
+(define-constant BENJAMIN-COST u100) ;; $100 USD
+(define-constant ERR-INSUFFICIENT-FUNDS (err u100))
+(define-constant ERR-PRICE-UPDATE-FAILED (err u101))
+
+(define-non-fungible-token benjamin-nft uint)
+(define-data-var last-token-id uint u0)
+
+(define-public (mint-for-hundred-dollars (price-feed-bytes (buff 8192)))
+  (let (
+    ;; Update and get BTC price
+    (price-data (try! (get-btc-price price-feed-bytes)))
+    (btc-price-cents (process-price-data price-data))
+    
+    ;; Calculate required sBTC amount
+    ;; $100 = 10,000 cents
+    (required-sbtc (/ (* u10000 u100000000) btc-price-cents))
+    
+    ;; Get user's sBTC balance
+    (user-balance (unwrap! 
+      (contract-call? .sbtc-token get-balance tx-sender)
+      ERR-INSUFFICIENT-FUNDS))
+  )
+    ;; Verify user has enough sBTC
+    (asserts! (>= user-balance required-sbtc) ERR-INSUFFICIENT-FUNDS)
+    
+    ;; Transfer sBTC and mint NFT
+    (try! (contract-call? .sbtc-token transfer 
+      required-sbtc tx-sender (as-contract tx-sender) none))
+    
+    ;; Mint the NFT
+    (let ((token-id (+ (var-get last-token-id) u1)))
+      (try! (nft-mint? benjamin-nft token-id tx-sender))
+      (var-set last-token-id token-id)
+      (ok token-id))))
+```
+
+### Protección contra la obsolescencia de precios
+
+Asegúrese de que los datos de precios sean lo suficientemente recientes para su caso de uso:
+
+```clarity
+(define-constant MAX-PRICE-AGE u300) ;; 5 minutes in seconds
+
+(define-read-only (is-price-fresh (price-data (tuple)))
+  (let (
+    (current-time (unwrap-panic (get-block-info? time block-height)))
+    (publish-time (get publish-time price-data))
+  )
+  (<= (- current-time publish-time) MAX-PRICE-AGE))
+)
+```
+
+### Agregación de precios de múltiples activos
+
+Obtén múltiples fuentes de precios en una sola transacción:
+
+```clarity
+(define-public (get-multiple-prices 
+  (btc-vaa (buff 8192))
+  (eth-vaa (buff 8192))
+  (stx-vaa (buff 8192)))
+  (let (
+    ;; Update all price feeds
+    (updates (try! (contract-call? PYTH-ORACLE-CONTRACT
+      verify-and-update-price-feeds 
+      (concat btc-vaa (concat eth-vaa stx-vaa))
+      { pyth-storage-contract: PYTH-STORAGE-CONTRACT,
+        pyth-decoder-contract: PYTH-DECODER-CONTRACT,
+        wormhole-core-contract: WORMHOLE-CORE-CONTRACT })))
+    
+    ;; Read all prices
+    (btc-price (try! (get-price-by-id BTC-USD-FEED-ID)))
+    (eth-price (try! (get-price-by-id ETH-USD-FEED-ID)))
+    (stx-price (try! (get-price-by-id STX-USD-FEED-ID)))
+  )
+  (ok { btc: btc-price, eth: eth-price, stx: stx-price }))
+)
+```
+
+## Despliegue en testnet
+
+Para el desarrollo en testnet, utilice estas direcciones de contrato:
+
+```clarity
+;; Testnet addresses
+(define-constant PYTH-ORACLE-CONTRACT-TESTNET 'ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-oracle-v3)
+(define-constant PYTH-STORAGE-CONTRACT-TESTNET 'ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-storage-v3)
+```
+
+## Próximos pasos
+
+:::next-steps
+* [Integración frontend](/reference/stacks.js/pyth-oracle-integration): Aprende cómo obtener mensajes VAA y llamar a tus contratos habilitados para oráculos
+* [Pruebas con Clarinet](/tools/clarinet/pyth-oracle-integration): Configurar pruebas para contratos que dependen de datos de oráculos
+:::

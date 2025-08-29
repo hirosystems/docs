@@ -1,0 +1,233 @@
+---
+title: Ejecutando tu propia API de Ordinals
+sidebarTitle: Integración de API de Ordinales
+description: Puntos finales de la API REST para consultar inscripciones de Ordinals, colecciones y rareza de satoshis.
+---
+## Resumen
+
+La API de Ordinals proporciona acceso integral a datos de inscripciones, artefactos digitales y seguimiento de satoshis. Todos los puntos de acceso devuelven JSON y admiten paginación para conjuntos de resultados grandes.
+
+URL base: `http://localhost:3000/ordinals/v1`
+
+## Autenticación
+
+La API está abierta por defecto. Para implementaciones en producción, configure claves de API:
+
+```bash title="bitcoin-indexer.toml"
+[api]
+require_auth = true
+api_keys = ["your-api-key-here"]
+```
+
+Incluya la clave API en las solicitudes:
+
+```bash
+Authorization: Bearer your-api-key-here
+```
+
+## Puntos finales de inscripción
+
+### Obtener inscripción \[#get-inscription]
+
+`GET /inscriptions/{inscription_id}` recupera detalles de inscripción por ID o número.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/inscriptions/0
+```
+
+```json
+{
+  "id": "6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799i0",
+  "number": 0,
+  "address": "bc1pxaneaf3w4d27hl2y93fuft2xk6m4u3wc4rafevc6slgd7f5tq2dqynekta",
+  "genesis_address": "bc1pxaneaf3w4d27hl2y93fuft2xk6m4u3wc4rafevc6slgd7f5tq2dqynekta",
+  "genesis_block_height": 767430,
+  "genesis_block_hash": "00000000000000000002a90330a99f67e3f01eb2ce070b45930581e82fb7ddad",
+  "genesis_tx_id": "6fb976ab49dcec017f1e201e84395983204ae1a7c2abf7ced0a85d692e442799",
+  "genesis_fee": "0",
+  "genesis_timestamp": 1670913723,
+  "content_type": "text/plain;charset=utf-8",
+  "content_length": 793,
+  "sat_ordinal": "1252201400444387",
+  "sat_rarity": "common",
+  "sat_coinbase_height": 59291
+}
+```
+
+### Lista de inscripciones \[#list-inscriptions]
+
+`GET /inscriptions` devuelve una lista paginada de inscripciones.
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `limit` | número | Resultados por página (máx. 100) |
+| `offset` | número | Número de resultados a omitir |
+| `address` | string | Filtrar por dirección del propietario |
+| `mime_type` | string | Filtrar por tipo MIME |
+| `from_block` | número | Altura del bloque inicial |
+| `to_block` | número | Altura final del bloque |
+
+```terminal
+$ curl "http://localhost:3000/ordinals/v1/inscriptions?limit=5&mime_type=image/png"
+```
+
+### Obtener contenido de inscripción \[#get-content]
+
+`GET /inscriptions/{inscription_id}/content` devuelve el contenido bruto de la inscripción.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/inscriptions/0/content
+hello world
+```
+
+Para contenido binario (imágenes, etc.), se establecen los encabezados Content-Type apropiados.
+
+## Puntos finales de colección
+
+### Listar colecciones \[#list-collections]
+
+`GET /collections` devuelve colecciones de Ordinals reconocidas.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/collections
+```
+
+```json
+{
+  "results": [
+    {
+      "id": "bitcoin-punks",
+      "name": "Bitcoin Punks", 
+      "inscription_count": 10000,
+      "holder_count": 3847,
+      "floor_price": 15000000,
+      "volume_24h": 580000000
+    }
+  ],
+  "total": 156
+}
+```
+
+### Obtener detalles de la colección \[#get-collection]
+
+`GET /collections/{collection_id}` devuelve metadatos y estadísticas de la colección.
+
+## Puntos finales de Satoshi
+
+### Obtener información de satoshi \[#get-satoshi]
+
+`GET /sats/{ordinal}` devuelve detalles sobre un satoshi específico.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/sats/1252201400444387
+```
+
+```json
+{
+  "ordinal": "1252201400444387",
+  "decimal": "59291.444387",
+  "rarity": "common",
+  "name": "ntwmwqcqfcb",
+  "block_height": 59291,
+  "offset": 444387,
+  "inscriptions": ["6fb976...42799i0"]
+}
+```
+
+### Lista de rarezas de satoshi \[#list-rarities]
+
+`GET /sats/rarities` devuelve satoshis por clase de rareza.
+
+| Rareza | Descripción |
+|--------|-------------|
+| `mythic` | Primer bloque de génesis |
+| `legendary` | Primer sat de la primera tx en el bloque |
+| `epic` | Primer sábado después del halving |
+| `rare` | Primer sábado después del ajuste de dificultad |
+| `uncommon` | Primer sábado de cada bloque |
+| `common` | Todos los demás sats |
+
+## Puntos finales de actividad
+
+### Obtener actividad reciente \[#recent-activity]
+
+`GET /activity` devuelve transferencias y ventas de inscripciones recientes.
+
+```terminal
+$ curl "http://localhost:3000/ordinals/v1/activity?type=transfer&limit=10"
+```
+
+### Obtener actividad de dirección \[#address-activity]
+
+`GET /addresses/{address}/activity` devuelve la actividad para una dirección específica.
+
+## Puntos finales de estadísticas
+
+### Obtener estadísticas globales \[#global-stats]
+
+`GET /stats` devuelve estadísticas agregadas de Ordinals.
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/stats
+```
+
+```json
+{
+  "total_inscriptions": 52342891,
+  "total_fees_paid": "4821.23",
+  "unique_mime_types": 847,
+  "holder_addresses": 892341,
+  "inscriptions_24h": 45123,
+  "volume_24h": "18.5"
+}
+```
+
+## Suscripciones de Websocket
+
+Suscríbete a eventos de inscripción en tiempo real:
+
+```javascript
+const ws = new WebSocket('ws://localhost:3000/ordinals/v1/subscribe');
+
+ws.on('message', (data) => {
+  const event = JSON.parse(data);
+  // Handle inscription_revealed, inscription_transferred, etc.
+});
+
+// Subscribe to specific events
+ws.send(JSON.stringify({
+  type: 'subscribe',
+  events: ['inscription_revealed'],
+  filters: { mime_type: 'image/*' }
+}));
+```
+
+## Respuestas de error
+
+Todos los errores devuelven una estructura JSON consistente:
+
+```json
+{
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "Inscription not found",
+    "details": {
+      "inscription_id": "invalid123"
+    }
+  }
+}
+```
+
+| Código | Estado HTTP | Descripción |
+|------|-------------|-------------|
+| `NOT_FOUND` | 404 | Recurso no encontrado |
+| `INVALID_REQUEST` | 400 | Solicitud mal formada |
+| `RATE_LIMITED` | 429 | Demasiadas solicitudes |
+| `INTERNAL_ERROR` | 500 | Error del servidor |
+
+## Próximos pasos
+
+:::next-steps
+* [API de Runas](/tools/bitcoin-indexer/runes-api): Consultar tokens y saldos de Runes
+* [API de Ordinales](/tools/bitcoin-indexer/ordinals-api): Acceder a datos de Ordinales
+:::

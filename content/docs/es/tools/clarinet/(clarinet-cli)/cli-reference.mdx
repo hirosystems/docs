@@ -1,0 +1,414 @@
+---
+title: Referencia de la CLI
+sidebarTitle: Referencia de la CLI
+isNew: true
+---
+El CLI de Clarinet proporciona un conjunto completo de herramientas para el desarrollo de contratos inteligentes en Clarity. Desde la inicialización del proyecto hasta la implementación, Clarinet optimiza todo tu flujo de trabajo de desarrollo.
+
+* Crear un nuevo proyecto: [`clarinet new`](#clarinet-new)
+* Generar un nuevo contrato inteligente: [`clarinet contracts new`](#clarinet-contracts)
+* Validar la sintaxis y los tipos del contrato: [`clarinet check`](#clarinet-check)
+* Interactive REPL for testing contracts: [`clarinet console`](#clarinet-console)
+* Lanza una red de desarrollo local: [`clarinet devnet start`](#clarinet-devnet)
+* Gestionar despliegues: [`clarinet deployments`](#clarinet-deployments)
+
+## Inicializar un nuevo proyecto \[#initialize-a-new-project]
+
+### clarinet new
+
+`clarinet new` crea un nuevo proyecto con todos los archivos de configuración y la estructura de directorios necesarios.
+
+**Uso**
+
+```console
+clarinet new [OPTIONS] <NAME>
+```
+
+```terminal
+$ clarinet new my-defi-protocol
+[32mCreate directory[0m [1mmy-defi-protocol[0m
+[32mCreate directory[0m [1mcontracts[0m
+[32mCreate directory[0m [1msettings[0m
+[32mCreate directory[0m [1mtests[0m
+[32mCreate file[0m [1mClarinet.toml[0m
+[32mCreate file[0m [1msettings/Mainnet.toml[0m
+[32mCreate file[0m [1msettings/Testnet.toml[0m
+[32mCreate file[0m [1msettings/Devnet.toml[0m
+[32mCreate directory[0m [1m.vscode[0m
+[32mCreate file[0m [1m.vscode/settings.json[0m
+[32mCreate file[0m [1m.vscode/tasks.json[0m
+[32mCreate file[0m [1m.gitignore[0m
+[32mCreate file[0m [1m.gitattributes[0m
+[32mCreate file[0m [1mpackage.json[0m
+[32mCreate file[0m [1mtsconfig.json[0m
+[32mCreate file[0m [1mvitest.config.js[0m
+```
+
+| Opción | Descripción |
+|--------|-------------|
+| `--disable-telemetry` | No proporcionar telemetría de uso del desarrollador para este proyecto |
+
+## Gestiona tus contratos \[#manage-your-contracts]
+
+### contratos de Clarinet
+
+`clarinet contracts` es un subcomando para trabajar con contratos. Tiene dos subcomandos:
+
+| Comando | Descripción |
+|---------|-------------|
+| `new`   | Generar archivos y configuraciones para un nuevo contrato |
+| `rm`    | Eliminar archivos y configuraciones de un contrato       |
+
+**Uso con `new`**
+
+```console
+clarinet contracts new <COMMAND> <OPTIONS>
+```
+
+```terminal
+$ clarinet contracts new fungible-token
+[32mCreated file[0m [1mcontracts/fungible-token.clar[0m
+[32mCreated file[0m [1mtests/fungible-token.test.ts[0m
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+**Uso con `rm`**
+
+```console
+clarinet contracts rm <COMMAND> <OPTIONS>
+```
+
+```terminal
+$ clarinet contracts rm old-token
+[33mRemoved file[0m [1mcontracts/old-token.clar[0m
+[33mRemoved file[0m [1mtests/old-token.test.ts[0m
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+| Opción | Descripción |
+|--------|-------------|
+| `--manifest-path <path>` | Ruta a Clarinet.toml |
+
+## Valide sus contratos \[#validate-your-contracts]
+
+### clarinet check
+
+`clarinet check` verifica la sintaxis de los contratos y realiza la comprobación de tipos.
+
+**Uso**
+
+```console
+$ clarinet check [FILE] [OPTIONS]
+```
+
+```terminal
+$ clarinet check
+[32m✔[0m [1m3 contracts checked[0m
+$ clarinet check contracts/token.clar
+[32m✔[0m [1mcontracts/token.clar syntax checks passed[0m
+```
+
+| Opción | Corto | Descripción |
+|--------|-------|-------------|
+| `--manifest-path <path>` | `-m` | Ruta a Clarinet.toml |
+| `--deployment-plan-path <path>` | `-p` | Si se especifica, utilizar este archivo de implementación |
+| `--use-on-disk-deployment-plan` | `-d` | Usar plan de implementación en disco (evitar cálculos de actualizaciones) |
+| `--use-computed-deployment-plan` | `-c` | Usar plan de despliegue calculado (sobrescribirá la versión en disco si hay alguna actualización) |
+| `--enable-clarity-wasm` | | Permitir que la vista previa de Clarity Wasm se ejecute en paralelo con el intérprete de Clarity (beta) |
+
+## Interact with your contracts in a local REPL \[#interact-with-your-contracts-in-a-local-repl]
+
+### consola de clarinet
+
+`clarinet console` loads contracts in a REPL for an interactive session.
+
+**Uso**
+
+```console
+$ clarinet console [OPTIONS]
+```
+
+```terminal
+$ clarinet console
+[32mclarity-repl v1.0.0[0m
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+```
+
+La consola de Clarinet ofrece una variedad de comandos para la interacción con contratos:
+
+* `::help`: Enumera todos los comandos de consola
+* `::functions`: Mostrar todas las funciones nativas disponibles en Clarity
+* `::keywords`: Mostrar todas las palabras clave nativas disponibles en Clarity
+* `::describe <function> | <keyword>`: Mostrar documentación para una función nativa o palabra clave determinada
+* `::toggle_costs`: Mostrar análisis de costo después de cada expresión
+* `::toggle_timings`: Mostrar la duración de la ejecución
+* `::mint_stx <principal> <amount>`: Acuñar saldo de STX para un principal dado
+* `::set_tx_sender <principal>`: Establecer la variable tx-sender al principal
+* `::get_assets_maps`: Obtener mapas de activos para cuentas activas
+* `::get_contracts`: Obtener contratos
+* `::get_block_height`: Obtener la altura actual del bloque
+* `::advance_chain_tip <count>`: Simular la minería de `<count>` bloques
+* `::advance_stacks_chain_tip <count>`: Simular la minería de `<count>` bloques de Stacks
+* `::advance_burn_chain_tip <count>`: Simular la minería de `<count>` bloques de burnchain
+* `::set_epoch <epoch>`: Actualizar la época actual
+* `::get_epoch`: Obtener la época actual
+* `::debug <expr>`: Iniciar una sesión de depuración interactiva ejecutando `<expr>`
+* `::trace <expr>`: Generar un rastro de ejecución para `<expr>`
+* `::get_costs <expr>`: Mostrar el análisis de costos
+* `::reload`: Recargar el contrato o contratos existentes en la sesión
+* `::read <filename>`: Leer expresiones desde un archivo
+* `::encode <expr>`: Codificar una expresión a una representación en bytes de Valor Clarity
+* `::decode <bytes>`: Decodificar una representación en bytes de un valor de Clarity
+
+| Opción | Corto | Descripción |
+|--------|-------|-------------|
+| `--manifest-path <path>` | `-m` | Ruta a Clarinet.toml |
+| `--deployment-plan-path <path>` | `-p` | Si se especifica, utilizar este archivo de implementación |
+| `--use-on-disk-deployment-plan` | `-d` | Usar plan de implementación en disco (evitar cálculos de actualizaciones) |
+| `--use-computed-deployment-plan` | `-c` | Usar plan de despliegue calculado (sobrescribirá la versión en disco si hay alguna actualización) |
+| `--enable-remote-data` | `-r` | Habilitar la obtención de datos remotos desde la red principal o una red de pruebas |
+| `--remote-data-api-url <url>` | `-a` | Establecer una URL personalizada de la API de Stacks Blockchain para la obtención de datos remotos |
+| `--remote-data-initial-height <height>` | `-b` | Altura inicial del bloque remoto de Stacks |
+| `--enable-clarity-wasm` | | Permitir que la vista previa de Clarity Wasm se ejecute en paralelo con el intérprete de Clarity (beta) |
+
+## Iniciar una red de desarrollo local \[#start-a-local-development-network]
+
+### clarinet devnet
+
+`clarinet devnet` es un subcomando para trabajar con Devnet. Tiene dos subcomandos:
+
+| Comando | Descripción                                           |
+|----------|-------------------------------------------------------|
+| `start`  | Inicie una red Devnet local para interactuar con sus contratos |
+| `package`| Generar paquete de todos los artefactos requeridos para devnet     |
+
+**Uso con `start`**
+
+```console
+$ clarinet devnet start [OPTIONS]
+```
+
+```terminal
+$ clarinet devnet start
+```
+
+| Opción | Corto | Descripción |
+|--------|-------|-------------|
+| `--manifest-path <path>` | `-m` | Ruta a Clarinet.toml |
+| `--no-dashboard` | | Mostrar flujos de registros en lugar del panel de interfaz de usuario de la terminal |
+| `--deployment-plan-path <path>` | `-p` | Si se especifica, utilizar este archivo de implementación |
+| `--use-on-disk-deployment-plan` | `-d` | Usar plan de implementación en disco (evitar cálculos de actualizaciones) |
+| `--use-computed-deployment-plan` | `-c` | Usar plan de despliegue calculado (sobrescribirá la versión en disco si hay alguna actualización) |
+| `--package <path>` | | Ruta al Package.json producido por 'clarinet devnet package' |
+
+**Uso con `package`**
+
+```console
+$ clarinet devnet package [OPTIONS]
+```
+
+```terminal
+$ clarinet devnet package --name my-devnet
+[32mPackaging devnet artifacts...[0m
+[32mCreated file[0m [1mmy-devnet.json[0m
+```
+
+| Opción | Corto | Descripción |
+|--------|-------|-------------|
+| `--name <name>` | `-n` | Nombre del archivo json de salida |
+| `--manifest-path <path>` | `-m` | Ruta a Clarinet.toml |
+
+## Gestiona tus implementaciones \[#manage-your-deployments]
+
+### despliegues de Clarinet
+
+`clarinet deployments` es un subcomando para gestionar despliegues en Devnet/Testnet/Mainnet.
+
+| Comando | Descripción |
+|------------|-------------|
+| `check`    | Verificar el formato de implementaciones |
+| `generate` | Generar nuevo despliegue  |
+| `apply`    | Aplicar despliegue         |
+
+**Uso con `check`**
+
+```console
+$ clarinet deployments check [OPTIONS]
+```
+
+```terminal
+$ clarinet deployments check
+[32m✔[0m Deployment files are valid
+```
+
+| Opción | Descripción |
+|--------|-------------|
+| `--manifest-path <path>` | Ruta a Clarinet.toml |
+
+**Uso con `generate`**
+
+```console
+$ clarinet deployments generate [OPTIONS]
+```
+
+```terminal
+$ clarinet deployments generate --testnet
+[32mGenerated deployment plan[0m
+[32mCreated file[0m [1mdeployments/default.testnet-plan.yaml[0m
+```
+
+| Opción | Descripción |
+|--------|-------------|
+| `--simnet` | Generar un archivo de despliegue para entornos simnet (consola, pruebas) |
+| `--devnet` | Generar un archivo de implementación para devnet, utilizando settings/Devnet.toml |
+| `--testnet` | Generar un archivo de despliegue para testnet, utilizando settings/Testnet.toml |
+| `--mainnet` | Generar un archivo de despliegue para mainnet, utilizando settings/Mainnet.toml |
+| `--manifest-path <path>` | Ruta a Clarinet.toml |
+| `--no-batch` | Generar un archivo de despliegue sin intentar agrupar transacciones (solo simnet) |
+| `--low-cost` | Calcular y establecer el costo, utilizando baja prioridad (se requiere conexión de red) |
+| `--medium-cost` | Calcular y establecer el costo, utilizando prioridad media (se requiere conexión de red) |
+| `--high-cost` | Calcular y establecer el costo, utilizando alta prioridad (se requiere conexión de red) |
+| `--manual-cost` | Dejar la estimación de costos manual |
+
+**Uso con `apply`**
+
+```console
+$ clarinet deployments apply [OPTIONS]
+```
+
+```terminal
+$ clarinet deployments apply --testnet
+[33mApplying deployment to testnet[0m
+[32m✔[0m Broadcasting transaction for token.clar
+  Transaction ID: 0x3d4f5...
+  Contract: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.token
+[32m✔[0m All contracts deployed successfully
+```
+
+| Opción | Corto | Descripción |
+|--------|-------|-------------|
+| `--devnet` | | Aplicar configuración de implementación predeterminada/default.devnet-plan.toml |
+| `--testnet` | | Aplicar configuración de implementación predeterminada/default.testnet-plan.toml |
+| `--mainnet` | | Aplicar configuración de implementación predeterminada/default.mainnet-plan.toml |
+| `--manifest-path <path>` | `-m` | Ruta a Clarinet.toml |
+| `--deployment-plan-path <path>` | `-p` | Aplicar el plan de implementación especificado |
+| `--no-dashboard` | | Mostrar flujos de registros en lugar del panel de interfaz de usuario de la terminal |
+| `--use-on-disk-deployment-plan` | `-d` | Usar plan de implementación en disco (evitar cálculos de actualizaciones) |
+| `--use-computed-deployment-plan` | `-c` | Usar plan de despliegue calculado (sobrescribirá la versión en disco si hay alguna actualización) |
+
+## Interactuar con contratos de Mainnet \[#interact-with-mainnet-contracts]
+
+### requisitos de Clarinet
+
+`clarinet requirements` es un subcomando para interactuar con contratos de Mainnet.
+
+| Comando | Descripción |
+|---------|-------------|
+| `add`   | Añada un contrato de mainnet como dependencia a su proyecto |
+
+**Uso**
+
+```console
+$ clarinet requirements <COMMAND>
+```
+
+```terminal
+$ clarinet requirements add SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[32mAdded requirement[0m SP2PABAF9FTAJYNFZH93XENAJ8FVY99RRM50D2JG9.nft-trait
+[33mUpdated[0m [1mClarinet.toml[0m
+```
+
+| Opción | Descripción |
+|--------|-------------|
+| `--manifest-path <path>` | Ruta a Clarinet.toml |
+
+## Integraciones del Editor \[#editor-integrations]
+
+### clarinet lsp
+
+`clarinet lsp` inicia el servicio del Protocolo de Servidor de Lenguaje para Clarity, habilitando la finalización inteligente de código, el resaltado de errores y otras características de IDE en editores compatibles.
+
+**Uso**
+
+```console
+$ clarinet lsp
+```
+
+## Depuración \[#debugging]
+
+### clarinet dap
+
+`clarinet dap` inicia el servicio del Protocolo de Adaptador de Depuración, habilitando funciones de depuración como puntos de interrupción, ejecución paso a paso e inspección de variables en editores compatibles.
+
+**Uso**
+
+```console
+$ clarinet dap
+```
+
+## Formatea tu código \[#format-your-code]
+
+### formato de clarinet
+
+`clarinet format` da formato a los archivos de código Clarity según las convenciones estándar.
+
+**Uso**
+
+```console
+$ clarinet format [OPTIONS]
+```
+
+```terminal
+$ clarinet format --check
+$ clarinet format --dry-run
+$ clarinet format --file contracts/token.clar --in-place
+```
+
+| Opción | Corto | Descripción | Requerido |
+|--------|-------|-------------|----------|
+| `--check` | | Comprobar si el código está formateado sin modificar archivos | No |
+| `--dry-run` | | Solo reproducir el resultado del formato | No |
+| `--in-place` | | Reemplazar el contenido de un archivo con el código formateado | No |
+| `--manifest-path <path>` | `-m` | Ruta a Clarinet.toml | No |
+| `--file <file>` | `-f` | Si se especifica, formatear solo este archivo | No |
+| `--max-line-length <length>` | `-l` | Longitud máxima de línea | No |
+| `--indent <size>` | `-i` | Tamaño de sangría, p. ej. 2 | No |
+| `--tabs` | `-t` | Usar tabulaciones en lugar de espacios | No |
+
+## Utilidades \[#utilities]
+
+### completaciones de clarinet
+
+`clarinet completions` genera scripts de completado de shell para tu shell.
+
+**Uso**
+
+```console
+$ clarinet completions <SHELL>
+```
+
+```terminal
+$ clarinet completions zsh > ~/.zsh/completions/_clarinet
+$ source ~/.zshrc
+```
+
+**Shells compatibles**
+
+* `bash`
+* `zsh`
+* `fish`
+* `powershell`
+* `elvish`
+
+| Opción | Corto | Descripción |
+|--------|-------|-------------|
+| `--shell <shell>` | `-s` | Especifique para qué shell generar el script de completado |
+
+## Variables de entorno \[#environment-variables]
+
+Clarinet admite variables de entorno para la configuración. Todas las variables de entorno tienen el prefijo `CLARINET_`:
+
+```terminal
+$ export CLARINET_MANIFEST_PATH=/path/to/project
+```

@@ -1,0 +1,354 @@
+---
+title: '@stacks/connect'
+description: Autenticar usuarios e interactuar con billeteras Stacks en aplicaciones web.
+---
+El `@stacks/connect` El paquete proporciona una interfaz simple para conectar aplicaciones web a billeteras Stacks, habilitando capacidades de autenticación de usuario, firma de transacciones y firma de mensajes.
+
+## Instalación
+
+```package-install
+@stacks/connect
+```
+
+## Funciones de conexión
+
+### conectar \[#connect]
+
+`connect` inicia una conexión de billetera y almacena las direcciones de usuario en el almacenamiento local.
+
+### Firma
+
+```typescript
+function connect(options?: ConnectOptions): Promise<ConnectResponse>
+```
+
+### Parámetros
+
+| Nombre | Tipo | Obligatorio | Descripción |
+|--------|------|-------------|-------------|
+| `options` | `ConnectOptions` | No | Opciones de configuración para la conexión |
+
+### Ejemplos
+
+#### Conexión básica
+
+```typescript
+import { connect } from '@stacks/connect';
+
+const response = await connect();
+// Response contains user addresses stored in local storage
+```
+
+#### Conexión con opciones
+
+```typescript
+const response = await connect({
+  forceWalletSelect: true,
+  approvedProviderIds: ['LeatherProvider', 'xverse']
+});
+```
+
+### isConnected \[#isConnected]
+
+`isConnected` comprueba si una billetera está actualmente conectada.
+
+```typescript
+import { isConnected } from '@stacks/connect';
+
+if (isConnected()) {
+  console.log('Wallet is connected');
+}
+```
+
+### desconectar \[#disconnect]
+
+`disconnect` borra el estado de la conexión y el almacenamiento local.
+
+```typescript
+import { disconnect } from '@stacks/connect';
+
+disconnect(); // Clears wallet connection
+```
+
+### getLocalStorage \[#getLocalStorage]
+
+`getLocalStorage` recupera los datos de conexión almacenados.
+
+```typescript
+import { getLocalStorage } from '@stacks/connect';
+
+const data = getLocalStorage();
+// {
+//   "addresses": {
+//     "stx": [{ "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN" }],
+//     "btc": [{ "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae" }]
+//   }
+// }
+```
+
+## Método de solicitud
+
+### solicitud \[#request]
+
+`request` es el método principal para interactuar con las billeteras conectadas.
+
+### Firma
+
+```typescript
+function request<T extends StacksMethod>(
+  options: RequestOptions | undefined,
+  method: T,
+  params?: MethodParams[T]
+): Promise<MethodResult[T]>
+```
+
+### Parámetros
+
+| Nombre | Tipo | Obligatorio | Descripción |
+|--------|------|-------------|-------------|
+| `options` | `RequestOptions` | No | Opciones de configuración de solicitud |
+| `method` | `StacksMethod` | Sí | Método para llamar en la billetera |
+| `params` | `MethodParams[T]` | Depende del método | Parámetros para el método |
+
+### Opciones de solicitud
+
+| Nombre | Tipo | Predeterminado | Descripción |
+|--------|------|----------------|-------------|
+| `provider` | `StacksProvider` | Detección automática | Instancia de proveedor personalizada |
+| `forceWalletSelect` | `boolean` | `false` | Forzar modal de selección de billetera |
+| `persistWalletSelect` | `boolean` | `true` | Mantener selección de billetera |
+| `enableOverrides` | `boolean` | `true` | Habilitar correcciones de compatibilidad |
+| `enableLocalStorage` | `boolean` | `true` | Almacenar direcciones localmente |
+| `approvedProviderIds` | `string[]` | Todos los proveedores | Filtrar billeteras disponibles |
+
+### Ejemplos
+
+#### Solicitud básica
+
+```typescript
+import { request } from '@stacks/connect';
+
+const addresses = await request('getAddresses');
+```
+
+#### Solicitud con opciones
+
+```typescript
+const response = await request(
+  { forceWalletSelect: true },
+  'stx_transferStx',
+  {
+    amount: '1000000', // 1 STX in microSTX
+    recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159'
+  }
+);
+```
+
+## Métodos de billetera
+
+### getAddresses \[#getAddresses]
+
+`getAddresses` recupera direcciones de Bitcoin y Stacks de la cartera.
+
+```typescript
+const response = await request('getAddresses');
+// {
+//   "addresses": [
+//     {
+//       "address": "bc1pp3ha248m0mnaevhp0txfxj5xaxmy03h0j7zuj2upg34mt7s7e32q7mdfae",
+//       "publicKey": "062bd2c825300d74f4f9feb6b2fec2590beac02b8938f0fc042a34254581ee69"
+//     },
+//     {
+//       "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//       "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304"
+//     }
+//   ]
+// }
+```
+
+### sendTransfer \[#sendTransfer]
+
+`sendTransfer` envía Bitcoin a uno o más destinatarios.
+
+```typescript
+const response = await request('sendTransfer', {
+  recipients: [
+    {
+      address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
+      amount: '1000' // Amount in satoshis
+    },
+    {
+      address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+      amount: '2000'
+    }
+  ]
+});
+// { "txid": "0x1234..." }
+```
+
+### signPsbt \[#signPsbt]
+
+`signPsbt` firma una transacción de Bitcoin parcialmente firmada.
+
+```typescript
+const response = await request('signPsbt', {
+  psbt: 'cHNidP...', // Base64 encoded PSBT
+  signInputs: [{ index: 0, address }], // Optional: specify inputs to sign
+  broadcast: false // Optional: broadcast after signing
+});
+// {
+//   "psbt": "cHNidP...", // Signed PSBT
+//   "txid": "0x1234..." // If broadcast is true
+// }
+```
+
+## Métodos específicos de Stacks
+
+### stx\_transferStx \[#stx\_transferStx]
+
+`stx_transferStx` transfiere tokens STX entre direcciones.
+
+```typescript
+const response = await request('stx_transferStx', {
+  amount: '1000000', // Amount in microSTX (1 STX = 1,000,000 microSTX)
+  recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159',
+  memo: 'Payment for services', // Optional
+  network: 'mainnet' // Optional, defaults to mainnet
+});
+// { "txid": "0x1234..." }
+```
+
+### stx\_callContract \[#stx\_callContract]
+
+`stx_callContract` llama a una función pública en un contrato inteligente.
+
+```typescript
+import { Cl } from '@stacks/transactions';
+
+const response = await request('stx_callContract', {
+  contract: 'SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.hello-world',
+  functionName: 'say-hi',
+  functionArgs: [Cl.stringUtf8('Hello!')],
+  network: 'mainnet'
+});
+// { "txid": "0x1234..." }
+```
+
+### stx\_deployContract \[#stx\_deployContract]
+
+`stx_deployContract` despliega un nuevo contrato inteligente.
+
+```typescript
+const response = await request('stx_deployContract', {
+  name: 'my-contract',
+  clarityCode: `(define-public (say-hi (name (string-utf8 50)))
+    (ok (concat "Hello, " name "!"))
+  )`,
+  clarityVersion: '2', // Optional
+  network: 'testnet'
+});
+// { "txid": "0x1234..." }
+```
+
+### stx\_signMessage \[#stx\_signMessage]
+
+`stx_signMessage` firma un mensaje de texto plano.
+
+```typescript
+const response = await request('stx_signMessage', {
+  message: 'Hello, World!'
+});
+// {
+//   "signature": "0x1234...",
+//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304"
+// }
+```
+
+### stx\_signStructuredMessage \[#stx\_signStructuredMessage]
+
+`stx_signStructuredMessage` firma un mensaje estructurado de Clarity siguiendo SIP-018.
+
+```typescript
+import { Cl } from '@stacks/transactions';
+
+const message = Cl.tuple({
+  action: Cl.stringAscii('transfer'),
+  amount: Cl.uint(1000000n)
+});
+
+const domain = Cl.tuple({
+  name: Cl.stringAscii('MyApp'),
+  version: Cl.stringAscii('1.0.0'),
+  'chain-id': Cl.uint(1) // mainnet
+});
+
+const response = await request('stx_signStructuredMessage', {
+  message,
+  domain
+});
+// {
+//   "signature": "0x1234...",
+//   "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cdea520f08c0cc68584a96e8ac19d8d304"
+// }
+```
+
+### stx\_getAccounts \[#stx\_getAccounts]
+
+`stx_getAccounts` recupera información detallada de la cuenta, incluyendo la configuración de Gaia.
+
+```typescript
+const response = await request('stx_getAccounts');
+// {
+//   "addresses": [{
+//     "address": "SP2MF04VAGYHGAZWGTEDW5VYCPDWWSY08Z1QFNDSN",
+//     "publicKey": "02d3331cbb9f72fe635e6f87c2cf1a13cd...",
+//     "gaiaHubUrl": "https://hub.hiro.so",
+//     "gaiaAppKey": "0488ade4040658015580000000dc81e3a5..."
+//   }]
+// }
+```
+
+## Manejo de errores
+
+Maneja los errores de la billetera utilizando patrones estándar de manejo de errores de Promesas.
+
+```typescript
+try {
+  const response = await request('stx_transferStx', {
+    amount: '1000000',
+    recipient: 'SP3FGQ8Z7JY9BWYZ5WM53E0M9NK7WHJF0691NZ159'
+  });
+  console.log('Transaction successful:', response.txid);
+} catch (error) {
+  console.error('Transaction failed:', error);
+}
+```
+
+## Uso avanzado
+
+### requestRaw \[#requestRaw]
+
+`requestRaw` proporciona acceso directo a los proveedores de billeteras sin características de compatibilidad.
+
+### Firma
+
+```typescript
+function requestRaw<T extends StacksMethod>(
+  provider: StacksProvider,
+  method: T,
+  params?: MethodParams[T]
+): Promise<MethodResult[T]>
+```
+
+### Ejemplo
+
+```typescript
+import { requestRaw } from '@stacks/connect';
+
+const provider = window.StacksProvider;
+const response = await requestRaw(provider, 'getAddresses');
+```
+
+## Notas de migración
+
+La versión 8.x.x implementa [SIP-030](https://github.com/janniks/sips/blob/main/sips/sip-030/sip-030-wallet-interface.md) estándares de billetera. Para la autenticación heredada basada en JWT, use la versión 7.10.1.

@@ -1,8 +1,8 @@
 import Link, { type LinkProps } from 'fumadocs-core/link';
 import { ChevronRight } from 'lucide-react';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { InteractiveBadge } from '@/app/(home)/components/interactive-badge';
 import { CopyButton } from '@/components/docskit/copy-button';
+import { InteractiveBadge } from '@/components/interactive-badge';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 

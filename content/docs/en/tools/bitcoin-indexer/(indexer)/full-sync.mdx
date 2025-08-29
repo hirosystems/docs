@@ -1,0 +1,188 @@
+---
+title: Full sync
+sidebarTitle: Full sync
+description: Run the Bitcoin Indexer from scratch.
+isNew: true
+---
+
+import { ArrowRight, Check } from 'lucide-react';
+
+## What you'll learn
+
+:::objectives
+- Set up and configure the Bitcoin Indexer
+- Run the indexer from scratch
+- Monitor indexing progress effectively
+:::
+
+:::prerequisites
+- Bitcoin Core node running with `txindex=1`
+- PostgreSQL running with databases created
+- Sufficient storage space
+:::
+
+:::callout
+### Archive bootstrap recommended
+If you haven't already, consider [bootstrapping from archives](/tools/bitcoin-indexer/archive-bootstrap) to save days of indexing time.
+:::
+
+## Start indexing services
+
+The Bitcoin Indexer runs separate services for each metaprotocol. Navigate to your indexer directory:
+
+```terminal
+$ cd ~/bitcoin-indexer/bitcoin-indexer
+```
+
+### Index Ordinals (includes BRC-20)
+
+```terminal
+$ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
+```
+
+### Index Runes
+
+In a separate terminal:
+
+```terminal
+$ ./target/release/bitcoin-indexer runes service start --config-path=bitcoin-indexer-config.toml
+```
+
+:::callout
+type: info
+### Building from source
+If you are downloading a release from our end, run `cargo build --release` after navigating to the folder to compile the project. This step is necessary to use `/target/release/bitcoin-indexer` for starting services.
+:::
+
+## Monitor indexing progress
+
+### Check service logs
+
+The indexer outputs detailed progress information:
+
+```terminal
+$ tail -f ~/bitcoin-indexer/bitcoin-indexer/ordinals.log
+```
+
+### Query indexer status via API
+
+Once the API server starts (usually after a few blocks):
+
+```terminal
+$ curl http://localhost:3000/ordinals/v1/status
+{
+  "block_height": 819600,
+  "inscriptions_indexed": 52342567,
+  "latest_inscription_number": 52342567,
+  "sync_percentage": 99.93,
+  "blocks_behind": 523
+}
+```
+
+## Service management
+
+### Stop services gracefully
+
+```terminal
+$ ps aux | grep bitcoin-indexer
+```
+
+### Restart after interruption
+
+The indexer automatically resumes from the last processed block:
+
+```terminal
+$ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
+```
+
+## Systemd service setup
+
+For production deployments, use systemd to manage services:
+
+### Create Ordinals service
+
+```bash title="/etc/systemd/system/bitcoin-indexer-ordinals.service"
+[Unit]
+Description=Bitcoin Indexer - Ordinals Service
+After=network.target postgresql.service bitcoind.service
+
+[Service]
+Type=simple
+User=bitcoin-indexer
+WorkingDirectory=/home/bitcoin-indexer/bitcoin-indexer
+ExecStart=/home/bitcoin-indexer/bitcoin-indexer/target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Create Runes service
+
+```bash title="/etc/systemd/system/bitcoin-indexer-runes.service"
+[Unit]
+Description=Bitcoin Indexer - Runes Service
+After=network.target postgresql.service bitcoind.service
+
+[Service]
+Type=simple
+User=bitcoin-indexer
+WorkingDirectory=/home/bitcoin-indexer/bitcoin-indexer
+ExecStart=/home/bitcoin-indexer/bitcoin-indexer/target/release/bitcoin-indexer runes service start --config-path=bitcoin-indexer-config.toml
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Enable and start services
+
+```terminal
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable bitcoin-indexer-ordinals bitcoin-indexer-runes
+$ sudo systemctl start bitcoin-indexer-ordinals bitcoin-indexer-runes
+$ sudo systemctl status bitcoin-indexer-ordinals
+```
+
+## Performance optimization
+
+### During initial sync
+
+Optimize for throughput during catch-up:
+
+```toml title="bitcoin-indexer-config.toml"
+[resources]
+# Use more cores during initial sync
+cpu_core_available = 12
+bitcoind_rpc_threads = 10
+```
+
+### After reaching chain tip
+
+Reduce resource usage for steady-state operation:
+
+```toml
+[resources]
+# Reduce for normal operation
+cpu_core_available = 4
+bitcoind_rpc_threads = 4
+```
+
+## Verify successful indexing
+
+### Check API endpoints
+
+Test that APIs are returning data:
+
+```terminal -o
+$ curl http://localhost:3000/ordinals/v1/inscriptions/0
+```
+
+## Next steps
+
+:::next-steps
+- [Hiro Archives](/tools/bitcoin-indexer/archive-bootstrap): Skip weeks of indexing by bootstrapping from Hiro's pre-indexed archives.
+- [Advanced configuration](/tools/bitcoin-indexer/configuration): Configure the Bitcoin Indexer for optimal performance and customize metaprotocol settings.
+:::

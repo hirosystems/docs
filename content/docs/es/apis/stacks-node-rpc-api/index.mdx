@@ -1,0 +1,28 @@
+---
+title: API RPC del Nodo Stacks
+sidebarTitle: Visión general
+description: Acceso RPC directo a los nodos de la cadena de bloques Stacks para datos y operaciones en tiempo real.
+llm: false
+---
+## Visión general
+
+La API RPC del Nodo Stacks proporciona acceso directo a los nodos de la cadena de bloques Stacks a través de puntos finales RPC. **Hiro envía estas llamadas a nodos Stacks ascendentes** - no mantenemos ni controlamos los nodos en sí, por lo que el rendimiento y la disponibilidad dependen de la infraestructura blockchain subyacente.
+
+## Características principales
+
+* **Métodos de nodo blockchain sin procesar** - Enviar transacciones, llamar contratos de solo lectura, consultar mempool/estado
+* **Estado de la blockchain en tiempo real** - Sin capas de almacenamiento en caché, respuestas directas del nodo
+* **Ejecución de contratos inteligentes** - Ejecutar funciones de solo lectura y recuperar el estado del contrato
+* **Transmisión de transacciones** - Enviar transacciones directamente a la red
+
+## Uso
+
+```terminal
+$ curl -L 'https://api.hiro.so/v2/info' -H 'Accept: application/json'
+```
+
+Para obtener más ejemplos de uso e información sobre límites de velocidad, consulte [Uso](/apis/stacks-node-rpc-api/usage).
+
+:::callout
+**REST vs RPC:** Usar [API de la Blockchain Stacks](/apis/stacks-blockchain-api) para datos de blockchain almacenados en caché e indexados (saldos, transacciones, eventos). Utilice los puntos finales RPC para operaciones de nodo sin procesar y consultas de estado de blockchain en tiempo real.
+:::

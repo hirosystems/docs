@@ -1,0 +1,45 @@
+---
+title: Claves de API
+description: Para desarrolladores que necesitan solicitudes de API más allá de los límites de velocidad estándar.
+---
+Los desarrolladores tienen acceso abierto a las API de Hiro sin necesidad de una clave API, pero están sujetos a [Política de límite de tasa de Hiro](/resources/guides/rate-limits). Para los desarrolladores que necesitan acceso más allá de estos límites de velocidad, proporcionamos claves de API.
+
+:::callout
+Si estás interesado en obtener una clave de API, puedes generar una gratis en el [Plataforma Hiro](https://platform.hiro.so) creando una cuenta.
+
+Si su aplicación necesita más de 500 RPM, por favor [contáctenos](mailto\:platform@hiro.so).
+:::
+
+## Uso con cURL
+
+La clave de API se pasa en el `header` de su solicitud de API HTTP con `x-api-key`.
+
+```terminal
+$ curl https://api.hiro.so/... -H 'x-api-key: <your-api-key>'
+```
+
+## Uso con Node
+
+Este fragmento muestra cómo realizar una `fetch` solicitud con tu clave de API incluyéndola en los encabezados de la solicitud.
+
+```ts fetch.ts
+async function makeApiRequest(apiKey: string) {
+  const url = `https://api.hiro.so/<your-api-endpoint>`;
+  const response = await fetch(url, {
+    headers: {
+      "x-api-key": apiKey
+    }
+  });
+  return response.json();
+}
+```
+
+:::callout
+type: warn
+
+### Precaución
+
+La clave de API se pasa en el encabezado de tu solicitud de API HTTP y se utiliza solo para uso privado, como en aplicaciones del lado del servidor.
+
+Si utiliza la clave de API en su aplicación del lado del cliente, los atacantes pueden capturarla utilizando las herramientas del cliente (por ejemplo, la consola del navegador) y abusar de su clave de API.
+:::

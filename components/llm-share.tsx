@@ -1,10 +1,11 @@
 'use client';
 
-import { Check, ChevronDown, Copy, ExternalLink, Text } from 'lucide-react';
+import { Check, ChevronDown, Copy, ExternalLink } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ClaudeIcon, OpenAIIcon } from '@/components/ui/icon';
 import { useCurrentPageMarkdown, useLLMsTxt } from '@/hooks/use-llms-txt';
+import { useTranslations } from '@/hooks/use-translations';
 import { cn } from '@/lib/utils';
 import { processMarkdownLinks } from '@/utils/process-markdown-links';
 import { Button } from './ui/button';
@@ -19,18 +20,18 @@ interface LLMShareProps {
   content: string;
 }
 
-const LLM_PROVIDERS = [
+const getLLMProviders = (t: any) => [
   {
     name: 'ChatGPT',
     url: 'https://chat.openai.com',
     icon: OpenAIIcon,
-    description: 'Ask questions about this page',
+    description: t.navigation.llmShare.askQuestions,
   },
   {
     name: 'Claude',
     url: 'https://claude.ai',
     icon: ClaudeIcon,
-    description: 'Ask questions about this page',
+    description: t.navigation.llmShare.askQuestions,
   },
 ];
 
@@ -39,6 +40,8 @@ export function LLMShare({ content }: LLMShareProps) {
   const pathname = usePathname();
   const markdownUrl = useCurrentPageMarkdown();
   const { refetch } = useLLMsTxt();
+  const t = useTranslations();
+  const llmProviders = getLLMProviders(t);
 
   const handleCopy = async () => {
     try {
@@ -67,22 +70,7 @@ export function LLMShare({ content }: LLMShareProps) {
     }
   };
 
-  const handleViewRawMarkdown = () => {
-    if (!pathname) return;
-
-    let mdPath = pathname;
-    if (mdPath.startsWith('/docs')) {
-      mdPath = mdPath.substring(5);
-    }
-
-    if (!mdPath || mdPath === '/') {
-      mdPath = '/index';
-    }
-
-    window.open(`${mdPath}.md`, '_blank');
-  };
-
-  const handleShare = async (provider: (typeof LLM_PROVIDERS)[number]) => {
+  const handleShare = async (provider: ReturnType<typeof getLLMProviders>[number]) => {
     try {
       const instruction = `Read from ${markdownUrl} so I can ask questions about it.`;
 
@@ -108,7 +96,7 @@ export function LLMShare({ content }: LLMShareProps) {
         onClick={handleCopy}
         type="button"
         className="cursor-pointer relative inline-flex items-center gap-2 rounded-l-md rounded-r-none px-2 py-1.5 text-sm font-fono focus:z-10 border-0 shadow-none transition-all duration-150 hover:bg-neutral-150 dark:hover:bg-neutral-700"
-        aria-label="Copy markdown to clipboard"
+        aria-label={t.navigation.llmShare.copyMarkdown}
       >
         <span
           className={cn(
@@ -118,7 +106,7 @@ export function LLMShare({ content }: LLMShareProps) {
         >
           {isCopied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
         </span>
-        Copy markdown
+        {t.navigation.llmShare.copyMarkdown}
       </button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -132,16 +120,7 @@ export function LLMShare({ content }: LLMShareProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-64">
-          <DropdownMenuItem onSelect={handleViewRawMarkdown} className="cursor-pointer">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <Text className="h-3 w-3 text-muted-foreground" />
-                <span className="font-medium font-fono">View as Markdown</span>
-              </div>
-            </div>
-            <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />
-          </DropdownMenuItem>
-          {LLM_PROVIDERS.map((provider) => (
+          {llmProviders.map((provider) => (
             <DropdownMenuItem
               key={provider.name}
               onSelect={() => handleShare(provider)}
@@ -150,7 +129,9 @@ export function LLMShare({ content }: LLMShareProps) {
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <provider.icon className="h-3 w-3 text-muted-foreground" />
-                  <span className="font-medium font-fono">Open in {provider.name}</span>
+                  <span className="font-medium font-fono">
+                    {t.navigation.llmShare.openIn} {provider.name}
+                  </span>
                 </div>
               </div>
               <ExternalLink className="ml-auto h-3 w-3 text-muted-foreground" />

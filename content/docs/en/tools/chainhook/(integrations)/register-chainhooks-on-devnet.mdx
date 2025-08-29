@@ -1,0 +1,123 @@
+---
+title: Register Chainhooks on devnet
+description: In this guide, you'll learn how to automatically register Chainhooks on devnet using Clarinet.
+---
+
+## What you'll learn
+
+:::objectives
+- Create Chainhook predicate files in your Clarinet project
+- Register predicates automatically when starting devnet
+- Monitor Chainhook execution during local development
+:::
+
+## Prerequisites
+
+:::prerequisites
+- Clarinet version 2.1.0 or higher installed
+- A Clarinet project with smart contracts
+- Basic understanding of Chainhook predicates
+:::
+
+## Register Chainhooks on devnet
+
+<Steps>
+  <Step>
+    ### Create predicate files
+    
+    Create your Chainhook predicate files in your Clarinet project directory. You can place them in the project root or organize them in a dedicated folder.
+
+    ```json chainhooks/increment.json
+    {
+      "chain": "stacks",
+      "uuid": "1",
+      "name": "Increment Counter",
+      "version": 1,
+      "networks": {
+        "devnet": {
+          "if_this": {
+            "scope": "contract_call",
+            "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter",
+            "method": "increment"
+          },
+          "then_that": {
+            "http_post": {
+              "url": "http://localhost:3000/api/increment",
+              "authorization_header": "Bearer devnet-token"
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    The predicate will trigger whenever the `increment` method is called on your counter contract.
+  </Step>
+
+  <Step>
+    ### Organize project structure
+    
+    Structure your project with Chainhook files in a logical location. Here's a recommended project layout:
+
+    ```
+    my-project/
+    ├── contracts/
+    │   └── counter.clar
+    ├── chainhooks/
+    │   ├── increment.json
+    │   └── decrement.json
+    ├── tests/
+    │   └── counter.test.ts
+    └── Clarinet.toml
+    ```
+
+    Clarinet will automatically discover predicate files in your project directory when starting devnet.
+  </Step>
+
+  <Step>
+    ### Start devnet with Chainhook registration
+    
+    Launch devnet from your project root. Clarinet automatically starts a Chainhook service and registers all predicate files it finds.
+
+    ```terminal
+    $ clarinet devnet start
+    ```
+
+    Look for the registration confirmation in your terminal output:
+
+    ```console
+    Computing deployment plan
+    ✔ Deployment plan completed
+    
+    INFO Feb  5 15:20:07.233382 2 chainhooks registered
+    ```
+
+    This message confirms your predicates are active and monitoring the local blockchain.
+  </Step>
+
+  <Step>
+    ### Verify Chainhook execution
+    
+    Interact with your contracts to trigger the registered Chainhooks. Monitor the devnet terminal for execution confirmations.
+
+    ```terminal
+    $ clarinet console
+    >> (contract-call? .counter increment)
+    ```
+
+    Watch the devnet terminal for triggered hooks:
+
+    ```console
+    INFO Feb  5 15:21:07.233382 1 hooks triggered
+    ```
+
+    Your webhook endpoint or file output will receive the event payload based on your `then_that` configuration.
+  </Step>
+</Steps>
+
+## Next steps
+
+:::next-steps
+- [Bitcoin scopes](/tools/chainhook/reference/bitcoin-scopes): Explore available event types for Bitcoin
+- [Stacks scopes](/tools/chainhook/reference/stacks-scopes): Explore available event types for Stacks
+:::
