@@ -1,10 +1,10 @@
 ---
-title: Utilice el archivo de la API de metadatos de tokens
-description: Descubre cómo utilizar el Archivo Hiro para crear una API de Metadatos de Tokens.
+title: Usar el archivo de la API de metadatos de tokens
+description: Descubre cómo utilizar el Hiro Archive para poner en marcha una API de Metadatos de Tokens.
 ---
 ## Requisitos previos
 
-Dado que la API de metadatos de tokens depende de una API de blockchain de Stacks, primero deberá lanzar una API de blockchain de Stacks configurada para la misma red de Stacks.
+Dado que la API de metadatos de tokens depende de una API de Stacks Blockchain, primero deberá lanzar una API de Stacks Blockchain configurada para la misma red de Stacks.
 
 Si aún no tienes uno, puedes seguir [estas instrucciones](/resources/archive/stacks-blockchain) para lanzar uno con un archivo.
 
@@ -20,7 +20,7 @@ Los patrones de nombres de archivo son los siguientes:
 * archivo: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-<DATE(YYYYMMDD)>.dump`
 * shasum: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-<DATE(YYYYMMDD)>.sha256`
 
-Existe un archivo y shasum continuamente actualizados que siempre apuntan a la carga más reciente:
+Existe un archivo y un shasum que se actualizan continuamente y siempre apuntan a la carga más reciente:
 
 * archivo: `token-metadata-api-pg-<DATABASE VERSION>-latest.dump`
 * shasum: `token-metadata-api-pg-<DATABASE VERSION>-latest.sha256`
@@ -30,11 +30,11 @@ o la carga más reciente para una versión en particular:
 * archivo: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-latest.dump`
 * shasum: `token-metadata-api-pg-<DATABASE VERSION>-<API VERSION>-latest.sha256`
 
-## Restaurando la API de Metadatos de Tokens utilizando el Archivo de Hiro
+## Restaurando la API de metadatos de tokens utilizando el archivo de Hiro
 
-1. Descargue el archivo y el shasum para la red correspondiente.
-2. [Verificar el archivo](/resources/archive/verify-archive-data) con el shasum.
-3. Importar el archivo de archivo en una base de datos Postgres en ejecución (puede tardar hasta una hora dependiendo de las especificaciones y ajustes de la base de datos):
+1. Descargue el archivo y el shasum para la red apropiada.
+2. Verifique el archivo usando los pasos en el [descargar guía](/resources/archive/download-guide#verification-and-extraction) (note: API archives may not have SHA256 files available).
+3. Importe el archivo de archivo en una base de datos Postgres en ejecución (puede tardar hasta una hora dependiendo de las especificaciones y la configuración de la base de datos):
    ```terminal
    $ export PGPASSWORD=<YOUR POSTGRES PASSWORD>
    $ pg_restore --username postgres --verbose --jobs 4 --dbname token_metadata_api /path/to/archive/file

@@ -1,10 +1,10 @@
 ---
-title: Utilice el archivo de la blockchain de Stacks
-description: Descubre cómo usar el Archivo Hiro para iniciar un nodo de Stacks.
+title: Utilizar el archivo de la cadena de bloques Stacks
+description: Descubre cómo utilizar el Hiro Archive para poner en marcha un nodo de Stacks.
 ---
 ## Dónde descargar archivos
 
-Los archivos de la cadena de bloques Stacks para cada red se pueden encontrar en las siguientes ubicaciones:
+Los archivos de la cadena de bloques de Stacks para cada red se pueden encontrar en las siguientes ubicaciones:
 
 * mainnet: https://archive.hiro.so/mainnet/stacks-blockchain/
 * testnet: https://archive.hiro.so/testnet/stacks-blockchain/
@@ -14,7 +14,7 @@ Los patrones de nombres de archivo son los siguientes:
 * archivo: `<NETWORK>-stacks-blockchain-<VERSION>-<DATE(YYYYMMDD)>.tar.gz`
 * shasum: `<NETWORK>-stacks-blockchain-<VERSION>-<DATE(YYYYMMDD)>.sha256`
 
-Existe un archivo y shasum continuamente actualizados que siempre apuntan a la carga más reciente:
+Existe un archivo y un shasum que se actualizan continuamente y siempre apuntan a la carga más reciente:
 
 * archivo: `<NETWORK>-stacks-blockchain-latest.tar.gz`
 * shasum: `<NETWORK>-stacks-blockchain-latest.sha256`
@@ -24,16 +24,25 @@ o la carga más reciente para una versión en particular:
 * archivo: `<NETWORK>-stacks-blockchain-2.3.0.0.2-latest.tar.gz`
 * shasum: `<NETWORK>-stacks-blockchain-2.3.0.0.2-latest.sha256`
 
-## Restaurando un nodo de blockchain de Stacks usando el Archivo Hiro
+## Restaurando un nodo de blockchain de Stacks utilizando el Archivo Hiro
 
-1. Descargue el archivo y el shasum para la red correspondiente.
-2. [Verificar el archivo](/resources/archive/verify-archive-data) con el shasum.
+1. Descargue el archivo y el shasum para la red apropiada.
+
+:::callout
+type: info
+
+### Descargar Ayuda
+
+Los archivos son archivos grandes (321GB+ para mainnet) que pueden experimentar problemas de conexión. Para métodos de descarga detallados, solución de problemas y opciones de descarga más rápidas, consulte el [Cómo descargar los archivos de Hiro](/resources/archive/download-guide) guía.
+:::
+
+2. Verifique el archivo usando los pasos en el [descargar guía](/resources/archive/download-guide#verification-and-extraction).
 3. Extraiga el archivo en el directorio deseado:
    ```terminal
    $ tar -zxvf <ARCHIVE FILE> -C /target/directory
    ```
-4. [Configura el `working_dir` propiedad](https://docs.stacks.co/docs/nodes-and-miners/stacks-node-configuration#node) en tu archivo Config.toml del nodo de la blockchain Stacks para que coincida con el directorio donde extrajiste el archivo.
-5. Lanza tu nodo de blockchain de Stacks. Puedes usar [uno de estos archivos de configuración de ejemplo](https://github.com/stacks-network/stacks-blockchain/tree/master/testnet/stacks-node/conf) como referencia.
-6. Verifique que el conjunto de datos se esté utilizando comparando sus nodos [altura del bloque local](http://localhost:20443/v2/info) con [Hiro's](https://api.hiro.so/v2/info). Si la altura del bloque coincide o está cerca de la altura del bloque de Hiro, la restauración fue exitosa.
+4. [Configurar el `working_dir` propiedad](https://docs.stacks.co/docs/nodes-and-miners/stacks-node-configuration#node) en su archivo Config.toml del nodo de blockchain Stacks para que coincida con el directorio donde extrajo el archivo.
+5. Inicie su nodo de blockchain de Stacks. Puede usar [uno de estos archivos de configuración de ejemplo](https://github.com/stacks-network/stacks-blockchain/tree/master/testnet/stacks-node/conf) como referencia.
+6. Verifique que el conjunto de datos se esté utilizando comparando sus nodos [altura del bloque local](http://localhost:20443/v2/info) con [De Hiro](https://api.hiro.so/v2/info)Si la altura del bloque coincide o está cerca de la altura del bloque de Hiro, la restauración fue exitosa.
    1. Es posible que el nodo local tarde unos minutos en responder en este punto final.
-   2. Es posible que la altura de tu bloque esté hasta unos cientos de bloques por detrás de la de Hiro, dependiendo de la antigüedad del archivo. Debería ponerse al día relativamente rápido.
+   2. Es posible que la altura de su bloque esté hasta unos cientos de bloques alejada de la de Hiro, dependiendo de la antigüedad del archivo. Debería ponerse al día relativamente rápido.

@@ -34,7 +34,7 @@ or the most recent upload for a particular version:
 ## Restoring the Token Metadata API using the Hiro Archive
 
 1. Download the archive and shasum for the appropriate network.
-1. [Verify the archive](/resources/archive/verify-archive-data) with the shasum.
+1. Verify the archive using the steps in the [download guide](/resources/archive/download-guide#verification-and-extraction) (note: API archives may not have SHA256 files available).
 1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning):
    ```terminal
    $ export PGPASSWORD=<YOUR POSTGRES PASSWORD>
