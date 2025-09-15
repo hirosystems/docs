@@ -586,14 +586,14 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
     (ok name)))
 ```
 
-### element-at [#element-at]
+### element-at? [#element-at?]
 
-`element-at` retrieves an element at a specific index.
+`element-at?` retrieves an element at a specific index.
 
 **Signature**
 
 ```clarity
-(element-at sequence index)
+(element-at? sequence index)
 ```
 
 **Parameters**
@@ -604,23 +604,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 | `index` | `uint` | Zero-based index |
 
 ```clarity
-(element-at "Hello" u1) ;; Returns (some "e")
-(element-at (list 10 20 30) u2) ;; Returns (some 30)
-(element-at (list 1 2) u5) ;; Returns none
+(element-at? "Hello" u1) ;; Returns (some "e")
+(element-at? (list 10 20 30) u2) ;; Returns (some 30)
+(element-at? (list 1 2) u5) ;; Returns none
 
 ;; Get from list safely
 (define-read-only (get-member-at (index uint))
-  (element-at (var-get members) index))
+  (element-at? (var-get members) index))
 ```
 
-### index-of [#index-of]
+### index-of? [#index-of]
 
-`index-of` finds the first occurrence of an element in a sequence.
+`index-of?` finds the first occurrence of an element in a sequence.
 
 **Signature**
 
 ```clarity
-(index-of sequence element)
+(index-of? sequence element)
 ```
 
 **Parameters**
@@ -631,23 +631,23 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 | `element` | any | Element to find |
 
 ```clarity
-(index-of "Hello" "l") ;; Returns (some u2)
-(index-of (list 1 2 3 2) 2) ;; Returns (some u1)
-(index-of (list 1 2 3) 5) ;; Returns none
+(index-of? "Hello" "l") ;; Returns (some u2)
+(index-of? (list 1 2 3 2) 2) ;; Returns (some u1)
+(index-of? (list 1 2 3) 5) ;; Returns none
 
 ;; Check membership
 (define-read-only (is-member (user principal))
-  (is-some (index-of (var-get members) user)))
+  (is-some (index-of? (var-get members) user)))
 ```
 
-### slice [#slice]
+### slice? [#slice]
 
-`slice` extracts a subsequence from a sequence.
+`slice?` extracts a subsequence from a sequence.
 
 **Signature**
 
 ```clarity
-(slice sequence left-position right-position)
+(slice? sequence left-position right-position)
 ```
 
 **Parameters**
@@ -659,22 +659,22 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 | `right-position` | `uint` | Ending index (exclusive) |
 
 ```clarity
-(slice "Hello World" u0 u5) ;; Returns (some "Hello")
-(slice (list 1 2 3 4 5) u1 u4) ;; Returns (some (2 3 4))
+(slice? "Hello World" u0 u5) ;; Returns (some "Hello")
+(slice? (list 1 2 3 4 5) u1 u4) ;; Returns (some (2 3 4))
 
 ;; Extract substring
 (define-read-only (get-prefix (text (string-ascii 100)) (length uint))
-  (slice text u0 length))
+  (slice? text u0 length))
 ```
 
-### replace-at [#replace-at]
+### replace-at? [#replace-at]
 
-`replace-at` replaces an element at a specific index.
+`replace-at?` replaces an element at a specific index.
 
 **Signature**
 
 ```clarity
-(replace-at sequence index new-element)
+(replace-at? sequence index new-element)
 ```
 
 **Parameters**
@@ -686,12 +686,12 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 | `new-element` | any | New element |
 
 ```clarity
-(replace-at "Hello" u1 "a") ;; Returns (some "Hallo")
-(replace-at (list 1 2 3) u1 5) ;; Returns (some (1 5 3))
+(replace-at? "Hello" u1 "a") ;; Returns (some "Hallo")
+(replace-at? (list 1 2 3) u1 5) ;; Returns (some (1 5 3))
 
 ;; Update list element
 (define-public (update-member (index uint) (new-member principal))
-  (match (replace-at (var-get members) index new-member)
+  (match (replace-at? (var-get members) index new-member)
     new-list (begin
       (var-set members new-list)
       (ok true))
@@ -749,14 +749,14 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
   (concat u"Label #" (int-to-utf8 num)))
 ```
 
-### string-to-int [#string-to-int]
+### string-to-int? [#string-to-int]
 
-`string-to-int` converts a string to an optional integer.
+`string-to-int?` converts a string to an optional integer.
 
 **Signature**
 
 ```clarity
-(string-to-int string)
+(string-to-int? string)
 ```
 
 **Parameters**
@@ -766,25 +766,25 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 | `string` | `string-ascii` or `string-utf8` | String to convert |
 
 ```clarity
-(string-to-int "123") ;; Returns (some 123)
-(string-to-int "-456") ;; Returns (some -456)
-(string-to-int "abc") ;; Returns none
+(string-to-int? "123") ;; Returns (some 123)
+(string-to-int? "-456") ;; Returns (some -456)
+(string-to-int? "abc") ;; Returns none
 
 ;; Parse user input
 (define-public (set-value (input (string-ascii 10)))
-  (match (string-to-int input)
+  (match (string-to-int? input)
     value (ok (var-set stored-value value))
     (err u1)))
 ```
 
-### string-to-uint [#string-to-uint]
+### string-to-uint? [#string-to-uint]
 
-`string-to-uint` converts a string to an optional unsigned integer.
+`string-to-uint?` converts a string to an optional unsigned integer.
 
 **Signature**
 
 ```clarity
-(string-to-uint string)
+(string-to-uint? string)
 ```
 
 **Parameters**
@@ -794,13 +794,13 @@ Clarity provides a comprehensive set of built-in functions for smart contract de
 | `string` | `string-ascii` or `string-utf8` | String to convert |
 
 ```clarity
-(string-to-uint "123") ;; Returns (some u123)
-(string-to-uint "0") ;; Returns (some u0)
-(string-to-uint "-123") ;; Returns none
+(string-to-uint? "123") ;; Returns (some u123)
+(string-to-uint? "0") ;; Returns (some u0)
+(string-to-uint? "-123") ;; Returns none
 
 ;; Parse amount
 (define-read-only (parse-amount (input (string-ascii 20)))
-  (string-to-uint input))
+  (string-to-uint? input))
 ```
 
 ### buff-to-int-be [#buff-to-int-be]
