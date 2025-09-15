@@ -3,7 +3,7 @@ title: Referencia de funciones
 sidebarTitle: Funciones
 description: Referencia completa de todas las funciones de Clarity organizadas por categoría, desde operaciones aritméticas hasta gestión de tokens.
 ---
-Clarity proporciona un conjunto completo de funciones integradas para el desarrollo de contratos inteligentes. Estas funciones abarcan desde aritmética básica hasta operaciones complejas de tokens e interacciones con la cadena de bloques.
+Clarity proporciona un conjunto completo de funciones incorporadas para el desarrollo de contratos inteligentes. Estas funciones abarcan desde aritmética básica hasta operaciones complejas de tokens e interacciones con la cadena de bloques.
 
 ## Operaciones aritméticas \[#arithmetic-operations]
 
@@ -21,7 +21,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| i1, i2, ... | `int` o `uint` | Dos o más números enteros para sumar |
+| i1, i2, ... | `int` o `uint` | Dos o más enteros para sumar |
 
 ```clarity
 (+ 1 2 3) ;; Returns 6
@@ -49,7 +49,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| i1, i2, ... | `int` o `uint` | Dos o más números enteros para restar |
+| i1, i2, ... | `int` o `uint` | Dos o más enteros para restar |
 
 ```clarity
 (- 10 3) ;; Returns 7
@@ -92,7 +92,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### / (dividir) \[#divide]
 
-`/` realiza división entera en un número variable de entradas enteras.
+`/` realiza la división entera en un número variable de entradas enteras.
 
 **Firma**
 
@@ -104,7 +104,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| i1, i2, ... | `int` o `uint` | Dos o más números enteros para dividir |
+| i1, i2, ... | `int` o `uint` | Dos o más enteros para dividir |
 
 ```clarity
 (/ 10 2) ;; Returns 5
@@ -278,7 +278,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### \<= (menor o igual) \[#less-than-or-equal]
 
-`<=` devuelve true si el primer argumento es menor o igual que el segundo.
+`<=` devuelve verdadero si el primer argumento es menor o igual que el segundo.
 
 **Firma**
 
@@ -305,7 +305,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### >= (mayor o igual que) \[#greater-than-or-equal]
 
-`>=` devuelve true si el primer argumento es mayor o igual que el segundo.
+`>=` devuelve verdadero si el primer argumento es mayor o igual que el segundo.
 
 **Firma**
 
@@ -346,7 +346,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| b1, b2, ... | `bool` | Valores booleanos a evaluar |
+| b1, b2, ... | `bool` | Valores booleanos para evaluar |
 
 ```clarity
 (and true true) ;; Returns true
@@ -363,7 +363,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### o \[#or]
 
-`or` devuelve true si al menos un argumento es verdadero.
+`or` devuelve verdadero si al menos un argumento es verdadero.
 
 **Firma**
 
@@ -375,7 +375,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| b1, b2, ... | `bool` | Valores booleanos a evaluar |
+| b1, b2, ... | `bool` | Valores booleanos para evaluar |
 
 ```clarity
 (or true false) ;; Returns true
@@ -513,7 +513,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `list-expr` | `list` | Lista a la que añadir |
-| `element` | cualquier | Elemento para agregar |
+| `element` | cualquiera | Elemento para agregar |
 
 ```clarity
 (append (list 1 2) 3) ;; Returns (1 2 3)
@@ -585,14 +585,14 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok name)))
 ```
 
-### element-at \[#element-at]
+### element-at? \[#element-at?]
 
-`element-at` recupera un elemento en un índice específico.
+`element-at?` recupera un elemento en un índice específico.
 
 **Firma**
 
 ```clarity
-(element-at sequence index)
+(element-at? sequence index)
 ```
 
 **Parámetros**
@@ -603,23 +603,23 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | `index` | `uint` | Índice basado en cero |
 
 ```clarity
-(element-at "Hello" u1) ;; Returns (some "e")
-(element-at (list 10 20 30) u2) ;; Returns (some 30)
-(element-at (list 1 2) u5) ;; Returns none
+(element-at? "Hello" u1) ;; Returns (some "e")
+(element-at? (list 10 20 30) u2) ;; Returns (some 30)
+(element-at? (list 1 2) u5) ;; Returns none
 
 ;; Get from list safely
 (define-read-only (get-member-at (index uint))
-  (element-at (var-get members) index))
+  (element-at? (var-get members) index))
 ```
 
-### índice de \[#index-of]
+### index-of? \[#index-of]
 
-`index-of` encuentra la primera aparición de un elemento en una secuencia.
+`index-of?` encuentra la primera aparición de un elemento en una secuencia.
 
 **Firma**
 
 ```clarity
-(index-of sequence element)
+(index-of? sequence element)
 ```
 
 **Parámetros**
@@ -627,26 +627,26 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `sequence` | secuencia | Secuencia a buscar |
-| `element` | cualquier | Elemento a encontrar |
+| `element` | cualquiera | Elemento a encontrar |
 
 ```clarity
-(index-of "Hello" "l") ;; Returns (some u2)
-(index-of (list 1 2 3 2) 2) ;; Returns (some u1)
-(index-of (list 1 2 3) 5) ;; Returns none
+(index-of? "Hello" "l") ;; Returns (some u2)
+(index-of? (list 1 2 3 2) 2) ;; Returns (some u1)
+(index-of? (list 1 2 3) 5) ;; Returns none
 
 ;; Check membership
 (define-read-only (is-member (user principal))
-  (is-some (index-of (var-get members) user)))
+  (is-some (index-of? (var-get members) user)))
 ```
 
-### rebanada \[#slice]
+### slice? \[#slice]
 
-`slice` extrae una subsecuencia de una secuencia.
+`slice?` extrae una subsecuencia de una secuencia.
 
 **Firma**
 
 ```clarity
-(slice sequence left-position right-position)
+(slice? sequence left-position right-position)
 ```
 
 **Parámetros**
@@ -654,26 +654,26 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `sequence` | secuencia | Secuencia para cortar |
-| `left-position` | `uint` | Índice inicial (inclusive) |
+| `left-position` | `uint` | Índice inicial (inclusivo) |
 | `right-position` | `uint` | Índice final (exclusivo) |
 
 ```clarity
-(slice "Hello World" u0 u5) ;; Returns (some "Hello")
-(slice (list 1 2 3 4 5) u1 u4) ;; Returns (some (2 3 4))
+(slice? "Hello World" u0 u5) ;; Returns (some "Hello")
+(slice? (list 1 2 3 4 5) u1 u4) ;; Returns (some (2 3 4))
 
 ;; Extract substring
 (define-read-only (get-prefix (text (string-ascii 100)) (length uint))
-  (slice text u0 length))
+  (slice? text u0 length))
 ```
 
-### reemplazar en \[#replace-at]
+### replace-at? \[#replace-at]
 
-`replace-at` reemplaza un elemento en un índice específico.
+`replace-at?` reemplaza un elemento en un índice específico.
 
 **Firma**
 
 ```clarity
-(replace-at sequence index new-element)
+(replace-at? sequence index new-element)
 ```
 
 **Parámetros**
@@ -682,15 +682,15 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 |------|------|-------------|
 | `sequence` | secuencia | Secuencia a modificar |
 | `index` | `uint` | Índice a reemplazar en |
-| `new-element` | cualquiera | Nuevo elemento |
+| `new-element` | cualquier | Nuevo elemento |
 
 ```clarity
-(replace-at "Hello" u1 "a") ;; Returns (some "Hallo")
-(replace-at (list 1 2 3) u1 5) ;; Returns (some (1 5 3))
+(replace-at? "Hello" u1 "a") ;; Returns (some "Hallo")
+(replace-at? (list 1 2 3) u1 5) ;; Returns (some (1 5 3))
 
 ;; Update list element
 (define-public (update-member (index uint) (new-member principal))
-  (match (replace-at (var-get members) index new-member)
+  (match (replace-at? (var-get members) index new-member)
     new-list (begin
       (var-set members new-list)
       (ok true))
@@ -699,7 +699,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### int-to-ascii \[#int-to-ascii]
 
-`int-to-ascii` convierte un número entero a su representación de cadena ASCII.
+`int-to-ascii` converts an integer to its ASCII string representation.
 
 **Firma**
 
@@ -747,14 +747,14 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
   (concat u"Label #" (int-to-utf8 num)))
 ```
 
-### string-to-int \[#string-to-int]
+### string-to-int? \[#string-to-int]
 
-`string-to-int` convierte una cadena a un entero opcional.
+`string-to-int?` convierte una cadena a un entero opcional.
 
 **Firma**
 
 ```clarity
-(string-to-int string)
+(string-to-int? string)
 ```
 
 **Parámetros**
@@ -764,25 +764,25 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | `string` | `string-ascii` o `string-utf8` | Cadena para convertir |
 
 ```clarity
-(string-to-int "123") ;; Returns (some 123)
-(string-to-int "-456") ;; Returns (some -456)
-(string-to-int "abc") ;; Returns none
+(string-to-int? "123") ;; Returns (some 123)
+(string-to-int? "-456") ;; Returns (some -456)
+(string-to-int? "abc") ;; Returns none
 
 ;; Parse user input
 (define-public (set-value (input (string-ascii 10)))
-  (match (string-to-int input)
+  (match (string-to-int? input)
     value (ok (var-set stored-value value))
     (err u1)))
 ```
 
-### string-to-uint \[#string-to-uint]
+### string-to-uint? \[#string-to-uint]
 
-`string-to-uint` convierte una cadena a un entero sin signo opcional.
+`string-to-uint?` convierte una cadena a un número entero sin signo opcional.
 
 **Firma**
 
 ```clarity
-(string-to-uint string)
+(string-to-uint? string)
 ```
 
 **Parámetros**
@@ -792,18 +792,18 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | `string` | `string-ascii` o `string-utf8` | Cadena para convertir |
 
 ```clarity
-(string-to-uint "123") ;; Returns (some u123)
-(string-to-uint "0") ;; Returns (some u0)
-(string-to-uint "-123") ;; Returns none
+(string-to-uint? "123") ;; Returns (some u123)
+(string-to-uint? "0") ;; Returns (some u0)
+(string-to-uint? "-123") ;; Returns none
 
 ;; Parse amount
 (define-read-only (parse-amount (input (string-ascii 20)))
-  (string-to-uint input))
+  (string-to-uint? input))
 ```
 
 ### buff-to-int-be \[#buff-to-int-be]
 
-`buff-to-int-be` convierte un búfer a un entero con signo (big-endian).
+`buff-to-int-be` convierte un búfer a un número entero con signo (big-endian).
 
 **Firma**
 
@@ -815,7 +815,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `buffer` | `buff` | Búfer para convertir |
+| `buffer` | `buff` | Búfer a convertir |
 
 ```clarity
 (buff-to-int-be 0x0001) ;; Returns 1
@@ -829,7 +829,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### buff-to-int-le \[#buff-to-int-le]
 
-`buff-to-int-le` convierte un búfer a un entero con signo (little-endian).
+`buff-to-int-le` convierte un búfer a un número entero con signo (little-endian).
 
 **Firma**
 
@@ -841,7 +841,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `buffer` | `buff` | Búfer para convertir |
+| `buffer` | `buff` | Búfer a convertir |
 
 ```clarity
 (buff-to-int-le 0x0100) ;; Returns 1
@@ -854,7 +854,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### buff-to-uint-be \[#buff-to-uint-be]
 
-`buff-to-uint-be` convierte un búfer a un entero sin signo (big-endian).
+`buff-to-uint-be` convierte un búfer a un número entero sin signo (big-endian).
 
 **Firma**
 
@@ -866,7 +866,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `buffer` | `buff` | Búfer para convertir |
+| `buffer` | `buff` | Búfer a convertir |
 
 ```clarity
 (buff-to-uint-be 0x0001) ;; Returns u1
@@ -879,7 +879,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### buff-to-uint-le \[#buff-to-uint-le]
 
-`buff-to-uint-le` convierte un búfer a un entero sin signo (little-endian).
+`buff-to-uint-le` convierte un búfer a un número entero sin signo (little-endian).
 
 **Firma**
 
@@ -891,7 +891,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `buffer` | `buff` | Búfer para convertir |
+| `buffer` | `buff` | Búfer a convertir |
 
 ```clarity
 (buff-to-uint-le 0x0100) ;; Returns u1
@@ -946,7 +946,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `func` | función | Función predicado |
+| `func` | función | Función de predicado |
 | `list` | `list` | Lista para filtrar |
 
 ```clarity
@@ -1006,7 +1006,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `name` | símbolo | Nombre de la constante |
-| `value` | cualquier | Valor de la constante |
+| `value` | cualquiera | Valor de la constante |
 
 ```clarity
 (define-constant contract-owner tx-sender)
@@ -1092,7 +1092,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `name` | símbolo | Nombre de la variable |
-| `value` | cualquier | Nuevo valor |
+| `value` | cualquiera | Nuevo valor |
 
 ```clarity
 (define-data-var counter uint u0)
@@ -1126,8 +1126,8 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `name` | símbolo | Nombre del mapa |
-| `key-type` | tipo | Tipo de las llaves |
-| `value-type` | type | Tipo de los valores |
+| `key-type` | tipo | Tipo de las claves |
+| `value-type` | tipo | Tipo de los valores |
 
 ```clarity
 (define-map balances principal uint)
@@ -1160,7 +1160,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `map-name` | símbolo | Nombre del mapa |
-| `key` | cualquier | Clave para buscar |
+| `key` | cualquiera | Clave para buscar |
 
 ```clarity
 (define-map balances principal uint)
@@ -1190,7 +1190,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `map-name` | símbolo | Nombre del mapa |
-| `key` | cualquier | Tecla para establecer |
+| `key` | cualquiera | Key to set |
 | `value` | cualquier | Valor para almacenar |
 
 ```clarity
@@ -1227,7 +1227,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `map-name` | símbolo | Nombre del mapa |
-| `key` | cualquier | Tecla para insertar |
+| `key` | cualquiera | Tecla para insertar |
 | `value` | cualquier | Valor para almacenar |
 
 ```clarity
@@ -1260,7 +1260,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `map-name` | símbolo | Nombre del mapa |
-| `key` | cualquier | Tecla para eliminar |
+| `key` | cualquiera | Key to delete |
 
 ```clarity
 (define-map users principal { data: uint })
@@ -1278,7 +1278,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok true)))
 ```
 
-### definir-privado \[#define-private]
+### define-private \[#define-private]
 
 `define-private` crea una función privada que solo se puede llamar dentro del contrato.
 
@@ -1454,7 +1454,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `condition` | `bool` | Condición a verificar |
-| `thrown-value` | cualquier | Valor a devolver si es falso |
+| `thrown-value` | cualquiera | Valor a devolver si es falso |
 
 ```clarity
 (define-public (transfer (amount uint) (recipient principal))
@@ -1472,7 +1472,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok true)))
 ```
 
-### ¡inténtalo! \[#try]
+### try! \[#try]
 
 `try!` intenta desenvolver una respuesta, propagando cualquier error.
 
@@ -1501,9 +1501,9 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok true)))
 ```
 
-### ¡desenvolver! \[#unwrap]
+### unwrap! \[#unwrap]
 
-`unwrap!` extrae el valor interno de una respuesta opcional o correcta.
+`unwrap!` extrae el valor interno de una respuesta opcional o exitosa.
 
 **Firma**
 
@@ -1515,7 +1515,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `optional-or-response` | opcional/respuesta | Valor a desenvolver |
+| `optional-or-response` | opcional/respuesta | Valor para desenvolver |
 | `thrown-value` | cualquiera | Valor si ninguno/error |
 
 ```clarity
@@ -1545,7 +1545,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `response` | respuesta | Respuesta a desenvolver |
-| `thrown-value` | cualquier | Valor si está bien |
+| `thrown-value` | cualquiera | Valor si está bien |
 
 ```clarity
 (unwrap-err! (err u404) u0) ;; Returns u404
@@ -1597,7 +1597,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `response` | respuesta | Respuesta a desenvolver |
+| `response` | respuesta | Respuesta para desenvolver |
 
 ```clarity
 (unwrap-err-panic (err u404)) ;; Returns u404
@@ -1612,7 +1612,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### default-to \[#default-to]
 
-`default-to` devuelve un valor predeterminado para ninguno.
+`default-to` devuelve un valor predeterminado para none.
 
 **Firma**
 
@@ -1664,7 +1664,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok true)))
 ```
 
-### obtener \[#get]
+### get \[#get]
 
 `get` extrae un valor de una tupla por clave.
 
@@ -1693,7 +1693,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### as-max-len? \[#as-max-len]
 
-`as-max-len?` comprueba si una secuencia cabe dentro de una longitud máxima.
+`as-max-len?` comprueba si una secuencia se ajusta a una longitud máxima.
 
 **Firma**
 
@@ -1738,8 +1738,8 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `condition` | `bool` | Condición a evaluar |
-| `true-branch` | cualquier | Valor si es verdadero |
-| `false-branch` | cualquier | Valor si es falso |
+| `true-branch` | cualquiera | Valor si es verdadero |
+| `false-branch` | cualquiera | Valor si es falso |
 
 ```clarity
 (if (> u10 u5)
@@ -1756,9 +1756,9 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
       (err u1))))
 ```
 
-### partido \[#match]
+### match \[#partido]
 
-`match` realiza la coincidencia de patrones en tipos opcionales y de respuesta.
+`match` realiza coincidencia de patrones en tipos opcionales y de respuesta.
 
 **Firma**
 
@@ -1811,7 +1811,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | expr1, expr2, ... | any | Expresiones a ejecutar |
-| `last-expr` | cualquier | Expresión final (valor de retorno) |
+| `last-expr` | cualquiera | Expresión final (valor de retorno) |
 
 ```clarity
 (begin
@@ -1829,7 +1829,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok true)))
 ```
 
-### dejemos \[#let]
+### let \[#let]
 
 `let` crea enlaces locales para su uso en una expresión.
 
@@ -1878,7 +1878,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `value` | cualquier | Valor para envolver |
+| `value` | cualquiera | Valor para envolver |
 
 ```clarity
 (some u42) ;; Returns (some u42)
@@ -1891,7 +1891,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     none))
 ```
 
-### está-bien \[#is-ok]
+### is-ok \[#is-ok]
 
 `is-ok` comprueba si una respuesta es correcta.
 
@@ -1941,7 +1941,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
   (is-err result))
 ```
 
-### es-alguno \[#is-some]
+### is-some \[#is-some]
 
 `is-some` comprueba si un opcional contiene un valor.
 
@@ -1955,7 +1955,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `optional` | opcional | Opcional para marcar |
+| `optional` | opcional | Opcional para verificar |
 
 ```clarity
 (is-some (some u42)) ;; Returns true
@@ -1966,9 +1966,9 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
   (is-some (map-get? users user)))
 ```
 
-### es-ninguno \[#is-none]
+### is-none \[#is-none]
 
-`is-none` comprueba si un opcional es ninguno.
+`is-none` comprueba si un opcional es none.
 
 **Firma**
 
@@ -1980,7 +1980,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `optional` | opcional | Opcional para marcar |
+| `optional` | opcional | Opcional para verificar |
 
 ```clarity
 (is-none none) ;; Returns true
@@ -2007,7 +2007,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `token-name` | símbolo | Nombre del token |
+| `token-name` | symbol | Nombre del token |
 | `total-supply` | `uint` (opcional) | Suministro máximo |
 
 ```clarity
@@ -2033,8 +2033,8 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `token` | token-name | Token a acuñar |
-| `amount` | `uint` | Cantidad para acuñar |
+| `token` | token-name | Token para acuñar |
+| `amount` | `uint` | Cantidad a acuñar |
 | `recipient` | `principal` | Destinatario de tokens |
 
 ```clarity
@@ -2061,7 +2061,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `token` | token-name | Token a quemar |
+| `token` | token-name | Token para quemar |
 | `amount` | `uint` | Cantidad para quemar |
 | `owner` | `principal` | Propietario de tokens |
 
@@ -2116,7 +2116,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `token` | token-name | Token para consultar |
+| `token` | token-name | Token a consultar |
 | `principal` | `principal` | Cuenta a verificar |
 
 ```clarity
@@ -2141,7 +2141,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `token` | token-name | Token para consultar |
+| `token` | token-name | Token a consultar |
 
 ```clarity
 (ft-get-supply my-token) ;; Returns uint
@@ -2171,8 +2171,8 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `token-name` | símbolo | Nombre del NFT |
-| `identifier-type` | type | Tipo del identificador |
+| `token-name` | symbol | Nombre del NFT |
+| `identifier-type` | tipo | Tipo del identificador |
 
 ```clarity
 (define-non-fungible-token my-nft uint)
@@ -2185,7 +2185,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 })
 ```
 
-### ¿Acuñación de NFT? \[#nft-mint]
+### nft-mint? \[#nft-mint]
 
 `nft-mint?` crea un nuevo NFT para un destinatario.
 
@@ -2214,7 +2214,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (ok id)))
 ```
 
-### ¿Quemar NFT? \[#nft-burn]
+### nft-burn? \[#nft-burn]
 
 `nft-burn?` destruye un NFT.
 
@@ -2229,7 +2229,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `token` | token-name | NFT para quemar |
-| `identifier` | cualquier | identificador NFT |
+| `identifier` | cualquier | identificador de NFT |
 | `owner` | `principal` | Propietario actual |
 
 ```clarity
@@ -2257,7 +2257,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `token` | token-name | NFT a transferir |
-| `identifier` | cualquier | identificador NFT |
+| `identifier` | cualquier | identificador de NFT |
 | `sender` | `principal` | Propietario actual |
 | `recipient` | `principal` | Nuevo propietario |
 
@@ -2286,7 +2286,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `token` | token-name | NFT a consultar |
-| `identifier` | cualquier | identificador NFT |
+| `identifier` | cualquier | identificador de NFT |
 
 ```clarity
 (nft-get-owner? my-nft u1) ;; Returns (optional principal)
@@ -2356,7 +2356,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
     (concat 0x494e56 invoice-id))) ;; "INV" prefix
 ```
 
-### ¿Quema de STX? \[#stx-burn]
+### stx-burn? \[#stx-burn]
 
 `stx-burn?` quema STX enviándolo a una dirección de quemado.
 
@@ -2371,7 +2371,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `amount` | `uint` | Cantidad para quemar |
-| `sender` | `principal` | Quemando dirección STX |
+| `sender` | `principal` | Dirección quemando STX |
 
 ```clarity
 (stx-burn? u1000000 tx-sender)
@@ -2421,7 +2421,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `principal` | `principal` | Dirección a consultar |
+| `principal` | `principal` | Dirección para consultar |
 
 ```clarity
 (stx-account tx-sender)
@@ -2538,7 +2538,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ### hash160 \[#hash160]
 
-`hash160` calcula RIPEMD160(SHA256(datos)).
+`hash160` computes RIPEMD160(SHA256(data)).
 
 **Firma**
 
@@ -2618,7 +2618,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 ## Datos de blockchain \[#blockchain-data]
 
-### ¿obtener-información-del-bloque? \[#get-block-info]
+### get-block-info? \[#get-block-info]
 
 `get-block-info?` recupera información sobre un bloque.
 
@@ -2632,7 +2632,7 @@ Clarity proporciona un conjunto completo de funciones integradas para el desarro
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `property` | PropertyName | Propiedad a recuperar |
+| `property` | Nombre de la propiedad | Propiedad a recuperar |
 | `block` | `uint` | Altura del bloque |
 
 Propiedades: `header-hash`, `burnchain-header-hash`, `time`, `miner-address`, `block-reward`, `miner-spend-total`, `miner-spend-winner`
@@ -2648,7 +2648,7 @@ Propiedades: `header-hash`, `burnchain-header-hash`, `time`, `miner-address`, `b
 
 ### get-burn-block-info? \[#get-burn-block-info]
 
-`get-burn-block-info?` recupera información de bloques de Bitcoin.
+`get-burn-block-info?` recupera información del bloque de Bitcoin.
 
 **Firma**
 
@@ -2660,7 +2660,7 @@ Propiedades: `header-hash`, `burnchain-header-hash`, `time`, `miner-address`, `b
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `property` | PropertyName | Propiedad a recuperar |
+| `property` | Nombre de la propiedad | Propiedad a recuperar |
 | `block` | `uint` | Altura del bloque de quemado |
 
 Propiedades: `header-hash`, `pox-addrs`
@@ -2673,7 +2673,7 @@ Propiedades: `header-hash`, `pox-addrs`
   (get-burn-block-info? header-hash height))
 ```
 
-### ¿obtener información del bloque de Stacks? \[#get-stacks-block-info]
+### get-stacks-block-info? \[#get-stacks-block-info]
 
 `get-stacks-block-info?` recupera información del bloque de Stacks.
 
@@ -2687,7 +2687,7 @@ Propiedades: `header-hash`, `pox-addrs`
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `property` | PropertyName | Propiedad a recuperar |
+| `property` | Nombre de la propiedad | Propiedad a recuperar |
 | `block` | `uint` | Altura del bloque de Stacks |
 
 Propiedades: `header-hash`, `block-hash`, `miner-address`, `block-reward`
@@ -2700,7 +2700,7 @@ Propiedades: `header-hash`, `block-hash`, `miner-address`, `block-reward`
   (get-stacks-block-info? block-hash height))
 ```
 
-### ¿obtener información sobre la titularidad? \[#get-tenure-info]
+### get-tenure-info? \[#get-tenure-info]
 
 `get-tenure-info?` recupera información sobre la tenencia.
 
@@ -2714,7 +2714,7 @@ Propiedades: `header-hash`, `block-hash`, `miner-address`, `block-reward`
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `property` | PropertyName | Propiedad a recuperar |
+| `property` | Nombre de la propiedad | Propiedad a recuperar |
 | `block` | `uint` | Bloque de tenencia |
 
 Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
@@ -2752,7 +2752,7 @@ Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (at-block block-hash (ft-get-balance my-token user)))
 ```
 
-## Operaciones principales y contractuales \[#principal-contract-operations]
+## Operaciones principales y de contrato \[#principal-contract-operations]
 
 ### principal-construct? \[#principal-construct]
 
@@ -2794,7 +2794,7 @@ Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `principal` | `principal` | Principio a descomponer |
+| `principal` | `principal` | Principal a descomponer |
 
 ```clarity
 (principal-destruct? tx-sender)
@@ -2805,7 +2805,7 @@ Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
   (principal-destruct? user))
 ```
 
-### principal-de? \[#principal-of]
+### principal-of? \[#principal-of]
 
 `principal-of?` devuelve el principal de una clave pública.
 
@@ -2881,9 +2881,9 @@ Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
     (as-contract (stx-transfer? balance tx-sender recipient))))
 ```
 
-### contrato de \[#contract-of]
+### contrato-de \[#contract-of]
 
-`contract-of` devuelve el principal de una referencia de rasgo.
+`contract-of` devuelve el principal de una referencia de trait.
 
 **Firma**
 
@@ -2907,7 +2907,7 @@ Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
 
 ### es-estándar \[#is-standard]
 
-`is-standard` comprueba si un principal coincide con el tipo de red actual y puede gastar tokens.
+`is-standard` verifica si un principal coincide con el tipo de red actual y puede gastar tokens.
 
 **Firma**
 
@@ -2919,7 +2919,7 @@ Propiedades: `burnchain-header-hash`, `miner-address`, `time`, `vrf-seed`
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `standard-or-contract-principal` | `principal` | Principio a verificar |
+| `standard-or-contract-principal` | `principal` | Principal a verificar |
 
 ```clarity
 ;; On testnet
@@ -2957,7 +2957,7 @@ Puntos clave:
 
 ## Rasgos \[#traits]
 
-### definir-rasgo \[#define-trait]
+### define-trait \[#define-trait]
 
 `define-trait` crea una nueva definición de rasgo.
 
@@ -2972,7 +2972,7 @@ Puntos clave:
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `trait-name` | símbolo | Nombre del rasgo |
-| `function-name` | símbolo | Firmas de función |
+| `function-name` | símbolo | Firmas de funciones |
 
 ```clarity
 (define-trait fungible-token (
@@ -3001,7 +3001,7 @@ Puntos clave:
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `trait-identifier` | rasgo | Rasgo a implementar |
+| `trait-identifier` | trait | Rasgo a implementar |
 
 ```clarity
 (impl-trait .token-trait.fungible-token)
@@ -3011,7 +3011,7 @@ Puntos clave:
 (impl-trait .dao-traits.voting-trait)
 ```
 
-### uso-rasgo \[#use-trait]
+### use-trait \[#use-trait]
 
 `use-trait` crea un alias de rasgo para usar en funciones.
 
@@ -3039,7 +3039,7 @@ Puntos clave:
 
 ### to-int \[#to-int]
 
-`to-int` convierte un entero sin signo a un entero con signo.
+`to-int` convierte un número entero sin signo a un número entero con signo.
 
 **Firma**
 
@@ -3076,7 +3076,7 @@ Puntos clave:
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `int` | `int` | Entero con signo |
+| `int` | `int` | Número entero con signo |
 
 ```clarity
 (to-uint 100) ;; Returns u100
@@ -3089,7 +3089,7 @@ Puntos clave:
     none))
 ```
 
-### ¿al consenso-buff? \[#to-consensus-buff]
+### to-consensus-buff? \[#to-consensus-buff]
 
 `to-consensus-buff?` serializa un valor al formato de consenso.
 
@@ -3131,7 +3131,7 @@ Puntos clave:
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `type` | tipo-firma | Tipo esperado |
-| `buffer` | `buff` | Buffer para deserializar |
+| `buffer` | `buff` | Buffer a deserializar |
 
 ```clarity
 (from-consensus-buff? uint 0x0100) ;; Returns (optional u1)
@@ -3224,7 +3224,7 @@ Puntos clave:
 
 ### bit-not \[#bit-not]
 
-`bit-not` realiza la operación bitwise NOT.
+`bit-not` realiza la operación de NOT a nivel de bits.
 
 **Firma**
 
@@ -3262,7 +3262,7 @@ Puntos clave:
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `i` | `int` o `uint` | Valor a desplazar |
-| `positions` | `uint` | Posiciones a desplazar |
+| `positions` | `uint` | Posiciones para desplazar |
 
 ```clarity
 (bit-shift-left u1 u3) ;; Returns u8 (1 << 3)
@@ -3288,7 +3288,7 @@ Puntos clave:
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
 | `i` | `int` o `uint` | Valor a desplazar |
-| `positions` | `uint` | Posiciones a desplazar |
+| `positions` | `uint` | Posiciones para desplazar |
 
 ```clarity
 (bit-shift-right u8 u3) ;; Returns u1 (8 >> 3)
@@ -3301,7 +3301,7 @@ Puntos clave:
 
 ## Funciones de utilidad \[#utility-functions]
 
-### imprimir \[#print]
+### print \[#print]
 
 `print` devuelve un valor y lo retorna.
 
@@ -3315,7 +3315,7 @@ Puntos clave:
 
 | Nombre | Tipo | Descripción |
 |------|------|-------------|
-| `value` | cualquier | Valor a imprimir |
+| `value` | cualquiera | Valor a imprimir |
 
 ```clarity
 (print "Debug message") ;; Prints and returns "Debug message"
