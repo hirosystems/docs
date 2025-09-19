@@ -1,7 +1,7 @@
 ---
 title: Preguntas frecuentes
 sidebarTitle: Preguntas frecuentes
-description: Preguntas comunes y soluciones para el desarrollo de Clarinet
+description: Preguntas comunes y soluciones para el desarrollo con Clarinet
 ---
 Esta página aborda preguntas y problemas comunes encontrados al desarrollar con Clarinet, basados en comentarios de la comunidad e interacciones de soporte.
 
@@ -13,7 +13,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        Para probar con tokens sBTC, añade el contrato sBTC de la red principal como requisito y acuña tokens usando la dirección del desplegador:
+        Para probar con tokens sBTC, agregue el contrato sBTC de mainnet como requisito y acuñe tokens utilizando la dirección del implementador:
 
         **Paso 1: Agregar sBTC como requisito**
 
@@ -41,14 +41,14 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="direcciones-de-simulación-de-red-principal">
+  <AccordionItem value="direcciones-de-simulación-de-mainnet">
     <AccordionTrigger>¿Por qué estoy recibiendo un error al usar direcciones de mainnet durante la simulación de mainnet?</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        Al utilizar la simulación de ejecución en la red principal, es posible que el contrato de la red principal esté verificando las llamadas de contrato de direcciones de la red principal, no las direcciones de la red de prueba.
+        Al utilizar la simulación de ejecución en la red principal, es posible que el contrato de la red principal esté verificando las llamadas de contrato de direcciones de la red principal, no las direcciones de la red de pruebas.
 
-        **A partir de Clarinet v3.4.0**, puedes habilitar direcciones de mainnet en simnet agregando `use_mainnet_wallets = true` a tu configuración:
+        **A partir de Clarinet v3.4.0**, puede habilitar direcciones de mainnet en simnet agregando `use_mainnet_wallets = true` a su configuración:
 
         ```toml Clarinet.toml
         [repl.remote_data]
@@ -68,7 +68,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 
         // Call functions with mainnet address
         const result = simnet.callReadOnlyFn(
-          "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3",
+          "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4",
           "get-price",
           [priceFeed],
           mainnetAddress
@@ -80,7 +80,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="ayudantes-de-prueba-migración">
+  <AccordionItem value="testing-helpers-migration">
     <AccordionTrigger>¿Cómo migro de expectSTXTransferEvent al nuevo SDK?</AccordionTrigger>
 
     <AccordionContent>
@@ -121,7 +121,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
         });
         ```
 
-        Para las aserciones de valor de Clarity, utiliza los comparadores incorporados:
+        Para las aserciones de valor de Clarity, utilice los comparadores incorporados:
 
         ```typescript
         expect(result).toBeOk(Cl.bool(true));
@@ -132,15 +132,15 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
   </AccordionItem>
 </Accordion>
 
-## Configuración e instalación
+## Configuración y preparación
 
 <Accordion type="single" collapsible>
-  <AccordionItem value="mnemónico-24-palabras">
-    <AccordionTrigger>¿Por qué estoy recibiendo "error bip39" al generar planes de implementación?</AccordionTrigger>
+  <AccordionItem value="mnemónica-24-palabras">
+    <AccordionTrigger>¿Por qué estoy obteniendo "bip39 error" al generar planes de implementación?</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        A partir de Clarinet 2.15.0, las configuraciones de implementación requieren mnemotécnicas de 24 palabras. Las mnemotécnicas de 12 palabras ya no son compatibles.
+        A partir de Clarinet 2.15.0, las configuraciones de despliegue requieren mnemotécnicas de 24 palabras. Las mnemotécnicas de 12 palabras ya no son compatibles.
 
         **Actualice su configuración:**
 
@@ -150,7 +150,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
         mnemonic = "twice kind fence tip hidden tilt action fragile skin nothing glory cousin green tomorrow spring wrist shed math olympic multiply hip blue scout claw"
         ```
 
-        Genere una nueva mnemotecnia de 24 palabras usando un generador BIP39 si es necesario. Este cambio mejora la seguridad para implementaciones en producción.
+        Generate a new 24-word mnemonic using a BIP39 generator if needed. This change improves security for production deployments.
       </div>
     </AccordionContent>
   </AccordionItem>
@@ -159,12 +159,12 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 ## Limitaciones conocidas
 
 <Accordion type="single" collapsible>
-  <AccordionItem value="limitaciones-de-pruebas-de-bitcoin">
+  <AccordionItem value="bitcoin-limitaciones-de-pruebas">
     <AccordionTrigger>¿Puedo probar la verificación de transacciones de Bitcoin en Clarinet?</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        Probar contratos que utilizan clarity-bitcoin-lib para la verificación de transacciones de Bitcoin tiene limitaciones en simnet y devnet:
+        Las pruebas de contratos que utilizan clarity-bitcoin-lib para la verificación de transacciones de Bitcoin tienen limitaciones en simnet y devnet:
 
         **Limitaciones actuales:**
 
@@ -174,7 +174,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 
         **Soluciones alternativas:**
 
-        * Probar la lógica de verificación de Bitcoin en la red principal o con simulación de ejecución de la red principal
+        * Probar la lógica de verificación de Bitcoin en la red principal o con simulación de ejecución en la red principal
         * Crear pruebas unitarias que simulen el comportamiento esperado sin verificación real
         * Considere separar la lógica de verificación de Bitcoin para facilitar las pruebas
 
@@ -183,17 +183,17 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="transición de época">
+  <AccordionItem value="época-transición">
     <AccordionTrigger>¿Por qué mi devnet se congela en la transición de la época 3.0?</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        La transición de época 3.0 en devnet puede ser inestable, con tasas de éxito que varían entre el 50-80% dependiendo de tu configuración.
+        La transición de la época 3.0 en devnet puede ser inestable, con tasas de éxito que varían entre el 50-80% dependiendo de tu configuración.
 
         **Soluciones temporales actuales:**
 
         * Reinicie devnet si se congela alrededor de los bloques 139-140
-        * Prueba Clarinet 2.14.0, que algunos usuarios informan que es más estable
+        * Prueba Clarinet 2.14.0, que algunos usuarios informan como más estable
         * Espera a que la próxima función comience devnet directamente en la época 3.0
 
         **Monitoreando la transición:**

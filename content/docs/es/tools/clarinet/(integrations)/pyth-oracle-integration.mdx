@@ -6,17 +6,17 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
 ## Lo que aprenderás
 
 :::objectives
-* Configurar las dependencias del contrato de mainnet
+* Configurar dependencias de contratos de mainnet
 * Utilizar la ejecución de transacciones de mainnet (MXS) para pruebas de oráculos
 * Crear feeds de precios simulados para pruebas unitarias
-* Escribir pruebas de integración con datos reales de oracle
+* Escribir pruebas de integración con datos reales del oráculo
 :::
 
 ## Requisitos previos
 
 :::prerequisites
-* Versión 2.1.0 o superior de Clarinet con soporte MXS
-* Comprensión de [Contratos de oráculo de Pyth](/resources/clarity/external-data)
+* Clarinet versión 2.1.0 o superior con soporte MXS
+* Comprensión de [Contratos de oráculo Pyth](/resources/clarity/external-data)
 :::
 
 ## Inicio rápido
@@ -25,20 +25,20 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Configurar dependencias de mainnet
 
-    Agregue los contratos de oráculo Pyth a sus requisitos de Clarinet.toml:
+    Agregue los contratos de oráculo de Pyth a sus requisitos de Clarinet.toml:
 
     ```toml Clarinet.toml
     [project]
     name = "my-oracle-project"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3"
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3"
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v2"
+    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v3"
 
     [[project.requirements]]
     contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3"
@@ -104,7 +104,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Escribir pruebas unitarias con precios simulados
 
-    Crear pruebas unitarias utilizando el oráculo simulado:
+    Crea pruebas unitarias utilizando el oráculo simulado:
 
     ```typescript tests/benjamin-club.test.ts
     import { Cl } from '@stacks/transactions';
@@ -170,9 +170,9 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   </Step>
 
   <Step>
-    ### Configurar pruebas de ejecución de mainnet
+    ### Configurar pruebas de ejecución en la red principal
 
-    Para pruebas de integración con datos reales de oracle, utilice la ejecución de transacciones de mainnet:
+    Para pruebas de integración con datos reales del oráculo, utilice la ejecución de transacciones de mainnet:
 
     ```typescript tests/benjamin-club-mxs.test.ts
     import { buildDevnetNetworkOrchestrator } from "@hirosystems/clarinet-sdk";
@@ -267,7 +267,7 @@ export function setupPriceScenario(
 }
 ```
 
-### Probando la obsolescencia de precios
+### Probando la obsolescencia del precio
 
 Asegúrate de que tu contrato maneje correctamente los precios obsoletos:
 
@@ -320,8 +320,8 @@ plan:
             contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R.benjamin-club
             method: initialize
             parameters:
-              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3"
-              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3"
+              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4"
+              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4"
 ```
 
 ### Estimación de gas

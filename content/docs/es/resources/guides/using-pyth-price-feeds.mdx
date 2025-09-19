@@ -8,7 +8,7 @@ import { ArrowRight, Check } from 'lucide-react';
 
 ## Visión general
 
-Esta guía completa le guía a través de la integración [Red Pyth](https://pyth.network)'s oráculo descentralizado para datos de precios en tiempo real en tus aplicaciones de Stacks. Construiremos un ejemplo completo: un NFT que solo se puede acuñar pagando exactamente $100 en valor de sBTC.
+Esta guía completa le guía a través de la integración [Red Pyth](https://pyth.network)'s oráculo descentralizado para datos de precios en tiempo real en sus aplicaciones de Stacks. Construiremos un ejemplo completo: un NFT que solo se puede acuñar pagando exactamente $100 en valor de sBTC.
 
 :::callout
 The Pyth protocol integration is available as a Beta on both testnet and mainnet networks. It's maintained by Trust Machines and provides access to real-time price feeds for BTC, STX, ETH, and USDC.
@@ -43,7 +43,7 @@ A diferencia de los oráculos basados en push que actualizan continuamente los p
 Crearemos un "Benjamin Club" - un NFT exclusivo que cuesta exactamente $100 en valor de sBTC para acuñar. Esto demuestra:
 
 * Lectura de precios BTC/USD en tiempo real desde Pyth
-* Conversión entre cantidades de USD y criptomonedas
+* Convirtiendo entre cantidades de USD y criptomonedas
 * Manejo de aritmética de punto fijo
 * Construyendo una integración frontend completa
 * Probando contratos dependientes de oráculo
@@ -78,7 +78,7 @@ Crearemos un "Benjamin Club" - un NFT exclusivo que cuesta exactamente $100 en v
   <Step>
     ### Escribir el contrato inteligente
 
-    Primero, implemente el contrato de Clarity que lee los datos de precios de Pyth:
+    Primero, implementa el contrato de Clarity que lee los datos de precios de Pyth:
 
     ```clarity contracts/benjamin-club.clar
     ;; Benjamin Club - $100 NFT minting contract
@@ -89,9 +89,9 @@ Crearemos un "Benjamin Club" - un NFT exclusivo que cuesta exactamente $100 en v
     (define-constant ERR-STALE-PRICE (err u102))
 
     ;; Pyth oracle contracts
-    (define-constant PYTH-ORACLE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3)
-    (define-constant PYTH-STORAGE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3)
-    (define-constant PYTH-DECODER 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v2)
+    (define-constant PYTH-ORACLE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4)
+    (define-constant PYTH-STORAGE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4)
+    (define-constant PYTH-DECODER 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v3)
     (define-constant WORMHOLE-CORE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3)
 
     ;; BTC price feed ID
@@ -365,7 +365,7 @@ Agrupe múltiples actualizaciones de precios cuando sea posible:
     <AccordionTrigger>La verificación de VAA falla</AccordionTrigger>
 
     <AccordionContent>
-      Asegúrate de obtener datos VAA con `binary: true` opción y convirtiendo de base64 a hexadecimal correctamente. El VAA debe ser reciente (típicamente dentro de 5 minutos).
+      Asegúrate de obtener datos VAA con `binary: true` opción y convirtiendo correctamente de base64 a hexadecimal. El VAA debe ser reciente (normalmente dentro de los 5 minutos).
     </AccordionContent>
   </AccordionItem>
 
@@ -399,9 +399,9 @@ Agrupe múltiples actualizaciones de precios cuando sea posible:
 
 | Red | Contrato | Dirección |
 |---------|----------|---------|
-| Mainnet | pyth-oracle-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
-| Mainnet | pyth-storage-v3 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v3` |
-| Red de pruebas | pyth-oracle-v3 | `ST3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v3` |
+| Mainnet | pyth-oracle-v4 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4` |
+| Mainnet | pyth-storage-v4 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4` |
+| Red de prueba | pyth-oracle-v4 | `ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-storage-v4` |
 
 ### IDs de fuentes de precios
 
