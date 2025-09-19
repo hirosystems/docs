@@ -32,16 +32,16 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
     name = "my-oracle-project"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4"
+    contract_id = "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4"
+    contract_id = "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v3"
+    contract_id = "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-pnau-decoder-v3"
 
     [[project.requirements]]
-    contract_id = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3"
+    contract_id = "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.wormhole-core-v4"
     ```
 
     Esto permite que tus pruebas interactúen con los contratos de oráculo reales de la red principal.
@@ -172,7 +172,7 @@ description: Aprende cómo probar contratos inteligentes que dependen de los fee
   <Step>
     ### Configurar pruebas de ejecución en la red principal
 
-    Para pruebas de integración con datos reales del oráculo, utilice la ejecución de transacciones de mainnet:
+    Para pruebas de integración con datos reales del oráculo, utilice la ejecución de transacciones en mainnet:
 
     ```typescript tests/benjamin-club-mxs.test.ts
     import { buildDevnetNetworkOrchestrator } from "@hirosystems/clarinet-sdk";
@@ -269,7 +269,7 @@ export function setupPriceScenario(
 
 ### Probando la obsolescencia del precio
 
-Asegúrate de que tu contrato maneje correctamente los precios obsoletos:
+Asegúrese de que su contrato maneje correctamente los precios obsoletos:
 
 ```typescript tests/price-staleness.test.ts
 describe("Price Staleness Handling", () => {
@@ -320,13 +320,13 @@ plan:
             contract-id: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRCBGD7R.benjamin-club
             method: initialize
             parameters:
-              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4"
-              - "'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4"
+              - "'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4"
+              - "'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4"
 ```
 
 ### Estimación de gas
 
-Probar el consumo de gas para operaciones de oráculo:
+Prueba el consumo de gas para operaciones de oráculo:
 
 ```typescript tests/gas-estimation.test.ts
 describe("Gas Estimation", () => {

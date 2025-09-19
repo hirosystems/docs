@@ -15,7 +15,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
       <div className="pb-4 pt-2">
         Para probar con tokens sBTC, agregue el contrato sBTC de mainnet como requisito y acuñe tokens utilizando la dirección del implementador:
 
-        **Paso 1: Agregar sBTC como requisito**
+        **Paso 1: Agregar sBTC como un requisito**
 
         ```terminal
         $ clarinet requirements add SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
@@ -61,14 +61,14 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 
         ```typescript
         // Instead of using simnet.getAccounts()
-        const mainnetAddress = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY";
+        const mainnetAddress = "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y";
 
         // Mint STX to any mainnet address
         simnet.mintSTX(mainnetAddress, 1000000n);
 
         // Call functions with mainnet address
         const result = simnet.callReadOnlyFn(
-          "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4",
+          "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4",
           "get-price",
           [priceFeed],
           mainnetAddress
@@ -136,7 +136,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 
 <Accordion type="single" collapsible>
   <AccordionItem value="mnemónica-24-palabras">
-    <AccordionTrigger>¿Por qué estoy obteniendo "bip39 error" al generar planes de implementación?</AccordionTrigger>
+    <AccordionTrigger>¿Por qué estoy recibiendo un "error bip39" al generar planes de implementación?</AccordionTrigger>
 
     <AccordionContent>
       <div className="pb-4 pt-2">
@@ -188,7 +188,7 @@ Esta página aborda preguntas y problemas comunes encontrados al desarrollar con
 
     <AccordionContent>
       <div className="pb-4 pt-2">
-        La transición de la época 3.0 en devnet puede ser inestable, con tasas de éxito que varían entre el 50-80% dependiendo de tu configuración.
+        La transición de la época 3.0 en devnet puede ser inestable, con tasas de éxito que varían entre el 50-80% dependiendo de su configuración.
 
         **Soluciones temporales actuales:**
 

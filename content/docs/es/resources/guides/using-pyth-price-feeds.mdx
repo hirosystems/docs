@@ -11,7 +11,7 @@ import { ArrowRight, Check } from 'lucide-react';
 Esta guía completa le guía a través de la integración [Red Pyth](https://pyth.network)'s oráculo descentralizado para datos de precios en tiempo real en sus aplicaciones de Stacks. Construiremos un ejemplo completo: un NFT que solo se puede acuñar pagando exactamente $100 en valor de sBTC.
 
 :::callout
-The Pyth protocol integration is available as a Beta on both testnet and mainnet networks. It's maintained by Trust Machines and provides access to real-time price feeds for BTC, STX, ETH, and USDC.
+The Pyth protocol integration is available on mainnet and maintained by Trust Machines, providing real-time price feeds for BTC, STX, ETH, and USDC.
 :::
 
 ## Descripción general de la arquitectura
@@ -78,7 +78,7 @@ Crearemos un "Benjamin Club" - un NFT exclusivo que cuesta exactamente $100 en v
   <Step>
     ### Escribir el contrato inteligente
 
-    Primero, implementa el contrato de Clarity que lee los datos de precios de Pyth:
+    Primero, implemente el contrato de Clarity que lee los datos de precios de Pyth:
 
     ```clarity contracts/benjamin-club.clar
     ;; Benjamin Club - $100 NFT minting contract
@@ -89,10 +89,10 @@ Crearemos un "Benjamin Club" - un NFT exclusivo que cuesta exactamente $100 en v
     (define-constant ERR-STALE-PRICE (err u102))
 
     ;; Pyth oracle contracts
-    (define-constant PYTH-ORACLE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4)
-    (define-constant PYTH-STORAGE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4)
-    (define-constant PYTH-DECODER 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v3)
-    (define-constant WORMHOLE-CORE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3)
+    (define-constant PYTH-ORACLE 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4)
+    (define-constant PYTH-STORAGE 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4)
+    (define-constant PYTH-DECODER 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-pnau-decoder-v3)
+    (define-constant WORMHOLE-CORE 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.wormhole-core-v4)
 
     ;; BTC price feed ID
     (define-constant BTC-USD-FEED-ID 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43)
@@ -399,9 +399,8 @@ Agrupe múltiples actualizaciones de precios cuando sea posible:
 
 | Red | Contrato | Dirección |
 |---------|----------|---------|
-| Mainnet | pyth-oracle-v4 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4` |
-| Mainnet | pyth-storage-v4 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4` |
-| Red de prueba | pyth-oracle-v4 | `ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-storage-v4` |
+| Mainnet | pyth-oracle-v4 | `SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4` |
+| Mainnet | pyth-storage-v4 | `SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4` |
 
 ### IDs de fuentes de precios
 

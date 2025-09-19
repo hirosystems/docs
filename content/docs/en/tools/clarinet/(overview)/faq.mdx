@@ -57,14 +57,14 @@ This page addresses common questions and issues encountered when developing with
         **Alternative: Manually use mainnet addresses:**
         ```typescript
         // Instead of using simnet.getAccounts()
-        const mainnetAddress = "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY";
+        const mainnetAddress = "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y";
 
         // Mint STX to any mainnet address
         simnet.mintSTX(mainnetAddress, 1000000n);
 
         // Call functions with mainnet address
         const result = simnet.callReadOnlyFn(
-          "SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4",
+          "SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4",
           "get-price",
           [priceFeed],
           mainnetAddress

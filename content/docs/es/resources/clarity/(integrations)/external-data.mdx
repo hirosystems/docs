@@ -19,7 +19,7 @@ description: En esta guía, aprenderás cómo leer datos de precios en tiempo re
 
 Pyth Network utiliza una **basado en pull** modelo de oráculo, diferente de los oráculos tradicionales basados en push:
 
-* **Modelo push**: Oracle envía continuamente actualizaciones de precios en cadena
+* **Modelo push**: Oracle envía continuamente actualizaciones de precios en la cadena
 * **Modelo de extracción**: Los usuarios obtienen y envían actualizaciones de precios cuando es necesario
 
 Este enfoque es más eficiente en cuanto al gas y permite actualizaciones de precios con mayor frecuencia.
@@ -45,10 +45,10 @@ La integración de Pyth en Stacks actualmente admite estos feeds de precios:
 
     ```clarity
     ;; Pyth oracle contract addresses (mainnet)
-    (define-constant PYTH-ORACLE-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4)
-    (define-constant PYTH-STORAGE-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4)
-    (define-constant PYTH-DECODER-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v3)
-    (define-constant WORMHOLE-CORE-CONTRACT 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3)
+    (define-constant PYTH-ORACLE-CONTRACT 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4)
+    (define-constant PYTH-STORAGE-CONTRACT 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4)
+    (define-constant PYTH-DECODER-CONTRACT 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-pnau-decoder-v3)
+    (define-constant WORMHOLE-CORE-CONTRACT 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.wormhole-core-v4)
 
     ;; Price feed IDs
     (define-constant BTC-USD-FEED-ID 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43)
@@ -202,16 +202,6 @@ Obtén múltiples fuentes de precios en una sola transacción:
   )
   (ok { btc: btc-price, eth: eth-price, stx: stx-price }))
 )
-```
-
-## Despliegue en testnet
-
-Para el desarrollo en testnet, utilice estas direcciones de contrato:
-
-```clarity
-;; Testnet addresses
-(define-constant PYTH-ORACLE-CONTRACT-TESTNET 'ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-oracle-v4)
-(define-constant PYTH-STORAGE-CONTRACT-TESTNET 'ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-storage-v4)
 ```
 
 ## Próximos pasos

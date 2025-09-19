@@ -12,7 +12,7 @@ import { ArrowRight, Check } from 'lucide-react';
 This comprehensive guide walks you through integrating [Pyth Network](https://pyth.network)'s decentralized oracle for real-time price data in your Stacks applications. We'll build a complete example: an NFT that can only be minted by paying exactly $100 worth of sBTC.
 
 :::callout
-The Pyth protocol integration is available as a Beta on both testnet and mainnet networks. It's maintained by Trust Machines and provides access to real-time price feeds for BTC, STX, ETH, and USDC.
+The Pyth protocol integration is available on mainnet and maintained by Trust Machines, providing real-time price feeds for BTC, STX, ETH, and USDC.
 :::
 
 ## Architecture overview
@@ -84,10 +84,10 @@ We'll create a "Benjamin Club" - an exclusive NFT that costs exactly $100 worth 
     (define-constant ERR-STALE-PRICE (err u102))
 
     ;; Pyth oracle contracts
-    (define-constant PYTH-ORACLE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4)
-    (define-constant PYTH-STORAGE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4)
-    (define-constant PYTH-DECODER 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-pnau-decoder-v3)
-    (define-constant WORMHOLE-CORE 'SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.wormhole-core-v3)
+    (define-constant PYTH-ORACLE 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4)
+    (define-constant PYTH-STORAGE 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4)
+    (define-constant PYTH-DECODER 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-pnau-decoder-v3)
+    (define-constant WORMHOLE-CORE 'SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.wormhole-core-v4)
 
     ;; BTC price feed ID
     (define-constant BTC-USD-FEED-ID 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43)
@@ -391,9 +391,8 @@ Batch multiple price updates when possible:
 
 | Network | Contract | Address |
 |---------|----------|---------|
-| Mainnet | pyth-oracle-v4 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-oracle-v4` |
-| Mainnet | pyth-storage-v4 | `SP3R4F6C1J3JQWWCVZ3S7FRRYPMYG6ZW6RZK31FXY.pyth-storage-v4` |
-| Testnet | pyth-oracle-v4 | `ST20M5GABDT6WYJHXBT5CDH4501V1Q65242SPRMXH.pyth-storage-v4` |
+| Mainnet | pyth-oracle-v4 | `SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-oracle-v4` |
+| Mainnet | pyth-storage-v4 | `SP1CGXWEAMG6P6FT04W66NVGJ7PQWMDAC19R7PJ0Y.pyth-storage-v4` |
 
 ### Price feed IDs
 
