@@ -46,6 +46,17 @@ Para explorar las funciones de Clarinet con IA, copie y pegue [llms.txt](/tools/
   ```
 </TerminalPicker>
 
+## Redes
+
+Clarinet admite diferentes tipos de redes para satisfacer diversas necesidades de desarrollo y pruebas:
+
+| Red          | Descripción                                                                      | Caso de uso
+| -------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `simnet`       | Optimizado para ciclos de retroalimentación rápidos, introspección y portabilidad. | Ideal para el desarrollo inicial y las pruebas unitarias. |
+| `devnet`       | Nodos locales de Stacks y Bitcoin ejecutándose en Docker para ciclos de retroalimentación más rápidos. | Utilizar para pruebas de integración o desarrollo frontend local. |
+| `testnet`      | Una red de preproducción que ofrece un entorno realista para pruebas. | Ideal para pruebas finales antes de implementar en Mainnet. |
+| `mainnet`      | La red de producción donde ocurren las transacciones reales. | Úsela cuando esté listo para implementar su contrato inteligente en producción. |
+
 ## Próximos pasos
 
 :::next-steps
