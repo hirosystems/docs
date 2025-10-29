@@ -1,7 +1,17 @@
 'use client';
 
 import { useDocsSearch } from 'fumadocs-core/search/client';
-import { Code, Copy, ExternalLink, Eye, File, Layers, Package, Search, Webhook } from 'lucide-react';
+import {
+  Code,
+  Copy,
+  ExternalLink,
+  Eye,
+  File,
+  Layers,
+  Package,
+  Search,
+  Webhook,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import {
