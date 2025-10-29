@@ -50,29 +50,19 @@ export interface Translations {
     auth: string;
 
     // Tools
-    clarinet: string;
     chainhook: string;
 
     // Specific pages/sections
     guides: string;
-    clarity: string;
     snippets: string;
     archive: string;
   };
   tools: {
-    clarinet: {
-      title: string;
-      description: string;
-    };
     chainhook: {
       title: string;
       description: string;
     };
     contractMonitoring: {
-      title: string;
-      description: string;
-    };
-    clarityVscode: {
       title: string;
       description: string;
     };
@@ -119,29 +109,8 @@ export interface Translations {
       description: string;
     };
   };
-  libraries: {
-    stacksJs: {
-      title: string;
-      description: string;
-    };
-    stacksConnect: {
-      title: string;
-      description: string;
-    };
-    clarinetSdk: {
-      title: string;
-      description: string;
-    };
-    clarinetBrowserSdk: {
-      title: string;
-      description: string;
-    };
-  };
+  libraries?: never;
   resources: {
-    clarityReference: {
-      title: string;
-      description: string;
-    };
     guides: {
       title: string;
       description: string;

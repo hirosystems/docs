@@ -10,7 +10,6 @@ import {
   Layers,
   Package,
   Search,
-  Terminal,
   Webhook,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -221,10 +220,10 @@ interface DocIndexEntry {
 }
 
 const predefinedDocQueries = [
-  { id: 'q1', text: 'how to set up devnet using clarinet' },
-  { id: 'q2', text: 'how to create a chainhook on the hiro platform' },
-  { id: 'q3', text: 'how can i connect my wallet to a web app' },
-  { id: 'q4', text: 'how can i query a list of the latest transactions' },
+  { id: 'q1', text: 'how to create a chainhook on the hiro platform' },
+  { id: 'q2', text: 'how can i query a list of the latest transactions' },
+  { id: 'q3', text: 'how do i bootstrap the bitcoin indexer' },
+  { id: 'q4', text: 'how do i manage api keys' },
 ];
 
 const suggestions = [
@@ -247,30 +246,29 @@ function extractSnippet(text: string | undefined, maxLength = 80): string {
 
 const navigateItems = [
   {
-    id: 'clarinet',
-    title: 'Clarinet',
-    icon: Terminal,
-    href: '/tools/clarinet',
-  },
-  {
-    id: 'stacks.js',
-    title: 'Stacks.js',
-    icon: Code,
-    href: '/reference/stacks.js',
-  },
-  {
     id: 'chainhook',
     title: 'Chainhook',
     icon: Webhook,
     href: '/tools/chainhook',
   },
   {
+    id: 'bitcoin-indexer',
+    title: 'Bitcoin Indexer',
+    icon: Layers,
+    href: '/tools/bitcoin-indexer',
+  },
+  {
     id: 'apis',
     title: 'APIs',
-    icon: Layers,
-    href: '/tools/api',
+    icon: Package,
+    href: '/apis/stacks-blockchain-api',
   },
-  { id: 'sdks', title: 'SDKs', icon: Package, href: '/reference' },
+  {
+    id: 'guides',
+    title: 'Guides',
+    icon: Code,
+    href: '/resources/guides',
+  },
 ];
 
 const aiItems = [

@@ -1,17 +1,7 @@
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Braces, Database, Play } from 'lucide-react';
 import { Card, Cards, SmallCard } from '@/components/card';
-import {
-  API,
-  Chainhook,
-  Clarinet,
-  Clarity,
-  Hiro,
-  Js,
-  Ordinals,
-  Runes,
-  StacksIcon,
-} from '@/components/ui/icon';
+import { API, Chainhook, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
 import heroImage from '@/public/stacks-hero.svg';
 
 export default function HomePage() {
@@ -65,12 +55,6 @@ export default function HomePage() {
             </h4>
             <hr className="border-t border-border my-2" />
             <Cards>
-              <SmallCard
-                icon={<Clarinet />}
-                href="/tools/clarinet"
-                title="Clarinet"
-                description="A comprehensive development environment for building and testing Clarity smart contracts."
-              />
               <SmallCard
                 icon={<Chainhook />}
                 href="/tools/chainhook"
@@ -140,44 +124,22 @@ export default function HomePage() {
           <div className="flex flex-col">
             <h4 id="explore-by-category" className="text-muted-foreground scroll-m-20">
               <a href="#explore-by-category" className="not-prose group text-sm uppercase">
-                Libraries &amp; SDKs
-              </a>
-            </h4>
-            <hr className="border-t border-border my-2" />
-            <Cards>
-              <SmallCard
-                icon={<Js />}
-                href="/reference/stacks.js"
-                title="Stacks.js"
-                description="JavaScript SDK for building applications on Stacks with transactions, network utilities, and wallet integration."
-              />
-              <SmallCard
-                icon={<Js />}
-                href="/tools/clarinet/sdk-introduction"
-                title="Clarinet JS SDK"
-                description="JavaScript SDK for testing and interacting with Clarity smart contracts in simulated environments."
-              />
-              {/* <SmallCard
-                icon={<StacksIcon />}
-                href="/reference/stacks-blockchain-api"
-                title="Stacks Blockchain API Client"
-                description="Type-safe JavaScript client library for interacting with the Stacks Blockchain API."
-              /> */}
-            </Cards>
-          </div>
-          <div className="flex flex-col">
-            <h4 id="explore-by-category" className="text-muted-foreground scroll-m-20">
-              <a href="#explore-by-category" className="not-prose group text-sm uppercase">
                 Resources
               </a>
             </h4>
             <hr className="border-t border-border my-2" />
             <Cards>
               <SmallCard
-                icon={<Clarity />}
-                href="/resources/clarity"
-                title="Clarity Reference"
-                description="Comprehensive guides and function reference for the Clarity smart contract language."
+                icon={<Play />}
+                href="/resources/guides"
+                title="Guides"
+                description="Step-by-step walkthroughs for building on Bitcoin layers."
+              />
+              <SmallCard
+                icon={<Braces />}
+                href="/resources/snippets"
+                title="Snippets"
+                description="Reusable code examples for common Stacks and Bitcoin tasks."
               />
               <SmallCard
                 icon={<Database />}

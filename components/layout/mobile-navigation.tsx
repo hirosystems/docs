@@ -68,18 +68,14 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
       }
     }
 
-    // FIXME: Limit to 2 levels deep (e.g., Tools/Clarinet, not Tools/Clarinet/Quickstart)
+    // FIXME: Limit to 2 levels deep (e.g., Tools/Chainhook, not Tools/Chainhook/Quickstart)
     const maxDepth = 2;
     const limitedSegments = displaySegments.slice(0, maxDepth);
 
     // FIXME: Special formatting
     const formattedSegments = limitedSegments.map((segment, index) => {
-      if (index === 0 && (segment === 'Libraries & SDKs' || firstSegmentMenu)) {
+      if (index === 0 && firstSegmentMenu) {
         return segment;
-      }
-
-      if (segment.toLowerCase() === 'stacks.js') {
-        return 'Stacks.js';
       }
 
       if (index === 1 && displaySegments[0].toLowerCase() === 'apis') {

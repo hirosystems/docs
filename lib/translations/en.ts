@@ -52,30 +52,20 @@ export const en: Translations = {
     auth: 'Auth',
 
     // Tools
-    clarinet: 'Clarinet',
     chainhook: 'Chainhook',
 
     // Specific pages/sections
     guides: 'Guides',
-    clarity: 'Clarity',
     snippets: 'Snippets',
     archive: 'Archive',
   },
   tools: {
-    clarinet: {
-      title: 'Clarinet',
-      description: 'Development environment and testing framework for Clarity smart contracts.',
-    },
     chainhook: {
       title: 'Chainhook',
       description: 'Monitor and analyze Clarity smart contract activity.',
     },
     contractMonitoring: {
       title: 'Contract Monitoring',
-      description: 'Monitor and analyze Clarity smart contract activity.',
-    },
-    clarityVscode: {
-      title: 'Clarity VSCode Extension',
       description: 'Monitor and analyze Clarity smart contract activity.',
     },
     bitcoinIndexer: {
@@ -122,29 +112,7 @@ export const en: Translations = {
       description: 'API for accessing Signer metrics data and functionality.',
     },
   },
-  libraries: {
-    stacksJs: {
-      title: 'Stacks.js',
-      description: 'JavaScript library for building on Stacks.',
-    },
-    stacksConnect: {
-      title: 'Stacks Connect',
-      description: 'JavaScript library for connecting to Stacks wallets.',
-    },
-    clarinetSdk: {
-      title: 'Clarinet JS SDK',
-      description: 'JavaScript SDK for Clarinet.',
-    },
-    clarinetBrowserSdk: {
-      title: 'Clarinet JS Browser SDK',
-      description: 'JavaScript SDK for Clarinet in the browser.',
-    },
-  },
   resources: {
-    clarityReference: {
-      title: 'Clarity Reference',
-      description: 'Clarity language reference.',
-    },
     guides: {
       title: 'Guides',
       description: 'Guides for building on Stacks.',

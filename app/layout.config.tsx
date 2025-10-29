@@ -22,11 +22,6 @@ export const baseOptions: BaseLayoutProps = {
       text: 'Tools',
       items: [
         {
-          text: 'Clarinet',
-          description: 'Development environment and testing framework for Clarity smart contracts.',
-          url: '/tools/clarinet',
-        },
-        {
           text: 'Chainhook',
           description: 'Monitor and analyze Clarity smart contract activity.',
           url: '/tools/chainhook',
@@ -35,11 +30,6 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Contract Monitoring',
           description: 'Monitor and analyze Clarity smart contract activity.',
           url: '/tools/contract-monitoring',
-        },
-        {
-          text: 'Clarity VSCode Extension',
-          description: 'Monitor and analyze Clarity smart contract activity.',
-          url: '/tools/clarinet/vscode-extension',
         },
         {
           text: 'Bitcoin Indexer',
@@ -103,44 +93,8 @@ export const baseOptions: BaseLayoutProps = {
     },
     {
       type: 'menu',
-      text: 'Libraries & SDKs',
-      items: [
-        {
-          text: 'Stacks.js',
-          description: 'JavaScript library for building on Stacks.',
-          url: '/reference/stacks.js',
-        },
-        {
-          text: 'Stacks Connect',
-          description: 'JavaScript library for connecting to Stacks wallets.',
-          url: '/reference/stacks.js/connect-wallet',
-        },
-        {
-          text: 'Clarinet JS SDK',
-          description: 'JavaScript SDK for Clarinet.',
-          url: '/tools/clarinet/sdk-introduction',
-        },
-        {
-          text: 'Clarinet JS Browser SDK',
-          description: 'JavaScript SDK for Clarinet in the browser.',
-          url: '/tools/clarinet/browser-sdk-reference',
-        },
-        // {
-        //   text: "Stacks Blockchain API Client",
-        //   description: "Client SDK for the Stacks blockchain API.",
-        //   url: "/reference/stacks-blockchain-api-client",
-        // },
-      ],
-    },
-    {
-      type: 'menu',
       text: 'Resources',
       items: [
-        {
-          text: 'Clarity Reference',
-          description: 'Clarity language reference.',
-          url: '/resources/clarity',
-        },
         {
           text: 'Guides',
           description: 'Guides for building on Stacks.',
