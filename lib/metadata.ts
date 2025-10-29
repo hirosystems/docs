@@ -86,36 +86,6 @@ const chainhookMetadata: Partial<Metadata> = {
   },
 };
 
-const clarinetMetadata: Partial<Metadata> = {
-  title: 'Clarinet',
-  description: "Build and test Clarity smart contracts with Clarinet's development tools.",
-  openGraph: {
-    title: 'Clarinet',
-    description: "Build and test Clarity smart contracts with Clarinet's development tools.",
-    images: [{ url: '/images/clarinet-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Clarinet',
-    description: "Build and test Clarity smart contracts with Clarinet's development tools.",
-    images: ['/images/clarinet-og.jpg'],
-  },
-};
-
-const clarinetJsSdkMetadata: Partial<Metadata> = {
-  title: 'Clarinet JS SDK',
-  description: "Integrate Clarinet's testing capabilities into your development workflow.",
-  openGraph: {
-    title: 'Clarinet JS SDK',
-    description: "Integrate Clarinet's testing capabilities into your development workflow.",
-    images: [{ url: '/images/clarinet-js-sdk-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Clarinet JS SDK',
-    description: "Integrate Clarinet's testing capabilities into your development workflow.",
-    images: ['/images/clarinet-js-sdk-og.jpg'],
-  },
-};
-
 const cookbookMetadata: Partial<Metadata> = {
   title: 'Hiro Cookbook',
   description: 'Practical recipes and examples for building on Bitcoin layers.',
@@ -227,36 +197,6 @@ const stacksApiMetadata: Partial<Metadata> = {
   },
 };
 
-const stacksConnectMetadata: Partial<Metadata> = {
-  title: 'Stacks Connect',
-  description: 'Integrate Stacks authentication and transactions in your applications.',
-  openGraph: {
-    title: 'Stacks Connect',
-    description: 'Integrate Stacks authentication and transactions in your applications.',
-    images: [{ url: '/images/stacks-connect-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Stacks Connect',
-    description: 'Integrate Stacks authentication and transactions in your applications.',
-    images: ['/images/stacks-connect-og.jpg'],
-  },
-};
-
-const stacksJsMetadata: Partial<Metadata> = {
-  title: 'Stacks.js',
-  description: 'Build Stacks applications with the Stacks.js library.',
-  openGraph: {
-    title: 'Stacks.js',
-    description: 'Build Stacks applications with the Stacks.js library.',
-    images: [{ url: '/images/stacks-js-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Stacks.js',
-    description: 'Build Stacks applications with the Stacks.js library.',
-    images: ['/images/stacks-js-og.jpg'],
-  },
-};
-
 const tokenMetadataApiMetadata: Partial<Metadata> = {
   title: 'Token Metadata API',
   description: 'Access and manage token metadata on the Stacks blockchain.',
@@ -313,8 +253,6 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
   }
   if (path.startsWith('/stacks/hacks')) return hiroHacksMetadata;
   if (path.startsWith('/tools/chainhook')) return chainhookMetadata;
-  if (path.startsWith('/tools/clarinet')) return clarinetMetadata;
-  if (path.startsWith('/tools/clarinet')) return clarinetJsSdkMetadata;
   if (path.startsWith('/resources/snippets')) return cookbookMetadata;
   if (path.startsWith('/resources/guides')) return guidesMetadata;
   if (path.startsWith('/apis/ordinals')) return ordinalsApiMetadata;
@@ -322,8 +260,6 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
   if (path.startsWith('/apis/runes')) return runesApiMetadata;
   if (path.startsWith('/apis/signer-metrics')) return signerMetricsApiMetadata;
   if (path.startsWith('/apis/stacks-blockchain')) return stacksApiMetadata;
-  if (path.startsWith('/reference/stacks.js')) return stacksJsMetadata;
-  if (path.startsWith('/reference/stacks.js')) return stacksConnectMetadata;
   if (path.startsWith('/apis/token-metadata')) return tokenMetadataApiMetadata;
   if (path.startsWith('/tools/bitcoin-indexer')) return bitcoinIndexerMetadata;
   return {};

@@ -193,13 +193,13 @@ function extractSectionFromUrl(url: string): string {
   // Remove leading slash and split by slash
   const pathParts = url.replace(/^\//, '').split('/');
 
-  // For URLs like "/stacks/clarinet/guides/..." return "clarinet"
-  // For URLs like "/tools/clarinet" return "clarinet"
+  // For URLs like "/stacks/example/guides/..." return "example"
+  // For URLs like "/tools/example" return "example"
   if (pathParts.length >= 2) {
     return pathParts[1];
   }
 
-  // For single level paths like "/clarinet", return that
+  // For single level paths like "/example", return that
   if (pathParts.length === 1 && pathParts[0]) {
     return pathParts[0];
   }
@@ -588,7 +588,7 @@ export const source = loader({
 
         // If this page has labels, add it to the filterable pages collection
         // if (labels.length > 0 && node.url) {
-        //   // Extract section from URL (e.g., "/stacks/clarinet" -> "clarinet")
+        //   // Extract section from URL (e.g., "/stacks/example" -> "example")
         //   const section = extractSectionFromUrl(node.url);
 
         //   const filterablePage: FilterablePage = {

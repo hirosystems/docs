@@ -1,6 +1,6 @@
 import { Brackets, Database } from 'lucide-react';
 import { Cards, IndexCard } from '@/components/card';
-import { Chainhook, Clarinet } from '@/components/ui/icon';
+import { Chainhook } from '@/components/ui/icon';
 
 export default function ToolsPage() {
   return (
@@ -12,13 +12,6 @@ export default function ToolsPage() {
             <hr className="border-t border-border mt-8" />
           </div>
           <Cards>
-            <IndexCard
-              href="/tools/clarinet"
-              title="Clarinet"
-              icon={<Clarinet />}
-              description="Un entorno de desarrollo integral para construir y probar contratos inteligentes de Clarity."
-            />
-
             <IndexCard
               href="/tools/chainhook"
               title="Chainhook"

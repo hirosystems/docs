@@ -1,6 +1,5 @@
 import { Code, Database, Terminal } from 'lucide-react';
 import { Cards, IndexCard } from '@/components/card';
-import { Clarity } from '@/components/ui/icon';
 
 export default function ResourcesPage() {
   return (
@@ -12,13 +11,6 @@ export default function ResourcesPage() {
             <hr className="border-t border-border mt-8" />
           </div>
           <Cards>
-            <IndexCard
-              icon={<Clarity />}
-              href="/resources/clarity"
-              title="Referencia de Clarity"
-              description="Guías completas y referencia de funciones para el lenguaje de contratos inteligentes Clarity."
-            />
-
             <IndexCard
               icon={<Terminal />}
               href="/resources/guides"
