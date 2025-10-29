@@ -11,10 +11,10 @@ Documentation for Hiro Systems PBC. Built with [Fumadocs](https://fumadocs.verce
 Example structure:
 
 ```
-/tools/clarinet/
+/tools/example-tool/
 ├── Overview/                 # Introduction and setup
-├── Clarinet CLI/             # Command-line features
-├── Clarinet JS SDK/          # Testing and programmatic usage
+├── CLI/                      # Command-line features
+├── SDK/                      # Testing and programmatic usage
 └── Integrations/             # External connections
 ```
 

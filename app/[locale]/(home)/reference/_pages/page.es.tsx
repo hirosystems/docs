@@ -1,5 +1,4 @@
-import { Cards, IndexCard } from '@/components/card';
-import { Js } from '@/components/ui/icon';
+import Link from 'next/link';
 
 export default function ReferencePage() {
   return (
@@ -10,35 +9,16 @@ export default function ReferencePage() {
             <h3 className="text-3xl">Bibliotecas y SDKs</h3>
             <hr className="border-t border-border mt-8" />
           </div>
-          <Cards>
-            <IndexCard
-              icon={<Js />}
-              href="/reference/stacks.js"
-              title="Stacks.js"
-              description="SDK de JavaScript para construir aplicaciones en Stacks con transacciones, utilidades de red e integración de billetera."
-            />
-
-            <IndexCard
-              icon={<Js />}
-              href="/tools/clarinet/sdk-introduction"
-              title="SDK de Clarinet JS"
-              description="SDK de JavaScript para probar e interactuar con contratos inteligentes de Clarity en entornos simulados."
-            />
-
-            <IndexCard
-              icon={<Js />}
-              href="/tools/clarinet/browser-sdk-reference"
-              title="Clarinet JS SDK para navegador"
-              description="SDK de JavaScript para interactuar con la simnet en navegadores web."
-            />
-
-            {/* <IndexCard
-               icon={<API />}
-               href="/reference/stacks-blockchain-api"
-               title="Stacks Blockchain API Client"
-               description="Type-safe JavaScript client library for interacting with the Stacks Blockchain API."
-              /> */}
-          </Cards>
+          <p className="text-sm text-muted-foreground">
+            ¿Buscas la documentación de SDKs? Visita{' '}
+            <Link
+              href="https://docs.stacks.co/reference"
+              className="text-primary underline underline-offset-4"
+            >
+              docs.stacks.co/reference
+            </Link>{' '}
+            para acceder a los recursos más recientes.
+          </p>
         </div>
       </div>
     </main>

@@ -12,21 +12,55 @@
     }
   ],
   "redirects": [
-    { "source": "/stacks/clarinet/:path*", "destination": "/tools/clarinet", "permanent": true },
+    {
+      "source": "/tools/clarinet/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
+    {
+      "source": "/:locale/tools/clarinet/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
+    {
+      "source": "/reference/stacks.js/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
+    {
+      "source": "/:locale/reference/stacks.js/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
+    {
+      "source": "/resources/clarity/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
+    {
+      "source": "/:locale/resources/clarity/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
+    {
+      "source": "/stacks/clarinet/:path*",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
     {
       "source": "/stacks/clarinet-js-sdk/:path*",
-      "destination": "/tools/clarinet",
+      "destination": "https://docs.stacks.co/reference",
       "permanent": true
     },
     { "source": "/stacks/chainhook/:path*", "destination": "/tools/chainhook", "permanent": true },
     {
       "source": "/stacks/stacks.js/:path*",
-      "destination": "/reference/stacks.js",
+      "destination": "https://docs.stacks.co/reference",
       "permanent": true
     },
     {
       "source": "/stacks/connect/:path*",
-      "destination": "/reference/stacks.js",
+      "destination": "https://docs.stacks.co/reference",
       "permanent": true
     },
     {
@@ -44,7 +78,11 @@
       "destination": "/apis/ordinals-api",
       "permanent": true
     },
-    { "source": "/clarinet", "destination": "/tools/clarinet", "permanent": true },
+    {
+      "source": "/clarinet",
+      "destination": "https://docs.stacks.co/reference",
+      "permanent": true
+    },
     {
       "source": "/token-metadata-api",
       "destination": "/apis/token-metadata-api",
