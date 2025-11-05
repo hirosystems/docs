@@ -1,0 +1,252 @@
+---
+title: FAQ
+description: Frequently asked questions about Chainhook 2.0 Beta
+---
+
+# Frequently Asked Questions
+
+## Chainhook 2.0 Beta
+
+### What is the goal/purpose of the Chainhook 2.0 Beta?
+
+Our goal during the Beta is to learn as much as possible about the reliability, performance and developer experience of Chainhooks 2.0 in anticipation of the full release. If you encounter any issues, have any questions, or would like to share feedback during the Beta, please reach out to [support@hiro.so](mailto:support@hiro.so).
+
+### Is the Chainhook 2.0 Beta free?
+
+Yes! The Chainhooks 2.0 Beta is free for all participants.
+
+### Will there be configuration or rate limits imposed during the Beta?
+
+All Beta users will initially be constrained to a limit of 10 Chainhook configurations.
+
+### How will Chainhooks be priced following the Beta?
+
+Chainhooks will be charged using a credit model for each delivery, with users able to select different credit limits depending on their usage. For Chainhooks 2.0 Beta users, your post-beta limits will initially be determined by your existing Hiro subscription tier.
+
+---
+
+## Version Management
+
+### What will happen to existing legacy Chainhooks running on v1.0?
+
+Users with Chainhooks running on v1.0 will still be able to view them and receive deliveries, but once the beta launches, all new Chainhooks created in the Platform or via the API during and after the Beta period will run on v2.0.
+
+The API will also not support Chainhooks running on v1.0.
+
+:::callout{type="info"}
+Learn how to migrate your v1 chainhooks to v2 in the [Migration Guide](/tools/chainhook/migration).
+:::
+
+### If v2.0 and v1.0 will be live at the same time, how do we access both and what will change/stay the same?
+
+In the Platform, v1 chainhooks are read-only. You can view them and they will continue to deliver events, but you cannot modify them through the Platform UI.
+
+To modify v1 chainhooks programmatically, use the [Platform API](/apis/platform-api). However, we recommend migrating to v2 chainhooks instead. See the [Migration Guide](/tools/chainhook/migration) for a complete walkthrough.
+
+---
+
+## Platform vs SDK
+
+### Can I edit my v2 Chainhooks?
+
+The Platform currently does not support editing existing chainhooks. You must use the [Chainhook SDK](/tools/chainhook/chainhook-sdk) or [Chainhook API](/apis/chainhook-api) to edit your chainhooks.
+
+:::callout{type="warning"}
+When creating a chainhook in the Platform, make sure all details are correct before creating it. You will not be able to edit it later in the Platform UI - you'll need to delete and recreate it, or use the SDK/API to make updates.
+:::
+
+### When should I use the Platform vs the SDK?
+
+**Use the Platform when:**
+- Creating simple chainhooks with a UI
+- Viewing chainhook status and activity
+- Managing API keys
+- Getting started quickly
+
+**Use the SDK/API when:**
+- You need to edit existing chainhooks
+- Programmatic chainhook management
+- Automating chainhook operations
+- Integrating into CI/CD pipelines
+- Managing many chainhooks at scale
+
+---
+
+## Getting Started
+
+### How do I get a Hiro API key?
+
+1. Visit [platform.hiro.so](https://platform.hiro.so)
+2. Sign in or create an account
+3. Navigate to the API Keys section
+4. Generate or copy your API key
+
+Store your API key securely in environment variables and never commit it to version control.
+
+### What's the difference between mainnet and testnet?
+
+- **Mainnet** - The production Stacks blockchain with real economic value
+- **Testnet** - A test network for development and testing
+
+Always test your chainhooks on testnet before deploying to mainnet. Use these base URLs:
+
+```typescript
+import { CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+// Testnet (for development)
+CHAINHOOKS_BASE_URL.testnet  // https://api.testnet.hiro.so
+
+// Mainnet (for production)
+CHAINHOOKS_BASE_URL.mainnet  // https://api.mainnet.hiro.so
+```
+
+---
+
+## Troubleshooting
+
+### My webhook isn't receiving events. What should I check?
+
+1. **Verify chainhook is enabled**
+   ```typescript
+   const chainhook = await client.getChainhook('uuid');
+   console.log('Enabled:', chainhook.status.enabled);
+   ```
+
+2. **Check your webhook URL is accessible**
+   - URL must be publicly accessible over HTTPS
+   - Test with tools like webhook.site or ngrok for local development
+
+3. **Verify your filters match blockchain events**
+   - Use `evaluateChainhook()` against a block you know contains matching events
+   - Check the [Filter Reference](/tools/chainhook/reference/filters) for correct syntax
+
+4. **Check webhook endpoint logs**
+   - Ensure your endpoint returns HTTP 200
+   - Look for error messages in your application logs
+
+### I'm getting 401 Unauthorized errors
+
+Your API key may be incorrect or missing:
+
+```typescript
+// Verify API key is set
+if (!process.env.HIRO_API_KEY) {
+  throw new Error('HIRO_API_KEY environment variable is required');
+}
+
+// Test the key
+try {
+  await client.getChainhooks();
+  console.log('✅ API key is valid');
+} catch (error) {
+  console.error('❌ Invalid API key');
+}
+```
+
+### How do I test my chainhook before enabling it?
+
+Use the `evaluateChainhook()` method to test against known blocks:
+
+```typescript
+// Create chainhook (disabled by default)
+const chainhook = await client.registerChainhook({
+  // ... your configuration
+  // Do NOT set enable_on_registration
+});
+
+// Test against a specific block
+await client.evaluateChainhook(chainhook.uuid, {
+  block_height: 150000,
+});
+
+// Check your webhook endpoint for the payload
+// If it works, enable the chainhook
+await client.enableChainhook(chainhook.uuid, true);
+```
+
+### Why am I getting duplicate webhook deliveries?
+
+Chainhook may retry webhook deliveries if your endpoint doesn't return HTTP 200. Make your webhook processing idempotent:
+
+```typescript
+app.post('/webhooks', async (req, res) => {
+  const blockHeight = req.body.event.apply[0].block_identifier.index;
+
+  // Check if already processed
+  const exists = await db.isBlockProcessed(blockHeight);
+  if (exists) {
+    console.log(`Block ${blockHeight} already processed, skipping`);
+    return res.sendStatus(200);
+  }
+
+  // Process the webhook
+  await processWebhook(req.body);
+
+  // Return 200 immediately
+  res.sendStatus(200);
+});
+```
+
+---
+
+## Common Questions
+
+### Can I use chainhooks for real-time notifications?
+
+Yes! Chainhooks are designed for real-time blockchain event delivery. Webhook payloads are delivered within seconds of events occurring on-chain.
+
+### How do chainhooks handle blockchain reorganizations?
+
+Chainhook automatically detects reorgs and sends both `rollback` and `apply` events. Always process rollback events first to maintain data consistency.
+
+Learn more in the [Usage guide](/tools/chainhook/usage#handling-blockchain-reorganizations).
+
+### Can I filter by multiple event types?
+
+Yes! You can include multiple filters in the `events` array. The chainhook will trigger if **any** filter matches:
+
+```typescript
+{
+  filters: {
+    events: [
+      { type: 'ft_transfer', asset_identifier: 'SP...TOKEN::usdc' },
+      { type: 'nft_mint', asset_identifier: 'SP...NFT::collectible' },
+      { type: 'contract_call', contract_identifier: 'SP...DEX.swap' },
+    ],
+  }
+}
+```
+
+### What happens if my webhook endpoint is down?
+
+Chainhook will retry webhook deliveries with exponential backoff. However, extended downtime may result in missed events. Implement proper error handling and monitoring for production applications.
+
+### Can I test chainhooks locally?
+
+Yes! Use tools like [ngrok](https://ngrok.com/) or [webhook.site](https://webhook.site) to expose your local development server:
+
+```bash
+# Expose local port 3000
+ngrok http 3000
+
+# Use the ngrok URL in your chainhook
+# https://abc123.ngrok-free.app/webhooks
+```
+
+---
+
+## Where to Get Help
+
+- **Discord**: Join the **#chainhook** channel on [Discord](https://stacks.chat/) under Hiro Developer Tools
+- **Weekly Office Hours**: Every Thursday at 11am ET ([add to calendar](https://www.addevent.com/event/oL21905919))
+- **Email Support**: [support@hiro.so](mailto:support@hiro.so)
+- **GitHub Issues**: [hirosystems/chainhook](https://github.com/hirosystems/chainhook/issues)
+
+---
+
+## Next Steps
+
+:::next-steps
+* [Migration Guide](/tools/chainhook/migration): Migrate from v1 to v2
+* [SDK Quickstart](/tools/chainhook/quickstart): Get started with the SDK
+:::

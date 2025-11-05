@@ -1,0 +1,502 @@
+---
+title: Edit & Update
+description: Modify existing chainhooks using the SDK
+---
+
+# Edit & Update
+
+Learn how to update existing chainhooks using the Chainhook SDK. Updates allow you to modify filters, actions, and options without recreating the chainhook.
+
+:::callout{type="info"}
+**Platform Limitation**: The Platform UI does not currently support editing chainhooks. You must use the SDK or API to make updates.
+:::
+
+## updateChainhook
+
+Updates an existing chainhook by UUID. You can modify any mutable fields, but `chain` and `network` cannot be changed.
+
+### Basic Update
+
+```typescript
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.updateChainhook('chainhook-uuid', {
+  name: 'Updated chainhook name',
+  filters: {
+    events: [
+      {
+        type: 'ft_transfer',
+        asset_identifier: 'SP...ABC.token::usdc',
+      },
+    ],
+  },
+});
+```
+
+### Immutable vs Mutable Fields
+
+| Mutable (Can Update) | Immutable (Cannot Update) |
+|---------------------|---------------------------|
+| `name` | `chain` |
+| `filters` | `network` |
+| `action` | |
+| `options` | |
+
+---
+
+## Additive Updates
+
+For additive changes (like adding a new event filter), fetch the current definition first:
+
+### Adding Event Filters
+
+```typescript
+// Step 1: Fetch current chainhook
+const current = await client.getChainhook('chainhook-uuid');
+
+// Step 2: Spread existing events and add new one
+await client.updateChainhook('chainhook-uuid', {
+  filters: {
+    events: [
+      ...(current.definition.filters.events ?? []),
+      {
+        type: 'contract_call',
+        contract_identifier: 'SP...XYZ.counter',
+        function_name: 'decrement',
+      },
+    ],
+  },
+});
+```
+
+This preserves existing filters while adding new ones.
+
+### Adding Options
+
+```typescript
+// Fetch current chainhook
+const current = await client.getChainhook('chainhook-uuid');
+
+// Spread existing options and add/override
+await client.updateChainhook('chainhook-uuid', {
+  options: {
+    ...current.definition.options,
+    decode_clarity_values: true,
+    include_contract_abi: true,
+  },
+});
+```
+
+---
+
+## Common Update Patterns
+
+### Update Webhook URL
+
+Change where chainhook events are sent:
+
+```typescript
+await client.updateChainhook('chainhook-uuid', {
+  action: {
+    type: 'http_post',
+    url: 'https://new-server.com/webhooks',
+  },
+});
+```
+
+### Update Chainhook Name
+
+```typescript
+await client.updateChainhook('chainhook-uuid', {
+  name: 'production-ft-tracker',
+});
+```
+
+### Replace All Filters
+
+Completely replace the filter configuration:
+
+```typescript
+await client.updateChainhook('chainhook-uuid', {
+  filters: {
+    events: [
+      {
+        type: 'nft_transfer',
+        asset_identifier: 'SP...COLL.nft::collectible',
+      },
+    ],
+  },
+});
+```
+
+### Update Multiple Fields
+
+```typescript
+await client.updateChainhook('chainhook-uuid', {
+  name: 'Updated name',
+  filters: {
+    events: [
+      {
+        type: 'stx_transfer',
+        sender: 'SP...SENDER',
+      },
+    ],
+  },
+  action: {
+    type: 'http_post',
+    url: 'https://new-url.com/webhooks',
+  },
+  options: {
+    decode_clarity_values: true,
+    include_block_metadata: true,
+  },
+});
+```
+
+---
+
+## cURL Examples
+
+### Update Name
+
+```bash
+curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "name": "Updated chainhook name"
+  }'
+```
+
+### Update Filters
+
+```bash
+curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "filters": {
+      "events": [
+        {
+          "type": "ft_transfer",
+          "asset_identifier": "SP...ABC.token::usdc"
+        }
+      ]
+    }
+  }'
+```
+
+### Update Action URL
+
+```bash
+curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "action": {
+      "type": "http_post",
+      "url": "https://new-server.com/webhooks"
+    }
+  }'
+```
+
+### Update Options
+
+```bash
+curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "options": {
+      "decode_clarity_values": true,
+      "include_contract_abi": true
+    }
+  }'
+```
+
+---
+
+## Response
+
+Successful updates return HTTP `204 No Content`.
+
+To verify the update, fetch the chainhook:
+
+```typescript
+await client.updateChainhook('chainhook-uuid', { name: 'New name' });
+
+// Verify
+const updated = await client.getChainhook('chainhook-uuid');
+console.log('Updated name:', updated.definition.name);
+```
+
+---
+
+## deleteChainhook
+
+Remove a chainhook permanently. This cannot be undone.
+
+### TypeScript
+
+```typescript
+await client.deleteChainhook('chainhook-uuid');
+
+console.log('Chainhook deleted');
+```
+
+### cURL
+
+```bash
+curl -sS -X DELETE "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
+  -H "x-api-key: $HIRO_API_KEY"
+```
+
+### Response
+
+Returns HTTP `204 No Content` on success.
+
+---
+
+## Best Practices
+
+### 1. Fetch Before Additive Updates
+
+Always fetch the current definition for additive updates:
+
+```typescript
+// ✅ Good: Fetch first for additive updates
+const current = await client.getChainhook(uuid);
+await client.updateChainhook(uuid, {
+  filters: {
+    events: [...current.definition.filters.events, newEvent],
+  },
+});
+
+// ❌ Bad: Might overwrite existing filters
+await client.updateChainhook(uuid, {
+  filters: {
+    events: [newEvent],
+  },
+});
+```
+
+### 2. Validate Updates
+
+Verify updates were applied:
+
+```typescript
+await client.updateChainhook(uuid, { name: 'New name' });
+
+const updated = await client.getChainhook(uuid);
+if (updated.definition.name !== 'New name') {
+  throw new Error('Update failed');
+}
+```
+
+### 3. Disable Before Major Updates
+
+Disable the chainhook before making significant changes:
+
+```typescript
+// Disable while updating
+await client.enableChainhook(uuid, false);
+
+// Make updates
+await client.updateChainhook(uuid, {
+  filters: { /* new filters */ },
+  action: { /* new action */ },
+});
+
+// Re-enable
+await client.enableChainhook(uuid, true);
+```
+
+### 4. Use Descriptive Names
+
+Update names to reflect the chainhook's purpose:
+
+```typescript
+await client.updateChainhook(uuid, {
+  name: `${environment}-${feature}-${version}`,
+});
+// Example: "production-ft-tracker-v2"
+```
+
+### 5. Document Changes
+
+Store update history in your database:
+
+```typescript
+await client.updateChainhook(uuid, { /* updates */ });
+
+// Log the change
+await db.chainhookUpdates.create({
+  chainhookUuid: uuid,
+  timestamp: new Date(),
+  changes: { /* what changed */ },
+  updatedBy: userId,
+});
+```
+
+---
+
+## Error Handling
+
+### Chainhook Not Found
+
+```typescript
+try {
+  await client.updateChainhook('invalid-uuid', { name: 'New name' });
+} catch (error) {
+  if (error.status === 404) {
+    console.error('Chainhook not found');
+  }
+}
+```
+
+### Invalid Update
+
+```typescript
+try {
+  await client.updateChainhook(uuid, {
+    chain: 'bitcoin', // Immutable field
+  });
+} catch (error) {
+  if (error.status === 400) {
+    console.error('Invalid update:', error.message);
+  }
+}
+```
+
+---
+
+## Migration Example
+
+Migrate all chainhooks from one webhook URL to another:
+
+```typescript
+async function migrateWebhookUrl(oldUrl: string, newUrl: string) {
+  // Get all chainhooks
+  const allChainhooks = await client.getChainhooks({ limit: 100 });
+
+  // Filter by old URL
+  const toMigrate = allChainhooks.results.filter(
+    ch => ch.definition.action.url === oldUrl
+  );
+
+  console.log(`Migrating ${toMigrate.length} chainhooks...`);
+
+  // Update each one
+  for (const ch of toMigrate) {
+    await client.updateChainhook(ch.uuid, {
+      action: {
+        type: 'http_post',
+        url: newUrl,
+      },
+    });
+    console.log(`✅ Migrated: ${ch.definition.name}`);
+  }
+
+  console.log('Migration complete!');
+}
+
+await migrateWebhookUrl(
+  'https://old-server.com/webhooks',
+  'https://new-server.com/webhooks'
+);
+```
+
+### Safer Migration with Bulk Operations
+
+For safer migrations, use `bulkEnableChainhooks` to disable chainhooks during updates, then re-enable them:
+
+```typescript
+async function safeWebhookMigration(oldUrl: string, newUrl: string) {
+  // Step 1: Disable all chainhooks for the old URL
+  console.log('Disabling chainhooks...');
+  await client.bulkEnableChainhooks({
+    enabled: false,
+    filters: {
+      webhook_url: oldUrl,
+    },
+  });
+
+  // Step 2: Update webhook URLs
+  console.log('Updating webhook URLs...');
+  const allChainhooks = await client.getChainhooks({ limit: 100 });
+  const toMigrate = allChainhooks.results.filter(
+    ch => ch.definition.action.url === oldUrl
+  );
+
+  for (const ch of toMigrate) {
+    await client.updateChainhook(ch.uuid, {
+      action: {
+        type: 'http_post',
+        url: newUrl,
+      },
+    });
+    console.log(`✅ Updated: ${ch.definition.name}`);
+  }
+
+  // Step 3: Re-enable all chainhooks with new URL
+  console.log('Re-enabling chainhooks...');
+  await client.bulkEnableChainhooks({
+    enabled: true,
+    filters: {
+      webhook_url: newUrl,
+    },
+  });
+
+  console.log('Migration complete!');
+}
+
+await safeWebhookMigration(
+  'https://old-server.com/webhooks',
+  'https://new-server.com/webhooks'
+);
+```
+
+This approach prevents chainhooks from firing during the migration window, avoiding potential errors or duplicate events.
+
+### Bulk Operations for Maintenance
+
+Use bulk enable/disable for maintenance windows:
+
+```typescript
+// Disable all chainhooks during server maintenance
+await client.bulkEnableChainhooks({
+  enabled: false,
+  filters: {
+    webhook_url: 'https://api.myapp.com/webhooks',
+  },
+});
+
+// Perform maintenance...
+console.log('Server maintenance in progress...');
+
+// Re-enable after maintenance
+await client.bulkEnableChainhooks({
+  enabled: true,
+  filters: {
+    webhook_url: 'https://api.myapp.com/webhooks',
+  },
+});
+```
+
+:::callout{type="info"}
+Learn more about bulk operations in the [Register & Enable guide](/tools/chainhook/register-enable#bulkenablechainhooks).
+:::
+
+---
+
+## Next Steps
+
+:::next-steps
+* [List & Fetch](/tools/chainhook/list-fetch): Retrieve chainhook information before updating
+* [Filter Reference](/tools/chainhook/reference/filters): Explore all filter options
+:::

@@ -1,0 +1,12 @@
+---
+title: Enable or disable a chainhook
+sidebarTitle: Patch
+description: Changes the enabled status of a chainhook by its UUID
+full: true
+---
+
+<APIPage
+  document="./openapi/chainhooks.json"
+  operations={[{ path: '/me/{uuid}/enabled', method: 'patch' }]}
+  hasHead={false}
+/>

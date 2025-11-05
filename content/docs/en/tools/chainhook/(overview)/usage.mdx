@@ -1,262 +1,325 @@
 ---
-title: Usage examples
-sidebarTitle: Usage
-description: Learn Chainhook's core functionality through practical examples - predicates, event scopes, reorg handling, and operation modes.
+title: Usage
+description: Learn Chainhook core concepts, event filtering, webhook delivery, and best practices
 ---
 
-## Predicates
+# Usage
 
-Predicates are JSON specifications that tell Chainhook what blockchain events to monitor and how to respond. They follow an if-this-then-that pattern.
+Learn the core concepts of working with Chainhooks, how they process blockchain events, and best practices for building reliable event-driven applications.
 
-```json stx-transfer-predicate.json
-{
-  "chain": "stacks",
-  "uuid": "1",
-  "name": "Monitor STX Transfers",
-  "version": 1,
-  "networks": {
-    "mainnet": {
-      "if_this": {
-        "scope": "stx_event",
-        "actions": ["transfer"]
-      },
-      "then_that": {
-        "http_post": {
-          "url": "https://api.example.com/stx-transfers",
-          "authorization_header": "Bearer secret-token"
-        }
-      },
-      "start_block": 100000
-    }
-  }
-}
-```
+## How Chainhooks Work
 
-This predicate monitors all STX transfer events starting from block 100,000 and sends them to your webhook endpoint.
+A chainhook monitors blockchain events and delivers matching data to your application via webhooks. Each chainhook consists of three main components:
 
-### Predicate components
+### 1. Filters
 
+Filters define which blockchain events trigger your chainhook. You can monitor:
+
+- **Token events** - FT/NFT transfers, mints, and burns
+- **STX events** - STX transfers and operations
+- **Contract events** - Deployments, function calls, and logs
+- **System events** - Block rewards and tenure changes
+
+Example filter for FT transfers:
 ```json
 {
-  "chain": "bitcoin",              // Target blockchain: "bitcoin" or "stacks"
-  "uuid": "unique-id-123",         // Unique identifier for tracking
-  "name": "My Bitcoin Monitor",    // Human-readable name
-  "version": 1,                    // Predicate version
-  "networks": {                    // Network-specific configurations
-    "mainnet": { ... },
-    "testnet": { ... }
-  }
-}
-```
-
-## Event scopes
-
-Each blockchain supports different event types. Scopes define what specific events your predicate will match.
-
-### Stacks events
-
-```json contract-call-predicate.json
-{
-  "if_this": {
-    "scope": "contract_call",
-    "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-oracle-v2-3",
-    "method": "update-price"
-  }
-}
-```
-
-Monitor specific contract function calls. Available Stacks scopes:
-- `stx_event` - STX transfers, mints, burns
-- `contract_call` - Smart contract function calls
-- `contract_deployment` - New contract deployments
-- `print_event` - Contract print statements
-- `ft_event` - Fungible token operations
-- `nft_event` - Non-fungible token operations
-
-### Bitcoin events
-
-```json bitcoin-ordinals-predicate.json
-{
-  "if_this": {
-    "scope": "ordinals_protocol",
-    "operation": "inscription_feed"
-  }
-}
-```
-
-Track Bitcoin ordinal inscriptions. Available Bitcoin scopes:
-- `p2pkh`, `p2sh`, `p2wpkh`, `p2tr` - Address types
-- `ordinals_protocol` - Ordinal inscriptions
-- `stacks_protocol` - Stacks-specific Bitcoin operations
-
-## Action handlers
-
-Define how Chainhook responds when events match your predicate criteria.
-
-### Webhook delivery
-
-```json webhook-config.json
-{
-  "then_that": {
-    "http_post": {
-      "url": "https://api.myapp.com/events",
-      "authorization_header": "Bearer ${WEBHOOK_SECRET}"
-    }
-  }
-}
-```
-
-Chainhook POSTs matching events to your endpoint with the authorization header.
-
-### File output
-
-```json file-output-config.json
-{
-  "then_that": {
-    "file_append": {
-      "path": "/data/blockchain-events.jsonl"
-    }
-  }
-}
-```
-
-Append events to a local file, one JSON object per line.
-
-## Blockchain reorganizations
-
-Chainhook automatically handles blockchain reorganizations (reorgs) by sending both rollback and apply events.
-
-```json reorg-event.json
-{
-  "apply": [
+  "events": [
     {
-      "block_identifier": {
-        "index": 792101,
-        "hash": "0x123..."
-      },
-      "transactions": [
-        // New canonical chain transactions
-      ]
-    }
-  ],
-  "rollback": [
-    {
-      "block_identifier": {
-        "index": 792100,
-        "hash": "0x456..."
-      },
-      "transactions": [
-        // Transactions to rollback
-      ]
+      "type": "ft_transfer",
+      "asset_identifier": "SP...ABC.token::usdc"
     }
   ]
 }
 ```
 
-Your application must handle both event types to maintain data consistency during reorgs.
+Learn more in the [Filter Reference](/tools/chainhook/reference/filters).
 
-### Handling reorg events
+### 2. Actions
 
-```typescript webhook-handler.ts
-app.post('/chainhook-events', (req, res) => {
-  const { apply, rollback } = req.body;
-  
-  // First, rollback orphaned transactions
-  if (rollback) {
-    for (const block of rollback) {
-      await removeTransactions(block.transactions);
-    }
-  }
-  
-  // Then apply new canonical transactions
-  if (apply) {
-    for (const block of apply) {
-      await processTransactions(block.transactions);
-    }
-  }
-  
-  res.status(200).send('OK');
-});
-```
-
-## Operation modes
-
-Chainhook operates in two primary modes depending on your use case.
-
-### Scanning mode
-
-Analyze historical blockchain data by scanning archived blocks:
-
-```terminal
-$ chainhook predicates scan my-predicate.json --mainnet
-```
-
-Use scanning mode for:
-- Testing predicates before deployment
-- Analyzing past blockchain events
-- Backfilling historical data
-
-### Service mode
-
-Monitor live blockchain events in real-time:
-
-```terminal
-$ chainhook service start --config-path=config.toml
-```
-
-```toml config.toml
-[http_api]
-http_port = 20456
-database_uri = "redis://localhost:6379"
-
-[network]
-mode = "mainnet"
-bitcoind_rpc_url = "http://localhost:8332"
-stacks_node_rpc_url = "http://localhost:20443"
-```
-
-Service mode maintains persistent connections to blockchain nodes and processes new blocks as they arrive.
-
-## Network configuration
-
-Configure predicates differently for each network environment:
-
-```json multi-network-predicate.json
-{
-  "networks": {
-    "mainnet": {
-      "start_block": 100000,
-      "if_this": {
-        "scope": "stx_event",
-        "actions": ["transfer", "mint"]
-      }
-    },
-    "testnet": {
-      "start_block": 1,
-      "decode_clarity_values": true,
-      "include_proof": true,
-      "if_this": {
-        "scope": "print_event"
-      }
-    }
-  }
-}
-```
-
-### Configuration options
+Actions define where chainhook data is delivered. Currently, chainhooks support HTTP POST to your webhook endpoint:
 
 ```json
 {
-  "start_block": 100000,           // Begin scanning from this block
-  "end_block": 200000,             // Stop at this block (optional)
-  "expire_after_occurrence": 5000, // Stop after N matches
-  "decode_clarity_values": true,   // Decode Clarity data types
-  "include_proof": false,          // Include merkle proofs
-  "include_contract_abi": true     // Include contract interfaces
+  "action": {
+    "type": "http_post",
+    "url": "https://example.com/webhooks"
+  }
 }
 ```
 
-## Further reading
+Your endpoint receives a POST request with the event payload whenever a filter matches.
 
-- [Design predicates](/tools/chainhook/usage)
-- [Run Chainhook as a service](/tools/chainhook/service-mode)
+### 3. Options
+
+Options customize the payload content and evaluation behavior:
+
+```json
+{
+  "options": {
+    "decode_clarity_values": true,
+    "include_block_metadata": true,
+    "enable_on_registration": true
+  }
+}
+```
+
+Learn more in the [Options Reference](/tools/chainhook/reference/options).
+
+---
+
+## Event Processing Flow
+
+1. **Block Evaluation** - Chainhook evaluates each new block against your filters
+2. **Event Matching** - If events match your filters, a payload is generated
+3. **Webhook Delivery** - The payload is POSTed to your configured endpoint
+4. **Reorg Handling** - If a reorg occurs, rollback events are sent
+
+```
+Blockchain → Chainhook → Filter Match → Webhook Delivery → Your Application
+```
+
+---
+
+## Webhook Payloads
+
+When a chainhook triggers, you receive a payload with this structure:
+
+```json
+{
+  "event": {
+    "apply": [
+      {
+        "block_identifier": { "index": 150000, "hash": "0x..." },
+        "transactions": [
+          {
+            "metadata": { /* tx info */ },
+            "operations": [ /* state changes */ ]
+          }
+        ]
+      }
+    ],
+    "rollback": [],
+    "chain": "stacks",
+    "network": "mainnet"
+  },
+  "chainhook": {
+    "uuid": "chainhook-uuid",
+    "name": "my-chainhook"
+  }
+}
+```
+
+Learn more in the [Payload Anatomy](/tools/chainhook/reference/payload-anatomy) reference.
+
+---
+
+## Handling Blockchain Reorganizations
+
+Chainhook automatically detects blockchain reorganizations (reorgs) and sends both `apply` and `rollback` events to keep your data consistent.
+
+### Understanding Reorgs
+
+A reorg occurs when the blockchain's canonical chain changes:
+1. Some blocks become orphaned (removed from the canonical chain)
+2. New blocks become part of the canonical chain
+3. Transactions may be reordered or invalidated
+
+### Processing Reorg Events
+
+Always process rollback events before apply events:
+
+```typescript
+app.post('/webhooks', async (req, res) => {
+  const { apply, rollback } = req.body.event;
+
+  // Step 1: Roll back orphaned blocks
+  for (const block of rollback) {
+    await database.revertBlock(block);
+    console.log(`Rolled back block ${block.block_identifier.index}`);
+  }
+
+  // Step 2: Apply new canonical blocks
+  for (const block of apply) {
+    await database.processBlock(block);
+    console.log(`Applied block ${block.block_identifier.index}`);
+  }
+
+  res.sendStatus(200);
+});
+```
+
+### Best Practices for Reorgs
+
+1. **Process rollbacks first** - Always revert orphaned blocks before applying new ones
+2. **Use transactions** - Wrap database operations in transactions for atomicity
+3. **Track block hashes** - Store block hashes to detect reorgs in your data
+4. **Test reorg scenarios** - Use the [evaluate method](/tools/chainhook/evaluate) to test reorg handling
+
+---
+
+## SDK vs Platform
+
+Choose the right tool for your use case:
+
+### Use the Chainhook SDK When:
+
+- **Editing required** - Platform UI doesn't support editing chainhooks yet
+- **Automation** - Integrate chainhook management into your CI/CD pipeline
+- **Programmatic control** - Create/update/delete chainhooks from your application
+- **Scale** - Manage many chainhooks with bulk operations
+- **Advanced features** - Use evaluate for historical indexing or testing
+
+### Use the Platform UI When:
+
+- **Getting started** - Create your first chainhook quickly without code
+- **Visual creation** - Prefer a form-based interface
+- **Viewing status** - Monitor chainhook activity and metrics
+- **Managing keys** - Generate and manage API keys visually
+
+:::callout{type="info"}
+Both approaches use the same underlying Chainhook API and deliver identical webhook payloads.
+:::
+
+---
+
+## Chainhook Lifecycle
+
+### 1. Create
+Register a chainhook with filters, action, and options:
+- SDK: `client.registerChainhook({ ... })`
+- Platform: Fill out the creation form
+
+### 2. Enable
+Activate the chainhook to start receiving events:
+- SDK: Set `enable_on_registration: true` or call `client.enableChainhook()`
+- Platform: Enable toggle in the UI
+
+### 3. Monitor
+Track chainhook activity and performance:
+- SDK: `client.getChainhook(uuid)` to check status
+- Platform: View metrics in the dashboard
+
+### 4. Update
+Modify filters, options, or webhook URL:
+- SDK: `client.updateChainhook(uuid, { ... })`
+- Platform: Not currently available (use SDK)
+
+### 5. Disable/Delete
+Pause or remove a chainhook:
+- SDK: `client.enableChainhook(uuid, false)` or `client.deleteChainhook(uuid)`
+- Platform: Disable toggle or delete button
+
+---
+
+## Best Practices
+
+### Webhook Security
+
+1. **Validate secrets** - Check the `x-chainhook-consumer-secret` header on all requests
+2. **Use HTTPS** - Always use encrypted endpoints for webhooks
+3. **Rotate secrets** - Periodically rotate webhook secrets with `rotateConsumerSecret()`
+4. **Implement retries** - Handle webhook delivery failures gracefully
+
+### Performance
+
+1. **Filter precisely** - Use specific filters to reduce unnecessary webhooks
+2. **Process asynchronously** - Return 200 quickly, process events in the background
+3. **Batch operations** - Use bulk enable/disable for managing multiple chainhooks
+4. **Monitor payload size** - Only enable options you need to reduce payload size
+
+### Reliability
+
+1. **Handle reorgs** - Always process rollback events correctly
+2. **Idempotent processing** - Handle duplicate webhook deliveries
+3. **Test before enabling** - Use `evaluateChainhook()` against known blocks
+4. **Set expiration** - Use `expire_after_occurrences` for time-limited chainhooks
+
+### Development
+
+1. **Start on testnet** - Test your chainhooks on testnet before mainnet
+2. **Use decode options** - Enable `decode_clarity_values` for easier debugging
+3. **Log webhook deliveries** - Track all incoming webhooks for debugging
+4. **Version your chainhooks** - Include version numbers in chainhook names
+
+---
+
+## Common Patterns
+
+### Track User Activity
+
+Monitor all activity for a specific address:
+
+```typescript
+await client.registerChainhook({
+  name: 'user-activity-tracker',
+  chain: 'stacks',
+  network: 'mainnet',
+  filters: {
+    events: [
+      { type: 'stx_transfer', sender: 'SP...USER' },
+      { type: 'stx_transfer', receiver: 'SP...USER' },
+      { type: 'ft_transfer', sender: 'SP...USER' },
+      { type: 'nft_transfer', sender: 'SP...USER' },
+    ],
+  },
+  action: { type: 'http_post', url: 'https://api.myapp.com/user-events' },
+  options: { decode_clarity_values: true, enable_on_registration: true },
+});
+```
+
+### Monitor Contract Calls
+
+Track specific contract function calls:
+
+```typescript
+await client.registerChainhook({
+  name: 'dex-swap-monitor',
+  chain: 'stacks',
+  network: 'mainnet',
+  filters: {
+    events: [
+      {
+        type: 'contract_call',
+        contract_identifier: 'SP...DEX.swap-contract',
+        function_name: 'swap',
+      },
+    ],
+  },
+  action: { type: 'http_post', url: 'https://api.myapp.com/swaps' },
+  options: { decode_clarity_values: true, enable_on_registration: true },
+});
+```
+
+### Time-Limited Monitoring
+
+Create a chainhook that expires after a certain number of events:
+
+```typescript
+await client.registerChainhook({
+  name: 'limited-nft-mints',
+  chain: 'stacks',
+  network: 'mainnet',
+  filters: {
+    events: [
+      {
+        type: 'nft_mint',
+        asset_identifier: 'SP...COLL.nft::collectible',
+      },
+    ],
+  },
+  action: { type: 'http_post', url: 'https://api.myapp.com/mints' },
+  options: {
+    enable_on_registration: true,
+    expire_after_occurrences: 1000, // Auto-expire after 1000 mints
+  },
+});
+```
+
+---
+
+## Next Steps
+
+:::next-steps
+* [SDK Quickstart](/tools/chainhook/quickstart): Start building with the SDK
+* [Filter Reference](/tools/chainhook/reference/filters): Explore all event filters
+:::

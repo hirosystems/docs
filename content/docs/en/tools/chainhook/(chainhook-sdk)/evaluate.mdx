@@ -1,0 +1,435 @@
+---
+title: Evaluate Chainhook
+description: Test chainhooks against specific past blocks
+---
+
+# Evaluate Chainhook
+
+The `evaluateChainhook` method allows you to test your chainhook configuration against specific past blocks. This is useful for testing, debugging, and historical indexing.
+
+## evaluateChainhook
+
+Evaluate a chainhook against a specific block by height or hash. If the chainhook's filters match any events in the specified block, a webhook payload will be sent to your configured endpoint.
+
+### By Block Height
+
+```typescript
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.evaluateChainhook('chainhook-uuid', {
+  block_height: 100000,
+});
+```
+
+### By Block Hash
+
+```typescript
+await client.evaluateChainhook('chainhook-uuid', {
+  index_block_hash: '0xa204da7ae59b86a569d66c237721937e1708b72913c6a67abf58360b8f5935b7',
+});
+```
+
+### Response
+
+Returns HTTP `204 No Content` on success. If the chainhook filter matches any events in the specified block, a webhook payload will be sent to your configured `action.url`.
+
+---
+
+## cURL Examples
+
+### Evaluate by Height
+
+```bash
+curl -sS -X POST "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>/evaluate" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "block_height": 100000
+  }'
+```
+
+### Evaluate by Hash
+
+```bash
+curl -sS -X POST "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>/evaluate" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "index_block_hash": "0xa204da7ae59b86a569d66c237721937e1708b72913c6a67abf58360b8f5935b7"
+  }'
+```
+
+---
+
+## Use Cases
+
+### 1. Test Chainhook Configuration
+
+Verify your chainhook works against a known block before enabling it:
+
+```typescript
+// Create chainhook (disabled)
+const chainhook = await client.registerChainhook({
+  version: '1',
+  name: 'test-chainhook',
+  chain: 'stacks',
+  network: 'testnet',
+  filters: {
+    events: [
+      {
+        type: 'ft_transfer',
+        asset_identifier: 'SP...ABC.token::usdc',
+      },
+    ],
+  },
+  action: {
+    type: 'http_post',
+    url: 'https://example.com/webhooks',
+  },
+  // No enable_on_registration
+});
+
+// Test against a block with known FT transfers
+await client.evaluateChainhook(chainhook.uuid, {
+  block_height: 150000,
+});
+
+// Check your webhook endpoint for the payload
+// If it looks good, enable the chainhook
+await client.enableChainhook(chainhook.uuid, true);
+```
+
+### 2. Historical Indexing
+
+Process past blocks to build up historical state:
+
+```typescript
+async function indexHistoricalBlocks(
+  chainhookUuid: string,
+  startHeight: number,
+  endHeight: number
+) {
+  console.log(`Indexing blocks ${startHeight} to ${endHeight}...`);
+
+  for (let height = startHeight; height <= endHeight; height++) {
+    await client.evaluateChainhook(chainhookUuid, {
+      block_height: height,
+    });
+
+    // Log progress every 100 blocks
+    if (height % 100 === 0) {
+      console.log(`Processed ${height - startHeight + 1} blocks...`);
+    }
+
+    // Add delay to avoid rate limits
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  console.log('Indexing complete!');
+}
+
+// Index 1000 blocks
+await indexHistoricalBlocks('chainhook-uuid', 100000, 101000);
+```
+
+### 3. Debug Missed Events
+
+If you think your chainhook missed an event, evaluate against that specific block:
+
+```typescript
+// User reports missing event at block 155000
+await client.evaluateChainhook('chainhook-uuid', {
+  block_height: 155000,
+});
+
+// Check your webhook logs to see if it triggers now
+```
+
+### 4. Re-process Specific Block
+
+Re-evaluate a block after fixing your webhook handler:
+
+```typescript
+// Your webhook had a bug, fix it, then re-process
+await client.evaluateChainhook('chainhook-uuid', {
+  block_height: 145000,
+});
+```
+
+### 5. Backfill Data
+
+Backfill data after creating a new chainhook:
+
+```typescript
+// Create new chainhook for NFT transfers
+const chainhook = await client.registerChainhook({
+  version: '1',
+  name: 'nft-tracker',
+  chain: 'stacks',
+  network: 'mainnet',
+  filters: {
+    events: [
+      {
+        type: 'nft_transfer',
+        asset_identifier: 'SP...COLL.nft::collectible',
+      },
+    ],
+  },
+  action: {
+    type: 'http_post',
+    url: 'https://example.com/webhooks',
+  },
+  options: {
+    enable_on_registration: true,
+  },
+});
+
+// Backfill last 30 days (~4320 blocks)
+const currentHeight = 200000; // Get from API
+const startHeight = currentHeight - 4320;
+
+for (let height = startHeight; height < currentHeight; height++) {
+  await client.evaluateChainhook(chainhook.uuid, {
+    block_height: height,
+  });
+  await new Promise(resolve => setTimeout(resolve, 100)); // Rate limit
+}
+```
+
+---
+
+## Advanced Patterns
+
+### Batch Evaluation with Concurrency
+
+Process multiple blocks concurrently:
+
+```typescript
+async function evaluateBatch(
+  chainhookUuid: string,
+  heights: number[],
+  concurrency = 5
+) {
+  // Split into batches
+  const batches = [];
+  for (let i = 0; i < heights.length; i += concurrency) {
+    batches.push(heights.slice(i, i + concurrency));
+  }
+
+  // Process each batch
+  for (const batch of batches) {
+    await Promise.all(
+      batch.map(height =>
+        client.evaluateChainhook(chainhookUuid, { block_height: height })
+      )
+    );
+    console.log(`Processed ${batch.length} blocks`);
+  }
+}
+
+// Evaluate blocks 100000-100100 with concurrency of 5
+const heights = Array.from({ length: 101 }, (_, i) => 100000 + i);
+await evaluateBatch('chainhook-uuid', heights, 5);
+```
+
+### Evaluate with Error Handling
+
+Handle errors gracefully during bulk evaluation:
+
+```typescript
+async function safeEvaluate(
+  chainhookUuid: string,
+  height: number
+): Promise<{ height: number; success: boolean; error?: string }> {
+  try {
+    await client.evaluateChainhook(chainhookUuid, { block_height: height });
+    return { height, success: true };
+  } catch (error) {
+    return {
+      height,
+      success: false,
+      error: error.message,
+    };
+  }
+}
+
+// Evaluate range with error tracking
+const results = await Promise.all(
+  [100000, 100001, 100002].map(height =>
+    safeEvaluate('chainhook-uuid', height)
+  )
+);
+
+const failed = results.filter(r => !r.success);
+if (failed.length > 0) {
+  console.error('Failed blocks:', failed);
+}
+```
+
+### Resume Interrupted Indexing
+
+Track progress and resume if interrupted:
+
+```typescript
+async function indexWithCheckpoint(
+  chainhookUuid: string,
+  startHeight: number,
+  endHeight: number,
+  checkpointKey: string
+) {
+  // Load last checkpoint
+  let currentHeight = loadCheckpoint(checkpointKey) || startHeight;
+
+  try {
+    while (currentHeight <= endHeight) {
+      await client.evaluateChainhook(chainhookUuid, {
+        block_height: currentHeight,
+      });
+
+      // Save checkpoint every 10 blocks
+      if (currentHeight % 10 === 0) {
+        saveCheckpoint(checkpointKey, currentHeight);
+      }
+
+      currentHeight++;
+    }
+
+    // Clear checkpoint when complete
+    clearCheckpoint(checkpointKey);
+  } catch (error) {
+    console.error(`Failed at height ${currentHeight}:`, error);
+    console.log(`Resume with: indexWithCheckpoint(..., ${currentHeight}, ...)`);
+    throw error;
+  }
+}
+```
+
+---
+
+## Best Practices
+
+### 1. Rate Limiting
+
+Add delays between requests to avoid rate limits:
+
+```typescript
+for (let height = start; height <= end; height++) {
+  await client.evaluateChainhook(uuid, { block_height: height });
+  await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay
+}
+```
+
+### 2. Test Before Production
+
+Always test against a few blocks before bulk evaluation:
+
+```typescript
+// Test on 3 sample blocks first
+for (const height of [100000, 100500, 101000]) {
+  await client.evaluateChainhook(uuid, { block_height: height });
+}
+
+// Verify webhooks work correctly, then do full range
+```
+
+### 3. Use Block Height for Ranges
+
+Block heights are easier for ranges than hashes:
+
+```typescript
+// ✅ Good: Easy to iterate
+for (let height = 100000; height <= 101000; height++) {
+  await client.evaluateChainhook(uuid, { block_height: height });
+}
+
+// ❌ Bad: Hard to iterate with hashes
+```
+
+### 4. Monitor Webhook Success
+
+Track webhook deliveries when evaluating:
+
+```typescript
+// In your webhook handler
+app.post('/webhooks', (req, res) => {
+  const { event, chainhook } = req.body;
+  const blockHeight = event.apply[0].block_identifier.index;
+
+  console.log(`Received event for block ${blockHeight}`);
+
+  // Process event...
+
+  res.sendStatus(200);
+});
+```
+
+### 5. Consider Expiration Options
+
+Use expiration options to avoid processing too many blocks:
+
+```typescript
+const chainhook = await client.registerChainhook({
+  // ... config
+  options: {
+    expire_after_evaluations: 5000, // Stop after 5000 blocks
+  },
+});
+```
+
+---
+
+## Troubleshooting
+
+### No Webhook Received
+
+If you don't receive a webhook after evaluation:
+
+1. **Check filter matches**: The block may not contain matching events
+2. **Verify webhook URL**: Ensure your endpoint is accessible
+3. **Check chainhook status**: Verify the chainhook exists and is configured correctly
+
+```typescript
+const chainhook = await client.getChainhook(uuid);
+console.log('Webhook URL:', chainhook.definition.action.url);
+console.log('Filters:', chainhook.definition.filters);
+```
+
+### Rate Limit Errors
+
+If you hit rate limits:
+
+```typescript
+// Increase delay between requests
+await new Promise(resolve => setTimeout(resolve, 200)); // 200ms instead of 100ms
+
+// Or reduce concurrency
+await evaluateBatch(uuid, heights, 3); // 3 concurrent instead of 5
+```
+
+### Block Not Found
+
+If you get a 404 for a block:
+
+```typescript
+try {
+  await client.evaluateChainhook(uuid, { block_height: 999999999 });
+} catch (error) {
+  if (error.status === 404) {
+    console.error('Block not found - may not exist yet');
+  }
+}
+```
+
+---
+
+## Next Steps
+
+:::next-steps
+* [Register & Enable](/tools/chainhook/register-enable): Create chainhooks to evaluate
+* [Filter Reference](/tools/chainhook/reference/filters): Configure which events to match
+:::

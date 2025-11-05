@@ -1,0 +1,488 @@
+---
+title: Payload Anatomy
+description: Understanding the structure of Chainhook webhook payloads
+---
+
+# Payload Anatomy
+
+This guide explains the structure of webhook payloads delivered by Chainhook when your event filters match.
+
+## Payload Overview
+
+A Chainhook payload consists of two main sections:
+
+1. **event** - Contains the blockchain data (blocks, transactions, operations)
+2. **chainhook** - Metadata about the chainhook that triggered
+
+---
+
+## Basic Structure
+
+```json
+{
+  "event": {
+    "apply": [...],      // Blocks being applied to the chain
+    "rollback": [...],   // Blocks being rolled back (during reorgs)
+    "chain": "stacks",
+    "network": "mainnet"
+  },
+  "chainhook": {
+    "name": "my-chainhook",
+    "uuid": "be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185"
+  }
+}
+```
+
+---
+
+## Event Section
+
+### Apply Array
+
+The `apply` array contains blocks being added to the canonical chain. Each block includes:
+
+```json
+{
+  "timestamp": 1757977309,
+  "block_identifier": {
+    "hash": "0xa204da7...",
+    "index": 3549902
+  },
+  "parent_block_identifier": {
+    "hash": "0xad0acff...",
+    "index": 3549901
+  },
+  "transactions": [...]
+}
+```
+
+### Rollback Array
+
+The `rollback` array contains blocks being removed during a chain reorganization. Same structure as `apply`.
+
+:::callout{type="info"}
+Chainhook automatically handles reorgs by sending rollback events. Your application should reverse any state changes from rolled-back blocks.
+:::
+
+---
+
+## Transaction Structure
+
+Each transaction in the `transactions` array contains:
+
+### Metadata
+
+Transaction-level information:
+
+```json
+{
+  "metadata": {
+    "type": "contract_call",
+    "nonce": 6689,
+    "result": {
+      "hex": "0x0703",
+      "repr": "(ok true)"
+    },
+    "status": "success",
+    "fee_rate": "3000",
+    "position": {
+      "index": 0,
+      "microblock_identifier": null
+    },
+    "execution_cost": {
+      "runtime": "7807",
+      "read_count": "5",
+      "read_length": "2441",
+      "write_count": "2",
+      "write_length": "1"
+    },
+    "sender_address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9",
+    "sponsor_address": null,
+    "canonical": true,
+    "sponsored": false,
+    "microblock_canonical": true
+  }
+}
+```
+
+### Transaction Identifier
+
+Unique identifier for the transaction:
+
+```json
+{
+  "transaction_identifier": {
+    "hash": "0x09defc9a6cd9318b5c458389d4dd57597203ec539818aec0de3cfcfd7af0c2ab"
+  }
+}
+```
+
+---
+
+## Operations Array
+
+Each transaction includes an `operations` array describing state changes. Operations are indexed sequentially.
+
+### Fee Operation
+
+Transaction fee paid:
+
+```json
+{
+  "type": "fee",
+  "amount": {
+    "value": "-3000",
+    "currency": {
+      "symbol": "STX",
+      "decimals": 6
+    }
+  },
+  "status": "success",
+  "account": {
+    "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+  },
+  "metadata": {
+    "sponsored": false
+  },
+  "operation_identifier": {
+    "index": 0
+  }
+}
+```
+
+### Contract Call Operation
+
+Contract function invocation:
+
+```json
+{
+  "type": "contract_call",
+  "status": "success",
+  "account": {
+    "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+  },
+  "metadata": {
+    "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token",
+    "function_name": "transfer",
+    "args": [
+      {
+        "hex": "0x01000000000000000000000002690ed9fe",
+        "name": "amount",
+        "repr": "u10352515582",
+        "type": "uint"
+      },
+      {
+        "hex": "0x0516362f36a4c7ca0318a59fe6448fd3a0c32bda724d",
+        "name": "sender",
+        "repr": "'SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9",
+        "type": "principal"
+      },
+      {
+        "hex": "0x05161740f4690c79466e3389a13476586e0cb3e1dfbf",
+        "name": "recipient",
+        "repr": "'SPBM1X391HWMCVHKH6GK8XJRDR6B7REZQYQ8KBCK",
+        "type": "principal"
+      },
+      {
+        "hex": "0x09",
+        "name": "memo",
+        "repr": "none",
+        "type": "(optional (buff 34))"
+      }
+    ]
+  },
+  "operation_identifier": {
+    "index": 1
+  }
+}
+```
+
+:::callout{type="info"}
+The `args` array includes `repr` and `type` fields when `decode_clarity_values` is enabled in options.
+:::
+
+### Token Transfer Operation
+
+FT/NFT/STX transfers:
+
+```json
+{
+  "type": "token_transfer",
+  "amount": {
+    "value": "-10352515582",
+    "currency": {
+      "symbol": "",
+      "decimals": 0,
+      "metadata": {
+        "token_type": "ft",
+        "asset_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token::diko"
+      }
+    }
+  },
+  "status": "success",
+  "account": {
+    "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+  },
+  "operation_identifier": {
+    "index": 2
+  }
+}
+```
+
+**Note**: Negative values indicate debits (sender), positive values indicate credits (receiver).
+
+### Contract Log Operation
+
+Print statements from contracts:
+
+```json
+{
+  "type": "contract_log",
+  "status": "success",
+  "metadata": {
+    "topic": "print",
+    "value": "0x09",
+    "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token"
+  },
+  "operation_identifier": {
+    "index": 4
+  }
+}
+```
+
+---
+
+## Complete Example
+
+Here's a complete payload from a contract call that transfers fungible tokens:
+
+```json
+{
+  "event": {
+    "apply": [
+      {
+        "timestamp": 1757977309,
+        "transactions": [
+          {
+            "metadata": {
+              "type": "contract_call",
+              "nonce": 6689,
+              "result": {
+                "hex": "0x0703",
+                "repr": "(ok true)"
+              },
+              "status": "success",
+              "fee_rate": "3000",
+              "position": {
+                "index": 0,
+                "microblock_identifier": null
+              },
+              "execution_cost": {
+                "runtime": "7807",
+                "read_count": "5",
+                "read_length": "2441",
+                "write_count": "2",
+                "write_length": "1"
+              },
+              "sender_address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9",
+              "sponsor_address": null,
+              "canonical": true,
+              "sponsored": false,
+              "microblock_canonical": true
+            },
+            "operations": [
+              {
+                "type": "fee",
+                "amount": {
+                  "value": "-3000",
+                  "currency": {
+                    "symbol": "STX",
+                    "decimals": 6
+                  }
+                },
+                "status": "success",
+                "account": {
+                  "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+                },
+                "metadata": {
+                  "sponsored": false
+                },
+                "operation_identifier": {
+                  "index": 0
+                }
+              },
+              {
+                "type": "contract_call",
+                "status": "success",
+                "account": {
+                  "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+                },
+                "metadata": {
+                  "args": [
+                    {
+                      "hex": "0x01000000000000000000000002690ed9fe",
+                      "name": "amount",
+                      "repr": "u10352515582",
+                      "type": "uint"
+                    },
+                    {
+                      "hex": "0x0516362f36a4c7ca0318a59fe6448fd3a0c32bda724d",
+                      "name": "sender",
+                      "repr": "'SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9",
+                      "type": "principal"
+                    },
+                    {
+                      "hex": "0x05161740f4690c79466e3389a13476586e0cb3e1dfbf",
+                      "name": "recipient",
+                      "repr": "'SPBM1X391HWMCVHKH6GK8XJRDR6B7REZQYQ8KBCK",
+                      "type": "principal"
+                    },
+                    {
+                      "hex": "0x09",
+                      "name": "memo",
+                      "repr": "none",
+                      "type": "(optional (buff 34))"
+                    }
+                  ],
+                  "function_name": "transfer",
+                  "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token"
+                },
+                "operation_identifier": {
+                  "index": 1
+                }
+              },
+              {
+                "type": "token_transfer",
+                "amount": {
+                  "value": "-10352515582",
+                  "currency": {
+                    "symbol": "",
+                    "decimals": 0,
+                    "metadata": {
+                      "token_type": "ft",
+                      "asset_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token::diko"
+                    }
+                  }
+                },
+                "status": "success",
+                "account": {
+                  "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+                },
+                "operation_identifier": {
+                  "index": 2
+                }
+              },
+              {
+                "type": "token_transfer",
+                "amount": {
+                  "value": "10352515582",
+                  "currency": {
+                    "symbol": "",
+                    "decimals": 0,
+                    "metadata": {
+                      "token_type": "ft",
+                      "asset_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token::diko"
+                    }
+                  }
+                },
+                "status": "success",
+                "account": {
+                  "address": "SPBM1X391HWMCVHKH6GK8XJRDR6B7REZQYQ8KBCK"
+                },
+                "operation_identifier": {
+                  "index": 3
+                }
+              },
+              {
+                "type": "contract_log",
+                "status": "success",
+                "metadata": {
+                  "topic": "print",
+                  "value": "0x09",
+                  "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token"
+                },
+                "operation_identifier": {
+                  "index": 4
+                }
+              }
+            ],
+            "transaction_identifier": {
+              "hash": "0x09defc9a6cd9318b5c458389d4dd57597203ec539818aec0de3cfcfd7af0c2ab"
+            }
+          }
+        ],
+        "block_identifier": {
+          "hash": "0xa204da7ae59b86a569d66c237721937e1708b72913c6a67abf58360b8f5935b7",
+          "index": 3549902
+        },
+        "parent_block_identifier": {
+          "hash": "0xad0acff4e24c398f00ea07079b36753f5136c1dfc021d19e58cfdcbcee265e5c",
+          "index": 3549901
+        }
+      }
+    ],
+    "chain": "stacks",
+    "network": "mainnet",
+    "rollback": []
+  },
+  "chainhook": {
+    "name": "blocksurvey",
+    "uuid": "be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185"
+  }
+}
+```
+
+---
+
+## Operation Types
+
+Chainhook payloads can include the following operation types:
+
+| Type | Description |
+|------|-------------|
+| `fee` | Transaction fee payment |
+| `contract_call` | Contract function invocation |
+| `contract_deploy` | Contract deployment |
+| `token_transfer` | FT/NFT/STX transfer |
+| `contract_log` | Contract print statement |
+| `coinbase` | Block reward |
+| `tenure_change` | Nakamoto tenure change |
+
+---
+
+## Best Practices
+
+### Handle Reorgs
+
+Always process the `rollback` array before the `apply` array:
+
+```typescript
+const { apply, rollback } = payload.event;
+
+// Reverse state changes from rolled-back blocks
+for (const block of rollback) {
+  await revertBlock(block);
+}
+
+// Apply new canonical blocks
+for (const block of apply) {
+  await processBlock(block);
+}
+```
+
+### Index Operations
+
+Operations are indexed sequentially. Use `operation_identifier.index` to maintain order when processing events.
+
+### Check Transaction Status
+
+Always verify `metadata.status === "success"` before processing transaction data. Failed transactions are included in payloads but should typically be ignored.
+
+---
+
+## Next Steps
+
+:::next-steps
+* [Filter Reference](/tools/chainhook/reference/filters): Configure which events trigger your chainhook
+* [Options Reference](/tools/chainhook/reference/options): Customize payload content
+:::
