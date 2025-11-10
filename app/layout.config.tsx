@@ -25,6 +25,7 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Chainhook',
           description: 'Monitor and analyze Clarity smart contract activity.',
           url: '/tools/chainhook',
+          isBeta: true,
         },
         {
           text: 'Contract Monitoring',
@@ -35,7 +36,6 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Bitcoin Indexer',
           description: 'Indexer for Bitcoin blockchain data.',
           url: '/tools/bitcoin-indexer',
-          isNew: true,
         },
       ],
     },
@@ -68,6 +68,12 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Token Metadata API',
           description: 'API for retrieving NFT and fungible token metadata.',
           url: '/apis/token-metadata-api',
+        },
+        {
+          text: 'Chainhook API',
+          description: 'RESTful API for accessing Chainhook',
+          url: '/apis/chainhook-api',
+          isNew: true,
         },
         {
           text: 'Platform API',
