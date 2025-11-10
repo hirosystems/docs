@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 
 const ALLOWED_METHODS = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
+const ALLOWED_HOSTNAMES = new Set(['api.hiro.so', 'api.mainnet.hiro.so', 'api.testnet.hiro.so']);
+const BLOCKED_REQUEST_HEADERS = new Set(['host', 'cookie', 'connection', 'content-length']);
+const STRIPPED_RESPONSE_HEADERS = new Set(['set-cookie', 'server', 'via', 'www-authenticate']);
 
 export const dynamic = 'force-dynamic';
 
@@ -10,6 +13,20 @@ export async function POST(request: Request) {
 
     if (!url || typeof url !== 'string') {
       return NextResponse.json({ error: 'A target URL is required.' }, { status: 400 });
+    }
+
+    let parsedUrl: URL;
+    try {
+      parsedUrl = new URL(url);
+    } catch {
+      return NextResponse.json({ error: 'URL must be absolute.' }, { status: 400 });
+    }
+
+    if (parsedUrl.protocol !== 'https:' || !ALLOWED_HOSTNAMES.has(parsedUrl.hostname)) {
+      return NextResponse.json(
+        { error: 'This proxy only allows Hiro API hosts over HTTPS.' },
+        { status: 403 },
+      );
     }
 
     const upperMethod = String(method).toUpperCase();
@@ -23,7 +40,7 @@ export async function POST(request: Request) {
     const upstreamHeaders = new Headers();
     if (headers && typeof headers === 'object') {
       for (const [key, value] of Object.entries(headers)) {
-        if (typeof value === 'string') {
+        if (typeof value === 'string' && !BLOCKED_REQUEST_HEADERS.has(key.toLowerCase())) {
           upstreamHeaders.set(key, value);
         }
       }
@@ -38,7 +55,7 @@ export async function POST(request: Request) {
       requestInit.body = typeof body === 'string' ? body : JSON.stringify(body);
     }
 
-    const upstreamResponse = await fetch(url, requestInit);
+    const upstreamResponse = await fetch(parsedUrl, requestInit);
     const contentType = upstreamResponse.headers.get('content-type') ?? '';
     let data: unknown;
 
@@ -48,10 +65,16 @@ export async function POST(request: Request) {
       data = await upstreamResponse.text();
     }
 
+    const sanitizedHeaders = Object.fromEntries(
+      Array.from(upstreamResponse.headers.entries()).filter(
+        ([key]) => !STRIPPED_RESPONSE_HEADERS.has(key.toLowerCase()),
+      ),
+    );
+
     return NextResponse.json({
       status: upstreamResponse.status,
       statusText: upstreamResponse.statusText,
-      headers: Object.fromEntries(upstreamResponse.headers),
+      headers: sanitizedHeaders,
       data,
     });
   } catch (error) {
