@@ -1,489 +1,67 @@
 ---
 title: Manage Keys
-description: API key setup and webhook secret management
+description: Rotate consumer secrets and validate every Chainhook delivery
 ---
 
-# Manage Keys
+## What you'll learn
 
-Learn how to manage your Hiro API keys and webhook secrets for secure chainhook operations.
-
-## Hiro API Keys
-
-API keys are required to authenticate requests to the Chainhook API. Get your API key from the [Hiro Platform](https://platform.hiro.so).
-
-### Getting Your API Key
-
-1. Visit [platform.hiro.so](https://platform.hiro.so)
-2. Sign in or create an account
-3. Navigate to API Keys section
-4. Generate or copy your API key
-
-### Using API Keys with the SDK
-
-Store your API key securely in environment variables:
-
-#### Environment Variables
-
-Create a `.env` file in your project root:
-
-```bash
-HIRO_API_KEY=your_api_key_here
-```
-
-:::callout{type="warning"}
-**Never commit `.env` files to version control.** Add `.env` to your `.gitignore` file.
+:::objectives
+- Create/rotate a Chainhook consumer secret.
+- Validate webhook requests by checking the `Authorization` header.
 :::
 
-#### Load Environment Variables
+## Prerequisites
 
-Use a package like `dotenv` to load environment variables:
+:::prerequisites
+- Hiro API key stored as `CHAINHOOKS_API_KEY`.
+- Chainhook UUID you want to protect.
+- Node.js runtime (the example uses Fastify).
+:::
 
-<TerminalPicker>
-  ```terminal !! npm
-  npm install dotenv
-  ```
+## Validating webhook requests with a consumer secret
 
-  ```terminal !! yarn
-  yarn add dotenv
-  ```
+Chainhooks attach an `Authorization: Bearer <secret>` header to every webhook attempt, giving you a simple shared-secret handshake.
 
-  ```terminal !! pnpm
-  pnpm add dotenv
-  ```
+1. Rotate the secret with `await client.rotateConsumerSecret(chainhookUuid)` (or the `/chainhooks/{uuid}/secret` API) whenever you need a new token.
+2. Persist the returned `secret` in your secret manager and reload it at process start or via a short refresh loop.
+3. Reject webhook deliveries whose `Authorization` header does not equal `Bearer <current-secret>`.
 
-  ```terminal !! bun
-  bun add dotenv
-  ```
-</TerminalPicker>
+### Rotate/create consumer secret
 
-Then load in your code:
-
-```typescript
-import 'dotenv/config';
+```ts
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
-  baseUrl: CHAINHOOKS_BASE_URL.testnet,
-  apiKey: process.env.HIRO_API_KEY!, // Loaded from .env
-});
-```
-
-### Authentication Header
-
-The SDK automatically adds the `x-api-key` header to all requests:
-
-```typescript
-// SDK handles this automatically
-await client.getChainhooks();
-
-// Equivalent cURL:
-// curl -H "x-api-key: YOUR_API_KEY" https://api.testnet.hiro.so/chainhooks/me
-```
-
-### Using API Keys Directly (cURL)
-
-For direct API calls, include the `x-api-key` header:
-
-```bash
-curl -sS "https://api.testnet.hiro.so/chainhooks/me" \
-  -H "x-api-key: $HIRO_API_KEY"
-```
-
----
-
-## Webhook Secrets
-
-Webhook secrets (consumer secrets) are used to verify that webhook payloads are sent by Hiro and not a third party.
-
-### How Webhook Secrets Work
-
-1. When you create a chainhook, Hiro generates a unique consumer secret
-2. This secret is included in the headers of every webhook payload sent to your endpoint
-3. Your server validates the secret to ensure the request is authentic
-
-### Webhook Secret Header
-
-Every webhook request includes:
-
-```http
-POST /webhooks HTTP/1.1
-Host: example.com
-Content-Type: application/json
-X-Chainhook-Consumer-Secret: your-secret-here
-
-{
-  "event": { ... },
-  "chainhook": { ... }
-}
-```
-
-### Verifying Webhook Requests
-
-Validate incoming webhooks by checking the secret:
-
-```typescript
-import express from 'express';
-
-const app = express();
-app.use(express.json());
-
-// Store your chainhook secrets (from database or config)
-const CHAINHOOK_SECRETS = new Map([
-  ['chainhook-uuid-1', 'secret-1'],
-  ['chainhook-uuid-2', 'secret-2'],
-]);
-
-app.post('/webhooks', (req, res) => {
-  const providedSecret = req.headers['x-chainhook-consumer-secret'];
-  const chainhookUuid = req.body.chainhook.uuid;
-  const expectedSecret = CHAINHOOK_SECRETS.get(chainhookUuid);
-
-  // Verify secret
-  if (providedSecret !== expectedSecret) {
-    console.error('Invalid webhook secret');
-    return res.sendStatus(401);
-  }
-
-  // Process webhook
-  const { event, chainhook } = req.body;
-  console.log('Valid webhook received from:', chainhook.name);
-
-  // Your processing logic here...
-
-  res.sendStatus(200);
+  baseUrl: CHAINHOOKS_BASE_URL.mainnet, // or .testnet / custom URL
+  apiKey: process.env.CHAINHOOKS_API_KEY!,
 });
 
-app.listen(3000, () => console.log('Webhook server running'));
+let consumerSecret: string = await client.rotateConsumerSecret(chainhookUuid).secret;
 ```
 
----
+### Example Fastify server
 
-## rotateConsumerSecret
+```ts
+import Fastify from 'fastify';
 
-Rotate the webhook secret for a chainhook. This generates a new secret that will be used for all future webhook deliveries.
+const server = Fastify();
 
-### TypeScript
+server.post('/webhook', async (request, reply) => {
+  if (!consumerSecret) {
+    reply.code(503).send({ error: 'consumer secret unavailable' });
+    return;
+  }
 
-```typescript
-const newSecret = await client.rotateConsumerSecret('chainhook-uuid');
+  const authHeader = request.headers.authorization;
+  if (authHeader !== `Bearer ${consumerSecret}`) {
+    reply.code(401).send({ error: 'invalid consumer secret' });
+    return;
+  }
 
-console.log('New secret:', newSecret.consumer_secret);
-
-// Store the new secret securely
-await db.chainhooks.update({
-  uuid: 'chainhook-uuid',
-  secret: newSecret.consumer_secret,
+  const event = request.body;
+  console.log(`received chainhook ${event.chainhook.uuid}`);
+  reply.code(204).send();
 });
+
+await server.listen({ port: Number(process.env.PORT) || 3000 });
 ```
-
-### cURL
-
-```bash
-curl -sS -X POST "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>/rotate-secret" \
-  -H "x-api-key: $HIRO_API_KEY"
-```
-
-### Response
-
-```json
-{
-  "consumer_secret": "new-secret-value-here"
-}
-```
-
-### When to Rotate Secrets
-
-Rotate webhook secrets when:
-
-1. **Security breach**: A secret has been exposed or compromised
-2. **Regular rotation**: Part of your security policy (e.g., every 90 days)
-3. **Team changes**: When team members with access leave
-4. **Testing**: When you need to test secret rotation
-
-### Secret Rotation Example
-
-```typescript
-async function rotateSecret(chainhookUuid: string) {
-  try {
-    // Rotate the secret
-    const { consumer_secret } = await client.rotateConsumerSecret(chainhookUuid);
-
-    // Update your database
-    await db.chainhooks.update({
-      uuid: chainhookUuid,
-      secret: consumer_secret,
-      lastRotated: new Date(),
-    });
-
-    console.log(`✅ Secret rotated for ${chainhookUuid}`);
-    return consumer_secret;
-  } catch (error) {
-    console.error('Failed to rotate secret:', error);
-    throw error;
-  }
-}
-```
-
-### Rotating Secrets for All Chainhooks
-
-```typescript
-async function rotateAllSecrets() {
-  const chainhooks = await client.getChainhooks({ limit: 100 });
-
-  for (const ch of chainhooks.results) {
-    const { consumer_secret } = await client.rotateConsumerSecret(ch.uuid);
-
-    // Update storage
-    await db.chainhooks.update({
-      uuid: ch.uuid,
-      secret: consumer_secret,
-    });
-
-    console.log(`✅ Rotated: ${ch.definition.name}`);
-
-    // Rate limit
-    await new Promise(resolve => setTimeout(resolve, 100));
-  }
-
-  console.log('All secrets rotated');
-}
-```
-
----
-
-## Best Practices
-
-### 1. Store Secrets Securely
-
-Never hardcode secrets in your application:
-
-```typescript
-// ❌ Bad: Hardcoded secret
-const SECRET = 'my-secret-here';
-
-// ✅ Good: From environment or secure storage
-const SECRET = process.env.WEBHOOK_SECRET;
-
-// ✅ Better: From encrypted database
-const SECRET = await getSecretFromDatabase(chainhookUuid);
-```
-
-### 2. Use Environment Variables
-
-Keep sensitive data in environment variables:
-
-```bash
-# .env file
-HIRO_API_KEY=your_api_key
-WEBHOOK_SECRET_1=secret_for_chainhook_1
-WEBHOOK_SECRET_2=secret_for_chainhook_2
-```
-
-Load with:
-
-```typescript
-import 'dotenv/config';
-
-const apiKey = process.env.HIRO_API_KEY;
-```
-
-### 3. Rotate Secrets Regularly
-
-Implement a rotation schedule:
-
-```typescript
-// Rotate secrets every 90 days
-async function scheduleSecretRotation() {
-  const chainhooks = await client.getChainhooks({ limit: 100 });
-
-  for (const ch of chainhooks.results) {
-    const lastRotated = await db.getLastRotationDate(ch.uuid);
-    const daysSinceRotation = (Date.now() - lastRotated) / (1000 * 60 * 60 * 24);
-
-    if (daysSinceRotation >= 90) {
-      await rotateSecret(ch.uuid);
-    }
-  }
-}
-
-// Run daily
-setInterval(scheduleSecretRotation, 24 * 60 * 60 * 1000);
-```
-
-### 4. Validate All Incoming Webhooks
-
-Always verify webhook secrets before processing:
-
-```typescript
-function validateWebhook(req: Request): boolean {
-  const providedSecret = req.headers['x-chainhook-consumer-secret'];
-  const chainhookUuid = req.body.chainhook?.uuid;
-
-  if (!providedSecret || !chainhookUuid) {
-    return false;
-  }
-
-  const expectedSecret = getStoredSecret(chainhookUuid);
-  return providedSecret === expectedSecret;
-}
-
-app.post('/webhooks', (req, res) => {
-  if (!validateWebhook(req)) {
-    return res.sendStatus(401);
-  }
-
-  // Process webhook...
-});
-```
-
-### 5. Handle Secret Rotation Gracefully
-
-During rotation, briefly accept both old and new secrets:
-
-```typescript
-// Store both current and previous secret
-interface ChainhookSecrets {
-  current: string;
-  previous?: string;
-  rotatedAt?: Date;
-}
-
-function validateWebhook(req: Request): boolean {
-  const providedSecret = req.headers['x-chainhook-consumer-secret'];
-  const secrets = getStoredSecrets(req.body.chainhook.uuid);
-
-  // Accept current or previous secret (for 5 minutes after rotation)
-  if (providedSecret === secrets.current) {
-    return true;
-  }
-
-  if (secrets.previous && secrets.rotatedAt) {
-    const minutesSinceRotation = (Date.now() - secrets.rotatedAt.getTime()) / (1000 * 60);
-    if (minutesSinceRotation < 5) {
-      return providedSecret === secrets.previous;
-    }
-  }
-
-  return false;
-}
-```
-
-### 6. Monitor Failed Validations
-
-Track and alert on failed secret validations:
-
-```typescript
-app.post('/webhooks', (req, res) => {
-  if (!validateWebhook(req)) {
-    // Log the failure
-    logger.warn('Webhook validation failed', {
-      chainhookUuid: req.body.chainhook?.uuid,
-      ip: req.ip,
-      timestamp: new Date(),
-    });
-
-    // Alert if too many failures
-    await checkForSecurityThreats(req.body.chainhook?.uuid);
-
-    return res.sendStatus(401);
-  }
-
-  // Process webhook...
-});
-```
-
----
-
-## Security Considerations
-
-### API Key Security
-
-- **Never commit API keys** to version control
-- **Use environment variables** for local development
-- **Use secret managers** for production (AWS Secrets Manager, HashiCorp Vault, etc.)
-- **Rotate keys periodically** as part of security policy
-- **Use different keys** for different environments (dev, staging, production)
-
-### Webhook Secret Security
-
-- **Always validate** webhook secrets on your server
-- **Rotate secrets** if you suspect compromise
-- **Log validation failures** for security monitoring
-- **Use HTTPS** for webhook endpoints
-- **Implement rate limiting** to prevent abuse
-
-### Production Setup
-
-For production, use a secret manager:
-
-```typescript
-import { SecretsManager } from 'aws-sdk';
-
-const secretsManager = new SecretsManager();
-
-async function getApiKey(): Promise<string> {
-  const secret = await secretsManager.getSecretValue({
-    SecretId: 'hiro-api-key-production',
-  }).promise();
-
-  return JSON.parse(secret.SecretString!).apiKey;
-}
-
-const client = new ChainhooksClient({
-  baseUrl: CHAINHOOKS_BASE_URL.mainnet,
-  apiKey: await getApiKey(),
-});
-```
-
----
-
-## Troubleshooting
-
-### 401 Unauthorized
-
-If you get 401 errors:
-
-```typescript
-// Check API key is set
-console.log('API Key:', process.env.HIRO_API_KEY ? 'Set' : 'Missing');
-
-// Verify it's correct
-try {
-  await client.getChainhooks();
-  console.log('✅ API key valid');
-} catch (error) {
-  if (error.status === 401) {
-    console.error('❌ Invalid API key');
-  }
-}
-```
-
-### Webhook Validation Failing
-
-If webhook validation fails:
-
-1. Check the secret matches:
-   ```typescript
-   console.log('Provided:', req.headers['x-chainhook-consumer-secret']);
-   console.log('Expected:', storedSecret);
-   ```
-
-2. Verify the chainhook UUID:
-   ```typescript
-   console.log('Chainhook UUID:', req.body.chainhook.uuid);
-   ```
-
-3. Check if secret was recently rotated:
-   ```typescript
-   const lastRotated = await db.getLastRotationDate(uuid);
-   console.log('Last rotated:', lastRotated);
-   ```
-
----
-
-## Next Steps
-
-:::next-steps
-* [Register & Enable](/tools/chainhook/register-enable): Create chainhooks with your API key
-* [Quickstart](/tools/chainhook/quickstart): Complete end-to-end example
-:::

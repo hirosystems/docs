@@ -70,45 +70,17 @@ curl -sS "https://api.testnet.hiro.so/chainhooks/me?limit=20&offset=0" \
       "status": {
         "enabled": true,
         "type": "active",
-        "info": {
-          "last_evaluated_block_height": 150000,
-          "number_of_times_triggered": 42,
-          "number_of_blocks_evaluated": 1000
-        }
+        "last_evaluated_at": 1696432154,
+        "last_evaluated_block_height": 150000,
+        "last_occurrence_at": 1696432100,
+        "last_occurrence_block_height": 149980,
+        "evaluated_block_count": 1000,
+        "occurrence_count": 42
       }
     },
     // ... more chainhooks
   ]
 }
-```
-
-### Pagination Example
-
-Fetch all chainhooks using pagination:
-
-```typescript
-async function getAllChainhooks() {
-  const allChainhooks = [];
-  let offset = 0;
-  const limit = 100;
-
-  while (true) {
-    const response = await client.getChainhooks({ limit, offset });
-    allChainhooks.push(...response.results);
-
-    // Check if we've fetched all chainhooks
-    if (offset + limit >= response.total) {
-      break;
-    }
-
-    offset += limit;
-  }
-
-  return allChainhooks;
-}
-
-const allMyChainhooks = await getAllChainhooks();
-console.log(`Found ${allMyChainhooks.length} chainhooks`);
 ```
 
 ---
@@ -121,11 +93,6 @@ Retrieve a specific chainhook by UUID.
 
 ```typescript
 const chainhook = await client.getChainhook('be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185');
-
-console.log('Name:', chainhook.definition.name);
-console.log('Enabled:', chainhook.status.enabled);
-console.log('Network:', chainhook.definition.network);
-console.log('Times triggered:', chainhook.status.info.number_of_times_triggered);
 ```
 
 ### cURL
@@ -165,182 +132,17 @@ curl -sS "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
   "status": {
     "enabled": true,
     "type": "active",
-    "info": {
-      "last_evaluated_block_height": 150000,
-      "last_occurrence": 149850,
-      "number_of_times_triggered": 42,
-      "number_of_blocks_evaluated": 1000
-    }
+    "last_evaluated_at": 1696432154,
+    "last_evaluated_block_height": 150000,
+    "last_occurrence_at": 1696432100,
+    "last_occurrence_block_height": 149980,
+    "evaluated_block_count": 1000,
+    "occurrence_count": 42
   }
 }
 ```
-
----
-
-## Understanding Status
-
-The `status` object provides information about the chainhook's state:
-
-### Status Fields
-
-```typescript
-{
-  "status": {
-    "enabled": true,              // Whether the chainhook is active
-    "type": "active",             // Status type (active, inactive, expired, etc.)
-    "info": {
-      "last_evaluated_block_height": 150000,    // Most recent block checked
-      "last_occurrence": 149850,                 // Most recent block where filter matched
-      "number_of_times_triggered": 42,          // Total matches
-      "number_of_blocks_evaluated": 1000,       // Total blocks processed
-      "expired_at_block_height": null           // When chainhook expired (if applicable)
-    }
-  }
-}
-```
-
-### Status Types
-
-| Type | Description |
-|------|-------------|
-| `active` | Chainhook is enabled and processing blocks |
-| `inactive` | Chainhook is disabled (paused) |
-| `expired` | Chainhook expired based on options |
-| `scanning` | Chainhook is catching up with chain tip |
-
-### Check if Enabled
-
-```typescript
-const chainhook = await client.getChainhook(uuid);
-
-if (chainhook.status.enabled) {
-  console.log('Chainhook is active');
-} else {
-  console.log('Chainhook is disabled');
-}
-```
-
-### Check Activity
-
-```typescript
-const chainhook = await client.getChainhook(uuid);
-const { info } = chainhook.status;
-
-console.log(`Triggered ${info.number_of_times_triggered} times`);
-console.log(`Evaluated ${info.number_of_blocks_evaluated} blocks`);
-console.log(`Last trigger at block ${info.last_occurrence}`);
-```
-
----
-
-## Common Use Cases
-
-### Find Chainhooks by Name
-
-```typescript
-const allChainhooks = await client.getChainhooks({ limit: 100 });
-
-const myChain hook = allChainhooks.results.find(
-  ch => ch.definition.name === 'ft-transfer-tracker'
-);
-
-if (myChainhook) {
-  console.log('Found:', myChainhook.uuid);
-}
-```
-
-### List All Enabled Chainhooks
-
-```typescript
-const allChainhooks = await client.getChainhooks({ limit: 100 });
-
-const enabledChainhooks = allChainhooks.results.filter(
-  ch => ch.status.enabled
-);
-
-console.log(`${enabledChainhooks.length} enabled chainhooks`);
-```
-
-### Monitor Chainhook Activity
-
-```typescript
-async function monitorChainhook(uuid: string) {
-  const chainhook = await client.getChainhook(uuid);
-  const { info } = chainhook.status;
-
-  console.log(`
-    Chainhook: ${chainhook.definition.name}
-    Status: ${chainhook.status.enabled ? 'Active' : 'Inactive'}
-    Last evaluated: Block ${info.last_evaluated_block_height}
-    Total triggers: ${info.number_of_times_triggered}
-    Blocks processed: ${info.number_of_blocks_evaluated}
-  `);
-}
-
-// Call periodically to monitor
-setInterval(() => monitorChainhook('uuid-here'), 60000); // Every minute
-```
-
-### List Chainhooks by Webhook URL
-
-```typescript
-const allChainhooks = await client.getChainhooks({ limit: 100 });
-
-const webhookUrl = 'https://example.com/webhooks';
-const matchingChainhooks = allChainhooks.results.filter(
-  ch => ch.definition.action.url === webhookUrl
-);
-
-console.log(`${matchingChainhooks.length} chainhooks POST to ${webhookUrl}`);
-```
-
-### Check for Expired Chainhooks
-
-```typescript
-const allChainhooks = await client.getChainhooks({ limit: 100 });
-
-const expiredChainhooks = allChainhooks.results.filter(
-  ch => ch.status.type === 'expired'
-);
-
-for (const ch of expiredChainhooks) {
-  console.log(`Expired: ${ch.definition.name} at block ${ch.status.info.expired_at_block_height}`);
-}
-```
-
----
-
-## Error Handling
-
-### Chainhook Not Found
-
-```typescript
-try {
-  const chainhook = await client.getChainhook('invalid-uuid');
-} catch (error) {
-  if (error.status === 404) {
-    console.error('Chainhook not found');
-  } else {
-    throw error;
-  }
-}
-```
-
-### Handle Pagination Errors
-
-```typescript
-try {
-  const chainhooks = await client.getChainhooks({ limit: 1000, offset: 0 });
-} catch (error) {
-  console.error('Failed to fetch chainhooks:', error);
-}
-```
-
----
-
-## Next Steps
 
 :::next-steps
-* [Edit & Update](/tools/chainhook/edit-update): Modify existing chainhooks
-* [Register & Enable](/tools/chainhook/register-enable): Create new chainhooks
+- [Edit & Update](/tools/chainhook/edit-update): Modify existing chainhooks
+- [Register & Enable](/tools/chainhook/register-enable): Create new chainhooks
 :::

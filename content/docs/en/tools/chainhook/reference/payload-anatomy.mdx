@@ -60,7 +60,7 @@ The `apply` array contains blocks being added to the canonical chain. Each block
 
 The `rollback` array contains blocks being removed during a chain reorganization. Same structure as `apply`.
 
-:::callout{type="info"}
+:::callout
 Chainhook automatically handles reorgs by sending rollback events. Your application should reverse any state changes from rolled-back blocks.
 :::
 
@@ -197,7 +197,7 @@ Contract function invocation:
 }
 ```
 
-:::callout{type="info"}
+:::callout
 The `args` array includes `repr` and `type` fields when `decode_clarity_values` is enabled in options.
 :::
 

@@ -1,45 +1,29 @@
 ---
-title: Chainhook SDK
+title: Introduction
 description: TypeScript/JavaScript SDK for managing chainhooks programmatically
 ---
 
-# Chainhook SDK
+## Overview
 
-The Chainhook SDK (`@hirosystems/chainhooks-client`) provides a TypeScript/JavaScript client for programmatically managing chainhooks. Use the SDK when you need to create, update, or manage chainhooks from your application code.
-
-## Why Use the SDK?
-
-**Use the SDK when you need to:**
-- Edit existing chainhooks (not available in Platform UI)
-- Automate chainhook operations
-- Integrate chainhook management into your application
-- Manage chainhooks in CI/CD pipelines
-- Handle multiple chainhooks programmatically
-- Evaluate chainhooks against past blocks
-- Rotate webhook secrets for security
-
-**Use the [Platform UI](/tools/chainhook/platform-usage) when you need to:**
-- Create simple chainhooks visually
-- View chainhook status and activity
-- Get started quickly without code
+The Chainhook SDK (`@hirosystems/chainhooks-client`) provides a TypeScript/JavaScript client for programmatically managing chainhooks.
 
 ## Installation
 
 <TerminalPicker>
   ```terminal !! npm
-  npm install @hirosystems/chainhooks-client
+  $ npm install @hirosystems/chainhooks-client
   ```
 
   ```terminal !! yarn
-  yarn add @hirosystems/chainhooks-client
+  $ yarn add @hirosystems/chainhooks-client
   ```
 
   ```terminal !! pnpm
-  pnpm add @hirosystems/chainhooks-client
+  $ pnpm add @hirosystems/chainhooks-client
   ```
 
   ```terminal !! bun
-  bun add @hirosystems/chainhooks-client
+  $ bun add @hirosystems/chainhooks-client
   ```
 </TerminalPicker>
 
@@ -83,21 +67,39 @@ console.log('Chainhook created:', chainhook.uuid);
 
 ## Base URLs
 
-The SDK provides constants for both networks:
+The SDK provides network-specific constants:
+
+| Network | Constant | URL |
+|---------|----------|-----|
+| Testnet | `CHAINHOOKS_BASE_URL.testnet` | https://api.testnet.hiro.so |
+| Mainnet | `CHAINHOOKS_BASE_URL.mainnet` | https://api.mainnet.hiro.so |
 
 ```typescript
 import { CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
-// Testnet
-CHAINHOOKS_BASE_URL.testnet  // https://api.testnet.hiro.so
+// Testnet (for development)
+const testnetClient = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
 
-// Mainnet
-CHAINHOOKS_BASE_URL.mainnet  // https://api.mainnet.hiro.so
+// Mainnet (for production)
+const mainnetClient = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.mainnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
 ```
 
 ## Authentication
 
-All SDK methods require a Hiro API key. Get your API key from the [Hiro Platform](https://platform.hiro.so).
+### Get Your API Key
+
+1. Visit [platform.hiro.so](https://platform.hiro.so)
+2. Sign in or create an account
+3. Navigate to API Keys section
+4. Generate or copy your API key
+
+### Configure Client
 
 ```typescript
 const client = new ChainhooksClient({
@@ -106,8 +108,10 @@ const client = new ChainhooksClient({
 });
 ```
 
-:::callout{type="warning"}
-**Never commit API keys to version control.** Always use environment variables or secure secret management.
+:::callout
+type: warn
+### API keys
+Never commit API keys to version control. Always use environment variables or secure secret management.
 :::
 
 ## SDK Methods
@@ -140,20 +144,22 @@ The SDK provides the following methods:
 
 ## TypeScript Support
 
-The SDK is written in TypeScript and provides full type definitions:
+### Available Types
+
+The SDK provides full TypeScript type definitions:
 
 ```typescript
 import type {
-  ChainhookDefinitionSchema,
-  ChainhookStatusSchema,
-  EvaluateChainhookRequest,
-  BulkEnableChainhooksRequest,
+  ChainhookDefinitionSchema,      // Chainhook configuration
+  ChainhookStatusSchema,           // Status and activity info
+  EvaluateChainhookRequest,        // Evaluation parameters
+  BulkEnableChainhooksRequest,     // Bulk operation filters
 } from '@hirosystems/chainhooks-client';
 ```
 
 ## Next Steps
 
 :::next-steps
-* [Quickstart](/tools/chainhook/quickstart): Get started in 5 minutes
-* [Register & Enable](/tools/chainhook/register-enable): Create and activate chainhooks
+- [Quickstart](/tools/chainhook/quickstart): Get started in 5 minutes
+- [Register & Enable](/tools/chainhook/register-enable): Create and activate chainhooks
 :::

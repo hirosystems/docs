@@ -5,8 +5,10 @@ description: Chainhook is a reorg-aware indexer that serves reliable blockchain 
 llm: false
 ---
 
-:::callout{type="info"}
-**Chainhook 2.0 Beta**: Chainhook 2.0 is currently in beta. During this period, we're focused on learning about reliability, performance, and developer experience. If you encounter issues or have feedback, please reach out to [support@hiro.so](mailto:support@hiro.so).
+:::callout
+type: warn
+### Chainhook 2.0 Beta
+Chainhook 2.0 is currently in beta. During this period, we're focused on learning about reliability, performance, and developer experience. If you encounter issues or have feedback, please reach out to [support@hiro.so](mailto:support@hiro.so).
 :::
 
 ## Overview
@@ -20,41 +22,19 @@ With Chainhook 2.0, you can manage chainhooks through:
 
 To explore Chainhook features with AI, copy and paste [llms.txt](/tools/chainhook/llms.txt) into your LLM of choice.
 
-![Chainhook overview](/images/tools/chainhook/overview.svg)
-
 ## Key Features
 
 - **Reorg-aware indexing** - Automatically handles blockchain forks and reorganizations
-- **If-this-then-that predicates** - Define custom logic to trigger actions on specific blockchain events
-- **Multi-chain support** - Works with both Bitcoin and Stacks blockchains
-- **Webhook delivery** - Receive blockchain events at your HTTP endpoint
+- **Event filtering** - Define custom logic to trigger actions on specific blockchain events
 - **Historical evaluation** - Test chainhooks against past blocks for indexing or debugging
-
-## Getting Started
-
-### Choose Your Approach
-
-**Use the SDK when you need to:**
-- Edit existing chainhooks (not available in Platform UI)
-- Automate chainhook operations
-- Integrate chainhook management into your application
-- Manage chainhooks programmatically at scale
-
-**Use the Platform UI when you need to:**
-- Create chainhooks visually without code
-- View chainhook status and activity
-- Manage API keys
-- Get started quickly
-
-## Next Steps
 
 :::next-steps
 * [SDK Quickstart](/tools/chainhook/quickstart): Get started with the Chainhook SDK in 5 minutes
 * [Platform Quickstart](/tools/chainhook/platform-quickstart): Create your first chainhook in the Platform UI
 :::
 
-:::callout{type="help"}
-### Need help building with Chainhook?
-
-Reach out to us on the **#chainhook** channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/oL21905919) call every Thursday at 11am ET.
+:::callout
+type: help
+### Need help with Chainhook?
+Reach out to us on the <span className="font-bold">#chainhook</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section.
 :::

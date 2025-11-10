@@ -3,196 +3,109 @@ title: Migrating from v1 to v2
 description: Guide for migrating legacy v1 chainhooks to Chainhook 2.0 Beta
 ---
 
-# Migrating from v1 to v2
-
-This guide helps you migrate your legacy v1 chainhooks to the new Chainhook 2.0 Beta. Learn how to manage v1 chainhooks programmatically and recreate them using v2.
-
-## Overview
-
-### What Changed
-
-**Chainhook v1** used the Hiro Platform API with predicate-based JSON files and CLI tools.
-
-**Chainhook v2** introduces:
-- New REST API with simpler endpoint structure
-- TypeScript/JavaScript SDK for programmatic management
-- Updated filter syntax and options
-- Improved Platform UI (creation only, no editing yet)
-
-### Platform API vs Chainhook API
-
-There are now **two separate APIs** for managing chainhooks:
-
-| API | Purpose | Base URL | Auth |
-|-----|---------|----------|------|
-| **Platform API** | Manage legacy v1 chainhooks | `https://api.platform.hiro.so` | API key in path |
-| **Chainhook API** | Manage v2 chainhooks | `https://api.testnet.hiro.so` or `https://api.mainnet.hiro.so` | `x-api-key` header |
-
-:::callout{type="info"}
-**v1 chainhooks are read-only in the Platform UI.** You must use the Platform API to manage them programmatically.
+:::callout
+### Managing v1 chainhooks
+Legacy v1 chainhooks remain read-only in the Platform UI; you manage them through the [Platform API](/apis/platform-api/reference/chainhooks/list).
 :::
 
----
+## What you'll learn
 
-## Migration Strategy
-
-### Recommended Approach
-
-1. **Audit v1 chainhooks** - List all your v1 chainhooks via Platform API
-2. **Recreate in v2** - Use the new Chainhook SDK/API to create equivalent v2 chainhooks
-3. **Test v2 chainhooks** - Verify v2 chainhooks work as expected
-4. **Delete v1 chainhooks** - Remove old v1 chainhooks after successful migration
-
-:::callout{type="warning"}
-**Do not delete v1 chainhooks until you've verified v2 replacements are working correctly.**
+:::objectives
+- Capture and analyze all existing v1 chainhooks.
+- Convert predicate-based filters into explicit v2 event definitions.
+- Register v2 chainhooks, test delivery, and retire the originals safely.
 :::
 
----
+## Prerequisites
 
-## Step 1: List v1 Chainhooks
+:::prerequisites
+- API access to both the Platform API and Chainhook REST API (same `HIRO_API_KEY`).
+- Local SDK (`@hirosystems/chainhooks-client`) or `curl` for REST calls.
+- Environment variable `HIRO_API_KEY` set for the CLI and code samples.
+:::
 
-Use the Platform API to retrieve all your existing v1 chainhooks.
+<Steps>
 
-### cURL
+<Step>
+### Inventory v1 chainhooks
+Use the Platform API to fetch every chainhook that still fires in production.
 
+#### CLI
 ```bash
 curl -sS "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks" \
   -H "content-type: application/json"
 ```
 
-### JavaScript/TypeScript
-
+#### TypeScript
 ```typescript
-async function listV1Chainhooks() {
+export async function listV1Chainhooks() {
   const response = await fetch(
     `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`,
-    {
-      headers: {
-        'content-type': 'application/json',
-      },
-    }
+    { headers: { 'content-type': 'application/json' } }
   );
 
-  if (!response.ok) {
-    throw new Error(`Failed to list chainhooks: ${response.statusText}`);
-  }
-
-  const chainhooks = await response.json();
-  return chainhooks;
+  if (!response.ok) throw new Error(response.statusText);
+  return (await response.json()) as any[];
 }
 
-const v1Chainhooks = await listV1Chainhooks();
-console.log(`Found ${v1Chainhooks.length} v1 chainhooks`);
+const chainhooks = await listV1Chainhooks();
+console.log(`Found ${chainhooks.length} v1 chainhooks`);
 ```
+</Step>
 
-### Response Example
+<Step>
+### Inspect a chainhook
+Pull the full definition for each UUID so you can convert custom filters and metadata.
 
-```json
-[
-  {
-    "uuid": "aa3626dc-2090-49cd-8f1e-8f9994393aed",
-    "name": "my-v1-chainhook",
-    "version": 1,
-    "chain": "stacks",
-    "networks": {
-      "mainnet": {
-        "if_this": {
-          "scope": "stx_event",
-          "actions": ["transfer"]
-        },
-        "then_that": {
-          "http_post": {
-            "url": "https://example.com/webhooks",
-            "authorization_header": "Bearer token"
-          }
-        }
-      }
-    }
-  }
-]
-```
-
----
-
-## Step 2: Get v1 Chainhook Details
-
-Retrieve detailed information about a specific v1 chainhook.
-
-### cURL
-
+#### CLI
 ```bash
-curl -sS "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks/$CHAINHOOK_UUID" \
+curl -sS \
+  "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks/$CHAINHOOK_UUID" \
   -H "content-type: application/json"
 ```
 
-### JavaScript/TypeScript
-
+#### TypeScript
 ```typescript
-async function getV1Chainhook(uuid: string) {
+export async function getV1Chainhook(uuid: string) {
   const response = await fetch(
     `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,
-    {
-      headers: {
-        'content-type': 'application/json',
-      },
-    }
+    { headers: { 'content-type': 'application/json' } }
   );
 
-  if (!response.ok) {
-    throw new Error(`Failed to get chainhook: ${response.statusText}`);
-  }
-
+  if (!response.ok) throw new Error(response.statusText);
   return await response.json();
 }
-
-const v1Chainhook = await getV1Chainhook('aa3626dc-2090-49cd-8f1e-8f9994393aed');
-console.log('v1 Chainhook:', v1Chainhook);
 ```
+</Step>
 
----
+<Step>
+### Map configuration to v2
+Translate v1 structures to v2 fields before provisioning new hooks.
 
-## Step 3: Create Equivalent v2 Chainhooks
+| v1 Concept | v2 Target | Notes |
+|------------|-----------|-------|
+| `if_this.scope` | `filters.events[].type` | Replace `scope/action` combos with a single event type. |
+| `if_this.actions` | `type` | `transfer` maps to `*_transfer`. |
+| `then_that.http_post.url` | `action.url` | v2 handles secrets automatically. |
+| `networks.mainnet` | `network: "mainnet"` | Create one v2 hook per network. |
+| `authorization_header` | Webhook secret management | Use `rotateConsumerSecret()` after registration. |
 
-Recreate your v1 chainhooks using the v2 SDK or API with updated syntax.
-
-### v1 to v2 Mapping
-
-| v1 Concept | v2 Equivalent |
-|------------|---------------|
-| `if_this.scope` | `filters.events[].type` |
-| `if_this.actions` | Part of event type (e.g., `ft_transfer`) |
-| `then_that.http_post` | `action.type: "http_post"` |
-| `networks.mainnet` | `network: "mainnet"` |
-| `authorization_header` | Removed (use webhook secrets) |
-
-### Example Migration
-
-**v1 Chainhook (Platform API format)**:
-```json
+#### Example Conversion
+```jsonc
+// v1 (Platform API)
 {
   "name": "stx-transfers",
-  "version": 1,
-  "chain": "stacks",
   "networks": {
     "mainnet": {
-      "if_this": {
-        "scope": "stx_event",
-        "actions": ["transfer"]
-      },
-      "then_that": {
-        "http_post": {
-          "url": "https://example.com/webhooks",
-          "authorization_header": "Bearer token"
-        }
-      },
-      "start_block": 100000
+      "if_this": { "scope": "stx_event", "actions": ["transfer"] },
+      "then_that": { "http_post": { "url": "https://example.com/webhooks" } }
     }
   }
 }
 ```
 
-**v2 Chainhook (SDK)**:
 ```typescript
+// v2 (SDK)
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -200,469 +113,190 @@ const client = new ChainhooksClient({
   apiKey: process.env.HIRO_API_KEY!,
 });
 
-const v2Chainhook = await client.registerChainhook({
+await client.registerChainhook({
   version: '1',
   name: 'stx-transfers',
   chain: 'stacks',
   network: 'mainnet',
   filters: {
-    events: [
-      {
-        type: 'stx_transfer', // Changed from scope + actions
-      },
-    ],
+    events: [{ type: 'stx_transfer' }],
   },
   action: {
     type: 'http_post',
     url: 'https://example.com/webhooks',
-    // Note: Authorization header removed, use webhook secrets instead
   },
   options: {
     decode_clarity_values: true,
     enable_on_registration: true,
   },
 });
+```
+</Step>
 
-console.log('Created v2 chainhook:', v2Chainhook.uuid);
+<Step>
+### Create v2 chainhooks
+Provision each chainhook with the SDK or REST API, mirroring the mapped filters.
+
+#### REST
+```bash
+curl -sS -X POST "https://api.mainnet.hiro.so/chainhooks/v1/me/" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d @v2-chainhook.json
 ```
 
----
+#### Chainhook SDK
+```typescript
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL[config.network],
+  apiKey: process.env.HIRO_API_KEY!,
+});
+const chainhook = await client.registerChainhook(config);
+```
+</Step>
 
-## Step 4: Delete v1 Chainhooks
+<Step>
+### Validate and retire v1
+Stream events through both versions, confirm delivery, then clean up the legacy definitions.
 
-After verifying v2 chainhooks work correctly, delete the old v1 chainhooks.
+:::callout
+type: info
+### Best practices
+Keep both v1 and v2 hooks active until you verify delivery parity.
+:::
 
-### cURL
+#### Enablement Checks
+```typescript
+const chainhook = await client.getChainhook(v2Uuid);
+console.log(chainhook.status.enabled);
+```
 
+#### Delete with cURL
 ```bash
 curl -sS -X DELETE \
   "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks/$CHAINHOOK_UUID" \
   -H "content-type: application/json"
 ```
 
-### JavaScript/TypeScript
-
+#### Delete with SDK
 ```typescript
-async function deleteV1Chainhook(uuid: string) {
+export async function deleteV1Chainhook(uuid: string) {
   const response = await fetch(
     `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,
-    {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-      },
-    }
+    { method: 'DELETE', headers: { 'content-type': 'application/json' } }
   );
 
-  if (!response.ok) {
-    throw new Error(`Failed to delete chainhook: ${response.statusText}`);
-  }
-
-  const result = await response.json();
-  return result;
-}
-
-await deleteV1Chainhook('aa3626dc-2090-49cd-8f1e-8f9994393aed');
-console.log('v1 chainhook deleted');
-```
-
-### Response
-
-```json
-{
-  "status": "success",
-  "chainhookUuid": "aa3626dc-2090-49cd-8f1e-8f9994393aed",
-  "message": "Chainhook deleted successfully"
+  if (!response.ok) throw new Error(response.statusText);
+  return await response.json();
 }
 ```
+</Step>
 
----
+</Steps>
 
-## Complete Migration Script
+## Automation Template
+Use this script as a starting point when you have many similar chainhooks to move.
 
-Here's a complete script to migrate all v1 chainhooks to v2:
+<Accordion>
+  <AccordionItem value="bulk-script">
+    <AccordionTrigger>Bulk migration script</AccordionTrigger>
+    <AccordionContent>
 
 ```typescript
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
-const PLATFORM_API_BASE = 'https://api.platform.hiro.so';
+const PLATFORM_API = 'https://api.platform.hiro.so';
 const API_KEY = process.env.HIRO_API_KEY!;
+const scopeMap: Record<string, Record<string, string>> = {
+  stx_event: { transfer: 'stx_transfer' },
+  ft_event: { transfer: 'ft_transfer' },
+  nft_event: { transfer: 'nft_transfer' },
+};
 
-// Initialize v2 client
 const v2Client = new ChainhooksClient({
   baseUrl: CHAINHOOKS_BASE_URL.mainnet,
   apiKey: API_KEY,
 });
 
-// Helper: List v1 chainhooks
-async function listV1Chainhooks() {
-  const response = await fetch(
-    `${PLATFORM_API_BASE}/v1/ext/${API_KEY}/chainhooks`
-  );
-  return await response.json();
-}
+const pickNetwork = (networks: any) =>
+  networks.mainnet ? ['mainnet', networks.mainnet] : ['testnet', networks.testnet];
 
-// Helper: Delete v1 chainhook
-async function deleteV1Chainhook(uuid: string) {
-  await fetch(
-    `${PLATFORM_API_BASE}/v1/ext/${API_KEY}/chainhooks/${uuid}`,
-    { method: 'DELETE' }
-  );
-}
+async function migrate() {
+  const res = await fetch(`${PLATFORM_API}/v1/ext/${API_KEY}/chainhooks`);
+  if (!res.ok) throw new Error(res.statusText);
+  const hooks = (await res.json()) as any[];
 
-// Convert v1 filter to v2
-function convertV1ToV2(v1Chainhook: any) {
-  const network = v1Chainhook.networks.mainnet || v1Chainhook.networks.testnet;
-  const scope = network.if_this.scope;
-  const actions = network.if_this.actions || [];
+  for (const hook of hooks) {
+    const [network, details] = pickNetwork(hook.networks);
+    const action = details.if_this.actions?.[0] ?? '';
+    const eventType = scopeMap[details.if_this.scope]?.[action] ?? details.if_this.scope;
 
-  // Map v1 scopes to v2 event types
-  let eventType: string;
-  if (scope === 'stx_event') {
-    eventType = actions.includes('transfer') ? 'stx_transfer' : 'stx_event';
-  } else if (scope === 'contract_call') {
-    eventType = 'contract_call';
-  } else if (scope === 'ft_event') {
-    eventType = actions.includes('transfer') ? 'ft_transfer' : 'ft_event';
-  } else if (scope === 'nft_event') {
-    eventType = actions.includes('transfer') ? 'nft_transfer' : 'nft_event';
-  } else {
-    eventType = scope; // Fallback
-  }
+    const payload = {
+      version: '1',
+      name: hook.name,
+      chain: hook.chain,
+      network,
+      filters: {
+        events: [
+          {
+            type: eventType,
+            ...(details.if_this.contract_identifier && {
+              contract_identifier: details.if_this.contract_identifier,
+            }),
+          },
+        ],
+      },
+      action: { type: 'http_post', url: details.then_that.http_post.url },
+      options: { decode_clarity_values: true, enable_on_registration: true },
+    };
 
-  return {
-    version: '1',
-    name: v1Chainhook.name,
-    chain: v1Chainhook.chain,
-    network: v1Chainhook.networks.mainnet ? 'mainnet' : 'testnet',
-    filters: {
-      events: [
-        {
-          type: eventType,
-          // Add additional filter properties based on v1 config
-          ...(network.if_this.contract_identifier && {
-            contract_identifier: network.if_this.contract_identifier,
-          }),
-        },
-      ],
-    },
-    action: {
-      type: 'http_post',
-      url: network.then_that.http_post.url,
-    },
-    options: {
-      decode_clarity_values: true,
-      enable_on_registration: true,
-    },
-  };
-}
-
-// Main migration function
-async function migrateAllChainhooks() {
-  console.log('🔄 Starting migration from v1 to v2...\n');
-
-  // Step 1: List v1 chainhooks
-  const v1Chainhooks = await listV1Chainhooks();
-  console.log(`Found ${v1Chainhooks.length} v1 chainhooks\n`);
-
-  const migrated = [];
-  const failed = [];
-
-  // Step 2: Migrate each v1 chainhook to v2
-  for (const v1Chainhook of v1Chainhooks) {
     try {
-      console.log(`Migrating: ${v1Chainhook.name} (${v1Chainhook.uuid})`);
-
-      // Convert and create v2 chainhook
-      const v2Config = convertV1ToV2(v1Chainhook);
-      const v2Chainhook = await v2Client.registerChainhook(v2Config);
-
-      console.log(`✅ Created v2 chainhook: ${v2Chainhook.uuid}`);
-
-      // Store migration info
-      migrated.push({
-        v1Uuid: v1Chainhook.uuid,
-        v2Uuid: v2Chainhook.uuid,
-        name: v1Chainhook.name,
-      });
-
-      // Wait a bit between API calls
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const created = await v2Client.registerChainhook(payload);
+      console.log(`Migrated ${hook.uuid} → ${created.uuid}`);
     } catch (error) {
-      console.error(`❌ Failed to migrate ${v1Chainhook.name}:`, error.message);
-      failed.push({ uuid: v1Chainhook.uuid, name: v1Chainhook.name, error });
+      console.error(`Failed for ${hook.uuid}`, error);
     }
   }
-
-  console.log(`\n📊 Migration Summary:`);
-  console.log(`- Migrated: ${migrated.length}`);
-  console.log(`- Failed: ${failed.length}\n`);
-
-  // Step 3: Prompt to delete v1 chainhooks
-  if (migrated.length > 0) {
-    console.log('⚠️  Review v2 chainhooks before deleting v1 versions');
-    console.log('Run deleteV1Chainhooks() when ready to clean up\n');
-
-    return { migrated, failed };
-  }
 }
 
-// Optional: Delete v1 chainhooks after verification
-async function deleteV1Chainhooks(uuids: string[]) {
-  console.log(`🗑️  Deleting ${uuids.length} v1 chainhooks...\n`);
-
-  for (const uuid of uuids) {
-    try {
-      await deleteV1Chainhook(uuid);
-      console.log(`✅ Deleted v1 chainhook: ${uuid}`);
-      await new Promise(resolve => setTimeout(resolve, 500));
-    } catch (error) {
-      console.error(`❌ Failed to delete ${uuid}:`, error.message);
-    }
-  }
-
-  console.log('\n✅ v1 cleanup complete!');
-}
-
-// Run migration
-const result = await migrateAllChainhooks();
-
-// After verifying v2 chainhooks work:
-// await deleteV1Chainhooks(result.migrated.map(m => m.v1Uuid));
+migrate();
 ```
 
----
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
 
-## Filter Conversion Guide
+## Filter Translation Reference
+### Common scopes
+| v1 Scope | Typical Actions | v2 `type` | Extras |
+|----------|-----------------|-----------|--------|
+| `stx_event` | `transfer` | `stx_transfer` | Include `sender` or `recipient` filters as needed. |
+| `contract_call` | n/a | `contract_call` | Add `contract_identifier` and `function_name`. |
+| `ft_event` | `transfer` | `ft_transfer` | Specify `asset_identifier`. |
+| `nft_event` | `transfer`, `mint` | `nft_transfer` · `nft_mint` | Provide `asset_identifier`. |
 
-### STX Events
-
-**v1**:
-```json
+### Example
+```jsonc
+// v1 filter
 {
   "scope": "stx_event",
   "actions": ["transfer"]
 }
 ```
 
-**v2**:
-```json
-{
-  "events": [
-    { "type": "stx_transfer" }
-  ]
-}
-```
-
-### Contract Calls
-
-**v1**:
-```json
-{
-  "scope": "contract_call",
-  "contract_identifier": "SP...XYZ.counter",
-  "method": "increment"
-}
-```
-
-**v2**:
-```json
+```jsonc
+// v2 filter
 {
   "events": [
     {
-      "type": "contract_call",
-      "contract_identifier": "SP...XYZ.counter",
-      "function_name": "increment"
+      "type": "stx_transfer",
+      "recipient": "SP3FBR2AGKQX0..."
     }
   ]
 }
 ```
-
-### FT Events
-
-**v1**:
-```json
-{
-  "scope": "ft_event",
-  "asset_identifier": "SP...ABC.token::usdc",
-  "actions": ["transfer"]
-}
-```
-
-**v2**:
-```json
-{
-  "events": [
-    {
-      "type": "ft_transfer",
-      "asset_identifier": "SP...ABC.token::usdc"
-    }
-  ]
-}
-```
-
-### NFT Events
-
-**v1**:
-```json
-{
-  "scope": "nft_event",
-  "asset_identifier": "SP...COLL.nft::item",
-  "actions": ["mint", "transfer"]
-}
-```
-
-**v2**:
-```json
-{
-  "events": [
-    {
-      "type": "nft_mint",
-      "asset_identifier": "SP...COLL.nft::item"
-    },
-    {
-      "type": "nft_transfer",
-      "asset_identifier": "SP...COLL.nft::item"
-    }
-  ]
-}
-```
-
----
-
-## Key Differences
-
-### 1. Authentication
-
-**v1 (Platform API)**:
-- API key in path: `/v1/ext/{apiKey}/chainhooks`
-
-**v2 (Chainhook API)**:
-- API key in header: `x-api-key: YOUR_KEY`
-- Or use SDK which handles this automatically
-
-### 2. Webhook Authorization
-
-**v1**:
-- Used `authorization_header` in config
-
-**v2**:
-- Uses `x-chainhook-consumer-secret` header automatically
-- Rotate with `rotateConsumerSecret()` method
-
-### 3. Filter Syntax
-
-**v1**:
-- `scope` + `actions` approach
-- Example: `scope: "stx_event", actions: ["transfer"]`
-
-**v2**:
-- Direct event type
-- Example: `type: "stx_transfer"`
-
-### 4. Network Configuration
-
-**v1**:
-- Nested under `networks.mainnet` or `networks.testnet`
-
-**v2**:
-- Top-level `network` field
-- Separate chainhooks for each network
-
----
-
-## Troubleshooting
-
-### v1 Chainhook Not Found
-
-If you can't find a v1 chainhook:
-```typescript
-const chainhook = await getV1Chainhook(uuid);
-if (!chainhook) {
-  console.error('Chainhook not found - may have been deleted');
-}
-```
-
-### Migration Fails
-
-If migration fails, check:
-1. API key is valid for both Platform and Chainhook APIs
-2. Webhook URL is accessible
-3. Filter syntax is correct for v2
-
-### v2 Chainhook Not Triggering
-
-After migration, if events aren't delivered:
-1. Verify chainhook is enabled: `chainhook.status.enabled === true`
-2. Check webhook secret validation in your endpoint
-3. Use `evaluateChainhook()` to test against a known block
-
----
-
-## Best Practices
-
-### 1. Test Migration on Testnet First
-
-Migrate testnet chainhooks first to validate your process:
-
-```typescript
-// Migrate testnet chainhooks first
-const v2Client = new ChainhooksClient({
-  baseUrl: CHAINHOOKS_BASE_URL.testnet,
-  apiKey: API_KEY,
-});
-```
-
-### 2. Keep v1 Running During Testing
-
-Don't delete v1 chainhooks until you've confirmed v2 works:
-- Let both run for 24-48 hours
-- Compare webhook deliveries
-- Verify no data loss
-
-### 3. Document Your Mappings
-
-Keep a record of v1 to v2 UUID mappings:
-
-```typescript
-await db.migrations.create({
-  v1Uuid: v1Chainhook.uuid,
-  v2Uuid: v2Chainhook.uuid,
-  migratedAt: new Date(),
-  name: v1Chainhook.name,
-});
-```
-
-### 4. Monitor Both Systems
-
-Monitor webhook deliveries during transition:
-
-```typescript
-app.post('/webhooks', (req, res) => {
-  const { chainhook } = req.body;
-
-  console.log(`Webhook from: ${chainhook.uuid}`);
-  console.log(`Name: ${chainhook.name}`);
-
-  // Process event...
-  res.sendStatus(200);
-});
-```
-
----
-
-## Next Steps
 
 :::next-steps
-* [SDK Documentation](/tools/chainhook/chainhook-sdk): Learn the v2 SDK
-* [Filter Reference](/tools/chainhook/reference/filters): Explore v2 filters
-:::
-
-:::callout{type="help"}
-### Need Migration Help?
-
-If you need assistance migrating your chainhooks:
-- **Discord**: #chainhook channel on [Discord](https://stacks.chat/)
-- **Email**: [support@hiro.so](mailto:support@hiro.so)
-- **Office Hours**: Every Thursday at 11am ET
+- [SDK Documentation](/tools/chainhook/chainhook-sdk): SDK Documentation
+- [Filter Reference](/tools/chainhook/reference/filters): Filter Reference
 :::
