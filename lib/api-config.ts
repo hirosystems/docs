@@ -10,6 +10,19 @@ export const apiConfig = {
     },
   },
 
+  // Chainhook API endpoints (use spec-provided servers)
+  chainhook: {
+    clarityConversion: false,
+    enablePlayground: true,
+    credentialId: 'chainhook',
+    credentialPublicOperations: [
+      { method: 'GET', path: '/' },
+    ],
+    playgroundOptions: {
+      proxyUrl: '/api/proxy',
+    },
+  },
+
   // Platform API endpoints
   platform: {
     baseUrl: 'https://platform.hiro.so',
@@ -43,21 +56,37 @@ export const apiConfig = {
 
 // Helper to get config based on document path
 export function getAPIConfig(documentPath: string) {
-  // RPC node endpoints
-  if (documentPath.includes('stacks-node-rpc-api.json')) {
-    return apiConfig.rpcNode;
+  const normalizedPath = documentPath.toLowerCase();
+
+  const cloneConfig = <T extends keyof typeof apiConfig>(key: T) => {
+    const config = apiConfig[key];
+    return {
+      ...config,
+      playgroundOptions: config.playgroundOptions
+        ? { ...config.playgroundOptions }
+        : undefined,
+    };
+  };
+
+  if (normalizedPath.includes('stacks-node-rpc-api.json')) {
+    return cloneConfig('rpcNode');
   }
 
-  // Platform APIs
-  if (documentPath.includes('/apis/platform/')) {
-    return apiConfig.platform;
+  if (normalizedPath.includes('platform-api.json') || normalizedPath.includes('/apis/platform/')) {
+    return cloneConfig('platform');
   }
 
-  // Token metadata
-  if (documentPath.includes('token-metadata')) {
-    return apiConfig.tokenMetadata;
+  if (normalizedPath.includes('token-metadata')) {
+    return cloneConfig('tokenMetadata');
   }
 
-  // Default to Stacks Blockchain API
-  return apiConfig.stacksBlockchain;
+  if (normalizedPath.includes('stacks-blockchain-api.json')) {
+    return cloneConfig('stacksBlockchain');
+  }
+
+  if (normalizedPath.includes('chainhook-api.json')) {
+    return cloneConfig('chainhook');
+  }
+
+  return undefined;
 }
