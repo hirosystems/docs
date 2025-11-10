@@ -395,7 +395,7 @@ export function PageBadges({ item }: { item: PageTree.Node }) {
     badges.push(
       <span
         key="new"
-        className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none"
+        className="font-regular text-[10px] px-1 py-0.5 rounded uppercase text-neutral-950 border-none bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)]"
       >
         New
       </span>,

@@ -243,14 +243,23 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
                     onClick={handleClose}
                     className={cn(
                       'flex items-center justify-between px-2 py-3 text-lg hover:bg-accent transition-colors',
-                      subItem.isNew && 'gap-3 justify-start',
+                      (subItem.isNew || subItem.isBeta) && 'gap-3 justify-start',
                     )}
                   >
                     <span className="font-fono text-muted-foreground">{subItem.text}</span>
-                    {subItem.isNew && (
-                      <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none">
-                        New
-                      </span>
+                    {(subItem.isNew || subItem.isBeta) && (
+                      <div className="flex items-center gap-1">
+                        {subItem.isNew && (
+                          <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)] text-neutral-950 border-none">
+                            New
+                          </span>
+                        )}
+                        {subItem.isBeta && (
+                          <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none">
+                            Beta
+                          </span>
+                        )}
+                      </div>
                     )}
                   </Link>
                 );
