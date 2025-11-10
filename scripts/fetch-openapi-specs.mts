@@ -44,7 +44,7 @@ const API_SPECS: ApiSpec[] = [
     url: 'https://runes-api.vercel.app/openapi.json',
   },
   {
-    name: 'chainhooks',
+    name: 'chainhook',
     url: 'https://chainhooks-api.vercel.app/openapi.json',
   },
 ];
