@@ -1,220 +1,76 @@
 ---
 title: Sincronización completa
 sidebarTitle: Sincronización completa
-description: Ejecuta el Bitcoin Indexer desde cero y monitorea su progreso.
+description: Ejecute el Indexador de Bitcoin desde cero.
 isNew: true
 ---
-
 import { ArrowRight, Check } from 'lucide-react';
 
-## Qué aprenderás
+## Lo que aprenderás
 
 :::objectives
-- Configurar el Bitcoin Indexer antes de sincronizar.
-- Ejecutar los servicios desde cero.
-- Vigilar el avance de indexación y reaccionar a tiempo.
+* Configurar y configurar el Indexador de Bitcoin
+* Ejecutar el indexador desde cero
+* Monitorear el progreso de indexación de manera efectiva
 :::
 
-```ts
-// Herramientas mínimas
-const requirements = ['bitcoind con txindex=1', 'PostgreSQL', '12+ núcleos recomendados'];
-console.table(requirements);
-```
-
-## Prerrequisitos
+## Requisitos previos
 
 :::prerequisites
-- Nodo de Bitcoin Core corriendo con `txindex=1`.
-- PostgreSQL con las bases de datos creadas.
-- Espacio de almacenamiento suficiente para datos y logs.
+* nodo de Bitcoin Core ejecutándose con `txindex=1`
+* PostgreSQL ejecutándose con bases de datos creadas
+* Espacio de almacenamiento suficiente
 :::
 
 :::callout
-### Usa archivos bootstrap cuando sea posible
-Si aún no lo haces, considera [inicializar desde archivos](/tools/bitcoin-indexer/archive-bootstrap) para ahorrarte días de sincronización.
+### Arranque de archivo recomendado
+
+Si aún no lo has hecho, considera [inicializando desde archivos](/tools/bitcoin-indexer/archive-bootstrap) para ahorrar días de tiempo de indexación.
 :::
 
-## Inicia los servicios de indexación
+## Iniciar servicios de indexación
 
-El Bitcoin Indexer ejecuta un servicio por metaprotocolo. Muévete al directorio del proyecto:
+El Indexador de Bitcoin ejecuta servicios separados para cada metaprotocolo. Navega a tu directorio del indexador:
 
 ```terminal
 $ cd ~/bitcoin-indexer/bitcoin-indexer
-# Todos los comandos siguientes asumen esta ruta base
 ```
 
-### Indexar Ordinals (incluye BRC-20)
+### Índice de Ordinales (incluye BRC-20)
 
 ```terminal
 $ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
-# Crea las tablas necesarias y empieza a consumir tu nodo de Bitcoin
 ```
 
-### Indexar Runes
+### Runas Índice
 
-Abre otro terminal para mantener procesos separados:
+En una terminal separada:
 
 ```terminal
 $ ./target/release/bitcoin-indexer runes service start --config-path=bitcoin-indexer-config.toml
-# Los dos servicios comparten configuración pero manejan colas independientes
 ```
 
 :::callout
 type: info
-### Compilar desde código fuente
-Si descargaste el código desde GitHub, ejecuta `cargo build --release` antes de iniciar servicios para generar `target/release/bitcoin-indexer`.
+
+### Construyendo desde el código fuente
+
+Si estás descargando una versión desde nuestro extremo, ejecuta `cargo build --release` después de navegar a la carpeta para compilar el proyecto. Este paso es necesario para usar `/target/release/bitcoin-indexer` para iniciar servicios.
 :::
 
-## Monitorea el progreso
+## Monitorear el progreso de indexación
 
-### Revisa los logs
+### Verificar registros del servicio
 
-El indexador imprime estadísticas continuas:
-
-```terminal
-$ tail -f ~/bitcoin-indexer/bitcoin-indexer/ordinals.log
-# Busca líneas con "blocks_behind" para confirmar que la brecha disminuye
-```
-
-### Consulta el estado vía API
-
-Cuando el servidor HTTP arranca (después de unos bloques):
-
-```terminal
-$ curl http://localhost:3000/ordinals/v1/status
-{
-  "block_height": 819600,
-  "inscriptions_indexed": 52342567,
-  "latest_inscription_number": 52342567,
-  "sync_percentage": 99.93,
-  "blocks_behind": 523
-}
-```
-
-## Administración de servicios
-
-### Detener procesos con seguridad
-
-```terminal
-$ ps aux | grep bitcoin-indexer
-# Usa kill solo para los PIDs mostrados; evita SIGKILL para no corromper colas
-```
-
-### Reiniciar tras una interrupción
-
-El indexador retoma desde el último bloque procesado:
-
-```terminal
-$ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
-# No necesitas limpiar PostgreSQL ni volver a descargar datos
-```
-
-## Configura systemd (opcional)
-
-Para entornos de producción conviene delegar el manejo a systemd.
-
-### Servicio de Ordinals
-
-```bash title="/etc/systemd/system/bitcoin-indexer-ordinals.service"
-[Unit]
-Description=Bitcoin Indexer - Ordinals Service
-After=network.target postgresql.service bitcoind.service
-
-[Service]
-Type=simple
-User=bitcoin-indexer
-WorkingDirectory=/home/bitcoin-indexer/bitcoin-indexer
-ExecStart=/home/bitcoin-indexer/bitcoin-indexer/target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
-Restart=on-failure
-RestartSec=30
-
-[Install]
-WantedBy=multi-user.target
-```
-
-### Servicio de Runes
-
-```bash title="/etc/systemd/system/bitcoin-indexer-runes.service"
-[Unit]
-Description=Bitcoin Indexer - Runes Service
-After=network.target postgresql.service bitcoind.service
-
-[Service]
-Type=simple
-User=bitcoin-indexer
-WorkingDirectory=/home/bitcoin-indexer/bitcoin-indexer
-ExecStart=/home/bitcoin-indexer/bitcoin-indexer/target/release/bitcoin-indexer runes service start --config-path=bitcoin-indexer-config.toml
-Restart=on-failure
-RestartSec=30
-
-[Install]
-WantedBy=multi-user.target
-```
-
-### Habilita y arranca
-
-```terminal
-$ sudo systemctl daemon-reload
-$ sudo systemctl enable bitcoin-indexer-ordinals bitcoin-indexer-runes
-$ sudo systemctl start bitcoin-indexer-ordinals bitcoin-indexer-runes
-$ sudo systemctl status bitcoin-indexer-ordinals
-```
-
-## Optimiza el rendimiento
-
-### Durante la sincronización inicial
-
-Asigna más recursos mientras alcanzas la punta de la cadena:
-
-```toml title="bitcoin-indexer-config.toml"
-[resources]
-cpu_core_available = 12
-bitcoind_rpc_threads = 10
-# Incrementa también la RAM disponible para PostgreSQL si es posible
-```
-
-### Después de alcanzar la punta
-
-Reduce el consumo para operación continua:
-
-```toml
-[resources]
-cpu_core_available = 4
-bitcoind_rpc_threads = 4
-# Mantén hilos mínimos mientras solo procesas nuevos bloques
-```
-
-## Verifica la indexación
-
-### Consulta endpoints clave
-
-```terminal
-$ curl http://localhost:3000/ordinals/v1/inscriptions/0
-# Recibir un payload válido confirma que la API está lista
-```
-
-:::next-steps
-- [Archivos de Hiro](/tools/bitcoin-indexer/archive-bootstrap): evita semanas de sincronización descargando datos preindexados.
-- [Configuración avanzada](/tools/bitcoin-indexer/configuration): ajusta recursos y metaprotocolos para workloads específicos.
-:::
-\- Error indexing app XYZ: success
-
-Missing dependencies:
-\- dependency B
-\- dependency C
-
-Failed jobs: 1
-\- app ABC
-
-Completed jobs: 22
+El indexador produce información detallada del progreso:
 
 ```terminal
 $ tail -f ~/bitcoin-indexer/bitcoin-indexer/ordinals.log
 ```
 
-### Consultar el estado del indexador a través de la API
+### Consultar estado del indexador mediante API
 
-Una vez que el servidor API se inicie (generalmente después de algunos bloques):
+Una vez que el servidor API se inicia (generalmente después de unos pocos bloques):
 
 ```terminal
 $ curl http://localhost:3000/ordinals/v1/status
@@ -229,7 +85,7 @@ $ curl http://localhost:3000/ordinals/v1/status
 
 ## Gestión de servicios
 
-### Detener los servicios de forma gradual
+### Detener servicios de manera elegante
 
 ```terminal
 $ ps aux | grep bitcoin-indexer
@@ -237,27 +93,15 @@ $ ps aux | grep bitcoin-indexer
 
 ### Reiniciar después de interrupción
 
-La indexadora se reanuda automáticamente desde el último bloque procesado:
+El indexador reanuda automáticamente desde el último bloque procesado:
 
 ```terminal
 $ ./target/release/bitcoin-indexer ordinals service start --config-path=bitcoin-indexer-config.toml
 ```
 
-Configuración del servicio Systemd
+## Configuración del servicio Systemd
 
-title: Systemd service setup
-description: Cómo configurar un servicio Systemd
-sidebarTitle: Systemd service
-
-\---
-\# Systemd service setup
-
-Cómo configurar un servicio Systemd.
-
-Clarinet, Stacks y Clarity son términos que se deben mantener sin traducir.
----------------------------------------------------------------------------
-
-Para despliegues de producción, utilice systemd para administrar servicios:
+Para despliegues en producción, usa systemd para gestionar servicios:
 
 ### Crear servicio de Ordinals
 
@@ -278,7 +122,7 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-### Crear servicio Runes
+### Crear servicio de Runes
 
 ```bash title="/etc/systemd/system/bitcoin-indexer-runes.service"
 [Unit]
@@ -297,7 +141,7 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-### Habilitar y comenzar servicios
+### Habilitar e iniciar servicios
 
 ```terminal
 $ sudo systemctl daemon-reload
@@ -306,11 +150,11 @@ $ sudo systemctl start bitcoin-indexer-ordinals bitcoin-indexer-runes
 $ sudo systemctl status bitcoin-indexer-ordinals
 ```
 
-## Optimización de rendimiento
+## Optimización del rendimiento
 
 ### Durante la sincronización inicial
 
-Optimizar para el rendimiento durante la recuperación:
+Optimizar para el rendimiento durante la actualización:
 
 ```toml title="bitcoin-indexer-config.toml"
 [resources]
@@ -319,9 +163,9 @@ cpu_core_available = 12
 bitcoind_rpc_threads = 10
 ```
 
-### Después de alcanzar el extremo de la cadena
+### Después de alcanzar la punta de la cadena
 
-Reducir el uso de recursos para la operación en estado estable:
+Reduce el uso de recursos para la operación en estado estable:
 
 ```toml
 [resources]
@@ -332,17 +176,15 @@ bitcoind_rpc_threads = 4
 
 ## Verificar indexación exitosa
 
-### Revisar puntos finales de API
+### Verificar endpoints de API
 
-Comprobar que las APIs devuelven datos:
+Prueba que las APIs estén devolviendo datos:
 
 ```terminal -o
 $ curl http://localhost:3000/ordinals/v1/inscriptions/0
 ```
 
-## Siguientes pasos
-
 :::next-steps
-- [Archivos de Hiro](/tools/bitcoin-indexer/archive-bootstrap): Salta semanas de indexación al arrancar desde los archivos previamente indexados de Hiro.
-- [Configuración avanzada](/tools/bitcoin-indexer/configuration): Configura el Bitcoin Indexer para un rendimiento óptimo y personaliza la configuración de cada metaprotocolo.
+* [Archivos Hiro](/tools/bitcoin-indexer/archive-bootstrap): Omite semanas de indexación iniciando desde los archivos pre-indexados de Hiro.
+* [Configuración avanzada](/tools/bitcoin-indexer/configuration): Configure el indexador de Bitcoin para un rendimiento óptimo y personaliza la configuración de metaprotocolo.
 :::

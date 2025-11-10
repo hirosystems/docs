@@ -194,81 +194,10 @@ export async function deleteV1Chainhook(uuid: string) {
 
 </Steps>
 
-## Automation Template
-Use this script as a starting point when you have many similar chainhooks to move.
-
-<Accordion>
-  <AccordionItem value="bulk-script">
-    <AccordionTrigger>Bulk migration script</AccordionTrigger>
-    <AccordionContent>
-
-```typescript
-import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
-
-const PLATFORM_API = 'https://api.platform.hiro.so';
-const API_KEY = process.env.HIRO_API_KEY!;
-const scopeMap: Record<string, Record<string, string>> = {
-  stx_event: { transfer: 'stx_transfer' },
-  ft_event: { transfer: 'ft_transfer' },
-  nft_event: { transfer: 'nft_transfer' },
-};
-
-const v2Client = new ChainhooksClient({
-  baseUrl: CHAINHOOKS_BASE_URL.mainnet,
-  apiKey: API_KEY,
-});
-
-const pickNetwork = (networks: any) =>
-  networks.mainnet ? ['mainnet', networks.mainnet] : ['testnet', networks.testnet];
-
-async function migrate() {
-  const res = await fetch(`${PLATFORM_API}/v1/ext/${API_KEY}/chainhooks`);
-  if (!res.ok) throw new Error(res.statusText);
-  const hooks = (await res.json()) as any[];
-
-  for (const hook of hooks) {
-    const [network, details] = pickNetwork(hook.networks);
-    const action = details.if_this.actions?.[0] ?? '';
-    const eventType = scopeMap[details.if_this.scope]?.[action] ?? details.if_this.scope;
-
-    const payload = {
-      version: '1',
-      name: hook.name,
-      chain: hook.chain,
-      network,
-      filters: {
-        events: [
-          {
-            type: eventType,
-            ...(details.if_this.contract_identifier && {
-              contract_identifier: details.if_this.contract_identifier,
-            }),
-          },
-        ],
-      },
-      action: { type: 'http_post', url: details.then_that.http_post.url },
-      options: { decode_clarity_values: true, enable_on_registration: true },
-    };
-
-    try {
-      const created = await v2Client.registerChainhook(payload);
-      console.log(`Migrated ${hook.uuid} → ${created.uuid}`);
-    } catch (error) {
-      console.error(`Failed for ${hook.uuid}`, error);
-    }
-  }
-}
-
-migrate();
-```
-
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
-
 ## Filter Translation Reference
+
 ### Common scopes
-| v1 Scope | Typical Actions | v2 `type` | Extras |
+| v1 | Typical Actions | v2 | Extras |
 |----------|-----------------|-----------|--------|
 | `stx_event` | `transfer` | `stx_transfer` | Include `sender` or `recipient` filters as needed. |
 | `contract_call` | n/a | `contract_call` | Add `contract_identifier` and `function_name`. |

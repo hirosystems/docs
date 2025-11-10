@@ -1,34 +1,34 @@
 ---
-title: Migrando de v1 a v2
+title: Migración de v1 a v2
 description: Guía para migrar chainhooks v1 heredados a Chainhook 2.0 Beta
 ---
 :::callout
 ### Gestión de chainhooks v1
 
-Los chainhooks heredados v1 permanecen de solo lectura en la interfaz de usuario de la plataforma; los gestionas a través del [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
+Los chainhooks v1 heredados permanecen de solo lectura en la interfaz de usuario de la plataforma; los gestionas a través del [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
 :::
 
 ## Lo que aprenderás
 
 :::objectives
-* Capturar y analizar todos los chainhooks v1 existentes.
-* Convertir filtros basados en predicados en definiciones explícitas de eventos v2.
-* Registra v2 chainhooks, prueba la entrega y retira los originales de forma segura.
+* Captura y analiza todos los chainhooks v1 existentes.
+* Convierte filtros basados en predicados en definiciones explícitas de eventos v2.
+* Registra chainhooks v2, prueba la entrega y retira los originales de forma segura.
 :::
 
-## Prerrequisitos
+## Requisitos previos
 
 :::prerequisites
 * API access to both the Platform API and Chainhook REST API (same `HIRO_API_KEY`).
 * SDK Local (`@hirosystems/chainhooks-client`) o `curl` for REST calls.
-* Variable de entorno `HIRO_API_KEY` configurado para la CLI y ejemplos de código.
+* Variable de entorno `HIRO_API_KEY` establecido para la CLI y ejemplos de código.
 :::
 
 <Steps>
   <Step>
-    ### Chainhooks de inventario v1
+    ### Inventario v1 chainhooks
 
-    Utiliza la API de la Plataforma para obtener todos los chainhooks que aún se activan en producción.
+    Utiliza la API de la Plataforma para obtener cada chainhook que aún se ejecuta en producción.
 
     #### CLI
 
@@ -84,27 +84,19 @@ Los chainhooks heredados v1 permanecen de solo lectura en la interfaz de usuario
   </Step>
 
   <Step>
-    ### Configuración de mapa a v2
+    ### Configuración de mapeo a v2
 
-    Traduce las estructuras v1 a campos v2 antes de aprovisionar nuevos hooks.
+    Traduce estructuras v1 a campos v2 antes de aprovisionar nuevos hooks.
 
-    | v1 Concepto | v2 Objetivo | Notas |
-    |-------------|-------------|-------|
-    | `if_this.scope` I notice that you've provided the translation rules and setup, but the actual text to translate appears to be just a single vertical bar "|" character.&#x20;
-
-    Since this is just a formatting character and not text content, the translation would be:
-
-    | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
-    | `if_this.actions` | `type` | `transfer` mapea a `*_transfer`. |
-    | `then_that.http_post.url` I notice that you've provided the rules and instructions for translation, but the actual text to translate appears to be just a single vertical bar "|".&#x20;
-
-    Since there's no meaningful text content to translate from English to Spanish, I'll return the same character:
-
-    | `action.url` | v2 maneja los secretos automáticamente. |
-    | `networks.mainnet` I don't see any text provided after "Text to translate:" in your message. Could you please provide the text you'd like me to translate from English to Spanish? `network: "mainnet"` | Crea un hook v2 por red. |
+    | v1 Concept | v2 Target | Notes |
+    |------------|-----------|-------|
+    | `if_this.scope` | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
+    | `if_this.actions` | `type` | `transfer` se mapea a `*_transfer`. |
+    | `then_that.http_post.url` | `action.url` | v2 maneja los secretos automáticamente. |
+    | `networks.mainnet` | `network: "mainnet"` | Crea un hook v2 por red. |
     | `authorization_header` | Gestión de secretos de webhook | Usar `rotateConsumerSecret()` después del registro. |
 
-    #### Ejemplo de Conversión
+    #### Conversión de Ejemplo
 
     ```jsonc
     // v1 (Platform API)
@@ -149,7 +141,7 @@ Los chainhooks heredados v1 permanecen de solo lectura en la interfaz de usuario
   </Step>
 
   <Step>
-    ### Crear v2 chainhooks
+    ### Crear chainhooks v2
 
     Provision each chainhook with the SDK or REST API, mirroring the mapped filters.
 
@@ -217,94 +209,20 @@ Los chainhooks heredados v1 permanecen de solo lectura en la interfaz de usuario
   </Step>
 </Steps>
 
-## Plantilla de Automatización
-
-Usa este script como punto de partida cuando tengas muchos chainhooks similares que mover.
-
-<Accordion>
-  <AccordionItem value="bulk-script">
-    <AccordionTrigger>Script de migración masiva</AccordionTrigger>
-
-    <AccordionContent>
-      ```typescript
-      import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
-
-      const PLATFORM_API = 'https://api.platform.hiro.so';
-      const API_KEY = process.env.HIRO_API_KEY!;
-      const scopeMap: Record<string, Record<string, string>> = {
-        stx_event: { transfer: 'stx_transfer' },
-        ft_event: { transfer: 'ft_transfer' },
-        nft_event: { transfer: 'nft_transfer' },
-      };
-
-      const v2Client = new ChainhooksClient({
-        baseUrl: CHAINHOOKS_BASE_URL.mainnet,
-        apiKey: API_KEY,
-      });
-
-      const pickNetwork = (networks: any) =>
-        networks.mainnet ? ['mainnet', networks.mainnet] : ['testnet', networks.testnet];
-
-      async function migrate() {
-        const res = await fetch(`${PLATFORM_API}/v1/ext/${API_KEY}/chainhooks`);
-        if (!res.ok) throw new Error(res.statusText);
-        const hooks = (await res.json()) as any[];
-
-        for (const hook of hooks) {
-          const [network, details] = pickNetwork(hook.networks);
-          const action = details.if_this.actions?.[0] ?? '';
-          const eventType = scopeMap[details.if_this.scope]?.[action] ?? details.if_this.scope;
-
-          const payload = {
-            version: '1',
-            name: hook.name,
-            chain: hook.chain,
-            network,
-            filters: {
-              events: [
-                {
-                  type: eventType,
-                  ...(details.if_this.contract_identifier && {
-                    contract_identifier: details.if_this.contract_identifier,
-                  }),
-                },
-              ],
-            },
-            action: { type: 'http_post', url: details.then_that.http_post.url },
-            options: { decode_clarity_values: true, enable_on_registration: true },
-          };
-
-          try {
-            const created = await v2Client.registerChainhook(payload);
-            console.log(`Migrated ${hook.uuid} → ${created.uuid}`);
-          } catch (error) {
-            console.error(`Failed for ${hook.uuid}`, error);
-          }
-        }
-      }
-
-      migrate();
-      ```
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
-
 ## Referencia de Traducción de Filtros
 
 ### Ámbitos comunes
 
-| Alcance v1 | Acciones Típicas | v2 `type` | Extras |
+| v1 | Acciones Típicas | v2 | Extras |
 |----------|-----------------|-----------|--------|
-| `stx_event` I notice that you've provided the translation rules but the actual text to translate appears to be just a single vertical bar "|".&#x20;
+| `stx_event` I notice that you've provided the translation rules and instructions, but the actual text to translate appears to be just a single vertical bar "|".&#x20;
 
-| `transfer` I notice that you've provided the translation rules and instructions, but the actual text to translate appears to be just a single vertical bar "|" character.&#x20;
-
-Since this is just a formatting character and not actual text content, the translation would be:
-
-| `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
+| `transfer` | `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
 | `contract_call` | n/a | `contract_call` | Agregar `contract_identifier` y `function_name`. |
 | `ft_event` | `transfer` | `ft_transfer` | Especificar `asset_identifier`. |
-| `nft_event` | `transfer`, `mint` I don't see any text provided to translate. Could you please share the text you'd like me to translate from English to Spanish? `nft_transfer` · `nft_mint` | Proporcionar `asset_identifier`. |
+| `nft_event` | `transfer`, `mint` I don't see any text to translate in your message. You've provided the rules and formatting instructions, but the actual text content appears to be missing after "Text to translate:" - there's only a vertical bar "|" shown.
+
+Could you please provide the actual text you'd like me to translate from English to Spanish? `nft_transfer` · `nft_mint` | Proporcionar `asset_identifier`. |
 
 ### Ejemplo
 
@@ -330,5 +248,5 @@ Since this is just a formatting character and not actual text content, the trans
 
 :::next-steps
 * [Documentación del SDK](/tools/chainhook/chainhook-sdk): Documentación del SDK
-* [Referencia de Filtros](/tools/chainhook/reference/filters): Referencia de filtros
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Referencia de Filtros
 :::
