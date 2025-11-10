@@ -24,6 +24,27 @@ import { DocsLogo } from '../ui/icon';
 import { NavigationMenu, NavigationMenuList } from '../ui/navigation-menu';
 import { renderNavItem } from './links';
 
+type SeparatorBadge = 'new' | 'beta';
+
+const separatorBadgeStyles: Record<SeparatorBadge, string> = {
+  new: 'font-regular text-[10px] px-1 py-0.5 rounded uppercase text-neutral-950 border-none bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)]',
+  beta: 'font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none',
+};
+
+function parseSeparatorMeta(name?: string): { label: string; badge?: SeparatorBadge } {
+  if (!name) {
+    return { label: '' };
+  }
+  const [rawLabel, rawBadge] = name.split('|');
+  const label = rawLabel?.trim() || name;
+  const normalizedBadge = rawBadge?.trim().toLowerCase();
+  const badge =
+    normalizedBadge === 'new' || normalizedBadge === 'beta'
+      ? (normalizedBadge as SeparatorBadge)
+      : undefined;
+  return { label, badge };
+}
+
 export interface DocsLayoutProps {
   tree: PageTree.Root;
   children: ReactNode;
@@ -310,8 +331,14 @@ export function SidebarItem({ item, children }: { item: PageTree.Node; children:
   }
 
   if (item.type === 'separator') {
+    const { label, badge } = parseSeparatorMeta(item.name);
     return (
-      <p className="text-primary font-fono font-semibold mt-6 mb-2 first:mt-0 px-2">{item.name}</p>
+      <div className="flex items-center gap-2 mt-6 mb-2 first:mt-0 px-2">
+        <p className="text-primary font-fono font-semibold mb-0">{label || item.name}</p>
+        {badge ? (
+          <span className={separatorBadgeStyles[badge]}>{badge.toUpperCase()}</span>
+        ) : null}
+      </div>
     );
   }
 
