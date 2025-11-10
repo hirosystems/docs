@@ -1,56 +1,44 @@
 ---
 title: Chainhook
 sidebarTitle: Visión general
-description: Chainhook es un indexador consciente de las reorganizaciones que proporciona datos confiables de blockchain para Bitcoin y Stacks.
+description: Chainhook es un indexador consciente de reorganización que proporciona datos confiables de blockchain para Bitcoin y Stacks.
 llm: false
 ---
-## Visión general
+:::callout
+type: warn
 
-Chainhook es un indexador consciente de las reorganizaciones que te permite construir flujos de eventos personalizados de las cadenas de bloques de Bitcoin y Stacks. A diferencia de los indexadores tradicionales, Chainhook maneja automáticamente las reorganizaciones de la cadena de bloques, asegurando que tus datos se mantengan precisos sin necesidad de reindexación manual.
+### Chainhook 2.0 Beta
 
-Para explorar las características de Chainhook con IA, copie y pegue [llms.txt](/tools/chainhook/llms.txt) en tu LLM de elección.
+Chainhook 2.0 se encuentra actualmente en versión beta. Durante este período, nos enfocamos en aprender sobre confiabilidad, rendimiento y experiencia del desarrollador. Si encuentras problemas o tienes comentarios, por favor comunícate con [support@hiro.so](mailto\:support@hiro.so).
+:::
 
-![Descripción general de Chainhook](/images/tools/chainhook/overview.svg)
+## Descripción general
+
+Chainhook es un indexador consciente de reorganizaciones que te permite construir flujos de eventos personalizados desde las blockchains de Bitcoin y Stacks. A diferencia de los indexadores tradicionales, Chainhook maneja automáticamente las reorganizaciones de blockchain, asegurando que tus datos se mantengan precisos sin reindexación manual.
+
+Con Chainhook 2.0, puedes gestionar chainhooks a través de:
+
+* **[Chainhook SDK](/tools/chainhook/chainhook-sdk)** - Cliente TypeScript/JavaScript para gestión programática
+* **[Plataforma Hiro](/tools/chainhook/platform-usage)** - UI basada en web para la creación visual de chainhooks
+* **[API de Chainhook](/apis/chainhook-api)** - Direct REST API access
+
+Para explorar las funciones de Chainhook con IA, copia y pega [llms.txt](/tools/chainhook/llms.txt) en tu LLM de elección.
 
 ## Características principales
 
-* **Indexación consciente de la reorganización** - Maneja automáticamente las bifurcaciones y reorganizaciones de la cadena de bloques
-* **Predicados si-esto-entonces-aquello** - Definir lógica personalizada para activar acciones en eventos específicos de la blockchain
-* **Soporte para múltiples cadenas** - Funciona con las cadenas de bloques de Bitcoin y Stacks
-* **Desarrollo local** - Probar predicados contra datos históricos de la cadena de bloques
-
-## Instalación
-
-<TerminalPicker storage="macOs">
-  ```terminal !! macOS
-  $ brew install chainhook
-  ```
-
-  ```terminal !! Linux
-  $ sudo snap install chainhook
-  ```
-
-  ```terminal !! Windows
-  $ winget install HiroSystems.Chainhook
-  ```
-
-  ```terminal !! Cargo
-  $ git clone https://github.com/hirosystems/chainhook.git
-  $ cd chainhook && cargo chainhook-install
-  ```
-</TerminalPicker>
-
-## Próximos pasos
+* **Indexación consciente de reorganización** - Maneja automáticamente las bifurcaciones y reorganizaciones de blockchain
+* **Filtrado de eventos** - Define lógica personalizada para activar acciones en eventos específicos de blockchain
+* **Evaluación histórica** - Prueba chainhooks contra bloques pasados para indexación o depuración
 
 :::next-steps
-* [Inicio rápido](/tools/chainhook/quickstart): Comienza con Chainhook.
-* [Registrar chainhooks localmente](/tools/chainhook/register-chainhooks-on-devnet): Registrar chainhooks en tu blockchain local.
+- [Inicio Rápido del SDK](/tools/chainhook/quickstart): Comienza con el SDK de Chainhook en 5 minutos
+- [Inicio Rápido de la Plataforma](/tools/chainhook/platform-quickstart): Crea tu primer chainhook en la interfaz de usuario de la plataforma
 :::
 
 :::callout
 type: help
 
-### ¿Necesitas ayuda para construir con Chainhook?
+### ¿Necesitas ayuda con Chainhook?
 
-Contáctenos en el **#chainhook** canal encendido [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro. También hay una [horario de oficina semanal](https://www.addevent.com/event/oL21905919) llamada todos los jueves a las 11 am ET.
+Contáctanos en el <span className="font-bold">#chainhook</span> canal encendido [Discord](https://stacks.chat/) bajo la sección Herramientas de Desarrollador de Hiro.
 :::

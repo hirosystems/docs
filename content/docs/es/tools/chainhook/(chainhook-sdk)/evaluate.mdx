@@ -1,0 +1,62 @@
+---
+title: Evaluar Chainhook
+description: Probar chainhooks contra bloques pasados específicos
+---
+Prueba tu configuración de chainhook contra bloques pasados específicos para pruebas, depuración e indexación histórica.
+
+## evaluateChainhook
+
+### Métodos de Evaluación
+
+| Method | Parameter | Example |
+|--------|-----------|---------|
+| **Por altura** | `block_height` I don't see any text provided to translate. Please provide the text you'd like me to translate from English to Spanish, and I'll follow all the critical rules you've specified. `{ block_height: 100000 }` |
+| **Por hash** | `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
+
+### Ejemplo
+
+```typescript
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.evaluateChainhook('chainhook-uuid', {
+  block_height: 100000,
+});
+```
+
+Returns HTTP `204 No Content`. Si los filtros coinciden, la carga útil del webhook se envía a tu `action.url`.
+
+### cURL
+
+```bash
+curl -X POST \
+  "https://api.testnet.hiro.so/chainhooks/me/chainhook-uuid/evaluate" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -H "content-type: application/json" \
+  -d '{ "block_height": 100000 }'
+```
+
+## Casos de Uso
+
+| Caso de Uso | Descripción | Ejemplo |
+|----------|-------------|---------|
+| **Depurar** | Investigar eventos perdidos | Evaluar bloque específico que debería haber activado |
+| **Rellenar** | Indexar datos históricos | Procesar bloques pasados después de crear chainhook |
+| **Reprocesar** | Corregir problemas del manejador de webhook | Re-evaluar después de corregir errores |
+
+## Mejores Prácticas
+
+| Práctica | Ejemplo |
+|----------|---------|
+| **Limitación de velocidad** | Agregar retraso de 100ms entre solicitudes |
+| **Prueba primero** | Evaluar 2-3 bloques de muestra antes del procesamiento masivo |
+| **Usar altura** | Más fácil de iterar que los hashes de bloques |
+
+:::next-steps
+* [Registrar & Habilitar](/tools/chainhook/register-enable): Crear chainhooks para evaluar
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Configura qué eventos coincidir
+:::

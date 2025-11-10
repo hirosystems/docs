@@ -5,7 +5,25 @@ description: Complete reference for all Chainhook filter types
 
 # Filter Reference
 
-Filters define which blockchain events will trigger your chainhook. Use any of the following filter types in your `filters.events[]` array.
+Filters define which blockchain events will trigger your chainhook—use the matrix below to pick the right entry for `filters.events[]`.
+
+| Filter | When to use |
+|--------|-------------|
+| `ft_event` | FT: catch *every* SIP-010 transfer, mint, or burn across assets. |
+| `ft_transfer` | FT: follow a single asset such as USDC; optionally add `sender`/`receiver` for wallet-level triggers. |
+| `ft_mint` | FT: track supply expansions or bridge inflows for one asset (set `asset_identifier`). |
+| `ft_burn` | FT: track redemptions or supply contractions (set `asset_identifier`). |
+| `nft_event` | NFT: monitor every transfer, mint, or burn for all collections. |
+| `nft_transfer` | NFT: follow a SIP-009 collection; add `sender`, `receiver`, or `value` for owner/token targeting. |
+| `nft_mint` | NFT: watch every new mint for a collection (set `asset_identifier`). |
+| `nft_burn` | NFT: catch burns or redemptions (set `asset_identifier`). |
+| `stx_event` | STX: capture all native transfers, mints, or burns. |
+| `stx_transfer` | STX: trace every transfer; add `sender` or `receiver` to spotlight specific principals. |
+| `contract_deploy` | Contracts: react to new contracts entering the network. |
+| `contract_call` | Contracts: observe every invocation; narrow with `contract_identifier` and `function_name`. |
+| `contract_log` | Contracts: catch `print`/log output from a contract (set `contract_identifier`). |
+| `coinbase` | System: watch miner rewards hitting the chain. |
+| `tenure_change` | System: track Proof-of-Transfer tenure updates; add `cause` (`"block_found"` or `"extended"`) for specificity. |
 
 ## Fungible Token Events (FT)
 
@@ -343,11 +361,7 @@ You can combine multiple filters in the `filters.events` array. A chainhook will
 
 This chainhook will trigger on either DIKO transfers **or** calls to the `increment` function.
 
----
-
-## Next Steps
-
 :::next-steps
-* [Options Reference](/tools/chainhook/reference/options): Configure payload enrichment and evaluation windows
-* [Register & Enable](/tools/chainhook/register-enable): Create your first chainhook
+- [Options Reference](/tools/chainhook/reference/options): Configure payload enrichment and evaluation windows
+- [Register & Enable](/tools/chainhook/register-enable): Create your first chainhook
 :::

@@ -3,8 +3,6 @@ title: Options Reference
 description: Complete reference for all Chainhook configuration options
 ---
 
-# Options Reference
-
 Options control payload enrichment and evaluation windows for your chainhook. The `options` field is optional and can be omitted or set to `null`.
 
 :::callout
@@ -13,7 +11,20 @@ All boolean options default to `false` if omitted. Integer options are optional.
 
 ---
 
-## Payload Enrichment Options
+## Payload options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `decode_clarity_values` | boolean | `false` | Include human-readable Clarity values |
+| `include_contract_abi` | boolean | `false` | Include contract ABI on deployments |
+| `include_contract_source_code` | boolean | `false` | Include source code on deployments |
+| `include_post_conditions` | boolean | `false` | Include post-conditions in metadata |
+| `include_raw_transactions` | boolean | `false` | Include raw transaction hex |
+| `include_block_metadata` | boolean | `false` | Include block metadata (Stacks & Bitcoin) |
+| `include_block_signatures` | boolean | `false` | Include block signatures and signers |
+| `enable_on_registration` | boolean | `false` | Enable chainhook immediately on creation |
+| `expire_after_evaluations` | integer | none | Expire after N blocks evaluated |
+| `expire_after_occurrences` | integer | none | Expire after N matches |
 
 ### decode_clarity_values
 
@@ -204,77 +215,7 @@ This chainhook will expire after triggering 250 times.
 
 ---
 
-## Combined Examples
-
-### Development Setup
-
-For local development with maximum visibility:
-
-```json
-{
-  "options": {
-    "decode_clarity_values": true,
-    "include_contract_abi": true,
-    "include_contract_source_code": true,
-    "include_post_conditions": true,
-    "include_block_metadata": true,
-    "enable_on_registration": true
-  }
-}
-```
-
-### Production Setup
-
-For production with essential data only:
-
-```json
-{
-  "options": {
-    "decode_clarity_values": true,
-    "enable_on_registration": true
-  }
-}
-```
-
-### Time-Limited Chainhook
-
-For a chainhook that auto-expires after 1000 blocks or 100 matches:
-
-```json
-{
-  "options": {
-    "decode_clarity_values": true,
-    "enable_on_registration": true,
-    "expire_after_evaluations": 1000,
-    "expire_after_occurrences": 100
-  }
-}
-```
-
-The chainhook will expire when **either** condition is met.
-
----
-
-## Options Summary Table
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `decode_clarity_values` | boolean | `false` | Include human-readable Clarity values |
-| `include_contract_abi` | boolean | `false` | Include contract ABI on deployments |
-| `include_contract_source_code` | boolean | `false` | Include source code on deployments |
-| `include_post_conditions` | boolean | `false` | Include post-conditions in metadata |
-| `include_raw_transactions` | boolean | `false` | Include raw transaction hex |
-| `include_block_metadata` | boolean | `false` | Include block metadata (Stacks & Bitcoin) |
-| `include_block_signatures` | boolean | `false` | Include block signatures and signers |
-| `enable_on_registration` | boolean | `false` | Enable chainhook immediately on creation |
-| `expire_after_evaluations` | integer | none | Expire after N blocks evaluated |
-| `expire_after_occurrences` | integer | none | Expire after N matches |
-
----
-
-## Next Steps
-
 :::next-steps
-* [Filter Reference](/tools/chainhook/reference/filters): Learn about all available event filters
-* [Payload Anatomy](/tools/chainhook/reference/payload-anatomy): Understand the structure of chainhook payloads
+- [Filter Reference](/tools/chainhook/reference/filters): Learn about all available event filters
+- [Payload Anatomy](/tools/chainhook/reference/payload-anatomy): Understand the structure of chainhook payloads
 :::

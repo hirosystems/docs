@@ -1,0 +1,123 @@
+---
+title: Editar y Actualizar
+description: Modificar chainhooks existentes usando el SDK
+---
+Modifica chainhooks existentes incluyendo filtros, acciones y opciones. La interfaz de usuario de la plataforma no admite edición - usa el SDK en su lugar.
+
+:::callout
+La interfaz de usuario de la plataforma no admite actualmente la edición de chainhooks. Debes usar el SDK o API para realizar actualizaciones.
+:::
+
+## updateChainhook
+
+### Campos Mutables vs Inmutables
+
+| Mutable (Puede Actualizar) | Immutable (No Puede Actualizar) |
+|---------------------|---------------------------|
+| `name` | `chain` |
+| `filters` I notice that you've provided the translation rules and setup, but the actual text to translate appears to be just a single vertical bar "|" character.&#x20;
+
+Since this is just a formatting character and not text content that needs translation, the translation would be:
+
+| `network` |
+| `action` | |
+| `options` | |
+
+### Ejemplo de Actualización Básica
+
+```typescript
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.updateChainhook('chainhook-uuid', {
+  name: 'Updated chainhook name',
+  filters: {
+    events: [{ type: 'ft_transfer', asset_identifier: 'SP...ABC.token::usdc' }],
+  },
+});
+```
+
+## Patrones de Actualización Comunes
+
+| Update Type | Example |
+|-------------|---------|
+| **URL del webhook** | `{ action: { type: 'http_post', url: 'https://new-server.com/webhooks' } }` |
+| **Nombre** | `{ name: 'production-ft-tracker' }` |
+| **Filtros** | `{ filters: { events: [{ type: 'nft_transfer' }] } }` |
+
+### Agregar Filtro de Evento (Conservando el Existente)
+
+```typescript
+const current = await client.getChainhook('chainhook-uuid');
+
+await client.updateChainhook('chainhook-uuid', {
+  filters: {
+    events: [
+      ...(current.definition.filters.events ?? []),
+      { type: 'contract_call', contract_identifier: 'SP...XYZ.counter' },
+    ],
+  },
+});
+```
+
+### Actualizar Múltiples Campos
+
+```typescript
+await client.updateChainhook('chainhook-uuid', {
+  name: 'Updated name',
+  filters: { events: [{ type: 'stx_transfer', sender: 'SP...SENDER' }] },
+  action: { type: 'http_post', url: 'https://new-url.com/webhooks' },
+  options: { decode_clarity_values: true },
+});
+```
+
+## Ejemplo de cURL
+
+### Actualizar Chainhook
+
+```bash
+curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
+  -H "content-type: application/json" \
+  -H "x-api-key: $HIRO_API_KEY" \
+  -d '{
+    "name": "Updated chainhook name",
+    "action": { "type": "http_post", "url": "https://new-server.com/webhooks" }
+  }'
+```
+
+### Respuesta
+
+* **Éxito**: HTTP `204 No Content`
+* **Verificar**: Obtener el chainhook para confirmar cambios
+
+```typescript
+await client.updateChainhook('chainhook-uuid', { name: 'New name' });
+const updated = await client.getChainhook('chainhook-uuid');
+console.log('Updated:', updated.definition.name);
+```
+
+### Ejemplo: Actualización Aditiva Segura
+
+```typescript
+// ✅ Good: Fetch first
+const current = await client.getChainhook(uuid);
+await client.updateChainhook(uuid, {
+  filters: {
+    events: [...current.definition.filters.events, newEvent],
+  },
+});
+
+// ❌ Bad: Might overwrite
+await client.updateChainhook(uuid, {
+  filters: { events: [newEvent] },
+});
+```
+
+:::next-steps
+* [Lista y Obtener](/tools/chainhook/list-fetch): Recuperar información de chainhook antes de actualizar
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
+:::

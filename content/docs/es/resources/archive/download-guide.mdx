@@ -1,52 +1,216 @@
 ---
-title: Cómo descargar los archivos de Hiro
-description: Guía completa para descargar archivos de archivo grandes de manera confiable con consejos para solucionar problemas.
+title: Cómo descargar archivos de Hiro
+description: Guía completa para descargar archivos grandes del archivo de Hiro con consejos prácticos para evitar errores.
 ---
-## Visión general
 
-Los archivos de Hiro Archive son grandes conjuntos de datos (que van desde varios GB hasta varios *cien* ES) alojado en Google Cloud Storage. Debido a su tamaño, las descargas pueden verse interrumpidas por problemas de red, límites de velocidad o tiempos de espera de conexión. Esta guía proporciona múltiples métodos de descarga y soluciones para resolver problemas.
+## Descripción general
+
+Los archivos de Hiro Archive son conjuntos de datos masivos (desde varios GB hasta varios *cientos* de GB) alojados en Google Cloud Storage. Las descargas pueden cortarse por límites de red o tiempos de espera, así que necesitas estrategias fiables y comandos que reanuden el trabajo cuando algo falla.
 
 ## Tamaños y requisitos de archivos
 
-Antes de descargar, asegúrate de tener suficiente:
+Antes de iniciar cualquier descarga, confirma estos puntos básicos:
 
-* **Espacio en disco**: Los archivos van desde 10GB (APIs) hasta varios cientos de GB+ (datos de blockchain)
-* **Ancho de banda**: Las descargas pueden tardar horas o días dependiendo de tu conexión
-* **Almacenamiento para extracción**: Los archivos comprimidos se expanden significativamente cuando se extraen
+- **Espacio en disco**: Desde 10 GB (APIs) hasta cientos de GB para datos de blockchain.
+- **Ancho de banda**: Algunas descargas pueden tardar horas; planifica horarios de baja congestión.
+- **Almacenamiento para extracción**: Al descomprimir, los archivos crecen 2‑3×. Reserva espacio adicional.
+
+```ts
+// Verifica espacio libre en macOS o Linux
+$ df -h | grep archive
+# Muestra el porcentaje de uso y te ayuda a decidir si necesitas otro volumen
+```
 
 ## Métodos de descarga
 
-### Método 1: wget con reanudación (Recomendado para la mayoría de los usuarios)
+### Método 1: wget con reanudación (recomendado)
 
-El `wget` comando con el `-c` la bandera permite reanudar descargas interrumpidas:
+El comando `wget` con la bandera `-c` reanuda cualquier descarga interrumpida y mantiene una barra de progreso legible.
 
 :::callout
 type: info
-
 ### Usuarios de macOS
-
-Es posible que necesite instalar wget primero: `brew install wget`. Alternativamente, utilice el método curl que se muestra a continuación, el cual viene preinstalado en macOS.
+Instala la utilidad con `brew install wget` si tu sistema no la incluye. Como alternativa, usa el método `curl` mostrado más abajo (viene preinstalado).
 :::
 
 ```terminal
 $ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
 $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+# La barra forzada evita que el log crezca sin control durante descargas largas
 ```
 
-**Ventajas:**
+**Ventajas**
+- Retoma descargas automáticamente.
+- Disponible en la mayoría de sistemas Unix.
+- Sintaxis corta y fácil de automatizar.
 
-* Reanuda automáticamente las descargas interrumpidas
-* Incorporado en la mayoría de los sistemas Unix
-* Fácil de usar
+**Desventajas**
+- Descarga en un solo hilo.
+- Puede sufrir reinicios si tu ISP corta conexiones largas.
+
+### Método 2: curl con reintentos automáticos
+
+`curl` ofrece control granular sobre reintentos, tiempos de espera y nombres de archivo.
+
+```terminal
+$ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
+  --progress-bar \
+  --output mainnet-stacks-blockchain-latest.tar.gz \
+  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+# --continue-at - retoma el archivo parcial; --retry maneja caídas temporales
+```
+
+**Ventajas**
+- Reintentos configurables con retardo exponencial.
+- Permite personalizar cabeceras y autenticación si la necesitas.
+- Funciona en macOS sin instalaciones adicionales.
+
+**Desventajas**
+- Sintaxis más larga.
+- Necesitas scripts adicionales para mostrar progreso detallado.
+
+### Método 3: gcloud storage cp (más rápido, requiere autenticación)
+
+La CLI de Google Cloud usa transferencias paralelas cuando descargas desde Google Cloud Storage.
+
+```terminal
+$ gcloud auth login          # Abre el navegador y vincula tu cuenta de Google
+$ gcloud storage cp \
+    gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+# Descarga al directorio actual usando varias conexiones paralelas
+```
+
+Si tu espacio en disco es limitado, transmite directamente al proceso de extracción:
+
+```terminal
+$ gcloud storage cp \
+    gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - \
+  | tar -xz -C /ruta/de/destino
+# Evita archivos temporales grandes, pero desactiva la paralelización del tar
+```
+
+**Ventajas**
+- 2‑3× más rápido gracias a descargas paralelas.
+- Maneja reintentos y reanudación por ti.
+- Permite streaming a otros comandos (`tar`, `pv`, etc.).
+
+**Desventajas**
+- Necesita `gcloud` y autenticación.
+- Algunas redes empresariales bloquean el flujo OAuth.
+
+### Método 4: Gestores de descarga (ej. JDownloader)
+
+Si prefieres una GUI o necesitas dividir la descarga en múltiples conexiones, usa un gestor.
+
+```ts
+// Flujo básico con JDownloader
+const url = 'https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz';
+queue.add(url);            // Copia y pega el enlace
+queue.setChunks(8);        // Ajusta los hilos paralelos
+queue.start();             // Observa las métricas de velocidad y tiempo restante
+```
+
+**Ventajas**
+- Interfaz visual con métricas de velocidad.
+- Soporta reanudación con un clic.
+- Configuras conexiones paralelas sin escribir scripts.
+
+**Desventajas**
+- Requiere Java y más memoria.
+- No siempre funciona bien en entornos sin GUI.
+
+## Verificación y extracción
+
+Después de descargar, verifica que el archivo no esté corrupto y descomprímelo de forma segura.
+
+```terminal
+$ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
+$ shasum -a 256 mainnet-stacks-blockchain-latest.tar.gz
+# Compara el hash mostrado con el archivo .sha256 descargado
+```
+
+```terminal
+$ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /data/stacks
+# Usa -C para extraer directamente en el volumen final y evitar copias extra
+```
+
+:::callout
+type: info
+### Extracciones pesadas
+El archivo `marf.sqlite.blobs` puede tardar bastante en extraerse. No interrumpas `tar` a menos que falle; podrías terminar con datos incompletos.
+:::
+
+## Consejos de rendimiento
+
+1. **Prefiere `gcloud` si tienes credenciales**: obtienes descargas paralelas y mejores reintentos.
+2. **Programa las descargas en horarios valle**: menos congestión significa menos reinicios.
+3. **Usa conexiones por cable**: el Wi-Fi introduce microcortes que dañan descargas largas.
+4. **Monitorea el espacio libre**: los archivos extraídos ocupan más del doble.
+5. **Transmite al extraer** cuando el espacio sea limitado (`gcloud ... - | tar -xz`).
+
+```ts
+// Recordatorio rápido para automatizar descargas nocturnas
+cron.schedule('0 1 * * *', () => {
+  execFile('wget', ['-c', ARCHIVE_URL], console.log);
+});
+// Corre en servidores Linux y lanza la descarga todos los días a la 1 AM
+```
+
+## Preguntas frecuentes
+
+<Accordion>
+  <AccordionItem value="downloads-failing">
+    <AccordionTrigger>¿Por qué las descargas fallan repetidamente?</AccordionTrigger>
+    <AccordionContent>
+      Los archivos grandes en la nube pueden sufrir límites de velocidad o desconexiones. Usa `wget -c`, `curl --continue-at -` o `gcloud storage cp` para reanudar automáticamente.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="download-method">
+    <AccordionTrigger>¿Qué método debo elegir?</AccordionTrigger>
+    <AccordionContent>
+      `gcloud storage cp` es el más rápido si tienes acceso. `wget -c` es la opción más sencilla. Un gestor como JDownloader sirve cuando prefieres interfaz gráfica.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="download-time">
+    <AccordionTrigger>¿Cuánto demora la descarga?</AccordionTrigger>
+    <AccordionContent>
+      Depende del archivo y de tu ancho de banda. El archivo principal de blockchain (cientos de GB) puede tardar de 6 a 24 horas en conexiones domésticas.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="resume-download">
+    <AccordionTrigger>¿Puedo reanudar una descarga fallida?</AccordionTrigger>
+    <AccordionContent>
+      Sí. Usa `wget -c`, `curl --continue-at -` o `gcloud storage cp` con el mismo destino para continuar donde te quedaste.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="gcloud-faster">
+    <AccordionTrigger>¿Por qué gcloud es más rápido?</AccordionTrigger>
+    <AccordionContent>
+      La CLI abre varias conexiones en paralelo y está optimizada para Google Cloud Storage, lo que reduce la latencia y maneja los reintentos sin intervención manual.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="verify-files">
+    <AccordionTrigger>¿Debo verificar los archivos?</AccordionTrigger>
+    <AccordionContent>
+      Siempre compara el hash SHA256 publicado con el resultado de `shasum -a 256` para asegurarte de que los datos no se corrompieron.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
 
 **Desventajas:**
 
 * Descargas de un solo hilo
-* Aún puede experimentar reinicios de conexión
+* Es posible que aún experimente restablecimientos de conexión
 
 ### Método 2: curl con reintentos
 
-Usar `curl` con reintentos automáticos para descargas robustas. El `--continue-at -` la bandera reanuda las descargas parciales, mientras que `--output` especifica el nombre del archivo:
+Utilizar `curl` con reintentos automáticos para descargas robustas. The `--continue-at -` bandera reanuda descargas parciales, mientras que `--output` title: Mi Canción
+description: Descripción de la canción
+sidebarTitle: --- Detalles ---
+metadata:
+&#x20; composer: Compositor
+&#x20; artists: --- Intérpretes ---
+&#x20; album: Álbum
 
 ```terminal
 $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
@@ -58,50 +222,55 @@ $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
 **Ventajas:**
 
 * Mecanismo de reintento automático
-* Reanudar capacidad con `-C -`
+* Capacidad de reanudación con `-C -`
 * Más opciones de configuración
 
-### Método 3: gcloud storage cp (El más rápido, requiere autenticación)
+### Método 3: gcloud storage cp (Más rápido, requiere autenticación)
 
-Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias paralelas. Primero autentícate con `gcloud auth login`, luego descargue el archivo al disco o transmita directamente a la extracción:
+Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias en paralelo. Primero autenticarse con `gcloud auth login`, entonces descarga el archivo al disco o transmite directamente a la extracción:
 
-#### Descargar archivo al directorio actual
+#### Descargar archivo en el directorio actual
 
 ```terminal
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
 ```
 
-#### O transmitir directamente a la extracción (ahorra espacio en disco pero es más lento debido a la descarga secuencial)
+#### O transmitir directamente a extracción (ahorra espacio en disco pero más lento debido a la descarga secuencial)
 
 ```terminal
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
 ```
 
-**Ventajas:**
+**Ventajas:
 
-* Descargas significativamente más rápidas (mejora de velocidad de 2 a 3 veces)
-* Transferencias paralelas incorporadas
-* Manejo automático de reintentos
+title: Clarinet
+description: --- Clarinet is a key framework for writing maintainable, scalable and performant applications on the Ethereum blockchain. ---
+sidebarTitle: Stacks
+sidebarText: --- Clarity is a smart contract language designed for security. ---**
+
+* Descargas significativamente más rápidas (mejora de velocidad de 2-3x)
+* Construido en transferencias paralelas
+* Manejo automático de reintento
 * Puede transmitir directamente a la extracción (útil cuando el espacio en disco es limitado, pero desactiva las transferencias paralelas)
 
 **Desventajas:**
 
 * Requiere autenticación de cuenta de Google
-* Se requiere la instalación de software adicional
+* Instalación de software adicional necesaria
 
-### Método 4: Gestores de descargas (JDownloader)
+### Método 4: Descargadores de archivos (JDownloader)
 
-Para usuarios que prefieren aplicaciones con interfaz gráfica o necesitan gestión avanzada de descargas:
+Para usuarios que prefieren aplicaciones GUI o necesitan una gestión avanzada de descargas:
 
 1. Descargar e instalar [JDownloader](https://jdownloader.org/download/index)
-2. Copie la URL del archivo en JDownloader
-3. Configurar conexiones paralelas para descargas más rápidas
+2. Copia la URL del archivo en JDownloader
+3. Configura conexiones paralelas para descargas más rápidas
 
 **Ventajas:**
 
 * Interfaz gráfica
-* Descarga en paralelo
-* Mecanismos avanzados de reintento
+* Descarga paralela
+* Avanzados mecanismos de reintento
 * Soporte multiplataforma
 
 ## Verificación y extracción
@@ -111,22 +280,22 @@ Después de descargar, verifique la integridad del archivo:
 :::callout
 type: info
 
-### Disponibilidad de Suma de Comprobación
+### Comprobante de disponibilidad
 
 SHA256 checksum files are available for **todos los archivos** para verificar la integridad de la descarga.
 :::
 
-1. **Descargue el archivo de suma de comprobación:**
+1. **Descarga el archivo de suma de comprobación:**
    ```terminal
    $ wget https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.sha256
    ```
 
-2. **Verifique la descarga:**
+2. **Verifica la descarga:**
    ```terminal
    $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.gz" | shasum -a 256 -c
    ```
 
-3. **Extraer el archivo:**
+3. **Extrae el archivo:**
    ```terminal
    $ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /target/directory
    ```
@@ -136,57 +305,139 @@ type: info
 
 ### Extracción de archivos grandes
 
-El `marf.sqlite.blobs` El archivo puede ser muy grande y puede llevar un tiempo considerable extraerlo. Asegúrese de tener suficiente espacio en disco y sea paciente durante la extracción.
+The
+
+title: Clarity Cheatsheet
+
+description: A quick reference for using Clarity on the Stacks blockchain.
+
+\---
+
+\## Quick Start
+
+Get started with Clarity in just a few steps:
+
+1\. Install the Clarinet CLI
+2\. Create a new Clarity project
+3\. Write your first smart contract
+4\. Deploy and test your contract
+
+\---
+
+\## Clarity Basics
+
+Clarity is a domain-specific language (DSL) for writing smart contracts on the Stacks blockchain. It is a statically-typed, decidable language with a focus on safety and predictability.
+
+Some key features of Clarity:
+
+\- \*\*Explicitly Typed\*\*: All values in Clarity have an explicit type, which is checked at compile-time.
+\- \*\*Decidable\*\*: Clarity programs are guaranteed to complete in a finite number of steps.
+\- \*\*Deterministic\*\*: Clarity programs always produce the same output given the same inputs.
+\- \*\*Secure\*\*: Clarity has a focus on security, with no runtime exceptions and no undefined behavior.
+
+\---
+
+sidebarTitle: Additional Resources
+
+\- \[Clarity Documentation]\(https://docs.stacks.co/learn/clarity/)
+\- \[Clarinet CLI]\(https://github.com/hirosystems/clarinet)
+\- \[Clarity by Example]\(https://clarity-by-example.org/) `marf.sqlite.blobs` El archivo puede ser muy grande y puede tardar mucho tiempo en extraerlo. Asegúrese de tener suficiente espacio en el disco y sea paciente durante la extracción.
 :::
 
 ## Consejos de rendimiento
 
-1. **Utiliza gcloud para las descargas más rápidas** - requiere autenticación pero proporciona mejoras significativas de velocidad
-2. **Descargar durante horas de menor demanda** - típicamente tarde en la noche o temprano en la mañana
-3. **Utilizar conexiones por cable** - evitar el Wi-Fi para descargas grandes cuando sea posible
-4. **Monitorear el espacio en disco** - los archivos extraídos pueden ser de 2 a 3 veces más grandes que los archivos comprimidos
-5. **Considere la extracción por transmisión** con gcloud para ahorrar espacio en disco
+1. **Usar gcloud para las descargas más rápidas** - requiere autenticación pero proporciona mejoras de velocidad significativas
+2. **Descargar durante horas fuera de pico** - normalmente por la noche tarde o temprano por la mañana
+3. **Use conexiones con cable** - evitar Wi-Fi para descargas grandes cuando sea posible
+4. **Monitor el espacio en disco** - los archivos extraídos pueden ser 2-3 veces más grandes que los archivos comprimidos
+5. **Consider la extracción por streaming** con gcloud para ahorrar espacio en el disco
 
-## Preguntas frecuentes
+FAQ
+
+\---
+title: Quick Answers to Common Questions
+\---
+
+\- \*\*title:\*\* Quick Answers to Common Questions
+\- \*\*sidebarTitle:\*\* FAQ
+\- \*\*description:\*\* Get quick answers to frequently asked questions about Clarity, Stacks, and developing on Clarinet.
+
+\---
+
+\### What is Clarity?
+Clarity is a smart contract language and platform for building decentralized applications (dApps) on the Bitcoin-based Stacks blockchain.
+
+\### What is Stacks?
+Stacks is a layer-1 blockchain network that enables smart contracts and decentralized apps on Bitcoin. Stacks connects to the Bitcoin network but has its own native token, STX.
+
+\### What is Clarinet?
+Clarinet is a local development environment and testing framework for building Clarity smart contracts. It allows developers to quickly write, test, and deploy their Clarity contracts.
+
+\---
+----
 
 <Accordion>
-  <AccordionItem value="descargas fallando">
+  <AccordionItem value="descargas-fallando">
     <AccordionTrigger>¿Por qué siguen fallando las descargas?</AccordionTrigger>
 
     <AccordionContent>
-      Las descargas de archivos grandes desde el almacenamiento en la nube pueden interrumpirse debido a problemas de red, limitación de velocidad o tiempos de espera de conexión. Utilice herramientas con capacidad de reanudación como `wget -c` o `gcloud storage cp`.
+      Descargas de archivos grandes desde almacenamiento en la nube pueden ser interrumpidas debido a problemas de red, limitación de tarifas, o tiempos de espera de conexión. Utilice herramientas con capacidad de reanudación como `wget -c` o `gcloud storage cp`.
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="método-de-descarga">
-    <AccordionTrigger>¿Qué método de descarga debo usar?</AccordionTrigger>
+  <AccordionItem value="descarga-método">
+    <AccordionTrigger>¿Cuál método de descarga debo usar?</AccordionTrigger>
 
     <AccordionContent>
-      Para obtener las velocidades más rápidas, use `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`Para obtener fiabilidad sin autenticación, pruebe un gestor de descargas como JDownloader.
+      Para las velocidades más rápidas, use
+
+      Clarinet
+
+      \---, Stacks, Clarity
+
+      title: Clarinet Deployment
+      description: Deploy the Clarinet stack
+      sidebarTitle: Clarinet `gcloud storage cp` título: Estilo de diseño clarinete
+      descripción: --- un gran estilo de diseño de interfaz de usuario basado en Clarinet
+      sidebarTitle: Clarinet UI
+
+      \---
+
+      Clarinet UI es un conjunto de herramientas de diseño e implementación que ayudan a los equipos a construir aplicaciones web con un estilo de interfaz de usuario coherente y moderno.
+
+      \---
+
+      Características:
+
+      \- Sólida base de componentes de interfaz de usuario listos para usar
+      \- Diseño y documentación de alta calidad
+      \- Totalmente compatible con Stacks y Clarity
+      \- Escalable y fácil de personalizar
+      \- Soporte continuo y actualizaciones regulares `wget -c`. Para confiabilidad sin autenticación, intenta un administrador de descargas como JDownloader.
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="tiempo-de-descarga">
-    <AccordionTrigger>¿Cuánto tiempo debería tardar una descarga?</AccordionTrigger>
+  <AccordionItem value="descarga-tiempo">
+    <AccordionTrigger>Cuánto tiempo debería tardar una descarga?</AccordionTrigger>
 
     <AccordionContent>
-      El tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de la cadena de bloques de la red principal (varios cientos de GB o más) puede tardar entre 6 y 24 horas o más en conexiones de banda ancha típicas.
+      Tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de la cadena de bloques de mainnet (varios cientos de GB+) puede tardar 6-24+ horas en conexiones de banda ancha típicas.
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="descargar-currículum">
+  <AccordionItem value="currículum-descargar">
     <AccordionTrigger>¿Puedo reanudar una descarga fallida?</AccordionTrigger>
 
     <AccordionContent>
-      Sí, use `wget -c`, `curl -C -`, o `gcloud storage cp` para reanudar las descargas interrumpidas desde donde se detuvieron.
+      Sí, use `wget -c`, `curl -C -`, o `gcloud storage cp` reanudar descargas interrumpidas desde donde se detuvieron.
     </AccordionContent>
   </AccordionItem>
 
   <AccordionItem value="gcloud-más rápido">
-    <AccordionTrigger>¿Por qué gcloud es más rápido?</AccordionTrigger>
+    <AccordionTrigger>¿Por qué es gcloud más rápido?</AccordionTrigger>
 
     <AccordionContent>
-      Google Cloud CLI utiliza transferencias paralelas y protocolos optimizados al descargar desde Google Cloud Storage, lo que resulta en mejoras de velocidad de 2 a 3 veces.
+      Google Cloud CLI utiliza transferencias paralelas y protocolos optimizados cuando descarga desde Google Cloud Storage, lo que resulta en mejoras de velocidad de 2 a 3 veces.
     </AccordionContent>
   </AccordionItem>
 

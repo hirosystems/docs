@@ -1,0 +1,366 @@
+---
+title: Referencia de Filtros
+description: Referencia completa para todos los tipos de filtros de Chainhook
+---
+# Referencia de Filtros
+
+Los filtros definen qué eventos de blockchain activarán tu chainhook—usa la matriz de abajo para elegir la entrada correcta para `filters.events[]`.
+
+| Filter | Cuándo usar |
+|--------|-------------|
+| `ft_event` | FT: capturar *cada* SIP-010 transferir, acuñar o quemar a través de activos. |
+| `ft_transfer` | FT: follow a single asset such as USDC; optionally add `sender`/`receiver` para disparadores a nivel de billetera. |
+| `ft_mint` | FT: rastrea expansiones de suministro o flujos de entrada de puente para un activo (establecer `asset_identifier`). |
+| `ft_burn` | FT: rastrear canjes o contracciones de suministro (establecer `asset_identifier`). |
+| `nft_event` | NFT: monitorea cada transferencia, acuñación o quema para todas las colecciones. |
+| `nft_transfer` | NFT: seguir una colección SIP-009; agregar `sender`, `receiver`, o `value` para focalización de propietario/token. |
+| `nft_mint` | NFT: observa cada nueva acuñación para una colección (establecer `asset_identifier`). |
+| `nft_burn` | NFT: capturar quemadas o canjes (establecer `asset_identifier`). |
+| `stx_event` | STX: capturar todas las transferencias nativas, acuñaciones o quemas. |
+| `stx_transfer` | STX: rastrear cada transferencia; agregar `sender` o `receiver` para destacar directores específicos. |
+| `contract_deploy` | Contratos: reaccionar a nuevos contratos que ingresan a la red. |
+| `contract_call` | Contratos: observar cada invocación; reducir con `contract_identifier` y `function_name`. |
+| `contract_log` | Contratos: capturar `print`/salida de log de un contrato (establecer `contract_identifier`). |
+| `coinbase` | Sistema: observar las recompensas de los mineros llegando a la cadena. |
+| `tenure_change` | Sistema: rastrear actualizaciones de tenencia de Proof-of-Transfer; agregar `cause` I don't see any text provided to translate. Could you please provide the text you'd like me to translate from English to Spanish?`"block_found"` o `"extended"`) para especificidad. |
+
+## Eventos de Token Fungible (FT)
+
+### Cualquier Evento FT
+
+Coincidir con cualquier evento de token fungible (transferencia, quema o acuñación):
+
+```json
+{
+  "type": "ft_event"
+}
+```
+
+### Transferencia FT
+
+Coincidencia de transferencias FT para un activo específico:
+
+```json
+{
+  "type": "ft_transfer",
+  "asset_identifier": "SP...ABC.ft::usdc"
+}
+```
+
+Filtrar por remitente:
+
+```json
+{
+  "type": "ft_transfer",
+  "asset_identifier": "SP...ABC.ft::usdc",
+  "sender": "SP...FROM"
+}
+```
+
+Filtrar por destinatario:
+
+```json
+{
+  "type": "ft_transfer",
+  "asset_identifier": "SP...ABC.ft::usdc",
+  "receiver": "SP...TO"
+}
+```
+
+### Acuñación de FT
+
+Hacer coincidir eventos de acuñación FT:
+
+```json
+{
+  "type": "ft_mint",
+  "asset_identifier": "SP...ABC.ft::usdc"
+}
+```
+
+### FT Burn
+
+Coincidir eventos de quema FT:
+
+```json
+{
+  "type": "ft_burn",
+  "asset_identifier": "SP...ABC.ft::usdc"
+}
+```
+
+***
+
+## Eventos de Tokens No Fungibles (NFT)
+
+### Cualquier Evento NFT
+
+Coincide con cualquier evento de NFT (transferencia, quema o acuñación):
+
+```json
+{
+  "type": "nft_event"
+}
+```
+
+### Transferencia de NFT
+
+Coincide transferencias de NFT para una colección específica:
+
+```json
+{
+  "type": "nft_transfer",
+  "asset_identifier": "SP...COLL.nft::collectible"
+}
+```
+
+Filtrar por remitente:
+
+```json
+{
+  "type": "nft_transfer",
+  "asset_identifier": "SP...COLL.nft::collectible",
+  "sender": "SP...FROM"
+}
+```
+
+Filtrar por receptor:
+
+```json
+{
+  "type": "nft_transfer",
+  "asset_identifier": "SP...COLL.nft::collectible",
+  "receiver": "SP...TO"
+}
+```
+
+Filtrar por ID de token específico:
+
+```json
+{
+  "type": "nft_transfer",
+  "asset_identifier": "SP...COLL.nft::collectible",
+  "value": "u123"
+}
+```
+
+### Acuñación de NFT
+
+Coincidir eventos de acuñación de NFT:
+
+```json
+{
+  "type": "nft_mint",
+  "asset_identifier": "SP...COLL.nft::collectible"
+}
+```
+
+### Quema de NFT
+
+Hacer coincidir eventos de quema de NFT:
+
+```json
+{
+  "type": "nft_burn",
+  "asset_identifier": "SP...COLL.nft::collectible"
+}
+```
+
+***
+
+## Eventos STX
+
+### Cualquier Evento STX
+
+Coincide con cualquier evento STX (transferencia, quema o acuñación):
+
+```json
+{
+  "type": "stx_event"
+}
+```
+
+### Transferencia STX
+
+Coincide con cualquier transferencia de STX:
+
+```json
+{
+  "type": "stx_transfer"
+}
+```
+
+Filtrar por remitente:
+
+```json
+{
+  "type": "stx_transfer",
+  "sender": "SP...SENDER"
+}
+```
+
+Filtrar por receptor:
+
+```json
+{
+  "type": "stx_transfer",
+  "receiver": "SP...RECEIVER"
+}
+```
+
+***
+
+## Eventos de Contratos
+
+### Implementación de Contrato
+
+Coincidir con cualquier despliegue de contrato:
+
+```json
+{
+  "type": "contract_deploy"
+}
+```
+
+Filtrar por implementador:
+
+```json
+{
+  "type": "contract_deploy",
+  "sender": "SP...DEPLOYER"
+}
+```
+
+### Llamada de Contrato
+
+Coincidir con cualquier llamada de contrato:
+
+```json
+{
+  "type": "contract_call"
+}
+```
+
+Coincidir llamadas a un contrato específico:
+
+```json
+{
+  "type": "contract_call",
+  "contract_identifier": "SP...XYZ.counter"
+}
+```
+
+Coincidir llamadas a una función específica:
+
+```json
+{
+  "type": "contract_call",
+  "contract_identifier": "SP...XYZ.counter",
+  "function_name": "increment"
+}
+```
+
+Filtrar por llamador:
+
+```json
+{
+  "type": "contract_call",
+  "contract_identifier": "SP...XYZ.counter",
+  "function_name": "increment",
+  "sender": "SP...CALLER"
+}
+```
+
+### Registro de Contrato
+
+Coincidir eventos de impresión del contrato:
+
+```json
+{
+  "type": "contract_log",
+  "contract_identifier": "SP...XYZ.counter"
+}
+```
+
+Filtrar por remitente de transacción:
+
+```json
+{
+  "type": "contract_log",
+  "contract_identifier": "SP...XYZ.counter",
+  "sender": "SP...SENDER"
+}
+```
+
+***
+
+## Eventos del Sistema
+
+### Coinbase
+
+Coincidir eventos de coinbase (recompensas de bloque):
+
+```json
+{
+  "type": "coinbase"
+}
+```
+
+### Cambio de Tenencia
+
+Coincidir con cualquier cambio de tenure:
+
+```json
+{
+  "type": "tenure_change"
+}
+```
+
+Coincidir cambios de tenencia por causa (bloque encontrado):
+
+```json
+{
+  "type": "tenure_change",
+  "cause": "block_found"
+}
+```
+
+Cambios de tenencia coincidentes por causa (extendido):
+
+```json
+{
+  "type": "tenure_change",
+  "cause": "extended"
+}
+```
+
+***
+
+## Combinando Filtros
+
+Puedes combinar múltiples filtros en el `filters.events` arreglo. Un chainhook se activará si **cualquier** de los filtros coinciden:
+
+```json
+{
+  "filters": {
+    "events": [
+      {
+        "type": "ft_transfer",
+        "asset_identifier": "SP...ABC.token::diko"
+      },
+      {
+        "type": "contract_call",
+        "contract_identifier": "SP...XYZ.counter",
+        "function_name": "increment"
+      }
+    ]
+  }
+}
+```
+
+This chainhook will trigger on either DIKO transfers **o** llamadas al `increment` función.
+
+:::next-steps
+* [Referencia de Opciones](/tools/chainhook/reference/options): Configurar el enriquecimiento de carga útil y las ventanas de evaluación
+* [Registrar y Habilitar](/tools/chainhook/register-enable): Crea tu primer chainhook
+:::

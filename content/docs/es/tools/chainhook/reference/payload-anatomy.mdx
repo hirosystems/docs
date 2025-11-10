@@ -1,18 +1,17 @@
 ---
-title: Payload Anatomy
-description: Understanding the structure of Chainhook webhook payloads
+title: Anatomía del Payload
+description: Entendiendo la estructura de las cargas útiles de webhook de Chainhook
 ---
+## Descripción General de la Carga Útil
 
-## Payload Overview
+Un payload de Chainhook consiste en dos secciones principales:
 
-A Chainhook payload consists of two main sections:
+1. **evento** - Contiene los datos de la blockchain (bloques, transacciones, operaciones)
+2. **chainhook** - Metadatos sobre el chainhook que se activó
 
-1. **event** - Contains the blockchain data (blocks, transactions, operations)
-2. **chainhook** - Metadata about the chainhook that triggered
+***
 
----
-
-## Basic Structure
+## Estructura Básica
 
 ```json
 {
@@ -29,13 +28,13 @@ A Chainhook payload consists of two main sections:
 }
 ```
 
----
+***
 
-## Event Section
+## Sección de Eventos
 
-### Apply Array
+### Aplicar Array
 
-The `apply` array contains blocks being added to the canonical chain. Each block includes:
+El `apply` la matriz contiene bloques que se están agregando a la cadena canónica. Cada bloque incluye:
 
 ```json
 {
@@ -52,23 +51,23 @@ The `apply` array contains blocks being added to the canonical chain. Each block
 }
 ```
 
-### Rollback Array
+### Revertir Array
 
-The `rollback` array contains blocks being removed during a chain reorganization. Same structure as `apply`.
+El `rollback` array contiene bloques que están siendo eliminados durante una reorganización de cadena. Misma estructura que `apply`.
 
 :::callout
-Chainhook automatically handles reorgs by sending rollback events. Your application should reverse any state changes from rolled-back blocks.
+Chainhook maneja automáticamente las reorganizaciones enviando eventos de reversión. Tu aplicación debe revertir cualquier cambio de estado de los bloques reversados.
 :::
 
----
+***
 
-## Transaction Structure
+## Estructura de Transacción
 
-Each transaction in the `transactions` array contains:
+Cada transacción en el `transactions` la matriz contiene:
 
-### Metadata
+### Metadatos
 
-Transaction-level information:
+Información a nivel de transacción:
 
 ```json
 {
@@ -101,9 +100,9 @@ Transaction-level information:
 }
 ```
 
-### Transaction Identifier
+### Identificador de Transacción
 
-Unique identifier for the transaction:
+Identificador único para la transacción:
 
 ```json
 {
@@ -113,15 +112,15 @@ Unique identifier for the transaction:
 }
 ```
 
----
+***
 
-## Operations Array
+## Array de Operaciones
 
-Each transaction includes an `operations` array describing state changes. Operations are indexed sequentially.
+Cada transacción incluye un `operations` array que describe cambios de estado. Las operaciones se indexan secuencialmente.
 
-### Fee Operation
+### Operación de Tarifa
 
-Transaction fee paid:
+Tarifa de transacción pagada:
 
 ```json
 {
@@ -146,9 +145,9 @@ Transaction fee paid:
 }
 ```
 
-### Contract Call Operation
+### Operación de Llamada de Contrato
 
-Contract function invocation:
+Invocación de función de contrato:
 
 ```json
 {
@@ -194,12 +193,12 @@ Contract function invocation:
 ```
 
 :::callout
-The `args` array includes `repr` and `type` fields when `decode_clarity_values` is enabled in options.
+El `args` array incluye `repr` y `type` campos cuando `decode_clarity_values` está habilitado en opciones.
 :::
 
-### Token Transfer Operation
+### Operación de Transferencia de Token
 
-FT/NFT/STX transfers:
+Transferencias FT/NFT/STX:
 
 ```json
 {
@@ -225,9 +224,9 @@ FT/NFT/STX transfers:
 }
 ```
 
-### Contract Log Operation
+### Operación de Registro de Contrato
 
-Print statements from contracts:
+Declaraciones de impresión de contratos:
 
 ```json
 {
@@ -245,6 +244,6 @@ Print statements from contracts:
 ```
 
 :::next-steps
-- [Filter Reference](/tools/chainhook/reference/filters): Configure which events trigger your chainhook
-- [Options Reference](/tools/chainhook/reference/options): Customize payload content
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Configura qué eventos activan tu chainhook
+* [Referencia de Opciones](/tools/chainhook/reference/options): Personalizar contenido del payload
 :::
