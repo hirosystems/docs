@@ -121,7 +121,6 @@ export default async function Page(props: {
     interactiveLinks, // Use the processed links with React components
   };
 
-
   return (
     <DocsPage data={pageData}>
       {page.data.interactive ? (
@@ -148,8 +147,7 @@ export default async function Page(props: {
                       const mergedProps = {
                         ...(config ?? {}),
                         ...props,
-                        playgroundOptions:
-                          props.playgroundOptions ?? config?.playgroundOptions,
+                        playgroundOptions: props.playgroundOptions ?? config?.playgroundOptions,
                       };
 
                       return <APIPage {...mergedProps} />;
@@ -254,8 +252,7 @@ export default async function Page(props: {
                       const mergedProps = {
                         ...(config ?? {}),
                         ...props,
-                        playgroundOptions:
-                          props.playgroundOptions ?? config?.playgroundOptions,
+                        playgroundOptions: props.playgroundOptions ?? config?.playgroundOptions,
                       };
 
                       return <APIPage {...mergedProps} />;

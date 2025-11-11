@@ -15,9 +15,7 @@ export const apiConfig = {
     clarityConversion: false,
     enablePlayground: true,
     credentialId: 'chainhook',
-    credentialPublicOperations: [
-      { method: 'GET', path: '/' },
-    ],
+    credentialPublicOperations: [{ method: 'GET', path: '/' }],
     playgroundOptions: {
       proxyUrl: '/api/proxy',
     },
@@ -62,9 +60,7 @@ export function getAPIConfig(documentPath: string) {
     const config = apiConfig[key];
     return {
       ...config,
-      playgroundOptions: config.playgroundOptions
-        ? { ...config.playgroundOptions }
-        : undefined,
+      playgroundOptions: config.playgroundOptions ? { ...config.playgroundOptions } : undefined,
     };
   };
 

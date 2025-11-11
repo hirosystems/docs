@@ -16,6 +16,8 @@ export default function ToolsPage() {
               href="/tools/chainhook"
               title="Chainhook"
               icon={<Chainhook />}
+              badge="beta"
+              tag="Stacks"
               description="Crea flujos de eventos personalizados y desencadenantes para el procesamiento de datos de blockchain en tiempo real."
             />
 
@@ -23,6 +25,7 @@ export default function ToolsPage() {
               href="/tools/contract-monitoring"
               title="Monitoreo de Contratos"
               icon={<Brackets />}
+              tag="Stacks"
               description="Monitorea y rastrea la actividad de contratos inteligentes y las métricas de rendimiento."
             />
 

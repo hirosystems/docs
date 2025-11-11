@@ -3,8 +3,8 @@ import { RootProvider } from 'fumadocs-ui/provider';
 import type { ReactNode } from 'react';
 import { aeonik, aeonikFono, aeonikMono, inter } from '@/fonts';
 import { KeyboardShortcutsProvider } from '@/hooks/use-keyboard-shortcuts';
-import { QueryProvider } from '@/providers/query-provider';
 import { ApiCredentialsProvider } from '@/providers/api-credentials-provider';
+import { QueryProvider } from '@/providers/query-provider';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
