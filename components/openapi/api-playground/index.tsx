@@ -2,8 +2,8 @@
 
 import { cvToJSON, cvToString, hexToCV } from '@stacks/transactions';
 import { ChevronDown, Eye, EyeOff, Play } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CodeSync } from '@/components/docskit/code';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -424,7 +424,11 @@ export function APIPlayground({
                     aria-label={credentialVisible ? 'Hide API key' : 'Show API key'}
                     onClick={() => setCredentialVisible((prev) => !prev)}
                   >
-                    {credentialVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {credentialVisible ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </Button>
                 )}
               </div>
