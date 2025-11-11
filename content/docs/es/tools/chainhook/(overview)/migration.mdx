@@ -3,9 +3,9 @@ title: Guía de migración
 description: Guía para migrar chainhooks heredados a v2
 ---
 :::callout
-### Gestión de chainhooks v1
+### Administración de chainhooks v1
 
-Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario de la plataforma; las gestionas a través de la [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
+Los chainhooks v1 heredados permanecen de solo lectura en la interfaz de usuario de la plataforma; los gestionas a través del [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
 :::
 
 ## Lo que aprenderás
@@ -13,20 +13,20 @@ Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario
 :::objectives
 * Capturar y analizar todos los chainhooks v1 existentes.
 * Convierte filtros basados en predicados en definiciones explícitas de eventos v2.
-* Registra chainhooks v2, prueba la entrega y retira los originales de forma segura.
+* Registra v2 chainhooks, prueba la entrega y retira los originales de forma segura.
 :::
 
 ## Requisitos previos
 
 :::prerequisites
-* Clave API de Hiro para acceso tanto a la Plataforma como a la API de Chainhook.
+* Clave API de Hiro para acceso tanto a la Platform como a la API de Chainhook.
 :::
 
 <Steps>
   <Step>
     ### Obtener una lista de chainhooks v1
 
-    Usa la API de la Plataforma para obtener los chainhooks que quieres migrar.
+    Usa la API de la plataforma para obtener los chainhooks que quieres migrar.
 
     ```ts index.ts -c
     const response = await fetch(`https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`, {
@@ -40,22 +40,18 @@ Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario
   </Step>
 
   <Step>
-    ### Comenzar el mapeo al nuevo formato v2
+    ### Comienza a mapear al nuevo formato v2
 
     Traduce las estructuras v1 a formatos v2 antes de crear nuevos hooks. La siguiente tabla muestra la correspondencia entre las estructuras v1 y v2:
 
     | v1 | v2 | Notes |
     |------------|-----------|-------|
     | `if_this.scope` | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
-    | `if_this.actions` I notice that you've provided the translation rules and context, but the actual text to translate appears to be missing. You've included:
+    | `if_this.actions` | `type` | `transfer` se asigna a `*_transfer`. |
+    | `then_that.http_post.url` I notice that you've provided the translation rules and instructions, but the actual text to translate appears to be just a single vertical bar "|" character.&#x20;
 
-    \- The instruction to translate from English to Spanish
-    \- Detailed rules about preserving formatting, field names, and specific terms
-    \- But only a single "|" character as the text to translate
-
-    Could you please provide the actual text content that needs to be translated? `type` I don't see any text provided to translate. Please provide the text you'd like me to translate from English to Spanish, and I'll follow all the critical rules you've specified. `transfer` se asigna a `*_transfer`. |
-    | `then_that.http_post.url` | `action.url` | v2 maneja los secretos automáticamente. |
-    | `networks.mainnet` | `network: "mainnet"` | Crear un hook v2 por red. |
+    | `action.url` | v2 maneja los secretos automáticamente. |
+    | `networks.mainnet` | `network: "mainnet"` | Crea un hook v2 por red. |
     | `authorization_header` | Gestión de secretos de webhook | Usar `rotateConsumerSecret()` después del registro. |
 
     #### Ejemplo
@@ -104,7 +100,7 @@ Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario
 
     <CodeTabs flags="ac">
       ```ts !! api.ts
-      const v2Chainhook = JSON.stringify({
+      const v2Chainhook = {
         "version": "1",
         "name": "stx-transfers",
         "chain": "stacks",
@@ -170,7 +166,7 @@ Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario
 
     ### Mejores prácticas
 
-    Mantén tanto los hooks v1 como v2 activos hasta que verifiques la paridad de entrega.
+    Mantén activos tanto los hooks v1 como v2 hasta que verifiques la paridad de entrega.
     :::
 
     #### Verificaciones de habilitación en v2
@@ -214,13 +210,17 @@ Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario
 
 ## Referencia de filtros
 
-### Ámbitos comunes
+### Alcances comunes
 
 | v1 | Acciones Típicas | v2 | Extras |
 |----------|-----------------|-----------|--------|
-| `stx_event` | `transfer` | `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
-| `contract_call` | n/a | `contract_call` | Añadir `contract_identifier` y `function_name`. |
-| `ft_event` | `transfer` | `ft_transfer` | Especificar `asset_identifier`. |
+| `stx_event` | `transfer` I don't see any text to translate. You've provided only a vertical bar character "|". Please provide the text you'd like me to translate from English to Spanish. `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
+| `contract_call` | n/a | `contract_call` | Agregar `contract_identifier` y `function_name`. |
+| `ft_event` I notice that you've provided the translation rules and setup, but the actual text to translate appears to be just a single vertical bar "|".&#x20;
+
+Since there's no substantial text content to translate from English to Spanish, I'll return the same character:
+
+| `transfer` | `ft_transfer` | Especificar `asset_identifier`. |
 | `nft_event` | `transfer`, `mint` | `nft_transfer` · `nft_mint` | Proporcionar `asset_identifier`. |
 
 Para más detalles, consulta el [Filtros](/tools/chainhook/reference/filters) página de referencia.
@@ -228,6 +228,6 @@ Para más detalles, consulta el [Filtros](/tools/chainhook/reference/filters) p�
 ## Próximos pasos
 
 :::next-steps
-* [Preguntas Frecuentes](/tools/chainhook/faq): Preguntas frecuentes de Chainhook 2.0
-* [Referencia de Filtro](/tools/chainhook/reference/filters): Referencia de Filtros
+* [FAQ](/tools/chainhook/faq): Preguntas frecuentes de Chainhook 2.0
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Referencia de Filtro
 :::
