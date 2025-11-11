@@ -54,7 +54,6 @@ export interface Translations {
 
     // Specific pages/sections
     guides: string;
-    snippets: string;
     archive: string;
   };
   tools: {
@@ -88,6 +87,10 @@ export interface Translations {
       title: string;
       description: string;
     };
+    chainhook: {
+      title: string;
+      description: string;
+    };
     tokenMetadata: {
       title: string;
       description: string;
@@ -112,10 +115,6 @@ export interface Translations {
   libraries?: never;
   resources: {
     guides: {
-      title: string;
-      description: string;
-    };
-    snippets: {
       title: string;
       description: string;
     };

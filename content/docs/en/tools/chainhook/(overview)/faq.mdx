@@ -1,0 +1,121 @@
+---
+title: FAQ
+description: Frequently asked questions about Chainhook 2.0 (Beta)
+---
+
+## Chainhook 2.0 (Beta)
+
+<Accordion collapsible="true" type="multiple">
+  <AccordionItem value="beta-purpose">
+    <AccordionTrigger>What is the goal/purpose of the Chainhook 2.0 (Beta)?</AccordionTrigger>
+    <AccordionContent>
+Our goal during the Beta is to learn as much as possible about the reliability, performance and developer experience of Chainhooks 2.0 in anticipation of the full release. If you encounter any issues, have any questions, or would like to share feedback during the Beta, please reach out to [beta@hiro.so](mailto:beta@hiro.so).
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="beta-free">
+    <AccordionTrigger>Is the Chainhook 2.0 (Beta) free?</AccordionTrigger>
+    <AccordionContent>
+Yes! The Chainhooks 2.0 Beta is free for all participants.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="beta-limits">
+    <AccordionTrigger>Will there be configuration or rate limits imposed during the Beta?</AccordionTrigger>
+    <AccordionContent>
+All Beta users will initially be constrained to a limit of 10 Chainhook configurations.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="beta-pricing">
+    <AccordionTrigger>How will Chainhooks be priced following the Beta?</AccordionTrigger>
+    <AccordionContent>
+Chainhooks will be charged using a credit model for each delivery, with users able to select different credit limits depending on their usage. For Chainhooks 2.0 Beta users, your post-beta limits will initially be determined by your existing Hiro subscription tier.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Version Management
+
+<Accordion>
+  <AccordionItem value="v1-legacy">
+    <AccordionTrigger>What will happen to existing legacy Chainhooks running on v1.0?</AccordionTrigger>
+    <AccordionContent>
+Users with Chainhooks running on v1.0 will still be able to view them and receive deliveries, but once the beta launches, all new Chainhooks created in the Platform will run on v2.0.
+
+The API will also not support Chainhooks running on v1.0.
+
+:::callout
+Learn how to migrate your v1 chainhooks to v2 in the [Migration Guide](/tools/chainhook/migration).
+:::
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="v1-v2-access">
+    <AccordionTrigger>If v2.0 and v1.0 will be live at the same time, how do we manage both?</AccordionTrigger>
+    <AccordionContent>
+In the Platform, v1 chainhooks are read-only. You can view them and they will continue to deliver events, but you cannot modify them through the Platform UI.
+
+To modify v1 chainhooks programmatically, use the [Platform API](/apis/platform-api). However, we recommend migrating to v2 chainhooks instead. See the [Migration Guide](/tools/chainhook/migration) for a complete walkthrough.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="migration">
+    <AccordionTrigger>How do I migrate my v1 chainhooks to v2?</AccordionTrigger>
+    <AccordionContent>
+        To migrate your v1 chainhooks to v2, follow the steps outlined in the [Migration Guide](/tools/chainhook/migration).
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Platform vs SDK
+
+<Accordion>
+  <AccordionItem value="edit-chainhooks">
+    <AccordionTrigger>Can I edit my v2 Chainhooks?</AccordionTrigger>
+    <AccordionContent>
+Yes! you can edit your v2 Chainhooks using the [Chainhook SDK](/tools/chainhook/update) or [Chainhook API](/apis/chainhook-api). The Platform does not currently support editing v2 Chainhooks.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Common Questions
+
+<Accordion>
+  <AccordionItem value="multiple-filters">
+    <AccordionTrigger>Can I filter by multiple event types?</AccordionTrigger>
+    <AccordionContent>
+        Yes! See examples in the [Filter reference](/tools/chainhook/reference/filters#combining-filters) guide for examples of combining filters.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="endpoint-down">
+    <AccordionTrigger>What happens if my webhook endpoint is down?</AccordionTrigger>
+    <AccordionContent>
+Chainhook will retry webhook deliveries and then "pause" your Chainhook, giving you time to fix the issue and re-enable. Extended downtime may result in missed events, but you can use the [Evaluate](/tools/chainhook/evaluate) feature to replay missed blocks.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="test-locally">
+    <AccordionTrigger>Can I test chainhooks locally?</AccordionTrigger>
+    <AccordionContent>
+        Currently, no. But we are working on a new feature that will help you quickly test chainhook payloads locally without requiring much setup.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+---
+
+## Where to Get Help
+
+- **Discord**: Join the **#chainhook** channel on [Discord](https://stacks.chat/) under Hiro Developer Tools
+- **Email Support**: [beta@hiro.so](mailto:beta@hiro.so)
+
+---
+
+## Next Steps
+
+:::next-steps
+- [Create chainhooks](/tools/chainhook/create): Register and enable chainhooks
+- [Payload anatomy](/tools/chainhook/payload-anatomy): Dive into the anatomy of a chainhook payload
+:::

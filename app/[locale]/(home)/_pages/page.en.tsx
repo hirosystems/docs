@@ -57,6 +57,7 @@ export default function HomePage() {
             <Cards>
               <SmallCard
                 icon={<Chainhook />}
+                badge="beta"
                 href="/tools/chainhook"
                 title="Chainhook"
                 description="Create custom event streams and triggers for real-time blockchain data processing."
@@ -134,12 +135,6 @@ export default function HomePage() {
                 href="/resources/guides"
                 title="Guides"
                 description="Step-by-step walkthroughs for building on Bitcoin layers."
-              />
-              <SmallCard
-                icon={<Braces />}
-                href="/resources/snippets"
-                title="Snippets"
-                description="Reusable code examples for common Stacks and Bitcoin tasks."
               />
               <SmallCard
                 icon={<Database />}

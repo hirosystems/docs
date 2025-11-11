@@ -56,7 +56,6 @@ export const es: Translations = {
 
     // Specific pages/sections
     guides: 'Guías',
-    snippets: 'Fragmentos',
     archive: 'Archivo',
   },
   tools: {
@@ -95,6 +94,10 @@ export const es: Translations = {
       title: 'API de Metadatos de Tokens',
       description: 'API para obtener metadatos de tokens NFT y fungibles.',
     },
+    chainhook: {
+      title: 'API de Chainhook',
+      description: 'API RESTful para acceder a Chainhook.',
+    },
     platform: {
       title: 'API de Plataforma',
       description: 'API para acceder a datos y funcionalidad de la Plataforma Hiro.',
@@ -116,10 +119,6 @@ export const es: Translations = {
     guides: {
       title: 'Guías',
       description: 'Guías para construir en Stacks.',
-    },
-    snippets: {
-      title: 'Fragmentos',
-      description: 'Fragmentos de código para construir en Stacks y Bitcoin.',
     },
     archive: {
       title: 'Archivo de Hiro',

@@ -58,6 +58,7 @@ export default function HomePage() {
             <Cards>
               <SmallCard
                 icon={<Chainhook />}
+                badge="beta"
                 href="/tools/chainhook"
                 title="Chainhook"
                 description="Crea flujos de eventos personalizados y desencadenantes para el procesamiento de datos de blockchain en tiempo real."

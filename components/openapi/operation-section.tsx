@@ -22,6 +22,8 @@ interface OperationSectionProps {
     };
   };
   baseUrl?: string;
+  credentialId?: string;
+  credentialPublicOperations?: Array<{ method: string; path: string }>;
 }
 
 export async function OperationSection({
@@ -32,6 +34,8 @@ export async function OperationSection({
   hasHead,
   playgroundOptions,
   baseUrl: baseUrlOverride,
+  credentialId,
+  credentialPublicOperations,
 }: OperationSectionProps) {
   const baseUrl = baseUrlOverride || servers?.[0]?.url || '';
 
@@ -45,6 +49,8 @@ export async function OperationSection({
               baseUrl={baseUrl}
               clarityConversion={clarityConversion}
               playgroundOptions={playgroundOptions}
+              credentialId={credentialId}
+              credentialPublicOperations={credentialPublicOperations}
             />
           )}
 

@@ -25,6 +25,7 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Chainhook',
           description: 'Monitor and analyze Clarity smart contract activity.',
           url: '/tools/chainhook',
+          isBeta: true,
         },
         {
           text: 'Contract Monitoring',
@@ -35,7 +36,6 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Bitcoin Indexer',
           description: 'Indexer for Bitcoin blockchain data.',
           url: '/tools/bitcoin-indexer',
-          isNew: true,
         },
       ],
     },
@@ -70,6 +70,12 @@ export const baseOptions: BaseLayoutProps = {
           url: '/apis/token-metadata-api',
         },
         {
+          text: 'Chainhook API',
+          description: 'RESTful API for accessing Chainhook',
+          url: '/apis/chainhook-api',
+          isNew: true,
+        },
+        {
           text: 'Platform API',
           description: 'API for accessing Hiro Platform data and functionality.',
           url: '/apis/platform-api',
@@ -100,26 +106,11 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Guides for building on Stacks.',
           url: '/resources/guides',
         },
-        // {
-        //   text: "Project templates",
-        //   description: "Project templates for building on Stacks.",
-        //   url: "/resources/templates",
-        // },
-        {
-          text: 'Snippets',
-          description: 'Code snippets for building on Stacks and Bitcoin.',
-          url: '/resources/snippets',
-        },
         {
           text: 'Hiro Archive',
           description: 'Archive of blockchain data.',
           url: '/resources/archive',
         },
-        // {
-        //   text: "Faucets",
-        //   description: "Faucets for getting testnet tokens.",
-        //   url: "/resources/faucets",
-        // },
       ],
     },
   ],

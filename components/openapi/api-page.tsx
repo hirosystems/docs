@@ -20,6 +20,8 @@ interface APIPageProps {
     };
   };
   baseUrl?: string;
+  credentialId?: string;
+  credentialPublicOperations?: Array<{ method: string; path: string }>;
 }
 
 export async function APIPage({
@@ -30,6 +32,8 @@ export async function APIPage({
   clarityConversion = false,
   playgroundOptions,
   baseUrl,
+  credentialId,
+  credentialPublicOperations,
 }: APIPageProps) {
   let apiDoc: OpenAPIDocument;
 
@@ -71,6 +75,8 @@ export async function APIPage({
             hasHead={hasHead}
             playgroundOptions={playgroundOptions}
             baseUrl={baseUrl}
+            credentialId={credentialId}
+            credentialPublicOperations={credentialPublicOperations}
           />
         </React.Fragment>
       ))}

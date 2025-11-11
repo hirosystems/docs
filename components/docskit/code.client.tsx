@@ -23,21 +23,37 @@ export function MultiCode({ group, className }: { group: CodeGroup; className?: 
       className={cn(CODEBLOCK, className)}
       style={style}
     >
-      <TabsList className={cn(TITLEBAR, 'rounded-none p-0 m-0 justify-start items-stretch !pt-0')}>
-        {group.tabs.map(({ icon, title }) => (
-          <TabsTrigger
-            key={title}
-            value={title}
-            className={cn(
-              'rounded-none relative transition-colors duration-200 gap-2 px-3 font-mono',
-              'text-ch-tab-inactive-foreground data-[state=active]:text-muted-foreground hover:text-muted-foreground', // text
-            )}
-          >
-            {icon}
-            {title}
-            <div className="absolute h-[1px] top-full left-0 right-0 transition-colors duration-200" />
-          </TabsTrigger>
-        ))}
+      <TabsList
+        className={cn(
+          TITLEBAR,
+          'rounded-none p-0 m-0 justify-start items-stretch !pt-0 gap-1 border-b border-border/60',
+        )}
+      >
+        {group.tabs.map(({ icon, title }) => {
+          const isActive = currentTitle === title;
+
+          return (
+            <TabsTrigger
+              key={title}
+              value={title}
+              className={cn(
+                'relative gap-2 rounded-md px-3 py-2 font-mono text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-border',
+                isActive
+                  ? 'text-foreground bg-ch-tabs-background shadow-[inset_0_-1px_0_rgba(0,0,0,0.08)] dark:shadow-[inset_0_-1px_0_rgba(255,255,255,0.08)]'
+                  : 'text-ch-tab-inactive-foreground hover:text-muted-foreground',
+              )}
+            >
+              {icon}
+              {title}
+              <div
+                className={cn(
+                  'absolute top-full left-0 right-0 h-[2px] rounded-full transition-colors duration-200',
+                  isActive ? 'bg-primary' : 'bg-transparent',
+                )}
+              />
+            </TabsTrigger>
+          );
+        })}
         {group.options.copyButton && (
           <div className={cn('ml-auto mr-3 items-center flex')}>
             <CopyButton text={code} />

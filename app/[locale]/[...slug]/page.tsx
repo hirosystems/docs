@@ -26,6 +26,7 @@ import { API } from '@/components/reference/api-page';
 import { Badge } from '@/components/ui/badge';
 import * as customIcons from '@/components/ui/icon';
 import { TagFilterSystem } from '@/components/ui/tag-filter-system';
+import { getAPIConfig } from '@/lib/api-config';
 import { i18n } from '@/lib/i18n';
 import { getAllFilterablePages, source } from '@/lib/source';
 import type { HeadingProps } from '@/types';
@@ -138,14 +139,19 @@ export default async function Page(props: {
                   components={getMDXComponents({
                     // Custom overrides that need special handling
                     API: (props) => <API {...props} />,
-                    APIPage: (props) => (
-                      <APIPage
-                        baseUrl="https://api.hiro.so"
-                        enablePlayground={true}
-                        clarityConversion={true}
-                        {...props}
-                      />
-                    ),
+                    APIPage: (props) => {
+                      const config = props.document
+                        ? getAPIConfig(String(props.document))
+                        : undefined;
+
+                      const mergedProps = {
+                        ...(config ?? {}),
+                        ...props,
+                        playgroundOptions: props.playgroundOptions ?? config?.playgroundOptions,
+                      };
+
+                      return <APIPage {...mergedProps} />;
+                    },
                     h1: ({ children, ...props }: HeadingProps) => {
                       const H1 = defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
                       const id = typeof children === 'string' ? children : undefined;
@@ -238,14 +244,19 @@ export default async function Page(props: {
                   components={getMDXComponents({
                     // Custom overrides that need special handling
                     API: (props) => <API {...props} />,
-                    APIPage: (props) => (
-                      <APIPage
-                        baseUrl="https://api.hiro.so"
-                        enablePlayground={true}
-                        clarityConversion={true}
-                        {...props}
-                      />
-                    ),
+                    APIPage: (props) => {
+                      const config = props.document
+                        ? getAPIConfig(String(props.document))
+                        : undefined;
+
+                      const mergedProps = {
+                        ...(config ?? {}),
+                        ...props,
+                        playgroundOptions: props.playgroundOptions ?? config?.playgroundOptions,
+                      };
+
+                      return <APIPage {...mergedProps} />;
+                    },
                     h1: ({ children, ...props }: HeadingProps) => {
                       const H1 = defaultMdxComponents.h1 as React.ComponentType<HeadingProps>;
                       const id = typeof children === 'string' ? children : undefined;

@@ -1,13 +1,16 @@
 'use client';
 
 import { cvToJSON, cvToString, hexToCV } from '@stacks/transactions';
-import { ChevronDown, Play } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { ChevronDown, Eye, EyeOff, Play } from 'lucide-react';
+import type { CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CodeSync } from '@/components/docskit/code';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { useApiCredentials } from '@/providers/api-credentials-provider';
 import type { OpenAPIOperation } from '../types';
 import { RequestBuilder } from './request-builder';
 import { executeRequest } from './request-executor';
@@ -24,6 +27,8 @@ interface APIPlaygroundProps {
       headerName?: string;
     };
   };
+  credentialId?: string;
+  credentialPublicOperations?: Array<{ method: string; path: string }>;
 }
 
 interface APIResponse {
@@ -35,14 +40,57 @@ interface APIResponse {
   error?: string;
 }
 
+type ObfuscatedInputStyle = CSSProperties & {
+  WebkitTextSecurity?: 'disc' | 'none';
+};
+
 export function APIPlayground({
   operation,
   baseUrl = '',
   clarityConversion = false,
   playgroundOptions,
+  credentialId,
+  credentialPublicOperations,
 }: APIPlaygroundProps) {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<APIResponse | null>(null);
+  const { getCredential, setCredential, clearCredential } = useApiCredentials();
+  const credentialValue = credentialId ? getCredential(credentialId) : '';
+  const [credentialInput, setCredentialInput] = useState(credentialValue);
+  const [credentialVisible, setCredentialVisible] = useState(false);
+  const credentialMaskStyle = useMemo<ObfuscatedInputStyle>(
+    () => ({
+      WebkitTextSecurity: credentialInput && !credentialVisible ? 'disc' : 'none',
+    }),
+    [credentialInput, credentialVisible],
+  );
+
+  useEffect(() => {
+    setCredentialInput(credentialValue);
+  }, [credentialValue]);
+
+  const isPublicOperation =
+    credentialPublicOperations?.some(
+      (entry) =>
+        entry.path === operation.path &&
+        entry.method.toUpperCase() === operation.method.toUpperCase(),
+    ) ?? false;
+
+  const needsCredential = Boolean(credentialId) && !isPublicOperation;
+
+  const mergedPlaygroundOptions = useMemo(() => {
+    if (needsCredential && credentialValue) {
+      return {
+        ...(playgroundOptions ?? {}),
+        defaultAuth: {
+          type: 'api-key' as const,
+          headerName: 'x-api-key',
+          value: credentialValue,
+        },
+      };
+    }
+    return playgroundOptions;
+  }, [credentialValue, needsCredential, playgroundOptions]);
 
   const getInitialFormData = () => {
     const initialData: Record<string, any> = {};
@@ -143,6 +191,18 @@ export function APIPlayground({
     }
 
     return true;
+  };
+
+  const handleCredentialChange = (value: string) => {
+    setCredentialInput(value);
+    if (!value) setCredentialVisible(false);
+    if (!credentialId) return;
+
+    if (value.trim()) {
+      setCredential(credentialId, value);
+    } else {
+      clearCredential(credentialId);
+    }
   };
 
   const handleSend = async () => {
@@ -272,8 +332,8 @@ export function APIPlayground({
         baseUrl || 'https://api.hiro.so',
         clarityConversion,
         {
-          proxyUrl: playgroundOptions?.proxyUrl,
-          auth: playgroundOptions?.defaultAuth,
+          proxyUrl: mergedPlaygroundOptions?.proxyUrl,
+          auth: mergedPlaygroundOptions?.defaultAuth,
         },
       );
       setResponse(result);
@@ -302,7 +362,7 @@ export function APIPlayground({
           />
           <Button
             onClick={handleSend}
-            disabled={loading || !isFormValid()}
+            disabled={loading || !isFormValid() || (needsCredential && !credentialValue)}
             className="h-8 px-3 bg-white dark:bg-neutral-700 border text-primary-foreground font-medium text-sm hover:enabled:bg-white/25 dark:hover:enabled:bg-neutral-800 hover:disabled:bg-white/50 dark:hover:disabled:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-auto"
           >
             {loading ? (
@@ -321,8 +381,60 @@ export function APIPlayground({
       </div>
 
       {/* Parameters sections - integrated into the same component */}
-      {hasParameters && (
+      {(hasParameters || needsCredential) && (
         <div>
+          {needsCredential && (
+            <div className="border-b border-border px-4 py-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-fono text-sm font-medium">Hiro API key</span>
+                {credentialValue ? (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 px-2 font-fono text-xs"
+                    onClick={() => handleCredentialChange('')}
+                  >
+                    Clear
+                  </Button>
+                ) : null}
+              </div>
+              <div className="flex items-center gap-2">
+                <Input
+                  value={credentialInput}
+                  onChange={(event) => handleCredentialChange(event.target.value)}
+                  placeholder="Enter your Hiro API key to enable requests"
+                  type="text"
+                  autoComplete="off"
+                  spellCheck={false}
+                  inputMode="text"
+                  name={`${credentialId}-api-key`}
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  className="text-sm font-fono bg-white dark:bg-neutral-950 border-border/50"
+                  data-lpignore="true"
+                  data-form-type="other"
+                  style={credentialMaskStyle}
+                />
+                {credentialInput && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="shrink-0"
+                    aria-label={credentialVisible ? 'Hide API key' : 'Show API key'}
+                    onClick={() => setCredentialVisible((prev) => !prev)}
+                  >
+                    {credentialVisible ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Path Parameters */}
           {pathParams.length > 0 && (
             <Collapsible
@@ -442,29 +554,29 @@ export function APIPlayground({
               </CollapsibleContent>
             </Collapsible>
           )}
+        </div>
+      )}
 
-          {/* Response section */}
-          {response && (
-            <div className="border-t border-border px-4 py-4">
-              {response.status && (
-                <Badge
-                  className={cn(
-                    'inline-flex items-center rounded border transition-colors font-fono text-xs px-1.5 py-0 h-5',
-                    response.status >= 200 && response.status < 300
-                      ? 'bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]'
-                      : 'bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]',
-                  )}
-                >
-                  {response.status} {response.statusText || ''}
-                </Badge>
+      {/* Response section */}
+      {response && (
+        <div className="border-t border-border px-4 py-4">
+          {response.status && (
+            <Badge
+              className={cn(
+                'inline-flex items-center rounded border transition-colors font-fono text-xs px-1.5 py-0 h-5',
+                response.status >= 200 && response.status < 300
+                  ? 'bg-[#e7f7e7] text-[#4B714D] border-[#c2ebc4] dark:bg-background dark:text-[#c2ebc4] dark:border-[#c2ebc4]'
+                  : 'bg-[#ffe7e7] text-[#8A4B4B] border-[#ffc2c2] dark:bg-background dark:text-[#ffc2c2] dark:border-[#ffc2c2]',
               )}
-              {response.error ? (
-                <div className="text-sm text-red-600 dark:text-red-400">{response.error}</div>
-              ) : response.data ? (
-                <ResponseBody data={response.data} clarityConversion={clarityConversion} />
-              ) : null}
-            </div>
+            >
+              {response.status} {response.statusText || ''}
+            </Badge>
           )}
+          {response.error ? (
+            <div className="text-sm text-red-600 dark:text-red-400">{response.error}</div>
+          ) : response.data ? (
+            <ResponseBody data={response.data} clarityConversion={clarityConversion} />
+          ) : null}
         </div>
       )}
     </div>

@@ -1,0 +1,79 @@
+---
+title: Editar chainhooks
+description: Modificar chainhooks existentes incluyendo filtros, acciones y opciones
+---
+:::callout
+La interfaz de usuario de la plataforma no admite actualmente la edición de chainhooks. Debe usar el SDK o API para realizar actualizaciones.
+:::
+
+## updateChainhook
+
+### Campos mutables vs inmutables
+
+| Mutable | Immutable |
+|---------------------|---------------------------|
+| `name` | `chain` |
+| `filters` | `network` |
+| `action` | |
+| `options` | |
+
+### Ejemplo de Actualización Básica
+
+```typescript -nc
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.updateChainhook('chainhook-uuid', {
+  name: 'Updated chainhook name',
+  filters: {
+    events: [{ type: 'ft_transfer', asset_identifier: 'SP...ABC.token::usdc' }],
+  },
+});
+```
+
+### Agregar filtro de eventos (preservando eventos existentes)
+
+Para agregar un nuevo filtro de evento a un chainhook existente, puedes obtener la definición actual, modificarla y luego actualizarla.
+
+```typescript -nc
+// ✅ Good: Fetch first
+const current = await client.getChainhook(uuid);
+await client.updateChainhook('chainhook-uuid', {
+  filters: {
+    events: [
+      ...(current.definition.filters.events ?? []),
+      { type: 'contract_call', contract_identifier: 'SP...XYZ.counter' },
+    ],
+  },
+});
+
+// ❌ Bad: Will overwrite any existing events
+await client.updateChainhook(uuid, {
+  filters: { events: { type: 'contract_call', contract_identifier: 'SP...XYZ.counter' } },
+});
+```
+
+### Actualizar Múltiples Campos
+
+```typescript -nc
+await client.updateChainhook('chainhook-uuid', {
+  name: 'Updated name',
+  filters: { events: [{ type: 'stx_transfer', sender: 'SP...SENDER' }] },
+  action: { type: 'http_post', url: 'https://new-url.com/webhooks' },
+  options: { decode_clarity_values: true },
+});
+
+const updated = await client.getChainhook('chainhook-uuid');
+console.log('Updated:', updated.definition.name);
+```
+
+## Próximos pasos
+
+:::next-steps
+* [Obtener chainhooks](/tools/chainhook/fetch): Recuperar información de chainhook antes de actualizar
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
+:::

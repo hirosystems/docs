@@ -1,0 +1,244 @@
+---
+title: Anatomía del payload
+description: Comprender la estructura de las cargas útiles de webhook de Chainhook
+---
+## Descripción General del Payload
+
+Un payload de Chainhook consiste en dos secciones principales: **evento** y **chainhook**:
+
+* `event` contiene los datos de la blockchain (bloques, transacciones, operaciones)
+* `chainhook` contiene metadatos sobre el chainhook que se activó
+
+***
+
+## Estructura Básica
+
+```json
+{
+  "event": {
+    "apply": [...],      // Blocks being applied to the chain
+    "rollback": [...],   // Blocks being rolled back (during reorgs)
+    "chain": "stacks",
+    "network": "mainnet"
+  },
+  "chainhook": {
+    "name": "my-chainhook",
+    "uuid": "be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185"
+  }
+}
+```
+
+***
+
+## Sección de Eventos
+
+### Apply Array
+
+El `apply` la matriz contiene bloques que se están agregando a la cadena canónica. Cada bloque incluye:
+
+```json
+{
+  "timestamp": 1757977309,
+  "block_identifier": {
+    "hash": "0xa204da7...",
+    "index": 3549902
+  },
+  "parent_block_identifier": {
+    "hash": "0xad0acff...",
+    "index": 3549901
+  },
+  "transactions": [...]
+}
+```
+
+### Array de Rollback
+
+El `rollback` array contiene bloques que se están eliminando durante una reorganización de cadena. Misma estructura que `apply`.
+
+:::callout
+Chainhook maneja automáticamente las reorganizaciones enviando eventos de reversión. Tu aplicación debe revertir cualquier cambio de estado de los bloques revertidos.
+:::
+
+***
+
+## Estructura de Transacción
+
+Cada transacción en el `transactions` array contiene:
+
+### Metadatos
+
+Información a nivel de transacción:
+
+```json
+{
+  "metadata": {
+    "type": "contract_call",
+    "nonce": 6689,
+    "result": {
+      "hex": "0x0703",
+      "repr": "(ok true)"
+    },
+    "status": "success",
+    "fee_rate": "3000",
+    "position": {
+      "index": 0,
+      "microblock_identifier": null
+    },
+    "execution_cost": {
+      "runtime": "7807",
+      "read_count": "5",
+      "read_length": "2441",
+      "write_count": "2",
+      "write_length": "1"
+    },
+    "sender_address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9",
+    "sponsor_address": null,
+    "canonical": true,
+    "sponsored": false,
+    "microblock_canonical": true
+  }
+}
+```
+
+### Identificador de Transacción
+
+Identificador único para la transacción:
+
+```json
+{
+  "transaction_identifier": {
+    "hash": "0x09defc9a6cd9318b5c458389d4dd57597203ec539818aec0de3cfcfd7af0c2ab"
+  }
+}
+```
+
+***
+
+## Arreglo de Operaciones
+
+Cada transacción incluye un `operations` array que describe los cambios de estado. Las operaciones están indexadas secuencialmente.
+
+### Operación de Tarifa
+
+Tarifa de transacción pagada:
+
+```json
+{
+  "type": "fee",
+  "amount": {
+    "value": "-3000",
+    "currency": {
+      "symbol": "STX",
+      "decimals": 6
+    }
+  },
+  "status": "success",
+  "account": {
+    "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+  },
+  "metadata": {
+    "sponsored": false
+  },
+  "operation_identifier": {
+    "index": 0
+  }
+}
+```
+
+### Operación de Llamada de Contrato
+
+Invocación de función de contrato:
+
+```json
+{
+  "type": "contract_call",
+  "status": "success",
+  "account": {
+    "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+  },
+  "metadata": {
+    "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token",
+    "function_name": "transfer",
+    "args": [
+      {
+        "hex": "0x01000000000000000000000002690ed9fe",
+        "name": "amount",
+        "repr": "u10352515582",
+        "type": "uint"
+      },
+      {
+        "hex": "0x0516362f36a4c7ca0318a59fe6448fd3a0c32bda724d",
+        "name": "sender",
+        "repr": "'SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9",
+        "type": "principal"
+      },
+      {
+        "hex": "0x05161740f4690c79466e3389a13476586e0cb3e1dfbf",
+        "name": "recipient",
+        "repr": "'SPBM1X391HWMCVHKH6GK8XJRDR6B7REZQYQ8KBCK",
+        "type": "principal"
+      },
+      {
+        "hex": "0x09",
+        "name": "memo",
+        "repr": "none",
+        "type": "(optional (buff 34))"
+      }
+    ]
+  },
+  "operation_identifier": {
+    "index": 1
+  }
+}
+```
+
+:::callout
+La `args` incluye arreglo `repr` y `type` campos cuando `decode_clarity_values` está habilitado en las opciones.
+:::
+
+### Operación de Transferencia de Token
+
+Transferencias FT/NFT/STX:
+
+```json
+{
+  "type": "token_transfer",
+  "amount": {
+    "value": "-10352515582",
+    "currency": {
+      "symbol": "",
+      "decimals": 0,
+      "metadata": {
+        "token_type": "ft",
+        "asset_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token::diko"
+      }
+    }
+  },
+  "status": "success",
+  "account": {
+    "address": "SPV2YDN4RZ506655KZK493YKM31JQPKJ9NN3QCX9"
+  },
+  "operation_identifier": {
+    "index": 2
+  }
+}
+```
+
+### Operación de Registro de Contrato
+
+Declaraciones de impresión de contratos:
+
+```json
+{
+  "type": "contract_log",
+  "status": "success",
+  "metadata": {
+    "topic": "print",
+    "value": "0x09",
+    "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-token"
+  },
+  "operation_identifier": {
+    "index": 4
+  }
+}
+```

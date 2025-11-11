@@ -43,6 +43,10 @@ const API_SPECS: ApiSpec[] = [
     name: 'runes',
     url: 'https://runes-api.vercel.app/openapi.json',
   },
+  {
+    name: 'chainhook',
+    url: 'https://chainhooks-api.vercel.app/openapi.json',
+  },
 ];
 
 const GITHUB_API_SPECS: GitHubApiSpec[] = [
