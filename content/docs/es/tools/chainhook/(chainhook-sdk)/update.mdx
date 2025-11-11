@@ -1,11 +1,9 @@
 ---
 title: Editar chainhooks
-description: Modificar chainhooks existentes usando el SDK
+description: Modificar chainhooks existentes incluyendo filtros, acciones y opciones
 ---
-Modifica chainhooks existentes incluyendo filtros, acciones y opciones. La interfaz de usuario de la Plataforma no soporta edición - usa el SDK en su lugar.
-
 :::callout
-La interfaz de la plataforma no admite actualmente la edición de chainhooks. Debes usar el SDK o API para realizar actualizaciones.
+La interfaz de usuario de la plataforma no admite actualmente la edición de chainhooks. Debe usar el SDK o API para realizar actualizaciones.
 :::
 
 ## updateChainhook
@@ -37,9 +35,9 @@ await client.updateChainhook('chainhook-uuid', {
 });
 ```
 
-### Agregar filtro de eventos (conservando los eventos existentes)
+### Agregar filtro de eventos (preservando eventos existentes)
 
-Para agregar un nuevo filtro de eventos a un chainhook existente, puedes obtener la definición actual, modificarla y luego actualizarla.
+Para agregar un nuevo filtro de evento a un chainhook existente, puedes obtener la definición actual, modificarla y luego actualizarla.
 
 ```typescript -nc
 // ✅ Good: Fetch first

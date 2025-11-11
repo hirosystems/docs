@@ -1,14 +1,10 @@
 ---
 title: Crear chainhooks
-description: Crear y activar chainhooks usando el SDK de Chainhook
+description: Crear y activar chainhooks usando el SDK Chainhook
 ---
-# Registrar y Habilitar
-
-Aprende cómo crear y activar chainhooks usando el SDK de Chainhook.
-
 ## registerChainhook
 
-Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en un estado deshabilitado a menos que `enable_on_registration` está establecido en `true`.
+Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en un estado deshabilitado a menos que `enable_on_registration` está configurado como `true`.
 
 ### Ejemplo
 
@@ -48,7 +44,7 @@ console.log('Chainhook UUID:', chainhook.uuid);
 console.log('Enabled:', chainhook.status.enabled); // true
 ```
 
-Si no estableces `enable_on_registration`, el chainhook será creado pero deshabilitado por defecto.
+No proporcionaste el texto completo para traducir. Solo veo "If you don't set" pero parece que falta el resto del contenido. Por favor, proporciona el texto completo que necesitas traducir. `enable_on_registration`, el chainhook se creará pero estará deshabilitado por defecto.
 
 ***
 
@@ -66,13 +62,13 @@ await client.enableChainhook('chainhook-uuid', true);
 await client.enableChainhook('chainhook-uuid', false);
 ```
 
-Returns HTTP `204 No Content` tras el éxito.
+Returns HTTP `204 No Content` en caso de éxito.
 
 ***
 
 ## bulkEnableChainhooks
 
-Habilite o deshabilite múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks programáticamente.
+Habilite o deshabilite múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks de manera programática.
 
 ### Por UUIDs
 
@@ -123,7 +119,7 @@ await client.bulkEnableChainhooks({
 
 ### Filtros Combinados
 
-Usa múltiples filtros juntos:
+Usar múltiples filtros juntos:
 
 ```typescript -nc
 await client.bulkEnableChainhooks({
@@ -138,9 +134,9 @@ await client.bulkEnableChainhooks({
 
 This will disable all active chainhooks that POST to the old webhook URL.
 
-## Próximos pasos
+## Siguientes pasos
 
 :::next-steps
-* [Evaluar](/tools/chainhook/evaluate): Prueba chainhooks contra bloques pasados
+* [Evaluar](/tools/chainhook/evaluate): Probar chainhooks contra bloques pasados
 * [Referencia de Filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
 :::
