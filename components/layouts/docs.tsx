@@ -331,7 +331,8 @@ export function SidebarItem({ item, children }: { item: PageTree.Node; children:
   }
 
   if (item.type === 'separator') {
-    const { label, badge } = parseSeparatorMeta(item.name);
+    const separatorName = typeof item.name === 'string' ? item.name : undefined;
+    const { label, badge } = parseSeparatorMeta(separatorName);
     return (
       <div className="flex items-center gap-2 mt-6 mb-2 first:mt-0 px-2">
         <p className="text-primary font-fono font-semibold mb-0">{label || item.name}</p>
