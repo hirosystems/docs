@@ -1,0 +1,166 @@
+---
+title: Introducción
+description: SDK de TypeScript/JavaScript para gestionar chainhooks programáticamente
+---
+## Descripción general
+
+El SDK de Chainhook (`@hirosystems/chainhooks-client`) proporciona un cliente TypeScript/JavaScript para gestionar chainhooks de forma programática.
+
+## Instalación
+
+<TerminalPicker>
+  ```terminal !! npm
+  $ npm install @hirosystems/chainhooks-client
+  ```
+
+  ```terminal !! yarn
+  $ yarn add @hirosystems/chainhooks-client
+  ```
+
+  ```terminal !! pnpm
+  $ pnpm add @hirosystems/chainhooks-client
+  ```
+
+  ```terminal !! bun
+  $ bun add @hirosystems/chainhooks-client
+  ```
+</TerminalPicker>
+
+## Ejemplo Rápido
+
+```typescript
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet, // or CHAINHOOKS_BASE_URL.mainnet
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+// Register and enable a chainhook
+const chainhook = await client.registerChainhook({
+  version: '1',
+  name: 'my-first-chainhook',
+  chain: 'stacks',
+  network: 'testnet',
+  filters: {
+    events: [
+      {
+        type: 'contract_call',
+        contract_identifier: 'SP...XYZ.counter',
+        function_name: 'increment',
+      },
+    ],
+  },
+  action: {
+    type: 'http_post',
+    url: 'https://example.com/webhooks',
+  },
+  options: {
+    decode_clarity_values: true,
+    enable_on_registration: true,
+  },
+});
+
+console.log('Chainhook created:', chainhook.uuid);
+```
+
+## URLs base
+
+El SDK proporciona constantes específicas de red:
+
+| Network | Constant | URL |
+|---------|----------|-----|
+| Red de prueba | `CHAINHOOKS_BASE_URL.testnet` | https://api.testnet.hiro.so |
+| Red principal | `CHAINHOOKS_BASE_URL.mainnet` | https://api.mainnet.hiro.so |
+
+```typescript
+import { CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+// Testnet (for development)
+const testnetClient = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+// Mainnet (for production)
+const mainnetClient = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.mainnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+```
+
+## Autenticación
+
+### Obtén tu Clave de API
+
+1. Visitar [platform.hiro.so](https://platform.hiro.so)
+2. Inicia sesión o crea una cuenta
+3. Navega a la sección de Claves API
+4. Generar o copiar tu clave API
+
+### Configurar Cliente
+
+```typescript
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!, // Store securely in environment variables
+});
+```
+
+:::callout
+type: warn
+
+### Claves API
+
+Nunca confirmes claves de API al control de versiones. Siempre usa variables de entorno o gestión segura de secretos.
+:::
+
+## Métodos del SDK
+
+El SDK proporciona los siguientes métodos:
+
+### Métodos Principales
+
+| Method | Description |
+|--------|-------------|
+| `registerChainhook()` | Crear un nuevo chainhook |
+| `getChainhooks()` | Lista todos tus chainhooks (con paginación) |
+| `getChainhook()` | Get a specific chainhook by UUID |
+| `updateChainhook()` | Actualizar un chainhook existente |
+| `deleteChainhook()` | Eliminar un chainhook |
+
+### Métodos de Activación
+
+| Method | Description |
+|--------|-------------|
+| `enableChainhook()` | Habilitar o deshabilitar un único chainhook |
+| `bulkEnableChainhooks()` | Habilitar o deshabilitar múltiples chainhooks con filtros |
+
+### Métodos de Utilidad
+
+| Method | Description |
+|--------|-------------|
+| `evaluateChainhook()` | Evaluar un chainhook contra bloques pasados específicos |
+| `rotateConsumerSecret()` | Rotar el secreto del webhook para verificación de carga útil |
+
+## Soporte para TypeScript
+
+### Tipos Disponibles
+
+El SDK proporciona definiciones completas de tipos TypeScript:
+
+```typescript
+import type {
+  ChainhookDefinitionSchema,      // Chainhook configuration
+  ChainhookStatusSchema,           // Status and activity info
+  EvaluateChainhookRequest,        // Evaluation parameters
+  BulkEnableChainhooksRequest,     // Bulk operation filters
+} from '@hirosystems/chainhooks-client';
+```
+
+## Próximos Pasos
+
+:::next-steps
+* [Inicio rápido](/tools/chainhook/quickstart): Comienza en 5 minutos
+* [Registrar y Habilitar](/tools/chainhook/register-enable): Crear y activar chainhooks
+:::

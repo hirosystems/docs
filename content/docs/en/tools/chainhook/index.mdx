@@ -1,57 +1,38 @@
 ---
 title: Chainhook
 sidebarTitle: Overview
-description: Chainhook is a reorg-aware indexer that serves reliable blockchain data for Bitcoin and Stacks.
+description: Chainhook is a webhook service for the Stacks blockchain that lets you register event streams and define precise filters to capture on-chain data as it happens.
 llm: false
 ---
 
+:::callout
+type: warn
+### Chainhook 2.0 Beta
+Chainhook 2.0 is currently in beta. If you encounter issues or have feedback, please reach out to [beta@hiro.so](mailto:beta@hiro.so).
+:::
+
 ## Overview
 
-Chainhook is a reorg-aware indexer that lets you build custom event streams from Bitcoin and Stacks blockchains. Unlike traditional indexers, Chainhook automatically handles blockchain reorganizations, ensuring your data stays accurate without manual reindexing.
+Chainhook makes it easy to subscribe to blockchain activity on Stacks by registering event streams, filtering for exactly the data you care about, and sending it straight to your app in real time.
 
-To explore Chainhook features with AI, copy and paste [llms.txt](/tools/chainhook/llms.txt) into your LLM of choice.
+With Chainhook 2.0, you can manage chainhooks through:
+- **[Chainhook SDK](/tools/chainhook/chainhook-sdk)** - TypeScript/JavaScript client for programmatic management
+- **[Hiro Platform](/tools/chainhook/platform-usage)** - Web-based UI for visual chainhook creation
+- **[Chainhook API](/apis/chainhook-api)** - Direct REST API access
 
-![Chainhook overview](/images/tools/chainhook/overview.svg)
-
-## Key features
+## Key Features
 
 - **Reorg-aware indexing** - Automatically handles blockchain forks and reorganizations
-- **If-this-then-that predicates** - Define custom logic to trigger actions on specific blockchain events
-- **Multi-chain support** - Works with both Bitcoin and Stacks blockchains
-- **Local development** - Test predicates against historical blockchain data
-
-## Installation
-
-<TerminalPicker storage="macOs">
-
-```terminal !! macOS
-$ brew install chainhook
-```
-
-```terminal !! Linux
-$ sudo snap install chainhook
-```
-
-```terminal !! Windows
-$ winget install HiroSystems.Chainhook
-```
-
-```terminal !! Cargo
-$ git clone https://github.com/hirosystems/chainhook.git
-$ cd chainhook && cargo chainhook-install
-```
-
-</TerminalPicker>
-
-## Next steps
+- **Event filtering** - Define custom logic to trigger actions on specific blockchain events
+- **Historical evaluation** - Test chainhooks against past blocks for indexing or debugging
 
 :::next-steps
-- [Quickstart](/tools/chainhook/quickstart): Get started with Chainhook.
-- [Register chainhooks locally](/tools/chainhook/register-chainhooks-on-devnet): Register chainhooks on your local blockchain.
+- [SDK introduction](/tools/chainhook/introduction): Get started with the Chainhook SDK
+- [Migration guide](/tools/chainhook/migration): Migration guide for upgrading to Chainhook 2.0
 :::
 
 :::callout
 type: help
-### Need help building with Chainhook?
-Reach out to us on the **#chainhook** channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section. There's also a [weekly office hours](https://www.addevent.com/event/oL21905919) call every Thursday at 11am ET.
+### Need help with Chainhook?
+Reach out to us on the <span className="font-bold">#chainhook</span> channel on [Discord](https://stacks.chat/) under the Hiro Developer Tools section.
 :::

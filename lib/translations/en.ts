@@ -95,6 +95,10 @@ export const en: Translations = {
       title: 'Token Metadata API',
       description: 'API for retrieving NFT and fungible token metadata.',
     },
+    chainhook: {
+      title: 'Chainhook API',
+      description: 'RESTful API for accessing Chainhook.',
+    },
     platform: {
       title: 'Platform API',
       description: 'API for accessing Hiro Platform data and functionality.',

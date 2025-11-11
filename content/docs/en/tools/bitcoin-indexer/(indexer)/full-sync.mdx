@@ -15,6 +15,8 @@ import { ArrowRight, Check } from 'lucide-react';
 - Monitor indexing progress effectively
 :::
 
+## Prerequisites
+
 :::prerequisites
 - Bitcoin Core node running with `txindex=1`
 - PostgreSQL running with databases created
@@ -179,8 +181,6 @@ Test that APIs are returning data:
 ```terminal -o
 $ curl http://localhost:3000/ordinals/v1/inscriptions/0
 ```
-
-## Next steps
 
 :::next-steps
 - [Hiro Archives](/tools/bitcoin-indexer/archive-bootstrap): Skip weeks of indexing by bootstrapping from Hiro's pre-indexed archives.

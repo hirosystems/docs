@@ -1,0 +1,319 @@
+---
+title: FAQ
+description: Frequently asked questions about Chainhook 2.0 Beta
+---
+
+## Chainhook 2.0 Beta
+
+<Accordion collapsible="true" type="multiple">
+  <AccordionItem value="beta-purpose">
+    <AccordionTrigger>What is the goal/purpose of the Chainhook 2.0 Beta?</AccordionTrigger>
+    <AccordionContent>
+Our goal during the Beta is to learn as much as possible about the reliability, performance and developer experience of Chainhooks 2.0 in anticipation of the full release. If you encounter any issues, have any questions, or would like to share feedback during the Beta, please reach out to [beta@hiro.so](mailto:beta@hiro.so).
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="beta-free">
+    <AccordionTrigger>Is the Chainhook 2.0 Beta free?</AccordionTrigger>
+    <AccordionContent>
+Yes! The Chainhooks 2.0 Beta is free for all participants.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="beta-limits">
+    <AccordionTrigger>Will there be configuration or rate limits imposed during the Beta?</AccordionTrigger>
+    <AccordionContent>
+All Beta users will initially be constrained to a limit of 10 Chainhook configurations.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="beta-pricing">
+    <AccordionTrigger>How will Chainhooks be priced following the Beta?</AccordionTrigger>
+    <AccordionContent>
+Chainhooks will be charged using a credit model for each delivery, with users able to select different credit limits depending on their usage. For Chainhooks 2.0 Beta users, your post-beta limits will initially be determined by your existing Hiro subscription tier.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Version Management
+
+<Accordion>
+  <AccordionItem value="v1-legacy">
+    <AccordionTrigger>What will happen to existing legacy Chainhooks running on v1.0?</AccordionTrigger>
+    <AccordionContent>
+Users with Chainhooks running on v1.0 will still be able to view them and receive deliveries, but once the beta launches, all new Chainhooks created in the Platform will run on v2.0.
+
+The API will also not support Chainhooks running on v1.0.
+
+:::callout
+Learn how to migrate your v1 chainhooks to v2 in the [Migration Guide](/tools/chainhook/migration).
+:::
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="v1-v2-access">
+    <AccordionTrigger>If v2.0 and v1.0 will be live at the same time, how do we manage both?</AccordionTrigger>
+    <AccordionContent>
+In the Platform, v1 chainhooks are read-only. You can view them and they will continue to deliver events, but you cannot modify them through the Platform UI.
+
+To modify v1 chainhooks programmatically, use the [Platform API](/apis/platform-api). However, we recommend migrating to v2 chainhooks instead. See the [Migration Guide](/tools/chainhook/migration) for a complete walkthrough.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="migration">
+    <AccordionTrigger>How do I migrate my v1 chainhooks to v2?</AccordionTrigger>
+    <AccordionContent>
+        To migrate your v1 chainhooks to v2, follow the steps outlined in the [Migration Guide](/tools/chainhook/migration).
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Platform vs SDK
+
+<Accordion>
+  <AccordionItem value="edit-chainhooks">
+    <AccordionTrigger>Can I edit my v2 Chainhooks?</AccordionTrigger>
+    <AccordionContent>
+The Platform currently does not support editing existing chainhooks. You must use the [Chainhook SDK](/tools/chainhook/chainhook-sdk) or [Chainhook API](/apis/chainhook-api) to edit your chainhooks.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="platform-vs-sdk">
+    <AccordionTrigger>When should I use the Platform vs the SDK?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p><strong>Use the Platform when:</strong></p>
+        <ul>
+          <li>Creating simple chainhooks with a UI</li>
+          <li>Viewing chainhook status and activity</li>
+          <li>Managing API keys</li>
+          <li>Getting started quickly</li>
+        </ul>
+        <p><strong>Use the SDK/API when:</strong></p>
+        <ul>
+          <li>You need to edit existing chainhooks</li>
+          <li>Programmatic chainhook management</li>
+          <li>Automating chainhook operations</li>
+          <li>Integrating into CI/CD pipelines</li>
+          <li>Managing many chainhooks at scale</li>
+        </ul>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Getting Started
+
+<Accordion>
+  <AccordionItem value="api-key">
+    <AccordionTrigger>How do I get a Hiro API key?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <ol>
+          <li>Visit <a href="https://platform.hiro.so">platform.hiro.so</a></li>
+          <li>Sign in or create an account</li>
+          <li>Navigate to the API Keys section</li>
+          <li>Generate or copy your API key</li>
+        </ol>
+        <p>Store your API key securely in environment variables and never commit it to version control.</p>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="mainnet-testnet">
+    <AccordionTrigger>What's the difference between mainnet and testnet?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <ul>
+          <li><strong>Mainnet</strong> - The production Stacks blockchain with real economic value</li>
+          <li><strong>Testnet</strong> - A test network for development and testing</li>
+        </ul>
+        <p>Always test your chainhooks on testnet before deploying to mainnet. Use these base URLs:</p>
+        <pre><code className="language-typescript">{`import { CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+// Testnet (for development)
+CHAINHOOKS_BASE_URL.testnet  // https://api.testnet.hiro.so
+
+// Mainnet (for production)
+CHAINHOOKS_BASE_URL.mainnet  // https://api.mainnet.hiro.so`}</code></pre>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Troubleshooting
+
+<Accordion>
+  <AccordionItem value="webhook-not-receiving">
+    <AccordionTrigger>My webhook isn't receiving events. What should I check?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p><strong>1. Verify chainhook is enabled</strong></p>
+        <pre><code className="language-typescript">{`const chainhook = await client.getChainhook('uuid');
+console.log('Enabled:', chainhook.status.enabled);`}</code></pre>
+        <p><strong>2. Check your webhook URL is accessible</strong></p>
+        <ul>
+          <li>URL must be publicly accessible over HTTPS</li>
+          <li>Test with tools like webhook.site or ngrok for local development</li>
+        </ul>
+        <p><strong>3. Verify your filters match blockchain events</strong></p>
+        <ul>
+          <li>Use <code>evaluateChainhook()</code> against a block you know contains matching events</li>
+          <li>Check the <a href="/tools/chainhook/reference/filters">Filter Reference</a> for correct syntax</li>
+        </ul>
+        <p><strong>4. Check webhook endpoint logs</strong></p>
+        <ul>
+          <li>Ensure your endpoint returns HTTP 200</li>
+          <li>Look for error messages in your application logs</li>
+        </ul>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="401-unauthorized">
+    <AccordionTrigger>I'm getting 401 Unauthorized errors</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p>Your API key may be incorrect or missing:</p>
+        <pre><code className="language-typescript">{`// Verify API key is set
+if (!process.env.HIRO_API_KEY) {
+  throw new Error('HIRO_API_KEY environment variable is required');
+}
+
+// Test the key
+try {
+  await client.getChainhooks();
+  console.log('✅ API key is valid');
+} catch (error) {
+  console.error('❌ Invalid API key');
+}`}</code></pre>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="test-before-enable">
+    <AccordionTrigger>How do I test my chainhook before enabling it?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p>Use the <code>evaluateChainhook()</code> method to test against known blocks:</p>
+        <pre><code className="language-typescript">{`// Create chainhook (disabled by default)
+const chainhook = await client.registerChainhook({
+  // ... your configuration
+  // Do NOT set enable_on_registration
+});
+
+// Test against a specific block
+await client.evaluateChainhook(chainhook.uuid, {
+  block_height: 150000,
+});
+
+// Check your webhook endpoint for the payload
+// If it works, enable the chainhook
+await client.enableChainhook(chainhook.uuid, true);`}</code></pre>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="duplicate-deliveries">
+    <AccordionTrigger>Why am I getting duplicate webhook deliveries?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p>Chainhook may retry webhook deliveries if your endpoint doesn't return HTTP 200. Make your webhook processing idempotent:</p>
+        <pre><code className="language-typescript">{`app.post('/webhooks', async (req, res) => {
+  const blockHeight = req.body.event.apply[0].block_identifier.index;
+
+  // Check if already processed
+  const exists = await db.isBlockProcessed(blockHeight);
+  if (exists) {
+    console.log(\`Block \${blockHeight} already processed, skipping\`);
+    return res.sendStatus(200);
+  }
+
+  // Process the webhook
+  await processWebhook(req.body);
+
+  // Return 200 immediately
+  res.sendStatus(200);
+});`}</code></pre>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+## Common Questions
+
+<Accordion>
+  <AccordionItem value="real-time">
+    <AccordionTrigger>Can I use chainhooks for real-time notifications?</AccordionTrigger>
+    <AccordionContent>
+Yes! Chainhooks are designed for real-time blockchain event delivery. Webhook payloads are delivered within seconds of events occurring on-chain.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="reorgs">
+    <AccordionTrigger>How do chainhooks handle blockchain reorganizations?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p>Chainhook automatically detects reorgs and sends both <code>rollback</code> and <code>apply</code> events. Always process rollback events first to maintain data consistency.</p>
+        <p>Learn more in the <a href="/tools/chainhook/usage#handling-blockchain-reorganizations">Usage guide</a>.</p>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="multiple-filters">
+    <AccordionTrigger>Can I filter by multiple event types?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p>Yes! You can include multiple filters in the <code>events</code> array. The chainhook will trigger if <strong>any</strong> filter matches:</p>
+        <pre><code className="language-typescript">{`{
+  filters: {
+    events: [
+      { type: 'ft_transfer', asset_identifier: 'SP...TOKEN::usdc' },
+      { type: 'nft_mint', asset_identifier: 'SP...NFT::collectible' },
+      { type: 'contract_call', contract_identifier: 'SP...DEX.swap' },
+    ],
+  }
+}`}</code></pre>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="endpoint-down">
+    <AccordionTrigger>What happens if my webhook endpoint is down?</AccordionTrigger>
+    <AccordionContent>
+Chainhook will retry webhook deliveries with exponential backoff. However, extended downtime may result in missed events. Implement proper error handling and monitoring for production applications.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="test-locally">
+    <AccordionTrigger>Can I test chainhooks locally?</AccordionTrigger>
+    <AccordionContent>
+      <div>
+        <p>Yes! Use tools like <a href="https://ngrok.com/">ngrok</a> or <a href="https://webhook.site">webhook.site</a> to expose your local development server:</p>
+        <pre><code className="language-bash">{`# Expose local port 3000
+ngrok http 3000
+
+# Use the ngrok URL in your chainhook
+# https://abc123.ngrok-free.app/webhooks`}</code></pre>
+      </div>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+---
+
+## Where to Get Help
+
+- **Discord**: Join the **#chainhook** channel on [Discord](https://stacks.chat/) under Hiro Developer Tools
+- **Weekly Office Hours**: Every Thursday at 11am ET ([add to calendar](https://www.addevent.com/event/oL21905919))
+- **Email Support**: [beta@hiro.so](mailto:beta@hiro.so)
+- **GitHub Issues**: [hirosystems/chainhook](https://github.com/hirosystems/chainhook/issues)
+
+---
+
+## Next Steps
+
+:::next-steps
+- [Migration Guide](/tools/chainhook/migration): Migrate from v1 to v2
+- [SDK Quickstart](/tools/chainhook/quickstart): Get started with the SDK
+:::

@@ -1,56 +1,42 @@
 ---
 title: Chainhook
-sidebarTitle: Visión general
-description: Chainhook es un indexador consciente de las reorganizaciones que proporciona datos confiables de blockchain para Bitcoin y Stacks.
+sidebarTitle: Descripción general
+description: Chainhook es un servicio de webhook para la blockchain de Stacks que te permite registrar flujos de eventos y definir filtros precisos para capturar datos en cadena mientras suceden.
 llm: false
 ---
-## Visión general
+:::callout
+type: warn
 
-Chainhook es un indexador consciente de las reorganizaciones que te permite construir flujos de eventos personalizados de las cadenas de bloques de Bitcoin y Stacks. A diferencia de los indexadores tradicionales, Chainhook maneja automáticamente las reorganizaciones de la cadena de bloques, asegurando que tus datos se mantengan precisos sin necesidad de reindexación manual.
+### Chainhook 2.0 Beta
 
-Para explorar las características de Chainhook con IA, copie y pegue [llms.txt](/tools/chainhook/llms.txt) en tu LLM de elección.
+Chainhook 2.0 está actualmente en beta. Si encuentras problemas o tienes comentarios, por favor contacta a [beta@hiro.so](mailto\:beta@hiro.so).
+:::
 
-![Descripción general de Chainhook](/images/tools/chainhook/overview.svg)
+## Descripción general
 
-## Características principales
+Chainhook facilita la suscripción a la actividad blockchain en Stacks mediante el registro de flujos de eventos, filtrando exactamente los datos que te interesan y enviándolos directamente a tu aplicación en tiempo real.
 
-* **Indexación consciente de la reorganización** - Maneja automáticamente las bifurcaciones y reorganizaciones de la cadena de bloques
-* **Predicados si-esto-entonces-aquello** - Definir lógica personalizada para activar acciones en eventos específicos de la blockchain
-* **Soporte para múltiples cadenas** - Funciona con las cadenas de bloques de Bitcoin y Stacks
-* **Desarrollo local** - Probar predicados contra datos históricos de la cadena de bloques
+Con Chainhook 2.0, puedes gestionar chainhooks a través de:
 
-## Instalación
+* **[SDK de Chainhook](/tools/chainhook/chainhook-sdk)** - Cliente TypeScript/JavaScript para gestión programática
+* **[Plataforma Hiro](/tools/chainhook/platform-usage)** - UI basada en web para la creación visual de chainhooks
+* **[API de Chainhook](/apis/chainhook-api)** - Direct REST API access
 
-<TerminalPicker storage="macOs">
-  ```terminal !! macOS
-  $ brew install chainhook
-  ```
+## Características Clave
 
-  ```terminal !! Linux
-  $ sudo snap install chainhook
-  ```
-
-  ```terminal !! Windows
-  $ winget install HiroSystems.Chainhook
-  ```
-
-  ```terminal !! Cargo
-  $ git clone https://github.com/hirosystems/chainhook.git
-  $ cd chainhook && cargo chainhook-install
-  ```
-</TerminalPicker>
-
-## Próximos pasos
+* **Indexación consciente de reorganización** - Maneja automáticamente las bifurcaciones y reorganizaciones de la blockchain
+* **Filtrado de eventos** - Define lógica personalizada para activar acciones en eventos específicos de blockchain
+* **Evaluación histórica** - Prueba chainhooks contra bloques pasados para indexación o depuración
 
 :::next-steps
-* [Inicio rápido](/tools/chainhook/quickstart): Comienza con Chainhook.
-* [Registrar chainhooks localmente](/tools/chainhook/register-chainhooks-on-devnet): Registrar chainhooks en tu blockchain local.
+- [Introducción del SDK](/tools/chainhook/introduction): Comienza con el SDK de Chainhook
+- [Guía de migración](/tools/chainhook/migration): Guía de migración para actualizar a Chainhook 2.0
 :::
 
 :::callout
 type: help
 
-### ¿Necesitas ayuda para construir con Chainhook?
+### ¿Necesitas ayuda con Chainhook?
 
-Contáctenos en el **#chainhook** canal encendido [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro. También hay una [horario de oficina semanal](https://www.addevent.com/event/oL21905919) llamada todos los jueves a las 11 am ET.
+Comunícate con nosotros en el <span className="font-bold">#chainhook</span> canal activado [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro.
 :::

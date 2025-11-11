@@ -12,7 +12,10 @@ export function CopyButton({ text, className }: { text: string; className?: stri
       type="button"
       className={cn(
         copied && '!bg-[#A6E3A1] hover:bg-[#A6E3A1] !text-[hsl(var(--dark))]/70',
-        'hover:bg-accent -m-1 p-1 rounded hidden sm:block',
+        'bg-card/80 -m-1 p-1 rounded hidden sm:block backdrop-blur',
+        'opacity-0 group-hover:opacity-100 focus-visible:opacity-100',
+        'pointer-events-none group-hover:pointer-events-auto focus-visible:pointer-events-auto',
+        'transition-opacity duration-200',
         className,
       )}
       onClick={() => {

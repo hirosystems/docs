@@ -85,11 +85,12 @@ export async function executeRequest(
     }
   }
 
+  const methodSupportsBody = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(
+    operation.method.toUpperCase(),
+  );
+
   let requestBody: any;
-  if (
-    formData.body &&
-    (operation.requestBody || ['POST', 'PUT', 'PATCH'].includes(operation.method.toUpperCase()))
-  ) {
+  if (formData.body && (operation.requestBody || methodSupportsBody)) {
     try {
       // Parse and re-stringify to validate JSON
       const parsedBody = JSON.parse(formData.body);
@@ -99,15 +100,8 @@ export async function executeRequest(
       console.error('Failed to parse body as JSON:', error);
       requestBody = formData.body;
     }
-  } else {
-    console.log(
-      'No body to send. formData.body:',
-      formData.body,
-      'operation.requestBody:',
-      operation.requestBody,
-      'method:',
-      operation.method,
-    );
+  } else if (operation.requestBody?.required && !formData.body) {
+    console.warn(`Request body is required for ${operation.method} ${operation.path}`);
   }
 
   const startTime = performance.now();

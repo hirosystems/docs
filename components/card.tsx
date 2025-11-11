@@ -123,6 +123,7 @@ export type SecondaryCardProps = {
   title: string;
   description: string;
   tag?: string;
+  beta?: string;
 } & Omit<LinkProps, 'title'>;
 
 export function SecondaryCard({
@@ -174,6 +175,7 @@ export type IndexCardProps = {
   title: string;
   description: string;
   tag?: string;
+  badge?: 'new' | 'beta';
 } & Omit<LinkProps, 'title'>;
 
 export function IndexCard({
@@ -181,10 +183,15 @@ export function IndexCard({
   title,
   description,
   tag,
+  badge,
   ...props
 }: IndexCardProps): React.ReactElement {
   const isBitcoinTag =
     tag && (tag.toLowerCase() === 'bitcoin' || tag.toLowerCase() === 'bitcoin l1');
+  const badgeClassName =
+    badge === 'beta'
+      ? 'bg-brand-orange dark:bg-brand-orange text-neutral-950'
+      : 'bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)] text-neutral-950';
 
   return (
     <Link
@@ -201,17 +208,26 @@ export function IndexCard({
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="font-normal text-card-foreground mb-2 leading-tight">{title}</h3>
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="font-normal text-card-foreground leading-tight">{title}</h3>
+            {badge && (
+              <Badge
+                className={cn(
+                  'font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none',
+                  badgeClassName,
+                )}
+              >
+                {badge.toUpperCase()}
+              </Badge>
+            )}
+          </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
         </div>
         {tag && (
           <Badge
             variant="outline"
             className={cn(
-              'uppercase rounded-md transition-colors h-fit',
-              isBitcoinTag
-                ? 'bg-orange-500 dark:bg-brand-orange text-neutral-900 border-none'
-                : 'text-card-foreground bg-accent border border-border shadow-md',
+              'uppercase rounded-md transition-colors h-fit bg-neutral-800 text-white dark:bg-brand-gold dark:text-neutral-900 border-none',
             )}
           >
             {tag}
@@ -223,12 +239,24 @@ export function IndexCard({
 }
 
 export type SmallCardProps = {
-  icon: ReactNode;
+  icon?: ReactNode;
   title: string;
   description: string;
+  badge?: 'new' | 'beta';
 } & Omit<LinkProps, 'title'>;
 
-export function SmallCard({ icon, title, description, ...props }: CardProps): React.ReactElement {
+export function SmallCard({
+  icon,
+  title,
+  description,
+  badge,
+  ...props
+}: SmallCardProps): React.ReactElement {
+  const badgeClassName =
+    badge === 'beta'
+      ? 'bg-brand-orange dark:bg-brand-orange text-neutral-950'
+      : 'bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)] text-neutral-950';
+
   return (
     <Link
       {...props}
@@ -244,9 +272,21 @@ export function SmallCard({ icon, title, description, ...props }: CardProps): Re
           </div>
         )}
         <div className="flex flex-col w-full">
-          <h3 className="mb-1 font-inter font-medium text-md text-primary dark:text-[#f6f5f3]">
-            {title}
-          </h3>
+          <div className="flex items-center gap-2">
+            <h3 className="mb-1 font-inter font-medium text-md text-primary dark:text-[#f6f5f3]">
+              {title}
+            </h3>
+            {badge && (
+              <Badge
+                className={cn(
+                  'font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none',
+                  badgeClassName,
+                )}
+              >
+                {badge.toUpperCase()}
+              </Badge>
+            )}
+          </div>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
       </div>

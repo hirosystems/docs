@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { aeonik, aeonikFono, aeonikMono, inter } from '@/fonts';
 import { KeyboardShortcutsProvider } from '@/hooks/use-keyboard-shortcuts';
 import { QueryProvider } from '@/providers/query-provider';
+import { ApiCredentialsProvider } from '@/providers/api-credentials-provider';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -14,15 +15,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="flex flex-col min-h-screen">
         <QueryProvider>
-          <KeyboardShortcutsProvider>
-            <RootProvider
-              search={{
-                enabled: true,
-              }}
-            >
-              {children}
-            </RootProvider>
-          </KeyboardShortcutsProvider>
+          <ApiCredentialsProvider>
+            <KeyboardShortcutsProvider>
+              <RootProvider
+                search={{
+                  enabled: true,
+                }}
+              >
+                {children}
+              </RootProvider>
+            </KeyboardShortcutsProvider>
+          </ApiCredentialsProvider>
         </QueryProvider>
       </body>
     </html>

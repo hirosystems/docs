@@ -80,7 +80,7 @@ export class ReferenceMarkdownGenerator {
     const sections: string[] = [];
 
     // Using Accordion JSX syntax
-    sections.push(`<Accordion type="single" collapsible>`);
+    sections.push(`<Accordion>`);
     sections.push(`  <AccordionItem value="${method.name}">`);
     sections.push(`    <AccordionTrigger>${method.name}</AccordionTrigger>`);
     sections.push(`    <AccordionContent>`);
@@ -271,7 +271,7 @@ bun add ${packageName}
       });
 
       if (namespaceFunctions.length > 0) {
-        sections.push(`<Accordion type="single" collapsible>`);
+        sections.push(`<Accordion>`);
 
         namespaceFunctions.forEach((func) => {
           // Skip the namespace itself

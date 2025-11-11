@@ -52,6 +52,7 @@ export interface MainItemType extends BaseLinkType {
   text: ReactNode;
   description?: ReactNode;
   isNew?: boolean;
+  isBeta?: boolean;
 }
 
 export interface IconItemType extends BaseLinkType {
@@ -311,13 +312,28 @@ export function renderNavItem(item: LinkItemType): ReactNode {
                       >
                         {menuItem.text}
                       </Link>
-                      {menuItem.isNew && (
-                        <span
-                          key="new"
-                          className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none"
-                        >
-                          New
-                        </span>
+                      {(menuItem.isNew || menuItem.isBeta) && (
+                        <div className="flex items-center gap-1">
+                          {menuItem.isNew && (
+                            <span
+                              key="new"
+                              className={cn(
+                                'font-regular text-[10px] px-1 py-0.5 rounded uppercase text-neutral-950 border-none',
+                                'bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)]',
+                              )}
+                            >
+                              New
+                            </span>
+                          )}
+                          {menuItem.isBeta && (
+                            <span
+                              key="beta"
+                              className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none"
+                            >
+                              Beta
+                            </span>
+                          )}
+                        </div>
                       )}
                     </div>
                   </NavigationMenuLink>
@@ -378,7 +394,23 @@ function DropdownNavItem({ item }: { item: DropdownItemType }) {
             return (
               <DropdownMenuItem key={dropdownItem.url} asChild>
                 <Link href={dropdownItem.url} className="flex flex-col gap-1 cursor-pointer p-3">
-                  <div className="font-medium text-sm">{dropdownItem.text}</div>
+                  <div className="font-medium text-sm flex items-center gap-2">
+                    {dropdownItem.text}
+                    {(dropdownItem.isNew || dropdownItem.isBeta) && (
+                      <div className="flex items-center gap-1">
+                        {dropdownItem.isNew && (
+                          <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase text-neutral-950 border-none bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)]">
+                            New
+                          </span>
+                        )}
+                        {dropdownItem.isBeta && (
+                          <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-orange-500 dark:bg-brand-orange text-neutral-950 border-none">
+                            Beta
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                   {dropdownItem.description && (
                     <div className="text-sm text-muted-foreground">{dropdownItem.description}</div>
                   )}

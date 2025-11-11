@@ -16,12 +16,15 @@ export default function ToolsPage() {
               href="/tools/chainhook"
               title="Chainhook"
               icon={<Chainhook />}
+              badge="beta"
+              tag="Stacks"
               description="Create custom event streams and triggers for real-time blockchain data processing."
             />
             <IndexCard
               href="/tools/contract-monitoring"
               title="Contract Monitoring"
               icon={<Brackets />}
+              tag="Stacks"
               description="Monitor and track smart contract activity and performance metrics."
             />
             <IndexCard
