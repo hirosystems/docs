@@ -1,17 +1,16 @@
 ---
-title: Create chainhooks
-description: Create and activate chainhooks using the Chainhook SDK
+title: Crear chainhooks
+description: Crear y activar chainhooks usando el SDK de Chainhook
 ---
+# Registrar y Habilitar
 
-# Register & Enable
-
-Learn how to create and activate chainhooks using the Chainhook SDK.
+Aprende cómo crear y activar chainhooks usando el SDK de Chainhook.
 
 ## registerChainhook
 
-Creates a new chainhook configuration. By default, new chainhooks are created in a disabled state unless `enable_on_registration` is set to `true`.
+Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en un estado deshabilitado a menos que `enable_on_registration` está establecido en `true`.
 
-### Example
+### Ejemplo
 
 ```ts -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
@@ -49,17 +48,17 @@ console.log('Chainhook UUID:', chainhook.uuid);
 console.log('Enabled:', chainhook.status.enabled); // true
 ```
 
-If you don't set `enable_on_registration`, the chainhook will be created but disabled by default.
+Si no estableces `enable_on_registration`, el chainhook será creado pero deshabilitado por defecto.
 
----
+***
 
 ## enableChainhook
 
 Enable or disable a single chainhook by UUID. This allows you to enable chainhooks after registration or pause without deleting it.
 
-### Examples
+### Ejemplos
 
-```typescript
+```typescript -nc
 // Enable a chainhook
 await client.enableChainhook('chainhook-uuid', true);
 
@@ -67,19 +66,19 @@ await client.enableChainhook('chainhook-uuid', true);
 await client.enableChainhook('chainhook-uuid', false);
 ```
 
-Returns HTTP `204 No Content` on success.
+Returns HTTP `204 No Content` tras el éxito.
 
----
+***
 
 ## bulkEnableChainhooks
 
-Enable or disable multiple chainhooks at once using filters. This is useful for managing many chainhooks programmatically.
+Habilite o deshabilite múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks programáticamente.
 
-### By UUIDs
+### Por UUIDs
 
-Enable specific chainhooks by their UUIDs (maximum 200):
+Habilitar chainhooks específicos por sus UUIDs (máximo 200):
 
-```typescript
+```typescript -nc
 await client.bulkEnableChainhooks({
   enabled: true,
   filters: {
@@ -93,11 +92,11 @@ await client.bulkEnableChainhooks({
 });
 ```
 
-### By Webhook URL
+### Por URL de Webhook
 
 Enable all chainhooks that POST to a specific URL:
 
-```typescript
+```typescript -nc
 await client.bulkEnableChainhooks({
   enabled: true,
   filters: {
@@ -107,11 +106,11 @@ await client.bulkEnableChainhooks({
 });
 ```
 
-### By Status
+### Por Estado
 
-Enable all chainhooks with a specific status:
+Habilitar todos los chainhooks con un estado específico:
 
-```typescript
+```typescript -nc
 
 await client.bulkEnableChainhooks({
   enabled: true,
@@ -122,11 +121,11 @@ await client.bulkEnableChainhooks({
 });
 ```
 
-### Combined Filters
+### Filtros Combinados
 
-Use multiple filters together:
+Usa múltiples filtros juntos:
 
-```typescript
+```typescript -nc
 await client.bulkEnableChainhooks({
   enabled: false, // Disable matching chainhooks
   filters: {
@@ -139,7 +138,9 @@ await client.bulkEnableChainhooks({
 
 This will disable all active chainhooks that POST to the old webhook URL.
 
+## Próximos pasos
+
 :::next-steps
-- [Evaluate](/tools/chainhook/evaluate): Test chainhooks against past blocks
-- [Filter Reference](/tools/chainhook/reference/filters): Explore all filter options
+* [Evaluar](/tools/chainhook/evaluate): Prueba chainhooks contra bloques pasados
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
 :::

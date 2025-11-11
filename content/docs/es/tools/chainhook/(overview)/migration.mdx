@@ -5,7 +5,7 @@ description: Guía para migrar chainhooks heredados a v2
 :::callout
 ### Gestión de chainhooks v1
 
-Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma; los gestionas a través del [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
+Las chainhooks heredadas v1 permanecen de solo lectura en la interfaz de usuario de la plataforma; las gestionas a través de la [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
 :::
 
 ## Lo que aprenderás
@@ -28,7 +28,7 @@ Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma
 
     Usa la API de la Plataforma para obtener los chainhooks que quieres migrar.
 
-    ```ts index.ts
+    ```ts index.ts -c
     const response = await fetch(`https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`, {
       headers: {
         'content-type': 'application/json'
@@ -42,18 +42,20 @@ Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma
   <Step>
     ### Comenzar el mapeo al nuevo formato v2
 
-    Traduce las estructuras v1 a formatos v2 antes de crear nuevos hooks. La siguiente tabla muestra el mapeo entre las estructuras v1 y v2:
+    Traduce las estructuras v1 a formatos v2 antes de crear nuevos hooks. La siguiente tabla muestra la correspondencia entre las estructuras v1 y v2:
 
-    | v1 | v2 | Notas |
+    | v1 | v2 | Notes |
     |------------|-----------|-------|
-    | `if_this.scope` I notice that you've provided the translation rules but the actual text to translate appears to be just a single vertical bar "|".&#x20;
+    | `if_this.scope` | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
+    | `if_this.actions` I notice that you've provided the translation rules and context, but the actual text to translate appears to be missing. You've included:
 
-    | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
-    | `if_this.actions` I don't see any text to translate in your message. You've provided the translation rules and formatting, but the actual text to translate appears to be missing after "Text to translate:" - there's only a vertical bar "|".
+    \- The instruction to translate from English to Spanish
+    \- Detailed rules about preserving formatting, field names, and specific terms
+    \- But only a single "|" character as the text to translate
 
-    Could you please provide the text you'd like me to translate from English to Spanish? `type` | `transfer` se asigna a `*_transfer`. |
-    | `then_that.http_post.url` | `action.url` | v2 maneja secretos automáticamente. |
-    | `networks.mainnet` | `network: "mainnet"` | Crea un hook v2 por red. |
+    Could you please provide the actual text content that needs to be translated? `type` I don't see any text provided to translate. Please provide the text you'd like me to translate from English to Spanish, and I'll follow all the critical rules you've specified. `transfer` se asigna a `*_transfer`. |
+    | `then_that.http_post.url` | `action.url` | v2 maneja los secretos automáticamente. |
+    | `networks.mainnet` | `network: "mainnet"` | Crear un hook v2 por red. |
     | `authorization_header` | Gestión de secretos de webhook | Usar `rotateConsumerSecret()` después del registro. |
 
     #### Ejemplo
@@ -92,7 +94,7 @@ Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma
       ```
     </CodeTabs>
 
-    Para más detalles sobre los cambios de formato, consulta el [Filtros](/tools/chainhook/reference/filters) guía de referencia.
+    Para más detalles sobre los cambios de formato, consulte el [Filtros](/tools/chainhook/reference/filters) guía de referencia.
   </Step>
 
   <Step>
@@ -168,7 +170,7 @@ Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma
 
     ### Mejores prácticas
 
-    Mantén ambos hooks v1 y v2 activos hasta que verifiques la paridad de entrega.
+    Mantén tanto los hooks v1 como v2 activos hasta que verifiques la paridad de entrega.
     :::
 
     #### Verificaciones de habilitación en v2
@@ -193,9 +195,9 @@ Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma
       ```
     </CodeTabs>
 
-    #### Eliminar chainhooks legacy
+    #### Eliminar chainhooks heredados
 
-    ```ts
+    ```ts -c
     const response = await fetch(
       `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,{
         method: 'DELETE',
@@ -212,20 +214,20 @@ Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma
 
 ## Referencia de filtros
 
-### Alcances comunes
+### Ámbitos comunes
 
 | v1 | Acciones Típicas | v2 | Extras |
 |----------|-----------------|-----------|--------|
-| `stx_event` | `transfer` I notice that you've provided the critical rules for translation, but the actual text to translate appears to be just a single vertical bar "|".&#x20;
-
-| `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
-| `contract_call` | n/a | `contract_call` | Agregar `contract_identifier` y `function_name`. |
+| `stx_event` | `transfer` | `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
+| `contract_call` | n/a | `contract_call` | Añadir `contract_identifier` y `function_name`. |
 | `ft_event` | `transfer` | `ft_transfer` | Especificar `asset_identifier`. |
 | `nft_event` | `transfer`, `mint` | `nft_transfer` · `nft_mint` | Proporcionar `asset_identifier`. |
 
 Para más detalles, consulta el [Filtros](/tools/chainhook/reference/filters) página de referencia.
 
+## Próximos pasos
+
 :::next-steps
-* [Documentación del SDK](/tools/chainhook/chainhook-sdk): Documentación del SDK
-* [Referencia de Filtros](/tools/chainhook/reference/filters): Referencia de Filtros
+* [Preguntas Frecuentes](/tools/chainhook/faq): Preguntas frecuentes de Chainhook 2.0
+* [Referencia de Filtro](/tools/chainhook/reference/filters): Referencia de Filtros
 :::

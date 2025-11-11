@@ -29,7 +29,7 @@ The Chainhook SDK (`@hirosystems/chainhooks-client`) provides a TypeScript/JavaS
 
 ## Quick Example
 
-```typescript
+```typescript -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -74,7 +74,7 @@ The SDK provides network-specific constants:
 | Testnet | `CHAINHOOKS_BASE_URL.testnet` | https://api.testnet.hiro.so |
 | Mainnet | `CHAINHOOKS_BASE_URL.mainnet` | https://api.mainnet.hiro.so |
 
-```typescript
+```typescript -nc
 import { CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 // Testnet (for development)
@@ -101,7 +101,7 @@ const mainnetClient = new ChainhooksClient({
 
 ### Configure Client
 
-```typescript
+```typescript -nc
 const client = new ChainhooksClient({
   baseUrl: CHAINHOOKS_BASE_URL.testnet,
   apiKey: process.env.HIRO_API_KEY!, // Store securely in environment variables
@@ -148,7 +148,7 @@ The SDK provides the following methods:
 
 The SDK provides full TypeScript type definitions:
 
-```typescript
+```typescript -nc
 import type {
   ChainhookDefinitionSchema,      // Chainhook configuration
   ChainhookStatusSchema,           // Status and activity info
@@ -160,6 +160,6 @@ import type {
 ## Next Steps
 
 :::next-steps
-- [Quickstart](/tools/chainhook/quickstart): Get started in 5 minutes
-- [Register & Enable](/tools/chainhook/register-enable): Create and activate chainhooks
+- [Create chainhooks](/tools/chainhook/create): Create and activate chainhooks
+- [Manage consumer secrets](/tools/chainhook/keys): Learn how to validate Chainhook delivery
 :::

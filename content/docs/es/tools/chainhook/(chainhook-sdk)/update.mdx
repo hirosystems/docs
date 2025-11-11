@@ -1,17 +1,16 @@
 ---
-title: Edit chainhooks
-description: Modify existing chainhooks using the SDK
+title: Editar chainhooks
+description: Modificar chainhooks existentes usando el SDK
 ---
-
-Modify existing chainhooks including filters, actions, and options. The Platform UI doesn't support editing - use the SDK instead.
+Modifica chainhooks existentes incluyendo filtros, acciones y opciones. La interfaz de usuario de la Plataforma no soporta edición - usa el SDK en su lugar.
 
 :::callout
-The Platform UI does not currently support editing chainhooks. You must use the SDK or API to make updates.
+La interfaz de la plataforma no admite actualmente la edición de chainhooks. Debes usar el SDK o API para realizar actualizaciones.
 :::
 
 ## updateChainhook
 
-### Mutable vs Immutable fields
+### Campos mutables vs inmutables
 
 | Mutable | Immutable |
 |---------------------|---------------------------|
@@ -20,9 +19,9 @@ The Platform UI does not currently support editing chainhooks. You must use the 
 | `action` | |
 | `options` | |
 
-### Basic Update Example
+### Ejemplo de Actualización Básica
 
-```typescript
+```typescript -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -38,11 +37,11 @@ await client.updateChainhook('chainhook-uuid', {
 });
 ```
 
-### Add event filter (while preserving existing events)
+### Agregar filtro de eventos (conservando los eventos existentes)
 
-In order to add a new event filter to an existing chainhook, you can fetch the current definition, modify it, and then update it.
+Para agregar un nuevo filtro de eventos a un chainhook existente, puedes obtener la definición actual, modificarla y luego actualizarla.
 
-```typescript
+```typescript -nc
 // ✅ Good: Fetch first
 const current = await client.getChainhook(uuid);
 await client.updateChainhook('chainhook-uuid', {
@@ -60,9 +59,9 @@ await client.updateChainhook(uuid, {
 });
 ```
 
-### Update Multiple Fields
+### Actualizar Múltiples Campos
 
-```typescript
+```typescript -nc
 await client.updateChainhook('chainhook-uuid', {
   name: 'Updated name',
   filters: { events: [{ type: 'stx_transfer', sender: 'SP...SENDER' }] },
@@ -74,7 +73,9 @@ const updated = await client.getChainhook('chainhook-uuid');
 console.log('Updated:', updated.definition.name);
 ```
 
+## Próximos pasos
+
 :::next-steps
-- [List & Fetch](/tools/chainhook/list-fetch): Retrieve chainhook information before updating
-- [Filter Reference](/tools/chainhook/reference/filters): Explore all filter options
+* [Obtener chainhooks](/tools/chainhook/fetch): Recuperar información de chainhook antes de actualizar
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
 :::

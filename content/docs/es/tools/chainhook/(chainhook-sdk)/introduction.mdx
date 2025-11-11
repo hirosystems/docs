@@ -28,7 +28,7 @@ El SDK de Chainhook (`@hirosystems/chainhooks-client`) proporciona un cliente Ty
 
 ## Ejemplo Rápido
 
-```typescript
+```typescript -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -68,12 +68,12 @@ console.log('Chainhook created:', chainhook.uuid);
 
 El SDK proporciona constantes específicas de red:
 
-| Network | Constant | URL |
+| Network | Constante | URL |
 |---------|----------|-----|
-| Red de prueba | `CHAINHOOKS_BASE_URL.testnet` | https://api.testnet.hiro.so |
+| Testnet | `CHAINHOOKS_BASE_URL.testnet` | https://api.testnet.hiro.so |
 | Red principal | `CHAINHOOKS_BASE_URL.mainnet` | https://api.mainnet.hiro.so |
 
-```typescript
+```typescript -nc
 import { CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 // Testnet (for development)
@@ -91,16 +91,16 @@ const mainnetClient = new ChainhooksClient({
 
 ## Autenticación
 
-### Obtén tu Clave de API
+### Obtén Tu Clave de API
 
 1. Visitar [platform.hiro.so](https://platform.hiro.so)
-2. Inicia sesión o crea una cuenta
-3. Navega a la sección de Claves API
-4. Generar o copiar tu clave API
+2. Iniciar sesión o crear una cuenta
+3. Navegar a la sección de Claves API
+4. Genera o copia tu clave API
 
 ### Configurar Cliente
 
-```typescript
+```typescript -nc
 const client = new ChainhooksClient({
   baseUrl: CHAINHOOKS_BASE_URL.testnet,
   apiKey: process.env.HIRO_API_KEY!, // Store securely in environment variables
@@ -110,9 +110,9 @@ const client = new ChainhooksClient({
 :::callout
 type: warn
 
-### Claves API
+### Claves de API
 
-Nunca confirmes claves de API al control de versiones. Siempre usa variables de entorno o gestión segura de secretos.
+Nunca confirmes claves API al control de versiones. Siempre usa variables de entorno o gestión segura de secretos.
 :::
 
 ## Métodos del SDK
@@ -124,7 +124,7 @@ El SDK proporciona los siguientes métodos:
 | Method | Description |
 |--------|-------------|
 | `registerChainhook()` | Crear un nuevo chainhook |
-| `getChainhooks()` | Lista todos tus chainhooks (con paginación) |
+| `getChainhooks()` | Enumera todos tus chainhooks (con paginación) |
 | `getChainhook()` | Get a specific chainhook by UUID |
 | `updateChainhook()` | Actualizar un chainhook existente |
 | `deleteChainhook()` | Eliminar un chainhook |
@@ -133,23 +133,23 @@ El SDK proporciona los siguientes métodos:
 
 | Method | Description |
 |--------|-------------|
-| `enableChainhook()` | Habilitar o deshabilitar un único chainhook |
+| `enableChainhook()` | Habilitar o deshabilitar un solo chainhook |
 | `bulkEnableChainhooks()` | Habilitar o deshabilitar múltiples chainhooks con filtros |
 
 ### Métodos de Utilidad
 
 | Method | Description |
 |--------|-------------|
-| `evaluateChainhook()` | Evaluar un chainhook contra bloques pasados específicos |
+| `evaluateChainhook()` | Evaluar un chainhook contra bloques específicos del pasado |
 | `rotateConsumerSecret()` | Rotar el secreto del webhook para verificación de carga útil |
 
-## Soporte para TypeScript
+## Soporte de TypeScript
 
 ### Tipos Disponibles
 
-El SDK proporciona definiciones completas de tipos TypeScript:
+El SDK proporciona definiciones de tipos TypeScript completas:
 
-```typescript
+```typescript -nc
 import type {
   ChainhookDefinitionSchema,      // Chainhook configuration
   ChainhookStatusSchema,           // Status and activity info
@@ -161,6 +161,6 @@ import type {
 ## Próximos Pasos
 
 :::next-steps
-* [Inicio rápido](/tools/chainhook/quickstart): Comienza en 5 minutos
-* [Registrar y Habilitar](/tools/chainhook/register-enable): Crear y activar chainhooks
+* [Crear chainhooks](/tools/chainhook/create): Crear y activar chainhooks
+* [Administrar secretos del consumidor](/tools/chainhook/keys): Aprende cómo validar la entrega de Chainhook
 :::

@@ -28,7 +28,7 @@ Legacy v1 chainhooks remain read-only in the Platform UI; you manage them throug
 ### Get a list of v1 chainhooks
 Use the Platform API to fetch the chainhooks you want to migrate.
 
-```ts index.ts
+```ts index.ts -c
 const response = await fetch(`https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`, {
   headers: {
     'content-type': 'application/json'
@@ -194,7 +194,7 @@ console.log(chainhook.status.enabled);
 
 #### Delete legacy chainhooks
 
-```ts
+```ts -c
 const response = await fetch(
   `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,{
     method: 'DELETE',
@@ -223,7 +223,9 @@ await response.json();
 
 For more details, check out the [Filters](/tools/chainhook/reference/filters) reference page.
 
+## Next steps
+
 :::next-steps
-- [SDK Documentation](/tools/chainhook/chainhook-sdk): SDK Documentation
+- [FAQ](/tools/chainhook/faq): Chainhook 2.0 FAQ
 - [Filter Reference](/tools/chainhook/reference/filters): Filter Reference
 :::

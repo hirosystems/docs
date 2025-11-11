@@ -20,7 +20,7 @@ Use it to reproduce missed deliveries, inspect payload schemas after filter chan
 
 <CodeTabs flags="ac">
 
-```ts !! with-block-height.ts
+```ts !! with-block-height.ts -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -34,7 +34,7 @@ await client.evaluateChainhook('chainhook-uuid', {
 });
 ```
 
-```ts !! with-block-hash.ts
+```ts !! with-block-hash.ts -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -60,8 +60,9 @@ Returns HTTP `204 No Content`. If filters match, webhook payload is sent to your
 | **Backfill** | Index historical data | Process past blocks after creating chainhook |
 | **Re-process** | Fix webhook handler issues | Re-evaluate after fixing bugs |
 
+## Next steps
 
 :::next-steps
-- [Register & Enable](/tools/chainhook/register-enable): Create chainhooks to evaluate
+- [Register & Enable](/tools/chainhook/create): Create chainhooks to evaluate
 - [Filter Reference](/tools/chainhook/reference/filters): Configure which events to match
 :::

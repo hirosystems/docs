@@ -2,10 +2,10 @@
 title: Opciones
 description: Referencia completa para todas las opciones de configuración de Chainhook
 ---
-Las opciones controlan el enriquecimiento de carga útil y las ventanas de evaluación para tu chainhook. La `options` el campo es opcional y puede omitirse o establecerse a `null`.
+Las opciones controlan el enriquecimiento de carga útil y las ventanas de evaluación para tu chainhook. El `options` el campo es opcional y puede ser omitido o establecido en `null`.
 
 :::callout
-Todas las opciones booleanas tienen como valor predeterminado `false` si se omite. Las opciones de enteros son opcionales.
+Todas las opciones booleanas tienen como valor predeterminado `false` si se omite. Las opciones enteras son opcionales.
 :::
 
 ***
@@ -15,24 +15,24 @@ Todas las opciones booleanas tienen como valor predeterminado `false` si se omit
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `decode_clarity_values` | boolean | `false` | Incluir valores de Clarity legibles para humanos |
-| `include_contract_abi` | boolean | `false` | Incluir ABI del contrato en los despliegues |
-| `include_contract_source_code` | boolean | `false` | Incluir código fuente en despliegues |
+| `include_contract_abi` | boolean | `false` | Incluir ABI del contrato en despliegues |
+| `include_contract_source_code` | boolean | `false` | Incluir código fuente en las implementaciones |
 | `include_post_conditions` | boolean | `false` | Incluir post-condiciones en metadatos |
 | `include_raw_transactions` | boolean | `false` | Incluir hex de transacción sin procesar |
 | `include_block_metadata` | boolean | `false` | Incluir metadatos de bloque (Stacks & Bitcoin) |
 | `include_block_signatures` | boolean | `false` | Incluir firmas de bloque y firmantes |
-| `enable_on_registration` | boolean | `false` | Habilitar chainhook inmediatamente en la creación |
-| `expire_after_evaluations` | integer | ninguno | Expira después de evaluar N bloques |
-| `expire_after_occurrences` | integer | ninguno | Expira después de N coincidencias |
+| `enable_on_registration` | boolean | `false` | Habilitar chainhook inmediatamente al crearlo |
+| `expire_after_evaluations` | integer | ninguno | Expira después de N bloques evaluados |
+| `expire_after_occurrences` | entero | ninguno | Expira después de N coincidencias |
 
 ### decode\_clarity\_values
 
-Incluir legible para humanos `repr` (y tipos inferidos) junto con `hex` para argumentos, registros y resultados.
+Incluir legible para humanos `repr` (y tipos inferidos) junto a `hex` para argumentos, registros y resultados.
 
-* **Tipo**I notice that the text you provided for translation is just a single colon (:). Since this appears to be formatting punctuation rather than translatable content, and following your rules about preserving formatting exactly, the translation would be:
+* **Tipo**I don't see any text to translate. You've provided the translation rules and instructions, but the actual text content appears to be missing after "Text to translate:" - there's only a colon (:) there.
 
-  : `boolean`
-* **Predeterminado**: `false`
+  Could you please provide the actual text you'd like me to translate from English to Spanish? `boolean`
+* **Default**: `false`
 
 ```json
 {
@@ -46,7 +46,7 @@ Incluir legible para humanos `repr` (y tipos inferidos) junto con `hex` para arg
 
 ### include\_contract\_abi
 
-Incluir la ABI del contrato en las operaciones de despliegue. Esto mejora el tipado de argumentos al decodificar.
+Incluir el ABI del contrato en las operaciones de despliegue. Esto mejora el tipado de argumentos al decodificar.
 
 * **Tipo**: `boolean`
 * **Predeterminado**: `false`
@@ -63,9 +63,9 @@ Incluir la ABI del contrato en las operaciones de despliegue. Esto mejora el tip
 
 ### include\_contract\_source\_code
 
-Incluir el código fuente del contrato en las operaciones de despliegue.
+Incluye el código fuente del contrato en las operaciones de despliegue.
 
-* **Tipo**: `boolean`
+* **Type**: `boolean`
 * **Predeterminado**: `false`
 
 ```json
@@ -80,7 +80,7 @@ Incluir el código fuente del contrato en las operaciones de despliegue.
 
 ### include\_post\_conditions
 
-Incluir post-condiciones decodificadas en los metadatos de transacción.
+Incluir post-condiciones decodificadas en los metadatos de la transacción.
 
 * **Tipo**: `boolean`
 * **Predeterminado**: `false`
@@ -114,7 +114,7 @@ Incluir hex de transacción sin procesar en los metadatos de transacción.
 
 ### include\_block\_metadata
 
-Incluir metadatos de bloque tanto para bloques de Stacks como de Bitcoin, con costos de ejecución, recuento de transacciones, etc.
+Incluir metadatos de bloques tanto para bloques de Stacks como de Bitcoin, con costos de ejecución, conteo de transacciones, etc.
 
 * **Tipo**: `boolean`
 * **Predeterminado**: `false`
@@ -133,12 +133,8 @@ Incluir metadatos de bloque tanto para bloques de Stacks como de Bitcoin, con co
 
 Incluir información del firmante y firmas en los metadatos del bloque.
 
-* **Tipo**I notice that you've provided the translation rules and instructions, but the actual text to translate appears to be just a single colon ":".&#x20;
-
-  Since there's no translatable content (just a colon), I'll return it as-is:
-
-  : `boolean`
-* **Default**: `false`
+* **Tipo**: `boolean`
+* **Predeterminado**: `false`
 
 ```json
 {
@@ -152,14 +148,12 @@ Incluir información del firmante y firmas en los metadatos del bloque.
 
 ## Opciones de Activación
 
-### enable\_on\_registration
+### habilitar\_en\_registro
 
-Habilitar el chainhook inmediatamente después del registro/creación. Por defecto, un nuevo chainhook está deshabilitado al momento de la creación.
+Habilita el chainhook inmediatamente al registrarse/crearse. Por defecto, un nuevo chainhook está deshabilitado al crearse.
 
-* **Tipo**I notice that you've provided the translation rules but the actual text to translate appears to be just a single colon ":".&#x20;
-
-  : `boolean`
-* **Predeterminado**I notice that the text you provided appears to be just a single colon ":". Since this is already just a punctuation mark and not actual text content to translate, the translation remains:
+* **Tipo**: `boolean`
+* **Por defecto**I notice that you've provided only a colon ":" as the text to translate. Since there's no actual content to translate, I'll return the same:
 
   : `false`
 
@@ -179,10 +173,10 @@ Cuando se establece en `true`, la respuesta incluirá `status.enabled = true` y 
 
 ### expire\_after\_evaluations
 
-Expirar automáticamente el chainhook después de evaluar esta cantidad de bloques.
+Vencerá automáticamente el chainhook después de evaluar esta cantidad de bloques.
 
 * **Tipo**: `integer`
-* **Predeterminado**: Ninguno (sin vencimiento)
+* **Predeterminado**: Ninguno (sin expiración)
 
 ```json
 {
@@ -192,13 +186,13 @@ Expirar automáticamente el chainhook después de evaluar esta cantidad de bloqu
 }
 ```
 
-Esta chainhook expirará después de evaluar 10,000 bloques.
+Este chainhook expirará después de evaluar 10,000 bloques.
 
 ***
 
 ### expire\_after\_occurrences
 
-Hacer expirar automáticamente el chainhook después de esta cantidad de ocurrencias coincidentes.
+Expira automáticamente el chainhook después de esta cantidad de ocurrencias coincidentes.
 
 * **Tipo**: `integer`
 * **Predeterminado**: Ninguno (sin expiración)
@@ -211,11 +205,4 @@ Hacer expirar automáticamente el chainhook después de esta cantidad de ocurren
 }
 ```
 
-Este chainhook expirará después de activarse 250 veces.
-
-***
-
-:::next-steps
-* [Referencia de Filtros](/tools/chainhook/reference/filters): Aprende sobre todos los filtros de eventos disponibles
-* [Anatomía del Payload](/tools/chainhook/reference/payload-anatomy): Comprender la estructura de las cargas útiles de chainhook
-:::
+Esta chainhook expirará después de activarse 250 veces.

@@ -26,7 +26,7 @@ When you create a secret, our Chainhook service attaches an `Authorization: Bear
 
 ### Create/rotate consumer secret
 
-```ts server.ts
+```ts -nc server.ts
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -40,7 +40,7 @@ const secret = await client.rotateConsumerSecret(chainhookUuid).secret;
 
 ### Example Fastify server
 
-```ts -n
+```ts -nc -n
 import Fastify from 'fastify';
 
 const server = Fastify();
