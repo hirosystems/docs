@@ -1,17 +1,13 @@
 ---
-title: List & Fetch
+title: Fetch chainhooks
 description: Retrieve chainhook information using the SDK
 ---
-
-# List & Fetch
-
-Learn how to list and fetch chainhooks using the Chainhook SDK.
 
 ## getChainhooks
 
 Retrieve a paginated list of all your chainhooks.
 
-### TypeScript
+### Example
 
 ```typescript
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
@@ -30,57 +26,14 @@ console.log('Limit:', chainhooks.limit);
 console.log('Offset:', chainhooks.offset);
 ```
 
-### With Pagination Options
+### With options
 
 ```typescript
-// Get specific page with custom limit
+// Get specific page with 50 chainhooks starting from position 100
 const chainhooks = await client.getChainhooks({
   limit: 50,
   offset: 100,
 });
-
-// This fetches 50 chainhooks starting from position 100
-```
-
-### cURL
-
-```bash
-curl -sS "https://api.testnet.hiro.so/chainhooks/me?limit=20&offset=0" \
-  -H "x-api-key: $HIRO_API_KEY"
-```
-
-### Response
-
-```json
-{
-  "limit": 20,
-  "offset": 0,
-  "total": 45,
-  "results": [
-    {
-      "uuid": "be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185",
-      "definition": {
-        "version": "1",
-        "name": "my-chainhook",
-        "chain": "stacks",
-        "network": "testnet",
-        "filters": { ... },
-        "action": { ... }
-      },
-      "status": {
-        "enabled": true,
-        "type": "active",
-        "last_evaluated_at": 1696432154,
-        "last_evaluated_block_height": 150000,
-        "last_occurrence_at": 1696432100,
-        "last_occurrence_block_height": 149980,
-        "evaluated_block_count": 1000,
-        "occurrence_count": 42
-      }
-    },
-    // ... more chainhooks
-  ]
-}
 ```
 
 ---
@@ -89,57 +42,10 @@ curl -sS "https://api.testnet.hiro.so/chainhooks/me?limit=20&offset=0" \
 
 Retrieve a specific chainhook by UUID.
 
-### TypeScript
+### Example
 
 ```typescript
 const chainhook = await client.getChainhook('be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185');
-```
-
-### cURL
-
-```bash
-curl -sS "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
-  -H "x-api-key: $HIRO_API_KEY"
-```
-
-### Response
-
-```json
-{
-  "uuid": "be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185",
-  "definition": {
-    "version": "1",
-    "name": "my-chainhook",
-    "chain": "stacks",
-    "network": "testnet",
-    "filters": {
-      "events": [
-        {
-          "type": "contract_call",
-          "contract_identifier": "SP...XYZ.counter",
-          "function_name": "increment"
-        }
-      ]
-    },
-    "action": {
-      "type": "http_post",
-      "url": "https://example.com/webhooks"
-    },
-    "options": {
-      "decode_clarity_values": true
-    }
-  },
-  "status": {
-    "enabled": true,
-    "type": "active",
-    "last_evaluated_at": 1696432154,
-    "last_evaluated_block_height": 150000,
-    "last_occurrence_at": 1696432100,
-    "last_occurrence_block_height": 149980,
-    "evaluated_block_count": 1000,
-    "occurrence_count": 42
-  }
-}
 ```
 
 :::next-steps

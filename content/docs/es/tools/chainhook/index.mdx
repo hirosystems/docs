@@ -1,7 +1,7 @@
 ---
 title: Chainhook
-sidebarTitle: Visión general
-description: Chainhook es un indexador consciente de reorganización que proporciona datos confiables de blockchain para Bitcoin y Stacks.
+sidebarTitle: Descripción general
+description: Chainhook es un servicio de webhook para la blockchain de Stacks que te permite registrar flujos de eventos y definir filtros precisos para capturar datos en cadena mientras suceden.
 llm: false
 ---
 :::callout
@@ -9,30 +9,28 @@ type: warn
 
 ### Chainhook 2.0 Beta
 
-Chainhook 2.0 se encuentra actualmente en versión beta. Durante este período, nos enfocamos en aprender sobre confiabilidad, rendimiento y experiencia del desarrollador. Si encuentras problemas o tienes comentarios, por favor comunícate con [support@hiro.so](mailto\:support@hiro.so).
+Chainhook 2.0 está actualmente en beta. Si encuentras problemas o tienes comentarios, por favor contacta a [beta@hiro.so](mailto\:beta@hiro.so).
 :::
 
 ## Descripción general
 
-Chainhook es un indexador consciente de reorganizaciones que te permite construir flujos de eventos personalizados desde las blockchains de Bitcoin y Stacks. A diferencia de los indexadores tradicionales, Chainhook maneja automáticamente las reorganizaciones de blockchain, asegurando que tus datos se mantengan precisos sin reindexación manual.
+Chainhook facilita la suscripción a la actividad blockchain en Stacks mediante el registro de flujos de eventos, filtrando exactamente los datos que te interesan y enviándolos directamente a tu aplicación en tiempo real.
 
 Con Chainhook 2.0, puedes gestionar chainhooks a través de:
 
-* **[Chainhook SDK](/tools/chainhook/chainhook-sdk)** - Cliente TypeScript/JavaScript para gestión programática
+* **[SDK de Chainhook](/tools/chainhook/chainhook-sdk)** - Cliente TypeScript/JavaScript para gestión programática
 * **[Plataforma Hiro](/tools/chainhook/platform-usage)** - UI basada en web para la creación visual de chainhooks
 * **[API de Chainhook](/apis/chainhook-api)** - Direct REST API access
 
-Para explorar las funciones de Chainhook con IA, copia y pega [llms.txt](/tools/chainhook/llms.txt) en tu LLM de elección.
+## Características Clave
 
-## Características principales
-
-* **Indexación consciente de reorganización** - Maneja automáticamente las bifurcaciones y reorganizaciones de blockchain
+* **Indexación consciente de reorganización** - Maneja automáticamente las bifurcaciones y reorganizaciones de la blockchain
 * **Filtrado de eventos** - Define lógica personalizada para activar acciones en eventos específicos de blockchain
 * **Evaluación histórica** - Prueba chainhooks contra bloques pasados para indexación o depuración
 
 :::next-steps
-- [Inicio Rápido del SDK](/tools/chainhook/quickstart): Comienza con el SDK de Chainhook en 5 minutos
-- [Inicio Rápido de la Plataforma](/tools/chainhook/platform-quickstart): Crea tu primer chainhook en la interfaz de usuario de la plataforma
+- [Introducción del SDK](/tools/chainhook/introduction): Comienza con el SDK de Chainhook
+- [Guía de migración](/tools/chainhook/migration): Guía de migración para actualizar a Chainhook 2.0
 :::
 
 :::callout
@@ -40,5 +38,5 @@ type: help
 
 ### ¿Necesitas ayuda con Chainhook?
 
-Contáctanos en el <span className="font-bold">#chainhook</span> canal encendido [Discord](https://stacks.chat/) bajo la sección Herramientas de Desarrollador de Hiro.
+Comunícate con nosotros en el <span className="font-bold">#chainhook</span> canal activado [Discord](https://stacks.chat/) bajo la sección de Herramientas para Desarrolladores de Hiro.
 :::

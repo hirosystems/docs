@@ -1,62 +1,65 @@
 ---
-title: Evaluar Chainhook
-description: Probar chainhooks contra bloques pasados específicos
+title: Evaluar un bloque específico
+description: Ejecuta tus chainhooks contra bloques específicos para pruebas, depuración e indexación histórica.
 ---
-Prueba tu configuración de chainhook contra bloques pasados específicos para pruebas, depuración e indexación histórica.
+El endpoint evaluate reproduce un solo bloque contra uno de tus chainhooks registrados para que puedas validar filtros sin esperar tráfico en vivo.
+
+Úsalo para reproducir entregas perdidas, inspeccionar esquemas de carga útil después de cambios de filtro, o probar la infraestructura de webhooks con bloques conocidos antes de habilitar un hook en producción.
 
 ## evaluateChainhook
 
 ### Métodos de Evaluación
 
-| Method | Parameter | Example |
+| Método | Parámetro | Ejemplo |
 |--------|-----------|---------|
-| **Por altura** | `block_height` I don't see any text provided to translate. Please provide the text you'd like me to translate from English to Spanish, and I'll follow all the critical rules you've specified. `{ block_height: 100000 }` |
-| **Por hash** | `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
+| **Por altura** | `block_height` | `{ block_height: 100000 }` |
+| **Por hash** I don't see any text to translate in your message. You've provided the rules and formatting instructions, but the actual text content appears to be missing after "Text to translate:" - there's only a "|" character.
+
+Could you please provide the text you'd like me to translate from English to Spanish? `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
 
 ### Ejemplo
 
-```typescript
-import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+<CodeTabs flags="ac">
+  ```ts !! with-block-height.ts
+  import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
-const client = new ChainhooksClient({
-  baseUrl: CHAINHOOKS_BASE_URL.testnet,
-  apiKey: process.env.HIRO_API_KEY!,
-});
+  const client = new ChainhooksClient({
+    baseUrl: CHAINHOOKS_BASE_URL.testnet,
+    apiKey: process.env.HIRO_API_KEY!,
+  });
 
-await client.evaluateChainhook('chainhook-uuid', {
-  block_height: 100000,
-});
-```
+  await client.evaluateChainhook('chainhook-uuid', {
+    // !mark
+    block_height: 100000,
+  });
+  ```
 
-Returns HTTP `204 No Content`. Si los filtros coinciden, la carga útil del webhook se envía a tu `action.url`.
+  ```ts !! with-block-hash.ts
+  import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
-### cURL
+  const client = new ChainhooksClient({
+    baseUrl: CHAINHOOKS_BASE_URL.testnet,
+    apiKey: process.env.HIRO_API_KEY!,
+  });
 
-```bash
-curl -X POST \
-  "https://api.testnet.hiro.so/chainhooks/me/chainhook-uuid/evaluate" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -H "content-type: application/json" \
-  -d '{ "block_height": 100000 }'
-```
+  await client.evaluateChainhook('chainhook-uuid', {
+    // !mark
+    index_block_hash: '0xa204...',
+  });
+  ```
+</CodeTabs>
+
+Returns HTTP `204 No Content`. Si los filtros coinciden, el payload del webhook se envía a tu `action.url`.
 
 ## Casos de Uso
 
 | Caso de Uso | Descripción | Ejemplo |
 |----------|-------------|---------|
-| **Depurar** | Investigar eventos perdidos | Evaluar bloque específico que debería haber activado |
+| **Debug** | Investigar eventos perdidos | Evaluar bloque específico que debería haberse activado |
 | **Rellenar** | Indexar datos históricos | Procesar bloques pasados después de crear chainhook |
-| **Reprocesar** | Corregir problemas del manejador de webhook | Re-evaluar después de corregir errores |
-
-## Mejores Prácticas
-
-| Práctica | Ejemplo |
-|----------|---------|
-| **Limitación de velocidad** | Agregar retraso de 100ms entre solicitudes |
-| **Prueba primero** | Evaluar 2-3 bloques de muestra antes del procesamiento masivo |
-| **Usar altura** | Más fácil de iterar que los hashes de bloques |
+| **Reprocesar** | Solucionar problemas del manejador de webhook | Re-evaluar después de corregir errores |
 
 :::next-steps
 * [Registrar & Habilitar](/tools/chainhook/register-enable): Crear chainhooks para evaluar
-* [Referencia de Filtros](/tools/chainhook/reference/filters): Configura qué eventos coincidir
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Configurar qué eventos coinciden
 :::

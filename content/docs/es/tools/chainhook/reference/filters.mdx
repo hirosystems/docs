@@ -1,30 +1,30 @@
 ---
-title: Referencia de Filtros
+title: Filtros
 description: Referencia completa para todos los tipos de filtros de Chainhook
 ---
-# Referencia de Filtros
+Los filtros definen qué eventos de blockchain activarán tu chainhook.
 
-Los filtros definen qué eventos de blockchain activarán tu chainhook—usa la matriz de abajo para elegir la entrada correcta para `filters.events[]`.
+Aquí está una referencia completa para todos los tipos de filtros de Chainhook:
 
-| Filter | Cuándo usar |
+| Filtro | Cuándo usar |
 |--------|-------------|
-| `ft_event` | FT: capturar *cada* SIP-010 transferir, acuñar o quemar a través de activos. |
-| `ft_transfer` | FT: follow a single asset such as USDC; optionally add `sender`/`receiver` para disparadores a nivel de billetera. |
-| `ft_mint` | FT: rastrea expansiones de suministro o flujos de entrada de puente para un activo (establecer `asset_identifier`). |
-| `ft_burn` | FT: rastrear canjes o contracciones de suministro (establecer `asset_identifier`). |
-| `nft_event` | NFT: monitorea cada transferencia, acuñación o quema para todas las colecciones. |
-| `nft_transfer` | NFT: seguir una colección SIP-009; agregar `sender`, `receiver`, o `value` para focalización de propietario/token. |
-| `nft_mint` | NFT: observa cada nueva acuñación para una colección (establecer `asset_identifier`). |
-| `nft_burn` | NFT: capturar quemadas o canjes (establecer `asset_identifier`). |
-| `stx_event` | STX: capturar todas las transferencias nativas, acuñaciones o quemas. |
-| `stx_transfer` | STX: rastrear cada transferencia; agregar `sender` o `receiver` para destacar directores específicos. |
-| `contract_deploy` | Contratos: reaccionar a nuevos contratos que ingresan a la red. |
-| `contract_call` | Contratos: observar cada invocación; reducir con `contract_identifier` y `function_name`. |
-| `contract_log` | Contratos: capturar `print`/salida de log de un contrato (establecer `contract_identifier`). |
-| `coinbase` | Sistema: observar las recompensas de los mineros llegando a la cadena. |
-| `tenure_change` | Sistema: rastrear actualizaciones de tenencia de Proof-of-Transfer; agregar `cause` I don't see any text provided to translate. Could you please provide the text you'd like me to translate from English to Spanish?`"block_found"` o `"extended"`) para especificidad. |
+| `ft_event` | Captura *cada* SIP-010 transferir, acuñar o quemar a través de activos. |
+| `ft_transfer` | Follow a single asset such as USDC; optionally add `sender`/`receiver` para disparadores a nivel de cartera. |
+| `ft_mint` | Rastrea expansiones de suministro o flujos de entrada de puentes para un activo (configurar `asset_identifier`). |
+| `ft_burn` | Rastrea redenciones o contracciones de suministro para un activo (establecer `asset_identifier`). |
+| `nft_event` | Monitorea cada transferencia, acuñación o quema para todas las colecciones. |
+| `nft_transfer` | Sigue una colección SIP-009; añade `sender`, `receiver`, o `value` para orientación de propietario/token. |
+| `nft_mint` | Observa cada nuevo mint para una colección (set `asset_identifier`). |
+| `nft_burn` | Captura quemaduras o canjes (establecer `asset_identifier`). |
+| `stx_event` | Capturar todas las transferencias nativas, acuñaciones o quemas. |
+| `stx_transfer` | Rastrea cada transferencia de STX; añade `sender` o `receiver` para destacar directores específicos. |
+| `contract_deploy` | Reacciona a nuevos contratos que entren en la red. |
+| `contract_call` | Observa cada invocación; reduce con `contract_identifier` y `function_name`. |
+| `contract_log` | Capturar `print`/salida de log de un contrato (establecer `contract_identifier`). |
+| `coinbase` | Observa las recompensas de los mineros llegando a la cadena. |
+| `tenure_change` | Seguimiento de actualizaciones de tenencia de Prueba de Transferencia; agregar `cause` I don't see any text to translate in your message. You've provided the rules and instructions, but the actual text content appears to be missing after "Text to translate:". Could you please provide the text you'd like me to translate from English to Spanish?`"block_found"` o `"extended"`) para especificidad. |
 
-## Eventos de Token Fungible (FT)
+## Eventos de Tokens Fungibles (FT)
 
 ### Cualquier Evento FT
 
@@ -38,11 +38,12 @@ Coincidir con cualquier evento de token fungible (transferencia, quema o acuñac
 
 ### Transferencia FT
 
-Coincidencia de transferencias FT para un activo específico:
+Coincidir transferencias FT para un activo específico:
 
 ```json
 {
   "type": "ft_transfer",
+  // !mark
   "asset_identifier": "SP...ABC.ft::usdc"
 }
 ```
@@ -53,23 +54,25 @@ Filtrar por remitente:
 {
   "type": "ft_transfer",
   "asset_identifier": "SP...ABC.ft::usdc",
+  // !mark
   "sender": "SP...FROM"
 }
 ```
 
-Filtrar por destinatario:
+Filtrar por receptor:
 
 ```json
 {
   "type": "ft_transfer",
   "asset_identifier": "SP...ABC.ft::usdc",
+  // !mark
   "receiver": "SP...TO"
 }
 ```
 
 ### Acuñación de FT
 
-Hacer coincidir eventos de acuñación FT:
+Coincidir eventos de acuñación FT:
 
 ```json
 {
@@ -80,7 +83,7 @@ Hacer coincidir eventos de acuñación FT:
 
 ### FT Burn
 
-Coincidir eventos de quema FT:
+Coincidir eventos de quema de FT:
 
 ```json
 {
@@ -91,7 +94,7 @@ Coincidir eventos de quema FT:
 
 ***
 
-## Eventos de Tokens No Fungibles (NFT)
+## Eventos de Token No Fungible (NFT)
 
 ### Cualquier Evento NFT
 
@@ -105,11 +108,12 @@ Coincide con cualquier evento de NFT (transferencia, quema o acuñación):
 
 ### Transferencia de NFT
 
-Coincide transferencias de NFT para una colección específica:
+Coincidir transferencias de NFT para una colección específica:
 
 ```json
 {
   "type": "nft_transfer",
+  // !mark
   "asset_identifier": "SP...COLL.nft::collectible"
 }
 ```
@@ -120,6 +124,7 @@ Filtrar por remitente:
 {
   "type": "nft_transfer",
   "asset_identifier": "SP...COLL.nft::collectible",
+  // !mark
   "sender": "SP...FROM"
 }
 ```
@@ -130,6 +135,7 @@ Filtrar por receptor:
 {
   "type": "nft_transfer",
   "asset_identifier": "SP...COLL.nft::collectible",
+  // !mark
   "receiver": "SP...TO"
 }
 ```
@@ -140,13 +146,14 @@ Filtrar por ID de token específico:
 {
   "type": "nft_transfer",
   "asset_identifier": "SP...COLL.nft::collectible",
+  // !mark
   "value": "u123"
 }
 ```
 
 ### Acuñación de NFT
 
-Coincidir eventos de acuñación de NFT:
+Hacer coincidir eventos de acuñación de NFT:
 
 ```json
 {
@@ -157,7 +164,7 @@ Coincidir eventos de acuñación de NFT:
 
 ### Quema de NFT
 
-Hacer coincidir eventos de quema de NFT:
+Coincidir eventos de quema de NFT:
 
 ```json
 {
@@ -172,7 +179,7 @@ Hacer coincidir eventos de quema de NFT:
 
 ### Cualquier Evento STX
 
-Coincide con cualquier evento STX (transferencia, quema o acuñación):
+Coincidir con cualquier evento STX (transferencia, quema o acuñación):
 
 ```json
 {
@@ -195,6 +202,7 @@ Filtrar por remitente:
 ```json
 {
   "type": "stx_transfer",
+  // !mark
   "sender": "SP...SENDER"
 }
 ```
@@ -204,13 +212,14 @@ Filtrar por receptor:
 ```json
 {
   "type": "stx_transfer",
+  // !mark
   "receiver": "SP...RECEIVER"
 }
 ```
 
 ***
 
-## Eventos de Contratos
+## Eventos de Contrato
 
 ### Implementación de Contrato
 
@@ -227,6 +236,7 @@ Filtrar por implementador:
 ```json
 {
   "type": "contract_deploy",
+  // !mark
   "sender": "SP...DEPLOYER"
 }
 ```
@@ -246,6 +256,7 @@ Coincidir llamadas a un contrato específico:
 ```json
 {
   "type": "contract_call",
+  // !mark
   "contract_identifier": "SP...XYZ.counter"
 }
 ```
@@ -256,6 +267,7 @@ Coincidir llamadas a una función específica:
 {
   "type": "contract_call",
   "contract_identifier": "SP...XYZ.counter",
+  // !mark
   "function_name": "increment"
 }
 ```
@@ -267,17 +279,27 @@ Filtrar por llamador:
   "type": "contract_call",
   "contract_identifier": "SP...XYZ.counter",
   "function_name": "increment",
+  // !mark
   "sender": "SP...CALLER"
 }
 ```
 
 ### Registro de Contrato
 
-Coincidir eventos de impresión del contrato:
+Coincide con cualquier evento de impresión:
+
+```json
+{
+  "type": "contract_log"
+}
+```
+
+Coincidir eventos de impresión de contrato:
 
 ```json
 {
   "type": "contract_log",
+  // !mark
   "contract_identifier": "SP...XYZ.counter"
 }
 ```
@@ -288,6 +310,7 @@ Filtrar por remitente de transacción:
 {
   "type": "contract_log",
   "contract_identifier": "SP...XYZ.counter",
+  // !mark
   "sender": "SP...SENDER"
 }
 ```
@@ -321,15 +344,17 @@ Coincidir cambios de tenencia por causa (bloque encontrado):
 ```json
 {
   "type": "tenure_change",
+  // !mark[/"block_found"/]
   "cause": "block_found"
 }
 ```
 
-Cambios de tenencia coincidentes por causa (extendido):
+Cambios de permanencia coincidentes por causa (extendido):
 
 ```json
 {
   "type": "tenure_change",
+  // !mark[/"extended"/]
   "cause": "extended"
 }
 ```
@@ -338,7 +363,7 @@ Cambios de tenencia coincidentes por causa (extendido):
 
 ## Combinando Filtros
 
-Puedes combinar múltiples filtros en el `filters.events` arreglo. Un chainhook se activará si **cualquier** de los filtros coinciden:
+Puedes combinar múltiples filtros en el `filters.events` array. Un chainhook se activará si **cualquier** de los filtros coinciden:
 
 ```json
 {
@@ -357,8 +382,6 @@ Puedes combinar múltiples filtros en el `filters.events` arreglo. Un chainhook 
   }
 }
 ```
-
-This chainhook will trigger on either DIKO transfers **o** llamadas al `increment` función.
 
 :::next-steps
 * [Referencia de Opciones](/tools/chainhook/reference/options): Configurar el enriquecimiento de carga útil y las ventanas de evaluación

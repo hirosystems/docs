@@ -1,18 +1,18 @@
 ---
-title: Registrar y Habilitar
-description: Crear y activar chainhooks usando el SDK
+title: Crear chainhooks
+description: Crear y activar chainhooks usando el SDK de Chainhook
 ---
 # Registrar y Habilitar
 
 Aprende cómo crear y activar chainhooks usando el SDK de Chainhook.
 
-## registrarChainhook
+## registerChainhook
 
-Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en estado deshabilitado a menos que `enable_on_registration` se establece en `true`.
+Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en estado deshabilitado a menos que `enable_on_registration` está configurado en `true`.
 
-### TypeScript
+### Ejemplo
 
-```typescript
+```ts -nc
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -40,7 +40,7 @@ const chainhook = await client.registerChainhook({
   },
   options: {
     decode_clarity_values: true,
-    enable_on_registration: true, // Enable immediately
+    enable_on_registration: true,
   },
 });
 
@@ -48,86 +48,15 @@ console.log('Chainhook UUID:', chainhook.uuid);
 console.log('Enabled:', chainhook.status.enabled); // true
 ```
 
-### cURL
-
-```bash
-curl -sS -X POST "https://api.testnet.hiro.so/chainhooks/me" \
-  -H "content-type: application/json" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -d '{
-    "version": "1",
-    "name": "my-chainhook",
-    "chain": "stacks",
-    "network": "testnet",
-    "filters": {
-      "events": [
-        {
-          "type": "contract_call",
-          "contract_identifier": "SP...XYZ.counter",
-          "function_name": "increment"
-        }
-      ]
-    },
-    "action": {
-      "type": "http_post",
-      "url": "https://example.com/webhooks"
-    },
-    "options": {
-      "decode_clarity_values": true,
-      "enable_on_registration": true
-    }
-  }'
-```
-
-### Respuesta
-
-```json
-{
-  "uuid": "be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185",
-  "definition": {
-    "version": "1",
-    "name": "my-chainhook",
-    "chain": "stacks",
-    "network": "testnet",
-    "filters": { ... },
-    "action": { ... },
-    "options": { ... }
-  },
-  "status": {
-    "enabled": true,
-    "type": "active"
-  }
-}
-```
-
-### Habilitar más tarde
-
-Si no estableces `enable_on_registration`, el chainhook será creado pero deshabilitado:
-
-```typescript
-const chainhook = await client.registerChainhook({
-  version: '1',
-  name: 'my-chainhook',
-  chain: 'stacks',
-  network: 'testnet',
-  filters: { /* ... */ },
-  action: { /* ... */ },
-  // No options.enable_on_registration
-});
-
-console.log('Enabled:', chainhook.status.enabled); // false
-
-// Enable it later
-await client.enableChainhook(chainhook.uuid, true);
-```
+Si no estableces `enable_on_registration`, el chainhook será creado pero deshabilitado por defecto.
 
 ***
 
 ## enableChainhook
 
-Enable or disable a single chainhook by UUID. This allows you to pause a chainhook without deleting it.
+Enable or disable a single chainhook by UUID. This allows you to enable chainhooks after registration or pause without deleting it.
 
-### TypeScript
+### Ejemplos
 
 ```typescript
 // Enable a chainhook
@@ -137,44 +66,23 @@ await client.enableChainhook('chainhook-uuid', true);
 await client.enableChainhook('chainhook-uuid', false);
 ```
 
-### cURL
-
-Habilitar:
-
-```bash
-curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>/enabled" \
-  -H "content-type: application/json" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -d '{ "enabled": true }'
-```
-
-Desactivar:
-
-```bash
-curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>/enabled" \
-  -H "content-type: application/json" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -d '{ "enabled": false }'
-```
-
-### Respuesta
-
 Returns HTTP `204 No Content` en caso de éxito.
 
 ***
 
 ## bulkEnableChainhooks
 
-Habilitar o deshabilitar múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks de forma programática.
+Habilita o deshabilita múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks de manera programática.
 
 ### Por UUIDs
 
-Habilitar chainhooks específicos por sus UUID (máximo 200):
+Habilitar chainhooks específicos por sus UUIDs (máximo 200):
 
 ```typescript
 await client.bulkEnableChainhooks({
   enabled: true,
   filters: {
+    // !mark(1:5)
     uuids: [
       'uuid-1',
       'uuid-2',
@@ -192,6 +100,7 @@ Enable all chainhooks that POST to a specific URL:
 await client.bulkEnableChainhooks({
   enabled: true,
   filters: {
+    // !mark
     webhook_url: 'https://example.com/webhooks',
   },
 });
@@ -202,9 +111,11 @@ await client.bulkEnableChainhooks({
 Habilitar todos los chainhooks con un estado específico:
 
 ```typescript
+
 await client.bulkEnableChainhooks({
   enabled: true,
   filters: {
+    // !mark
     statuses: ['inactive'],
   },
 });
@@ -218,6 +129,7 @@ Usa múltiples filtros juntos:
 await client.bulkEnableChainhooks({
   enabled: false, // Disable matching chainhooks
   filters: {
+    // !mark(1:2)
     webhook_url: 'https://old-server.com/webhooks',
     statuses: ['active'],
   },
@@ -226,40 +138,7 @@ await client.bulkEnableChainhooks({
 
 This will disable all active chainhooks that POST to the old webhook URL.
 
-### cURL
-
-```bash
-curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/enabled" \
-  -H "content-type: application/json" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -d '{
-    "enabled": true,
-    "filters": {
-      "uuids": ["uuid-1", "uuid-2"],
-      "webhook_url": "https://example.com/webhooks"
-    }
-  }'
-```
-
-### Respuesta
-
-```json
-{
-  "updated": 5,
-  "results": [
-    {
-      "uuid": "uuid-1",
-      "enabled": true
-    },
-    {
-      "uuid": "uuid-2",
-      "enabled": true
-    }
-  ]
-}
-```
-
 :::next-steps
-* [Evaluar](/tools/chainhook/evaluate): Prueba chainhooks contra bloques pasados
-* [Referencia de filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
+* [Evaluar](/tools/chainhook/evaluate): Probar chainhooks contra bloques pasados
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Explora todas las opciones de filtro
 :::

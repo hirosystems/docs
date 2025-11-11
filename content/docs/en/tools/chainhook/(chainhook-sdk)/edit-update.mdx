@@ -1,5 +1,5 @@
 ---
-title: Edit & Update
+title: Edit chainhooks
 description: Modify existing chainhooks using the SDK
 ---
 
@@ -11,9 +11,9 @@ The Platform UI does not currently support editing chainhooks. You must use the 
 
 ## updateChainhook
 
-### Mutable vs Immutable Fields
+### Mutable vs Immutable fields
 
-| Mutable (Can Update) | Immutable (Cannot Update) |
+| Mutable | Immutable |
 |---------------------|---------------------------|
 | `name` | `chain` |
 | `filters` | `network` |
@@ -38,19 +38,13 @@ await client.updateChainhook('chainhook-uuid', {
 });
 ```
 
-## Common Update Patterns
+### Add event filter (while preserving existing events)
 
-| Update Type | Example |
-|-------------|---------|
-| **Webhook URL** | `{ action: { type: 'http_post', url: 'https://new-server.com/webhooks' } }` |
-| **Name** | `{ name: 'production-ft-tracker' }` |
-| **Filters** | `{ filters: { events: [{ type: 'nft_transfer' }] } }` |
-
-### Add Event Filter (Preserving Existing)
+In order to add a new event filter to an existing chainhook, you can fetch the current definition, modify it, and then update it.
 
 ```typescript
-const current = await client.getChainhook('chainhook-uuid');
-
+// ✅ Good: Fetch first
+const current = await client.getChainhook(uuid);
 await client.updateChainhook('chainhook-uuid', {
   filters: {
     events: [
@@ -58,6 +52,11 @@ await client.updateChainhook('chainhook-uuid', {
       { type: 'contract_call', contract_identifier: 'SP...XYZ.counter' },
     ],
   },
+});
+
+// ❌ Bad: Will overwrite any existing events
+await client.updateChainhook(uuid, {
+  filters: { events: { type: 'contract_call', contract_identifier: 'SP...XYZ.counter' } },
 });
 ```
 
@@ -70,48 +69,9 @@ await client.updateChainhook('chainhook-uuid', {
   action: { type: 'http_post', url: 'https://new-url.com/webhooks' },
   options: { decode_clarity_values: true },
 });
-```
 
-## cURL Example
-
-### Update Chainhook
-
-```bash
-curl -sS -X PATCH "https://api.testnet.hiro.so/chainhooks/me/<chainhook-uuid>" \
-  -H "content-type: application/json" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -d '{
-    "name": "Updated chainhook name",
-    "action": { "type": "http_post", "url": "https://new-server.com/webhooks" }
-  }'
-```
-
-### Response
-
-- **Success**: HTTP `204 No Content`
-- **Verify**: Fetch the chainhook to confirm changes
-
-```typescript
-await client.updateChainhook('chainhook-uuid', { name: 'New name' });
 const updated = await client.getChainhook('chainhook-uuid');
 console.log('Updated:', updated.definition.name);
-```
-
-### Example: Safe Additive Update
-
-```typescript
-// ✅ Good: Fetch first
-const current = await client.getChainhook(uuid);
-await client.updateChainhook(uuid, {
-  filters: {
-    events: [...current.definition.filters.events, newEvent],
-  },
-});
-
-// ❌ Bad: Might overwrite
-await client.updateChainhook(uuid, {
-  filters: { events: [newEvent] },
-});
 ```
 
 :::next-steps

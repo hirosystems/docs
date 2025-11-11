@@ -1,29 +1,29 @@
 ---
-title: Filter Reference
+title: Filters
 description: Complete reference for all Chainhook filter types
 ---
 
-# Filter Reference
+Filters define which blockchain events will trigger your chainhook.
 
-Filters define which blockchain events will trigger your chainhook—use the matrix below to pick the right entry for `filters.events[]`.
+Here is a complete reference for all Chainhook filter types:
 
 | Filter | When to use |
 |--------|-------------|
-| `ft_event` | FT: catch *every* SIP-010 transfer, mint, or burn across assets. |
-| `ft_transfer` | FT: follow a single asset such as USDC; optionally add `sender`/`receiver` for wallet-level triggers. |
-| `ft_mint` | FT: track supply expansions or bridge inflows for one asset (set `asset_identifier`). |
-| `ft_burn` | FT: track redemptions or supply contractions (set `asset_identifier`). |
-| `nft_event` | NFT: monitor every transfer, mint, or burn for all collections. |
-| `nft_transfer` | NFT: follow a SIP-009 collection; add `sender`, `receiver`, or `value` for owner/token targeting. |
-| `nft_mint` | NFT: watch every new mint for a collection (set `asset_identifier`). |
-| `nft_burn` | NFT: catch burns or redemptions (set `asset_identifier`). |
-| `stx_event` | STX: capture all native transfers, mints, or burns. |
-| `stx_transfer` | STX: trace every transfer; add `sender` or `receiver` to spotlight specific principals. |
-| `contract_deploy` | Contracts: react to new contracts entering the network. |
-| `contract_call` | Contracts: observe every invocation; narrow with `contract_identifier` and `function_name`. |
-| `contract_log` | Contracts: catch `print`/log output from a contract (set `contract_identifier`). |
-| `coinbase` | System: watch miner rewards hitting the chain. |
-| `tenure_change` | System: track Proof-of-Transfer tenure updates; add `cause` (`"block_found"` or `"extended"`) for specificity. |
+| `ft_event` | Catch *every* SIP-010 transfer, mint, or burn across assets. |
+| `ft_transfer` | Follow a single asset such as USDC; optionally add `sender`/`receiver` for wallet-level triggers. |
+| `ft_mint` | Track supply expansions or bridge inflows for one asset (set `asset_identifier`). |
+| `ft_burn` | Track redemptions or supply contractions for one asset (set `asset_identifier`). |
+| `nft_event` | Monitor every transfer, mint, or burn for all collections. |
+| `nft_transfer` | Follow a SIP-009 collection; add `sender`, `receiver`, or `value` for owner/token targeting. |
+| `nft_mint` | Watch every new mint for a collection (set `asset_identifier`). |
+| `nft_burn` | Catch burns or redemptions (set `asset_identifier`). |
+| `stx_event` | Capture all native transfers, mints, or burns. |
+| `stx_transfer` | Track every STX transfer; add `sender` or `receiver` to spotlight specific principals. |
+| `contract_deploy` | React to new contracts entering the network. |
+| `contract_call` | Observe every invocation; narrow with `contract_identifier` and `function_name`. |
+| `contract_log` | Catch `print`/log output from a contract (set `contract_identifier`). |
+| `coinbase` | Watch miner rewards hitting the chain. |
+| `tenure_change` | Track Proof-of-Transfer tenure updates; add `cause` (`"block_found"` or `"extended"`) for specificity. |
 
 ## Fungible Token Events (FT)
 
@@ -44,6 +44,7 @@ Match FT transfers for a specific asset:
 ```json
 {
   "type": "ft_transfer",
+  // !mark
   "asset_identifier": "SP...ABC.ft::usdc"
 }
 ```
@@ -54,6 +55,7 @@ Filter by sender:
 {
   "type": "ft_transfer",
   "asset_identifier": "SP...ABC.ft::usdc",
+  // !mark
   "sender": "SP...FROM"
 }
 ```
@@ -64,6 +66,7 @@ Filter by receiver:
 {
   "type": "ft_transfer",
   "asset_identifier": "SP...ABC.ft::usdc",
+  // !mark
   "receiver": "SP...TO"
 }
 ```
@@ -111,6 +114,7 @@ Match NFT transfers for a specific collection:
 ```json
 {
   "type": "nft_transfer",
+  // !mark
   "asset_identifier": "SP...COLL.nft::collectible"
 }
 ```
@@ -121,6 +125,7 @@ Filter by sender:
 {
   "type": "nft_transfer",
   "asset_identifier": "SP...COLL.nft::collectible",
+  // !mark
   "sender": "SP...FROM"
 }
 ```
@@ -131,6 +136,7 @@ Filter by receiver:
 {
   "type": "nft_transfer",
   "asset_identifier": "SP...COLL.nft::collectible",
+  // !mark
   "receiver": "SP...TO"
 }
 ```
@@ -141,6 +147,7 @@ Filter by specific token ID:
 {
   "type": "nft_transfer",
   "asset_identifier": "SP...COLL.nft::collectible",
+  // !mark
   "value": "u123"
 }
 ```
@@ -196,6 +203,7 @@ Filter by sender:
 ```json
 {
   "type": "stx_transfer",
+  // !mark
   "sender": "SP...SENDER"
 }
 ```
@@ -205,6 +213,7 @@ Filter by receiver:
 ```json
 {
   "type": "stx_transfer",
+  // !mark
   "receiver": "SP...RECEIVER"
 }
 ```
@@ -228,6 +237,7 @@ Filter by deployer:
 ```json
 {
   "type": "contract_deploy",
+  // !mark
   "sender": "SP...DEPLOYER"
 }
 ```
@@ -247,6 +257,7 @@ Match calls to a specific contract:
 ```json
 {
   "type": "contract_call",
+  // !mark
   "contract_identifier": "SP...XYZ.counter"
 }
 ```
@@ -257,6 +268,7 @@ Match calls to a specific function:
 {
   "type": "contract_call",
   "contract_identifier": "SP...XYZ.counter",
+  // !mark
   "function_name": "increment"
 }
 ```
@@ -268,17 +280,27 @@ Filter by caller:
   "type": "contract_call",
   "contract_identifier": "SP...XYZ.counter",
   "function_name": "increment",
+  // !mark
   "sender": "SP...CALLER"
 }
 ```
 
 ### Contract Log
 
+Match any print events:
+
+```json
+{
+  "type": "contract_log"
+}
+```
+
 Match contract print events:
 
 ```json
 {
   "type": "contract_log",
+  // !mark
   "contract_identifier": "SP...XYZ.counter"
 }
 ```
@@ -289,6 +311,7 @@ Filter by transaction sender:
 {
   "type": "contract_log",
   "contract_identifier": "SP...XYZ.counter",
+  // !mark
   "sender": "SP...SENDER"
 }
 ```
@@ -322,6 +345,7 @@ Match tenure changes by cause (block found):
 ```json
 {
   "type": "tenure_change",
+  // !mark[/"block_found"/]
   "cause": "block_found"
 }
 ```
@@ -331,6 +355,7 @@ Match tenure changes by cause (extended):
 ```json
 {
   "type": "tenure_change",
+  // !mark[/"extended"/]
   "cause": "extended"
 }
 ```
@@ -358,8 +383,6 @@ You can combine multiple filters in the `filters.events` array. A chainhook will
   }
 }
 ```
-
-This chainhook will trigger on either DIKO transfers **or** calls to the `increment` function.
 
 :::next-steps
 - [Options Reference](/tools/chainhook/reference/options): Configure payload enrichment and evaluation windows

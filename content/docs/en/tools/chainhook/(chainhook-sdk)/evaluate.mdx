@@ -1,9 +1,11 @@
 ---
-title: Evaluate Chainhook
-description: Test chainhooks against specific past blocks
+title: Evaluate a specific block
+description: Run your chainhooks against specific blocks for testing, debugging, and historical indexing.
 ---
 
-Test your chainhook configuration against specific past blocks for testing, debugging, and historical indexing.
+The evaluate endpoint replays a single block against one of your registered chainhooks so you can validate filters without waiting for live traffic.
+
+Use it to reproduce missed deliveries, inspect payload schemas after filter changes, or test webhook infrastructure with known blocks before enabling a hook in production.
 
 ## evaluateChainhook
 
@@ -16,7 +18,9 @@ Test your chainhook configuration against specific past blocks for testing, debu
 
 ### Example
 
-```typescript
+<CodeTabs flags="ac">
+
+```ts !! with-block-height.ts
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
@@ -25,21 +29,28 @@ const client = new ChainhooksClient({
 });
 
 await client.evaluateChainhook('chainhook-uuid', {
+  // !mark
   block_height: 100000,
 });
 ```
 
-Returns HTTP `204 No Content`. If filters match, webhook payload is sent to your `action.url`.
+```ts !! with-block-hash.ts
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
-### cURL
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
 
-```bash
-curl -X POST \
-  "https://api.testnet.hiro.so/chainhooks/me/chainhook-uuid/evaluate" \
-  -H "x-api-key: $HIRO_API_KEY" \
-  -H "content-type: application/json" \
-  -d '{ "block_height": 100000 }'
+await client.evaluateChainhook('chainhook-uuid', {
+  // !mark
+  index_block_hash: '0xa204...',
+});
 ```
+
+</CodeTabs>
+
+Returns HTTP `204 No Content`. If filters match, webhook payload is sent to your `action.url`.
 
 ## Use Cases
 
@@ -48,14 +59,6 @@ curl -X POST \
 | **Debug** | Investigate missed events | Evaluate specific block that should have triggered |
 | **Backfill** | Index historical data | Process past blocks after creating chainhook |
 | **Re-process** | Fix webhook handler issues | Re-evaluate after fixing bugs |
-
-## Best Practices
-
-| Practice | Example |
-|----------|---------|
-| **Rate limiting** | Add 100ms delay between requests |
-| **Test first** | Evaluate 2-3 sample blocks before bulk processing |
-| **Use height** | Easier to iterate than block hashes |
 
 
 :::next-steps

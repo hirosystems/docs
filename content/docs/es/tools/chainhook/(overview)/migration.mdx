@@ -1,17 +1,17 @@
 ---
-title: Migración de v1 a v2
-description: Guía para migrar chainhooks v1 heredados a Chainhook 2.0 Beta
+title: Guía de migración
+description: Guía para migrar chainhooks heredados a v2
 ---
 :::callout
 ### Gestión de chainhooks v1
 
-Los chainhooks v1 heredados permanecen de solo lectura en la interfaz de usuario de la plataforma; los gestionas a través del [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
+Los chainhooks v1 heredados permanecen de solo lectura en la UI de la Plataforma; los gestionas a través del [API de Plataforma](/apis/platform-api/reference/chainhooks/list).
 :::
 
 ## Lo que aprenderás
 
 :::objectives
-* Captura y analiza todos los chainhooks v1 existentes.
+* Capturar y analizar todos los chainhooks v1 existentes.
 * Convierte filtros basados en predicados en definiciones explícitas de eventos v2.
 * Registra chainhooks v2, prueba la entrega y retira los originales de forma segura.
 :::
@@ -19,154 +19,147 @@ Los chainhooks v1 heredados permanecen de solo lectura en la interfaz de usuario
 ## Requisitos previos
 
 :::prerequisites
-* API access to both the Platform API and Chainhook REST API (same `HIRO_API_KEY`).
-* SDK Local (`@hirosystems/chainhooks-client`) o `curl` for REST calls.
-* Variable de entorno `HIRO_API_KEY` establecido para la CLI y ejemplos de código.
+* Clave API de Hiro para acceso tanto a la Plataforma como a la API de Chainhook.
 :::
 
 <Steps>
   <Step>
-    ### Inventario v1 chainhooks
+    ### Obtener una lista de chainhooks v1
 
-    Utiliza la API de la Plataforma para obtener cada chainhook que aún se ejecuta en producción.
+    Usa la API de la Plataforma para obtener los chainhooks que quieres migrar.
 
-    #### CLI
+    ```ts index.ts
+    const response = await fetch(`https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
 
-    ```bash
-    curl -sS "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks" \
-      -H "content-type: application/json"
-    ```
-
-    #### TypeScript
-
-    ```typescript
-    export async function listV1Chainhooks() {
-      const response = await fetch(
-        `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`,
-        { headers: { 'content-type': 'application/json' } }
-      );
-
-      if (!response.ok) throw new Error(response.statusText);
-      return (await response.json()) as any[];
-    }
-
-    const chainhooks = await listV1Chainhooks();
-    console.log(`Found ${chainhooks.length} v1 chainhooks`);
+    const chainhooks = await response.json();
     ```
   </Step>
 
   <Step>
-    ### Inspeccionar un chainhook
+    ### Comenzar el mapeo al nuevo formato v2
 
-    Pull the full definition for each UUID so you can convert custom filters and metadata.
+    Traduce las estructuras v1 a formatos v2 antes de crear nuevos hooks. La siguiente tabla muestra el mapeo entre las estructuras v1 y v2:
 
-    #### CLI
-
-    ```bash
-    curl -sS \
-      "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks/$CHAINHOOK_UUID" \
-      -H "content-type: application/json"
-    ```
-
-    #### TypeScript
-
-    ```typescript
-    export async function getV1Chainhook(uuid: string) {
-      const response = await fetch(
-        `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,
-        { headers: { 'content-type': 'application/json' } }
-      );
-
-      if (!response.ok) throw new Error(response.statusText);
-      return await response.json();
-    }
-    ```
-  </Step>
-
-  <Step>
-    ### Configuración de mapeo a v2
-
-    Traduce estructuras v1 a campos v2 antes de aprovisionar nuevos hooks.
-
-    | v1 Concept | v2 Target | Notes |
+    | v1 | v2 | Notas |
     |------------|-----------|-------|
-    | `if_this.scope` | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
-    | `if_this.actions` | `type` | `transfer` se mapea a `*_transfer`. |
-    | `then_that.http_post.url` | `action.url` | v2 maneja los secretos automáticamente. |
+    | `if_this.scope` I notice that you've provided the translation rules but the actual text to translate appears to be just a single vertical bar "|".&#x20;
+
+    | `filters.events[].type` | Reemplazar `scope/action` combos con un solo tipo de evento. |
+    | `if_this.actions` I don't see any text to translate in your message. You've provided the translation rules and formatting, but the actual text to translate appears to be missing after "Text to translate:" - there's only a vertical bar "|".
+
+    Could you please provide the text you'd like me to translate from English to Spanish? `type` | `transfer` se asigna a `*_transfer`. |
+    | `then_that.http_post.url` | `action.url` | v2 maneja secretos automáticamente. |
     | `networks.mainnet` | `network: "mainnet"` | Crea un hook v2 por red. |
     | `authorization_header` | Gestión de secretos de webhook | Usar `rotateConsumerSecret()` después del registro. |
 
-    #### Conversión de Ejemplo
+    #### Ejemplo
 
-    ```jsonc
-    // v1 (Platform API)
-    {
-      "name": "stx-transfers",
-      "networks": {
-        "mainnet": {
-          "if_this": { "scope": "stx_event", "actions": ["transfer"] },
-          "then_that": { "http_post": { "url": "https://example.com/webhooks" } }
+    <CodeTabs flags="ac">
+      ```json !! Legacy
+      {
+        "name": "stx-transfers",
+        "networks": {
+          "mainnet": {
+            "if_this": { "scope": "stx_event", "actions": ["transfer"] },
+            "then_that": { "http_post": { "url": "https://example.com/webhooks" } }
+          }
         }
       }
-    }
-    ```
+      ```
 
-    ```typescript
-    // v2 (SDK)
-    import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+      ```json !! v2
+      {
+        "version": "1",
+        "name": "stx-transfers",
+        "chain": "stacks",
+        "network": "mainnet",
+        "filters": {
+          "events": [{ "type": "stx_transfer" }]
+        },
+        "action": {
+          "type": "http_post",
+          "url": "https://example.com/webhooks"
+        },
+        "options": {
+          "decode_clarity_values": true,
+          "enable_on_registration": true
+        }
+      }
+      ```
+    </CodeTabs>
 
-    const client = new ChainhooksClient({
-      baseUrl: CHAINHOOKS_BASE_URL.mainnet,
-      apiKey: process.env.HIRO_API_KEY!,
-    });
-
-    await client.registerChainhook({
-      version: '1',
-      name: 'stx-transfers',
-      chain: 'stacks',
-      network: 'mainnet',
-      filters: {
-        events: [{ type: 'stx_transfer' }],
-      },
-      action: {
-        type: 'http_post',
-        url: 'https://example.com/webhooks',
-      },
-      options: {
-        decode_clarity_values: true,
-        enable_on_registration: true,
-      },
-    });
-    ```
+    Para más detalles sobre los cambios de formato, consulta el [Filtros](/tools/chainhook/reference/filters) guía de referencia.
   </Step>
 
   <Step>
     ### Crear chainhooks v2
 
-    Provision each chainhook with the SDK or REST API, mirroring the mapped filters.
+    Register each chainhook with the SDK or REST API, mirroring the mapped filters.
 
-    #### REST
+    <CodeTabs flags="ac">
+      ```ts !! api.ts
+      const v2Chainhook = JSON.stringify({
+        "version": "1",
+        "name": "stx-transfers",
+        "chain": "stacks",
+        "network": "mainnet",
+        "filters": {
+          "events": [{ "type": "stx_transfer" }]
+        },
+        "action": {
+          "type": "http_post",
+          "url": "https://example.com/webhooks"
+        },
+        "options": {
+          "decode_clarity_values": true,
+          "enable_on_registration": true
+        }
+      });
 
-    ```bash
-    curl -sS -X POST "https://api.mainnet.hiro.so/chainhooks/v1/me/" \
-      -H "content-type: application/json" \
-      -H "x-api-key: $HIRO_API_KEY" \
-      -d @v2-chainhook.json
-    ```
+      const response = await fetch('https://api.hiro.so/chainhooks/v1/me/', {
+        method: 'POST',
+        headers: {
+          'x-api-key': process.env.HIRO_API_KEY!,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(v2Chainhook),
+      });
+      ```
 
-    #### SDK de Chainhook
-
-    ```typescript
-    const client = new ChainhooksClient({
-      baseUrl: CHAINHOOKS_BASE_URL[config.network],
-      apiKey: process.env.HIRO_API_KEY!,
-    });
-    const chainhook = await client.registerChainhook(config);
-    ```
+      ```ts !! sdk.ts
+      const client = new ChainhooksClient({
+        baseUrl: CHAINHOOKS_BASE_URL.mainnet,
+        apiKey: process.env.HIRO_API_KEY!,
+      });
+      const chainhook = await client.registerChainhook(
+        {
+          "version": "1",
+          "name": "stx-transfers",
+          "chain": "stacks",
+          "network": "mainnet",
+          "filters": {
+            "events": [{ "type": "stx_transfer" }]
+          },
+          "action": {
+            "type": "http_post",
+            "url": "https://example.com/webhooks"
+          },
+          "options": {
+            "decode_clarity_values": true,
+            "enable_on_registration": true
+          }
+        }
+      );
+      ```
+    </CodeTabs>
   </Step>
 
   <Step>
-    ### Validar y retirar v1
+    ### Validar y limpiar chainhooks heredados
 
     Transmite eventos a través de ambas versiones, confirma la entrega, luego limpia las definiciones heredadas.
 
@@ -175,76 +168,62 @@ Los chainhooks v1 heredados permanecen de solo lectura en la interfaz de usuario
 
     ### Mejores prácticas
 
-    Mantén tanto los hooks v1 como v2 activos hasta que verifiques la paridad de entrega.
+    Mantén ambos hooks v1 y v2 activos hasta que verifiques la paridad de entrega.
     :::
 
-    #### Verificaciones de Habilitación
+    #### Verificaciones de habilitación en v2
 
-    ```typescript
-    const chainhook = await client.getChainhook(v2Uuid);
-    console.log(chainhook.status.enabled);
-    ```
+    <CodeTabs flags="ac">
+      ```ts !! api.ts
+      const response = await fetch(`https://api.hiro.so/chainhooks/v1/me/${uuid}`, {
+        method: 'GET',
+        headers: {
+          'x-api-key': process.env.HIRO_API_KEY!,
+          'content-type': 'application/json',
+        },
+      });
 
-    #### Eliminar con cURL
+      const chainhook = await response.json();
+      console.log(chainhook.status.enabled);
+      ```
 
-    ```bash
-    curl -sS -X DELETE \
-      "https://api.platform.hiro.so/v1/ext/$HIRO_API_KEY/chainhooks/$CHAINHOOK_UUID" \
-      -H "content-type: application/json"
-    ```
+      ```ts !! sdk.ts
+      const chainhook = await client.getChainhook(uuid);
+      console.log(chainhook.status.enabled);
+      ```
+    </CodeTabs>
 
-    #### Eliminar con SDK
+    #### Eliminar chainhooks legacy
 
-    ```typescript
-    export async function deleteV1Chainhook(uuid: string) {
-      const response = await fetch(
-        `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,
-        { method: 'DELETE', headers: { 'content-type': 'application/json' } }
-      );
+    ```ts
+    const response = await fetch(
+      `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,{
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }
+    );
 
-      if (!response.ok) throw new Error(response.statusText);
-      return await response.json();
-    }
+    await response.json();
     ```
   </Step>
 </Steps>
 
-## Referencia de Traducción de Filtros
+## Referencia de filtros
 
-### Ámbitos comunes
+### Alcances comunes
 
 | v1 | Acciones Típicas | v2 | Extras |
 |----------|-----------------|-----------|--------|
-| `stx_event` I notice that you've provided the translation rules and instructions, but the actual text to translate appears to be just a single vertical bar "|".&#x20;
+| `stx_event` | `transfer` I notice that you've provided the critical rules for translation, but the actual text to translate appears to be just a single vertical bar "|".&#x20;
 
-| `transfer` | `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
+| `stx_transfer` | Incluir `sender` o `recipient` filtros según sea necesario. |
 | `contract_call` | n/a | `contract_call` | Agregar `contract_identifier` y `function_name`. |
 | `ft_event` | `transfer` | `ft_transfer` | Especificar `asset_identifier`. |
-| `nft_event` | `transfer`, `mint` I don't see any text to translate in your message. You've provided the rules and formatting instructions, but the actual text content appears to be missing after "Text to translate:" - there's only a vertical bar "|" shown.
+| `nft_event` | `transfer`, `mint` | `nft_transfer` · `nft_mint` | Proporcionar `asset_identifier`. |
 
-Could you please provide the actual text you'd like me to translate from English to Spanish? `nft_transfer` · `nft_mint` | Proporcionar `asset_identifier`. |
-
-### Ejemplo
-
-```jsonc
-// v1 filter
-{
-  "scope": "stx_event",
-  "actions": ["transfer"]
-}
-```
-
-```jsonc
-// v2 filter
-{
-  "events": [
-    {
-      "type": "stx_transfer",
-      "recipient": "SP3FBR2AGKQX0..."
-    }
-  ]
-}
-```
+Para más detalles, consulta el [Filtros](/tools/chainhook/reference/filters) página de referencia.
 
 :::next-steps
 * [Documentación del SDK](/tools/chainhook/chainhook-sdk): Documentación del SDK

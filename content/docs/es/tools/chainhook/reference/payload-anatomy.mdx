@@ -1,13 +1,15 @@
 ---
-title: Anatomía del Payload
-description: Entendiendo la estructura de las cargas útiles de webhook de Chainhook
+title: Anatomía del payload
+description: Comprendiendo la estructura de las cargas útiles de webhook de Chainhook
 ---
-## Descripción General de la Carga Útil
+## Resumen de Payload
 
-Un payload de Chainhook consiste en dos secciones principales:
+Una carga útil de Chainhook consta de dos secciones principales: **evento** y **chainhook**I notice that you've only provided a colon ":" as the text to translate. Since there's no actual content to translate, I'll return the same:
 
-1. **evento** - Contiene los datos de la blockchain (bloques, transacciones, operaciones)
-2. **chainhook** - Metadatos sobre el chainhook que se activó
+:
+
+* `event` contiene los datos de la blockchain (bloques, transacciones, operaciones)
+* `chainhook` contiene metadatos sobre el chainhook que se activó
 
 ***
 
@@ -34,7 +36,7 @@ Un payload de Chainhook consiste en dos secciones principales:
 
 ### Aplicar Array
 
-El `apply` la matriz contiene bloques que se están agregando a la cadena canónica. Cada bloque incluye:
+El `apply` array contiene bloques que se están agregando a la cadena canónica. Cada bloque incluye:
 
 ```json
 {
@@ -51,19 +53,19 @@ El `apply` la matriz contiene bloques que se están agregando a la cadena canón
 }
 ```
 
-### Revertir Array
+### Rollback Array
 
 El `rollback` array contiene bloques que están siendo eliminados durante una reorganización de cadena. Misma estructura que `apply`.
 
 :::callout
-Chainhook maneja automáticamente las reorganizaciones enviando eventos de reversión. Tu aplicación debe revertir cualquier cambio de estado de los bloques reversados.
+Chainhook maneja automáticamente las reorganizaciones enviando eventos de rollback. Tu aplicación debe revertir cualquier cambio de estado de los bloques que fueron revertidos.
 :::
 
 ***
 
-## Estructura de Transacción
+## Estructura de Transacciones
 
-Cada transacción en el `transactions` la matriz contiene:
+Cada transacción en la `transactions` array contiene:
 
 ### Metadatos
 
@@ -114,9 +116,9 @@ Identificador único para la transacción:
 
 ***
 
-## Array de Operaciones
+## Matriz de Operaciones
 
-Cada transacción incluye un `operations` array que describe cambios de estado. Las operaciones se indexan secuencialmente.
+Cada transacción incluye un `operations` matriz que describe los cambios de estado. Las operaciones están indexadas secuencialmente.
 
 ### Operación de Tarifa
 
@@ -244,6 +246,6 @@ Declaraciones de impresión de contratos:
 ```
 
 :::next-steps
-* [Referencia de Filtros](/tools/chainhook/reference/filters): Configura qué eventos activan tu chainhook
-* [Referencia de Opciones](/tools/chainhook/reference/options): Personalizar contenido del payload
+* [Referencia de Filtros](/tools/chainhook/reference/filters): Configurar qué eventos activan tu chainhook
+* [Referencia de Opciones](/tools/chainhook/reference/options): Personalizar el contenido de la carga útil
 :::

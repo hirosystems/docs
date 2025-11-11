@@ -1,58 +1,57 @@
 ---
-title: Gestionar Claves
-description: Rotar secretos de consumidor y validar cada entrega de Chainhook
+title: Administrar Claves
+description: Rotar secretos del consumidor y validar cada entrega de Chainhook
 ---
-## Lo que aprenderás
+## Qué aprenderás
 
 :::objectives
-* Crear/rotar un secreto de consumidor Chainhook.
-* Valida las solicitudes de webhook verificando el `Authorization` header.
+* Crear/rotar un secreto de consumidor de Chainhook.
+* Validar solicitudes de webhook verificando la `Authorization` encabezado.
 :::
 
-## Requisitos previos
+## Prerrequisitos
 
 :::prerequisites
-* Clave API de Hiro almacenada como `CHAINHOOKS_API_KEY`.
-* Chainhook UUID you want to protect.
-* Runtime de Node.js (el ejemplo usa Fastify).
+* Clave API de Hiro
+* Node.js (el ejemplo del servidor usa Fastify).
 :::
 
 ## Validación de solicitudes de webhook con un secreto de consumidor
 
-Los chainhooks adjuntan un `Authorization: Bearer <secret>` encabezado a cada intento de webhook, proporcionándote un simple protocolo de intercambio de secreto compartido.
+Cuando creas un secreto, nuestro servicio Chainhook adjunta un `Authorization: Bearer <secret>` encabezado a cada intento de webhook, dándote un simple apretón de manos de secreto compartido. Así es como empezar:
 
-1. Rotar el secreto con `await client.rotateConsumerSecret(chainhookUuid)` (o el `/chainhooks/{uuid}/secret` API) cada vez que necesites un nuevo token.
-2. Persistir lo devuelto `secret` en tu administrador de secretos y recárgalo al inicio del proceso o a través de un bucle de actualización corto.
-3. Rechazar las entregas de webhook cuyas `Authorization` el encabezado no es igual a `Bearer <current-secret>`.
+1. Rota el secreto con `rotateConsumerSecret` (o el `/chainhooks/{uuid}/secret` API) cada vez que necesites inicializar o crear un nuevo token.
+2. Rechazar entregas de webhook cuyas `Authorization` header no es igual a `Bearer <current-secret>`.
 
-### Rotar/crear secreto del consumidor
+### Crear/rotar secreto del consumidor
 
-```ts
+```ts server.ts
 import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
 
 const client = new ChainhooksClient({
   baseUrl: CHAINHOOKS_BASE_URL.mainnet, // or .testnet / custom URL
-  apiKey: process.env.CHAINHOOKS_API_KEY!,
+  apiKey: process.env.HIRO_API_KEY!,
 });
 
-let consumerSecret: string = await client.rotateConsumerSecret(chainhookUuid).secret;
+// Store this value securely and use it to validate webhook requests
+const secret = await client.rotateConsumerSecret(chainhookUuid).secret;
 ```
 
 ### Servidor Fastify de ejemplo
 
-```ts
+```ts -n
 import Fastify from 'fastify';
 
 const server = Fastify();
 
 server.post('/webhook', async (request, reply) => {
-  if (!consumerSecret) {
+  if (!secret) {
     reply.code(503).send({ error: 'consumer secret unavailable' });
     return;
   }
 
   const authHeader = request.headers.authorization;
-  if (authHeader !== `Bearer ${consumerSecret}`) {
+  if (authHeader !== `Bearer ${secret}`) {
     reply.code(401).send({ error: 'invalid consumer secret' });
     return;
   }
