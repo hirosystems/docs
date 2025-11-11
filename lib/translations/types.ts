@@ -54,7 +54,6 @@ export interface Translations {
 
     // Specific pages/sections
     guides: string;
-    snippets: string;
     archive: string;
   };
   tools: {
@@ -116,10 +115,6 @@ export interface Translations {
   libraries?: never;
   resources: {
     guides: {
-      title: string;
-      description: string;
-    };
-    snippets: {
       title: string;
       description: string;
     };

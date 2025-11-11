@@ -86,21 +86,6 @@ const chainhookMetadata: Partial<Metadata> = {
   },
 };
 
-const cookbookMetadata: Partial<Metadata> = {
-  title: 'Hiro Cookbook',
-  description: 'Practical recipes and examples for building on Bitcoin layers.',
-  openGraph: {
-    title: 'Hiro Cookbook',
-    description: 'Practical recipes and examples for building on Stacks.',
-    images: [{ url: '/images/cookbook-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Hiro Cookbook',
-    description: 'Practical recipes and examples for building on Bitcoin layers.',
-    images: ['/images/cookbook-og.jpg'],
-  },
-};
-
 const guidesMetadata: Partial<Metadata> = {
   title: 'Hiro Guides',
   description: 'Comprehensive guides for building on Bitcoin layers with Hiro tools.',
@@ -253,7 +238,6 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
   }
   if (path.startsWith('/stacks/hacks')) return hiroHacksMetadata;
   if (path.startsWith('/tools/chainhook')) return chainhookMetadata;
-  if (path.startsWith('/resources/snippets')) return cookbookMetadata;
   if (path.startsWith('/resources/guides')) return guidesMetadata;
   if (path.startsWith('/apis/ordinals')) return ordinalsApiMetadata;
   if (path.startsWith('/apis/platform')) return platformApiMetadata;

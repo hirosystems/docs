@@ -56,7 +56,6 @@ export const es: Translations = {
 
     // Specific pages/sections
     guides: 'Guías',
-    snippets: 'Fragmentos',
     archive: 'Archivo',
   },
   tools: {
@@ -120,10 +119,6 @@ export const es: Translations = {
     guides: {
       title: 'Guías',
       description: 'Guías para construir en Stacks.',
-    },
-    snippets: {
-      title: 'Fragmentos',
-      description: 'Fragmentos de código para construir en Stacks y Bitcoin.',
     },
     archive: {
       title: 'Archivo de Hiro',

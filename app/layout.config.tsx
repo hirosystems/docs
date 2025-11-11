@@ -106,26 +106,11 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Guides for building on Stacks.',
           url: '/resources/guides',
         },
-        // {
-        //   text: "Project templates",
-        //   description: "Project templates for building on Stacks.",
-        //   url: "/resources/templates",
-        // },
-        {
-          text: 'Snippets',
-          description: 'Code snippets for building on Stacks and Bitcoin.',
-          url: '/resources/snippets',
-        },
         {
           text: 'Hiro Archive',
           description: 'Archive of blockchain data.',
           url: '/resources/archive',
         },
-        // {
-        //   text: "Faucets",
-        //   description: "Faucets for getting testnet tokens.",
-        //   url: "/resources/faucets",
-        // },
       ],
     },
   ],

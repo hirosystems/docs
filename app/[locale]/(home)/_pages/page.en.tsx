@@ -137,12 +137,6 @@ export default function HomePage() {
                 description="Step-by-step walkthroughs for building on Bitcoin layers."
               />
               <SmallCard
-                icon={<Braces />}
-                href="/resources/snippets"
-                title="Snippets"
-                description="Reusable code examples for common Stacks and Bitcoin tasks."
-              />
-              <SmallCard
                 icon={<Database />}
                 href="/resources/archive"
                 title="Hiro Archive"

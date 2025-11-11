@@ -43,7 +43,6 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
       ['/apis/runes-api', t.apis.runes],
       ['/apis/signer-metrics-api', t.apis.signerMetrics],
       ['/resources/guides', t.resources.guides],
-      ['/resources/snippets', t.resources.snippets],
       ['/resources/archive', t.resources.archive],
     ]);
 
@@ -51,7 +50,7 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
       if (link.type !== 'menu') return link;
 
       const localizedText =
-        typeof link.text === 'string' ? menuTitleMap.get(link.text) ?? link.text : link.text;
+        typeof link.text === 'string' ? (menuTitleMap.get(link.text) ?? link.text) : link.text;
 
       const localizedItems = link.items?.map((item) => {
         if (!('url' in item) || !item.url) return item;
