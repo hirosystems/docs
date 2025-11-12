@@ -22,9 +22,9 @@ export const baseOptions: BaseLayoutProps = {
       text: 'Tools',
       items: [
         {
-          text: 'Chainhook',
+          text: 'Chainhooks',
           description: 'Monitor and analyze Clarity smart contract activity.',
-          url: '/tools/chainhook',
+          url: '/tools/chainhooks',
           isBeta: true,
         },
         {
@@ -70,9 +70,9 @@ export const baseOptions: BaseLayoutProps = {
           url: '/apis/token-metadata-api',
         },
         {
-          text: 'Chainhook API',
+          text: 'Chainhooks API',
           description: 'RESTful API for accessing Chainhook',
-          url: '/apis/chainhook-api',
+          url: '/apis/chainhooks-api',
           isNew: true,
         },
         {

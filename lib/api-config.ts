@@ -10,7 +10,7 @@ export const apiConfig = {
     },
   },
 
-  // Chainhook API endpoints (use spec-provided servers)
+  // Chainhooks API endpoints (use spec-provided servers)
   chainhook: {
     clarityConversion: false,
     enablePlayground: true,
