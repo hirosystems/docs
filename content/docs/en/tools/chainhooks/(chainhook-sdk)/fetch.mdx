@@ -1,0 +1,56 @@
+---
+title: Fetch chainhooks
+description: Retrieve chainhook information using the SDK
+---
+
+## getChainhook
+
+Retrieve a paginated list of all your chainhooks.
+
+### Example
+
+```typescript -nc
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+// Get first page (default: 20 results)
+const chainhooks = await client.getChainhooks();
+
+console.log('Total chainhooks:', chainhooks.total);
+console.log('Results:', chainhooks.results.length);
+console.log('Limit:', chainhooks.limit);
+console.log('Offset:', chainhooks.offset);
+```
+
+### With options
+
+```typescript -nc
+// Get specific page with 50 chainhooks starting from position 100
+const chainhooks = await client.getChainhooks({
+  limit: 50,
+  offset: 100,
+});
+```
+
+---
+
+## getChainhooks
+
+Retrieve a specific chainhook by UUID.
+
+### Example
+
+```typescript -nc
+const chainhook = await client.getChainhook('be4ab3ed-b606-4fe0-97c4-6c0b1ac9b185');
+```
+
+## Next steps
+
+:::next-steps
+- [Edit & Update](/tools/chainhooks/update): Modify existing chainhooks
+- [Register & Enable](/tools/chainhooks/create): Create new chainhooks
+:::

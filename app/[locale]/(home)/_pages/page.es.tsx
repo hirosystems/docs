@@ -59,8 +59,8 @@ export default function HomePage() {
               <SmallCard
                 icon={<Chainhook />}
                 badge="beta"
-                href="/tools/chainhook"
-                title="Chainhook"
+                href="/tools/chainhooks"
+                title="Chainhooks"
                 description="Crea flujos de eventos personalizados y desencadenantes para el procesamiento de datos de blockchain en tiempo real."
               />
 
@@ -93,35 +93,43 @@ export default function HomePage() {
                 title="API de la cadena de bloques Stacks"
                 description="API REST completa para interactuar con la cadena de bloques Stacks y los datos de la red."
               />
-
+              <SmallCard
+                icon={<StacksIcon />}
+                href="/apis/stacks-node-rpc-api"
+                title="API RPC del Nodo Stacks"
+                description="Métodos de nodo sin procesar: enviar transacciones, llamar contratos de solo lectura, consultar mempool/estado."
+              />
+              <SmallCard
+                icon={<Chainhook />}
+                href="/apis/chainhooks-api"
+                title="API de Chainhooks"
+                badge="new"
+                description="API REST para acceder y administrar Chainhook."
+              />
               <SmallCard
                 icon={<API />}
                 href="/apis/token-metadata-api"
                 title="API de Metadatos de Tokens"
                 description="Metadatos rápidos y confiables para tokens fungibles y no fungibles en Stacks."
               />
-
               <SmallCard
                 icon={<Hiro />}
                 href="/apis/platform-api"
                 title="API de la plataforma"
                 description="Administre programáticamente devnets y chainhooks a través de la interfaz REST."
               />
-
               <SmallCard
                 icon={<Ordinals />}
                 href="/apis/ordinals-api"
                 title="API de Ordinales"
                 description="Datos completos de ordinales de Bitcoin y tokens BRC-20 con optimización de caché."
               />
-
               <SmallCard
                 icon={<Runes />}
                 href="/apis/runes-api"
                 title="API de Runas"
                 description="Datos rápidos y confiables para Bitcoin Runes a través de una interfaz REST fácil de usar."
               />
-
               <SmallCard
                 icon={<API />}
                 href="/apis/signer-metrics-api"
@@ -144,14 +152,6 @@ export default function HomePage() {
                 title="Guías"
                 description="Instrucciones paso a paso para construir en capas de Bitcoin."
               />
-
-              <SmallCard
-                icon={<Braces />}
-                href="/resources/snippets"
-                title="Fragmentos"
-                description="Ejemplos de código reutilizables para tareas comunes en Stacks y Bitcoin."
-              />
-
               <SmallCard
                 icon={<Database />}
                 href="/resources/archive"

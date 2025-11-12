@@ -52,7 +52,7 @@ export const es: Translations = {
     auth: 'Auth',
 
     // Tools
-    chainhook: 'Chainhook',
+    chainhook: 'Chainhooks',
 
     // Specific pages/sections
     guides: 'Guías',
@@ -60,7 +60,7 @@ export const es: Translations = {
   },
   tools: {
     chainhook: {
-      title: 'Chainhook',
+      title: 'Chainhooks',
       description: 'Monitorear y analizar la actividad de contratos inteligentes Clarity.',
     },
     contractMonitoring: {
@@ -95,8 +95,8 @@ export const es: Translations = {
       description: 'API para obtener metadatos de tokens NFT y fungibles.',
     },
     chainhook: {
-      title: 'API de Chainhook',
-      description: 'API RESTful para acceder a Chainhook.',
+      title: 'API de Chainhooks',
+      description: 'API RESTful para acceder a Chainhooks.',
     },
     platform: {
       title: 'API de Plataforma',

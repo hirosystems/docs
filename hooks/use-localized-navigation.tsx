@@ -29,7 +29,7 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
         description: string;
       }
     >([
-      ['/tools/chainhook', t.tools.chainhook],
+      ['/tools/chainhooks', t.tools.chainhook],
       ['/tools/contract-monitoring', t.tools.contractMonitoring],
       ['/tools/bitcoin-indexer', t.tools.bitcoinIndexer],
       ['/resources/guides/api-keys', t.apis.apiKeys],
@@ -37,7 +37,7 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
       ['/apis/stacks-blockchain-api', t.apis.stacksApi],
       ['/apis/stacks-node-rpc-api', t.apis.stacksNodeRpcApi],
       ['/apis/token-metadata-api', t.apis.tokenMetadata],
-      ['/apis/chainhook-api', t.apis.chainhook],
+      ['/apis/chainhooks-api', t.apis.chainhook],
       ['/apis/platform-api', t.apis.platform],
       ['/apis/ordinals-api', t.apis.ordinals],
       ['/apis/runes-api', t.apis.runes],

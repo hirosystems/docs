@@ -1,5 +1,5 @@
 import { Cards, IndexCard } from '@/components/card';
-import { API, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
+import { API, Chainhook, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
 
 export default function APIsPage() {
   return (
@@ -17,28 +17,31 @@ export default function APIsPage() {
               title="API de la cadena de bloques Stacks"
               description="API REST completa para interactuar con la cadena de bloques de Stacks y los datos de la red."
             />
-
             <IndexCard
               icon={<StacksIcon />}
               href="/apis/stacks-node-rpc-api"
               title="API RPC del Nodo Stacks"
               description="Métodos de nodo de blockchain sin procesar: enviar transacciones, llamar contratos de solo lectura, consultar mempool/estado."
             />
-
+            <IndexCard
+              icon={<Chainhook />}
+              href="/apis/chainhooks-api"
+              title="API de Chainhooks"
+              badge="new"
+              description="API REST para gestionar y acceder a Chainhook."
+            />
             <IndexCard
               icon={<API />}
               href="/apis/token-metadata-api"
               title="API de Metadatos de Tokens"
               description="Metadatos rápidos y confiables para tokens fungibles y no fungibles en Stacks."
             />
-
             <IndexCard
               icon={<Hiro />}
               href="/apis/platform-api"
               title="API de la plataforma"
               description="Gestione programáticamente devnets y chainhooks a través de la interfaz REST."
             />
-
             <IndexCard
               icon={<Ordinals />}
               href="/apis/ordinals-api"
@@ -46,7 +49,6 @@ export default function APIsPage() {
               tag="Bitcoin L1"
               description="Datos completos de ordinales de Bitcoin y tokens BRC-20 con optimización de caché."
             />
-
             <IndexCard
               icon={<Runes />}
               href="/apis/runes-api"
@@ -54,7 +56,6 @@ export default function APIsPage() {
               tag="Bitcoin L1"
               description="Datos rápidos y confiables para Bitcoin Runes a través de una interfaz REST fácil de usar."
             />
-
             <IndexCard
               icon={<API />}
               href="/apis/signer-metrics-api"

@@ -72,15 +72,15 @@ const hiroHacksMetadata: Partial<Metadata> = {
 };
 
 const chainhookMetadata: Partial<Metadata> = {
-  title: 'Chainhook',
+  title: 'Chainhooks',
   description: 'Learn how to use Chainhook for blockchain event streaming.',
   openGraph: {
-    title: 'Chainhook',
+    title: 'Chainhooks',
     description: 'Learn how to use Chainhook for blockchain event streaming.',
     images: [{ url: '/images/chainhook-og.jpg', width: 800, height: 600 }],
   },
   twitter: {
-    title: 'Chainhook',
+    title: 'Chainhooks',
     description: 'Learn how to use Chainhook for blockchain event streaming.',
     images: ['/images/chainhook-og.jpg'],
   },
@@ -237,7 +237,7 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
     return apiKeysMetadata;
   }
   if (path.startsWith('/stacks/hacks')) return hiroHacksMetadata;
-  if (path.startsWith('/tools/chainhook')) return chainhookMetadata;
+  if (path.startsWith('/tools/chainhooks')) return chainhookMetadata;
   if (path.startsWith('/resources/guides')) return guidesMetadata;
   if (path.startsWith('/apis/ordinals')) return ordinalsApiMetadata;
   if (path.startsWith('/apis/platform')) return platformApiMetadata;

@@ -247,9 +247,9 @@ function extractSnippet(text: string | undefined, maxLength = 80): string {
 const navigateItems = [
   {
     id: 'chainhook',
-    title: 'Chainhook',
+    title: 'Chainhooks',
     icon: Webhook,
-    href: '/tools/chainhook',
+    href: '/tools/chainhooks',
   },
   {
     id: 'bitcoin-indexer',

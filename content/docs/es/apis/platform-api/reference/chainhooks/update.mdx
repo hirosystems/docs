@@ -1,7 +1,9 @@
 ---
 title: Actualizar un chainhook
-sidebarTitle: Actualizar
-description: Actualiza un chainhook a través de la Plataforma Hiro.
+sidebarTitle: Actualización
+description: Actualizar un chainhook a través de la Plataforma Hiro.
 full: true
 ---
 <APIPage document="./openapi/platform-api.json" operations={[{ path: '/v1/ext/{apiKey}/chainhooks/{chainhookUuid}', method: 'put' }]} hasHead={false} />
+
+Con `updateChainhook`, puedes ajustar una definición existente sin tiempo de inactividad: cambiar la URL del webhook, capturar nuevos eventos, o ajustar las opciones de configuración según evolucionen los requisitos.

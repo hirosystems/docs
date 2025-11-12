@@ -1,7 +1,7 @@
 ---
-title: Empezar
+title: Comenzar
 description: Comienza a construir aplicaciones descentralizadas en Stacks con las herramientas de Hiro.
-sidebarTitle: Visión general
+sidebarTitle: Resumen
 full: true
 llm: false
 ---
@@ -14,9 +14,9 @@ import heroImage from '@/public/stacks-hero.svg';
 
 <div className="flex flex-col space-y-10 pt-0">
   <Cards>
-    <SecondaryCard href="/features" title="Introducción a las herramientas de Hiro" icon={<Hiro />} tag="Hiro" description="Aprende más sobre las características que ofrecen nuestras herramientas." />
+    <SecondaryCard href="/features" title="Introducción a las herramientas de Hiro" icon={<Hiro />} tag="Hiro" description="Aprende más sobre las características que proporcionan nuestras herramientas." />
 
-    <SecondaryCard href="/recommended-resources" title="Recursos recomendados" icon={<NotebookIcon />} tag="Resources" description="Comienza con una colección de recursos seleccionados en todo el ecosistema de Stacks." />
+    <SecondaryCard href="/recommended-resources" title="Recursos recomendados" icon={<NotebookIcon />} tag="Recursos" description="Comienza con una colección de recursos seleccionados a través del ecosistema de Stacks." />
   </Cards>
 
   <div className="flex flex-col">
@@ -35,14 +35,14 @@ import heroImage from '@/public/stacks-hero.svg';
 
       <SmallCard icon={<Zap />} href="/contract-monitoring" title="Quiero monitorear datos de blockchain" description="Configura el monitoreo e indexación en tiempo real." />
 
-      <SmallCard icon={<Hammer />} href="/building-transactions" title="Quiero interactuar con contratos" description="Aprende cómo construir y enviar transacciones de forma programática." />
+      <SmallCard icon={<Hammer />} href="/building-transactions" title="Quiero interactuar con contratos" description="Aprende cómo construir y enviar transacciones programáticamente." />
     </Cards>
   </div>
 
   <div className="flex flex-col">
     <h4 id="explore-by-workflow" className="scroll-m-20">
       <a href="#explore-by-workflow" className="not-prose group text-sm text-muted-foreground uppercase">
-        Flujo de trabajo de desarrollo
+        Flujo de Trabajo de Desarrollo
       </a>
     </h4>
 
@@ -51,9 +51,9 @@ import heroImage from '@/public/stacks-hero.svg';
     <Cards>
       <SmallCard icon={<Code />} href="/creating-a-clarinet-project" title="Crea Tu Primer Proyecto" description="Configura un nuevo proyecto de Clarinet y comienza a construir contratos inteligentes localmente." />
 
-      <SmallCard icon={<Terminal />} href="/configuring-clarity-vscode-extension" title="Configura Tu IDE" description="Configure VS Code con la extensión Clarity para una experiencia de desarrollo mejorada." />
+      <SmallCard icon={<Terminal />} href="/configuring-clarity-vscode-extension" title="Configura tu IDE" description="Configura VS Code con la extensión Clarity para una experiencia de desarrollo mejorada." />
 
-      <SmallCard icon={<Wallet />} href="/using-local-accounts" title="Administrar Cuentas Locales" description="Trabaja con cuentas y billeteras de prueba en tu entorno de desarrollo local." />
+      <SmallCard icon={<Wallet />} href="/using-local-accounts" title="Gestionar Cuentas Locales" description="Trabaja con cuentas de prueba y billeteras en tu entorno de desarrollo local." />
 
       <SmallCard icon={<Database />} href="/working-with-devnet" title="Configuración de Red Local" description="Ejecuta y configura una blockchain local de Stacks para pruebas." />
     </Cards>
@@ -69,31 +69,31 @@ import heroImage from '@/public/stacks-hero.svg';
     <hr className="border-t border-border my-2" />
 
     <Cards>
-      <SmallCard icon={<TestTube />} href="/unit-testing" title="Pruebas Unitarias" description="Escriba pruebas unitarias exhaustivas para asegurarse de que la lógica de su contrato sea correcta." />
+      <SmallCard icon={<TestTube />} href="/unit-testing" title="Pruebas Unitarias" description="Escriba pruebas unitarias integrales para asegurar que la lógica de su contrato sea correcta." />
 
-      <SmallCard icon={<Layers />} href="/integration-testing" title="Pruebas de Integración" description="Prueba las interacciones del contrato y los escenarios complejos con pruebas de integración." />
+      <SmallCard icon={<Layers />} href="/integration-testing" title="Pruebas de Integración" description="Prueba las interacciones de contratos y escenarios complejos con pruebas de integración." />
 
-      <SmallCard icon={<Calculator />} href="/cost-analysis-and-debugging" title="Análisis de Costos" description="Analizar los costos de transacción y depurar problemas de rendimiento del contrato." />
+      <SmallCard icon={<Calculator />} href="/cost-analysis-and-debugging" title="Análisis de Costos" description="Analiza los costos de transacción y depura problemas de rendimiento del contrato." />
     </Cards>
   </div>
 
   <div className="flex flex-col">
     <h4 id="explore-by-events" className="scroll-m-20">
       <a href="#explore-by-events" className="not-prose group text-sm text-muted-foreground uppercase">
-        Datos y eventos en tiempo real
+        Datos y Eventos en Tiempo Real
       </a>
     </h4>
 
     <hr className="border-t border-border my-2" />
 
     <Cards>
-      <SmallCard icon={<Activity />} href="/contract-monitoring" title="Monitorear Contratos" description="Rastrea la actividad y los eventos de contratos inteligentes en tiempo real." />
+      <SmallCard icon={<Activity />} href="/contract-monitoring" title="Monitorear Contratos" description="Rastrea la actividad y eventos de contratos inteligentes en tiempo real." />
 
-      <SmallCard icon={<Filter />} href="/creating-predicates" title="Crear Filtros de Eventos" description="Construye predicados personalizados para filtrar eventos de blockchain." />
+      <SmallCard icon={<Filter />} href="/creating-predicates" title="Crear Filtros de Eventos" description="Crea predicados personalizados para filtrar eventos de blockchain." />
 
-      <SmallCard icon={<Server />} href="/building-a-simple-indexer" title="Construir un Indexador" description="Crea tu propio indexador de datos de blockchain para aplicaciones personalizadas." />
+      <SmallCard icon={<Server />} href="/building-a-simple-indexer" title="Construir un Indexador" description="Crea tu propio indexador de datos blockchain para aplicaciones personalizadas." />
 
-      <SmallCard icon={<Package />} href="/working-with-events-and-transaction-payloads" title="Cargas útiles de eventos" description="Analiza y trabaja con datos de transacciones y cargas útiles de eventos." />
+      <SmallCard icon={<Package />} href="/working-with-events-and-transaction-payloads" title="Cargas útiles de eventos" description="Analizar y trabajar con datos de transacciones y cargas útiles de eventos." />
     </Cards>
   </div>
 </div>

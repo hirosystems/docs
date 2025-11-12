@@ -1,0 +1,68 @@
+---
+title: Evaluate a specific block
+description: Run your chainhooks against specific blocks for testing, debugging, and historical indexing.
+---
+
+The evaluate endpoint replays a single block against one of your registered chainhooks so you can validate filters without waiting for live traffic.
+
+Use it to reproduce missed deliveries, inspect payload schemas after filter changes, or test webhook infrastructure with known blocks before enabling a hook in production.
+
+## evaluateChainhook
+
+### Evaluation Methods
+
+| Method | Parameter | Example |
+|--------|-----------|---------|
+| **By height** | `block_height` | `{ block_height: 100000 }` |
+| **By hash** | `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
+
+### Example
+
+<CodeTabs flags="ac">
+
+```ts !! with-block-height.ts -nc
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.evaluateChainhook('chainhook-uuid', {
+  // !mark
+  block_height: 100000,
+});
+```
+
+```ts !! with-block-hash.ts -nc
+import { ChainhooksClient, CHAINHOOKS_BASE_URL } from '@hirosystems/chainhooks-client';
+
+const client = new ChainhooksClient({
+  baseUrl: CHAINHOOKS_BASE_URL.testnet,
+  apiKey: process.env.HIRO_API_KEY!,
+});
+
+await client.evaluateChainhook('chainhook-uuid', {
+  // !mark
+  index_block_hash: '0xa204...',
+});
+```
+
+</CodeTabs>
+
+Returns HTTP `204 No Content`. If filters match, webhook payload is sent to your `action.url`.
+
+## Use Cases
+
+| Use Case | Description | Example |
+|----------|-------------|---------|
+| **Debug** | Investigate missed events | Evaluate specific block that should have triggered |
+| **Backfill** | Index historical data | Process past blocks after creating chainhook |
+| **Re-process** | Fix webhook handler issues | Re-evaluate after fixing bugs |
+
+## Next steps
+
+:::next-steps
+- [Register & Enable](/tools/chainhooks/create): Create chainhooks to evaluate
+- [Filter Reference](/tools/chainhooks/reference/filters): Configure which events to match
+:::

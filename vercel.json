@@ -52,7 +52,13 @@
       "destination": "https://docs.stacks.co/reference",
       "permanent": true
     },
-    { "source": "/stacks/chainhook/:path*", "destination": "/tools/chainhook", "permanent": true },
+    { "source": "/stacks/chainhook/:path*", "destination": "/tools/chainhooks", "permanent": true },
+    { "source": "/tools/chainhook", "destination": "/tools/chainhooks", "permanent": true },
+    {
+      "source": "/:locale/tools/chainhook",
+      "destination": "/:locale/tools/chainhooks",
+      "permanent": true
+    },
     {
       "source": "/stacks/stacks.js/:path*",
       "destination": "https://docs.stacks.co/reference",

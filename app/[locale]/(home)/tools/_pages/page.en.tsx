@@ -13,8 +13,8 @@ export default function ToolsPage() {
           </div>
           <Cards>
             <IndexCard
-              href="/tools/chainhook"
-              title="Chainhook"
+              href="/tools/chainhooks"
+              title="Chainhooks"
               icon={<Chainhook />}
               badge="beta"
               tag="Stacks"
