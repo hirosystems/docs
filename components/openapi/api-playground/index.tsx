@@ -298,9 +298,7 @@ export function APIPlayground({
               } catch (error) {
                 console.error('Failed to convert arguments:', error);
                 bodyFieldErrors.push(
-                  error instanceof Error
-                    ? error.message
-                    : `Invalid value provided for ${propName}`,
+                  error instanceof Error ? error.message : `Invalid value provided for ${propName}`,
                 );
               }
             } else if (propName === 'sender') {
@@ -314,9 +312,7 @@ export function APIPlayground({
                 });
               } catch (error) {
                 bodyFieldErrors.push(
-                  error instanceof Error
-                    ? error.message
-                    : `Invalid value provided for ${propName}`,
+                  error instanceof Error ? error.message : `Invalid value provided for ${propName}`,
                 );
               }
             }
