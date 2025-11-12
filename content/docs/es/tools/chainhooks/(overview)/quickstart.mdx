@@ -1,0 +1,100 @@
+---
+title: Inicio rápido
+description: En esta guía, crearás tu primer predicado Chainhook para monitorear transferencias de STX en la blockchain de Stacks.
+---
+## Lo que aprenderás
+
+:::objectives
+* Cómo crear un predicado Chainhook para rastrear transferencias de STX
+* Cómo escanear datos históricos de blockchain utilizando Chainhook
+:::
+
+## Requisitos previos
+
+:::prerequisites
+* Para instrucciones de instalación, visite el [Guía de instalación de Chainhook](/tools/chainhooks#installation).
+:::
+
+## Inicio rápido
+
+<Steps>
+  <Step>
+    ### Generar un archivo de predicado
+
+    Chainhook utiliza predicados para definir qué eventos de la cadena de bloques se deben rastrear. Genere un archivo de predicado de plantilla:
+
+    ```terminal
+    $ chainhook predicates new stx-transfer.json --stacks
+    ```
+
+    Esto crea un archivo JSON de plantilla con la estructura básica del predicado. El `--stacks` flag especifica que estás rastreando eventos de Stacks (usa `--bitcoin` para Bitcoin).
+  </Step>
+
+  <Step>
+    ### Configurar el seguimiento de eventos
+
+    Abrir `stx-transfer.json` y actualizar el `if_this` sección para rastrear eventos de transferencia de STX:
+
+    ```json stx-transfer.json
+    {
+      "chain": "stacks",
+      "uuid": "87ac9bff-1052-4d02-9c79-3768a6f08a09",
+      "name": "STX Transfer",
+      "version": 1,
+      "networks": {
+        "mainnet": {
+          "start_block": 154670,
+          "if_this": {
+            "scope": "stx_event",
+            "actions": ["transfer"]
+          },
+          "then_that": {
+            "file_append": {
+              "path": "stx-transfers.txt"
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    Este predicado:
+
+    * Rastrea todos los eventos de transferencia de STX (`scope: "stx_event"`, `actions: ["transfer"]`)
+    * Comience a escanear desde el bloque 154670
+    * Agregar eventos coincidentes a `stx-transfers.txt`
+  </Step>
+
+  <Step>
+    ### Escanear eventos
+
+    Ejecute el comando de escaneo para buscar datos históricos de la cadena de bloques:
+
+    ```terminal
+    $ chainhook predicates scan stx-transfer.json --mainnet
+    ```
+
+    :::callout
+    El primero `scan` descarga un archivo de estado de cadena desde el Archivo Hiro. Los escaneos posteriores utilizan los datos almacenados en caché para un rendimiento más rápido.
+    :::
+  </Step>
+
+  <Step>
+    ### Ver resultados
+
+    Verifique el archivo de salida para ver los eventos de transferencia:
+
+    ```terminal
+    $ head -5 stx-transfers.txt
+    ```
+
+    Cada línea contiene una carga útil JSON con detalles de transferencia que incluyen remitente, destinatario, cantidad e información del bloque.
+  </Step>
+</Steps>
+
+## Próximos pasos
+
+:::next-steps
+* [Diseñar predicados personalizados](/tools/chainhooks/usage): Aprende a crear predicados para llamadas de contratos, transferencias de NFT y más
+* [Ejecutar Chainhook como un servicio](/tools/chainhooks/service-mode): Configurar monitoreo continuo de blockchain con entrega por webhook
+:::

@@ -1,0 +1,102 @@
+---
+title: Chainhook API
+sidebarTitle: Descripción general
+description: API REST para gestionar Chainhooks programáticamente
+---
+## Descripción general
+
+The Chainhook API is a REST API that allows you to programmatically manage chainhooks, configure event filters, and control webhook delivery. It provides the same functionality as the [SDK de Chainhook](/tools/chainhooks/chainhook-sdk) through direct HTTP requests.
+
+Usa la API de Chainhook cuando:
+
+* Estás trabajando en un lenguaje sin soporte de SDK
+* You need direct HTTP control over chainhook operations
+* Estás construyendo integraciones personalizadas o flujos de trabajo de automatización
+* You prefer REST APIs over client libraries
+
+## Características Principales
+
+* **Gestión completa de chainhook** - Crear, leer, actualizar y eliminar chainhooks
+* **Filtrado de eventos** - Configurar filtros para eventos FT, NFT, STX, de contrato y del sistema
+* **Configuración de webhook** - Set up HTTP POST endpoints for event delivery
+* **Endpoints de evaluación** - Probar chainhooks contra bloques históricos
+* **Operaciones en lote** - Habilitar o deshabilitar múltiples chainhooks a la vez
+* **Gestión de secretos** - Rotar secretos del consumidor de webhook por seguridad
+
+## URLs Base
+
+La API de Chainhook está disponible tanto en mainnet como en testnet:
+
+```
+Testnet: https://api.testnet.hiro.so/chainhooks/v1
+Mainnet: https://api.mainnet.hiro.so/chainhooks/v1
+```
+
+## Autenticación
+
+Todas las solicitudes de API requieren autenticación usando una clave API de Hiro en el `x-api-key` header:
+
+```bash
+curl https://api.testnet.hiro.so/chainhooks/v1/me/ \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+Obtén tu clave de API de [platform.hiro.so](https://platform.hiro.so).
+
+## Ejemplo Rápido
+
+Registrar un nuevo chainhook para monitorear transferencias de FT:
+
+```bash
+curl -X POST https://api.testnet.hiro.so/chainhooks/v1/me/ \
+  -H "x-api-key: YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "ft-transfer-monitor",
+    "version": "1",
+    "chain": "stacks",
+    "network": "testnet",
+    "filters": {
+      "events": [{
+        "type": "ft_transfer",
+        "asset_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.usda-token::usda"
+      }]
+    },
+    "action": {
+      "type": "http_post",
+      "url": "https://example.com/webhooks"
+    },
+    "options": {
+      "enable_on_registration": true
+    }
+  }'
+```
+
+## SDK vs REST API
+
+Both the SDK and REST API provide identical functionality:
+
+| Feature | SDK | REST API |
+|---------|-----|----------|
+| Language | TypeScript/JavaScript | Any language |
+| Type Safety | Yes | No |
+| Authentication | Automatic | Manual headers |
+| Error Handling | Built-in | Custom |
+| Best For | Node.js/Bun apps | Other languages, scripts |
+
+Para proyectos de TypeScript/JavaScript, recomendamos usar el [SDK de Chainhook](/tools/chainhooks/chainhook-sdk) para una mejor experiencia de desarrollador.
+
+## Próximos Pasos
+
+:::next-steps
+* [Guía de Uso](/apis/chainhooks-api/usage): Autenticación y mejores prácticas
+* [Referencia de API](/apis/chainhooks-api/reference): Documentación completa del endpoint
+:::
+
+:::callout
+type: help
+
+### ¿Necesitas ayuda construyendo con la API de Chainhook?
+
+Contáctanos en el **#chainhook** canal activado [Discord](https://stacks.chat/) bajo Herramientas de Desarrollador de Hiro. También hay un [horario de oficina semanal](https://www.addevent.com/event/oL21905919) llamada todos los jueves a las 11am ET.
+:::
