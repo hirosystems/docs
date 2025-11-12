@@ -1,19 +1,19 @@
 ---
 title: Uso
-description: Aprende cómo autenticar, realizar solicitudes y manejar respuestas con la API de Chainhook
+description: Aprende cómo autenticar, hacer solicitudes y manejar respuestas con la API de Chainhooks
 ---
 ## Autenticación
 
-Todas las solicitudes de la API de Chainhook requieren autenticación usando una clave API de Hiro.
+Todas las solicitudes de la API Chainhooks requieren autenticación utilizando una clave de API de Hiro.
 
-### Obtén Tu Clave API
+### Obtén tu Clave API
 
-1. Visita [platform.hiro.so](https://platform.hiro.so)
+1. Visitar [platform.hiro.so](https://platform.hiro.so)
 2. Inicia sesión o crea una cuenta
-3. Navegar a Claves de API
+3. Navegar a Claves API
 4. Genera o copia tu clave API
 
-### Usando tu Clave de API
+### Usando Tu Clave de API
 
 Incluye tu clave de API en el `x-api-key` encabezado para todas las solicitudes:
 
@@ -25,8 +25,8 @@ curl https://api.testnet.hiro.so/chainhooks/v1/me/ \
 **Mejores prácticas de seguridad:**
 
 * Almacena las claves de API en variables de entorno, nunca en el código
-* Use diferentes claves para desarrollo y producción
-* Rotar claves periódicamente
+* Utiliza diferentes claves para desarrollo y producción
+* Rote las claves periódicamente
 * Nunca confirmes claves al control de versiones
 
 ## URLs Base
@@ -38,7 +38,7 @@ Testnet: https://api.testnet.hiro.so/chainhooks/v1
 Mainnet: https://api.mainnet.hiro.so/chainhooks/v1
 ```
 
-**Siempre prueba primero en testnet** antes de hacer el despliegue en la red principal.
+**Siempre prueba primero en testnet** antes de implementar en mainnet.
 
 ## Formato de Solicitud
 
@@ -51,7 +51,7 @@ Content-Type: application/json
 x-api-key: YOUR_API_KEY
 ```
 
-### Cuerpo de la Solicitud
+### Cuerpo de Solicitud
 
 Most endpoints accept JSON request bodies. Example for registering a chainhook:
 
@@ -116,7 +116,7 @@ Successful responses return JSON with relevant data:
 
 ### Respuestas de Error
 
-Las respuestas de error incluyen detalles sobre lo que salió mal:
+Las respuestas de error incluyen detalles sobre qué salió mal:
 
 ```json
 {
@@ -168,9 +168,9 @@ curl -X POST https://api.testnet.hiro.so/chainhooks/v1/me/{uuid}/evaluate \
   -d '{"block_height": 150000}'
 ```
 
-### Activar/Desactivar en Lote
+### Habilitar/Deshabilitar en Lote
 
-Habilitar o deshabilitar múltiples chainhooks que coinciden con filtros:
+Habilitar o deshabilitar múltiples filtros de coincidencia de chainhooks:
 
 ```bash
 curl -X PATCH https://api.testnet.hiro.so/chainhooks/v1/me/enabled \
@@ -184,15 +184,15 @@ curl -X PATCH https://api.testnet.hiro.so/chainhooks/v1/me/enabled \
   }'
 ```
 
-## Límites de Tasa
+## Límites de Velocidad
 
-La API de Chainhook aplica límites de velocidad basados en tu nivel de suscripción:
+La API de Chainhooks aplica límites de velocidad basados en tu nivel de suscripción:
 
 * Nivel gratuito: 100 solicitudes por minuto
 * Nivel Pro: 1000 solicitudes por minuto
-* Enterprise: Límites personalizados
+* Empresa: Límites personalizados
 
-Cuando esté limitado por la tasa, recibirá un `429 Too Many Requests` respuesta. Implementa retroceso exponencial en tu aplicación:
+Cuando esté limitado por velocidad, recibirá un `429 Too Many Requests` respuesta. Implemente el retroceso exponencial en su aplicación:
 
 ```javascript
 async function makeRequestWithRetry(url, options, maxRetries = 3) {
@@ -216,7 +216,7 @@ async function makeRequestWithRetry(url, options, maxRetries = 3) {
 
 ### Secreto del Consumidor
 
-Cuando registras un chainhook, las cargas útiles del webhook incluyen un `x-chainhook-consumer-secret` header. Valida este secreto en tu endpoint de webhook:
+Cuando registras un chainhook, las cargas útiles del webhook incluyen un `x-chainhook-consumer-secret` header. Valida este secreto en tu punto final de webhook:
 
 ```javascript
 app.post('/webhooks', (req, res) => {
@@ -245,18 +245,18 @@ Almacena el nuevo secreto de forma segura y actualiza tu endpoint de webhook.
 
 ## Mejores Prácticas
 
-1. **Comenzar en testnet** - Siempre prueba los chainhooks en testnet antes de mainnet
+1. **Comienza en testnet** - Siempre prueba los chainhooks en testnet antes de mainnet
 2. **Habilitar gradualmente** - Crear chainhooks deshabilitados, probar con `evaluate`, luego habilita
-3. **Manejar errores** - Implementar manejo adecuado de errores y reintentos
-4. **Validar webhooks** - Siempre verificar el encabezado del secreto del consumidor
+3. **Manejar errores** - Implementar manejo de errores adecuado y reintentos
+4. **Validar webhooks** - Siempre verifica el encabezado del secreto del consumidor
 5. **Use HTTPS** - Webhook URLs must use HTTPS for security
-6. **Supervisar uso** - Rastrea el uso de la API para mantenerte dentro de los límites de velocidad
+6. **Monitorear uso** - Rastrea el uso de la API para mantenerte dentro de los límites de velocidad
 7. **Control de versiones** - Documenta tus configuraciones de chainhook
 8. **Limpiar** - Eliminar chainhooks no utilizados para reducir costos
 
 ## Paginación
 
-Los endpoints de lista admiten paginación a través de parámetros de consulta:
+Los endpoints de lista admiten paginación mediante parámetros de consulta:
 
 ```bash
 # Get first page (default: 20 results)
@@ -282,6 +282,6 @@ La respuesta incluye metadatos de paginación:
 ## Próximos Pasos
 
 :::next-steps
-* [Referencia de API](/apis/chainhooks-api/reference): Documentación completa del endpoint
-* [Referencia de Filtros](/tools/chainhooks/reference/filters): Sintaxis de filtro de eventos
+* [Referencia de API](/apis/chainhooks-api): Documentación completa de endpoints
+* [Referencia de Filtro](/tools/chainhooks/reference/filters): Sintaxis de filtro de eventos
 :::

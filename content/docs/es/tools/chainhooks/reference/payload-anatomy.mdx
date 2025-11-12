@@ -1,10 +1,14 @@
 ---
 title: Anatomía del payload
-description: Comprender la estructura de las cargas útiles de webhook de Chainhook
+description: Comprender la estructura de las cargas útiles de webhook de Chainhooks
 ---
-## Descripción General del Payload
+## Resumen de Payload
 
-Un payload de Chainhook consiste en dos secciones principales: **evento** y **chainhook**:
+Un payload de Chainhooks consta de dos secciones principales: **evento** y **chainhook**I see that you've provided the critical rules for translation, but the actual text to translate appears to be just a single colon ":".&#x20;
+
+Since there's no substantive text content to translate, I'll return:
+
+:
 
 * `event` contiene los datos de la blockchain (bloques, transacciones, operaciones)
 * `chainhook` contiene metadatos sobre el chainhook que se activó
@@ -32,9 +36,9 @@ Un payload de Chainhook consiste en dos secciones principales: **evento** y **ch
 
 ## Sección de Eventos
 
-### Apply Array
+### Aplicar Array
 
-El `apply` la matriz contiene bloques que se están agregando a la cadena canónica. Cada bloque incluye:
+El `apply` el arreglo contiene bloques que se están agregando a la cadena canónica. Cada bloque incluye:
 
 ```json
 {
@@ -51,19 +55,19 @@ El `apply` la matriz contiene bloques que se están agregando a la cadena canón
 }
 ```
 
-### Array de Rollback
+### Rollback de Array
 
 El `rollback` array contiene bloques que se están eliminando durante una reorganización de cadena. Misma estructura que `apply`.
 
 :::callout
-Chainhook maneja automáticamente las reorganizaciones enviando eventos de reversión. Tu aplicación debe revertir cualquier cambio de estado de los bloques revertidos.
+Chainhooks maneja automáticamente las reorganizaciones enviando eventos de reversión. Su aplicación debe revertir cualquier cambio de estado de los bloques revertidos.
 :::
 
 ***
 
 ## Estructura de Transacción
 
-Cada transacción en el `transactions` array contiene:
+Cada transacción en el `transactions` la matriz contiene:
 
 ### Metadatos
 
@@ -114,7 +118,7 @@ Identificador único para la transacción:
 
 ***
 
-## Arreglo de Operaciones
+## Matriz de Operaciones
 
 Cada transacción incluye un `operations` array que describe los cambios de estado. Las operaciones están indexadas secuencialmente.
 
@@ -193,7 +197,7 @@ Invocación de función de contrato:
 ```
 
 :::callout
-La `args` incluye arreglo `repr` y `type` campos cuando `decode_clarity_values` está habilitado en las opciones.
+El `args` array incluye `repr` y `type` campos cuando `decode_clarity_values` está habilitado en las opciones.
 :::
 
 ### Operación de Transferencia de Token

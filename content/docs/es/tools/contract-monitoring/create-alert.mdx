@@ -1,77 +1,77 @@
 ---
 title: Crear una alerta
-description: Aprende cómo crear una alerta para monitorear las llamadas a funciones de un contrato.
+description: Aprende cómo crear una alerta para monitorear llamadas de función para un contrato.
 ---
 ## Lo que aprenderás
 
 :::objectives
-* Configurar alertas para funciones de contrato
-* Configurar notificaciones por correo electrónico y webhook
+* Configurar alertas para funciones de contratos
+* Configura notificaciones de correo electrónico y webhook
 * Monitorear patrones de uso de contratos
 :::
 
 ## Requisitos previos
 
 :::prerequisites
-* Contratos implementados en la red principal de Stacks (o use cualquier contrato público)
-* Una cuenta de la Plataforma Hiro - [Regístrate gratis](https://platform.hiro.so)
+* Contratos desplegados en la red principal de Stacks (o usa cualquier contrato público)
+* Una cuenta de Hiro Platform - [Regístrate gratis](https://platform.hiro.so)
 :::
 
-## Configurar el monitoreo de contratos
+## Configurar monitoreo de contratos
 
 <Steps>
   <Step>
-    ### Navegar a monitoreo
+    ### Navegar al monitoreo
 
-    Inicie sesión en el [Plataforma Hiro](https://platform.hiro.so) y cambia a la **Monitor** pestaña.
+    Inicia sesión en el [Plataforma Hiro](https://platform.hiro.so) y alternar al **Monitor** pestaña.
 
-    Puedes configurar monitoreo de alertas para cualquier contrato en la red principal.
+    Puedes configurar monitoreo de alertas para cualquier contrato en mainnet.
   </Step>
 
   <Step>
     ### Agregar contrato para monitoreo
 
-    Hacer clic **Agregar contrato** para abrir el modal de búsqueda de contratos.
+    Hacer clic **Añadir contrato** para abrir el modal de búsqueda de contratos.
 
     Tienes dos opciones:
 
-    * **Entrada manual**: Ingrese el principal del contrato y el nombre del contrato
-    * **Conexión de billetera**: Conecta tu billetera para ver tu historial de implementación
+    * **Entrada manual**: Ingresa el principal del contrato y el nombre del contrato
+    * **Conexión de cartera**: Conecta tu billetera para ver tu historial de despliegues
 
-    Todos los contratos implementados en la red principal son públicos, por lo que puedes monitorear cualquiera de ellos independientemente de quién los haya implementado.
+    Todos los contratos desplegados en la red principal son públicos, por lo que puedes monitorear cualquiera de ellos sin importar quién los haya desplegado.
   </Step>
 
   <Step>
     ### Ver actividad del contrato
 
-    Una vez agregado, su contrato aparece en Monitoreo de Contratos donde puede:
+    Una vez agregado, tu contrato aparece bajo Monitoreo de Contratos donde puedes:
 
     * Ver historial de transacciones
     * Ver transacciones pendientes en el mempool
-    * Hacer clic **Crear una alerta** para configurar un monitoreo específico
+    * Clic **Crear una alerta** para configurar monitoreo específico
   </Step>
 
   <Step>
     ### Configurar alertas personalizadas
 
-    Configura alertas para cualquier llamada a función de contrato con condiciones específicas:
+    Configurar alertas para cualquier llamada de función de contrato con condiciones específicas:
 
-    * **Función llamada**: Alertar cuando se llama a una función específica
-    * **Con argumentos**: Alertar solo cuando se llame con valores de argumento especificados
+    * **Función llamada**: Alerta cuando una función particular es llamada
+    * **Con argumentos**: Alerta solo cuando se llama con valores de argumento especificados
     * **Por dirección**: Alertar solo cuando sea llamado por una dirección de billetera específica
 
-    Por ejemplo, monitorear `set-contract-owner`, funciones de transferencia/acuñación/quemado, o cualquier función personalizada que hayas implementado.
+    Por ejemplo, monitorear `set-contract-owner`, funciones de transferencia/acuñación/quema, o cualquier función personalizada que hayas implementado.
   </Step>
 
   <Step>
-    ### Elegir método de notificación
+    ### Elija el método de notificación
 
-    Seleccione cómo desea recibir alertas:
+    Selecciona cómo quieres recibir alertas:
 
-    * **Notificaciones por correo electrónico**: Reciba alertas en su dirección de correo electrónico
-    * **Llamadas de webhook**: Envía a tu punto final de API para flujos de trabajo personalizados
+    * **Notificaciones por correo electrónico**: Recibe alertas en tu dirección de correo electrónico
+    * **Llamadas de webhook**: Enviar a tu endpoint de API para flujos de trabajo personalizados
 
-    Puede habilitar varios métodos de notificación para la misma alerta.
+    Puedes habilitar múltiples métodos de notificación para la misma alerta.
   </Step>
 </Steps>
 
@@ -79,9 +79,9 @@ description: Aprende cómo crear una alerta para monitorear las llamadas a funci
 
 Las notificaciones por correo electrónico provienen de Hiro Platform `<platform@hiro.so>`.
 
-Los payloads de webhook siguen esta estructura:
+Las cargas útiles de webhook siguen esta estructura:
 
-<CodeTabs storage="languageSwitcher">
+<CodeTabs storage="selector de idioma">
   ```json !! sample.json
   {
     "tx_id": "0xa7f511b3f379efef6fe71d0de57712ed13a89c5b6e24dd049eb2cc9a7c24fcb5",
@@ -168,12 +168,12 @@ Los payloads de webhook siguen esta estructura:
 </CodeTabs>
 
 :::callout
-El `tx_status` siempre devolverá "pending" para las alertas de monitoreo. Las notificaciones se envían cuando las transacciones llegan al mempool, no cuando se confirman en la blockchain.
+El `tx_status` siempre devolverá "pending" para alertas de monitoreo. Las notificaciones se envían cuando las transacciones llegan al mempool, no cuando se confirman en la blockchain.
 :::
 
 ## Próximos pasos
 
 :::next-steps
-* [Plataforma Hiro](https://platform.hiro.so): Crea y gestiona nuevos webhooks en la Plataforma.
+* [Plataforma Hiro](https://platform.hiro.so): Crear y gestionar nuevos webhooks en la Plataforma.
 * [Chainhook](/tools/chainhooks): Aprende sobre el monitoreo avanzado de eventos con Chainhook
 :::

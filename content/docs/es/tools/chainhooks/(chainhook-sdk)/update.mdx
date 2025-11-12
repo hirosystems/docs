@@ -1,21 +1,14 @@
 ---
 title: Editar chainhooks
-description: Modificar chainhooks existentes incluyendo filtros, acciones y opciones
+description: Modificar chainhooks existentes
 ---
 :::callout
-La interfaz de usuario de la plataforma no admite actualmente la edición de chainhooks. Debe usar el SDK o API para realizar actualizaciones.
+La interfaz de usuario de la plataforma actualmente no admite la edición de chainhooks. Debes usar el SDK o la API para realizar actualizaciones.
 :::
 
+Con `updateChainhook`, puedes ajustar una definición existente sin tiempo de inactividad: cambiar la URL del webhook, capturar nuevos eventos, o afinar las opciones de configuración a medida que evolucionen los requisitos.
+
 ## updateChainhook
-
-### Campos mutables vs inmutables
-
-| Mutable | Immutable |
-|---------------------|---------------------------|
-| `name` | `chain` |
-| `filters` | `network` |
-| `action` | |
-| `options` | |
 
 ### Ejemplo de Actualización Básica
 
@@ -35,9 +28,9 @@ await client.updateChainhook('chainhook-uuid', {
 });
 ```
 
-### Agregar filtro de eventos (preservando eventos existentes)
+### Agregar filtro de eventos (preservando los eventos existentes)
 
-Para agregar un nuevo filtro de evento a un chainhook existente, puedes obtener la definición actual, modificarla y luego actualizarla.
+Para agregar un nuevo filtro de eventos a un chainhook existente, puedes obtener la definición actual, modificarla, y luego actualizarla.
 
 ```typescript -nc
 // ✅ Good: Fetch first

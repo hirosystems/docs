@@ -1,34 +1,34 @@
 ---
 title: Filtros
-description: Referencia completa para todos los tipos de filtros de Chainhook
+description: Referencia completa para todos los tipos de filtros de Chainhooks
 ---
 Los filtros definen qué eventos de blockchain activarán tu chainhook.
 
-Aquí tienes una referencia completa para todos los tipos de filtros de Chainhook:
+Aquí tienes una referencia completa para todos los tipos de filtros de Chainhooks:
 
-| Filtro | Cuándo usar |
+| Filter | Cuándo usar |
 |--------|-------------|
-| `ft_event` | Capturar *cada* transferencia, acuñación o quema SIP-010 entre activos. |
-| `ft_transfer` | Follow a single asset such as USDC; optionally add `sender`/`receiver` para activadores a nivel de billetera. |
-| `ft_mint` | Seguimiento de expansiones de suministro o flujos de entrada de puente para un activo (configurar `asset_identifier`). |
-| `ft_burn` | Rastrea redenciones o contracciones de suministro para un activo (conjunto `asset_identifier`). |
-| `nft_event` | Supervisa cada transferencia, acuñación o quema para todas las colecciones. |
-| `nft_transfer` | Sigue una colección SIP-009; añadir `sender`, `receiver`, o `value` para dirigirse a propietario/token. |
-| `nft_mint` | Ve cada nueva acuñación para una colección (conjunto `asset_identifier`). |
-| `nft_burn` | Capturar quemas o canjes (establecer `asset_identifier`). |
+| `ft_event` | Capturar *cada* SIP-010 transferir, acuñar o quemar a través de activos. |
+| `ft_transfer` | Follow a single asset such as USDC; optionally add `sender`/`receiver` para disparadores a nivel de cartera. |
+| `ft_mint` | Rastrea expansiones de suministro o flujos de entrada del puente para un activo (establecer `asset_identifier`). |
+| `ft_burn` | Rastrea canjes o contracciones de suministro para un activo (conjunto `asset_identifier`). |
+| `nft_event` | Monitorear cada transferencia, acuñación o quema para todas las colecciones. |
+| `nft_transfer` | Seguir una colección SIP-009; agregar `sender`, `receiver`, o `value` para la orientación propietario/token. |
+| `nft_mint` | Observa cada nuevo mint para una colección (establecer `asset_identifier`). |
+| `nft_burn` | Detectar quemaduras o canjes (set `asset_identifier`). |
 | `stx_event` | Captura todas las transferencias nativas, acuñaciones o quemas. |
-| `stx_transfer` | Rastrea cada transferencia de STX; añade `sender` o `receiver` para destacar directores específicos. |
+| `stx_transfer` | Rastrea cada transferencia de STX; agrega `sender` o `receiver` para destacar directores específicos. |
 | `contract_deploy` | Reacciona a nuevos contratos que ingresan a la red. |
 | `contract_call` | Observa cada invocación; reduce con `contract_identifier` y `function_name`. |
-| `contract_log` | Capturar `print`salida de /log de un contrato (establecer `contract_identifier`). |
-| `coinbase` | Observa las recompensas de los mineros llegando a la cadena. |
-| `tenure_change` | Seguir las actualizaciones de tenencia de Proof-of-Transfer; agregar `cause` I don't see any text provided to translate. Could you please share the text you'd like me to translate from English to Spanish?`"block_found"` o `"extended"`) para especificidad. |
+| `contract_log` | Capturar `print`/log output desde un contrato (set `contract_identifier`). |
+| `coinbase` | Observa las recompensas del minero llegando a la cadena. |
+| `tenure_change` | Seguimiento de las actualizaciones de tenencia de Proof-of-Transfer; agregar `cause` I don't see any text provided to translate. Please provide the text you'd like me to translate from English to Spanish, and I'll follow the critical rules you've outlined.`"block_found"` o `"extended"`) para especificidad. |
 
 ## Eventos de Tokens Fungibles (FT)
 
 ### Cualquier Evento FT
 
-Coincide con cualquier evento de token fungible (transferencia, quema o acuñación):
+Coincidir con cualquier evento de token fungible (transferencia, quema o acuñación):
 
 ```json
 {
@@ -38,7 +38,7 @@ Coincide con cualquier evento de token fungible (transferencia, quema o acuñaci
 
 ### Transferencia FT
 
-Coincidir transferencias FT para un activo específico:
+Emparejar transferencias FT para un activo específico:
 
 ```json
 {
@@ -70,9 +70,9 @@ Filtrar por receptor:
 }
 ```
 
-### Acuñación FT
+### FT Mint
 
-Coincidir eventos de mint de FT:
+Coincidir eventos de acuñación FT:
 
 ```json
 {
@@ -81,9 +81,9 @@ Coincidir eventos de mint de FT:
 }
 ```
 
-### FT Burn
+### Quemado de FT
 
-Hacer coincidir eventos de quema de FT:
+Emparejar eventos de quema de FT:
 
 ```json
 {
@@ -94,7 +94,7 @@ Hacer coincidir eventos de quema de FT:
 
 ***
 
-## Eventos de Token No Fungible (NFT)
+## Eventos de Tokens No Fungibles (NFT)
 
 ### Cualquier Evento NFT
 
@@ -108,7 +108,7 @@ Coincidir con cualquier evento NFT (transferencia, quema o acuñación):
 
 ### Transferencia de NFT
 
-Coincide con las transferencias de NFT para una colección específica:
+Hacer coincidir transferencias de NFT para una colección específica:
 
 ```json
 {
@@ -162,9 +162,9 @@ Coincidir eventos de mint de NFT:
 }
 ```
 
-### Quema de NFT
+### NFT Quemado
 
-Eventos de quemado de NFT coincidentes:
+Coincidir eventos de quema de NFT:
 
 ```json
 {
@@ -179,7 +179,7 @@ Eventos de quemado de NFT coincidentes:
 
 ### Cualquier Evento STX
 
-Coincidir con cualquier evento de STX (transferencia, quema o acuñación):
+Coincidir con cualquier evento STX (transferencia, quema o acuñación):
 
 ```json
 {
@@ -223,7 +223,7 @@ Filtrar por receptor:
 
 ### Despliegue de Contrato
 
-Coincidir con cualquier despliegue de contrato:
+Coincida con cualquier despliegue de contrato:
 
 ```json
 {
@@ -231,7 +231,7 @@ Coincidir con cualquier despliegue de contrato:
 }
 ```
 
-Filtrar por desplegador:
+Filtrar por implementador:
 
 ```json
 {
@@ -243,7 +243,7 @@ Filtrar por desplegador:
 
 ### Llamada de Contrato
 
-Coincide con cualquier llamada de contrato:
+Coincidir con cualquier llamada de contrato:
 
 ```json
 {
@@ -294,7 +294,7 @@ Coincidir con cualquier evento de impresión:
 }
 ```
 
-Coincide con eventos de impresión de contratos:
+Coincide con eventos de impresión de contrato:
 
 ```json
 {
@@ -321,7 +321,7 @@ Filtrar por remitente de transacción:
 
 ### Coinbase
 
-Coincidir con eventos de coinbase (recompensas de bloque):
+Coincidir eventos de coinbase (recompensas de bloque):
 
 ```json
 {
@@ -331,7 +331,7 @@ Coincidir con eventos de coinbase (recompensas de bloque):
 
 ### Cambio de Tenencia
 
-Coincidir con cualquier cambio de permanencia:
+Coincidir con cualquier cambio de tenencia:
 
 ```json
 {
@@ -339,7 +339,7 @@ Coincidir con cualquier cambio de permanencia:
 }
 ```
 
-Coincidir cambios de tenencia por causa (bloque encontrado):
+Coincidencias de cambios de tenencia por causa (bloque encontrado):
 
 ```json
 {
@@ -349,7 +349,7 @@ Coincidir cambios de tenencia por causa (bloque encontrado):
 }
 ```
 
-Coincidir cambios de tenencia por causa (extendido):
+Igualar cambios de tenencia por causa (extendido):
 
 ```json
 {
@@ -363,7 +363,7 @@ Coincidir cambios de tenencia por causa (extendido):
 
 ## Combinando Filtros
 
-Puedes combinar múltiples filtros en el `filters.events` matriz. Un chainhook se activará si **any** de los filtros coinciden:
+Puedes combinar múltiples filtros en el `filters.events` arreglo. Un chainhook se activará si **any** de los filtros coinciden:
 
 ```json
 {

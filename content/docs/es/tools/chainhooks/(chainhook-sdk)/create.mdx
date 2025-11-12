@@ -1,10 +1,10 @@
 ---
 title: Crear chainhooks
-description: Crear y activar chainhooks usando el SDK Chainhook
+description: Crear y activar chainhooks usando el SDK de Chainhooks
 ---
-## registerChainhook
+Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en un estado deshabilitado a menos que `enable_on_registration` está configurado en `true`.
 
-Crea una nueva configuración de chainhook. Por defecto, los nuevos chainhooks se crean en un estado deshabilitado a menos que `enable_on_registration` está configurado como `true`.
+## registerChainhook
 
 ### Ejemplo
 
@@ -40,11 +40,11 @@ const chainhook = await client.registerChainhook({
   },
 });
 
-console.log('Chainhook UUID:', chainhook.uuid);
+console.log('Chainhooks UUID:', chainhook.uuid);
 console.log('Enabled:', chainhook.status.enabled); // true
 ```
 
-No proporcionaste el texto completo para traducir. Solo veo "If you don't set" pero parece que falta el resto del contenido. Por favor, proporciona el texto completo que necesitas traducir. `enable_on_registration`, el chainhook se creará pero estará deshabilitado por defecto.
+Si no estableces `enable_on_registration`, el chainhook será creado pero deshabilitado por defecto.
 
 ***
 
@@ -68,7 +68,7 @@ Returns HTTP `204 No Content` en caso de éxito.
 
 ## bulkEnableChainhooks
 
-Habilite o deshabilite múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks de manera programática.
+Habilita o deshabilita múltiples chainhooks a la vez usando filtros. Esto es útil para gestionar muchos chainhooks programáticamente.
 
 ### Por UUIDs
 
@@ -119,7 +119,7 @@ await client.bulkEnableChainhooks({
 
 ### Filtros Combinados
 
-Usar múltiples filtros juntos:
+Utiliza múltiples filtros juntos:
 
 ```typescript -nc
 await client.bulkEnableChainhooks({
@@ -134,9 +134,9 @@ await client.bulkEnableChainhooks({
 
 This will disable all active chainhooks that POST to the old webhook URL.
 
-## Siguientes pasos
+## Próximos pasos
 
 :::next-steps
-* [Evaluar](/tools/chainhooks/evaluate): Probar chainhooks contra bloques pasados
+* [Evaluar](/tools/chainhooks/evaluate): Prueba chainhooks contra bloques pasados
 * [Referencia de Filtros](/tools/chainhooks/reference/filters): Explora todas las opciones de filtro
 :::

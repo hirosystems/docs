@@ -6,22 +6,13 @@ description: REST API for managing Chainhooks programmatically
 
 ## Overview
 
-The Chainhooks API is a REST API that allows you to programmatically manage chainhooks, configure event filters, and control webhook delivery. It provides the same functionality as the [Chainhook SDK](/tools/chainhooks/chainhook-sdk) through direct HTTP requests.
-
-Use the Chainhooks API when:
-- You're working in a language without SDK support
-- You need direct HTTP control over chainhook operations
-- You're building custom integrations or automation workflows
-- You prefer REST APIs over client libraries
+The Chainhooks API is a REST API that allows you to programmatically manage chainhooks, configure event filters, and control webhook delivery. It provides the same functionality covered in the [Chainhooks SDK introduction](/tools/chainhooks/introduction) through direct HTTP requests.
 
 ## Key Features
 
 - **Full chainhook management** - Create, read, update, and delete chainhooks
-- **Event filtering** - Configure filters for FT, NFT, STX, contract, and system events
 - **Webhook configuration** - Set up HTTP POST endpoints for event delivery
 - **Evaluation endpoints** - Test chainhooks against historical blocks
-- **Bulk operations** - Enable or disable multiple chainhooks at once
-- **Secret management** - Rotate webhook consumer secrets for security
 
 ## Base URLs
 
@@ -32,65 +23,11 @@ Testnet: https://api.testnet.hiro.so/chainhooks/v1
 Mainnet: https://api.mainnet.hiro.so/chainhooks/v1
 ```
 
-## Authentication
-
-All API requests require authentication using a Hiro API key in the `x-api-key` header:
-
-```bash
-curl https://api.testnet.hiro.so/chainhooks/v1/me/ \
-  -H "x-api-key: YOUR_API_KEY"
-```
-
-Get your API key from [platform.hiro.so](https://platform.hiro.so).
-
-## Quick Example
-
-Register a new chainhook to monitor FT transfers:
-
-```bash
-curl -X POST https://api.testnet.hiro.so/chainhooks/v1/me/ \
-  -H "x-api-key: YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "ft-transfer-monitor",
-    "version": "1",
-    "chain": "stacks",
-    "network": "testnet",
-    "filters": {
-      "events": [{
-        "type": "ft_transfer",
-        "asset_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.usda-token::usda"
-      }]
-    },
-    "action": {
-      "type": "http_post",
-      "url": "https://example.com/webhooks"
-    },
-    "options": {
-      "enable_on_registration": true
-    }
-  }'
-```
-
-## SDK vs REST API
-
-Both the SDK and REST API provide identical functionality:
-
-| Feature | SDK | REST API |
-|---------|-----|----------|
-| Language | TypeScript/JavaScript | Any language |
-| Type Safety | Yes | No |
-| Authentication | Automatic | Manual headers |
-| Error Handling | Built-in | Custom |
-| Best For | Node.js/Bun apps | Other languages, scripts |
-
-For TypeScript/JavaScript projects, we recommend using the [Chainhook SDK](/tools/chainhooks/chainhook-sdk) for better developer experience.
-
 ## Next Steps
 
 :::next-steps
 * [Usage Guide](/apis/chainhooks-api/usage): Authentication and best practices
-* [API Reference](/apis/chainhooks-api/reference): Complete endpoint documentation
+* [API Reference](/apis/chainhooks-api): Complete endpoint documentation
 :::
 
 :::callout

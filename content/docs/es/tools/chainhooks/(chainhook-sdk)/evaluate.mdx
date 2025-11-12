@@ -1,10 +1,10 @@
 ---
-title: Evalúa un bloque específico
+title: Evaluar un bloque específico
 description: Ejecuta tus chainhooks contra bloques específicos para pruebas, depuración e indexación histórica.
 ---
 El endpoint evaluate reproduce un solo bloque contra uno de tus chainhooks registrados para que puedas validar filtros sin esperar tráfico en vivo.
 
-Úselo para reproducir entregas perdidas, inspeccionar esquemas de carga útil después de cambios de filtro, o probar la infraestructura de webhooks con bloques conocidos antes de habilitar un hook en producción.
+Úsalo para reproducir entregas perdidas, inspeccionar esquemas de carga útil después de cambios de filtro, o probar infraestructura de webhooks con bloques conocidos antes de habilitar un hook en producción.
 
 ## evaluateChainhook
 
@@ -12,12 +12,10 @@ El endpoint evaluate reproduce un solo bloque contra uno de tus chainhooks regis
 
 | Method | Parameter | Example |
 |--------|-----------|---------|
-| **Por altura** I notice you've provided the translation rules but the actual text to translate appears to be just a single "|" character. Since this is just a pipe symbol (vertical bar), it doesn't need translation and should remain as:
+| **Por altura** | `block_height` I don't see any text to translate. You've provided the rules and instructions, but the actual text content appears to be missing after "Text to translate:" - there's only a "|" symbol.
 
-| `block_height` | `{ block_height: 100000 }` |
-| **Por hash** I notice that you've provided the translation rules and indicated there's text to translate, but the actual text appears to be missing. You've only included a "|" character at the end.&#x20;
-
-Could you please provide the actual text content that needs to be translated from English to Spanish? `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
+Could you please provide the actual text you'd like me to translate from English to Spanish? `{ block_height: 100000 }` |
+| **Por hash** | `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
 
 ### Ejemplo
 
@@ -57,9 +55,9 @@ Returns HTTP `204 No Content`. Si los filtros coinciden, la carga útil del webh
 
 | Caso de Uso | Descripción | Ejemplo |
 |----------|-------------|---------|
-| **Debug** | Investigar eventos perdidos | Evaluar bloque específico que debería haber disparado |
-| **Rellenar** | Indexar datos históricos | Procesar bloques pasados después de crear chainhook |
-| **Reprocesar** | Solucionar problemas del manejador de webhook | Re-evaluar después de corregir errores |
+| **Debug** | Investigar eventos perdidos | Evaluar bloque específico que debería haber activado |
+| **Rellenar** | Indexar datos históricos | Procesar bloques pasados después de crear el chainhook |
+| **Reprocesar** | Solucionar problemas del controlador de webhook | Reevaluar después de corregir errores |
 
 ## Próximos pasos
 

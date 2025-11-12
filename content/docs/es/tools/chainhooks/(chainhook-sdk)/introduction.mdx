@@ -4,7 +4,7 @@ description: SDK de TypeScript/JavaScript para gestionar chainhooks programátic
 ---
 ## Descripción general
 
-El SDK de Chainhook (`@hirosystems/chainhooks-client`) proporciona un cliente TypeScript/JavaScript para gestionar chainhooks de forma programática.
+El SDK de Chainhooks (`@hirosystems/chainhooks-client`) proporciona un cliente TypeScript/JavaScript para gestionar chainhooks programáticamente.
 
 ## Instalación
 
@@ -61,14 +61,14 @@ const chainhook = await client.registerChainhook({
   },
 });
 
-console.log('Chainhook created:', chainhook.uuid);
+console.log('Chainhooks created:', chainhook.uuid);
 ```
 
 ## URLs base
 
-El SDK proporciona constantes específicas de red:
+El SDK proporciona constantes específicas de la red:
 
-| Network | Constante | URL |
+| Network | Constant | URL |
 |---------|----------|-----|
 | Testnet | `CHAINHOOKS_BASE_URL.testnet` | https://api.testnet.hiro.so |
 | Red principal | `CHAINHOOKS_BASE_URL.mainnet` | https://api.mainnet.hiro.so |
@@ -91,12 +91,12 @@ const mainnetClient = new ChainhooksClient({
 
 ## Autenticación
 
-### Obtén Tu Clave de API
+### Obtén tu clave API
 
 1. Visitar [platform.hiro.so](https://platform.hiro.so)
-2. Iniciar sesión o crear una cuenta
+2. Inicia sesión o crea una cuenta
 3. Navegar a la sección de Claves API
-4. Genera o copia tu clave API
+4. Genera o copia tu clave de API
 
 ### Configurar Cliente
 
@@ -110,7 +110,7 @@ const client = new ChainhooksClient({
 :::callout
 type: warn
 
-### Claves de API
+### claves API
 
 Nunca confirmes claves API al control de versiones. Siempre usa variables de entorno o gestión segura de secretos.
 :::
@@ -140,18 +140,18 @@ El SDK proporciona los siguientes métodos:
 
 | Method | Description |
 |--------|-------------|
-| `evaluateChainhook()` | Evaluar un chainhook contra bloques específicos del pasado |
-| `rotateConsumerSecret()` | Rotar el secreto del webhook para verificación de carga útil |
+| `evaluateChainhook()` | Evaluar un chainhook contra bloques pasados específicos |
+| `rotateConsumerSecret()` | Rota el secreto del webhook para verificación de carga útil |
 
-## Soporte de TypeScript
+## Soporte para TypeScript
 
 ### Tipos Disponibles
 
-El SDK proporciona definiciones de tipos TypeScript completas:
+El SDK proporciona definiciones de tipos completas de TypeScript:
 
 ```typescript -nc
 import type {
-  ChainhookDefinitionSchema,      // Chainhook configuration
+  ChainhookDefinitionSchema,      // Chainhooks configuration
   ChainhookStatusSchema,           // Status and activity info
   EvaluateChainhookRequest,        // Evaluation parameters
   BulkEnableChainhooksRequest,     // Bulk operation filters
@@ -162,5 +162,5 @@ import type {
 
 :::next-steps
 * [Crear chainhooks](/tools/chainhooks/create): Crear y activar chainhooks
-* [Administrar secretos del consumidor](/tools/chainhooks/keys): Aprende cómo validar la entrega de Chainhook
+* [Gestionar secretos del consumidor](/tools/chainhooks/secrets): Aprende cómo validar la entrega de Chainhooks
 :::
