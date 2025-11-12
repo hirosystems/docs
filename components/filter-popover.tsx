@@ -9,9 +9,7 @@ const CATEGORIES = [
   { label: 'Stacks.js', value: 'stacks.js' },
   { label: 'Clarity', value: 'clarity' },
   { label: 'Bitcoin', value: 'bitcoin' },
-  // { label: "Chainhook", value: "chainhook" },
   { label: 'API', value: 'api' },
-  // { label: "Clarinet", value: "clarinet" },
 ];
 
 interface FilterPopoverProps {
