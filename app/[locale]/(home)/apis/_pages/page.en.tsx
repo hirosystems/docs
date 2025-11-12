@@ -1,5 +1,5 @@
 import { Cards, IndexCard } from '@/components/card';
-import { API, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
+import { API, Chainhook, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
 
 export default function APIsPage() {
   return (
@@ -22,6 +22,13 @@ export default function APIsPage() {
               href="/apis/stacks-node-rpc-api"
               title="Stacks Node RPC API"
               description="Raw blockchain node methods: submit txs, call read-only contracts, query mempool/state."
+            />
+            <IndexCard
+              icon={<Chainhook />}
+              href="/apis/chainhooks-api"
+              title="Chainhooks API"
+              badge="new"
+              description="RESTful API for accessing Chainhook."
             />
             <IndexCard
               icon={<API />}

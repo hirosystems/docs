@@ -91,6 +91,19 @@ export default function HomePage() {
                 description="Comprehensive REST API for interacting with the Stacks blockchain and network data."
               />
               <SmallCard
+                icon={<StacksIcon />}
+                href="/apis/stacks-node-rpc-api"
+                title="Stacks Node RPC API"
+                description="Raw blockchain node methods: submit txs, call read-only contracts, query mempool/state."
+              />
+              <SmallCard
+                icon={<Chainhook />}
+                href="/apis/chainhooks-api"
+                title="Chainhooks API"
+                badge="new"
+                description="RESTful API for accessing Chainhook."
+              />
+              <SmallCard
                 icon={<API />}
                 href="/apis/token-metadata-api"
                 title="Token Metadata API"

@@ -272,8 +272,8 @@ export function SmallCard({
           </div>
         )}
         <div className="flex flex-col w-full">
-          <div className="flex items-center gap-2">
-            <h3 className="mb-1 font-inter font-medium text-md text-primary dark:text-[#f6f5f3]">
+          <div className="mb-1 flex items-center gap-2">
+            <h3 className="font-inter font-medium text-md text-primary dark:text-[#f6f5f3]">
               {title}
             </h3>
             {badge && (
