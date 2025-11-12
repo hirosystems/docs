@@ -14,6 +14,7 @@ import { useApiCredentials } from '@/providers/api-credentials-provider';
 import type { OpenAPIOperation } from '../types';
 import { RequestBuilder } from './request-builder';
 import { executeRequest } from './request-executor';
+import { coerceValueForSchema } from './schema-utils';
 
 interface APIPlaygroundProps {
   operation: OpenAPIOperation;
@@ -230,6 +231,8 @@ export function APIPlayground({
     }
 
     let finalFormData = { ...formData };
+    let bodyFieldErrors: string[] = [];
+
     if (operation.requestBody) {
       const bodySchema = operation.requestBody.content?.['application/json']?.schema;
       if (bodySchema?.type === 'object' && bodySchema.properties) {
@@ -294,16 +297,41 @@ export function APIPlayground({
                 });
               } catch (error) {
                 console.error('Failed to convert arguments:', error);
-                bodyObject[propName] = fieldValue;
+                bodyFieldErrors.push(
+                  error instanceof Error
+                    ? error.message
+                    : `Invalid value provided for ${propName}`,
+                );
               }
             } else if (propName === 'sender') {
               // Sender stays as string
               bodyObject[propName] = fieldValue;
             } else {
-              // Other fields - no conversion for now
-              bodyObject[propName] = fieldValue;
+              try {
+                bodyObject[propName] = coerceValueForSchema(fieldValue, propSchema, {
+                  strict: true,
+                  fieldName: propName,
+                });
+              } catch (error) {
+                bodyFieldErrors.push(
+                  error instanceof Error
+                    ? error.message
+                    : `Invalid value provided for ${propName}`,
+                );
+              }
             }
           }
+        }
+
+        if (bodyFieldErrors.length > 0) {
+          if (!openSections.includes('body')) {
+            setOpenSections((prev) => [...prev, 'body']);
+          }
+          setResponse({
+            status: 0,
+            error: bodyFieldErrors[0],
+          });
+          return;
         }
 
         finalFormData = {

@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { cn } from '@/lib/utils';
 import type { OpenAPIOperation, OpenAPIParameter } from '../types';
 import { ClarityConverter, type ClarityTypeHint } from './clarity-converter';
+import { coerceValueForSchema, resolveEffectiveSchema } from './schema-utils';
 
 interface RequestBuilderProps {
   operation: OpenAPIOperation;
@@ -135,12 +136,14 @@ export const RequestBuilder = forwardRef<HTMLFormElement, RequestBuilderProps>(
         const bodySchema = operation.requestBody.content?.['application/json']?.schema;
         if (bodySchema?.type === 'object' && bodySchema.properties) {
           const bodyObject: Record<string, any> = {};
+          const parseErrors: Record<string, string> = {};
 
           for (const [propName, propSchema] of Object.entries(bodySchema.properties) as [
             string,
             any,
           ][]) {
             const fieldValue = formData[`body.${propName}`];
+            const fieldName = `body.${propName}`;
             if (fieldValue !== undefined && fieldValue !== '') {
               if (clarityConversion) {
                 if (propName === 'arguments' && propSchema.type === 'array') {
@@ -152,7 +155,10 @@ export const RequestBuilder = forwardRef<HTMLFormElement, RequestBuilderProps>(
                     });
                   } catch (error) {
                     console.error('Failed to convert arguments:', error);
-                    bodyObject[propName] = fieldValue;
+                    parseErrors[fieldName] =
+                      error instanceof Error
+                        ? error.message
+                        : `Invalid value provided for ${propName}`;
                   }
                 } else {
                   if (propName === 'sender') {
@@ -167,17 +173,52 @@ export const RequestBuilder = forwardRef<HTMLFormElement, RequestBuilderProps>(
                         );
                         bodyObject[propName] = cvToHex(clarityValue);
                       } catch (error) {
-                        bodyObject[propName] = fieldValue;
+                        try {
+                          bodyObject[propName] = coerceValueForSchema(fieldValue, propSchema, {
+                            strict: true,
+                            fieldName: propName,
+                          });
+                        } catch (coerceError) {
+                          parseErrors[fieldName] =
+                            coerceError instanceof Error
+                              ? coerceError.message
+                              : `Invalid value provided for ${propName}`;
+                        }
                       }
                     } else {
-                      bodyObject[propName] = fieldValue;
+                      try {
+                        bodyObject[propName] = coerceValueForSchema(fieldValue, propSchema, {
+                          strict: true,
+                          fieldName: propName,
+                        });
+                      } catch (error) {
+                        parseErrors[fieldName] =
+                          error instanceof Error
+                            ? error.message
+                            : `Invalid value provided for ${propName}`;
+                      }
                     }
                   }
                 }
               } else {
-                bodyObject[propName] = fieldValue;
+                try {
+                  bodyObject[propName] = coerceValueForSchema(fieldValue, propSchema, {
+                    strict: true,
+                    fieldName: propName,
+                  });
+                } catch (error) {
+                  parseErrors[fieldName] =
+                    error instanceof Error
+                      ? error.message
+                      : `Invalid value provided for ${propName}`;
+                }
               }
             }
+          }
+
+          if (Object.keys(parseErrors).length > 0) {
+            setErrors((prev) => ({ ...prev, ...parseErrors }));
+            return;
           }
 
           finalFormData = {
@@ -422,9 +463,26 @@ export const RequestBuilder = forwardRef<HTMLFormElement, RequestBuilderProps>(
             const fieldName = `body.${propName}`;
             const isRequired = bodySchema.required?.includes(propName);
             const hasError = !!errors[fieldName];
+            const resolvedPropSchema = resolveEffectiveSchema(propSchema) || propSchema;
+            const schemaType = resolvedPropSchema?.type || propSchema.type;
             const clarityType = clarityConversion
               ? detectClarityType(propName, propSchema, formData[fieldName] || '')
               : null;
+            const exampleValue =
+              typeof propSchema.example === 'string'
+                ? propSchema.example
+                : propSchema.example
+                  ? JSON.stringify(propSchema.example, null, 2)
+                  : undefined;
+            const placeholder =
+              exampleValue ||
+              propSchema.description ||
+              (schemaType === 'object'
+                ? 'Enter JSON object'
+                : schemaType === 'array'
+                  ? 'Enter array values as JSON array'
+                  : undefined);
+            const shouldUseTextarea = schemaType === 'array' || schemaType === 'object';
 
             return (
               <div key={propName} className="space-y-2">
@@ -451,19 +509,17 @@ export const RequestBuilder = forwardRef<HTMLFormElement, RequestBuilderProps>(
                   )}
                 </div>
 
-                {propSchema.type === 'array' ? (
+                {shouldUseTextarea ? (
                   <Textarea
                     id={fieldName}
                     value={formData[fieldName] || ''}
                     onChange={(e) => handleInputChange(fieldName, e.target.value)}
                     placeholder={
-                      propSchema.example?.toString() ||
-                      propSchema.description ||
-                      (propName === 'arguments'
+                      propName === 'arguments' && schemaType === 'array'
                         ? 'e.g. [SP123...] or [SP123..., 100] or [1, [2, 3, 4]]'
-                        : 'Enter array values as JSON array')
+                        : placeholder
                     }
-                    rows={3}
+                    rows={schemaType === 'array' ? 3 : 5}
                     className={cn(
                       'font-mono text-sm bg-white dark:bg-neutral-950 border-border',
                       hasError && 'border-red-500',

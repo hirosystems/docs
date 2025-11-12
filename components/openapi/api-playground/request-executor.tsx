@@ -66,7 +66,6 @@ export async function executeRequest(
   // Build headers
   const headers: Record<string, string> = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
   };
 
   const headerParameters = operation.parameters?.filter((p) => p.in === 'header') || [];
@@ -90,7 +89,9 @@ export async function executeRequest(
   );
 
   let requestBody: any;
-  if (formData.body && (operation.requestBody || methodSupportsBody)) {
+  const shouldAttachBody = formData.body && (operation.requestBody || methodSupportsBody);
+
+  if (shouldAttachBody) {
     try {
       // Parse and re-stringify to validate JSON
       const parsedBody = JSON.parse(formData.body);
@@ -102,6 +103,10 @@ export async function executeRequest(
     }
   } else if (operation.requestBody?.required && !formData.body) {
     console.warn(`Request body is required for ${operation.method} ${operation.path}`);
+  }
+
+  if (requestBody !== undefined) {
+    headers['Content-Type'] = 'application/json';
   }
 
   const startTime = performance.now();
