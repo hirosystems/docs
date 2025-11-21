@@ -21,6 +21,12 @@ There are two ways to restore a Stacks Blockchain API using the Hiro Archive. Th
 
 This is the quickest and most direct method, and it is suitable for most scenarios. It consists of a backup of the API's Postgres database taken using `pg_dump`. We generally recommend starting with this method before attempting the method below if this one does not work for any reason.
 
+:::callout
+type: info
+### Postgres Schema
+You will need to set the API `PG_SCHEMA` environment variable to: `PG_SCHEMA=stacks_blockchain_api` when restoring from an archive.
+:::
+
 **Restore via tab-separated-values (TSV) file**
 
 This method is several times slower than restoring from a Postgres dump. The API TSV file contains the raw unprocessed events from a Stacks blockchain node. The API can ingest this file to process events into a Postgres database.

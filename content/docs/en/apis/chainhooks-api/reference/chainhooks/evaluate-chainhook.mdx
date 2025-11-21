@@ -5,6 +5,10 @@ description: Queues an on-demand evaluation job for a specific block
 full: true
 ---
 
+Use this endpoint to replay a single block (historical) against an existing chainhook so you can debug delivery issues, re-run missed events, or backfill data after a filter change. Provide either a `block_height` or `index_block_hash` to pinpoint the block you evaluate.
+
+The evaluation job returns `204 No Content`; if your filters match, the webhook payload is delivered to the hook's configured action just like a live event.
+
 <APIPage
   document="./openapi/chainhook-api.json"
   operations={[{ path: '/me/{uuid}/evaluate', method: 'post' }]}

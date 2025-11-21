@@ -4,4 +4,8 @@ sidebarTitle: Evaluar un bloque específico
 description: Pone en cola un trabajo de evaluación bajo demanda para un bloque específico
 full: true
 ---
+Use este endpoint para reproducir un solo bloque (histórico) contra un chainhook existente para que puedas depurar problemas de entrega, volver a ejecutar eventos perdidos, o rellenar datos después de un cambio de filtro. Proporciona ya sea un `block_height` o `index_block_hash` para identificar el bloque que evalúas.
+
+El trabajo de evaluación devuelve `204 No Content`; si tus filtros coinciden, la carga útil del webhook se entrega a la acción configurada del gancho igual que un evento en vivo.
+
 <APIPage document="./openapi/chainhook-api.json" operations={[{ path: '/me/{uuid}/evaluate', method: 'post' }]} hasHead={false} />
