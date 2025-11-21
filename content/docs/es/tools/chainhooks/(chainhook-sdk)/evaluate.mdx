@@ -1,10 +1,10 @@
 ---
-title: Evaluar un bloque específico
-description: Ejecuta tus chainhooks contra bloques específicos para pruebas, depuración e indexación histórica.
+title: Reproducir un bloque
+description: Reproduce cualquier altura de bloque o hash contra un chainhook para depurar, rellenar o reprocesar eventos históricos.
 ---
-El endpoint evaluate reproduce un solo bloque contra uno de tus chainhooks registrados para que puedas validar filtros sin esperar tráfico en vivo.
+El endpoint de evaluación reproduce cualquier bloque individual que elijas—en vivo o histórico—contra uno de tus chainhooks registrados para que puedas validar filtros sin esperar tráfico en vivo. Proporciona ya sea una altura de bloque o un hash de bloque para dirigirte al bloque exacto que te interesa.
 
-Úsalo para reproducir entregas perdidas, inspeccionar esquemas de carga útil después de cambios de filtro, o probar infraestructura de webhooks con bloques conocidos antes de habilitar un hook en producción.
+Úsalo para reproducir entregas perdidas, inspeccionar esquemas de carga útil después de cambios en filtros, o probar la infraestructura de webhooks con bloques conocidos antes de habilitar un hook en producción.
 
 ## evaluateChainhook
 
@@ -12,10 +12,10 @@ El endpoint evaluate reproduce un solo bloque contra uno de tus chainhooks regis
 
 | Method | Parameter | Example |
 |--------|-----------|---------|
-| **Por altura** | `block_height` I don't see any text to translate. You've provided the rules and instructions, but the actual text content appears to be missing after "Text to translate:" - there's only a "|" symbol.
+| **Por altura** | `block_height` I notice you've provided the translation rules but the actual text to translate appears to be just a single vertical bar "|".&#x20;
 
-Could you please provide the actual text you'd like me to translate from English to Spanish? `{ block_height: 100000 }` |
-| **Por hash** | `index_block_hash` | `{ index_block_hash: '0xa204...' }` |
+| `{ block_height: 100000 }` |
+| **Por hash** | `index_block_hash` I don't see any text provided after "Text to translate:" - only a vertical bar (|). Please provide the text you'd like me to translate from English to Spanish, and I'll follow your specified rules carefully. `{ index_block_hash: '0xa204...' }` I don't see any text to translate in your message. You've provided the rules and said "Text to translate:" followed by just a "|" character. Please provide the actual text you'd like me to translate from English to Spanish, and I'll follow all the rules you've specified.
 
 ### Ejemplo
 
@@ -54,14 +54,14 @@ Returns HTTP `204 No Content`. Si los filtros coinciden, la carga útil del webh
 ## Casos de Uso
 
 | Caso de Uso | Descripción | Ejemplo |
-|----------|-------------|---------|
-| **Debug** | Investigar eventos perdidos | Evaluar bloque específico que debería haber activado |
-| **Rellenar** | Indexar datos históricos | Procesar bloques pasados después de crear el chainhook |
-| **Reprocesar** | Solucionar problemas del controlador de webhook | Reevaluar después de corregir errores |
+|-------------|-------------|---------|
+| **Depurar** | Investigar eventos perdidos | Reproducir una altura de bloque que debería haber activado |
+| **Rellenar** | Indexar datos históricos | Procesar bloques más antiguos creados antes de que existiera el hook |
+| **Reprocesar** | Solucionar problemas del manejador de webhook | Re-evaluar un bloque después de aplicar parches a la infraestructura |
 
 ## Próximos pasos
 
 :::next-steps
-* [Registrar y Habilitar](/tools/chainhooks/create): Crear chainhooks para evaluar
 * [Referencia de Filtros](/tools/chainhooks/reference/filters): Configurar qué eventos coincidir
+* [Evaluar endpoint](/apis/chainhooks-api/reference/chainhooks/evaluate-chainhook): Reproducir bloques pasados a través de la API
 :::

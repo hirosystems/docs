@@ -699,8 +699,8 @@ async function generatePlatformApiSpec(): Promise<void> {
         },
         '/v1/ext/{apiKey}/chainhooks/{chainhookUuid}': {
           get: {
-            summary: 'Get a specific chainhook',
-            description: 'Get a specific chainhook through the Hiro Platform',
+            summary: 'Get a chainhook',
+            description: 'Get a chainhook through the Hiro Platform',
             operationId: 'retrieveChainhook',
             tags: ['Chainhooks'],
             parameters: [

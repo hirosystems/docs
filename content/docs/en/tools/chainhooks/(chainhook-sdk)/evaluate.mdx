@@ -1,9 +1,9 @@
 ---
-title: Evaluate a specific block
-description: Run your chainhooks against specific blocks for testing, debugging, and historical indexing.
+title: Replay a block
+description: Replay any block height or hash against a chainhook to debug, backfill, or re-process historical events.
 ---
 
-The evaluate endpoint replays a single block against one of your registered chainhooks so you can validate filters without waiting for live traffic.
+The evaluate endpoint replays any single block you choose—live or historical—against one of your registered chainhooks so you can validate filters without waiting for live traffic. Provide either a block height or block hash to target the exact block you care about.
 
 Use it to reproduce missed deliveries, inspect payload schemas after filter changes, or test webhook infrastructure with known blocks before enabling a hook in production.
 
@@ -56,13 +56,13 @@ Returns HTTP `204 No Content`. If filters match, webhook payload is sent to your
 
 | Use Case | Description | Example |
 |----------|-------------|---------|
-| **Debug** | Investigate missed events | Evaluate specific block that should have triggered |
-| **Backfill** | Index historical data | Process past blocks after creating chainhook |
-| **Re-process** | Fix webhook handler issues | Re-evaluate after fixing bugs |
+| **Debug** | Investigate missed events | Replay a block height that should have triggered |
+| **Backfill** | Index historical data | Process older blocks created before the hook existed |
+| **Re-process** | Fix webhook handler issues | Re-evaluate a block after patching infrastructure |
 
 ## Next steps
 
 :::next-steps
-- [Register & Enable](/tools/chainhooks/create): Create chainhooks to evaluate
 - [Filter Reference](/tools/chainhooks/reference/filters): Configure which events to match
+- [Evaluate endpoint](/apis/chainhooks-api/reference/chainhooks/evaluate-chainhook): Replay past blocks through the API
 :::
