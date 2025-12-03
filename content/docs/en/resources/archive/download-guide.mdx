@@ -66,10 +66,10 @@ Google Cloud CLI provides the fastest download speeds with parallel transfers. F
 $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst .
 ```
 
-#### OR stream directly to extraction (saves disk space but slower due to sequential download)
+#### OR stream directly to extraction (saves disk space but slower due to sequential download, zst extension requires zstd installed)
 
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -I zstd -xv
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst - | tar -I zstd -xv
 ```
 Or for older backups with the tar.gz extention:
 ```terminal
