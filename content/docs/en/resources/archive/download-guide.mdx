@@ -27,8 +27,8 @@ You may need to install wget first: `brew install wget`. Alternatively, use the 
 :::
 
 ```terminal
-$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
-$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
+$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
 ```
 
 **Advantages:**
@@ -47,8 +47,8 @@ Use `curl` with automatic retries for robust downloads. The `--continue-at -` fl
 ```terminal
 $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
-  --output mainnet-stacks-blockchain-latest.tar.gz \
-  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+  --output mainnet-stacks-blockchain-latest.tar.zst \
+  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
 ```
 
 **Advantages:**
@@ -63,13 +63,17 @@ Google Cloud CLI provides the fastest download speeds with parallel transfers. F
 #### Download file to current directory
 
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst .
 ```
 
 #### OR stream directly to extraction (saves disk space but slower due to sequential download)
 
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -I zstd -xv
+```
+Or for older backups with the tar.gz extention:
+```terminal
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -zxv
 ```
 
 **Advantages:**
@@ -113,10 +117,14 @@ SHA256 checksum files are available for **all archives** to verify download inte
 
 2. **Verify the download:**
    ```terminal
-   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.gz" | shasum -a 256 -c
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.zst" | shasum -a 256 -c
    ```
 
-3. **Extract the archive:**
+3. **Extract the archive (requires zstd-tool to be installed):**
+   ```terminal
+   $ tar -I zstd -xvf mainnet-stacks-blockchain-latest.tar.zst
+   ```
+     Or for older backups with the tar.gz extention:
    ```terminal
    $ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /target/directory
    ```
