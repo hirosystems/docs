@@ -16,6 +16,17 @@ Before downloading, ensure you have sufficient:
 
 ## Download methods
 
+:::callout
+type: warn
+### Archive Format Update: .tar.gz → .tar.zst
+We are transitioning all Hiro archive downloads from gzip (.tar.gz) to the more efficient Zstandard (.tar.zst) format. Going forward, newly published archives will use the .zst extension. Older backups will continue to be available in .tar.gz.
+
+**What this means for you:**
+- Update any scripts or automation to download `*.tar.zst` instead of `*.tar.gz`.
+- Extracting `.zst` archives requires zstd support (e.g., `tar -I zstd -xvf archive.tar.zst`).
+- `.tar.gz` examples are still provided below for backward compatibility.
+:::
+
 ### Method 1: wget with resume (Recommended for most users)
 
 The `wget` command with the `-c` flag enables resuming interrupted downloads:
@@ -27,8 +38,8 @@ You may need to install wget first: `brew install wget`. Alternatively, use the 
 :::
 
 ```terminal
-$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
-$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
+$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
 ```
 
 **Advantages:**
@@ -44,11 +55,16 @@ $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-b
 
 Use `curl` with automatic retries for robust downloads. The `--continue-at -` flag resumes partial downloads, while `--output` specifies the filename:
 
+:::callout
+### Archive format update
+This example uses `.tar.zst` for the new format. For all new backups, use `.zst`. For older backups, replace `.zst` with `.gz` and use `--output file.tar.gz`.
+:::
+
 ```terminal
 $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
-  --output mainnet-stacks-blockchain-latest.tar.gz \
-  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+  --output mainnet-stacks-blockchain-latest.tar.zst \
+  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
 ```
 
 **Advantages:**
@@ -62,14 +78,24 @@ Google Cloud CLI provides the fastest download speeds with parallel transfers. F
 
 #### Download file to current directory
 
+:::callout
+type: warn
+### Legacy archive format
+Most new archives are published in `.tar.zst`. Use `.tar.gz` only when accessing older snapshots.
+:::
+
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst .
 ```
 
-#### OR stream directly to extraction (saves disk space but slower due to sequential download)
+#### OR stream directly to extraction (saves disk space but slower due to sequential download, zst extension requires zstd installed)
 
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst - | tar -I zstd -xv
+```
+Or for older backups with the tar.gz extention:
+```terminal
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -zxv
 ```
 
 **Advantages:**
@@ -112,11 +138,28 @@ SHA256 checksum files are available for **all archives** to verify download inte
    ```
 
 2. **Verify the download:**
+
+   :::callout
+   ### Legacy checksum
+   Checksum verification for `.tar.gz` is provided for users downloading older backups. Use the `.zst` checksum example for all current and future archives.
+   :::
+
    ```terminal
-   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.gz" | shasum -a 256 -c
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.zst" | shasum -a 256 -c
    ```
 
-3. **Extract the archive:**
+3. **Extract the archive (requires zstd-tool to be installed):**
+
+   :::callout
+   type: tip
+   ### Using older backups?
+   If you are working with a legacy `.tar.gz` archive, use the extraction command below. All new archives are distributed as `.tar.zst`, which requires zstd support (`tar -I zstd`).
+   :::
+
+   ```terminal
+   $ tar -I zstd -xvf mainnet-stacks-blockchain-latest.tar.zst
+   ```
+     Or for older backups with the tar.gz extention:
    ```terminal
    $ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /target/directory
    ```
