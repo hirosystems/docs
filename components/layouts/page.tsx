@@ -22,6 +22,7 @@ export interface PageData {
   interactive?: boolean;
   title?: string;
   description?: string;
+  isBeta?: boolean;
   interactiveFeatures?: string[];
   interactiveLinks?: Array<{
     title: string;
