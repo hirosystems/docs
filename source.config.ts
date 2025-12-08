@@ -10,6 +10,7 @@ export const docs = defineDocs({
     schema: frontmatterSchema.extend({
       llm: z.boolean().optional(),
       isNew: z.boolean().optional(),
+      isBeta: z.boolean().optional(),
       publishedAt: z.string().optional(),
       sidebarTitle: z.string().optional(),
       root: z.boolean().optional(),

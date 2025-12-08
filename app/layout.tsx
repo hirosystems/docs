@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${aeonik.variable} ${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen" suppressHydrationWarning>
         <QueryProvider>
           <ApiCredentialsProvider>
             <KeyboardShortcutsProvider>

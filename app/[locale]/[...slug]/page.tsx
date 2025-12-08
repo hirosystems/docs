@@ -117,6 +117,7 @@ export default async function Page(props: {
     interactive: page.data.interactive,
     title: page.data.title,
     description: page.data.description,
+    isBeta: page.data.isBeta,
     interactiveFeatures: page.data.interactiveFeatures,
     interactiveLinks, // Use the processed links with React components
   };
@@ -207,6 +208,11 @@ export default async function Page(props: {
               <div className="flex justify-between items-start gap-4">
                 <div className="flex items-center gap-3">
                   <DocsPageTitle className="mt-0" />
+                  {page.data.isBeta && (
+                    <span className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none">
+                      BETA
+                    </span>
+                  )}
                   {page.data.isRpc && (
                     <Badge
                       variant="outline"
