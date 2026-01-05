@@ -23,10 +23,10 @@ import { getMDXComponents } from '@/components/mdx';
 import { Mermaid } from '@/components/mdx/mermaid';
 import { APIPage } from '@/components/openapi/api-page';
 import { API } from '@/components/reference/api-page';
-import { Badge } from '@/components/ui/badge';
 import * as customIcons from '@/components/ui/icon';
 import { TagFilterSystem } from '@/components/ui/tag-filter-system';
 import { getAPIConfig } from '@/lib/api-config';
+import { checkIfDeprecated } from '@/lib/check-deprecated';
 import { i18n } from '@/lib/i18n';
 import { getAllFilterablePages, source } from '@/lib/source';
 import type { HeadingProps } from '@/types';
@@ -56,6 +56,9 @@ export default async function Page(props: {
     .filter((line) => !line.trim().startsWith('import'))
     .join('\n')
     .trim();
+
+  // Check if this page contains deprecated API operations
+  const isDeprecated = await checkIfDeprecated(rawMarkdownContent);
 
   const MDX = page.data.body;
 
@@ -213,27 +216,15 @@ export default async function Page(props: {
                       BETA
                     </span>
                   )}
-                  {page.data.isRpc && (
-                    <Badge
-                      variant="outline"
-                      className="cursor-pointer font-normal text-[10px] px-1 py-0.5 uppercase bg-orange-500 text-neutral-950 dark:bg-brand-orange border-none"
-                    >
-                      RPC node
-                    </Badge>
+                  {isDeprecated && (
+                    <span className="mt-1 font-semibold text-[10px] px-2 py-0.5 rounded uppercase tracking-wider bg-brand-gold/10 text-brand-gold dark:bg-brand-gold/20">
+                      Deprecated
+                    </span>
                   )}
                 </div>
                 {page.data.llm !== false && <LLMShare content={LLMContent} />}
               </div>
               <DocsPageDescription />
-
-              {/* RPC endpoint callout */}
-              {page.data.isRpc && (
-                <Callout type="info" title="About RPC endpoints">
-                  These are served by Stacks nodes, not directly operated by Hiro. Availability and
-                  performance may vary depending on upstream node health. For guaranteed
-                  performance, run your own node or talk to us about dedicated options.
-                </Callout>
-              )}
 
               {/* Render TagFilterSystem if tags are present in frontmatter */}
               {page.data.tags && page.data.tags.length > 0 && (

@@ -11,6 +11,7 @@ export interface OpenAPIOperation {
   responses?: Record<string, OpenAPIResponse>;
   security?: Array<Record<string, string[]>>;
   tags?: string[];
+  deprecated?: boolean;
 }
 
 export interface OpenAPIParameter {
