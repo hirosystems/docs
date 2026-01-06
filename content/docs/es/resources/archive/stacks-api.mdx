@@ -1,36 +1,36 @@
 ---
-title: Usar el archivo de la API de Blockchain de Stacks
+title: Usar el archivo de la API de Stacks Blockchain
 description: Descubre cómo usar el Hiro Archive para configurar una API de Stacks Blockchain.
 ---
 ## Prerrequisitos
 
-Dado que la API de Stacks Blockchain depende de que un nodo de blockchain de Stacks esté en la misma altura de bloque, primero necesitarás [restaurar un nodo de blockchain de Stacks usando el Archivo de Hiro](/resources/archive/stacks-blockchain) antes de restaurar la API de Stacks Blockchain. De lo contrario, es posible que encuentres errores al ejecutar la API.
+Dado que la API de Stacks Blockchain depende de que un nodo de blockchain de Stacks esté a la misma altura de bloque, primero necesitarás [restaurar un nodo de blockchain de Stacks usando el Archivo de Hiro](/resources/archive/stacks-blockchain) antes de restaurar la API de Blockchain de Stacks. De lo contrario, puedes encontrar errores al ejecutar la API.
 
-Para que la blockchain de Stacks y los archivos de la API de Stacks Blockchain sean compatibles, deben cumplir con los siguientes criterios:
+Para que la cadena de bloques Stacks y los archivos de la API de Stacks Blockchain sean compatibles, deben cumplir con los siguientes criterios:
 
-* Ambos archivos corresponden a la misma red de Stacks (mainnet/testnet).
-* La versión del archivo de la API debe ser compatible con la versión del archivo de la blockchain de Stacks (Ver [Notas de lanzamiento de la API](https://github.com/hirosystems/stacks-blockchain-api/releases) para orientación).
+* Ambos archivos corresponden a la misma red Stacks (mainnet/testnet).
+* La versión del archivo API debe ser compatible con la versión del archivo de blockchain de Stacks (Ver [Notas de lanzamiento de la API](https://github.com/hirosystems/stacks-blockchain-api/releases) para orientación).
 * Ambos archivos fueron creados en la misma fecha.
 
 ## Métodos de restauración
 
-Hay dos formas de restaurar una API de Stacks Blockchain usando el Archivo Hiro. El archivo de archivo que necesitarás descargar dependerá de tu método de restauración. No hay ningún escenario en el que necesitarías ambos métodos de restauración.
+Hay dos formas de restaurar una API de Blockchain de Stacks utilizando el Archivo de Hiro. El archivo de archivo que necesitarás descargar dependerá de tu método de restauración. No hay ningún escenario donde necesitarías ambos métodos de restauración.
 
 **Restaurar a través del volcado de la base de datos Postgres (Recomendado)**
 
-Este es el método más rápido y directo, y es adecuado para la mayoría de escenarios. Consiste en una copia de seguridad de la base de datos Postgres de la API tomada usando `pg_dump`. Generalmente recomendamos comenzar con este método antes de intentar el método siguiente si este no funciona por alguna razón.
+Este es el método más rápido y directo, y es adecuado para la mayoría de escenarios. Consiste en una copia de seguridad de la base de datos Postgres de la API tomada usando `pg_dump`. Generalmente recomendamos comenzar con este método antes de intentar el método a continuación si este no funciona por alguna razón.
 
 :::callout
 type: info
 
 ### Esquema de Postgres
 
-Necesitarás configurar la API `PG_SCHEMA` variable de entorno a: `PG_SCHEMA=stacks_blockchain_api` al restaurar desde un archivo.
+Necesitarás configurar la API `PG_SCHEMA` variable de entorno a: `PG_SCHEMA=stacks_blockchain_api` cuando se restaura desde un archivo.
 :::
 
 **Restaurar mediante archivo de valores separados por tabulaciones (TSV)**
 
-Este método es varias veces más lento que restaurar desde un volcado de Postgres. El archivo TSV de la API contiene los eventos en bruto no procesados de un nodo de blockchain de Stacks. La API puede ingerir este archivo para procesar eventos en una base de datos Postgres.
+Este método es varias veces más lento que restaurar desde un volcado de Postgres. El archivo TSV de la API contiene los eventos sin procesar directamente de un nodo de blockchain de Stacks. La API puede ingerir este archivo para procesar eventos en una base de datos Postgres.
 Restaurar desde un archivo TSV puede ser útil cuando un archivo de base de datos Postgres para una versión particular de la API no está disponible o cuando no se puede usar por alguna razón.
 
 ## Dónde descargar archivos
@@ -76,27 +76,27 @@ o la subida más reciente para una versión particular:
 **Si se restaura mediante volcado de Postgres**
 
 1. Descarga el archivo y el shasum para la red apropiada y el método de restauración.
-2. Verifique el archivo usando los pasos en el [guía de descarga](/resources/archive/download-guide#verification-and-extraction) (note: API archives may not have SHA256 files available).
+2. Verifica el archivo siguiendo los pasos en el [guía de descarga](/resources/archive/download-guide#verification-and-extraction) (note: API archives may not have SHA256 files available).
 3. Importa el archivo de archivo en una base de datos Postgres en ejecución (puede tomar hasta una hora dependiendo de las especificaciones y configuración de la base de datos):
    ```terminal
    $ export PGPASSWORD=<YOUR POSTGRES PASSWORD>
    $ pg_restore --username postgres --verbose --jobs 4 --dbname stacks_blockchain_api /path/to/archive/file
    ```
-4. Inicia el servicio API de Stacks Blockchain.
-5. Verificar que el conjunto de datos esté siendo utilizado comparando tus nodos [altura del bloque local](http://localhost:3999/extended/v1/status) con [Hiro's](https://api.hiro.so/extended/v1/status). Si la altura del bloque coincide o está cerca de la altura del bloque de Hiro, la restauración fue exitosa.
+4. Lanza el servicio API de Stacks Blockchain.
+5. Verifica que el conjunto de datos está siendo utilizado comparando tus nodos [altura de bloque local](http://localhost:3999/extended/v1/status) con [Hiro's](https://api.hiro.so/extended/v1/status). Si la altura del bloque coincide o está cerca de la altura del bloque de Hiro, la restauración fue exitosa.
    1. Puede tomar unos minutos para que el nodo local responda en este endpoint.
-   2. La altura de tu bloque puede estar hasta unos pocos cientos de bloques alejada de la de Hiro dependiendo de la antigüedad del archivo. Debería ponerse al día relativamente rápido.
+   2. La altura de tu bloque puede estar hasta unos cientos de bloques alejada de la de Hiro dependiendo de la antigüedad del archivo. Debería ponerse al día relativamente rápido.
 
-**Si se restaura a través de archivo TSV**
+**Si restauras mediante archivo TSV**
 
-1. Descarga el archivo y shasum para la red apropiada y el método de restauración.
+1. Descarga el archivo y shasum para la red apropiada y método de restauración.
 2. Verifica el archivo usando los pasos en el [guía de descarga](/resources/archive/download-guide#verification-and-extraction) (note: API archives may not have SHA256 files available).
 3. Extrae el archivo en el directorio deseado:
    ```terminal
    $ gzip -d <ARCHIVE FILE> --stdout > /path/to/extracted/file
    ```
 4. [Sigue estas instrucciones](https://github.com/hirosystems/stacks-blockchain-api#export-and-import) para procesar e importar los eventos en el archivo TSV a tu base de datos Postgres.
-5. Inicia el servicio de API de Stacks Blockchain.
-6. Verificar que el conjunto de datos está siendo utilizado comparando sus nodos [altura de bloque local](http://localhost:3999/extended/v1/status) con [Hiro's](https://api.hiro.so/extended/v1/status). Si la altura del bloque coincide o está cerca de la altura del bloque de Hiro, la restauración fue exitosa.
+5. Ejecute el servicio de API de Stacks Blockchain.
+6. Verificar que el conjunto de datos esté siendo utilizado comparando tus nodos [altura de bloque local](http://localhost:3999/extended/v1/status) con [Hiro's](https://api.hiro.so/extended/v1/status). Si la altura del bloque coincide o está cerca de la altura del bloque de Hiro, la restauración fue exitosa.
    1. Puede tomar unos minutos para que el nodo local responda en este endpoint.
-   2. La altura de tu bloque puede estar hasta unos cientos de bloques alejada de la de Hiro dependiendo de la antigüedad del archivo. Debería ponerse al día relativamente rápido.
+   2. La altura de tu bloque puede estar hasta unos cientos de bloques por debajo del de Hiro dependiendo de la antigüedad del archivo. Debería ponerse al día relativamente rápido.

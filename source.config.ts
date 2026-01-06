@@ -17,7 +17,6 @@ export const docs = defineDocs({
       tags: z.array(z.string()).optional(),
       labels: z.array(z.string()).optional(),
       type: z.string().optional(),
-      isRpc: z.boolean().optional(),
       // Interactive layout fields
       interactive: z.boolean().optional(),
       interactiveFeatures: z.array(z.string()).optional(),
