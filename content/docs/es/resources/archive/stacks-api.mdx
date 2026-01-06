@@ -16,7 +16,7 @@ Para que la cadena de bloques Stacks y los archivos de la API de Stacks Blockcha
 
 Hay dos formas de restaurar una API de Blockchain de Stacks utilizando el Archivo de Hiro. El archivo de archivo que necesitarás descargar dependerá de tu método de restauración. No hay ningún escenario donde necesitarías ambos métodos de restauración.
 
-**Restaurar mediante volcado de base de datos Postgres (Recomendado)**
+**Restaurar a través del volcado de la base de datos Postgres (Recomendado)**
 
 Este es el método más rápido y directo, y es adecuado para la mayoría de escenarios. Consiste en una copia de seguridad de la base de datos Postgres de la API tomada usando `pg_dump`. Generalmente recomendamos comenzar con este método antes de intentar el método a continuación si este no funciona por alguna razón.
 
@@ -56,13 +56,13 @@ Los patrones de nombres de archivos son los siguientes:
 Hay un archivo continuamente actualizado y shasum que siempre apunta a la carga más reciente:
 
 * Volcado de base de datos Postgres
-  * archivo: `stacks-blockchain-api-pg-<DATABASE VERSION>-latest.dump`
+  * archive: `stacks-blockchain-api-pg-<DATABASE VERSION>-latest.dump`
   * shasum: `stacks-blockchain-api-pg-<DATABASE VERSION>-latest.sha256`
 * archivo TSV
   * archivo: `<network>-stacks-blockchain-api-latest.gz`
   * shasum: `<network>-stacks-blockchain-api-latest.sha256`
 
-o la carga más reciente para una versión en particular:
+o la subida más reciente para una versión particular:
 
 * Volcado de base de datos Postgres
   * archivo: `stacks-blockchain-api-pg-<DATABASE VERSION>-<API VERSION>-latest.dump`
