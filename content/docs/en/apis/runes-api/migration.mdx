@@ -1,0 +1,45 @@
+---
+title: Migration guide
+description: Guide for migrating to using the L1 APIs from Xverse
+llm: true
+---
+
+As part of the deprecation of Hiro’s L1 APIs for Ordinals, Runes, BRC-20, Ordhooks, and Runehooks, we’re recommending developers move to using the L1 APIs from Xverse, who have built a robust set of tooling for Bitcoin metaprotocols. We’ve put together this guide for developers on how to migrate your applications to using their APIs.
+
+:::callout
+### Using Xverse's L1 APIs
+NOTE: The Xverse L1 APIs are in private beta, but we’ve worked with them to create an expedited approval path for those coming from Hiro APIs, so just [fill out this form](https://form.typeform.com/to/HkwDUt9P?typeform-source=docs.xverse.app) and they will get back to you quickly.
+:::
+
+## Timeline
+- Announcement date: Feburary 7th, 2026
+- Deprecation effective: March 1st, 2026
+
+## What you'll learn
+
+:::objectives
+- Capture and analyze all existing Runes API endpoints.
+- Maps the API endpoint equivalent to the applicable endpoint with Xverse.
+- Note any differences and changes you'll need to make.
+:::
+
+## Endpoint mappings
+
+### List of endpoints and its Xverse endpoint equivalent
+| Hiro Endpoint | Description (Hiro) | Key Parameters (Hiro) | Xverse Equivalent Endpoint | Description (Xverse Equivalent) | Key Parameters (Xverse) | Migration Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `GET /etchings` | Retrieves a paginated list of all rune etchings. | `limit` (default: 20, max: 100), `offset` (for pagination). | None | N/A | N/A | No direct global etchings list in Xverse. Workaround: Use market data endpoints (e.g., for popular runes) or external explorers to identify etchings, then query individual details via rune-specific calls. Hiro responses include etching metadata like name, supply, and terms. |
+| `GET /etchings/{runeId}` | Fetches detailed metadata for a specific rune etching. | Path param: `runeId` (string, e.g., rune identifier). | `GET /v1/runes/{runeId}` (inferred from balances/metadata support) | Retrieves rune metadata and details for a specific rune. | Path param: `runeId` (string). | Strong mapping. Both provide fields like name, divisibility, supply, and etching terms. Update base URL; Xverse may include additional market data (e.g., price). |
+| `GET /balances/{address}` | Retrieves rune balances for a specific address. | Path param: `address` (string); optional filters like `runeId`. | `GET /v1/runes/balances/{address}` (via Sats Connect: `runes_getBalance`) | Fetches all rune balances for an address, including amounts and divisibility. | Path param: `address` (string); network (e.g., ‘Mainnet’). | Direct mapping for core functionality. Xverse returns spendable/available balances per rune; supports wallet integration. No explicit pagination, but full lists are provided. |
+| `GET /activity/address/{address}` | Retrieves rune activity (transfers, etches) for a specific address. | Path param: `address` (string); `limit`, `offset`, optional `runeId` or event type filters. | `GET /v1/runes/transactions/{address}` (inferred from transaction parsing) | Queries transaction history including rune transfers and activity. | Path param: `address` (string); optional filters for confirmed/unconfirmed. | Partial mapping. Xverse supports rune-inclusive transaction history; filter client-side for rune-specific events. Includes mempool data. |
+| `GET /activity/block/{blockHeight}` | Retrieves rune activity within a specific block. | Path param: `blockHeight` (integer). | None | N/A | N/A | No block-specific rune activity in Xverse. Workaround: Use general transaction history endpoints with block filters if available, or aggregate from address queries. |
+| `GET /holders/{runeId}` | Lists holders and balances for a specific rune. | Path param: `runeId` (string); `limit`, `offset`. | None | N/A | N/A | No global holder listing in Xverse. Workaround: Requires custom aggregation from multiple balance queries or third-party tools. |
+
+For more details, check out the [Xverse Runes](https://docs.xverse.app/api/runes) reference.
+
+## Hiro-Specific Functionality for Runes Not Available in Xverse
+
+- Global etchings list (`/etchings`): Absent; Xverse focuses on per-rune or per-address data.
+- Block-level activity (`/activity/block/{blockHeight}`): No equivalent; use Xverse’s transaction endpoints with block parameters if extended.
+- Rune holder aggregation (`/holders/{runeId}`): Not supported; implement via batched balance calls.
+- Xverse provides unique capabilities like mint/etch order management (e.g., `runes_estimateMint`, `runes_mint`, `runes_getOrder` via Sats Connect) and rune swaps (e.g., `/v1/swaps/runes/quotes`), which Hiro lacks. For comprehensive activity tracking, supplement Xverse with Bitcoin RPC or Hiro during transition.
