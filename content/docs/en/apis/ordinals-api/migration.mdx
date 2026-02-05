@@ -1,0 +1,71 @@
+---
+title: Migration guide
+description: Guide for migrating to using the L1 APIs from Xverse
+llm: true
+---
+
+As part of the deprecation of Hiro’s L1 APIs for Ordinals, Runes, BRC-20, Ordhooks, and Runehooks, we’re recommending developers move to using the L1 APIs from Xverse, who have built a robust set of tooling for Bitcoin metaprotocols. We’ve put together this guide for developers on how to migrate your applications to using their APIs.
+
+:::callout
+### Using Xverse's L1 APIs
+NOTE: The Xverse L1 APIs are in private beta, but we’ve worked with them to create an expedited approval path for those coming from Hiro APIs, so just [fill out this form](https://form.typeform.com/to/HkwDUt9P?typeform-source=docs.xverse.app) and they will get back to you quickly.
+:::
+
+## Timeline
+- Announcement date: Feburary 7th, 2026
+- Deprecation effective: March 1st, 2026
+
+## What you'll learn
+
+:::objectives
+- Capture and analyze all existing Ordinals and BRC-20 API endpoints.
+- Maps the API endpoint equivalent to the applicable endpoint with Xverse.
+- Note any differences and changes you'll need to be aware of.
+:::
+
+## Ordinals endpoint mappings
+
+### List of endpoints and its Xverse endpoint equivalent
+| Hiro Endpoint | Description (Hiro) | Key Parameters (Hiro) | Xverse Equivalent Endpoint | Description (Xverse Equivalent) | Key Parameters (Xverse) | Migration Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `GET /inscriptions` | Retrieves a paginated list of all inscriptions. | `limit` (default: 20, max: 100), `offset` (for pagination), `after` (inscription ID for cursor-based pagination), `before` (inscription ID for cursor-based pagination), `sat_ordinal_range` (filter by satoshi ordinal range, e.g., “23-34”), `content_type` (filter by MIME type, e.g., “image/png”), `content_length_range` (filter by byte range, e.g., “100-500”), `tag` (filter by inscription tag). | `GET /inscriptions` | Retrieves a paginated list of inscriptions. | `limit` (default: 20, max: 100), `offset` (for pagination), `after` (inscription ID), `content_type` (MIME type filter). | Direct mapping possible. Xverse supports core pagination and content_type filtering but omits `sat_ordinal_range`, `content_length_range`, and `tag`. Use Xverse’s `after` for cursor pagination. Response fields (e.g., `id`, `content_type`, `content_length`) are compatible. |
+| `GET /inscriptions/{inscriptionId}` | Fetches details for a specific inscription by ID. | Path param: `inscriptionId` (string). | `GET /inscriptions/{inscriptionId}` | Fetches details for a specific inscription by ID. | Path param: `inscriptionId` (string). | Direct mapping. Both return inscription metadata (e.g., `id`, `content_type`, `genesis_fee`, `sat_ordinal`). No changes required. |
+| `GET /inscriptions/{inscriptionId}/content` | Retrieves the raw content (e.g., image or text) of a specific inscription. | Path param: `inscriptionId` (string). | `GET /inscriptions/{inscriptionId}/content` | Retrieves the raw content of a specific inscription. | Path param: `inscriptionId` (string). | Direct mapping. Supports binary content retrieval; ensure handling of MIME types in responses. |
+| `GET /inscriptions/{inscriptionId}/sat` | Retrieves the satoshi details associated with a specific inscription. | Path param: `inscriptionId` (string). | None | N/A | N/A | No direct equivalent in Xverse. Workaround: Use `GET /inscriptions/{inscriptionId}` which includes `sat_ordinal` in the response, or query satoshi details via Xverse’s broader inscription endpoint if available. This is a Hiro-specific feature for granular satoshi-inscription linkage. |
+| `GET /inscriptions/block-height/{blockHeight}` | Retrieves all inscriptions in a specific block by height. | Path param: `blockHeight` (integer). | `GET /inscriptions/block/{blockHeight}` | Retrieves inscriptions for a specific block by height. | Path param: `blockHeight` (integer). | Near-direct mapping; note the path difference (`/block-height/` vs. `/block/`). Both support pagination via `limit` and `offset`. |
+| `GET /inscriptions/block-hash/{blockHash}` | Retrieves all inscriptions in a specific block by hash. | Path param: `blockHash` (string). | `GET /inscriptions/block/{blockHash}` | Retrieves inscriptions for a specific block by hash. | Path param: `blockHash` (string). | Near-direct mapping; path uses `/block/` in Xverse. Pagination supported. |
+| `GET /collections` | Retrieves a paginated list of all collections. | `limit` (default: 20, max: 100), `offset` (for pagination). | `GET /collections` | Retrieves a paginated list of collections. | `limit` (default: 20, max: 100), `offset` (for pagination). | Direct mapping. Responses include collection metadata (e.g., `id`, `name`, `inscription_count`). |
+| `GET /collections/{collectionId}` | Fetches details for a specific collection by ID. | Path param: `collectionId` (string). | `GET /collections/{collectionId}` | Fetches details for a specific collection by ID. | Path param: `collectionId` (string). | Direct mapping. Includes fields like `inscription_count` and `total_supply`. |
+| `GET /collections/{collectionId}/inscriptions` | Retrieves paginated inscriptions within a specific collection. | Path param: `collectionId` (string); `limit`, `offset`. | `GET /collections/{collectionId}/inscriptions` | Retrieves paginated inscriptions in a specific collection. | Path param: `collectionId` (string); `limit`, `offset`. | Direct mapping. Supports standard pagination. |
+| `GET /stats` | Retrieves global Ordinals statistics (e.g., total inscriptions, blocks). | None. | `GET /stats` | Retrieves global Ordinals statistics. | None. | Direct mapping. Both provide aggregates like `total_inscriptions` and `total_size`. |
+
+For more details, check out the [Xverse Ordinals](https://docs.xverse.app/api/ordinals) reference.
+
+## Hiro-Specific Functionality for Ordinals Not Available in Xverse
+
+- `GET /inscriptions/{inscriptionId}/sat`: Dedicated satoshi retrieval for an inscription. Xverse includes basic sat_ordinal in inscription details but not full satoshi metadata.
+- Advanced filtering in `GET /inscriptions`:
+    - `sat_ordinal_range`: Filter by satoshi ordinal range.
+    - `content_length_range`: Filter by content size range.
+    - `tag`: Filter by inscription tags.
+- No Xverse support for inscription tagging or content-length-based queries, which may necessitate client-side filtering post-retrieval.
+
+## BRC-20 endpoint mappings
+
+### List of endpoints and its Xverse endpoint equivalent
+| Hiro Endpoint | Description (Hiro) | Key Parameters (Hiro) | Xverse Equivalent Endpoint | Description (Xverse Equivalent) | Key Parameters (Xverse) | Migration Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `GET /ordinals/brc-20/tokens` | Retrieves a paginated list of all BRC-20 tokens. | `limit` (default: 20, max: 100), `offset` (for pagination). | None (partial via address balances) | N/A | N/A | No direct global token list in Xverse. Workaround: Query multiple address balances or use external explorers for token discovery. Responses in Hiro include `ticker`, `max`, `limit`, `supply`; replicate via aggregated address queries if needed. |
+| `GET /ordinals/brc-20/tokens/{ticker}` | Fetches detailed information for a specific BRC-20 token by ticker. | Path param: `ticker` (string). | `GET /v1/brc20/ticker/ {ticker}` | Get data and price info for a specific BRC20 by ticker. | Path param: `ticker` (string) token ticker | Xverse includes extra price data |
+| `GET /ordinals/brc-20/tokens/{ticker}/holders` | Retrieves a paginated list of holders and their balances for a specific token. | Path param: `ticker` (string); `limit`, `offset`. | None | N/A | N/A | No holder list in Xverse. Workaround: Requires custom indexing of transfer events or third-party tools; Xverse lacks global holder aggregation. |
+| `GET /ordinals/brc-20/tokens/{ticker}/events` | Returns the event history (deploys, mints, transfers) for a specific token. | Path param: `ticker` (string); `limit`, `offset`, optional filters like `event_type` (deploy, mint, transfer). | None (partial via address history) | N/A | N/A | No token-specific event history in Xverse. Workaround: Use address-specific transaction history and filter client-side by ticker. |
+| `GET /ordinals/brc-20/balances/{address}` | Retrieves BRC-20 token balances for a specific address. | Path param: `address` (string); optional `ticker` filter. | `GET /v1/ordinals/address/{address}/brc20` | Fetches confirmed BRC-20 balances for an address. | Path param: `address` (string); supports `limit` and `offset` (currently ignored, returns full list). | Strong mapping. Both return balances per ticker (e.g., `balance`, `available`). Update path and base URL; test pagination as Xverse may evolve to enforce limits. |
+
+For more details, check out the [Xverse BRC-20](https://docs.xverse.app/api/brc-20) reference.
+
+## Hiro-Specific Functionality for BRC-20 Not Available in Xverse
+
+- Global token listing (`/ordinals/brc-20/tokens`): No equivalent; Xverse prioritizes per-address or per-user data.
+- Token holder lists (`/ordinals/brc-20/tokens/{ticker}/holders`): Absent; requires aggregation from balances or external sources.
+- Token event history (`/ordinals/brc-20/tokens/{ticker}/events`): No dedicated endpoint; use address history with filtering.
+- Xverse offers unique extensions like minting (`/v1/brc20/mint/estimate`, `/v1/brc20/mint/order`, `/v1/brc20/mint/execute`) and deployment (`/v1/brc20/deploy/estimate`, etc.), plus swaps (`/v1/brc20/swaps/quotes`), which Hiro lacks. For full event history, consider supplementing Xverse with Hiro temporarily or custom Bitcoin RPC parsing.
