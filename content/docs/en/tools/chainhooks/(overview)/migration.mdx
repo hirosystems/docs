@@ -4,8 +4,8 @@ description: Guide for migrating legacy chainhooks to v2
 ---
 
 :::callout
-### Managing v1 chainhooks
-Legacy v1 chainhooks remain read-only in the Platform UI, but you manage them through the [Platform API](/apis/platform-api/reference/chainhooks/list).
+### Deprecation of Chainhooks v1
+Legacy v1 chainhooks will be deprecated on March 9th, 2026.
 :::
 
 ## What you'll learn
@@ -228,11 +228,9 @@ For more details, check out the [Filters](/tools/chainhooks/reference/filters) r
 
 Chainhooks v2 does not have the ability to specify a **start block** in a hook’s configuration for past block scans.
 
-However, you can use the [Replay Block API endpoint](https://docs.hiro.so/en/tools/chainhooks/evaluate) to request any block replay you need at any time. Once requested, you will receive that block’s information through the same webhook payload endpoint you use for real-time updates within a couple seconds.
+However, you can use the [Replay Block API endpoint](/tools/chainhooks/evaluate) to request any block replay you need at any time. Once requested, you will receive that block’s information through the same webhook payload endpoint you use for real-time updates within a couple seconds.
 
 This method ensures you have complete control over which blocks you need to replay whenever you need to.
-
-See [Replay a block](/tools/chainhooks/(chainhook-sdk)/evaluate) for more information.
 
 ## Next steps
 
