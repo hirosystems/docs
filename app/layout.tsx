@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="flex flex-col min-h-screen" suppressHydrationWarning>
-        <Banner id="chainhooks-deprecation" endDate="2026-03-10">
+        <Banner id="chainhooks-deprecation">
           Hosted Chainhooks v1 and L1 APIs (Ordinals, Runes, BRC20) deprecated March 9th, please migrate now!
         </Banner>
         <QueryProvider>
