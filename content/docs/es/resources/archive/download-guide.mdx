@@ -1,12 +1,12 @@
 ---
 title: Cómo descargar archivos de Hiro
-description: Guía completa para descargar archivos de archivo grandes de manera confiable con consejos de resolución de problemas.
+description: Guía completa para descargar archivos grandes de forma confiable con consejos de solución de problemas.
 ---
 ## Descripción general
 
-Los archivos Hiro Archive son conjuntos de datos grandes (que van desde varios GB a varios *cien* GB) alojados en Google Cloud Storage. Debido a su tamaño, las descargas pueden verse interrumpidas por problemas de red, límites de velocidad o tiempos de espera de conexión. Esta guía proporciona múltiples métodos de descarga y soluciones de resolución de problemas.
+Los archivos de Hiro Archive son conjuntos de datos grandes (que van desde varios GB hasta varios *cien* GB) alojados en Google Cloud Storage. Debido a su tamaño, las descargas pueden interrumpirse por problemas de red, límites de velocidad o tiempos de espera de conexión. Esta guía proporciona múltiples métodos de descarga y soluciones de resolución de problemas.
 
-## Tamaños de archivos y requisitos
+## Tamaños de archivo y requisitos
 
 Antes de descargar, asegúrate de tener suficiente:
 
@@ -15,6 +15,20 @@ Antes de descargar, asegúrate de tener suficiente:
 * **Almacenamiento para extracción**: Los archivos se expanden significativamente cuando se extraen
 
 ## Métodos de descarga
+
+:::callout
+type: warn
+
+### Actualización del Formato de Archivo: .tar.gz → .tar.zst
+
+Estamos haciendo la transición de todas las descargas de archivos de Hiro de gzip (.tar.gz) al formato más eficiente Zstandard (.tar.zst). En adelante, los archivos recién publicados usarán la extensión .zst. Las copias de seguridad más antiguas seguirán estando disponibles en .tar.gz.
+
+**Lo que esto significa para ti:**
+
+* Actualiza cualquier script o automatización para descargar `*.tar.zst` en lugar de `*.tar.gz`.
+* Extrayendo `.zst` archivos requiere soporte de zstd (por ejemplo, `tar -I zstd -xvf archive.tar.zst`).
+* `.tar.gz` los ejemplos aún se proporcionan a continuación para compatibilidad con versiones anteriores.
+:::
 
 ### Método 1: wget con reanudación (Recomendado para la mayoría de usuarios)
 
@@ -25,19 +39,19 @@ type: info
 
 ### Usuarios de macOS
 
-Es posible que necesites instalar wget primero: `brew install wget`. Alternativamente, usa el método curl a continuación que está preinstalado en macOS.
+Puede que necesites instalar wget primero: `brew install wget`. Alternativamente, usa el método curl a continuación que está preinstalado en macOS.
 :::
 
 ```terminal
-$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
-$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+$ wget -c https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
+$ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
 ```
 
 **Ventajas:**
 
 * Reanuda descargas interrumpidas automáticamente
 * Integrado en la mayoría de sistemas Unix
-* Fácil de usar
+* Simple de usar
 
 **Desventajas:**
 
@@ -46,13 +60,19 @@ $ wget -c --progress=bar:force:noscroll https://archive.hiro.so/mainnet/stacks-b
 
 ### Método 2: curl con reintentos
 
-Usar `curl` con reintentos automáticos para descargas robustas. El `--continue-at -` flag reanuda descargas parciales, mientras `--output` especifica el nombre del archivo:
+Usar `curl` con reintentos automáticos para descargas robustas. La `--continue-at -` flag reanuda descargas parciales, mientras `--output` especifica el nombre del archivo:
+
+:::callout
+### Actualización del formato de archivo
+
+Este ejemplo utiliza `.tar.zst` para el nuevo formato. Para todas las copias de seguridad nuevas, usa `.zst`. Para respaldos más antiguos, reemplaza `.zst` con `.gz` y usar `--output file.tar.gz`.
+:::
 
 ```terminal
 $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
   --progress-bar \
-  --output mainnet-stacks-blockchain-latest.tar.gz \
-  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz
+  --output mainnet-stacks-blockchain-latest.tar.zst \
+  https://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst
 ```
 
 **Ventajas:**
@@ -63,18 +83,32 @@ $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
 
 ### Método 3: gcloud storage cp (Más rápido, requiere autenticación)
 
-Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias paralelas. Primero autentica con `gcloud auth login`, entonces descarga el archivo al disco o transmite directamente a la extracción:
+Google Cloud CLI proporciona las velocidades de descarga más rápidas con transferencias paralelas. Primero autentica con `gcloud auth login`, luego descarga el archivo al disco o transmite directamente a la extracción:
 
 #### Descargar archivo al directorio actual
 
+:::callout
+type: warn
+
+### Formato de archivo heredado
+
+La mayoría de los nuevos archivos se publican en `.tar.zst`. Usar `.tar.gz` solo al acceder a instantáneas más antiguas.
+:::
+
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz .
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst .
 ```
 
-#### O transmitir directamente a la extracción (ahorra espacio en disco pero es más lento debido a la descarga secuencial)
+#### O transmitir directamente a la extracción (ahorra espacio en disco pero es más lento debido a la descarga secuencial, la extensión zst requiere zstd instalado)
 
 ```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -xz
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst - | tar -I zstd -xv
+```
+
+O para copias de seguridad más antiguas con la extensión tar.gz:
+
+```terminal
+$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -zxv
 ```
 
 **Ventajas:**
@@ -87,15 +121,15 @@ $ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stack
 **Desventajas:**
 
 * Requiere autenticación de cuenta de Google
-* Instalación de software adicional necesaria
+* Se necesita instalación de software adicional
 
 ### Método 4: Gestores de descarga (JDownloader)
 
-Para usuarios que prefieren aplicaciones con interfaz gráfica o necesitan gestión avanzada de descargas:
+Para usuarios que prefieren aplicaciones GUI o necesitan gestión avanzada de descargas:
 
 1. Descargar e instalar [JDownloader](https://jdownloader.org/download/index)
 2. Copia la URL del archivo en JDownloader
-3. Configurar conexiones paralelas para descargas más rápidas
+3. Configura conexiones paralelas para descargas más rápidas
 
 **Ventajas:**
 
@@ -122,11 +156,33 @@ SHA256 checksum files are available for **todos los archivos** para verificar la
    ```
 
 2. **Verifica la descarga:**
+
+   :::callout
+   ### Suma de verificación heredada
+
+   Verificación de suma de comprobación para `.tar.gz` se proporciona para usuarios que descargan copias de seguridad más antiguas. Utiliza el `.zst` ejemplo de suma de verificación para todos los archivos actuales y futuros.
+   :::
+
    ```terminal
-   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.gz" | shasum -a 256 -c
+   $ echo "$(cat mainnet-stacks-blockchain-latest.sha256 | awk '{print $1}')  mainnet-stacks-blockchain-latest.tar.zst" | shasum -a 256 -c
    ```
 
-3. **Extrae el archivo:**
+3. **Extrae el archivo (requiere que zstd-tool esté instalado):**
+
+   :::callout
+   type: tip
+
+   ### ¿Usando copias de seguridad más antiguas?
+
+   Si estás trabajando con un sistema heredado `.tar.gz` archivo, use el comando de extracción a continuación. Todos los archivos nuevos se distribuyen como `.tar.zst`, que requiere soporte de zstd (`tar -I zstd`).
+   :::
+
+   ```terminal
+   $ tar -I zstd -xvf mainnet-stacks-blockchain-latest.tar.zst
+   ```
+
+   O para respaldos más antiguos con la extensión tar.gz:
+
    ```terminal
    $ tar -zxvf mainnet-stacks-blockchain-latest.tar.gz -C /target/directory
    ```
@@ -136,33 +192,33 @@ type: info
 
 ### Extracción de archivos grandes
 
-El `marf.sqlite.blobs` el archivo puede ser muy grande y puede tomar un tiempo considerable para extraer. Asegúrese de tener suficiente espacio en disco y sea paciente durante la extracción.
+The `marf.sqlite.blobs` El archivo puede ser muy grande y puede tomar un tiempo considerable para extraer. Asegúrese de tener suficiente espacio en disco y sea paciente durante la extracción.
 :::
 
 ## Consejos de rendimiento
 
 1. **Usa gcloud para descargas más rápidas** - requiere autenticación pero proporciona mejoras significativas de velocidad
 2. **Descargar durante las horas de menor actividad** - típicamente tarde en la noche o temprano en la mañana
-3. **Usar conexiones por cable** - evita el Wi-Fi para descargas grandes cuando sea posible
+3. **Usar conexiones por cable** - evita Wi-Fi para descargas grandes cuando sea posible
 4. **Monitorear espacio en disco** - los archivos extraídos pueden ser 2-3x más grandes que los archivos comprimidos
 5. **Considera la extracción por streaming** con gcloud para ahorrar espacio en disco
 
-## Preguntas Frecuentes
+## FAQ
 
 <Accordion collapsible="true" type="multiple">
   <AccordionItem value="descargas-fallando">
     <AccordionTrigger>¿Por qué siguen fallando las descargas?</AccordionTrigger>
 
     <AccordionContent>
-      Las descargas de archivos grandes desde el almacenamiento en la nube pueden interrumpirse debido a problemas de red, limitación de velocidad o tiempos de espera de conexión. Utiliza herramientas con capacidad de reanudación como `wget -c` o `gcloud storage cp`.
+      Las descargas de archivos grandes desde el almacenamiento en la nube pueden ser interrumpidas debido a problemas de red, limitación de velocidad o tiempos de espera de conexión. Use herramientas capaces de reanudar como `wget -c` o `gcloud storage cp`.
     </AccordionContent>
   </AccordionItem>
 
   <AccordionItem value="método-de-descarga">
-    <AccordionTrigger>¿Qué método de descarga debo usar?</AccordionTrigger>
+    <AccordionTrigger>¿Qué método de descarga debería usar?</AccordionTrigger>
 
     <AccordionContent>
-      Para obtener las velocidades más rápidas, usa `gcloud storage cp` (requiere autenticación de Google). Para simplificar, use `wget -c`. Para mayor confiabilidad sin autenticación, prueba un gestor de descargas como JDownloader.
+      Para velocidades más rápidas, usa `gcloud storage cp` (requiere autenticación de Google). Por simplicidad, usa `wget -c`. Para mayor confiabilidad sin autenticación, prueba un gestor de descargas como JDownloader.
     </AccordionContent>
   </AccordionItem>
 
@@ -170,11 +226,11 @@ El `marf.sqlite.blobs` el archivo puede ser muy grande y puede tomar un tiempo c
     <AccordionTrigger>¿Cuánto tiempo debería tomar una descarga?</AccordionTrigger>
 
     <AccordionContent>
-      El tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de blockchain de mainnet (varios cientos de GB+) puede tomar de 6 a 24+ horas en conexiones de banda ancha típicas.
+      El tiempo de descarga varía según el tamaño del archivo y la velocidad de conexión. El archivo de la cadena de bloques de la red principal (varios cientos de GB+) puede tomar de 6 a 24+ horas en conexiones de banda ancha típicas.
     </AccordionContent>
   </AccordionItem>
 
-  <AccordionItem value="descargar-curriculum">
+  <AccordionItem value="descarga-curriculum">
     <AccordionTrigger>¿Puedo reanudar una descarga fallida?</AccordionTrigger>
 
     <AccordionContent>
