@@ -10,13 +10,13 @@ export const docs = defineDocs({
     schema: frontmatterSchema.extend({
       llm: z.boolean().optional(),
       isNew: z.boolean().optional(),
+      isBeta: z.boolean().optional(),
       publishedAt: z.string().optional(),
       sidebarTitle: z.string().optional(),
       root: z.boolean().optional(),
       tags: z.array(z.string()).optional(),
       labels: z.array(z.string()).optional(),
       type: z.string().optional(),
-      isRpc: z.boolean().optional(),
       // Interactive layout fields
       interactive: z.boolean().optional(),
       interactiveFeatures: z.array(z.string()).optional(),

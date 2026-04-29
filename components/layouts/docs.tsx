@@ -304,6 +304,9 @@ export function SidebarItem({ item, children }: { item: PageTree.Node; children:
     const sidebarTitle = (item as any).data?.sidebarTitle;
     const displayName = sidebarTitle || item.name;
     const isRootPage = (item as any).data?.root === true;
+    // Hide badges for sidebar items that are folder index pages shown as children
+    // These are duplicates - the folder itself already shows the badge
+    const isFolderIndexAsChild = sidebarTitle === 'Overview';
 
     return (
       <Link
@@ -324,7 +327,7 @@ export function SidebarItem({ item, children }: { item: PageTree.Node; children:
         <div className="!font-normal flex items-center gap-2 flex-1">
           {item.icon}
           {displayName}
-          <PageBadges item={item} />
+          {!isFolderIndexAsChild && <PageBadges item={item} />}
         </div>
       </Link>
     );
@@ -416,6 +419,7 @@ export function PageBadges({ item }: { item: PageTree.Node }) {
   const badges: React.ReactNode[] = [];
 
   const isNew = (item as any).data?.isNew;
+  const isBeta = (item as any).data?.isBeta;
 
   if (isNew) {
     badges.push(
@@ -424,6 +428,17 @@ export function PageBadges({ item }: { item: PageTree.Node }) {
         className="font-regular text-[10px] px-1 py-0.5 rounded uppercase text-neutral-950 border-none bg-[var(--color-brand-mint)] dark:bg-[var(--color-brand-mint)]"
       >
         New
+      </span>,
+    );
+  }
+
+  if (isBeta) {
+    badges.push(
+      <span
+        key="beta"
+        className="font-regular text-[10px] px-1 py-0.5 rounded uppercase bg-brand-orange dark:bg-brand-orange text-neutral-950 border-none"
+      >
+        Beta
       </span>,
     );
   }

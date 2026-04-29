@@ -28,7 +28,7 @@ export const buttonVariants = cva(
 
 export function Banner({
   id,
-  cta = 'Call to Action',
+  cta,
   url = '/',
   startDate,
   endDate,

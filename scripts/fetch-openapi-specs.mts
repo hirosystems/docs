@@ -24,10 +24,6 @@ interface GitHubApiSpec {
 
 const API_SPECS: ApiSpec[] = [
   {
-    name: 'stacks-blockchain',
-    url: 'https://stacks-blockchain-api.vercel.app/openapi.json',
-  },
-  {
     name: 'token-metadata',
     url: 'https://token-metadata-api.vercel.app/openapi.json',
   },
@@ -56,6 +52,13 @@ const GITHUB_API_SPECS: GitHubApiSpec[] = [
     repo: 'stacks-network/stacks-core',
     branch: 'develop',
     filePath: 'docs/rpc/openapi.yaml',
+  },
+  {
+    name: 'stacks-blockchain',
+    type: 'github',
+    repo: 'hirosystems/stacks-blockchain-api',
+    branch: 'master',
+    filePath: 'openapi.yaml',
   },
 ];
 

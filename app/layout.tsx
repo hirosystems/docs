@@ -5,6 +5,7 @@ import { aeonik, aeonikFono, aeonikMono, inter } from '@/fonts';
 import { KeyboardShortcutsProvider } from '@/hooks/use-keyboard-shortcuts';
 import { ApiCredentialsProvider } from '@/providers/api-credentials-provider';
 import { QueryProvider } from '@/providers/query-provider';
+import { Banner } from '@/components/ui/banner';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -13,7 +14,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${aeonik.variable} ${aeonikFono.variable} ${aeonikMono.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen" suppressHydrationWarning>
+        <Banner id="chainhooks-deprecation">
+          Hosted Chainhooks v1 and L1 APIs (Ordinals, Runes, BRC20) deprecated March 9th, please migrate now!
+        </Banner>
         <QueryProvider>
           <ApiCredentialsProvider>
             <KeyboardShortcutsProvider>

@@ -617,6 +617,10 @@ export const source = loader({
           dataToAdd.sidebarTitle = frontmatter.sidebarTitle;
         }
 
+        if (frontmatter?.isBeta) {
+          dataToAdd.isBeta = frontmatter.isBeta;
+        }
+
         // if (frontmatter?.root) {
         //   dataToAdd.root = frontmatter.root;
         // }
