@@ -93,7 +93,6 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
 
       if (index === 1 && displaySegments[0] === 'Tools') {
         const toolMappings: { [key: string]: string } = {
-          'bitcoin-indexer': 'Bitcoin Indexer',
           'contract-monitoring': 'Contract Monitoring',
         };
 

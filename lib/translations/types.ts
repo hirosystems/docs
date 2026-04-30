@@ -65,10 +65,6 @@ export interface Translations {
       title: string;
       description: string;
     };
-    bitcoinIndexer: {
-      title: string;
-      description: string;
-    };
   };
   apis: {
     apiKeys: {

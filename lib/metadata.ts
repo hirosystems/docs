@@ -167,21 +167,6 @@ const tokenMetadataApiMetadata: Partial<Metadata> = {
   },
 };
 
-const bitcoinIndexerMetadata: Partial<Metadata> = {
-  title: 'Bitcoin Indexer',
-  description: 'Build accurate, lightweight databases with the Bitcoin Indexer.',
-  openGraph: {
-    title: 'Bitcoin Indexer',
-    description: 'Build accurate, lightweight databases with the Bitcoin Indexer.',
-    images: [{ url: '/images/bitcoin-indexer-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Bitcoin Indexer',
-    description: 'Build accurate, lightweight databases with the Bitcoin Indexer.',
-    images: ['/images/bitcoin-indexer-og.jpg'],
-  },
-};
-
 export function createMetadata(override: Partial<Metadata>): Metadata {
   return {
     ...defaultMetadata,
@@ -213,6 +198,5 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
   if (path.startsWith('/apis/signer-metrics')) return signerMetricsApiMetadata;
   if (path.startsWith('/apis/stacks-blockchain')) return stacksApiMetadata;
   if (path.startsWith('/apis/token-metadata')) return tokenMetadataApiMetadata;
-  if (path.startsWith('/tools/bitcoin-indexer')) return bitcoinIndexerMetadata;
   return {};
 }

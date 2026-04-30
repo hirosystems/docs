@@ -31,7 +31,6 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
     >([
       ['/tools/chainhooks', t.tools.chainhook],
       ['/tools/contract-monitoring', t.tools.contractMonitoring],
-      ['/tools/bitcoin-indexer', t.tools.bitcoinIndexer],
       ['/resources/guides/api-keys', t.apis.apiKeys],
       ['/resources/guides/rate-limits', t.apis.rateLimits],
       ['/apis/stacks-blockchain-api', t.apis.stacksApi],

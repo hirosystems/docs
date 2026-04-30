@@ -70,13 +70,6 @@ export default function HomePage() {
                 title="Monitoreo de Contratos"
                 description="Monitorear y rastrear la actividad de contratos inteligentes y las métricas de rendimiento."
               />
-
-              <SmallCard
-                icon={<Database />}
-                href="/tools/bitcoin-indexer"
-                title="Indexador de Bitcoin"
-                description="Indexa y consulta datos de la cadena de bloques de Bitcoin con indexación de alto rendimiento."
-              />
             </Cards>
           </div>
           <div className="flex flex-col">

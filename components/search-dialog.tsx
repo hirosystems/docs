@@ -7,7 +7,6 @@ import {
   ExternalLink,
   Eye,
   File,
-  Layers,
   Package,
   Search,
   Webhook,
@@ -222,7 +221,7 @@ interface DocIndexEntry {
 const predefinedDocQueries = [
   { id: 'q1', text: 'how to create a chainhook on the hiro platform' },
   { id: 'q2', text: 'how can i query a list of the latest transactions' },
-  { id: 'q3', text: 'how do i bootstrap the bitcoin indexer' },
+  { id: 'q3', text: 'how do i monitor contract activity' },
   { id: 'q4', text: 'how do i manage api keys' },
 ];
 
@@ -250,12 +249,6 @@ const navigateItems = [
     title: 'Chainhooks',
     icon: Webhook,
     href: '/tools/chainhooks',
-  },
-  {
-    id: 'bitcoin-indexer',
-    title: 'Bitcoin Indexer',
-    icon: Layers,
-    href: '/tools/bitcoin-indexer',
   },
   {
     id: 'apis',

@@ -32,11 +32,6 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Monitor and analyze Clarity smart contract activity.',
           url: '/tools/contract-monitoring',
         },
-        {
-          text: 'Bitcoin Indexer',
-          description: 'Indexer for Bitcoin blockchain data.',
-          url: '/tools/bitcoin-indexer',
-        },
       ],
     },
     {

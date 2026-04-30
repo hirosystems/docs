@@ -68,12 +68,6 @@ export default function HomePage() {
                 title="Contract Monitoring"
                 description="Monitor and track smart contract activity and performance metrics."
               />
-              <SmallCard
-                icon={<Database />}
-                href="/tools/bitcoin-indexer"
-                title="Bitcoin Indexer"
-                description="Index and query Bitcoin blockchain data with high-performance indexing."
-              />
             </Cards>
           </div>
           <div className="flex flex-col">

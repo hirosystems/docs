@@ -67,10 +67,6 @@ export const es: Translations = {
       title: 'Monitoreo de Contratos',
       description: 'Monitorear y analizar la actividad de contratos inteligentes Clarity.',
     },
-    bitcoinIndexer: {
-      title: 'Indexador de Bitcoin',
-      description: 'Indexador para datos de la blockchain de Bitcoin.',
-    },
   },
   apis: {
     apiKeys: {
