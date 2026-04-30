@@ -32,14 +32,6 @@ const API_SPECS: ApiSpec[] = [
     url: 'https://signer-metrics-api.vercel.app/openapi.json',
   },
   {
-    name: 'ordinals',
-    url: 'https://ordinals-api.vercel.app/openapi.json',
-  },
-  {
-    name: 'runes',
-    url: 'https://runes-api.vercel.app/openapi.json',
-  },
-  {
     name: 'chainhook',
     url: 'https://chainhooks-api.vercel.app/openapi.json',
   },

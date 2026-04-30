@@ -83,8 +83,6 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
           'stacks-blockchain-api': 'Stacks Blockchain API',
           'token-metadata-api': 'Token Metadata API',
           'platform-api': 'Platform API',
-          'ordinals-api': 'Ordinals API',
-          'runes-api': 'Runes API',
           'signer-metrics-api': 'Signer Metrics API',
         };
 

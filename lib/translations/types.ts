@@ -99,14 +99,6 @@ export interface Translations {
       title: string;
       description: string;
     };
-    ordinals: {
-      title: string;
-      description: string;
-    };
-    runes: {
-      title: string;
-      description: string;
-    };
     signerMetrics: {
       title: string;
       description: string;

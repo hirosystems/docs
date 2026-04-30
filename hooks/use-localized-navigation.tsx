@@ -39,8 +39,6 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
       ['/apis/token-metadata-api', t.apis.tokenMetadata],
       ['/apis/chainhooks-api', t.apis.chainhook],
       ['/apis/platform-api', t.apis.platform],
-      ['/apis/ordinals-api', t.apis.ordinals],
-      ['/apis/runes-api', t.apis.runes],
       ['/apis/signer-metrics-api', t.apis.signerMetrics],
       ['/resources/guides', t.resources.guides],
       ['/resources/archive', t.resources.archive],

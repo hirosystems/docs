@@ -102,14 +102,6 @@ export const en: Translations = {
       title: 'Platform API',
       description: 'API for accessing Hiro Platform data and functionality.',
     },
-    ordinals: {
-      title: 'Ordinals API',
-      description: 'API for Bitcoin Ordinals and inscriptions data.',
-    },
-    runes: {
-      title: 'Runes API',
-      description: 'API for Bitcoin Runes data.',
-    },
     signerMetrics: {
       title: 'Signer Metrics API',
       description: 'API for accessing Signer metrics data and functionality.',

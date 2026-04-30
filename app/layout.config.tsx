@@ -81,16 +81,6 @@ export const baseOptions: BaseLayoutProps = {
           url: '/apis/platform-api',
         },
         {
-          text: 'Ordinals API',
-          description: 'API for Bitcoin Ordinals and inscriptions data.',
-          url: '/apis/ordinals-api',
-        },
-        {
-          text: 'Runes API',
-          description: 'API for Bitcoin Runes data.',
-          url: '/apis/runes-api',
-        },
-        {
           text: 'Signer Metrics API',
           description: 'API for accessing Signer metrics data and functionality.',
           url: '/apis/signer-metrics-api',

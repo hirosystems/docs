@@ -1,7 +1,7 @@
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { Braces, Database, Play } from 'lucide-react';
 import { Card, Cards, SmallCard } from '@/components/card';
-import { API, Chainhook, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
+import { API, Chainhook, Hiro, StacksIcon } from '@/components/ui/icon';
 import heroImage from '@/public/stacks-hero.svg';
 
 export default function HomePage() {
@@ -114,18 +114,6 @@ export default function HomePage() {
                 href="/apis/platform-api"
                 title="Platform API"
                 description="Programmatically manage devnets and chainhooks via REST interface."
-              />
-              <SmallCard
-                icon={<Ordinals />}
-                href="/apis/ordinals-api"
-                title="Ordinals API"
-                description="Complete Bitcoin ordinals and BRC-20 token data with caching optimization."
-              />
-              <SmallCard
-                icon={<Runes />}
-                href="/apis/runes-api"
-                title="Runes API"
-                description="Fast, reliable data for Bitcoin Runes via an easy-to-use REST interface."
               />
               <SmallCard
                 icon={<API />}
