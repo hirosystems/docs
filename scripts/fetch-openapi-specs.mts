@@ -24,14 +24,6 @@ interface GitHubApiSpec {
 
 const API_SPECS: ApiSpec[] = [
   {
-    name: 'token-metadata',
-    url: 'https://token-metadata-api.vercel.app/openapi.json',
-  },
-  {
-    name: 'signer-metrics',
-    url: 'https://signer-metrics-api.vercel.app/openapi.json',
-  },
-  {
     name: 'chainhook',
     url: 'https://chainhooks-api.vercel.app/openapi.json',
   },
@@ -52,6 +44,20 @@ const GITHUB_API_SPECS: GitHubApiSpec[] = [
     branch: 'master',
     filePath: 'openapi.yaml',
   },
+  {
+    name: 'token-metadata',
+    type: 'github',
+    repo: 'stx-labs/token-metadata-api',
+    branch: 'master',
+    filePath: 'openapi.yaml',
+  },
+  {
+    name: 'signer-metrics',
+    type: 'github',
+    repo: 'stx-labs/signer-metrics-api',
+    branch: 'main',
+    filePath: 'openapi.yaml',
+  }
 ];
 
 async function generatePlatformApiSpec(): Promise<void> {
