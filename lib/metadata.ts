@@ -101,21 +101,6 @@ const guidesMetadata: Partial<Metadata> = {
   },
 };
 
-const ordinalsApiMetadata: Partial<Metadata> = {
-  title: 'Ordinals API',
-  description: "Interact with Bitcoin Ordinals using Hiro's Ordinals API.",
-  openGraph: {
-    title: 'Ordinals API',
-    description: "Interact with Bitcoin Ordinals using Hiro's Ordinals API.",
-    images: [{ url: '/images/ordinals-api-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Ordinals API',
-    description: "Interact with Bitcoin Ordinals using Hiro's Ordinals API.",
-    images: ['/images/ordinals-api-og.jpg'],
-  },
-};
-
 const platformApiMetadata: Partial<Metadata> = {
   title: 'Platform API',
   description: "Build applications with Hiro's Platform API services.",
@@ -128,21 +113,6 @@ const platformApiMetadata: Partial<Metadata> = {
     title: 'Platform API',
     description: "Build applications with Hiro's Platform API services.",
     images: ['/images/platform-api-og.jpg'],
-  },
-};
-
-const runesApiMetadata: Partial<Metadata> = {
-  title: 'Runes API',
-  description: "Interact with Bitcoin Runes using Hiro's Runes API.",
-  openGraph: {
-    title: 'Runes API',
-    description: "Interact with Bitcoin Runes using Hiro's Runes API.",
-    images: [{ url: '/images/runes-api-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Runes API',
-    description: "Interact with Bitcoin Runes using Hiro's Runes API.",
-    images: ['/images/runes-api-og.jpg'],
   },
 };
 
@@ -197,21 +167,6 @@ const tokenMetadataApiMetadata: Partial<Metadata> = {
   },
 };
 
-const bitcoinIndexerMetadata: Partial<Metadata> = {
-  title: 'Bitcoin Indexer',
-  description: 'Build accurate, lightweight databases with the Bitcoin Indexer.',
-  openGraph: {
-    title: 'Bitcoin Indexer',
-    description: 'Build accurate, lightweight databases with the Bitcoin Indexer.',
-    images: [{ url: '/images/bitcoin-indexer-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Bitcoin Indexer',
-    description: 'Build accurate, lightweight databases with the Bitcoin Indexer.',
-    images: ['/images/bitcoin-indexer-og.jpg'],
-  },
-};
-
 export function createMetadata(override: Partial<Metadata>): Metadata {
   return {
     ...defaultMetadata,
@@ -239,12 +194,9 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
   if (path.startsWith('/stacks/hacks')) return hiroHacksMetadata;
   if (path.startsWith('/tools/chainhooks')) return chainhookMetadata;
   if (path.startsWith('/resources/guides')) return guidesMetadata;
-  if (path.startsWith('/apis/ordinals')) return ordinalsApiMetadata;
   if (path.startsWith('/apis/platform')) return platformApiMetadata;
-  if (path.startsWith('/apis/runes')) return runesApiMetadata;
   if (path.startsWith('/apis/signer-metrics')) return signerMetricsApiMetadata;
   if (path.startsWith('/apis/stacks-blockchain')) return stacksApiMetadata;
   if (path.startsWith('/apis/token-metadata')) return tokenMetadataApiMetadata;
-  if (path.startsWith('/tools/bitcoin-indexer')) return bitcoinIndexerMetadata;
   return {};
 }

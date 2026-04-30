@@ -1,5 +1,5 @@
 import { Cards, IndexCard } from '@/components/card';
-import { API, Chainhook, Hiro, Ordinals, Runes, StacksIcon } from '@/components/ui/icon';
+import { API, Chainhook, Hiro, StacksIcon } from '@/components/ui/icon';
 
 export default function APIsPage() {
   return (
@@ -41,20 +41,6 @@ export default function APIsPage() {
               href="/apis/platform-api"
               title="API de la plataforma"
               description="Gestione programáticamente devnets y chainhooks a través de la interfaz REST."
-            />
-            <IndexCard
-              icon={<Ordinals />}
-              href="/apis/ordinals-api"
-              title="API de Ordinals"
-              tag="Bitcoin L1"
-              description="Datos completos de ordinales de Bitcoin y tokens BRC-20 con optimización de caché."
-            />
-            <IndexCard
-              icon={<Runes />}
-              href="/apis/runes-api"
-              title="API de Runas"
-              tag="Bitcoin L1"
-              description="Datos rápidos y confiables para Bitcoin Runes a través de una interfaz REST fácil de usar."
             />
             <IndexCard
               icon={<API />}

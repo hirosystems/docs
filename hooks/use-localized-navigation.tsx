@@ -31,7 +31,6 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
     >([
       ['/tools/chainhooks', t.tools.chainhook],
       ['/tools/contract-monitoring', t.tools.contractMonitoring],
-      ['/tools/bitcoin-indexer', t.tools.bitcoinIndexer],
       ['/resources/guides/api-keys', t.apis.apiKeys],
       ['/resources/guides/rate-limits', t.apis.rateLimits],
       ['/apis/stacks-blockchain-api', t.apis.stacksApi],
@@ -39,8 +38,6 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
       ['/apis/token-metadata-api', t.apis.tokenMetadata],
       ['/apis/chainhooks-api', t.apis.chainhook],
       ['/apis/platform-api', t.apis.platform],
-      ['/apis/ordinals-api', t.apis.ordinals],
-      ['/apis/runes-api', t.apis.runes],
       ['/apis/signer-metrics-api', t.apis.signerMetrics],
       ['/resources/guides', t.resources.guides],
       ['/resources/archive', t.resources.archive],

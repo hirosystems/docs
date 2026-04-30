@@ -32,11 +32,6 @@ export const baseOptions: BaseLayoutProps = {
           description: 'Monitor and analyze Clarity smart contract activity.',
           url: '/tools/contract-monitoring',
         },
-        {
-          text: 'Bitcoin Indexer',
-          description: 'Indexer for Bitcoin blockchain data.',
-          url: '/tools/bitcoin-indexer',
-        },
       ],
     },
     {
@@ -79,16 +74,6 @@ export const baseOptions: BaseLayoutProps = {
           text: 'Platform API',
           description: 'API for accessing Hiro Platform data and functionality.',
           url: '/apis/platform-api',
-        },
-        {
-          text: 'Ordinals API',
-          description: 'API for Bitcoin Ordinals and inscriptions data.',
-          url: '/apis/ordinals-api',
-        },
-        {
-          text: 'Runes API',
-          description: 'API for Bitcoin Runes data.',
-          url: '/apis/runes-api',
         },
         {
           text: 'Signer Metrics API',

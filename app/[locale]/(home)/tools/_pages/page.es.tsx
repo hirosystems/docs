@@ -1,4 +1,4 @@
-import { Brackets, Database } from 'lucide-react';
+import { Brackets } from 'lucide-react';
 import { Cards, IndexCard } from '@/components/card';
 import { Chainhook } from '@/components/ui/icon';
 
@@ -29,13 +29,6 @@ export default function ToolsPage() {
               description="Monitorea y rastrea la actividad de contratos inteligentes y las métricas de rendimiento."
             />
 
-            <IndexCard
-              href="/tools/bitcoin-indexer"
-              title="Indexador de Bitcoin"
-              icon={<Database />}
-              tag="Bitcoin L1"
-              description="Indexa y consulta datos de la cadena de bloques de Bitcoin con indexación de alto rendimiento."
-            />
           </Cards>
         </div>
       </div>

@@ -67,10 +67,6 @@ export const en: Translations = {
       title: 'Contract Monitoring',
       description: 'Monitor and analyze Clarity smart contract activity.',
     },
-    bitcoinIndexer: {
-      title: 'Bitcoin Indexer',
-      description: 'Indexer for Bitcoin blockchain data.',
-    },
   },
   apis: {
     apiKeys: {
@@ -101,14 +97,6 @@ export const en: Translations = {
     platform: {
       title: 'Platform API',
       description: 'API for accessing Hiro Platform data and functionality.',
-    },
-    ordinals: {
-      title: 'Ordinals API',
-      description: 'API for Bitcoin Ordinals and inscriptions data.',
-    },
-    runes: {
-      title: 'Runes API',
-      description: 'API for Bitcoin Runes data.',
     },
     signerMetrics: {
       title: 'Signer Metrics API',

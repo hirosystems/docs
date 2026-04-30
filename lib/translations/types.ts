@@ -65,10 +65,6 @@ export interface Translations {
       title: string;
       description: string;
     };
-    bitcoinIndexer: {
-      title: string;
-      description: string;
-    };
   };
   apis: {
     apiKeys: {
@@ -96,14 +92,6 @@ export interface Translations {
       description: string;
     };
     platform: {
-      title: string;
-      description: string;
-    };
-    ordinals: {
-      title: string;
-      description: string;
-    };
-    runes: {
       title: string;
       description: string;
     };

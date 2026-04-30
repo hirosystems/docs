@@ -13,7 +13,7 @@ The following rate-limits (in requests per minute, or RPM) are applicable for [a
 | Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
 Rate limits are split between two service types based on the API path:
-- **Bitcoin services** (`/ordinals/*` and `/runes/*` paths): [Ordinals API](/apis/ordinals-api) and [Runes API](/apis/runes-api)
+- **Bitcoin services** (`/ordinals/*` and `/runes/*` paths)
 - **Stacks services** (all other paths): [Stacks Blockchain API](/apis/stacks-blockchain-api), [Token Metadata API](/apis/token-metadata-api), [Signer Metrics API](/apis/signer-metrics-api), Explorer endpoints, and other Hiro services
 
 Each service type has its own independent quota, allowing you to use both Stacks and Bitcoin APIs without one affecting the other's rate limits. For more details, see our guide on [response headers](/resources/guides/response-headers).

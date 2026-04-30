@@ -83,8 +83,6 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
           'stacks-blockchain-api': 'Stacks Blockchain API',
           'token-metadata-api': 'Token Metadata API',
           'platform-api': 'Platform API',
-          'ordinals-api': 'Ordinals API',
-          'runes-api': 'Runes API',
           'signer-metrics-api': 'Signer Metrics API',
         };
 
@@ -95,7 +93,6 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
 
       if (index === 1 && displaySegments[0] === 'Tools') {
         const toolMappings: { [key: string]: string } = {
-          'bitcoin-indexer': 'Bitcoin Indexer',
           'contract-monitoring': 'Contract Monitoring',
         };
 
