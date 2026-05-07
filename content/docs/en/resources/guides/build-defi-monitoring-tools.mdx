@@ -1,0 +1,218 @@
+---
+title: Build DeFi monitoring tools
+description: Learn how to build DeFi monitoring tools on Stacks using Clarity smart contracts, Chainhooks, and the Hiro Platform API.
+---
+
+import { Code, Terminal } from 'lucide-react';
+
+DeFi monitoring is essential for tracking on-chain activity such as large token transfers, price movements, and liquidity changes. In this guide, you will learn how to build monitoring tools on Stacks using Clarity smart contracts and the Hiro developer toolchain.
+
+Over the course of this guide, you will learn how to:
+
+1. Set up a DeFi monitoring project with Clarinet
+2. Create a price oracle contract in Clarity
+3. Build a whale tracking contract for large transfers
+4. Integrate with the Hiro Platform API for real-time data
+5. Use Chainhooks for event-driven monitoring
+
+---
+
+## Set up a DeFi monitoring project
+
+Start by creating a new Clarinet project to house your monitoring contracts.
+
+```terminal
+clarinet new defi-monitor
+cd defi-monitor
+clarinet contract new price-oracle
+clarinet contract new whale-tracker
+```
+
+This scaffolds a project with two contracts: one for tracking price data and another for detecting large transfers.
+
+## Create a price oracle contract
+
+A price oracle allows trusted sources to submit off-chain price data on-chain, which other contracts can then read. Define the oracle with an authorized submitter list and a price data map.
+
+```clarity
+;; price-oracle.clar
+
+;; Error constants
+(define-constant ERR_UNAUTHORIZED (err u1000))
+(define-constant ERR_STALE_PRICE (err u1001))
+(define-constant CONTRACT_OWNER tx-sender)
+
+;; Maximum age of a price entry in blocks before it is considered stale
+(define-constant MAX_PRICE_AGE u144)
+
+;; Track authorized price submitters
+(define-map authorized-submitters principal bool)
+
+;; Store price data keyed by token identifier
+(define-map prices
+  (string-ascii 12)
+  {
+    price: uint,
+    block-submitted: uint,
+    submitter: principal
+  }
+)
+
+;; Only the contract owner can authorize submitters
+(define-public (set-submitter (submitter principal) (allowed bool))
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT_OWNER) ERR_UNAUTHORIZED)
+    (ok (map-set authorized-submitters submitter allowed))
+  )
+)
+
+;; Submit a price update for a given token
+(define-public (submit-price (token (string-ascii 12)) (price uint))
+  (begin
+    (asserts!
+      (default-to false (map-get? authorized-submitters tx-sender))
+      ERR_UNAUTHORIZED
+    )
+    (ok (map-set prices token {
+      price: price,
+      block-submitted: block-height,
+      submitter: tx-sender
+    }))
+  )
+)
+
+;; Read the current price for a token, rejecting stale entries
+(define-read-only (get-price (token (string-ascii 12)))
+  (match (map-get? prices token)
+    entry
+      (if (<= (- block-height (get block-submitted entry)) MAX_PRICE_AGE)
+        (ok (get price entry))
+        ERR_STALE_PRICE
+      )
+    ERR_STALE_PRICE
+  )
+)
+```
+
+The `MAX_PRICE_AGE` constant (set to 144 blocks, roughly one day) ensures that consumers never rely on outdated data.
+
+## Build a whale tracking contract
+
+Large transfers can signal meaningful market activity. The whale tracker contract emits a print event whenever a transfer exceeds a configurable threshold, making it easy for off-chain services to react.
+
+```clarity
+;; whale-tracker.clar
+
+(define-constant ERR_UNAUTHORIZED (err u2000))
+(define-constant CONTRACT_OWNER tx-sender)
+
+;; Default whale threshold in micro-STX (1 000 STX)
+(define-data-var whale-threshold uint u1000000000)
+
+;; Allow the contract owner to adjust the threshold
+(define-public (set-threshold (new-threshold uint))
+  (begin
+    (asserts! (is-eq tx-sender CONTRACT_OWNER) ERR_UNAUTHORIZED)
+    (ok (var-set whale-threshold new-threshold))
+  )
+)
+
+;; Call after observing a transfer to check and log whale activity
+(define-public (check-transfer
+  (sender principal)
+  (recipient principal)
+  (amount uint)
+)
+  (begin
+    (if (>= amount (var-get whale-threshold))
+      (print {
+        event: "whale-transfer",
+        sender: sender,
+        recipient: recipient,
+        amount: amount,
+        block: block-height
+      })
+      true
+    )
+    (ok true)
+  )
+)
+
+;; Read the current threshold
+(define-read-only (get-threshold)
+  (var-get whale-threshold)
+)
+```
+
+The `print` expression is key: it produces an on-chain event that Chainhooks can listen for without polling.
+
+## Integrate with the Hiro Platform API
+
+The [Hiro Platform API](/apis) provides REST endpoints for querying account balances, transaction history, and contract state. Use the API to feed data into your monitoring pipeline.
+
+Fetch the latest STX balance for an address:
+
+```terminal
+curl "https://api.hiro.so/extended/v1/address/SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7/balances" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+Poll recent contract calls to your whale tracker:
+
+```terminal
+curl "https://api.hiro.so/extended/v1/address/SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7.whale-tracker/transactions?limit=10" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+:::callout
+### Tip
+Register for a free API key on the [Hiro Platform](https://platform.hiro.so) to increase your rate limits. See the [API Keys guide](/resources/guides/api-keys) for details.
+:::
+
+## Use Chainhooks for event-driven monitoring
+
+Instead of continuously polling the API, [Chainhooks](/tools/chainhooks) let you define predicates that trigger a webhook whenever a matching on-chain event occurs. Create a Chainhook predicate that fires when the whale tracker emits an event.
+
+```json
+{
+  "chain": "stacks",
+  "uuid": "whale-alert-1",
+  "name": "Whale Transfer Alert",
+  "version": 1,
+  "networks": {
+    "mainnet": {
+      "start_block": 1,
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7.whale-tracker",
+        "contains": "whale-transfer"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://your-server.com/api/whale-alert",
+          "authorization_header": "Bearer YOUR_SECRET"
+        }
+      }
+    }
+  }
+}
+```
+
+Deploy this predicate through the Hiro Platform or the Chainhook SDK. Every time `whale-tracker` prints an event containing `whale-transfer`, your server receives a POST with the full event payload.
+
+## Verify your contracts
+
+Run the Clarinet test suite to verify that your contracts behave correctly before deploying.
+
+```terminal
+clarinet check
+```
+
+You can also write unit tests in TypeScript using the Clarinet SDK to simulate price submissions and whale-sized transfers in an isolated environment. See the [Clarinet documentation](/tools/contract-monitoring) for more on testing strategies.
+
+## Next steps
+
+- Extend the price oracle to support multiple authorized data sources and median-price aggregation.
+- Add [Contract Monitoring alerts](/tools/contract-monitoring/create-alert) on the Hiro Platform to get notified when your contracts emit specific events.
+- Combine Chainhook payloads with a database to build historical analytics dashboards.
+- Explore the [Stacks API](/apis) for additional on-chain data useful in DeFi monitoring.
