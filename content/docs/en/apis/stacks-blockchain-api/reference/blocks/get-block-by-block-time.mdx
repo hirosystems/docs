@@ -1,0 +1,12 @@
+---
+title: Get block by block time
+sidebarTitle: Block by block time
+description: Retrieves the most recent block mined at or before a given Unix timestamp (in seconds)
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v2/blocks/by-block-time/{timestamp}', method: 'get' }]}
+  hasHead={false}
+/>

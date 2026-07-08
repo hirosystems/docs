@@ -1,0 +1,12 @@
+---
+title: Get blocks by tenure
+sidebarTitle: Blocks by tenure
+description: Retrieves blocks confirmed in a block tenure
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v2/block-tenures/{tenure_height}/blocks', method: 'get' }]}
+  hasHead={false}
+/>

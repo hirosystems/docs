@@ -1,0 +1,12 @@
+---
+title: Get staking signer stakers
+sidebarTitle: Staking signer stakers
+description: List the stakers that belong to a pox-5 signer, across both direct STX staking and BTC/sBTC bond staking.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/staking/signers/{principal}/stakers', method: 'get' }]}
+  hasHead={false}
+/>

@@ -1,0 +1,12 @@
+---
+title: Get principal balance changes
+sidebarTitle: Principal balance changes
+description: Returns the balance changes for a principal across one or more transactions, as a single paginated flat array ordered by chain position descending then by asset.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/balance-changes', method: 'get' }]}
+  hasHead={false}
+/>

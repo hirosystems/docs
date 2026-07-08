@@ -1,0 +1,12 @@
+---
+title: Get the list of current transactions that belong to unanchored microblocks
+sidebarTitle: The list of current transactions that belong to unanchored microblocks
+description: Retrieves transactions that have been streamed in microblocks but not yet accepted or rejected in an anchor block
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v1/microblock/unanchored/txs', method: 'get' }]}
+  hasHead={false}
+/>

@@ -1,0 +1,12 @@
+---
+title: Get principal transactions
+sidebarTitle: Principal transactions
+description: Returns a list of confirmed transactions sent or received by a Stacks principal, including the transaction summary, the involvement of the principal in the transaction, and the balances affected by the transaction.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/transactions', method: 'get' }]}
+  hasHead={false}
+/>

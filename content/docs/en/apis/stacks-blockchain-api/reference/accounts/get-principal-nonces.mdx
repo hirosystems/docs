@@ -1,0 +1,12 @@
+---
+title: Get principal nonces
+sidebarTitle: Principal nonces
+description: "Get a Stacks account's latest nonce state by inspecting its confirmed (anchored + microblock) transactions and the mempool, including the nonce to use for its next transaction."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/nonces', method: 'get' }]}
+  hasHead={false}
+/>

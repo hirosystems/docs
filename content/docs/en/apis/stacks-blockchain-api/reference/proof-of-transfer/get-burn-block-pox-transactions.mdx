@@ -1,0 +1,12 @@
+---
+title: Get PoX transactions by burn block
+sidebarTitle: PoX transactions by burn block
+description: Retrieves a list of PoX transactions confirmed by a specific burn block
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v2/burn-blocks/{height_or_hash}/pox-transactions', method: 'get' }]}
+  hasHead={false}
+/>

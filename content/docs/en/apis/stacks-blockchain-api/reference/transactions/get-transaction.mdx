@@ -1,12 +1,12 @@
 ---
 title: Get transaction
 sidebarTitle: Transaction
-description: Retrieves details for a specific transaction.
+description: Retrieves details for a given transaction, including both mined and mempool transactions
 full: true
 ---
 
 <APIPage
   document="./openapi/stacks-blockchain-api.json"
-  operations={[{ path: '/extended/v1/tx/{tx_id}', method: 'get' }]}
+  operations={[{ path: '/extended/v3/transactions/{tx_id}', method: 'get' }]}
   hasHead={false}
 />

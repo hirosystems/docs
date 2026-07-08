@@ -1,0 +1,12 @@
+---
+title: Get principal bond positions
+sidebarTitle: Principal bond positions
+description: "Get a principal's bond positions — its enrollment, lock, status, and sBTC rewards in each bond it participates in."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/staking/bonds', method: 'get' }]}
+  hasHead={false}
+/>

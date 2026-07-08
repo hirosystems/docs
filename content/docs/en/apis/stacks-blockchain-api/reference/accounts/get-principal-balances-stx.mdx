@@ -1,0 +1,12 @@
+---
+title: Get principal STX balance
+sidebarTitle: Principal STX balance
+description: "Get a principal's STX balance: its total and spendable (available) balance, any locked STX, and the projected balance from pending mempool transactions."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/balances/stx', method: 'get' }]}
+  hasHead={false}
+/>
