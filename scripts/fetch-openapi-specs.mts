@@ -40,7 +40,7 @@ const GITHUB_API_SPECS: GitHubApiSpec[] = [
   {
     name: 'stacks-blockchain',
     type: 'github',
-    repo: 'hirosystems/stacks-blockchain-api',
+    repo: 'stx-labs/stacks-blockchain-api',
     branch: 'master',
     filePath: 'openapi.yaml',
   },
