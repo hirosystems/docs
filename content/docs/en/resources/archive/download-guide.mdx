@@ -5,7 +5,7 @@ description: Comprehensive guide for downloading large archive files reliably wi
 
 ## Overview
 
-Hiro Archive files are large datasets (ranging from several GB to several _hundred_ GB) hosted on Google Cloud Storage. Due to their size, downloads can be interrupted by network issues, rate limits, or connection timeouts. This guide provides multiple download methods and troubleshooting solutions.
+Hiro Archive files are large datasets (ranging from several GB to several _hundred_ GB) hosted at `archive.hiro.so`. Due to their size, downloads can be interrupted by network issues, rate limits, or connection timeouts. This guide provides multiple download methods and troubleshooting solutions.
 
 ## File sizes and requirements
 
@@ -72,43 +72,7 @@ $ curl --continue-at - --retry 10 --retry-delay 5 --retry-max-time 0 \
 - Resume capability with `-C -`
 - More configuration options
 
-### Method 3: gcloud storage cp (Fastest, requires authentication)
-
-Google Cloud CLI provides the fastest download speeds with parallel transfers. First authenticate with `gcloud auth login`, then either download the file to disk or stream directly to extraction:
-
-#### Download file to current directory
-
-:::callout
-type: warn
-### Legacy archive format
-Most new archives are published in `.tar.zst`. Use `.tar.gz` only when accessing older snapshots.
-:::
-
-```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst .
-```
-
-#### OR stream directly to extraction (saves disk space but slower due to sequential download, zst extension requires zstd installed)
-
-```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.zst - | tar -I zstd -xv
-```
-Or for older backups with the tar.gz extention:
-```terminal
-$ gcloud storage cp gs://archive.hiro.so/mainnet/stacks-blockchain/mainnet-stacks-blockchain-latest.tar.gz - | tar -zxv
-```
-
-**Advantages:**
-- Significantly faster downloads (2-3x speed improvement)
-- Built-in parallel transfers
-- Automatic retry handling
-- Can stream directly to extraction (useful when disk space is limited, but disables parallel transfers)
-
-**Disadvantages:**
-- Requires Google account authentication
-- Additional software installation needed
-
-### Method 4: Download managers (JDownloader)
+### Method 3: Download managers (JDownloader)
 
 For users who prefer GUI applications or need advanced download management:
 
@@ -172,11 +136,9 @@ The `marf.sqlite.blobs` file can be very large and may take significant time to 
 
 ## Performance tips
 
-1. **Use gcloud for fastest downloads** - requires authentication but provides significant speed improvements
-2. **Download during off-peak hours** - typically late night or early morning
-3. **Use wired connections** - avoid Wi-Fi for large downloads when possible
-4. **Monitor disk space** - extracted archives can be 2-3x larger than compressed files
-5. **Consider streaming extraction** with gcloud to save disk space
+1. **Download during off-peak hours** - typically late night or early morning
+2. **Use wired connections** - avoid Wi-Fi for large downloads when possible
+3. **Monitor disk space** - extracted archives can be 2-3x larger than compressed files
 
 ## FAQ
 
@@ -184,14 +146,14 @@ The `marf.sqlite.blobs` file can be very large and may take significant time to 
   <AccordionItem value="downloads-failing">
     <AccordionTrigger>Why do downloads keep failing?</AccordionTrigger>
     <AccordionContent>
-      Large file downloads from cloud storage can be interrupted due to network issues, rate limiting, or connection timeouts. Use resume-capable tools like `wget -c` or `gcloud storage cp`.
+      Large file downloads can be interrupted due to network issues, rate limiting, or connection timeouts. Use resume-capable tools like `wget -c` or `curl -C -`.
     </AccordionContent>
   </AccordionItem>
 
   <AccordionItem value="download-method">
     <AccordionTrigger>Which download method should I use?</AccordionTrigger>
     <AccordionContent>
-      For fastest speeds, use `gcloud storage cp` (requires Google auth). For simplicity, use `wget -c`. For reliability without authentication, try a download manager like JDownloader.
+      For simplicity, use `wget -c`. For automatic retries, use `curl` with `--retry`. For a GUI with parallel downloads, try a download manager like JDownloader.
     </AccordionContent>
   </AccordionItem>
 
@@ -205,14 +167,7 @@ The `marf.sqlite.blobs` file can be very large and may take significant time to 
   <AccordionItem value="resume-download">
     <AccordionTrigger>Can I resume a failed download?</AccordionTrigger>
     <AccordionContent>
-      Yes, use `wget -c`, `curl -C -`, or `gcloud storage cp` to resume interrupted downloads from where they stopped.
-    </AccordionContent>
-  </AccordionItem>
-
-  <AccordionItem value="gcloud-faster">
-    <AccordionTrigger>Why is gcloud faster?</AccordionTrigger>
-    <AccordionContent>
-      Google Cloud CLI uses parallel transfers and optimized protocols when downloading from Google Cloud Storage, resulting in 2-3x speed improvements.
+      Yes, use `wget -c` or `curl -C -` to resume interrupted downloads from where they stopped.
     </AccordionContent>
   </AccordionItem>
 
