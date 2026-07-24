@@ -17,6 +17,12 @@ In order for the Stacks blockchain and Stacks Blockchain API archives to be comp
 
 There are two ways to restore a Stacks Blockchain API using the Hiro Archive. The archive file you'll need to download will depend on your method of restoration. There is no scenario where you would need both restoration methods.
 
+:::callout
+type: info
+### Deploying with Docker?
+If you're running your setup with Docker, the [Stacks Blockchain Docker](https://github.com/stx-labs/stacks-blockchain-docker) tool provides scripts that automatically deploy a Stacks blockchain node and a Stacks Blockchain API from the Hiro Archive, handling the restoration steps below for you.
+:::
+
 **Restore via Postgres database dump (Recommended)**
 
 This is the quickest and most direct method, and it is suitable for most scenarios. It consists of a backup of the API's Postgres database taken using `pg_dump`. We generally recommend starting with this method before attempting the method below if this one does not work for any reason.
