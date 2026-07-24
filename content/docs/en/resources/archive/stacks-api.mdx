@@ -5,13 +5,13 @@ description: Discover how to use the Hiro Archive to spin up a Stacks Blockchain
 
 ## Prerequisites
 
-Since the Stacks Blockchain API depends on a Stacks blockchain node being at the same block height, you will need to first [restore a Stacks blockchain node using the Hiro Archive](/resources/archive/stacks-blockchain) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API.
+Since the Stacks Blockchain API depends on a Stacks blockchain node, you will need to first [restore a Stacks blockchain node using the Hiro Archive](/resources/archive/stacks-blockchain) before restoring the Stacks Blockchain API. Otherwise, you may encounter errors when running the API. The two do not need to be at the same block height; the API's block height can be greater than or equal to the Stacks blockchain node's block height.
 
 In order for the Stacks blockchain and Stacks Blockchain API archives to be compatible, they must meet the following criteria:
 
 - Both archives correspond to the same Stacks network (mainnet/testnet).
 - The API archive version must be compatible with the Stacks blockchain archive version (See [API release notes](https://github.com/hirosystems/stacks-blockchain-api/releases) for guidance).
-- Both archives were created on the same date.
+- The Stacks blockchain archive was created on the same date as, or an earlier date than, the API archive.
 
 ## Restoration methods
 
@@ -76,7 +76,7 @@ or the most recent upload for a particular version:
 
 1. Download the archive and shasum for the appropriate network and restoration method.
 1. Verify the archive using the steps in the [download guide](/resources/archive/download-guide#verification-and-extraction) (note: API archives may not have SHA256 files available).
-1. Import the archive file into a running Postgres database (may take up to an hour depending on database specs and tuning):
+1. Import the archive file into a running Postgres database (may take several hours depending on database specs and tuning):
    ```terminal
    $ export PGPASSWORD=<YOUR POSTGRES PASSWORD>
    $ pg_restore --username postgres --verbose --jobs 4 --dbname stacks_blockchain_api /path/to/archive/file
@@ -96,6 +96,31 @@ or the most recent upload for a particular version:
    ```
 1. [Follow these directions](https://github.com/hirosystems/stacks-blockchain-api#export-and-import) to process and import the events in the TSV file into your Postgres database.
 1. Launch the Stacks Blockchain API service.
-1. Verify the dataset is being used by comparing your nodes [local block height](http://localhost:3999/extended/v1/status) with [Hiro's](https://api.hiro.so/extended/v1/status). If the block height matches or is close to Hiro's block height, the restoration was successful.
+1. Verify the dataset is being used by comparing your nodes [local block height](http://localhost:3999/extended) with [Hiro's](https://api.hiro.so/extended/v1/status). If the block height matches or is close to Hiro's block height, the restoration was successful.
    1. It may take a few minutes for the local node to respond on this endpoint.
    1. Your block height may be up to a few hundred blocks away from Hiro's depending on the age of the archive. It should catch up relatively quickly.
+
+## Receiving new blocks
+
+Once the archive is restored and the Stacks Blockchain API service is running and connected to your Stacks blockchain node, the API should begin receiving and accepting new block events from the node. As the node processes each new block, it sends the corresponding events to the API, which appends them to its Postgres database.
+
+You can confirm this is working by watching the API logs for block ingestion messages and by checking that the block height reported at [`/extended`](http://localhost:3999/extended) is steadily increasing and catching up to [Hiro's](https://api.hiro.so/extended). Because the API's block height can be greater than or equal to the node's, the API will continue to accept new blocks as the node produces or replays them.
+
+## Troubleshooting
+
+### The API is not accepting new blocks
+
+If the API is running but its block height is not advancing, check the API logs for an error similar to the following:
+
+```
+DB does not contain a parent block at height 8599913 with index_hash 0x7774575047357047226126c79a2c675fc2b14f4bc7b0a790ac135be2a267394c
+```
+
+**Cause:** This means the API received a block from the Stacks blockchain node whose parent block is missing from the API's database. It typically happens when the API's database is behind the Stacks blockchain node — that is, the node is at a higher block height than the API. This is usually the result of restoring an API archive that was created *before* the Stacks blockchain node archive, leaving a gap the API cannot reconcile.
+
+**Resolution:** Restore the archives so that the API's block height is greater than or equal to the node's. Either:
+
+- Restore an API archive created on the same date as, or a later date than, the Stacks blockchain node archive, or
+- Restore an older Stacks blockchain node archive so the node is at or below the API's block height.
+
+After re-restoring, restart the API service. See the [prerequisites](#prerequisites) for the full archive compatibility criteria.
