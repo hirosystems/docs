@@ -22,10 +22,22 @@ interface GitHubApiSpec {
   filePath: string;
 }
 
-const API_SPECS: ApiSpec[] = [
+const API_SPECS: ApiSpec[] = [];
+
+// Specs that can't be fetched at build time (private source / no public URL) are
+// vendored in the repo and copied into the generated `openapi/` dir before markdown
+// generation. The Chainhooks API spec lives in the private repo stx-labs/chainhooks
+// (packages/api/openapi.yaml); to refresh it, regenerate the JSON below from that
+// repo's openapi.yaml.
+interface VendoredSpec {
+  name: string;
+  file: string;
+}
+
+const VENDORED_SPECS: VendoredSpec[] = [
   {
     name: 'chainhook',
-    url: 'https://chainhooks-api.vercel.app/openapi.json',
+    file: 'vendored-specs/chainhook-api.json',
   },
 ];
 
@@ -34,7 +46,7 @@ const GITHUB_API_SPECS: GitHubApiSpec[] = [
     name: 'stacks-node-rpc',
     type: 'github',
     repo: 'stacks-network/stacks-core',
-    branch: 'develop',
+    branch: 'main',
     filePath: 'docs/rpc/openapi.yaml',
   },
   {
@@ -1117,6 +1129,20 @@ async function generateAllMarkdown(): Promise<void> {
   console.log('\n✔️ Markdown generation complete!');
 }
 
+async function copyVendoredSpec(spec: VendoredSpec): Promise<void> {
+  try {
+    const openApiDir = path.join(process.cwd(), 'openapi');
+    await fs.mkdir(openApiDir, { recursive: true });
+
+    const source = path.join(import.meta.dirname, spec.file);
+    const dest = path.join(openApiDir, `${spec.name}-api.json`);
+
+    await fs.copyFile(source, dest);
+  } catch (error) {
+    console.error(`❌ Failed to copy vendored spec ${spec.name}:`, error);
+  }
+}
+
 async function fetchAllSpecs(): Promise<void> {
   console.log('Fetching OpenAPI specs...');
 
@@ -1125,6 +1151,7 @@ async function fetchAllSpecs(): Promise<void> {
     generatePlatformApiSpec(),
     ...API_SPECS.map((spec) => fetchApiSpec(spec)),
     ...GITHUB_API_SPECS.map((spec) => fetchGitHubApiSpec(spec)),
+    ...VENDORED_SPECS.map((spec) => copyVendoredSpec(spec)),
   ];
 
   await Promise.all(allPromises);
