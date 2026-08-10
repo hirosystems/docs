@@ -1,0 +1,178 @@
+---
+title: WebSockets and Socket.IO
+sidebarTitle: WebSockets
+description: Subscribe to real-time blockchain events over WebSockets or Socket.IO.
+---
+
+## Overview
+
+Instead of polling REST endpoints, you can subscribe to blockchain events and have the API push updates to you as they happen. The Stacks Blockchain API exposes two real-time channels:
+
+- **WebSockets**: A standard WebSocket connection speaking JSON-RPC 2.0, available at the `/extended/v1/ws` path.
+- **Socket.IO**: A [Socket.IO](https://socket.io/) server on the API's root URL, which adds automatic reconnection and fallback transports on top of WebSockets.
+
+Both channels deliver the same events: new blocks, microblocks, mempool transactions, transaction status updates, address activity, and NFT events.
+
+| Network | WebSockets | Socket.IO |
+|---------|------------|-----------|
+| Mainnet | `wss://api.mainnet.hiro.so/extended/v1/ws` | `https://api.mainnet.hiro.so` |
+| Testnet | `wss://api.testnet.hiro.so/extended/v1/ws` | `https://api.testnet.hiro.so` |
+
+The easiest way to use either channel is through the [`@stacks/blockchain-api-client`](https://github.com/stx-labs/stacks-blockchain-api/tree/master/client) package, which wraps both protocols in a typed interface. You can also connect directly with any WebSocket or Socket.IO implementation — both approaches are covered below.
+
+<Callout type="warn">
+  Events reflect the canonical chain as it stands when they are sent, and they are susceptible to re-orgs: a block you were notified about (and the transactions it anchored) can later be orphaned when a new canonical chain fork takes its place. Don't treat a pushed event as final — keep watching subsequent block events, and confirm anything critical against the REST API (for example, a transaction's `canonical` flag and its number of confirmations) before acting on it.
+</Callout>
+
+## Using the API client library
+
+Install the client package:
+
+```terminal
+$ npm install @stacks/blockchain-api-client
+```
+
+### WebSockets
+
+Use `connectWebSocketClient` to open a connection, then call a `subscribe*` method for each event stream you want:
+
+```js
+import { connectWebSocketClient } from '@stacks/blockchain-api-client';
+
+const client = await connectWebSocketClient('wss://api.mainnet.hiro.so/');
+
+const sub = await client.subscribeAddressTransactions(
+  'ST3GQB6WGCWKDNFNPSQRV8DY93JN06XPZ2ZE9EVMA',
+  event => console.log(event)
+);
+```
+
+Each subscription returns an object you can use to stop receiving that event stream:
+
+```js
+await sub.unsubscribe();
+```
+
+### Socket.IO
+
+Create a `StacksApiSocketClient` pointed at the API's root URL:
+
+```js
+import { StacksApiSocketClient } from '@stacks/blockchain-api-client';
+
+const client = new StacksApiSocketClient({ url: 'https://api.mainnet.hiro.so' });
+
+client.subscribeBlocks(block => console.log(block));
+client.subscribeMempool(tx => console.log(tx));
+```
+
+### Subscription methods
+
+Both clients cover the same events:
+
+| Event | WebSocket client | Socket.IO client |
+|-------|------------------|------------------|
+| Blocks | `subscribeBlocks(handler)` | `subscribeBlocks(handler)` |
+| Microblocks | `subscribeMicroblocks(handler)` | `subscribeMicroblocks(handler)` |
+| Mempool transactions | `subscribeMempool(handler)` | `subscribeMempool(handler)` |
+| Transaction updates | `subscribeTxUpdates(txId, handler)` | `subscribeTransaction(txId, handler)` |
+| Address transactions | `subscribeAddressTransactions(address, handler)` | `subscribeAddressTransactions(address, handler)` |
+| Address STX balance | `subscribeAddressBalanceUpdates(address, handler)` | `subscribeAddressStxBalance(address, handler)` |
+| NFT events (all) | `subscribeNftEventUpdates(handler)` | `subscribeNftEvent(handler)` |
+| NFT asset events | `subscribeNftAssetEventUpdates(assetId, value, handler)` | `subscribeNftAssetEvent(assetId, value, handler)` |
+| NFT collection events | `subscribeNftCollectionEventUpdates(assetId, handler)` | `subscribeNftCollectionEvent(assetId, handler)` |
+
+## Connecting directly
+
+The client library is a convenience, not a requirement. Both channels speak documented protocols that any language or runtime can implement.
+
+### WebSockets (JSON-RPC 2.0)
+
+Open a WebSocket to `/extended/v1/ws` and send JSON-RPC 2.0 messages with the `subscribe` and `unsubscribe` methods. The event to subscribe to goes in `params.event`:
+
+| `event` | Additional params |
+|---------|-------------------|
+| `block` | — |
+| `microblock` | — |
+| `mempool` | — |
+| `tx_update` | `tx_id` |
+| `address_tx_update` | `address` |
+| `address_balance_update` | `address` |
+| `nft_event` | — |
+| `nft_asset_event` | `asset_identifier`, `value` |
+| `nft_collection_event` | `asset_identifier` |
+
+The server pushes matching events as JSON-RPC notifications whose `method` equals the event name and whose `params` contain the payload:
+
+```js
+const ws = new WebSocket('wss://api.mainnet.hiro.so/extended/v1/ws');
+
+ws.addEventListener('open', () => {
+  ws.send(
+    JSON.stringify({
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'subscribe',
+      params: { event: 'address_tx_update', address: 'ST3GQB6WGCWKDNFNPSQRV8DY93JN06XPZ2ZE9EVMA' },
+    })
+  );
+});
+
+ws.addEventListener('message', message => {
+  const data = JSON.parse(message.data);
+  // Responses to your requests have an `id`; pushed events are
+  // notifications with a `method` and `params`.
+  if (data.method === 'address_tx_update') {
+    console.log(data.params);
+  }
+});
+```
+
+To stop receiving an event, send the same message with `method: 'unsubscribe'`.
+
+<Callout type="info">
+  Raw WebSocket connections do not reconnect on their own. If you connect directly, handle the socket's `close` and `error` events and re-subscribe after reconnecting.
+</Callout>
+
+### Socket.IO
+
+Connect any standard Socket.IO client to the API's root URL. Subscriptions are managed with topic strings, in one of two ways:
+
+1. Pass initial topics in the `subscriptions` query parameter (comma-separated) when connecting.
+2. Emit `subscribe` and `unsubscribe` events with topic names after connecting.
+
+| Topic | Description |
+|-------|-------------|
+| `block` | New blocks |
+| `microblock` | New microblocks |
+| `mempool` | New mempool transactions |
+| `transaction:{txId}` | Updates for a specific transaction |
+| `address-transaction:{address}` | Transactions involving an address |
+| `address-stx-balance:{address}` | STX balance changes for an address |
+| `nft-event` | All NFT events |
+| `nft-asset-event:{assetIdentifier}+{value}` | Events for a specific NFT asset |
+| `nft-collection-event:{assetIdentifier}` | Events for an NFT collection |
+
+The server emits events named after the topic, including the dynamic segment:
+
+```js
+import { io } from 'socket.io-client';
+
+const address = 'ST3GQB6WGCWKDNFNPSQRV8DY93JN06XPZ2ZE9EVMA';
+
+const socket = io('https://api.mainnet.hiro.so', {
+  query: { subscriptions: `block,address-transaction:${address}` },
+});
+
+socket.on('block', block => {
+  console.log(block);
+});
+
+socket.on(`address-transaction:${address}`, (addr, tx) => {
+  console.log(addr, tx);
+});
+
+// Add or remove topics at any time:
+socket.emit('subscribe', 'mempool');
+socket.emit('unsubscribe', 'mempool');
+```
