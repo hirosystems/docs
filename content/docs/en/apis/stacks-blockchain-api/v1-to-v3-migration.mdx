@@ -1,0 +1,323 @@
+---
+title: Migrating from v1 to v3
+sidebarTitle: v1 to v3 migration
+description: Map every deprecated /extended/v1 endpoint to its /extended/v3 replacement.
+---
+
+## Overview
+
+Most `/extended/v1` endpoints are now deprecated in favor of `/extended/v3`. The v3 API is a
+redesign, not a rename: it uses cursor-based pagination, splits large "kitchen sink" responses
+into focused resources, and nests related fields into objects instead of flattening them into
+prefixed keys.
+
+Deprecated endpoints still work today. Every response from one carries a `Warning` header:
+
+```
+Warning: 299 - "Deprecated: See https://docs.hiro.so/stacks/api for more information"
+```
+
+At the sunset date, deprecated endpoints stop executing and return `410 Gone` instead. Migrate
+before then.
+
+## What changed in v3
+
+Before mapping endpoints one by one, these are the cross-cutting changes you will hit on almost
+every route.
+
+### Cursor pagination replaces offsets
+
+v1 list endpoints take `limit` and `offset` and return `{ limit, offset, total, results }`. v3
+list endpoints take `limit` and `cursor`, and return `{ limit, total, cursor: { next, previous,
+current }, results }`. See [Pagination](/en/apis/stacks-blockchain-api/pagination) for the full
+walkthrough.
+
+The practical consequence: you cannot jump to an arbitrary page. Walk the list with
+`cursor.next` until it is `null`.
+
+### Summaries by default, details on request
+
+v3 list endpoints return a *summary* of each object (the fields most callers need) rather than
+the full record. The single-resource endpoints return the full record, and the heavy fields are
+opt-in via `?include=`:
+
+```terminal
+$ curl 'https://api.hiro.so/extended/v3/transactions/{tx_id}?include=function_args,post_conditions,result,source_code'
+```
+
+Available `include` values on `GET /extended/v3/transactions/{tx_id}`: `function_args`,
+`source_code`, `post_conditions`, `result`. They may be repeated (`?include=a&include=b`) or
+comma-separated (`?include=a,b`).
+
+This replaces the v1 `exclude_function_args` pattern, inverted: v1 sent everything unless you
+opted out, v3 sends the lean payload unless you opt in.
+
+### Nested objects replace prefixed fields
+
+v1 flattened everything into the top level (`block_height`, `burn_block_time`,
+`execution_cost_runtime`, `pending_balance_inbound`). v3 groups them (`block.height`,
+`bitcoin_block.time`, `execution_cost.runtime`, `mempool.inbound`).
+
+### Microblock and unanchored fields are gone
+
+Microblocks were removed in the Nakamoto upgrade. v3 has no `microblock_hash`,
+`microblock_sequence`, `microblock_canonical`, `is_unanchored`, or `unanchored` query parameter.
+There is also no `canonical` field. v3 only returns canonical data.
+
+### ISO timestamp duplicates are gone
+
+v1 returned both `burn_block_time` and `burn_block_time_iso`. v3 returns Unix seconds only
+(`block.time`, `bitcoin_block.time`). Format them client-side.
+
+:::callout
+type: warn
+### v3 list endpoints do not support filtering yet
+`GET /extended/v1/tx` accepts `type`, `from_address`, `to_address`, `contract_id`,
+`function_name`, `nonce`, `start_time`, `end_time`, `sort_by`, and `order`.
+`GET /extended/v3/transactions` accepts only `limit` and `cursor`. The same applies to the
+mempool endpoints (`sender_address`, `recipient_address`, `address`, `order_by` are not
+available in v3). If you depend on server-side filtering, keep using the v1 endpoint until a
+v3 equivalent ships, and filter client-side where you can.
+:::
+
+## Transactions
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/tx` | `GET /extended/v3/transactions` |
+| `GET /extended/v1/tx/{tx_id}` | `GET /extended/v3/transactions/{tx_id}` |
+| `GET /extended/v1/tx/{tx_id}/raw` | Stacks node RPC `GET /v3/transaction/{tx_id}` |
+| `GET /extended/v1/tx/mempool` | `GET /extended/v3/mempool/transactions` |
+| `GET /extended/v1/tx/block/{block_hash}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
+| `GET /extended/v1/tx/block_height/{height}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
+| `GET /extended/v1/tx/events` | No direct replacement — see [Endpoints without a v3 replacement](#endpoints-without-a-v3-replacement) |
+
+The two v1 "transactions in a block" endpoints collapse into one: `{height_or_hash}` accepts a
+block height, a block hash, or the literal `latest`.
+
+### Transaction field mapping
+
+| v1 field | v3 field |
+| --- | --- |
+| `tx_type` | `type` |
+| `tx_status` | `status` |
+| `tx_result` | `result` (only with `?include=result`) |
+| `sender_address` | `sender.address` |
+| `nonce` | `sender.nonce` |
+| `sponsor_address` / `sponsor_nonce` | `sponsor.address` / `sponsor.nonce` (`sponsor` is `null` when unsponsored) |
+| `sponsored` | Removed — check `sponsor !== null` |
+| `block_hash` | `block.hash` |
+| `block_height` | `block.height` |
+| `block_time` | `block.time` |
+| `tx_index` | `block.tx_index` |
+| `parent_block_hash` | `parent_block.hash` (single-transaction endpoint only) |
+| `burn_block_height` | `bitcoin_block.height` |
+| `burn_block_time` | `bitcoin_block.time` |
+| `block_time_iso`, `burn_block_time_iso` | Removed — derive from the Unix timestamps |
+| `execution_cost_read_count` (and siblings) | `execution_cost.read_count` (and siblings) |
+| `contract_call.function_args` | Same path, only with `?include=function_args` |
+| `smart_contract.source_code` | Same path, only with `?include=source_code` |
+| `post_conditions` | Same field, only with `?include=post_conditions` |
+| `post_condition_mode`, `anchor_mode` | Removed |
+| `canonical`, `is_unanchored`, `microblock_*` | Removed |
+| — | `block.index_hash` (new) |
+| — | `vm_error` (new) |
+
+`status` gained a `problematic_skipped` value in Epoch 4.0 alongside `success`,
+`abort_by_response`, and `abort_by_post_condition`.
+
+Mempool transactions use `receipt_time` and `receipt_block_height` in place of block fields, and
+their `status` is one of `pending` or the `dropped_*` values.
+
+## Accounts and principals
+
+The v1 "address" resource is the v3 "principal" resource.
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/address/{principal}/stx` | `GET /extended/v3/principals/{principal}/balances/stx` |
+| `GET /extended/v1/address/{principal}/balances` | Split across `/balances/stx`, `/balances/ft`, and `/balances/nft` |
+| `GET /extended/v1/address/{principal}/transactions` | `GET /extended/v3/principals/{principal}/transactions` |
+| `GET /extended/v1/address/{principal}/transactions_with_transfers` | `GET /extended/v3/principals/{principal}/transactions` |
+| `GET /extended/v1/address/{principal}/{tx_id}/with_transfers` | `GET /extended/v3/principals/{principal}/transactions/{tx_id}/balance-changes` |
+| `GET /extended/v1/address/{principal}/mempool` | `GET /extended/v3/principals/{principal}/mempool/transactions` |
+| `GET /extended/v1/address/{principal}/nonces` | `GET /extended/v3/principals/{principal}/nonces` |
+| `GET /extended/v1/address/{principal}/assets` | No direct replacement — closest is `GET /extended/v3/principals/{principal}/balance-changes` |
+| `GET /extended/v1/address/{principal}/stx_inbound` | No direct replacement |
+| `GET /extended/v1/tokens/nft/holdings?principal=` | `GET /extended/v3/principals/{principal}/balances/nft` |
+
+### STX balance field mapping
+
+`GET /extended/v1/address/{principal}/stx` → `GET /extended/v3/principals/{principal}/balances/stx`
+
+| v1 field | v3 field |
+| --- | --- |
+| `balance` | `balance` |
+| — | `available` (new — `balance` minus locked STX) |
+| `locked` | `locked.amount` (`locked` is `null` when nothing is locked) |
+| `lock_tx_id` | `locked.lock_tx_id` |
+| `lock_height` | `locked.stacks_lock_height` |
+| `burnchain_lock_height` | `locked.burn_lock_height` |
+| `burnchain_unlock_height` | `locked.burn_unlock_height` |
+| — | `locked.pox_version` (new) |
+| `estimated_balance` | `mempool.estimated_balance` (`mempool` is `null` when nothing is pending) |
+| `pending_balance_inbound` | `mempool.inbound` |
+| `pending_balance_outbound` | `mempool.outbound` |
+| `total_sent`, `total_received`, `total_fees_sent`, `total_miner_rewards_received` | Removed |
+| `token_offering_locked` | Removed |
+
+:::callout
+type: warn
+### `estimated_balance` changed meaning
+In v1, `estimated_balance` was the **total** balance plus the pending mempool delta. In v3,
+`mempool.estimated_balance` is the **available** (spendable) balance plus the pending delta, so
+locked STX is excluded. If you were subtracting `locked` yourself, stop.
+:::
+
+v1 accepted `until_block` and `unanchored` on the balance endpoints. v3 always reports the
+current chain tip.
+
+### FT and NFT balances
+
+`GET /extended/v1/address/{principal}/balances` returned FT and NFT balances as objects keyed by
+asset identifier, with the NFT entry being a count. v3 returns cursor-paginated arrays instead:
+
+- `GET /extended/v3/principals/{principal}/balances/ft` — `{ asset_identifier, balance }` per
+  token, sorted by balance descending.
+- `GET /extended/v3/principals/{principal}/balances/ft/{asset_identifier}` — a single token's
+  balance; returns zero rather than 404 when the principal does not hold it.
+- `GET /extended/v3/principals/{principal}/balances/nft` — one entry per owned NFT *instance*,
+  `{ asset_identifier, value: { hex, repr } }`, not a per-collection count.
+
+The v1 `total_sent` / `total_received` counters on each token are not carried over.
+
+### Nonce field mapping
+
+`GET /extended/v1/address/{principal}/nonces` → `GET /extended/v3/principals/{principal}/nonces`
+
+| v1 field | v3 field |
+| --- | --- |
+| `possible_next_nonce` | `next_nonce` |
+| `last_executed_tx_nonce` | `last_confirmed_nonce` |
+| `last_mempool_tx_nonce` | `mempool.last_nonce` |
+| `detected_mempool_nonces` | `mempool.pending_nonces` |
+| `detected_missing_nonces` | `mempool.missing_nonces` |
+
+The v1 endpoint accepted `block_height` and `block_hash` to read the nonce at a past block. v3
+only reports current nonce state.
+
+### Account transactions and transfers
+
+v1 had three overlapping endpoints. v3 has two, with a cleaner split between "which transactions
+touched this principal" and "what changed for this principal".
+
+`GET /extended/v3/principals/{principal}/transactions` returns, per transaction:
+
+- `transaction` — the transaction summary (same shape as `GET /extended/v3/transactions`).
+- `involvement` — `sender`, `sponsor`, or `affected`.
+- `balance_changes.stx` — `{ sent, received, net }` in micro-STX, fee included in `sent`.
+- `affected_balances` — `{ stx, ft, nft }` booleans telling you whether it is worth fetching the
+  detailed balance changes.
+
+For the FT and NFT detail that v1 packed into `stx_transfers` / `ft_transfers` / `nft_transfers`,
+call `GET /extended/v3/principals/{principal}/transactions/{tx_id}/balance-changes`, or fetch
+several transactions at once with
+`GET /extended/v3/principals/{principal}/balance-changes?tx_id=A,B,C` (up to 50 IDs).
+
+Each balance change is `{ asset: { type, identifier? }, balance_change: { sent, received, net } }`,
+where `type` is `stx`, `ft`, or `nft`.
+
+## Blocks
+
+Blocks did not move to v3 — only the *transactions in a block* did. The v1 block endpoints are
+superseded by v2.
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `GET /extended/v1/block` | `GET /extended/v2/blocks` |
+| `GET /extended/v1/block/{hash}` | `GET /extended/v2/blocks/{height_or_hash}` |
+| `GET /extended/v1/block/by_height/{height}` | `GET /extended/v2/blocks/{height_or_hash}` |
+| `GET /extended/v1/block/by_burn_block_height/{burn_block_height}` | `GET /extended/v2/burn-blocks/{height_or_hash}/blocks` |
+| `GET /extended/v1/block/by_burn_block_hash/{burn_block_hash}` | `GET /extended/v2/burn-blocks/{height_or_hash}/blocks` |
+
+The v1 block responses embedded a `txs` array of transaction IDs. In v2 the block object carries
+a `tx_count`; fetch the transactions from
+`GET /extended/v3/blocks/{height_or_hash}/transactions`.
+
+## Smart contracts
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `GET /extended/v1/contract/{contract_id}/events` | `GET /extended/v2/smart-contracts/{contract_id}/logs` |
+
+## Fees
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `POST /extended/v1/fee_rate` | Stacks node RPC `POST /v2/fees/transaction` |
+
+## STX supply
+
+The plain-text and legacy-shaped variants are deprecated in favor of the single JSON endpoint,
+which is **not** deprecated.
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `GET /extended/v1/stx_supply/total/plain` | `GET /extended/v1/stx_supply` → `total_stx` |
+| `GET /extended/v1/stx_supply/circulating/plain` | `GET /extended/v1/stx_supply` → `unlocked_stx` |
+| `GET /extended/v1/stx_supply/legacy_format` | `GET /extended/v1/stx_supply` |
+
+## Endpoints without a v3 replacement
+
+These are deprecated with no successor. Plan around them rather than swapping a URL.
+
+| Deprecated endpoint | Notes |
+| --- | --- |
+| `GET /extended/v1/tx/events` | Global event feed filtered by principal, transaction, or event type. Per-transaction events are available at `GET /extended/v3/transactions/{tx_id}/events`, and per-principal asset movement at `GET /extended/v3/principals/{principal}/balance-changes`. |
+| `GET /extended/v1/address/{principal}/assets` | Closest equivalent is `GET /extended/v3/principals/{principal}/balance-changes`, which reports net balance deltas rather than raw asset events. |
+| `GET /extended/v1/address/{principal}/stx_inbound` | Inbound STX transfers with memos, including `send-many-memo` bulk sends. No v3 equivalent. |
+| `GET /extended/v1/microblock` | Microblocks were removed in the Nakamoto upgrade and are no longer produced. |
+| `GET /extended/v1/microblock/{hash}` | Same. |
+| `GET /extended/v1/microblock/unanchored/txs` | Same. |
+| `GET /extended/v1/faucets/btc/{address}` | Testnet-only BTC balance helper. No replacement. |
+
+## Also deprecated: v2 endpoints
+
+A handful of `/extended/v2` routes are deprecated alongside v1 and move to v3. If you already
+migrated from v1 to v2, these are your next hop.
+
+| Deprecated v2 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v2/addresses/{address}/transactions` | `GET /extended/v3/principals/{principal}/transactions` |
+| `GET /extended/v2/addresses/{address}/transactions/{tx_id}/events` | `GET /extended/v3/principals/{principal}/transactions/{tx_id}/balance-changes` |
+| `GET /extended/v2/addresses/{principal}/balances/stx` | `GET /extended/v3/principals/{principal}/balances/stx` |
+| `GET /extended/v2/addresses/{principal}/balances/ft` | `GET /extended/v3/principals/{principal}/balances/ft` |
+| `GET /extended/v2/addresses/{principal}/balances/ft/{token}` | `GET /extended/v3/principals/{principal}/balances/ft/{asset_identifier}` |
+| `GET /extended/v2/blocks/{height_or_hash}/transactions` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
+
+## Endpoints that are not deprecated
+
+Not everything under `/extended/v1` is going away. These remain the supported way to fetch their
+data today:
+
+- **Transactions** — `GET /extended/v1/tx/multiple`, `GET /extended/v1/tx/mempool/stats`
+- **Smart contracts** — `GET /extended/v1/contract/by_trait`,
+  `GET /extended/v1/contract/{contract_id}`
+- **Tokens** — `GET /extended/v1/tokens/nft/history`, `GET /extended/v1/tokens/nft/mints`,
+  `GET /extended/v1/tokens/ft/{token}/holders`
+- **Info** — `GET /extended/v1/stx_supply`, `GET /extended/v1/info/network_block_times`,
+  `GET /extended/v1/info/network_block_time/{network}`
+- **Burnchain** — `GET /extended/v1/burnchain/reward_slot_holders`,
+  `GET /extended/v1/burnchain/rewards` (and their per-address variants)
+- **Stacking** — the `GET /extended/v1/pox4/*` family
+- **Search** — `GET /extended/v1/search/{id}`
+- **BNS** — the `GET /v1/names/*`, `GET /v1/namespaces/*`, `GET /v1/addresses/*`, and
+  `GET /v2/prices/*` families
+- **Status** — `GET /extended`
+
+:::callout
+type: help
+### Need help migrating?
+Reach out on the <span className="font-bold">#api</span> channel on [Discord](https://stacks.chat/)
+under the Hiro Developer Tools section.
+:::
