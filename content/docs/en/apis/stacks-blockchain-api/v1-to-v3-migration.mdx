@@ -104,7 +104,8 @@ block height, a block hash, or the literal `latest`.
 | `tx_result` | `result` (only with `?include=result`) |
 | `sender_address` | `sender.address` |
 | `nonce` | `sender.nonce` |
-| `sponsor_address` / `sponsor_nonce` | `sponsor.address` / `sponsor.nonce` (`sponsor` is `null` when unsponsored) |
+| `sponsor_address` | `sponsor.address` (`sponsor` is `null` when unsponsored) |
+| `sponsor_nonce` | `sponsor.nonce` (`sponsor` is `null` when unsponsored) |
 | `sponsored` | Removed — check `sponsor !== null` |
 | `block_hash` | `block.hash` |
 | `block_height` | `block.height` |
@@ -113,13 +114,17 @@ block height, a block hash, or the literal `latest`.
 | `parent_block_hash` | `parent_block.hash` (single-transaction endpoint only) |
 | `burn_block_height` | `bitcoin_block.height` |
 | `burn_block_time` | `bitcoin_block.time` |
-| `block_time_iso`, `burn_block_time_iso` | Removed — derive from the Unix timestamps |
-| `execution_cost_read_count` (and siblings) | `execution_cost.read_count` (and siblings) |
+| `block_time_iso` | Removed — derive from `block.time` |
+| `burn_block_time_iso` | Removed — derive from `bitcoin_block.time` |
+| `execution_cost_*` | `execution_cost.*` — e.g. `execution_cost_runtime` becomes `execution_cost.runtime` |
 | `contract_call.function_args` | Same path, only with `?include=function_args` |
 | `smart_contract.source_code` | Same path, only with `?include=source_code` |
 | `post_conditions` | Same field, only with `?include=post_conditions` |
-| `post_condition_mode`, `anchor_mode` | Removed |
-| `canonical`, `is_unanchored`, `microblock_*` | Removed |
+| `post_condition_mode` | Removed |
+| `anchor_mode` | Removed |
+| `canonical` | Removed — v3 only returns canonical data |
+| `is_unanchored` | Removed |
+| `microblock_*` | Removed — microblocks no longer exist |
 | — | `block.index_hash` (new) |
 | — | `vm_error` (new) |
 
@@ -163,7 +168,10 @@ The v1 "address" resource is the v3 "principal" resource.
 | `estimated_balance` | `mempool.estimated_balance` (`mempool` is `null` when nothing is pending) |
 | `pending_balance_inbound` | `mempool.inbound` |
 | `pending_balance_outbound` | `mempool.outbound` |
-| `total_sent`, `total_received`, `total_fees_sent`, `total_miner_rewards_received` | Removed |
+| `total_sent` | Removed |
+| `total_received` | Removed |
+| `total_fees_sent` | Removed |
+| `total_miner_rewards_received` | Removed |
 | `token_offering_locked` | Removed |
 
 :::callout
