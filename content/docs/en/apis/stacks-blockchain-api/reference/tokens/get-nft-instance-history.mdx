@@ -1,0 +1,12 @@
+---
+title: Get non-fungible token history
+sidebarTitle: Non-fungible token history
+description: "Retrieves the event history of a single non-fungible token instance, newest first. Useful for determining an asset's ownership history. Mints have a null `sender` and burns a null `recipient`. The instance is addressed by a SIP-009 token id, or by its serialized Clarity value when the collection is not keyed by a `uint`."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/tokens/nft/{asset_identifier}/{value}/history', method: 'get' }]}
+  hasHead={false}
+/>

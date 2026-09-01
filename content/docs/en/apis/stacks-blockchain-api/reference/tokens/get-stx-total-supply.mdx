@@ -1,0 +1,12 @@
+---
+title: Get total STX supply
+sidebarTitle: Total STX supply
+description: "Retrieves the total liquid STX supply in micro-STX (µSTX) at the current chain tip: all STX minted (including vesting schedule unlocks) plus matured miner coinbase rewards, minus burned STX."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/tokens/stx/supply', method: 'get' }]}
+  hasHead={false}
+/>

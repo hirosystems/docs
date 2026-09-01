@@ -1,0 +1,12 @@
+---
+title: Get smart contract
+sidebarTitle: Smart contract
+description: Retrieves a deployed smart contract, along with the transaction that deployed it. Only successfully deployed contracts are returned; a contract id whose deploy transaction failed is not found.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/smart-contracts/{contract_id}', method: 'get' }]}
+  hasHead={false}
+/>

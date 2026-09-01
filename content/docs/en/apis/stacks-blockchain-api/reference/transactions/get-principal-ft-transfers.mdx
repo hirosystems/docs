@@ -1,0 +1,12 @@
+---
+title: Get fungible token transfers
+sidebarTitle: Fungible token transfers
+description: "Returns a principal's transfer history for a single fungible token as one feed, newest first, combining the events that credit it and the events that debit it. Includes mints (which have a null `sender`) and burns (which have a null `recipient`). A transaction that moves the token several times for this principal yields one result per event. Amounts are in the token's own base units."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/transfers/ft/{asset_identifier}', method: 'get' }]}
+  hasHead={false}
+/>

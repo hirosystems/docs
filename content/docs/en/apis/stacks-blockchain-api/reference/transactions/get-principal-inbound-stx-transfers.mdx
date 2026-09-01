@@ -1,0 +1,12 @@
+---
+title: Get inbound STX transfers
+sidebarTitle: Inbound STX transfers
+description: "Returns the individual inbound STX events crediting a principal. Includes native stx-transfer transactions, `send-many-memo` bulk-send legs, any other STX transfer event crediting the principal, and STX mints (which have a null `sender`), each with its own sender, amount, and memo. A transaction that credits the principal multiple times yields one result per event."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/transfers/stx/inbound', method: 'get' }]}
+  hasHead={false}
+/>

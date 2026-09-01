@@ -1,0 +1,12 @@
+---
+title: Get cycle signers
+sidebarTitle: Cycle signers
+description: "Get the signer set of a PoX cycle, including each signer's weight, staked amount, and the signer manager contracts whose registered signing key (via `register-signer`) was this key when the cycle's reward set was calculated. Each manager also lists its live `grant-signer-key` authorizations, and keys registered after the reward set was calculated are surfaced as pending updates that take effect next cycle."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/staking/cycles/{cycle_number}/signers', method: 'get' }]}
+  hasHead={false}
+/>

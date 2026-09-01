@@ -1,0 +1,12 @@
+---
+title: Get outbound STX transfers
+sidebarTitle: Outbound STX transfers
+description: "Returns the individual outbound STX events debiting a principal. Includes native stx-transfer transactions, `send-many-memo` bulk-send legs, any other STX transfer event debiting the principal, and STX burns (which have a null `recipient`), each with its own recipient, amount, and memo. A transaction that debits the principal multiple times yields one result per event."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/transfers/stx/outbound', method: 'get' }]}
+  hasHead={false}
+/>
