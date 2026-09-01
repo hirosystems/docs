@@ -1,0 +1,12 @@
+---
+title: Get total fungible token supply
+sidebarTitle: Total fungible token supply
+description: "Retrieves the total supply of a fungible token: the sum of every holder balance, equivalent to the token's mints minus its burns. Returns a zero supply for a token with no recorded balances."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/tokens/ft/{asset_identifier}/supply', method: 'get' }]}
+  hasHead={false}
+/>

@@ -148,8 +148,24 @@ The v1 "address" resource is the v3 "principal" resource.
 | `GET /extended/v1/address/{principal}/mempool` | `GET /extended/v3/principals/{principal}/mempool/transactions` |
 | `GET /extended/v1/address/{principal}/nonces` | `GET /extended/v3/principals/{principal}/nonces` |
 | `GET /extended/v1/address/{principal}/assets` | No direct replacement — closest is `GET /extended/v3/principals/{principal}/balance-changes` |
-| `GET /extended/v1/address/{principal}/stx_inbound` | No direct replacement |
+| `GET /extended/v1/address/{principal}/stx_inbound` | `GET /extended/v3/principals/{principal}/transfers/stx/inbound` |
 | `GET /extended/v1/tokens/nft/holdings?principal=` | `GET /extended/v3/principals/{principal}/balances/nft` |
+
+v3 also adds two transfer feeds with no v1 counterpart:
+
+- `GET /extended/v3/principals/{principal}/transfers/stx/outbound` — the debit side of
+  `stx_inbound`.
+- `GET /extended/v3/principals/{principal}/transfers/ft/{asset_identifier}` — a principal's
+  history for one fungible token, credits and debits interleaved in a single feed, newest first,
+  in the token's own base units.
+
+All three transfer endpoints return one result per *event* rather than per transaction, so a
+transaction that moves the asset several times for this principal yields several rows. Mints have
+a `null` sender and burns a `null` recipient.
+
+`GET /extended/v3/principals/{principal}/balances/nft` accepts an optional `asset_identifier`
+query parameter, which replaces the v1 `asset_identifiers` array filter. It takes a single asset
+class, not a list.
 
 ### STX balance field mapping
 
@@ -256,7 +272,66 @@ a `tx_count`; fetch the transactions from
 
 | Deprecated v1 endpoint | Replacement |
 | --- | --- |
+| `GET /extended/v1/contract/{contract_id}` | `GET /extended/v3/smart-contracts/{contract_id}` |
 | `GET /extended/v1/contract/{contract_id}/events` | `GET /extended/v2/smart-contracts/{contract_id}/logs` |
+| `GET /extended/v1/contract/by_trait` | None — see [Endpoints without a v3 replacement](#endpoints-without-a-v3-replacement) |
+
+### Contract field mapping
+
+`GET /extended/v1/contract/{contract_id}` → `GET /extended/v3/smart-contracts/{contract_id}`
+
+| v1 field | v3 field |
+| --- | --- |
+| `contract_id` | `contract_id` |
+| `clarity_version` | `clarity_version` |
+| `tx_id` | `tx_id` |
+| `block_height` | `block.height` |
+| `source_code` | `source_code`, only with `?include=source_code` |
+| `abi` | Removed — use the Stacks node RPC `GET /v2/contracts/interface/{address}/{name}` |
+| `canonical` | Removed — v3 returns canonical data only |
+| — | `block.hash`, `block.index_hash`, `block.time`, `block.tx_index` (new) |
+| — | `bitcoin_block` (new: height, time) |
+
+:::callout
+type: warn
+### Failed deployments are no longer returned
+v1 wrote a row for every contract-deploy transaction, successful or not, and returned it with
+`abi: null` and no indication that the deploy had aborted. v3 returns only contracts that were
+successfully deployed; a contract id whose deploy transaction failed responds `404`.
+:::
+
+## Stacking rewards
+
+The burnchain reward endpoints report the Bitcoin reward addresses and BTC payouts of the pox-1
+through pox-4 reward model. That model is keyed on the `pox-addr` a stacker supplies when
+stacking, and pox-5 has no such address: stakers lock BTC or sBTC against a bond, and rewards
+accrue as **sBTC on the Stacks layer** rather than as BTC sent to a burnchain address.
+
+These endpoints therefore serve historical pox-4-and-earlier data only. No new records are
+written to them once the last pox-4 lock unlocks.
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `GET /extended/v1/burnchain/reward_slot_holders` | None — reward slots do not exist in pox-5. The nearest concept is the cycle signer set, `GET /extended/v3/staking/cycles/{cycle_number}/signers` |
+| `GET /extended/v1/burnchain/reward_slot_holders/{address}` | None |
+| `GET /extended/v1/burnchain/rewards` | No global feed. Per-bond payouts: `GET /extended/v3/staking/bonds` → `balances.paid_out.btc` |
+| `GET /extended/v1/burnchain/rewards/{address}` | `GET /extended/v3/principals/{principal}/staking/bonds` → `rewards.btc` |
+| `GET /extended/v1/burnchain/rewards/{address}/total` | `GET /extended/v3/principals/{principal}/staking` → `bonds.rewards.btc` and `stx.rewards.btc` |
+
+:::callout
+type: warn
+### These are not drop-in replacements
+Three things change at once. The lookup key flips from a **Bitcoin address** to a **Stacks
+principal** — the v1 endpoints accept either and convert a STX address to its Bitcoin
+equivalent, and pox-5 has no such relationship to convert through. The asset flips from **BTC on
+Bitcoin** to **sBTC on Stacks** (both denominated in sats, so amounts look interchangeable when
+they are not). And the granularity flips from **per-burn-block payout events** to **running
+`accrued` / `claimed` / `claimable` totals per position** — v3 has no per-block reward history.
+:::
+
+For per-burn-block BTC payouts under the current model, see
+`GET /extended/v2/burn-blocks/{height_or_hash}/pox-transactions` and
+`GET /extended/v2/addresses/{burnchain_address}/pox-transactions`, which are not deprecated.
 
 ## Fees
 
@@ -266,14 +341,169 @@ a `tx_count`; fetch the transactions from
 
 ## STX supply
 
-The plain-text and legacy-shaped variants are deprecated in favor of the single JSON endpoint,
-which is **not** deprecated.
+All four v1 supply endpoints — including the JSON one — are deprecated in favor of a single v3
+endpoint.
 
 | Deprecated v1 endpoint | Replacement |
 | --- | --- |
-| `GET /extended/v1/stx_supply/total/plain` | `GET /extended/v1/stx_supply` → `total_stx` |
-| `GET /extended/v1/stx_supply/circulating/plain` | `GET /extended/v1/stx_supply` → `unlocked_stx` |
-| `GET /extended/v1/stx_supply/legacy_format` | `GET /extended/v1/stx_supply` |
+| `GET /extended/v1/stx_supply` | `GET /extended/v3/tokens/stx/supply` |
+| `GET /extended/v1/stx_supply/total/plain` | `GET /extended/v3/tokens/stx/supply` → `total` |
+| `GET /extended/v1/stx_supply/circulating/plain` | `GET /extended/v3/tokens/stx/supply` → `total` |
+| `GET /extended/v1/stx_supply/legacy_format` | `GET /extended/v3/tokens/stx/supply` |
+
+### Supply field mapping
+
+| v1 field | v3 field |
+| --- | --- |
+| `total_stx` | `total` |
+| `total_stx_year_2050` | `projected_total_2050` |
+| `unlocked_stx` | Removed |
+| `unlocked_percent` | Removed |
+| `block_height` | Removed |
+
+:::callout
+type: warn
+### Units and definition both changed
+v1 returned decimal **STX** strings (`"1470469916.700000"`). v3 returns string-quoted integer
+**micro-STX** (`"1470469916700000"`). Multiply by 10^6 when comparing against stored v1 values.
+
+The quantity itself is also defined differently. v1 `total_stx` was the circulating supply at a
+given block height, with `unlocked_stx` tracking the unlocked portion separately. v3 `total` is
+the total **liquid** supply at the current chain tip: all STX minted (vesting unlocks included)
+plus matured miner coinbase rewards, minus burned STX. There is no separate locked/unlocked
+split, and v3 always reports the chain tip — the v1 `height` and `unanchored` query parameters
+are gone.
+:::
+
+## Fungible tokens
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/tokens/ft/{token}/holders` | `GET /extended/v3/tokens/ft/{asset_identifier}/holders` |
+| `GET /extended/v1/tokens/ft/stx/holders` | `GET /extended/v3/tokens/stx/holders` |
+
+v1 took the literal string `stx` in the `token` path parameter to mean STX holders. v3 splits
+that into its own route, matching how `/tokens/stx/supply` is already separated, and validates
+`{asset_identifier}` as a real Clarity asset identifier.
+
+### Holder field mapping
+
+| v1 field | v3 field |
+| --- | --- |
+| `address` | `principal` |
+| `balance` | `balance` |
+| `total_supply` | Moved to `GET /extended/v3/tokens/ft/{asset_identifier}/supply` → `total` |
+
+The v1 response fused `total_supply` into the paginated envelope as an extra top-level field. In
+v3 the holders response is the standard cursor envelope and nothing else, and supply is its own
+endpoint — `{ asset_identifier, total }` for fungible tokens, or the existing
+`/tokens/stx/supply` for STX.
+
+:::callout
+type: warn
+### Zero balances are no longer holders
+`ft_balances` rows are never deleted, so a principal that has spent its entire position stays in
+the table with a `0` balance. v1 listed those rows and counted them in `total`; v3 filters them
+out, matching `GET /extended/v3/principals/{principal}/balances/ft`. Expect a smaller `total`
+than v1 reported for the same token.
+
+Sort order also changed: v1 ordered by `balance DESC` with no tiebreaker, so holders with equal
+balances came back in an arbitrary order and offset paging could skip or repeat them. v3 orders
+by `(balance DESC, principal ASC)`, which is what makes the cursor stable.
+:::
+
+Balances are in the token's own base units. This API does not know a token's decimal precision —
+fetch that from the Token Metadata API.
+
+For `/tokens/stx/holders`, the balance is the **total** µSTX held, including STX locked for
+stacking. It is not the spendable figure that `GET /extended/v3/principals/{principal}/balances/stx`
+reports as `available`.
+
+## Non-fungible tokens
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/tokens/nft/history` | `GET /extended/v3/tokens/nft/{asset_identifier}/{value}/history` |
+
+`asset_identifier` moved from a query parameter into the path, matching the fungible token routes.
+The token instance moved into the path too, and is accepted in two forms:
+
+- **A plain integer** — a SIP-009 token id, e.g. `.../the-explorer-guild/2051/history`. This is
+  the form to use for almost every collection.
+- **A `0x`-prefixed serialized Clarity value** — required for assets not keyed by a `uint`. BNS
+  names are the notable case: `bns.clar` defines them as
+  `{ name: (buff 48), namespace: (buff 20) }`, a tuple, so they have no integer id.
+
+:::callout
+type: warn
+### The `0x` prefix is required for the hex form
+v1 accepted `value` with or without it. In a path segment a bare hex string is ambiguous with a
+decimal token id — and a serialized `uint` happens to be all decimal digits — so hex stripped of
+its prefix is read as a (very large) token id and resolves to an empty page rather than erroring.
+Always send the prefix.
+
+To tell which form a collection needs, look at `value.repr` from
+`GET /extended/v3/principals/{principal}/balances/nft`: a `repr` like `u2051` means the integer
+form works.
+:::
+
+### Field mapping
+
+| v1 field | v3 field |
+| --- | --- |
+| `asset_event_type` | Removed — a mint has a null `sender`, a burn a null `recipient` |
+| `sender` | `sender` (null on mints) |
+| `recipient` | `recipient` (null on burns) |
+| `event_index` | `transaction.event_index` |
+| `tx_id` | `transaction.tx_id` |
+| `value` | `value` (mints only — for history it is the request parameter) |
+| `tx` | Removed — the `tx_metadata` parameter is gone |
+| — | `block` (new: height, hash, index_hash, time, tx_index) |
+
+:::callout
+type: warn
+### `tx_metadata` has no v3 equivalent
+v1 could inline a full transaction object into each row via `tx_metadata=true`. v3 returns the
+transaction id and event index only; fetch the transaction separately from
+`GET /extended/v3/transactions/{tx_id}` when you need its detail. The `unanchored` parameter is
+also gone, as everywhere else in v3.
+:::
+
+## Network block times
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `GET /extended/v1/info/network_block_times` | None |
+| `GET /extended/v1/info/network_block_time/{network}` | None |
+
+These return hardcoded legacy values (600s mainnet, 120s testnet) that no longer reflect actual
+Stacks block production since the Nakamoto upgrade. For real block timing, use
+`GET /extended/v2/blocks/average-times`, which is not deprecated.
+
+## BNS
+
+All BNS endpoints are deprecated. They are no longer maintained.
+
+| Deprecated endpoint | Replacement |
+| --- | --- |
+| `GET /v1/names` | None |
+| `GET /v1/names/{name}` | None |
+| `GET /v1/names/{name}/subdomains` | None |
+| `GET /v1/names/{name}/zonefile` | None |
+| `GET /v1/names/{name}/zonefile/{zoneFileHash}` | None |
+| `GET /v1/namespaces` | None |
+| `GET /v1/namespaces/{tld}/names` | None |
+| `GET /v2/prices/names/{name}` | None |
+| `GET /v2/prices/namespaces/{tld}` | None |
+| `GET /v1/addresses/{blockchain}/{address}` | `GET /extended/v3/principals/{principal}/balances/nft?asset_identifier=SP000000000000000000002Q6VF78.bns::names` |
+
+:::callout
+type: warn
+### Names-owned lookups are not equivalent
+Querying NFT balances filtered to the BNS asset class returns only **NFT-backed names**. It does
+not include subdomains, nor names imported from Blockstack v1, both of which
+`GET /v1/addresses/{blockchain}/{address}` did return.
+:::
 
 ## Endpoints without a v3 replacement
 
@@ -281,12 +511,13 @@ These are deprecated with no successor. Plan around them rather than swapping a 
 
 | Deprecated endpoint | Notes |
 | --- | --- |
-| `GET /extended/v1/tx/events` | Global event feed filtered by principal, transaction, or event type. Per-transaction events are available at `GET /extended/v3/transactions/{tx_id}/events`, and per-principal asset movement at `GET /extended/v3/principals/{principal}/balance-changes`. |
+| `GET /extended/v1/tx/events` | Global event feed filtered by principal, transaction, or event type. Several v3 endpoints cover parts of it: per-transaction events at `GET /extended/v3/transactions/{tx_id}/events`, a principal's history for one fungible token at `GET /extended/v3/principals/{principal}/transfers/ft/{asset_identifier}`, a principal's STX transfers at `GET /extended/v3/principals/{principal}/transfers/stx/{inbound,outbound}`, and per-principal asset movement at `GET /extended/v3/principals/{principal}/balance-changes`. There is no single global event feed. |
 | `GET /extended/v1/address/{principal}/assets` | Closest equivalent is `GET /extended/v3/principals/{principal}/balance-changes`, which reports net balance deltas rather than raw asset events. |
-| `GET /extended/v1/address/{principal}/stx_inbound` | Inbound STX transfers with memos, including `send-many-memo` bulk sends. No v3 equivalent. |
+| `GET /extended/v1/contract/by_trait` | Searches deployed contracts by Clarity trait ABI. No v3 equivalent. To look up a specific contract you already know, use `GET /extended/v3/smart-contracts/{contract_id}`. |
 | `GET /extended/v1/microblock` | Microblocks were removed in the Nakamoto upgrade and are no longer produced. |
 | `GET /extended/v1/microblock/{hash}` | Same. |
 | `GET /extended/v1/microblock/unanchored/txs` | Same. |
+| `GET /extended/v1/tokens/nft/mints` | Mint events for an asset class. Retired rather than migrated — the endpoint serves negligible traffic. A single instance's mint is the oldest entry in `GET /extended/v3/tokens/nft/{asset_identifier}/{value}/history`, but there is no collection-wide mint feed. |
 | `GET /extended/v1/faucets/btc/{address}` | Testnet-only BTC balance helper. No replacement. |
 
 ## Also deprecated: v2 endpoints
@@ -305,23 +536,31 @@ migrated from v1 to v2, these are your next hop.
 
 ## Endpoints that are not deprecated
 
-Not everything under `/extended/v1` is going away. These remain the supported way to fetch their
-data today:
+Most of `/extended/v1` is now deprecated, but these routes are not. They remain the supported way
+to fetch their data today:
 
-- **Transactions** — `GET /extended/v1/tx/multiple`, `GET /extended/v1/tx/mempool/stats`
-- **Smart contracts** — `GET /extended/v1/contract/by_trait`,
-  `GET /extended/v1/contract/{contract_id}`
-- **Tokens** — `GET /extended/v1/tokens/nft/history`, `GET /extended/v1/tokens/nft/mints`,
-  `GET /extended/v1/tokens/ft/{token}/holders`
-- **Info** — `GET /extended/v1/stx_supply`, `GET /extended/v1/info/network_block_times`,
-  `GET /extended/v1/info/network_block_time/{network}`
-- **Burnchain** — `GET /extended/v1/burnchain/reward_slot_holders`,
-  `GET /extended/v1/burnchain/rewards` (and their per-address variants)
-- **Stacking** — the `GET /extended/v1/pox4/*` family
-- **Search** — `GET /extended/v1/search/{id}`
-- **BNS** — the `GET /v1/names/*`, `GET /v1/namespaces/*`, `GET /v1/addresses/*`, and
-  `GET /v2/prices/*` families
-- **Status** — `GET /extended`
+| Area | Endpoint |
+| --- | --- |
+| Transactions | `GET /extended/v1/tx/multiple` |
+| Transactions | `GET /extended/v1/tx/mempool/stats` |
+| Stacking | `GET /extended/v1/pox4/events` |
+| Stacking | `GET /extended/v1/pox4/tx/{tx_id}` |
+| Stacking | `GET /extended/v1/pox4/stacker/{principal}` |
+| Stacking | `GET /extended/v1/pox4/{pool_principal}/delegations` |
+| Search | `GET /extended/v1/search/{id}` |
+| Faucets | `POST /extended/v1/faucets/stx` |
+| Faucets | `POST /extended/v1/faucets/btc` |
+| Faucets | `POST /extended/v1/faucets/sbtc` |
+| Status | `GET /extended` |
+
+The `pox4` prefix also accepts `pox2` and `pox3` for historical data. Faucet endpoints are
+testnet-only.
+
+Outside `/extended/v1`, these `/extended/v2` routes are also current and have no v3 successor
+yet: `GET /extended/v2/blocks` and its siblings, `GET /extended/v2/burn-blocks/*`,
+`GET /extended/v2/block-tenures/{tenure_height}/blocks`, `GET /extended/v2/pox/cycles*`,
+`GET /extended/v2/mempool/fees`, `GET /extended/v2/smart-contracts/*`, and the two
+`pox-transactions` routes noted under [Stacking rewards](#stacking-rewards).
 
 :::callout
 type: help

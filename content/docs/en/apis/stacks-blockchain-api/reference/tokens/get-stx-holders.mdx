@@ -1,0 +1,12 @@
+---
+title: Get STX holders
+sidebarTitle: STX holders
+description: "Retrieves the principals holding STX, sorted by balance descending. Balances are the total µSTX held, including any STX locked for stacking — they are not the spendable balance reported as `available` by a principal's STX balance."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/tokens/stx/holders', method: 'get' }]}
+  hasHead={false}
+/>
