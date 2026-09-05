@@ -1,0 +1,500 @@
+---
+title: Real-Time DeFi Monitoring with Chainhooks
+description: Build a production-ready DeFi sentinel that monitors DEX swaps, whale movements, and liquidity events on Stacks using Chainhooks.
+---
+
+import { Callout, Steps, Step, Tabs, Tab } from 'fumadocs-ui/components'
+
+Learn how to build a real-time DeFi monitoring application on Stacks using Chainhooks. This tutorial walks you through setting up event-driven blockchain listeners to track DEX swaps, whale movements, and liquidity events.
+
+## What You'll Build
+
+A production-ready DeFi sentinel application that:
+
+- Monitors DEX swaps across Velar, ALEX, and Arkadiko in real time
+- Sends whale alerts for STX transfers over 100,000 STX
+- Tracks liquidity pool events and TVL changes
+- Exposes a webhook server to receive and process Chainhook payloads
+
+## Prerequisites
+
+- Basic knowledge of TypeScript/Node.js
+- Familiarity with Stacks and Clarity smart contracts
+- [Hiro Platform account](https://platform.hiro.so) (for managed Chainhooks)
+- Node.js v18+ installed
+
+---
+
+## Introduction to Chainhooks
+
+Chainhooks is an event-driven framework built by Hiro that lets you react to on-chain activity on Stacks and Bitcoin in real time. Instead of polling the blockchain repeatedly, you define **predicates** that describe the events you care about, and Chainhooks delivers matching transactions directly to your webhook.
+
+### Why Chainhooks Instead of Polling?
+
+| Approach | Latency | Resource Usage | Complexity |
+|---|---|---|---|
+| Polling (RPC) | High (interval-based) | High (constant requests) | Low |
+| Chainhooks | Low (event-driven) | Low (push-based) | Low |
+
+### How Chainhooks Works
+
+1. You define a **predicate** — a JSON rule describing which transactions to watch
+2. The Chainhooks engine scans every new block
+3. When a match is found, the engine POSTs a payload to your webhook URL
+4. Your server processes the payload and acts on it
+
+### Types of Predicates
+
+**contract-call** - Triggers when a specific contract function is called:
+
+```json
+{
+  "type": "contract-call",
+  "contract_identifier": "SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-swap-v2-1",
+  "method": "swap-x-for-y"
+}
+```
+
+**print-event** - Triggers when a contract emits a `print` event matching a topic:
+
+```json
+{
+  "type": "print-event",
+  "contract_identifier": "SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.univ2-core",
+  "topic": "swap"
+}
+```
+
+**stx-event** - Triggers on STX transfers, useful for whale tracking:
+
+```json
+{
+  "type": "stx-event",
+  "actions": ["transfer"]
+}
+```
+
+### Deployment Options
+
+- **Hiro Platform (managed)** — Register predicates via the [Hiro Platform dashboard](https://platform.hiro.so). No infrastructure required.
+- **Self-hosted** — Run `chainhooks` locally using the open-source CLI.
+
+In this tutorial we use the **Hiro Platform** approach.
+
+---
+
+## Project Setup
+
+<Steps>
+<Step>
+### Initialize the Project
+
+```bash
+mkdir defi-sentinel && cd defi-sentinel
+npm init -y
+npm install fastify dotenv
+npm install -D typescript @types/node ts-node
+```
+</Step>
+
+<Step>
+### Project Structure
+
+```
+defi-sentinel/
+├── src/
+│   ├── server.ts
+│   ├── predicates/
+│   │   ├── dex-swaps.ts
+│   │   ├── whales.ts
+│   │   └── liquidity.ts
+│   ├── handlers/
+│   │   ├── swap-handler.ts
+│   │   ├── whale-handler.ts
+│   │   └── liquidity-handler.ts
+│   └── types.ts
+├── package.json
+└── tsconfig.json
+```
+</Step>
+
+<Step>
+### Environment Variables
+
+Create `.env`:
+
+```bash
+HIRO_API_KEY=your_api_key_here
+WEBHOOK_URL=https://your-app.example.com
+PORT=3000
+WHALE_THRESHOLD_STX=100000
+```
+</Step>
+
+<Step>
+### Basic Fastify Server
+
+Create `src/server.ts`:
+
+```typescript
+import Fastify from 'fastify'
+import { swapHandler } from './handlers/swap-handler'
+import { whaleHandler } from './handlers/whale-handler'
+import { liquidityHandler } from './handlers/liquidity-handler'
+
+const fastify = Fastify({ logger: true })
+
+fastify.get('/health', async () => {
+  return { status: 'ok', timestamp: new Date().toISOString() }
+})
+
+fastify.post('/webhook', async (request, reply) => {
+  const payload = request.body as any
+  const uuid = payload.chainhook?.uuid
+
+  try {
+    if (uuid?.startsWith('dex-swap')) await swapHandler(payload)
+    else if (uuid?.startsWith('whale-alert')) await whaleHandler(payload)
+    else if (uuid?.startsWith('liquidity')) await liquidityHandler(payload)
+    return reply.status(200).send({ received: true })
+  } catch (error) {
+    fastify.log.error(error)
+    return reply.status(500).send({ error: 'Handler failed' })
+  }
+})
+
+const start = async () => {
+  await fastify.listen({ port: parseInt(process.env.PORT || '3000'), host: '0.0.0.0' })
+}
+
+start()
+```
+</Step>
+</Steps>
+
+---
+
+## Creating Predicates
+
+Predicates define what on-chain activity Chainhooks should watch for.
+
+### DEX Swap Predicate
+
+Create `src/predicates/dex-swaps.ts`:
+
+```typescript
+const WEBHOOK_URL = process.env.WEBHOOK_URL!
+const AUTH_TOKEN = process.env.AUTH_TOKEN || 'defi-sentinel-secret'
+
+const DEX_CONTRACTS = [
+  {
+    uuid: 'dex-swap-velar-v1',
+    name: 'Velar',
+    contract: 'SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.univ2-router',
+    method: 'swap-exact-tokens-for-tokens'
+  },
+  {
+    uuid: 'dex-swap-alex-v1',
+    name: 'ALEX',
+    contract: 'SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.amm-swap-pool-v1-1',
+    method: 'swap-helper'
+  },
+  {
+    uuid: 'dex-swap-arkadiko-v1',
+    name: 'Arkadiko',
+    contract: 'SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-swap-v2-1',
+    method: 'swap-x-for-y'
+  }
+]
+
+export function buildDexPredicates() {
+  return DEX_CONTRACTS.map(dex => ({
+    uuid: dex.uuid,
+    name: `DeFi Sentinel - ${dex.name} Swap Monitor`,
+    version: 1,
+    chain: 'stacks',
+    networks: {
+      mainnet: {
+        start_block: 150000,
+        predicate: {
+          scope: 'contract_call',
+          contract_identifier: dex.contract,
+          method: dex.method
+        },
+        action: {
+          http_post: {
+            url: `${WEBHOOK_URL}/webhook`,
+            authorization_header: `Bearer ${AUTH_TOKEN}`
+          }
+        }
+      }
+    }
+  }))
+}
+```
+
+### Whale Alert Predicate
+
+Create `src/predicates/whales.ts`:
+
+```typescript
+export function buildWhalePredicates() {
+  return [{
+    uuid: 'whale-alert-stx-v1',
+    name: 'DeFi Sentinel - STX Whale Alert',
+    version: 1,
+    chain: 'stacks',
+    networks: {
+      mainnet: {
+        start_block: 150000,
+        predicate: { scope: 'stx_event', actions: ['transfer'] },
+        action: {
+          http_post: {
+            url: `${process.env.WEBHOOK_URL}/webhook`,
+            authorization_header: `Bearer ${process.env.AUTH_TOKEN}`
+          }
+        }
+      }
+    }
+  }]
+}
+```
+
+### Register Predicates
+
+Create `src/register-predicates.ts`:
+
+```typescript
+import { buildDexPredicates } from './predicates/dex-swaps'
+import { buildWhalePredicates } from './predicates/whales'
+
+async function registerPredicates() {
+  const allPredicates = [...buildDexPredicates(), ...buildWhalePredicates()]
+
+  for (const predicate of allPredicates) {
+    const response = await fetch('https://api.hiro.so/chainhooks/v1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-hiro-api-key': process.env.HIRO_API_KEY!
+      },
+      body: JSON.stringify(predicate)
+    })
+
+    if (!response.ok) {
+      console.error(`Failed: ${predicate.uuid}`, await response.text())
+      continue
+    }
+    console.log(`✅ Registered: ${predicate.uuid}`)
+  }
+}
+
+registerPredicates().catch(console.error)
+```
+
+Run the registration:
+
+```bash
+npx ts-node src/register-predicates.ts
+```
+
+---
+
+## Processing Payloads
+
+### Payload Structure
+
+```json
+{
+  "apply": [
+    {
+      "block_identifier": { "index": 155432, "hash": "0xabc..." },
+      "timestamp": 1710000000,
+      "transactions": [ ... ]
+    }
+  ],
+  "rollback": [],
+  "chainhook": {
+    "uuid": "dex-swap-velar-v1",
+    "is_streaming_blocks": true
+  }
+}
+```
+
+- **`apply`** — blocks with transactions that matched your predicate
+- **`rollback`** — blocks rolled back due to chain reorg
+- **`chainhook.uuid`** — which predicate triggered this payload
+
+### Swap Handler
+
+Create `src/handlers/swap-handler.ts`:
+
+```typescript
+export async function swapHandler(payload: any): Promise<void> {
+  for (const block of payload.apply) {
+    for (const tx of block.transactions) {
+      if (!tx.metadata.success) continue
+
+      const events = tx.metadata?.receipt?.events || []
+      for (const event of events) {
+        const value = event.data?.value
+        if (value?.topic !== 'swap') continue
+
+        console.log(
+          `🔄 Swap | ${(value.dx / 1_000_000).toFixed(2)} ${value.token_x} → ` +
+          `${(value.dy / 1_000_000).toFixed(2)} ${value.token_y} | ` +
+          `Block ${block.block_identifier.index}`
+        )
+      }
+    }
+  }
+
+  for (const block of payload.rollback) {
+    for (const tx of block.transactions) {
+      console.warn(`⚠️ Reorg - rolling back: ${tx.transaction_identifier.hash}`)
+    }
+  }
+}
+```
+
+### Whale Handler
+
+Create `src/handlers/whale-handler.ts`:
+
+```typescript
+const THRESHOLD = parseInt(process.env.WHALE_THRESHOLD_STX || '100000') * 1_000_000
+
+export async function whaleHandler(payload: any): Promise<void> {
+  for (const block of payload.apply) {
+    for (const tx of block.transactions) {
+      if (!tx.metadata.success) continue
+
+      for (const op of tx.operations) {
+        if (op.type !== 'credit' || !op.amount) continue
+
+        const amount = Math.abs(op.amount.value)
+        if (amount < THRESHOLD) continue
+
+        console.log(
+          `🐋 WHALE | ${(amount / 1_000_000).toLocaleString()} STX | ` +
+          `${tx.metadata.sender.slice(0, 8)}... → ${op.account.address.slice(0, 8)}... | ` +
+          `Block ${block.block_identifier.index}`
+        )
+      }
+    }
+  }
+}
+```
+
+### Liquidity Handler
+
+Create `src/handlers/liquidity-handler.ts`:
+
+```typescript
+export async function liquidityHandler(payload: any): Promise<void> {
+  for (const block of payload.apply) {
+    for (const tx of block.transactions) {
+      if (!tx.metadata.success) continue
+
+      const events = tx.metadata?.receipt?.events || []
+      for (const event of events) {
+        const value = event.data?.value
+        if (!value) continue
+
+        if (value.topic === 'mint') {
+          console.log(`💧 LP ADD | ${tx.metadata.sender.slice(0, 8)}... | Block ${block.block_identifier.index}`)
+        }
+        if (value.topic === 'burn') {
+          console.log(`💧 LP REMOVE | ${tx.metadata.sender.slice(0, 8)}... | Block ${block.block_identifier.index}`)
+        }
+      }
+    }
+  }
+}
+```
+
+<Callout type="warn">
+Always handle the `rollback` array. Ignoring reorgs can lead to stale or incorrect data.
+</Callout>
+
+---
+
+## Running the Monitor
+
+### Local Development with ngrok
+
+```bash
+# Terminal 1
+npm run dev
+
+# Terminal 2
+ngrok http 3000
+```
+
+Update `.env` with your ngrok URL, then register predicates:
+
+```bash
+npx ts-node src/register-predicates.ts
+```
+
+### Verify Registration
+
+```bash
+curl -H "x-hiro-api-key: $HIRO_API_KEY" https://api.hiro.so/chainhooks/v1
+```
+
+### Test with a Manual Payload
+
+```bash
+curl -X POST http://localhost:3000/webhook \
+  -H "Content-Type: application/json" \
+  -d '{
+    "apply": [{
+      "block_identifier": { "index": 155432, "hash": "0xabc123" },
+      "timestamp": 1710000000,
+      "transactions": [{
+        "transaction_identifier": { "hash": "0xtx123" },
+        "operations": [{
+          "operation_identifier": { "index": 0 },
+          "type": "credit",
+          "status": "success",
+          "account": { "address": "SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7" },
+          "amount": { "value": 150000000000, "currency": { "symbol": "STX", "decimals": 6 } }
+        }],
+        "metadata": { "success": true, "sender": "SP1HTBVD3JG9C05J7HBJTHGR0GGW7KXW28M5JS8QE", "fee": 1000, "kind": { "type": "ContractCall" } }
+      }],
+      "metadata": {}
+    }],
+    "rollback": [],
+    "chainhook": { "uuid": "whale-alert-stx-v1", "is_streaming_blocks": true }
+  }'
+```
+
+Expected output:
+
+```
+🐋 WHALE | 150,000 STX | SP1HTBVD... → SP2J6ZY4... | Block 155432
+```
+
+### Delete a Predicate
+
+```bash
+curl -X DELETE \
+  -H "x-hiro-api-key: $HIRO_API_KEY" \
+  https://api.hiro.so/chainhooks/v1/dex-swap-velar-v1
+```
+
+---
+
+## Next Steps
+
+- Persist data in PostgreSQL or Redis
+- Push live events to a frontend dashboard via WebSocket
+- Send Telegram/Discord alerts to your community
+- Detect price impact from large swaps
+
+## Resources
+
+- [Chainhooks Documentation](/tools/chainhook)
+- [Hiro Platform](https://platform.hiro.so)
+- [Reference Implementation](https://github.com/serayd61/stacks-defi-sentinel)
