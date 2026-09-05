@@ -1,0 +1,370 @@
+---
+title: Build a DeFi monitor with Chainhooks
+description: Learn how to build a real-time DeFi monitoring application using Chainhooks to track swaps, liquidity events, and whale transactions.
+---
+
+import { Code, Terminal, Webhook, Activity } from 'lucide-react';
+import { SmallCard } from '@/components/card';
+
+In this guide, you will learn how to build a real-time DeFi monitoring application using Chainhooks. The application will track:
+- DEX swaps across popular protocols (Velar, ALEX, Arkadiko)
+- Large STX transfers (whale alerts)
+- Liquidity pool events
+
+Chainhooks provides an event-driven architecture that pushes blockchain events to your application in real-time, eliminating the need for constant polling.
+
+Over the course of this guide, you will learn how to:
+1. Set up a webhook server to receive Chainhook events
+2. Create predicates for tracking DeFi events
+3. Process and display real-time data
+4. Handle different event types
+
+---
+
+## Prerequisites
+
+Before starting, ensure you have:
+- Node.js 18+ installed
+- A [Hiro Platform](https://platform.hiro.so) account
+- Basic TypeScript knowledge
+
+## Set up the webhook server
+
+First, create a simple Fastify server to receive webhook events from Chainhooks.
+
+```typescript
+import Fastify from 'fastify';
+import cors from '@fastify/cors';
+
+const fastify = Fastify({ logger: true });
+
+await fastify.register(cors, { origin: true });
+
+// Health check endpoint
+fastify.get('/health', async () => ({ status: 'ok' }));
+
+// Webhook endpoint for Chainhook events
+fastify.post('/webhooks/chainhooks', async (request, reply) => {
+  const payload = request.body as any;
+  
+  // Process the Chainhook event
+  console.log('Received event:', payload);
+  
+  // Extract relevant data based on event type
+  if (payload.apply) {
+    for (const block of payload.apply) {
+      for (const tx of block.transactions || []) {
+        processTransaction(tx);
+      }
+    }
+  }
+  
+  return reply.send({ status: 'received' });
+});
+
+function processTransaction(tx: any) {
+  // Handle different transaction types
+  if (tx.metadata?.kind?.type === 'ContractCall') {
+    console.log('Contract call:', tx.metadata.kind.data);
+  }
+  
+  if (tx.metadata?.receipt?.events) {
+    for (const event of tx.metadata.receipt.events) {
+      if (event.type === 'STXTransferEvent') {
+        console.log('STX Transfer:', event.data);
+      }
+    }
+  }
+}
+
+const port = parseInt(process.env.PORT || '4000');
+await fastify.listen({ port, host: '0.0.0.0' });
+```
+
+## Create predicates for DeFi events
+
+Predicates define what blockchain events you want to track. Here are predicates for common DeFi monitoring scenarios.
+
+### Track DEX swaps
+
+Create a predicate to monitor swap transactions on Velar DEX:
+
+```json
+{
+  "uuid": "velar-swaps",
+  "name": "Velar DEX Swaps",
+  "version": 1,
+  "chain": "stacks",
+  "networks": {
+    "mainnet": {
+      "if_this": {
+        "scope": "contract_call",
+        "contract_identifier": "SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.univ2-router",
+        "method": "swap-exact-tokens-for-tokens"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://your-server.com/webhooks/chainhooks",
+          "authorization_header": "Bearer your-secret-token"
+        }
+      }
+    }
+  }
+}
+```
+
+### Track whale transactions
+
+Monitor large STX transfers (100K+ STX):
+
+```json
+{
+  "uuid": "whale-alerts",
+  "name": "Whale Transaction Alerts",
+  "version": 1,
+  "chain": "stacks",
+  "networks": {
+    "mainnet": {
+      "if_this": {
+        "scope": "stx_event",
+        "actions": ["transfer"],
+        "start_from": {
+          "amount_greater_than": 100000000000
+        }
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://your-server.com/webhooks/chainhooks",
+          "authorization_header": "Bearer your-secret-token"
+        }
+      }
+    }
+  }
+}
+```
+
+### Track liquidity events
+
+Monitor liquidity additions and removals:
+
+```json
+{
+  "uuid": "liquidity-events",
+  "name": "Liquidity Pool Events",
+  "version": 1,
+  "chain": "stacks",
+  "networks": {
+    "mainnet": {
+      "if_this": {
+        "scope": "print_event",
+        "contract_identifier": "SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.univ2-core",
+        "contains": "mint"
+      },
+      "then_that": {
+        "http_post": {
+          "url": "https://your-server.com/webhooks/chainhooks",
+          "authorization_header": "Bearer your-secret-token"
+        }
+      }
+    }
+  }
+}
+```
+
+## Process different event types
+
+Extend your webhook handler to process different DeFi events:
+
+```typescript
+interface SwapEvent {
+  txId: string;
+  sender: string;
+  tokenIn: string;
+  tokenOut: string;
+  amountIn: number;
+  amountOut: number;
+  timestamp: number;
+}
+
+interface WhaleAlert {
+  txId: string;
+  sender: string;
+  recipient: string;
+  amount: number;
+  timestamp: number;
+}
+
+function processSwapEvent(tx: any): SwapEvent | null {
+  const contractCall = tx.metadata?.kind?.data;
+  if (!contractCall) return null;
+  
+  // Parse swap parameters from contract call args
+  const args = contractCall.args || [];
+  
+  return {
+    txId: tx.transaction_identifier?.hash || '',
+    sender: tx.metadata?.sender || '',
+    tokenIn: args[0] || '',
+    tokenOut: args[1] || '',
+    amountIn: parseInt(args[2] || '0'),
+    amountOut: parseInt(args[3] || '0'),
+    timestamp: Date.now(),
+  };
+}
+
+function processWhaleAlert(event: any): WhaleAlert | null {
+  if (event.type !== 'STXTransferEvent') return null;
+  
+  const amount = parseInt(event.data?.amount || '0');
+  const threshold = 100000000000; // 100K STX in microSTX
+  
+  if (amount < threshold) return null;
+  
+  return {
+    txId: event.data?.tx_id || '',
+    sender: event.data?.sender || '',
+    recipient: event.data?.recipient || '',
+    amount: amount / 1000000, // Convert to STX
+    timestamp: Date.now(),
+  };
+}
+```
+
+## Register predicates via API
+
+Use the Hiro Platform API to register your predicates:
+
+```typescript
+async function registerPredicate(predicate: object) {
+  const response = await fetch('https://api.platform.hiro.so/v1/chainhooks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.HIRO_API_KEY}`,
+    },
+    body: JSON.stringify(predicate),
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Failed to register predicate: ${response.statusText}`);
+  }
+  
+  return response.json();
+}
+```
+
+## Add real-time updates with WebSocket
+
+Broadcast events to connected clients using WebSocket:
+
+```typescript
+import websocket from '@fastify/websocket';
+
+await fastify.register(websocket);
+
+const clients = new Set<WebSocket>();
+
+fastify.get('/ws', { websocket: true }, (socket) => {
+  clients.add(socket);
+  
+  socket.on('close', () => {
+    clients.delete(socket);
+  });
+});
+
+function broadcastEvent(event: any) {
+  const message = JSON.stringify(event);
+  for (const client of clients) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message);
+    }
+  }
+}
+
+// In your webhook handler, broadcast events
+fastify.post('/webhooks/chainhooks', async (request, reply) => {
+  const payload = request.body as any;
+  
+  // Process and broadcast
+  if (payload.apply) {
+    for (const block of payload.apply) {
+      for (const tx of block.transactions || []) {
+        const event = processTransaction(tx);
+        if (event) {
+          broadcastEvent(event);
+        }
+      }
+    }
+  }
+  
+  return reply.send({ status: 'received' });
+});
+```
+
+## Multi-DEX support
+
+Track swaps across multiple DEX protocols:
+
+```typescript
+const DEX_CONTRACTS = [
+  {
+    name: 'Velar',
+    contract: 'SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.univ2-router',
+    method: 'swap-exact-tokens-for-tokens',
+  },
+  {
+    name: 'ALEX',
+    contract: 'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.amm-swap-pool-v1-1',
+    method: 'swap-helper',
+  },
+  {
+    name: 'Arkadiko',
+    contract: 'SP2C2YFP12AJZB4MABJBAJ55XECVS7E4PMMZ89YZR.arkadiko-swap-v2-1',
+    method: 'swap-x-for-y',
+  },
+];
+
+// Create predicates for each DEX
+for (const dex of DEX_CONTRACTS) {
+  const predicate = {
+    uuid: `${dex.name.toLowerCase()}-swaps`,
+    name: `${dex.name} DEX Swaps`,
+    version: 1,
+    chain: 'stacks',
+    networks: {
+      mainnet: {
+        if_this: {
+          scope: 'contract_call',
+          contract_identifier: dex.contract,
+          method: dex.method,
+        },
+        then_that: {
+          http_post: {
+            url: `${process.env.WEBHOOK_URL}/webhooks/chainhooks`,
+            authorization_header: `Bearer ${process.env.WEBHOOK_SECRET}`,
+          },
+        },
+      },
+    },
+  };
+  
+  await registerPredicate(predicate);
+}
+```
+
+## Next steps
+
+<Cards>
+  <SmallCard
+    icon={<Webhook className="transition-colors duration-500 group-hover:text-primary" />}
+    href="/tools/chainhooks"
+    title="Chainhooks documentation"
+    description="Learn more about Chainhooks predicates and configuration."
+  />
+  <SmallCard
+    icon={<Activity className="transition-colors duration-500 group-hover:text-primary" />}
+    href="https://github.com/serayd61/stacks-defi-sentinel"
+    title="Example implementation"
+    description="See a complete DeFi monitoring implementation."
+  />
+</Cards>
