@@ -14,7 +14,7 @@ Cursor-paginated endpoints accept two query parameters:
 - `limit`: The number of items to return per page. Defaults to `20`, with a maximum of `50`.
 - `cursor`: The cursor pointing at the page to fetch. Omit it on your first request to get the first page.
 
-Treat the cursor as an opaque token — copy the value from a response and pass it back unchanged. (Its internal format is endpoint-specific; for example, the transactions endpoint encodes `block_height:microblock_sequence:tx_index`.)
+Treat the cursor as an opaque token — copy the value from a response and pass it back unchanged. Its internal format is endpoint-specific and may change, so don't construct or parse cursors yourself.
 
 ## Response body
 
