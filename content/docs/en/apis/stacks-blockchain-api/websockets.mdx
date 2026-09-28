@@ -11,7 +11,7 @@ Instead of polling REST endpoints, you can subscribe to blockchain events and ha
 - **WebSockets**: A standard WebSocket connection speaking JSON-RPC 2.0, available at the `/extended/v1/ws` path.
 - **Socket.IO**: A [Socket.IO](https://socket.io/) server on the API's root URL, which adds automatic reconnection and fallback transports on top of WebSockets.
 
-Both channels deliver the same events: new blocks, microblocks, mempool transactions, transaction status updates, address activity, and NFT events.
+Both channels deliver the same events: new blocks, mempool transactions, transaction status updates, address activity, and NFT events.
 
 | Network | WebSockets | Socket.IO |
 |---------|------------|-----------|
@@ -73,7 +73,6 @@ Both clients cover the same events:
 | Event | WebSocket client | Socket.IO client |
 |-------|------------------|------------------|
 | Blocks | `subscribeBlocks(handler)` | `subscribeBlocks(handler)` |
-| Microblocks | `subscribeMicroblocks(handler)` | `subscribeMicroblocks(handler)` |
 | Mempool transactions | `subscribeMempool(handler)` | `subscribeMempool(handler)` |
 | Transaction updates | `subscribeTxUpdates(txId, handler)` | `subscribeTransaction(txId, handler)` |
 | Address transactions | `subscribeAddressTransactions(address, handler)` | `subscribeAddressTransactions(address, handler)` |
@@ -93,7 +92,6 @@ Open a WebSocket to `/extended/v1/ws` and send JSON-RPC 2.0 messages with the `s
 | `event` | Additional params |
 |---------|-------------------|
 | `block` | — |
-| `microblock` | — |
 | `mempool` | — |
 | `tx_update` | `tx_id` |
 | `address_tx_update` | `address` |
@@ -144,7 +142,6 @@ Connect any standard Socket.IO client to the API's root URL. Subscriptions are m
 | Topic | Description |
 |-------|-------------|
 | `block` | New blocks |
-| `microblock` | New microblocks |
 | `mempool` | New mempool transactions |
 | `transaction:{txId}` | Updates for a specific transaction |
 | `address-transaction:{address}` | Transactions involving an address |

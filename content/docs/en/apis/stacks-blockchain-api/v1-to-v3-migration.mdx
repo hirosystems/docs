@@ -58,11 +58,9 @@ v1 flattened everything into the top level (`block_height`, `burn_block_time`,
 `execution_cost_runtime`, `pending_balance_inbound`). v3 groups them (`block.height`,
 `bitcoin_block.time`, `execution_cost.runtime`, `mempool.inbound`).
 
-### Microblock and unanchored fields are gone
+### Only canonical data is returned
 
-Microblocks were removed in the Nakamoto upgrade. v3 has no `microblock_hash`,
-`microblock_sequence`, `microblock_canonical`, `is_unanchored`, or `unanchored` query parameter.
-There is also no `canonical` field. v3 only returns canonical data.
+v1 marked records with a `canonical` flag. v3 has no such field: it only returns canonical data.
 
 ### ISO timestamp duplicates are gone
 
@@ -123,8 +121,6 @@ block height, a block hash, or the literal `latest`.
 | `post_condition_mode` | Removed |
 | `anchor_mode` | Removed |
 | `canonical` | Removed — v3 only returns canonical data |
-| `is_unanchored` | Removed |
-| `microblock_*` | Removed — microblocks no longer exist |
 | — | `block.index_hash` (new) |
 | — | `vm_error` (new) |
 
@@ -198,8 +194,7 @@ In v1, `estimated_balance` was the **total** balance plus the pending mempool de
 locked STX is excluded. If you were subtracting `locked` yourself, stop.
 :::
 
-v1 accepted `until_block` and `unanchored` on the balance endpoints. v3 always reports the
-current chain tip.
+v1 accepted `until_block` on the balance endpoints. v3 always reports the current chain tip.
 
 ### FT and NFT balances
 
@@ -371,8 +366,7 @@ The quantity itself is also defined differently. v1 `total_stx` was the circulat
 given block height, with `unlocked_stx` tracking the unlocked portion separately. v3 `total` is
 the total **liquid** supply at the current chain tip: all STX minted (vesting unlocks included)
 plus matured miner coinbase rewards, minus burned STX. There is no separate locked/unlocked
-split, and v3 always reports the chain tip — the v1 `height` and `unanchored` query parameters
-are gone.
+split, and v3 always reports the chain tip — the v1 `height` query parameter is gone.
 :::
 
 ## Fungible tokens
@@ -465,8 +459,7 @@ type: warn
 ### `tx_metadata` has no v3 equivalent
 v1 could inline a full transaction object into each row via `tx_metadata=true`. v3 returns the
 transaction id and event index only; fetch the transaction separately from
-`GET /extended/v3/transactions/{tx_id}` when you need its detail. The `unanchored` parameter is
-also gone, as everywhere else in v3.
+`GET /extended/v3/transactions/{tx_id}` when you need its detail.
 :::
 
 ## Network block times
@@ -514,9 +507,6 @@ These are deprecated with no successor. Plan around them rather than swapping a 
 | `GET /extended/v1/tx/events` | Global event feed filtered by principal, transaction, or event type. Several v3 endpoints cover parts of it: per-transaction events at `GET /extended/v3/transactions/{tx_id}/events`, a principal's history for one fungible token at `GET /extended/v3/principals/{principal}/transfers/ft/{asset_identifier}`, a principal's STX transfers at `GET /extended/v3/principals/{principal}/transfers/stx/{inbound,outbound}`, and per-principal asset movement at `GET /extended/v3/principals/{principal}/balance-changes`. There is no single global event feed. |
 | `GET /extended/v1/address/{principal}/assets` | Closest equivalent is `GET /extended/v3/principals/{principal}/balance-changes`, which reports net balance deltas rather than raw asset events. |
 | `GET /extended/v1/contract/by_trait` | Searches deployed contracts by Clarity trait ABI. No v3 equivalent. To look up a specific contract you already know, use `GET /extended/v3/smart-contracts/{contract_id}`. |
-| `GET /extended/v1/microblock` | Microblocks were removed in the Nakamoto upgrade and are no longer produced. |
-| `GET /extended/v1/microblock/{hash}` | Same. |
-| `GET /extended/v1/microblock/unanchored/txs` | Same. |
 | `GET /extended/v1/tokens/nft/mints` | Mint events for an asset class. Retired rather than migrated — the endpoint serves negligible traffic. A single instance's mint is the oldest entry in `GET /extended/v3/tokens/nft/{asset_identifier}/{value}/history`, but there is no collection-wide mint feed. |
 | `GET /extended/v1/faucets/btc/{address}` | Testnet-only BTC balance helper. No replacement. |
 

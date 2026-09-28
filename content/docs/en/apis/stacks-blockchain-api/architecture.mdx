@@ -5,52 +5,140 @@ description: Understand the architecture of the Stacks Blockchain API.
 
 ![Stacks Blockchain API architecture](/images/api/architecture.svg)
 
-## RPC Endpoints
+## Overview
 
-The `stacks-node` has its own minimal set of http endpoints referred to as `RPC endpoints`.
+The Stacks Blockchain API sits between Stacks nodes and the apps that use chain data. It does three
+things:
 
-- The `stacks-blockchain-api` allows clients to access RPC endpoints by proxying requests to a load-balanced pool of `stacks-nodes`.
-- For more details on RPC endpoints, see: [RPC Endpoints Documentation](https://github.com/blockstack/stacks-blockchain/blob/master/docs/rpc-endpoints.md)
-- Common RPC endpoints include:
-  - `POST /v2/transactions` - Broadcast a transaction
-  - `GET /v2/pox` - Retrieve current Proof of Transfer (PoX) relevant information
-  - `POST /v2/contracts/call-read/<contract>/<function>` - Evaluate and return the result of calling a Clarity function
-  - `POST /v2/fees/transaction` - Evaluate a given transaction and provide transaction fee estimation data
-  - `GET /v2/accounts/<address>` - Fetch the current nonce required for creating transactions
+- **Indexes the chain.** It receives events from a Stacks node and stores them as relational data
+  in PostgreSQL.
+- **Serves that data.** Its REST endpoints and real-time subscriptions read from PostgreSQL, so
+  they can answer questions a node cannot, such as the full transaction history of an account.
+- **Proxies the node.** Requests to the node's own `/v2/*` RPC endpoints pass through the API to a
+  Stacks node.
 
-## Additional Endpoints
+## Event ingestion
 
-The Stacks Blockchain API implements additional endpoints that provide data unavailable directly from Stacks nodes due to various constraints.
+A Stacks node doesn't keep an account's transaction history, and it isn't built to serve many
+clients at once. The API fills that gap by indexing everything the node reports.
 
-- The `stacks-node` may not persist certain data or may not serve it efficiently to many clients. For instance, while it can return the current STX balance of an account, it cannot provide a history of account transactions.
-- The API implements the Rosetta specification by Coinbase, an open standard designed to simplify blockchain deployment and interaction. More information can be found at [Rosetta API](https://www.rosetta-api.org/).
-- The API includes support for the Blockchain Naming System (BNS) endpoints. Details are available at [BNS Documentation](https://docs.stacks.co/clarity/example-contracts/bns).
-- For Express.js routes, see the directory `/src/api/routes`.
+The API runs an event server (port `3700` by default) that a Stacks node pushes events to over
+HTTP. To connect a node, add an event observer to its configuration:
 
-The API creates an "event observer" http server which listens for events from a stacks-node "event emitter".
+```toml
+[[events_observer]]
+endpoint = "localhost:3700"
+events_keys = ["*"]
+timeout_ms = 60_000
+```
 
-Events are HTTP POST requests containing:
-  - Blocks
-  - Transactions
+The node then sends:
 
-Byproducts of executed transactions such as:
-  - Asset transfers
-  - Smart-contract log data
-  - Execution cost data
+- **New blocks**, with each transaction and what it produced: asset transfers, smart contract logs,
+  and execution costs
+- **New burn blocks** from the Bitcoin chain
+- **Mempool activity**: newly received transactions, and transactions dropped from the mempool
+- **Signer data**: StackerDB chunks and block proposal responses
 
-The API processes and stores these events as relational data in PostgreSQL. For the "event observer" code, see `/src/event-stream`.
+The API decodes these and writes them to PostgreSQL. The ingestion code is in
+[`src/event-stream`](https://github.com/hirosystems/stacks-blockchain-api/tree/main/src/event-stream).
 
-## OpenAPI and JSON Schema
+### Ingesting from Stacks Node Publisher
 
-All http endpoints and responses are defined in OpenAPI and JSON Schema.
+Instead of receiving events directly from a node, the API can consume them from
+[Stacks Node Publisher](https://github.com/stx-labs/stacks-node-publisher) (SNP), which stores
+every node event in PostgreSQL and streams it to consumers over Redis. This decouples the API from
+any single node, and SNP can replay history from any block, so a new API instance can sync without
+a node re-sending events.
 
-- See `/docs/openapi.yaml`
-- These are used to auto-generate the docs at https://hirosystems.github.io/stacks-blockchain-api/
-- JSON Schemas are converted into TypeScript interfaces, which are used internally by the db controller module to transform SQL query results into the correct object shapes.
-- OpenAPI and JSON Schemas are also used to generate a standalone `@stacks/blockchain-api-client`.
+Set `SNP_EVENT_STREAMING=true` and `SNP_REDIS_URL` to enable it. `SNP_BLOCKS_ONLY_STREAMING=true`
+limits the stream to blocks and burn blocks, which speeds up a sync from genesis.
 
-## Development Setup
+## Serving data
 
-The easiest/quickest way to develop in this repo is using the VS Code debugger. It uses docker-compose to set up a stacks-node and Postgres instance.
+Endpoints are built with [Fastify](https://fastify.dev/), with request and response schemas
+defined in [TypeBox](https://github.com/sinclairzx81/typebox). Route definitions are in
+[`src/api/routes`](https://github.com/hirosystems/stacks-blockchain-api/tree/main/src/api/routes).
 
-Alternatively, you can run `npm run dev:integrated` which does the same thing but without a debugger.
+- **REST endpoints** under `/extended/v3`, plus the `/extended/v2` endpoints that have no v3
+  successor, read from PostgreSQL. See the [API reference](/apis/stacks-blockchain-api) for the full
+  list. Older `/extended/v1` endpoints are deprecated; see
+  [Migrating from v1 to v3](/apis/stacks-blockchain-api/v1-to-v3-migration).
+- **Real-time subscriptions** for blocks, mempool transactions, transaction updates, address
+  activity, and NFT events are available over WebSocket (JSON-RPC 2.0) and Socket.IO. See
+  [WebSockets](/apis/stacks-blockchain-api/websockets).
+
+Most responses carry an `ETag` tied to the state they were computed from, such as the chain tip, the
+mempool, or a specific transaction. Send it back in an `If-None-Match` header, and the API answers
+`304 Not Modified` when nothing has changed, without recomputing the response.
+
+## Stacks node RPC proxy
+
+A Stacks node exposes its own set of HTTP endpoints, referred to as RPC endpoints. The API forwards
+requests for the node's `/v2/*` endpoints to the Stacks node it is configured with, and returns the
+node's response unchanged. Commonly used RPC endpoints include:
+
+| Endpoint | Purpose |
+| --- | --- |
+| `POST /v2/transactions` | Broadcast a transaction |
+| `POST /v2/fees/transaction` | Estimate the fee for a transaction |
+| `POST /v2/contracts/call-read/{deployer_address}/{contract_name}/{function_name}` | Call a read-only Clarity function |
+| `GET /v2/accounts/{principal}` | Get an account's balance and nonce |
+| `GET /v2/pox` | Get current Proof of Transfer information |
+
+See the [Stacks Node RPC API](/apis/stacks-node-rpc-api) for every RPC endpoint.
+
+Proxied requests take longer than requests the API answers from its own database, because each one
+round-trips to a node. Avoid calling them at high frequency when an API endpoint serves the same
+data.
+
+The API forwards to a single configured node address (`STACKS_CORE_PROXY_HOST` and
+`STACKS_CORE_PROXY_PORT`, falling back to the node's RPC host and port). To spread proxied traffic
+across several nodes, point it at a load balancer.
+
+:::callout
+### Fee estimation can differ from the node's
+When `STACKS_CORE_FEE_ESTIMATOR_ENABLED=true`, the API adjusts `POST /v2/fees/transaction`
+responses. If recent blocks had spare capacity, it returns the minimum fee for the transaction's
+size. Otherwise it returns the node's estimate scaled by a configurable multiplier, never below
+that minimum. It is disabled by default.
+:::
+
+## Run modes
+
+The same codebase can run as a single instance or be split up to scale, controlled by
+`STACKS_API_MODE`:
+
+| Mode | Runs | Use |
+| --- | --- | --- |
+| Default | Event server and API server | A single self-contained instance |
+| `readonly` | API server only | Serve traffic from a database another instance writes to |
+| `writeonly` | Event server only | Ingest into PostgreSQL without serving endpoints |
+
+A common production layout is one write-only instance ingesting events and several read-only
+instances behind a load balancer, all sharing one PostgreSQL database. Read-only instances fully
+support WebSocket and Socket.IO subscriptions.
+
+## OpenAPI specification and client
+
+The OpenAPI specification is generated from the Fastify route schemas, so it can't drift from the
+endpoints it describes. The committed
+[`openapi.yaml`](https://github.com/hirosystems/stacks-blockchain-api/blob/main/openapi.yaml) is
+regenerated with each release and excludes deprecated endpoints.
+
+The specification powers:
+
+- The [API reference](/apis/stacks-blockchain-api) in these docs
+- [`@stacks/blockchain-api-client`](https://www.npmjs.com/package/@stacks/blockchain-api-client), a
+  typed TypeScript client for the REST and real-time APIs
+
+## Running the API yourself
+
+For local development, [Clarinet](https://github.com/stx-labs/clarinet) runs a full devnet — Bitcoin node, Stacks node,
+API, and PostgreSQL — with `clarinet devnet start`.
+
+For production, use the
+[`hirosystems/stacks-blockchain-api`](https://hub.docker.com/r/hirosystems/stacks-blockchain-api)
+Docker image. The
+[repository README](https://github.com/hirosystems/stacks-blockchain-api#readme) covers
+configuration, run modes, event replay, and development setup.
