@@ -87,6 +87,7 @@ v3 equivalent ships, and filter client-side where you can.
 | `GET /extended/v1/tx` | `GET /extended/v3/transactions` |
 | `GET /extended/v1/tx/{tx_id}` | `GET /extended/v3/transactions/{tx_id}` |
 | `GET /extended/v1/tx/{tx_id}/raw` | Stacks node RPC `GET /v3/transaction/{tx_id}` |
+| `GET /extended/v1/tx/multiple` | `GET /extended/v3/transactions/batch` |
 | `GET /extended/v1/tx/mempool` | `GET /extended/v3/mempool/transactions` |
 | `GET /extended/v1/tx/block/{block_hash}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
 | `GET /extended/v1/tx/block_height/{height}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
@@ -94,6 +95,30 @@ v3 equivalent ships, and filter client-side where you can.
 
 The two v1 "transactions in a block" endpoints collapse into one: `{height_or_hash}` accepts a
 block height, a block hash, or the literal `latest`.
+
+### Batch transaction lookups
+
+`GET /extended/v1/tx/multiple` → `GET /extended/v3/transactions/batch`
+
+Ids are supplied the same way — repeated (`?tx_id=A&tx_id=B`) or comma-separated (`?tx_id=A,B`),
+up to 20 — but the response differs in two ways that need code changes, not just a URL swap:
+
+| | v1 `/tx/multiple` | v3 `/transactions/batch` |
+| --- | --- | --- |
+| Shape | Map keyed by transaction id | `{ results: [...] }` array |
+| Unresolved ids | Present as `{ found: false, result: { tx_id } }` | Absent — diff the response against the ids you sent |
+| Mempool | Included | Excluded; mined canonical transactions only |
+| Detail | Full transaction, with events | Transaction summary |
+| Order | Unordered map | Canonical chain order, newest first — not the order ids were supplied |
+
+:::callout
+type: warn
+### Pending transactions are not covered
+The v3 batch endpoint reads mined transactions only, so a broadcast transaction that has not yet
+been mined is simply absent from `results` — indistinguishable from an unknown id. For the common
+"poll until confirmed" flow, call `GET /extended/v3/transactions/{tx_id}` per transaction instead;
+that endpoint returns both mined and mempool transactions.
+:::
 
 ### Transaction field mapping
 
@@ -133,6 +158,52 @@ block height, a block hash, or the literal `latest`.
 
 Mempool transactions use `receipt_time` and `receipt_block_height` in place of block fields, and
 their `status` is one of `pending` or the `dropped_*` values.
+
+## Mempool
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/tx/mempool/stats` | `GET /extended/v3/mempool` |
+
+The mempool is now a resource with a summary, rather than a `stats` sub-route of transactions.
+v1 returned four parallel maps keyed by transaction type, so a question about one type meant
+joining four objects, and a question about the whole mempool was not answerable at all —
+percentiles cannot be averaged. v3 inverts the nesting: top-level metrics cover the whole mempool,
+with a `by_type` breakdown underneath.
+
+### Mempool field mapping
+
+| v1 field | v3 field |
+| --- | --- |
+| `tx_type_counts.{type}` | `by_type.{type}.count` |
+| `tx_simple_fee_averages.{type}` | `by_type.{type}.fee_rate` |
+| `tx_byte_sizes.{type}` | `by_type.{type}.tx_size` |
+| `tx_ages.{type}` | Removed — use `by_type.{type}.receipt_block_height` |
+| — | `count`, `fee_rate`, `tx_size`, `receipt_time`, `receipt_block_height` for the whole mempool (new) |
+| — | `by_type.{type}.receipt_time` (new) |
+| `*.poison_microblock` | Removed from every map — microblocks no longer exist |
+
+Each metric is still `{ p25, p50, p75, p95 }`, `null` when a bucket is empty. The top-level `count`
+always equals the sum of the per-type counts. Versioned smart-contract transactions are counted as
+`smart_contract`, as in v1.
+
+:::callout
+type: warn
+### Percentiles changed meaning, not just names
+Three behavior changes need code changes, not a find-and-replace:
+
+- **Percentiles are discrete.** v1 interpolated, so a p50 could be a fee no transaction paid, and
+  came back fractional. v3 returns a value some pending transaction actually has. Fees are exact
+  µSTX integers, returned as **strings**. Despite its name, v1's `tx_simple_fee_averages` was
+  never an average — it has always held percentiles.
+- **Age in blocks is gone.** v1's `tx_ages` was computed against the chain tip on the server. v3
+  returns absolute `receipt_block_height` and `receipt_time` percentiles instead — subtract from
+  the current tip or your own clock for an age. This keeps cached responses accurate: a server-side
+  age went stale whenever a block arrived that left the mempool unchanged.
+- **The percentile direction inverts.** For an age, `p95` was the oldest transaction. For a receipt
+  height or time, the oldest pending transactions are at `p25`. Code ported from `tx_ages` will
+  read them backwards unless you flip it.
+:::
 
 ## Accounts and principals
 
@@ -246,7 +317,7 @@ touched this principal" and "what changed for this principal".
 For the FT and NFT detail that v1 packed into `stx_transfers` / `ft_transfers` / `nft_transfers`,
 call `GET /extended/v3/principals/{principal}/transactions/{tx_id}/balance-changes`, or fetch
 several transactions at once with
-`GET /extended/v3/principals/{principal}/balance-changes?tx_id=A,B,C` (up to 50 IDs).
+`GET /extended/v3/principals/{principal}/balance-changes?tx_id=A,B,C` (up to 20 IDs).
 
 Each balance change is `{ asset: { type, identifier? }, balance_change: { sent, received, net } }`,
 where `type` is `stx`, `ft`, or `nft`.
@@ -332,6 +403,23 @@ they are not). And the granularity flips from **per-burn-block payout events** t
 For per-burn-block BTC payouts under the current model, see
 `GET /extended/v2/burn-blocks/{height_or_hash}/pox-transactions` and
 `GET /extended/v2/addresses/{burnchain_address}/pox-transactions`, which are not deprecated.
+
+## Stacking events
+
+The `/extended/v1/pox{2,3,4}` routes read the pox-2, pox-3, and pox-4 event tables and have no
+pox-5 counterpart, so like the burnchain reward endpoints they serve historical data only. The
+pox-5 equivalent differs per route — two have a partial one, two have none — so there is no single
+replacement to point them all at.
+
+| Deprecated v1 endpoint | pox-5 equivalent |
+| --- | --- |
+| `GET /extended/v1/pox{2,3,4}/events` | None — there is no global pox-5 event feed. A single bond's history is at `GET /extended/v3/staking/bonds/{bond_index}/events`. |
+| `GET /extended/v1/pox{2,3,4}/tx/{tx_id}` | None. `GET /extended/v3/transactions/{tx_id}/events` returns a transaction's events, but not decoded PoX operations. |
+| `GET /extended/v1/pox{2,3,4}/stacker/{principal}` | For a principal's *current* position, `GET /extended/v3/principals/{principal}/staking`. There is no pox-5 event-history equivalent. |
+| `GET /extended/v1/pox{2,3,4}/{pool_principal}/delegations` | `GET /extended/v3/staking/signers/{principal}/stakers` |
+
+The pool-delegation mapping is the closest to a like-for-like swap: a pox-4 pool aggregating
+delegators corresponds to a pox-5 signer with stakers.
 
 ## Fees
 
@@ -505,6 +593,63 @@ not include subdomains, nor names imported from Blockstack v1, both of which
 `GET /v1/addresses/{blockchain}/{address}` did return.
 :::
 
+## Search
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/search/{id}` | `GET /extended/v3/search?q={term}` |
+
+v1 resolved one exact identifier to a single entity. v3 is a real search: the term moves from the
+path to a `q` query parameter, and it can be the beginning of an identifier as well as a complete
+one. Contract and asset names match anywhere in the name, so `?q=arkadiko` finds the contracts and
+tokens named after it.
+
+| | v1 `/search/{id}` | v3 `/search` |
+| --- | --- | --- |
+| Term | Path segment, exact | `q` query parameter, prefix or name substring |
+| Response | One result with a `found` flag | `{ results: [...] }`, up to 20, best match first |
+| No match | `found: false` with an error | Empty `results` array, `200` |
+| Entity types | Addresses, contracts, blocks, transactions, mempool transactions | `block`, `bitcoin_block`, `transaction`, `address`, `smart_contract`, `token` |
+| Type filter | None | `?type=block,transaction` (repeated or comma-separated) |
+| Extra detail | `include_metadata=true` | Removed — fetch the entity from its own endpoint |
+
+There is no pagination; narrow the term to surface something that did not appear. Terms have
+minimum lengths: 8 characters for hex, 6 for an address, 3 for a contract or asset name. Block
+heights have no minimum, and a term that fits none of these forms returns `400`.
+
+:::callout
+type: warn
+### Pending transactions are no longer found
+v1 could resolve a mempool transaction id. v3 searches canonical, mined entities only, so a
+transaction that has been broadcast but not mined returns no result. To look one up directly, use
+`GET /extended/v3/transactions/{tx_id}`, which covers both mined and mempool transactions.
+:::
+
+## Faucets
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `POST /extended/v1/faucets/stx` | `POST /extended/v3/faucets/stx` |
+| `POST /extended/v1/faucets/btc` | `POST /extended/v3/faucets/btc` |
+| `POST /extended/v1/faucets/sbtc` | `POST /extended/v3/faucets/sbtc` |
+
+All three are testnet-only. The request and response both change shape:
+
+| | v1 | v3 |
+| --- | --- | --- |
+| Address | `?address=` query parameter (the body form was already deprecated) | `{ "address": "…" }` JSON body, required |
+| Amount | Size flags: `stacking` for STX, `large` / `xlarge` for BTC | Fixed per deployment, reported in the response |
+| Success | `{ success: true, txId, txRaw }` | `{ transaction: { tx_id, chain }, amount: { stx \| btc \| sbtc } }` |
+| Error | `{ success: false, error, help }` | `{ error }` |
+
+The amount is keyed by the asset it is denominated in — `stx` in µSTX, `btc` and `sbtc` in
+satoshis — so the response says which token was sent and in what units. `txRaw` is gone, and the
+BTC faucet's transaction id is now `0x`-prefixed like the Stacks ones.
+
+The size flags have no v3 equivalent. If you relied on `stacking=true` to get enough STX to stack,
+or need more than the fixed amount for testing, reach out on Discord to request a custom faucet
+transaction.
+
 ## Endpoints without a v3 replacement
 
 These are deprecated with no successor. Plan around them rather than swapping a URL.
@@ -536,28 +681,12 @@ migrated from v1 to v2, these are your next hop.
 
 ## Endpoints that are not deprecated
 
-Most of `/extended/v1` is now deprecated, but these routes are not. They remain the supported way
-to fetch their data today:
+As of API 9.4.0, every `/extended/v1` data endpoint is deprecated. The one route that is not is
+`GET /extended`, which reports the API's version and chain tip. It is service metadata rather than
+part of the versioned data API, so it has no v3 counterpart and does not need one.
 
-| Area | Endpoint |
-| --- | --- |
-| Transactions | `GET /extended/v1/tx/multiple` |
-| Transactions | `GET /extended/v1/tx/mempool/stats` |
-| Stacking | `GET /extended/v1/pox4/events` |
-| Stacking | `GET /extended/v1/pox4/tx/{tx_id}` |
-| Stacking | `GET /extended/v1/pox4/stacker/{principal}` |
-| Stacking | `GET /extended/v1/pox4/{pool_principal}/delegations` |
-| Search | `GET /extended/v1/search/{id}` |
-| Faucets | `POST /extended/v1/faucets/stx` |
-| Faucets | `POST /extended/v1/faucets/btc` |
-| Faucets | `POST /extended/v1/faucets/sbtc` |
-| Status | `GET /extended` |
-
-The `pox4` prefix also accepts `pox2` and `pox3` for historical data. Faucet endpoints are
-testnet-only.
-
-Outside `/extended/v1`, these `/extended/v2` routes are also current and have no v3 successor
-yet: `GET /extended/v2/blocks` and its siblings, `GET /extended/v2/burn-blocks/*`,
+These `/extended/v2` routes are also current and have no v3 successor:
+`GET /extended/v2/blocks` and its siblings, `GET /extended/v2/burn-blocks/*`,
 `GET /extended/v2/block-tenures/{tenure_height}/blocks`, `GET /extended/v2/pox/cycles*`,
 `GET /extended/v2/mempool/fees`, `GET /extended/v2/smart-contracts/*`, and the two
 `pox-transactions` routes noted under [Stacking rewards](#stacking-rewards).

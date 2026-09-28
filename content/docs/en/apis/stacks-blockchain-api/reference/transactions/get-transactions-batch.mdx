@@ -1,0 +1,12 @@
+---
+title: Get a batch of transactions
+sidebarTitle: Batch of transactions
+description: "Retrieves the summaries of up to 20 mined transactions in a single call, given their transaction ids. Provide them as repeated querystring values (`?tx_id=A&tx_id=B`) or as a single comma-separated value (`?tx_id=A,B`). Results are returned in canonical chain order (newest first), not in the order the ids were supplied. Only transactions mined in the canonical chain are returned: an id that is unknown, non-canonical, or still in the mempool is absent from `results` rather than reported as an error, so compare the response against the ids you sent to find the ones that did not resolve. Use `GET /extended/v3/transactions/{tx_id}` for a single transaction, which also covers mempool transactions."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/transactions/batch', method: 'get' }]}
+  hasHead={false}
+/>
