@@ -246,7 +246,7 @@ touched this principal" and "what changed for this principal".
 For the FT and NFT detail that v1 packed into `stx_transfers` / `ft_transfers` / `nft_transfers`,
 call `GET /extended/v3/principals/{principal}/transactions/{tx_id}/balance-changes`, or fetch
 several transactions at once with
-`GET /extended/v3/principals/{principal}/balance-changes?tx_id=A,B,C` (up to 50 IDs).
+`GET /extended/v3/principals/{principal}/balance-changes?tx_id=A,B,C` for several IDs in one call.
 
 Each balance change is `{ asset: { type, identifier? }, balance_change: { sent, received, net } }`,
 where `type` is `stx`, `ft`, or `nft`.

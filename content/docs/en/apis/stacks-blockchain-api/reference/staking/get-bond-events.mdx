@@ -1,0 +1,12 @@
+---
+title: Get bond events
+sidebarTitle: Bond events
+description: "A bond's pox-5 event log, newest first: setup, allowlist additions, registrations and registration updates, early exits (`announce-l1-early-exit`, and `unstake-sbtc` with a `new_amount_sats` of 0), partial sBTC unstakes, reward distributions, and staker reward claims."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/staking/bonds/{bond_index}/events', method: 'get' }]}
+  hasHead={false}
+/>

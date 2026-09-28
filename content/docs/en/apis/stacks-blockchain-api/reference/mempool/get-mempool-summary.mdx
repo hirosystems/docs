@@ -1,0 +1,12 @@
+---
+title: Get mempool summary
+sidebarTitle: Mempool summary
+description: "Retrieves a summary of the transactions currently pending in the mempool: how many there are, and the fee, size, and receipt percentiles across them, both overall and broken down by transaction type. Percentiles are discrete: each is a value some pending transaction actually has, not an interpolation between two of them."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/mempool', method: 'get' }]}
+  hasHead={false}
+/>

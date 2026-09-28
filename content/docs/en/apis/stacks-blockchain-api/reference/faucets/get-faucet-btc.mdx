@@ -1,0 +1,12 @@
+---
+title: Get BTC regtest or signet tokens
+sidebarTitle: BTC regtest or signet tokens
+description: "Sends BTC to the specified regtest or signet BTC address. The response reports the amount sent, in satoshis, and the transaction id, which you can use to view the transaction in a regtest or signet Bitcoin block explorer. The tokens are delivered once the transaction has been included in a block. Each request sends a fixed amount configured by the API operator, which the response reports. If you need more for testing (for example, to enroll in a staking bond), reach out to request a custom faucet transaction. **Note:** This is a Bitcoin regtest/signet-only endpoint. This endpoint will not work on Bitcoin mainnet."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/faucets/btc', method: 'post' }]}
+  hasHead={false}
+/>
