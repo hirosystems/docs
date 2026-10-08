@@ -24,7 +24,7 @@ export const CategorySubTags = {
 
   chainhook: [] as const,
 
-  api: ['token-metadata', 'signer-metrics', 'rpc', 'platform', 'ordinals', 'runes'] as const,
+  api: ['token-metadata', 'signer-metrics', 'rpc'] as const,
 
   clarinet: ['testing', 'deployment'] as const,
 } as const;

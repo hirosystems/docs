@@ -101,21 +101,6 @@ const guidesMetadata: Partial<Metadata> = {
   },
 };
 
-const platformApiMetadata: Partial<Metadata> = {
-  title: 'Platform API',
-  description: "Build applications with Hiro's Platform API services.",
-  openGraph: {
-    title: 'Platform API',
-    description: "Build applications with Hiro's Platform API services.",
-    images: [{ url: '/images/platform-api-og.jpg', width: 800, height: 600 }],
-  },
-  twitter: {
-    title: 'Platform API',
-    description: "Build applications with Hiro's Platform API services.",
-    images: ['/images/platform-api-og.jpg'],
-  },
-};
-
 const signerMetricsApiMetadata: Partial<Metadata> = {
   title: 'Signer Metrics API',
   description: 'Monitor and analyze Stacks signing metrics with the Signer Metrics API.',
@@ -194,7 +179,6 @@ export function getRouteMetadata(path: string): Partial<Metadata> {
   if (path.startsWith('/stacks/hacks')) return hiroHacksMetadata;
   if (path.startsWith('/tools/chainhooks')) return chainhookMetadata;
   if (path.startsWith('/resources/guides')) return guidesMetadata;
-  if (path.startsWith('/apis/platform')) return platformApiMetadata;
   if (path.startsWith('/apis/signer-metrics')) return signerMetricsApiMetadata;
   if (path.startsWith('/apis/stacks-blockchain')) return stacksApiMetadata;
   if (path.startsWith('/apis/token-metadata')) return tokenMetadataApiMetadata;

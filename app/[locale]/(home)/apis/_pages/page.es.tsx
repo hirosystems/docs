@@ -1,5 +1,5 @@
 import { Cards, IndexCard } from '@/components/card';
-import { API, Chainhook, Hiro, StacksIcon } from '@/components/ui/icon';
+import { API, Chainhook, StacksIcon } from '@/components/ui/icon';
 
 export default function APIsPage() {
   return (
@@ -35,12 +35,6 @@ export default function APIsPage() {
               href="/apis/token-metadata-api"
               title="API de Metadatos de Tokens"
               description="Metadatos rápidos y confiables para tokens fungibles y no fungibles en Stacks."
-            />
-            <IndexCard
-              icon={<Hiro />}
-              href="/apis/platform-api"
-              title="API de la plataforma"
-              description="Gestione programáticamente devnets y chainhooks a través de la interfaz REST."
             />
             <IndexCard
               icon={<API />}

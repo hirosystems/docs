@@ -9,21 +9,11 @@ The following rate-limits (in requests per minute, or RPM) are applicable for [a
 
 | API key | Rate Limit                        |
 |:--------|:----------------------------------|
-| No      | 50 requests per minute (RPM) per client IP, for unauthenticated traffic |
-| Yes     | 500 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
-
-Rate limits are split between two service types based on the API path:
-- **Bitcoin services** (`/ordinals/*` and `/runes/*` paths)
-- **Stacks services** (all other paths): [Stacks Blockchain API](/apis/stacks-blockchain-api), [Token Metadata API](/apis/token-metadata-api), [Signer Metrics API](/apis/signer-metrics-api), Explorer endpoints, and other Hiro services
-
-Each service type has its own independent quota, allowing you to use both Stacks and Bitcoin APIs without one affecting the other's rate limits. For more details, see our guide on [response headers](/resources/guides/response-headers).
+| No      | 150 requests per minute (RPM) per client IP, for unauthenticated traffic |
+| Yes     | 5,000 requests per minute (RPM), regardless of origin IP, with an authenticated API key |
 
 :::callout
-Platform services (Platform API, Devnet) have separate rate limiting and are not part of this quota system.
-:::
-
-:::callout
-You can create an API key for free in the [Hiro Platform](https://platform.hiro.so) by creating an account.
+Sign in or create an account to [create and manage your API keys](https://platform.hiro.so) for free.
 :::
 
 ## STX Faucet rate limits

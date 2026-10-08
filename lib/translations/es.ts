@@ -2,7 +2,7 @@ import type { Translations } from './types';
 
 export const es: Translations = {
   navigation: {
-    signIn: 'Iniciar sesión',
+    apiKeys: 'Obtener claves API',
     menus: {
       tools: 'Herramientas',
       apis: 'APIs',
@@ -63,10 +63,6 @@ export const es: Translations = {
       title: 'Chainhooks',
       description: 'Monitorear y analizar la actividad de contratos inteligentes Clarity.',
     },
-    contractMonitoring: {
-      title: 'Monitoreo de Contratos',
-      description: 'Monitorear y analizar la actividad de contratos inteligentes Clarity.',
-    },
   },
   apis: {
     apiKeys: {
@@ -93,10 +89,6 @@ export const es: Translations = {
     chainhook: {
       title: 'API de Chainhooks',
       description: 'API RESTful para acceder a Chainhooks.',
-    },
-    platform: {
-      title: 'API de Plataforma',
-      description: 'API para acceder a datos y funcionalidad de la Plataforma Hiro.',
     },
     signerMetrics: {
       title: 'API de Métricas de Firmante',

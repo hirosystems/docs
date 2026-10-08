@@ -21,16 +21,6 @@ export const apiConfig = {
     },
   },
 
-  // Platform API endpoints
-  platform: {
-    baseUrl: 'https://platform.hiro.so',
-    clarityConversion: false,
-    enablePlayground: true,
-    playgroundOptions: {
-      proxyUrl: '/api/proxy',
-    },
-  },
-
   // RPC Node endpoints (override localhost)
   rpcNode: {
     baseUrl: 'https://api.hiro.so',
@@ -66,10 +56,6 @@ export function getAPIConfig(documentPath: string) {
 
   if (normalizedPath.includes('stacks-node-rpc-api.json')) {
     return cloneConfig('rpcNode');
-  }
-
-  if (normalizedPath.includes('platform-api.json') || normalizedPath.includes('/apis/platform/')) {
-    return cloneConfig('platform');
   }
 
   if (normalizedPath.includes('token-metadata')) {
