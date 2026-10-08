@@ -69,8 +69,8 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
   }, []);
 
   React.useEffect(() => {
-    // register 'p' shortcut for platform navigation
-    const platformShortcut = registerShortcut({
+    // register 'p' shortcut for API key management
+    const apiKeysShortcut = registerShortcut({
       key: 'p',
       callback: () => {
         window.open('https://platform.hiro.so', '_blank', 'noopener,noreferrer');
@@ -88,7 +88,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
     });
 
     return () => {
-      platformShortcut();
+      apiKeysShortcut();
       calendarShortcut();
     };
   }, [registerShortcut]);
@@ -137,7 +137,7 @@ export function DocsLayout({ tree, children }: DocsLayoutProps) {
                   className="bg-brand-orange font-fono text-neutral-900 flex items-baseline gap-0.5 px-3 py-2 hover:bg-brand-orange transition-colors duration-200 group hidden lg:flex"
                 >
                   <Link href="https://platform.hiro.so" target="_blank">
-                    {t.navigation.signIn}
+                    {t.navigation.apiKeys}
                     <ArrowUpRight className="w-3.5 h-3.5 translate-y-0.5 group-hover:translate-y-0 transition-transform duration-200" />
                   </Link>
                 </Button>

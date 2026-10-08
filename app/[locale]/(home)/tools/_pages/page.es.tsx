@@ -1,4 +1,3 @@
-import { Brackets } from 'lucide-react';
 import { Cards, IndexCard } from '@/components/card';
 import { Chainhook } from '@/components/ui/icon';
 
@@ -20,15 +19,6 @@ export default function ToolsPage() {
               tag="Stacks"
               description="Crea flujos de eventos personalizados y desencadenantes para el procesamiento de datos de blockchain en tiempo real."
             />
-
-            <IndexCard
-              href="/tools/contract-monitoring"
-              title="Monitoreo de Contratos"
-              icon={<Brackets />}
-              tag="Stacks"
-              description="Monitorea y rastrea la actividad de contratos inteligentes y las métricas de rendimiento."
-            />
-
           </Cards>
         </div>
       </div>

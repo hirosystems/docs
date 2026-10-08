@@ -1,16 +1,7 @@
 'use client';
 
 import { useDocsSearch } from 'fumadocs-core/search/client';
-import {
-  Code,
-  Copy,
-  ExternalLink,
-  Eye,
-  File,
-  Package,
-  Search,
-  Webhook,
-} from 'lucide-react';
+import { Code, Copy, ExternalLink, Eye, File, Package, Search, Webhook } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import {
@@ -219,7 +210,7 @@ interface DocIndexEntry {
 }
 
 const predefinedDocQueries = [
-  { id: 'q1', text: 'how to create a chainhook on the hiro platform' },
+  { id: 'q1', text: 'how to create a chainhook using the SDK' },
   { id: 'q2', text: 'how can i query a list of the latest transactions' },
   { id: 'q3', text: 'how do i monitor contract activity' },
   { id: 'q4', text: 'how do i manage api keys' },

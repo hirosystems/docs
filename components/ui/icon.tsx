@@ -133,15 +133,6 @@ export function StacksIcon({
   );
 }
 
-export function Ordinals(): JSX.Element {
-  return (
-    <svg width="12" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="7.58228" cy="7.05255" r="6.36257" stroke="currentColor" />
-      <circle cx="7.53107" cy="7.04505" r="3.76642" fill="currentColor" />
-    </svg>
-  );
-}
-
 export function Bitcoin(props: any) {
   return (
     <svg
@@ -583,38 +574,6 @@ export function Container(props: SVGProps<SVGSVGElement>): JSX.Element {
       <rect x="12.9751" y="12.9116" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
       <rect x="18.9675" y="12.9116" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
       <rect x="12.9751" y="7.15027" width="3.57779" height="3.57779" rx="1" stroke="currentColor" />
-    </svg>
-  );
-}
-
-export function Runes(props: SVGProps<SVGSVGElement>): JSX.Element {
-  return (
-    <svg
-      width="12"
-      height="18"
-      viewBox="0 0 12 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M1.12305 17.4532V0.545898"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="bevel"
-      />
-      <path
-        d="M3.49548 0.545898L10.5198 5.66523L3.49548 10.6656"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="bevel"
-      />
-      <path
-        d="M5.40039 11.9766L10.8769 17.4532"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="bevel"
-      />
     </svg>
   );
 }

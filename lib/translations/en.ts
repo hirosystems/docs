@@ -2,7 +2,7 @@ import type { Translations } from './types';
 
 export const en: Translations = {
   navigation: {
-    signIn: 'Sign in',
+    apiKeys: 'Get API keys',
     menus: {
       tools: 'Tools',
       apis: 'APIs',
@@ -63,10 +63,6 @@ export const en: Translations = {
       title: 'Chainhooks',
       description: 'Monitor and analyze Clarity smart contract activity.',
     },
-    contractMonitoring: {
-      title: 'Contract Monitoring',
-      description: 'Monitor and analyze Clarity smart contract activity.',
-    },
   },
   apis: {
     apiKeys: {
@@ -93,10 +89,6 @@ export const en: Translations = {
     chainhook: {
       title: 'Chainhooks API',
       description: 'RESTful API for accessing Chainhook.',
-    },
-    platform: {
-      title: 'Platform API',
-      description: 'API for accessing Hiro Platform data and functionality.',
     },
     signerMetrics: {
       title: 'Signer Metrics API',
