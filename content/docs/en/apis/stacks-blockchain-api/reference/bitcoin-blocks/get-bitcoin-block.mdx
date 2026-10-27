@@ -1,0 +1,12 @@
+---
+title: Get Bitcoin block
+sidebarTitle: Bitcoin block
+description: "Retrieves a single canonical Bitcoin block, by height, hash, or `latest`, with its time (see the Bitcoin blocks list). A height above the Bitcoin tip returns the future block with no hash and its projected time."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/bitcoin-blocks/{height_or_hash}', method: 'get' }]}
+  hasHead={false}
+/>

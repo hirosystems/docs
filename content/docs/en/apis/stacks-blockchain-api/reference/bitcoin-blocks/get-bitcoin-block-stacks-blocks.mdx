@@ -1,0 +1,12 @@
+---
+title: Get Bitcoin block Stacks blocks
+sidebarTitle: Bitcoin block Stacks blocks
+description: Retrieves the summaries of the canonical Stacks blocks confirmed by a single canonical Bitcoin block, newest first.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/bitcoin-blocks/{height_or_hash}/blocks', method: 'get' }]}
+  hasHead={false}
+/>

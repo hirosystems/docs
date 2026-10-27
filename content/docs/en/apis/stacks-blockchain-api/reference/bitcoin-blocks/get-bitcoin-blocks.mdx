@@ -1,0 +1,12 @@
+---
+title: Get Bitcoin blocks
+sidebarTitle: Bitcoin blocks
+description: Retrieves canonical Bitcoin blocks, newest first. Each block carries its header time once the API has learned it from a Stacks block anchored to it, an interpolated time for a past block no Stacks block anchored to, and a projected time for the newest blocks no Stacks block has anchored to yet.
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/bitcoin-blocks', method: 'get' }]}
+  hasHead={false}
+/>

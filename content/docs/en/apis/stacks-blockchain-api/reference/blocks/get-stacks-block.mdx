@@ -1,0 +1,12 @@
+---
+title: Get block
+sidebarTitle: Block
+description: "Retrieves a single canonical Stacks block with its details, by height, block hash, index block hash, or `latest`."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/blocks/{height_or_hash}', method: 'get' }]}
+  hasHead={false}
+/>
