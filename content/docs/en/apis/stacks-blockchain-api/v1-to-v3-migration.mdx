@@ -64,10 +64,18 @@ Microblocks were removed in the Nakamoto upgrade. v3 has no `microblock_hash`,
 `microblock_sequence`, `microblock_canonical`, `is_unanchored`, or `unanchored` query parameter.
 There is also no `canonical` field. v3 only returns canonical data.
 
-### ISO timestamp duplicates are gone
+### Every timestamp has an ISO twin
 
-v1 returned both `burn_block_time` and `burn_block_time_iso`. v3 returns Unix seconds only
-(`block.time`, `bitcoin_block.time`). Format them client-side.
+v1 returned both `burn_block_time` and `burn_block_time_iso`. v3 keeps that pairing in its nested
+objects: every Unix-seconds `time` field has a sibling `time_iso` (ISO 8601, UTC), e.g.
+`block.time` / `block.time_iso` and `bitcoin_block.time` / `bitcoin_block.time_iso`. Mempool
+transactions pair `receipt_time` with `receipt_time_iso`.
+
+### Hashes without `0x` are redirected
+
+Every v3 endpoint that takes a transaction id or block hash in its path answers a hash sent
+without the `0x` prefix with a `302` redirect to the same URL with the prefix, as v1 did. Send the
+prefix to save the extra round trip.
 
 :::callout
 type: warn
@@ -86,14 +94,25 @@ v3 equivalent ships, and filter client-side where you can.
 | --- | --- |
 | `GET /extended/v1/tx` | `GET /extended/v3/transactions` |
 | `GET /extended/v1/tx/{tx_id}` | `GET /extended/v3/transactions/{tx_id}` |
+| `GET /extended/v1/tx/multiple` | `GET /extended/v3/transactions/batch` |
 | `GET /extended/v1/tx/{tx_id}/raw` | Stacks node RPC `GET /v3/transaction/{tx_id}` |
 | `GET /extended/v1/tx/mempool` | `GET /extended/v3/mempool/transactions` |
+| `GET /extended/v1/tx/mempool/stats` | `GET /extended/v3/mempool` |
 | `GET /extended/v1/tx/block/{block_hash}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
 | `GET /extended/v1/tx/block_height/{height}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
 | `GET /extended/v1/tx/events` | No direct replacement — see [Endpoints without a v3 replacement](#endpoints-without-a-v3-replacement) |
 
 The two v1 "transactions in a block" endpoints collapse into one: `{height_or_hash}` accepts a
 block height, a block hash, or the literal `latest`.
+
+`GET /extended/v3/transactions/batch` differs from `/tx/multiple` in two ways. It returns mined
+transactions only, so use `GET /extended/v3/transactions/{tx_id}` for one that may still be in
+the mempool. And it returns a `results` array rather than a map keyed by transaction id, so ids
+it cannot resolve are absent from the response instead of being reported as `found: false`.
+
+`GET /extended/v3/mempool` replaces the mempool statistics endpoint with a differently shaped
+summary: fields are renamed and regrouped, percentiles are discrete rather than interpolated, and
+transaction age in blocks is replaced by `receipt_block_height`.
 
 ### Transaction field mapping
 
@@ -114,8 +133,9 @@ block height, a block hash, or the literal `latest`.
 | `parent_block_hash` | `parent_block.hash` (single-transaction endpoint only) |
 | `burn_block_height` | `bitcoin_block.height` |
 | `burn_block_time` | `bitcoin_block.time` |
-| `block_time_iso` | Removed — derive from `block.time` |
-| `burn_block_time_iso` | Removed — derive from `bitcoin_block.time` |
+| `block_time_iso` | `block.time_iso` |
+| `burn_block_time_iso` | `bitcoin_block.time_iso` |
+| `event_count` | `event_count` (in summaries as well as the single-transaction endpoint) |
 | `execution_cost_*` | `execution_cost.*` — e.g. `execution_cost_runtime` becomes `execution_cost.runtime` |
 | `contract_call.function_args` | Same path, only with `?include=function_args` |
 | `smart_contract.source_code` | Same path, only with `?include=source_code` |
@@ -187,7 +207,7 @@ class, not a list.
 | `total_sent` | Removed |
 | `total_received` | Removed |
 | `total_fees_sent` | Removed |
-| `total_miner_rewards_received` | Removed |
+| `total_miner_rewards_received` | Moved to `GET /extended/v3/principals/{principal}/mining` → `rewards.total` |
 | `token_offering_locked` | Removed |
 
 :::callout
@@ -200,6 +220,21 @@ locked STX is excluded. If you were subtracting `locked` yourself, stop.
 
 v1 accepted `until_block` and `unanchored` on the balance endpoints. v3 always reports the
 current chain tip.
+
+### Miner rewards
+
+v1 only exposed a principal's miner rewards as the `total_miner_rewards_received` counter on the
+STX balance. v3 gives them their own resource:
+
+- `GET /extended/v3/principals/{principal}/mining` — lifetime matured miner reward totals,
+  `{ rewards: { count, coinbase, fees, total } }`, in µSTX.
+- `GET /extended/v3/principals/{principal}/mining/rewards` — the individual matured rewards,
+  cursor-paginated, newest first. Each reports the `block` it matured (and was credited) in and
+  the `source_block` whose reward matured.
+
+Miner rewards are credited to the recipient's balance without a transaction or STX event, so they
+never appear in the principal's transactions or transfer feeds. Only canonical rewards are
+counted, and zero-value rewards are left out.
 
 ### FT and NFT balances
 
@@ -253,20 +288,77 @@ where `type` is `stx`, `ft`, or `nft`.
 
 ## Blocks
 
-Blocks did not move to v3 — only the *transactions in a block* did. The v1 block endpoints are
-superseded by v2.
-
-| Deprecated v1 endpoint | Replacement |
+| Deprecated v1 endpoint | v3 replacement |
 | --- | --- |
-| `GET /extended/v1/block` | `GET /extended/v2/blocks` |
-| `GET /extended/v1/block/{hash}` | `GET /extended/v2/blocks/{height_or_hash}` |
-| `GET /extended/v1/block/by_height/{height}` | `GET /extended/v2/blocks/{height_or_hash}` |
-| `GET /extended/v1/block/by_burn_block_height/{burn_block_height}` | `GET /extended/v2/burn-blocks/{height_or_hash}/blocks` |
-| `GET /extended/v1/block/by_burn_block_hash/{burn_block_hash}` | `GET /extended/v2/burn-blocks/{height_or_hash}/blocks` |
+| `GET /extended/v1/block` | `GET /extended/v3/blocks` |
+| `GET /extended/v1/block/{hash}` | `GET /extended/v3/blocks/{height_or_hash}` |
+| `GET /extended/v1/block/by_height/{height}` | `GET /extended/v3/blocks/{height_or_hash}` |
+| `GET /extended/v1/block/by_burn_block_height/{burn_block_height}` | `GET /extended/v3/bitcoin-blocks/{height_or_hash}/blocks` |
+| `GET /extended/v1/block/by_burn_block_hash/{burn_block_hash}` | `GET /extended/v3/bitcoin-blocks/{height_or_hash}/blocks` |
 
-The v1 block responses embedded a `txs` array of transaction IDs. In v2 the block object carries
-a `tx_count`; fetch the transactions from
-`GET /extended/v3/blocks/{height_or_hash}/transactions`.
+`{height_or_hash}` on `GET /extended/v3/blocks/{height_or_hash}` accepts a block height, a block
+hash, an index block hash, or the literal `latest`. The two v1 "by burn block" endpoints returned
+a single Stacks block; their v3 replacement returns every canonical Stacks block anchored to that
+Bitcoin block, as a cursor-paginated list, newest first. Since Nakamoto there are usually many.
+
+If you already migrated to the v2 block routes (`GET /extended/v2/blocks`,
+`GET /extended/v2/blocks/{height_or_hash}`, `GET /extended/v2/burn-blocks*`), those are deprecated
+too and move to the same v3 endpoints — see
+[Also deprecated: v2 endpoints](#also-deprecated-v2-endpoints).
+
+### Block field mapping
+
+`GET /extended/v3/blocks` returns block *summaries*; `GET /extended/v3/blocks/{height_or_hash}`
+adds the fields marked "detail only".
+
+| v1 / v2 field | v3 field |
+| --- | --- |
+| `height` | `height` |
+| `hash` | `hash` |
+| `index_block_hash` | `index_hash` |
+| `block_time` | `time` |
+| `block_time_iso` | `time_iso` |
+| `tenure_height` | `tenure_height` (`null` for a Nakamoto block indexed before tenure heights were recorded) |
+| `tx_count` (v2) / `txs` (v1) | `tx_count` — fetch the transactions from `GET /extended/v3/blocks/{height_or_hash}/transactions` |
+| `burn_block_hash` | `bitcoin_block.hash` |
+| `burn_block_height` | `bitcoin_block.height` |
+| `burn_block_time` | `bitcoin_block.time` (detail only) |
+| `burn_block_time_iso` | `bitcoin_block.time_iso` (detail only) |
+| `parent_block_hash` | `parent_block.hash` (detail only) |
+| `parent_index_block_hash` | `parent_block.index_hash` (detail only) |
+| `execution_cost_*` | `execution_cost.*` (detail only) |
+| `miner_txid` | Removed |
+| `canonical` | Removed — v3 only returns canonical blocks |
+| `parent_microblock_*`, `microblocks_*`, `microblock_tx_count` | Removed — microblocks no longer exist |
+| — | `size` (new, detail only: total transaction bytes; `null` for blocks indexed before sizes were recorded) |
+
+### Bitcoin blocks
+
+v3 renames "burn blocks" to **Bitcoin blocks**:
+
+| Deprecated v2 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v2/burn-blocks` | `GET /extended/v3/bitcoin-blocks` |
+| `GET /extended/v2/burn-blocks/{height_or_hash}` | `GET /extended/v3/bitcoin-blocks/{height_or_hash}` |
+| `GET /extended/v2/burn-blocks/{height_or_hash}/blocks` | `GET /extended/v3/bitcoin-blocks/{height_or_hash}/blocks` |
+
+| v2 field | v3 field |
+| --- | --- |
+| `burn_block_height` | `height` |
+| `burn_block_hash` | `hash` (`null` for a future block) |
+| `burn_block_time` | `time` |
+| `burn_block_time_iso` | `time_iso` |
+| `stacks_blocks` | `stacks_block_count` — list them with `GET /extended/v3/bitcoin-blocks/{height_or_hash}/blocks` |
+| `total_tx_count` | `tx_count` |
+| `avg_block_time` | Removed — use `GET /extended/v2/blocks/average-times` |
+| — | `projected_time`, `projected_time_iso` (new) |
+
+The API learns a Bitcoin block's time from the Stacks blocks anchored to it. For a past Bitcoin
+block no Stacks block anchored to (a missed sortition, for example), `time` is interpolated
+between its neighbors. For the newest Bitcoin blocks no Stacks block has anchored to yet, `time`
+is `null` and `projected_time` carries an estimate instead. `GET /extended/v3/bitcoin-blocks/{height}`
+also accepts a height above the Bitcoin tip and returns that future block with a `null` hash and
+its projected time, rather than `404`.
 
 ## Smart contracts
 
@@ -332,6 +424,44 @@ they are not). And the granularity flips from **per-burn-block payout events** t
 For per-burn-block BTC payouts under the current model, see
 `GET /extended/v2/burn-blocks/{height_or_hash}/pox-transactions` and
 `GET /extended/v2/addresses/{burnchain_address}/pox-transactions`, which are not deprecated.
+
+## Stacking events
+
+The `pox4` event endpoints read the pox-2 through pox-4 event tables and have no pox-5 event
+history counterpart. They serve historical data only.
+
+| Deprecated v1 endpoint | Replacement |
+| --- | --- |
+| `GET /extended/v1/pox4/events` | None — there is no global pox-5 event feed |
+| `GET /extended/v1/pox4/tx/{tx_id}` | None — v3 transaction events do not carry decoded pox operations |
+| `GET /extended/v1/pox4/stacker/{principal}` | `GET /extended/v3/principals/{principal}/staking` for the current pox-5 position (no event history) |
+| `GET /extended/v1/pox4/{pool_principal}/delegations` | `GET /extended/v3/staking/signers/{principal}/stakers` |
+
+The same deprecation applies under the `pox2` and `pox3` prefixes.
+
+## Search
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `GET /extended/v1/search/{id}` | `GET /extended/v3/search` |
+
+v1 took a complete hash or ID in the path and returned the first match. v3 takes the search term
+in the `q` query parameter, accepts partial terms as well as complete ones, matches block heights and
+token assets in addition to blocks, transactions, contracts, and accounts, and returns up to 20
+ranked matches.
+
+## Faucets
+
+| Deprecated v1 endpoint | v3 replacement |
+| --- | --- |
+| `POST /extended/v1/faucets/stx` | `POST /extended/v3/faucets/stx` |
+| `POST /extended/v1/faucets/btc` | `POST /extended/v3/faucets/btc` |
+| `POST /extended/v1/faucets/sbtc` | `POST /extended/v3/faucets/sbtc` |
+
+The v3 faucets take the recipient as an `address` field in a JSON body rather than the query
+string, send a single fixed amount configured by the API operator (no size or stacking options),
+and return a `transaction` object plus the amount sent instead of the transaction id and raw
+transaction hex. They remain testnet-only.
 
 ## Fees
 
@@ -519,6 +649,8 @@ These are deprecated with no successor. Plan around them rather than swapping a 
 | `GET /extended/v1/microblock/unanchored/txs` | Same. |
 | `GET /extended/v1/tokens/nft/mints` | Mint events for an asset class. Retired rather than migrated — the endpoint serves negligible traffic. A single instance's mint is the oldest entry in `GET /extended/v3/tokens/nft/{asset_identifier}/{value}/history`, but there is no collection-wide mint feed. |
 | `GET /extended/v1/faucets/btc/{address}` | Testnet-only BTC balance helper. No replacement. |
+| `GET /extended/v1/pox4/events` | Historical pox-4-and-earlier event feed. No pox-5 equivalent. |
+| `GET /extended/v1/pox4/tx/{tx_id}` | Historical pox-4-and-earlier events for one transaction. v3 transaction events do not decode pox operations. |
 
 ## Also deprecated: v2 endpoints
 
@@ -532,32 +664,30 @@ migrated from v1 to v2, these are your next hop.
 | `GET /extended/v2/addresses/{principal}/balances/stx` | `GET /extended/v3/principals/{principal}/balances/stx` |
 | `GET /extended/v2/addresses/{principal}/balances/ft` | `GET /extended/v3/principals/{principal}/balances/ft` |
 | `GET /extended/v2/addresses/{principal}/balances/ft/{token}` | `GET /extended/v3/principals/{principal}/balances/ft/{asset_identifier}` |
+| `GET /extended/v2/blocks` | `GET /extended/v3/blocks` |
+| `GET /extended/v2/blocks/{height_or_hash}` | `GET /extended/v3/blocks/{height_or_hash}` |
 | `GET /extended/v2/blocks/{height_or_hash}/transactions` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
+| `GET /extended/v2/burn-blocks` | `GET /extended/v3/bitcoin-blocks` |
+| `GET /extended/v2/burn-blocks/{height_or_hash}` | `GET /extended/v3/bitcoin-blocks/{height_or_hash}` |
+| `GET /extended/v2/burn-blocks/{height_or_hash}/blocks` | `GET /extended/v3/bitcoin-blocks/{height_or_hash}/blocks` |
+
+See [Blocks](#blocks) for the block and Bitcoin block field mappings.
+
+:::callout
+type: info
+### The v2 block routes outlive the sunset
+The six v2 block and burn block routes above carry the deprecation `Warning` header but are
+exempt from the sunset: they keep serving after the other deprecated endpoints start returning
+`410 Gone`. Migrate them anyway, since new block fields only land in v3.
+:::
 
 ## Endpoints that are not deprecated
 
-Most of `/extended/v1` is now deprecated, but these routes are not. They remain the supported way
-to fetch their data today:
+Every `/extended/v1` route is now deprecated except the API status endpoint, `GET /extended`.
 
-| Area | Endpoint |
-| --- | --- |
-| Transactions | `GET /extended/v1/tx/multiple` |
-| Transactions | `GET /extended/v1/tx/mempool/stats` |
-| Stacking | `GET /extended/v1/pox4/events` |
-| Stacking | `GET /extended/v1/pox4/tx/{tx_id}` |
-| Stacking | `GET /extended/v1/pox4/stacker/{principal}` |
-| Stacking | `GET /extended/v1/pox4/{pool_principal}/delegations` |
-| Search | `GET /extended/v1/search/{id}` |
-| Faucets | `POST /extended/v1/faucets/stx` |
-| Faucets | `POST /extended/v1/faucets/btc` |
-| Faucets | `POST /extended/v1/faucets/sbtc` |
-| Status | `GET /extended` |
-
-The `pox4` prefix also accepts `pox2` and `pox3` for historical data. Faucet endpoints are
-testnet-only.
-
-Outside `/extended/v1`, these `/extended/v2` routes are also current and have no v3 successor
-yet: `GET /extended/v2/blocks` and its siblings, `GET /extended/v2/burn-blocks/*`,
+These `/extended/v2` routes are not deprecated and have no v3 successor yet:
+`GET /extended/v2/blocks/average-times`, `GET /extended/v2/blocks/by-block-time/{timestamp}`,
+`GET /extended/v2/blocks/{height_or_hash}/signer-signatures`,
 `GET /extended/v2/block-tenures/{tenure_height}/blocks`, `GET /extended/v2/pox/cycles*`,
 `GET /extended/v2/mempool/fees`, `GET /extended/v2/smart-contracts/*`, and the two
 `pox-transactions` routes noted under [Stacking rewards](#stacking-rewards).

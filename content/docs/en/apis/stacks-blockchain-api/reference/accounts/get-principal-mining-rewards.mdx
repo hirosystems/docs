@@ -1,0 +1,12 @@
+---
+title: Get principal mining rewards
+sidebarTitle: Principal mining rewards
+description: "Returns the matured miner rewards credited to a principal, most recent first. Miner rewards are credited to the recipient's STX balance when they mature, without a transaction or STX event, so they don't appear in the principal's transactions or transfers. Each reward reports the `block` it matured (and was credited) in and the `source_block` whose reward matured; a parent-miner share of fees reports the same `source_block` as the miner reward it was paid alongside. Only rewards on the canonical chain are listed; zero-value rewards are left out."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/mining/rewards', method: 'get' }]}
+  hasHead={false}
+/>

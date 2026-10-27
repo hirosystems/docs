@@ -1,0 +1,12 @@
+---
+title: Get principal mining summary
+sidebarTitle: Principal mining summary
+description: "A one-call overview of a principal's mining: its lifetime matured miner rewards (coinbase and fees, in µSTX), counting only rewards on the canonical chain. The individual rewards are paginated at `/principals/:principal/mining/rewards`."
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/principals/{principal}/mining', method: 'get' }]}
+  hasHead={false}
+/>
