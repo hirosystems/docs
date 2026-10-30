@@ -30,14 +30,12 @@ export function useLocalizedNavigation(): BaseLayoutProps['links'] {
       }
     >([
       ['/tools/chainhooks', t.tools.chainhook],
-      ['/tools/contract-monitoring', t.tools.contractMonitoring],
       ['/resources/guides/api-keys', t.apis.apiKeys],
       ['/resources/guides/rate-limits', t.apis.rateLimits],
       ['/apis/stacks-blockchain-api', t.apis.stacksApi],
       ['/apis/stacks-node-rpc-api', t.apis.stacksNodeRpcApi],
       ['/apis/token-metadata-api', t.apis.tokenMetadata],
       ['/apis/chainhooks-api', t.apis.chainhook],
-      ['/apis/platform-api', t.apis.platform],
       ['/apis/signer-metrics-api', t.apis.signerMetrics],
       ['/resources/guides', t.resources.guides],
       ['/resources/archive', t.resources.archive],

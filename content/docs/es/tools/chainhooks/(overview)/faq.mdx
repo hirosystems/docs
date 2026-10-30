@@ -42,26 +42,9 @@ description: Preguntas frecuentes sobre Chainhooks 2.0 (Beta)
 
 <Accordion>
   <AccordionItem value="v1-legacy">
-    <AccordionTrigger>¿Qué pasará con los Chainhooks heredados existentes que se ejecutan en v1.0?</AccordionTrigger>
-
+    <AccordionTrigger>¿Puedo gestionar chainhooks v1 con la API de Chainhooks?</AccordionTrigger>
     <AccordionContent>
-      Los usuarios con Chainhooks ejecutándose en v1.0 aún podrán verlos y recibir entregas, pero una vez que se lance la beta, todos los nuevos Chainhooks creados en la Plataforma se ejecutarán en v2.0.
-
-      La API tampoco admitirá Chainhooks ejecutándose en v1.0.
-
-      :::callout
-      Aprende cómo migrar tus chainhooks v1 a v2 en el [Guía de Migración](/tools/chainhooks/migration).
-      :::
-    </AccordionContent>
-  </AccordionItem>
-
-  <AccordionItem value="v1-v2-access">
-    <AccordionTrigger>Si v2.0 y v1.0 estarán activas al mismo tiempo, ¿cómo gestionamos ambas?</AccordionTrigger>
-
-    <AccordionContent>
-      En la Plataforma, los chainhooks v1 son de solo lectura. Puedes verlos y continuarán entregando eventos, pero no puedes modificarlos a través de la interfaz de usuario de la Plataforma.
-
-      Para modificar v1 chainhooks programáticamente, usa el [API de Plataforma](/apis/platform-api). Sin embargo, recomendamos migrar a chainhooks v2 en su lugar. Ver el [Guía de Migración](/tools/chainhooks/migration) para un tutorial completo.
+La API de Chainhooks admite chainhooks v2. Para convertir definiciones v1 guardadas, consulta la [guía de migración](/tools/chainhooks/migration). Si necesitas ayuda con un chainhook v1 existente, [contacta con soporte](mailto:support@hiro.so).
     </AccordionContent>
   </AccordionItem>
 
@@ -74,14 +57,14 @@ description: Preguntas frecuentes sobre Chainhooks 2.0 (Beta)
   </AccordionItem>
 </Accordion>
 
-## Plataforma vs SDK
+## Gestión de chainhooks
 
 <Accordion>
   <AccordionItem value="edit-chainhooks">
     <AccordionTrigger>¿Puedo editar mis Chainhooks v2?</AccordionTrigger>
 
     <AccordionContent>
-      ¡Sí! puedes editar tus Chainhooks v2 usando el [SDK de Chainhooks](/tools/chainhooks/update) o [API de Chainhooks](/apis/chainhooks-api). La Plataforma actualmente no admite la edición de v2 Chainhooks.
+      ¡Sí! puedes editar tus Chainhooks v2 usando el [SDK de Chainhooks](/tools/chainhooks/update) o [API de Chainhooks](/apis/chainhooks-api).
     </AccordionContent>
   </AccordionItem>
 </Accordion>

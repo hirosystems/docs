@@ -82,22 +82,11 @@ export function MobileNavigation({ isOpen = false, onClose, tree }: MobileNaviga
         const apiMappings: { [key: string]: string } = {
           'stacks-blockchain-api': 'Stacks Blockchain API',
           'token-metadata-api': 'Token Metadata API',
-          'platform-api': 'Platform API',
           'signer-metrics-api': 'Signer Metrics API',
         };
 
         if (apiMappings[segment.toLowerCase()]) {
           return apiMappings[segment.toLowerCase()];
-        }
-      }
-
-      if (index === 1 && displaySegments[0] === 'Tools') {
-        const toolMappings: { [key: string]: string } = {
-          'contract-monitoring': 'Contract Monitoring',
-        };
-
-        if (toolMappings[segment.toLowerCase()]) {
-          return toolMappings[segment.toLowerCase()];
         }
       }
 

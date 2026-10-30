@@ -1,7 +1,7 @@
 import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
-import { Braces, Database, Play } from 'lucide-react';
+import { Database, Play } from 'lucide-react';
 import { Card, Cards, SmallCard } from '@/components/card';
-import { API, Chainhook, Hiro, StacksIcon } from '@/components/ui/icon';
+import { API, Chainhook, StacksIcon } from '@/components/ui/icon';
 import heroImage from '@/public/stacks-hero.svg';
 
 export default function HomePage() {
@@ -62,12 +62,6 @@ export default function HomePage() {
                 title="Chainhooks"
                 description="Create custom event streams and triggers for real-time blockchain data processing."
               />
-              <SmallCard
-                icon={<Braces />}
-                href="/tools/contract-monitoring"
-                title="Contract Monitoring"
-                description="Monitor and track smart contract activity and performance metrics."
-              />
             </Cards>
           </div>
           <div className="flex flex-col">
@@ -102,12 +96,6 @@ export default function HomePage() {
                 href="/apis/token-metadata-api"
                 title="Token Metadata API"
                 description="Fast, reliable metadata for fungible and non-fungible tokens on Stacks."
-              />
-              <SmallCard
-                icon={<Hiro />}
-                href="/apis/platform-api"
-                title="Platform API"
-                description="Programmatically manage devnets and chainhooks via REST interface."
               />
               <SmallCard
                 icon={<API />}

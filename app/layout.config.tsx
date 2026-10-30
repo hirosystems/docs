@@ -27,11 +27,6 @@ export const baseOptions: BaseLayoutProps = {
           url: '/tools/chainhooks',
           isBeta: true,
         },
-        {
-          text: 'Contract Monitoring',
-          description: 'Monitor and analyze Clarity smart contract activity.',
-          url: '/tools/contract-monitoring',
-        },
       ],
     },
     {
@@ -69,11 +64,6 @@ export const baseOptions: BaseLayoutProps = {
           description: 'RESTful API for accessing Chainhook',
           url: '/apis/chainhooks-api',
           isNew: true,
-        },
-        {
-          text: 'Platform API',
-          description: 'API for accessing Hiro Platform data and functionality.',
-          url: '/apis/platform-api',
         },
         {
           text: 'Signer Metrics API',

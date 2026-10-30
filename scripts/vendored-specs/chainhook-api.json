@@ -13,9 +13,7 @@
       "get": {
         "operationId": "getApiStatus",
         "summary": "API Status",
-        "tags": [
-          "Status"
-        ],
+        "tags": ["Status"],
         "description": "Displays the status of the API and its current workload",
         "responses": {
           "200": {
@@ -24,19 +22,14 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "server_version",
-                    "status"
-                  ],
+                  "required": ["server_version", "status"],
                   "properties": {
                     "server_version": {
                       "type": "string"
                     },
                     "status": {
                       "type": "string",
-                      "enum": [
-                        "ready"
-                      ]
+                      "enum": ["ready"]
                     }
                   }
                 }
@@ -49,9 +42,7 @@
     "/me/": {
       "post": {
         "operationId": "registerChainhook",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Allows users to register a new Chainhook",
         "requestBody": {
           "required": true,
@@ -59,51 +50,34 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "version",
-                  "chain",
-                  "network",
-                  "filters",
-                  "action"
-                ],
+                "required": ["name", "version", "chain", "network", "filters", "action"],
                 "properties": {
                   "name": {
                     "type": "string"
                   },
                   "version": {
                     "type": "string",
-                    "enum": [
-                      "1"
-                    ]
+                    "enum": ["1"]
                   },
                   "chain": {
                     "type": "string",
-                    "enum": [
-                      "stacks"
-                    ]
+                    "enum": ["stacks"]
                   },
                   "network": {
                     "anyOf": [
                       {
                         "type": "string",
-                        "enum": [
-                          "mainnet"
-                        ]
+                        "enum": ["mainnet"]
                       },
                       {
                         "type": "string",
-                        "enum": [
-                          "testnet"
-                        ]
+                        "enum": ["testnet"]
                       }
                     ]
                   },
                   "filters": {
                     "type": "object",
-                    "required": [
-                      "events"
-                    ],
+                    "required": ["events"],
                     "properties": {
                       "events": {
                         "type": "array",
@@ -111,16 +85,11 @@
                           "anyOf": [
                             {
                               "type": "object",
-                              "required": [
-                                "type",
-                                "principal"
-                              ],
+                              "required": ["type", "principal"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "balance_change"
-                                  ]
+                                  "enum": ["balance_change"]
                                 },
                                 "principal": {
                                   "anyOf": [
@@ -138,15 +107,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_event"
-                                  ]
+                                  "enum": ["ft_event"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -156,15 +121,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_mint"
-                                  ]
+                                  "enum": ["ft_mint"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -186,15 +147,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_burn"
-                                  ]
+                                  "enum": ["ft_burn"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -216,15 +173,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_transfer"
-                                  ]
+                                  "enum": ["ft_transfer"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -258,15 +211,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_event"
-                                  ]
+                                  "enum": ["nft_event"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -279,15 +228,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_mint"
-                                  ]
+                                  "enum": ["nft_mint"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -312,15 +257,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_burn"
-                                  ]
+                                  "enum": ["nft_burn"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -345,15 +286,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_transfer"
-                                  ]
+                                  "enum": ["nft_transfer"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -390,29 +327,21 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_event"
-                                  ]
+                                  "enum": ["stx_event"]
                                 }
                               }
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_mint"
-                                  ]
+                                  "enum": ["stx_mint"]
                                 },
                                 "receiver": {
                                   "anyOf": [
@@ -430,15 +359,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_burn"
-                                  ]
+                                  "enum": ["stx_burn"]
                                 },
                                 "sender": {
                                   "anyOf": [
@@ -456,15 +381,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_transfer"
-                                  ]
+                                  "enum": ["stx_transfer"]
                                 },
                                 "sender": {
                                   "anyOf": [
@@ -494,15 +415,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "contract_deploy"
-                                  ]
+                                  "enum": ["contract_deploy"]
                                 },
                                 "contract_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -524,15 +441,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "contract_call"
-                                  ]
+                                  "enum": ["contract_call"]
                                 },
                                 "contract_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -557,15 +470,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "contract_log"
-                                  ]
+                                  "enum": ["contract_log"]
                                 },
                                 "contract_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -587,44 +496,31 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "coinbase"
-                                  ]
+                                  "enum": ["coinbase"]
                                 }
                               }
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type",
-                                "cause"
-                              ],
+                              "required": ["type", "cause"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "tenure_change"
-                                  ]
+                                  "enum": ["tenure_change"]
                                 },
                                 "cause": {
                                   "anyOf": [
                                     {
                                       "type": "string",
-                                      "enum": [
-                                        "block_found"
-                                      ]
+                                      "enum": ["block_found"]
                                     },
                                     {
                                       "type": "string",
-                                      "enum": [
-                                        "extended"
-                                      ]
+                                      "enum": ["extended"]
                                     }
                                   ]
                                 }
@@ -680,16 +576,11 @@
                   },
                   "action": {
                     "type": "object",
-                    "required": [
-                      "type",
-                      "url"
-                    ],
+                    "required": ["type", "url"],
                     "properties": {
                       "type": {
                         "type": "string",
-                        "enum": [
-                          "http_post"
-                        ]
+                        "enum": ["http_post"]
                       },
                       "url": {
                         "format": "uri",
@@ -709,11 +600,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "uuid",
-                    "definition",
-                    "status"
-                  ],
+                  "required": ["uuid", "definition", "status"],
                   "properties": {
                     "uuid": {
                       "format": "uuid",
@@ -721,51 +608,34 @@
                     },
                     "definition": {
                       "type": "object",
-                      "required": [
-                        "name",
-                        "version",
-                        "chain",
-                        "network",
-                        "filters",
-                        "action"
-                      ],
+                      "required": ["name", "version", "chain", "network", "filters", "action"],
                       "properties": {
                         "name": {
                           "type": "string"
                         },
                         "version": {
                           "type": "string",
-                          "enum": [
-                            "1"
-                          ]
+                          "enum": ["1"]
                         },
                         "chain": {
                           "type": "string",
-                          "enum": [
-                            "stacks"
-                          ]
+                          "enum": ["stacks"]
                         },
                         "network": {
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "mainnet"
-                              ]
+                              "enum": ["mainnet"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "testnet"
-                              ]
+                              "enum": ["testnet"]
                             }
                           ]
                         },
                         "filters": {
                           "type": "object",
-                          "required": [
-                            "events"
-                          ],
+                          "required": ["events"],
                           "properties": {
                             "events": {
                               "type": "array",
@@ -773,16 +643,11 @@
                                 "anyOf": [
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type",
-                                      "principal"
-                                    ],
+                                    "required": ["type", "principal"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "balance_change"
-                                        ]
+                                        "enum": ["balance_change"]
                                       },
                                       "principal": {
                                         "anyOf": [
@@ -800,15 +665,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_event"
-                                        ]
+                                        "enum": ["ft_event"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -818,15 +679,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_mint"
-                                        ]
+                                        "enum": ["ft_mint"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -848,15 +705,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_burn"
-                                        ]
+                                        "enum": ["ft_burn"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -878,15 +731,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_transfer"
-                                        ]
+                                        "enum": ["ft_transfer"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -920,15 +769,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_event"
-                                        ]
+                                        "enum": ["nft_event"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -941,15 +786,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_mint"
-                                        ]
+                                        "enum": ["nft_mint"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -974,15 +815,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_burn"
-                                        ]
+                                        "enum": ["nft_burn"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1007,15 +844,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_transfer"
-                                        ]
+                                        "enum": ["nft_transfer"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1052,29 +885,21 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_event"
-                                        ]
+                                        "enum": ["stx_event"]
                                       }
                                     }
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_mint"
-                                        ]
+                                        "enum": ["stx_mint"]
                                       },
                                       "receiver": {
                                         "anyOf": [
@@ -1092,15 +917,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_burn"
-                                        ]
+                                        "enum": ["stx_burn"]
                                       },
                                       "sender": {
                                         "anyOf": [
@@ -1118,15 +939,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_transfer"
-                                        ]
+                                        "enum": ["stx_transfer"]
                                       },
                                       "sender": {
                                         "anyOf": [
@@ -1156,15 +973,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_deploy"
-                                        ]
+                                        "enum": ["contract_deploy"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1186,15 +999,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_call"
-                                        ]
+                                        "enum": ["contract_call"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1219,15 +1028,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_log"
-                                        ]
+                                        "enum": ["contract_log"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1249,44 +1054,31 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "coinbase"
-                                        ]
+                                        "enum": ["coinbase"]
                                       }
                                     }
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type",
-                                      "cause"
-                                    ],
+                                    "required": ["type", "cause"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "tenure_change"
-                                        ]
+                                        "enum": ["tenure_change"]
                                       },
                                       "cause": {
                                         "anyOf": [
                                           {
                                             "type": "string",
-                                            "enum": [
-                                              "block_found"
-                                            ]
+                                            "enum": ["block_found"]
                                           },
                                           {
                                             "type": "string",
-                                            "enum": [
-                                              "extended"
-                                            ]
+                                            "enum": ["extended"]
                                           }
                                         ]
                                       }
@@ -1342,16 +1134,11 @@
                         },
                         "action": {
                           "type": "object",
-                          "required": [
-                            "type",
-                            "url"
-                          ],
+                          "required": ["type", "url"],
                           "properties": {
                             "type": {
                               "type": "string",
-                              "enum": [
-                                "http_post"
-                              ]
+                              "enum": ["http_post"]
                             },
                             "url": {
                               "format": "uri",
@@ -1380,27 +1167,19 @@
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "new"
-                              ]
+                              "enum": ["new"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "streaming"
-                              ]
+                              "enum": ["streaming"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "expired"
-                              ]
+                              "enum": ["expired"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "interrupted"
-                              ]
+                              "enum": ["interrupted"]
                             }
                           ]
                         },
@@ -1467,9 +1246,7 @@
       },
       "get": {
         "operationId": "getChainhooks",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Returns all chainhooks registered by the current user",
         "parameters": [
           {
@@ -1504,12 +1281,7 @@
                 "schema": {
                   "title": "Paginated Chainhooks response",
                   "type": "object",
-                  "required": [
-                    "limit",
-                    "offset",
-                    "total",
-                    "results"
-                  ],
+                  "required": ["limit", "offset", "total", "results"],
                   "properties": {
                     "limit": {
                       "type": "integer",
@@ -1527,11 +1299,7 @@
                       "type": "array",
                       "items": {
                         "type": "object",
-                        "required": [
-                          "uuid",
-                          "definition",
-                          "status"
-                        ],
+                        "required": ["uuid", "definition", "status"],
                         "properties": {
                           "uuid": {
                             "format": "uuid",
@@ -1553,37 +1321,27 @@
                               },
                               "version": {
                                 "type": "string",
-                                "enum": [
-                                  "1"
-                                ]
+                                "enum": ["1"]
                               },
                               "chain": {
                                 "type": "string",
-                                "enum": [
-                                  "stacks"
-                                ]
+                                "enum": ["stacks"]
                               },
                               "network": {
                                 "anyOf": [
                                   {
                                     "type": "string",
-                                    "enum": [
-                                      "mainnet"
-                                    ]
+                                    "enum": ["mainnet"]
                                   },
                                   {
                                     "type": "string",
-                                    "enum": [
-                                      "testnet"
-                                    ]
+                                    "enum": ["testnet"]
                                   }
                                 ]
                               },
                               "filters": {
                                 "type": "object",
-                                "required": [
-                                  "events"
-                                ],
+                                "required": ["events"],
                                 "properties": {
                                   "events": {
                                     "type": "array",
@@ -1591,16 +1349,11 @@
                                       "anyOf": [
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type",
-                                            "principal"
-                                          ],
+                                          "required": ["type", "principal"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "balance_change"
-                                              ]
+                                              "enum": ["balance_change"]
                                             },
                                             "principal": {
                                               "anyOf": [
@@ -1618,15 +1371,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "ft_event"
-                                              ]
+                                              "enum": ["ft_event"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1636,15 +1385,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "ft_mint"
-                                              ]
+                                              "enum": ["ft_mint"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1666,15 +1411,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "ft_burn"
-                                              ]
+                                              "enum": ["ft_burn"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1696,15 +1437,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "ft_transfer"
-                                              ]
+                                              "enum": ["ft_transfer"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1738,15 +1475,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "nft_event"
-                                              ]
+                                              "enum": ["nft_event"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1759,15 +1492,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "nft_mint"
-                                              ]
+                                              "enum": ["nft_mint"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1792,15 +1521,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "nft_burn"
-                                              ]
+                                              "enum": ["nft_burn"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1825,15 +1550,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "nft_transfer"
-                                              ]
+                                              "enum": ["nft_transfer"]
                                             },
                                             "asset_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -1870,29 +1591,21 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "stx_event"
-                                              ]
+                                              "enum": ["stx_event"]
                                             }
                                           }
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "stx_mint"
-                                              ]
+                                              "enum": ["stx_mint"]
                                             },
                                             "receiver": {
                                               "anyOf": [
@@ -1910,15 +1623,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "stx_burn"
-                                              ]
+                                              "enum": ["stx_burn"]
                                             },
                                             "sender": {
                                               "anyOf": [
@@ -1936,15 +1645,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "stx_transfer"
-                                              ]
+                                              "enum": ["stx_transfer"]
                                             },
                                             "sender": {
                                               "anyOf": [
@@ -1974,15 +1679,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "contract_deploy"
-                                              ]
+                                              "enum": ["contract_deploy"]
                                             },
                                             "contract_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2004,15 +1705,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "contract_call"
-                                              ]
+                                              "enum": ["contract_call"]
                                             },
                                             "contract_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2037,15 +1734,11 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "contract_log"
-                                              ]
+                                              "enum": ["contract_log"]
                                             },
                                             "contract_identifier": {
                                               "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2067,44 +1760,31 @@
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type"
-                                          ],
+                                          "required": ["type"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "coinbase"
-                                              ]
+                                              "enum": ["coinbase"]
                                             }
                                           }
                                         },
                                         {
                                           "type": "object",
-                                          "required": [
-                                            "type",
-                                            "cause"
-                                          ],
+                                          "required": ["type", "cause"],
                                           "properties": {
                                             "type": {
                                               "type": "string",
-                                              "enum": [
-                                                "tenure_change"
-                                              ]
+                                              "enum": ["tenure_change"]
                                             },
                                             "cause": {
                                               "anyOf": [
                                                 {
                                                   "type": "string",
-                                                  "enum": [
-                                                    "block_found"
-                                                  ]
+                                                  "enum": ["block_found"]
                                                 },
                                                 {
                                                   "type": "string",
-                                                  "enum": [
-                                                    "extended"
-                                                  ]
+                                                  "enum": ["extended"]
                                                 }
                                               ]
                                             }
@@ -2160,16 +1840,11 @@
                               },
                               "action": {
                                 "type": "object",
-                                "required": [
-                                  "type",
-                                  "url"
-                                ],
+                                "required": ["type", "url"],
                                 "properties": {
                                   "type": {
                                     "type": "string",
-                                    "enum": [
-                                      "http_post"
-                                    ]
+                                    "enum": ["http_post"]
                                   },
                                   "url": {
                                     "format": "uri",
@@ -2198,27 +1873,19 @@
                                 "anyOf": [
                                   {
                                     "type": "string",
-                                    "enum": [
-                                      "new"
-                                    ]
+                                    "enum": ["new"]
                                   },
                                   {
                                     "type": "string",
-                                    "enum": [
-                                      "streaming"
-                                    ]
+                                    "enum": ["streaming"]
                                   },
                                   {
                                     "type": "string",
-                                    "enum": [
-                                      "expired"
-                                    ]
+                                    "enum": ["expired"]
                                   },
                                   {
                                     "type": "string",
-                                    "enum": [
-                                      "interrupted"
-                                    ]
+                                    "enum": ["interrupted"]
                                   }
                                 ]
                               },
@@ -2290,9 +1957,7 @@
     "/me/{uuid}/evaluate": {
       "post": {
         "operationId": "evaluateChainhook",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Queues an on-demand evaluation job for a specific block",
         "requestBody": {
           "required": true,
@@ -2339,9 +2004,7 @@
     "/me/{uuid}": {
       "patch": {
         "operationId": "updateChainhook",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Updates a chainhook by its UUID",
         "requestBody": {
           "required": true,
@@ -2355,37 +2018,27 @@
                   },
                   "version": {
                     "type": "string",
-                    "enum": [
-                      "1"
-                    ]
+                    "enum": ["1"]
                   },
                   "chain": {
                     "type": "string",
-                    "enum": [
-                      "stacks"
-                    ]
+                    "enum": ["stacks"]
                   },
                   "network": {
                     "anyOf": [
                       {
                         "type": "string",
-                        "enum": [
-                          "mainnet"
-                        ]
+                        "enum": ["mainnet"]
                       },
                       {
                         "type": "string",
-                        "enum": [
-                          "testnet"
-                        ]
+                        "enum": ["testnet"]
                       }
                     ]
                   },
                   "filters": {
                     "type": "object",
-                    "required": [
-                      "events"
-                    ],
+                    "required": ["events"],
                     "properties": {
                       "events": {
                         "type": "array",
@@ -2393,16 +2046,11 @@
                           "anyOf": [
                             {
                               "type": "object",
-                              "required": [
-                                "type",
-                                "principal"
-                              ],
+                              "required": ["type", "principal"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "balance_change"
-                                  ]
+                                  "enum": ["balance_change"]
                                 },
                                 "principal": {
                                   "anyOf": [
@@ -2420,15 +2068,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_event"
-                                  ]
+                                  "enum": ["ft_event"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2438,15 +2082,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_mint"
-                                  ]
+                                  "enum": ["ft_mint"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2468,15 +2108,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_burn"
-                                  ]
+                                  "enum": ["ft_burn"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2498,15 +2134,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "ft_transfer"
-                                  ]
+                                  "enum": ["ft_transfer"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2540,15 +2172,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_event"
-                                  ]
+                                  "enum": ["nft_event"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2561,15 +2189,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_mint"
-                                  ]
+                                  "enum": ["nft_mint"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2594,15 +2218,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_burn"
-                                  ]
+                                  "enum": ["nft_burn"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2627,15 +2247,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "nft_transfer"
-                                  ]
+                                  "enum": ["nft_transfer"]
                                 },
                                 "asset_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2672,29 +2288,21 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_event"
-                                  ]
+                                  "enum": ["stx_event"]
                                 }
                               }
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_mint"
-                                  ]
+                                  "enum": ["stx_mint"]
                                 },
                                 "receiver": {
                                   "anyOf": [
@@ -2712,15 +2320,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_burn"
-                                  ]
+                                  "enum": ["stx_burn"]
                                 },
                                 "sender": {
                                   "anyOf": [
@@ -2738,15 +2342,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "stx_transfer"
-                                  ]
+                                  "enum": ["stx_transfer"]
                                 },
                                 "sender": {
                                   "anyOf": [
@@ -2776,15 +2376,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "contract_deploy"
-                                  ]
+                                  "enum": ["contract_deploy"]
                                 },
                                 "contract_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2806,15 +2402,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "contract_call"
-                                  ]
+                                  "enum": ["contract_call"]
                                 },
                                 "contract_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2839,15 +2431,11 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "contract_log"
-                                  ]
+                                  "enum": ["contract_log"]
                                 },
                                 "contract_identifier": {
                                   "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -2869,44 +2457,31 @@
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type"
-                              ],
+                              "required": ["type"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "coinbase"
-                                  ]
+                                  "enum": ["coinbase"]
                                 }
                               }
                             },
                             {
                               "type": "object",
-                              "required": [
-                                "type",
-                                "cause"
-                              ],
+                              "required": ["type", "cause"],
                               "properties": {
                                 "type": {
                                   "type": "string",
-                                  "enum": [
-                                    "tenure_change"
-                                  ]
+                                  "enum": ["tenure_change"]
                                 },
                                 "cause": {
                                   "anyOf": [
                                     {
                                       "type": "string",
-                                      "enum": [
-                                        "block_found"
-                                      ]
+                                      "enum": ["block_found"]
                                     },
                                     {
                                       "type": "string",
-                                      "enum": [
-                                        "extended"
-                                      ]
+                                      "enum": ["extended"]
                                     }
                                   ]
                                 }
@@ -2962,16 +2537,11 @@
                   },
                   "action": {
                     "type": "object",
-                    "required": [
-                      "type",
-                      "url"
-                    ],
+                    "required": ["type", "url"],
                     "properties": {
                       "type": {
                         "type": "string",
-                        "enum": [
-                          "http_post"
-                        ]
+                        "enum": ["http_post"]
                       },
                       "url": {
                         "format": "uri",
@@ -3002,11 +2572,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "uuid",
-                    "definition",
-                    "status"
-                  ],
+                  "required": ["uuid", "definition", "status"],
                   "properties": {
                     "uuid": {
                       "format": "uuid",
@@ -3014,51 +2580,34 @@
                     },
                     "definition": {
                       "type": "object",
-                      "required": [
-                        "name",
-                        "version",
-                        "chain",
-                        "network",
-                        "filters",
-                        "action"
-                      ],
+                      "required": ["name", "version", "chain", "network", "filters", "action"],
                       "properties": {
                         "name": {
                           "type": "string"
                         },
                         "version": {
                           "type": "string",
-                          "enum": [
-                            "1"
-                          ]
+                          "enum": ["1"]
                         },
                         "chain": {
                           "type": "string",
-                          "enum": [
-                            "stacks"
-                          ]
+                          "enum": ["stacks"]
                         },
                         "network": {
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "mainnet"
-                              ]
+                              "enum": ["mainnet"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "testnet"
-                              ]
+                              "enum": ["testnet"]
                             }
                           ]
                         },
                         "filters": {
                           "type": "object",
-                          "required": [
-                            "events"
-                          ],
+                          "required": ["events"],
                           "properties": {
                             "events": {
                               "type": "array",
@@ -3066,16 +2615,11 @@
                                 "anyOf": [
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type",
-                                      "principal"
-                                    ],
+                                    "required": ["type", "principal"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "balance_change"
-                                        ]
+                                        "enum": ["balance_change"]
                                       },
                                       "principal": {
                                         "anyOf": [
@@ -3093,15 +2637,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_event"
-                                        ]
+                                        "enum": ["ft_event"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3111,15 +2651,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_mint"
-                                        ]
+                                        "enum": ["ft_mint"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3141,15 +2677,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_burn"
-                                        ]
+                                        "enum": ["ft_burn"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3171,15 +2703,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_transfer"
-                                        ]
+                                        "enum": ["ft_transfer"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3213,15 +2741,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_event"
-                                        ]
+                                        "enum": ["nft_event"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3234,15 +2758,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_mint"
-                                        ]
+                                        "enum": ["nft_mint"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3267,15 +2787,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_burn"
-                                        ]
+                                        "enum": ["nft_burn"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3300,15 +2816,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_transfer"
-                                        ]
+                                        "enum": ["nft_transfer"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3345,29 +2857,21 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_event"
-                                        ]
+                                        "enum": ["stx_event"]
                                       }
                                     }
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_mint"
-                                        ]
+                                        "enum": ["stx_mint"]
                                       },
                                       "receiver": {
                                         "anyOf": [
@@ -3385,15 +2889,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_burn"
-                                        ]
+                                        "enum": ["stx_burn"]
                                       },
                                       "sender": {
                                         "anyOf": [
@@ -3411,15 +2911,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_transfer"
-                                        ]
+                                        "enum": ["stx_transfer"]
                                       },
                                       "sender": {
                                         "anyOf": [
@@ -3449,15 +2945,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_deploy"
-                                        ]
+                                        "enum": ["contract_deploy"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3479,15 +2971,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_call"
-                                        ]
+                                        "enum": ["contract_call"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3512,15 +3000,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_log"
-                                        ]
+                                        "enum": ["contract_log"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3542,44 +3026,31 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "coinbase"
-                                        ]
+                                        "enum": ["coinbase"]
                                       }
                                     }
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type",
-                                      "cause"
-                                    ],
+                                    "required": ["type", "cause"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "tenure_change"
-                                        ]
+                                        "enum": ["tenure_change"]
                                       },
                                       "cause": {
                                         "anyOf": [
                                           {
                                             "type": "string",
-                                            "enum": [
-                                              "block_found"
-                                            ]
+                                            "enum": ["block_found"]
                                           },
                                           {
                                             "type": "string",
-                                            "enum": [
-                                              "extended"
-                                            ]
+                                            "enum": ["extended"]
                                           }
                                         ]
                                       }
@@ -3635,16 +3106,11 @@
                         },
                         "action": {
                           "type": "object",
-                          "required": [
-                            "type",
-                            "url"
-                          ],
+                          "required": ["type", "url"],
                           "properties": {
                             "type": {
                               "type": "string",
-                              "enum": [
-                                "http_post"
-                              ]
+                              "enum": ["http_post"]
                             },
                             "url": {
                               "format": "uri",
@@ -3673,27 +3139,19 @@
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "new"
-                              ]
+                              "enum": ["new"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "streaming"
-                              ]
+                              "enum": ["streaming"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "expired"
-                              ]
+                              "enum": ["expired"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "interrupted"
-                              ]
+                              "enum": ["interrupted"]
                             }
                           ]
                         },
@@ -3760,9 +3218,7 @@
       },
       "get": {
         "operationId": "getChainhook",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Returns a chainhook by its UUID",
         "parameters": [
           {
@@ -3782,11 +3238,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "uuid",
-                    "definition",
-                    "status"
-                  ],
+                  "required": ["uuid", "definition", "status"],
                   "properties": {
                     "uuid": {
                       "format": "uuid",
@@ -3794,51 +3246,34 @@
                     },
                     "definition": {
                       "type": "object",
-                      "required": [
-                        "name",
-                        "version",
-                        "chain",
-                        "network",
-                        "filters",
-                        "action"
-                      ],
+                      "required": ["name", "version", "chain", "network", "filters", "action"],
                       "properties": {
                         "name": {
                           "type": "string"
                         },
                         "version": {
                           "type": "string",
-                          "enum": [
-                            "1"
-                          ]
+                          "enum": ["1"]
                         },
                         "chain": {
                           "type": "string",
-                          "enum": [
-                            "stacks"
-                          ]
+                          "enum": ["stacks"]
                         },
                         "network": {
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "mainnet"
-                              ]
+                              "enum": ["mainnet"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "testnet"
-                              ]
+                              "enum": ["testnet"]
                             }
                           ]
                         },
                         "filters": {
                           "type": "object",
-                          "required": [
-                            "events"
-                          ],
+                          "required": ["events"],
                           "properties": {
                             "events": {
                               "type": "array",
@@ -3846,16 +3281,11 @@
                                 "anyOf": [
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type",
-                                      "principal"
-                                    ],
+                                    "required": ["type", "principal"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "balance_change"
-                                        ]
+                                        "enum": ["balance_change"]
                                       },
                                       "principal": {
                                         "anyOf": [
@@ -3873,15 +3303,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_event"
-                                        ]
+                                        "enum": ["ft_event"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3891,15 +3317,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_mint"
-                                        ]
+                                        "enum": ["ft_mint"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3921,15 +3343,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_burn"
-                                        ]
+                                        "enum": ["ft_burn"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3951,15 +3369,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "ft_transfer"
-                                        ]
+                                        "enum": ["ft_transfer"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -3993,15 +3407,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_event"
-                                        ]
+                                        "enum": ["nft_event"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4014,15 +3424,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_mint"
-                                        ]
+                                        "enum": ["nft_mint"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4047,15 +3453,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_burn"
-                                        ]
+                                        "enum": ["nft_burn"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4080,15 +3482,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "nft_transfer"
-                                        ]
+                                        "enum": ["nft_transfer"]
                                       },
                                       "asset_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}::[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4125,29 +3523,21 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_event"
-                                        ]
+                                        "enum": ["stx_event"]
                                       }
                                     }
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_mint"
-                                        ]
+                                        "enum": ["stx_mint"]
                                       },
                                       "receiver": {
                                         "anyOf": [
@@ -4165,15 +3555,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_burn"
-                                        ]
+                                        "enum": ["stx_burn"]
                                       },
                                       "sender": {
                                         "anyOf": [
@@ -4191,15 +3577,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "stx_transfer"
-                                        ]
+                                        "enum": ["stx_transfer"]
                                       },
                                       "sender": {
                                         "anyOf": [
@@ -4229,15 +3611,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_deploy"
-                                        ]
+                                        "enum": ["contract_deploy"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4259,15 +3637,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_call"
-                                        ]
+                                        "enum": ["contract_call"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4292,15 +3666,11 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "contract_log"
-                                        ]
+                                        "enum": ["contract_log"]
                                       },
                                       "contract_identifier": {
                                         "pattern": "^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{28,41}\\.[a-zA-Z]([a-zA-Z0-9]|[-_]){0,39}$",
@@ -4322,44 +3692,31 @@
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type"
-                                    ],
+                                    "required": ["type"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "coinbase"
-                                        ]
+                                        "enum": ["coinbase"]
                                       }
                                     }
                                   },
                                   {
                                     "type": "object",
-                                    "required": [
-                                      "type",
-                                      "cause"
-                                    ],
+                                    "required": ["type", "cause"],
                                     "properties": {
                                       "type": {
                                         "type": "string",
-                                        "enum": [
-                                          "tenure_change"
-                                        ]
+                                        "enum": ["tenure_change"]
                                       },
                                       "cause": {
                                         "anyOf": [
                                           {
                                             "type": "string",
-                                            "enum": [
-                                              "block_found"
-                                            ]
+                                            "enum": ["block_found"]
                                           },
                                           {
                                             "type": "string",
-                                            "enum": [
-                                              "extended"
-                                            ]
+                                            "enum": ["extended"]
                                           }
                                         ]
                                       }
@@ -4415,16 +3772,11 @@
                         },
                         "action": {
                           "type": "object",
-                          "required": [
-                            "type",
-                            "url"
-                          ],
+                          "required": ["type", "url"],
                           "properties": {
                             "type": {
                               "type": "string",
-                              "enum": [
-                                "http_post"
-                              ]
+                              "enum": ["http_post"]
                             },
                             "url": {
                               "format": "uri",
@@ -4453,27 +3805,19 @@
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "new"
-                              ]
+                              "enum": ["new"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "streaming"
-                              ]
+                              "enum": ["streaming"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "expired"
-                              ]
+                              "enum": ["expired"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "interrupted"
-                              ]
+                              "enum": ["interrupted"]
                             }
                           ]
                         },
@@ -4540,9 +3884,7 @@
       },
       "delete": {
         "operationId": "deleteChainhook",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Deletes a chainhook by its UUID",
         "parameters": [
           {
@@ -4565,9 +3907,7 @@
     "/me/enabled": {
       "patch": {
         "operationId": "bulkEnableChainhooks",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Updates the enabled status of chainhooks that match the provided filters",
         "requestBody": {
           "required": true,
@@ -4575,9 +3915,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "enabled"
-                ],
+                "required": ["enabled"],
                 "properties": {
                   "enabled": {
                     "description": "Enabled status to apply to the matching chainhooks",
@@ -4614,27 +3952,19 @@
                           "anyOf": [
                             {
                               "type": "string",
-                              "enum": [
-                                "new"
-                              ]
+                              "enum": ["new"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "streaming"
-                              ]
+                              "enum": ["streaming"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "expired"
-                              ]
+                              "enum": ["expired"]
                             },
                             {
                               "type": "string",
-                              "enum": [
-                                "interrupted"
-                              ]
+                              "enum": ["interrupted"]
                             }
                           ]
                         }
@@ -4653,9 +3983,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "updated_uuids"
-                  ],
+                  "required": ["updated_uuids"],
                   "properties": {
                     "updated_uuids": {
                       "description": "UUIDs of chainhooks that were successfully enabled",
@@ -4676,9 +4004,7 @@
     "/me/{uuid}/enabled": {
       "patch": {
         "operationId": "updateChainhookEnabled",
-        "tags": [
-          "Chainhooks"
-        ],
+        "tags": ["Chainhooks"],
         "description": "Changes the enabled status of a chainhook by its UUID",
         "requestBody": {
           "required": true,
@@ -4686,9 +4012,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "enabled"
-                ],
+                "required": ["enabled"],
                 "properties": {
                   "enabled": {
                     "description": "The enabled status of the chainhook",
@@ -4720,9 +4044,7 @@
     "/me/secret": {
       "get": {
         "operationId": "getConsumerSecret",
-        "tags": [
-          "Secrets"
-        ],
+        "tags": ["Secrets"],
         "description": "Retrieves the current Chainhooks event payload consumer secret when available",
         "responses": {
           "200": {
@@ -4731,9 +4053,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "secret"
-                  ],
+                  "required": ["secret"],
                   "properties": {
                     "secret": {
                       "description": "Consumer secret value, null when no secret exists",
@@ -4758,9 +4078,7 @@
       },
       "post": {
         "operationId": "rotateConsumerSecret",
-        "tags": [
-          "Secrets"
-        ],
+        "tags": ["Secrets"],
         "description": "Generates and returns a new Chainhooks event payload consumer secret",
         "responses": {
           "200": {
@@ -4769,9 +4087,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "secret"
-                  ],
+                  "required": ["secret"],
                   "properties": {
                     "secret": {
                       "description": "Consumer secret value, null when no secret exists",
@@ -4796,9 +4112,7 @@
       },
       "delete": {
         "operationId": "deleteConsumerSecret",
-        "tags": [
-          "Secrets"
-        ],
+        "tags": ["Secrets"],
         "description": "Deletes the Chainhooks event payload consumer secret",
         "responses": {
           "200": {

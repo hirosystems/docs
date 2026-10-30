@@ -4,40 +4,31 @@ description: Guide for migrating legacy chainhooks to v2
 ---
 
 :::callout
-### Deprecation of Chainhooks v1
-Legacy v1 chainhooks will be deprecated on March 9th, 2026.
+### Migrating legacy definitions
+The legacy Platform API and Chainhooks UI have been retired. This guide shows how to convert saved v1 definitions to v2. If you need help recovering a definition or retiring an existing v1 chainhook, [contact support](mailto:support@hiro.so).
 :::
 
 ## What you'll learn
 
 :::objectives
-- Capture and analyze all existing v1 chainhooks.
+- Review your saved v1 chainhook definitions.
 - Convert predicate-based filters into explicit v2 event definitions.
-- Register v2 chainhooks, test delivery, and retire the originals safely.
+- Register v2 chainhooks and test delivery.
 :::
 
 ## Prerequisites
 
 :::prerequisites
-- Hiro API key for access to both the Platform and Chainhooks API.
+- [Hiro API key](/resources/guides/api-keys) for the Chainhooks API.
+- Saved v1 chainhook definitions, including filters and webhook URLs.
 - (optional) If you use TypeScript and Node.js, you can install the [Chainhooks client library](https://www.npmjs.com/package/@hirosystems/chainhooks-client) to easily parse incoming Chainhooks v2 payloads
 :::
 
 <Steps>
 
 <Step>
-### Get a list of v1 chainhooks
-Use the Platform API to fetch the chainhooks you want to migrate.
-
-```ts index.ts -c
-const response = await fetch(`https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks`, {
-  headers: {
-    'content-type': 'application/json'
-  }
-});
-
-const chainhooks = await response.json();
-```
+### Gather your v1 definitions
+Use your saved configurations or exports to identify the filters, networks, and webhook URLs you want to migrate. If you do not have a copy, [contact support](mailto:support@hiro.so) before proceeding.
 
 </Step>
 
@@ -117,7 +108,7 @@ const v2Chainhook = {
     "decode_clarity_values": true,
     "enable_on_registration": true
   }
-});
+};
 
 const response = await fetch('https://api.hiro.so/chainhooks/v1/me/', {
   method: 'POST',
@@ -160,14 +151,8 @@ const chainhook = await client.registerChainhook(
 </Step>
 
 <Step>
-### Validate and cleanup legacy chainhooks
-Stream events through both versions, confirm delivery, then clean up the legacy definitions.
-
-:::callout
-type: info
-### Best practices
-Keep both v1 and v2 hooks active until you verify delivery parity.
-:::
+### Validate v2 chainhooks
+Confirm that each chainhook is enabled and that your webhook receives the expected events. Update your application to handle the v2 payload format.
 
 #### Enablement checks on v2
 
@@ -192,21 +177,6 @@ console.log(chainhook.status.enabled);
 ```
 
 </CodeTabs>
-
-#### Delete legacy chainhooks
-
-```ts -c
-const response = await fetch(
-  `https://api.platform.hiro.so/v1/ext/${process.env.HIRO_API_KEY}/chainhooks/${uuid}`,{
-    method: 'DELETE',
-    headers: {
-      'content-type': 'application/json'
-    }
-  }
-);
-
-await response.json();
-```
 
 </Step>
 

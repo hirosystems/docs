@@ -1,6 +1,6 @@
 export interface Translations {
   navigation: {
-    signIn: string;
+    apiKeys: string;
     menus: {
       tools: string;
       apis: string;
@@ -61,10 +61,6 @@ export interface Translations {
       title: string;
       description: string;
     };
-    contractMonitoring: {
-      title: string;
-      description: string;
-    };
   };
   apis: {
     apiKeys: {
@@ -88,10 +84,6 @@ export interface Translations {
       description: string;
     };
     tokenMetadata: {
-      title: string;
-      description: string;
-    };
-    platform: {
       title: string;
       description: string;
     };

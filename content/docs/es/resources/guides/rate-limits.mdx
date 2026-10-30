@@ -8,22 +8,11 @@ Los siguientes límites de tasa (en solicitudes por minuto, o RPM) son aplicable
 
 | Clave de API | Límite de tasa                        |
 |:-------------|:----------------------------------|
-| No           | 50 solicitudes por minuto (RPM) por IP de cliente, para tráfico no autenticado |
-| Sí           | 500 solicitudes por minuto (RPM), independientemente de la IP de origen, con una clave de API autenticada |
-
-Los límites de tasa se dividen entre dos tipos de servicio según la ruta de la API:
-
-* **Servicios de Bitcoin** (`/ordinals/*` y `/runes/*` caminos)
-* **Servicios de Stacks** (todos los demás caminos): [API de Blockchain de Stacks](/apis/stacks-blockchain-api), [API de Metadatos de Tokens](/apis/token-metadata-api), [API de métricas de firmantes](/apis/signer-metrics-api), puntos finales de Explorer y otros servicios de Hiro
-
-Cada tipo de servicio tiene su propia cuota independiente, lo que te permite utilizar tanto las APIs de Stacks como las de Bitcoin sin que una afecte los límites de velocidad de la otra. Para más detalles, consulta nuestra guía sobre [encabezados de respuesta](/resources/guides/response-headers).
+| No           | 150 solicitudes por minuto (RPM) por IP de cliente, para tráfico no autenticado |
+| Sí           | 5000 solicitudes por minuto (RPM), independientemente de la IP de origen, con una clave de API autenticada |
 
 :::callout
-Los servicios de plataforma (API de plataforma, Devnet) tienen límites de velocidad separados y no forman parte de este sistema de cuotas.
-:::
-
-:::callout
-Puedes crear una clave de API gratis en el [Plataforma Hiro](https://platform.hiro.so) creando una cuenta.
+Inicia sesión o crea una cuenta para [crear y gestionar tus claves API](https://platform.hiro.so) gratis.
 :::
 
 ## Límites de tasa del grifo STX
