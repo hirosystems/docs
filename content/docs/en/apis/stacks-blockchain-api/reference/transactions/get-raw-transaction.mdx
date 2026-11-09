@@ -1,0 +1,12 @@
+---
+title: Get raw transaction
+sidebarTitle: Raw transaction
+description: Retrieves the hex-encoded serialized bytes of a mined or mempool transaction
+full: true
+---
+
+<APIPage
+  document="./openapi/stacks-blockchain-api.json"
+  operations={[{ path: '/extended/v3/transactions/{tx_id}/raw', method: 'get' }]}
+  hasHead={false}
+/>

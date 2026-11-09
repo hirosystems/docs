@@ -75,15 +75,21 @@ Every v3 endpoint that takes a transaction id or block hash in its path answers 
 without the `0x` prefix with a `302` redirect to the same URL with the prefix, as v1 did. Send the
 prefix to save the extra round trip.
 
+### Filtering and sorting are limited
+
+v3 list endpoints support only a small set of filters. `GET /extended/v3/transactions` and
+`GET /extended/v3/mempool/transactions` accept a `type` filter, and the mempool list can also be
+sorted by fee. See [Filtering transaction lists](#filtering-transaction-lists) for details.
+
 :::callout
 type: warn
-### v3 list endpoints do not support filtering yet
-`GET /extended/v1/tx` accepts `type`, `from_address`, `to_address`, `contract_id`,
-`function_name`, `nonce`, `start_time`, `end_time`, `sort_by`, and `order`.
-`GET /extended/v3/transactions` accepts only `limit` and `cursor`. The same applies to the
-mempool endpoints (`sender_address`, `recipient_address`, `address`, `order_by` are not
-available in v3). If you depend on server-side filtering, keep using the v1 endpoint until a
-v3 equivalent ships, and filter client-side where you can.
+### Most v1 filters have no v3 equivalent yet
+`GET /extended/v1/tx` also accepts `from_address`, `to_address`, `contract_id`,
+`function_name`, `nonce`, `start_time`, `end_time`, `sort_by`, and `order`, none of which
+`GET /extended/v3/transactions` supports. It always lists newest first by chain position. The
+same applies to the mempool endpoints: `sender_address`, `recipient_address`, and `address` are
+not available in v3. If you depend on one of these, keep using the v1 endpoint until a v3
+equivalent ships, and filter client-side where you can.
 :::
 
 ## Transactions
@@ -93,7 +99,7 @@ v3 equivalent ships, and filter client-side where you can.
 | `GET /extended/v1/tx` | `GET /extended/v3/transactions` |
 | `GET /extended/v1/tx/{tx_id}` | `GET /extended/v3/transactions/{tx_id}` |
 | `GET /extended/v1/tx/multiple` | `GET /extended/v3/transactions/batch` |
-| `GET /extended/v1/tx/{tx_id}/raw` | Stacks node RPC `GET /v3/transaction/{tx_id}` |
+| `GET /extended/v1/tx/{tx_id}/raw` | `GET /extended/v3/transactions/{tx_id}/raw` |
 | `GET /extended/v1/tx/mempool` | `GET /extended/v3/mempool/transactions` |
 | `GET /extended/v1/tx/mempool/stats` | `GET /extended/v3/mempool` |
 | `GET /extended/v1/tx/block/{block_hash}` | `GET /extended/v3/blocks/{height_or_hash}/transactions` |
@@ -108,9 +114,43 @@ transactions only, so use `GET /extended/v3/transactions/{tx_id}` for one that m
 the mempool. And it returns a `results` array rather than a map keyed by transaction id, so ids
 it cannot resolve are absent from the response instead of being reported as `found: false`.
 
+`GET /extended/v3/transactions/{tx_id}/raw` returns the hex-encoded serialized transaction as
+`{ "raw": "0x…" }`. v1 named the same field `raw_tx`. It serves both mined and pending mempool
+transactions, which makes it the call to use when fetching a transaction to rebuild it for
+replace-by-fee. Unlike v1, it returns `404` for a transaction that is only in a non-canonical
+block or was dropped from the mempool.
+
 `GET /extended/v3/mempool` replaces the mempool statistics endpoint with a differently shaped
 summary: fields are renamed and regrouped, percentiles are discrete rather than interpolated, and
 transaction age in blocks is replaced by `receipt_block_height`.
+
+### Filtering transaction lists
+
+Both transaction lists take a `type` filter. Pass it as repeated values
+(`?type=contract_call&type=token_transfer`) or as one comma-separated value
+(`?type=contract_call,token_transfer`). With a filter set, `total` counts only the matching
+transactions. `smart_contract` also matches versioned contract deployments, and `coinbase` matches
+every coinbase variant.
+
+- `GET /extended/v3/transactions` accepts `token_transfer`, `smart_contract`, `contract_call`,
+  `poison_microblock`, `coinbase`, and `tenure_change`. Its cursors are chain positions, so a
+  cursor stays valid when you change the `type` filter: the new list resumes from the same point
+  in the chain.
+- `GET /extended/v3/mempool/transactions` accepts `token_transfer`, `smart_contract`, and
+  `contract_call`, the only types that can be pending.
+
+`GET /extended/v3/mempool/transactions` also takes `sort_by` and `order`, which replace the v1
+`order_by` and `order` parameters:
+
+| v1 `order_by` | v3 `sort_by` |
+| --- | --- |
+| `age` | `receipt_time` (default) |
+| `fee` | `fee` |
+| `size` | Not supported |
+
+`order` is `desc` (default: newest or highest fee first) or `asc`. `sort_by=fee` sorts by the
+transaction's total fee, not its fee per byte, and breaks ties by `tx_id` in the same direction. A
+cursor only works with the `sort_by` that returned it, but you can reuse it with either `order`.
 
 ### Transaction field mapping
 
@@ -241,7 +281,17 @@ asset identifier, with the NFT entry being a count. v3 returns cursor-paginated 
 - `GET /extended/v3/principals/{principal}/balances/ft/{asset_identifier}` — a single token's
   balance; returns zero rather than 404 when the principal does not hold it.
 - `GET /extended/v3/principals/{principal}/balances/nft` — one entry per owned NFT *instance*,
-  `{ asset_identifier, value: { hex, repr } }`, not a per-collection count.
+  `{ asset_identifier, value: { hex, repr } }`, not a per-collection count. Sorted newest first
+  by when the principal received each instance (the chain position of the mint or transfer that
+  gave it to them), so recent acquisitions appear on the first page.
+
+:::callout
+type: info
+### NFT balance order and cursors changed in API 9.9.0
+Before 9.9.0, `GET /extended/v3/principals/{principal}/balances/nft` was ordered by asset
+identifier and then value. Cursors from that ordering are no longer accepted, so if you stored
+one, restart pagination from the first page.
+:::
 
 The v1 `total_sent` / `total_received` counters on each token are not carried over.
 
