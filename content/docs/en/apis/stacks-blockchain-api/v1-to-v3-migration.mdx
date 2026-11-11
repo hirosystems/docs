@@ -80,6 +80,8 @@ prefix to save the extra round trip.
 v3 list endpoints support only a small set of filters. `GET /extended/v3/transactions` and
 `GET /extended/v3/mempool/transactions` accept a `type` filter, and the mempool list can also be
 sorted by fee. See [Filtering transaction lists](#filtering-transaction-lists) for details.
+`GET /extended/v3/transactions/{tx_id}/events` accepts an event `type` filter; see
+[Filtering transaction events](#filtering-transaction-events).
 
 :::callout
 type: warn
@@ -152,6 +154,22 @@ every coinbase variant.
 transaction's total fee, not its fee per byte, and breaks ties by `tx_id` in the same direction. A
 cursor only works with the `sort_by` that returned it, but you can reuse it with either `order`.
 
+### Filtering transaction events
+
+`GET /extended/v3/transactions/{tx_id}/events` takes a `type` filter in the same repeated
+(`?type=ft_asset&type=nft_asset`) or comma-separated (`?type=ft_asset,nft_asset`) form. With a
+filter set, `total` counts only the matching events. Its cursors are event indexes, so a cursor
+stays valid when you change the filter. v3 uses shorter names for the event types that the v1
+`GET /extended/v1/tx/events` `type` filter accepts:
+
+| v1 event type | v3 event type |
+| --- | --- |
+| `smart_contract_log` | `contract_log` |
+| `stx_lock` | `stx_lock` |
+| `stx_asset` | `stx_asset` |
+| `fungible_token_asset` | `ft_asset` |
+| `non_fungible_token_asset` | `nft_asset` |
+
 ### Transaction field mapping
 
 | v1 field | v3 field |
@@ -175,7 +193,7 @@ cursor only works with the `sort_by` that returned it, but you can reuse it with
 | `burn_block_time_iso` | `bitcoin_block.time_iso` |
 | `event_count` | `event_count` (in summaries as well as the single-transaction endpoint) |
 | `execution_cost_*` | `execution_cost.*` — e.g. `execution_cost_runtime` becomes `execution_cost.runtime` |
-| `contract_call.function_args` | Same path, only with `?include=function_args` |
+| `contract_call.function_args` | Same path and item shape (`hex`, `repr`, `name`, `type`), only with `?include=function_args`. `name` is `null` when the contract interface is unavailable |
 | `smart_contract.source_code` | Same path, only with `?include=source_code` |
 | `post_conditions` | Same field, only with `?include=post_conditions` |
 | `post_condition_mode` | Removed |
@@ -189,6 +207,16 @@ cursor only works with the `sort_by` that returned it, but you can reuse it with
 
 Mempool transactions use `receipt_time` and `receipt_block_height` in place of block fields, and
 their `status` is one of `pending` or the `dropped_*` values.
+
+:::callout
+type: info
+### Function arguments gained `name` and `type` in API 9.10.0
+Before 9.10.0, each `contract_call.function_args` entry in v3 transactions and mempool
+transactions carried only `hex` and `repr`. Each entry now also has the argument `name` and
+Clarity `type` from the called function's signature, as in v1. When the contract interface is
+unavailable (for example, a pending call to a contract that is not deployed yet), `name` is
+`null` and `type` is inferred from the value.
+:::
 
 ## Accounts and principals
 
@@ -684,7 +712,7 @@ These are deprecated with no successor. Plan around them rather than swapping a 
 
 | Deprecated endpoint | Notes |
 | --- | --- |
-| `GET /extended/v1/tx/events` | Global event feed filtered by principal, transaction, or event type. Several v3 endpoints cover parts of it: per-transaction events at `GET /extended/v3/transactions/{tx_id}/events`, a principal's history for one fungible token at `GET /extended/v3/principals/{principal}/transfers/ft/{asset_identifier}`, a principal's STX transfers at `GET /extended/v3/principals/{principal}/transfers/stx/{inbound,outbound}`, and per-principal asset movement at `GET /extended/v3/principals/{principal}/balance-changes`. There is no single global event feed. |
+| `GET /extended/v1/tx/events` | Global event feed filtered by principal, transaction, or event type. Several v3 endpoints cover parts of it: per-transaction events, optionally filtered by event type, at `GET /extended/v3/transactions/{tx_id}/events`, a principal's history for one fungible token at `GET /extended/v3/principals/{principal}/transfers/ft/{asset_identifier}`, a principal's STX transfers at `GET /extended/v3/principals/{principal}/transfers/stx/{inbound,outbound}`, and per-principal asset movement at `GET /extended/v3/principals/{principal}/balance-changes`. There is no single global event feed. |
 | `GET /extended/v1/address/{principal}/assets` | Closest equivalent is `GET /extended/v3/principals/{principal}/balance-changes`, which reports net balance deltas rather than raw asset events. |
 | `GET /extended/v1/contract/by_trait` | Searches deployed contracts by Clarity trait ABI. No v3 equivalent. To look up a specific contract you already know, use `GET /extended/v3/smart-contracts/{contract_id}`. |
 | `GET /extended/v1/tokens/nft/mints` | Mint events for an asset class. Retired rather than migrated — the endpoint serves negligible traffic. A single instance's mint is the oldest entry in `GET /extended/v3/tokens/nft/{asset_identifier}/{value}/history`, but there is no collection-wide mint feed. |
